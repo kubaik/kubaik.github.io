@@ -124,6 +124,8 @@ class StaticSiteGenerator:
         self._generate_post_pages(posts)
         self._generate_static_pages(posts)
         self._generate_author_page(posts)  # Added Fix 4 call
+        self._generate_dmca_page()
+        self._generate_ai_disclosure_page()
         self._generate_rss_feed(posts)
         self._generate_sitemap(posts)
         self._generate_posts_json(posts)
@@ -134,6 +136,7 @@ class StaticSiteGenerator:
         self._generate_ads_txt()
         self._generate_pwa_files()
         self._generate_tag_pages(posts)
+
         print(f"Site generated successfully with {len(posts)} posts!")
 
     def _generate_ads_txt(self):
@@ -255,6 +258,42 @@ Sitemap: {base_url}/rss.xml
         with open("./docs/404.html", 'w', encoding='utf-8') as f:
             f.write(html)
         print("Generated 404.html")
+
+    def _generate_dmca_page(self):
+        """Generate /dmca/ page."""
+        config = self.blog_system.config
+        page_dir = Path("./docs/dmca")
+        page_dir.mkdir(exist_ok=True)
+        context = {
+            'site_name': config.get('site_name', 'Tech Blog'),
+            'base_path': config.get('base_path', ''),
+            'base_url': config.get('base_url', ''),
+            'current_year': datetime.now().year,
+            'current_date': datetime.now().strftime('%B %d, %Y'),
+            'global_meta_tags': self.seo.generate_global_meta_tags(),
+        }
+        html = self.templates['dmca'].render(**context)
+        with open(page_dir / "index.html", 'w', encoding='utf-8') as f:
+            f.write(html)
+        print("Generated /dmca/ page")
+
+    def _generate_ai_disclosure_page(self):
+        """Generate /ai-content-policy/ page."""
+        config = self.blog_system.config
+        page_dir = Path("./docs/ai-content-policy")
+        page_dir.mkdir(exist_ok=True)
+        context = {
+            'site_name': config.get('site_name', 'Tech Blog'),
+            'base_path': config.get('base_path', ''),
+            'base_url': config.get('base_url', ''),
+            'current_year': datetime.now().year,
+            'current_date': datetime.now().strftime('%B %d, %Y'),
+            'global_meta_tags': self.seo.generate_global_meta_tags(),
+        }
+        html = self.templates['ai_disclosure'].render(**context)
+        with open(page_dir / "index.html", 'w', encoding='utf-8') as f:
+            f.write(html)
+        print("Generated /ai-content-policy/ page")
 
     def _generate_pwa_files(self):
         import shutil
@@ -869,6 +908,8 @@ Sitemap: {base_url}/rss.xml
             f'<url><loc>{base_url}/privacy-policy/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>',
             f'<url><loc>{base_url}/terms-of-service/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>',
             f'<url><loc>{base_url}/tag/</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>',
+            f'<url><loc>{base_url}/dmca/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>',
+            f'<url><loc>{base_url}/ai-content-policy/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>',
         ]
         for post in posts:
             last_mod = post.updated_at.split(
@@ -2424,6 +2465,261 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
+    AI_DISCLOSURE_TMPL = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Content Policy — {{ site_name }}</title>
+    <meta name="description" content="How {{ site_name }} uses AI writing tools, our editorial process, and how we ensure accuracy and originality.">
+    <link rel="canonical" href="{{ base_url }}/ai-content-policy/">
+    <meta name="robots" content="index, follow">
+    {{ global_meta_tags | safe }}
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+    <link rel="manifest" href="{{ base_path }}/manifest.json">
+    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
+    <style>
+        .policy-section { background:#f8f9fa; padding:1.5rem; margin-bottom:1.5rem; border-radius:8px; border-left:4px solid #6366f1; }
+        .policy-section h2 { color:#333; margin-top:0; font-size:1.2rem; }
+        .highlight-box { background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:1.5rem; border-radius:8px; margin:1.5rem 0; }
+        .highlight-box h2 { margin-top:0; color:white; }
+        .check-list { list-style:none; padding:0; }
+        .check-list li { padding-left:2rem; position:relative; margin-bottom:0.6rem; }
+        .check-list li::before { content:"✓"; position:absolute; left:0; color:#6366f1; font-weight:700; }
+        .cross-list li::before { content:"✗"; color:#dc3545; }
+        .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+        @media(max-width:600px){ .two-col{grid-template-columns:1fr;} }
+        .card { background:#fff; border:1px solid #e0e0e0; border-radius:8px; padding:1.25rem; }
+        .card h3 { margin-top:0; font-size:1rem; color:#1a1a2e; }
+    </style>
+</head>
+<body>
+    <header><div class="container">
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+        <nav>
+            <a href="{{ base_path }}/">Home</a>
+            <a href="{{ base_path }}/about/">About</a>
+            <a href="{{ base_path }}/contact/">Contact</a>
+            <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
+        </nav>
+    </div></header>
+    <main class="container">
+        <div class="hero" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:2.5rem 2rem;border-radius:12px;text-align:center;margin-bottom:2rem;">
+            <h1 style="color:#fff;font-size:2rem;margin-bottom:0.5rem;">AI Content Policy</h1>
+            <p style="opacity:0.9;">How we use AI tools, what human review covers, and what we guarantee.</p>
+        </div>
+ 
+        <article class="page-content">
+            <div class="highlight-box">
+                <h2>Our Commitment in One Paragraph</h2>
+                <p style="margin-bottom:0;">Every article on {{ site_name }} is written on a topic selected from the author's direct professional experience, drafted with AI assistance for structure and speed, then reviewed by the author (Kubai Kevin) for factual accuracy, voice, and relevance before publication. AI tools accelerate the writing process — they do not replace editorial judgment.</p>
+            </div>
+ 
+            <div class="policy-section">
+                <h2>1. How AI is Used on This Site</h2>
+                <p>{{ site_name }} uses large language model (LLM) APIs — including models from Mistral, Google Gemini, Meta Llama (via Groq and other providers), and similar services — to:</p>
+                <ul class="check-list">
+                    <li>Draft article structure and outlines based on an author-selected topic.</li>
+                    <li>Generate prose that is then reviewed and edited.</li>
+                    <li>Suggest SEO keywords, meta descriptions, and social media copy.</li>
+                    <li>Automate repetitive formatting tasks (headings, code blocks, tables).</li>
+                </ul>
+                <p>AI tools are used as a writing <em>assistant</em>, not as the final publisher. The author remains responsible for all published content.</p>
+            </div>
+ 
+            <div class="policy-section">
+                <h2>2. What AI Does NOT Do on This Site</h2>
+                <div class="two-col">
+                    <div class="card">
+                        <h3>Not scraped or aggregated</h3>
+                        <p style="font-size:0.9rem;color:#555;">We do not scrape, copy, or rephrase content from other websites. Every article starts from a topic brief, not from existing web content.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Not published without review</h3>
+                        <p style="font-size:0.9rem;color:#555;">Our pipeline includes automated quality gates: minimum word count (1,500+), boilerplate detection, and content quality validation before any article is saved.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Not keyword-stuffed</h3>
+                        <p style="font-size:0.9rem;color:#555;">Content prompts explicitly ban keyword stuffing, filler phrases, and AI-detectable clichés. Quality validators check for these automatically.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Not fabricated facts</h3>
+                        <p style="font-size:0.9rem;color:#555;">Factual claims, tool versions, and performance figures referenced in articles are verified against primary sources (official docs, GitHub, benchmarks) before publication.</p>
+                    </div>
+                </div>
+            </div>
+ 
+            <div class="policy-section">
+                <h2>3. Quality Controls in Our Publishing Pipeline</h2>
+                <p>Before an article is saved and published, it passes through automated checks that enforce:</p>
+                <ul class="check-list">
+                    <li><strong>Minimum 1,500 words</strong> — thin content is rejected outright.</li>
+                    <li><strong>Boilerplate detection</strong> — template artifacts or placeholder text trigger automatic discard.</li>
+                    <li><strong>Filler phrase detection</strong> — AI-pattern phrases ("dive into", "game-changer", "it's important to note") are flagged and the article is regenerated.</li>
+                    <li><strong>E-E-A-T signal injection</strong> — every article includes an author byline, publication date, last-reviewed date, and an editorial standards footer.</li>
+                    <li><strong>Duplicate title detection</strong> — Jaccard similarity is checked against all existing posts to prevent near-duplicate articles.</li>
+                    <li><strong>Stale year scrubbing</strong> — dates and statistics are validated to use current year references.</li>
+                </ul>
+                <p>Articles that fail these gates are discarded. No fallback or placeholder article is published in their place.</p>
+            </div>
+ 
+            <div class="policy-section">
+                <h2>4. Author's Role</h2>
+                <p><strong>Kubai Kevin</strong> is the author and editor of all content on this site. His role in the pipeline includes:</p>
+                <ul class="check-list">
+                    <li>Defining the topic list from personal production experience (not keyword research alone).</li>
+                    <li>Reviewing the quality validation reports for each published article.</li>
+                    <li>Responding to reader corrections within 48 hours and updating affected articles.</li>
+                    <li>Periodically auditing the published post library for accuracy and policy compliance.</li>
+                    <li>Maintaining the quality gate code that governs what is and isn't published.</li>
+                </ul>
+                <p>The author's LinkedIn profile and contact details are published on the <a href="{{ base_path }}/about/">About page</a> for full transparency.</p>
+            </div>
+ 
+            <div class="policy-section">
+                <h2>5. Corrections Policy</h2>
+                <p>If an article contains a factual error, an outdated tool version, or inaccurate code, please <a href="{{ base_path }}/contact/">contact us</a>. We will:</p>
+                <ul>
+                    <li>Acknowledge the report within 24 hours.</li>
+                    <li>Investigate and apply corrections within 48 hours of confirmation.</li>
+                    <li>Note the correction in the article with the correction date.</li>
+                </ul>
+            </div>
+ 
+            <div class="policy-section">
+                <h2>6. AI Disclosure Compliance</h2>
+                <p>This page serves as the AI content disclosure for {{ site_name }} in jurisdictions that require or recommend disclosure of AI-assisted content generation. We believe transparency is both ethically correct and practically important for reader trust.</p>
+                <p>We monitor evolving regulatory requirements around AI content labelling (including EU AI Act guidance, FTC guidance, and platform-specific requirements) and will update this policy accordingly.</p>
+            </div>
+ 
+            <p style="color:#888;font-size:0.85rem;margin-top:2rem;"><strong>Last updated:</strong> {{ current_date }}</p>
+        </article>
+    </main>
+    <footer><div class="container">
+        <p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p>
+    </div></footer>
+    <script src="{{ base_path }}/static/navigation.js"></script>
+    <script defer src="{{ base_path }}/static/consent.js"></script>
+</body>
+</html>"""
+
+    DMCA_TMPL = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMCA & Copyright Policy — {{ site_name }}</title>
+    <meta name="description" content="DMCA takedown process and copyright policy for {{ site_name }}.">
+    <link rel="canonical" href="{{ base_url }}/dmca/">
+    <meta name="robots" content="index, follow">
+    {{ global_meta_tags | safe }}
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+    <link rel="manifest" href="{{ base_path }}/manifest.json">
+    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
+    <style>
+        .dmca-section { background:#f8f9fa; padding:1.5rem; margin-bottom:1.5rem; border-radius:8px; border-left:4px solid #6366f1; }
+        .dmca-section h2 { color:#333; margin-top:0; font-size:1.2rem; }
+        .dmca-section h3 { color:#444; margin-top:1rem; font-size:1rem; }
+        .highlight-box { background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:1.5rem; border-radius:8px; margin:1.5rem 0; }
+        .highlight-box h2 { margin-top:0; color:white; font-size:1.1rem; }
+        .highlight-box a { color:#fff; font-weight:bold; }
+        .warning-box { background:#fff3cd; border-left:4px solid #ffc107; padding:1rem 1.5rem; margin:1.5rem 0; border-radius:4px; color:#856404; }
+        .step-list { counter-reset:steps; list-style:none; padding:0; }
+        .step-list li { counter-increment:steps; padding-left:2.5rem; position:relative; margin-bottom:0.75rem; }
+        .step-list li::before { content:counter(steps); position:absolute; left:0; top:0; background:#6366f1; color:#fff; width:1.6rem; height:1.6rem; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; }
+    </style>
+</head>
+<body>
+    <header><div class="container">
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+        <nav>
+            <a href="{{ base_path }}/">Home</a>
+            <a href="{{ base_path }}/about/">About</a>
+            <a href="{{ base_path }}/contact/">Contact</a>
+            <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
+        </nav>
+    </div></header>
+    <main class="container">
+        <div class="hero" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:2.5rem 2rem;border-radius:12px;text-align:center;margin-bottom:2rem;">
+            <h1 style="color:#fff;font-size:2rem;margin-bottom:0.5rem;">DMCA &amp; Copyright Policy</h1>
+            <p style="opacity:0.9;">How to report copyright concerns and how we handle them.</p>
+        </div>
+ 
+        <article class="page-content">
+            <div class="dmca-section">
+                <h2>1. Copyright Ownership</h2>
+                <p>All original articles, prose, code examples, and other content published on {{ site_name }} are the intellectual property of <strong>Kubai Kevin</strong> and are protected under copyright law. Unauthorised reproduction, distribution, or derivative works without explicit written permission is prohibited.</p>
+                <p>Content on this site is produced with AI writing assistance and reviewed by the author before publication. The editorial decisions, original observations, structure, and voice are the author's own.</p>
+            </div>
+ 
+            <div class="dmca-section">
+                <h2>2. Third-Party Content</h2>
+                <p>{{ site_name }} may reference, quote, or link to third-party sources. All such use is intended to be transformative, educational, or analytical in nature. If you believe your copyrighted work has been used in a way that constitutes infringement, please follow the notice process below.</p>
+                <div class="warning-box">
+                    <p><strong>Note:</strong> This site uses an automated content generation pipeline. Despite quality controls, it is possible that a generated article may inadvertently resemble or reproduce protected material. We take all DMCA notices seriously and will respond within <strong>24–48 hours</strong>.</p>
+                </div>
+            </div>
+ 
+            <div class="dmca-section">
+                <h2>3. DMCA Takedown — Notice Requirements</h2>
+                <p>To submit a valid DMCA takedown notice under 17 U.S.C. § 512(c)(3), your written notification must include all of the following:</p>
+                <ol class="step-list">
+                    <li>Your physical or electronic signature (or that of your authorised agent).</li>
+                    <li>Identification of the copyrighted work you claim has been infringed.</li>
+                    <li>Identification of the material you claim is infringing, with enough information for us to locate it (e.g. the specific URL on our site).</li>
+                    <li>Your contact information: name, address, telephone number, and email address.</li>
+                    <li>A statement that you have a good-faith belief that the disputed use is not authorised by the copyright owner, its agent, or the law.</li>
+                    <li>A statement, under penalty of perjury, that the information in your notice is accurate and that you are (or are authorised to act on behalf of) the copyright owner.</li>
+                </ol>
+            </div>
+ 
+            <div class="highlight-box">
+                <h2>4. Where to Send DMCA Notices</h2>
+                <p>Email your complete DMCA notice to:<br>
+                <a href="mailto:aiblogauto@gmail.com"><strong>aiblogauto@gmail.com</strong></a></p>
+                <p style="margin-bottom:0;font-size:0.9rem;opacity:0.9;">Subject line: <em>DMCA Takedown Request — [URL of infringing page]</em></p>
+            </div>
+ 
+            <div class="dmca-section">
+                <h2>5. Our Response Process</h2>
+                <p>Upon receiving a valid DMCA notice, we will:</p>
+                <ul>
+                    <li>Acknowledge receipt within <strong>24 hours</strong>.</li>
+                    <li>Investigate the claim and, if valid, remove or disable access to the infringing content within <strong>48 hours</strong>.</li>
+                    <li>Notify the author of the takedown.</li>
+                    <li>Maintain a record of all DMCA notices for compliance purposes.</li>
+                </ul>
+                <p>We reserve the right to remove content proactively if we believe it may infringe third-party rights, without waiting for a formal DMCA notice.</p>
+            </div>
+ 
+            <div class="dmca-section">
+                <h2>6. Counter-Notice</h2>
+                <p>If you believe content was removed in error, you may submit a counter-notice under 17 U.S.C. § 512(g). Counter-notices must include equivalent information to a takedown notice, plus a statement that you consent to the jurisdiction of the federal court where your address is located.</p>
+            </div>
+ 
+            <div class="dmca-section">
+                <h2>7. Repeat Infringer Policy</h2>
+                <p>{{ site_name }} will disable or terminate the publishing pipeline for any content source that is the subject of repeated valid DMCA notices, in accordance with the safe-harbour provisions of the DMCA.</p>
+            </div>
+ 
+            <div class="dmca-section">
+                <h2>8. Using Our Content</h2>
+                <p>Brief quotations (under 150 words) with a clear attribution link to the source article are permitted under fair use. For longer excerpts, syndication, or any commercial use, contact us at <a href="mailto:aiblogauto@gmail.com">aiblogauto@gmail.com</a> to request written permission.</p>
+            </div>
+ 
+            <p style="color:#888;font-size:0.85rem;margin-top:2rem;"><strong>Last updated:</strong> {{ current_date }}</p>
+        </article>
+    </main>
+    <footer><div class="container">
+        <p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p>
+    </div></footer>
+    <script src="{{ base_path }}/static/navigation.js"></script>
+    <script defer src="{{ base_path }}/static/consent.js"></script>
+</body>
+</html>"""
+
     env = Environment(loader=BaseLoader())
     return {
         'post':             env.from_string(POST_TMPL),
@@ -2433,4 +2729,6 @@ def _build_templates() -> dict:
         'terms_of_service': env.from_string(TERMS_TMPL),
         'contact':          env.from_string(CONTACT_TMPL),
         'not_found':        env.from_string(NOT_FOUND_TMPL),
+        'dmca': env.from_string(DMCA_TMPL),
+        'ai_disclosure': env.from_string(AI_DISCLOSURE_TMPL),
     }

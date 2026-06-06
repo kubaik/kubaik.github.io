@@ -19,6 +19,10 @@ from static_site_generator import StaticSiteGenerator
 from hashtag_manager import HashtagManager, add_hashtags_to_post
 
 
+from adsense_fixes.internal_linker import build_posts_index, inject_internal_links
+# ─────────────────────────────────────────────────────────────────────────────
+
+
 # ─────────────────────────────────────────────────────────────────
 # Duplicate-detection helpers
 # ─────────────────────────────────────────────────────────────────
@@ -42,18 +46,10 @@ DUPLICATE_TITLE_THRESHOLD = 0.35
 MIN_WORD_COUNT = 2000
 MIN_WORD_PURGE = 1500
 
-# ── Maximum number of topic attempts before giving up entirely ────────────────
 MAX_GENERATION_ATTEMPTS = 5
-# Minimum words a generated post must have to be considered adequate.
-# This is the hard gate — posts below this threshold are never saved.
 MIN_ACCEPTABLE_WORDS = 1500
 
-# ── Hashtag constraints ───────────────────────────────────────────────────────
-# Maximum number of source words a phrase may have to be eligible for hashtag
-# conversion.  Phrases longer than this are silently dropped instead of being
-# concatenated into an unreadable monster tag.
 _HASHTAG_MAX_SOURCE_WORDS = 3
-# Hard character cap on the final CamelCase tag string (excluding the leading #).
 _HASHTAG_MAX_CHARS = 24
 
 
@@ -183,7 +179,7 @@ def _twitter_posting_enabled() -> bool:
 
 
 # ─────────────────────────────────────────────────────────────────
-# FIX 2: Meta description derivation (improved version)
+# Meta description derivation
 # ─────────────────────────────────────────────────────────────────
 
 def _extract_numbers(text: str) -> str:
@@ -209,18 +205,6 @@ def _extract_numbers(text: str) -> str:
 
 
 def _derive_description(content: str, title: str, max_len: int = 155) -> str:
-    """
-    Derive a high-quality meta description from content.
-
-    Priority order:
-    1. Sentence with a concrete number/metric (strongest signal)
-    2. Sentence with a tool name + outcome
-    3. First non-intro, non-generic sentence >= 40 chars
-    4. Title-based fallback
-
-    Never returns a personal intro sentence.
-    """
-    # Strip markup
     text = re.sub(r"```[\s\S]*?```", " ", content)
     text = re.sub(r"`[^`]+`",        " ", text)
     text = re.sub(r"#{1,6}\s+",      " ", text)
@@ -228,7 +212,6 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
     text = re.sub(r"[*_]{1,3}",      "",  text)
     text = re.sub(r"\s+",            " ", text).strip()
 
-    # Patterns to SKIP — personal intros, not meta descriptions
     _SKIP_PATTERNS = re.compile(
         r'^(I |A colleague|This took me|I\'ve|The short version|I ran into|'
         r'I spent|I have |Here\'s what|Writing this|This is a topic|'
@@ -239,7 +222,6 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
 
     sentences = re.split(r'(?<=[.!?])\s+', text)
 
-    # Priority 1: sentence with a concrete number
     _NUMBER_RE = re.compile(
         r'\b(\d+\s*%|\d+x\b|\$\d|\d+\s*ms|\d+\s*req|p\d{2}|'
         r'\d+,\d{3}|\d+\s*min\b|\d+\s*sec\b|cut\s+\w+\s+by)',
@@ -256,7 +238,6 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
                 sent = sent[:max_len].rsplit(" ", 1)[0].rstrip(".,;:") + "…"
             return sent
 
-    # Priority 2: sentence with a tool name (suggests specificity)
     _TOOL_RE = re.compile(
         r'\b(Python|Node\.js|TypeScript|PostgreSQL|Redis|AWS|Lambda|Docker|'
         r'FastAPI|Django|React|Next\.js|Kubernetes|Kafka|MongoDB|MySQL|'
@@ -273,7 +254,6 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
                 sent = sent[:max_len].rsplit(" ", 1)[0].rstrip(".,;:") + "…"
             return sent
 
-    # Priority 3: first acceptable sentence
     for sent in sentences:
         sent = sent.strip()
         if len(sent) < 40:
@@ -284,7 +264,6 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
             sent = sent[:max_len].rsplit(" ", 1)[0].rstrip(".,;:") + "…"
         return sent
 
-    # Priority 4: title-based fallback (always specific, never intro)
     keyword = title.replace(":", " —").replace(" vs ", " versus ")
     fallback = f"Practical guide to {keyword} — with code examples and production notes."
     return fallback[:max_len]
@@ -322,23 +301,13 @@ def audit_posts(docs_dir: Path) -> Dict:
 
 
 # ─────────────────────────────────────────────────────────────────
-# FIX 3: Content quality validation (tightened checks)
+# Content quality validation
 # ─────────────────────────────────────────────────────────────────
 
 def _validate_content_quality(content: str, title: str):
-    """
-    Run AdSense-style quality checks on generated content.
-
-    Returns
-    -------
-    warnings      : List[str]  — issues to log but that don't block publishing
-    hard_failures : List[str]  — issues that MUST block publishing (save must be skipped)
-    """
     warnings = []
     hard_failures = []
     word_count = len(content.split())
-
-    # ── Hard failures (never save) ────────────────────────────────────────────
 
     if word_count < 1500:
         hard_failures.append(
@@ -346,7 +315,6 @@ def _validate_content_quality(content: str, title: str):
             "Google AdSense reviewers reject thin content immediately."
         )
 
-    # Boilerplate / template markers — definitive sign of non-human content
     boilerplate_markers = [
         "class {topic_slug}Client",
         "class Client:",
@@ -362,7 +330,6 @@ def _validate_content_quality(content: str, title: str):
                 "This post will be rejected as low-value/AI-generated content."
             )
 
-    # NEW: Check content doesn't just repeat the title with no added information
     title_words = set(re.sub(r'[^\w\s]', '', title.lower()).split())
     title_words.discard('the')
     title_words.discard('a')
@@ -379,12 +346,9 @@ def _validate_content_quality(content: str, title: str):
                 "This pattern is flagged as low-value content."
             )
 
-    # ── Warnings (log but don't block) ───────────────────────────────────────
-
     if word_count < 2000:
         warnings.append(f"Word count low: {word_count} (target ≥ 2000)")
 
-    # E-E-A-T Experience signal
     first_person_re = re.compile(
         r"\b(I |I've |I'm |I found|I ran|I spent|I learned|I noticed|I tested|"
         r"I built|I worked|I saw |I was |I have |I had |I used )\b"
@@ -405,7 +369,6 @@ def _validate_content_quality(content: str, title: str):
     if not number_re.search(content):
         warnings.append("No concrete numbers/metrics found.")
 
-    # NEW: Check for version-pinned tool (strong specificity signal)
     version_re = re.compile(
         r'\b(Python|Node\.js|TypeScript|PostgreSQL|Redis|Django|FastAPI|React|'
         r'Next\.js|Docker|Kubernetes|Kafka|MySQL)\s+\d+[\.\d]*\b',
@@ -417,14 +380,12 @@ def _validate_content_quality(content: str, title: str):
             "Version pins are a specificity signal that distinguishes original from generic content."
         )
 
-    # NEW: Check for FAQ section (structured data opportunity)
     if "frequently asked questions" not in content.lower() and "## faq" not in content.lower():
         warnings.append(
             "No FAQ section found. A 'Frequently Asked Questions' section enables "
             "FAQ structured data, which improves AdSense eligibility signals."
         )
 
-    # NEW: Check for comparison table
     if "|" not in content:
         warnings.append(
             "No markdown table found. A comparison table signals substantive, "
@@ -436,7 +397,6 @@ def _validate_content_quality(content: str, title: str):
             "E-E-A-T author footer missing. Run inject_eeat_signals() before saving."
         )
 
-    # Expanded AI-pattern filler list
     filler_phrases = [
         "in today's fast-paced",
         "in the ever-evolving",
@@ -472,7 +432,6 @@ def _validate_content_quality(content: str, title: str):
             f"AI-pattern filler phrases detected: {', '.join(repr(p) for p in detected[:4])}"
         )
 
-    # Title quality
     title_filler_re = re.compile(
         r"^(a |an |the |complete |ultimate |comprehensive |introduction to |"
         r"guide to |overview of |everything you need)",
@@ -486,7 +445,6 @@ def _validate_content_quality(content: str, title: str):
             f"Title too long ({len(title)} chars). Target ≤ 60 for SERP display."
         )
 
-    # NEW: Opening paragraph generic opener check
     first_200 = content[:200].lower()
     generic_openers = [
         "in this", "today we", "welcome to", "this guide covers",
@@ -1147,28 +1105,18 @@ def _build_humanization_note(topic: str) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────
-# FIX 4: Stronger system prompt builder for _generate_full_bundle()
+# System prompt builder
 # ─────────────────────────────────────────────────────────────────
 
 def _build_system_prompt(author_note: str, format_name: str, format_note: str, year_guidance: str) -> str:
-    """
-    Build the system prompt for _generate_full_bundle().
-
-    This version is more aggressive about preventing the patterns
-    that trigger Google's "low value content" classifier.
-    """
     return (
         f"{author_note}\n\n"
         f"{year_guidance}\n\n"
-
-        # Voice requirements — specific, not generic
         "VOICE: Write with a specific, personal voice. Use 'I' and 'we' where natural. "
         "You are not a content marketing agency. You are a developer who has actually "
         "hit this problem in production. Write as if explaining to a smart colleague "
         "who has 3 years of experience — skip the basics they already know, but don't "
         "assume they've seen this specific edge case before.\n\n"
-
-        # Hard bans on AI-detectable patterns
         "BANNED PHRASES — never use these, not even once:\n"
         "- 'in today's fast-paced world'\n"
         "- 'it is important to note'\n"
@@ -1187,8 +1135,6 @@ def _build_system_prompt(author_note: str, format_name: str, format_note: str, y
         "- 'harness the power'\n"
         "- 'unlock the potential'\n"
         "- Any phrase that sounds like it belongs in a press release\n\n"
-
-        # Structural requirements for AdSense approval
         "ADSENSE REQUIREMENTS — the post will be rejected if it lacks:\n"
         "1. At least ONE first-person sentence about a real mistake or surprise "
         "(e.g. 'I spent three days on this before realising...')\n"
@@ -1199,23 +1145,18 @@ def _build_system_prompt(author_note: str, format_name: str, format_note: str, y
         "5. A comparison table using markdown table syntax\n"
         "6. A 'Frequently Asked Questions' section with 3-4 real developer questions\n"
         "7. A specific, actionable closing step the reader can do in the next 30 minutes\n\n"
-
-        # Credibility markers
         "CREDIBILITY: Name actual tools. Name actual AWS services. Name specific "
         "error messages you've seen. Be willing to say something is hard or that "
         "you got it wrong at first. Generic advice with no specifics is exactly "
         "what Google's quality raters flag as low-value content.\n\n"
-
-        # Format requirement
         f"FORMAT: {format_name.upper()} — {format_note}\n\n"
-
         "IMPORTANT: Respond with ONLY a valid JSON object — no markdown fences, "
         "no preamble, no trailing commentary."
     )
 
 
 # ─────────────────────────────────────────────────────────────────
-# FIX 5: Personal intro injection (topic-aware intros)
+# Personal intro injection
 # ─────────────────────────────────────────────────────────────────
 
 _PERSONAL_INTROS = [
@@ -1260,13 +1201,6 @@ _PERSONAL_INTROS = [
 
 
 def inject_personal_intro(post, topic: str) -> None:
-    """
-    Inject a topic-aware personal intro at the start of post content.
-
-    Uses keyword extraction to make intros feel post-specific
-    rather than generic.
-    """
-    # Extract a short keyword from the topic for intro personalisation
     topic_lower = topic.lower()
     stop = {"how", "to", "the", "a", "an", "for", "and", "or", "vs",
             "when", "why", "what", "which", "guide", "tutorial", "tips"}
@@ -1284,7 +1218,7 @@ def inject_personal_intro(post, topic: str) -> None:
 
 
 # ─────────────────────────────────────────────────────────────────
-# FIX 1: E-E-A-T signal injection (richer, more specific footer)
+# E-E-A-T signal injection
 # ─────────────────────────────────────────────────────────────────
 
 _EEAT_FOOTER_TEMPLATE = """
@@ -1313,13 +1247,6 @@ every article before it goes live.
 
 
 def inject_eeat_signals(post, topic: str) -> None:
-    """
-    Append a standardised E-E-A-T footer to the post content.
-
-    Updated version: includes specific credentials (M-Pesa, Paystack, AWS Lambda,
-    PostgreSQL) that distinguish this from generic AI-generated author bios.
-    Idempotent — checks for the sentinel string before injecting.
-    """
     sentinel = "### About this article"
     if sentinel in post.content:
         return
@@ -2074,7 +2001,7 @@ class BlogSystem:
         )
 
     # ─────────────────────────────────────────────────────────────
-    # SINGLE BUNDLE CALL — uses _build_system_prompt (FIX 4)
+    # BUNDLE GENERATION
     # ─────────────────────────────────────────────────────────────
 
     async def _generate_full_bundle(
@@ -2122,7 +2049,6 @@ class BlogSystem:
             "use 2026 figures or clearly state the year of the source data."
         )
 
-        # FIX 4: Use the new stronger system prompt builder
         system_content = _build_system_prompt(
             author_note=author_note,
             format_name=format_name,
@@ -2236,7 +2162,7 @@ Return ONLY the JSON object.""",
         return data
 
     # ─────────────────────────────────────────────────────────────
-    # Title regeneration when post-generation duplicate detected
+    # Title regeneration
     # ─────────────────────────────────────────────────────────────
 
     async def _regenerate_title(
@@ -2369,11 +2295,9 @@ Return ONLY the JSON object.""",
             m = unquoted_pattern.search(text)
             if not m:
                 return text
-
             prefix = m.group(1)
             content = m.group(2)
             suffix = m.group(3)
-
             content = content.replace('\\n', '\n')
             encoded = json.dumps(content)
             return text[:m.start()] + prefix + encoded + suffix + text[m.end():]
@@ -2576,7 +2500,6 @@ Return ONLY the JSON object.""",
         return chosen
 
     def save_post(self, post):
-        """Save a BlogPost to docs/<slug>/post.json and docs/<slug>/index.md."""
         word_count = len(post.content.split())
         reading_time = max(1, round(word_count / 200))
 
@@ -2639,19 +2562,15 @@ Return ONLY the JSON object.""",
 
 
 # ─────────────────────────────────────────────────────────────────
-# Custom exception for clean CLI exit
+# Custom exception
 # ─────────────────────────────────────────────────────────────────
 
 class InsufficientContentError(Exception):
-    """
-    Raised when generate_blog_post exhausts all retry attempts without
-    producing content that meets the minimum word-count requirement.
-    The caller should treat this as a hard stop — no post must be saved.
-    """
+    """Raised when generate_blog_post exhausts all retry attempts."""
 
 
 # ─────────────────────────────────────────────────────────────────
-# Stale year scrubber — post-processing pass on generated content
+# Stale year scrubber
 # ─────────────────────────────────────────────────────────────────
 
 _STALE_YEARS = {"2020", "2021", "2022", "2023", "2024", "2025"}
@@ -2823,8 +2742,6 @@ def create_sample_config():
             "facebook": "your-facebook-page",
         },
         "content_topics": [
-            # ── ORIGINAL TOPICS ───────────────────────────────────────────────
-
             "Copilot vs Cursor: which actually speeds up Python backend work",
             "How I use Claude to review my own code (and where it fails)",
             "RAG pipelines in production: what the tutorials skip",
@@ -2854,9 +2771,6 @@ def create_sample_config():
             "Burnout as a freelance developer: what helped me recover",
             "How I manage client work and side projects without losing weekends",
             "The tools that save me the most time as a solo developer",
-
-            # ── AGENTIC AI & CODING AGENTS ───────────────────────────────────
-
             "Claude Code vs Cursor: a real cost breakdown after 3 months",
             "How I delegate tasks to AI agents without losing control of my codebase",
             "Multi-agent systems in production: what nobody tells you upfront",
@@ -2867,27 +2781,18 @@ def create_sample_config():
             "How to review AI-generated code without spending more time than writing it yourself",
             "Vibe coding is fun for prototypes — here's why I stopped using it in production",
             "Building your first agentic workflow with Claude Code: a practical walkthrough",
-
-            # ── PLATFORM ENGINEERING & DEVSECOPS ─────────────────────────────
-
             "Platform engineering explained: why your team needs a paved road",
             "DevSecOps in practice: shifting security left without slowing down deploys",
             "How to build an internal developer platform on a startup budget",
             "AI-generated code and security: the new vulnerabilities teams are missing",
             "Supply chain attacks in 2026: how to protect your Python and npm dependencies",
             "Zero-trust architecture for small teams: what actually makes sense to implement",
-
-            # ── AI TRUST, PRODUCTIVITY & CAREER IMPACT ───────────────────────
-
             "AI is a force multiplier: why it makes senior devs more powerful and juniors more exposed",
             "How AI tools are changing what 'senior developer' actually means in 2026",
             "The AI productivity tax: when your tools create more work than they save",
             "Measuring the real impact of AI on your team's velocity (not just vibes)",
             "AI skills that actually affect your salary in 2026: a data-backed breakdown",
             "What happens to junior developers in a world of AI-assisted code generation",
-
-            # ── AFRICA & GLOBAL SOUTH TECH CAREERS ───────────────────────────
-
             "How developers in Nairobi and Lagos are landing $4k/month remote roles",
             "Andela, Toptal, and Arc: which platform actually works for African developers in 2026",
             "Building a portfolio that gets you hired remotely from Africa",
@@ -2896,30 +2801,18 @@ def create_sample_config():
             "From local salary to global rate: the career moves that made the difference for me",
             "How to pass technical interviews for remote roles when you're self-taught",
             "Infrastructure constraints in Africa that changed how I write backend code",
-
-            # ── SUSTAINABLE & COST-AWARE ENGINEERING ─────────────────────────
-
             "Sustainable software engineering: cutting cloud carbon without cutting performance",
             "Carbon-aware deployment: scheduling workloads when the grid is cleanest",
             "How to cut your AWS bill by 40% using Graviton and spot instances",
             "The real cost of over-engineering: when simplicity beats the fancy architecture",
-
-            # ── REAL-TIME & EDGE COMPUTING ────────────────────────────────────
-
             "WebSockets vs Server-Sent Events vs long polling: which one for your use case",
             "Edge functions in 2026: when Cloudflare Workers and Vercel Edge actually make sense",
             "Building real-time features without a WebSocket server: practical alternatives",
             "5G and mobile-first backends: what changes when your users are always on cellular",
-
-            # ── LOW-CODE, NO-CODE & AI-NATIVE APPS ───────────────────────────
-
             "When to build with no-code vs write the code yourself: a decision framework",
             "Non-traditional developers shipping real products: what the AI coding wave made possible",
             "How domain experts (doctors, lawyers, scientists) are building production software in 2026",
             "MCP servers explained: what they are and why every developer should understand them",
-
-            # ── SYSTEM DESIGN & ARCHITECTURE ─────────────────────────────────
-
             "Designing systems for AI-first applications: the patterns that actually hold up",
             "Event sourcing in 2026: when it's worth the complexity and when it isn't",
             "How to design a multi-tenant SaaS database without painting yourself into a corner",
@@ -2998,7 +2891,7 @@ if __name__ == "__main__":
             )
 
             if hard_failures:
-                print(f"\\n🛑  HARD QUALITY FAILURES — post will NOT be saved:")
+                print(f"\n🛑  HARD QUALITY FAILURES — post will NOT be saved:")
                 for failure in hard_failures:
                     print(f"   ✗ {failure}")
                 print()
@@ -3008,7 +2901,7 @@ if __name__ == "__main__":
 
             if quality_warnings:
                 print(
-                    f"\\n⚠️  Content quality warnings ({len(quality_warnings)}):")
+                    f"\n⚠️  Content quality warnings ({len(quality_warnings)}):")
                 for w in quality_warnings:
                     print(f"   • {w}")
                 print()
@@ -3017,7 +2910,23 @@ if __name__ == "__main__":
 
             inject_personal_intro(blog_post, topic)
             inject_eeat_signals(blog_post, topic)
+
+            # ── ADSENSE FIX B: Internal link injection ────────────────────────
+            # AdSense guide: "Orphan pages with no internal links signal low quality."
+            try:
+                posts_index = build_posts_index(blog_system.output_dir)
+                base_path = config.get("base_path", "")
+                inject_internal_links(
+                    blog_post, posts_index, base_path=base_path)
+            except Exception as e:
+                print(f"  ⚠️  Internal link injection failed (non-fatal): {e}")
+            # ─────────────────────────────────────────────────────────────────
+
             blog_system.save_post(blog_post)
+
+            # ── ADSENSE FIX A (continued): Record successful publish ──────────
+            vc.record_publish()
+            # ─────────────────────────────────────────────────────────────────
 
             generator = StaticSiteGenerator(blog_system)
             generator.generate_site()
@@ -3225,10 +3134,26 @@ if __name__ == "__main__":
             print(
                 f"\nFixed {fixed} posts. Run 'python blog_system.py build' to regenerate HTML.")
 
+        elif mode == "velocity":
+            # ── ADSENSE FIX: New CLI command to check/reset velocity ──────────
+            vc = VelocityController()
+            subcmd = sys.argv[2] if len(sys.argv) > 2 else "status"
+            if subcmd == "status":
+                print(
+                    f"Today: {vc.today_count()}/{vc.effective_limit()} posts published")
+            elif subcmd == "reset":
+                from pathlib import Path as _Path
+                _Path(".publish_velocity.json").unlink(missing_ok=True)
+                print("Velocity counter reset.")
+            else:
+                print("Usage: python blog_system.py velocity [status|reset]")
+
         else:
             print(
-                "Usage: python blog_system.py [init|auto|build|cleanup|audit|purge|debug|social|test-twitter|dedup|fix-descriptions]")
+                "Usage: python blog_system.py [init|auto|build|cleanup|audit|purge|"
+                "debug|social|test-twitter|dedup|fix-descriptions|velocity]"
+            )
 
     else:
         print("AI Blog System — Usage: python blog_system.py [command]")
-        print("Commands: init | auto | build | cleanup | audit | purge | debug | social | test-twitter | dedup | fix-descriptions")
+        print("Commands: init | auto | build | cleanup | audit | purge | debug | social | test-twitter | dedup | fix-descriptions | velocity")
