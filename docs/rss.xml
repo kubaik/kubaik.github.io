@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 23:00:17 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 23:04:25 +0000</lastBuildDate>
+    <item>
+      <title>Pool size isn&apos;t CPU cores</title>
+      <link>https://kubaik.github.io/pool-size-isnt-cpu-cores/</link>
+      <description>Set max pool size to CPU cores? Wrong. Use peak RPS × P95 latency to size your connection pool—here’s the data and code to prove it.</description>
+      <pubDate>Sat, 06 Jun 2026 23:04:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-isnt-cpu-cores/</guid>
+    </item>
     <item>
       <title>Senior devs quit big tech over this</title>
       <link>https://kubaik.github.io/senior-devs-quit-big-tech-over-this/</link>
@@ -138,13 +145,6 @@
       <description>Senior engineers quit big tech not because of pay but because of scaling friction — connection leaks, unobserved errors, and flaky staging cost teams 40% of their velocity. Measure your own stack with pgBouncer 1.21, Prometheus 2.47, and Node.js 20 LTS.</description>
       <pubDate>Sat, 06 Jun 2026 17:48:00 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-exodus-meetings-vs-code/</guid>
-    </item>
-    <item>
-      <title>Close the remote pay gap now</title>
-      <link>https://kubaik.github.io/close-the-remote-pay-gap-now/</link>
-      <description>Increase remote salary 15–25% from a low-cost country in 2026 — Wise, Revolut, and the exact email template to anchor your ask and split FX risk.</description>
-      <pubDate>Sat, 06 Jun 2026 17:07:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/close-the-remote-pay-gap-now/</guid>
     </item>
   </channel>
 </rss>
