@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 23:45:45 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 23:50:34 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines: 240ms to 80ms without rewriting models</title>
+      <link>https://kubaik.github.io/rag-pipelines-240ms-to-80ms-without-rewriting-models/</link>
+      <description>Cut RAG latency 67% and costs 32% with pgvector 0.6.0, scalar quantization, and language filtering — the three levers tutorials never mention.</description>
+      <pubDate>Sat, 06 Jun 2026 23:50:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-240ms-to-80ms-without-rewriting-models/</guid>
+    </item>
     <item>
       <title>2026 AI Salaries: What Actually Pays</title>
       <link>https://kubaik.github.io/2026-ai-salaries-what-actually-pays/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 65% and AWS bill 32% by fixing prompt bloat, connection leaks, and cache TTL. Real numbers from a 7 k QPS Weaviate 1.22 pipeline.</description>
       <pubDate>Sat, 06 Jun 2026 17:56:27 +0000</pubDate>
       <guid>https://kubaik.github.io/weaviate-missed-the-real-rag-bottleneck/</guid>
-    </item>
-    <item>
-      <title>Senior exodus: meetings vs code</title>
-      <link>https://kubaik.github.io/senior-exodus-meetings-vs-code/</link>
-      <description>Senior engineers quit big tech not because of pay but because of scaling friction — connection leaks, unobserved errors, and flaky staging cost teams 40% of their velocity. Measure your own stack with pgBouncer 1.21, Prometheus 2.47, and Node.js 20 LTS.</description>
-      <pubDate>Sat, 06 Jun 2026 17:48:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-exodus-meetings-vs-code/</guid>
     </item>
   </channel>
 </rss>
