@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 14:18:33 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 14:23:09 +0000</lastBuildDate>
+    <item>
+      <title>Ship work, not code: Africa remote</title>
+      <link>https://kubaik.github.io/ship-work-not-code-africa-remote/</link>
+      <description>Get hired remotely from Africa in 2026: show production artifacts (cost, latency, uptime) not just code. Live demos, post-incident reports, and canary graphs convert at 4.3x the rate of GitHub stars.</description>
+      <pubDate>Sat, 06 Jun 2026 14:22:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-work-not-code-africa-remote/</guid>
+    </item>
     <item>
       <title>Senior engineers flee Big Tech—layers kill morale</title>
       <link>https://kubaik.github.io/senior-engineers-flee-big-techlayers-kill-morale/</link>
@@ -138,13 +145,6 @@
       <description>Yet attrition among engineers with 5–10 years of experience remains stubbornly high — around 12% annually at Google and Meta in 2025, according to…</description>
       <pubDate>Sat, 06 Jun 2026 05:11:14 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-exodus-what-really-breaks-engineers/</guid>
-    </item>
-    <item>
-      <title>Async pool size: why your DB chokes</title>
-      <link>https://kubaik.github.io/async-pool-size-why-your-db-chokes/</link>
-      <description>Cut database latency 60% by fixing pool size — new formula beats the 2002 heuristic. PostgreSQL 16, Aurora, Node 20 LTS, Go 1.21, Python 3.11 asyncio.</description>
-      <pubDate>Sat, 06 Jun 2026 04:45:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/async-pool-size-why-your-db-chokes/</guid>
     </item>
   </channel>
 </rss>
