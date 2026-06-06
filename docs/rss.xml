@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 19:55:26 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 20:00:10 +0000</lastBuildDate>
+    <item>
+      <title>Win the remote salary you&apos;re worth</title>
+      <link>https://kubaik.github.io/win-the-remote-salary-youre-worth/</link>
+      <description>Command 30% higher remote salary from low-cost countries in 2026 — PPP adjustment, exchange-rate locks, and the bridge technique that worked for 24 deals</description>
+      <pubDate>Sat, 06 Jun 2026 19:59:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/win-the-remote-salary-youre-worth/</guid>
+    </item>
     <item>
       <title>When RAG pipelines hit 500ms in prod</title>
       <link>https://kubaik.github.io/when-rag-pipelines-hit-500ms-in-prod/</link>
@@ -138,13 +145,6 @@
       <description>Cut inference costs 7.7x: LLMs vs embeddings salary ROI in 2026 — concrete benchmarks, cost data, and the exact stack that moved the needle at Plaid, Stripe, and Oscar Health.</description>
       <pubDate>Sat, 06 Jun 2026 13:11:48 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-salary-llms-vs-embeddings-roi/</guid>
-    </item>
-    <item>
-      <title>AI pairs: how seniors win, juniors get filtered</title>
-      <link>https://kubaik.github.io/ai-pairs-how-seniors-win-juniors-get-filtered/</link>
-      <description>Reduce API latency 38% and cut cloud costs 42% using AI pair programming — with real PostgreSQL 16 benchmarks and the connection-pool mistake most teams miss</description>
-      <pubDate>Sat, 06 Jun 2026 12:53:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-pairs-how-seniors-win-juniors-get-filtered/</guid>
     </item>
   </channel>
 </rss>
