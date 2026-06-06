@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 05:39:50 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 05:44:41 +0000</lastBuildDate>
+    <item>
+      <title>AI code misses edge cases</title>
+      <link>https://kubaik.github.io/ai-code-misses-edge-cases/</link>
+      <description>Cut edge-case failures 70% with ESLint vs SonarQube — concurrency, protocol races, and timeout misconfigurations most teams miss. Practical rules and real benchmarks for 2026.</description>
+      <pubDate>Sat, 06 Jun 2026 05:44:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-code-misses-edge-cases/</guid>
+    </item>
     <item>
       <title>Senior exodus: what really breaks engineers</title>
       <link>https://kubaik.github.io/senior-exodus-what-really-breaks-engineers/</link>
@@ -138,13 +145,6 @@
       <description>Increase remote salary 25% with a PPP table and FX-indexed retainer — real 2026 figures and email template you can use today.</description>
       <pubDate>Fri, 05 Jun 2026 20:19:34 +0000</pubDate>
       <guid>https://kubaik.github.io/ask-for-25-more-salary-negotiation-script/</guid>
-    </item>
-    <item>
-      <title>Break the max pool size myth</title>
-      <link>https://kubaik.github.io/break-the-max-pool-size-myth/</link>
-      <description>The conventional wisdom (and why it&apos;s incomplete) For years, the standard advice on database connection pooling has been simple: set to the number of…</description>
-      <pubDate>Fri, 05 Jun 2026 19:37:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/break-the-max-pool-size-myth/</guid>
     </item>
   </channel>
 </rss>
