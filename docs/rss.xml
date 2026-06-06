@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 23:54:23 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 23:59:01 +0000</lastBuildDate>
+    <item>
+      <title>Remote jobs from Africa: stop showing work, show value</title>
+      <link>https://kubaik.github.io/remote-jobs-from-africa-stop-showing-work-show-value/</link>
+      <description>Remote hiring teams ignore GitHub portfolios in 2026 unless they show business impact. Learn how to frame your work as case studies with real metrics and live demos that get you past the first round.</description>
+      <pubDate>Sat, 06 Jun 2026 23:58:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-jobs-from-africa-stop-showing-work-show-value/</guid>
+    </item>
     <item>
       <title>RAG pipelines: 240ms to 80ms without rewriting models</title>
       <link>https://kubaik.github.io/rag-pipelines-240ms-to-80ms-without-rewriting-models/</link>
@@ -138,13 +145,6 @@
       <description>Cut p99 latency 60% with PostgreSQL connection pooling — the default 5–10 pool size and 30-second timeouts lose in 2026. Real benchmarks, Python 3.11 and asyncpg 0.29 examples.</description>
       <pubDate>Sat, 06 Jun 2026 18:08:53 +0000</pubDate>
       <guid>https://kubaik.github.io/max-pool-size-missteps-cripple-apps/</guid>
-    </item>
-    <item>
-      <title>Weaviate missed the real RAG bottleneck</title>
-      <link>https://kubaik.github.io/weaviate-missed-the-real-rag-bottleneck/</link>
-      <description>Cut RAG latency 65% and AWS bill 32% by fixing prompt bloat, connection leaks, and cache TTL. Real numbers from a 7 k QPS Weaviate 1.22 pipeline.</description>
-      <pubDate>Sat, 06 Jun 2026 17:56:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/weaviate-missed-the-real-rag-bottleneck/</guid>
     </item>
   </channel>
 </rss>
