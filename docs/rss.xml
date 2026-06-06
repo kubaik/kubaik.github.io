@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 17:45:08 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 14:49:16 +0000</lastBuildDate>
+    <item>
+      <title>Pay them in US dollars, not pesos</title>
+      <link>https://kubaik.github.io/pay-them-in-us-dollars-not-pesos/</link>
+      <description>Convert local salary to USD remotes with 3 concrete numbers — FX spreads, delays, and effective hourly rates. Includes a payment calculator, USD invoice generator, and negotiation scripts for LATAM developers.</description>
+      <pubDate>Sat, 06 Jun 2026 14:49:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/pay-them-in-us-dollars-not-pesos/</guid>
+    </item>
+    <item>
+      <title>Ship work, not code: Africa remote</title>
+      <link>https://kubaik.github.io/ship-work-not-code-africa-remote/</link>
+      <description>Get hired remotely from Africa in 2026: show production artifacts (cost, latency, uptime) not just code. Live demos, post-incident reports, and canary graphs convert at 4.3x the rate of GitHub stars.</description>
+      <pubDate>Sat, 06 Jun 2026 14:22:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-work-not-code-africa-remote/</guid>
+    </item>
     <item>
       <title>Senior engineers flee Big Tech—layers kill morale</title>
       <link>https://kubaik.github.io/senior-engineers-flee-big-techlayers-kill-morale/</link>
@@ -131,13 +145,6 @@
       <description>Cut edge-case failures 70% with ESLint vs SonarQube — concurrency, protocol races, and timeout misconfigurations most teams miss. Practical rules and real benchmarks for 2026.</description>
       <pubDate>Sat, 06 Jun 2026 05:44:21 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-code-misses-edge-cases/</guid>
-    </item>
-    <item>
-      <title>Senior exodus: what really breaks engineers</title>
-      <link>https://kubaik.github.io/senior-exodus-what-really-breaks-engineers/</link>
-      <description>Yet attrition among engineers with 5–10 years of experience remains stubbornly high — around 12% annually at Google and Meta in 2025, according to…</description>
-      <pubDate>Sat, 06 Jun 2026 05:11:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-exodus-what-really-breaks-engineers/</guid>
     </item>
   </channel>
 </rss>
