@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 21:46:44 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 21:52:03 +0000</lastBuildDate>
+    <item>
+      <title>Land fair remote pay from low-cost country</title>
+      <link>https://kubaik.github.io/land-fair-remote-pay-from-low-cost-country/</link>
+      <description>Another client quoted $2,100/month, but it took three back-and-forths to realize that number didn’t include employer taxes I’d have to pay.</description>
+      <pubDate>Sat, 06 Jun 2026 21:51:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/land-fair-remote-pay-from-low-cost-country/</guid>
+    </item>
     <item>
       <title>5 RAG pipeline mistakes production teams ignore</title>
       <link>https://kubaik.github.io/5-rag-pipeline-mistakes-production-teams-ignore/</link>
@@ -138,13 +145,6 @@
       <description>Cut 95th percentile latency 60% by fixing connection pool settings — measure peak bursts, set idle timeout to 10s, and autoscale pools in 2026</description>
       <pubDate>Sat, 06 Jun 2026 15:56:17 +0000</pubDate>
       <guid>https://kubaik.github.io/idle-pools-kill-db-performance/</guid>
-    </item>
-    <item>
-      <title>Fine-tune or prompt: pick the right tool</title>
-      <link>https://kubaik.github.io/fine-tune-or-prompt-pick-the-right-tool/</link>
-      <description>Cut API costs 70% by switching from prompt engineering to fine-tuning at 10k prompts/day — latency drops from 380ms to 45ms, and accuracy often improves — plus when to stick with prompts</description>
-      <pubDate>Sat, 06 Jun 2026 15:09:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/fine-tune-or-prompt-pick-the-right-tool/</guid>
     </item>
   </channel>
 </rss>
