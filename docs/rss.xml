@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 10:21:42 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 10:26:16 +0000</lastBuildDate>
+    <item>
+      <title>Pool size isn&apos;t a fixed number</title>
+      <link>https://kubaik.github.io/pool-size-isnt-a-fixed-number/</link>
+      <description>Learn why setting database pool size to 10 or 20 breaks in 2026. Use real data, benchmarks, and cost figures to set pool size correctly for Kubernetes, serverless, and monoliths.</description>
+      <pubDate>Sat, 06 Jun 2026 10:25:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-isnt-a-fixed-number/</guid>
+    </item>
     <item>
       <title>Shrink cloud carbon without slowing code</title>
       <link>https://kubaik.github.io/shrink-cloud-carbon-without-slowing-code/</link>
@@ -138,13 +145,6 @@
       <description>Cut database costs 40% by right-sizing connection pools — the metric that predicts failure and 3 concrete steps to fix it today.</description>
       <pubDate>Fri, 05 Jun 2026 22:52:10 +0000</pubDate>
       <guid>https://kubaik.github.io/miscount-your-db-pool-your-app-pays/</guid>
-    </item>
-    <item>
-      <title>Portfolio projects that prove you&apos;re hireable</title>
-      <link>https://kubaik.github.io/portfolio-projects-that-prove-youre-hireable/</link>
-      <description>Prove you&apos;re hireable remotely — build one small, runnable project that a recruiter can clone and understand in under five minutes. No PRs, no blog posts, just proof you can ship maintainable code.</description>
-      <pubDate>Fri, 05 Jun 2026 22:29:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-projects-that-prove-youre-hireable/</guid>
     </item>
   </channel>
 </rss>
