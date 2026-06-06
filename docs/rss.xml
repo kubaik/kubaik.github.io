@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 21:56:54 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 22:01:26 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio mistakes cost remote jobs</title>
+      <link>https://kubaik.github.io/portfolio-mistakes-cost-remote-jobs/</link>
+      <description>Portfolio mistakes cost remote jobs — one system, one README, one cost breakdown. 2026 guide to proofs, not promises.</description>
+      <pubDate>Sat, 06 Jun 2026 22:01:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-mistakes-cost-remote-jobs/</guid>
+    </item>
     <item>
       <title>Land fair remote pay from low-cost country</title>
       <link>https://kubaik.github.io/land-fair-remote-pay-from-low-cost-country/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 92% and AWS bill 71% with semantic chunking, Qdrant 1.8.0, and Redis caching — the production lessons tutorials never mention.</description>
       <pubDate>Sat, 06 Jun 2026 16:04:55 +0000</pubDate>
       <guid>https://kubaik.github.io/production-rag-what-tutorials-never-mention/</guid>
-    </item>
-    <item>
-      <title>Idle pools kill DB performance</title>
-      <link>https://kubaik.github.io/idle-pools-kill-db-performance/</link>
-      <description>Cut 95th percentile latency 60% by fixing connection pool settings — measure peak bursts, set idle timeout to 10s, and autoscale pools in 2026</description>
-      <pubDate>Sat, 06 Jun 2026 15:56:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/idle-pools-kill-db-performance/</guid>
     </item>
   </channel>
 </rss>
