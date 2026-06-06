@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 06 Jun 2026 14:55:39 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 15:00:41 +0000</lastBuildDate>
+    <item>
+      <title>Pool size wrong? Your DB is bleeding</title>
+      <link>https://kubaik.github.io/pool-size-wrong-your-db-is-bleeding/</link>
+      <description>The conventional wisdom (and why it&apos;s incomplete) The most common advice about database connection pooling boils down to this: set the maximum pool size…</description>
+      <pubDate>Sat, 06 Jun 2026 15:00:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-wrong-your-db-is-bleeding/</guid>
+    </item>
     <item>
       <title>Pay them in US dollars, not pesos</title>
       <link>https://kubaik.github.io/pay-them-in-us-dollars-not-pesos/</link>
@@ -138,13 +145,6 @@
       <description>Python vs SQL AI salaries 2026: $66k gap revealed — which stack pays more and why. Real benchmarks, costs, and mistakes that cost real money.</description>
       <pubDate>Sat, 06 Jun 2026 06:28:35 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-ai-pay-gap-python-beats-sql-by-66k/</guid>
-    </item>
-    <item>
-      <title>AI code misses edge cases</title>
-      <link>https://kubaik.github.io/ai-code-misses-edge-cases/</link>
-      <description>Cut edge-case failures 70% with ESLint vs SonarQube — concurrency, protocol races, and timeout misconfigurations most teams miss. Practical rules and real benchmarks for 2026.</description>
-      <pubDate>Sat, 06 Jun 2026 05:44:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-code-misses-edge-cases/</guid>
     </item>
   </channel>
 </rss>
