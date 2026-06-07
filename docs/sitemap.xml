@@ -726,7 +726,6 @@
 <url><loc>https://kubaik.github.io/find-nodejs-memory-leaks-in-10-min/</loc><lastmod>2026-05-14</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/run-llms-locally-today/</loc><lastmod>2026-05-14</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/circleci-cheaper-past-50k-builds/</loc><lastmod>2026-05-14</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/redis-vs-memcached-the-cache-choice/</loc><lastmod>2026-05-14</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/event-sourcing-when-its-worth-the-pain/</loc><lastmod>2026-05-14</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/split-the-database-now-or-regret-it-later/</loc><lastmod>2026-05-14</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/land-120k-remote-data-driven-offers/</loc><lastmod>2026-05-14</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
@@ -833,7 +832,7 @@
 <url><loc>https://kubaik.github.io/got-a-remote-tech-job-what-actually-worked/</loc><lastmod>2026-05-08</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/agents-in-production-5-things-docs-skip/</loc><lastmod>2026-05-08</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
 <url><loc>https://kubaik.github.io/6-free-ai-tools-that-replaced-2k-of-my-paid-stack/</loc><lastmod>2026-05-08</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
-<url><loc>https://kubaik.github.io/choose-wrong-fastapi-vs-django-rest-in-prod/</loc><lastmod>2026-05-08</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
+<url><loc>https://kubaik.github.io/choose-wrong-fastapi-vs-django-rest-in-prod/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/doctors-lawyers-scientists-how-they-ship-production/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/ai-changed-senior-devs-9-tools-reshaping-2026/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://kubaik.github.io/win-4k-remote-jobs-nextjs-supabase-stack/</loc><lastmod>2026-05-08</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
