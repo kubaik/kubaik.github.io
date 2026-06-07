@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 10:59:36 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 11:04:19 +0000</lastBuildDate>
+    <item>
+      <title>Senior exodus: hidden costs of big tech scale</title>
+      <link>https://kubaik.github.io/senior-exodus-hidden-costs-of-big-tech-scale/</link>
+      <description>Senior engineers quit big tech for 3 reasons — none are salary. Learn what really burns them out and how to measure it with Redis 7.2, PostgreSQL 16, and 3 concrete numbers.</description>
+      <pubDate>Sun, 07 Jun 2026 11:03:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-exodus-hidden-costs-of-big-tech-scale/</guid>
+    </item>
     <item>
       <title>Cache wars: Redis vs Memcached in 2026</title>
       <link>https://kubaik.github.io/cache-wars-redis-vs-memcached-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>AI skills that move your salary in 2026: prompt engineering vs observability — benchmarked with real salary data, concrete numbers, and production stacks.</description>
       <pubDate>Sat, 06 Jun 2026 23:41:25 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-ai-salaries-what-actually-pays/</guid>
-    </item>
-    <item>
-      <title>Pool size isn&apos;t CPU cores</title>
-      <link>https://kubaik.github.io/pool-size-isnt-cpu-cores/</link>
-      <description>Set max pool size to CPU cores? Wrong. Use peak RPS × P95 latency to size your connection pool—here’s the data and code to prove it.</description>
-      <pubDate>Sat, 06 Jun 2026 23:04:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-size-isnt-cpu-cores/</guid>
     </item>
   </channel>
 </rss>
