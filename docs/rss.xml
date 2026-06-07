@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 09:36:47 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 09:41:41 +0000</lastBuildDate>
+    <item>
+      <title>Default max pool is wrong: set it higher</title>
+      <link>https://kubaik.github.io/default-max-pool-is-wrong-set-it-higher/</link>
+      <description>80% of requests queued for a connection, adding 400ms–800ms to every API call.</description>
+      <pubDate>Sun, 07 Jun 2026 09:41:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/default-max-pool-is-wrong-set-it-higher/</guid>
+    </item>
     <item>
       <title>Senior exodus: what kills velocity in Big Tech</title>
       <link>https://kubaik.github.io/senior-exodus-what-kills-velocity-in-big-tech/</link>
@@ -138,13 +145,6 @@
       <description>AI skills that pay 30% more in 2026 — prompt engineering vs MLOps/tooling benchmarked with 2026 salary data, latency figures, and cost savings.</description>
       <pubDate>Sat, 06 Jun 2026 22:21:59 +0000</pubDate>
       <guid>https://kubaik.github.io/30-pay-bump-ai-pipeline-skills-vs-prompts/</guid>
-    </item>
-    <item>
-      <title>Portfolio mistakes cost remote jobs</title>
-      <link>https://kubaik.github.io/portfolio-mistakes-cost-remote-jobs/</link>
-      <description>Portfolio mistakes cost remote jobs — one system, one README, one cost breakdown. 2026 guide to proofs, not promises.</description>
-      <pubDate>Sat, 06 Jun 2026 22:01:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-mistakes-cost-remote-jobs/</guid>
     </item>
   </channel>
 </rss>
