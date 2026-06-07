@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 22:50:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 22:55:27 +0000</lastBuildDate>
+    <item>
+      <title>Remote devs in Africa: sell impact, not code</title>
+      <link>https://kubaik.github.io/remote-devs-in-africa-sell-impact-not-code/</link>
+      <description>Portfolio wins: show impact, not code dumps — reduce latency 60%, cut costs 42%, and land remote jobs from Africa with measurable outcomes.</description>
+      <pubDate>Sun, 07 Jun 2026 22:55:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-devs-in-africa-sell-impact-not-code/</guid>
+    </item>
     <item>
       <title>Pay yourself 3x with Remote Salary Math</title>
       <link>https://kubaik.github.io/pay-yourself-3x-with-remote-salary-math/</link>
@@ -138,13 +145,6 @@
       <description>Cut monthly costs 76% and latency 86% by removing event sourcing and queues — the real cost of over-engineering in 2026</description>
       <pubDate>Sun, 07 Jun 2026 16:50:38 +0000</pubDate>
       <guid>https://kubaik.github.io/killed-by-your-own-k8s-cluster/</guid>
-    </item>
-    <item>
-      <title>AI salary bump: LangChain vs LLM APIs in 2026</title>
-      <link>https://kubaik.github.io/ai-salary-bump-langchain-vs-llm-apis-in-2026/</link>
-      <description>Cut inference costs 35% and latency 78% using raw APIs vs LangChain — the actual salary levers in 2026 and the benchmark every AI engineer should run today.</description>
-      <pubDate>Sun, 07 Jun 2026 16:09:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-salary-bump-langchain-vs-llm-apis-in-2026/</guid>
     </item>
   </channel>
 </rss>
