@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 02:19:59 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 02:43:20 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs flee: the soft killers</title>
+      <link>https://kubaik.github.io/senior-devs-flee-the-soft-killers/</link>
+      <description>Senior engineers quit big tech even when pay is $320k–$550k — here’s what actually drives them away: bureaucracy, ambiguity, and fire-drill culture. Learn the three metrics that predict attrition and how to fix them before your team starts emptying out.</description>
+      <pubDate>Sun, 07 Jun 2026 02:43:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-flee-the-soft-killers/</guid>
+    </item>
     <item>
       <title>Pick the right platform: African devs 2026</title>
       <link>https://kubaik.github.io/pick-the-right-platform-african-devs-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline latency 87% by moving from Chroma to PostgreSQL + pgvector — concurrency, cache stampedes, and the ivfflat tuning mistake most teams miss. 95% of requests now under 500ms.</description>
       <pubDate>Sat, 06 Jun 2026 19:08:44 +0000</pubDate>
       <guid>https://kubaik.github.io/when-rag-pipelines-hit-500ms-in-prod/</guid>
-    </item>
-    <item>
-      <title>Prove you ship, not just code</title>
-      <link>https://kubaik.github.io/prove-you-ship-not-just-code/</link>
-      <description>Portfolio that lands remote jobs: show production evidence, not screenshots. Learn how Nairobi engineers reduced failed payments 94% and cut AWS bills 40% with real code and metrics.</description>
-      <pubDate>Sat, 06 Jun 2026 19:04:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/prove-you-ship-not-just-code/</guid>
     </item>
   </channel>
 </rss>
