@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 16:55:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 17:00:09 +0000</lastBuildDate>
+    <item>
+      <title>Beat lower-country remote pay cuts</title>
+      <link>https://kubaik.github.io/beat-lower-country-remote-pay-cuts/</link>
+      <description>Negotiate remote salary 40% higher using Levels.fyi 2026 + Payscale 2026 bands — concrete FX rates, counter scripts, and email templates that worked in Brazil, Colombia, and Mexico.</description>
+      <pubDate>Sun, 07 Jun 2026 16:59:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/beat-lower-country-remote-pay-cuts/</guid>
+    </item>
     <item>
       <title>Killed by your own K8s cluster</title>
       <link>https://kubaik.github.io/killed-by-your-own-k8s-cluster/</link>
@@ -138,13 +145,6 @@
       <description>LLM vs embeddings salaries in 2026: $195k vs $178k — real skills that move the needle and the specific mistakes that cost teams $47k in fines</description>
       <pubDate>Sun, 07 Jun 2026 10:03:36 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-ai-pay-llm-vs-embeddings-data/</guid>
-    </item>
-    <item>
-      <title>Default max pool is wrong: set it higher</title>
-      <link>https://kubaik.github.io/default-max-pool-is-wrong-set-it-higher/</link>
-      <description>80% of requests queued for a connection, adding 400ms–800ms to every API call.</description>
-      <pubDate>Sun, 07 Jun 2026 09:41:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/default-max-pool-is-wrong-set-it-higher/</guid>
     </item>
   </channel>
 </rss>
