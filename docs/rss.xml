@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 17:09:05 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 17:53:09 +0000</lastBuildDate>
     <item>
       <title>Senior devs flee big tech&apos;s quiet burnout</title>
       <link>https://kubaik.github.io/senior-devs-flee-big-techs-quiet-burnout/</link>
@@ -54,13 +54,6 @@
       <description>Portfolio that lands remote jobs: show systems you’ve touched, not stars you’ve collected. Includes concrete latency and cost metrics from real Nairobi deployments.</description>
       <pubDate>Sun, 07 Jun 2026 15:16:33 +0000</pubDate>
       <guid>https://kubaik.github.io/african-devs-ship-systems-not-stars/</guid>
-    </item>
-    <item>
-      <title>Senior devs flee Big Tech’s hidden drag</title>
-      <link>https://kubaik.github.io/senior-devs-flee-big-techs-hidden-drag/</link>
-      <description>Cut cycle time 60% without raises by fixing approval loops, seed drift, and cognitive load — the real reasons senior engineers leave Big Tech in 2026.</description>
-      <pubDate>Sun, 07 Jun 2026 14:49:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-flee-big-techs-hidden-drag/</guid>
     </item>
     <item>
       <title>RAG pipelines burn $20k/month before they work</title>
@@ -145,6 +138,13 @@
       <description>Cut RAG retrieval latency from 4.2s to 280ms without spending more — how we split indices, tuned refresh rates, and built a two-tier cache using OpenSearch 2.11, Redis 7.2, and Python 3.11</description>
       <pubDate>Sun, 07 Jun 2026 10:08:56 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-3-silent-killers/</guid>
+    </item>
+    <item>
+      <title>2026 AI Pay: LLM vs Embeddings Data</title>
+      <link>https://kubaik.github.io/2026-ai-pay-llm-vs-embeddings-data/</link>
+      <description>LLM vs embeddings salaries in 2026: $195k vs $178k — real skills that move the needle and the specific mistakes that cost teams $47k in fines</description>
+      <pubDate>Sun, 07 Jun 2026 10:03:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-ai-pay-llm-vs-embeddings-data/</guid>
     </item>
   </channel>
 </rss>
