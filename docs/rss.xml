@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 16:03:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 16:10:14 +0000</lastBuildDate>
+    <item>
+      <title>AI salary bump: LangChain vs LLM APIs in 2026</title>
+      <link>https://kubaik.github.io/ai-salary-bump-langchain-vs-llm-apis-in-2026/</link>
+      <description>Cut inference costs 35% and latency 78% using raw APIs vs LangChain — the actual salary levers in 2026 and the benchmark every AI engineer should run today.</description>
+      <pubDate>Sun, 07 Jun 2026 16:09:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-salary-bump-langchain-vs-llm-apis-in-2026/</guid>
+    </item>
     <item>
       <title>Negotiate remote pay from low-cost countries</title>
       <link>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-countries/</link>
@@ -138,13 +145,6 @@
       <description>Cut senior engineer attrition 40% by fixing latency alerts and MTTD — Prometheus, Grafana, and Go 1.22 lab with real numbers and actionable steps.</description>
       <pubDate>Sun, 07 Jun 2026 08:49:49 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-exodus-what-kills-velocity-in-big-tech/</guid>
-    </item>
-    <item>
-      <title>Break GitHub’s noise, land remote jobs</title>
-      <link>https://kubaik.github.io/break-githubs-noise-land-remote-jobs/</link>
-      <description>Portfolio that converts remote jobs: show impact, not code. Three real case studies with latency, cost, and error-rate metrics. 2026 hiring data included.</description>
-      <pubDate>Sun, 07 Jun 2026 08:41:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/break-githubs-noise-land-remote-jobs/</guid>
     </item>
   </channel>
 </rss>
