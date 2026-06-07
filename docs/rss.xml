@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 05:54:11 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 05:59:03 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines crash at 10k QPS</title>
+      <link>https://kubaik.github.io/rag-pipelines-crash-at-10k-qps/</link>
+      <description>Cut RAG pipeline costs 30% with RedisSearch HNSW — latency dropped from 850ms to 15ms at 10k QPS, with recall at 97% and bill from $4,800 to $3,400/month</description>
+      <pubDate>Sun, 07 Jun 2026 05:58:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-crash-at-10k-qps/</guid>
+    </item>
     <item>
       <title>2026 salary boost: PyTorch vs TensorFlow ROI</title>
       <link>https://kubaik.github.io/2026-salary-boost-pytorch-vs-tensorflow-roi/</link>
@@ -138,13 +145,6 @@
       <description>Avoid polished code dumps: show systems, not snippets. Learn how to build a portfolio that proves you can handle 1,000 TPS, survive region outages, and cut AWS costs — all with $0 infrastructure spend.</description>
       <pubDate>Sat, 06 Jun 2026 20:43:18 +0000</pubDate>
       <guid>https://kubaik.github.io/build-systems-not-just-code/</guid>
-    </item>
-    <item>
-      <title>Stop trusting CPU cores for connection pools</title>
-      <link>https://kubaik.github.io/stop-trusting-cpu-cores-for-connection-pools/</link>
-      <description>Over 78% of PostgreSQL bottlenecks in 2025 were I/O waits — yet most teams still set database pool size to CPU cores. Here’s the real formula.</description>
-      <pubDate>Sat, 06 Jun 2026 20:09:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-trusting-cpu-cores-for-connection-pools/</guid>
     </item>
   </channel>
 </rss>
