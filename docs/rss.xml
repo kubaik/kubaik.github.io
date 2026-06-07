@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 17:53:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 17:58:01 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines: 3 things benchmarks hide</title>
+      <link>https://kubaik.github.io/rag-pipelines-3-things-benchmarks-hide/</link>
+      <description>Cut RAG pipeline latency 65% without increasing cloud spend — connection pools, cache granularity, and dynamic reranking tactics most teams miss</description>
+      <pubDate>Sun, 07 Jun 2026 17:57:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-3-things-benchmarks-hide/</guid>
+    </item>
     <item>
       <title>Senior devs flee big tech&apos;s quiet burnout</title>
       <link>https://kubaik.github.io/senior-devs-flee-big-techs-quiet-burnout/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG retrieval latency from 4.2s to 280ms without spending more — how we split indices, tuned refresh rates, and built a two-tier cache using OpenSearch 2.11, Redis 7.2, and Python 3.11</description>
       <pubDate>Sun, 07 Jun 2026 10:08:56 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-3-silent-killers/</guid>
-    </item>
-    <item>
-      <title>2026 AI Pay: LLM vs Embeddings Data</title>
-      <link>https://kubaik.github.io/2026-ai-pay-llm-vs-embeddings-data/</link>
-      <description>LLM vs embeddings salaries in 2026: $195k vs $178k — real skills that move the needle and the specific mistakes that cost teams $47k in fines</description>
-      <pubDate>Sun, 07 Jun 2026 10:03:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-ai-pay-llm-vs-embeddings-data/</guid>
     </item>
   </channel>
 </rss>
