@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 12:04:08 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 12:09:01 +0000</lastBuildDate>
+    <item>
+      <title>Fine-tune prompts for $42k raises</title>
+      <link>https://kubaik.github.io/fine-tune-prompts-for-42k-raises/</link>
+      <description>Earn 28% more in 2026 by fine-tuning LLMs instead of just writing prompts — concrete salary data, benchmarks, and the exact stack to deploy</description>
+      <pubDate>Sun, 07 Jun 2026 12:08:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/fine-tune-prompts-for-42k-raises/</guid>
+    </item>
     <item>
       <title>African devs: GitHub isn’t your ticket</title>
       <link>https://kubaik.github.io/african-devs-github-isnt-your-ticket/</link>
@@ -138,13 +145,6 @@
       <description>10k+ engineers quit Big Tech in 2026 for reasons beyond pay — deploy time, rollback speed, and cognitive load. Learn the hidden costs and build a system you can ship in 4 minutes.</description>
       <pubDate>Sun, 07 Jun 2026 00:23:27 +0000</pubDate>
       <guid>https://kubaik.github.io/3-5-yr-engineers-flee-faang-not-pay/</guid>
-    </item>
-    <item>
-      <title>Remote jobs from Africa: stop showing work, show value</title>
-      <link>https://kubaik.github.io/remote-jobs-from-africa-stop-showing-work-show-value/</link>
-      <description>Remote hiring teams ignore GitHub portfolios in 2026 unless they show business impact. Learn how to frame your work as case studies with real metrics and live demos that get you past the first round.</description>
-      <pubDate>Sat, 06 Jun 2026 23:58:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/remote-jobs-from-africa-stop-showing-work-show-value/</guid>
     </item>
   </channel>
 </rss>

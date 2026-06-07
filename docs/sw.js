@@ -13,7 +13,7 @@
 
 'use strict';
 
-const CACHE_VERSION = 'v1780833849';
+const CACHE_VERSION = 'v1780834142';
 const CACHE_SHELL = `shell-${CACHE_VERSION}`;
 const CACHE_PAGES = `pages-${CACHE_VERSION}`;
 const CACHE_IMAGES = `images-${CACHE_VERSION}`;
