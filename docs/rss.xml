@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 21:01:40 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 21:05:25 +0000</lastBuildDate>
+    <item>
+      <title>Fine-tuning loses to prompt design 90% of the time</title>
+      <link>https://kubaik.github.io/fine-tuning-loses-to-prompt-design-90-of-the-time/</link>
+      <description>Fine-tuning loses to prompt design 90% of the time — latency, cost, and iteration speed wins 9 out of 10 times. Real systems data with numbers, code, and mistakes.</description>
+      <pubDate>Sun, 07 Jun 2026 21:05:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/fine-tuning-loses-to-prompt-design-90-of-the-time/</guid>
+    </item>
     <item>
       <title>Mis-size DB pool in 2026?</title>
       <link>https://kubaik.github.io/mis-size-db-pool-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG infra cost 74% and latency 4.4x with BM25 reranking, self-hosted embeddings, and Go APIs. Concrete numbers, real mistakes, and production-grade fixes.</description>
       <pubDate>Sun, 07 Jun 2026 14:38:30 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-burn-20kmonth-before-they-work/</guid>
-    </item>
-    <item>
-      <title>Stop guessing: measure 5G backend latency in 2026</title>
-      <link>https://kubaik.github.io/stop-guessing-measure-5g-backend-latency-in-2026/</link>
-      <description>Cut mobile backend latency 30% with TCP keep-alive, TLS tickets, and pool sizing — measure RTT, retransmits, and TLS handshake before you change code.</description>
-      <pubDate>Sun, 07 Jun 2026 14:28:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-guessing-measure-5g-backend-latency-in-2026/</guid>
     </item>
   </channel>
 </rss>
