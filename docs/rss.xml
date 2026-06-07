@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 09:58:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 10:03:54 +0000</lastBuildDate>
+    <item>
+      <title>2026 AI Pay: LLM vs Embeddings Data</title>
+      <link>https://kubaik.github.io/2026-ai-pay-llm-vs-embeddings-data/</link>
+      <description>LLM vs embeddings salaries in 2026: $195k vs $178k — real skills that move the needle and the specific mistakes that cost teams $47k in fines</description>
+      <pubDate>Sun, 07 Jun 2026 10:03:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-ai-pay-llm-vs-embeddings-data/</guid>
+    </item>
     <item>
       <title>Default max pool is wrong: set it higher</title>
       <link>https://kubaik.github.io/default-max-pool-is-wrong-set-it-higher/</link>
@@ -138,13 +145,6 @@
       <description>Stop guessing connection pool sizes — lock contention, SSL overhead, and idle timeouts break systems before CPU does. Learn the 2026 rules that replace CPU × 2 formulas.</description>
       <pubDate>Sat, 06 Jun 2026 22:38:19 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-cheatsheet-2026/</guid>
-    </item>
-    <item>
-      <title>30% pay bump: AI pipeline skills vs prompts</title>
-      <link>https://kubaik.github.io/30-pay-bump-ai-pipeline-skills-vs-prompts/</link>
-      <description>AI skills that pay 30% more in 2026 — prompt engineering vs MLOps/tooling benchmarked with 2026 salary data, latency figures, and cost savings.</description>
-      <pubDate>Sat, 06 Jun 2026 22:21:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/30-pay-bump-ai-pipeline-skills-vs-prompts/</guid>
     </item>
   </channel>
 </rss>
