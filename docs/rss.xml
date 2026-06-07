@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 17:58:01 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 18:00:50 +0000</lastBuildDate>
+    <item>
+      <title>2026: Which AI skills really boost salaries</title>
+      <link>https://kubaik.github.io/2026-which-ai-skills-really-boost-salaries/</link>
+      <description>AI skills that pay 40% more in 2026 — PromptOps vs AI Engineering with salary ranges, benchmarks, and the real tooling stack.</description>
+      <pubDate>Sun, 07 Jun 2026 18:00:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-which-ai-skills-really-boost-salaries/</guid>
+    </item>
     <item>
       <title>RAG pipelines: 3 things benchmarks hide</title>
       <link>https://kubaik.github.io/rag-pipelines-3-things-benchmarks-hide/</link>
@@ -138,13 +145,6 @@
       <description>Cut cache latency 40% with the right choice — Redis 7.2 vs Memcached 1.6.21 benchmarks, eviction policies, and the hidden cost of operational complexity in 2026.</description>
       <pubDate>Sun, 07 Jun 2026 10:17:57 +0000</pubDate>
       <guid>https://kubaik.github.io/cache-wars-redis-vs-memcached-in-2026/</guid>
-    </item>
-    <item>
-      <title>RAG in prod: 3 silent killers</title>
-      <link>https://kubaik.github.io/rag-in-prod-3-silent-killers/</link>
-      <description>Cut RAG retrieval latency from 4.2s to 280ms without spending more — how we split indices, tuned refresh rates, and built a two-tier cache using OpenSearch 2.11, Redis 7.2, and Python 3.11</description>
-      <pubDate>Sun, 07 Jun 2026 10:08:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-3-silent-killers/</guid>
     </item>
   </channel>
 </rss>
