@@ -1914,8 +1914,7 @@ class BlogSystem:
                 seo_keywords=seo_keywords,
                 affiliate_links=[],
                 monetization_data={},
-                # PATCH 11
-                reading_time_minutes=reading_time_minutes,
+
             )
 
             post.affiliate_links = []
