@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 00:19:01 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 00:23:49 +0000</lastBuildDate>
+    <item>
+      <title>3-5 yr engineers flee FAANG: not pay</title>
+      <link>https://kubaik.github.io/3-5-yr-engineers-flee-faang-not-pay/</link>
+      <description>10k+ engineers quit Big Tech in 2026 for reasons beyond pay — deploy time, rollback speed, and cognitive load. Learn the hidden costs and build a system you can ship in 4 minutes.</description>
+      <pubDate>Sun, 07 Jun 2026 00:23:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-5-yr-engineers-flee-faang-not-pay/</guid>
+    </item>
     <item>
       <title>Remote jobs from Africa: stop showing work, show value</title>
       <link>https://kubaik.github.io/remote-jobs-from-africa-stop-showing-work-show-value/</link>
@@ -138,13 +145,6 @@
       <description>2026 salary data shows RAG engineers earn 28% more, but observability engineers close roles 50% faster — here’s the breakdown with concrete numbers, pinned tools, and code you can ship today.</description>
       <pubDate>Sat, 06 Jun 2026 18:26:29 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-salary-boosters-2-models-that-pay-off-in-2026/</guid>
-    </item>
-    <item>
-      <title>Max pool size missteps cripple apps</title>
-      <link>https://kubaik.github.io/max-pool-size-missteps-cripple-apps/</link>
-      <description>Cut p99 latency 60% with PostgreSQL connection pooling — the default 5–10 pool size and 30-second timeouts lose in 2026. Real benchmarks, Python 3.11 and asyncpg 0.29 examples.</description>
-      <pubDate>Sat, 06 Jun 2026 18:08:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/max-pool-size-missteps-cripple-apps/</guid>
     </item>
   </channel>
 </rss>
