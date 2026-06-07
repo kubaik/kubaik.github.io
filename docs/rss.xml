@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 15:12:15 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 15:16:53 +0000</lastBuildDate>
+    <item>
+      <title>African devs: ship systems, not stars</title>
+      <link>https://kubaik.github.io/african-devs-ship-systems-not-stars/</link>
+      <description>Portfolio that lands remote jobs: show systems you’ve touched, not stars you’ve collected. Includes concrete latency and cost metrics from real Nairobi deployments.</description>
+      <pubDate>Sun, 07 Jun 2026 15:16:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/african-devs-ship-systems-not-stars/</guid>
+    </item>
     <item>
       <title>Senior devs flee Big Tech’s hidden drag</title>
       <link>https://kubaik.github.io/senior-devs-flee-big-techs-hidden-drag/</link>
@@ -138,13 +145,6 @@
       <description>Async Python cuts API latency 12× in benchmarks — but one blocking call drops throughput 200×. Learn when to use asyncio and when to avoid it.</description>
       <pubDate>Sun, 07 Jun 2026 06:59:56 +0000</pubDate>
       <guid>https://kubaik.github.io/async-python-gil-io-and-where-it-fails/</guid>
-    </item>
-    <item>
-      <title>Turn local costs into remote salary wins</title>
-      <link>https://kubaik.github.io/turn-local-costs-into-remote-salary-wins/</link>
-      <description>Negotiate remote salary from a lower-cost country: $92k total comp, buffer math, Levels.fyi 2026, and the Loom that closed the deal.</description>
-      <pubDate>Sun, 07 Jun 2026 06:51:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/turn-local-costs-into-remote-salary-wins/</guid>
     </item>
   </channel>
 </rss>
