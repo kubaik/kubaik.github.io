@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 16:46:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 16:50:59 +0000</lastBuildDate>
+    <item>
+      <title>Killed by your own K8s cluster</title>
+      <link>https://kubaik.github.io/killed-by-your-own-k8s-cluster/</link>
+      <description>Cut monthly costs 76% and latency 86% by removing event sourcing and queues — the real cost of over-engineering in 2026</description>
+      <pubDate>Sun, 07 Jun 2026 16:50:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/killed-by-your-own-k8s-cluster/</guid>
+    </item>
     <item>
       <title>AI salary bump: LangChain vs LLM APIs in 2026</title>
       <link>https://kubaik.github.io/ai-salary-bump-langchain-vs-llm-apis-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>80% of requests queued for a connection, adding 400ms–800ms to every API call.</description>
       <pubDate>Sun, 07 Jun 2026 09:41:20 +0000</pubDate>
       <guid>https://kubaik.github.io/default-max-pool-is-wrong-set-it-higher/</guid>
-    </item>
-    <item>
-      <title>Senior exodus: what kills velocity in Big Tech</title>
-      <link>https://kubaik.github.io/senior-exodus-what-kills-velocity-in-big-tech/</link>
-      <description>Cut senior engineer attrition 40% by fixing latency alerts and MTTD — Prometheus, Grafana, and Go 1.22 lab with real numbers and actionable steps.</description>
-      <pubDate>Sun, 07 Jun 2026 08:49:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-exodus-what-kills-velocity-in-big-tech/</guid>
     </item>
   </channel>
 </rss>
