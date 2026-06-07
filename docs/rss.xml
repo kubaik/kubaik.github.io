@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 05:08:26 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 05:13:12 +0000</lastBuildDate>
+    <item>
+      <title>Too-small DB pools ruin CPU savings</title>
+      <link>https://kubaik.github.io/too-small-db-pools-ruin-cpu-savings/</link>
+      <description>Set max pool size too low? Your app is 3x slower — connection pool tuning in 2026 with concrete numbers, benchmarks, and the one metric that exposes the bottleneck most teams miss.</description>
+      <pubDate>Sun, 07 Jun 2026 05:12:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/too-small-db-pools-ruin-cpu-savings/</guid>
+    </item>
     <item>
       <title>Senior devs flee: the soft killers</title>
       <link>https://kubaik.github.io/senior-devs-flee-the-soft-killers/</link>
@@ -138,13 +145,6 @@
       <description>Command 30% higher remote salary from low-cost countries in 2026 — PPP adjustment, exchange-rate locks, and the bridge technique that worked for 24 deals</description>
       <pubDate>Sat, 06 Jun 2026 19:59:49 +0000</pubDate>
       <guid>https://kubaik.github.io/win-the-remote-salary-youre-worth/</guid>
-    </item>
-    <item>
-      <title>When RAG pipelines hit 500ms in prod</title>
-      <link>https://kubaik.github.io/when-rag-pipelines-hit-500ms-in-prod/</link>
-      <description>Cut RAG pipeline latency 87% by moving from Chroma to PostgreSQL + pgvector — concurrency, cache stampedes, and the ivfflat tuning mistake most teams miss. 95% of requests now under 500ms.</description>
-      <pubDate>Sat, 06 Jun 2026 19:08:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/when-rag-pipelines-hit-500ms-in-prod/</guid>
     </item>
   </channel>
 </rss>
