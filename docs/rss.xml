@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 06:55:30 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 07:00:16 +0000</lastBuildDate>
+    <item>
+      <title>Async Python: GIL, I/O, and where it fails</title>
+      <link>https://kubaik.github.io/async-python-gil-io-and-where-it-fails/</link>
+      <description>Async Python cuts API latency 12× in benchmarks — but one blocking call drops throughput 200×. Learn when to use asyncio and when to avoid it.</description>
+      <pubDate>Sun, 07 Jun 2026 06:59:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/async-python-gil-io-and-where-it-fails/</guid>
+    </item>
     <item>
       <title>Turn local costs into remote salary wins</title>
       <link>https://kubaik.github.io/turn-local-costs-into-remote-salary-wins/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 89% and errors 87% for African users — the stack changes, config snippets, and mistakes I made building for unreliable networks in 2026.</description>
       <pubDate>Sat, 06 Jun 2026 20:58:03 +0000</pubDate>
       <guid>https://kubaik.github.io/rewrite-backend-stacks-for-african-latency/</guid>
-    </item>
-    <item>
-      <title>AI salaries 2026: which skills move the needle</title>
-      <link>https://kubaik.github.io/ai-salaries-2026-which-skills-move-the-needle/</link>
-      <description>Cut API error rates 90% with structured-output prompt engineering or cut costs 35% with vector search optimization — the 2026 salary breakdown for AI skills that actually move the needle.</description>
-      <pubDate>Sat, 06 Jun 2026 20:54:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-salaries-2026-which-skills-move-the-needle/</guid>
     </item>
   </channel>
 </rss>
