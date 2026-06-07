@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 10:13:29 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 10:18:17 +0000</lastBuildDate>
+    <item>
+      <title>Cache wars: Redis vs Memcached in 2026</title>
+      <link>https://kubaik.github.io/cache-wars-redis-vs-memcached-in-2026/</link>
+      <description>Cut cache latency 40% with the right choice — Redis 7.2 vs Memcached 1.6.21 benchmarks, eviction policies, and the hidden cost of operational complexity in 2026.</description>
+      <pubDate>Sun, 07 Jun 2026 10:17:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/cache-wars-redis-vs-memcached-in-2026/</guid>
+    </item>
     <item>
       <title>RAG in prod: 3 silent killers</title>
       <link>https://kubaik.github.io/rag-in-prod-3-silent-killers/</link>
@@ -138,13 +145,6 @@
       <description>Set max pool size to CPU cores? Wrong. Use peak RPS × P95 latency to size your connection pool—here’s the data and code to prove it.</description>
       <pubDate>Sat, 06 Jun 2026 23:04:05 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-isnt-cpu-cores/</guid>
-    </item>
-    <item>
-      <title>Senior devs quit big tech over this</title>
-      <link>https://kubaik.github.io/senior-devs-quit-big-tech-over-this/</link>
-      <description>Cut on-call burnout 80% with Redis cache locks and pool sizing — the hidden reasons senior developers leave big tech in 2026</description>
-      <pubDate>Sat, 06 Jun 2026 22:59:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-quit-big-tech-over-this/</guid>
     </item>
   </channel>
 </rss>
