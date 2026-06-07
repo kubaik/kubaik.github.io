@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 11:45:40 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 11:50:25 +0000</lastBuildDate>
+    <item>
+      <title>African devs: GitHub isn’t your ticket</title>
+      <link>https://kubaik.github.io/african-devs-github-isnt-your-ticket/</link>
+      <description>Build one project with latency, load tests, and dashboards — GitHub alone won’t land remote jobs from Africa in 2026. Here’s the exact formula 8,000 TPS systems use to stand out.</description>
+      <pubDate>Sun, 07 Jun 2026 11:50:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/african-devs-github-isnt-your-ticket/</guid>
+    </item>
     <item>
       <title>Stop guessing your DB pool size</title>
       <link>https://kubaik.github.io/stop-guessing-your-db-pool-size/</link>
@@ -138,13 +145,6 @@
       <description>Remote hiring teams ignore GitHub portfolios in 2026 unless they show business impact. Learn how to frame your work as case studies with real metrics and live demos that get you past the first round.</description>
       <pubDate>Sat, 06 Jun 2026 23:58:41 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-jobs-from-africa-stop-showing-work-show-value/</guid>
-    </item>
-    <item>
-      <title>RAG pipelines: 240ms to 80ms without rewriting models</title>
-      <link>https://kubaik.github.io/rag-pipelines-240ms-to-80ms-without-rewriting-models/</link>
-      <description>Cut RAG latency 67% and costs 32% with pgvector 0.6.0, scalar quantization, and language filtering — the three levers tutorials never mention.</description>
-      <pubDate>Sat, 06 Jun 2026 23:50:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-pipelines-240ms-to-80ms-without-rewriting-models/</guid>
     </item>
   </channel>
 </rss>
