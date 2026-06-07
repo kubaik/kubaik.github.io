@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 11:22:22 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 11:26:56 +0000</lastBuildDate>
+    <item>
+      <title>Stop guessing your DB pool size</title>
+      <link>https://kubaik.github.io/stop-guessing-your-db-pool-size/</link>
+      <description>Cut API response time 60% by fixing connection pool settings — set max pool size too low? Your app is slower than it should be in 2026</description>
+      <pubDate>Sun, 07 Jun 2026 11:26:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-guessing-your-db-pool-size/</guid>
+    </item>
     <item>
       <title>Senior exodus: hidden costs of big tech scale</title>
       <link>https://kubaik.github.io/senior-exodus-hidden-costs-of-big-tech-scale/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 67% and costs 32% with pgvector 0.6.0, scalar quantization, and language filtering — the three levers tutorials never mention.</description>
       <pubDate>Sat, 06 Jun 2026 23:50:14 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-240ms-to-80ms-without-rewriting-models/</guid>
-    </item>
-    <item>
-      <title>2026 AI Salaries: What Actually Pays</title>
-      <link>https://kubaik.github.io/2026-ai-salaries-what-actually-pays/</link>
-      <description>AI skills that move your salary in 2026: prompt engineering vs observability — benchmarked with real salary data, concrete numbers, and production stacks.</description>
-      <pubDate>Sat, 06 Jun 2026 23:41:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-ai-salaries-what-actually-pays/</guid>
     </item>
   </channel>
 </rss>
