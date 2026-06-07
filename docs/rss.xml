@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 13:01:54 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 13:06:20 +0000</lastBuildDate>
+    <item>
+      <title>Fine-tune or perish: AI pay gaps revealed</title>
+      <link>https://kubaik.github.io/fine-tune-or-perish-ai-pay-gaps-revealed/</link>
+      <description>Fine-tuning beats prompt engineering 34% to 18% on salary in 2026 — but only if you’re deploying models, not notebooks. Benchmarks, hidden costs, and the exact tool stack that moves the needle.</description>
+      <pubDate>Sun, 07 Jun 2026 13:06:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/fine-tune-or-perish-ai-pay-gaps-revealed/</guid>
+    </item>
     <item>
       <title>Negotiate remote pay: cost-of-living parity script</title>
       <link>https://kubaik.github.io/negotiate-remote-pay-cost-of-living-parity-script/</link>
@@ -138,13 +145,6 @@
       <description>Senior engineers quit big tech even when pay is $320k–$550k — here’s what actually drives them away: bureaucracy, ambiguity, and fire-drill culture. Learn the three metrics that predict attrition and how to fix them before your team starts emptying out.</description>
       <pubDate>Sun, 07 Jun 2026 02:43:00 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-flee-the-soft-killers/</guid>
-    </item>
-    <item>
-      <title>Pick the right platform: African devs 2026</title>
-      <link>https://kubaik.github.io/pick-the-right-platform-african-devs-2026/</link>
-      <description>Earnings, payout days, and paperwork compared for Andela, Toptal, and Arc in 2026 — real data from three platforms, three weeks of testing, and the exact script to decide which one works for you.</description>
-      <pubDate>Sun, 07 Jun 2026 02:19:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-the-right-platform-african-devs-2026/</guid>
     </item>
   </channel>
 </rss>
