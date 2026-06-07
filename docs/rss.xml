@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 07:00:16 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 07:03:50 +0000</lastBuildDate>
+    <item>
+      <title>Salary negotiation: USD rates from LATAM in 2026</title>
+      <link>https://kubaik.github.io/salary-negotiation-usd-rates-from-latam-in-2026/</link>
+      <description>Calculate USD salary from LATAM in 2026 using PPP, Glassdoor, and Levels.fyi — get $23k more by attaching data to your counter-offer</description>
+      <pubDate>Sun, 07 Jun 2026 07:03:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/salary-negotiation-usd-rates-from-latam-in-2026/</guid>
+    </item>
     <item>
       <title>Async Python: GIL, I/O, and where it fails</title>
       <link>https://kubaik.github.io/async-python-gil-io-and-where-it-fails/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline latency 75% and AWS costs 67% with pgvector + Redis caching — the connection leaks, cache stampedes, and model drift most tutorials skip. 2026 production guide with code and numbers.</description>
       <pubDate>Sat, 06 Jun 2026 21:43:13 +0000</pubDate>
       <guid>https://kubaik.github.io/5-rag-pipeline-mistakes-production-teams-ignore/</guid>
-    </item>
-    <item>
-      <title>Rewrite backend stacks for African latency</title>
-      <link>https://kubaik.github.io/rewrite-backend-stacks-for-african-latency/</link>
-      <description>Cut API latency 89% and errors 87% for African users — the stack changes, config snippets, and mistakes I made building for unreliable networks in 2026.</description>
-      <pubDate>Sat, 06 Jun 2026 20:58:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/rewrite-backend-stacks-for-african-latency/</guid>
     </item>
   </channel>
 </rss>
