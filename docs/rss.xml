@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 10:03:54 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 10:09:16 +0000</lastBuildDate>
+    <item>
+      <title>RAG in prod: 3 silent killers</title>
+      <link>https://kubaik.github.io/rag-in-prod-3-silent-killers/</link>
+      <description>Cut RAG retrieval latency from 4.2s to 280ms without spending more — how we split indices, tuned refresh rates, and built a two-tier cache using OpenSearch 2.11, Redis 7.2, and Python 3.11</description>
+      <pubDate>Sun, 07 Jun 2026 10:08:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-in-prod-3-silent-killers/</guid>
+    </item>
     <item>
       <title>2026 AI Pay: LLM vs Embeddings Data</title>
       <link>https://kubaik.github.io/2026-ai-pay-llm-vs-embeddings-data/</link>
@@ -138,13 +145,6 @@
       <description>Cut on-call burnout 80% with Redis cache locks and pool sizing — the hidden reasons senior developers leave big tech in 2026</description>
       <pubDate>Sat, 06 Jun 2026 22:59:55 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-quit-big-tech-over-this/</guid>
-    </item>
-    <item>
-      <title>Pool size cheatsheet 2026</title>
-      <link>https://kubaik.github.io/pool-size-cheatsheet-2026/</link>
-      <description>Stop guessing connection pool sizes — lock contention, SSL overhead, and idle timeouts break systems before CPU does. Learn the 2026 rules that replace CPU × 2 formulas.</description>
-      <pubDate>Sat, 06 Jun 2026 22:38:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/pool-size-cheatsheet-2026/</guid>
     </item>
   </channel>
 </rss>
