@@ -1,3 +1,4 @@
+
 import os
 import json
 import random
@@ -18,8 +19,10 @@ from visibility_automator import VisibilityAutomator
 from static_site_generator import StaticSiteGenerator
 from hashtag_manager import HashtagManager, add_hashtags_to_post
 
-
 from adsense_fixes.internal_linker import build_posts_index, inject_internal_links
+# PATCH 2: new AdSense-readiness imports ─────────────────────────────────────
+from adsense_fixes.similarity_guard import SimilarityGuard
+from adsense_fixes.link_validator import validate_post_links
 # ─────────────────────────────────────────────────────────────────────────────
 
 
@@ -301,7 +304,7 @@ def audit_posts(docs_dir: Path) -> Dict:
 
 
 # ─────────────────────────────────────────────────────────────────
-# Content quality validation
+# Content quality validation  (PATCH 7 applied here)
 # ─────────────────────────────────────────────────────────────────
 
 def _validate_content_quality(content: str, title: str):
@@ -358,16 +361,25 @@ def _validate_content_quality(content: str, title: str):
             "No first-person sentences found. E-E-A-T 'Experience' signal missing."
         )
 
+    # PATCH 7: Code blocks promoted from warning → hard failure
+    # Technical posts without code examples are flagged as thin content.
     if "```" not in content:
-        warnings.append(
-            "No code examples. Reduces substantive value for technical topics."
+        hard_failures.append(
+            "No code examples found. Technical blog posts must contain at least one "
+            "fenced code block. Google's quality raters flag technical posts without "
+            "code as low-value content. Regenerate with code examples included."
         )
 
+    # PATCH 7: Concrete numbers promoted from warning → hard failure
     number_re = re.compile(
         r"\b(\d+%|\d+ms|\d+x\b|\$\d|\d+ req|\d+ min|p\d{2}|\d+,\d{3})"
     )
     if not number_re.search(content):
-        warnings.append("No concrete numbers/metrics found.")
+        hard_failures.append(
+            "No concrete numbers or metrics found (ms, %, cost, line count, etc.). "
+            "Specificity is a core E-E-A-T signal. Regenerate with real benchmarks, "
+            "version numbers, or performance figures."
+        )
 
     version_re = re.compile(
         r'\b(Python|Node\.js|TypeScript|PostgreSQL|Redis|Django|FastAPI|React|'
@@ -380,10 +392,13 @@ def _validate_content_quality(content: str, title: str):
             "Version pins are a specificity signal that distinguishes original from generic content."
         )
 
+    # PATCH 7: FAQ section promoted from warning → hard failure
+    # FAQPage structured data is a meaningful AdSense quality signal.
     if "frequently asked questions" not in content.lower() and "## faq" not in content.lower():
-        warnings.append(
-            "No FAQ section found. A 'Frequently Asked Questions' section enables "
-            "FAQ structured data, which improves AdSense eligibility signals."
+        hard_failures.append(
+            "No FAQ section found. A 'Frequently Asked Questions' section is required — "
+            "it enables FAQPage structured data, which is a key AdSense quality signal. "
+            "The generation prompt already requests this section; check why it was omitted."
         )
 
     if "|" not in content:
@@ -392,9 +407,12 @@ def _validate_content_quality(content: str, title: str):
             "structured content — reviewers notice its absence in technical posts."
         )
 
+    # PATCH 7: E-E-A-T author footer promoted from warning → hard failure
     if "### About this article" not in content:
-        warnings.append(
-            "E-E-A-T author footer missing. Run inject_eeat_signals() before saving."
+        hard_failures.append(
+            "E-E-A-T author footer missing. inject_eeat_signals() must run before "
+            "save_post(). Without this section, the post has no authorship signal — "
+            "a critical trust requirement for AdSense review."
         )
 
     filler_phrases = [
@@ -461,6 +479,10 @@ def _validate_content_quality(content: str, title: str):
 
     return warnings, hard_failures
 
+
+# ─────────────────────────────────────────────────────────────────
+# Topic phrase extractor
+# ─────────────────────────────────────────────────────────────────
 
 # ─────────────────────────────────────────────────────────────────
 # Topic phrase extractor
@@ -1877,6 +1899,9 @@ class BlogSystem:
 
             slug = self._create_slug(title)
 
+            # PATCH 11: Compute reading_time_minutes before constructing BlogPost
+            reading_time_minutes = max(1, round(word_count / 200))
+
             post = BlogPost(
                 title=title.strip(),
                 content=content,
@@ -1889,6 +1914,8 @@ class BlogSystem:
                 seo_keywords=seo_keywords,
                 affiliate_links=[],
                 monetization_data={},
+                # PATCH 11
+                reading_time_minutes=reading_time_minutes,
             )
 
             post.affiliate_links = []
@@ -1980,6 +2007,7 @@ class BlogSystem:
                     parts.append(hashtag_str)
                 if reply_bait:
                     parts.append(reply_bait)
+                # PATCH 12: prewritten_tweet now assigned to model attribute
                 post.prewritten_tweet = "\n\n".join(parts)
 
                 print(
@@ -1990,6 +2018,7 @@ class BlogSystem:
                     f"  Bait    : {reply_bait if reply_bait else '(dropped)'}"
                 )
             else:
+                # PATCH 12: prewritten_tweet assigned to model attribute
                 post.prewritten_tweet = ""
                 print("Note: no tweet_text in bundle — template fallback will be used.")
 
@@ -2501,7 +2530,9 @@ Return ONLY the JSON object.""",
 
     def save_post(self, post):
         word_count = len(post.content.split())
-        reading_time = max(1, round(word_count / 200))
+        # PATCH 11: derive reading_time from content if not set on the model
+        reading_time = getattr(post, 'reading_time_minutes', None) or max(
+            1, round(word_count / 200))
 
         if word_count < 1500:
             raise ValueError(
@@ -2530,6 +2561,9 @@ Return ONLY the JSON object.""",
                 post.content, post.title)
             print("  meta_description was empty — derived from content.")
 
+        # Sync reading_time_minutes onto the model before to_dict()
+        post.reading_time_minutes = reading_time
+
         post_dir = self.output_dir / post.slug
         post_dir.mkdir(exist_ok=True)
 
@@ -2538,12 +2572,6 @@ Return ONLY the JSON object.""",
         post_data['reading_time_minutes'] = reading_time
         post_data['has_code'] = '```' in post.content
         post_data['has_table'] = '|' in post.content
-
-        if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
-            post_data['twitter_hashtags'] = post.twitter_hashtags
-
-        if hasattr(post, 'prewritten_tweet') and post.prewritten_tweet:
-            post_data['prewritten_tweet'] = post.prewritten_tweet
 
         with open(post_dir / "post.json", "w", encoding="utf-8") as f:
             json.dump(post_data, f, indent=2, ensure_ascii=False)
@@ -2890,6 +2918,15 @@ if __name__ == "__main__":
                 blog_post.content, blog_post.title
             )
 
+            guard = SimilarityGuard(docs_dir=blog_system.output_dir)
+            result = guard.check(blog_post)
+            if result.is_blocked:
+                print(f"🛑 SIMILARITY BLOCK: {result.reason}")
+                sys.exit(1)
+            if result.warnings:
+                for w in result.warnings:
+                    print(f"  ⚠️  Similarity warning: {w}")
+
             if hard_failures:
                 print(f"\n🛑  HARD QUALITY FAILURES — post will NOT be saved:")
                 for failure in hard_failures:
@@ -2922,6 +2959,10 @@ if __name__ == "__main__":
                 print(f"  ⚠️  Internal link injection failed (non-fatal): {e}")
             # ─────────────────────────────────────────────────────────────────
 
+            removed = validate_post_links(blog_post, blog_system.output_dir)
+            if removed:
+                print(f"  🔗 Link validator removed {len(removed)} unresolvable link(s): "
+                      f"{', '.join(removed)}")
             blog_system.save_post(blog_post)
 
             generator = StaticSiteGenerator(blog_system)
@@ -3018,6 +3059,11 @@ if __name__ == "__main__":
             blog_system.purge_low_quality_posts(dry_run=False)
             StaticSiteGenerator(blog_system).generate_site()
             print("Purge and rebuild complete!")
+
+        elif mode == 'audit-links':
+            from adsense_fixes.link_validator import audit_all_internal_links
+            report = audit_all_internal_links(Path('./docs'))
+            print(report)
 
         elif mode == "debug":
             if not os.path.exists("config.yaml"):
@@ -3129,20 +3175,6 @@ if __name__ == "__main__":
                     print(f"Error fixing {post_dir.name}: {e}")
             print(
                 f"\nFixed {fixed} posts. Run 'python blog_system.py build' to regenerate HTML.")
-
-        elif mode == "velocity":
-            # ── ADSENSE FIX: New CLI command to check/reset velocity ──────────
-            vc = VelocityController()
-            subcmd = sys.argv[2] if len(sys.argv) > 2 else "status"
-            if subcmd == "status":
-                print(
-                    f"Today: {vc.today_count()}/{vc.effective_limit()} posts published")
-            elif subcmd == "reset":
-                from pathlib import Path as _Path
-                _Path(".publish_velocity.json").unlink(missing_ok=True)
-                print("Velocity counter reset.")
-            else:
-                print("Usage: python blog_system.py velocity [status|reset]")
 
         else:
             print(
