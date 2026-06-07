@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 07 Jun 2026 20:56:55 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2026 21:01:40 +0000</lastBuildDate>
+    <item>
+      <title>Mis-size DB pool in 2026?</title>
+      <link>https://kubaik.github.io/mis-size-db-pool-in-2026/</link>
+      <description>Cut API latency 86% with PostgreSQL pooling — the max pool size formula most teams still copy from 2010 guides is wrong in 2026. Real benchmarks, async tuning, and the one setting you’re probably missing.</description>
+      <pubDate>Sun, 07 Jun 2026 21:01:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/mis-size-db-pool-in-2026/</guid>
+    </item>
     <item>
       <title>AI salaries 2026: skills that pay vs hype</title>
       <link>https://kubaik.github.io/ai-salaries-2026-skills-that-pay-vs-hype/</link>
@@ -138,13 +145,6 @@
       <description>Cut mobile backend latency 30% with TCP keep-alive, TLS tickets, and pool sizing — measure RTT, retransmits, and TLS handshake before you change code.</description>
       <pubDate>Sun, 07 Jun 2026 14:28:18 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-guessing-measure-5g-backend-latency-in-2026/</guid>
-    </item>
-    <item>
-      <title>10x RAG costs you didn’t see in tutorials</title>
-      <link>https://kubaik.github.io/10x-rag-costs-you-didnt-see-in-tutorials/</link>
-      <description>Cut RAG pipeline latency 90% and costs 42% — the hidden bottlenecks tutorials never mention: FAISS swaps, GIL blocking, cache stampedes, and browser-first metrics.</description>
-      <pubDate>Sun, 07 Jun 2026 13:26:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/10x-rag-costs-you-didnt-see-in-tutorials/</guid>
     </item>
   </channel>
 </rss>
