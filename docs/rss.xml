@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 23:52:29 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 23:57:37 +0000</lastBuildDate>
+    <item>
+      <title>50k builds: GitHub vs CircleCI cost smackdown</title>
+      <link>https://kubaik.github.io/50k-builds-github-vs-circleci-cost-smackdown/</link>
+      <description>CircleCI beats GitHub Actions 2-to-1 at 50k builds/month — real cost data, benchmarks, and the pricing change that broke the old advice.</description>
+      <pubDate>Mon, 08 Jun 2026 23:57:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/50k-builds-github-vs-circleci-cost-smackdown/</guid>
+    </item>
     <item>
       <title>RAG pipelines: 4 silent prod killers</title>
       <link>https://kubaik.github.io/rag-pipelines-4-silent-prod-killers/</link>
@@ -61,13 +68,6 @@
       <description>Cut AI infra bill 80% and raise salary 28-35% in 2026: RAG pipelines vs prompt engineering — the real numbers, benchmarks, and security pitfalls most teams miss.</description>
       <pubDate>Mon, 08 Jun 2026 20:05:11 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-the-2026-salary-multiplier/</guid>
-    </item>
-    <item>
-      <title>50k builds: GitHub vs CircleCI cost smackdown</title>
-      <link>https://kubaik.github.io/50k-builds-github-vs-circleci-cost-smackdown/</link>
-      <description>GitHub Actions vs CircleCI real cost at 50k builds/month — self-hosted wins by 3.1× but hosted GitHub still costs more than CircleCI Large</description>
-      <pubDate>Mon, 08 Jun 2026 19:57:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/50k-builds-github-vs-circleci-cost-smackdown/</guid>
     </item>
     <item>
       <title>Skip WebSockets: cheaper real-time hacks</title>
