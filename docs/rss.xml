@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 00:00:07 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 00:03:43 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs flee when systems rot</title>
+      <link>https://kubaik.github.io/senior-devs-flee-when-systems-rot/</link>
+      <description>Senior devs quit big tech for 3 invisible reasons — here’s what to measure next. Cache hit ratio, pager frequency, and connection leaks reveal the real technical debt.</description>
+      <pubDate>Mon, 08 Jun 2026 00:03:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-flee-when-systems-rot/</guid>
+    </item>
     <item>
       <title>Pool size: too high, not low, kills speed</title>
       <link>https://kubaik.github.io/pool-size-too-high-not-low-kills-speed/</link>
@@ -138,13 +145,6 @@
       <description>AI skills that pay 40% more in 2026 — PromptOps vs AI Engineering with salary ranges, benchmarks, and the real tooling stack.</description>
       <pubDate>Sun, 07 Jun 2026 18:00:34 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-which-ai-skills-really-boost-salaries/</guid>
-    </item>
-    <item>
-      <title>RAG pipelines: 3 things benchmarks hide</title>
-      <link>https://kubaik.github.io/rag-pipelines-3-things-benchmarks-hide/</link>
-      <description>Cut RAG pipeline latency 65% without increasing cloud spend — connection pools, cache granularity, and dynamic reranking tactics most teams miss</description>
-      <pubDate>Sun, 07 Jun 2026 17:57:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-pipelines-3-things-benchmarks-hide/</guid>
     </item>
   </channel>
 </rss>
