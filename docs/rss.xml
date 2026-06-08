@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 16:50:49 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 17:28:44 +0000</lastBuildDate>
+    <item>
+      <title>8 DB pool size mistakes killing your CPU</title>
+      <link>https://kubaik.github.io/8-db-pool-size-mistakes-killing-your-cpu/</link>
+      <description>Cut connection wait time 50% by sizing pool to concurrency ceiling, not threads — with Node 20, Python 3.11 and PostgreSQL 16 benchmarks and exact formulas.</description>
+      <pubDate>Mon, 08 Jun 2026 17:28:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/8-db-pool-size-mistakes-killing-your-cpu/</guid>
+    </item>
     <item>
       <title>AI salaries 2026: the 3 skills that moved the needle</title>
       <link>https://kubaik.github.io/ai-salaries-2026-the-3-skills-that-moved-the-needle/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio sites waste time for remote engineers. GitHub, blog posts, and production demos land interviews faster — here’s the 3-2-1 proof with 2026 data.</description>
       <pubDate>Mon, 08 Jun 2026 00:27:43 +0000</pubDate>
       <guid>https://kubaik.github.io/your-portfolio-doesnt-need-a-website/</guid>
-    </item>
-    <item>
-      <title>Senior devs flee when systems rot</title>
-      <link>https://kubaik.github.io/senior-devs-flee-when-systems-rot/</link>
-      <description>Senior devs quit big tech for 3 invisible reasons — here’s what to measure next. Cache hit ratio, pager frequency, and connection leaks reveal the real technical debt.</description>
-      <pubDate>Mon, 08 Jun 2026 00:03:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-flee-when-systems-rot/</guid>
     </item>
   </channel>
 </rss>
