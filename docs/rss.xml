@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 12:28:39 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 14:02:57 +0000</lastBuildDate>
+    <item>
+      <title>Senior devs flee big tech (not for money)</title>
+      <link>https://kubaik.github.io/senior-devs-flee-big-tech-not-for-money/</link>
+      <description>Cut big tech attrition 60%: meeting load, cycle time, and promotion velocity metrics that actually matter in 2026.</description>
+      <pubDate>Mon, 08 Jun 2026 14:02:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-devs-flee-big-tech-not-for-money/</guid>
+    </item>
     <item>
       <title>Ship GitHub, not a portfolio</title>
       <link>https://kubaik.github.io/ship-github-not-a-portfolio/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio wins: show impact, not code dumps — reduce latency 60%, cut costs 42%, and land remote jobs from Africa with measurable outcomes.</description>
       <pubDate>Sun, 07 Jun 2026 22:55:10 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-devs-in-africa-sell-impact-not-code/</guid>
-    </item>
-    <item>
-      <title>Pay yourself 3x with Remote Salary Math</title>
-      <link>https://kubaik.github.io/pay-yourself-3x-with-remote-salary-math/</link>
-      <description>Pay yourself 3x more by converting local costs to USD with real data, clauses, and tools — avoid the 8–12% loss most remote workers miss in 2026.</description>
-      <pubDate>Sun, 07 Jun 2026 22:39:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/pay-yourself-3x-with-remote-salary-math/</guid>
     </item>
   </channel>
 </rss>
