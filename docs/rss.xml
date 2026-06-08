@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 19:58:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 20:05:41 +0000</lastBuildDate>
+    <item>
+      <title>RAG pipelines: the 2026 salary multiplier</title>
+      <link>https://kubaik.github.io/rag-pipelines-the-2026-salary-multiplier/</link>
+      <description>Cut AI infra bill 80% and raise salary 28-35% in 2026: RAG pipelines vs prompt engineering — the real numbers, benchmarks, and security pitfalls most teams miss.</description>
+      <pubDate>Mon, 08 Jun 2026 20:05:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-pipelines-the-2026-salary-multiplier/</guid>
+    </item>
     <item>
       <title>50k builds: GitHub vs CircleCI cost smackdown</title>
       <link>https://kubaik.github.io/50k-builds-github-vs-circleci-cost-smackdown/</link>
@@ -138,13 +145,6 @@
       <description>AI skills 2026 salaries revealed: integration pays $155k–$195k, fine-tuning pays $175k–$250k — but only if you avoid common pitfalls and measure ROI in weeks, not months.</description>
       <pubDate>Mon, 08 Jun 2026 06:13:35 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-2026-which-ones-pay-and-which-dont/</guid>
-    </item>
-    <item>
-      <title>Ship real work, not polished READMEs</title>
-      <link>https://kubaik.github.io/ship-real-work-not-polished-readmes/</link>
-      <description>Prove you can run systems, not write code — 3 real portfolio projects that got interviews vs ones that didn’t, with IaC, observability and cost data from 2026</description>
-      <pubDate>Mon, 08 Jun 2026 05:25:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-real-work-not-polished-readmes/</guid>
     </item>
   </channel>
 </rss>
