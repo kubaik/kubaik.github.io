@@ -2995,7 +2995,7 @@ if __name__ == "__main__":
             # ── PATCH 5: Post-save AdSense actions ───────────────────────────
 
             # Record publish for velocity tracking
-            vc.record_publish()
+            # vc.record_publish()
 
             # Generate OG image card (NEW — improves social sharing + CTR)
             try:
