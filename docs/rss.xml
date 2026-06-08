@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 10:10:24 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 10:15:05 +0000</lastBuildDate>
+    <item>
+      <title>Break RAG pipelines in prod</title>
+      <link>https://kubaik.github.io/break-rag-pipelines-in-prod/</link>
+      <description>Cut RAG pipeline latency 90% and AWS bill 98% using BM25 + reranker + cache — the staging-to-prod playbook most tutorials skip</description>
+      <pubDate>Mon, 08 Jun 2026 10:14:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/break-rag-pipelines-in-prod/</guid>
+    </item>
     <item>
       <title>Ship faster with a paved road: 4 weeks to 80% less toil</title>
       <link>https://kubaik.github.io/ship-faster-with-a-paved-road-4-weeks-to-80-less-toil/</link>
@@ -138,13 +145,6 @@
       <description>Senior engineers leave big tech even when pay is high — hidden friction in review cycles, on-call rotations, and deployment pipelines burns them out. Here are the real reasons with actionable fixes.</description>
       <pubDate>Sun, 07 Jun 2026 22:08:45 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-quit-big-tech-for-this/</guid>
-    </item>
-    <item>
-      <title>Underrated PostgreSQL limits in RAG pipelines</title>
-      <link>https://kubaik.github.io/underrated-postgresql-limits-in-rag-pipelines/</link>
-      <description>Reduce RAG latency from 800 ms to 60 ms at 1,000 QPS by replacing PostgreSQL with Qdrant and adding Redis caching. Real AWS cost drop from $2.40 to $0.72 per hour and embedding latency cut 2.6x with int8 quantisation.</description>
-      <pubDate>Sun, 07 Jun 2026 21:55:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/underrated-postgresql-limits-in-rag-pipelines/</guid>
     </item>
   </channel>
 </rss>
