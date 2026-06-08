@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 17:40:22 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 17:45:50 +0000</lastBuildDate>
+    <item>
+      <title>RAG in prod: what tutorials won’t tell you</title>
+      <link>https://kubaik.github.io/rag-in-prod-what-tutorials-wont-tell-you/</link>
+      <description>Cut RAG latency 78% and AWS costs 35% with a two-tier FAISS + PostgreSQL system. Learn the cache invalidation, CDC and memory traps tutorials skip.</description>
+      <pubDate>Mon, 08 Jun 2026 17:45:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-in-prod-what-tutorials-wont-tell-you/</guid>
+    </item>
     <item>
       <title>8 DB pool size mistakes killing your CPU</title>
       <link>https://kubaik.github.io/8-db-pool-size-mistakes-killing-your-cpu/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency from 4.2s to 85ms and AWS costs 78% with Qdrant 1.8.3, quantized embeddings, and Spot Instances — the exact stack and numbers most tutorials skip</description>
       <pubDate>Mon, 08 Jun 2026 01:43:09 +0000</pubDate>
       <guid>https://kubaik.github.io/break-rag-at-10k-requestsday/</guid>
-    </item>
-    <item>
-      <title>Your portfolio doesn&apos;t need a website</title>
-      <link>https://kubaik.github.io/your-portfolio-doesnt-need-a-website/</link>
-      <description>Portfolio sites waste time for remote engineers. GitHub, blog posts, and production demos land interviews faster — here’s the 3-2-1 proof with 2026 data.</description>
-      <pubDate>Mon, 08 Jun 2026 00:27:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/your-portfolio-doesnt-need-a-website/</guid>
     </item>
   </channel>
 </rss>
