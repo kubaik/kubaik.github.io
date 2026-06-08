@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 19:52:58 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 19:58:03 +0000</lastBuildDate>
+    <item>
+      <title>50k builds: GitHub vs CircleCI cost smackdown</title>
+      <link>https://kubaik.github.io/50k-builds-github-vs-circleci-cost-smackdown/</link>
+      <description>GitHub Actions vs CircleCI real cost at 50k builds/month — self-hosted wins by 3.1× but hosted GitHub still costs more than CircleCI Large</description>
+      <pubDate>Mon, 08 Jun 2026 19:57:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/50k-builds-github-vs-circleci-cost-smackdown/</guid>
+    </item>
     <item>
       <title>Skip WebSockets: cheaper real-time hacks</title>
       <link>https://kubaik.github.io/skip-websockets-cheaper-real-time-hacks/</link>
@@ -138,13 +145,6 @@
       <description>Prove you can run systems, not write code — 3 real portfolio projects that got interviews vs ones that didn’t, with IaC, observability and cost data from 2026</description>
       <pubDate>Mon, 08 Jun 2026 05:25:11 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-real-work-not-polished-readmes/</guid>
-    </item>
-    <item>
-      <title>Multi-agent systems break first</title>
-      <link>https://kubaik.github.io/multi-agent-systems-break-first/</link>
-      <description>After switching to Fargate with 0.25 vCPU and 512MB RAM ephemeral containers, we cut costs by 78%.</description>
-      <pubDate>Mon, 08 Jun 2026 04:25:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-agent-systems-break-first/</guid>
     </item>
   </channel>
 </rss>
