@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 12:12:06 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 09:19:46 +0000</lastBuildDate>
+    <item>
+      <title>5 signs you’re done with big tech</title>
+      <link>https://kubaik.github.io/5-signs-youre-done-with-big-tech/</link>
+      <description>One joined a Series B startup for 30 % less pay, the other moved to a government digital team.</description>
+      <pubDate>Mon, 08 Jun 2026 09:19:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-signs-youre-done-with-big-tech/</guid>
+    </item>
     <item>
       <title>Why your DB pool size is still wrong</title>
       <link>https://kubaik.github.io/why-your-db-pool-size-is-still-wrong/</link>
@@ -138,13 +145,6 @@
       <description>Fine-tuning loses to prompt design 90% of the time — latency, cost, and iteration speed wins 9 out of 10 times. Real systems data with numbers, code, and mistakes.</description>
       <pubDate>Sun, 07 Jun 2026 21:05:04 +0000</pubDate>
       <guid>https://kubaik.github.io/fine-tuning-loses-to-prompt-design-90-of-the-time/</guid>
-    </item>
-    <item>
-      <title>Mis-size DB pool in 2026?</title>
-      <link>https://kubaik.github.io/mis-size-db-pool-in-2026/</link>
-      <description>Cut API latency 86% with PostgreSQL pooling — the max pool size formula most teams still copy from 2010 guides is wrong in 2026. Real benchmarks, async tuning, and the one setting you’re probably missing.</description>
-      <pubDate>Sun, 07 Jun 2026 21:01:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/mis-size-db-pool-in-2026/</guid>
     </item>
   </channel>
 </rss>
