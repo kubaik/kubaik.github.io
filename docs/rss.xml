@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 02:50:56 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 02:56:10 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate remote pay from low-cost countries</title>
+      <link>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-countries/</link>
+      <description>Raise your remote rate 21% with a 37-line Python script that converts your local cost into USD and builds a finance-ready PDF—no Delaware C-corp required.</description>
+      <pubDate>Mon, 08 Jun 2026 02:55:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-countries/</guid>
+    </item>
     <item>
       <title>Break RAG at 10k requests/day</title>
       <link>https://kubaik.github.io/break-rag-at-10k-requestsday/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 70% with the right cache — Redis vs Memcached 2026 benchmarks, real p99 latency, and the one config change that prevents 70% of outages.</description>
       <pubDate>Sun, 07 Jun 2026 18:57:28 +0000</pubDate>
       <guid>https://kubaik.github.io/redis-vs-memcached-choose-the-right-cache/</guid>
-    </item>
-    <item>
-      <title>Mis-size your DB pool? CPU pays the price</title>
-      <link>https://kubaik.github.io/mis-size-your-db-pool-cpu-pays-the-price/</link>
-      <description>Stop wasting 96 % of connection wait time — size your database pool against real database slots, not threads. Learn the 2026 formula and cut 503 errors with PostgreSQL 16 and Node 20 LTS.</description>
-      <pubDate>Sun, 07 Jun 2026 18:48:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/mis-size-your-db-pool-cpu-pays-the-price/</guid>
     </item>
   </channel>
 </rss>
