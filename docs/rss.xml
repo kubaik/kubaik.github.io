@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 07:23:42 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 07:28:33 +0000</lastBuildDate>
+    <item>
+      <title>Price your remote salary: 4-step script</title>
+      <link>https://kubaik.github.io/price-your-remote-salary-4-step-script/</link>
+      <description>Price your remote salary in 4 steps using Numbeo COL and volatility buffers — exact formulas, Google Sheets template, and Python 3.11 script included.</description>
+      <pubDate>Mon, 08 Jun 2026 07:28:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/price-your-remote-salary-4-step-script/</guid>
+    </item>
     <item>
       <title>RAG in prod: 7 hard lessons tutorials skip</title>
       <link>https://kubaik.github.io/rag-in-prod-7-hard-lessons-tutorials-skip/</link>
@@ -138,13 +145,6 @@
       <description>Cut 2026 AI salary volatility: only two skills move the needle — RAG evaluation and privacy-preserving ML. Benchmarks, compliance risks, and the exact hiring data you need to pick the right one.</description>
       <pubDate>Sun, 07 Jun 2026 20:52:21 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-salaries-2026-skills-that-pay-vs-hype/</guid>
-    </item>
-    <item>
-      <title>RAG in prod: what breaks at scale</title>
-      <link>https://kubaik.github.io/rag-in-prod-what-breaks-at-scale/</link>
-      <description>Cut RAG pipeline latency 87% and AWS bill 48% by decoupling nightly embeddings and caching retrievals — connection pool traps, Qdrant memory tricks, and Parquet snapshots we learned the hard way.</description>
-      <pubDate>Sun, 07 Jun 2026 20:44:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-what-breaks-at-scale/</guid>
     </item>
   </channel>
 </rss>
