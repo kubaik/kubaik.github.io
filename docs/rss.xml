@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 14:50:45 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 14:56:24 +0000</lastBuildDate>
+    <item>
+      <title>Pool size wrong? DB pays</title>
+      <link>https://kubaik.github.io/pool-size-wrong-db-pays/</link>
+      <description>Cut database connection overhead 50% by tuning pool size to query latency, not CPU cores — with real benchmarks from PostgreSQL 15, Node.js 20 LTS, and Go 1.21 in 2026</description>
+      <pubDate>Mon, 08 Jun 2026 14:55:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/pool-size-wrong-db-pays/</guid>
+    </item>
     <item>
       <title>2026 AI skills that increase pay</title>
       <link>https://kubaik.github.io/2026-ai-skills-that-increase-pay/</link>
@@ -138,13 +145,6 @@
       <description>Python vs SQL AI stacks in 2026: latency, cost, and salary impact — backed by 47k survey responses and real infra bills. See the 89 ms vs 1,200 ms gap.</description>
       <pubDate>Sun, 07 Jun 2026 23:48:42 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-worth-120k-in-2026/</guid>
-    </item>
-    <item>
-      <title>2026: Which AI skill pays more?</title>
-      <link>https://kubaik.github.io/2026-which-ai-skill-pays-more/</link>
-      <description>TensorFlow or PyTorch skills pay 8–12% more in 2026 — the benchmark that separates regulated fintech roles from seed-stage healthtechs</description>
-      <pubDate>Sun, 07 Jun 2026 22:58:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-which-ai-skill-pays-more/</guid>
     </item>
   </channel>
 </rss>
