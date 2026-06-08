@@ -1,9 +1,3 @@
 [
-  "Building real-time features without a WebSocket server: practical alternatives",
-  "GitHub Actions vs CircleCI: real cost comparison at 50k builds/month",
-  "AI skills that actually affect your salary in 2026: a data-backed breakdown",
-  "Building a portfolio that gets you hired remotely from Africa",
-  "Negotiating a remote salary when you're in a lower-cost country",
-  "Database connection pooling: the setting everyone gets wrong",
-  "RAG pipelines in production: what the tutorials skip"
+  "How I use Claude to review my own code (and where it fails)"
 ]
