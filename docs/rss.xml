@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 23:25:56 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 23:31:15 +0000</lastBuildDate>
+    <item>
+      <title>Price your remote job like a New York dev</title>
+      <link>https://kubaik.github.io/price-your-remote-job-like-a-new-york-dev/</link>
+      <description>Price your remote salary like a New York dev — $120k target, $112/hr client rate, 6% rejection drop. FX locks, VAT gotchas, and the 48-hour rule most freelancers miss.</description>
+      <pubDate>Mon, 08 Jun 2026 23:30:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/price-your-remote-job-like-a-new-york-dev/</guid>
+    </item>
     <item>
       <title>Claude code review: wins and blind spots</title>
       <link>https://kubaik.github.io/claude-code-review-wins-and-blind-spots/</link>
@@ -138,13 +145,6 @@
       <description>One joined a Series B startup for 30 % less pay, the other moved to a government digital team.</description>
       <pubDate>Mon, 08 Jun 2026 09:19:19 +0000</pubDate>
       <guid>https://kubaik.github.io/5-signs-youre-done-with-big-tech/</guid>
-    </item>
-    <item>
-      <title>Price your remote salary: 4-step script</title>
-      <link>https://kubaik.github.io/price-your-remote-salary-4-step-script/</link>
-      <description>Price your remote salary in 4 steps using Numbeo COL and volatility buffers — exact formulas, Google Sheets template, and Python 3.11 script included.</description>
-      <pubDate>Mon, 08 Jun 2026 07:28:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/price-your-remote-salary-4-step-script/</guid>
     </item>
   </channel>
 </rss>
