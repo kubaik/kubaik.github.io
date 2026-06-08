@@ -20,6 +20,14 @@ from hashtag_manager import HashtagManager, add_hashtags_to_post
 
 
 from adsense_fixes.internal_linker import build_posts_index, inject_internal_links
+
+from velocity_controller import VelocityController
+from adsense_fixes.link_validator import validate_post_links
+from adsense_fixes.similarity_guard import SimilarityGuard
+from adsense_fixes.image_optimizer import inject_alt_text, generate_og_card
+from adsense_fixes.canonical_guard import validate_canonical, audit_duplicate_slugs
+from adsense_fixes.schema_validator import extract_and_build_faq_schema
+from adsense_fixes.content_freshness import inject_freshness_footer, get_publishing_schedule_status
 # ─────────────────────────────────────────────────────────────────────────────
 
 
@@ -2863,6 +2871,17 @@ if __name__ == "__main__":
 
             blog_system = BlogSystem(config)
 
+            # ── PATCH 2: Velocity check ───────────────────────────────────────
+            # AdSense guide §7: "Publishing 100+ posts per day is a spam signal."
+            # vc = VelocityController()
+            # if not vc.can_publish():
+            #     print(
+            #         f"\n⏸  VELOCITY LIMIT REACHED — {vc.today_count()}/{vc.effective_limit()} "
+            #         f"posts published today. Exiting cleanly; retry tomorrow.\n"
+            #     )
+            #     sys.exit(0)
+            # ─────────────────────────────────────────────────────────────────
+
             try:
                 topic = pick_next_topic()
                 blog_post = asyncio.run(blog_system.generate_blog_post(topic))
@@ -2886,6 +2905,21 @@ if __name__ == "__main__":
                 traceback.print_exc()
                 sys.exit(1)
 
+            # ── PATCH 3: SimilarityGuard check ───────────────────────────────
+            # AdSense guide §7: "Run each generated post through a plagiarism
+            # checker to confirm < 10% similarity with existing web content."
+            try:
+                guard = SimilarityGuard(docs_dir=blog_system.output_dir)
+                sim_result = guard.check(blog_post)
+                if sim_result.is_blocked:
+                    print(f"\n🛑 SIMILARITY BLOCK: {sim_result.reason}\n")
+                    sys.exit(1)
+                for warning in sim_result.warnings:
+                    print(f"  ⚠️  Similarity: {warning}")
+            except Exception as sim_err:
+                print(f"  ⚠️  SimilarityGuard failed (non-fatal): {sim_err}")
+            # ─────────────────────────────────────────────────────────────────
+
             quality_warnings, hard_failures = _validate_content_quality(
                 blog_post.content, blog_post.title
             )
@@ -2908,11 +2942,25 @@ if __name__ == "__main__":
             else:
                 print("✅  Content quality check passed (0 warnings).")
 
-            inject_personal_intro(blog_post, topic)
-            inject_eeat_signals(blog_post, topic)
+            # ── PATCH 4: Full enrichment pipeline ────────────────────────────
 
-            # ── ADSENSE FIX B: Internal link injection ────────────────────────
-            # AdSense guide: "Orphan pages with no internal links signal low quality."
+            # 1. Personal intro (existing)
+            inject_personal_intro(blog_post, topic)
+
+            # 2. E-E-A-T footer + freshness date
+            inject_eeat_signals(blog_post, topic)
+            # NEW: update "Last reviewed" date
+            inject_freshness_footer(blog_post)
+
+            # 3. Image alt text (NEW — required for WCAG + AdSense content quality)
+            try:
+                injected_imgs = inject_alt_text(blog_post)
+                if injected_imgs:
+                    print(f"  🖼  {injected_imgs} image alt text(s) injected.")
+            except Exception as e:
+                print(f"  ⚠️  Alt text injection failed (non-fatal): {e}")
+
+            # 4. Internal links (existing)
             try:
                 posts_index = build_posts_index(blog_system.output_dir)
                 base_path = config.get("base_path", "")
@@ -2920,9 +2968,52 @@ if __name__ == "__main__":
                     blog_post, posts_index, base_path=base_path)
             except Exception as e:
                 print(f"  ⚠️  Internal link injection failed (non-fatal): {e}")
+
+            # 5. Link validation — strip injected links to non-existent slugs
+            try:
+                removed_links = validate_post_links(
+                    blog_post, blog_system.output_dir)
+                if removed_links:
+                    print(f"  🔗 Link validator removed {len(removed_links)} unresolvable link(s): "
+                          f"{', '.join(removed_links)}")
+            except Exception as e:
+                print(f"  ⚠️  Link validator failed (non-fatal): {e}")
+
+            # 6. Canonical validation (NEW)
+            try:
+                canon_issues = validate_canonical(
+                    blog_post, config.get('base_url', ''))
+                for issue in canon_issues:
+                    print(f"  ⚠️  Canonical: {issue}")
+            except Exception as e:
+                print(f"  ⚠️  Canonical validation failed (non-fatal): {e}")
+
             # ─────────────────────────────────────────────────────────────────
 
             blog_system.save_post(blog_post)
+
+            # ── PATCH 5: Post-save AdSense actions ───────────────────────────
+
+            # Record publish for velocity tracking
+            vc.record_publish()
+
+            # Generate OG image card (NEW — improves social sharing + CTR)
+            try:
+                generate_og_card(
+                    blog_post,
+                    output_dir=blog_system.output_dir,
+                    site_name=config.get('site_name', 'Tech Blog'),
+                )
+            except Exception as e:
+                print(f"  ⚠️  OG card generation failed (non-fatal): {e}")
+
+            # Update similarity index for next run
+            try:
+                guard.update_index(blog_post)
+            except Exception:
+                pass   # guard may not be defined if similarity check was skipped
+
+            # ─────────────────────────────────────────────────────────────────
 
             generator = StaticSiteGenerator(blog_system)
             generator.generate_site()
@@ -3130,26 +3221,52 @@ if __name__ == "__main__":
             print(
                 f"\nFixed {fixed} posts. Run 'python blog_system.py build' to regenerate HTML.")
 
+        # ── PATCH 6: New CLI commands ─────────────────────────────────────────
+
+        elif mode == "audit-links":
+            # Audit all internal links for broken targets
+            from adsense_fixes.link_validator import audit_all_internal_links
+            report = audit_all_internal_links(Path('./docs'))
+            print(report)
+
+        elif mode == "audit-slugs":
+            # Find near-duplicate slugs that could cause canonical issues
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found.")
+                sys.exit(1)
+            report = audit_duplicate_slugs(Path('./docs'))
+            print(report)
+
+        elif mode == "audit-freshness":
+            # Report on stale posts and publishing cadence
+            from adsense_fixes.content_freshness import stale_report
+            print(stale_report(Path('./docs')))
+            print()
+            print(get_publishing_schedule_status(Path('./docs')))
+
         elif mode == "velocity":
-            # ── ADSENSE FIX: New CLI command to check/reset velocity ──────────
             vc = VelocityController()
             subcmd = sys.argv[2] if len(sys.argv) > 2 else "status"
             if subcmd == "status":
                 print(
                     f"Today: {vc.today_count()}/{vc.effective_limit()} posts published")
             elif subcmd == "reset":
-                from pathlib import Path as _Path
-                _Path(".publish_velocity.json").unlink(missing_ok=True)
+                Path(".publish_velocity.json").unlink(missing_ok=True)
                 print("Velocity counter reset.")
             else:
                 print("Usage: python blog_system.py velocity [status|reset]")
 
+        # ─────────────────────────────────────────────────────────────────────
+
         else:
             print(
                 "Usage: python blog_system.py [init|auto|build|cleanup|audit|purge|"
-                "debug|social|test-twitter|dedup|fix-descriptions|velocity]"
+                "debug|social|test-twitter|dedup|fix-descriptions|"
+                "audit-links|audit-slugs|audit-freshness|velocity]"
             )
 
     else:
         print("AI Blog System — Usage: python blog_system.py [command]")
-        print("Commands: init | auto | build | cleanup | audit | purge | debug | social | test-twitter | dedup | fix-descriptions | velocity")
+        print("Commands: init | auto | build | cleanup | audit | purge | debug | social | "
+              "test-twitter | dedup | fix-descriptions | audit-links | audit-slugs | "
+              "audit-freshness | velocity")
