@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 22:03:16 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 22:09:10 +0000</lastBuildDate>
+    <item>
+      <title>Remote salary: negotiate without sounding cheap</title>
+      <link>https://kubaik.github.io/remote-salary-negotiate-without-sounding-cheap/</link>
+      <description>Go from $3,800 to $7,800 remote salary in one negotiation packet — cost sheet, time sheet, risk sheet included. Real 20</description>
+      <pubDate>Mon, 08 Jun 2026 22:08:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-salary-negotiate-without-sounding-cheap/</guid>
+    </item>
     <item>
       <title>Portfolio ≠ Projects: Signal over noise</title>
       <link>https://kubaik.github.io/portfolio-projects-signal-over-noise/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 85% and costs 36% with CDC, Qdrant, and ONNX — the pipeline tricks tutorials skip. Real numbers, real stack, real mistakes.</description>
       <pubDate>Mon, 08 Jun 2026 07:16:32 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-7-hard-lessons-tutorials-skip/</guid>
-    </item>
-    <item>
-      <title>AI skills 2026: which ones pay — and which don’t</title>
-      <link>https://kubaik.github.io/ai-skills-2026-which-ones-pay-and-which-dont/</link>
-      <description>AI skills 2026 salaries revealed: integration pays $155k–$195k, fine-tuning pays $175k–$250k — but only if you avoid common pitfalls and measure ROI in weeks, not months.</description>
-      <pubDate>Mon, 08 Jun 2026 06:13:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skills-2026-which-ones-pay-and-which-dont/</guid>
     </item>
   </channel>
 </rss>
