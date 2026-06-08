@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 16:34:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 08 Jun 2026 16:40:01 +0000</lastBuildDate>
+    <item>
+      <title>2026 remote pay: beat the PPP trap</title>
+      <link>https://kubaik.github.io/2026-remote-pay-beat-the-ppp-trap/</link>
+      <description>2026 remote salary negotiation: use Levels.fyi and FX math to raise offers 76–118% from lower-cost countries.</description>
+      <pubDate>Mon, 08 Jun 2026 16:39:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-remote-pay-beat-the-ppp-trap/</guid>
+    </item>
     <item>
       <title>CircleCI beats GitHub Actions at 50k builds</title>
       <link>https://kubaik.github.io/circleci-beats-github-actions-at-50k-builds/</link>
@@ -138,13 +145,6 @@
       <description>In my experience, it works fine for small apps or internal tools, but as soon as you hit 10,000–20,000 requests per second, the math breaks down.</description>
       <pubDate>Sun, 07 Jun 2026 23:59:46 +0000</pubDate>
       <guid>https://kubaik.github.io/pool-size-too-high-not-low-kills-speed/</guid>
-    </item>
-    <item>
-      <title>AI skills worth $120k in 2026</title>
-      <link>https://kubaik.github.io/ai-skills-worth-120k-in-2026/</link>
-      <description>Python vs SQL AI stacks in 2026: latency, cost, and salary impact — backed by 47k survey responses and real infra bills. See the 89 ms vs 1,200 ms gap.</description>
-      <pubDate>Sun, 07 Jun 2026 23:48:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skills-worth-120k-in-2026/</guid>
     </item>
   </channel>
 </rss>
