@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 06:02:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 06:06:57 +0000</lastBuildDate>
+    <item>
+      <title>RAG in prod: why demos crumble</title>
+      <link>https://kubaik.github.io/rag-in-prod-why-demos-crumble/</link>
+      <description>Cut RAG pipeline latency 88% and cloud bill 83% by splitting retrieval and generation. Real numbers, Go + pgvector 0.7.0, Redis 7.2, vLLM 0.5.0-alpha — what the tutorials skip.</description>
+      <pubDate>Tue, 09 Jun 2026 06:06:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-in-prod-why-demos-crumble/</guid>
+    </item>
     <item>
       <title>Why 48 connections can break your DB</title>
       <link>https://kubaik.github.io/why-48-connections-can-break-your-db/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG latency 78% and AWS costs 35% with a two-tier FAISS + PostgreSQL system. Learn the cache invalidation, CDC and memory traps tutorials skip.</description>
       <pubDate>Mon, 08 Jun 2026 17:45:22 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-what-tutorials-wont-tell-you/</guid>
-    </item>
-    <item>
-      <title>8 DB pool size mistakes killing your CPU</title>
-      <link>https://kubaik.github.io/8-db-pool-size-mistakes-killing-your-cpu/</link>
-      <description>Cut connection wait time 50% by sizing pool to concurrency ceiling, not threads — with Node 20, Python 3.11 and PostgreSQL 16 benchmarks and exact formulas.</description>
-      <pubDate>Mon, 08 Jun 2026 17:28:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/8-db-pool-size-mistakes-killing-your-cpu/</guid>
     </item>
   </channel>
 </rss>
