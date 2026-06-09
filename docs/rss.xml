@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 23:12:41 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 23:16:05 +0000</lastBuildDate>
+    <item>
+      <title>PWAs in 2026: what browsers finally fixed</title>
+      <link>https://kubaik.github.io/pwas-in-2026-what-browsers-finally-fixed/</link>
+      <description>Cut API response time 60% with PWA caching — Background Sync v2, File System Access API, and the install prompt mistake most solo founders miss.</description>
+      <pubDate>Tue, 09 Jun 2026 23:16:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/pwas-in-2026-what-browsers-finally-fixed/</guid>
+    </item>
     <item>
       <title>Container builds in 2026: 7 speed hacks you missed</title>
       <link>https://kubaik.github.io/container-builds-in-2026-7-speed-hacks-you-missed/</link>
@@ -138,13 +145,6 @@
       <description>Ship a real SaaS in 6 weeks using AI tools — but only if you control the architecture. Learn the exact constraints, benchmarks, and refactor patterns that separate working code from melted VPS instances.</description>
       <pubDate>Tue, 09 Jun 2026 16:31:58 +0000</pubDate>
       <guid>https://kubaik.github.io/saas-in-6-weeks-80-ai-code-failed-in-prod/</guid>
-    </item>
-    <item>
-      <title>2026 GitOps showdown: ArgoCD vs Flux after two years</title>
-      <link>https://kubaik.github.io/2026-gitops-showdown-argocd-vs-flux-after-two-years/</link>
-      <description>Cut Kubernetes drift 90% with GitOps — Flux v2.3 syncs in 390 ms, costs 0.9 vCPU, and runs for two years without a UI meltdown. Real production numbers from 2026.</description>
-      <pubDate>Tue, 09 Jun 2026 15:58:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-gitops-showdown-argocd-vs-flux-after-two-years/</guid>
     </item>
   </channel>
 </rss>
