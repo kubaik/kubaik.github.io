@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 08 Jun 2026 23:57:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 00:01:31 +0000</lastBuildDate>
+    <item>
+      <title>Hire remotely from Africa: show context, not code</title>
+      <link>https://kubaik.github.io/hire-remotely-from-africa-show-context-not-code/</link>
+      <description>In 2026, GitHub portfolios fail remote African devs — here’s how 3 engineers landed jobs with problem-first projects, production artifacts, and relevance scoring. Includes AWS services, specific tools, and actionable steps.</description>
+      <pubDate>Tue, 09 Jun 2026 00:01:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/hire-remotely-from-africa-show-context-not-code/</guid>
+    </item>
     <item>
       <title>50k builds: GitHub vs CircleCI cost smackdown</title>
       <link>https://kubaik.github.io/50k-builds-github-vs-circleci-cost-smackdown/</link>
@@ -138,13 +145,6 @@
       <description>Turn your cost of living into higher pay with a data-driven negotiation playbook used by engineers in Colombia, Mexico, and Brazil — includes scripts, spreadsheets, and email templates.</description>
       <pubDate>Mon, 08 Jun 2026 11:28:12 +0000</pubDate>
       <guid>https://kubaik.github.io/turn-cop-into-usd-remote-pay-hacks/</guid>
-    </item>
-    <item>
-      <title>Ship faster with a paved road: 4 weeks to 80% less toil</title>
-      <link>https://kubaik.github.io/ship-faster-with-a-paved-road-4-weeks-to-80-less-toil/</link>
-      <description>Ship 80% faster with a paved road: 4-week plan cuts merge-to-prod time from 30 min to 4 min, cuts on-call pages 75%, and drops infra cost 39% per 1k API requests.</description>
-      <pubDate>Mon, 08 Jun 2026 09:23:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-faster-with-a-paved-road-4-weeks-to-80-less-toil/</guid>
     </item>
   </channel>
 </rss>
