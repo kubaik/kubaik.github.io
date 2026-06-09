@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 20:37:31 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 20:42:08 +0000</lastBuildDate>
+    <item>
+      <title>5 AI pair tools that fixed our code reviews</title>
+      <link>https://kubaik.github.io/5-ai-pair-tools-that-fixed-our-code-reviews/</link>
+      <description>Save 60% on PR review time with Zed AI — setup hours, costs, and the exact metrics that convinced our team to switch editors.</description>
+      <pubDate>Tue, 09 Jun 2026 20:42:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-ai-pair-tools-that-fixed-our-code-reviews/</guid>
+    </item>
     <item>
       <title>Audit logs: Postgres vs ClickHouse under load</title>
       <link>https://kubaik.github.io/audit-logs-postgres-vs-clickhouse-under-load/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% with SSE in 2026 — connection pooling, keep-alive tricks, and the one mistake most teams make with WebSockets. Includes cost breakdown per 1M updates.</description>
       <pubDate>Tue, 09 Jun 2026 12:21:37 +0000</pubDate>
       <guid>https://kubaik.github.io/6-ways-to-ship-real-time-without-websockets/</guid>
-    </item>
-    <item>
-      <title>4 AI tools shipping real products in 2026</title>
-      <link>https://kubaik.github.io/4-ai-tools-shipping-real-products-in-2026/</link>
-      <description>Ship real products faster with 4 AI tools tested in 2026 — cost, latency, and setup time for non-traditional developers building compliance APIs, SaaS, and more.</description>
-      <pubDate>Tue, 09 Jun 2026 11:47:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/4-ai-tools-shipping-real-products-in-2026/</guid>
     </item>
   </channel>
 </rss>

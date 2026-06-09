@@ -26,5 +26,6 @@
   "How I design for LLM latency: the patterns that keep AI features feeling fast",
   "API design in 2026: what GraphQL, REST, and tRPC each still do better than the others",
   "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress",
-  "Building audit logs that satisfy compliance requirements without killing performance"
+  "Building audit logs that satisfy compliance requirements without killing performance",
+  "Pair programming with AI: how it changed collaboration on my team"
 ]
