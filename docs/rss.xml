@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 13:08:29 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 10:12:07 +0000</lastBuildDate>
+    <item>
+      <title>Cut latency 70% with edge functions or waste CPU</title>
+      <link>https://kubaik.github.io/cut-latency-70-with-edge-functions-or-waste-cpu/</link>
+      <description>Cut API response time 70% with edge functions — real p50/p95 numbers, Cloudflare Workers vs Vercel Edge pros/cons, and the exact TTL mistake most teams make.</description>
+      <pubDate>Tue, 09 Jun 2026 10:12:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-latency-70-with-edge-functions-or-waste-cpu/</guid>
+    </item>
     <item>
       <title>Build the 30-minute deployment road</title>
       <link>https://kubaik.github.io/build-the-30-minute-deployment-road/</link>
@@ -138,13 +145,6 @@
       <description>Price your remote salary like a New York dev — $120k target, $112/hr client rate, 6% rejection drop. FX locks, VAT gotchas, and the 48-hour rule most freelancers miss.</description>
       <pubDate>Mon, 08 Jun 2026 23:30:46 +0000</pubDate>
       <guid>https://kubaik.github.io/price-your-remote-job-like-a-new-york-dev/</guid>
-    </item>
-    <item>
-      <title>Claude code review: wins and blind spots</title>
-      <link>https://kubaik.github.io/claude-code-review-wins-and-blind-spots/</link>
-      <description>AI code review with Claude saves 150 hours/month but misses race conditions and logic bugs. Setup, costs, and where it fails in 2026.</description>
-      <pubDate>Mon, 08 Jun 2026 23:14:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/claude-code-review-wins-and-blind-spots/</guid>
     </item>
   </channel>
 </rss>
