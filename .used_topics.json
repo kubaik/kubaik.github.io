@@ -22,5 +22,6 @@
   "React 19 in production: what the compiler actually changed about how I write components",
   "The skills that protect your salary when AI automates junior developer tasks",
   "How I replaced a $3k/month Kubernetes cluster with a $200/month alternative",
-  "How to stay technically relevant when the tools change faster than you can learn them"
+  "How to stay technically relevant when the tools change faster than you can learn them",
+  "How I design for LLM latency: the patterns that keep AI features feeling fast"
 ]

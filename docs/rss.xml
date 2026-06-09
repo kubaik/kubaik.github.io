@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 18:49:09 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 19:11:04 +0000</lastBuildDate>
+    <item>
+      <title>LLM latency: what kills speed first</title>
+      <link>https://kubaik.github.io/llm-latency-what-kills-speed-first/</link>
+      <description>Cut LLM latency 78%: the SDK knobs nobody tunes — connection pools, idle sockets, DNS cache, and the first-token cache you missed</description>
+      <pubDate>Tue, 09 Jun 2026 19:11:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-latency-what-kills-speed-first/</guid>
+    </item>
     <item>
       <title>Stay relevant when tools change faster than you can</title>
       <link>https://kubaik.github.io/stay-relevant-when-tools-change-faster-than-you-can/</link>
@@ -138,13 +145,6 @@
       <description>Cut deployment lead time from 11 days to 28 minutes with a paved road — the real cost of environment drift, policy enforcement, and Backstage templates in 2026</description>
       <pubDate>Tue, 09 Jun 2026 09:52:14 +0000</pubDate>
       <guid>https://kubaik.github.io/build-the-30-minute-deployment-road/</guid>
-    </item>
-    <item>
-      <title>Event sourcing: pay the complexity tax only here</title>
-      <link>https://kubaik.github.io/event-sourcing-pay-the-complexity-tax-only-here/</link>
-      <description>Cut audit time from hours to minutes with event sourcing in 2026 — when it pays off and when to avoid it. Benchmarks, schema traps, and the real cost of 10 k events/sec.</description>
-      <pubDate>Tue, 09 Jun 2026 09:48:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/event-sourcing-pay-the-complexity-tax-only-here/</guid>
     </item>
   </channel>
 </rss>
