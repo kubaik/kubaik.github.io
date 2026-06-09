@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 04:42:08 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 04:47:17 +0000</lastBuildDate>
+    <item>
+      <title>CircleCI still beats GitHub Actions at 50k builds</title>
+      <link>https://kubaik.github.io/circleci-still-beats-github-actions-at-50k-builds/</link>
+      <description>CircleCI beats GitHub Actions at 50k builds/month by 75% — with real cost breakdowns, hidden fees, and Nairobi fintech case studies from 2026.</description>
+      <pubDate>Tue, 09 Jun 2026 04:46:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/circleci-still-beats-github-actions-at-50k-builds/</guid>
+    </item>
     <item>
       <title>Choose no-code only when</title>
       <link>https://kubaik.github.io/choose-no-code-only-when/</link>
@@ -138,13 +145,6 @@
       <description>AI skills that pay 35% more in 2026 — the only two stacks that move the needle on salary, with concrete latency, cost, and audit data.</description>
       <pubDate>Mon, 08 Jun 2026 14:50:17 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-ai-skills-that-increase-pay/</guid>
-    </item>
-    <item>
-      <title>Senior devs flee big tech (not for money)</title>
-      <link>https://kubaik.github.io/senior-devs-flee-big-tech-not-for-money/</link>
-      <description>Cut big tech attrition 60%: meeting load, cycle time, and promotion velocity metrics that actually matter in 2026.</description>
-      <pubDate>Mon, 08 Jun 2026 14:02:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-devs-flee-big-tech-not-for-money/</guid>
     </item>
   </channel>
 </rss>
