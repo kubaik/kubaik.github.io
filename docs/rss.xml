@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 18:25:41 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 18:30:30 +0000</lastBuildDate>
+    <item>
+      <title>AI-proof your salary: 5 skills that still pay 2026</title>
+      <link>https://kubaik.github.io/ai-proof-your-salary-5-skills-that-still-pay-2026/</link>
+      <description>Cut API response time 60% and protect your 2026 salary with 5 boring but proven skills — connection pooling, observability, cache hit rate, cold starts, and cost per request. Real metrics, code, and mistakes included.</description>
+      <pubDate>Tue, 09 Jun 2026 18:30:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-proof-your-salary-5-skills-that-still-pay-2026/</guid>
+    </item>
     <item>
       <title>React 19 compiler: 3x faster re-renders or bust?</title>
       <link>https://kubaik.github.io/react-19-compiler-3x-faster-re-renders-or-bust/</link>
@@ -138,13 +145,6 @@
       <description>Cut security incidents 60% by scanning AI-generated code for 7 hidden risks before they hit prod</description>
       <pubDate>Tue, 09 Jun 2026 09:26:14 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-codes-hidden-cves-exposed/</guid>
-    </item>
-    <item>
-      <title>Negotiate remote pay from low-cost cities</title>
-      <link>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-cities/</link>
-      <description>Raise remote salary 33–100% from lower-cost countries — exact templates, payment rails, and dashboards that clients actually approve</description>
-      <pubDate>Tue, 09 Jun 2026 09:14:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-remote-pay-from-low-cost-cities/</guid>
     </item>
   </channel>
 </rss>
