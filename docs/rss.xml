@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 09:48:32 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 09:52:21 +0000</lastBuildDate>
+    <item>
+      <title>Build the 30-minute deployment road</title>
+      <link>https://kubaik.github.io/build-the-30-minute-deployment-road/</link>
+      <description>Cut deployment lead time from 11 days to 28 minutes with a paved road — the real cost of environment drift, policy enforcement, and Backstage templates in 2026</description>
+      <pubDate>Tue, 09 Jun 2026 09:52:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-the-30-minute-deployment-road/</guid>
+    </item>
     <item>
       <title>Event sourcing: pay the complexity tax only here</title>
       <link>https://kubaik.github.io/event-sourcing-pay-the-complexity-tax-only-here/</link>
@@ -138,13 +145,6 @@
       <description>AI code review with Claude saves 150 hours/month but misses race conditions and logic bugs. Setup, costs, and where it fails in 2026.</description>
       <pubDate>Mon, 08 Jun 2026 23:14:01 +0000</pubDate>
       <guid>https://kubaik.github.io/claude-code-review-wins-and-blind-spots/</guid>
-    </item>
-    <item>
-      <title>RAG pipelines: 3 untold prod traps</title>
-      <link>https://kubaik.github.io/rag-pipelines-3-untold-prod-traps/</link>
-      <description>Cut RAG pipeline latency 76% and save $1,380/month — the hidden costs tutorials ignore: connection churn, cache semantics, and prompt overhead. Real numbers from a 2,000 QPS Jakarta startup.</description>
-      <pubDate>Mon, 08 Jun 2026 22:22:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-pipelines-3-untold-prod-traps/</guid>
     </item>
   </channel>
 </rss>
