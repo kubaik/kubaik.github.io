@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 02:02:18 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 03:28:49 +0000</lastBuildDate>
+    <item>
+      <title>AI skills: 2 salaries that move in 2026</title>
+      <link>https://kubaik.github.io/ai-skills-2-salaries-that-move-in-2026/</link>
+      <description>Salaries in 2026 move 30% when engineers master prompt + chaining vs RAG pipelines — latency, cost, and MTTR numbers that recruiters actually read</description>
+      <pubDate>Tue, 09 Jun 2026 03:28:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-2-salaries-that-move-in-2026/</guid>
+    </item>
     <item>
       <title>Mis-size DB pool? Here’s why</title>
       <link>https://kubaik.github.io/mis-size-db-pool-heres-why/</link>
@@ -138,13 +145,6 @@
       <description>Cut big tech attrition 60%: meeting load, cycle time, and promotion velocity metrics that actually matter in 2026.</description>
       <pubDate>Mon, 08 Jun 2026 14:02:25 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-devs-flee-big-tech-not-for-money/</guid>
-    </item>
-    <item>
-      <title>Ship GitHub, not a portfolio</title>
-      <link>https://kubaik.github.io/ship-github-not-a-portfolio/</link>
-      <description>Land remote jobs faster by making GitHub your portfolio — real projects, clean READMEs, and live demos beat polished portfolio sites every time.</description>
-      <pubDate>Mon, 08 Jun 2026 12:28:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-github-not-a-portfolio/</guid>
     </item>
   </channel>
 </rss>
