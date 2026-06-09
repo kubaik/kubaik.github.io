@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 08:58:09 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 09:03:26 +0000</lastBuildDate>
+    <item>
+      <title>Build dev platform for $2k/month</title>
+      <link>https://kubaik.github.io/build-dev-platform-for-2kmonth/</link>
+      <description>Cut dev platform costs 77% to $412/month with ephemeral environments, Pulumi, and Next.js ISR — connection-first design for mobile networks in Africa</description>
+      <pubDate>Tue, 09 Jun 2026 09:02:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-dev-platform-for-2kmonth/</guid>
+    </item>
     <item>
       <title>Africa devs: Ship production code, not CRUD</title>
       <link>https://kubaik.github.io/africa-devs-ship-production-code-not-crud/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI infra bill 80% and raise salary 28-35% in 2026: RAG pipelines vs prompt engineering — the real numbers, benchmarks, and security pitfalls most teams miss.</description>
       <pubDate>Mon, 08 Jun 2026 20:05:11 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-pipelines-the-2026-salary-multiplier/</guid>
-    </item>
-    <item>
-      <title>Skip WebSockets: cheaper real-time hacks</title>
-      <link>https://kubaik.github.io/skip-websockets-cheaper-real-time-hacks/</link>
-      <description>Cut real-time feature costs 86% using SSE + Redis — latency benchmarks, Safari fallback, and code samples for Node 20 LTS and Redis 7.2.</description>
-      <pubDate>Mon, 08 Jun 2026 19:43:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-websockets-cheaper-real-time-hacks/</guid>
     </item>
   </channel>
 </rss>
