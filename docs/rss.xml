@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 19:56:14 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 20:01:12 +0000</lastBuildDate>
+    <item>
+      <title>Drop Cypress in 2026: Playwright beats it head-to-head</title>
+      <link>https://kubaik.github.io/drop-cypress-in-2026-playwright-beats-it-head-to-head/</link>
+      <description>Why this list exists (what I was actually trying to solve) I inherited a React frontend that had 2,800 lines of Cypress tests nobody trusted anymore.</description>
+      <pubDate>Tue, 09 Jun 2026 20:01:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/drop-cypress-in-2026-playwright-beats-it-head-to-head/</guid>
+    </item>
     <item>
       <title>GraphQL vs REST vs tRPC: 2026’s API fight</title>
       <link>https://kubaik.github.io/graphql-vs-rest-vs-trpc-2026s-api-fight/</link>
@@ -138,13 +145,6 @@
       <description>Self-taught devs pass remote interviews by debugging real systems, not just LeetCode. Learn the trade-offs interviewers actually test — latency budgets, memory leaks, cache stampedes — with specific tools, benchmarks, and fixes.</description>
       <pubDate>Tue, 09 Jun 2026 10:55:19 +0000</pubDate>
       <guid>https://kubaik.github.io/pass-interviews-without-a-cs-degree/</guid>
-    </item>
-    <item>
-      <title>Cut latency 70% with edge functions or waste CPU</title>
-      <link>https://kubaik.github.io/cut-latency-70-with-edge-functions-or-waste-cpu/</link>
-      <description>Cut API response time 70% with edge functions — real p50/p95 numbers, Cloudflare Workers vs Vercel Edge pros/cons, and the exact TTL mistake most teams make.</description>
-      <pubDate>Tue, 09 Jun 2026 10:12:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-latency-70-with-edge-functions-or-waste-cpu/</guid>
     </item>
   </channel>
 </rss>

@@ -24,5 +24,6 @@
   "How I replaced a $3k/month Kubernetes cluster with a $200/month alternative",
   "How to stay technically relevant when the tools change faster than you can learn them",
   "How I design for LLM latency: the patterns that keep AI features feeling fast",
-  "API design in 2026: what GraphQL, REST, and tRPC each still do better than the others"
+  "API design in 2026: what GraphQL, REST, and tRPC each still do better than the others",
+  "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress"
 ]
