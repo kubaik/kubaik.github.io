@@ -34,5 +34,6 @@
   "Documentation in 2026: how AI changed what humans still need to write",
   "Developer burnout in the AI era: why output pressure increased even as tools improved",
   "How I use Cloudflare Workers to handle 80% of traffic before it hits my origin server",
-  "Soft deletes at scale: why the simple pattern breaks and what to do instead"
+  "Soft deletes at scale: why the simple pattern breaks and what to do instead",
+  "How container builds changed in 2026: BuildKit, depot.dev, and why CI pipelines got faster"
 ]
