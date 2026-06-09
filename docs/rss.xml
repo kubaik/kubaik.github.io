@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 21:37:05 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 21:40:37 +0000</lastBuildDate>
+    <item>
+      <title>TLS stack breaks under post-quantum crypto</title>
+      <link>https://kubaik.github.io/tls-stack-breaks-under-post-quantum-crypto/</link>
+      <description>Cut TLS latency 22% when enabling Kyber768 — the hidden costs, AWS ALB tuning, and the hybrid cert generation workflow most teams miss in 2026.</description>
+      <pubDate>Tue, 09 Jun 2026 21:40:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/tls-stack-breaks-under-post-quantum-crypto/</guid>
+    </item>
     <item>
       <title>LLM quality: metrics that cut hallucinations 40%</title>
       <link>https://kubaik.github.io/llm-quality-metrics-that-cut-hallucinations-40/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI hallucinations 68% with Sentry AI Guard 2.4 — the only tool that enforces senior-level quality in CI without rewriting your stack</description>
       <pubDate>Tue, 09 Jun 2026 12:41:59 +0000</pubDate>
       <guid>https://kubaik.github.io/7-ai-red-flags-your-senior-title-hides/</guid>
-    </item>
-    <item>
-      <title>Skip the zero-trust hype for 5-person teams</title>
-      <link>https://kubaik.github.io/skip-the-zero-trust-hype-for-5-person-teams/</link>
-      <description>Cut security overhead 60% with minimal zero trust — secrets rotation, rate limits, and when to skip mTLS. Tools: Vault 1.15, Cognito, Calico 3.26.</description>
-      <pubDate>Tue, 09 Jun 2026 12:37:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-the-zero-trust-hype-for-5-person-teams/</guid>
     </item>
   </channel>
 </rss>
