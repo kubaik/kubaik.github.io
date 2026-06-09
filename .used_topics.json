@@ -28,5 +28,6 @@
   "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress",
   "Building audit logs that satisfy compliance requirements without killing performance",
   "Pair programming with AI: how it changed collaboration on my team",
-  "How AI is changing infrastructure: automated capacity planning, anomaly detection, and runbooks"
+  "How AI is changing infrastructure: automated capacity planning, anomaly detection, and runbooks",
+  "Evaluating LLM output quality at scale: the metrics that actually matter"
 ]
