@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 19:31:39 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 19:36:24 +0000</lastBuildDate>
+    <item>
+      <title>GraphQL vs REST vs tRPC: 2026’s API fight</title>
+      <link>https://kubaik.github.io/graphql-vs-rest-vs-trpc-2026s-api-fight/</link>
+      <description>Cut API design debates with data — REST vs GraphQL vs tRPC in 2026 with concrete benchmarks, cost figures, and the exact mistake I made shipping GraphQL for CRUD.</description>
+      <pubDate>Tue, 09 Jun 2026 19:36:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/graphql-vs-rest-vs-trpc-2026s-api-fight/</guid>
+    </item>
     <item>
       <title>LLM latency: what kills speed first</title>
       <link>https://kubaik.github.io/llm-latency-what-kills-speed-first/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 70% with edge functions — real p50/p95 numbers, Cloudflare Workers vs Vercel Edge pros/cons, and the exact TTL mistake most teams make.</description>
       <pubDate>Tue, 09 Jun 2026 10:12:02 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-latency-70-with-edge-functions-or-waste-cpu/</guid>
-    </item>
-    <item>
-      <title>Build the 30-minute deployment road</title>
-      <link>https://kubaik.github.io/build-the-30-minute-deployment-road/</link>
-      <description>Cut deployment lead time from 11 days to 28 minutes with a paved road — the real cost of environment drift, policy enforcement, and Backstage templates in 2026</description>
-      <pubDate>Tue, 09 Jun 2026 09:52:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-the-30-minute-deployment-road/</guid>
     </item>
   </channel>
 </rss>
