@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 21:40:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 21:45:31 +0000</lastBuildDate>
+    <item>
+      <title>AI API docs: what humans still write in 2026</title>
+      <link>https://kubaik.github.io/ai-api-docs-what-humans-still-write-in-2026/</link>
+      <description>Cut API error rates 63% with guardrail docs — learn what humans must still write, Speakeasy 2.8, FastAPI 0.111, and the guardrail doc template that blocks AI hallucinations.</description>
+      <pubDate>Tue, 09 Jun 2026 21:45:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-api-docs-what-humans-still-write-in-2026/</guid>
+    </item>
     <item>
       <title>TLS stack breaks under post-quantum crypto</title>
       <link>https://kubaik.github.io/tls-stack-breaks-under-post-quantum-crypto/</link>
@@ -138,13 +145,6 @@
       <description>The only thing it couldn’t do was handle the 1,000+ concurrent users I’d planned for.</description>
       <pubDate>Tue, 09 Jun 2026 13:19:00 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-killed-these-micro-saas-niches/</guid>
-    </item>
-    <item>
-      <title>7 AI red flags your senior title hides</title>
-      <link>https://kubaik.github.io/7-ai-red-flags-your-senior-title-hides/</link>
-      <description>Cut AI hallucinations 68% with Sentry AI Guard 2.4 — the only tool that enforces senior-level quality in CI without rewriting your stack</description>
-      <pubDate>Tue, 09 Jun 2026 12:41:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-ai-red-flags-your-senior-title-hides/</guid>
     </item>
   </channel>
 </rss>
