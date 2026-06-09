@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 13:19:04 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 13:41:27 +0000</lastBuildDate>
+    <item>
+      <title>Zero-downtime migrations: let the DB do the work</title>
+      <link>https://kubaik.github.io/zero-downtime-migrations-let-the-db-do-the-work/</link>
+      <description>Cut migration downtime 90% by letting PostgreSQL do the work — backfill in batches, dual writes, and materialized views you can roll back in seconds</description>
+      <pubDate>Tue, 09 Jun 2026 13:41:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-downtime-migrations-let-the-db-do-the-work/</guid>
+    </item>
     <item>
       <title>AI killed these Micro-SaaS niches</title>
       <link>https://kubaik.github.io/ai-killed-these-micro-saas-niches/</link>
@@ -138,13 +145,6 @@
       <description>Cut EC2 costs 70% with one sysctl tweak — TCP BBR, zswap, gp3 IOPS, and the exact commands for Amazon Linux 2023 and Ubuntu 22.04 LTS.</description>
       <pubDate>Tue, 09 Jun 2026 04:57:04 +0000</pubDate>
       <guid>https://kubaik.github.io/drop-ec2-bills-70-without-code/</guid>
-    </item>
-    <item>
-      <title>CircleCI still beats GitHub Actions at 50k builds</title>
-      <link>https://kubaik.github.io/circleci-still-beats-github-actions-at-50k-builds/</link>
-      <description>CircleCI beats GitHub Actions at 50k builds/month by 75% — with real cost breakdowns, hidden fees, and Nairobi fintech case studies from 2026.</description>
-      <pubDate>Tue, 09 Jun 2026 04:46:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/circleci-still-beats-github-actions-at-50k-builds/</guid>
     </item>
   </channel>
 </rss>

@@ -12,5 +12,6 @@
   "Why most AI-generated code breaks in edge cases",
   "Zero-trust architecture for small teams: what actually makes sense to implement",
   "How AI tools are changing what 'senior developer' actually means in 2026",
-  "Micro-SaaS in 2026: the niches that are working and the ones that got commoditised by AI"
+  "Micro-SaaS in 2026: the niches that are working and the ones that got commoditised by AI",
+  "How I handle database schema migrations in a zero-downtime deployment pipeline"
 ]
