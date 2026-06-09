@@ -27,5 +27,6 @@
   "API design in 2026: what GraphQL, REST, and tRPC each still do better than the others",
   "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress",
   "Building audit logs that satisfy compliance requirements without killing performance",
-  "Pair programming with AI: how it changed collaboration on my team"
+  "Pair programming with AI: how it changed collaboration on my team",
+  "How AI is changing infrastructure: automated capacity planning, anomaly detection, and runbooks"
 ]
