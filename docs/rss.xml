@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 12:16:44 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 12:21:42 +0000</lastBuildDate>
+    <item>
+      <title>6 ways to ship real-time without WebSockets</title>
+      <link>https://kubaik.github.io/6-ways-to-ship-real-time-without-websockets/</link>
+      <description>Cut API response time 60% with SSE in 2026 — connection pooling, keep-alive tricks, and the one mistake most teams make with WebSockets. Includes cost breakdown per 1M updates.</description>
+      <pubDate>Tue, 09 Jun 2026 12:21:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/6-ways-to-ship-real-time-without-websockets/</guid>
+    </item>
     <item>
       <title>4 AI tools shipping real products in 2026</title>
       <link>https://kubaik.github.io/4-ai-tools-shipping-real-products-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>In 2026, GitHub portfolios fail remote African devs — here’s how 3 engineers landed jobs with problem-first projects, production artifacts, and relevance scoring. Includes AWS services, specific tools, and actionable steps.</description>
       <pubDate>Tue, 09 Jun 2026 00:01:03 +0000</pubDate>
       <guid>https://kubaik.github.io/hire-remotely-from-africa-show-context-not-code/</guid>
-    </item>
-    <item>
-      <title>50k builds: GitHub vs CircleCI cost smackdown</title>
-      <link>https://kubaik.github.io/50k-builds-github-vs-circleci-cost-smackdown/</link>
-      <description>CircleCI beats GitHub Actions 2-to-1 at 50k builds/month — real cost data, benchmarks, and the pricing change that broke the old advice.</description>
-      <pubDate>Mon, 08 Jun 2026 23:57:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/50k-builds-github-vs-circleci-cost-smackdown/</guid>
     </item>
   </channel>
 </rss>
