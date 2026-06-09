@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 22:58:57 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 23:03:33 +0000</lastBuildDate>
+    <item>
+      <title>Soft deletes fail: what breaks first</title>
+      <link>https://kubaik.github.io/soft-deletes-fail-what-breaks-first/</link>
+      <description>Cut API response time 75% by ditching soft deletes — index bloat, 1.8s queries, and $18k/month storage bills exposed</description>
+      <pubDate>Tue, 09 Jun 2026 23:03:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/soft-deletes-fail-what-breaks-first/</guid>
+    </item>
     <item>
       <title>Block 80% of traffic with Workers</title>
       <link>https://kubaik.github.io/block-80-of-traffic-with-workers/</link>
@@ -138,13 +145,6 @@
       <description>A simple endpoint took 45ms on x86 and 38ms on ARM64.</description>
       <pubDate>Tue, 09 Jun 2026 15:45:09 +0000</pubDate>
       <guid>https://kubaik.github.io/deploy-a-solo-stack-for-20month-in-2026/</guid>
-    </item>
-    <item>
-      <title>Land $5k remote roles: what Nairobi devs got right</title>
-      <link>https://kubaik.github.io/land-5k-remote-roles-what-nairobi-devs-got-right/</link>
-      <description>Land $5k remote roles in 2026 — how Nairobi and Lagos devs reframed their résumés, built async portfolios, and closed seed-stage contracts at the top of the range.</description>
-      <pubDate>Tue, 09 Jun 2026 15:37:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/land-5k-remote-roles-what-nairobi-devs-got-right/</guid>
     </item>
   </channel>
 </rss>

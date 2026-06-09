@@ -33,5 +33,6 @@
   "How post-quantum cryptography affects the TLS stack you're running today",
   "Documentation in 2026: how AI changed what humans still need to write",
   "Developer burnout in the AI era: why output pressure increased even as tools improved",
-  "How I use Cloudflare Workers to handle 80% of traffic before it hits my origin server"
+  "How I use Cloudflare Workers to handle 80% of traffic before it hits my origin server",
+  "Soft deletes at scale: why the simple pattern breaks and what to do instead"
 ]
