@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 15:32:24 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 15:37:46 +0000</lastBuildDate>
+    <item>
+      <title>Land $5k remote roles: what Nairobi devs got right</title>
+      <link>https://kubaik.github.io/land-5k-remote-roles-what-nairobi-devs-got-right/</link>
+      <description>Land $5k remote roles in 2026 — how Nairobi and Lagos devs reframed their résumés, built async portfolios, and closed seed-stage contracts at the top of the range.</description>
+      <pubDate>Tue, 09 Jun 2026 15:37:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/land-5k-remote-roles-what-nairobi-devs-got-right/</guid>
+    </item>
     <item>
       <title>Zero-downtime migrations: let the DB do the work</title>
       <link>https://kubaik.github.io/zero-downtime-migrations-let-the-db-do-the-work/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% by shrinking the database connection pool — the real levers most teams ignore in 2026</description>
       <pubDate>Tue, 09 Jun 2026 05:06:35 +0000</pubDate>
       <guid>https://kubaik.github.io/why-48-connections-can-break-your-db/</guid>
-    </item>
-    <item>
-      <title>Drop EC2 bills 70% without code</title>
-      <link>https://kubaik.github.io/drop-ec2-bills-70-without-code/</link>
-      <description>Cut EC2 costs 70% with one sysctl tweak — TCP BBR, zswap, gp3 IOPS, and the exact commands for Amazon Linux 2023 and Ubuntu 22.04 LTS.</description>
-      <pubDate>Tue, 09 Jun 2026 04:57:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/drop-ec2-bills-70-without-code/</guid>
     </item>
   </channel>
 </rss>
