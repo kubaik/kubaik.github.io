@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 15:36:58 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 12:42:04 +0000</lastBuildDate>
+    <item>
+      <title>7 AI red flags your senior title hides</title>
+      <link>https://kubaik.github.io/7-ai-red-flags-your-senior-title-hides/</link>
+      <description>Cut AI hallucinations 68% with Sentry AI Guard 2.4 — the only tool that enforces senior-level quality in CI without rewriting your stack</description>
+      <pubDate>Tue, 09 Jun 2026 12:41:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/7-ai-red-flags-your-senior-title-hides/</guid>
+    </item>
+    <item>
+      <title>Skip the zero-trust hype for 5-person teams</title>
+      <link>https://kubaik.github.io/skip-the-zero-trust-hype-for-5-person-teams/</link>
+      <description>Cut security overhead 60% with minimal zero trust — secrets rotation, rate limits, and when to skip mTLS. Tools: Vault 1.15, Cognito, Calico 3.26.</description>
+      <pubDate>Tue, 09 Jun 2026 12:37:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-the-zero-trust-hype-for-5-person-teams/</guid>
+    </item>
     <item>
       <title>AI code traps: Copilot vs Cursor smackdown</title>
       <link>https://kubaik.github.io/ai-code-traps-copilot-vs-cursor-smackdown/</link>
@@ -131,13 +145,6 @@
       <description>Choose no-code vs custom code in 2026 with this decision framework: latency SLOs, export limits, GDPR, and real cost data. Save weeks of rewrite pain.</description>
       <pubDate>Tue, 09 Jun 2026 04:30:23 +0000</pubDate>
       <guid>https://kubaik.github.io/choose-no-code-only-when/</guid>
-    </item>
-    <item>
-      <title>AI skills: 2 salaries that move in 2026</title>
-      <link>https://kubaik.github.io/ai-skills-2-salaries-that-move-in-2026/</link>
-      <description>Salaries in 2026 move 30% when engineers master prompt + chaining vs RAG pipelines — latency, cost, and MTTR numbers that recruiters actually read</description>
-      <pubDate>Tue, 09 Jun 2026 03:28:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skills-2-salaries-that-move-in-2026/</guid>
     </item>
   </channel>
 </rss>
