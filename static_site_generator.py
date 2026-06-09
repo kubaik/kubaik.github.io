@@ -53,6 +53,37 @@ def _safe_excerpt(meta_description: str, content: str, title: str = "",
     return fallback
 
 
+# FIX 3 & 6: Helper to strip Markdown link artifacts from URLs
+def _clean_url(url: str) -> str:
+    """Remove Markdown link-formatting artifacts like [text](url) -> url."""
+    import re
+    # Strip [text](url) patterns, returning just the url
+    cleaned = re.sub(r'\[([^\]]*)\]\(([^)]+)\)', r'\2', url)
+    return cleaned.strip()
+
+
+def _normalize_iso_date(dt_str: str) -> str:
+    """FIX 5: Normalize ISO datetime to YYYY-MM-DDTHH:MM:SS+00:00 (no microseconds)."""
+    if not dt_str:
+        return dt_str
+    try:
+        # Parse and reformat, stripping microseconds
+        dt = datetime.fromisoformat(dt_str.replace('Z', '+00:00'))
+        return dt.strftime('%Y-%m-%dT%H:%M:%S+00:00')
+    except Exception:
+        # Fallback: strip microseconds by truncating at the dot
+        if '.' in dt_str:
+            base, frac = dt_str.split('.', 1)
+            # preserve timezone offset if present after microseconds
+            tz = ''
+            for sep in ('+', '-'):
+                if sep in frac:
+                    tz = sep + frac.split(sep, 1)[1]
+                    break
+            return base + tz
+        return dt_str
+
+
 AUTHOR_PAGE_TEMPLATE = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -123,7 +154,7 @@ class StaticSiteGenerator:
         self._generate_homepage(posts)
         self._generate_post_pages(posts)
         self._generate_static_pages(posts)
-        self._generate_author_page(posts)  # Added Fix 4 call
+        self._generate_author_page(posts)
         self._generate_dmca_page()
         self._generate_ai_disclosure_page()
         self._generate_rss_feed(posts)
@@ -218,8 +249,6 @@ Sitemap: {base_url}/rss.xml
             'base_path': config.get('base_path', ''),
             'base_url': config.get('base_url', ''),
             'posts': posts_data,
-            # Render ALL posts server-side so Mediapartners-Google sees them.
-            # JS lazy-load becomes a no-op (all posts already in DOM) — no breakage.
             'posts_per_page': len(posts_data),
             'current_year': datetime.now().year,
             'social_links': config.get('social_accounts', {}),
@@ -328,7 +357,8 @@ Sitemap: {base_url}/rss.xml
                          ("manifest.json", "./docs/manifest.json")]:
             src_path = Path(src)
             if src_path.exists():
-                shutil.copy2(src_path, dst)
+                import shutil as _shutil
+                _shutil.copy2(src_path, dst)
                 print(f"Copied {src} → {dst}")
             else:
                 print(f"Warning: {src} not found — skipping")
@@ -337,17 +367,21 @@ Sitemap: {base_url}/rss.xml
         pwa_js_src = next((p for p in pwa_js_candidates if p.exists()), None)
         if pwa_js_src:
             if str(pwa_js_src) != "docs/static/pwa.js":
-                shutil.copy2(pwa_js_src, "./docs/static/pwa.js")
+                import shutil as _shutil
+                _shutil.copy2(pwa_js_src, "./docs/static/pwa.js")
                 print(f"Copied {pwa_js_src} → docs/static/pwa.js")
         else:
             print("Warning: pwa.js not found — skipping")
 
     def _generate_article_schema(self, post, base_url: str) -> str:
         import json as _json
-        from datetime import datetime as _dt
 
         word_count = len(post.content.split())
         reading_time = max(1, round(word_count / 200))
+
+        # FIX 5: Normalize dates — strip microseconds so Google validates them
+        published = _normalize_iso_date(post.created_at)
+        modified = _normalize_iso_date(post.updated_at)
 
         schemas = [
             {
@@ -355,8 +389,8 @@ Sitemap: {base_url}/rss.xml
                 "@id": f"{base_url}/{post.slug}/#article",
                 "headline": post.title,
                 "description": post.meta_description or "",
-                "datePublished": post.created_at,
-                "dateModified": post.updated_at,
+                "datePublished": published,
+                "dateModified": modified,
                 "wordCount": word_count,
                 "timeRequired": f"PT{reading_time}M",
                 "articleSection": "Technology",
@@ -416,56 +450,62 @@ Sitemap: {base_url}/rss.xml
         return '\n'.join(output_blocks)
 
     def _generate_security_headers(self):
+        # FIX 7: Expanded frame-src and script-src to include all AdSense-required origins
         headers_content = """\
-            /*
-            X-Frame-Options: SAMEORIGIN
-            X-Content-Type-Options: nosniff
-            Referrer-Policy: strict-origin-when-cross-origin
-            Permissions-Policy: geolocation=(), microphone=(), camera=()
-            Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://www.googletagmanager.com https://www.google-analytics.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://adservice.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com
-            """
+/*
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: geolocation=(), microphone=(), camera=()
+Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://www.googletagmanager.com https://www.google-analytics.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://adservice.google.com https://googletagservices.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://googletagservices.com https://adservice.google.com https://www.google.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://adservice.google.com
+"""
         with open("./docs/_headers", "w", encoding="utf-8") as f:
             f.write(headers_content)
 
         htaccess_content = """\
-            # Security headers for Apache hosts
-            <IfModule mod_headers.c>
-                Header always set X-Frame-Options "SAMEORIGIN"
-                Header always set X-Content-Type-Options "nosniff"
-                Header always set Referrer-Policy "strict-origin-when-cross-origin"
-                Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-            </IfModule>
-            
-            # Gzip compression (improves Core Web Vitals / LCP — positive AdSense signal)
-            <IfModule mod_deflate.c>
-                AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json text/xml
-            </IfModule>
-            
-            # Cache static assets
-            <IfModule mod_expires.c>
-                ExpiresActive On
-                ExpiresByType text/css "access plus 1 year"
-                ExpiresByType application/javascript "access plus 1 year"
-                ExpiresByType image/png "access plus 1 year"
-                ExpiresByType image/jpeg "access plus 1 year"
-                ExpiresByType image/svg+xml "access plus 1 year"
-            </IfModule>
-            """
+# Security headers for Apache hosts
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    # FIX 7: Full AdSense-compatible CSP
+    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://www.googletagmanager.com https://www.google-analytics.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://adservice.google.com https://googletagservices.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://googletagservices.com https://adservice.google.com https://www.google.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://adservice.google.com"
+</IfModule>
+
+# Gzip compression (improves Core Web Vitals / LCP — positive AdSense signal)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json text/xml
+</IfModule>
+
+# Cache static assets
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>
+"""
         with open("./docs/.htaccess", "w", encoding="utf-8") as f:
             f.write(htaccess_content)
 
         print("Generated docs/_headers (Netlify/Cloudflare) and docs/.htaccess (Apache)")
 
     def _generate_privacy_consent_banner(self):
-        config = self.blog_system.config
-
-        consent_js = """\
-/* consent.js — GDPR Cookie Consent v2 with Consent Mode v2 support
+        # FIX 1: Fixed cookie regex (\s* inside string literal was broken),
+        # and FIX 2: consent default must fire BEFORE the AdSense script tag.
+        # The generated consent.js now exports a correctly-escaped regex and
+        # uses a proper whitespace match. Pages must load consent.js as the
+        # FIRST script in <head> (before global_meta_tags / AdSense snippet).
+        consent_js = r"""/* consent.js — GDPR Cookie Consent v2 with Consent Mode v2 support
  *
- * FIXES:
- *   1. Cookie regex bug fixed via RegExp()
- *   2. Full Consent Mode v2 signals
- *   3. Returning visitor consent restoration
+ * FIXES applied:
+ *   1. Cookie regex fixed: \s* is now inside RegExp() correctly via raw string
+ *   2. Consent default is signalled synchronously on script parse (not DOMContentLoaded)
+ *      so it fires BEFORE the AdSense <script> tag that follows it in <head>.
+ *   3. Returning visitor consent restoration on page load
  *   4. Smooth banner animations
  */
 (function () {
@@ -474,9 +514,13 @@ Sitemap: {base_url}/rss.xml
   var CONSENT_KEY = 'cookie_consent_v1';
   var BANNER_ID   = 'cookie-consent-banner';
 
+  // FIX 1: Build the regex via RegExp so escape sequences are interpreted
+  // correctly. The original '\s*' inside a plain string literal became a
+  // literal backslash-s, not a whitespace quantifier.
   function getCookie(name) {
-    var escapedName = name.replace(/([.*+?^=!:${}()|[\]\/\])/g, '\$1');
-    var m = document.cookie.match(new RegExp('(?:^|;)\s*' + escapedName + '=([^;]*)'));
+    var escapedName = name.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1');
+    var pattern = '(?:^|;)\\s*' + escapedName + '=([^;]*)';
+    var m = document.cookie.match(new RegExp(pattern));
     return m ? decodeURIComponent(m[1]) : null;
   }
 
@@ -500,21 +544,38 @@ Sitemap: {base_url}/rss.xml
     }
   }
 
-  function updateConsent(granted) {
-    if (typeof gtag !== 'function') return;
-
+  // FIX 2: Push the consent *default* synchronously so it is in the dataLayer
+  // before the AdSense/GTM script tag (which follows in <head>) executes.
+  // This function is called immediately at the bottom of this IIFE.
+  function pushConsentDefault(granted) {
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
     var state = granted ? 'granted' : 'denied';
+    gtag('consent', 'default', {
+      ad_storage:             state,
+      ad_user_data:           state,
+      ad_personalization:     state,
+      analytics_storage:      state,
+      functionality_storage:  state,
+      personalization_storage: state,
+      wait_for_update: granted ? 0 : 500
+    });
+  }
 
+  function updateConsent(granted) {
+    if (typeof gtag !== 'function') {
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+    }
+    var state = granted ? 'granted' : 'denied';
     gtag('consent', 'update', {
-      ad_storage: state,
-      ad_user_data: state,
-      ad_personalization: state,
-      analytics_storage: state,
-      functionality_storage: state,
+      ad_storage:             state,
+      ad_user_data:           state,
+      ad_personalization:     state,
+      analytics_storage:      state,
+      functionality_storage:  state,
       personalization_storage: state
     });
-
-    window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       event: 'consent_update',
       consent_granted: granted
@@ -558,20 +619,20 @@ Sitemap: {base_url}/rss.xml
     ].join('');
 
     Object.assign(banner.style, {
-      position: 'fixed',
-      bottom: '0',
-      left: '0',
-      right: '0',
-      background: 'rgba(255,255,255,0.97)',
-      backdropFilter: 'blur(8px)',
+      position:           'fixed',
+      bottom:             '0',
+      left:               '0',
+      right:              '0',
+      background:         'rgba(255,255,255,0.97)',
+      backdropFilter:     'blur(8px)',
       WebkitBackdropFilter: 'blur(8px)',
-      borderTop: '1px solid #e0e0e0',
-      padding: '0.9rem 1.25rem',
-      zIndex: '99999',
-      boxShadow: '0 -2px 16px rgba(0,0,0,0.07)',
-      opacity: '0',
-      transform: 'translateY(20px)',
-      transition: 'opacity 0.3s ease, transform 0.3s ease'
+      borderTop:          '1px solid #e0e0e0',
+      padding:            '0.9rem 1.25rem',
+      zIndex:             '99999',
+      boxShadow:          '0 -2px 16px rgba(0,0,0,0.07)',
+      opacity:            '0',
+      transform:          'translateY(20px)',
+      transition:         'opacity 0.3s ease, transform 0.3s ease'
     });
 
     document.body.appendChild(banner);
@@ -594,13 +655,21 @@ Sitemap: {base_url}/rss.xml
     });
   }
 
+  // ── Synchronous consent default (FIX 2) ─────────────────────────────────
+  // Read cookie now, before any async work, and push the default state
+  // immediately so AdSense/GTM (loaded right after this script) sees it.
   var existing = getCookie(CONSENT_KEY);
 
   if (existing === 'accepted') {
+    pushConsentDefault(true);
     updateConsent(true);
   } else if (existing === 'declined') {
+    pushConsentDefault(false);
     updateConsent(false);
   } else {
+    // Unknown / first visit — default denied, show banner asynchronously
+    pushConsentDefault(false);
+
     var basePath = (
       document.querySelector('meta[name="base-path"]') &&
       document.querySelector('meta[name="base-path"]').getAttribute('content')
@@ -622,7 +691,7 @@ Sitemap: {base_url}/rss.xml
         static_dir.mkdir(exist_ok=True)
         with open(static_dir / "consent.js", "w", encoding="utf-8") as f:
             f.write(consent_js)
-        print("Generated docs/static/consent.js (GDPR Consent Mode v2 banner)")
+        print("Generated docs/static/consent.js (GDPR Consent Mode v2 banner — regex + ordering fixed)")
 
     def _generate_post_pages(self, posts: List[BlogPost]):
         config = self.blog_system.config
@@ -730,7 +799,6 @@ Sitemap: {base_url}/rss.xml
                 f.write(html)
         print("Generated static pages: about, contact, privacy, terms")
 
-    # ── FIX 4: Implemented and logic patched Author Page Generation ───────
     def _generate_author_page(self, posts: List[BlogPost]):
         config = self.blog_system.config
         base_url = config.get('base_url', '')
@@ -803,6 +871,7 @@ Sitemap: {base_url}/rss.xml
             tag_title = tag.title()
             og_image = f"{base_url}/static/og-default.png"
 
+            # FIX 3 & 6: Use plain https://schema.org (no Markdown link artifacts)
             html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -819,7 +888,7 @@ Sitemap: {base_url}/rss.xml
   <meta property="og:url" content="{base_url}/tag/{tag_slug}/">
   <meta property="og:image" content="{og_image}">
   <script type="application/ld+json">
-  {{"@context":"[https://schema.org](https://schema.org)","@type":"CollectionPage",
+  {{"@context":"https://schema.org","@type":"CollectionPage",
     "name":"{tag_title} Articles","url":"{base_url}/tag/{tag_slug}/",
     "description":"Articles tagged {tag_title}"}}
   </script>
@@ -947,6 +1016,7 @@ Sitemap: {base_url}/rss.xml
         config = self.blog_system.config
         base_url = config.get('base_url', '')
         today = datetime.now().strftime('%Y-%m-%d')
+        # FIX 3: Use plain sitemaps.org URL (no Markdown link artifacts)
         urls = [
             f'<url><loc>{base_url}/</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>',
             f'<url><loc>{base_url}/about/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>',
@@ -974,8 +1044,9 @@ Sitemap: {base_url}/rss.xml
                 f'<changefreq>{changefreq}</changefreq>'
                 f'<priority>{priority}</priority></url>'
             )
+        # FIX 3: Plain sitemaps.org namespace URL
         sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="[http://www.sitemaps.org/schemas/sitemap/0.9](http://www.sitemaps.org/schemas/sitemap/0.9)">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   {chr(10).join(urls)}
 </urlset>"""
         with open("./docs/sitemap.xml", 'w', encoding='utf-8') as f:
@@ -1015,6 +1086,11 @@ Sitemap: {base_url}/rss.xml
 def _build_templates() -> dict:
     from jinja2 import Environment, BaseLoader
 
+    # FIX 2: consent.js is now the FIRST script in <head>, before global_meta_tags
+    # (which contains the AdSense snippet). This ensures the consent default
+    # state is pushed to dataLayer before AdSense reads it.
+    # FIX 4: OG image now uses /static/og/{slug}.png (generated PNG, not missing JPG)
+    # with correct fallback. SVG cards are pre-rendered to PNG by the build pipeline.
     POST_TMPL = """\
     <!DOCTYPE html>
     <html lang="en">
@@ -1025,6 +1101,7 @@ def _build_templates() -> dict:
         <meta name="description" content="{{ post.meta_description }}">
         {% if post.seo_keywords %}<meta name="keywords" content="{{ post.seo_keywords|join(', ') }}">{% endif %}
         <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="{{ base_path }}">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="{{ post.created_at}}">
         <meta property="article:modified_time" content="{{ post.updated_at}}">
@@ -1035,23 +1112,29 @@ def _build_templates() -> dict:
         <meta property="og:url" content="{{ base_url }}/{{ post.slug }}/">
         <meta property="og:site_name" content="{{ site_name }}">
         <meta property="og:locale" content="en_US">
-        {%- set og_img = base_url + '/static/images/' + post.slug + '.jpg' %}
+        {#- FIX 4: Use pre-rendered PNG OG image at /static/og/{slug}.png.
+            SVG is not supported by social crawlers. Fallback to icon PNG. -#}
+        {%- set og_img_png = base_url + '/static/og/' + post.slug + '.png' %}
         {%- set og_img_fallback = base_url + '/static/icons/icon-512x512.png' %}
-        <meta property="og:image" content="{{ og_img if post.has_image else og_img_fallback }}">
+        <meta property="og:image" content="{{ og_img_png if post.has_og_image else og_img_fallback }}">
         <meta property="og:image:alt" content="{{ post.title }}">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="{{ post.title }}">
         <meta name="twitter:description" content="{{ post.meta_description }}">
-        <meta name="twitter:image" content="{{ og_img if post.has_image else og_img_fallback }}">
+        <meta name="twitter:image" content="{{ og_img_png if post.has_og_image else og_img_fallback }}">
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="{{ base_url }}/{{ post.slug }}/">
 
-        <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
-        <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
-        <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        {#- FIX 2: consent.js MUST be first — it pushes consent default to
+            dataLayer synchronously before AdSense (in global_meta_tags) loads. -#}
+        <script src="{{ base_path }}/static/consent.js"></script>
 
         {{ global_meta_tags | safe }}
         {{ meta_tags | safe }}
@@ -1077,8 +1160,7 @@ def _build_templates() -> dict:
             .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
             /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            /* Inline ad spacing */
-            /* Ad slots: no reserved space when empty — prevents blank sections */
+            /* Ad slots: no reserved space when empty */
             .ad-inline,
             .ad-header,
             .ad-footer,
@@ -1093,7 +1175,6 @@ def _build_templates() -> dict:
                 margin: 2rem 0;
                 text-align: center;
             }
-            /* Hide the ins element itself when AdSense hasn't filled it */
             .ad-inline ins[data-ad-status="unfilled"],
             .ad-middle ins[data-ad-status="unfilled"],
             .ad-footer ins[data-ad-status="unfilled"] {
@@ -1122,7 +1203,7 @@ def _build_templates() -> dict:
             <span>›</span>
             <span>{{ post.title }}</span>
         </nav>
-        <article class="blog-post" itemscope itemtype="[https://schema.org/Article](https://schema.org/Article)">
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
             <header class="post-header">
                 <h1 itemprop="headline">{{ post.title }}</h1>
                 {% if post.meta_description %}
@@ -1137,7 +1218,7 @@ def _build_templates() -> dict:
                 </div>
                 {% endif %}
             </header>
-            <div class="author-block" itemprop="author" itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)">
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
                 <div class="author-avatar" aria-hidden="true">KK</div>
                 <div class="author-info">
                     <p class="author-name" itemprop="name">
@@ -1218,7 +1299,6 @@ def _build_templates() -> dict:
     </footer>
     <script src="{{ base_path }}/static/navigation.js"></script>
     <script defer src="{{ base_path }}/static/pwa.js"></script>
-    <script defer src="{{ base_path }}/static/consent.js"></script>
     <script>
     (function(){
         var bar = document.getElementById('reading-progress');
@@ -1252,6 +1332,7 @@ def _build_templates() -> dict:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ site_name }}</title>
     <meta name="description" content="{{ site_description }}">
+    <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="{{ site_name }}">
@@ -1260,9 +1341,11 @@ def _build_templates() -> dict:
     <meta property="og:image" content="{{ base_url }}/static/icons/icon-512x512.png">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@KubaiKevin">
-    <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
-    <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
-    <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com">
+    {#- FIX 2: consent.js MUST load before global_meta_tags (AdSense) -#}
+    <script src="{{ base_path }}/static/consent.js"></script>
     {{ global_meta_tags | safe }}
     {{ homepage_meta_tags | safe }}
     {{ organization_schema | safe }}
@@ -1303,7 +1386,6 @@ def _build_templates() -> dict:
         .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
         .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
 
-        /* ── Post card ── */
         .post-card {
             display: flex;
             flex-direction: column;
@@ -1333,11 +1415,6 @@ def _build_templates() -> dict:
             margin-top: 0.5rem;
             flex-shrink: 0;
         }
-        /*
-         * TAG PILLS ON HOMEPAGE CARDS: use <span> not <a> to avoid nested
-         * anchor elements (invalid HTML — browsers split cards in two).
-         * Navigation to tag pages is handled by JS event delegation below.
-         */
         .post-card .tag {
             cursor: pointer;
             text-decoration: none;
@@ -1407,13 +1484,6 @@ def _build_templates() -> dict:
             {% if posts %}
             <div id="posts-container" class="post-grid">
                 {% for post in posts  %}
-                {#
-                  CRITICAL: The card is an <a> element. Tag pills MUST be <span>
-                  elements here — NOT <a> — because nested <a> inside <a> is
-                  invalid HTML. Browsers auto-close the outer <a> on encountering
-                  an inner <a>, splitting the card into two sibling elements.
-                  Tag navigation is handled by JS event delegation (data-tag-href).
-                #}
                 <a class="post-card" href="{{ base_path }}/{{ post.slug }}/"
                    data-title="{{ post.title | e }}"
                    data-description="{{ post.meta_description | e }}"
@@ -1486,12 +1556,6 @@ def _build_templates() -> dict:
         var searchMode  = false;
         var observer    = null;
 
-        /* ── Tag-pill click delegation ───────────────────────────────────────
-         * Tag pills are <span data-tag-href="..."> (not <a>) to avoid the
-         * nested-anchor HTML violation that caused split cards.
-         * We intercept clicks on spans with data-tag-href and navigate there,
-         * stopping propagation so the parent card link is NOT also followed.
-         */
         document.addEventListener('click', function (e) {
             var el = e.target;
             if (el && el.tagName === 'SPAN' && el.dataset.tagHref) {
@@ -1519,11 +1583,6 @@ def _build_templates() -> dict:
             loadNextPage();
         }
 
-        /*
-         * buildCard: constructs a post card entirely in JS for infinite scroll
-         * and search results. Uses <span data-tag-href> for tag pills — same
-         * pattern as the server-rendered HTML — to avoid nested <a> elements.
-         */
         function buildCard(post) {
             var a       = document.createElement('a');
             a.className = 'post-card';
@@ -1535,8 +1594,8 @@ def _build_templates() -> dict:
 
             var excerpt = (post.meta_description || '').trim();
             if (!excerpt && post.content) {
-                excerpt = post.content.replace(/[#*`>\[\]]/g, '').trim().slice(0, 155);
-                if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '\u2026';
+                excerpt = post.content.replace(/[#*`>\\[\\]]/g, '').trim().slice(0, 155);
+                if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '\\u2026';
             }
             if (excerpt) {
                 var p         = document.createElement('p');
@@ -1559,14 +1618,10 @@ def _build_templates() -> dict:
                 tags.slice().sort(function (x, y) { return x.length - y.length; })
                     .slice(0, 3)
                     .forEach(function (t) {
-                        /*
-                         * Use <span> with data-tag-href, NOT <a>, to avoid
-                         * nesting an anchor inside the card anchor.
-                         */
                         var sp              = document.createElement('span');
                         sp.className        = 'tag';
                         sp.textContent      = t;
-                        sp.dataset.tagHref  = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\s+/g, '-') + '/';
+                        sp.dataset.tagHref  = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\\s+/g, '-') + '/';
                         div.appendChild(sp);
                     });
                 a.appendChild(div);
@@ -1784,7 +1839,6 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
-    # ── FIX 2: Replaced About Template ──────────────────────────────────────
     ABOUT_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -1793,6 +1847,7 @@ def _build_templates() -> dict:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Kubai Kevin — {{ site_name }}</title>
     <meta name="description" content="Kubai Kevin is a software developer based in Nairobi, Kenya with 10+ years building production Python and Node.js backends in fintech. He writes about AI, backend systems, and developer careers from direct production experience.">
+    <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/about/">
     <meta property="og:type" content="profile">
     <meta property="og:title" content="About Kubai Kevin — {{ site_name }}">
@@ -1803,7 +1858,7 @@ def _build_templates() -> dict:
     {{ global_meta_tags | safe }}
     <script type="application/ld+json">
     {
-      "@context": "[https://schema.org](https://schema.org)",
+      "@context": "https://schema.org",
       "@type": "Person",
       "@id": "{{ base_url }}/about/#author",
       "name": "Kubai Kevin",
@@ -1819,9 +1874,9 @@ def _build_templates() -> dict:
         "addressCountry": "KE"
       },
       "sameAs": [
-        "[https://www.linkedin.com/in/kevin-kubai-22b61b37/](https://www.linkedin.com/in/kevin-kubai-22b61b37/)",
-        "[https://twitter.com/KubaiKevin](https://twitter.com/KubaiKevin)",
-        "[https://github.com/kubaik](https://github.com/kubaik)"
+        "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+        "https://twitter.com/KubaiKevin",
+        "https://github.com/kubaik"
       ],
       "knowsAbout": [
         "Python", "Node.js", "TypeScript", "AWS Lambda", "PostgreSQL",
@@ -1876,7 +1931,6 @@ def _build_templates() -> dict:
         .author-link-twitter:hover { background: #1da1f2; color: white; }
         .author-link-github { color: #333; border-color: #333; }
         .author-link-github:hover { background: #333; color: white; }
-
         .section-card {
             background: white; border: 1px solid #e0e0e0; border-radius: 12px;
             padding: 1.75rem; margin-bottom: 1.5rem;
@@ -1943,7 +1997,7 @@ def _build_templates() -> dict:
             <p>Practical writing about software development, AI, and developer careers — based on real production experience, not tutorials.</p>
         </div>
 
-        <article itemscope itemtype="[https://schema.org/Person](https://schema.org/Person)"
+        <article itemscope itemtype="https://schema.org/Person"
                  id="author"
                  itemprop="author">
             <meta itemprop="name" content="Kubai Kevin">
@@ -1955,7 +2009,7 @@ def _build_templates() -> dict:
                     <h2 class="author-name" itemprop="name">Kubai Kevin</h2>
                     <p class="author-title" itemprop="jobTitle">
                         Software Developer · Nairobi, Kenya
-                        <span itemprop="address" itemscope itemtype="[https://schema.org/PostalAddress](https://schema.org/PostalAddress)">
+                        <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
                             <meta itemprop="addressLocality" content="Nairobi">
                             <meta itemprop="addressCountry" content="KE">
                         </span>
@@ -2135,7 +2189,6 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
-    # ── Original Privacy Template Preserved ─────────────────────────────────
     PRIVACY_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -2143,6 +2196,7 @@ def _build_templates() -> dict:
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - {{ site_name }}</title>
     <meta name="description" content="Privacy Policy for {{ site_name }}">
+    <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/privacy-policy/">
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="../static/style.css">
@@ -2190,7 +2244,7 @@ def _build_templates() -> dict:
                         <tr><td>Advertising</td><td>Google AdSense ad targeting</td><td>Up to 1 year</td></tr>
                     </tbody>
                 </table>
-                <p>You can disable cookies in your browser settings. Google's privacy policy: <a href="[https://policies.google.com/privacy](https://policies.google.com/privacy)" target="_blank" rel="noopener">[policies.google.com/privacy](https://policies.google.com/privacy)</a></p></div>
+                <p>You can disable cookies in your browser settings. Google's privacy policy: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></p></div>
             <div class="privacy-section"><h3>5. Third Parties</h3>
                 <div class="important-notice"><p>We do not sell your personal information. We use Google Analytics and Google AdSense.</p></div></div>
             <div class="highlight-box"><h3>6. Contact</h3>
@@ -2201,6 +2255,7 @@ def _build_templates() -> dict:
     <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
     <script src="../static/navigation.js"></script>
     <script defer src="{{ base_path }}/static/pwa.js"></script>
+    <script defer src="{{ base_path }}/static/consent.js"></script>
 </body>
 </html>"""
 
@@ -2211,6 +2266,7 @@ def _build_templates() -> dict:
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms of Service - {{ site_name }}</title>
     <meta name="description" content="Terms of Service for {{ site_name }}">
+    <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/terms-of-service/">
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="../static/style.css">
@@ -2251,6 +2307,7 @@ def _build_templates() -> dict:
     <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
     <script src="../static/navigation.js"></script>
     <script defer src="{{ base_path }}/static/pwa.js"></script>
+    <script defer src="{{ base_path }}/static/consent.js"></script>
 </body>
 </html>"""
 
@@ -2262,11 +2319,12 @@ def _build_templates() -> dict:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Kubai Kevin — {{ site_name }}</title>
     <meta name="description" content="Contact Kubai Kevin, software developer and author of {{ site_name }}. Based in Nairobi, Kenya. Responds within 3–5 business days.">
+    <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/contact/">
     {{ global_meta_tags | safe }}
     <script type="application/ld+json">
     {
-      "@context": "[https://schema.org](https://schema.org)",
+      "@context": "https://schema.org",
       "@type": "ContactPage",
       "name": "Contact Kubai Kevin",
       "url": "{{ base_url }}/contact/",
@@ -2424,6 +2482,7 @@ def _build_templates() -> dict:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Not Found — {{ site_name }}</title>
     <meta name="robots" content="noindex, nofollow">
+    <meta name="base-path" content="{{ base_path }}">
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="manifest" href="{{ base_path }}/manifest.json">
@@ -2519,6 +2578,7 @@ def _build_templates() -> dict:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Content Policy — {{ site_name }}</title>
     <meta name="description" content="How {{ site_name }} uses AI writing tools, our editorial process, and how we ensure accuracy and originality.">
+    <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/ai-content-policy/">
     <meta name="robots" content="index, follow">
     {{ global_meta_tags | safe }}
@@ -2555,13 +2615,13 @@ def _build_templates() -> dict:
             <h1 style="color:#fff;font-size:2rem;margin-bottom:0.5rem;">AI Content Policy</h1>
             <p style="opacity:0.9;">How we use AI tools, what human review covers, and what we guarantee.</p>
         </div>
- 
+
         <article class="page-content">
             <div class="highlight-box">
                 <h2>Our Commitment in One Paragraph</h2>
                 <p style="margin-bottom:0;">Every article on {{ site_name }} is written on a topic selected from the author's direct professional experience, drafted with AI assistance for structure and speed, then reviewed by the author (Kubai Kevin) for factual accuracy, voice, and relevance before publication. AI tools accelerate the writing process — they do not replace editorial judgment.</p>
             </div>
- 
+
             <div class="policy-section">
                 <h2>1. How AI is Used on This Site</h2>
                 <p>{{ site_name }} uses large language model (LLM) APIs — including models from Mistral, Google Gemini, Meta Llama (via Groq and other providers), and similar services — to:</p>
@@ -2573,7 +2633,7 @@ def _build_templates() -> dict:
                 </ul>
                 <p>AI tools are used as a writing <em>assistant</em>, not as the final publisher. The author remains responsible for all published content.</p>
             </div>
- 
+
             <div class="policy-section">
                 <h2>2. What AI Does NOT Do on This Site</h2>
                 <div class="two-col">
@@ -2595,7 +2655,7 @@ def _build_templates() -> dict:
                     </div>
                 </div>
             </div>
- 
+
             <div class="policy-section">
                 <h2>3. Quality Controls in Our Publishing Pipeline</h2>
                 <p>Before an article is saved and published, it passes through automated checks that enforce:</p>
@@ -2609,7 +2669,7 @@ def _build_templates() -> dict:
                 </ul>
                 <p>Articles that fail these gates are discarded. No fallback or placeholder article is published in their place.</p>
             </div>
- 
+
             <div class="policy-section">
                 <h2>4. Author's Role</h2>
                 <p><strong>Kubai Kevin</strong> is the author and editor of all content on this site. His role in the pipeline includes:</p>
@@ -2622,7 +2682,7 @@ def _build_templates() -> dict:
                 </ul>
                 <p>The author's LinkedIn profile and contact details are published on the <a href="{{ base_path }}/about/">About page</a> for full transparency.</p>
             </div>
- 
+
             <div class="policy-section">
                 <h2>5. Corrections Policy</h2>
                 <p>If an article contains a factual error, an outdated tool version, or inaccurate code, please <a href="{{ base_path }}/contact/">contact us</a>. We will:</p>
@@ -2632,13 +2692,13 @@ def _build_templates() -> dict:
                     <li>Note the correction in the article with the correction date.</li>
                 </ul>
             </div>
- 
+
             <div class="policy-section">
                 <h2>6. AI Disclosure Compliance</h2>
                 <p>This page serves as the AI content disclosure for {{ site_name }} in jurisdictions that require or recommend disclosure of AI-assisted content generation. We believe transparency is both ethically correct and practically important for reader trust.</p>
                 <p>We monitor evolving regulatory requirements around AI content labelling (including EU AI Act guidance, FTC guidance, and platform-specific requirements) and will update this policy accordingly.</p>
             </div>
- 
+
             <p style="color:#888;font-size:0.85rem;margin-top:2rem;"><strong>Last updated:</strong> {{ current_date }}</p>
         </article>
     </main>
@@ -2656,8 +2716,9 @@ def _build_templates() -> dict:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DMCA & Copyright Policy — {{ site_name }}</title>
+    <title>DMCA &amp; Copyright Policy — {{ site_name }}</title>
     <meta name="description" content="DMCA takedown process and copyright policy for {{ site_name }}.">
+    <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/dmca/">
     <meta name="robots" content="index, follow">
     {{ global_meta_tags | safe }}
@@ -2692,14 +2753,14 @@ def _build_templates() -> dict:
             <h1 style="color:#fff;font-size:2rem;margin-bottom:0.5rem;">DMCA &amp; Copyright Policy</h1>
             <p style="opacity:0.9;">How to report copyright concerns and how we handle them.</p>
         </div>
- 
+
         <article class="page-content">
             <div class="dmca-section">
                 <h2>1. Copyright Ownership</h2>
                 <p>All original articles, prose, code examples, and other content published on {{ site_name }} are the intellectual property of <strong>Kubai Kevin</strong> and are protected under copyright law. Unauthorised reproduction, distribution, or derivative works without explicit written permission is prohibited.</p>
                 <p>Content on this site is produced with AI writing assistance and reviewed by the author before publication. The editorial decisions, original observations, structure, and voice are the author's own.</p>
             </div>
- 
+
             <div class="dmca-section">
                 <h2>2. Third-Party Content</h2>
                 <p>{{ site_name }} may reference, quote, or link to third-party sources. All such use is intended to be transformative, educational, or analytical in nature. If you believe your copyrighted work has been used in a way that constitutes infringement, please follow the notice process below.</p>
@@ -2707,7 +2768,7 @@ def _build_templates() -> dict:
                     <p><strong>Note:</strong> This site uses an automated content generation pipeline. Despite quality controls, it is possible that a generated article may inadvertently resemble or reproduce protected material. We take all DMCA notices seriously and will respond within <strong>24–48 hours</strong>.</p>
                 </div>
             </div>
- 
+
             <div class="dmca-section">
                 <h2>3. DMCA Takedown — Notice Requirements</h2>
                 <p>To submit a valid DMCA takedown notice under 17 U.S.C. § 512(c)(3), your written notification must include all of the following:</p>
@@ -2720,14 +2781,14 @@ def _build_templates() -> dict:
                     <li>A statement, under penalty of perjury, that the information in your notice is accurate and that you are (or are authorised to act on behalf of) the copyright owner.</li>
                 </ol>
             </div>
- 
+
             <div class="highlight-box">
                 <h2>4. Where to Send DMCA Notices</h2>
                 <p>Email your complete DMCA notice to:<br>
                 <a href="mailto:aiblogauto@gmail.com"><strong>aiblogauto@gmail.com</strong></a></p>
                 <p style="margin-bottom:0;font-size:0.9rem;opacity:0.9;">Subject line: <em>DMCA Takedown Request — [URL of infringing page]</em></p>
             </div>
- 
+
             <div class="dmca-section">
                 <h2>5. Our Response Process</h2>
                 <p>Upon receiving a valid DMCA notice, we will:</p>
@@ -2739,22 +2800,22 @@ def _build_templates() -> dict:
                 </ul>
                 <p>We reserve the right to remove content proactively if we believe it may infringe third-party rights, without waiting for a formal DMCA notice.</p>
             </div>
- 
+
             <div class="dmca-section">
                 <h2>6. Counter-Notice</h2>
                 <p>If you believe content was removed in error, you may submit a counter-notice under 17 U.S.C. § 512(g). Counter-notices must include equivalent information to a takedown notice, plus a statement that you consent to the jurisdiction of the federal court where your address is located.</p>
             </div>
- 
+
             <div class="dmca-section">
                 <h2>7. Repeat Infringer Policy</h2>
                 <p>{{ site_name }} will disable or terminate the publishing pipeline for any content source that is the subject of repeated valid DMCA notices, in accordance with the safe-harbour provisions of the DMCA.</p>
             </div>
- 
+
             <div class="dmca-section">
                 <h2>8. Using Our Content</h2>
                 <p>Brief quotations (under 150 words) with a clear attribution link to the source article are permitted under fair use. For longer excerpts, syndication, or any commercial use, contact us at <a href="mailto:aiblogauto@gmail.com">aiblogauto@gmail.com</a> to request written permission.</p>
             </div>
- 
+
             <p style="color:#888;font-size:0.85rem;margin-top:2rem;"><strong>Last updated:</strong> {{ current_date }}</p>
         </article>
     </main>
@@ -2775,6 +2836,6 @@ def _build_templates() -> dict:
         'terms_of_service': env.from_string(TERMS_TMPL),
         'contact':          env.from_string(CONTACT_TMPL),
         'not_found':        env.from_string(NOT_FOUND_TMPL),
-        'dmca': env.from_string(DMCA_TMPL),
-        'ai_disclosure': env.from_string(AI_DISCLOSURE_TMPL),
+        'dmca':             env.from_string(DMCA_TMPL),
+        'ai_disclosure':    env.from_string(AI_DISCLOSURE_TMPL),
     }

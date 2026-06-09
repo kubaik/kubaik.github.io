@@ -5,14 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 12:37:21 +0000</lastBuildDate>
-    <item>
-      <title>Skip the zero-trust hype for 5-person teams</title>
-      <link>https://kubaik.github.io/skip-the-zero-trust-hype-for-5-person-teams/</link>
-      <description>Cut security overhead 60% with minimal zero trust — secrets rotation, rate limits, and when to skip mTLS. Tools: Vault 1.15, Cognito, Calico 3.26.</description>
-      <pubDate>Tue, 09 Jun 2026 12:37:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-the-zero-trust-hype-for-5-person-teams/</guid>
-    </item>
+    <lastBuildDate>Tue, 09 Jun 2026 15:36:58 +0000</lastBuildDate>
     <item>
       <title>AI code traps: Copilot vs Cursor smackdown</title>
       <link>https://kubaik.github.io/ai-code-traps-copilot-vs-cursor-smackdown/</link>

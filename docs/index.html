@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tech Blog</title>
     <meta name="description" content="Cutting-edge insights into technology, AI, and development">
+    <meta name="base-path" content="">
     <link rel="canonical" href="https://kubaik.github.io/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Tech Blog">
@@ -13,9 +14,9 @@
     <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@KubaiKevin">
-    <link rel="preconnect" href="[https://pagead2.googlesyndication.com](https://pagead2.googlesyndication.com)">
-    <link rel="preconnect" href="[https://googleads.g.doubleclick.net](https://googleads.g.doubleclick.net)">
-    <link rel="preconnect" href="[https://www.google-analytics.com](https://www.google-analytics.com)">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+    <link rel="preconnect" href="https://www.google-analytics.com"><script src="/static/consent.js"></script>
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -123,7 +124,6 @@
         .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
         .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
 
-        /* ── Post card ── */
         .post-card {
             display: flex;
             flex-direction: column;
@@ -153,11 +153,6 @@
             margin-top: 0.5rem;
             flex-shrink: 0;
         }
-        /*
-         * TAG PILLS ON HOMEPAGE CARDS: use <span> not <a> to avoid nested
-         * anchor elements (invalid HTML — browsers split cards in two).
-         * Navigation to tag pages is handled by JS event delegation below.
-         */
         .post-card .tag {
             cursor: pointer;
             text-decoration: none;
@@ -279,7 +274,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/6-ways-to-ship-real-time-without-websockets/"
                    data-title="6 ways to ship real-time without WebSockets"
                    data-description="Cut API response time 60% with SSE in 2026 — connection pooling, keep-alive tricks, and the one mistake most teams make with WebSockets. Includes cost breakdown per 1M updates."
@@ -304,7 +298,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/4-ai-tools-shipping-real-products-in-2026/"
                    data-title="4 AI tools shipping real products in 2026"
@@ -331,7 +324,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/pass-interviews-without-a-cs-degree/"
                    data-title="Pass interviews without a CS degree"
                    data-description="Self-taught devs pass remote interviews by debugging real systems, not just LeetCode. Learn the trade-offs interviewers actually test — latency budgets, memory leaks, cache stampedes — with specific tools, benchmarks, and fixes."
@@ -356,7 +348,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/cut-latency-70-with-edge-functions-or-waste-cpu/"
                    data-title="Cut latency 70% with edge functions or waste CPU"
@@ -383,7 +374,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/build-the-30-minute-deployment-road/"
                    data-title="Build the 30-minute deployment road"
                    data-description="Cut deployment lead time from 11 days to 28 minutes with a paved road — the real cost of environment drift, policy enforcement, and Backstage templates in 2026"
@@ -408,7 +398,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/event-sourcing-pay-the-complexity-tax-only-here/"
                    data-title="Event sourcing: pay the complexity tax only here"
@@ -435,7 +424,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/ai-velocity-audit-3-real-metrics-your-team-ignores/"
                    data-title="AI velocity audit: 3 real metrics your team ignores"
                    data-description="In a 2025 study by Sema, teams using AI assistants saw a 22% increase in code smells per 1K lines of code, even as PR throughput rose."
@@ -457,7 +445,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/ai-codes-hidden-cves-exposed/"
                    data-title="AI code’s hidden CVEs exposed"
@@ -484,7 +471,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/negotiate-remote-pay-from-low-cost-cities/"
                    data-title="Negotiate remote pay from low-cost cities"
                    data-description="Raise remote salary 33–100% from lower-cost countries — exact templates, payment rails, and dashboards that clients actually approve"
@@ -509,7 +495,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/build-dev-platform-for-2kmonth/"
                    data-title="Build dev platform for $2k/month"
@@ -536,7 +521,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/africa-devs-ship-production-code-not-crud/"
                    data-title="Africa devs: Ship production code, not CRUD"
                    data-description="Show production-grade engineering in your remote portfolio to get hired from Africa — metrics, post-mortems, and Terraform matter more than React dashboards. 2026 hiring data included."
@@ -561,7 +545,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/ai-skills-that-pay-data-vs-prompt-skills-in-2026/"
                    data-title="AI skills that pay: data vs prompt skills in 2026"
@@ -588,7 +571,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/rag-in-prod-why-demos-crumble/"
                    data-title="RAG in prod: why demos crumble"
                    data-description="Cut RAG pipeline latency 88% and cloud bill 83% by splitting retrieval and generation. Real numbers, Go + pgvector 0.7.0, Redis 7.2, vLLM 0.5.0-alpha — what the tutorials skip."
@@ -613,7 +595,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/why-48-connections-can-break-your-db/"
                    data-title="Why 48 connections can break your DB"
@@ -640,7 +621,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/drop-ec2-bills-70-without-code/"
                    data-title="Drop EC2 bills 70% without code"
                    data-description="Cut EC2 costs 70% with one sysctl tweak — TCP BBR, zswap, gp3 IOPS, and the exact commands for Amazon Linux 2023 and Ubuntu 22.04 LTS."
@@ -665,7 +645,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/circleci-still-beats-github-actions-at-50k-builds/"
                    data-title="CircleCI still beats GitHub Actions at 50k builds"
@@ -692,7 +671,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/choose-no-code-only-when/"
                    data-title="Choose no-code only when"
                    data-description="Choose no-code vs custom code in 2026 with this decision framework: latency SLOs, export limits, GDPR, and real cost data. Save weeks of rewrite pain."
@@ -711,7 +689,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/ai-skills-2-salaries-that-move-in-2026/"
                    data-title="AI skills: 2 salaries that move in 2026"
@@ -738,7 +715,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/mis-size-db-pool-heres-why/"
                    data-title="Mis-size DB pool? Here’s why"
                    data-description="Cut database connection pool mistakes 80%: stop using CPU × 2 — use the formula with real latency data and PgBouncer for 2026 systems"
@@ -763,7 +739,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/hire-remotely-from-africa-show-context-not-code/"
                    data-title="Hire remotely from Africa: show context, not code"
@@ -790,7 +765,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/50k-builds-github-vs-circleci-cost-smackdown/"
                    data-title="50k builds: GitHub vs CircleCI cost smackdown"
                    data-description="CircleCI beats GitHub Actions 2-to-1 at 50k builds/month — real cost data, benchmarks, and the pricing change that broke the old advice."
@@ -815,7 +789,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/rag-pipelines-4-silent-prod-killers/"
                    data-title="RAG pipelines: 4 silent prod killers"
@@ -842,7 +815,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/price-your-remote-job-like-a-new-york-dev/"
                    data-title="Price your remote job like a New York dev"
                    data-description="Price your remote salary like a New York dev — $120k target, $112/hr client rate, 6% rejection drop. FX locks, VAT gotchas, and the 48-hour rule most freelancers miss."
@@ -867,7 +839,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/claude-code-review-wins-and-blind-spots/"
                    data-title="Claude code review: wins and blind spots"
@@ -894,7 +865,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/rag-pipelines-3-untold-prod-traps/"
                    data-title="RAG pipelines: 3 untold prod traps"
                    data-description="Cut RAG pipeline latency 76% and save $1,380/month — the hidden costs tutorials ignore: connection churn, cache semantics, and prompt overhead. Real numbers from a 2,000 QPS Jakarta startup."
@@ -919,7 +889,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/wrong-db-pool-size-wastes-cash/"
                    data-title="Wrong DB pool size wastes cash"
@@ -946,7 +915,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/remote-salary-negotiate-without-sounding-cheap/"
                    data-title="Remote salary: negotiate without sounding cheap"
                    data-description="Go from $3,800 to $7,800 remote salary in one negotiation packet — cost sheet, time sheet, risk sheet included. Real 20"
@@ -969,7 +937,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/portfolio-projects-signal-over-noise/"
                    data-title="Portfolio ≠ Projects: Signal over noise"
                    data-description="I’ve seen this advice work — for the top 5% of candidates who already have strong fundamentals and can afford to spend months polishing public repos."
@@ -981,7 +948,6 @@
                     
                     
                 </a>
-                
                 
                 <a class="post-card" href="/rag-pipelines-the-2026-salary-multiplier/"
                    data-title="RAG pipelines: the 2026 salary multiplier"
@@ -1008,7 +974,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/skip-websockets-cheaper-real-time-hacks/"
                    data-title="Skip WebSockets: cheaper real-time hacks"
                    data-description="Cut real-time feature costs 86% using SSE + Redis — latency benchmarks, Safari fallback, and code samples for Node 20 LTS and Redis 7.2."
@@ -1033,7 +998,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/african-devs-waste-time-on-github-stars-do-this/"
                    data-title="African devs waste time on GitHub stars? Do this"
@@ -1060,7 +1024,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/rag-in-prod-what-tutorials-wont-tell-you/"
                    data-title="RAG in prod: what tutorials won’t tell you"
                    data-description="Cut RAG latency 78% and AWS costs 35% with a two-tier FAISS + PostgreSQL system. Learn the cache invalidation, CDC and memory traps tutorials skip."
@@ -1085,7 +1048,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/8-db-pool-size-mistakes-killing-your-cpu/"
                    data-title="8 DB pool size mistakes killing your CPU"
@@ -1112,7 +1074,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/2026-remote-pay-beat-the-ppp-trap/"
                    data-title="2026 remote pay: beat the PPP trap"
                    data-description="2026 remote salary negotiation: use Levels.fyi and FX math to raise offers 76–118% from lower-cost countries."
@@ -1137,7 +1098,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/senior-devs-flee-big-tech-not-for-money/"
                    data-title="Senior devs flee big tech (not for money)"
@@ -1164,7 +1124,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/ship-github-not-a-portfolio/"
                    data-title="Ship GitHub, not a portfolio"
                    data-description="Land remote jobs faster by making GitHub your portfolio — real projects, clean READMEs, and live demos beat polished portfolio sites every time."
@@ -1189,7 +1148,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/turn-cop-into-usd-remote-pay-hacks/"
                    data-title="Turn COP into USD: remote pay hacks"
@@ -1216,7 +1174,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/ship-faster-with-a-paved-road-4-weeks-to-80-less-toil/"
                    data-title="Ship faster with a paved road: 4 weeks to 80% less toil"
                    data-description="Ship 80% faster with a paved road: 4-week plan cuts merge-to-prod time from 30 min to 4 min, cuts on-call pages 75%, and drops infra cost 39% per 1k API requests."
@@ -1242,7 +1199,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/5-signs-youre-done-with-big-tech/"
                    data-title="5 signs you’re done with big tech"
                    data-description="One joined a Series B startup for 30 % less pay, the other moved to a government digital team."
@@ -1264,7 +1220,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/price-your-remote-salary-4-step-script/"
                    data-title="Price your remote salary: 4-step script"
@@ -1291,7 +1246,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/rag-in-prod-7-hard-lessons-tutorials-skip/"
                    data-title="RAG in prod: 7 hard lessons tutorials skip"
                    data-description="Cut RAG latency 85% and costs 36% with CDC, Qdrant, and ONNX — the pipeline tricks tutorials skip. Real numbers, real stack, real mistakes."
@@ -1316,7 +1270,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/ai-skills-2026-which-ones-pay-and-which-dont/"
                    data-title="AI skills 2026: which ones pay — and which don’t"
@@ -1343,7 +1296,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/ship-real-work-not-polished-readmes/"
                    data-title="Ship real work, not polished READMEs"
                    data-description="Prove you can run systems, not write code — 3 real portfolio projects that got interviews vs ones that didn’t, with IaC, observability and cost data from 2026"
@@ -1369,7 +1321,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/multi-agent-systems-break-first/"
                    data-title="Multi-agent systems break first"
                    data-description="After switching to Fargate with 0.25 vCPU and 512MB RAM ephemeral containers, we cut costs by 78%."
@@ -1388,7 +1339,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/break-rag-at-10k-requestsday/"
                    data-title="Break RAG at 10k requests/day"
@@ -1415,7 +1365,6 @@
                     
                 </a>
                 
-                
                 <a class="post-card" href="/your-portfolio-doesnt-need-a-website/"
                    data-title="Your portfolio doesn&#39;t need a website"
                    data-description="Portfolio sites waste time for remote engineers. GitHub, blog posts, and production demos land interviews faster — here’s the 3-2-1 proof with 2026 data."
@@ -1440,7 +1389,6 @@
                     </div>
                     
                 </a>
-                
                 
                 <a class="post-card" href="/senior-devs-flee-when-systems-rot/"
                    data-title="Senior devs flee when systems rot"
@@ -1522,12 +1470,6 @@
         var searchMode  = false;
         var observer    = null;
 
-        /* ── Tag-pill click delegation ───────────────────────────────────────
-         * Tag pills are <span data-tag-href="..."> (not <a>) to avoid the
-         * nested-anchor HTML violation that caused split cards.
-         * We intercept clicks on spans with data-tag-href and navigate there,
-         * stopping propagation so the parent card link is NOT also followed.
-         */
         document.addEventListener('click', function (e) {
             var el = e.target;
             if (el && el.tagName === 'SPAN' && el.dataset.tagHref) {
@@ -1555,11 +1497,6 @@
             loadNextPage();
         }
 
-        /*
-         * buildCard: constructs a post card entirely in JS for infinite scroll
-         * and search results. Uses <span data-tag-href> for tag pills — same
-         * pattern as the server-rendered HTML — to avoid nested <a> elements.
-         */
         function buildCard(post) {
             var a       = document.createElement('a');
             a.className = 'post-card';
@@ -1572,7 +1509,7 @@
             var excerpt = (post.meta_description || '').trim();
             if (!excerpt && post.content) {
                 excerpt = post.content.replace(/[#*`>\[\]]/g, '').trim().slice(0, 155);
-                if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '…';
+                if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '\u2026';
             }
             if (excerpt) {
                 var p         = document.createElement('p');
@@ -1595,10 +1532,6 @@
                 tags.slice().sort(function (x, y) { return x.length - y.length; })
                     .slice(0, 3)
                     .forEach(function (t) {
-                        /*
-                         * Use <span> with data-tag-href, NOT <a>, to avoid
-                         * nesting an anchor inside the card anchor.
-                         */
                         var sp              = document.createElement('span');
                         sp.className        = 'tag';
                         sp.textContent      = t;
