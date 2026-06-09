@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 15:40:46 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 15:45:13 +0000</lastBuildDate>
+    <item>
+      <title>Deploy a solo stack for $20/month in 2026</title>
+      <link>https://kubaik.github.io/deploy-a-solo-stack-for-20month-in-2026/</link>
+      <description>A simple endpoint took 45ms on x86 and 38ms on ARM64.</description>
+      <pubDate>Tue, 09 Jun 2026 15:45:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/deploy-a-solo-stack-for-20month-in-2026/</guid>
+    </item>
     <item>
       <title>Land $5k remote roles: what Nairobi devs got right</title>
       <link>https://kubaik.github.io/land-5k-remote-roles-what-nairobi-devs-got-right/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG pipeline latency 88% and cloud bill 83% by splitting retrieval and generation. Real numbers, Go + pgvector 0.7.0, Redis 7.2, vLLM 0.5.0-alpha — what the tutorials skip.</description>
       <pubDate>Tue, 09 Jun 2026 06:06:28 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-in-prod-why-demos-crumble/</guid>
-    </item>
-    <item>
-      <title>Why 48 connections can break your DB</title>
-      <link>https://kubaik.github.io/why-48-connections-can-break-your-db/</link>
-      <description>Cut API response time 60% by shrinking the database connection pool — the real levers most teams ignore in 2026</description>
-      <pubDate>Tue, 09 Jun 2026 05:06:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-48-connections-can-break-your-db/</guid>
     </item>
   </channel>
 </rss>
