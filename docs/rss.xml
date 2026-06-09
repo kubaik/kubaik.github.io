@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 22:00:37 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 22:05:41 +0000</lastBuildDate>
+    <item>
+      <title>AI burnout: why output pressure rose even as tools got</title>
+      <link>https://kubaik.github.io/ai-burnout-why-output-pressure-rose-even-as-tools-got/</link>
+      <description>Cut burnout 30% by measuring AI’s net time saved — GitHub Copilot Enterprise, Cursor logs, and the PR size trap most teams miss in 2026.</description>
+      <pubDate>Tue, 09 Jun 2026 22:05:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-burnout-why-output-pressure-rose-even-as-tools-got/</guid>
+    </item>
     <item>
       <title>AI API docs: what humans still write in 2026</title>
       <link>https://kubaik.github.io/ai-api-docs-what-humans-still-write-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut migration downtime 90% by letting PostgreSQL do the work — backfill in batches, dual writes, and materialized views you can roll back in seconds</description>
       <pubDate>Tue, 09 Jun 2026 13:41:22 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-downtime-migrations-let-the-db-do-the-work/</guid>
-    </item>
-    <item>
-      <title>AI killed these Micro-SaaS niches</title>
-      <link>https://kubaik.github.io/ai-killed-these-micro-saas-niches/</link>
-      <description>The only thing it couldn’t do was handle the 1,000+ concurrent users I’d planned for.</description>
-      <pubDate>Tue, 09 Jun 2026 13:19:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-killed-these-micro-saas-niches/</guid>
     </item>
   </channel>
 </rss>
