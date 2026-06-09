@@ -175,3 +175,18 @@ python blog_system.py audit
 Then if there are fallback or short posts:
 
 python blog_system.py purge
+
+Validate only (no changes)
+python test_schema_validator.py
+
+Dry-run then delete the 5 oldest failing posts
+python test_schema_validator.py --delete 5
+
+Delete all failing posts, skip the confirmation prompt
+python test_schema_validator.py --delete all --yes
+
+Quiet mode — only show failures, not passing posts
+python test_schema_validator.py --quiet --delete 3
+
+Point at a non-default docs path
+hpython test_schema_validator.py --docs /path/to/docs --delete 2
