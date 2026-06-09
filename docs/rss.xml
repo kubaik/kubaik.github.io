@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 06:06:57 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 07:41:12 +0000</lastBuildDate>
+    <item>
+      <title>AI skills that pay: data vs prompt skills in 2026</title>
+      <link>https://kubaik.github.io/ai-skills-that-pay-data-vs-prompt-skills-in-2026/</link>
+      <description>AI skills that pay 22% more in 2026 — prompt vs data engineering, with real benchmarks, salaries, and the one change that cuts costs 70%</description>
+      <pubDate>Tue, 09 Jun 2026 07:40:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-skills-that-pay-data-vs-prompt-skills-in-2026/</guid>
+    </item>
     <item>
       <title>RAG in prod: why demos crumble</title>
       <link>https://kubaik.github.io/rag-in-prod-why-demos-crumble/</link>
@@ -138,13 +145,6 @@
       <description>Show one deployed project, not green squares. Remote hiring managers in 2026 judge African devs by production-ready systems, not GitHub stars. Build it in Python 3.11, FastAPI, Redis 7.2, deploy for $12/month.</description>
       <pubDate>Mon, 08 Jun 2026 19:21:05 +0000</pubDate>
       <guid>https://kubaik.github.io/african-devs-waste-time-on-github-stars-do-this/</guid>
-    </item>
-    <item>
-      <title>RAG in prod: what tutorials won’t tell you</title>
-      <link>https://kubaik.github.io/rag-in-prod-what-tutorials-wont-tell-you/</link>
-      <description>Cut RAG latency 78% and AWS costs 35% with a two-tier FAISS + PostgreSQL system. Learn the cache invalidation, CDC and memory traps tutorials skip.</description>
-      <pubDate>Mon, 08 Jun 2026 17:45:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-in-prod-what-tutorials-wont-tell-you/</guid>
     </item>
   </channel>
 </rss>
