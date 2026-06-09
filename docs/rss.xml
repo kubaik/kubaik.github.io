@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 16:15:05 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 16:32:02 +0000</lastBuildDate>
+    <item>
+      <title>SaaS in 6 weeks: 80% AI code failed in prod</title>
+      <link>https://kubaik.github.io/saas-in-6-weeks-80-ai-code-failed-in-prod/</link>
+      <description>Ship a real SaaS in 6 weeks using AI tools — but only if you control the architecture. Learn the exact constraints, benchmarks, and refactor patterns that separate working code from melted VPS instances.</description>
+      <pubDate>Tue, 09 Jun 2026 16:31:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/saas-in-6-weeks-80-ai-code-failed-in-prod/</guid>
+    </item>
     <item>
       <title>2026 GitOps showdown: ArgoCD vs Flux after two years</title>
       <link>https://kubaik.github.io/2026-gitops-showdown-argocd-vs-flux-after-two-years/</link>
@@ -138,13 +145,6 @@
       <description>Show production-grade engineering in your remote portfolio to get hired from Africa — metrics, post-mortems, and Terraform matter more than React dashboards. 2026 hiring data included.</description>
       <pubDate>Tue, 09 Jun 2026 08:47:49 +0000</pubDate>
       <guid>https://kubaik.github.io/africa-devs-ship-production-code-not-crud/</guid>
-    </item>
-    <item>
-      <title>AI skills that pay: data vs prompt skills in 2026</title>
-      <link>https://kubaik.github.io/ai-skills-that-pay-data-vs-prompt-skills-in-2026/</link>
-      <description>AI skills that pay 22% more in 2026 — prompt vs data engineering, with real benchmarks, salaries, and the one change that cuts costs 70%</description>
-      <pubDate>Tue, 09 Jun 2026 07:40:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-skills-that-pay-data-vs-prompt-skills-in-2026/</guid>
     </item>
   </channel>
 </rss>
