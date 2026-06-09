@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 22:14:16 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 22:19:01 +0000</lastBuildDate>
+    <item>
+      <title>Block 80% of traffic with Workers</title>
+      <link>https://kubaik.github.io/block-80-of-traffic-with-workers/</link>
+      <description>Cut origin load 79% with Cloudflare Workers caching — Durable Objects for rate limiting, KV for storage, and real results from a 6-week run in 2026.</description>
+      <pubDate>Tue, 09 Jun 2026 22:18:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/block-80-of-traffic-with-workers/</guid>
+    </item>
     <item>
       <title>AI burnout: why output pressure rose even as tools got</title>
       <link>https://kubaik.github.io/ai-burnout-why-output-pressure-rose-even-as-tools-got/</link>
@@ -138,13 +145,6 @@
       <description>Land $5k remote roles in 2026 — how Nairobi and Lagos devs reframed their résumés, built async portfolios, and closed seed-stage contracts at the top of the range.</description>
       <pubDate>Tue, 09 Jun 2026 15:37:42 +0000</pubDate>
       <guid>https://kubaik.github.io/land-5k-remote-roles-what-nairobi-devs-got-right/</guid>
-    </item>
-    <item>
-      <title>Zero-downtime migrations: let the DB do the work</title>
-      <link>https://kubaik.github.io/zero-downtime-migrations-let-the-db-do-the-work/</link>
-      <description>Cut migration downtime 90% by letting PostgreSQL do the work — backfill in batches, dual writes, and materialized views you can roll back in seconds</description>
-      <pubDate>Tue, 09 Jun 2026 13:41:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-downtime-migrations-let-the-db-do-the-work/</guid>
     </item>
   </channel>
 </rss>
