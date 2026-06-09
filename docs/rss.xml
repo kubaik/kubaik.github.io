@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 17:54:18 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 17:58:58 +0000</lastBuildDate>
+    <item>
+      <title>Enforce SBOM in 30 mins: Syft + Trivy 2026</title>
+      <link>https://kubaik.github.io/enforce-sbom-in-30-mins-syft-trivy-2026/</link>
+      <description>Enforce SBOM in 30 mins using Syft 0.10.0 and Trivy 0.48.3 — cut audit rework 83%, fail builds on invalid SPDX, and publish SBOMs to GCS for 0.035 USD per build.</description>
+      <pubDate>Tue, 09 Jun 2026 17:58:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/enforce-sbom-in-30-mins-syft-trivy-2026/</guid>
+    </item>
     <item>
       <title>SaaS in 6 weeks: 80% AI code failed in prod</title>
       <link>https://kubaik.github.io/saas-in-6-weeks-80-ai-code-failed-in-prod/</link>
@@ -138,13 +145,6 @@
       <description>Cut dev platform costs 77% to $412/month with ephemeral environments, Pulumi, and Next.js ISR — connection-first design for mobile networks in Africa</description>
       <pubDate>Tue, 09 Jun 2026 09:02:58 +0000</pubDate>
       <guid>https://kubaik.github.io/build-dev-platform-for-2kmonth/</guid>
-    </item>
-    <item>
-      <title>Africa devs: Ship production code, not CRUD</title>
-      <link>https://kubaik.github.io/africa-devs-ship-production-code-not-crud/</link>
-      <description>Show production-grade engineering in your remote portfolio to get hired from Africa — metrics, post-mortems, and Terraform matter more than React dashboards. 2026 hiring data included.</description>
-      <pubDate>Tue, 09 Jun 2026 08:47:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/africa-devs-ship-production-code-not-crud/</guid>
     </item>
   </channel>
 </rss>
