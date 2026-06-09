@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 12:32:43 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 12:37:21 +0000</lastBuildDate>
+    <item>
+      <title>Skip the zero-trust hype for 5-person teams</title>
+      <link>https://kubaik.github.io/skip-the-zero-trust-hype-for-5-person-teams/</link>
+      <description>Cut security overhead 60% with minimal zero trust — secrets rotation, rate limits, and when to skip mTLS. Tools: Vault 1.15, Cognito, Calico 3.26.</description>
+      <pubDate>Tue, 09 Jun 2026 12:37:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-the-zero-trust-hype-for-5-person-teams/</guid>
+    </item>
     <item>
       <title>AI code traps: Copilot vs Cursor smackdown</title>
       <link>https://kubaik.github.io/ai-code-traps-copilot-vs-cursor-smackdown/</link>
@@ -138,13 +145,6 @@
       <description>Salaries in 2026 move 30% when engineers master prompt + chaining vs RAG pipelines — latency, cost, and MTTR numbers that recruiters actually read</description>
       <pubDate>Tue, 09 Jun 2026 03:28:19 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-skills-2-salaries-that-move-in-2026/</guid>
-    </item>
-    <item>
-      <title>Mis-size DB pool? Here’s why</title>
-      <link>https://kubaik.github.io/mis-size-db-pool-heres-why/</link>
-      <description>Cut database connection pool mistakes 80%: stop using CPU × 2 — use the formula with real latency data and PgBouncer for 2026 systems</description>
-      <pubDate>Tue, 09 Jun 2026 02:01:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/mis-size-db-pool-heres-why/</guid>
     </item>
   </channel>
 </rss>
