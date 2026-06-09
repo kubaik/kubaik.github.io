@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 12:28:34 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 09:32:39 +0000</lastBuildDate>
+    <item>
+      <title>AI velocity audit: 3 real metrics your team ignores</title>
+      <link>https://kubaik.github.io/ai-velocity-audit-3-real-metrics-your-team-ignores/</link>
+      <description>In a 2025 study by Sema, teams using AI assistants saw a 22% increase in code smells per 1K lines of code, even as PR throughput rose.</description>
+      <pubDate>Tue, 09 Jun 2026 09:32:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-velocity-audit-3-real-metrics-your-team-ignores/</guid>
+    </item>
     <item>
       <title>AI code’s hidden CVEs exposed</title>
       <link>https://kubaik.github.io/ai-codes-hidden-cves-exposed/</link>
@@ -138,13 +145,6 @@
       <description>Waste 60% of database budget on idle connections — pool size formulas from 2018 break in 2026. Measure rps, latency, and lock waits to cut costs 30% today.</description>
       <pubDate>Mon, 08 Jun 2026 22:18:07 +0000</pubDate>
       <guid>https://kubaik.github.io/wrong-db-pool-size-wastes-cash/</guid>
-    </item>
-    <item>
-      <title>Remote salary: negotiate without sounding cheap</title>
-      <link>https://kubaik.github.io/remote-salary-negotiate-without-sounding-cheap/</link>
-      <description>Go from $3,800 to $7,800 remote salary in one negotiation packet — cost sheet, time sheet, risk sheet included. Real 20</description>
-      <pubDate>Mon, 08 Jun 2026 22:08:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/remote-salary-negotiate-without-sounding-cheap/</guid>
     </item>
   </channel>
 </rss>
