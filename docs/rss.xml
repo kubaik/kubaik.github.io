@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 23:43:34 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 09 Jun 2026 23:48:40 +0000</lastBuildDate>
+    <item>
+      <title>Cut AWS bills 32%: AWS Cost Explorer vs. Infracost</title>
+      <link>https://kubaik.github.io/cut-aws-bills-32-aws-cost-explorer-vs-infracost/</link>
+      <description>Cut AWS bills 32%: AWS Cost Explorer vs Infracost — the real FinOps levers for mid-size teams in 2026. Compare speed, accuracy, and ROI with concrete numbers and benchmarks.</description>
+      <pubDate>Tue, 09 Jun 2026 23:48:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-aws-bills-32-aws-cost-explorer-vs-infracost/</guid>
+    </item>
     <item>
       <title>PWAs in 2026: what browsers finally fixed</title>
       <link>https://kubaik.github.io/pwas-in-2026-what-browsers-finally-fixed/</link>
@@ -138,13 +145,6 @@
       <description>Enforce SBOM in 30 mins using Syft 0.10.0 and Trivy 0.48.3 — cut audit rework 83%, fail builds on invalid SPDX, and publish SBOMs to GCS for 0.035 USD per build.</description>
       <pubDate>Tue, 09 Jun 2026 17:58:53 +0000</pubDate>
       <guid>https://kubaik.github.io/enforce-sbom-in-30-mins-syft-trivy-2026/</guid>
-    </item>
-    <item>
-      <title>SaaS in 6 weeks: 80% AI code failed in prod</title>
-      <link>https://kubaik.github.io/saas-in-6-weeks-80-ai-code-failed-in-prod/</link>
-      <description>Ship a real SaaS in 6 weeks using AI tools — but only if you control the architecture. Learn the exact constraints, benchmarks, and refactor patterns that separate working code from melted VPS instances.</description>
-      <pubDate>Tue, 09 Jun 2026 16:31:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/saas-in-6-weeks-80-ai-code-failed-in-prod/</guid>
     </item>
   </channel>
 </rss>
