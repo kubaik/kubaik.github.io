@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 17:52:16 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 17:57:20 +0000</lastBuildDate>
+    <item>
+      <title>Slice monoliths slowly, not all at once</title>
+      <link>https://kubaik.github.io/slice-monoliths-slowly-not-all-at-once/</link>
+      <description>Cut API latency 75% by replacing strangler fig with sidecars — real benchmarks, Django-to-Go migration cost data, and the Unix socket trick most teams miss.</description>
+      <pubDate>Wed, 10 Jun 2026 17:57:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/slice-monoliths-slowly-not-all-at-once/</guid>
+    </item>
     <item>
       <title>AI observability: why logs and traces lie</title>
       <link>https://kubaik.github.io/ai-observability-why-logs-and-traces-lie/</link>
@@ -138,13 +145,6 @@
       <description>Cut interview rejection rates 54% with a single-file Python test instead of Docker setups — the AI-era format replacing LeetCode in 2026</description>
       <pubDate>Wed, 10 Jun 2026 05:11:22 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-interviews-the-new-tests-replacing-leetcode/</guid>
-    </item>
-    <item>
-      <title>5 things HTMX replaced in my stack</title>
-      <link>https://kubaik.github.io/5-things-htmx-replaced-in-my-stack/</link>
-      <description>Cut frontend build time 95% and TTFB 71% with HTMX — the real latency numbers, Docker image sizes, and the one mistake I made when migrating off React</description>
-      <pubDate>Wed, 10 Jun 2026 04:51:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-things-htmx-replaced-in-my-stack/</guid>
     </item>
   </channel>
 </rss>
