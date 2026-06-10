@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-10T23:20:14.376106",
+  "built_at": "2026-06-10T23:33:59.770641",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -550,6 +550,11 @@
       "slug": "zero-trust-for-small-teams-wireguard-vs-tailscale",
       "title": "Zero-trust for small teams: WireGuard vs Tailscale",
       "summary": "I've seen the same zerotrust practice mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now If you’re running a small product team in Latin America, zero-trust"
+    },
+    {
+      "slug": "3-iac-tools-in-2026-what-i-picked-after-hashicorp-fork",
+      "title": "3 IaC tools in 2026: what I picked after HashiCorp fork",
+      "summary": "I ran into this pulumi terraform problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks migrating our 80+ ser"
     }
   ]
 }

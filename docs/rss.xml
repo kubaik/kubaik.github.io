@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 23:29:16 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 23:34:02 +0000</lastBuildDate>
+    <item>
+      <title>3 IaC tools in 2026: what I picked after HashiCorp fork</title>
+      <link>https://kubaik.github.io/3-iac-tools-in-2026-what-i-picked-after-hashicorp-fork/</link>
+      <description>Cut IaC cold starts 60% after HashiCorp fork — Pulumi 3.91.1 vs OpenTofu 1.6.7 vs Terraform 1.7.3 benchmarked on 5000 AWS resources with real drift accuracy and cost data.</description>
+      <pubDate>Wed, 10 Jun 2026 23:33:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-iac-tools-in-2026-what-i-picked-after-hashicorp-fork/</guid>
+    </item>
     <item>
       <title>Zero-trust for small teams: WireGuard vs Tailscale</title>
       <link>https://kubaik.github.io/zero-trust-for-small-teams-wireguard-vs-tailscale/</link>
@@ -138,13 +145,6 @@
       <description>It can simulate 1,000 user flows in minutes.</description>
       <pubDate>Wed, 10 Jun 2026 08:45:10 +0000</pubDate>
       <guid>https://kubaik.github.io/legacy-code-revive-it-cheap-with-ai/</guid>
-    </item>
-    <item>
-      <title>ARM in production: Graviton4 vs Ampere in 2026</title>
-      <link>https://kubaik.github.io/arm-in-production-graviton4-vs-ampere-in-2026/</link>
-      <description>Cut AWS costs 36% with Graviton4 — the real migration mistakes teams make, benchmarks, and the exact timeouts to change first</description>
-      <pubDate>Wed, 10 Jun 2026 08:38:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/arm-in-production-graviton4-vs-ampere-in-2026/</guid>
     </item>
   </channel>
 </rss>
