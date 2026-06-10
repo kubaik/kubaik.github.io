@@ -5,14 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 12:47:33 +0000</lastBuildDate>
-    <item>
-      <title>1M token models are overkill — most apps don’t need</title>
-      <link>https://kubaik.github.io/1m-token-models-are-overkill-most-apps-dont-need/</link>
-      <description>Cut LLM costs 60% by capping context at 16k tokens — real benchmarks from Nairobi fintech and legal systems show when bigger windows help and when they waste cash</description>
-      <pubDate>Wed, 10 Jun 2026 12:47:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/1m-token-models-are-overkill-most-apps-dont-need/</guid>
-    </item>
+    <lastBuildDate>Wed, 10 Jun 2026 12:57:01 +0000</lastBuildDate>
     <item>
       <title>Bootcamp to $120k: 2026 steps that pay</title>
       <link>https://kubaik.github.io/bootcamp-to-120k-2026-steps-that-pay/</link>
@@ -145,6 +138,13 @@
       <description>Cut AWS bills 32%: AWS Cost Explorer vs Infracost — the real FinOps levers for mid-size teams in 2026. Compare speed, accuracy, and ROI with concrete numbers and benchmarks.</description>
       <pubDate>Tue, 09 Jun 2026 23:48:35 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-aws-bills-32-aws-cost-explorer-vs-infracost/</guid>
+    </item>
+    <item>
+      <title>PWAs in 2026: what browsers finally fixed</title>
+      <link>https://kubaik.github.io/pwas-in-2026-what-browsers-finally-fixed/</link>
+      <description>Cut API response time 60% with PWA caching — Background Sync v2, File System Access API, and the install prompt mistake most solo founders miss.</description>
+      <pubDate>Tue, 09 Jun 2026 23:16:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/pwas-in-2026-what-browsers-finally-fixed/</guid>
     </item>
   </channel>
 </rss>
