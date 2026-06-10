@@ -50,5 +50,6 @@
   "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant",
   "How to maintain a codebase where 40% of the code was written by an AI",
   "How AI changed what hiring managers are looking for in engineering interviews",
-  "How prompt injection attacks work and why your AI product is probably vulnerable"
+  "How prompt injection attacks work and why your AI product is probably vulnerable",
+  "Graviton4 and Ampere in 2026: the ARM migration decision for production workloads"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 11:34:48 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 08:38:52 +0000</lastBuildDate>
+    <item>
+      <title>ARM in production: Graviton4 vs Ampere in 2026</title>
+      <link>https://kubaik.github.io/arm-in-production-graviton4-vs-ampere-in-2026/</link>
+      <description>Cut AWS costs 36% with Graviton4 — the real migration mistakes teams make, benchmarks, and the exact timeouts to change first</description>
+      <pubDate>Wed, 10 Jun 2026 08:38:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/arm-in-production-graviton4-vs-ampere-in-2026/</guid>
+    </item>
     <item>
       <title>Prompt injection: your AI is leaking data now</title>
       <link>https://kubaik.github.io/prompt-injection-your-ai-is-leaking-data-now/</link>
@@ -138,13 +145,6 @@
       <description>Cut burnout 30% by measuring AI’s net time saved — GitHub Copilot Enterprise, Cursor logs, and the PR size trap most teams miss in 2026.</description>
       <pubDate>Tue, 09 Jun 2026 22:05:37 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-burnout-why-output-pressure-rose-even-as-tools-got/</guid>
-    </item>
-    <item>
-      <title>AI API docs: what humans still write in 2026</title>
-      <link>https://kubaik.github.io/ai-api-docs-what-humans-still-write-in-2026/</link>
-      <description>Cut API error rates 63% with guardrail docs — learn what humans must still write, Speakeasy 2.8, FastAPI 0.111, and the guardrail doc template that blocks AI hallucinations.</description>
-      <pubDate>Tue, 09 Jun 2026 21:45:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-api-docs-what-humans-still-write-in-2026/</guid>
     </item>
   </channel>
 </rss>
