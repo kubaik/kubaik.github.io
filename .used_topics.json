@@ -46,5 +46,6 @@
   "How HTMX changed my stack and what I gave up to get there",
   "How to pass AI-era technical interviews: the new formats replacing LeetCode",
   "How feature flag systems evolved into full experimentation platforms",
-  "Python 3.13 in production: the free-threaded GIL change and what it means for web apps"
+  "Python 3.13 in production: the free-threaded GIL change and what it means for web apps",
+  "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant"
 ]
