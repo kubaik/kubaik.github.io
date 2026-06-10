@@ -37,5 +37,6 @@
   "Soft deletes at scale: why the simple pattern breaks and what to do instead",
   "How container builds changed in 2026: BuildKit, depot.dev, and why CI pipelines got faster",
   "Progressive Web Apps in 2026: what the browser APIs finally made possible",
-  "FinOps in 2026: the AWS cost levers that actually move the needle for mid-size teams"
+  "FinOps in 2026: the AWS cost levers that actually move the needle for mid-size teams",
+  "Observability in 2026: why the three pillars model is being replaced and what comes next"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 09 Jun 2026 23:57:37 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 00:03:02 +0000</lastBuildDate>
+    <item>
+      <title>Observability 2026: ditch the three pillars</title>
+      <link>https://kubaik.github.io/observability-2026-ditch-the-three-pillars/</link>
+      <description>Replace Prometheus + Grafana + Jaeger with one ClickHouse table in 2026. Save $4k/month, cut query latency 47×, and keep every span forever. Learn the new unified telemetry model and the exact schema.</description>
+      <pubDate>Wed, 10 Jun 2026 00:02:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/observability-2026-ditch-the-three-pillars/</guid>
+    </item>
     <item>
       <title>Cut AWS bills 32%: AWS Cost Explorer vs. Infracost</title>
       <link>https://kubaik.github.io/cut-aws-bills-32-aws-cost-explorer-vs-infracost/</link>
@@ -138,13 +145,6 @@
       <description>Cut React 19 re-renders 61% with the compiler — build times, TTI drops, and the TypeScript gotcha most docs miss.</description>
       <pubDate>Tue, 09 Jun 2026 18:01:57 +0000</pubDate>
       <guid>https://kubaik.github.io/react-19-compiler-3x-faster-re-renders-or-bust/</guid>
-    </item>
-    <item>
-      <title>Enforce SBOM in 30 mins: Syft + Trivy 2026</title>
-      <link>https://kubaik.github.io/enforce-sbom-in-30-mins-syft-trivy-2026/</link>
-      <description>Enforce SBOM in 30 mins using Syft 0.10.0 and Trivy 0.48.3 — cut audit rework 83%, fail builds on invalid SPDX, and publish SBOMs to GCS for 0.035 USD per build.</description>
-      <pubDate>Tue, 09 Jun 2026 17:58:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/enforce-sbom-in-30-mins-syft-trivy-2026/</guid>
     </item>
   </channel>
 </rss>
