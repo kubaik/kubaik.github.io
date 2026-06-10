@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 23:15:25 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 23:20:17 +0000</lastBuildDate>
+    <item>
+      <title>Zero-trust for small teams: WireGuard vs Tailscale</title>
+      <link>https://kubaik.github.io/zero-trust-for-small-teams-wireguard-vs-tailscale/</link>
+      <description>Cut VPN costs 90% with zero-trust networking — WireGuard vs Tailscale in 2026 latency, throughput, and the key rotation mistake most teams make.</description>
+      <pubDate>Wed, 10 Jun 2026 23:20:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-for-small-teams-wireguard-vs-tailscale/</guid>
+    </item>
     <item>
       <title>AI tools for African devs: what actually works now</title>
       <link>https://kubaik.github.io/ai-tools-for-african-devs-what-actually-works-now/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS costs 36% with Graviton4 — the real migration mistakes teams make, benchmarks, and the exact timeouts to change first</description>
       <pubDate>Wed, 10 Jun 2026 08:38:47 +0000</pubDate>
       <guid>https://kubaik.github.io/arm-in-production-graviton4-vs-ampere-in-2026/</guid>
-    </item>
-    <item>
-      <title>Prompt injection: your AI is leaking data now</title>
-      <link>https://kubaik.github.io/prompt-injection-your-ai-is-leaking-data-now/</link>
-      <description>Lose 14 AI incidents in 30 days with this 30-minute defense pipeline — prompt injection cheat sheet for 2026 systems using LangChain 0.2.5 and AWS Lambda.</description>
-      <pubDate>Wed, 10 Jun 2026 08:07:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/prompt-injection-your-ai-is-leaking-data-now/</guid>
     </item>
   </channel>
 </rss>
