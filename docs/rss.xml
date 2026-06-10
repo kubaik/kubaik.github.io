@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 12:02:39 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 12:24:21 +0000</lastBuildDate>
+    <item>
+      <title>Bootcamp to $120k: 2026 steps that pay</title>
+      <link>https://kubaik.github.io/bootcamp-to-120k-2026-steps-that-pay/</link>
+      <description>From bootcamp to $120k ARR in 2026: the boring stack vs edge stack showdown with concrete costs, latency benchmarks, and the exact migration point most teams miss.</description>
+      <pubDate>Wed, 10 Jun 2026 12:24:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/bootcamp-to-120k-2026-steps-that-pay/</guid>
+    </item>
     <item>
       <title>Build a Nairobi SaaS stack for $3.2k/month</title>
       <link>https://kubaik.github.io/build-a-nairobi-saas-stack-for-32kmonth/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% with PWA caching — Background Sync v2, File System Access API, and the install prompt mistake most solo founders miss.</description>
       <pubDate>Tue, 09 Jun 2026 23:16:00 +0000</pubDate>
       <guid>https://kubaik.github.io/pwas-in-2026-what-browsers-finally-fixed/</guid>
-    </item>
-    <item>
-      <title>Container builds in 2026: 7 speed hacks you missed</title>
-      <link>https://kubaik.github.io/container-builds-in-2026-7-speed-hacks-you-missed/</link>
-      <description>Cut CI pipeline time 80% with BuildKit, depot.dev, and registry cache — concrete benchmarks, costs, and migration steps for Node 20 LTS services in 2026.</description>
-      <pubDate>Tue, 09 Jun 2026 23:12:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/container-builds-in-2026-7-speed-hacks-you-missed/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-10T12:02:36.716463",
+  "built_at": "2026-06-10T12:24:18.634804",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -465,6 +465,11 @@
       "slug": "build-a-nairobi-saas-stack-for-32kmonth",
       "title": "Build a Nairobi SaaS stack for $3.2k/month",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. I spent three weeks debugging a deadlock between PostgreSQL 15 and Redis 7.2 that only appeared under 500 concurrent users — this post"
+    },
+    {
+      "slug": "bootcamp-to-120k-2026-steps-that-pay",
+      "title": "Bootcamp to $120k: 2026 steps that pay",
+      "summary": "I've seen the same from bootcamp mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now If you’re a solo founder or indie hacker who’s also the only engineer, t"
     }
   ]
 }
