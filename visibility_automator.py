@@ -10,6 +10,7 @@ from typing import Dict, List, Optional
 import tweepy
 
 from enhanced_tweet_generator import EnhancedTweetGenerator
+from tweet_entropy import build_single_tweet_v2
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -859,7 +860,7 @@ class VisibilityAutomator:
         if link_strategy == "hook_only":
             tweet_text = _build_linkless_hook(post, hook_style)
         else:
-            tweet_text = _build_single_tweet(post, base_url, hook_style)
+            tweet_text = build_single_tweet_v2(post, base_url, hook_style)
 
         return {
             "tweet_text":    tweet_text,
@@ -990,7 +991,7 @@ class VisibilityAutomator:
         if link_strategy == "hook_only":
             tweet_text = _build_linkless_hook(post, hook_style)
         else:
-            tweet_text = _build_single_tweet(post, base_url, hook_style)
+            tweet_text = build_single_tweet_v2(post, base_url, hook_style)
 
         SEP = "─" * 68
         print(f"\n{SEP}")
