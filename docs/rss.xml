@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 21:14:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 21:20:32 +0000</lastBuildDate>
+    <item>
+      <title>Price a dev tool: 3 weeks of mistakes</title>
+      <link>https://kubaik.github.io/price-a-dev-tool-3-weeks-of-mistakes/</link>
+      <description>Cut pricing mistakes 80% with seat vs usage data from 1,247 dev tool users in 2026. Learn the exact tiers, Redis scripts, and Stripe pitfalls that turned $2k MRR into $6.2k.</description>
+      <pubDate>Wed, 10 Jun 2026 21:20:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/price-a-dev-tool-3-weeks-of-mistakes/</guid>
+    </item>
     <item>
       <title>Build a portfolio that beats AI clones in 2026</title>
       <link>https://kubaik.github.io/build-a-portfolio-that-beats-ai-clones-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut incident rates 62% by rewriting 20% of AI code — the hard numbers on guardrails vs human rewrite for 40% AI codebases in 2026</description>
       <pubDate>Wed, 10 Jun 2026 07:24:26 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-codebase-keep-it-or-kill-it-40-dilemma/</guid>
-    </item>
-    <item>
-      <title>Schema-per-tenant: the 2026 trade-offs nobody talks</title>
-      <link>https://kubaik.github.io/schema-per-tenant-the-2026-trade-offs-nobody-talks/</link>
-      <description>Cut multi-tenant SaaS costs 43% by switching from PostgreSQL RLS to schema-per-tenant in 2026 — real latency, cost, and onboarding numbers from a live system using Python 3.11 and PostgreSQL 16.</description>
-      <pubDate>Wed, 10 Jun 2026 07:04:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/schema-per-tenant-the-2026-trade-offs-nobody-talks/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-10T20:16:56.363274",
+  "built_at": "2026-06-10T21:20:29.810127",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -530,6 +530,11 @@
       "slug": "build-a-portfolio-that-beats-ai-clones-in-2026",
       "title": "Build a portfolio that beats AI clones in 2026",
       "summary": "Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, the Nigerian tech job market is flooded with candidates who used AI assistant"
+    },
+    {
+      "slug": "price-a-dev-tool-3-weeks-of-mistakes",
+      "title": "Price a dev tool: 3 weeks of mistakes",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I spent three weeks in 2026 charging a dev tool at 5¢ per API call when the market would"
     }
   ]
 }
