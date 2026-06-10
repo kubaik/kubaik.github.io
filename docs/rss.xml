@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 01:56:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 02:01:28 +0000</lastBuildDate>
+    <item>
+      <title>AI scans code: what it finds — and what it misses</title>
+      <link>https://kubaik.github.io/ai-scans-code-what-it-finds-and-what-it-misses/</link>
+      <description>AI scanners now catch 40-60% of escaped vulnerabilities in 2026 — but they miss logic flaws and hallucinate issues. Learn which tools to pair with them, how to tune confidence, and why manual review still matters.</description>
+      <pubDate>Wed, 10 Jun 2026 02:01:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-scans-code-what-it-finds-and-what-it-misses/</guid>
+    </item>
     <item>
       <title>OpenTelemetry stuck — here’s how to use it</title>
       <link>https://kubaik.github.io/opentelemetry-stuck-heres-how-to-use-it/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS infrastructure costs 86% by replacing $3k/month Kubernetes with ECS Fargate, CloudFront, and Redis — real numbers, real stack, real mistakes.</description>
       <pubDate>Tue, 09 Jun 2026 18:45:32 +0000</pubDate>
       <guid>https://kubaik.github.io/killed-3k-kubernetes-kept-200-infra/</guid>
-    </item>
-    <item>
-      <title>AI-proof your salary: 5 skills that still pay 2026</title>
-      <link>https://kubaik.github.io/ai-proof-your-salary-5-skills-that-still-pay-2026/</link>
-      <description>Cut API response time 60% and protect your 2026 salary with 5 boring but proven skills — connection pooling, observability, cache hit rate, cold starts, and cost per request. Real metrics, code, and mistakes included.</description>
-      <pubDate>Tue, 09 Jun 2026 18:30:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-proof-your-salary-5-skills-that-still-pay-2026/</guid>
     </item>
   </channel>
 </rss>
