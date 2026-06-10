@@ -23,7 +23,7 @@ from datetime import datetime
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 
-DOCS_DIR = Path("./../docs")
+DOCS_DIR = Path(__file__).resolve().parent.parent / "docs"
 DEFAULT_THRESHOLD = 0.5   # 0.0 = any overlap, 1.0 = identical titles only
 
 

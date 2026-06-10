@@ -33,7 +33,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
-DOCS_DIR = Path("./../docs")
+DOCS_DIR = Path(__file__).resolve().parent.parent / "docs"
 DEFAULT_THRESHOLD = 0.75   # 0.0 = no similarity, 1.0 = identical
 
 

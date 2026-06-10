@@ -15,7 +15,7 @@ import sys
 from pathlib import Path
 
 
-DOCS_DIR = Path("./../docs")
+DOCS_DIR = Path(__file__).resolve().parent.parent / "docs"
 
 # ── Fingerprints of fallback-generated posts ──────────────────────────────────
 # These match the exact strings hardcoded in _generate_fallback_post()
