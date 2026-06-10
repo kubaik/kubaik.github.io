@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 21:37:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 22:51:33 +0000</lastBuildDate>
+    <item>
+      <title>AI tools for African devs: what actually works now</title>
+      <link>https://kubaik.github.io/ai-tools-for-african-devs-what-actually-works-now/</link>
+      <description>Cut AI tool waste 70%: what African devs actually use in 2026 — real models, costs, and benchmarks for Flutter, Django, and Laravel stacks.</description>
+      <pubDate>Wed, 10 Jun 2026 22:51:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-tools-for-african-devs-what-actually-works-now/</guid>
+    </item>
     <item>
       <title>Build a search system in 2026: semantic, keyword</title>
       <link>https://kubaik.github.io/build-a-search-system-in-2026-semantic-keyword/</link>
@@ -138,13 +145,6 @@
       <description>Lose 14 AI incidents in 30 days with this 30-minute defense pipeline — prompt injection cheat sheet for 2026 systems using LangChain 0.2.5 and AWS Lambda.</description>
       <pubDate>Wed, 10 Jun 2026 08:07:28 +0000</pubDate>
       <guid>https://kubaik.github.io/prompt-injection-your-ai-is-leaking-data-now/</guid>
-    </item>
-    <item>
-      <title>AI interviews now ask for this</title>
-      <link>https://kubaik.github.io/ai-interviews-now-ask-for-this/</link>
-      <description>In our production systems at [redacted fintech], we saw a 37% increase in flaky tests after migrating to pytest 8.1 in Q3 2024.</description>
-      <pubDate>Wed, 10 Jun 2026 07:28:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-interviews-now-ask-for-this/</guid>
     </item>
   </channel>
 </rss>

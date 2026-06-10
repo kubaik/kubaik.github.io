@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-10T21:36:57.578803",
+  "built_at": "2026-06-10T22:51:30.405837",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -540,6 +540,11 @@
       "slug": "build-a-search-system-in-2026-semantic-keyword",
       "title": "Build a search system in 2026: semantic, keyword",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026 I built a keyword search endpoint for a SaaS that would return results in under "
+    },
+    {
+      "slug": "ai-tools-for-african-devs-what-actually-works-now",
+      "title": "AI tools for African devs: what actually works now",
+      "summary": "After reviewing a lot of code that touches tools built, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You’ve probably seen the ads: \"AI coding assistant for Africa\" or \"Local AI model fine-tuned"
     }
   ]
 }
