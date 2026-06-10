@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 16:13:46 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 16:18:54 +0000</lastBuildDate>
+    <item>
+      <title>ORM 2026: Prisma vs Drizzle vs SQLAlchemy</title>
+      <link>https://kubaik.github.io/orm-2026-prisma-vs-drizzle-vs-sqlalchemy/</link>
+      <description>Cut ORM cold-start latency 71% and save $1,200/month by dropping Prisma for Drizzle + raw SQL on Postgres 16 and Node 22. Migration safety over 2G, RAM under 512 MB, and type safety without runtime overhead.</description>
+      <pubDate>Wed, 10 Jun 2026 16:18:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/orm-2026-prisma-vs-drizzle-vs-sqlalchemy/</guid>
+    </item>
     <item>
       <title>API attacks rise 300% in 2026: what’s breaking first</title>
       <link>https://kubaik.github.io/api-attacks-rise-300-in-2026-whats-breaking-first/</link>
@@ -138,13 +145,6 @@
       <description>Cut payment integrations from three APIs to one gateway in Kenya, Nigeria, and Ghana. See 3x latency drops, 22% cost savings, and a single observability dashboard — with real numbers and code.</description>
       <pubDate>Wed, 10 Jun 2026 02:38:19 +0000</pubDate>
       <guid>https://kubaik.github.io/merge-three-payment-apis-into-one-system/</guid>
-    </item>
-    <item>
-      <title>Fine-tune or prompt: who wins in 2026?</title>
-      <link>https://kubaik.github.io/fine-tune-or-prompt-who-wins-in-2026/</link>
-      <description>Cut LLM costs 80% with fine-tuning in 2026 — real latency, hallucination, and support ticket data from a live system. Compare 70B fine-tuned vs 405B prompt-only on AWS SageMaker.</description>
-      <pubDate>Wed, 10 Jun 2026 02:13:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/fine-tune-or-prompt-who-wins-in-2026/</guid>
     </item>
   </channel>
 </rss>

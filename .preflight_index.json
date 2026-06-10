@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-10T15:46:42.875882",
+  "built_at": "2026-06-10T16:18:51.842305",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -500,6 +500,11 @@
       "slug": "api-attacks-rise-300-in-2026-whats-breaking-first",
       "title": "API attacks rise 300% in 2026: what’s breaking first",
       "summary": "Most api security guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In June 2026 we got paged at 3 a.m. because our API response times had spiked from 150 ms"
+    },
+    {
+      "slug": "orm-2026-prisma-vs-drizzle-vs-sqlalchemy",
+      "title": "ORM 2026: Prisma vs Drizzle vs SQLAlchemy",
+      "summary": "Most orm debate guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. Our team had to ship a new healthcare claims system in 6 weeks for 12 district hospitals. The stack was Postgres 16, Node 22 LTS, and a "
     }
   ]
 }
