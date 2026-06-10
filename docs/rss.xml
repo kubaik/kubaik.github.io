@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 21:32:05 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 21:37:00 +0000</lastBuildDate>
+    <item>
+      <title>Build a search system in 2026: semantic, keyword</title>
+      <link>https://kubaik.github.io/build-a-search-system-in-2026-semantic-keyword/</link>
+      <description>Cut search latency 50 % in 5 minutes — PostgreSQL 16, pgvector 0.7, and Redis 7.2 walkthrough with real 2026 benchmarks and cost breakdowns</description>
+      <pubDate>Wed, 10 Jun 2026 21:36:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-a-search-system-in-2026-semantic-keyword/</guid>
+    </item>
     <item>
       <title>Price a dev tool: 3 weeks of mistakes</title>
       <link>https://kubaik.github.io/price-a-dev-tool-3-weeks-of-mistakes/</link>
@@ -138,13 +145,6 @@
       <description>In our production systems at [redacted fintech], we saw a 37% increase in flaky tests after migrating to pytest 8.1 in Q3 2024.</description>
       <pubDate>Wed, 10 Jun 2026 07:28:02 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-interviews-now-ask-for-this/</guid>
-    </item>
-    <item>
-      <title>AI codebase: keep it or kill it (40% dilemma)</title>
-      <link>https://kubaik.github.io/ai-codebase-keep-it-or-kill-it-40-dilemma/</link>
-      <description>Cut incident rates 62% by rewriting 20% of AI code — the hard numbers on guardrails vs human rewrite for 40% AI codebases in 2026</description>
-      <pubDate>Wed, 10 Jun 2026 07:24:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-codebase-keep-it-or-kill-it-40-dilemma/</guid>
     </item>
   </channel>
 </rss>

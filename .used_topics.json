@@ -73,5 +73,6 @@
   "How pgvector changed our architecture: replacing Pinecone with what we already had",
   "Serverless databases in 2026: Neon vs PlanetScale vs Turso after real production use",
   "How to build a portfolio that gets you hired in a market where everyone has AI-assisted projects",
-  "Pricing a developer tool in 2026: what the market teaches you fast"
+  "Pricing a developer tool in 2026: what the market teaches you fast",
+  "How to design a search system in 2026: semantic, keyword, and hybrid approaches compared"
 ]
