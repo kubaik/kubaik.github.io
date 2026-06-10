@@ -70,5 +70,6 @@
   "The ORM debate in 2026: Prisma vs Drizzle vs SQLAlchemy for new projects",
   "How AI observability is different from traditional application monitoring",
   "How I migrated a monolith to services in 2026 without a big-bang rewrite",
-  "How pgvector changed our architecture: replacing Pinecone with what we already had"
+  "How pgvector changed our architecture: replacing Pinecone with what we already had",
+  "Serverless databases in 2026: Neon vs PlanetScale vs Turso after real production use"
 ]

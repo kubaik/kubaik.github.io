@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 18:46:12 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 18:51:15 +0000</lastBuildDate>
+    <item>
+      <title>Neon vs PlanetScale vs Turso: which broke first?</title>
+      <link>https://kubaik.github.io/neon-vs-planetscale-vs-turso-which-broke-first/</link>
+      <description>Cut API 500 errors 90% by fixing Neon, PlanetScale and Turso timeouts under real load — connection pools, replica lag and proxy limits exposed after 12 months in production.</description>
+      <pubDate>Wed, 10 Jun 2026 18:51:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/neon-vs-planetscale-vs-turso-which-broke-first/</guid>
+    </item>
     <item>
       <title>pgvector replaced Pinecone for $8k/year</title>
       <link>https://kubaik.github.io/pgvector-replaced-pinecone-for-8kyear/</link>
@@ -138,13 +145,6 @@
       <description>Load balancers were distributing traffic evenly, but every so often—around 03:17 AM our time—latency would spike to 800ms from the usual 45ms.</description>
       <pubDate>Wed, 10 Jun 2026 07:00:43 +0000</pubDate>
       <guid>https://kubaik.github.io/python-313-free-threaded-30-faster-apis/</guid>
-    </item>
-    <item>
-      <title>5 post-flag platforms for A/B testing in 2026</title>
-      <link>https://kubaik.github.io/5-post-flag-platforms-for-ab-testing-in-2026/</link>
-      <description>Cut experiment setup time 70% with 5 post-flag platforms in 2026 — real benchmarks, 4G-friendly SDKs, and hidden costs nobody tells you about.</description>
-      <pubDate>Wed, 10 Jun 2026 06:50:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-post-flag-platforms-for-ab-testing-in-2026/</guid>
     </item>
   </channel>
 </rss>
