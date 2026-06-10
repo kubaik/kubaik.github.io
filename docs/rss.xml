@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 08:45:15 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 11:34:30 +0000</lastBuildDate>
+    <item>
+      <title>2026 technical screens: what actually works</title>
+      <link>https://kubaik.github.io/2026-technical-screens-what-actually-works/</link>
+      <description>Cut technical screen time 40% with a real feature flag service — Neon Postgres 3.4, Upstash Redis 7.2, Vercel Edge 32.5.4</description>
+      <pubDate>Wed, 10 Jun 2026 11:34:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-technical-screens-what-actually-works/</guid>
+    </item>
     <item>
       <title>Legacy code: revive it cheap with AI</title>
       <link>https://kubaik.github.io/legacy-code-revive-it-cheap-with-ai/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 75% by ditching soft deletes — index bloat, 1.8s queries, and $18k/month storage bills exposed</description>
       <pubDate>Tue, 09 Jun 2026 23:03:28 +0000</pubDate>
       <guid>https://kubaik.github.io/soft-deletes-fail-what-breaks-first/</guid>
-    </item>
-    <item>
-      <title>Block 80% of traffic with Workers</title>
-      <link>https://kubaik.github.io/block-80-of-traffic-with-workers/</link>
-      <description>Cut origin load 79% with Cloudflare Workers caching — Durable Objects for rate limiting, KV for storage, and real results from a 6-week run in 2026.</description>
-      <pubDate>Tue, 09 Jun 2026 22:18:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/block-80-of-traffic-with-workers/</guid>
     </item>
   </channel>
 </rss>
