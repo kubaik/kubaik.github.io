@@ -5,14 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 07:04:29 +0000</lastBuildDate>
-    <item>
-      <title>Schema-per-tenant: the 2026 trade-offs nobody talks</title>
-      <link>https://kubaik.github.io/schema-per-tenant-the-2026-trade-offs-nobody-talks/</link>
-      <description>Cut multi-tenant SaaS costs 43% by switching from PostgreSQL RLS to schema-per-tenant in 2026 — real latency, cost, and onboarding numbers from a live system using Python 3.11 and PostgreSQL 16.</description>
-      <pubDate>Wed, 10 Jun 2026 07:04:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/schema-per-tenant-the-2026-trade-offs-nobody-talks/</guid>
-    </item>
+    <lastBuildDate>Wed, 10 Jun 2026 10:20:02 +0000</lastBuildDate>
     <item>
       <title>Python 3.13 free-threaded: 30% faster APIs</title>
       <link>https://kubaik.github.io/python-313-free-threaded-30-faster-apis/</link>

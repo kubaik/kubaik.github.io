@@ -188,7 +188,7 @@ jobs:
         id: fallback_check
         run: |
           echo "Running fallback post detection..."
-          OUTPUT=$(python delete_fallback_posts.py 2>&1)
+          OUTPUT=$(python utils/delete_fallback_posts.py 2>&1)
           echo "$OUTPUT"
 
           if echo "$OUTPUT" | grep -q "No fallback posts detected."; then
@@ -204,13 +204,13 @@ jobs:
       - name: Run delete_fallback_posts (delete)
         if: steps.fallback_check.outputs.has_fallback == 'true'
         run: |
-          echo "yes" | python delete_fallback_posts.py --delete
+          echo "yes" | python utils/delete_fallback_posts.py --delete
 
       - name: Run delete_similar_posts (dry-run detect)
         id: similar_check
         run: |
           echo "Running similar post detection..."
-          OUTPUT=$(python delete_similar_posts.py --threshold 0.75 2>&1)
+          OUTPUT=$(python utils/delete_similar_posts.py --threshold 0.75 2>&1)
           echo "$OUTPUT"
 
           if echo "$OUTPUT" | grep -q "No similar post groups found"; then
@@ -226,13 +226,13 @@ jobs:
       - name: Run delete_similar_posts (delete)
         if: steps.similar_check.outputs.has_similar == 'true'
         run: |
-          echo "yes" | python delete_similar_posts.py --delete --threshold 0.75
+          echo "yes" | python utils/delete_similar_posts.py --delete --threshold 0.75
 
       - name: Run deduplicate_posts (dry-run detect)
         id: dedup_check
         run: |
           echo "Running deduplication detection..."
-          OUTPUT=$(python deduplicate_posts.py --threshold 0.5 2>&1)
+          OUTPUT=$(python utils/deduplicate_posts.py --threshold 0.5 2>&1)
           echo "$OUTPUT"
 
           if echo "$OUTPUT" | grep -q "No duplicate posts found"; then
@@ -248,13 +248,13 @@ jobs:
       - name: Run deduplicate_posts (delete)
         if: steps.dedup_check.outputs.has_duplicates == 'true'
         run: |
-          python deduplicate_posts.py --delete --no-rebuild
+          python utils/deduplicate_posts.py --delete --no-rebuild
 
       - name: Run blog audit
         id: audit
         run: |
           echo "Running blog audit..."
-          OUTPUT=$(python blog_system.py audit 2>&1)
+          OUTPUT=$(python utils/blog_system.py audit 2>&1)
           echo "$OUTPUT"
 
           if echo "$OUTPUT" | grep -qiE "fallback|short post|low.quality|would (be )?purge|flagged"; then
@@ -266,7 +266,7 @@ jobs:
       - name: Run blog purge
         if: steps.audit.outputs.has_audit_issues == 'true'
         run: |
-          python blog_system.py purge
+          python utils/blog_system.py purge
 
       # ── CONSOLIDATED REBUILD & SELF-HEALING PUSH ─────────────────────────────
 
@@ -279,7 +279,7 @@ jobs:
           steps.audit.outputs.has_audit_issues == 'true'
         run: |
           echo "Modifications occurred — rebuilding site..."
-          python blog_system.py build
+          python utils/blog_system.py build
 
       - name: Master Commit and Push with Safe Engine Retry Loop
         if: >
@@ -323,20 +323,20 @@ jobs:
                 
                 # Re-execute targeted scripts on top of pristine upstream state
                 if [ "${{ steps.fallback_check.outputs.has_fallback }}" = "true" ]; then
-                  echo "yes" | python delete_fallback_posts.py --delete
+                  echo "yes" | python utils/delete_fallback_posts.py --delete
                 fi
                 if [ "${{ steps.similar_check.outputs.has_similar }}" = "true" ]; then
-                  echo "yes" | python delete_similar_posts.py --delete --threshold 0.75
+                  echo "yes" | python utils/delete_similar_posts.py --delete --threshold 0.75
                 fi
                 if [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then
-                  python deduplicate_posts.py --delete --no-rebuild
+                  python utils/deduplicate_posts.py --delete --no-rebuild
                 fi
                 if [ "${{ steps.audit.outputs.has_audit_issues }}" = "true" ]; then
-                  python blog_system.py purge
+                  python utils/blog_system.py purge
                 fi
                 
                 # Recompile fresh assets on top of updated branch head
-                python blog_system.py build
+                python utils/blog_system.py build
                 
                 git add docs/
                 git commit -m "chore: watchdog cleanup + rebuild [${TIMESTAMP}] (${SUMMARY% })"
@@ -448,15 +448,4 @@ jobs:
             echo "| Covered hours (all events) | \`${{ steps.fetch_runs.outputs.covered_hours }}\` |"
             echo "| Initially missing | \`${{ steps.missing.outputs.missing_list || 'none' }}\` |"
             echo "| Still missing after re-verify | \`${{ steps.reverify.outputs.confirmed_list || 'none' }}\` |"
-            echo "| Action | ${{ steps.reverify.outputs.confirmed_missing == 'true' && 'Re-triggered ⚠️' || 'No action needed ✅' }} |"
-            echo "| Fallback posts found | \`${{ steps.fallback_check.outputs.has_fallback == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
-            echo "| Similar posts found  | \`${{ steps.similar_check.outputs.has_similar == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
-            echo "| Duplicate posts found | \`${{ steps.dedup_check.outputs.has_duplicates == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
-            echo "| Audit issues found    | \`${{ steps.audit.outputs.has_audit_issues == 'true' && 'yes — purged ⚠️' || 'none ✅' }}\` |"
-            echo ""
-            if [ "${{ steps.reverify.outputs.confirmed_missing }}" = "true" ]; then
-              echo "⚠️ **Triggered catch-up run for missed slots:** \`${{ steps.reverify.outputs.confirmed_list }}\`"
-            else
-              echo "✅ **All cron slots running on schedule.**"
-            fi
-          } >> $GITHUB_STEP_SUMMARY
+            echo "| Action | ${{ steps.reverify.outputs.confirmed

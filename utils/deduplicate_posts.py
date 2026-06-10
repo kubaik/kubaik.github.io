@@ -23,7 +23,7 @@ from datetime import datetime
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 
-DOCS_DIR        = Path("./docs")
+DOCS_DIR = Path("./../docs")
 DEFAULT_THRESHOLD = 0.5   # 0.0 = any overlap, 1.0 = identical titles only
 
 
@@ -78,7 +78,7 @@ def find_duplicates(posts: list[dict], threshold: float) -> list[tuple[dict, dic
     We keep the NEWER post (higher created_at).
     """
     pairs = []
-    seen  = set()
+    seen = set()
 
     for i, post_a in enumerate(posts):
         for j, post_b in enumerate(posts):
@@ -90,7 +90,7 @@ def find_duplicates(posts: list[dict], threshold: float) -> list[tuple[dict, dic
 
             tokens_a = tokenise(post_a.get("title", ""))
             tokens_b = tokenise(post_b.get("title", ""))
-            score    = jaccard(tokens_a, tokens_b)
+            score = jaccard(tokens_a, tokens_b)
 
             if score >= threshold:
                 seen.add(key)
@@ -130,11 +130,11 @@ def rebuild_site():
         with open("config.yaml", "r") as f:
             config = yaml.safe_load(f)
 
-        from blog_system          import BlogSystem
+        from blog_system import BlogSystem
         from static_site_generator import StaticSiteGenerator
 
         blog_system = BlogSystem(config)
-        generator   = StaticSiteGenerator(blog_system)
+        generator = StaticSiteGenerator(blog_system)
         generator.generate_site()
         print("Site rebuilt successfully.")
     except Exception as e:
@@ -145,7 +145,8 @@ def rebuild_site():
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
-    parser = argparse.ArgumentParser(description="Find and remove near-duplicate blog posts.")
+    parser = argparse.ArgumentParser(
+        description="Find and remove near-duplicate blog posts.")
     parser.add_argument("--delete",    action="store_true",
                         help="Actually delete duplicates (default is dry-run only).")
     parser.add_argument("--threshold", type=float, default=DEFAULT_THRESHOLD,
@@ -158,7 +159,8 @@ def main():
     print("=" * 60)
     print("  Blog Post Deduplication Tool")
     print(f"  Threshold : {args.threshold}")
-    print(f"  Mode      : {'DELETE' if args.delete else 'DRY-RUN (pass --delete to apply)'}")
+    print(
+        f"  Mode      : {'DELETE' if args.delete else 'DRY-RUN (pass --delete to apply)'}")
     print("=" * 60)
 
     posts = load_posts()
@@ -177,8 +179,10 @@ def main():
 
     for keep, delete, score in duplicates:
         print(f"  Similarity : {score:.0%}")
-        print(f"  KEEP   [{format_date(keep.get('created_at',''))}]  {keep.get('title','?')}")
-        print(f"  DELETE [{format_date(delete.get('created_at',''))}]  {delete.get('title','?')}")
+        print(
+            f"  KEEP   [{format_date(keep.get('created_at',''))}]  {keep.get('title','?')}")
+        print(
+            f"  DELETE [{format_date(delete.get('created_at',''))}]  {delete.get('title','?')}")
         print()
 
         if args.delete:

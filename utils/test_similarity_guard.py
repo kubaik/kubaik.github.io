@@ -564,8 +564,8 @@ def parse_args():
         epilog=__doc__,
     )
     parser.add_argument(
-        "--docs", default="./docs",
-        help="Path to docs directory (default: ./docs)",
+        "--docs", default="./../docs",
+        help="Path to docs directory (default: ./../docs)",
     )
     parser.add_argument(
         "--block-threshold", type=float, default=DEFAULT_BLOCK_THRESHOLD,

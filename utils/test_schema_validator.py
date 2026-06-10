@@ -468,8 +468,8 @@ def parse_args():
     )
     parser.add_argument(
         "--docs",
-        default="./docs",
-        help="Path to the docs directory (default: ./docs)",
+        default="./../docs",
+        help="Path to the docs directory (default: ./../docs)",
     )
     parser.add_argument(
         "--base-url",

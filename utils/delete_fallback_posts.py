@@ -15,16 +15,16 @@ import sys
 from pathlib import Path
 
 
-DOCS_DIR = Path("./docs")
+DOCS_DIR = Path("./../docs")
 
 # ── Fingerprints of fallback-generated posts ──────────────────────────────────
 # These match the exact strings hardcoded in _generate_fallback_post()
 
-FALLBACK_TITLE_PREFIX  = "Understanding "
-FALLBACK_TITLE_SUFFIX  = ": A Complete Guide"
+FALLBACK_TITLE_PREFIX = "Understanding "
+FALLBACK_TITLE_SUFFIX = ": A Complete Guide"
 FALLBACK_CONTENT_PROBE = "is a crucial aspect of modern technology"
-FALLBACK_TAGS          = {"technology", "development", "guide"}
-FALLBACK_SEO_KEYWORDS  = {"guide", "tutorial", "best practices"}
+FALLBACK_TAGS = {"technology", "development", "guide"}
+FALLBACK_SEO_KEYWORDS = {"guide", "tutorial", "best practices"}
 
 
 def is_fallback_post(data: dict) -> tuple[bool, list[str]]:
@@ -41,7 +41,8 @@ def is_fallback_post(data: dict) -> tuple[bool, list[str]]:
 
     content = data.get("content", "")
     if FALLBACK_CONTENT_PROBE in content:
-        reasons.append(f'Content contains fallback probe text: "{FALLBACK_CONTENT_PROBE}"')
+        reasons.append(
+            f'Content contains fallback probe text: "{FALLBACK_CONTENT_PROBE}"')
 
     tags = set(data.get("tags", []))
     overlap = tags & FALLBACK_TAGS
@@ -51,7 +52,8 @@ def is_fallback_post(data: dict) -> tuple[bool, list[str]]:
     seo = set(data.get("seo_keywords", []))
     seo_overlap = seo & FALLBACK_SEO_KEYWORDS
     if len(seo_overlap) >= 2:
-        reasons.append(f"SEO keywords overlap with fallback keywords: {seo_overlap}")
+        reasons.append(
+            f"SEO keywords overlap with fallback keywords: {seo_overlap}")
 
     # Needs at least 2 signals to be flagged (avoids false positives)
     return len(reasons) >= 2, reasons
@@ -62,9 +64,9 @@ def scan_docs(dry_run: bool = True):
         print(f"❌ Directory not found: {DOCS_DIR.resolve()}")
         sys.exit(1)
 
-    fallback_dirs  = []
-    skipped        = []
-    error_count    = 0
+    fallback_dirs = []
+    skipped = []
+    error_count = 0
 
     for post_dir in sorted(DOCS_DIR.iterdir()):
         if not post_dir.is_dir() or post_dir.name == "static":
@@ -92,7 +94,8 @@ def scan_docs(dry_run: bool = True):
     print(f"  {'DRY RUN — ' if dry_run else ''}Fallback Post Scanner")
     print(f"{'=' * 65}")
     print(f"  Docs directory : {DOCS_DIR.resolve()}")
-    print(f"  Posts scanned  : {sum(1 for d in DOCS_DIR.iterdir() if d.is_dir() and d.name != 'static')}")
+    print(
+        f"  Posts scanned  : {sum(1 for d in DOCS_DIR.iterdir() if d.is_dir() and d.name != 'static')}")
     print(f"  Fallback posts : {len(fallback_dirs)}")
     print(f"  Skipped (no JSON): {len(skipped)}")
     print(f"  Read errors    : {error_count}")
@@ -123,7 +126,8 @@ def scan_docs(dry_run: bool = True):
 
     print(f"{'=' * 65}")
     if dry_run:
-        print(f"  DRY RUN complete. {len(fallback_dirs)} post(s) would be deleted.")
+        print(
+            f"  DRY RUN complete. {len(fallback_dirs)} post(s) would be deleted.")
         print(f"  Run with --delete to actually remove them.")
     else:
         print(f"  Done. {deleted}/{len(fallback_dirs)} post(s) deleted.")

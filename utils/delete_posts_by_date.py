@@ -214,8 +214,8 @@ def parse_args():
         epilog=__doc__,
     )
     parser.add_argument(
-        "--docs", default="./docs",
-        help="Path to docs directory (default: ./docs)",
+        "--docs", default="./../docs",
+        help="Path to docs directory (default: ./../docs)",
     )
     parser.add_argument(
         "--from", dest="from_date", metavar="YYYY-MM-DD", default=None,

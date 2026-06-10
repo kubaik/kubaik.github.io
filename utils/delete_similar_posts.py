@@ -33,7 +33,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 
-DOCS_DIR = Path("./docs")
+DOCS_DIR = Path("./../docs")
 DEFAULT_THRESHOLD = 0.75   # 0.0 = no similarity, 1.0 = identical
 
 
@@ -54,10 +54,10 @@ def post_to_text(data: dict) -> str:
     Content is intentionally excluded — it's too long and skews similarity
     toward shared boilerplate phrases rather than actual subject matter.
     """
-    title       = clean(data.get("title", ""))
+    title = clean(data.get("title", ""))
     description = clean(data.get("meta_description", ""))
-    tags        = clean(" ".join(data.get("tags", [])))
-    keywords    = clean(" ".join(data.get("seo_keywords", [])))
+    tags = clean(" ".join(data.get("tags", [])))
+    keywords = clean(" ".join(data.get("seo_keywords", [])))
 
     # Repeat title/description to give them more weight in TF-IDF
     return f"{title} {title} {title} {title} {description} {description} {tags} {keywords}"
@@ -80,7 +80,7 @@ def load_posts(docs_dir: Path) -> list[dict]:
         try:
             with open(post_json, "r", encoding="utf-8") as f:
                 data = json.load(f)
-            data["_dir"]  = post_dir          # attach path for deletion
+            data["_dir"] = post_dir          # attach path for deletion
             data["_text"] = post_to_text(data)
             posts.append(data)
         except (json.JSONDecodeError, OSError) as e:
@@ -93,7 +93,8 @@ def load_posts(docs_dir: Path) -> list[dict]:
 def build_similarity_matrix(posts: list[dict]) -> np.ndarray:
     texts = [p["_text"] for p in posts]
     vectorizer = TfidfVectorizer(
-        ngram_range=(1, 2),   # unigrams + bigrams catch "machine learning" etc.
+        # unigrams + bigrams catch "machine learning" etc.
+        ngram_range=(1, 2),
         min_df=1,
         sublinear_tf=True,    # log-scale TF dampens very frequent terms
         stop_words="english"
@@ -172,7 +173,8 @@ def run(threshold: float, keep_longest: bool, dry_run: bool):
     print(f"  {'DRY RUN — ' if dry_run else ''}Similar Post Scanner")
     print("=" * 70)
     print(f"  Threshold      : {threshold}  (higher = stricter)")
-    print(f"  Keep strategy  : {'longest content' if keep_longest else 'oldest post'}")
+    print(
+        f"  Keep strategy  : {'longest content' if keep_longest else 'oldest post'}")
     print(f"  Posts scanned  : {len(posts)}")
     print(f"  Similar groups : {len(groups)}")
     print(f"  Posts to delete: {total_to_delete}")
@@ -186,26 +188,30 @@ def run(threshold: float, keep_longest: bool, dry_run: bool):
     deleted = 0
 
     for group_num, group in enumerate(groups, 1):
-        keeper_idx   = pick_keeper(group, posts, keep_longest)
-        to_delete    = [i for i in group if i != keeper_idx]
-        keeper       = posts[keeper_idx]
+        keeper_idx = pick_keeper(group, posts, keep_longest)
+        to_delete = [i for i in group if i != keeper_idx]
+        keeper = posts[keeper_idx]
 
-        print(f"\n── Group {group_num} ({'%d similar posts' % len(group)}) {'─' * 40}")
+        print(
+            f"\n── Group {group_num} ({'%d similar posts' % len(group)}) {'─' * 40}")
 
         # Show similarity scores between all pairs in the group
         print(f"  Similarity scores within group:")
         for i, j in combinations(group, 2):
             score = sim_matrix[i, j]
-            print(f"    {posts[i]['title'][:40]:<42} ↔  {posts[j]['title'][:40]:<42}  {score:.3f}")
+            print(
+                f"    {posts[i]['title'][:40]:<42} ↔  {posts[j]['title'][:40]:<42}  {score:.3f}")
 
-        print(f"\n  ✅ KEEPING  [{keeper.get('created_at','?')[:10]}]  {keeper['title']}")
+        print(
+            f"\n  ✅ KEEPING  [{keeper.get('created_at','?')[:10]}]  {keeper['title']}")
         print(f"     Slug: {keeper['_dir'].name}")
         print(f"     Content length: {content_length(keeper):,} chars")
 
         for idx in to_delete:
             post = posts[idx]
             action = "🗑️  DELETING" if not dry_run else "🔍 WOULD DELETE"
-            print(f"\n  {action}  [{post.get('created_at','?')[:10]}]  {post['title']}")
+            print(
+                f"\n  {action}  [{post.get('created_at','?')[:10]}]  {post['title']}")
             print(f"     Slug: {post['_dir'].name}")
             print(f"     Content length: {content_length(post):,} chars")
 
@@ -221,7 +227,8 @@ def run(threshold: float, keep_longest: bool, dry_run: bool):
     print(f"\n{'=' * 70}")
     if dry_run:
         print(f"  DRY RUN complete.")
-        print(f"  {total_to_delete} post(s) across {len(groups)} group(s) would be deleted.")
+        print(
+            f"  {total_to_delete} post(s) across {len(groups)} group(s) would be deleted.")
         print(f"  Run with --delete to apply, or adjust --threshold first.")
     else:
         print(f"  Done. {deleted}/{total_to_delete} post(s) deleted.")
@@ -234,7 +241,7 @@ def run(threshold: float, keep_longest: bool, dry_run: bool):
 if __name__ == "__main__":
     args = sys.argv[1:]
 
-    dry_run      = "--delete"       not in args
+    dry_run = "--delete" not in args
     keep_longest = "--keep-longest" in args
 
     threshold = DEFAULT_THRESHOLD
