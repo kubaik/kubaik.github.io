@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 15:41:40 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 15:46:45 +0000</lastBuildDate>
+    <item>
+      <title>API attacks rise 300% in 2026: what’s breaking first</title>
+      <link>https://kubaik.github.io/api-attacks-rise-300-in-2026-whats-breaking-first/</link>
+      <description>Cut API overage 90% by capping CPU, memory, and Redis state. Real 2026 numbers from a 200k req/day service, Cloudflare Workers, Redis 7.2, and PostgreSQL 16.</description>
+      <pubDate>Wed, 10 Jun 2026 15:46:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-attacks-rise-300-in-2026-whats-breaking-first/</guid>
+    </item>
     <item>
       <title>Branching databases: my 2026 workflow fix</title>
       <link>https://kubaik.github.io/branching-databases-my-2026-workflow-fix/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM costs 80% with fine-tuning in 2026 — real latency, hallucination, and support ticket data from a live system. Compare 70B fine-tuned vs 405B prompt-only on AWS SageMaker.</description>
       <pubDate>Wed, 10 Jun 2026 02:13:10 +0000</pubDate>
       <guid>https://kubaik.github.io/fine-tune-or-prompt-who-wins-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI scans code: what it finds — and what it misses</title>
-      <link>https://kubaik.github.io/ai-scans-code-what-it-finds-and-what-it-misses/</link>
-      <description>AI scanners now catch 40-60% of escaped vulnerabilities in 2026 — but they miss logic flaws and hallucinate issues. Learn which tools to pair with them, how to tune confidence, and why manual review still matters.</description>
-      <pubDate>Wed, 10 Jun 2026 02:01:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-scans-code-what-it-finds-and-what-it-misses/</guid>
     </item>
   </channel>
 </rss>

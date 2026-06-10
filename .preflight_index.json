@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-10T14:58:06.801412",
+  "built_at": "2026-06-10T15:46:42.875882",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -495,6 +495,11 @@
       "slug": "branching-databases-my-2026-workflow-fix",
       "title": "Branching databases: my 2026 workflow fix",
       "summary": "After reviewing a lot of code that touches database branching, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. I ran into a nasty surprise when a feature branch from last week suddenly broke staging — even though CI had passed. T"
+    },
+    {
+      "slug": "api-attacks-rise-300-in-2026-whats-breaking-first",
+      "title": "API attacks rise 300% in 2026: what’s breaking first",
+      "summary": "Most api security guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In June 2026 we got paged at 3 a.m. because our API response times had spiked from 150 ms"
     }
   ]
 }
