@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 18:34:37 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 18:39:41 +0000</lastBuildDate>
+    <item>
+      <title>pgvector replaced Pinecone for $8k/year</title>
+      <link>https://kubaik.github.io/pgvector-replaced-pinecone-for-8kyear/</link>
+      <description>Cut $8k/year by replacing Pinecone with pgvector — real latency, cost, and recall numbers from 2 production systems in 2026. See how a 70% bill reduction and sub-50ms p99 latency became possible.</description>
+      <pubDate>Wed, 10 Jun 2026 18:39:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/pgvector-replaced-pinecone-for-8kyear/</guid>
+    </item>
     <item>
       <title>Slice monoliths slowly, not all at once</title>
       <link>https://kubaik.github.io/slice-monoliths-slowly-not-all-at-once/</link>
@@ -138,13 +145,6 @@
       <description>Cut experiment setup time 70% with 5 post-flag platforms in 2026 — real benchmarks, 4G-friendly SDKs, and hidden costs nobody tells you about.</description>
       <pubDate>Wed, 10 Jun 2026 06:50:51 +0000</pubDate>
       <guid>https://kubaik.github.io/5-post-flag-platforms-for-ab-testing-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI interviews: the new tests replacing LeetCode</title>
-      <link>https://kubaik.github.io/ai-interviews-the-new-tests-replacing-leetcode/</link>
-      <description>Cut interview rejection rates 54% with a single-file Python test instead of Docker setups — the AI-era format replacing LeetCode in 2026</description>
-      <pubDate>Wed, 10 Jun 2026 05:11:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-interviews-the-new-tests-replacing-leetcode/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-10T17:57:17.654401",
+  "built_at": "2026-06-10T18:39:38.072193",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -515,6 +515,11 @@
       "slug": "slice-monoliths-slowly-not-all-at-once",
       "title": "Slice monoliths slowly, not all at once",
       "summary": "A colleague asked me about migrated monolith during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete)"
+    },
+    {
+      "slug": "pgvector-replaced-pinecone-for-8kyear",
+      "title": "pgvector replaced Pinecone for $8k/year",
+      "summary": "A colleague asked me about pgvector changed during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) "
     }
   ]
 }
