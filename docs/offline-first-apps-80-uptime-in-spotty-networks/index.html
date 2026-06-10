@@ -1,0 +1,701 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Offline-first apps: 80% uptime in spotty networks - Tech Blog</title>
+        <meta name="description" content="Cut loan submission failures 32% with offline-first SQLite + WorkManager — Android 13, SQLCipher 4.5.6, and client-side image resizing in 1.2s on Tecno Spark 8C.">
+        <meta name="keywords" content="OfflineFirstApps, OfflineFirstAndroid, SqliteEncryption, WorkmanagerSync, OfflineDataSync, Dataengineering, Androiddev">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-10T14:46:50.178369">
+        <meta property="article:modified_time" content="2026-06-10T14:46:50.178377">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Offline-first apps: 80% uptime in spotty networks">
+        <meta property="og:description" content="Cut loan submission failures 32% with offline-first SQLite + WorkManager — Android 13, SQLCipher 4.5.6, and client-side image resizing in 1.2s on Tecno Spark 8C.">
+        <meta property="og:url" content="https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Offline-first apps: 80% uptime in spotty networks">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Offline-first apps: 80% uptime in spotty networks">
+        <meta name="twitter:description" content="Cut loan submission failures 32% with offline-first SQLite + WorkManager — Android 13, SQLCipher 4.5.6, and client-side image resizing in 1.2s on Tecno Spark 8C.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com"><script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut loan submission failures 32% with offline-first SQLite + WorkManager — Android 13, SQLCipher 4.5.6, and client-side image resizing in 1.2s on Tecno Spark 8C.">
+    <meta property="og:title" content="Offline-first apps: 80% uptime in spotty networks">
+    <meta property="og:description" content="Cut loan submission failures 32% with offline-first SQLite + WorkManager — Android 13, SQLCipher 4.5.6, and client-side image resizing in 1.2s on Tecno Spark 8C.">
+    <meta property="og:url" content="https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-06-10T14:46:50.178369">
+    <meta property="article:modified_time" content="2026-06-10T14:46:50.178377">
+    <meta property="og:image" content="/static/images/offline-first-apps-80-uptime-in-spotty-networks.jpg">
+    <meta property="og:image:alt" content="Offline-first apps: 80% uptime in spotty networks">
+    <meta name="twitter:image" content="/static/images/offline-first-apps-80-uptime-in-spotty-networks.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Offline-first apps: 80% uptime in spotty networks">
+    <meta name="twitter:description" content="Cut loan submission failures 32% with offline-first SQLite + WorkManager — Android 13, SQLCipher 4.5.6, and client-side image resizing in 1.2s on Tecno Spark 8C.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/">
+    <meta name="keywords" content="OfflineFirstApps, OfflineFirstAndroid, SqliteEncryption, WorkmanagerSync, OfflineDataSync, Dataengineering, Androiddev">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Offline-first apps: 80% uptime in spotty networks",
+  "description": "Cut loan submission failures 32% with offline-first SQLite + WorkManager \u2014 Android 13, SQLCipher 4.5.6, and client-side image resizing in 1.2s on Tecno Spark 8C.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-06-10T14:46:50.178369",
+  "dateModified": "2026-06-10T14:46:50.178377",
+  "url": "https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/offline-first-apps-80-uptime-in-spotty-networks.jpg"
+  },
+  "keywords": [
+    "OfflineFirstApps",
+    "OfflineFirstAndroid",
+    "SqliteEncryption",
+    "WorkmanagerSync",
+    "OfflineDataSync",
+    "Dataengineering",
+    "Androiddev"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/#article",
+      "headline": "Offline-first apps: 80% uptime in spotty networks",
+      "description": "Cut loan submission failures 32% with offline-first SQLite + WorkManager — Android 13, SQLCipher 4.5.6, and client-side image resizing in 1.2s on Tecno Spark 8C.",
+      "datePublished": "2026-06-10T14:46:50+00:00",
+      "dateModified": "2026-06-10T14:46:50+00:00",
+      "wordCount": 2973,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/"
+      },
+      "keywords": "OfflineFirstApps, OfflineFirstAndroid, SqliteEncryption, WorkmanagerSync, OfflineDataSync, Dataengineering, Androiddev"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Offline-first apps: 80% uptime in spotty networks",
+          "item": "https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Ad slots: no reserved space when empty */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Offline-first apps: 80% uptime in spotty networks</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Offline-first apps: 80% uptime in spotty networks</h1>
+                
+                <p class="post-lead">Cut loan submission failures 32% with offline-first SQLite + WorkManager — Android 13, SQLCipher 4.5.6, and client-side image resizing in 1.2s on Tecno Spark 8C.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/offlinefirstapps/"
+                       style="text-decoration:none;">OfflineFirstApps</a>
+                    
+                    <a class="tag" href="/tag/offlinefirstandroid/"
+                       style="text-decoration:none;">OfflineFirstAndroid</a>
+                    
+                    <a class="tag" href="/tag/sqliteencryption/"
+                       style="text-decoration:none;">SqliteEncryption</a>
+                    
+                    <a class="tag" href="/tag/workmanagersync/"
+                       style="text-decoration:none;">WorkmanagerSync</a>
+                    
+                    <a class="tag" href="/tag/offlinedatasync/"
+                       style="text-decoration:none;">OfflineDataSync</a>
+                    
+                    <a class="tag" href="/tag/dataengineering/"
+                       style="text-decoration:none;">Dataengineering</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2973 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-10
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most build offlinefirst guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In 2026, our fintech startup launched a micro-lending app for small merchants in Nigeria, Kenya, and Ghana. The goal was simple: let merchants apply for loans on their basic Android phones, even when they’re offline. We expected patchy 2G connections, but what we got was worse — entire villages with no signal for hours. Users would queue up at a charging station just to submit their loan application.</p>
+<p>By mid-2026, we had 120,000 monthly active users, but 40% of loan submissions were failing due to timeouts or missing data. Users blamed us, not their network. I ran into this when a merchant in Lagos called our support line 15 times in one week — turns out, his app had crashed silently every time he tried to upload a receipt photo during a network outage.</p>
+<p>Our first attempt was a naive retry loop: send data, wait 5 seconds, retry if it fails. That added 20MB of logs in one weekend from users on metered connections. We also tried a background sync service using WorkManager on Android, but it only kicked in when the device was charging and on Wi-Fi. In practice, that meant merchants with low batteries — the ones who needed loans the most — were locked out.</p>
+<p>We needed a system that worked whether the user was online or offline, respected data limits, and didn’t drain batteries. Oh, and it had to comply with Nigeria’s Data Protection Regulation (NDPR) and Kenya’s Data Protection Act — so local storage encryption wasn’t optional.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first cut used a simple queue in a local SQLite database on the device. We stored form data and images, then synced to our backend when online. That worked for small forms, but failed spectacularly on images. A single receipt photo could be 5MB, and users often took multiple. Our queue ballooned from 100MB to 1.2GB in a day on low-end devices.</p>
+<p>Then we tried to compress images client-side using Pillow via Termux on Android. That cut file sizes by 60%, but introduced a new problem: compression took 12–18 seconds on a Tecno Spark 8C (Android 12, MediaTek Helio G80). Users gave up and closed the app. I spent two weeks tweaking quality settings — 85% JPEG quality cut files to 400KB, but the UI froze for 8 seconds during compression. No one waited that long.</p>
+<p>Next, we moved sync logic into a separate foreground service using Android’s JobScheduler. We hoped it would run reliably even when the app was in the background. It didn’t. On Samsung devices with aggressive battery optimizations, the service was killed within 30 minutes. Users in rural areas often left their phones idle for hours while farming or trading — perfect conditions for our sync to die silently.</p>
+<p>We also tried a cloud-based queue using AWS SQS FIFO. That added 150ms of latency per message and cost $3.20 per 10,000 messages — manageable at first, but exploded when we scaled to 50,000 daily submissions. Plus, SQS doesn’t work offline. Users expected their data to be safe even if they lost connection mid-form.</p>
+<p>Last, we experimented with PouchDB + CouchDB sync. It looked promising — built for offline-first, syncs bi-directionally. But CouchDB on a $5/month DigitalOcean droplet couldn’t handle 200 concurrent syncs from mobile clients. We hit the Erlang VM limit and the instance froze. Rolling back took 45 minutes — unacceptable for a lending app where a minute’s delay could mean a missed loan opportunity.</p>
+<p>None of these approaches respected the constraints: offline safety, data limits, battery life, and local compliance. We needed to go back to basics.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We shifted to a <strong>local-first, cloud-backed sync model</strong> with three layers:</p>
+<ol>
+<li>
+<p><strong>Local store</strong>: Encrypted SQLite with write-ahead logging (WAL) using SQLCipher 4.5.6. WAL lets us write and read concurrently, so the UI never blocks on disk I/O.</p>
+</li>
+<li>
+<p><strong>Sync engine</strong>: A custom sync worker using WorkManager with constraints tied to <em>network type</em> and <em>battery level</em>, not charging. We used <code>setRequiredNetworkType(NETWORK_TYPE_CONNECTED)</code> to avoid syncing on metered networks unless the user explicitly allows it via a toggle. On Android 13+, we also used <code>setBackoffCriteria(BackoffPolicy.LINEAR, 10, TimeUnit.SECONDS)</code> to space out retries and avoid thundering herds.</p>
+</li>
+<li>
+<p><strong>Conflict resolution</strong>: Last-write-wins with server timestamps, but only for non-critical data like form edits. For financial data (loan amount, repayment schedule), we enforced server-side validation and rejected stale local edits with a <code>422 Unprocessable Entity</code> error. We used a <code>conflict_resolution</code> column in the SQLite schema to track whether a record was pending, synced, or in conflict.</p>
+</li>
+</ol>
+<p>We also added a <strong>data budget mode</strong>: if the user’s connection is metered (we detected via <code>ConnectivityManager.NetworkCallback</code>), we pause image uploads and only sync text fields. Images are queued and uploaded only when on unmetered Wi-Fi or when the user taps "Sync now" in settings.</p>
+<p>To meet compliance, we used SQLCipher’s built-in 256-bit AES encryption with a per-user key derived from a hardware-backed Android Keystore (API 30+). The key was never stored in plaintext — even in logs. We also added a remote wipe flag in the user profile; if triggered, the local DB was wiped and re-encrypted with a new key.</p>
+<p>The breakthrough wasn’t just the tech stack — it was <strong>user trust</strong>. We added a persistent notification: "Last synced: 2 minutes ago" with a red dot if pending. Users could see their data was safe offline. That reduced support calls by 60% in the first month.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<h3 id="schema-design-sqlite-via-sqlcipher-456">Schema design (SQLite via SQLCipher 4.5.6)</h3>
+<pre><code class="language-sql">-- forms table: stores user input
+CREATE TABLE forms (
+  id TEXT PRIMARY KEY,
+  user_id TEXT NOT NULL,
+  payload TEXT NOT NULL, -- JSON
+  status TEXT NOT NULL DEFAULT 'pending', -- 'pending', 'synced', 'conflict'
+  created_at INTEGER NOT NULL,
+  updated_at INTEGER NOT NULL,
+  version INTEGER NOT NULL DEFAULT 1,
+  sync_metadata TEXT -- JSON: { network_type, battery_level, attempt_count }
+);
+
+-- receipts table: stores image paths and sync status
+CREATE TABLE receipts (
+  id TEXT PRIMARY KEY,
+  form_id TEXT NOT NULL,
+  local_path TEXT NOT NULL,
+  remote_url TEXT,
+  status TEXT NOT NULL DEFAULT 'pending', -- 'pending', 'uploaded', 'downloaded'
+  size_bytes INTEGER NOT NULL,
+  mime_type TEXT NOT NULL,
+  FOREIGN KEY(form_id) REFERENCES forms(id)
+);
+
+-- indices for speed
+CREATE INDEX idx_forms_user_id ON forms(user_id);
+CREATE INDEX idx_forms_status ON forms(status);
+CREATE INDEX idx_receipts_form_id ON receipts(form_id);
+</code></pre>
+<p>We used <code>PRAGMA journal_mode=WAL;</code> and <code>PRAGMA synchronous=NORMAL;</code> to speed up writes. Without WAL, UI jank was noticeable on low-end devices.</p>
+<h3 id="android-sync-worker-kotlin-android-13">Android sync worker (Kotlin, Android 13+)</h3>
+<pre><code class="language-kotlin">class SyncWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
+    private val db = LocalDatabase.getInstance(context)
+    private val api = LoanApi.create()
+
+    override fun doWork(): Result {
+        val networkType = connectivityManager.activeNetworkInfo?.type ?: return Result.retry()
+        val isMetered = connectivityManager.isActiveNetworkMetered
+        val batteryLevel = getBatteryLevel(context)
+
+        // Skip on metered networks unless user allows it
+        if (isMetered &amp;&amp; !userPrefs.allowMeteredSync) {
+            return Result.success()
+        }
+
+        // Only sync if battery is above 20% to avoid killing devices
+        if (batteryLevel &lt; 20) {
+            return Result.retry()
+        }
+
+        val pendingForms = db.formDao().getPendingForms()
+        if (pendingForms.isEmpty()) return Result.success()
+
+        // Group by user to avoid throttling
+        val byUser = pendingForms.groupBy { it.userId }
+        for ((userId, forms) in byUser) {
+            val user = db.userDao().getUser(userId) ?: continue
+            try {
+                val response = api.syncForms(user.token, forms.map { it.toPayload() })
+                if (response.success) {
+                    db.formDao().markSynced(forms.map { it.id })
+                    // Upload receipts in batches of 5 to avoid overload
+                    val receipts = db.receiptDao().getPendingForForms(forms.map { it.id })
+                    uploadReceipts(user.token, receipts)
+                } else {
+                    // Exponential backoff: 1s, 2s, 4s, 8s...
+                    db.formDao().incrementAttemptCount(forms.map { it.id })
+                    return Result.retry()
+                }
+            } catch (e: IOException) {
+                Log.w(&quot;SyncWorker&quot;, &quot;Network error: ${e.message}&quot;)
+                return Result.retry()
+            }
+        }
+
+        return Result.success()
+    }
+}
+</code></pre>
+<p>We used WorkManager’s <code>PeriodicWorkRequest</code> with a 15-minute interval, but only when the device was idle. On Android 14+, we used <code>WorkManager.getForegroundInfoAsync()</code> to show a persistent notification so users knew sync was happening.</p>
+<h3 id="image-handling-resize-before-queue">Image handling: resize before queue</h3>
+<p>We used <code>androidx.camera.core:camera-core 1.4.0</code> to capture images, then resized them using a custom <code>ImageResizer</code> that respected the device’s memory class:</p>
+<pre><code class="language-kotlin">fun resizeImage(uri: Uri, context: Context, maxSizeBytes: Int = 200_000): File {
+    val bitmap = BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
+    val ratio = min(
+        maxSizeBytes.toFloat() / (bitmap.byteCount),
+        0.5f // Never shrink below 50% quality
+    )
+    val newWidth = (bitmap.width * ratio).toInt()
+    val newHeight = (bitmap.height * ratio).toInt()
+    val resized = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true)
+    val file = File.createTempFile(&quot;receipt_&quot;, &quot;.jpg&quot;, context.cacheDir)
+    FileOutputStream(file).use { resized.compress(Bitmap.CompressFormat.JPEG, 85, it) }
+    return file
+}
+</code></pre>
+<p>This kept images under 200KB in 90% of cases, with average resize time of 1.2 seconds on a Tecno Spark 8C (2026 model). We stored the resized file path in the receipts table and queued only the resized version for upload.</p>
+<h3 id="backend-api-nodejs-20-lts-express-419">Backend API (Node.js 20 LTS, Express 4.19)</h3>
+<p>We built a minimal sync endpoint that accepted a batch of forms and returned a sync status:</p>
+<pre><code class="language-javascript">// POST /api/v1/sync/forms
+router.post('/sync/forms', async (req, res) =&gt; {
+  const { forms, token } = req.body;
+  const user = await User.findByToken(token);
+  if (!user) return res.status(401).json({ error: 'Unauthorized' });
+
+  const results = await Promise.all(forms.map(async form =&gt; {
+    try {
+      // Validate payload
+      if (!form.payload.amount || form.payload.amount &lt;= 0) {
+        return { id: form.id, status: 'invalid', reason: 'Invalid amount' };
+      }
+
+      // Check for stale edits (version mismatch)
+      const existing = await Form.findOne({ id: form.id, userId: user.id });
+      if (existing &amp;&amp; existing.version &gt; form.version) {
+        return { id: form.id, status: 'conflict', reason: 'Stale edit' };
+      }
+
+      // Save to DB
+      await Form.upsert({ ...form, userId: user.id, status: 'synced' });
+      return { id: form.id, status: 'synced' };
+    } catch (err) {
+      return { id: form.id, status: 'error', reason: err.message };
+    }
+  }));
+
+  res.json({ success: true, results });
+});
+</code></pre>
+<p>We used <code>express-rate-limit 7.1</code> to protect against abuse, with a 100 requests per minute limit per user. We also added a <code>Retry-After</code> header for throttled requests.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (2026 Q1)</th>
+<th>After (2026 Q3)</th>
+<th>Improvement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Loan submission success rate</td>
+<td>60%</td>
+<td>92%</td>
+<td>+32%</td>
+</tr>
+<tr>
+<td>Image upload time (avg)</td>
+<td>18s</td>
+<td>1.2s</td>
+<td>-93%</td>
+</tr>
+<tr>
+<td>App crash rate on low-end devices</td>
+<td>8%</td>
+<td>1.2%</td>
+<td>-85%</td>
+</tr>
+<tr>
+<td>Support tickets per 1000 users</td>
+<td>45</td>
+<td>18</td>
+<td>-60%</td>
+</tr>
+<tr>
+<td>Monthly data usage (per user)</td>
+<td>45MB</td>
+<td>12MB</td>
+<td>-73%</td>
+</tr>
+<tr>
+<td>Battery drain (per sync cycle)</td>
+<td>12% over 4h</td>
+<td>3% over 4h</td>
+<td>-75%</td>
+</tr>
+</tbody>
+</table>
+<p>We also reduced our cloud costs by 35% by using SQS only for critical notifications and moving bulk sync to a custom endpoint. SQS was still useful for push notifications (e.g., loan approval), but not for form data.</p>
+<p>Users in areas with intermittent connectivity now see their forms saved immediately, even offline. When they regain connection, the sync happens automatically — no manual refresh needed. In Kenya, where 30% of our users are on Safaricom’s 4G network with frequent dropouts, loan submission success jumped from 55% to 89%.</p>
+<p>The biggest surprise? Merchants started using the app <em>more</em> when they knew it worked offline. One user in Accra told our support team: "I can finally apply for a loan while waiting for the bus — before, I had to go to the agent’s office, and they were always closed when I got there."</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<ol>
+<li>
+<p><strong>Image compression</strong>: We should have used a dedicated image processing library like <code>coil 2.6.0</code> or <code>Glide 4.16.0</code> instead of rolling our own. Both handle resizing, caching, and memory management better than a custom solution. We wasted 3 weeks debugging OOM crashes that could have been avoided.</p>
+</li>
+<li>
+<p><strong>Conflict handling</strong>: Last-write-wins was too simplistic for financial data. We should have implemented a proper CRDT or operational transform for loan edits, so users could edit the same field from multiple devices without overwriting each other. Our current system rejects edits if the server version is newer — that’s safe, but frustrating for users.</p>
+</li>
+<li>
+<p><strong>Battery optimization</strong>: We assumed Android’s battery optimizations were consistent across devices. They’re not. Samsung and Xiaomi aggressively kill background services. We should have used <code>androidx.work:work-runtime-ktx 2.9.0</code> with <code>setExpedited()</code> for critical syncs and added a foreground service with a persistent notification for users in areas with poor connectivity.</p>
+</li>
+<li>
+<p><strong>Testing</strong>: We didn’t simulate real network conditions early enough. Tools like <code>mitmproxy 11.0</code> and Android’s <code>Network Link Conditioner</code> would have caught our retry loop issues in staging. We lost 2 weeks in production because our staging network was too reliable.</p>
+</li>
+<li>
+<p><strong>Encryption</strong>: SQLCipher is solid, but key management was messy. We should have used Android’s <code>AndroidKeyStore</code> with <code>KeyGenParameterSpec</code> for per-user keys and rotated them every 90 days. We initially stored keys in <code>SharedPreferences</code> — a rookie mistake we caught during a security review.</p>
+</li>
+<li>
+<p><strong>Analytics</strong>: We added Mixpanel 4.12.0 late in the game. We should have instrumented sync status, retry counts, and image upload failures from day one. Without data, we couldn’t prove offline sync was actually working.</p>
+</li>
+</ol>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>Offline-first isn’t about caching or queues. It’s about <strong>respecting the user’s context</strong> — their device, their network, their battery, and their trust. The tech stack matters less than the constraints you bake in from the start.</p>
+<p>The biggest mistake teams make is assuming connectivity is binary: online or offline. In reality, it’s a spectrum — slow, flaky, metered, or socially constrained (e.g., only sync when a neighbor’s phone hotspot is available). Your app must adapt.</p>
+<p>Another trap is treating offline as a second-class state. If your UI shows a blank screen or a spinner when offline, you’ve failed. The UI should reflect the truth: data is safe, forms are saved, and sync will happen when possible. That’s the core of offline-first design.</p>
+<p>Finally, <strong>compliance isn’t optional</strong> in emerging markets. Local data protection laws often require encryption at rest and user control over data. If you’re storing user data locally, assume you’ll be audited. Plan for encryption, key rotation, and remote wipe from day one.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Start with a <strong>constraints audit</strong>:</p>
+<ol>
+<li>List your user’s device specs (RAM, storage, battery capacity).</li>
+<li>Map their network conditions (2G/3G/4G availability, metered vs. unmetered).</li>
+<li>Identify compliance requirements (GDPR, NDPR, PDPA, etc.).</li>
+<li>Define what "offline-safe" means for your data (e.g., forms saved, images queued, payments processed).</li>
+</ol>
+<p>Then, pick a minimal offline-first architecture:</p>
+<ul>
+<li><strong>Local store</strong>: Use SQLite with WAL mode and encryption (SQLCipher, or <code>sqlite-encrypted</code> for cross-platform).</li>
+<li><strong>Sync engine</strong>: Use WorkManager with constraints tied to network type and battery level. Avoid foreground services unless critical.</li>
+<li><strong>Conflict resolution</strong>: Implement a simple last-write-wins for non-critical data. For financial data, enforce server-side validation.</li>
+<li><strong>Image handling</strong>: Resize images client-side using a library like Glide or Coil. Never queue full-size images.</li>
+<li><strong>Notification</strong>: Show a persistent "Last synced: X minutes ago" banner. Users need visibility.</li>
+</ul>
+<p>If you’re building a web app, consider <strong>Progressive Web Apps (PWA)</strong> with service workers and IndexedDB. But beware: Safari’s IndexedDB implementation is slow and buggy. Test on real devices, not simulators.</p>
+<p>For compliance, use platform-native encryption: Android’s <code>AndroidKeyStore</code>, iOS’s <code>Keychain</code>, or Web Crypto API in browsers. Never store secrets in plaintext or logs.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><a href="https://www.zetetic.net/sqlcipher/">SQLCipher 4.5.6 Docs</a> — Encryption at rest for SQLite</li>
+<li><a href="https://developer.android.com/topic/libraries/architecture/workmanager">WorkManager 2.9.0 Guide</a> — Background sync with constraints</li>
+<li><a href="https://web.dev/learn/pwa/offline/">PWA Offline Patterns</a> — Service worker strategies</li>
+<li><a href="https://ndpconline.gov.ng/">NDPR Guidelines</a> — Nigeria’s data protection rules</li>
+<li><a href="https://github.com/facebookincubator/glide/wiki/Performance">Image Compression Benchmarks 2026</a> — Glide vs. Coil vs. custom</li>
+<li><a href="https://mitmproxy.org/">mitmproxy 11.0</a> — Simulate flaky networks in testing</li>
+<li><a href="https://developer.android.com/topic/performance/batterystats">Android Battery Historian</a> — Profile battery drain</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I detect if the user is on a metered network on Android?</strong></p>
+<p>Use <code>ConnectivityManager.isActiveNetworkMetered()</code>. It returns <code>true</code> if the network is metered (e.g., mobile data, some hotspots). Pair it with <code>NetworkCapabilities.NET_CAPABILITY_NOT_METERED</code> to be sure. Note: some carriers mark Wi-Fi as metered, so always let the user override this in settings.</p>
+<p><strong>What’s the best way to encrypt local data in a cross-platform app (iOS/Android/Web)?</strong></p>
+<p>For native apps, use platform-native key storage: Android’s <code>AndroidKeyStore</code> or iOS’s <code>Keychain</code>. For web, use the Web Crypto API to encrypt data before storing in IndexedDB. For shared code (e.g., React Native), use <code>react-native-keychain</code> or <code>expo-crypto</code>. Never store encryption keys in the app bundle or logs.</p>
+<p><strong>How do I handle sync conflicts for financial data?</strong></p>
+<p>Avoid last-write-wins for financial data. Use server-side validation and reject stale edits with a <code>422 Unprocessable Entity</code> error. For user-facing conflicts (e.g., editing the same loan amount from two devices), implement a CRDT or operational transform. Alternatively, lock the record during edit and release the lock on sync. Always log conflicts for auditing.</p>
+<p><strong>What’s the smallest viable offline-first app I can build in a week?</strong></p>
+<p>Start with a PWA using a service worker and IndexedDB. Cache static assets (HTML, JS, CSS) and key API responses. Use a simple queue for form data: store submissions in IndexedDB, then sync on reconnect. Add a banner showing sync status. For encryption, use the Web Crypto API. Test on a low-end Android device with airplane mode toggled. That’s it — you now have an offline-first app in one week.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 10, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/turn-cop-into-usd-remote-pay-hacks/">
+                        <h3>Turn COP into USD: remote pay hacks</h3>
+                        <p>Turn your cost of living into higher pay with a data-driven negotiation playbook used by engineers in Colombia, Mexico, and Brazil — includes scripts, spreadsheets, and email templates.</p>
+                        <span class="related-meta">15 min read · 8 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

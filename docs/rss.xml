@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 14:41:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 14:46:54 +0000</lastBuildDate>
+    <item>
+      <title>Offline-first apps: 80% uptime in spotty networks</title>
+      <link>https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/</link>
+      <description>Cut loan submission failures 32% with offline-first SQLite + WorkManager — Android 13, SQLCipher 4.5.6, and client-side image resizing in 1.2s on Tecno Spark 8C.</description>
+      <pubDate>Wed, 10 Jun 2026 14:46:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/</guid>
+    </item>
     <item>
       <title>Migrate Daraja 2.0 to production in 2 hours</title>
       <link>https://kubaik.github.io/migrate-daraja-20-to-production-in-2-hours/</link>
@@ -138,13 +145,6 @@
       <description>Cut observability ingestion 70% with OpenTelemetry in 2026 — Collector v0.94 sampling, OTLP wire format, and the head vs tail sampler mistake most teams make.</description>
       <pubDate>Wed, 10 Jun 2026 01:39:47 +0000</pubDate>
       <guid>https://kubaik.github.io/opentelemetry-stuck-heres-how-to-use-it/</guid>
-    </item>
-    <item>
-      <title>Observability 2026: ditch the three pillars</title>
-      <link>https://kubaik.github.io/observability-2026-ditch-the-three-pillars/</link>
-      <description>Replace Prometheus + Grafana + Jaeger with one ClickHouse table in 2026. Save $4k/month, cut query latency 47×, and keep every span forever. Learn the new unified telemetry model and the exact schema.</description>
-      <pubDate>Wed, 10 Jun 2026 00:02:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/observability-2026-ditch-the-three-pillars/</guid>
     </item>
   </channel>
 </rss>
