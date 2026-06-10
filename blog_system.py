@@ -1264,6 +1264,225 @@ def inject_eeat_signals(post, topic: str) -> None:
 
 
 # ─────────────────────────────────────────────────────────────────
+# PRE-FLIGHT SIMILARITY INDEX  ◄── NEW
+# ─────────────────────────────────────────────────────────────────
+#
+# Design goals
+# ─────────────
+# 1. Cheap: built once per process run from a JSON cache, not from
+#    raw post content on every check.
+# 2. Fast: TF-IDF on titles + 150-char summaries (~200 KB of text
+#    for 500 posts) takes <20 ms.
+# 3. Accurate enough: cosine similarity on TF-IDF vectors catches
+#    semantic near-duplicates that Jaccard on word sets misses.
+# 4. Safe: never raises — returns (False, "", 0.0) on any error so
+#    a broken index never blocks generation.
+#
+# Cache format  →  .preflight_index.json
+# {
+#   "built_at": "2026-06-10T12:00:00",
+#   "entries": [
+#     {"slug": "redis-caching-patterns",
+#      "title": "Redis caching: what breaks first",
+#      "summary": "first 150 chars of content …"},
+#     …
+#   ]
+# }
+
+_PREFLIGHT_CACHE_FILE = Path(".preflight_index.json")
+_PREFLIGHT_CACHE_TTL_SECONDS = 3600          # rebuild every hour
+_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD = 0.55  # tuned: Jaccard fires at 0.35
+_PREFLIGHT_MAX_RETRIES = 3                    # max distinct-topic prompts
+
+
+class PreFlightIndex:
+    """
+    Lightweight TF-IDF pre-flight similarity check.
+
+    Usage
+    -----
+    index = PreFlightIndex(docs_dir=Path("./docs"))
+    blocked, match_title, score = index.is_duplicate(candidate_topic)
+    if blocked:
+        # ask LLM for a new topic instead of generating content
+    """
+
+    def __init__(self, docs_dir: Path, cache_file: Path = _PREFLIGHT_CACHE_FILE):
+        self.docs_dir = docs_dir
+        self.cache_file = cache_file
+        self._entries: List[Dict] = []        # [{slug, title, summary}]
+        self._vectorizer = None               # fitted TfidfVectorizer
+        self._matrix = None                   # sparse matrix (n_docs × vocab)
+        self._loaded = False
+
+    # ── public API ────────────────────────────────────────────────
+
+    def load(self, force_rebuild: bool = False) -> None:
+        """
+        Load the index from cache or rebuild from docs/.
+        Call once at startup; subsequent calls are no-ops unless force_rebuild.
+        """
+        if self._loaded and not force_rebuild:
+            return
+        try:
+            if not force_rebuild and self._cache_is_fresh():
+                self._load_from_cache()
+            else:
+                self._rebuild_from_docs()
+                self._save_cache()
+            self._fit_vectorizer()
+            self._loaded = True
+            print(
+                f"  PreFlightIndex ready: {len(self._entries)} posts indexed.")
+        except Exception as exc:
+            print(f"  ⚠️  PreFlightIndex load failed (non-fatal): {exc}")
+            self._entries = []
+            self._loaded = True   # mark as loaded so we don't retry forever
+
+    def is_duplicate(self, candidate: str) -> tuple:
+        """
+        Check whether `candidate` (a topic string or proposed title) is
+        too similar to any indexed post.
+
+        Returns
+        -------
+        (is_blocked: bool, best_match_title: str, score: float)
+        """
+        if not self._loaded:
+            self.load()
+        try:
+            return self._cosine_check(candidate)
+        except Exception as exc:
+            print(
+                f"  ⚠️  PreFlightIndex.is_duplicate error (non-fatal): {exc}")
+            return False, "", 0.0
+
+    def add_entry(self, slug: str, title: str, content: str) -> None:
+        """
+        Add a newly published post to the in-memory index and persist
+        the updated cache.  Call this after save_post() succeeds.
+        """
+        summary = self._make_summary(content)
+        self._entries.append(
+            {"slug": slug, "title": title, "summary": summary})
+        try:
+            self._fit_vectorizer()   # refit with new entry
+            self._save_cache()
+        except Exception as exc:
+            print(f"  ⚠️  PreFlightIndex.add_entry failed (non-fatal): {exc}")
+
+    def invalidate(self) -> None:
+        """Force a full rebuild on next load()."""
+        self._loaded = False
+        if self.cache_file.exists():
+            self.cache_file.unlink(missing_ok=True)
+
+    # ── private helpers ───────────────────────────────────────────
+
+    def _cache_is_fresh(self) -> bool:
+        if not self.cache_file.exists():
+            return False
+        try:
+            mtime = self.cache_file.stat().st_mtime
+            age = datetime.now().timestamp() - mtime
+            return age < _PREFLIGHT_CACHE_TTL_SECONDS
+        except OSError:
+            return False
+
+    def _load_from_cache(self) -> None:
+        with open(self.cache_file, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        self._entries = data.get("entries", [])
+        print(
+            f"  PreFlightIndex: loaded {len(self._entries)} entries from cache.")
+
+    def _rebuild_from_docs(self) -> None:
+        """Scan docs/ and build entries from post.json files."""
+        self._entries = []
+        if not self.docs_dir.exists():
+            return
+        for post_dir in self.docs_dir.iterdir():
+            if not post_dir.is_dir() or post_dir.name == "static":
+                continue
+            post_json = post_dir / "post.json"
+            if not post_json.exists():
+                continue
+            try:
+                with open(post_json, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                title = data.get("title", "").strip()
+                content = data.get("content", "")
+                if title:
+                    self._entries.append({
+                        "slug": post_dir.name,
+                        "title": title,
+                        "summary": self._make_summary(content),
+                    })
+            except Exception:
+                pass
+        print(
+            f"  PreFlightIndex: rebuilt {len(self._entries)} entries from docs/.")
+
+    def _save_cache(self) -> None:
+        payload = {
+            "built_at": datetime.now().isoformat(),
+            "entries": self._entries,
+        }
+        with open(self.cache_file, "w", encoding="utf-8") as f:
+            json.dump(payload, f, ensure_ascii=False, indent=2)
+
+    def _make_summary(self, content: str, max_chars: int = 300) -> str:
+        """
+        Strip markdown and return the first `max_chars` characters of plain
+        text.  This gives TF-IDF more signal than a bare title.
+        """
+        text = re.sub(r"```[\s\S]*?```", " ", content)
+        text = re.sub(r"`[^`]+`", " ", text)
+        text = re.sub(r"#{1,6}\s+", " ", text)
+        text = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", text)
+        text = re.sub(r"[*_]{1,3}", "", text)
+        text = re.sub(r"\s+", " ", text).strip()
+        return text[:max_chars]
+
+    def _fit_vectorizer(self) -> None:
+        """Fit a TF-IDF vectorizer over title + summary for every entry."""
+        if not self._entries:
+            self._vectorizer = None
+            self._matrix = None
+            return
+        from sklearn.feature_extraction.text import TfidfVectorizer
+        corpus = [
+            f"{e['title']} {e['summary']}"
+            for e in self._entries
+        ]
+        self._vectorizer = TfidfVectorizer(
+            analyzer="word",
+            ngram_range=(1, 2),
+            min_df=1,
+            sublinear_tf=True,
+            stop_words="english",
+        )
+        self._matrix = self._vectorizer.fit_transform(corpus)
+
+    def _cosine_check(self, candidate: str) -> tuple:
+        """Return (is_blocked, best_title, score) using cosine similarity."""
+        if self._vectorizer is None or self._matrix is None:
+            return False, "", 0.0
+
+        from sklearn.metrics.pairwise import cosine_similarity
+        import numpy as np
+
+        vec = self._vectorizer.transform([candidate])
+        scores = cosine_similarity(vec, self._matrix).flatten()
+        best_idx = int(np.argmax(scores))
+        best_score = float(scores[best_idx])
+        best_title = self._entries[best_idx]["title"]
+
+        blocked = best_score >= _PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD
+        return blocked, best_title, best_score
+
+
+# ─────────────────────────────────────────────────────────────────
 # BlogSystem
 # ─────────────────────────────────────────────────────────────────
 
@@ -1294,6 +1513,11 @@ class BlogSystem:
 
         self.monetization = MonetizationManager(config)
         self.hashtag_manager = HashtagManager(config)
+
+        # ── PRE-FLIGHT INDEX  ◄── NEW
+        # Initialised here so it is shared across all generate_blog_post()
+        # calls within a single process run.  load() is deferred to first use.
+        self.preflight_index = PreFlightIndex(docs_dir=self.output_dir)
 
     def _log_key_status(self):
         print("=== API Key Status ===")
@@ -1728,11 +1952,64 @@ class BlogSystem:
             print("No API keys configured. Using local template content.")
             return self._generate_fallback_post(topic)
 
-        SEP = "─" * 60
+        # ── PRE-FLIGHT CHECK  ◄── NEW
+        # Ensure the index is loaded (no-op after first call).
+        self.preflight_index.load()
 
-        attempted_topics: List[str] = []
+        # Resolve the working topic: start with the caller's topic, then
+        # ask the LLM for a distinct alternative if it's too similar.
         current_topic = topic
         current_keywords = keywords
+        preflight_attempts = 0
+
+        SEP = "─" * 60
+        print(f"\n{SEP}")
+        print(f"PRE-FLIGHT CHECK for topic: '{current_topic}'")
+
+        while preflight_attempts < _PREFLIGHT_MAX_RETRIES:
+            blocked, match_title, pf_score = self.preflight_index.is_duplicate(
+                current_topic
+            )
+            if not blocked:
+                print(
+                    f"  ✅ Pre-flight OK (best match score {pf_score:.2f} < "
+                    f"{_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD}). Proceeding."
+                )
+                break
+
+            preflight_attempts += 1
+            print(
+                f"  ⚠️  Pre-flight BLOCKED (attempt {preflight_attempts}/{_PREFLIGHT_MAX_RETRIES}):\n"
+                f"     Score {pf_score:.2f} ≥ {_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD} "
+                f"vs '{match_title}'\n"
+                f"     Asking LLM for a distinct topic…"
+            )
+
+            if preflight_attempts >= _PREFLIGHT_MAX_RETRIES:
+                print(
+                    f"  🛑 Pre-flight max retries ({_PREFLIGHT_MAX_RETRIES}) reached. "
+                    "Proceeding with last candidate — post-generation duplicate "
+                    "checks will still apply."
+                )
+                break
+
+            try:
+                current_topic = await self._ask_llm_for_distinct_topic(
+                    blocked_topic=current_topic,
+                    similar_title=match_title,
+                    similarity_score=pf_score,
+                )
+                current_keywords = None   # reset keywords for the new topic
+                print(f"  LLM suggested: '{current_topic}'")
+            except Exception as exc:
+                print(
+                    f"  LLM topic suggestion failed ({exc}). Continuing with current topic.")
+                break
+
+        print(SEP)
+        # ── END PRE-FLIGHT ────────────────────────────────────────
+
+        attempted_topics: List[str] = []
 
         for attempt_num in range(1, MAX_GENERATION_ATTEMPTS + 1):
             attempted_topics.append(current_topic)
@@ -2007,6 +2284,48 @@ class BlogSystem:
             f"Exhausted {MAX_GENERATION_ATTEMPTS} generation attempts without "
             f"producing adequate content. No post has been saved."
         )
+
+    # ─────────────────────────────────────────────────────────────
+    # LLM-BASED DISTINCT TOPIC SUGGESTER  ◄── NEW
+    # ─────────────────────────────────────────────────────────────
+
+    async def _ask_llm_for_distinct_topic(
+        self,
+        blocked_topic: str,
+        similar_title: str,
+        similarity_score: float,
+    ) -> str:
+        """
+        Ask the LLM to propose a new, distinct topic that avoids the
+        blocked topic's angle.  Returns a plain-text topic string.
+        """
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You are a technical blog editor. Your only job right now is to "
+                    "propose a single, distinct blog topic. Respond with ONLY the topic "
+                    "— no quotes, no explanation, no JSON, no markdown."
+                ),
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"The topic '{blocked_topic}' is too similar to an existing post "
+                    f"titled '{similar_title}' (similarity score: {similarity_score:.0%}).\n\n"
+                    "Propose ONE new blog topic that:\n"
+                    "- Covers a meaningfully different angle, sub-topic, or technology\n"
+                    "- Is within the same broad domain (software engineering / developer tools / "
+                    "AI / backend / career)\n"
+                    "- Is specific enough to generate 2000+ words of original content\n"
+                    "- Does NOT repeat the existing post's core subject\n\n"
+                    "Respond with ONLY the topic text."
+                ),
+            },
+        ]
+        raw = await self._call_api_with_fallback(messages, max_tokens=80)
+        new_topic = raw.strip().strip('"').strip("'").strip()
+        return new_topic if new_topic else blocked_topic
 
     # ─────────────────────────────────────────────────────────────
     # BUNDLE GENERATION
@@ -2559,6 +2878,19 @@ Return ONLY the JSON object.""",
         with open(post_dir / "index.md", "w", encoding="utf-8") as f:
             f.write(f"# {post.title}\n\n{post.content}")
 
+        # ── UPDATE PRE-FLIGHT INDEX after successful save  ◄── NEW
+        # This keeps the in-memory TF-IDF model and the on-disk cache in sync
+        # without requiring a full rebuild on the next run.
+        try:
+            self.preflight_index.add_entry(
+                slug=post.slug,
+                title=post.title,
+                content=post.content,
+            )
+        except Exception as exc:
+            print(
+                f"  ⚠️  PreFlightIndex post-save update failed (non-fatal): {exc}")
+
         print(
             f"Saved: {post.title} ({post.slug}) — "
             f"{word_count} words / ~{reading_time} min read"
@@ -2663,10 +2995,23 @@ def _scrub_stale_years(text: str) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────
-# TOPIC PICKER
+# TOPIC PICKER  (updated to use PreFlightIndex)  ◄── MODIFIED
 # ─────────────────────────────────────────────────────────────────
 
-def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json") -> str:
+def pick_next_topic(
+    config_path: str = "config.yaml",
+    history_file: str = ".used_topics.json",
+    preflight_index: "PreFlightIndex | None" = None,
+) -> str:
+    """
+    Pick the next topic from config.yaml, skipping topics that are:
+    1. Already in the used-topics history.
+    2. Jaccard-duplicate of an existing post title (original logic).
+    3. TF-IDF near-duplicate of existing posts (pre-flight check — NEW).
+
+    Pass a PreFlightIndex instance to share the loaded index across calls.
+    If None, a fresh index is built inline (slightly slower but safe).
+    """
     print(f"Picking topic from {config_path}")
     if not os.path.exists(config_path):
         raise FileNotFoundError(
@@ -2696,6 +3041,7 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
     docs_dir = Path("./docs")
     existing_titles = _load_existing_titles(docs_dir)
 
+    # ── original Jaccard dedup (unchanged) ──────────────────────
     if existing_titles:
         safe_available, skipped = [], []
         for candidate in available:
@@ -2707,16 +3053,49 @@ def pick_next_topic(config_path="config.yaml", history_file=".used_topics.json")
                 safe_available.append(candidate)
 
         if skipped:
-            print(f"Skipped {len(skipped)} topic(s) already covered:")
+            print(
+                f"Skipped {len(skipped)} topic(s) already covered (Jaccard):")
             for topic, match, score in skipped:
                 print(f"  '{topic}' ≈ '{match}' ({score:.0%})")
 
         if safe_available:
             available = safe_available
         else:
-            print("All available topics covered. Resetting.")
+            print("All available topics covered (Jaccard). Resetting.")
             available = topics
             used = []
+
+    # ── NEW: TF-IDF pre-flight dedup ─────────────────────────────
+    if available:
+        # Build or reuse the pre-flight index
+        if preflight_index is None:
+            preflight_index = PreFlightIndex(docs_dir=docs_dir)
+        preflight_index.load()
+
+        pf_safe, pf_skipped = [], []
+        for candidate in available:
+            blocked, match_title, pf_score = preflight_index.is_duplicate(
+                candidate)
+            if blocked:
+                pf_skipped.append((candidate, match_title, pf_score))
+            else:
+                pf_safe.append(candidate)
+
+        if pf_skipped:
+            print(
+                f"Skipped {len(pf_skipped)} topic(s) already covered (TF-IDF pre-flight):")
+            for t, m, s in pf_skipped:
+                print(f"  '{t}' ≈ '{m}' ({s:.0%})")
+
+        if pf_safe:
+            available = pf_safe
+        else:
+            print(
+                "All remaining topics are TF-IDF near-duplicates. "
+                "Falling back to Jaccard-safe list."
+            )
+            # Don't reset available — use the Jaccard-safe set to avoid
+            # completely ignoring the TF-IDF result for a totally empty run.
 
     topic = random.choice(available)
     used.append(topic)
@@ -2966,7 +3345,11 @@ if __name__ == "__main__":
             # ─────────────────────────────────────────────────────────────────
 
             try:
-                topic = pick_next_topic()
+                # Pass the shared pre-flight index to avoid rebuilding it twice
+                # (BlogSystem.__init__ already created one; reuse it here).
+                topic = pick_next_topic(
+                    preflight_index=blog_system.preflight_index
+                )
                 blog_post = asyncio.run(blog_system.generate_blog_post(topic))
 
             except InsufficientContentError as e:
@@ -3339,17 +3722,49 @@ if __name__ == "__main__":
             else:
                 print("Usage: python blog_system.py velocity [status|reset]")
 
+        # ── NEW: preflight CLI commands ───────────────────────────────────────
+
+        elif mode == "preflight-rebuild":
+            # Force a full rebuild of the pre-flight index cache.
+            # Run this after manually deleting posts or making bulk edits.
+            docs_dir = Path("./docs")
+            idx = PreFlightIndex(docs_dir=docs_dir)
+            idx.load(force_rebuild=True)
+            print(
+                f"Pre-flight index rebuilt: {len(idx._entries)} posts indexed.")
+            print(f"Cache written to: {idx.cache_file}")
+
+        elif mode == "preflight-check":
+            # Check a single topic from the CLI.
+            # Usage: python blog_system.py preflight-check "my proposed topic"
+            if len(sys.argv) < 3:
+                print("Usage: python blog_system.py preflight-check <topic>")
+                sys.exit(1)
+            candidate = " ".join(sys.argv[2:])
+            docs_dir = Path("./docs")
+            idx = PreFlightIndex(docs_dir=docs_dir)
+            idx.load()
+            blocked, match_title, score = idx.is_duplicate(candidate)
+            status = "BLOCKED" if blocked else "OK"
+            print(f"Topic   : {candidate}")
+            print(f"Status  : {status}")
+            print(
+                f"Score   : {score:.2f} (threshold {_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD})")
+            if match_title:
+                print(f"Nearest : {match_title}")
+
         # ─────────────────────────────────────────────────────────────────────
 
         else:
             print(
                 "Usage: python blog_system.py [init|auto|build|cleanup|audit|purge|"
                 "debug|social|test-twitter|dedup|fix-descriptions|"
-                "audit-links|audit-slugs|audit-freshness|velocity]"
+                "audit-links|audit-slugs|audit-freshness|velocity|"
+                "preflight-rebuild|preflight-check]"
             )
 
     else:
         print("AI Blog System — Usage: python blog_system.py [command]")
         print("Commands: init | auto | build | cleanup | audit | purge | debug | social | "
               "test-twitter | dedup | fix-descriptions | audit-links | audit-slugs | "
-              "audit-freshness | velocity")
+              "audit-freshness | velocity | preflight-rebuild | preflight-check")
