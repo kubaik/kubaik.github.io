@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-10T12:24:18.634804",
+  "built_at": "2026-06-10T12:47:30.749699",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -470,6 +470,11 @@
       "slug": "bootcamp-to-120k-2026-steps-that-pay",
       "title": "Bootcamp to $120k: 2026 steps that pay",
       "summary": "I've seen the same from bootcamp mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now If you’re a solo founder or indie hacker who’s also the only engineer, t"
+    },
+    {
+      "slug": "1m-token-models-are-overkill-most-apps-dont-need",
+      "title": "1M token models are overkill — most apps don’t need",
+      "summary": "A colleague asked me about context window during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Mo"
     }
   ]
 }
