@@ -40,5 +40,6 @@
   "FinOps in 2026: the AWS cost levers that actually move the needle for mid-size teams",
   "Observability in 2026: why the three pillars model is being replaced and what comes next",
   "OpenTelemetry in 2026: the standard that finally stuck and how to actually use it",
-  "How AI is being used to find vulnerabilities and what that means for defenders"
+  "How AI is being used to find vulnerabilities and what that means for defenders",
+  "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff"
 ]

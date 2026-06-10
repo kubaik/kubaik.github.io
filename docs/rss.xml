@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 02:08:06 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 02:13:14 +0000</lastBuildDate>
+    <item>
+      <title>Fine-tune or prompt: who wins in 2026?</title>
+      <link>https://kubaik.github.io/fine-tune-or-prompt-who-wins-in-2026/</link>
+      <description>Cut LLM costs 80% with fine-tuning in 2026 — real latency, hallucination, and support ticket data from a live system. Compare 70B fine-tuned vs 405B prompt-only on AWS SageMaker.</description>
+      <pubDate>Wed, 10 Jun 2026 02:13:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/fine-tune-or-prompt-who-wins-in-2026/</guid>
+    </item>
     <item>
       <title>AI scans code: what it finds — and what it misses</title>
       <link>https://kubaik.github.io/ai-scans-code-what-it-finds-and-what-it-misses/</link>
@@ -138,13 +145,6 @@
       <description>Stay technically relevant in 2026 by classifying tools into 3 tiers and spending your learning budget wisely — benchmarks, rollback plans, and Renovate automation included.</description>
       <pubDate>Tue, 09 Jun 2026 18:49:05 +0000</pubDate>
       <guid>https://kubaik.github.io/stay-relevant-when-tools-change-faster-than-you-can/</guid>
-    </item>
-    <item>
-      <title>Killed $3k Kubernetes, kept $200 infra</title>
-      <link>https://kubaik.github.io/killed-3k-kubernetes-kept-200-infra/</link>
-      <description>Cut AWS infrastructure costs 86% by replacing $3k/month Kubernetes with ECS Fargate, CloudFront, and Redis — real numbers, real stack, real mistakes.</description>
-      <pubDate>Tue, 09 Jun 2026 18:45:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/killed-3k-kubernetes-kept-200-infra/</guid>
     </item>
   </channel>
 </rss>
