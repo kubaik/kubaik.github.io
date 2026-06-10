@@ -42,5 +42,6 @@
   "OpenTelemetry in 2026: the standard that finally stuck and how to actually use it",
   "How AI is being used to find vulnerabilities and what that means for defenders",
   "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff",
-  "How to build payment systems that work across Kenya, Nigeria, and Ghana without three separate integrations"
+  "How to build payment systems that work across Kenya, Nigeria, and Ghana without three separate integrations",
+  "How HTMX changed my stack and what I gave up to get there"
 ]
