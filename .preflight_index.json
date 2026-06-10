@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-10T16:18:51.842305",
+  "built_at": "2026-06-10T17:52:13.587969",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -505,6 +505,11 @@
       "slug": "orm-2026-prisma-vs-drizzle-vs-sqlalchemy",
       "title": "ORM 2026: Prisma vs Drizzle vs SQLAlchemy",
       "summary": "Most orm debate guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. Our team had to ship a new healthcare claims system in 6 weeks for 12 district hospitals. The stack was Postgres 16, Node 22 LTS, and a "
+    },
+    {
+      "slug": "ai-observability-why-logs-and-traces-lie",
+      "title": "AI observability: why logs and traces lie",
+      "summary": "The official documentation for observability different is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs I spent a week chasing a "
     }
   ]
 }

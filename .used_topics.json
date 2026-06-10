@@ -67,5 +67,6 @@
   "How to build offline-first apps for markets where connectivity is still unreliable",
   "Database branching workflows: how Neon and PlanetScale changed how I develop locally",
   "API security in 2026: the attack patterns that are becoming more common and how to block them",
-  "The ORM debate in 2026: Prisma vs Drizzle vs SQLAlchemy for new projects"
+  "The ORM debate in 2026: Prisma vs Drizzle vs SQLAlchemy for new projects",
+  "How AI observability is different from traditional application monitoring"
 ]

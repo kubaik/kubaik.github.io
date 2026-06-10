@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 17:47:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 17:52:16 +0000</lastBuildDate>
+    <item>
+      <title>AI observability: why logs and traces lie</title>
+      <link>https://kubaik.github.io/ai-observability-why-logs-and-traces-lie/</link>
+      <description>Cut AI hallucinations 80% with real observability metrics — embedding drift, attention entropy, and retrieval precision you can’t get from Prometheus alone</description>
+      <pubDate>Wed, 10 Jun 2026 17:52:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-observability-why-logs-and-traces-lie/</guid>
+    </item>
     <item>
       <title>ORM 2026: Prisma vs Drizzle vs SQLAlchemy</title>
       <link>https://kubaik.github.io/orm-2026-prisma-vs-drizzle-vs-sqlalchemy/</link>
@@ -138,13 +145,6 @@
       <description>Cut frontend build time 95% and TTFB 71% with HTMX — the real latency numbers, Docker image sizes, and the one mistake I made when migrating off React</description>
       <pubDate>Wed, 10 Jun 2026 04:51:34 +0000</pubDate>
       <guid>https://kubaik.github.io/5-things-htmx-replaced-in-my-stack/</guid>
-    </item>
-    <item>
-      <title>Merge three payment APIs into one system</title>
-      <link>https://kubaik.github.io/merge-three-payment-apis-into-one-system/</link>
-      <description>Cut payment integrations from three APIs to one gateway in Kenya, Nigeria, and Ghana. See 3x latency drops, 22% cost savings, and a single observability dashboard — with real numbers and code.</description>
-      <pubDate>Wed, 10 Jun 2026 02:38:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/merge-three-payment-apis-into-one-system/</guid>
     </item>
   </channel>
 </rss>
