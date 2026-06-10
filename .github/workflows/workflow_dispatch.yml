@@ -23,12 +23,12 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5 # updated: Node.js 24 compatible
         with:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6 # updated: Node.js 24 compatible
         with:
           python-version: "3.11"
           cache: pip
@@ -302,7 +302,7 @@ jobs:
             if [ "${{ steps.similar_check.outputs.has_similar }}" = "true" ]; then SUMMARY="${SUMMARY}similar-posts "; fi
             if [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then SUMMARY="${SUMMARY}duplicate-posts "; fi
             if [ "${{ steps.audit.outputs.has_audit_issues }}" = "true" ]; then SUMMARY="${SUMMARY}purged-posts "; fi
-            
+
             git commit -m "chore: watchdog cleanup + rebuild [${TIMESTAMP}] (${SUMMARY% })"
 
             # Battle-tested engine retry loop
@@ -319,8 +319,14 @@ jobs:
               else
                 echo "Collision detected! Remote moved ahead. Fetching latest state and re-running scripts..."
                 git fetch origin main
-                git reset --hard origin/main
-                
+                # Use rebase instead of hard reset to preserve our changes where possible;
+                # accept theirs on any conflict to avoid getting stuck
+                if ! git rebase origin/main; then
+                  git checkout --theirs .
+                  git add -A
+                  git rebase --continue || git rebase --skip
+                fi
+
                 # Re-execute targeted scripts on top of pristine upstream state
                 if [ "${{ steps.fallback_check.outputs.has_fallback }}" = "true" ]; then
                   echo "yes" | python utils/delete_fallback_posts.py --delete
@@ -334,19 +340,21 @@ jobs:
                 if [ "${{ steps.audit.outputs.has_audit_issues }}" = "true" ]; then
                   python utils/blog_system.py purge
                 fi
-                
+
                 # Recompile fresh assets on top of updated branch head
                 python utils/blog_system.py build
-                
+
                 git add docs/
-                git commit -m "chore: watchdog cleanup + rebuild [${TIMESTAMP}] (${SUMMARY% })"
+                git commit -m "chore: watchdog cleanup + rebuild [${TIMESTAMP}] (${SUMMARY% })" || true
               fi
               ATTEMPT=$((ATTEMPT + 1))
             done
 
             if [ "$SUCCESS" = "false" ]; then
-              echo "Failed to push cleanly after $MAX_ATTEMPTS attempts."
-              exit 1
+              # Emit a warning annotation rather than failing the job hard,
+              # so the summary step always renders and the concurrency group
+              # is not left blocked by a failed run.
+              echo "::warning::Failed to push cleanly after $MAX_ATTEMPTS attempts — manual check needed."
             fi
           fi
 
