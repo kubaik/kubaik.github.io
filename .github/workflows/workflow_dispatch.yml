@@ -254,7 +254,7 @@ jobs:
         id: audit
         run: |
           echo "Running blog audit..."
-          OUTPUT=$(python utils/blog_system.py audit 2>&1)
+          OUTPUT=$(python blog_system.py audit 2>&1)
           echo "$OUTPUT"
 
           if echo "$OUTPUT" | grep -qiE "fallback|short post|low.quality|would (be )?purge|flagged"; then
@@ -266,7 +266,7 @@ jobs:
       - name: Run blog purge
         if: steps.audit.outputs.has_audit_issues == 'true'
         run: |
-          python utils/blog_system.py purge
+          python blog_system.py purge
 
       # ── CONSOLIDATED REBUILD & SELF-HEALING PUSH ─────────────────────────────
 
@@ -279,7 +279,7 @@ jobs:
           steps.audit.outputs.has_audit_issues == 'true'
         run: |
           echo "Modifications occurred — rebuilding site..."
-          python utils/blog_system.py build
+          python blog_system.py build
 
       - name: Master Commit and Push with Safe Engine Retry Loop
         if: >
@@ -338,11 +338,11 @@ jobs:
                   python utils/deduplicate_posts.py --delete --no-rebuild
                 fi
                 if [ "${{ steps.audit.outputs.has_audit_issues }}" = "true" ]; then
-                  python utils/blog_system.py purge
+                  python blog_system.py purge
                 fi
 
                 # Recompile fresh assets on top of updated branch head
-                python utils/blog_system.py build
+                python blog_system.py build
 
                 git add docs/
                 git commit -m "chore: watchdog cleanup + rebuild [${TIMESTAMP}] (${SUMMARY% })" || true
