@@ -47,5 +47,6 @@
   "How to pass AI-era technical interviews: the new formats replacing LeetCode",
   "How feature flag systems evolved into full experimentation platforms",
   "Python 3.13 in production: the free-threaded GIL change and what it means for web apps",
-  "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant"
+  "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant",
+  "How to maintain a codebase where 40% of the code was written by an AI"
 ]

@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 10:20:02 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 07:24:32 +0000</lastBuildDate>
+    <item>
+      <title>AI codebase: keep it or kill it (40% dilemma)</title>
+      <link>https://kubaik.github.io/ai-codebase-keep-it-or-kill-it-40-dilemma/</link>
+      <description>Cut incident rates 62% by rewriting 20% of AI code — the hard numbers on guardrails vs human rewrite for 40% AI codebases in 2026</description>
+      <pubDate>Wed, 10 Jun 2026 07:24:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-codebase-keep-it-or-kill-it-40-dilemma/</guid>
+    </item>
+    <item>
+      <title>Schema-per-tenant: the 2026 trade-offs nobody talks</title>
+      <link>https://kubaik.github.io/schema-per-tenant-the-2026-trade-offs-nobody-talks/</link>
+      <description>Cut multi-tenant SaaS costs 43% by switching from PostgreSQL RLS to schema-per-tenant in 2026 — real latency, cost, and onboarding numbers from a live system using Python 3.11 and PostgreSQL 16.</description>
+      <pubDate>Wed, 10 Jun 2026 07:04:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/schema-per-tenant-the-2026-trade-offs-nobody-talks/</guid>
+    </item>
     <item>
       <title>Python 3.13 free-threaded: 30% faster APIs</title>
       <link>https://kubaik.github.io/python-313-free-threaded-30-faster-apis/</link>
@@ -131,13 +145,6 @@
       <description>Cut hallucination rate 75% with a rule-based + confidence evaluator — real AWS numbers, Python 3.11, and the prompt-drift mistake that cost us 1.8k bad responses.</description>
       <pubDate>Tue, 09 Jun 2026 21:37:00 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-quality-metrics-that-cut-hallucinations-40/</guid>
-    </item>
-    <item>
-      <title>AI ops tools: automated capacity vs runbooks in 2026</title>
-      <link>https://kubaik.github.io/ai-ops-tools-automated-capacity-vs-runbooks-in-2026/</link>
-      <description>Cut AWS costs 18% with Karpenter AI forecasting — the real latency, cost, and incident data for 2026</description>
-      <pubDate>Tue, 09 Jun 2026 21:21:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ops-tools-automated-capacity-vs-runbooks-in-2026/</guid>
     </item>
   </channel>
 </rss>
