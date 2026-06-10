@@ -57,5 +57,10 @@
   "The infrastructure stack for a Nairobi-based SaaS in 2026: a real cost breakdown",
   "From bootcamp to $120k: the realistic 2026 timeline and what actually fills the gap",
   "The context window arms race: what 1M token models actually change in practice",
-  "Technical debt in 2026: the new category created by AI-generated code"
+  "Technical debt in 2026: the new category created by AI-generated code",
+  "How to implement least-privilege IAM in AWS without spending a week on policies",
+  "How multi-agent orchestration frameworks compare in 2026: LangGraph vs CrewAI vs custom",
+  "How I got to $5k MRR without a marketing team or a growth budget",
+  "Building accessible AI chat interfaces: the WCAG requirements most teams miss",
+  "TypeScript 5.x features that changed how I model domain logic"
 ]
