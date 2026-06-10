@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 02:13:14 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 02:38:24 +0000</lastBuildDate>
+    <item>
+      <title>Merge three payment APIs into one system</title>
+      <link>https://kubaik.github.io/merge-three-payment-apis-into-one-system/</link>
+      <description>Cut payment integrations from three APIs to one gateway in Kenya, Nigeria, and Ghana. See 3x latency drops, 22% cost savings, and a single observability dashboard — with real numbers and code.</description>
+      <pubDate>Wed, 10 Jun 2026 02:38:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/merge-three-payment-apis-into-one-system/</guid>
+    </item>
     <item>
       <title>Fine-tune or prompt: who wins in 2026?</title>
       <link>https://kubaik.github.io/fine-tune-or-prompt-who-wins-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM latency 78%: the SDK knobs nobody tunes — connection pools, idle sockets, DNS cache, and the first-token cache you missed</description>
       <pubDate>Tue, 09 Jun 2026 19:11:00 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-latency-what-kills-speed-first/</guid>
-    </item>
-    <item>
-      <title>Stay relevant when tools change faster than you can</title>
-      <link>https://kubaik.github.io/stay-relevant-when-tools-change-faster-than-you-can/</link>
-      <description>Stay technically relevant in 2026 by classifying tools into 3 tiers and spending your learning budget wisely — benchmarks, rollback plans, and Renovate automation included.</description>
-      <pubDate>Tue, 09 Jun 2026 18:49:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/stay-relevant-when-tools-change-faster-than-you-can/</guid>
     </item>
   </channel>
 </rss>
