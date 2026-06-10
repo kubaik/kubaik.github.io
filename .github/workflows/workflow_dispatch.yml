@@ -448,4 +448,15 @@ jobs:
             echo "| Covered hours (all events) | \`${{ steps.fetch_runs.outputs.covered_hours }}\` |"
             echo "| Initially missing | \`${{ steps.missing.outputs.missing_list || 'none' }}\` |"
             echo "| Still missing after re-verify | \`${{ steps.reverify.outputs.confirmed_list || 'none' }}\` |"
-            echo "| Action | ${{ steps.reverify.outputs.confirmed
+            echo "| Action | ${{ steps.reverify.outputs.confirmed_missing == 'true' && 'Re-triggered ⚠️' || 'No action needed ✅' }} |"
+            echo "| Fallback posts found | \`${{ steps.fallback_check.outputs.has_fallback == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
+            echo "| Similar posts found  | \`${{ steps.similar_check.outputs.has_similar == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
+            echo "| Duplicate posts found | \`${{ steps.dedup_check.outputs.has_duplicates == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
+            echo "| Audit issues found    | \`${{ steps.audit.outputs.has_audit_issues == 'true' && 'yes — purged ⚠️' || 'none ✅' }}\` |"
+            echo ""
+            if [ "${{ steps.reverify.outputs.confirmed_missing }}" = "true" ]; then
+              echo "⚠️ **Triggered catch-up run for missed slots:** \`${{ steps.reverify.outputs.confirmed_list }}\`"
+            else
+              echo "✅ **All cron slots running on schedule.**"
+            fi
+          } >> $GITHUB_STEP_SUMMARY
