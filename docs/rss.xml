@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 05:06:53 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 05:11:27 +0000</lastBuildDate>
+    <item>
+      <title>AI interviews: the new tests replacing LeetCode</title>
+      <link>https://kubaik.github.io/ai-interviews-the-new-tests-replacing-leetcode/</link>
+      <description>Cut interview rejection rates 54% with a single-file Python test instead of Docker setups — the AI-era format replacing LeetCode in 2026</description>
+      <pubDate>Wed, 10 Jun 2026 05:11:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-interviews-the-new-tests-replacing-leetcode/</guid>
+    </item>
     <item>
       <title>5 things HTMX replaced in my stack</title>
       <link>https://kubaik.github.io/5-things-htmx-replaced-in-my-stack/</link>
@@ -138,13 +145,6 @@
       <description>Why this list exists (what I was actually trying to solve) I inherited a React frontend that had 2,800 lines of Cypress tests nobody trusted anymore.</description>
       <pubDate>Tue, 09 Jun 2026 20:01:08 +0000</pubDate>
       <guid>https://kubaik.github.io/drop-cypress-in-2026-playwright-beats-it-head-to-head/</guid>
-    </item>
-    <item>
-      <title>GraphQL vs REST vs tRPC: 2026’s API fight</title>
-      <link>https://kubaik.github.io/graphql-vs-rest-vs-trpc-2026s-api-fight/</link>
-      <description>Cut API design debates with data — REST vs GraphQL vs tRPC in 2026 with concrete benchmarks, cost figures, and the exact mistake I made shipping GraphQL for CRUD.</description>
-      <pubDate>Tue, 09 Jun 2026 19:36:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/graphql-vs-rest-vs-trpc-2026s-api-fight/</guid>
     </item>
   </channel>
 </rss>
