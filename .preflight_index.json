@@ -1,0 +1,450 @@
+{
+  "built_at": "2026-06-10T08:07:30.972496",
+  "entries": [
+    {
+      "slug": "merge-three-payment-apis-into-one-system",
+      "title": "Merge three payment APIs into one system",
+      "summary": "A colleague asked me about build payment during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) The"
+    },
+    {
+      "slug": "mis-size-db-pool-heres-why",
+      "title": "Mis-size DB pool? Here’s why",
+      "summary": "A colleague asked me about database connection during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it’s incomplet"
+    },
+    {
+      "slug": "stay-relevant-when-tools-change-faster-than-you-can",
+      "title": "Stay relevant when tools change faster than you can",
+      "summary": "The short version: the conventional advice on stay technically is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) You can’t learn every new tool that lands on Hacker News, but you can learn how t"
+    },
+    {
+      "slug": "audit-logs-postgres-vs-clickhouse-under-load",
+      "title": "Audit logs: Postgres vs ClickHouse under load",
+      "summary": "I've seen the same building audit mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, SOC 2 Type II audits for SaaS products with >10K monthly activ"
+    },
+    {
+      "slug": "ai-burnout-why-output-pressure-rose-even-as-tools-got",
+      "title": "AI burnout: why output pressure rose even as tools got",
+      "summary": "The short version: the conventional advice on developer burnout is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI tools in 2026 promise to cut your coding time by 40–60%, but most teams repor"
+    },
+    {
+      "slug": "ai-skills-2-salaries-that-move-in-2026",
+      "title": "AI skills: 2 salaries that move in 2026",
+      "summary": "I've seen the same skills that mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the AI job market is bifurcating. Salary data from 18,420 LinkedI"
+    },
+    {
+      "slug": "wrong-db-pool-size-wastes-cash",
+      "title": "Wrong DB pool size wastes cash",
+      "summary": "A colleague asked me about database connection during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplet"
+    },
+    {
+      "slug": "break-rag-at-10k-requestsday",
+      "title": "Break RAG at 10k requests/day",
+      "summary": "Most rag pipelines guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) We were running a customer-facing chatbot for a SaaS product that let users query their "
+    },
+    {
+      "slug": "rag-pipelines-the-2026-salary-multiplier",
+      "title": "RAG pipelines: the 2026 salary multiplier",
+      "summary": "I've seen the same skills that mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, asking which AI skills boost salary is like asking which database"
+    },
+    {
+      "slug": "50k-builds-github-vs-circleci-cost-smackdown",
+      "title": "50k builds: GitHub vs CircleCI cost smackdown",
+      "summary": "A colleague asked me about github actions during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Mo"
+    },
+    {
+      "slug": "llm-latency-what-kills-speed-first",
+      "title": "LLM latency: what kills speed first",
+      "summary": "The official documentation for design llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most LLM latency write-ups focus on pr"
+    },
+    {
+      "slug": "6-ways-to-ship-real-time-without-websockets",
+      "title": "6 ways to ship real-time without WebSockets",
+      "summary": "I ran into this building realtime problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I ran into this when our team tried to a"
+    },
+    {
+      "slug": "fine-tune-or-prompt-who-wins-in-2026",
+      "title": "Fine-tune or prompt: who wins in 2026?",
+      "summary": "The official documentation for finetuning small is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most of the 2026 blog posts and "
+    },
+    {
+      "slug": "rag-in-prod-why-demos-crumble",
+      "title": "RAG in prod: why demos crumble",
+      "summary": "Most rag pipelines guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) We were building a customer-support chatbot for an Indonesian edtech unicorn in late 202"
+    },
+    {
+      "slug": "enforce-sbom-in-30-mins-syft-trivy-2026",
+      "title": "Enforce SBOM in 30 mins: Syft + Trivy 2026",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026, every security review starts the same way: “Show me your SBOM.” I’d hand over a"
+    },
+    {
+      "slug": "rag-pipelines-3-untold-prod-traps",
+      "title": "RAG pipelines: 3 untold prod traps",
+      "summary": "Most rag pipelines guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, our Jakarta-based startup launched an AI assistant that answered customer suppo"
+    },
+    {
+      "slug": "drop-ec2-bills-70-without-code",
+      "title": "Drop EC2 bills 70% without code",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026 I switched a client’s Node 20 LTS backend from Elastic Beanstalk to raw EC2 beca"
+    },
+    {
+      "slug": "ai-proof-your-salary-5-skills-that-still-pay-2026",
+      "title": "AI-proof your salary: 5 skills that still pay 2026",
+      "summary": "After reviewing a lot of code that touches skills that, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing In April 2026 I watched a junior engineer on our team roll out a RAG system that looked perf"
+    },
+    {
+      "slug": "skip-the-zero-trust-hype-for-5-person-teams",
+      "title": "Skip the zero-trust hype for 5-person teams",
+      "summary": "A colleague asked me about zerotrust architecture during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomp"
+    },
+    {
+      "slug": "choose-no-code-only-when",
+      "title": "Choose no-code only when",
+      "summary": "The short version: the conventional advice on build with is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) If your project is a short-lived experiment, a no-code tool is faster and cheaper 90% o"
+    },
+    {
+      "slug": "circleci-still-beats-github-actions-at-50k-builds",
+      "title": "CircleCI still beats GitHub Actions at 50k builds",
+      "summary": "A colleague asked me about github actions during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Mo"
+    },
+    {
+      "slug": "skip-websockets-cheaper-real-time-hacks",
+      "title": "Skip WebSockets: cheaper real-time hacks",
+      "summary": "I ran into this building realtime problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. I ran into this when I inherited a chat app that used Socket.IO and was costing us $2k/month in EC2"
+    },
+    {
+      "slug": "deploy-a-solo-stack-for-20month-in-2026",
+      "title": "Deploy a solo stack for $20/month in 2026",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) Building something alone is hard enough, but when you add the expectation that it must s"
+    },
+    {
+      "slug": "build-the-30-minute-deployment-road",
+      "title": "Build the 30-minute deployment road",
+      "summary": "Most platform engineering guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our team at a 150-person fintech startup in Berlin was running 47 s"
+    },
+    {
+      "slug": "ship-faster-with-a-paved-road-4-weeks-to-80-less-toil",
+      "title": "Ship faster with a paved road: 4 weeks to 80% less toil",
+      "summary": "Most platform engineering guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026 we rebuilt the internal platform at a 150-engineer fintech company af"
+    },
+    {
+      "slug": "llm-quality-metrics-that-cut-hallucinations-40",
+      "title": "LLM quality: metrics that cut hallucinations 40%",
+      "summary": "The official documentation for evaluating llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Every LLM vendor promises 99 % acc"
+    },
+    {
+      "slug": "container-builds-in-2026-7-speed-hacks-you-missed",
+      "title": "Container builds in 2026: 7 speed hacks you missed",
+      "summary": "I ran into this container builds problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026, our CI pipeline in Lagos for a N"
+    },
+    {
+      "slug": "claude-code-review-wins-and-blind-spots",
+      "title": "Claude code review: wins and blind spots",
+      "summary": "The short version: the conventional advice on use claude is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Using Claude for code review saves me ~1.5 hours per PR when it works, but it’s not a r"
+    },
+    {
+      "slug": "ship-real-work-not-polished-readmes",
+      "title": "Ship real work, not polished READMEs",
+      "summary": "A colleague asked me about building portfolio during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete"
+    },
+    {
+      "slug": "ship-github-not-a-portfolio",
+      "title": "Ship GitHub, not a portfolio",
+      "summary": "A colleague asked me about building portfolio during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete"
+    },
+    {
+      "slug": "hire-remotely-from-africa-show-context-not-code",
+      "title": "Hire remotely from Africa: show context, not code",
+      "summary": "A colleague asked me about building portfolio during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete"
+    },
+    {
+      "slug": "event-sourcing-pay-the-complexity-tax-only-here",
+      "title": "Event sourcing: pay the complexity tax only here",
+      "summary": "The short version: the conventional advice on event sourcing is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. Have you ever stared at a tangled database schema that screams ‘audit me’ but screams even louder ‘I’ll break under any change’"
+    },
+    {
+      "slug": "cut-latency-70-with-edge-functions-or-waste-cpu",
+      "title": "Cut latency 70% with edge functions or waste CPU",
+      "summary": "The official documentation for edge functions is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Edge functions are sold as a silve"
+    },
+    {
+      "slug": "why-48-connections-can-break-your-db",
+      "title": "Why 48 connections can break your DB",
+      "summary": "A colleague asked me about database connection during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplet"
+    },
+    {
+      "slug": "observability-2026-ditch-the-three-pillars",
+      "title": "Observability 2026: ditch the three pillars",
+      "summary": "The short version: the conventional advice on observability 2026 is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In 2026, the “three pillars of observability” (logs, metrics, traces) are being"
+    },
+    {
+      "slug": "build-dev-platform-for-2kmonth",
+      "title": "Build dev platform for $2k/month",
+      "summary": "Most build internal guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026 our startup hit 35 engineers across Lagos, Nairobi, and Accra. We were shipping"
+    },
+    {
+      "slug": "ai-ops-tools-automated-capacity-vs-runbooks-in-2026",
+      "title": "AI ops tools: automated capacity vs runbooks in 2026",
+      "summary": "I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Capacity planning used to mean staring at CloudWatch graphs fo"
+    },
+    {
+      "slug": "tls-stack-breaks-under-post-quantum-crypto",
+      "title": "TLS stack breaks under post-quantum crypto",
+      "summary": "Most postquantum cryptography guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our team at a SaaS startup got a security audit that included a"
+    },
+    {
+      "slug": "ai-api-docs-what-humans-still-write-in-2026",
+      "title": "AI API docs: what humans still write in 2026",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026, most teams have swapped half of their internal documentation for AI-generated R"
+    },
+    {
+      "slug": "schema-per-tenant-the-2026-trade-offs-nobody-talks",
+      "title": "Schema-per-tenant: the 2026 trade-offs nobody talks",
+      "summary": "Most designing multitenant guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, we launched a multi-tenant SaaS product that needed to scale horiz"
+    },
+    {
+      "slug": "5-post-flag-platforms-for-ab-testing-in-2026",
+      "title": "5 post-flag platforms for A/B testing in 2026",
+      "summary": "I ran into this feature flag problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) Three years ago I inherited a feature flag sy"
+    },
+    {
+      "slug": "ai-skills-that-pay-data-vs-prompt-skills-in-2026",
+      "title": "AI skills that pay: data vs prompt skills in 2026",
+      "summary": "I've seen the same skills that mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the AI salary premium isn’t about knowing every new model—it’s ab"
+    },
+    {
+      "slug": "2026-remote-pay-beat-the-ppp-trap",
+      "title": "2026 remote pay: beat the PPP trap",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I got burned twice in 2026. First offer was $36k for a backend role in a US company. I c"
+    },
+    {
+      "slug": "python-313-free-threaded-30-faster-apis",
+      "title": "Python 3.13 free-threaded: 30% faster APIs",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In late 2026, I was running a Flask-based recommendation API for a Vietnamese e-commerce"
+    },
+    {
+      "slug": "ai-codebase-keep-it-or-kill-it-40-dilemma",
+      "title": "AI codebase: keep it or kill it (40% dilemma)",
+      "summary": "I've seen the same maintain codebase mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, teams are staring at codebases where 40% of the lines were "
+    },
+    {
+      "slug": "price-your-remote-job-like-a-new-york-dev",
+      "title": "Price your remote job like a New York dev",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I once quoted a US client in Colombian pesos at a 30% discount to \"be competitive.\" Two "
+    },
+    {
+      "slug": "8-db-pool-size-mistakes-killing-your-cpu",
+      "title": "8 DB pool size mistakes killing your CPU",
+      "summary": "A colleague asked me about database connection during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplet"
+    },
+    {
+      "slug": "ai-interviews-the-new-tests-replacing-leetcode",
+      "title": "AI interviews: the new tests replacing LeetCode",
+      "summary": "Most pass aiera guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, a wave of AI-native startups began rejecting LeetCode-style whiteboard tests outri"
+    },
+    {
+      "slug": "opentelemetry-stuck-heres-how-to-use-it",
+      "title": "OpenTelemetry stuck — here’s how to use it",
+      "summary": "The short version: the conventional advice on opentelemetry 2026 is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In 2026, OpenTelemetry (OTel) is the de-facto observability standard, but most "
+    },
+    {
+      "slug": "ai-code-traps-copilot-vs-cursor-smackdown",
+      "title": "AI code traps: Copilot vs Cursor smackdown",
+      "summary": "I've seen the same most aigenerated mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Edge cases are the graveyard of AI-generated code. I once merged a PR that passed our unit tests and QA scr"
+    },
+    {
+      "slug": "block-80-of-traffic-with-workers",
+      "title": "Block 80% of traffic with Workers",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I spent three weeks in late 2026 trying to shave 300 ms off every API call. We had just "
+    },
+    {
+      "slug": "land-5k-remote-roles-what-nairobi-devs-got-right",
+      "title": "Land $5k remote roles: what Nairobi devs got right",
+      "summary": "Most developers nairobi guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, two friends in Nairobi and Lagos hit the same ceiling: local offers topped"
+    },
+    {
+      "slug": "killed-3k-kubernetes-kept-200-infra",
+      "title": "Killed $3k Kubernetes, kept $200 infra",
+      "summary": "Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, our SaaS product had grown enough that the marketing site kept crashin"
+    },
+    {
+      "slug": "senior-devs-flee-when-systems-rot",
+      "title": "Senior devs flee when systems rot",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026 I helped a team of 8 senior engineers move from Google Cloud to a mid-stage star"
+    },
+    {
+      "slug": "price-your-remote-salary-4-step-script",
+      "title": "Price your remote salary: 4-step script",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) Three years ago I took my first fully-remote job from Bogotá to a U.S. fintech in Austin"
+    },
+    {
+      "slug": "ai-skills-2026-which-ones-pay-and-which-dont",
+      "title": "AI skills 2026: which ones pay — and which don’t",
+      "summary": "I've seen the same skills that mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the idea that \"any AI skill boosts pay\" is a myth. I learned this"
+    },
+    {
+      "slug": "graphql-vs-rest-vs-trpc-2026s-api-fight",
+      "title": "GraphQL vs REST vs tRPC: 2026’s API fight",
+      "summary": "I've seen the same api design mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, API design isn’t about choosing a religion. It’s about matching a "
+    },
+    {
+      "slug": "saas-in-6-weeks-80-ai-code-failed-in-prod",
+      "title": "SaaS in 6 weeks: 80% AI code failed in prod",
+      "summary": "A colleague asked me about built launched during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Mo"
+    },
+    {
+      "slug": "ai-velocity-audit-3-real-metrics-your-team-ignores",
+      "title": "AI velocity audit: 3 real metrics your team ignores",
+      "summary": "After reviewing a lot of code that touches measuring real, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You rolled out an AI coding assistant for the team last quarter. GitHub Copilot Enterpris"
+    },
+    {
+      "slug": "pwas-in-2026-what-browsers-finally-fixed",
+      "title": "PWAs in 2026: what browsers finally fixed",
+      "summary": "The short version: the conventional advice on progressive web is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. PWAs in 2026: what browsers finally fixed The one-paragraph version (read this first) In 2026, Progressive Web Apps (PWAs) fin"
+    },
+    {
+      "slug": "soft-deletes-fail-what-breaks-first",
+      "title": "Soft deletes fail: what breaks first",
+      "summary": "The short version: the conventional advice on soft deletes is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Soft deletes look simple: mark a row as deleted instead of erasing it. In production "
+    },
+    {
+      "slug": "5-signs-youre-done-with-big-tech",
+      "title": "5 signs you’re done with big tech",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I joined a well-known Silicon Valley platform team in 2026 with two other engineers from"
+    },
+    {
+      "slug": "rag-in-prod-7-hard-lessons-tutorials-skip",
+      "title": "RAG in prod: 7 hard lessons tutorials skip",
+      "summary": "Most rag pipelines guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) We were building a customer-support chatbot that had to answer 95% of tickets with real-"
+    },
+    {
+      "slug": "ai-killed-these-micro-saas-niches",
+      "title": "AI killed these Micro-SaaS niches",
+      "summary": "A colleague asked me about microsaas 2026 during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In"
+    },
+    {
+      "slug": "portfolio-projects-signal-over-noise",
+      "title": "Portfolio ≠ Projects: Signal over noise",
+      "summary": "A colleague asked me about building portfolio during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete"
+    },
+    {
+      "slug": "ai-scans-code-what-it-finds-and-what-it-misses",
+      "title": "AI scans code: what it finds — and what it misses",
+      "summary": "The short version: the conventional advice on being used is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI vulnerability scanners have moved from novelty demos to tools you run before every P"
+    },
+    {
+      "slug": "react-19-compiler-3x-faster-re-renders-or-bust",
+      "title": "React 19 compiler: 3x faster re-renders or bust?",
+      "summary": "I've seen the same react production mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In May 2026, the React team quietly shipped the first stable release "
+    },
+    {
+      "slug": "turn-cop-into-usd-remote-pay-hacks",
+      "title": "Turn COP into USD: remote pay hacks",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026 I took a remote job from a US-based fintech that paid my Colombian employer $120"
+    },
+    {
+      "slug": "senior-devs-flee-big-tech-not-for-money",
+      "title": "Senior devs flee big tech (not for money)",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I joined a top-tier big tech team in 2026 and spent two weeks trying to find out why hal"
+    },
+    {
+      "slug": "ai-codes-hidden-cves-exposed",
+      "title": "AI code’s hidden CVEs exposed",
+      "summary": "I ran into this aigenerated code problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026 I inherited a codebase where"
+    },
+    {
+      "slug": "multi-agent-systems-break-first",
+      "title": "Multi-agent systems break first",
+      "summary": "The official documentation for multiagent systems is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most tutorials on multi-agent "
+    },
+    {
+      "slug": "negotiate-remote-pay-from-low-cost-cities",
+      "title": "Negotiate remote pay from low-cost cities",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I once took a contract in 2026 that paid $1,800/month. Six months later the client raise"
+    },
+    {
+      "slug": "african-devs-waste-time-on-github-stars-do-this",
+      "title": "African devs waste time on GitHub stars? Do this",
+      "summary": "A colleague asked me about building portfolio during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete"
+    },
+    {
+      "slug": "ai-interviews-now-ask-for-this",
+      "title": "AI interviews now ask for this",
+      "summary": "The official documentation for changed hiring is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs In 2026, every engineering team ad"
+    },
+    {
+      "slug": "7-ai-red-flags-your-senior-title-hides",
+      "title": "7 AI red flags your senior title hides",
+      "summary": "I ran into this tools are problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I got my first ‘senior’ title in 2026. The bar f"
+    },
+    {
+      "slug": "pass-interviews-without-a-cs-degree",
+      "title": "Pass interviews without a CS degree",
+      "summary": "A colleague asked me about pass technical during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Mo"
+    },
+    {
+      "slug": "cut-aws-bills-32-aws-cost-explorer-vs-infracost",
+      "title": "Cut AWS bills 32%: AWS Cost Explorer vs. Infracost",
+      "summary": "I've seen the same finops 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now I still remember the Slack channel meltdown at 2:17 AM when our monthly AW"
+    },
+    {
+      "slug": "5-things-htmx-replaced-in-my-stack",
+      "title": "5 things HTMX replaced in my stack",
+      "summary": "I ran into this htmx changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026 I inherited a React frontend that had"
+    },
+    {
+      "slug": "rag-pipelines-4-silent-prod-killers",
+      "title": "RAG pipelines: 4 silent prod killers",
+      "summary": "Most rag pipelines guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. Advanced edge cases we personally encountered 1. Tokenisation drift between embeddings and rerankers We used (v3) for indexing and (v"
+    },
+    {
+      "slug": "your-portfolio-doesnt-need-a-website",
+      "title": "Your portfolio doesn't need a website",
+      "summary": "A colleague asked me about building portfolio during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete"
+    },
+    {
+      "slug": "4-ai-tools-shipping-real-products-in-2026",
+      "title": "4 AI tools shipping real products in 2026",
+      "summary": "I ran into this nontraditional developers problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026, I joined a startup"
+    },
+    {
+      "slug": "zero-downtime-migrations-let-the-db-do-the-work",
+      "title": "Zero-downtime migrations: let the DB do the work",
+      "summary": "A colleague asked me about handle database during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) T"
+    },
+    {
+      "slug": "5-ai-pair-tools-that-fixed-our-code-reviews",
+      "title": "5 AI pair tools that fixed our code reviews",
+      "summary": "I ran into this pair programming problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. I spent three months trying every AI pair programming setup we could find before realising we were o"
+    },
+    {
+      "slug": "remote-salary-negotiate-without-sounding-cheap",
+      "title": "Remote salary: negotiate without sounding cheap",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) Three years ago I took my first US remote contract. The offer was $3,800 a month. I imme"
+    },
+    {
+      "slug": "rag-in-prod-what-tutorials-wont-tell-you",
+      "title": "RAG in prod: what tutorials won’t tell you",
+      "summary": "Most rag pipelines guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, the team at Tokopedia Clone Co. (yes, that’s a placeholder—we’re a B2B Sa"
+    },
+    {
+      "slug": "africa-devs-ship-production-code-not-crud",
+      "title": "Africa devs: Ship production code, not CRUD",
+      "summary": "A colleague asked me about building portfolio during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete"
+    },
+    {
+      "slug": "2026-gitops-showdown-argocd-vs-flux-after-two-years",
+      "title": "2026 GitOps showdown: ArgoCD vs Flux after two years",
+      "summary": "I ran into this gitops 2026 problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026 I inherited a set of Kubernetes c"
+    },
+    {
+      "slug": "drop-cypress-in-2026-playwright-beats-it-head-to-head",
+      "title": "Drop Cypress in 2026: Playwright beats it head-to-head",
+      "summary": "I ran into this test frontend problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve I inherited a React frontend that had 2,800 l"
+    },
+    {
+      "slug": "prompt-injection-your-ai-is-leaking-data-now",
+      "title": "Prompt injection: your AI is leaking data now",
+      "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most AI product docs explain how"
+    }
+  ]
+}

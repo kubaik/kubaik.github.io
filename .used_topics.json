@@ -49,5 +49,6 @@
   "Python 3.13 in production: the free-threaded GIL change and what it means for web apps",
   "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant",
   "How to maintain a codebase where 40% of the code was written by an AI",
-  "How AI changed what hiring managers are looking for in engineering interviews"
+  "How AI changed what hiring managers are looking for in engineering interviews",
+  "How prompt injection attacks work and why your AI product is probably vulnerable"
 ]

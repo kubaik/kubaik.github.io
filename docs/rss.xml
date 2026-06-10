@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 11:02:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 08:07:33 +0000</lastBuildDate>
+    <item>
+      <title>Prompt injection: your AI is leaking data now</title>
+      <link>https://kubaik.github.io/prompt-injection-your-ai-is-leaking-data-now/</link>
+      <description>Lose 14 AI incidents in 30 days with this 30-minute defense pipeline — prompt injection cheat sheet for 2026 systems using LangChain 0.2.5 and AWS Lambda.</description>
+      <pubDate>Wed, 10 Jun 2026 08:07:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/prompt-injection-your-ai-is-leaking-data-now/</guid>
+    </item>
     <item>
       <title>AI interviews now ask for this</title>
       <link>https://kubaik.github.io/ai-interviews-now-ask-for-this/</link>
@@ -138,13 +145,6 @@
       <description>Cut API error rates 63% with guardrail docs — learn what humans must still write, Speakeasy 2.8, FastAPI 0.111, and the guardrail doc template that blocks AI hallucinations.</description>
       <pubDate>Tue, 09 Jun 2026 21:45:26 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-api-docs-what-humans-still-write-in-2026/</guid>
-    </item>
-    <item>
-      <title>TLS stack breaks under post-quantum crypto</title>
-      <link>https://kubaik.github.io/tls-stack-breaks-under-post-quantum-crypto/</link>
-      <description>Cut TLS latency 22% when enabling Kyber768 — the hidden costs, AWS ALB tuning, and the hybrid cert generation workflow most teams miss in 2026.</description>
-      <pubDate>Tue, 09 Jun 2026 21:40:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/tls-stack-breaks-under-post-quantum-crypto/</guid>
     </item>
   </channel>
 </rss>
