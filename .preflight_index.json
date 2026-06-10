@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-10T23:33:59.770641",
+  "built_at": "2026-06-10T23:58:31.478508",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -555,6 +555,11 @@
       "slug": "3-iac-tools-in-2026-what-i-picked-after-hashicorp-fork",
       "title": "3 IaC tools in 2026: what I picked after HashiCorp fork",
       "summary": "I ran into this pulumi terraform problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks migrating our 80+ ser"
+    },
+    {
+      "slug": "2026-tech-salaries-where-cuts-stopped-where-raises",
+      "title": "2026 tech salaries: where cuts stopped, where raises",
+      "summary": "The short version: the conventional advice on tech salaries is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In 2026 the market settled into two clear tracks: companies that weathered the corre"
     }
   ]
 }

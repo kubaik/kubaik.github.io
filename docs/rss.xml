@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 23:53:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 23:58:34 +0000</lastBuildDate>
+    <item>
+      <title>2026 tech salaries: where cuts stopped, where raises</title>
+      <link>https://kubaik.github.io/2026-tech-salaries-where-cuts-stopped-where-raises/</link>
+      <description>Tech salaries in 2026 settled into two tracks: niche roles up 15–25%, mass-market roles flat or down 5–15%. Compare Nairobi bands by role, funding stage, and product type — with real offer math and tax gotchas.</description>
+      <pubDate>Wed, 10 Jun 2026 23:58:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-tech-salaries-where-cuts-stopped-where-raises/</guid>
+    </item>
     <item>
       <title>3 IaC tools in 2026: what I picked after HashiCorp fork</title>
       <link>https://kubaik.github.io/3-iac-tools-in-2026-what-i-picked-after-hashicorp-fork/</link>
@@ -138,13 +145,6 @@
       <description>Cut technical screen time 40% with a real feature flag service — Neon Postgres 3.4, Upstash Redis 7.2, Vercel Edge 32.5.4</description>
       <pubDate>Wed, 10 Jun 2026 11:34:25 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-technical-screens-what-actually-works/</guid>
-    </item>
-    <item>
-      <title>Legacy code: revive it cheap with AI</title>
-      <link>https://kubaik.github.io/legacy-code-revive-it-cheap-with-ai/</link>
-      <description>It can simulate 1,000 user flows in minutes.</description>
-      <pubDate>Wed, 10 Jun 2026 08:45:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/legacy-code-revive-it-cheap-with-ai/</guid>
     </item>
   </channel>
 </rss>
