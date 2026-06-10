@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 14:46:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 14:58:09 +0000</lastBuildDate>
+    <item>
+      <title>Branching databases: my 2026 workflow fix</title>
+      <link>https://kubaik.github.io/branching-databases-my-2026-workflow-fix/</link>
+      <description>Cut local DB setup time 50% with Neon and PlanetScale branching — stop debugging `relation does not exist` errors and sync schemas in minutes.</description>
+      <pubDate>Wed, 10 Jun 2026 14:58:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/branching-databases-my-2026-workflow-fix/</guid>
+    </item>
     <item>
       <title>Offline-first apps: 80% uptime in spotty networks</title>
       <link>https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/</link>
@@ -138,13 +145,6 @@
       <description>AI scanners now catch 40-60% of escaped vulnerabilities in 2026 — but they miss logic flaws and hallucinate issues. Learn which tools to pair with them, how to tune confidence, and why manual review still matters.</description>
       <pubDate>Wed, 10 Jun 2026 02:01:23 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-scans-code-what-it-finds-and-what-it-misses/</guid>
-    </item>
-    <item>
-      <title>OpenTelemetry stuck — here’s how to use it</title>
-      <link>https://kubaik.github.io/opentelemetry-stuck-heres-how-to-use-it/</link>
-      <description>Cut observability ingestion 70% with OpenTelemetry in 2026 — Collector v0.94 sampling, OTLP wire format, and the head vs tail sampler mistake most teams make.</description>
-      <pubDate>Wed, 10 Jun 2026 01:39:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/opentelemetry-stuck-heres-how-to-use-it/</guid>
     </item>
   </channel>
 </rss>

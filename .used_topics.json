@@ -64,5 +64,6 @@
   "Building accessible AI chat interfaces: the WCAG requirements most teams miss",
   "TypeScript 5.x features that changed how I model domain logic",
   "M-Pesa Daraja 2.0 in 2026: what changed and how to migrate your integration",
-  "How to build offline-first apps for markets where connectivity is still unreliable"
+  "How to build offline-first apps for markets where connectivity is still unreliable",
+  "Database branching workflows: how Neon and PlanetScale changed how I develop locally"
 ]

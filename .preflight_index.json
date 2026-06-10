@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-10T14:46:52.503449",
+  "built_at": "2026-06-10T14:58:06.801412",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -490,6 +490,11 @@
       "slug": "offline-first-apps-80-uptime-in-spotty-networks",
       "title": "Offline-first apps: 80% uptime in spotty networks",
       "summary": "Most build offlinefirst guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, our fintech startup launched a micro-lending app for small merchants in Ni"
+    },
+    {
+      "slug": "branching-databases-my-2026-workflow-fix",
+      "title": "Branching databases: my 2026 workflow fix",
+      "summary": "After reviewing a lot of code that touches database branching, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. I ran into a nasty surprise when a feature branch from last week suddenly broke staging — even though CI had passed. T"
     }
   ]
 }
