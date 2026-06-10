@@ -28,6 +28,8 @@ from adsense_fixes.image_optimizer import inject_alt_text, generate_og_card
 from adsense_fixes.canonical_guard import validate_canonical, audit_duplicate_slugs
 from adsense_fixes.schema_validator import extract_and_build_faq_schema
 from adsense_fixes.content_freshness import inject_freshness_footer, get_publishing_schedule_status
+from adsense_fixes.content_freshness import mark_stale_posts
+
 # ─────────────────────────────────────────────────────────────────────────────
 
 
@@ -56,6 +58,7 @@ MIN_WORD_PURGE = 1500
 
 MAX_GENERATION_ATTEMPTS = 5
 MIN_ACCEPTABLE_WORDS = 1500
+STALE_THRESHOLD_DAYS = 90  # Default threshold for stale content refresh
 
 _HASHTAG_MAX_SOURCE_WORDS = 3
 _HASHTAG_MAX_CHARS = 24
@@ -789,13 +792,13 @@ def _derive_hashtags_from_keywords(
 # Provider constants
 # ─────────────────────────────────────────────────────────────────
 
-_MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions"
+_MISTRAL_API_URL = "[https://api.mistral.ai/v1/chat/completions](https://api.mistral.ai/v1/chat/completions)"
 _MISTRAL_FREE_TIER_DELAY = 1.2
 
-_NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
+_NVIDIA_API_URL = "[https://integrate.api.nvidia.com/v1/chat/completions](https://integrate.api.nvidia.com/v1/chat/completions)"
 _NVIDIA_MODEL = "meta/llama-3.3-70b-instruct"
 
-_GITHUB_MODELS_URL = "https://models.github.ai/inference/chat/completions"
+_GITHUB_MODELS_URL = "[https://models.github.ai/inference/chat/completions](https://models.github.ai/inference/chat/completions)"
 _GITHUB_MODEL = "Llama-4-Scout-17B-16E-Instruct"
 
 _CF_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
@@ -1263,6 +1266,31 @@ def inject_eeat_signals(post, topic: str) -> None:
     post.content = post.content.rstrip() + "\n" + footer
 
 
+def _inject_freshness_footer_inline(post_data: dict) -> None:
+    """
+    Update the 'Last reviewed' date in the E-E-A-T footer in post_data['content'].
+
+    This is the post-save version of inject_freshness_footer that works on
+    a dict instead of a BlogPost object.
+    """
+    import re
+    from datetime import datetime
+
+    if not post_data.get('content', ''):
+        return
+
+    today_str = datetime.now().strftime('%B %d, %Y')
+    # Pattern matches: **Last reviewed:** Month DD, YYYY
+    reviewed_pattern = r'(\*\*Last reviewed:\*\*\s*)([^\n]+)'
+
+    new_content = re.sub(
+        reviewed_pattern,
+        lambda m: f"{m.group(1)}{today_str}",
+        post_data['content'],
+    )
+    post_data['content'] = new_content
+
+
 # ─────────────────────────────────────────────────────────────────
 # PRE-FLIGHT SIMILARITY INDEX  ◄── NEW
 # ─────────────────────────────────────────────────────────────────
@@ -1609,6 +1637,268 @@ class BlogSystem:
         else:
             print(f"\nPurged {len(to_remove)} low-quality posts.")
 
+    async def refresh_stale_posts_impl(self, limit: int = 2) -> dict:
+        """
+        Identify top-priority stale posts and refresh them using the LLM.
+
+        Preserves slug, SEO keywords, and E-E-A-T signals while modernizing
+        outdated technical content.
+
+        Args:
+            limit: Maximum number of posts to refresh per run (default 2)
+
+        Returns:
+            {
+                "refreshed": ["slug1", "slug2"],     # Successfully refreshed slugs
+                "skipped": ["reason1", "reason2"],   # Posts skipped with reason
+                "errors": ["error1"]                 # Posts that failed
+            }
+        """
+        import json
+        from datetime import datetime
+
+        results = {
+            "refreshed": [],
+            "skipped": [],
+            "errors": [],
+        }
+
+        stale_posts = mark_stale_posts(
+            self.output_dir, days_threshold=STALE_THRESHOLD_DAYS)
+
+        if not stale_posts:
+            print("✅  No stale posts detected.")
+            return results
+
+        # Sort by priority (high first) then days_old descending
+        stale_posts.sort(
+            key=lambda x: (
+                0 if x['priority'] == 'high' else 1,
+                -x['days_old'],
+            )
+        )
+
+        print(
+            f"\nFound {len(stale_posts)} stale post(s). Refreshing top {limit}..."
+        )
+
+        for i, stale_post in enumerate(stale_posts[:limit]):
+            slug = stale_post['slug']
+            title = stale_post['title']
+            days_old = stale_post['days_old']
+            is_fast_decay = stale_post['fast_decay']
+
+            print(
+                f"\n[{i+1}/{min(limit, len(stale_posts))}] "
+                f"Refreshing: {slug} (title: {title}, {days_old} days old, "
+                f"fast_decay={'yes' if is_fast_decay else 'no'})"
+            )
+
+            post_dir = self.output_dir / slug
+            post_json = post_dir / "post.json"
+
+            if not post_json.exists():
+                msg = f"post.json not found for {slug}"
+                print(f"  ⚠️  Skip: {msg}")
+                results["skipped"].append(msg)
+                continue
+
+            # Load original post data
+            try:
+                with open(post_json, "r", encoding="utf-8") as f:
+                    post_data = json.load(f)
+            except Exception as e:
+                msg = f"{slug}: failed to load post.json ({e})"
+                print(f"  ❌  Error: {msg}")
+                results["errors"].append(msg)
+                continue
+
+            original_title = post_data.get("title", "")
+            original_content = post_data.get("content", "")
+            seo_keywords = post_data.get("seo_keywords", [])
+
+            if not original_content or len(original_content.split()) < 1000:
+                msg = f"{slug}: content too short or empty"
+                print(f"  ⚠️  Skip: {msg}")
+                results["skipped"].append(msg)
+                continue
+
+            # Call LLM to refresh content
+            try:
+                refreshed_content = await self._refresh_post_content(
+                    original_title=original_title,
+                    original_content=original_content,
+                    seo_keywords=seo_keywords,
+                    days_stale=days_old,
+                    is_fast_decay=is_fast_decay,
+                )
+            except Exception as e:
+                msg = f"{slug}: LLM refresh failed ({e})"
+                print(f"  ❌  Error: {msg}")
+                results["errors"].append(msg)
+                continue
+
+            # Validate refreshed content
+            refreshed_count = _count_words(refreshed_content)
+            original_count = _count_words(original_content)
+
+            if refreshed_count < MIN_ACCEPTABLE_WORDS:
+                msg = (
+                    f"{slug}: refreshed content too short "
+                    f"({refreshed_count} < {MIN_ACCEPTABLE_WORDS} words)"
+                )
+                print(f"  ⚠️  Skip: {msg}")
+                results["skipped"].append(msg)
+                continue
+
+            print(
+                f"  ✓ LLM refresh complete: {original_count} → {refreshed_count} words"
+            )
+
+            # Update post data with refreshed content
+            post_data["content"] = refreshed_content
+            post_data["updated_at"] = datetime.now().isoformat()
+
+            # Update freshness footer with current timestamp
+            try:
+                _inject_freshness_footer_inline(post_data)
+                print(f"  ✓ Freshness footer updated with timestamp")
+            except Exception as e:
+                print(f"  ⚠️  Freshness footer update failed (non-fatal): {e}")
+
+            # Write updated files
+            try:
+                with open(post_json, "w", encoding="utf-8") as f:
+                    json.dump(post_data, f, indent=2, ensure_ascii=False)
+                print(f"  ✓ post.json saved")
+
+                with open(post_dir / "index.md", "w", encoding="utf-8") as f:
+                    f.write(f"# {original_title}\n\n{refreshed_content}")
+                print(f"  ✓ index.md saved")
+
+                results["refreshed"].append(slug)
+                print(f"  ✅  REFRESHED: {slug}")
+
+            except Exception as e:
+                msg = f"{slug}: failed to write files ({e})"
+                print(f"  ❌  Error: {msg}")
+                results["errors"].append(msg)
+
+        return results
+
+    async def _refresh_post_content(
+        self,
+        original_title: str,
+        original_content: str,
+        seo_keywords: list,
+        days_stale: int,
+        is_fast_decay: bool,
+    ) -> str:
+        """
+        Use the LLM to refresh stale content while preserving SEO structure.
+        """
+        excerpt = " ".join(original_content.split()[:400])
+        keywords_str = ", ".join(seo_keywords[:8])
+
+        decay_context = (
+            "This is a FAST-DECAY technical topic (AI, LLM, cloud, Kubernetes, DevOps). "
+            "Tool versions, API endpoints, and best practices may have shifted significantly."
+        ) if is_fast_decay else (
+            "This is a standard-decay topic. Core concepts are stable, but tool versions and "
+            "examples should be modernized."
+        )
+
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You are a technical content expert. Your job is to refresh an existing "
+                    "blog post while preserving its SEO value and core message. "
+                    "\n\n"
+                    "CONSTRAINTS (ABSOLUTE):\n"
+                    "1. Keep the title EXACTLY as provided — do not change it\n"
+                    "2. Keep the slug EXACTLY as provided — do not change it\n"
+                    "3. Preserve all SEO keywords — they are embedded in the original content\n"
+                    "4. Preserve the original article structure (headings, sections)\n"
+                    "5. Preserve author voice and first-person anecdotes\n"
+                    "6. Preserve all code examples, but update tool/library versions\n"
+                    "7. Do not remove sections — only update facts, versions, and recommendations\n"
+                    "8. Do not add new sections (no FAQ, no new deep-dives)\n"
+                    "9. Preserve the E-E-A-T footer ('### About this article') — do NOT remove it\n"
+                    "10. Current year is 2026 — update all year references and statistics\n"
+                    "\n"
+                    "WHAT TO UPDATE:\n"
+                    "- Tool versions: 'Python 3.9' → 'Python 3.13', 'Node 18' → 'Node 22 LTS'\n"
+                    "- API endpoints: check if deprecated/changed\n"
+                    "- Deprecation warnings: flag if library/tool mentioned is EOL\n"
+                    "- Performance figures: note if 2024/2023 benchmarks now seem outdated\n"
+                    "- Cost comparisons: update SaaS pricing if known to have changed\n"
+                    "- Best practices: modernize patterns (e.g., callbacks → async/await)\n"
+                    "- Security guidance: update if new vulnerabilities/mitigations exist\n"
+                    "- Framework features: if the library added major features, mention them\n"
+                    "- Alternative tools: note if landscape changed (new competitors, acquisitions)\n"
+                    "\n"
+                    "WHAT NOT TO CHANGE:\n"
+                    "- The core point/angle of the article\n"
+                    "- The title (word-for-word)\n"
+                    "- The slug\n"
+                    "- The author persona or voice\n"
+                    "- The section headings (only update content within sections)\n"
+                    "- Any copyright/attribution statements\n"
+                    "- The 'About this article' footer\n"
+                    "\n"
+                    "PROCESS:\n"
+                    "1. Read the original content carefully\n"
+                    "2. Identify outdated version numbers, API endpoints, tool recommendations\n"
+                    "3. Update in-place: replace old references with 2026 equivalents\n"
+                    "4. If unsure about a fact, add: 'As of 2026, [claim]. (Verify against latest.)'\n"
+                    "5. Keep all prose, examples, and structure identical except factual updates\n"
+                    "6. Return the COMPLETE refreshed article (all sections, all content)\n"
+                    "7. Preserve all markdown formatting, code blocks, tables, and emphasis\n"
+                ),
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"CONTEXT:\n"
+                    f"Post age: {days_stale} days old\n"
+                    f"Decay type: {decay_context}\n"
+                    f"Title (DO NOT CHANGE): {original_title}\n"
+                    f"SEO Keywords (preserve in content): {keywords_str}\n"
+                    f"\n"
+                    f"ORIGINAL CONTENT (excerpt, first 400 words for review):\n"
+                    f"─────────────────────────────────────────────────────────────\n"
+                    f"{excerpt}\n"
+                    f"─────────────────────────────────────────────────────────────\n"
+                    f"\n"
+                    f"FULL ORIGINAL CONTENT:\n"
+                    f"{original_content}\n"
+                    f"\n"
+                    f"TASK:\n"
+                    f"Refresh this post by updating:\n"
+                    f"1. Tool/library/framework versions to their 2026 equivalents\n"
+                    f"2. Deprecated APIs or endpoints\n"
+                    f"3. Security/best-practice guidance (if applicable)\n"
+                    f"4. Cost figures or pricing comparisons\n"
+                    f"5. Benchmark numbers (latency, throughput, etc.)\n"
+                    f"6. Outdated statistics or market data\n"
+                    f"\n"
+                    f"Do NOT:\n"
+                    f"- Change the title\n"
+                    f"- Remove sections\n"
+                    f"- Add new sections or FAQ\n"
+                    f"- Alter the voice or author anecdotes\n"
+                    f"- Remove or modify the 'About this article' footer\n"
+                    f"- Change section headings\n"
+                    f"- Change code examples unless the syntax is deprecated\n"
+                    f"\n"
+                    f"Return the COMPLETE refreshed article (every section, every paragraph)."
+                ),
+            },
+        ]
+
+        return await self._call_api_with_fallback(messages, max_tokens=6500)
+
     # ─────────────────────────────────────────────────────────────
     # API FALLBACK CHAIN
     # ─────────────────────────────────────────────────────────────
@@ -1689,7 +1979,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                    async with s.post("[https://api.groq.com/openai/v1/chat/completions](https://api.groq.com/openai/v1/chat/completions)", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -1710,7 +2000,7 @@ class BlogSystem:
         headers = {
             "Authorization": f"Bearer {self.openrouter_key}",
             "Content-Type": "application/json",
-            "HTTP-Referer": self.config.get("base_url", "https://kubaik.github.io"),
+            "HTTP-Referer": self.config.get("base_url", "[https://kubaik.github.io](https://kubaik.github.io)"),
             "X-Title": self.config.get("site_name", "Tech Blog"),
         }
         data = {
@@ -1724,7 +2014,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                    async with s.post("[https://openrouter.ai/api/v1/chat/completions](https://openrouter.ai/api/v1/chat/completions)", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
                         if r.status == 200:
                             result = await r.json()
                             if "error" in result:
@@ -1754,7 +2044,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://api.cerebras.ai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                    async with s.post("[https://api.cerebras.ai/v1/chat/completions](https://api.cerebras.ai/v1/chat/completions)", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -1780,7 +2070,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://api.mistral.ai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                    async with s.post("[https://api.mistral.ai/v1/chat/completions](https://api.mistral.ai/v1/chat/completions)", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -1806,7 +2096,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=120)) as r:
+                    async with s.post("[https://integrate.api.nvidia.com/v1/chat/completions](https://integrate.api.nvidia.com/v1/chat/completions)", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=120)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -1846,7 +2136,7 @@ class BlogSystem:
             pass
 
         api_url = (
-            f"https://generativelanguage.googleapis.com/v1/models/"
+            f"[https://generativelanguage.googleapis.com/v1/models/](https://generativelanguage.googleapis.com/v1/models/)"
             f"{GEMINI_MODEL}:generateContent?key={self.gemini_key}"
         )
         system_parts = [m["content"]
@@ -1920,7 +2210,7 @@ class BlogSystem:
                    "Content-Type": "application/json"}
         data = {"model": _CF_MODEL, "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
-        url = f"https://api.cloudflare.com/client/v4/accounts/{self.cloudflare_account_id}/ai/v1/chat/completions"
+        url = f"[https://api.cloudflare.com/client/v4/accounts/](https://api.cloudflare.com/client/v4/accounts/){self.cloudflare_account_id}/ai/v1/chat/completions"
         waits = [2, 5, 10]
         for attempt in range(1, 3):
             try:
@@ -2197,7 +2487,7 @@ class BlogSystem:
             bundle_tweet = bundle.get("tweet_text", "").strip()
             if bundle_tweet:
                 post_url = (
-                    f"{self.config.get('base_url', 'https://kubaik.github.io')}"
+                    f"{self.config.get('base_url', '[https://kubaik.github.io](https://kubaik.github.io)')}"
                     f"/{post.slug}"
                 )
 
@@ -3115,7 +3405,7 @@ def create_sample_config():
     config = {
         "site_name":        "Tech Blog",
         "site_description": "Cutting-edge insights into technology, AI, and development",
-        "base_url":         "https://kubaik.github.io",
+        "base_url":         "[https://kubaik.github.io](https://kubaik.github.io)",
         "base_path":        "",
         "amazon_affiliate_tag":        "aiblogcontent-20",
         "google_analytics_id":         "G-DST4PJYK6V",
@@ -3753,6 +4043,60 @@ if __name__ == "__main__":
             if match_title:
                 print(f"Nearest : {match_title}")
 
+        # ── REFRESH STALE INTEGRATION ─────────────────────────────────────────
+
+        elif mode == "refresh-stale":
+            limit = 2
+            for i, arg in enumerate(sys.argv[2:]):
+                if arg == "--limit" and i + 1 < len(sys.argv[2:]):
+                    try:
+                        limit = int(sys.argv[3 + i + 1])
+                    except (ValueError, IndexError):
+                        limit = 2
+
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found.")
+                sys.exit(1)
+
+            with open("config.yaml", "r") as f:
+                config = yaml.safe_load(f)
+
+            blog_system = BlogSystem(config)
+            refresh_results = asyncio.run(
+                blog_system.refresh_stale_posts_impl(limit=limit)
+            )
+
+            print("\n" + "="*70)
+            print("REFRESH RESULTS")
+            print("="*70)
+            print(f"Refreshed: {len(refresh_results['refreshed'])} posts")
+            if refresh_results['refreshed']:
+                for slug in refresh_results['refreshed']:
+                    print(f"  ✓ {slug}")
+
+            if refresh_results['skipped']:
+                print(f"\nSkipped: {len(refresh_results['skipped'])} posts")
+                for reason in refresh_results['skipped']:
+                    print(f"  - {reason}")
+
+            if refresh_results['errors']:
+                print(f"\nErrors: {len(refresh_results['errors'])} posts")
+                for error in refresh_results['errors']:
+                    print(f"  ✗ {error}")
+
+            print("="*70 + "\n")
+
+            # Output for Watchdog workflow
+            if refresh_results['refreshed']:
+                print(f"has_refreshed=true")
+                print(
+                    f"refreshed_list={','.join(refresh_results['refreshed'])}")
+            else:
+                print(f"has_refreshed=false")
+
+            # Rebuild site
+            StaticSiteGenerator(blog_system).generate_site()
+
         # ─────────────────────────────────────────────────────────────────────
 
         else:
@@ -3760,11 +4104,11 @@ if __name__ == "__main__":
                 "Usage: python blog_system.py [init|auto|build|cleanup|audit|purge|"
                 "debug|social|test-twitter|dedup|fix-descriptions|"
                 "audit-links|audit-slugs|audit-freshness|velocity|"
-                "preflight-rebuild|preflight-check]"
+                "preflight-rebuild|preflight-check|refresh-stale]"
             )
 
     else:
         print("AI Blog System — Usage: python blog_system.py [command]")
         print("Commands: init | auto | build | cleanup | audit | purge | debug | social | "
               "test-twitter | dedup | fix-descriptions | audit-links | audit-slugs | "
-              "audit-freshness | velocity | preflight-rebuild | preflight-check")
+              "audit-freshness | velocity | preflight-rebuild | preflight-check | refresh-stale")
