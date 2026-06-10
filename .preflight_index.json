@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-10T13:01:49.178981",
+  "built_at": "2026-06-10T13:21:38.490354",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -480,6 +480,11 @@
       "slug": "ai-code-debt-manual-vs-ai-generated",
       "title": "AI code debt: manual vs AI-generated",
       "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, every codebase has two kinds of functions: the ones your team "
+    },
+    {
+      "slug": "migrate-daraja-20-to-production-in-2-hours",
+      "title": "Migrate Daraja 2.0 to production in 2 hours",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I ran into a hard truth in August 2026: every Daraja integration I had built before 2026"
     }
   ]
 }

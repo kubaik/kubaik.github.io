@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 16:16:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 10 Jun 2026 13:21:41 +0000</lastBuildDate>
+    <item>
+      <title>Migrate Daraja 2.0 to production in 2 hours</title>
+      <link>https://kubaik.github.io/migrate-daraja-20-to-production-in-2-hours/</link>
+      <description>Cut Daraja callback failures 97% in 2 hours: TLS 1.3, idempotency keys, and the 10-line retry wrapper most teams miss.</description>
+      <pubDate>Wed, 10 Jun 2026 13:21:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/migrate-daraja-20-to-production-in-2-hours/</guid>
+    </item>
     <item>
       <title>AI code debt: manual vs AI-generated</title>
       <link>https://kubaik.github.io/ai-code-debt-manual-vs-ai-generated/</link>
@@ -138,13 +145,6 @@
       <description>Replace Prometheus + Grafana + Jaeger with one ClickHouse table in 2026. Save $4k/month, cut query latency 47×, and keep every span forever. Learn the new unified telemetry model and the exact schema.</description>
       <pubDate>Wed, 10 Jun 2026 00:02:57 +0000</pubDate>
       <guid>https://kubaik.github.io/observability-2026-ditch-the-three-pillars/</guid>
-    </item>
-    <item>
-      <title>Cut AWS bills 32%: AWS Cost Explorer vs. Infracost</title>
-      <link>https://kubaik.github.io/cut-aws-bills-32-aws-cost-explorer-vs-infracost/</link>
-      <description>Cut AWS bills 32%: AWS Cost Explorer vs Infracost — the real FinOps levers for mid-size teams in 2026. Compare speed, accuracy, and ROI with concrete numbers and benchmarks.</description>
-      <pubDate>Tue, 09 Jun 2026 23:48:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-aws-bills-32-aws-cost-explorer-vs-infracost/</guid>
     </item>
   </channel>
 </rss>
