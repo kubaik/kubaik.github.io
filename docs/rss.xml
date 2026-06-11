@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 17:55:12 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 18:10:42 +0000</lastBuildDate>
+    <item>
+      <title>AI interviews broke system design: 3 patterns that</title>
+      <link>https://kubaik.github.io/ai-interviews-broke-system-design-3-patterns-that/</link>
+      <description>Latency spiked to 850ms on a 500ms SLA, and the Terraform script it wrote referenced AWS services that don’t exist in us-east-2.</description>
+      <pubDate>Thu, 11 Jun 2026 18:10:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-interviews-broke-system-design-3-patterns-that/</guid>
+    </item>
     <item>
       <title>SLSA 1.0 and Sigstore: why every repo needs them in</title>
       <link>https://kubaik.github.io/slsa-10-and-sigstore-why-every-repo-needs-them-in/</link>
@@ -138,13 +145,6 @@
       <description>Cut PR merge time 70% with chaos-first AI tooling; or keep risk low with guardrails-first validation. Which onboarding path saves you $3.8k/month in 2026? Get the benchmarks, code samples, and decision matrix.</description>
       <pubDate>Thu, 11 Jun 2026 00:12:38 +0000</pubDate>
       <guid>https://kubaik.github.io/onboard-devs-to-ai-code-guardrails-vs-chaos/</guid>
-    </item>
-    <item>
-      <title>2026 tech salaries: where cuts stopped, where raises</title>
-      <link>https://kubaik.github.io/2026-tech-salaries-where-cuts-stopped-where-raises/</link>
-      <description>Tech salaries in 2026 settled into two tracks: niche roles up 15–25%, mass-market roles flat or down 5–15%. Compare Nairobi bands by role, funding stage, and product type — with real offer math and tax gotchas.</description>
-      <pubDate>Wed, 10 Jun 2026 23:58:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-tech-salaries-where-cuts-stopped-where-raises/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T17:55:09.226798",
+  "built_at": "2026-06-11T18:10:39.475246",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -655,6 +655,11 @@
       "slug": "slsa-10-and-sigstore-why-every-repo-needs-them-in",
       "title": "SLSA 1.0 and Sigstore: why every repo needs them in",
       "summary": "Most supply chain guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. We were auditing 12 open-source dependencies last quarter and found 3 with unsigned releases—one of them a log4j fork that had been qu"
+    },
+    {
+      "slug": "ai-interviews-broke-system-design-3-patterns-that",
+      "title": "AI interviews broke system design: 3 patterns that",
+      "summary": "After reviewing a lot of code that touches system design, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. System design interviews in 2026 aren’t about whiteboards anymore — they’re about how well your AI assistant drafts the whi"
     }
   ]
 }
