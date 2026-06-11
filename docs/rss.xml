@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 23:17:28 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 23:21:33 +0000</lastBuildDate>
+    <item>
+      <title>Avoid these 4 platforms in 2026 (African devs)</title>
+      <link>https://kubaik.github.io/avoid-these-4-platforms-in-2026-african-devs/</link>
+      <description>Which freelance platforms still pay African developers fairly in 2026? Median payout times, fee splits, and dispute win rates for Andela, Toptal, Arc, and Contra.</description>
+      <pubDate>Thu, 11 Jun 2026 23:21:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/avoid-these-4-platforms-in-2026-african-devs/</guid>
+    </item>
     <item>
       <title>2 AI roles ranked: staff engineer vs manager in 2026</title>
       <link>https://kubaik.github.io/2-ai-roles-ranked-staff-engineer-vs-manager-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut 98% of AI assistant costs without vendor lock-in — Redis 7.2 caching, OpenSearch 2.11 search, and vLLM 0.4.0 self-hosted models deliver P95 latency under 1.2s and $0.12 per 1k calls.</description>
       <pubDate>Thu, 11 Jun 2026 09:44:01 +0000</pubDate>
       <guid>https://kubaik.github.io/personal-ai-assistants-avoid-vendor-lock-in-traps/</guid>
-    </item>
-    <item>
-      <title>AI UI tools: what they’ll ship, what they’ll break</title>
-      <link>https://kubaik.github.io/ai-ui-tools-what-theyll-ship-what-theyll-break/</link>
-      <description>Cut UI time 60% with AI tools — but they’ll ship broken components if you skip validation. Real numbers, concrete steps, and the mistakes I made in 2026.</description>
-      <pubDate>Thu, 11 Jun 2026 09:35:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ui-tools-what-theyll-ship-what-theyll-break/</guid>
     </item>
   </channel>
 </rss>
