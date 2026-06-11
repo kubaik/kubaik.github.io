@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 09:52:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 09:57:32 +0000</lastBuildDate>
+    <item>
+      <title>Local LLMs on MacBook Pro: the 4 models that run</title>
+      <link>https://kubaik.github.io/local-llms-on-macbook-pro-the-4-models-that-run/</link>
+      <description>Local LLMs in 2026 cut AI costs to $0 and battery drain 40% on a MacBook Pro — benchmarks for four models that finally run usably, with concrete latency, RAM, and power numbers.</description>
+      <pubDate>Thu, 11 Jun 2026 09:57:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/local-llms-on-macbook-pro-the-4-models-that-run/</guid>
+    </item>
     <item>
       <title>Save $12k/month: cloud egress costs in 2026</title>
       <link>https://kubaik.github.io/save-12kmonth-cloud-egress-costs-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut API 500 errors 90% by fixing Neon, PlanetScale and Turso timeouts under real load — connection pools, replica lag and proxy limits exposed after 12 months in production.</description>
       <pubDate>Wed, 10 Jun 2026 18:51:10 +0000</pubDate>
       <guid>https://kubaik.github.io/neon-vs-planetscale-vs-turso-which-broke-first/</guid>
-    </item>
-    <item>
-      <title>pgvector replaced Pinecone for $8k/year</title>
-      <link>https://kubaik.github.io/pgvector-replaced-pinecone-for-8kyear/</link>
-      <description>Cut $8k/year by replacing Pinecone with pgvector — real latency, cost, and recall numbers from 2 production systems in 2026. See how a 70% bill reduction and sub-50ms p99 latency became possible.</description>
-      <pubDate>Wed, 10 Jun 2026 18:39:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/pgvector-replaced-pinecone-for-8kyear/</guid>
     </item>
   </channel>
 </rss>

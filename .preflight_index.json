@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T09:49:24.201440",
+  "built_at": "2026-06-11T09:57:29.826252",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -615,6 +615,11 @@
       "slug": "save-12kmonth-cloud-egress-costs-in-2026",
       "title": "Save $12k/month: cloud egress costs in 2026",
       "summary": "I ran into this cloud egress problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026, a client asked us to migrate a "
+    },
+    {
+      "slug": "local-llms-on-macbook-pro-the-4-models-that-run",
+      "title": "Local LLMs on MacBook Pro: the 4 models that run",
+      "summary": "Most local llms guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, a client wanted a privacy-first AI assistant that could run offline on a MacB"
     }
   ]
 }
