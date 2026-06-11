@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T09:24:22.017163",
+  "built_at": "2026-06-11T09:35:27.273016",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -600,6 +600,11 @@
       "slug": "vibe-coding-9-reasons-it-dies-in-production",
       "title": "Vibe coding: 9 reasons it dies in production",
       "summary": "I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I built a side project in 2026 that went from "
+    },
+    {
+      "slug": "ai-ui-tools-what-theyll-ship-what-theyll-break",
+      "title": "AI UI tools: what they’ll ship, what they’ll break",
+      "summary": "The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI UI tools accelerate the boring parts of frontend work—boilerplate, layouts, an"
     }
   ]
 }

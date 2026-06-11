@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 09:24:25 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 09:35:30 +0000</lastBuildDate>
+    <item>
+      <title>AI UI tools: what they’ll ship, what they’ll break</title>
+      <link>https://kubaik.github.io/ai-ui-tools-what-theyll-ship-what-theyll-break/</link>
+      <description>Cut UI time 60% with AI tools — but they’ll ship broken components if you skip validation. Real numbers, concrete steps, and the mistakes I made in 2026.</description>
+      <pubDate>Thu, 11 Jun 2026 09:35:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ui-tools-what-theyll-ship-what-theyll-break/</guid>
+    </item>
     <item>
       <title>Vibe coding: 9 reasons it dies in production</title>
       <link>https://kubaik.github.io/vibe-coding-9-reasons-it-dies-in-production/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI hallucinations 80% with real observability metrics — embedding drift, attention entropy, and retrieval precision you can’t get from Prometheus alone</description>
       <pubDate>Wed, 10 Jun 2026 17:52:11 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-observability-why-logs-and-traces-lie/</guid>
-    </item>
-    <item>
-      <title>ORM 2026: Prisma vs Drizzle vs SQLAlchemy</title>
-      <link>https://kubaik.github.io/orm-2026-prisma-vs-drizzle-vs-sqlalchemy/</link>
-      <description>Cut ORM cold-start latency 71% and save $1,200/month by dropping Prisma for Drizzle + raw SQL on Postgres 16 and Node 22. Migration safety over 2G, RAM under 512 MB, and type safety without runtime overhead.</description>
-      <pubDate>Wed, 10 Jun 2026 16:18:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/orm-2026-prisma-vs-drizzle-vs-sqlalchemy/</guid>
     </item>
   </channel>
 </rss>
