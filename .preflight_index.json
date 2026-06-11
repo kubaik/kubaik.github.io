@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T21:44:21.886297",
+  "built_at": "2026-06-11T23:08:11.658460",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -690,6 +690,11 @@
       "slug": "skip-stripe-in-2026-i-use-lemon-squeezy-now",
       "title": "Skip Stripe in 2026 — I use Lemon Squeezy now",
       "summary": "A colleague asked me about stripe lemon during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Most"
+    },
+    {
+      "slug": "secure-llm-apps-owasp-top-10-for-2026",
+      "title": "Secure LLM apps: OWASP Top 10 for 2026",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In late 2026 I was asked to review an LLM-powered chatbot that had gone live with only a"
     }
   ]
 }

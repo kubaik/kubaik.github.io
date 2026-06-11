@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 23:02:28 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 23:08:14 +0000</lastBuildDate>
+    <item>
+      <title>Secure LLM apps: OWASP Top 10 for 2026</title>
+      <link>https://kubaik.github.io/secure-llm-apps-owasp-top-10-for-2026/</link>
+      <description>Secure LLM apps in 2026: OWASP Top 10 patterns that stop prompt injection, jailbreaks, and data leakage — with code, benchmarks, and the exact guardrail model to use.</description>
+      <pubDate>Thu, 11 Jun 2026 23:08:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/secure-llm-apps-owasp-top-10-for-2026/</guid>
+    </item>
     <item>
       <title>Skip Stripe in 2026 — I use Lemon Squeezy now</title>
       <link>https://kubaik.github.io/skip-stripe-in-2026-i-use-lemon-squeezy-now/</link>
@@ -138,13 +145,6 @@
       <description>Cut production incidents 94% by adding tests to vibe-coded MVPs — FastAPI + pytest, Node + Jest, Go 1.22 benchmarks and the real gotchas most teams miss.</description>
       <pubDate>Thu, 11 Jun 2026 09:24:19 +0000</pubDate>
       <guid>https://kubaik.github.io/vibe-coding-9-reasons-it-dies-in-production/</guid>
-    </item>
-    <item>
-      <title>AI agents eat your budget 3 ways</title>
-      <link>https://kubaik.github.io/ai-agents-eat-your-budget-3-ways/</link>
-      <description>The gap between what the docs say and what production needs Most AI agent tutorials end at &quot;here’s the prompt and a success case.&quot; They don’t mention what…</description>
-      <pubDate>Thu, 11 Jun 2026 09:20:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-eat-your-budget-3-ways/</guid>
     </item>
   </channel>
 </rss>
