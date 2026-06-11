@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T09:57:29.826252",
+  "built_at": "2026-06-11T10:11:08.900769",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -620,6 +620,11 @@
       "slug": "local-llms-on-macbook-pro-the-4-models-that-run",
       "title": "Local LLMs on MacBook Pro: the 4 models that run",
       "summary": "Most local llms guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, a client wanted a privacy-first AI assistant that could run offline on a MacB"
+    },
+    {
+      "slug": "css-finally-fixed-my-css-problems",
+      "title": "CSS finally fixed my CSS problems",
+      "summary": "Most css 2026 guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, our team at KargoTech had built a design system for a logistics dashboard used by 1."
     }
   ]
 }
