@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T05:25:10.155910",
+  "built_at": "2026-06-11T07:24:23.799117",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -585,6 +585,11 @@
       "slug": "7-code-review-traps-when-ai-writes-half-your-code",
       "title": "7 code review traps when AI writes half your code",
       "summary": "I ran into this code review problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In mid-2026 our team at a Lagos-based fintech "
+    },
+    {
+      "slug": "ai-tools-cut-rates-30-whats-real-in-2026",
+      "title": "AI tools cut rates 30%: what’s real in 2026",
+      "summary": "The short version: the conventional advice on freelance developer is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) By 2026, AI coding assistants have compressed freelance rates for standard tas"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 07:19:36 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 07:24:26 +0000</lastBuildDate>
+    <item>
+      <title>AI tools cut rates 30%: what’s real in 2026</title>
+      <link>https://kubaik.github.io/ai-tools-cut-rates-30-whats-real-in-2026/</link>
+      <description>Freelance rates fell 30% in 2026 — but only for the wrong stack. Learn which 20% of work still commands $90+/hr and which 80% got commoditized by AI agents.</description>
+      <pubDate>Thu, 11 Jun 2026 07:24:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-tools-cut-rates-30-whats-real-in-2026/</guid>
+    </item>
     <item>
       <title>7 code review traps when AI writes half your code</title>
       <link>https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/</link>
@@ -138,13 +145,6 @@
       <description>Cut local DB setup time 50% with Neon and PlanetScale branching — stop debugging `relation does not exist` errors and sync schemas in minutes.</description>
       <pubDate>Wed, 10 Jun 2026 14:58:04 +0000</pubDate>
       <guid>https://kubaik.github.io/branching-databases-my-2026-workflow-fix/</guid>
-    </item>
-    <item>
-      <title>Offline-first apps: 80% uptime in spotty networks</title>
-      <link>https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/</link>
-      <description>Cut loan submission failures 32% with offline-first SQLite + WorkManager — Android 13, SQLCipher 4.5.6, and client-side image resizing in 1.2s on Tecno Spark 8C.</description>
-      <pubDate>Wed, 10 Jun 2026 14:46:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/</guid>
     </item>
   </channel>
 </rss>
