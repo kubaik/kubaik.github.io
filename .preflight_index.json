@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T23:08:11.658460",
+  "built_at": "2026-06-11T23:17:25.066865",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -695,6 +695,11 @@
       "slug": "secure-llm-apps-owasp-top-10-for-2026",
       "title": "Secure LLM apps: OWASP Top 10 for 2026",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In late 2026 I was asked to review an LLM-powered chatbot that had gone live with only a"
+    },
+    {
+      "slug": "2-ai-roles-ranked-staff-engineer-vs-manager-in-2026",
+      "title": "2 AI roles ranked: staff engineer vs manager in 2026",
+      "summary": "I ran into this staff engineer problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) Last year I inherited a team that had grown"
     }
   ]
 }

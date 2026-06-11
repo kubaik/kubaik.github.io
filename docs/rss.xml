@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 23:12:30 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 23:17:28 +0000</lastBuildDate>
+    <item>
+      <title>2 AI roles ranked: staff engineer vs manager in 2026</title>
+      <link>https://kubaik.github.io/2-ai-roles-ranked-staff-engineer-vs-manager-in-2026/</link>
+      <description>Cut AI inference spend 60% with the right staff role in 2026 — AI-Architect Advocate beats manager or staff engineer for ROI</description>
+      <pubDate>Thu, 11 Jun 2026 23:17:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/2-ai-roles-ranked-staff-engineer-vs-manager-in-2026/</guid>
+    </item>
     <item>
       <title>Secure LLM apps: OWASP Top 10 for 2026</title>
       <link>https://kubaik.github.io/secure-llm-apps-owasp-top-10-for-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut UI time 60% with AI tools — but they’ll ship broken components if you skip validation. Real numbers, concrete steps, and the mistakes I made in 2026.</description>
       <pubDate>Thu, 11 Jun 2026 09:35:24 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ui-tools-what-theyll-ship-what-theyll-break/</guid>
-    </item>
-    <item>
-      <title>Vibe coding: 9 reasons it dies in production</title>
-      <link>https://kubaik.github.io/vibe-coding-9-reasons-it-dies-in-production/</link>
-      <description>Cut production incidents 94% by adding tests to vibe-coded MVPs — FastAPI + pytest, Node + Jest, Go 1.22 benchmarks and the real gotchas most teams miss.</description>
-      <pubDate>Thu, 11 Jun 2026 09:24:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/vibe-coding-9-reasons-it-dies-in-production/</guid>
     </item>
   </channel>
 </rss>
