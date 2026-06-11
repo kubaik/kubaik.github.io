@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T21:16:45.021132",
+  "built_at": "2026-06-11T21:30:08.963643",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -680,6 +680,11 @@
       "slug": "self-healing-ai-agents-vs-rule-based-ops-40-fewer",
       "title": "Self-healing AI agents vs rule-based ops: 40% fewer",
       "summary": "I've seen the same built selfhealing mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026 your deployment pipeline has two ways to recover from failur"
+    },
+    {
+      "slug": "ai-ate-our-niche-heres-how-we-picked-a-new-one",
+      "title": "AI ate our niche — here’s how we picked a new one",
+      "summary": "Most pick saas guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, the team at our Nairobi-based fintech noticed our core SaaS product—an expense"
     }
   ]
 }
