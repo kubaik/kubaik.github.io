@@ -178,6 +178,11 @@ jobs:
             sleep 10
           fi
 
+      # ── PIPELINE PROCESSING ──────────────────────────────────────────────────
+      - name: Install deduplication dependencies
+        run: |
+          pip install --quiet scikit-learn numpy tweepy markdown aiohttp jinja2 pyyaml pygments
+
       - name: Refresh stale posts
         id: refresh_stale
         run: |
@@ -202,12 +207,6 @@ jobs:
             echo "has_refreshed=false" >> $GITHUB_OUTPUT
             echo "ℹ️  Refresh: no posts updated"
           fi
-
-      # ── PIPELINE PROCESSING ──────────────────────────────────────────────────
-
-      - name: Install deduplication dependencies
-        run: |
-          pip install --quiet scikit-learn numpy tweepy markdown aiohttp jinja2 pyyaml pygments
 
       - name: Run delete_fallback_posts (dry-run detect)
         id: fallback_check
