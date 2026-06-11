@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 18:18:14 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 18:23:30 +0000</lastBuildDate>
+    <item>
+      <title>Cut React bundle 62% without rewriting</title>
+      <link>https://kubaik.github.io/cut-react-bundle-62-without-rewriting/</link>
+      <description>That’s what server components give you: the ability to reduce client JS by 60% without touching the UI layer.</description>
+      <pubDate>Thu, 11 Jun 2026 18:23:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-react-bundle-62-without-rewriting/</guid>
+    </item>
     <item>
       <title>AI interviews broke system design: 3 patterns that</title>
       <link>https://kubaik.github.io/ai-interviews-broke-system-design-3-patterns-that/</link>
@@ -138,13 +145,6 @@
       <description>Cut INP 67% in 2026 with scheduler.postTask, Comlink cache, and a CSS spinner — the real steps that worked on low-end devices in Kenya and Uganda.</description>
       <pubDate>Thu, 11 Jun 2026 02:10:24 +0000</pubDate>
       <guid>https://kubaik.github.io/inp-2026-one-tweak-cut-67-of-slow-clicks/</guid>
-    </item>
-    <item>
-      <title>Onboard devs to AI code: guardrails vs chaos</title>
-      <link>https://kubaik.github.io/onboard-devs-to-ai-code-guardrails-vs-chaos/</link>
-      <description>Cut PR merge time 70% with chaos-first AI tooling; or keep risk low with guardrails-first validation. Which onboarding path saves you $3.8k/month in 2026? Get the benchmarks, code samples, and decision matrix.</description>
-      <pubDate>Thu, 11 Jun 2026 00:12:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/onboard-devs-to-ai-code-guardrails-vs-chaos/</guid>
     </item>
   </channel>
 </rss>
