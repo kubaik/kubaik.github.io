@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T02:10:26.624234",
+  "built_at": "2026-06-11T04:16:55.044750",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -570,6 +570,11 @@
       "slug": "inp-2026-one-tweak-cut-67-of-slow-clicks",
       "title": "INP 2026: one tweak cut 67% of slow clicks",
       "summary": "Most web performance guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 Google announced that Interaction to Next Paint (INP) would replace First"
+    },
+    {
+      "slug": "postgres-killed-three-tools-the-2026-stack-audit",
+      "title": "Postgres killed three tools: the 2026 stack audit",
+      "summary": "I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, PostgreSQL 17 introduced three features that quietly replaced t"
     }
   ]
 }

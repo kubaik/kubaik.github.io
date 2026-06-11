@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 04:12:01 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 04:16:58 +0000</lastBuildDate>
+    <item>
+      <title>Postgres killed three tools: the 2026 stack audit</title>
+      <link>https://kubaik.github.io/postgres-killed-three-tools-the-2026-stack-audit/</link>
+      <description>Cut infra cost 42% by replacing Redis, TimescaleDB, and pg_partman with Postgres 17’s native features in 2026 — benchmarks, p99 traps, and the exact flags to set.</description>
+      <pubDate>Thu, 11 Jun 2026 04:16:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/postgres-killed-three-tools-the-2026-stack-audit/</guid>
+    </item>
     <item>
       <title>INP 2026: one tweak cut 67% of slow clicks</title>
       <link>https://kubaik.github.io/inp-2026-one-tweak-cut-67-of-slow-clicks/</link>
@@ -138,13 +145,6 @@
       <description>Cut production fires 60% with guardrails: manual vs AI-generated code in 2026. See the latency, cost, and error rate numbers that actually matter.</description>
       <pubDate>Wed, 10 Jun 2026 13:01:46 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-code-debt-manual-vs-ai-generated/</guid>
-    </item>
-    <item>
-      <title>Bootcamp to $120k: 2026 steps that pay</title>
-      <link>https://kubaik.github.io/bootcamp-to-120k-2026-steps-that-pay/</link>
-      <description>From bootcamp to $120k ARR in 2026: the boring stack vs edge stack showdown with concrete costs, latency benchmarks, and the exact migration point most teams miss.</description>
-      <pubDate>Wed, 10 Jun 2026 12:24:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/bootcamp-to-120k-2026-steps-that-pay/</guid>
     </item>
   </channel>
 </rss>
