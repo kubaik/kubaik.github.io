@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T07:24:23.799117",
+  "built_at": "2026-06-11T09:20:53.702934",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -590,6 +590,11 @@
       "slug": "ai-tools-cut-rates-30-whats-real-in-2026",
       "title": "AI tools cut rates 30%: what’s real in 2026",
       "summary": "The short version: the conventional advice on freelance developer is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) By 2026, AI coding assistants have compressed freelance rates for standard tas"
+    },
+    {
+      "slug": "ai-agents-eat-your-budget-3-ways",
+      "title": "AI agents eat your budget 3 ways",
+      "summary": "The official documentation for hidden costs is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most AI agent tutorials end at \"here"
     }
   ]
 }
