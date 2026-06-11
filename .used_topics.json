@@ -81,5 +81,6 @@
   "Tech salaries in 2026: what the market correction settled at and where it's growing",
   "How to onboard a developer to a partially AI-generated codebase",
   "Web performance in 2026: the Core Web Vitals update and what changed about INP",
-  "Postgres in 2026: the features that replaced three separate tools in our stack"
+  "Postgres in 2026: the features that replaced three separate tools in our stack",
+  "The background job queue landscape in 2026: what replaced Celery in my stack"
 ]

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T04:16:55.044750",
+  "built_at": "2026-06-11T05:08:12.751477",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -575,6 +575,11 @@
       "slug": "postgres-killed-three-tools-the-2026-stack-audit",
       "title": "Postgres killed three tools: the 2026 stack audit",
       "summary": "I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, PostgreSQL 17 introduced three features that quietly replaced t"
+    },
+    {
+      "slug": "replaced-celery-in-2026-what-actually-worked",
+      "title": "Replaced Celery in 2026: what actually worked",
+      "summary": "Most background job guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) Late 2026, I inherited a Python microservices stack for a Mexico City–based e-commerce "
     }
   ]
 }
