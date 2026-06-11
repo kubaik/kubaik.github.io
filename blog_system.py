@@ -60,6 +60,9 @@ MIN_ACCEPTABLE_WORDS = 1500
 _HASHTAG_MAX_SOURCE_WORDS = 3
 _HASHTAG_MAX_CHARS = 24
 
+# Stale content refresh threshold (days)
+STALE_THRESHOLD_DAYS = 90
+
 
 def _to_single_word_tags(tags: List[str]) -> List[str]:
     result = []
@@ -1264,64 +1267,29 @@ def inject_eeat_signals(post, topic: str) -> None:
 
 
 # ─────────────────────────────────────────────────────────────────
-# PRE-FLIGHT SIMILARITY INDEX  ◄── NEW
+# PRE-FLIGHT SIMILARITY INDEX
 # ─────────────────────────────────────────────────────────────────
-#
-# Design goals
-# ─────────────
-# 1. Cheap: built once per process run from a JSON cache, not from
-#    raw post content on every check.
-# 2. Fast: TF-IDF on titles + 150-char summaries (~200 KB of text
-#    for 500 posts) takes <20 ms.
-# 3. Accurate enough: cosine similarity on TF-IDF vectors catches
-#    semantic near-duplicates that Jaccard on word sets misses.
-# 4. Safe: never raises — returns (False, "", 0.0) on any error so
-#    a broken index never blocks generation.
-#
-# Cache format  →  .preflight_index.json
-# {
-#   "built_at": "2026-06-10T12:00:00",
-#   "entries": [
-#     {"slug": "redis-caching-patterns",
-#      "title": "Redis caching: what breaks first",
-#      "summary": "first 150 chars of content …"},
-#     …
-#   ]
-# }
 
 _PREFLIGHT_CACHE_FILE = Path(".preflight_index.json")
-_PREFLIGHT_CACHE_TTL_SECONDS = 3600          # rebuild every hour
-_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD = 0.55  # tuned: Jaccard fires at 0.35
-_PREFLIGHT_MAX_RETRIES = 3                    # max distinct-topic prompts
+_PREFLIGHT_CACHE_TTL_SECONDS = 3600
+_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD = 0.55
+_PREFLIGHT_MAX_RETRIES = 3
 
 
 class PreFlightIndex:
     """
     Lightweight TF-IDF pre-flight similarity check.
-
-    Usage
-    -----
-    index = PreFlightIndex(docs_dir=Path("./docs"))
-    blocked, match_title, score = index.is_duplicate(candidate_topic)
-    if blocked:
-        # ask LLM for a new topic instead of generating content
     """
 
     def __init__(self, docs_dir: Path, cache_file: Path = _PREFLIGHT_CACHE_FILE):
         self.docs_dir = docs_dir
         self.cache_file = cache_file
-        self._entries: List[Dict] = []        # [{slug, title, summary}]
-        self._vectorizer = None               # fitted TfidfVectorizer
-        self._matrix = None                   # sparse matrix (n_docs × vocab)
+        self._entries: List[Dict] = []
+        self._vectorizer = None
+        self._matrix = None
         self._loaded = False
 
-    # ── public API ────────────────────────────────────────────────
-
     def load(self, force_rebuild: bool = False) -> None:
-        """
-        Load the index from cache or rebuild from docs/.
-        Call once at startup; subsequent calls are no-ops unless force_rebuild.
-        """
         if self._loaded and not force_rebuild:
             return
         try:
@@ -1337,17 +1305,9 @@ class PreFlightIndex:
         except Exception as exc:
             print(f"  ⚠️  PreFlightIndex load failed (non-fatal): {exc}")
             self._entries = []
-            self._loaded = True   # mark as loaded so we don't retry forever
+            self._loaded = True
 
     def is_duplicate(self, candidate: str) -> tuple:
-        """
-        Check whether `candidate` (a topic string or proposed title) is
-        too similar to any indexed post.
-
-        Returns
-        -------
-        (is_blocked: bool, best_match_title: str, score: float)
-        """
         if not self._loaded:
             self.load()
         try:
@@ -1358,26 +1318,19 @@ class PreFlightIndex:
             return False, "", 0.0
 
     def add_entry(self, slug: str, title: str, content: str) -> None:
-        """
-        Add a newly published post to the in-memory index and persist
-        the updated cache.  Call this after save_post() succeeds.
-        """
         summary = self._make_summary(content)
         self._entries.append(
             {"slug": slug, "title": title, "summary": summary})
         try:
-            self._fit_vectorizer()   # refit with new entry
+            self._fit_vectorizer()
             self._save_cache()
         except Exception as exc:
             print(f"  ⚠️  PreFlightIndex.add_entry failed (non-fatal): {exc}")
 
     def invalidate(self) -> None:
-        """Force a full rebuild on next load()."""
         self._loaded = False
         if self.cache_file.exists():
             self.cache_file.unlink(missing_ok=True)
-
-    # ── private helpers ───────────────────────────────────────────
 
     def _cache_is_fresh(self) -> bool:
         if not self.cache_file.exists():
@@ -1397,7 +1350,6 @@ class PreFlightIndex:
             f"  PreFlightIndex: loaded {len(self._entries)} entries from cache.")
 
     def _rebuild_from_docs(self) -> None:
-        """Scan docs/ and build entries from post.json files."""
         self._entries = []
         if not self.docs_dir.exists():
             return
@@ -1432,10 +1384,6 @@ class PreFlightIndex:
             json.dump(payload, f, ensure_ascii=False, indent=2)
 
     def _make_summary(self, content: str, max_chars: int = 300) -> str:
-        """
-        Strip markdown and return the first `max_chars` characters of plain
-        text.  This gives TF-IDF more signal than a bare title.
-        """
         text = re.sub(r"```[\s\S]*?```", " ", content)
         text = re.sub(r"`[^`]+`", " ", text)
         text = re.sub(r"#{1,6}\s+", " ", text)
@@ -1445,7 +1393,6 @@ class PreFlightIndex:
         return text[:max_chars]
 
     def _fit_vectorizer(self) -> None:
-        """Fit a TF-IDF vectorizer over title + summary for every entry."""
         if not self._entries:
             self._vectorizer = None
             self._matrix = None
@@ -1465,7 +1412,6 @@ class PreFlightIndex:
         self._matrix = self._vectorizer.fit_transform(corpus)
 
     def _cosine_check(self, candidate: str) -> tuple:
-        """Return (is_blocked, best_title, score) using cosine similarity."""
         if self._vectorizer is None or self._matrix is None:
             return False, "", 0.0
 
@@ -1514,9 +1460,6 @@ class BlogSystem:
         self.monetization = MonetizationManager(config)
         self.hashtag_manager = HashtagManager(config)
 
-        # ── PRE-FLIGHT INDEX  ◄── NEW
-        # Initialised here so it is shared across all generate_blog_post()
-        # calls within a single process run.  load() is deferred to first use.
         self.preflight_index = PreFlightIndex(docs_dir=self.output_dir)
 
     def _log_key_status(self):
@@ -1608,6 +1551,261 @@ class BlogSystem:
                 f"\nRun with dry_run=False to actually delete {len(to_remove)} posts.")
         else:
             print(f"\nPurged {len(to_remove)} low-quality posts.")
+
+    # ─────────────────────────────────────────────────────────────
+    # STALE CONTENT REFRESH
+    # ─────────────────────────────────────────────────────────────
+
+    async def refresh_stale_posts(self, limit: int = 2) -> dict:
+        """
+        Identify top-priority stale posts and refresh them using the LLM.
+
+        Preserves slug, SEO keywords, and E-E-A-T signals while modernizing
+        outdated technical content.
+
+        Args:
+            limit: Maximum number of posts to refresh per run (default 2)
+
+        Returns:
+            {
+                "refreshed": ["slug1", "slug2"],
+                "skipped":   ["reason1"],
+                "errors":    ["error1"]
+            }
+        """
+        from adsense_fixes.content_freshness import mark_stale_posts
+
+        results = {
+            "refreshed": [],
+            "skipped": [],
+            "errors": [],
+        }
+
+        stale_posts = mark_stale_posts(
+            self.output_dir, days_threshold=STALE_THRESHOLD_DAYS
+        )
+
+        if not stale_posts:
+            print("✅  No stale posts detected.")
+            return results
+
+        # Sort: high priority first, then oldest first
+        stale_posts.sort(
+            key=lambda x: (
+                0 if x['priority'] == 'high' else 1,
+                -x['days_old'],
+            )
+        )
+
+        print(
+            f"\nFound {len(stale_posts)} stale post(s). "
+            f"Refreshing top {limit}..."
+        )
+
+        for i, stale_post in enumerate(stale_posts[:limit]):
+            slug = stale_post['slug']
+            title = stale_post['title']
+            days_old = stale_post['days_old']
+            is_fast_decay = stale_post['fast_decay']
+
+            print(
+                f"\n[{i+1}/{min(limit, len(stale_posts))}] "
+                f"Refreshing: {slug} "
+                f"(title: {title}, {days_old} days old, "
+                f"fast_decay={'yes' if is_fast_decay else 'no'})"
+            )
+
+            post_dir = self.output_dir / slug
+            post_json = post_dir / "post.json"
+
+            if not post_json.exists():
+                msg = f"post.json not found for {slug}"
+                print(f"  ⚠️  Skip: {msg}")
+                results["skipped"].append(msg)
+                continue
+
+            try:
+                with open(post_json, "r", encoding="utf-8") as f:
+                    post_data = json.load(f)
+            except Exception as e:
+                msg = f"{slug}: failed to load post.json ({e})"
+                print(f"  ❌  Error: {msg}")
+                results["errors"].append(msg)
+                continue
+
+            original_title = post_data.get("title", "")
+            original_content = post_data.get("content", "")
+            seo_keywords = post_data.get("seo_keywords", [])
+
+            if not original_content or len(original_content.split()) < 1000:
+                msg = f"{slug}: content too short or empty"
+                print(f"  ⚠️  Skip: {msg}")
+                results["skipped"].append(msg)
+                continue
+
+            try:
+                refreshed_content = await self._refresh_post_content(
+                    original_title=original_title,
+                    original_content=original_content,
+                    seo_keywords=seo_keywords,
+                    days_stale=days_old,
+                    is_fast_decay=is_fast_decay,
+                )
+            except Exception as e:
+                msg = f"{slug}: LLM refresh failed ({e})"
+                print(f"  ❌  Error: {msg}")
+                results["errors"].append(msg)
+                continue
+
+            refreshed_count = _count_words(refreshed_content)
+            original_count = _count_words(original_content)
+
+            if refreshed_count < MIN_ACCEPTABLE_WORDS:
+                msg = (
+                    f"{slug}: refreshed content too short "
+                    f"({refreshed_count} < {MIN_ACCEPTABLE_WORDS} words)"
+                )
+                print(f"  ⚠️  Skip: {msg}")
+                results["skipped"].append(msg)
+                continue
+
+            print(
+                f"  ✓ LLM refresh complete: "
+                f"{original_count} → {refreshed_count} words"
+            )
+
+            post_data["content"] = refreshed_content
+            post_data["updated_at"] = datetime.now().isoformat()
+
+            try:
+                _inject_freshness_footer_inline(post_data)
+                print(f"  ✓ Freshness footer updated")
+            except Exception as e:
+                print(
+                    f"  ⚠️  Freshness footer update failed (non-fatal): {e}")
+
+            try:
+                with open(post_json, "w", encoding="utf-8") as f:
+                    json.dump(post_data, f, indent=2, ensure_ascii=False)
+                print(f"  ✓ post.json saved")
+
+                with open(post_dir / "index.md", "w", encoding="utf-8") as f:
+                    f.write(f"# {original_title}\n\n{refreshed_content}")
+                print(f"  ✓ index.md saved")
+
+                results["refreshed"].append(slug)
+                print(f"  ✅  REFRESHED: {slug}")
+
+            except Exception as e:
+                msg = f"{slug}: failed to write files ({e})"
+                print(f"  ❌  Error: {msg}")
+                results["errors"].append(msg)
+
+        return results
+
+    async def _refresh_post_content(
+        self,
+        original_title: str,
+        original_content: str,
+        seo_keywords: list,
+        days_stale: int,
+        is_fast_decay: bool,
+    ) -> str:
+        """
+        Use the LLM to refresh stale content while preserving SEO structure.
+        """
+        excerpt = " ".join(original_content.split()[:400])
+        keywords_str = ", ".join(seo_keywords[:8])
+
+        decay_context = (
+            "This is a FAST-DECAY technical topic (AI, LLM, cloud, Kubernetes, DevOps). "
+            "Tool versions, API endpoints, and best practices may have shifted significantly."
+        ) if is_fast_decay else (
+            "This is a standard-decay topic. Core concepts are stable, but tool versions and "
+            "examples should be modernized."
+        )
+
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You are a technical content expert. Your job is to refresh an existing "
+                    "blog post while preserving its SEO value and core message.\n\n"
+                    "CONSTRAINTS (ABSOLUTE):\n"
+                    "1. Keep the title EXACTLY as provided — do not change it\n"
+                    "2. Keep the slug EXACTLY as provided — do not change it\n"
+                    "3. Preserve all SEO keywords — they are embedded in the original content\n"
+                    "4. Preserve the original article structure (headings, sections)\n"
+                    "5. Preserve author voice and first-person anecdotes\n"
+                    "6. Preserve all code examples, but update tool/library versions\n"
+                    "7. Do not remove sections — only update facts, versions, and recommendations\n"
+                    "8. Do not add new sections (no FAQ, no new deep-dives)\n"
+                    "9. Preserve the E-E-A-T footer ('### About this article') — do NOT remove it\n"
+                    "10. Current year is 2026 — update all year references and statistics\n\n"
+                    "WHAT TO UPDATE:\n"
+                    "- Tool versions: 'Python 3.9' → 'Python 3.13', 'Node 18' → 'Node 22 LTS'\n"
+                    "- API endpoints: check if deprecated/changed\n"
+                    "- Deprecation warnings: flag if library/tool mentioned is EOL\n"
+                    "- Performance figures: note if 2024/2023 benchmarks now seem outdated\n"
+                    "- Cost comparisons: update SaaS pricing if known to have changed\n"
+                    "- Best practices: modernize patterns (e.g., callbacks → async/await)\n"
+                    "- Security guidance: update if new vulnerabilities/mitigations exist\n"
+                    "- Framework features: if the library added major features, mention them\n"
+                    "- Alternative tools: note if landscape changed (new competitors, acquisitions)\n\n"
+                    "WHAT NOT TO CHANGE:\n"
+                    "- The core point/angle of the article\n"
+                    "- The title (word-for-word)\n"
+                    "- The slug\n"
+                    "- The author persona or voice\n"
+                    "- The section headings (only update content within sections)\n"
+                    "- Any copyright/attribution statements\n"
+                    "- The 'About this article' footer\n\n"
+                    "PROCESS:\n"
+                    "1. Read the original content carefully\n"
+                    "2. Identify outdated version numbers, API endpoints, tool recommendations\n"
+                    "3. Update in-place: replace old references with 2026 equivalents\n"
+                    "4. If unsure about a fact, add: 'As of 2026, [claim]. (Verify against latest.)'\n"
+                    "5. Keep all prose, examples, and structure identical except factual updates\n"
+                    "6. Return the COMPLETE refreshed article (all sections, all content)\n"
+                    "7. Preserve all markdown formatting, code blocks, tables, and emphasis\n"
+                ),
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"CONTEXT:\n"
+                    f"Post age: {days_stale} days old\n"
+                    f"Decay type: {decay_context}\n"
+                    f"Title (DO NOT CHANGE): {original_title}\n"
+                    f"SEO Keywords (preserve in content): {keywords_str}\n\n"
+                    f"ORIGINAL CONTENT (excerpt, first 400 words for review):\n"
+                    f"─────────────────────────────────────────────────────────────\n"
+                    f"{excerpt}\n"
+                    f"─────────────────────────────────────────────────────────────\n\n"
+                    f"FULL ORIGINAL CONTENT:\n"
+                    f"{original_content}\n\n"
+                    f"TASK:\n"
+                    f"Refresh this post by updating:\n"
+                    f"1. Tool/library/framework versions to their 2026 equivalents\n"
+                    f"2. Deprecated APIs or endpoints\n"
+                    f"3. Security/best-practice guidance (if applicable)\n"
+                    f"4. Cost figures or pricing comparisons\n"
+                    f"5. Benchmark numbers (latency, throughput, etc.)\n"
+                    f"6. Outdated statistics or market data\n\n"
+                    f"Do NOT:\n"
+                    f"- Change the title\n"
+                    f"- Remove sections\n"
+                    f"- Add new sections or FAQ\n"
+                    f"- Alter the voice or author anecdotes\n"
+                    f"- Remove or modify the 'About this article' footer\n"
+                    f"- Change section headings\n"
+                    f"- Change code examples unless the syntax is deprecated\n\n"
+                    f"Return the COMPLETE refreshed article (every section, every paragraph)."
+                ),
+            },
+        ]
+
+        return await self._call_api_with_fallback(messages, max_tokens=6500)
 
     # ─────────────────────────────────────────────────────────────
     # API FALLBACK CHAIN
@@ -1952,12 +2150,8 @@ class BlogSystem:
             print("No API keys configured. Using local template content.")
             return self._generate_fallback_post(topic)
 
-        # ── PRE-FLIGHT CHECK  ◄── NEW
-        # Ensure the index is loaded (no-op after first call).
         self.preflight_index.load()
 
-        # Resolve the working topic: start with the caller's topic, then
-        # ask the LLM for a distinct alternative if it's too similar.
         current_topic = topic
         current_keywords = keywords
         preflight_attempts = 0
@@ -1999,7 +2193,7 @@ class BlogSystem:
                     similar_title=match_title,
                     similarity_score=pf_score,
                 )
-                current_keywords = None   # reset keywords for the new topic
+                current_keywords = None
                 print(f"  LLM suggested: '{current_topic}'")
             except Exception as exc:
                 print(
@@ -2007,7 +2201,6 @@ class BlogSystem:
                 break
 
         print(SEP)
-        # ── END PRE-FLIGHT ────────────────────────────────────────
 
         attempted_topics: List[str] = []
 
@@ -2286,7 +2479,7 @@ class BlogSystem:
         )
 
     # ─────────────────────────────────────────────────────────────
-    # LLM-BASED DISTINCT TOPIC SUGGESTER  ◄── NEW
+    # LLM-BASED DISTINCT TOPIC SUGGESTER
     # ─────────────────────────────────────────────────────────────
 
     async def _ask_llm_for_distinct_topic(
@@ -2295,10 +2488,6 @@ class BlogSystem:
         similar_title: str,
         similarity_score: float,
     ) -> str:
-        """
-        Ask the LLM to propose a new, distinct topic that avoids the
-        blocked topic's angle.  Returns a plain-text topic string.
-        """
         messages = [
             {
                 "role": "system",
@@ -2878,9 +3067,6 @@ Return ONLY the JSON object.""",
         with open(post_dir / "index.md", "w", encoding="utf-8") as f:
             f.write(f"# {post.title}\n\n{post.content}")
 
-        # ── UPDATE PRE-FLIGHT INDEX after successful save  ◄── NEW
-        # This keeps the in-memory TF-IDF model and the on-disk cache in sync
-        # without requiring a full rebuild on the next run.
         try:
             self.preflight_index.add_entry(
                 slug=post.slug,
@@ -2995,7 +3181,29 @@ def _scrub_stale_years(text: str) -> str:
 
 
 # ─────────────────────────────────────────────────────────────────
-# TOPIC PICKER  (updated to use PreFlightIndex)  ◄── MODIFIED
+# Freshness footer helper (works on dict, used by refresh-stale)
+# ─────────────────────────────────────────────────────────────────
+
+def _inject_freshness_footer_inline(post_data: dict) -> None:
+    """
+    Update the 'Last reviewed' date in the E-E-A-T footer stored in
+    post_data['content'].  Works on a plain dict (not a BlogPost object).
+    """
+    if not post_data.get('content', ''):
+        return
+
+    today_str = datetime.now().strftime('%B %d, %Y')
+    reviewed_pattern = r'(\*\*Last reviewed:\*\*\s*)([^\n]+)'
+
+    post_data['content'] = re.sub(
+        reviewed_pattern,
+        lambda m: f"{m.group(1)}{today_str}",
+        post_data['content'],
+    )
+
+
+# ─────────────────────────────────────────────────────────────────
+# TOPIC PICKER
 # ─────────────────────────────────────────────────────────────────
 
 def pick_next_topic(
@@ -3003,15 +3211,6 @@ def pick_next_topic(
     history_file: str = ".used_topics.json",
     preflight_index: "PreFlightIndex | None" = None,
 ) -> str:
-    """
-    Pick the next topic from config.yaml, skipping topics that are:
-    1. Already in the used-topics history.
-    2. Jaccard-duplicate of an existing post title (original logic).
-    3. TF-IDF near-duplicate of existing posts (pre-flight check — NEW).
-
-    Pass a PreFlightIndex instance to share the loaded index across calls.
-    If None, a fresh index is built inline (slightly slower but safe).
-    """
     print(f"Picking topic from {config_path}")
     if not os.path.exists(config_path):
         raise FileNotFoundError(
@@ -3041,7 +3240,6 @@ def pick_next_topic(
     docs_dir = Path("./docs")
     existing_titles = _load_existing_titles(docs_dir)
 
-    # ── original Jaccard dedup (unchanged) ──────────────────────
     if existing_titles:
         safe_available, skipped = [], []
         for candidate in available:
@@ -3065,9 +3263,7 @@ def pick_next_topic(
             available = topics
             used = []
 
-    # ── NEW: TF-IDF pre-flight dedup ─────────────────────────────
     if available:
-        # Build or reuse the pre-flight index
         if preflight_index is None:
             preflight_index = PreFlightIndex(docs_dir=docs_dir)
         preflight_index.load()
@@ -3094,8 +3290,6 @@ def pick_next_topic(
                 "All remaining topics are TF-IDF near-duplicates. "
                 "Falling back to Jaccard-safe list."
             )
-            # Don't reset available — use the Jaccard-safe set to avoid
-            # completely ignoring the TF-IDF result for a totally empty run.
 
     topic = random.choice(available)
     used.append(topic)
@@ -3333,20 +3527,7 @@ if __name__ == "__main__":
 
             blog_system = BlogSystem(config)
 
-            # ── PATCH 2: Velocity check ───────────────────────────────────────
-            # AdSense guide §7: "Publishing 100+ posts per day is a spam signal."
-            # vc = VelocityController()
-            # if not vc.can_publish():
-            #     print(
-            #         f"\n⏸  VELOCITY LIMIT REACHED — {vc.today_count()}/{vc.effective_limit()} "
-            #         f"posts published today. Exiting cleanly; retry tomorrow.\n"
-            #     )
-            #     sys.exit(0)
-            # ─────────────────────────────────────────────────────────────────
-
             try:
-                # Pass the shared pre-flight index to avoid rebuilding it twice
-                # (BlogSystem.__init__ already created one; reuse it here).
                 topic = pick_next_topic(
                     preflight_index=blog_system.preflight_index
                 )
@@ -3371,9 +3552,6 @@ if __name__ == "__main__":
                 traceback.print_exc()
                 sys.exit(1)
 
-            # ── PATCH 3: SimilarityGuard check ───────────────────────────────
-            # AdSense guide §7: "Run each generated post through a plagiarism
-            # checker to confirm < 10% similarity with existing web content."
             try:
                 guard = SimilarityGuard(docs_dir=blog_system.output_dir)
                 sim_result = guard.check(blog_post)
@@ -3384,7 +3562,6 @@ if __name__ == "__main__":
                     print(f"  ⚠️  Similarity: {warning}")
             except Exception as sim_err:
                 print(f"  ⚠️  SimilarityGuard failed (non-fatal): {sim_err}")
-            # ─────────────────────────────────────────────────────────────────
 
             quality_warnings, hard_failures = _validate_content_quality(
                 blog_post.content, blog_post.title
@@ -3408,17 +3585,10 @@ if __name__ == "__main__":
             else:
                 print("✅  Content quality check passed (0 warnings).")
 
-            # ── PATCH 4: Full enrichment pipeline ────────────────────────────
-
-            # 1. Personal intro (existing)
             inject_personal_intro(blog_post, topic)
-
-            # 2. E-E-A-T footer + freshness date
             inject_eeat_signals(blog_post, topic)
-            # NEW: update "Last reviewed" date
             inject_freshness_footer(blog_post)
 
-            # 3. Image alt text (NEW — required for WCAG + AdSense content quality)
             try:
                 injected_imgs = inject_alt_text(blog_post)
                 if injected_imgs:
@@ -3426,7 +3596,6 @@ if __name__ == "__main__":
             except Exception as e:
                 print(f"  ⚠️  Alt text injection failed (non-fatal): {e}")
 
-            # 4. Internal links (existing)
             try:
                 posts_index = build_posts_index(blog_system.output_dir)
                 base_path = config.get("base_path", "")
@@ -3435,7 +3604,6 @@ if __name__ == "__main__":
             except Exception as e:
                 print(f"  ⚠️  Internal link injection failed (non-fatal): {e}")
 
-            # 5. Link validation — strip injected links to non-existent slugs
             try:
                 removed_links = validate_post_links(
                     blog_post, blog_system.output_dir)
@@ -3445,7 +3613,6 @@ if __name__ == "__main__":
             except Exception as e:
                 print(f"  ⚠️  Link validator failed (non-fatal): {e}")
 
-            # 6. Canonical validation (NEW)
             try:
                 canon_issues = validate_canonical(
                     blog_post, config.get('base_url', ''))
@@ -3454,16 +3621,8 @@ if __name__ == "__main__":
             except Exception as e:
                 print(f"  ⚠️  Canonical validation failed (non-fatal): {e}")
 
-            # ─────────────────────────────────────────────────────────────────
-
             blog_system.save_post(blog_post)
 
-            # ── PATCH 5: Post-save AdSense actions ───────────────────────────
-
-            # Record publish for velocity tracking
-            # vc.record_publish()
-
-            # Generate OG image card (NEW — improves social sharing + CTR)
             try:
                 generate_og_card(
                     blog_post,
@@ -3473,13 +3632,10 @@ if __name__ == "__main__":
             except Exception as e:
                 print(f"  ⚠️  OG card generation failed (non-fatal): {e}")
 
-            # Update similarity index for next run
             try:
                 guard.update_index(blog_post)
             except Exception:
-                pass   # guard may not be defined if similarity check was skipped
-
-            # ─────────────────────────────────────────────────────────────────
+                pass
 
             generator = StaticSiteGenerator(blog_system)
             generator.generate_site()
@@ -3687,16 +3843,67 @@ if __name__ == "__main__":
             print(
                 f"\nFixed {fixed} posts. Run 'python blog_system.py build' to regenerate HTML.")
 
-        # ── PATCH 6: New CLI commands ─────────────────────────────────────────
+        elif mode == "refresh-stale":
+            limit = 2
+            args = sys.argv[2:]
+            for i, arg in enumerate(args):
+                if arg == "--limit" and i + 1 < len(args):
+                    try:
+                        limit = int(args[i + 1])
+                    except (ValueError, IndexError):
+                        limit = 2
+
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found.")
+                sys.exit(1)
+
+            with open("config.yaml", "r") as f:
+                config = yaml.safe_load(f)
+
+            blog_system = BlogSystem(config)
+            refresh_results = asyncio.run(
+                blog_system.refresh_stale_posts(limit=limit)
+            )
+
+            print("\n" + "=" * 70)
+            print("REFRESH RESULTS")
+            print("=" * 70)
+            print(f"Refreshed : {len(refresh_results['refreshed'])} posts")
+            if refresh_results['refreshed']:
+                for slug in refresh_results['refreshed']:
+                    print(f"  ✓ {slug}")
+
+            if refresh_results['skipped']:
+                print(f"\nSkipped   : {len(refresh_results['skipped'])} posts")
+                for reason in refresh_results['skipped']:
+                    print(f"  - {reason}")
+
+            if refresh_results['errors']:
+                print(f"\nErrors    : {len(refresh_results['errors'])} posts")
+                for error in refresh_results['errors']:
+                    print(f"  ✗ {error}")
+
+            print("=" * 70 + "\n")
+
+            # Output flags for Watchdog workflow / shell scripts
+            if refresh_results['refreshed']:
+                print(f"has_refreshed=true")
+                print(
+                    f"refreshed_list={','.join(refresh_results['refreshed'])}")
+            else:
+                print(f"has_refreshed=false")
+
+            # Rebuild site if anything changed
+            if refresh_results['refreshed']:
+                StaticSiteGenerator(blog_system).generate_site()
+                print("Site rebuilt after stale-post refresh.")
 
         elif mode == "audit-links":
-            # Audit all internal links for broken targets
             from adsense_fixes.link_validator import audit_all_internal_links
             report = audit_all_internal_links(Path('./docs'))
             print(report)
 
         elif mode == "audit-slugs":
-            # Find near-duplicate slugs that could cause canonical issues
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found.")
                 sys.exit(1)
@@ -3704,7 +3911,6 @@ if __name__ == "__main__":
             print(report)
 
         elif mode == "audit-freshness":
-            # Report on stale posts and publishing cadence
             from adsense_fixes.content_freshness import stale_report
             print(stale_report(Path('./docs')))
             print()
@@ -3722,11 +3928,7 @@ if __name__ == "__main__":
             else:
                 print("Usage: python blog_system.py velocity [status|reset]")
 
-        # ── NEW: preflight CLI commands ───────────────────────────────────────
-
         elif mode == "preflight-rebuild":
-            # Force a full rebuild of the pre-flight index cache.
-            # Run this after manually deleting posts or making bulk edits.
             docs_dir = Path("./docs")
             idx = PreFlightIndex(docs_dir=docs_dir)
             idx.load(force_rebuild=True)
@@ -3735,8 +3937,6 @@ if __name__ == "__main__":
             print(f"Cache written to: {idx.cache_file}")
 
         elif mode == "preflight-check":
-            # Check a single topic from the CLI.
-            # Usage: python blog_system.py preflight-check "my proposed topic"
             if len(sys.argv) < 3:
                 print("Usage: python blog_system.py preflight-check <topic>")
                 sys.exit(1)
@@ -3753,12 +3953,10 @@ if __name__ == "__main__":
             if match_title:
                 print(f"Nearest : {match_title}")
 
-        # ─────────────────────────────────────────────────────────────────────
-
         else:
             print(
                 "Usage: python blog_system.py [init|auto|build|cleanup|audit|purge|"
-                "debug|social|test-twitter|dedup|fix-descriptions|"
+                "debug|social|test-twitter|dedup|fix-descriptions|refresh-stale|"
                 "audit-links|audit-slugs|audit-freshness|velocity|"
                 "preflight-rebuild|preflight-check]"
             )
@@ -3766,5 +3964,5 @@ if __name__ == "__main__":
     else:
         print("AI Blog System — Usage: python blog_system.py [command]")
         print("Commands: init | auto | build | cleanup | audit | purge | debug | social | "
-              "test-twitter | dedup | fix-descriptions | audit-links | audit-slugs | "
-              "audit-freshness | velocity | preflight-rebuild | preflight-check")
+              "test-twitter | dedup | fix-descriptions | refresh-stale | audit-links | "
+              "audit-slugs | audit-freshness | velocity | preflight-rebuild | preflight-check")

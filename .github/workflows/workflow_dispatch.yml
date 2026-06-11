@@ -178,6 +178,26 @@ jobs:
             sleep 10
           fi
 
+      - name: Refresh stale posts
+        id: refresh_stale
+        run: |
+          echo "Running stale content refresh..."
+          OUTPUT=$(python blog_system.py refresh-stale --limit 2 2>&1)
+          echo "$OUTPUT"
+
+          if echo "$OUTPUT" | grep -q "has_refreshed=true"; then
+            echo "has_refreshed=true"  >> $GITHUB_OUTPUT
+            
+            # Extract the refreshed list from output
+            REFRESHED=$(echo "$OUTPUT" | grep "refreshed_list=" | head -1 | cut -d= -f2)
+            echo "refreshed_list=$REFRESHED" >> $GITHUB_OUTPUT
+            
+            echo "✅ Refresh: posts updated"
+          else
+            echo "has_refreshed=false" >> $GITHUB_OUTPUT
+            echo "ℹ️  Refresh: no posts updated"
+          fi
+
       # ── PIPELINE PROCESSING ──────────────────────────────────────────────────
 
       - name: Install deduplication dependencies
