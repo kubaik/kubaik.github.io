@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T23:21:30.049409",
+  "built_at": "2026-06-11T23:31:50.313451",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -705,6 +705,11 @@
       "slug": "avoid-these-4-platforms-in-2026-african-devs",
       "title": "Avoid these 4 platforms in 2026 (African devs)",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) Early in 2026, I helped a Tanzanian friend negotiate rates with a US client introduced v"
+    },
+    {
+      "slug": "debug-ai-agent-failures-4-mistakes-most-teams-miss",
+      "title": "Debug AI agent failures: 4 mistakes most teams miss",
+      "summary": "I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now If you’ve run a production AI agent in 2026, you’ve already hit the “"
     }
   ]
 }

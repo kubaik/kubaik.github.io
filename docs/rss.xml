@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 23:26:52 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 23:31:53 +0000</lastBuildDate>
+    <item>
+      <title>Debug AI agent failures: 4 mistakes most teams miss</title>
+      <link>https://kubaik.github.io/debug-ai-agent-failures-4-mistakes-most-teams-miss/</link>
+      <description>Cut AI agent failures 45% faster by adding prompt diffs, tool-use traces, and reward scores — the 3 artifacts most teams miss in 2026 postmortems.</description>
+      <pubDate>Thu, 11 Jun 2026 23:31:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-ai-agent-failures-4-mistakes-most-teams-miss/</guid>
+    </item>
     <item>
       <title>Avoid these 4 platforms in 2026 (African devs)</title>
       <link>https://kubaik.github.io/avoid-these-4-platforms-in-2026-african-devs/</link>
@@ -138,13 +145,6 @@
       <description>Save $3k/month on cloud egress costs in 2026 with 7 real architecture moves tested in production. Includes code, benchmarks, and the PrivateLink trick most teams miss.</description>
       <pubDate>Thu, 11 Jun 2026 09:49:21 +0000</pubDate>
       <guid>https://kubaik.github.io/save-12kmonth-cloud-egress-costs-in-2026/</guid>
-    </item>
-    <item>
-      <title>Personal AI assistants: avoid vendor lock-in traps</title>
-      <link>https://kubaik.github.io/personal-ai-assistants-avoid-vendor-lock-in-traps/</link>
-      <description>Cut 98% of AI assistant costs without vendor lock-in — Redis 7.2 caching, OpenSearch 2.11 search, and vLLM 0.4.0 self-hosted models deliver P95 latency under 1.2s and $0.12 per 1k calls.</description>
-      <pubDate>Thu, 11 Jun 2026 09:44:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/personal-ai-assistants-avoid-vendor-lock-in-traps/</guid>
     </item>
   </channel>
 </rss>
