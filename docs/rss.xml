@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 09:44:07 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 09:49:27 +0000</lastBuildDate>
+    <item>
+      <title>Save $12k/month: cloud egress costs in 2026</title>
+      <link>https://kubaik.github.io/save-12kmonth-cloud-egress-costs-in-2026/</link>
+      <description>Save $3k/month on cloud egress costs in 2026 with 7 real architecture moves tested in production. Includes code, benchmarks, and the PrivateLink trick most teams miss.</description>
+      <pubDate>Thu, 11 Jun 2026 09:49:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/save-12kmonth-cloud-egress-costs-in-2026/</guid>
+    </item>
     <item>
       <title>Personal AI assistants: avoid vendor lock-in traps</title>
       <link>https://kubaik.github.io/personal-ai-assistants-avoid-vendor-lock-in-traps/</link>
@@ -138,13 +145,6 @@
       <description>Cut $8k/year by replacing Pinecone with pgvector — real latency, cost, and recall numbers from 2 production systems in 2026. See how a 70% bill reduction and sub-50ms p99 latency became possible.</description>
       <pubDate>Wed, 10 Jun 2026 18:39:35 +0000</pubDate>
       <guid>https://kubaik.github.io/pgvector-replaced-pinecone-for-8kyear/</guid>
-    </item>
-    <item>
-      <title>Slice monoliths slowly, not all at once</title>
-      <link>https://kubaik.github.io/slice-monoliths-slowly-not-all-at-once/</link>
-      <description>Cut API latency 75% by replacing strangler fig with sidecars — real benchmarks, Django-to-Go migration cost data, and the Unix socket trick most teams miss.</description>
-      <pubDate>Wed, 10 Jun 2026 17:57:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/slice-monoliths-slowly-not-all-at-once/</guid>
     </item>
   </channel>
 </rss>
