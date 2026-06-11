@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 05:08:15 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 05:25:13 +0000</lastBuildDate>
+    <item>
+      <title>7 code review traps when AI writes half your code</title>
+      <link>https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/</link>
+      <description>Cut code review time 70% when AI writes half your code — the exact checklist and tools teams used in 2026 to catch AI-specific bugs before they hit production.</description>
+      <pubDate>Thu, 11 Jun 2026 05:25:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/</guid>
+    </item>
     <item>
       <title>Replaced Celery in 2026: what actually worked</title>
       <link>https://kubaik.github.io/replaced-celery-in-2026-what-actually-worked/</link>
@@ -138,13 +145,6 @@
       <description>Cut loan submission failures 32% with offline-first SQLite + WorkManager — Android 13, SQLCipher 4.5.6, and client-side image resizing in 1.2s on Tecno Spark 8C.</description>
       <pubDate>Wed, 10 Jun 2026 14:46:50 +0000</pubDate>
       <guid>https://kubaik.github.io/offline-first-apps-80-uptime-in-spotty-networks/</guid>
-    </item>
-    <item>
-      <title>Migrate Daraja 2.0 to production in 2 hours</title>
-      <link>https://kubaik.github.io/migrate-daraja-20-to-production-in-2-hours/</link>
-      <description>Cut Daraja callback failures 97% in 2 hours: TLS 1.3, idempotency keys, and the 10-line retry wrapper most teams miss.</description>
-      <pubDate>Wed, 10 Jun 2026 13:21:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/migrate-daraja-20-to-production-in-2-hours/</guid>
     </item>
   </channel>
 </rss>

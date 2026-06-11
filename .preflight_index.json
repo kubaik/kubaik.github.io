@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T05:08:12.751477",
+  "built_at": "2026-06-11T05:25:10.155910",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -580,6 +580,11 @@
       "slug": "replaced-celery-in-2026-what-actually-worked",
       "title": "Replaced Celery in 2026: what actually worked",
       "summary": "Most background job guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) Late 2026, I inherited a Python microservices stack for a Mexico City–based e-commerce "
+    },
+    {
+      "slug": "7-code-review-traps-when-ai-writes-half-your-code",
+      "title": "7 code review traps when AI writes half your code",
+      "summary": "I ran into this code review problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In mid-2026 our team at a Lagos-based fintech "
     }
   ]
 }
