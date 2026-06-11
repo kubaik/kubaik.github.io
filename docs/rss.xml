@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 09:38:58 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 09:44:07 +0000</lastBuildDate>
+    <item>
+      <title>Personal AI assistants: avoid vendor lock-in traps</title>
+      <link>https://kubaik.github.io/personal-ai-assistants-avoid-vendor-lock-in-traps/</link>
+      <description>Cut 98% of AI assistant costs without vendor lock-in — Redis 7.2 caching, OpenSearch 2.11 search, and vLLM 0.4.0 self-hosted models deliver P95 latency under 1.2s and $0.12 per 1k calls.</description>
+      <pubDate>Thu, 11 Jun 2026 09:44:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/personal-ai-assistants-avoid-vendor-lock-in-traps/</guid>
+    </item>
     <item>
       <title>AI UI tools: what they’ll ship, what they’ll break</title>
       <link>https://kubaik.github.io/ai-ui-tools-what-theyll-ship-what-theyll-break/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 75% by replacing strangler fig with sidecars — real benchmarks, Django-to-Go migration cost data, and the Unix socket trick most teams miss.</description>
       <pubDate>Wed, 10 Jun 2026 17:57:15 +0000</pubDate>
       <guid>https://kubaik.github.io/slice-monoliths-slowly-not-all-at-once/</guid>
-    </item>
-    <item>
-      <title>AI observability: why logs and traces lie</title>
-      <link>https://kubaik.github.io/ai-observability-why-logs-and-traces-lie/</link>
-      <description>Cut AI hallucinations 80% with real observability metrics — embedding drift, attention entropy, and retrieval precision you can’t get from Prometheus alone</description>
-      <pubDate>Wed, 10 Jun 2026 17:52:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-observability-why-logs-and-traces-lie/</guid>
     </item>
   </channel>
 </rss>
