@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T09:20:53.702934",
+  "built_at": "2026-06-11T09:24:22.017163",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -595,6 +595,11 @@
       "slug": "ai-agents-eat-your-budget-3-ways",
       "title": "AI agents eat your budget 3 ways",
       "summary": "The official documentation for hidden costs is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most AI agent tutorials end at \"here"
+    },
+    {
+      "slug": "vibe-coding-9-reasons-it-dies-in-production",
+      "title": "Vibe coding: 9 reasons it dies in production",
+      "summary": "I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I built a side project in 2026 that went from "
     }
   ]
 }

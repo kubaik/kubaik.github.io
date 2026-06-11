@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 09:20:56 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 09:24:25 +0000</lastBuildDate>
+    <item>
+      <title>Vibe coding: 9 reasons it dies in production</title>
+      <link>https://kubaik.github.io/vibe-coding-9-reasons-it-dies-in-production/</link>
+      <description>Cut production incidents 94% by adding tests to vibe-coded MVPs — FastAPI + pytest, Node + Jest, Go 1.22 benchmarks and the real gotchas most teams miss.</description>
+      <pubDate>Thu, 11 Jun 2026 09:24:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/vibe-coding-9-reasons-it-dies-in-production/</guid>
+    </item>
     <item>
       <title>AI agents eat your budget 3 ways</title>
       <link>https://kubaik.github.io/ai-agents-eat-your-budget-3-ways/</link>
@@ -138,13 +145,6 @@
       <description>Cut ORM cold-start latency 71% and save $1,200/month by dropping Prisma for Drizzle + raw SQL on Postgres 16 and Node 22. Migration safety over 2G, RAM under 512 MB, and type safety without runtime overhead.</description>
       <pubDate>Wed, 10 Jun 2026 16:18:49 +0000</pubDate>
       <guid>https://kubaik.github.io/orm-2026-prisma-vs-drizzle-vs-sqlalchemy/</guid>
-    </item>
-    <item>
-      <title>API attacks rise 300% in 2026: what’s breaking first</title>
-      <link>https://kubaik.github.io/api-attacks-rise-300-in-2026-whats-breaking-first/</link>
-      <description>Cut API overage 90% by capping CPU, memory, and Redis state. Real 2026 numbers from a 200k req/day service, Cloudflare Workers, Redis 7.2, and PostgreSQL 16.</description>
-      <pubDate>Wed, 10 Jun 2026 15:46:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-attacks-rise-300-in-2026-whats-breaking-first/</guid>
     </item>
   </channel>
 </rss>

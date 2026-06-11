@@ -85,5 +85,6 @@
   "The background job queue landscape in 2026: what replaced Celery in my stack",
   "Code review in the AI era: what the process looks like when half the code is generated",
   "Freelance developer rates in 2026: what the AI productivity tools did to pricing",
-  "The hidden costs of running AI agents in production: tokens, retries, and timeouts"
+  "The hidden costs of running AI agents in production: tokens, retries, and timeouts",
+  "Why vibe coding works for MVPs and fails for anything you need to maintain"
 ]
