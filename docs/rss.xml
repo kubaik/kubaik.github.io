@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jun 2026 23:58:34 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 00:12:44 +0000</lastBuildDate>
+    <item>
+      <title>Onboard devs to AI code: guardrails vs chaos</title>
+      <link>https://kubaik.github.io/onboard-devs-to-ai-code-guardrails-vs-chaos/</link>
+      <description>Cut PR merge time 70% with chaos-first AI tooling; or keep risk low with guardrails-first validation. Which onboarding path saves you $3.8k/month in 2026? Get the benchmarks, code samples, and decision matrix.</description>
+      <pubDate>Thu, 11 Jun 2026 00:12:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/onboard-devs-to-ai-code-guardrails-vs-chaos/</guid>
+    </item>
     <item>
       <title>2026 tech salaries: where cuts stopped, where raises</title>
       <link>https://kubaik.github.io/2026-tech-salaries-where-cuts-stopped-where-raises/</link>
@@ -138,13 +145,6 @@
       <description>Cut Nairobi SaaS costs 40% with this 2026 stack — exact Terraform, CI/CD, and RDS tuning that kept us under $3.2k/month at 5,000 users</description>
       <pubDate>Wed, 10 Jun 2026 12:02:34 +0000</pubDate>
       <guid>https://kubaik.github.io/build-a-nairobi-saas-stack-for-32kmonth/</guid>
-    </item>
-    <item>
-      <title>2026 technical screens: what actually works</title>
-      <link>https://kubaik.github.io/2026-technical-screens-what-actually-works/</link>
-      <description>Cut technical screen time 40% with a real feature flag service — Neon Postgres 3.4, Upstash Redis 7.2, Vercel Edge 32.5.4</description>
-      <pubDate>Wed, 10 Jun 2026 11:34:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-technical-screens-what-actually-works/</guid>
     </item>
   </channel>
 </rss>
