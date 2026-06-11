@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 14:20:44 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 14:34:37 +0000</lastBuildDate>
+    <item>
+      <title>USSD fintech in 2026: the 300M user channel nobody</title>
+      <link>https://kubaik.github.io/ussd-fintech-in-2026-the-300m-user-channel-nobody/</link>
+      <description>Cut USSD latency to under 2s &amp; costs to $0.25 per 1k sessions in 2026 — Node 20 LTS, DynamoDB &amp; CloudWatch setup with real carrier SLA results and Africa’s Talking sandbox.</description>
+      <pubDate>Thu, 11 Jun 2026 14:34:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/ussd-fintech-in-2026-the-300m-user-channel-nobody/</guid>
+    </item>
     <item>
       <title>MCP server timeouts: why your tools vanish after 30s</title>
       <link>https://kubaik.github.io/mcp-server-timeouts-why-your-tools-vanish-after-30s/</link>
@@ -138,13 +145,6 @@
       <description>Cut VPN costs 90% with zero-trust networking — WireGuard vs Tailscale in 2026 latency, throughput, and the key rotation mistake most teams make.</description>
       <pubDate>Wed, 10 Jun 2026 23:20:11 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-for-small-teams-wireguard-vs-tailscale/</guid>
-    </item>
-    <item>
-      <title>AI tools for African devs: what actually works now</title>
-      <link>https://kubaik.github.io/ai-tools-for-african-devs-what-actually-works-now/</link>
-      <description>Cut AI tool waste 70%: what African devs actually use in 2026 — real models, costs, and benchmarks for Flutter, Django, and Laravel stacks.</description>
-      <pubDate>Wed, 10 Jun 2026 22:51:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-tools-for-african-devs-what-actually-works-now/</guid>
     </item>
   </channel>
 </rss>

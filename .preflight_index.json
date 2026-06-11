@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T14:20:41.263849",
+  "built_at": "2026-06-11T14:34:34.495808",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -640,6 +640,11 @@
       "slug": "mcp-server-timeouts-why-your-tools-vanish-after-30s",
       "title": "MCP server timeouts: why your tools vanish after 30s",
       "summary": "After reviewing a lot of code that touches mcp servers, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. When your MCP server dies silently every 30 seconds with no logs, you’re not alone. I spent two weeks chasing a ‘connection r"
+    },
+    {
+      "slug": "ussd-fintech-in-2026-the-300m-user-channel-nobody",
+      "title": "USSD fintech in 2026: the 300M user channel nobody",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026 I helped a Lagos-based fintech launch a new wallet product that targeted 1.2 mil"
     }
   ]
 }
