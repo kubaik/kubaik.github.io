@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T20:44:50.277837",
+  "built_at": "2026-06-11T21:16:45.021132",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -675,6 +675,11 @@
       "slug": "3-notification-stacks-that-wont-drown-you-in",
       "title": "3 notification stacks that won’t drown you in",
       "summary": "I ran into this designing notification problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026 I joined a startup that had"
+    },
+    {
+      "slug": "self-healing-ai-agents-vs-rule-based-ops-40-fewer",
+      "title": "Self-healing AI agents vs rule-based ops: 40% fewer",
+      "summary": "I've seen the same built selfhealing mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026 your deployment pipeline has two ways to recover from failur"
     }
   ]
 }
