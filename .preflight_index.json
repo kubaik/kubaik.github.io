@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T12:06:38.459266",
+  "built_at": "2026-06-11T14:09:13.139764",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -630,6 +630,11 @@
       "slug": "tool-calling-patterns-that-survive-prod-vs-those-that",
       "title": "Tool-calling patterns that survive prod vs those that",
       "summary": "I've seen the same toolcalling patterns mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026 the average Node.js service running on AWS ECS in us-east"
+    },
+    {
+      "slug": "50-edge-locations-what-breaks-in-your-backend",
+      "title": "50 edge locations: what breaks in your backend",
+      "summary": "The short version: the conventional advice on edgenative backends is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) When your API runs in 50 edge locations instead of one region, every assumptio"
     }
   ]
 }

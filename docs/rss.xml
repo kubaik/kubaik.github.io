@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 14:03:33 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 14:09:16 +0000</lastBuildDate>
+    <item>
+      <title>50 edge locations: what breaks in your backend</title>
+      <link>https://kubaik.github.io/50-edge-locations-what-breaks-in-your-backend/</link>
+      <description>Cut API latency 60% by running in 50 edge locations — the TTL mistake that wastes 3 days, connection pool sizing at 512 MB, and why Redis 7.2 central cache costs more than edge-native.</description>
+      <pubDate>Thu, 11 Jun 2026 14:09:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/50-edge-locations-what-breaks-in-your-backend/</guid>
+    </item>
     <item>
       <title>Tool-calling patterns that survive prod vs those that</title>
       <link>https://kubaik.github.io/tool-calling-patterns-that-survive-prod-vs-those-that/</link>
@@ -138,13 +145,6 @@
       <description>Cut search latency 50 % in 5 minutes — PostgreSQL 16, pgvector 0.7, and Redis 7.2 walkthrough with real 2026 benchmarks and cost breakdowns</description>
       <pubDate>Wed, 10 Jun 2026 21:36:55 +0000</pubDate>
       <guid>https://kubaik.github.io/build-a-search-system-in-2026-semantic-keyword/</guid>
-    </item>
-    <item>
-      <title>Price a dev tool: 3 weeks of mistakes</title>
-      <link>https://kubaik.github.io/price-a-dev-tool-3-weeks-of-mistakes/</link>
-      <description>Cut pricing mistakes 80% with seat vs usage data from 1,247 dev tool users in 2026. Learn the exact tiers, Redis scripts, and Stripe pitfalls that turned $2k MRR into $6.2k.</description>
-      <pubDate>Wed, 10 Jun 2026 21:20:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/price-a-dev-tool-3-weeks-of-mistakes/</guid>
     </item>
   </channel>
 </rss>
