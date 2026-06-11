@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 12:01:38 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 12:06:41 +0000</lastBuildDate>
+    <item>
+      <title>Tool-calling patterns that survive prod vs those that</title>
+      <link>https://kubaik.github.io/tool-calling-patterns-that-survive-prod-vs-those-that/</link>
+      <description>Cut p99 latency 97% and save $4k/month with BullMQ 4.13 vs static Redis pools — connection exhaustion, queue depth, and circuit breaker tuning that actually work in 2026.</description>
+      <pubDate>Thu, 11 Jun 2026 12:06:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/tool-calling-patterns-that-survive-prod-vs-those-that/</guid>
+    </item>
     <item>
       <title>CSS finally fixed my CSS problems</title>
       <link>https://kubaik.github.io/css-finally-fixed-my-css-problems/</link>
@@ -138,13 +145,6 @@
       <description>Cut pricing mistakes 80% with seat vs usage data from 1,247 dev tool users in 2026. Learn the exact tiers, Redis scripts, and Stripe pitfalls that turned $2k MRR into $6.2k.</description>
       <pubDate>Wed, 10 Jun 2026 21:20:27 +0000</pubDate>
       <guid>https://kubaik.github.io/price-a-dev-tool-3-weeks-of-mistakes/</guid>
-    </item>
-    <item>
-      <title>Build a portfolio that beats AI clones in 2026</title>
-      <link>https://kubaik.github.io/build-a-portfolio-that-beats-ai-clones-in-2026/</link>
-      <description>Your React clone won’t beat AI assistants in 2026 — here’s how to ship under 2G constraints and prove it with hard numbers</description>
-      <pubDate>Wed, 10 Jun 2026 20:16:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-a-portfolio-that-beats-ai-clones-in-2026/</guid>
     </item>
   </channel>
 </rss>
