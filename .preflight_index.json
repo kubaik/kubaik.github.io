@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T00:12:41.317570",
+  "built_at": "2026-06-11T02:10:26.624234",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -565,6 +565,11 @@
       "slug": "onboard-devs-to-ai-code-guardrails-vs-chaos",
       "title": "Onboard devs to AI code: guardrails vs chaos",
       "summary": "I've seen the same onboard developer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, most codebases contain some AI-generated code — sometimes 2"
+    },
+    {
+      "slug": "inp-2026-one-tweak-cut-67-of-slow-clicks",
+      "title": "INP 2026: one tweak cut 67% of slow clicks",
+      "summary": "Most web performance guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 Google announced that Interaction to Next Paint (INP) would replace First"
     }
   ]
 }

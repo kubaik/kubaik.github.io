@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 02:05:42 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 02:10:29 +0000</lastBuildDate>
+    <item>
+      <title>INP 2026: one tweak cut 67% of slow clicks</title>
+      <link>https://kubaik.github.io/inp-2026-one-tweak-cut-67-of-slow-clicks/</link>
+      <description>Cut INP 67% in 2026 with scheduler.postTask, Comlink cache, and a CSS spinner — the real steps that worked on low-end devices in Kenya and Uganda.</description>
+      <pubDate>Thu, 11 Jun 2026 02:10:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/inp-2026-one-tweak-cut-67-of-slow-clicks/</guid>
+    </item>
     <item>
       <title>Onboard devs to AI code: guardrails vs chaos</title>
       <link>https://kubaik.github.io/onboard-devs-to-ai-code-guardrails-vs-chaos/</link>
@@ -138,13 +145,6 @@
       <description>From bootcamp to $120k ARR in 2026: the boring stack vs edge stack showdown with concrete costs, latency benchmarks, and the exact migration point most teams miss.</description>
       <pubDate>Wed, 10 Jun 2026 12:24:16 +0000</pubDate>
       <guid>https://kubaik.github.io/bootcamp-to-120k-2026-steps-that-pay/</guid>
-    </item>
-    <item>
-      <title>Build a Nairobi SaaS stack for $3.2k/month</title>
-      <link>https://kubaik.github.io/build-a-nairobi-saas-stack-for-32kmonth/</link>
-      <description>Cut Nairobi SaaS costs 40% with this 2026 stack — exact Terraform, CI/CD, and RDS tuning that kept us under $3.2k/month at 5,000 users</description>
-      <pubDate>Wed, 10 Jun 2026 12:02:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-a-nairobi-saas-stack-for-32kmonth/</guid>
     </item>
   </channel>
 </rss>
