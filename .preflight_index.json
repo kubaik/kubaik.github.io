@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T16:47:05.830057",
+  "built_at": "2026-06-11T17:55:09.226798",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -650,6 +650,11 @@
       "slug": "aws-lambda-replaced-airflow-for-half-our-pipelines",
       "title": "AWS Lambda replaced Airflow for half our pipelines",
       "summary": "Most data pipeline guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, our data team at Retool ran 47 pipelines using Apache Airflow 2.7 on Kube"
+    },
+    {
+      "slug": "slsa-10-and-sigstore-why-every-repo-needs-them-in",
+      "title": "SLSA 1.0 and Sigstore: why every repo needs them in",
+      "summary": "Most supply chain guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. We were auditing 12 open-source dependencies last quarter and found 3 with unsigned releases—one of them a log4j fork that had been qu"
     }
   ]
 }
