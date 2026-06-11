@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T14:09:13.139764",
+  "built_at": "2026-06-11T14:20:41.263849",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -635,6 +635,11 @@
       "slug": "50-edge-locations-what-breaks-in-your-backend",
       "title": "50 edge locations: what breaks in your backend",
       "summary": "The short version: the conventional advice on edgenative backends is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) When your API runs in 50 edge locations instead of one region, every assumptio"
+    },
+    {
+      "slug": "mcp-server-timeouts-why-your-tools-vanish-after-30s",
+      "title": "MCP server timeouts: why your tools vanish after 30s",
+      "summary": "After reviewing a lot of code that touches mcp servers, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. When your MCP server dies silently every 30 seconds with no logs, you’re not alone. I spent two weeks chasing a ‘connection r"
     }
   ]
 }

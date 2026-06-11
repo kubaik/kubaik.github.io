@@ -93,5 +93,6 @@
   "Local LLMs in 2026: the models that finally run usably on a MacBook Pro",
   "CSS in 2026: container queries, @layer, and the features that finally retired my utility framework",
   "Tool-calling patterns that work in production vs the ones that break under load",
-  "Edge-native backends in 2026: what changes when your API runs in 50 locations"
+  "Edge-native backends in 2026: what changes when your API runs in 50 locations",
+  "MCP servers in 2026: the protocol that quietly became infrastructure"
 ]

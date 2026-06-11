@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 11 Jun 2026 14:15:36 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2026 14:20:44 +0000</lastBuildDate>
+    <item>
+      <title>MCP server timeouts: why your tools vanish after 30s</title>
+      <link>https://kubaik.github.io/mcp-server-timeouts-why-your-tools-vanish-after-30s/</link>
+      <description>Cut MCP server timeouts 90% by fixing Docker keepalive and MTU issues — exact sysctl values, Docker Compose snippets, and Lambda configs for 2026.</description>
+      <pubDate>Thu, 11 Jun 2026 14:20:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-server-timeouts-why-your-tools-vanish-after-30s/</guid>
+    </item>
     <item>
       <title>50 edge locations: what breaks in your backend</title>
       <link>https://kubaik.github.io/50-edge-locations-what-breaks-in-your-backend/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI tool waste 70%: what African devs actually use in 2026 — real models, costs, and benchmarks for Flutter, Django, and Laravel stacks.</description>
       <pubDate>Wed, 10 Jun 2026 22:51:27 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-tools-for-african-devs-what-actually-works-now/</guid>
-    </item>
-    <item>
-      <title>Build a search system in 2026: semantic, keyword</title>
-      <link>https://kubaik.github.io/build-a-search-system-in-2026-semantic-keyword/</link>
-      <description>Cut search latency 50 % in 5 minutes — PostgreSQL 16, pgvector 0.7, and Redis 7.2 walkthrough with real 2026 benchmarks and cost breakdowns</description>
-      <pubDate>Wed, 10 Jun 2026 21:36:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-a-search-system-in-2026-semantic-keyword/</guid>
     </item>
   </channel>
 </rss>
