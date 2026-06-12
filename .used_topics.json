@@ -133,5 +133,6 @@
   "AI-assisted incident response: what works and what makes oncall worse",
   "The islands architecture in 2026: when Astro and partial hydration are the right choice",
   "Building developer tools as a business: what the AI era changed about the sales cycle",
-  "Structured outputs from LLMs: why JSON mode is not enough for real workflows"
+  "Structured outputs from LLMs: why JSON mode is not enough for real workflows",
+  "RAG is not enough: why hybrid search + reranking is the 2026 baseline"
 ]

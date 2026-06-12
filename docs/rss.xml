@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 19:36:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 19:41:12 +0000</lastBuildDate>
+    <item>
+      <title>RAG needs reranking: 2026’s default search stack</title>
+      <link>https://kubaik.github.io/rag-needs-reranking-2026s-default-search-stack/</link>
+      <description>Cut RAG hallucinations from 12% to 2.8% in 2026 with hybrid search + reranking. Latency &lt;250 ms, cost &lt;$0.0008/query on c6i.large.</description>
+      <pubDate>Fri, 12 Jun 2026 19:41:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-needs-reranking-2026s-default-search-stack/</guid>
+    </item>
     <item>
       <title>JSON mode fails: 3 real workflows that broke ours</title>
       <link>https://kubaik.github.io/json-mode-fails-3-real-workflows-that-broke-ours/</link>
@@ -138,13 +145,6 @@
       <description>See 38% faster PR merges and 50% fewer on-call pages using Claude Code in 2026 — real latency, cost, and coverage numbers from 14 repos.</description>
       <pubDate>Fri, 12 Jun 2026 07:04:26 +0000</pubDate>
       <guid>https://kubaik.github.io/claude-code-after-365-days-what-actually-works/</guid>
-    </item>
-    <item>
-      <title>APIs must die in 2026</title>
-      <link>https://kubaik.github.io/apis-must-die-in-2026/</link>
-      <description>Cut API failure rates 85% by ditching REST in 2026 — idempotency keys, HTTP/3, and callback queues that survive 250 ms latency and 15% packet loss.</description>
-      <pubDate>Fri, 12 Jun 2026 06:47:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/apis-must-die-in-2026/</guid>
     </item>
   </channel>
 </rss>
