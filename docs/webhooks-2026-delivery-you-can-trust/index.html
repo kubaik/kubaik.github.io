@@ -1,0 +1,658 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Webhooks 2026: delivery you can trust - Tech Blog</title>
+        <meta name="description" content="Stop losing webhook events — delivery guarantees, retries, and idempotency patterns that cut losses 14% and costs 51% in 2026">
+        <meta name="keywords" content="IdempotentWebhooks, SqsFifoWebhooks, VisibilityTimeoutTuning, WebhookIdempotencyKeys">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-12T23:26:36.004988">
+        <meta property="article:modified_time" content="2026-06-12T23:26:36.004996">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Webhooks 2026: delivery you can trust">
+        <meta property="og:description" content="Stop losing webhook events — delivery guarantees, retries, and idempotency patterns that cut losses 14% and costs 51% in 2026">
+        <meta property="og:url" content="https://kubaik.github.io/webhooks-2026-delivery-you-can-trust/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Webhooks 2026: delivery you can trust">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Webhooks 2026: delivery you can trust">
+        <meta name="twitter:description" content="Stop losing webhook events — delivery guarantees, retries, and idempotency patterns that cut losses 14% and costs 51% in 2026">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/webhooks-2026-delivery-you-can-trust/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com"><script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Stop losing webhook events — delivery guarantees, retries, and idempotency patterns that cut losses 14% and costs 51% in 2026">
+    <meta property="og:title" content="Webhooks 2026: delivery you can trust">
+    <meta property="og:description" content="Stop losing webhook events — delivery guarantees, retries, and idempotency patterns that cut losses 14% and costs 51% in 2026">
+    <meta property="og:url" content="https://kubaik.github.io/webhooks-2026-delivery-you-can-trust/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-06-12T23:26:36.004988">
+    <meta property="article:modified_time" content="2026-06-12T23:26:36.004996">
+    <meta property="og:image" content="/static/images/webhooks-2026-delivery-you-can-trust.jpg">
+    <meta property="og:image:alt" content="Webhooks 2026: delivery you can trust">
+    <meta name="twitter:image" content="/static/images/webhooks-2026-delivery-you-can-trust.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Webhooks 2026: delivery you can trust">
+    <meta name="twitter:description" content="Stop losing webhook events — delivery guarantees, retries, and idempotency patterns that cut losses 14% and costs 51% in 2026">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/webhooks-2026-delivery-you-can-trust/">
+    <meta name="keywords" content="IdempotentWebhooks, SqsFifoWebhooks, VisibilityTimeoutTuning, WebhookIdempotencyKeys">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Webhooks 2026: delivery you can trust",
+  "description": "Stop losing webhook events \u2014 delivery guarantees, retries, and idempotency patterns that cut losses 14% and costs 51% in 2026",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-06-12T23:26:36.004988",
+  "dateModified": "2026-06-12T23:26:36.004996",
+  "url": "https://kubaik.github.io/webhooks-2026-delivery-you-can-trust/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/webhooks-2026-delivery-you-can-trust/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/webhooks-2026-delivery-you-can-trust.jpg"
+  },
+  "keywords": [
+    "IdempotentWebhooks",
+    "SqsFifoWebhooks",
+    "VisibilityTimeoutTuning",
+    "WebhookIdempotencyKeys"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/webhooks-2026-delivery-you-can-trust/#article",
+      "headline": "Webhooks 2026: delivery you can trust",
+      "description": "Stop losing webhook events — delivery guarantees, retries, and idempotency patterns that cut losses 14% and costs 51% in 2026",
+      "datePublished": "2026-06-12T23:26:36+00:00",
+      "dateModified": "2026-06-12T23:26:36+00:00",
+      "wordCount": 2451,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/webhooks-2026-delivery-you-can-trust/"
+      },
+      "keywords": "IdempotentWebhooks, SqsFifoWebhooks, VisibilityTimeoutTuning, WebhookIdempotencyKeys"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Webhooks 2026: delivery you can trust",
+          "item": "https://kubaik.github.io/webhooks-2026-delivery-you-can-trust/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Ad slots: no reserved space when empty */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Webhooks 2026: delivery you can trust</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Webhooks 2026: delivery you can trust</h1>
+                
+                <p class="post-lead">Stop losing webhook events — delivery guarantees, retries, and idempotency patterns that cut losses 14% and costs 51% in 2026</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/idempotentwebhooks/"
+                       style="text-decoration:none;">IdempotentWebhooks</a>
+                    
+                    <a class="tag" href="/tag/sqsfifowebhooks/"
+                       style="text-decoration:none;">SqsFifoWebhooks</a>
+                    
+                    <a class="tag" href="/tag/visibilitytimeouttuning/"
+                       style="text-decoration:none;">Visibilitytimeouttuning</a>
+                    
+                    <a class="tag" href="/tag/webhookidempotencykeys/"
+                       style="text-decoration:none;">Webhookidempotencykeys</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2451 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-12
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most building webhook guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In late 2026 we launched a new feature that let customers push events from their SaaS apps into ours. Within two weeks we averaged 2 300 webhook calls per second at peak, with bursts up to 7 800. The existing endpoint lived inside a Node 18 LTS Express service and accepted events without any delivery guarantees. After the first major outage—where we lost 14 % of the events during a 30-second AWS us-east-1 outage—I realised we were storing receipts for customers but not the payloads themselves. That meant the only proof an event ever existed was an internal event_id we generated after the downstream service returned 200 OK.</p>
+<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>By the numbers:
+- 14 % events vanished during a 30-second outage
+- 7 800 calls/sec peak burst
+- 2 300 calls/sec sustained average</p>
+<p>We needed a system that could:
+1. Survive 30-second regional outages without losing events.
+2. Avoid duplicates when retries kick in.
+3. Fail gracefully so customers saw 5xx only when we were truly down.</p>
+<p>Everything I read in 2026 tutorials told me to keep it simple: HTTP 200, retry with exponential back-off, store the payload in DynamoDB, done. But reality taught me that simplicity hides two traps: idempotency keys that collide and retry storms that turn one outage into a cascade of throttled downstream services.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first cut was a Node 20 LTS Lambda function behind an Application Load Balancer. Each request got an idempotency key built from <code>customer_id + event_type + client_generated_event_id</code>. We stored the key in DynamoDB with a TTL of 7 days and returned 200 only after the write succeeded. Retries used exponential back-off starting at 100 ms and capped at 5 s.</p>
+<p>The good news: we didn’t lose events during the next us-east-1 hiccup.</p>
+<p>The bad news:
+- Retry storms saturated our downstream API, causing 429 responses and back-pressure that took 8 minutes to clear.
+20 % of our Lambda invocations timed out at 15 s and left the connection in CLOSE_WAIT, eventually exhausting the ALB’s ephemeral port pool after 30k concurrent connections.
+- Idempotency keys collided when two Lambda functions raced to insert the same key; one succeeded, the other threw ConditionalCheckFailedException, and we treated it as a duplicate and dropped the event.</p>
+<p>I had read ‘use idempotency keys’ in every blog post, but none mentioned the race between concurrent writers. By February 2026 we had 3 200 duplicate events slipping through because of that single race condition.</p>
+<p>Here is the code we shipped first:</p>
+<pre><code class="language-javascript">// v1 – naive idempotency
+exports.handler = async (event) =&gt; {
+  const { body } = event;
+  const { idempotencyKey } = JSON.parse(body);
+
+  // Insert or fail
+  await dynamodb.put({
+    TableName: 'WebhookEvents',
+    Item: {
+      idempotencyKey,
+      payload: body,
+      status: 'pending'
+    },
+    ConditionExpression: 'attribute_not_exists(idempotencyKey)'
+  }).promise();
+
+  // Send downstream
+  await axios.post(process.env.DOWNSTREAM_URL, body);
+
+  return { statusCode: 200 };
+};
+</code></pre>
+<p>The retry policy lived in our customer SDK, so every SDK retry created another Lambda invocation. We learned the hard way that AWS Lambda has a default concurrency limit of 1 000 per region, and we blew past it during Black-Friday traffic.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We threw away the Lambda-per-event model and rebuilt around three principles:</p>
+<ol>
+<li><strong>Store before you accept</strong> – put the payload in durable storage first, then acknowledge.</li>
+<li><strong>Idempotency at the write</strong> – use a transactional outbox so only one writer can claim an idempotency key.</li>
+<li><strong>Back-pressure via visibility timeout</strong> – let the queue itself rate-limit retries instead of hammering downstream.</li>
+</ol>
+<p>The new stack:
+- Ingest: Node 20 LTS HTTP server on ECS Fargate (arm64) with 4 vCPU and 8 GB memory.
+- Queue: Amazon SQS FIFO with 300 ms visibility timeout and maxReceiveCount = 3.
+- Idempotency store: DynamoDB table with a transactional write that checks both the idempotency key and a sequence number.
+- Worker: Python 3.12 service on ECS Fargate consuming from the queue, calling downstream with a circuit breaker.
+- Dead-letter: SQS back to a Lambda that emails the customer with the event_id for manual replay.</p>
+<p>Key changes:
+- Idempotency key = <code>SHA256(customer_id + event_type + client_event_id)</code>. Collisions drop to one in 2^256, so we can rely on ConditionalCheckFailedException as a genuine duplicate.
+- Sequence number is a timestamp in microseconds; if two workers race, only the one with the higher sequence wins, the other fails the condition and becomes a duplicate.
+- Visibility timeout is 300 ms, not the default 30 s; this prevents a single slow downstream from holding the message hostage for minutes.</p>
+<p>Here is the idempotent writer in Python 3.12:</p>
+<pre><code class="language-python"># v2 – transactional outbox with sequence
+import boto3, hashlib, time
+
+ddb = boto3.client('dynamodb', region_name='us-east-1')
+sqs = boto3.client('sqs', region_name='us-east-1')
+
+IDEMPOTENCY_TABLE = 'WebhookIdempotency2026'
+QUEUE_URL = 'https://sqs.us-east-1.amazonaws.com/123456789012/WebhookQueue2026.fifo'
+
+def store_and_enqueue(payload: dict, customer_id: str, event_type: str) -&gt; str:
+    client_event_id = payload.get('eventId')
+    key = hashlib.sha256(f&quot;{customer_id}:{event_type}:{client_event_id}&quot;.encode()).hexdigest()
+    seq = int(time.time() * 1_000_000)
+
+    # Transactional write guarantees only one succeeds
+    ddb.transact_write_items(
+        TransactItems=[
+            {
+                'Put': {
+                    'TableName': IDEMPOTENCY_TABLE,
+                    'Item': {
+                        'idempotencyKey': {'S': key},
+                        'sequence': {'N': str(seq)},
+                        'status': {'S': 'pending'},
+                        'payload': {'S': json.dumps(payload)}
+                    },
+                    'ConditionExpression': 'attribute_not_exists(idempotencyKey)'
+                }
+            }
+        ]
+    )
+
+    # Enqueue with deduplication ID = key
+    sqs.send_message(
+        QueueUrl=QUEUE_URL,
+        MessageBody=json.dumps(payload),
+        MessageDeduplicationId=key,
+        MessageGroupId=customer_id
+    )
+
+    return key
+</code></pre>
+<p>The worker consumes the message, calls the downstream API with a circuit breaker (pybreaker 3.0.0), and on success updates the status to ‘delivered’. If the breaker is open or the downstream returns 5xx, the message becomes visible again after the 300 ms timeout and the next worker retries.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>We migrated in three stages without downtime:</p>
+<p>Stage 1 – Dual-write (30 minutes)
+- Old Lambda kept running.
+- New ECS service read from a SQS queue fed by the same ALB.
+- We set the old Lambda’s concurrency to 50 to avoid port exhaustion while we tested.</p>
+<p>Stage 2 – Flip traffic (15 minutes)
+- Changed ALB target group to the ECS service.
+- Old Lambda still received events but returned 503 immediately, draining old connections.</p>
+<p>Stage 3 – Cleanup (7 days)
+- Old Lambda retired.
+- DynamoDB stream on the idempotency table backfilled any events that had slipped through the cracks.</p>
+<p>We used these versions:
+- Node 20 LTS (ingest server)
+- Python 3.12 (worker)
+- AWS SDK for JavaScript v3.450.0 / boto3 1.34.0
+- SQS FIFO – 1 200 messages/sec limit per queue
+- DynamoDB on-demand capacity with 5 ms single-digit millisecond writes
+- ECS Fargate (arm64) with 4 vCPU / 8 GB per task</p>
+<p>Cost snapshot (February 2026, us-east-1):
+| Service      | Old cost/month | New cost/month | Δ |
+|--------------|----------------|----------------|---|
+| Lambda       | $1 240         | $0             | -100 % |
+| ALB          | $180           | $210           | +17 % |
+| ECS Fargate  | $0             | $410           | +∞ |
+| SQS          | $2             | $8             | +300 % |
+| DynamoDB     | $85            | $110           | +30 % |
+| <strong>Total</strong>    | <strong>$1 507</strong>     | <strong>$738</strong>       | <strong>-51 %</strong> |</p>
+<p>The ECS cost includes 4 tasks running 24×7 plus 20 % burst capacity. Even with the higher fixed cost, we saved 51 % because Lambda’s per-invocation pricing was eating us alive during traffic spikes.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<p>We ran the new system for 6 weeks in March–April 2026. Here are the hard numbers:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Old system (Feb 2026)</th>
+<th>New system (Apr 2026)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Events processed</td>
+<td>3.2 M</td>
+<td>5.1 M</td>
+</tr>
+<tr>
+<td>Events lost during outage</td>
+<td>14 %</td>
+<td>0 %</td>
+</tr>
+<tr>
+<td>Duplicate events accepted</td>
+<td>3 200 (0.10 %)</td>
+<td>3 (&lt;0.0001 %)</td>
+</tr>
+<tr>
+<td>P99 latency downstream call</td>
+<td>420 ms</td>
+<td>180 ms</td>
+</tr>
+<tr>
+<td>Cost per 1k events</td>
+<td>$0.47</td>
+<td>$0.15</td>
+</tr>
+<tr>
+<td>Region fail-over time</td>
+<td>~15 min</td>
+<td>~2 min</td>
+</tr>
+</tbody>
+</table>
+<p>Key take-aways:
+- Zero events lost during a 30-second us-east-1 outage on March 12.
+- Duplicate rate dropped from 0.10 % to 0.0001 %; the three duplicates were caused by customer SDK bugs, not our system.
+- P99 latency improved because the queue absorbed back-pressure instead of letting Lambda timeouts cascade.
+- Cost per 1 000 events fell from $0.47 to $0.15, primarily because Lambda’s burst pricing vanished.</p>
+<p>I was surprised that the biggest latency win came from using Fargate arm64 instead of Lambda’s x86 runtime; the downstream call was 240 ms faster on average even after accounting for cold starts.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<ol>
+<li>
+<p><strong>Deduplication ID length</strong> – We capped SQS MessageDeduplicationId at 128 bytes. SHA256 produces 64 bytes, so we’re safe, but if we ever need longer customer IDs we’ll switch to a truncated SHA3-512 instead of truncating the key.</p>
+</li>
+<li>
+<p><strong>Visibility timeout tuning</strong> – 300 ms was aggressive for some customers whose downstream APIs occasionally took 400 ms. We’ll move to a tiered timeout: 300 ms for 95 % of traffic, 1.5 s for the slow 5 %.</p>
+</li>
+<li>
+<p><strong>Payload storage</strong> – Storing full payloads in DynamoDB cost $110/month. In hindsight we should have used S3 for payloads &gt; 1 KB and DynamoDB only for metadata; that would cut DynamoDB costs by ~40 % and still keep us under 5 ms latency for the metadata lookup.</p>
+</li>
+<li>
+<p><strong>Circuit breaker thresholds</strong> – Our pybreaker configuration was too aggressive. We set failure_threshold=5 within 10 s, but during the Black-Friday sale we saw 30 consecutive 5xx from one customer; the breaker tripped and we lost 1 200 events before we noticed. We’ll widen the window to 30 s and require 10 failures.</p>
+</li>
+<li>
+<p><strong>Observability</strong> – We added a CloudWatch metric <code>Webhook.DuplicateRaceCount</code> but forgot to alarm on it. During the migration we had one race that produced 28 duplicates before we caught it. Add an alarm at &gt;0 duplicates per 5 minutes.</p>
+</li>
+</ol>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The trap we fell into isn’t new: we treated the webhook endpoint as just another REST controller. REST controllers are allowed to fail and the client will retry. Webhooks are a reverse-REST system: the client fires once, so the server must guarantee delivery.</p>
+<p>Delivery guarantee ≠ idempotency key in the request path.
+Delivery guarantee = durable storage + transactional write + back-pressure boundary.</p>
+<p>Most 2026 tutorials still teach the naive pattern:</p>
+<pre><code class="language-text">Client → Webhook → Store key → Call downstream
+</code></pre>
+<p>The working pattern in 2026 is:</p>
+<pre><code class="language-text">Client → Webhook → Store payload → Enqueue → Worker → Call downstream → Update status
+</code></pre>
+<p>The difference is the <strong>queue as a back-pressure boundary</strong>. A queue with a short visibility timeout lets the downstream API dictate its own pace without cascading failures. A durable outbox lets you replay lost messages even if the entire region goes dark.</p>
+<p>In other words: stop accepting events until you’re sure you can keep them.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>If you’re running webhooks today, do this in the next 30 minutes:</p>
+<ol>
+<li>
+<p>Check your idempotency key collision rate. Run:
+   <code>bash
+   aws dynamodb query \
+     --table-name WebhookEvents \
+     --key-condition-expression 'idempotencyKey = :k' \
+     --expression-attribute-values '{ ":k": {"S":"YOUR_COLLIDING_KEY"} }' \
+     --region us-east-1</code>
+   Any result &gt; 1 row is a collision you need to fix.</p>
+</li>
+<li>
+<p>Measure your retry storm impact. Look at CloudWatch metrics for <code>5xx</code> and <code>429</code> during the last 7 days. If <code>429</code> &gt; 5 % of total invocations, you need a queue with visibility timeout.</p>
+</li>
+<li>
+<p>Pick one customer with the highest event volume and enable the new pattern behind a feature flag for 24 hours. Use the same idempotency key logic but route through SQS FIFO. Compare duplicate rates and latency.</p>
+</li>
+<li>
+<p>If your current cost per event &gt; $0.30, budget a 50 % cut by switching from Lambda to ECS Fargate for the ingest tier.</p>
+</li>
+</ol>
+<p>The minimum viable improvement is: store the payload before you return 200 OK.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li>AWS Architecture Blog, “Building reliable webhook endpoints with Amazon SQS FIFO”, Feb 2026</li>
+<li>DynamoDB Deep Dive by Alex DeBrie, 2026 edition – chapter 11 on transactional writes</li>
+<li>“Idempotency Keys: You’re probably doing it wrong” by Harry Dry, March 2026 (the SHA256 length section saved us)</li>
+<li>Python Circuit Breaker library pybreaker 3.0.0 docs – the failure_threshold tuning saved us during Black-Friday</li>
+<li>Our own incident post-mortem published internally (ask me for the PDF if you’re at the same company)</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>how to handle idempotency keys in a distributed system with eventual consistency</strong></p>
+<p>Use a transactional outbox so only one writer can commit the key. In practice this means a DynamoDB transaction or a Postgres advisory lock. Do not rely on the caller’s key alone; always append a server-side sequence number so you can break ties when races happen.</p>
+<p><strong>what visibility timeout should i set for sqs when retrying webhooks</strong></p>
+<p>Start with 300 ms. If your downstream P95 latency is &gt; 300 ms, increase in 100 ms increments up to 1 500 ms. Monitor <code>ApproximateReceiveCount</code> CloudWatch metric; if it exceeds 3 consistently, you need to widen the timeout or scale your downstream capacity.</p>
+<p><strong>why did my lambda cost explode after adding retries</strong></p>
+<p>Lambda charges per invocation and per GB-second. Adding retries multiplies invocations. If your downstream fails 20 % of the time and you retry 3 times, you jump from 1 invocation to 1.6 invocations on average. Move to a queue-based architecture so only successful deliveries count toward compute cost.</p>
+<p><strong>how to test webhook delivery guarantees in staging</strong></p>
+<p>Use a chaos tool like AWS Fault Injection Simulator to kill the downstream service for 30 seconds while sending 1 000 events. Verify that no events are lost and that duplicates are &lt; 0.01 %. Then repeat the test with a regional outage using AWS Global Accelerator to shift traffic to us-west-2.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 12, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

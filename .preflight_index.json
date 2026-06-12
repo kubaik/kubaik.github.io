@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T23:14:46.224364",
+  "built_at": "2026-06-12T23:26:38.867887",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -870,6 +870,11 @@
       "slug": "5-ai-tools-beating-higher-cost-teams-from-nairobi",
       "title": "5 AI tools beating higher-cost teams from Nairobi",
       "summary": "I ran into this east african problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) Last year we were bidding against a London te"
+    },
+    {
+      "slug": "webhooks-2026-delivery-you-can-trust",
+      "title": "Webhooks 2026: delivery you can trust",
+      "summary": "Most building webhook guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we launched a new feature that let customers push events from their SaaS"
     }
   ]
 }

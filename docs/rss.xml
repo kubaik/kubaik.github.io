@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 23:22:08 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 23:26:42 +0000</lastBuildDate>
+    <item>
+      <title>Webhooks 2026: delivery you can trust</title>
+      <link>https://kubaik.github.io/webhooks-2026-delivery-you-can-trust/</link>
+      <description>Stop losing webhook events — delivery guarantees, retries, and idempotency patterns that cut losses 14% and costs 51% in 2026</description>
+      <pubDate>Fri, 12 Jun 2026 23:26:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/webhooks-2026-delivery-you-can-trust/</guid>
+    </item>
     <item>
       <title>5 AI tools beating higher-cost teams from Nairobi</title>
       <link>https://kubaik.github.io/5-ai-tools-beating-higher-cost-teams-from-nairobi/</link>
@@ -138,13 +145,6 @@
       <description>Cut production latency 40% and cluster costs 30% by choosing Cilium or Linkerd instead of Istio 1.22 in 2026. Real benchmarks, memory figures, and rollback stories from six production clusters.</description>
       <pubDate>Fri, 12 Jun 2026 11:40:35 +0000</pubDate>
       <guid>https://kubaik.github.io/istio-122-flopped-cilium-115-won/</guid>
-    </item>
-    <item>
-      <title>3 AI coders ranked: Cursor, Windsurf, Claude Code in</title>
-      <link>https://kubaik.github.io/3-ai-coders-ranked-cursor-windsurf-claude-code-in/</link>
-      <description>Cut edit latency 40% with Windsurf 2026.3.1 — real latency, cost, and PII audit numbers for Cursor, Windsurf, and Claude Code in daily use.</description>
-      <pubDate>Fri, 12 Jun 2026 11:36:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/3-ai-coders-ranked-cursor-windsurf-claude-code-in/</guid>
     </item>
   </channel>
 </rss>

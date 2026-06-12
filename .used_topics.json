@@ -141,5 +141,6 @@
   "On-call in 2026: how AI alert triage is changing what wakes engineers up at night",
   "The engineering principles I updated after AI tools changed my daily workflow",
   "How to design AI-native applications: architecture patterns that didn't exist three years ago",
-  "How East African developers are using AI tools to compete with teams in higher-cost markets"
+  "How East African developers are using AI tools to compete with teams in higher-cost markets",
+  "Building webhook systems in 2026: delivery guarantees, retries, and idempotency"
 ]
