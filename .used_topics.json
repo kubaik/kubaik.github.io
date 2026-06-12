@@ -126,5 +126,6 @@
   "Secrets management in 2026: the approaches that replaced .env files in serious projects",
   "Why Claude 4 and GPT-5 changed how I structure prompts for production systems",
   "Building for eventual consistency: the real-world patterns behind systems that stay up",
-  "How I write tests for AI-assisted code without testing the AI"
+  "How I write tests for AI-assisted code without testing the AI",
+  "Feature flags in 2026: how they became the backbone of AI rollout strategies"
 ]

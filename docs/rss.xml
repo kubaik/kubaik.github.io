@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 14:33:48 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 14:40:20 +0000</lastBuildDate>
+    <item>
+      <title>AI rollouts live or die by flags</title>
+      <link>https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/</link>
+      <description>Reduce AI incident minutes 40% with feature flags in 2026 — 15 ms p95 latency, GDPR-ready audit trails, and $3/month DynamoDB costs using Node 20 LTS and AWS Lambda arm64.</description>
+      <pubDate>Fri, 12 Jun 2026 14:40:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/</guid>
+    </item>
     <item>
       <title>9 tests to chase AI bugs without testing AI</title>
       <link>https://kubaik.github.io/9-tests-to-chase-ai-bugs-without-testing-ai/</link>
@@ -138,13 +145,6 @@
       <description>Which freelance platforms still pay African developers fairly in 2026? Median payout times, fee splits, and dispute win rates for Andela, Toptal, Arc, and Contra.</description>
       <pubDate>Thu, 11 Jun 2026 23:21:27 +0000</pubDate>
       <guid>https://kubaik.github.io/avoid-these-4-platforms-in-2026-african-devs/</guid>
-    </item>
-    <item>
-      <title>2 AI roles ranked: staff engineer vs manager in 2026</title>
-      <link>https://kubaik.github.io/2-ai-roles-ranked-staff-engineer-vs-manager-in-2026/</link>
-      <description>Cut AI inference spend 60% with the right staff role in 2026 — AI-Architect Advocate beats manager or staff engineer for ROI</description>
-      <pubDate>Thu, 11 Jun 2026 23:17:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/2-ai-roles-ranked-staff-engineer-vs-manager-in-2026/</guid>
     </item>
   </channel>
 </rss>
