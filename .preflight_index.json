@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T16:28:29.247490",
+  "built_at": "2026-06-12T17:25:53.492442",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -805,6 +805,11 @@
       "slug": "async-python-traps-sync-vs-trio-vs-asyncio-2026",
       "title": "Async Python traps: sync vs trio vs asyncio 2026",
       "summary": "I've seen the same async python mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Async Python isn’t new—it’s been in the runtime since 3.5 and got a serio"
+    },
+    {
+      "slug": "signals-killed-react-context-4-real-wins-outside",
+      "title": "Signals killed React context: 4 real wins outside",
+      "summary": "I ran into this signals changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026 I joined a team building a re"
     }
   ]
 }

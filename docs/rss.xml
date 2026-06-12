@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 17:20:54 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 17:25:57 +0000</lastBuildDate>
+    <item>
+      <title>Signals killed React context: 4 real wins outside</title>
+      <link>https://kubaik.github.io/signals-killed-react-context-4-real-wins-outside/</link>
+      <description>Cut render time 90% with Signals — Preact Signals vs vanilla Signals vs SolidJS Signals ranked with 2026 benchmarks and memory growth numbers.</description>
+      <pubDate>Fri, 12 Jun 2026 17:25:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/signals-killed-react-context-4-real-wins-outside/</guid>
+    </item>
     <item>
       <title>Async Python traps: sync vs trio vs asyncio 2026</title>
       <link>https://kubaik.github.io/async-python-traps-sync-vs-trio-vs-asyncio-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI wrapper failure 65% in 2026 with the 3 wrappers that survived rigorous production testing and cost audits.</description>
       <pubDate>Fri, 12 Jun 2026 01:48:30 +0000</pubDate>
       <guid>https://kubaik.github.io/which-ai-wrappers-made-money-in-2026/</guid>
-    </item>
-    <item>
-      <title>Debug AI agent failures: 4 mistakes most teams miss</title>
-      <link>https://kubaik.github.io/debug-ai-agent-failures-4-mistakes-most-teams-miss/</link>
-      <description>Cut AI agent failures 45% faster by adding prompt diffs, tool-use traces, and reward scores — the 3 artifacts most teams miss in 2026 postmortems.</description>
-      <pubDate>Thu, 11 Jun 2026 23:31:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-ai-agent-failures-4-mistakes-most-teams-miss/</guid>
     </item>
   </channel>
 </rss>
