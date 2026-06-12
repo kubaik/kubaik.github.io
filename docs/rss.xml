@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 11:11:17 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 11:16:19 +0000</lastBuildDate>
+    <item>
+      <title>3 second incomes for devs in 2026 — no SaaS needed</title>
+      <link>https://kubaik.github.io/3-second-incomes-for-devs-in-2026-no-saas-needed/</link>
+      <description>Earn KES 22k/month in 2026 with a 200-line API wrapper — no SaaS, no sales, and no waiting. Real Nairobi case studies, code, and launch checklist.</description>
+      <pubDate>Fri, 12 Jun 2026 11:16:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-second-incomes-for-devs-in-2026-no-saas-needed/</guid>
+    </item>
     <item>
       <title>Stop shipping daily: the burn rate math</title>
       <link>https://kubaik.github.io/stop-shipping-daily-the-burn-rate-math/</link>
@@ -138,13 +145,6 @@
       <description>Cut compensation talks 40% faster with GitHub Copilot telemetry — build a CLI, pull 90 days of data, and negotiate using real hours saved in 2026.</description>
       <pubDate>Thu, 11 Jun 2026 19:30:36 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-2026-pay-when-ai-steals-40-of-your-job/</guid>
-    </item>
-    <item>
-      <title>Cut React bundle 62% without rewriting</title>
-      <link>https://kubaik.github.io/cut-react-bundle-62-without-rewriting/</link>
-      <description>That’s what server components give you: the ability to reduce client JS by 60% without touching the UI layer.</description>
-      <pubDate>Thu, 11 Jun 2026 18:23:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-react-bundle-62-without-rewriting/</guid>
     </item>
   </channel>
 </rss>

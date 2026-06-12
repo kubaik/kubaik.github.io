@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T11:01:44.827644",
+  "built_at": "2026-06-12T11:16:16.190124",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -760,6 +760,11 @@
       "slug": "stop-shipping-daily-the-burn-rate-math",
       "title": "Stop shipping daily: the burn rate math",
       "summary": "A colleague asked me about build public during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) The "
+    },
+    {
+      "slug": "3-second-incomes-for-devs-in-2026-no-saas-needed",
+      "title": "3 second incomes for devs in 2026 — no SaaS needed",
+      "summary": "I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026 I hit the same wall every Nai"
     }
   ]
 }
