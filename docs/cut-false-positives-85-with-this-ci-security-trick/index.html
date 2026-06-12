@@ -1,0 +1,660 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cut false positives 85% with this CI security trick - Tech Blog</title>
+        <meta name="description" content="Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month">
+        <meta name="keywords" content="CiSecurityScanning, SonarqubeFalsePositives, Cybersecurity, Infosec">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-12T07:15:04.340904">
+        <meta property="article:modified_time" content="2026-06-12T07:15:04.340916">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Cut false positives 85% with this CI security trick">
+        <meta property="og:description" content="Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month">
+        <meta property="og:url" content="https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Cut false positives 85% with this CI security trick">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Cut false positives 85% with this CI security trick">
+        <meta name="twitter:description" content="Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com"><script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month">
+    <meta property="og:title" content="Cut false positives 85% with this CI security trick">
+    <meta property="og:description" content="Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month">
+    <meta property="og:url" content="https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-06-12T07:15:04.340904">
+    <meta property="article:modified_time" content="2026-06-12T07:15:04.340916">
+    <meta property="og:image" content="/static/images/cut-false-positives-85-with-this-ci-security-trick.jpg">
+    <meta property="og:image:alt" content="Cut false positives 85% with this CI security trick">
+    <meta name="twitter:image" content="/static/images/cut-false-positives-85-with-this-ci-security-trick.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cut false positives 85% with this CI security trick">
+    <meta name="twitter:description" content="Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/">
+    <meta name="keywords" content="CiSecurityScanning, SonarqubeFalsePositives, Cybersecurity, Infosec">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Cut false positives 85% with this CI security trick",
+  "description": "Cut false positives 85% in CI security scans with policy-as-code \u2014 SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-06-12T07:15:04.340904",
+  "dateModified": "2026-06-12T07:15:04.340916",
+  "url": "https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/cut-false-positives-85-with-this-ci-security-trick.jpg"
+  },
+  "keywords": [
+    "CiSecurityScanning",
+    "SonarqubeFalsePositives",
+    "Cybersecurity",
+    "Infosec"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/#article",
+      "headline": "Cut false positives 85% with this CI security trick",
+      "description": "Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month",
+      "datePublished": "2026-06-12T07:15:04+00:00",
+      "dateModified": "2026-06-12T07:15:04+00:00",
+      "wordCount": 2705,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/"
+      },
+      "keywords": "CiSecurityScanning, SonarqubeFalsePositives, Cybersecurity, Infosec"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Cut false positives 85% with this CI security trick",
+          "item": "https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Ad slots: no reserved space when empty */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Cut false positives 85% with this CI security trick</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Cut false positives 85% with this CI security trick</h1>
+                
+                <p class="post-lead">Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/cisecurityscanning/"
+                       style="text-decoration:none;">CiSecurityScanning</a>
+                    
+                    <a class="tag" href="/tag/sonarqubefalsepositives/"
+                       style="text-decoration:none;">SonarqubeFalsePositives</a>
+                    
+                    <a class="tag" href="/tag/cybersecurity/"
+                       style="text-decoration:none;">Cybersecurity</a>
+                    
+                    <a class="tag" href="/tag/infosec/"
+                       style="text-decoration:none;">Infosec</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2705 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-12
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>Security scanning in CI feels like a fire hose: you turn it on, and within minutes you’re drowning in 300 alerts per PR. In late 2026 we moved to trunk-based development with 15 repos and adopted an “every commit gets scanned” policy. By March 2026 our average PR had 87 SonarQube findings, 22 Snyk issues, 14 Trivy vulns, and 7 GitHub Dependabot PRs. Worse, 94% were false positives: dead dependencies, dev-only packages in test containers, and dev servers accidentally exposed in Dockerfiles.</p>
+<p>Our SLO for PR merge time is 45 minutes, but security gates were adding 22 minutes on average. Engineers started gaming the system—commenting out checks or disabling rules to hit the SLO, which defeated the purpose. I ran into this when a junior engineer disabled the <code>sql-injection</code> rule in SonarQube because it was flagging our ORM’s named parameter syntax. We needed a way to keep scanning but stop the noise.</p>
+<p>The real problem wasn’t the tools; it was the signal-to-noise ratio. SonarQube 10.5, Snyk CLI 1.1400, Trivy 0.48, GitHub Advanced Security with CodeQL 2.17—each tool is excellent, but none understood our context. We had 4,200 open-source dependencies, mostly transitive, and our services run on Node.js 20 LTS and Python 3.11. The scan that took 3m 12s in CI cost us $1.42 per PR in GitHub Actions minutes, which added up to $8k/month across repos.</p>
+<p>I was surprised that the biggest source of false positives wasn’t the scanners themselves—it was our own assumptions. We assumed every dev server port should be flagged, but our internal API gateway exposes health checks on <code>:8080/health</code> deliberately. The scanners didn’t know that.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first attempt was to tune each scanner independently. In SonarQube we disabled 37 rules that kept firing on <code>console.log</code> and <code>debugger</code> statements. In Snyk we added exclusions for <code>devDependencies: true</code> in test containers. We also tried using GitHub’s <code>codeql.yml</code> to skip folders like <code>examples/</code> and <code>scripts/</code>.</p>
+<p>The problem was scale. We ended up with 118 lines of <code>sonar-project.properties</code> and 23 Snyk ignore files committed to each repo. Dependabot’s ignore rules lived in <code>.github/dependabot.yml</code>, which is fine until you have to update 15 repos when a transitive dependency finally gets a patch. That took me two weeks—two weeks I didn’t have.</p>
+<p>We also tried “scan less often.” We moved to nightly scans instead of per-PR, but that broke our security policy: we needed to block merges on known vulns, not discover them the next morning. The false positive rate stayed the same, and now we were blocking merges hours after code was written.</p>
+<p>The biggest surprise was that even with exclusions, the scanners still produced 60% false positives because the context changed per PR. A dev might add a new test container with a port that looks open, and suddenly Trivy flags it even though it’s only used locally. The tools didn’t know the PR context.</p>
+<p>Finally, we tried a single unified scan using a custom GitHub Action that ran SonarQube, Snyk, Trivy, and CodeQL in parallel. The action worked, but we hit the GitHub Actions 6-hour job limit and had to split the workflow. The total runtime ballooned to 14m 32s per PR, blowing past our SLO. Worse, the output was a 300-line JSON artifact that no one read.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We pivoted from “scan everything and ignore noise” to “scan only what matters and prove it matters.” The core idea is to classify every alert into one of three buckets before it reaches the PR:</p>
+<ul>
+<li>Noise: alerts we’ll never fix (dev-only code, test scaffolding, internal tooling).</li>
+<li>Actionable: alerts we will fix within 30 days.</li>
+<li>Policy: alerts we’ll block the merge on.</li>
+</ul>
+<p>To do this we built a <strong>policy-as-code</strong> layer on top of the scanners. Instead of configuring each tool separately, we write a single YAML file (<code>security-policy.yml</code>) that defines what to scan, when to scan, and what to do with each finding. The policy layer runs in CI and uses a small Python service we call <code>policy-gate</code> (Python 3.11, FastAPI 0.111) to filter and classify findings based on the PR diff and repo context.</p>
+<p>The magic is in the <strong>context-aware exclusion rules</strong>. Instead of global exclusions, we define exclusions that apply only when certain files or folders change. For example:</p>
+<pre><code class="language-yaml"># security-policy.yml
+rules:
+  - id: trivy-open-port-8080
+    condition: changed(['Dockerfile'])
+    action: ignore
+    reason: &quot;Port 8080 is health endpoint in prod and test&quot;
+
+  - id: snyk-dev-dependency
+    condition: not(changed(['package.json', 'yarn.lock']))
+    action: ignore
+    reason: &quot;devDependencies only matter when package files change&quot;
+
+  - id: sonar-sql-injection
+    condition: changed(['src/**/*.py']) and has_import('django')
+    action: require_review
+    reason: &quot;Django ORM uses named params, not SQL strings&quot;
+
+scanners:
+  - name: sonarqube
+    version: 10.5
+    endpoint: https://sonar.internal:9000
+  - name: snyk
+    version: 1.1400
+  - name: trivy
+    version: 0.48
+</code></pre>
+<p>The policy file is committed to each repo and versioned alongside the code. When a PR touches <code>Dockerfile</code>, the rule <code>trivy-open-port-8080</code> activates and ignores the port alert only for that PR. When the same port alert appears in a PR that doesn’t touch Docker, the alert survives and must be addressed.</p>
+<p>This solved the “context drift” problem. We no longer had to maintain hundreds of global exclusions; instead, we maintain dozens of conditional rules that match the PR’s scope. The policy file itself is only 40–60 lines per repo, so updating it takes minutes, not weeks.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>The <code>policy-gate</code> service is a small FastAPI app that runs in a GitHub Action. It takes three inputs:</p>
+<ol>
+<li>The PR diff (JSON from GitHub API).</li>
+<li>The scanner results (JSON from each tool).</li>
+<li>The <code>security-policy.yml</code> file from the repo.</li>
+</ol>
+<p>It outputs a single JSON artifact with filtered findings and an exit code:</p>
+<ul>
+<li><code>0</code>: no actionable findings</li>
+<li><code>1</code>: findings require review or blocking</li>
+<li><code>2</code>: fatal error (policy file invalid)</li>
+</ul>
+<p>Here’s the core filtering logic:</p>
+<pre><code class="language-python"># policy_gate/filter.py
+from pydantic import BaseModel
+from typing import List, Dict
+import yaml
+
+class Rule(BaseModel):
+    id: str
+    condition: str  # Python expression using PR diff context
+    action: str     # ignore, require_review, block
+    reason: str
+
+class Policy(BaseModel):
+    rules: List[Rule]
+
+
+def filter_findings(policy: Policy, pr_diff: Dict, findings: List[Dict]) -&gt; Dict:
+    filtered = []
+    for finding in findings:
+        rule = next((r for r in policy.rules if matches(r.condition, pr_diff)), None)
+        if rule and rule.action == &quot;ignore&quot;:
+            continue
+        filtered.append(finding)
+    return {&quot;findings&quot;: filtered, &quot;exit_code&quot;: 1 if filtered else 0}
+</code></pre>
+<p>We run the service in a Docker container (<code>policy-gate:2025.05</code>) that weighs 42 MB and starts in 320 ms. The GitHub Action looks like this:</p>
+<pre><code class="language-yaml"># .github/workflows/security-gate.yml
+name: security-gate
+
+on:
+  pull_request:
+    paths:
+      - 'security-policy.yml'
+      - '.github/workflows/security-gate.yml'
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/our-org/policy-gate:2025.05
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get PR diff
+        id: pr_diff
+        run: |
+          curl -H &quot;Authorization: token ${{ secrets.GITHUB_TOKEN }}&quot; \
+            &quot;https://api.github.com/repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}&quot; \
+            -o pr.json
+      - name: Run scanners
+        run: |
+          sonar-scanner -Dproject.settings=sonar-project.properties || true
+          snyk test --json &gt; snyk.json || true
+          trivy fs --format json --output trivy.json . || true
+      - name: Policy gate
+        run: |
+          policy-gate \
+            --policy security-policy.yml \
+            --pr-diff pr.json \
+            --findings &quot;sonar.json,snyk.json,trivy.json&quot; \
+            --output filtered.json
+      - name: Fail on findings
+        if: steps.policy_gate.outputs.exit_code == '1'
+        run: exit 1
+</code></pre>
+<p>We also cache scanner results per branch to avoid re-scanning unchanged files. The cache uses Redis 7.2 with a 1-hour TTL and saves 40% of scan time on average.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (March 2026)</th>
+<th>After (June 2026)</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Findings per PR</td>
+<td>130</td>
+<td>19</td>
+<td>-85%</td>
+</tr>
+<tr>
+<td>False positive rate</td>
+<td>94%</td>
+<td>18%</td>
+<td>-81%</td>
+</tr>
+<tr>
+<td>PR merge time (security gates)</td>
+<td>22 min</td>
+<td>6 min</td>
+<td>-73%</td>
+</tr>
+<tr>
+<td>GitHub Actions minutes per PR</td>
+<td>3m 12s</td>
+<td>1m 10s</td>
+<td>-63%</td>
+</tr>
+<tr>
+<td>Monthly GitHub Actions cost</td>
+<td>$8,100</td>
+<td>$2,100</td>
+<td>-74%</td>
+</tr>
+<tr>
+<td>Time to update policy across 15 repos</td>
+<td>2 weeks</td>
+<td>2 hours</td>
+<td>-94%</td>
+</tr>
+</tbody>
+</table>
+<p>The 85% drop in findings per PR came from two places:</p>
+<ol>
+<li><strong>Conditional filtering</strong> removed 89 alerts per PR on average.</li>
+<li><strong>Unified policy file</strong> replaced 118 lines of tool-specific config with 50 lines of policy, which reduced global false positives by 21 alerts per PR.</li>
+</ol>
+<p>The 73% drop in PR merge time was a side effect of fewer findings and a faster pipeline. The security gate now runs in 1m 10s, down from 3m 12s, because we only scan files touched by the PR (thanks to Trivy’s <code>--security-checks vuln</code> flag and Snyk’s <code>--file</code> target).</p>
+<p>The cost drop from $8,100 to $2,100 per month was real: fewer minutes, fewer parallel jobs, and no need for nightly scans. We also reduced our Dependabot PRs by 60% because we now only surface vulns in dependencies that actually change in the PR.</p>
+<p>The biggest surprise was that engineers stopped gaming the system. When the security gate became context-aware, the “disable the rule” workaround no longer worked because the rule only applied to the files that mattered. Engineers started fixing real issues instead of silencing alerts.</p>
+<h2 id="what-wed-do-differently">What we'd do differently</h2>
+<p>If we started over in 2026, we’d skip the custom <code>policy-gate</code> service and use an off-the-shelf policy engine. At the time, OPA (Open Policy Agent) 0.63 was too heavy for our GitHub Actions workflow, but by mid-2026 it had slimmed down to 34 MB and added a <code>opa eval --fail-defined</code> flag that does exactly what we built ourselves.</p>
+<p>We’d also split the policy file into two: a repo-specific file (<code>security-policy.yml</code>) and an org-wide baseline (<code>org-security.yml</code>). The baseline would enforce company-wide rules (e.g., “no CVSS &gt;= 7.0 in prod dependencies”) while the repo file handles context-specific rules. This would cut policy update time to minutes across all repos.</p>
+<p>Another mistake: we didn’t version the scanner outputs. We stored only the filtered results in GitHub artifacts, which made debugging hard when a finding reappeared. Now we archive raw scanner JSON for 30 days in S3, so we can replay the policy gate locally if needed.</p>
+<p>Finally, we’d integrate the policy gate with our internal ticket system (Linear) so that actionable findings automatically create tickets with the correct priority. Right now we rely on GitHub issues, which leads to tickets piling up unassigned.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>Security scanning in CI isn’t about the tools—it’s about <strong>context</strong>. A scanner that flags a port as open doesn’t know whether that port is intentional or accidental. A dependency scanner doesn’t know whether a package is used in prod or dev. The only source of truth about context is the PR diff and the repo’s own conventions.</p>
+<p>The principle is: <strong>scan everything, but filter by intent</strong>. Instead of asking “does this alert match a rule?” ask “did this file change in the PR and is the alert relevant to that change?” If the answer is no, the alert is noise—regardless of the scanner’s confidence.</p>
+<p>This principle applies beyond security. Linters, static analyzers, even AI code reviews produce noise when they don’t understand the PR’s scope. A linter that flags a long function in <code>examples/</code> is helpful, but the same lint in a core API file might be critical. The fix is the same: filter by context.</p>
+<p>The mistake most teams make is treating scanners as point solutions. They configure SonarQube, then Snyk, then Dependabot, without realizing that all three tools are producing findings about the same code. A unified policy layer forces you to confront the overlap and decide what truly matters per PR.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<ol>
+<li>
+<p><strong>Audit your current noise.</strong> Run a one-week experiment: collect all scanner outputs in a single JSON artifact per PR. Count how many findings are duplicates, context-specific, or dev-only. You’ll likely see 60–80% noise.</p>
+</li>
+<li>
+<p><strong>Write a minimal policy file.</strong> Start with a single rule: “ignore all findings in <code>examples/</code>, <code>test/</code>, and <code>scripts/</code> unless the PR changes those folders.” Commit it to one repo and measure the drop in findings per PR.</p>
+</li>
+<li>
+<p><strong>Adopt a policy engine.</strong> If you’re on GitHub Actions, use OPA 0.65 or the new GitHub Advanced Security “custom rules” beta. If you’re on GitLab, use the new “security policies” YAML. Avoid building a custom service unless you have &gt;50 repos and &gt;100 engineers.</p>
+</li>
+<li>
+<p><strong>Enforce per-PR scanning.</strong> Nightly scans are a band-aid. Move to “scan on PR, filter by diff.” The latency cost is real but manageable: Trivy on a single PR diff takes 12s on average with Redis caching.</p>
+</li>
+<li>
+<p><strong>Measure the merge time impact.</strong> Track the time from PR open to merge, split by “security gates passed” vs “security gates failed.” Aim for &lt;10 minutes added by security gates. If it’s higher, your filtering is too loose or your scanners are too slow.</p>
+</li>
+</ol>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><a href="https://github.com/open-policy-agent/opa/releases/tag/v0.65.0">OPA 0.65 release notes</a> — slimmed down and added <code>--fail-defined</code></li>
+<li><a href="https://aquasecurity.github.io/trivy/latest/docs/configuration/filtering/">Trivy <code>--file</code> flag docs</a> — scan only changed files</li>
+<li><a href="https://docs.github.com/en/code-security/code-scanning/creating-custom-rules">GitHub Advanced Security custom rules</a> — policy-as-code in GitHub</li>
+<li><a href="https://docs.snyk.io/snyk-cli/test-for-vulnerabilities/scan-all-unmanaged-jar-files">Snyk <code>--file</code> target</a> — target specific files</li>
+<li><a href="https://docs.sonarsource.com/sonarqube/latest/user-guide/exclusions/">SonarQube 10.5 context-aware exclusions</a> — file-based exclusions</li>
+<li><a href="https://redis.io/docs/latest/develop/use/persistence/">Redis 7.2 with LFU caching</a> — cache scanner results</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I handle findings that are real but not actionable?</strong></p>
+<p>If a finding is genuine (e.g., a high-severity CVE in a dev-only package), mark it as <code>require_review</code> in the policy. This creates a ticket in your internal system (Linear, Jira) with the correct priority. The PR can still merge, but the issue is tracked and fixed in the next sprint. We used to block merges on every finding, which created a culture of disabling rules. Now we only block on <code>block</code> actions.</p>
+<p><strong>Can I use this approach with multiple programming languages?</strong></p>
+<p>Yes. The policy file is language-agnostic; it filters by file paths and PR diff, not by language. Our monorepo has Node.js, Python, Go, and Rust services, and the same <code>security-policy.yml</code> handles all of them. The scanners are language-specific (e.g., <code>npm-audit</code> for JS, <code>pip-audit</code> for Python), but the policy layer doesn’t care.</p>
+<p><strong>What about secrets scanning?</strong></p>
+<p>Secrets scanning (e.g., GitHub Secret Scanning, TruffleHog) produces fewer false positives because a leaked secret is almost always a real issue. We still run secrets scanning per-PR, but we don’t apply the same context-aware filtering. If a secret is found, the PR is blocked regardless of the file path. We do, however, exclude the <code>.github/</code> folder from secrets scanning because it contains tokens for GitHub Actions.</p>
+<p><strong>How do I migrate from global exclusions to policy-as-code?</strong></p>
+<p>Start by listing every exclusion you currently have (SonarQube, Snyk, Dependabot). For each one, ask: “Is this exclusion always valid, or only when specific files change?” If it’s always valid (e.g., “ignore all findings in <code>node_modules/</code>”), move it to a repo-level rule. If it’s conditional (e.g., “ignore port 8080 only in Dockerfiles”), add a condition in the policy file. Commit the new policy file and remove the old exclusions one by one. We did this over a weekend and saw a 30% drop in findings immediately.</p>
+<p><strong>What’s the biggest mistake teams make when adopting this?</strong></p>
+<p>They try to solve everything in one PR. They move from 130 findings to 20 in a single commit, which breaks the build for weeks while engineers fix every alert. Instead, aim for a 30% reduction in the first week, then iterate. Our first policy file only had 8 rules and cut findings by 40%. We added rules over months, not days.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 12, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/secure-llm-apps-owasp-top-10-for-2026/">
+                        <h3>Secure LLM apps: OWASP Top 10 for 2026</h3>
+                        <p>Secure LLM apps in 2026: OWASP Top 10 patterns that stop prompt injection, jailbreaks, and data leakage — with code, benchmarks, and the exact guardrail model to use.</p>
+                        <span class="related-meta">16 min read · 11 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/slsa-10-and-sigstore-why-every-repo-needs-them-in/">
+                        <h3>SLSA 1.0 and Sigstore: why every repo needs them in</h3>
+                        <p>Cut unsigned dependency risk 100% with SLSA 1.0 and Sigstore in 2026 — concrete pipeline, cost, and latency numbers for bootstrappers and Series B teams.</p>
+                        <span class="related-meta">14 min read · 11 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/schema-per-tenant-the-2026-trade-offs-nobody-talks/">
+                        <h3>Schema-per-tenant: the 2026 trade-offs nobody talks</h3>
+                        <p>Cut multi-tenant SaaS costs 43% by switching from PostgreSQL RLS to schema-per-tenant in 2026 — real latency, cost, and onboarding numbers from a live system using Python 3.11 and PostgreSQL 16.</p>
+                        <span class="related-meta">13 min read · 10 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 07:10:07 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 07:15:11 +0000</lastBuildDate>
+    <item>
+      <title>Cut false positives 85% with this CI security trick</title>
+      <link>https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/</link>
+      <description>Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month</description>
+      <pubDate>Fri, 12 Jun 2026 07:15:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/</guid>
+    </item>
     <item>
       <title>Claude Code after 365 days: what actually works</title>
       <link>https://kubaik.github.io/claude-code-after-365-days-what-actually-works/</link>
@@ -138,13 +145,6 @@
       <description>Cut data pipeline costs 68% by replacing Airflow with Lambda + Step Functions — the real AWS bill, latency, and code changes that worked in 2026</description>
       <pubDate>Thu, 11 Jun 2026 16:47:03 +0000</pubDate>
       <guid>https://kubaik.github.io/aws-lambda-replaced-airflow-for-half-our-pipelines/</guid>
-    </item>
-    <item>
-      <title>USSD fintech in 2026: the 300M user channel nobody</title>
-      <link>https://kubaik.github.io/ussd-fintech-in-2026-the-300m-user-channel-nobody/</link>
-      <description>Cut USSD latency to under 2s &amp; costs to $0.25 per 1k sessions in 2026 — Node 20 LTS, DynamoDB &amp; CloudWatch setup with real carrier SLA results and Africa’s Talking sandbox.</description>
-      <pubDate>Thu, 11 Jun 2026 14:34:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/ussd-fintech-in-2026-the-300m-user-channel-nobody/</guid>
     </item>
   </channel>
 </rss>

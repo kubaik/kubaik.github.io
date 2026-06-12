@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T07:04:29.465653",
+  "built_at": "2026-06-12T07:15:07.352092",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -740,6 +740,11 @@
       "slug": "claude-code-after-365-days-what-actually-works",
       "title": "Claude Code after 365 days: what actually works",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In late 2026 I rolled Claude Code into every repo we owned at work. At first the pitch f"
+    },
+    {
+      "slug": "cut-false-positives-85-with-this-ci-security-trick",
+      "title": "Cut false positives 85% with this CI security trick",
+      "summary": "Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) Security scanning in CI feels like a fire hose: you turn it on, and within minutes you’r"
     }
   ]
 }
