@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 21:21:50 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 21:27:37 +0000</lastBuildDate>
+    <item>
+      <title>Replace job queues with Temporal in 2026</title>
+      <link>https://kubaik.github.io/replace-job-queues-with-temporal-in-2026/</link>
+      <description>The system was supposed to retry failed tasks three times, but after a weekend of AWS Lambda cold starts the queue backed up for 12 hours and we lost 27%…</description>
+      <pubDate>Fri, 12 Jun 2026 21:27:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/replace-job-queues-with-temporal-in-2026/</guid>
+    </item>
     <item>
       <title>Route tasks to LLMs automatically in 2026</title>
       <link>https://kubaik.github.io/route-tasks-to-llms-automatically-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut failed logins 82% by switching to passkeys — real numbers, code samples, and the Samsung credential ID trap we hit first.</description>
       <pubDate>Fri, 12 Jun 2026 07:18:53 +0000</pubDate>
       <guid>https://kubaik.github.io/passkeys-killed-passwords-in-2026/</guid>
-    </item>
-    <item>
-      <title>Cut false positives 85% with this CI security trick</title>
-      <link>https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/</link>
-      <description>Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month</description>
-      <pubDate>Fri, 12 Jun 2026 07:15:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/</guid>
     </item>
   </channel>
 </rss>
