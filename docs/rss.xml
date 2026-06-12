@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 23:10:48 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 23:14:50 +0000</lastBuildDate>
+    <item>
+      <title>5 AI tools beating higher-cost teams from Nairobi</title>
+      <link>https://kubaik.github.io/5-ai-tools-beating-higher-cost-teams-from-nairobi/</link>
+      <description>Cut dev time 50% with these 5 AI tools — real cost, latency, and bug data from Nairobi teams in 2026. Includes code examples and ROI calculator.</description>
+      <pubDate>Fri, 12 Jun 2026 23:14:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-ai-tools-beating-higher-cost-teams-from-nairobi/</guid>
+    </item>
     <item>
       <title>AI-native apps: forget the old stack</title>
       <link>https://kubaik.github.io/ai-native-apps-forget-the-old-stack/</link>
@@ -138,13 +145,6 @@
       <description>Cut edit latency 40% with Windsurf 2026.3.1 — real latency, cost, and PII audit numbers for Cursor, Windsurf, and Claude Code in daily use.</description>
       <pubDate>Fri, 12 Jun 2026 11:36:40 +0000</pubDate>
       <guid>https://kubaik.github.io/3-ai-coders-ranked-cursor-windsurf-claude-code-in/</guid>
-    </item>
-    <item>
-      <title>Cost hacking multi-region backends in 2026</title>
-      <link>https://kubaik.github.io/cost-hacking-multi-region-backends-in-2026/</link>
-      <description>Your fraud detection model needs writes in one region, but 90% of reads happen in another.</description>
-      <pubDate>Fri, 12 Jun 2026 11:24:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/cost-hacking-multi-region-backends-in-2026/</guid>
     </item>
   </channel>
 </rss>

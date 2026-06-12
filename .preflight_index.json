@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T23:10:44.767207",
+  "built_at": "2026-06-12T23:14:46.224364",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -865,6 +865,11 @@
       "slug": "ai-native-apps-forget-the-old-stack",
       "title": "AI-native apps: forget the old stack",
       "summary": "A colleague asked me about design ainative during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) T"
+    },
+    {
+      "slug": "5-ai-tools-beating-higher-cost-teams-from-nairobi",
+      "title": "5 AI tools beating higher-cost teams from Nairobi",
+      "summary": "I ran into this east african problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) Last year we were bidding against a London te"
     }
   ]
 }
