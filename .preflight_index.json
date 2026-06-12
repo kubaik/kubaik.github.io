@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T19:14:57.033518",
+  "built_at": "2026-06-12T19:32:38.346530",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -825,6 +825,11 @@
       "slug": "ai-sales-cycles-why-dev-tools-now-need-3-demos",
       "title": "AI sales cycles: why dev tools now need 3 demos",
       "summary": "Most building developer guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) We launched a CLI tool called in early 2026 to help teams debug API latency spikes "
+    },
+    {
+      "slug": "json-mode-fails-3-real-workflows-that-broke-ours",
+      "title": "JSON mode fails: 3 real workflows that broke ours",
+      "summary": "Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our team at KubeAI shipped an internal tool that used an LLM to extra"
     }
   ]
 }
