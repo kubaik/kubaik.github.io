@@ -134,5 +134,6 @@
   "The islands architecture in 2026: when Astro and partial hydration are the right choice",
   "Building developer tools as a business: what the AI era changed about the sales cycle",
   "Structured outputs from LLMs: why JSON mode is not enough for real workflows",
-  "RAG is not enough: why hybrid search + reranking is the 2026 baseline"
+  "RAG is not enough: why hybrid search + reranking is the 2026 baseline",
+  "Model routing in 2026: how to pick the right LLM for each task automatically"
 ]

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T19:41:08.083468",
+  "built_at": "2026-06-12T19:58:22.223430",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -835,6 +835,11 @@
       "slug": "rag-needs-reranking-2026s-default-search-stack",
       "title": "RAG needs reranking: 2026’s default search stack",
       "summary": "The short version: the conventional advice on rag not is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) If your RAG app returns irrelevant snippets 30% of the time and you’re still calling it “g"
+    },
+    {
+      "slug": "route-tasks-to-llms-automatically-in-2026",
+      "title": "Route tasks to LLMs automatically in 2026",
+      "summary": "The official documentation for model routing is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs I spent two weeks tuning a system t"
     }
   ]
 }

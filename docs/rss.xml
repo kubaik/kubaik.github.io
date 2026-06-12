@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 19:41:12 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 19:58:26 +0000</lastBuildDate>
+    <item>
+      <title>Route tasks to LLMs automatically in 2026</title>
+      <link>https://kubaik.github.io/route-tasks-to-llms-automatically-in-2026/</link>
+      <description>The gap between what the docs say and what production needs I spent two weeks tuning a system that routed every query to the biggest model available —…</description>
+      <pubDate>Fri, 12 Jun 2026 19:58:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/route-tasks-to-llms-automatically-in-2026/</guid>
+    </item>
     <item>
       <title>RAG needs reranking: 2026’s default search stack</title>
       <link>https://kubaik.github.io/rag-needs-reranking-2026s-default-search-stack/</link>
@@ -138,13 +145,6 @@
       <description>Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month</description>
       <pubDate>Fri, 12 Jun 2026 07:15:04 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/</guid>
-    </item>
-    <item>
-      <title>Claude Code after 365 days: what actually works</title>
-      <link>https://kubaik.github.io/claude-code-after-365-days-what-actually-works/</link>
-      <description>See 38% faster PR merges and 50% fewer on-call pages using Claude Code in 2026 — real latency, cost, and coverage numbers from 14 repos.</description>
-      <pubDate>Fri, 12 Jun 2026 07:04:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/claude-code-after-365-days-what-actually-works/</guid>
     </item>
   </channel>
 </rss>
