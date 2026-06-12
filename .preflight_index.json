@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T01:48:33.310903",
+  "built_at": "2026-06-12T02:06:57.860989",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -715,6 +715,11 @@
       "slug": "which-ai-wrappers-made-money-in-2026",
       "title": "Which AI wrappers made money in 2026",
       "summary": "I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In early 2026 I joined a seed-stage sta"
+    },
+    {
+      "slug": "drop-checklists-ai-code-reviews-that-scale",
+      "title": "Drop checklists: AI code reviews that scale",
+      "summary": "The short version: the conventional advice on code review is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Teams that replaced PR checklists with AI agents cut review time by 65% in 2026 benchm"
     }
   ]
 }

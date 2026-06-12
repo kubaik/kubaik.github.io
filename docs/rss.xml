@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 02:01:39 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 02:07:01 +0000</lastBuildDate>
+    <item>
+      <title>Drop checklists: AI code reviews that scale</title>
+      <link>https://kubaik.github.io/drop-checklists-ai-code-reviews-that-scale/</link>
+      <description>Cut code review time 65% by replacing static checklists with AI agents that replay production events — concrete GitHub Action + Lambda setup and real failure caught, 2026 benchmarks.</description>
+      <pubDate>Fri, 12 Jun 2026 02:06:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/drop-checklists-ai-code-reviews-that-scale/</guid>
+    </item>
     <item>
       <title>Which AI wrappers made money in 2026</title>
       <link>https://kubaik.github.io/which-ai-wrappers-made-money-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut CSS bundle size 89%, build time 95%, and CloudFront costs 50% with container queries, @layer, and CSS variables — the tools that finally retired utility frameworks in 2026.</description>
       <pubDate>Thu, 11 Jun 2026 10:11:06 +0000</pubDate>
       <guid>https://kubaik.github.io/css-finally-fixed-my-css-problems/</guid>
-    </item>
-    <item>
-      <title>Local LLMs on MacBook Pro: the 4 models that run</title>
-      <link>https://kubaik.github.io/local-llms-on-macbook-pro-the-4-models-that-run/</link>
-      <description>Local LLMs in 2026 cut AI costs to $0 and battery drain 40% on a MacBook Pro — benchmarks for four models that finally run usably, with concrete latency, RAM, and power numbers.</description>
-      <pubDate>Thu, 11 Jun 2026 09:57:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/local-llms-on-macbook-pro-the-4-models-that-run/</guid>
     </item>
   </channel>
 </rss>
