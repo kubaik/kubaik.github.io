@@ -137,5 +137,6 @@
   "RAG is not enough: why hybrid search + reranking is the 2026 baseline",
   "Model routing in 2026: how to pick the right LLM for each task automatically",
   "Durable execution in 2026: why Temporal and Inngest are replacing custom job queues",
-  "gRPC vs REST vs tRPC in 2026: which one I reach for and why"
+  "gRPC vs REST vs tRPC in 2026: which one I reach for and why",
+  "On-call in 2026: how AI alert triage is changing what wakes engineers up at night"
 ]
