@@ -121,5 +121,6 @@
   "How to build in public in 2026 without the performance burning you out",
   "Building a second income stream as a developer in 2026 without building a SaaS",
   "How to design multi-region backends without triple the infrastructure cost",
-  "Cursor vs Windsurf vs Claude Code in 2026: a real daily-use comparison"
+  "Cursor vs Windsurf vs Claude Code in 2026: a real daily-use comparison",
+  "How service mesh adoption actually went: what Istio and Cilium look like in real production"
 ]

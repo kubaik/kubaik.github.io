@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 11:36:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 11:40:41 +0000</lastBuildDate>
+    <item>
+      <title>Istio 1.22 flopped. Cilium 1.15 won.</title>
+      <link>https://kubaik.github.io/istio-122-flopped-cilium-115-won/</link>
+      <description>Cut production latency 40% and cluster costs 30% by choosing Cilium or Linkerd instead of Istio 1.22 in 2026. Real benchmarks, memory figures, and rollback stories from six production clusters.</description>
+      <pubDate>Fri, 12 Jun 2026 11:40:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/istio-122-flopped-cilium-115-won/</guid>
+    </item>
     <item>
       <title>3 AI coders ranked: Cursor, Windsurf, Claude Code in</title>
       <link>https://kubaik.github.io/3-ai-coders-ranked-cursor-windsurf-claude-code-in/</link>
@@ -138,13 +145,6 @@
       <description>Cut SaaS churn 74% by pivoting away from AI-vulnerable niches — the compliance automation playbook with latency, cost, and fraud numbers from 2026.</description>
       <pubDate>Thu, 11 Jun 2026 21:30:06 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ate-our-niche-heres-how-we-picked-a-new-one/</guid>
-    </item>
-    <item>
-      <title>Self-healing AI agents vs rule-based ops: 40% fewer</title>
-      <link>https://kubaik.github.io/self-healing-ai-agents-vs-rule-based-ops-40-fewer/</link>
-      <description>Cut MTTR 83% with self-healing AI agents — real costs, false positives, and the exact Kubernetes manifests to migrate in 30 minutes.</description>
-      <pubDate>Thu, 11 Jun 2026 21:16:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/self-healing-ai-agents-vs-rule-based-ops-40-fewer/</guid>
     </item>
   </channel>
 </rss>

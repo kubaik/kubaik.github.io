@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T11:36:43.607824",
+  "built_at": "2026-06-12T11:40:37.988276",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -775,6 +775,11 @@
       "slug": "3-ai-coders-ranked-cursor-windsurf-claude-code-in",
       "title": "3 AI coders ranked: Cursor, Windsurf, Claude Code in",
       "summary": "I ran into this cursor windsurf problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent six weeks last year trying to repl"
+    },
+    {
+      "slug": "istio-122-flopped-cilium-115-won",
+      "title": "Istio 1.22 flopped. Cilium 1.15 won.",
+      "summary": "A colleague asked me about service mesh during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. Service mesh adoption in 2026: the honest ledger I spe"
     }
   ]
 }
