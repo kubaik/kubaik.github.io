@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 14:28:33 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 14:33:48 +0000</lastBuildDate>
+    <item>
+      <title>9 tests to chase AI bugs without testing AI</title>
+      <link>https://kubaik.github.io/9-tests-to-chase-ai-bugs-without-testing-ai/</link>
+      <description>Cut test maintenance 50% with 9 concrete techniques that test behavior, not AI output. From OpenAPI contracts to property-based tests — here’s what actually works in 2026.</description>
+      <pubDate>Fri, 12 Jun 2026 14:33:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/9-tests-to-chase-ai-bugs-without-testing-ai/</guid>
+    </item>
     <item>
       <title>5 patterns to keep systems up when consistency breaks</title>
       <link>https://kubaik.github.io/5-patterns-to-keep-systems-up-when-consistency-breaks/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI inference spend 60% with the right staff role in 2026 — AI-Architect Advocate beats manager or staff engineer for ROI</description>
       <pubDate>Thu, 11 Jun 2026 23:17:22 +0000</pubDate>
       <guid>https://kubaik.github.io/2-ai-roles-ranked-staff-engineer-vs-manager-in-2026/</guid>
-    </item>
-    <item>
-      <title>Secure LLM apps: OWASP Top 10 for 2026</title>
-      <link>https://kubaik.github.io/secure-llm-apps-owasp-top-10-for-2026/</link>
-      <description>Secure LLM apps in 2026: OWASP Top 10 patterns that stop prompt injection, jailbreaks, and data leakage — with code, benchmarks, and the exact guardrail model to use.</description>
-      <pubDate>Thu, 11 Jun 2026 23:08:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/secure-llm-apps-owasp-top-10-for-2026/</guid>
     </item>
   </channel>
 </rss>

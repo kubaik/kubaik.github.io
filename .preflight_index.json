@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T14:24:17.421744",
+  "built_at": "2026-06-12T14:33:44.777671",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -790,6 +790,11 @@
       "slug": "5-patterns-to-keep-systems-up-when-consistency-breaks",
       "title": "5 patterns to keep systems up when consistency breaks",
       "summary": "After reviewing a lot of code that touches claude gpt5, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. Why this list exists (what I was actually trying to solve) I was on call the week we pushed our first global feature using Dy"
+    },
+    {
+      "slug": "9-tests-to-chase-ai-bugs-without-testing-ai",
+      "title": "9 tests to chase AI bugs without testing AI",
+      "summary": "I ran into this write tests problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I shipped a feature last month that used GitHu"
     }
   ]
 }
