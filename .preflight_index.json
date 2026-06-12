@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T17:38:58.071601",
+  "built_at": "2026-06-12T17:42:05.747031",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -815,6 +815,11 @@
       "slug": "ai-incident-bots-pagerduty-vs-opsgenie-2026",
       "title": "AI incident bots: PagerDuty vs Opsgenie 2026",
       "summary": "I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026 we hit the tipping point: teams that added AI triage to th"
+    },
+    {
+      "slug": "astro-islands-cut-js-80-in-2026",
+      "title": "Astro islands cut JS 80% in 2026",
+      "summary": "Most islands architecture guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 our team shipped a redesign of our main product dashboard. We wanted"
     }
   ]
 }

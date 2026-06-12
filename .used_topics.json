@@ -130,5 +130,6 @@
   "Feature flags in 2026: how they became the backbone of AI rollout strategies",
   "Why async Python still surprises people and how to stop getting burned by it",
   "How Signals changed state management and whether it matters outside of frameworks",
-  "AI-assisted incident response: what works and what makes oncall worse"
+  "AI-assisted incident response: what works and what makes oncall worse",
+  "The islands architecture in 2026: when Astro and partial hydration are the right choice"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 17:39:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 17:42:09 +0000</lastBuildDate>
+    <item>
+      <title>Astro islands cut JS 80% in 2026</title>
+      <link>https://kubaik.github.io/astro-islands-cut-js-80-in-2026/</link>
+      <description>Astro islands 2026: cut JavaScript 90%, TTI 83% — Vercel 7.2 adapter, Preact hydration, and the bundle budget mistake most teams repeat.</description>
+      <pubDate>Fri, 12 Jun 2026 17:42:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/astro-islands-cut-js-80-in-2026/</guid>
+    </item>
     <item>
       <title>AI incident bots: PagerDuty vs Opsgenie 2026</title>
       <link>https://kubaik.github.io/ai-incident-bots-pagerduty-vs-opsgenie-2026/</link>
@@ -138,13 +145,6 @@
       <description>The mismatches weren’t large dollar amounts—they were 1 Naira here, 5 Naira there—but they accumulated into a $4,200 variance over a single weekend.</description>
       <pubDate>Fri, 12 Jun 2026 02:44:27 +0000</pubDate>
       <guid>https://kubaik.github.io/reconciling-mobile-money-edge-cases-banks-ignore/</guid>
-    </item>
-    <item>
-      <title>Drop checklists: AI code reviews that scale</title>
-      <link>https://kubaik.github.io/drop-checklists-ai-code-reviews-that-scale/</link>
-      <description>Cut code review time 65% by replacing static checklists with AI agents that replay production events — concrete GitHub Action + Lambda setup and real failure caught, 2026 benchmarks.</description>
-      <pubDate>Fri, 12 Jun 2026 02:06:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/drop-checklists-ai-code-reviews-that-scale/</guid>
     </item>
   </channel>
 </rss>
