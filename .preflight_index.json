@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T02:44:29.968705",
+  "built_at": "2026-06-12T04:18:45.754528",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -725,6 +725,11 @@
       "slug": "reconciling-mobile-money-edge-cases-banks-ignore",
       "title": "Reconciling mobile money: edge cases banks ignore",
       "summary": "Most building mobile guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026 we launched a B2B payments product in Nigeria that settled via mobile money ra"
+    },
+    {
+      "slug": "automate-80-keep-20-why-ai-agents-still-need-humans",
+      "title": "Automate 80% keep 20%: why AI agents still need humans",
+      "summary": "I've seen the same most agents mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now If you’re running an AI agent in production today, you’ve probably seen it"
     }
   ]
 }
