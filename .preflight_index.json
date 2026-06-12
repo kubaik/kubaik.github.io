@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T22:09:27.189143",
+  "built_at": "2026-06-12T23:10:44.767207",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -860,6 +860,11 @@
       "slug": "ai-tools-broke-my-stack-heres-what-i-changed",
       "title": "AI tools broke my stack — here’s what I changed",
       "summary": "A colleague asked me about engineering principles during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomp"
+    },
+    {
+      "slug": "ai-native-apps-forget-the-old-stack",
+      "title": "AI-native apps: forget the old stack",
+      "summary": "A colleague asked me about design ainative during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) T"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 23:05:07 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 23:10:48 +0000</lastBuildDate>
+    <item>
+      <title>AI-native apps: forget the old stack</title>
+      <link>https://kubaik.github.io/ai-native-apps-forget-the-old-stack/</link>
+      <description>Cut LLM token costs 60% with state machines and prompt versioning — latency benchmarks, cache keys, and the hidden cost of agent loops in 2026.</description>
+      <pubDate>Fri, 12 Jun 2026 23:10:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-native-apps-forget-the-old-stack/</guid>
+    </item>
     <item>
       <title>AI tools broke my stack — here’s what I changed</title>
       <link>https://kubaik.github.io/ai-tools-broke-my-stack-heres-what-i-changed/</link>
@@ -138,13 +145,6 @@
       <description>Your fraud detection model needs writes in one region, but 90% of reads happen in another.</description>
       <pubDate>Fri, 12 Jun 2026 11:24:58 +0000</pubDate>
       <guid>https://kubaik.github.io/cost-hacking-multi-region-backends-in-2026/</guid>
-    </item>
-    <item>
-      <title>3 second incomes for devs in 2026 — no SaaS needed</title>
-      <link>https://kubaik.github.io/3-second-incomes-for-devs-in-2026-no-saas-needed/</link>
-      <description>Earn KES 22k/month in 2026 with a 200-line API wrapper — no SaaS, no sales, and no waiting. Real Nairobi case studies, code, and launch checklist.</description>
-      <pubDate>Fri, 12 Jun 2026 11:16:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/3-second-incomes-for-devs-in-2026-no-saas-needed/</guid>
     </item>
   </channel>
 </rss>

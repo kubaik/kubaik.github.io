@@ -139,5 +139,6 @@
   "Durable execution in 2026: why Temporal and Inngest are replacing custom job queues",
   "gRPC vs REST vs tRPC in 2026: which one I reach for and why",
   "On-call in 2026: how AI alert triage is changing what wakes engineers up at night",
-  "The engineering principles I updated after AI tools changed my daily workflow"
+  "The engineering principles I updated after AI tools changed my daily workflow",
+  "How to design AI-native applications: architecture patterns that didn't exist three years ago"
 ]
