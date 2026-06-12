@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 22:04:25 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 22:09:31 +0000</lastBuildDate>
+    <item>
+      <title>AI tools broke my stack — here’s what I changed</title>
+      <link>https://kubaik.github.io/ai-tools-broke-my-stack-heres-what-i-changed/</link>
+      <description>Cut debugging time 40% by constraining AI tools — guardrails, metrics, and the rollback numbers most teams miss in 2026.</description>
+      <pubDate>Fri, 12 Jun 2026 22:09:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-tools-broke-my-stack-heres-what-i-changed/</guid>
+    </item>
     <item>
       <title>AI alert triage: cut pages 80% in production</title>
       <link>https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/</link>
@@ -138,13 +145,6 @@
       <description>Earn KES 22k/month in 2026 with a 200-line API wrapper — no SaaS, no sales, and no waiting. Real Nairobi case studies, code, and launch checklist.</description>
       <pubDate>Fri, 12 Jun 2026 11:16:13 +0000</pubDate>
       <guid>https://kubaik.github.io/3-second-incomes-for-devs-in-2026-no-saas-needed/</guid>
-    </item>
-    <item>
-      <title>Stop shipping daily: the burn rate math</title>
-      <link>https://kubaik.github.io/stop-shipping-daily-the-burn-rate-math/</link>
-      <description>Cut daily posting burn 70% with deliberate artifacts — READMEs, GIFs, and issue templates that actually convert. Real metrics and tools for 2026 builders.</description>
-      <pubDate>Fri, 12 Jun 2026 11:01:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-shipping-daily-the-burn-rate-math/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T21:55:36.160144",
+  "built_at": "2026-06-12T22:09:27.189143",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -855,6 +855,11 @@
       "slug": "ai-alert-triage-cut-pages-80-in-production",
       "title": "AI alert triage: cut pages 80% in production",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) By 2026, every mid-size tech team I know runs at least two AI alert-triage tools side-by"
+    },
+    {
+      "slug": "ai-tools-broke-my-stack-heres-what-i-changed",
+      "title": "AI tools broke my stack — here’s what I changed",
+      "summary": "A colleague asked me about engineering principles during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomp"
     }
   ]
 }
