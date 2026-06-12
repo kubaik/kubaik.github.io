@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T04:18:45.754528",
+  "built_at": "2026-06-12T06:47:14.700995",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -730,6 +730,11 @@
       "slug": "automate-80-keep-20-why-ai-agents-still-need-humans",
       "title": "Automate 80% keep 20%: why AI agents still need humans",
       "summary": "I've seen the same most agents mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now If you’re running an AI agent in production today, you’ve probably seen it"
+    },
+    {
+      "slug": "apis-must-die-in-2026",
+      "title": "APIs must die in 2026",
+      "summary": "A colleague asked me about african fintech during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete)\\n"
     }
   ]
 }

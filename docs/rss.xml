@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 09:43:09 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 06:47:18 +0000</lastBuildDate>
+    <item>
+      <title>APIs must die in 2026</title>
+      <link>https://kubaik.github.io/apis-must-die-in-2026/</link>
+      <description>Cut API failure rates 85% by ditching REST in 2026 — idempotency keys, HTTP/3, and callback queues that survive 250 ms latency and 15% packet loss.</description>
+      <pubDate>Fri, 12 Jun 2026 06:47:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/apis-must-die-in-2026/</guid>
+    </item>
     <item>
       <title>Automate 80% keep 20%: why AI agents still need humans</title>
       <link>https://kubaik.github.io/automate-80-keep-20-why-ai-agents-still-need-humans/</link>
@@ -138,13 +145,6 @@
       <description>Cut MCP server timeouts 90% by fixing Docker keepalive and MTU issues — exact sysctl values, Docker Compose snippets, and Lambda configs for 2026.</description>
       <pubDate>Thu, 11 Jun 2026 14:20:38 +0000</pubDate>
       <guid>https://kubaik.github.io/mcp-server-timeouts-why-your-tools-vanish-after-30s/</guid>
-    </item>
-    <item>
-      <title>50 edge locations: what breaks in your backend</title>
-      <link>https://kubaik.github.io/50-edge-locations-what-breaks-in-your-backend/</link>
-      <description>Cut API latency 60% by running in 50 edge locations — the TTL mistake that wastes 3 days, connection pool sizing at 512 MB, and why Redis 7.2 central cache costs more than edge-native.</description>
-      <pubDate>Thu, 11 Jun 2026 14:09:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/50-edge-locations-what-breaks-in-your-backend/</guid>
     </item>
   </channel>
 </rss>
