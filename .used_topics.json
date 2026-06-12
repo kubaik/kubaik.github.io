@@ -131,5 +131,6 @@
   "Why async Python still surprises people and how to stop getting burned by it",
   "How Signals changed state management and whether it matters outside of frameworks",
   "AI-assisted incident response: what works and what makes oncall worse",
-  "The islands architecture in 2026: when Astro and partial hydration are the right choice"
+  "The islands architecture in 2026: when Astro and partial hydration are the right choice",
+  "Building developer tools as a business: what the AI era changed about the sales cycle"
 ]

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T17:42:05.747031",
+  "built_at": "2026-06-12T19:14:57.033518",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -820,6 +820,11 @@
       "slug": "astro-islands-cut-js-80-in-2026",
       "title": "Astro islands cut JS 80% in 2026",
       "summary": "Most islands architecture guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 our team shipped a redesign of our main product dashboard. We wanted"
+    },
+    {
+      "slug": "ai-sales-cycles-why-dev-tools-now-need-3-demos",
+      "title": "AI sales cycles: why dev tools now need 3 demos",
+      "summary": "Most building developer guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) We launched a CLI tool called in early 2026 to help teams debug API latency spikes "
     }
   ]
 }
