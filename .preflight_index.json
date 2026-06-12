@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T11:16:16.190124",
+  "built_at": "2026-06-12T11:25:01.150276",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -765,6 +765,11 @@
       "slug": "3-second-incomes-for-devs-in-2026-no-saas-needed",
       "title": "3 second incomes for devs in 2026 — no SaaS needed",
       "summary": "I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026 I hit the same wall every Nai"
+    },
+    {
+      "slug": "cost-hacking-multi-region-backends-in-2026",
+      "title": "Cost hacking multi-region backends in 2026",
+      "summary": "The official documentation for design multiregion is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs If you’ve ever read the AWS We"
     }
   ]
 }
