@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 10:56:48 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 11:01:48 +0000</lastBuildDate>
+    <item>
+      <title>Stop shipping daily: the burn rate math</title>
+      <link>https://kubaik.github.io/stop-shipping-daily-the-burn-rate-math/</link>
+      <description>Cut daily posting burn 70% with deliberate artifacts — READMEs, GIFs, and issue templates that actually convert. Real metrics and tools for 2026 builders.</description>
+      <pubDate>Fri, 12 Jun 2026 11:01:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-shipping-daily-the-burn-rate-math/</guid>
+    </item>
     <item>
       <title>Ship 1MB pages on 4G: Starlink Africa case study</title>
       <link>https://kubaik.github.io/ship-1mb-pages-on-4g-starlink-africa-case-study/</link>
@@ -138,13 +145,6 @@
       <description>That’s what server components give you: the ability to reduce client JS by 60% without touching the UI layer.</description>
       <pubDate>Thu, 11 Jun 2026 18:23:24 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-react-bundle-62-without-rewriting/</guid>
-    </item>
-    <item>
-      <title>AI interviews broke system design: 3 patterns that</title>
-      <link>https://kubaik.github.io/ai-interviews-broke-system-design-3-patterns-that/</link>
-      <description>Latency spiked to 850ms on a 500ms SLA, and the Terraform script it wrote referenced AWS services that don’t exist in us-east-2.</description>
-      <pubDate>Thu, 11 Jun 2026 18:10:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-interviews-broke-system-design-3-patterns-that/</guid>
     </item>
   </channel>
 </rss>
