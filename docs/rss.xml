@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 07:15:11 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 07:18:59 +0000</lastBuildDate>
+    <item>
+      <title>Passkeys killed passwords in 2026</title>
+      <link>https://kubaik.github.io/passkeys-killed-passwords-in-2026/</link>
+      <description>Cut failed logins 82% by switching to passkeys — real numbers, code samples, and the Samsung credential ID trap we hit first.</description>
+      <pubDate>Fri, 12 Jun 2026 07:18:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/passkeys-killed-passwords-in-2026/</guid>
+    </item>
     <item>
       <title>Cut false positives 85% with this CI security trick</title>
       <link>https://kubaik.github.io/cut-false-positives-85-with-this-ci-security-trick/</link>
@@ -138,13 +145,6 @@
       <description>Cut unsigned dependency risk 100% with SLSA 1.0 and Sigstore in 2026 — concrete pipeline, cost, and latency numbers for bootstrappers and Series B teams.</description>
       <pubDate>Thu, 11 Jun 2026 17:55:06 +0000</pubDate>
       <guid>https://kubaik.github.io/slsa-10-and-sigstore-why-every-repo-needs-them-in/</guid>
-    </item>
-    <item>
-      <title>AWS Lambda replaced Airflow for half our pipelines</title>
-      <link>https://kubaik.github.io/aws-lambda-replaced-airflow-for-half-our-pipelines/</link>
-      <description>Cut data pipeline costs 68% by replacing Airflow with Lambda + Step Functions — the real AWS bill, latency, and code changes that worked in 2026</description>
-      <pubDate>Thu, 11 Jun 2026 16:47:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/aws-lambda-replaced-airflow-for-half-our-pipelines/</guid>
     </item>
   </channel>
 </rss>

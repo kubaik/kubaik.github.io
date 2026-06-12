@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T07:15:07.352092",
+  "built_at": "2026-06-12T07:18:55.993578",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -745,6 +745,11 @@
       "slug": "cut-false-positives-85-with-this-ci-security-trick",
       "title": "Cut false positives 85% with this CI security trick",
       "summary": "Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) Security scanning in CI feels like a fire hose: you turn it on, and within minutes you’r"
+    },
+    {
+      "slug": "passkeys-killed-passwords-in-2026",
+      "title": "Passkeys killed passwords in 2026",
+      "summary": "Most passkeys changed guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, our Jakarta-based social app had 1.2 million monthly active users, but"
     }
   ]
 }
