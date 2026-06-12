@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 06:59:20 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 07:04:32 +0000</lastBuildDate>
+    <item>
+      <title>Claude Code after 365 days: what actually works</title>
+      <link>https://kubaik.github.io/claude-code-after-365-days-what-actually-works/</link>
+      <description>See 38% faster PR merges and 50% fewer on-call pages using Claude Code in 2026 — real latency, cost, and coverage numbers from 14 repos.</description>
+      <pubDate>Fri, 12 Jun 2026 07:04:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/claude-code-after-365-days-what-actually-works/</guid>
+    </item>
     <item>
       <title>APIs must die in 2026</title>
       <link>https://kubaik.github.io/apis-must-die-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut USSD latency to under 2s &amp; costs to $0.25 per 1k sessions in 2026 — Node 20 LTS, DynamoDB &amp; CloudWatch setup with real carrier SLA results and Africa’s Talking sandbox.</description>
       <pubDate>Thu, 11 Jun 2026 14:34:31 +0000</pubDate>
       <guid>https://kubaik.github.io/ussd-fintech-in-2026-the-300m-user-channel-nobody/</guid>
-    </item>
-    <item>
-      <title>MCP server timeouts: why your tools vanish after 30s</title>
-      <link>https://kubaik.github.io/mcp-server-timeouts-why-your-tools-vanish-after-30s/</link>
-      <description>Cut MCP server timeouts 90% by fixing Docker keepalive and MTU issues — exact sysctl values, Docker Compose snippets, and Lambda configs for 2026.</description>
-      <pubDate>Thu, 11 Jun 2026 14:20:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-server-timeouts-why-your-tools-vanish-after-30s/</guid>
     </item>
   </channel>
 </rss>
