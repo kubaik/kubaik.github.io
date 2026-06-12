@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T11:40:37.988276",
+  "built_at": "2026-06-12T12:34:10.534045",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -780,6 +780,11 @@
       "slug": "istio-122-flopped-cilium-115-won",
       "title": "Istio 1.22 flopped. Cilium 1.15 won.",
       "summary": "A colleague asked me about service mesh during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. Service mesh adoption in 2026: the honest ledger I spe"
+    },
+    {
+      "slug": "lose-the-env-files-what-replaced-them-in-2026",
+      "title": "Lose the .env files: what replaced them in 2026",
+      "summary": "The official documentation for secrets management is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. Secrets management in 2026 is still about one thing: trust I spent three days debugging a "
     }
   ]
 }
