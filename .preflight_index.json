@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T02:06:57.860989",
+  "built_at": "2026-06-12T02:44:29.968705",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -720,6 +720,11 @@
       "slug": "drop-checklists-ai-code-reviews-that-scale",
       "title": "Drop checklists: AI code reviews that scale",
       "summary": "The short version: the conventional advice on code review is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Teams that replaced PR checklists with AI agents cut review time by 65% in 2026 benchm"
+    },
+    {
+      "slug": "reconciling-mobile-money-edge-cases-banks-ignore",
+      "title": "Reconciling mobile money: edge cases banks ignore",
+      "summary": "Most building mobile guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026 we launched a B2B payments product in Nigeria that settled via mobile money ra"
     }
   ]
 }
