@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jun 2026 01:43:32 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 12 Jun 2026 01:48:36 +0000</lastBuildDate>
+    <item>
+      <title>Which AI wrappers made money in 2026</title>
+      <link>https://kubaik.github.io/which-ai-wrappers-made-money-in-2026/</link>
+      <description>Cut AI wrapper failure 65% in 2026 with the 3 wrappers that survived rigorous production testing and cost audits.</description>
+      <pubDate>Fri, 12 Jun 2026 01:48:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/which-ai-wrappers-made-money-in-2026/</guid>
+    </item>
     <item>
       <title>Debug AI agent failures: 4 mistakes most teams miss</title>
       <link>https://kubaik.github.io/debug-ai-agent-failures-4-mistakes-most-teams-miss/</link>
@@ -138,13 +145,6 @@
       <description>Local LLMs in 2026 cut AI costs to $0 and battery drain 40% on a MacBook Pro — benchmarks for four models that finally run usably, with concrete latency, RAM, and power numbers.</description>
       <pubDate>Thu, 11 Jun 2026 09:57:27 +0000</pubDate>
       <guid>https://kubaik.github.io/local-llms-on-macbook-pro-the-4-models-that-run/</guid>
-    </item>
-    <item>
-      <title>Save $12k/month: cloud egress costs in 2026</title>
-      <link>https://kubaik.github.io/save-12kmonth-cloud-egress-costs-in-2026/</link>
-      <description>Save $3k/month on cloud egress costs in 2026 with 7 real architecture moves tested in production. Includes code, benchmarks, and the PrivateLink trick most teams miss.</description>
-      <pubDate>Thu, 11 Jun 2026 09:49:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/save-12kmonth-cloud-egress-costs-in-2026/</guid>
     </item>
   </channel>
 </rss>

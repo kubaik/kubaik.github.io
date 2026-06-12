@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-11T23:31:50.313451",
+  "built_at": "2026-06-12T01:48:33.310903",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -710,6 +710,11 @@
       "slug": "debug-ai-agent-failures-4-mistakes-most-teams-miss",
       "title": "Debug AI agent failures: 4 mistakes most teams miss",
       "summary": "I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now If you’ve run a production AI agent in 2026, you’ve already hit the “"
+    },
+    {
+      "slug": "which-ai-wrappers-made-money-in-2026",
+      "title": "Which AI wrappers made money in 2026",
+      "summary": "I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In early 2026 I joined a seed-stage sta"
     }
   ]
 }
