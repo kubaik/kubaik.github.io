@@ -129,5 +129,6 @@
   "How I write tests for AI-assisted code without testing the AI",
   "Feature flags in 2026: how they became the backbone of AI rollout strategies",
   "Why async Python still surprises people and how to stop getting burned by it",
-  "How Signals changed state management and whether it matters outside of frameworks"
+  "How Signals changed state management and whether it matters outside of frameworks",
+  "AI-assisted incident response: what works and what makes oncall worse"
 ]
