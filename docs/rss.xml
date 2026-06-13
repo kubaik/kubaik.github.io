@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 15:10:15 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 15:29:51 +0000</lastBuildDate>
+    <item>
+      <title>3 AI pair-programming tools we dropped after 60 days</title>
+      <link>https://kubaik.github.io/3-ai-pair-programming-tools-we-dropped-after-60-days/</link>
+      <description>Discover how a team cut nitpick comments 68% with AI pair programming. Real metrics from 60 days of testing GitHub Copilot, Cursor, Amazon Q and more — plus the exact commands to onboard in 30 minutes.</description>
+      <pubDate>Sat, 13 Jun 2026 15:29:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-ai-pair-programming-tools-we-dropped-after-60-days/</guid>
+    </item>
     <item>
       <title>AI prompt injection: why most systems fail</title>
       <link>https://kubaik.github.io/ai-prompt-injection-why-most-systems-fail/</link>
@@ -138,13 +145,6 @@
       <description>Cut deployment time 69% by moving from GitHub Actions to Argo CD — the concrete thresholds, costs, and code for platforms at 20, 100, 500, and 2000 engineers in 2026.</description>
       <pubDate>Sat, 13 Jun 2026 01:58:19 +0000</pubDate>
       <guid>https://kubaik.github.io/internal-platforms-the-size-gap-you-missed/</guid>
-    </item>
-    <item>
-      <title>AI solo SaaS: build vs buy the stack in 2026</title>
-      <link>https://kubaik.github.io/ai-solo-saas-build-vs-buy-the-stack-in-2026/</link>
-      <description>AI-first solo SaaS stacks cost 27% more to run than AI-assisted stacks — real numbers from 30 days of prod traffic in 2026. Learn which 2026 stack actually saves time and money.</description>
-      <pubDate>Sat, 13 Jun 2026 00:02:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-solo-saas-build-vs-buy-the-stack-in-2026/</guid>
     </item>
   </channel>
 </rss>

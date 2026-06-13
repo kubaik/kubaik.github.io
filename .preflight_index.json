@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T15:10:10.895898",
+  "built_at": "2026-06-13T15:29:47.361786",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -975,6 +975,11 @@
       "slug": "ai-prompt-injection-why-most-systems-fail",
       "title": "AI prompt injection: why most systems fail",
       "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs A month after we launched our AI"
+    },
+    {
+      "slug": "3-ai-pair-programming-tools-we-dropped-after-60-days",
+      "title": "3 AI pair-programming tools we dropped after 60 days",
+      "summary": "I ran into this pair programming problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In early 2026 we decided to try AI pair p"
     }
   ]
 }
