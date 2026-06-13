@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T19:12:51.151986",
+  "built_at": "2026-06-13T19:47:52.993727",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1015,6 +1015,11 @@
       "slug": "bundle-size-70-lighter-with-server-components",
       "title": "Bundle size: 70% lighter with server components",
       "summary": "The official documentation for use server is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams start with Next.js 14 or Re"
+    },
+    {
+      "slug": "marketing-without-budget-5k-mrr-in-18-months",
+      "title": "Marketing without budget: $5k MRR in 18 months",
+      "summary": "The short version: the conventional advice on got mrr is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) I built a $5,000 monthly recurring revenue SaaS with zero marketing budget, no ads, and no"
     }
   ]
 }

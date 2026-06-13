@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 19:42:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 19:47:57 +0000</lastBuildDate>
+    <item>
+      <title>Marketing without budget: $5k MRR in 18 months</title>
+      <link>https://kubaik.github.io/marketing-without-budget-5k-mrr-in-18-months/</link>
+      <description>Hit $5k MRR with zero marketing spend — the exact Stack Overflow, GitHub, and package manager tactics that worked in 2026.</description>
+      <pubDate>Sat, 13 Jun 2026 19:47:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/marketing-without-budget-5k-mrr-in-18-months/</guid>
+    </item>
     <item>
       <title>Bundle size: 70% lighter with server components</title>
       <link>https://kubaik.github.io/bundle-size-70-lighter-with-server-components/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM token spend 34% without raising latency with a 200 ms router. Learn the exact model scoring weights, canary tricks, and Redis 7.2 tricks that saved $2,340/month in production.</description>
       <pubDate>Sat, 13 Jun 2026 09:54:59 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-the-right-llm-in-500ms-or-less/</guid>
-    </item>
-    <item>
-      <title>AI static analysis vs legacy SAST: 5x faster scans</title>
-      <link>https://kubaik.github.io/ai-static-analysis-vs-legacy-sast-5x-faster-scans/</link>
-      <description>Cut vulnerability remediation time 78% with AI static analysis — CodeQL AI vs Semgrep 1.55 in real CI/CD pipelines with SOC 2 compliance data for 2026.</description>
-      <pubDate>Sat, 13 Jun 2026 08:40:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-static-analysis-vs-legacy-sast-5x-faster-scans/</guid>
     </item>
   </channel>
 </rss>
