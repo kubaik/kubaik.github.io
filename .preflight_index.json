@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T21:27:19.837389",
+  "built_at": "2026-06-13T22:39:59.199753",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1040,6 +1040,11 @@
       "slug": "api-security-the-attacks-rising-in-2026",
       "title": "API security: the attacks rising in 2026",
       "summary": "Most api security guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, our API gateway at a B2B SaaS startup started getting hit with a new kind of abu"
+    },
+    {
+      "slug": "css-2026-container-queries-retired-our-utility-class",
+      "title": "CSS 2026: container queries retired our utility class",
+      "summary": "Most css 2026 guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our mobile-first fintech app in Vietnam had ballooned to 2.3 million monthly ac"
     }
   ]
 }
