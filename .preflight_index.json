@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T15:29:47.361786",
+  "built_at": "2026-06-13T16:57:31.837679",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -980,6 +980,11 @@
       "slug": "3-ai-pair-programming-tools-we-dropped-after-60-days",
       "title": "3 AI pair-programming tools we dropped after 60 days",
       "summary": "I ran into this pair programming problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In early 2026 we decided to try AI pair p"
+    },
+    {
+      "slug": "wcag-chat-fails-the-4-silent-aria-traps",
+      "title": "WCAG chat fails: the 4 silent ARIA traps",
+      "summary": "After reviewing a lot of code that touches building accessible, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You built an AI chat widget with a slick streaming UI, but users with screen readers"
     }
   ]
 }

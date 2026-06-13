@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 16:52:32 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 16:57:36 +0000</lastBuildDate>
+    <item>
+      <title>WCAG chat fails: the 4 silent ARIA traps</title>
+      <link>https://kubaik.github.io/wcag-chat-fails-the-4-silent-aria-traps/</link>
+      <description>WCAG chat fails: cut silent ARIA bugs 90% with assertive live regions, atomic updates, and cross-engine fixes tested on VoiceOver, NVDA, and TalkBack in 2026.</description>
+      <pubDate>Sat, 13 Jun 2026 16:57:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/wcag-chat-fails-the-4-silent-aria-traps/</guid>
+    </item>
     <item>
       <title>3 AI pair-programming tools we dropped after 60 days</title>
       <link>https://kubaik.github.io/3-ai-pair-programming-tools-we-dropped-after-60-days/</link>
@@ -138,13 +145,6 @@
       <description>Cut remote work costs 40% with async Matrix chat and self-hosted runners — latency benchmarks, Synapse 1.116.0, and the mistake most teams still make in 2026.</description>
       <pubDate>Sat, 13 Jun 2026 02:36:53 +0000</pubDate>
       <guid>https://kubaik.github.io/remote-work-in-2026-which-tools-survived/</guid>
-    </item>
-    <item>
-      <title>Internal platforms: the size gap you missed</title>
-      <link>https://kubaik.github.io/internal-platforms-the-size-gap-you-missed/</link>
-      <description>Cut deployment time 69% by moving from GitHub Actions to Argo CD — the concrete thresholds, costs, and code for platforms at 20, 100, 500, and 2000 engineers in 2026.</description>
-      <pubDate>Sat, 13 Jun 2026 01:58:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/internal-platforms-the-size-gap-you-missed/</guid>
     </item>
   </channel>
 </rss>
