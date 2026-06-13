@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T11:51:29.539273",
+  "built_at": "2026-06-13T12:19:51.574610",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -945,6 +945,11 @@
       "slug": "5-experimentation-platforms-i-wish-id-tested-sooner",
       "title": "5 experimentation platforms I wish I’d tested sooner",
       "summary": "I ran into this feature flag problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026, I joined a Nairobi-based NGO running"
+    },
+    {
+      "slug": "service-mesh-in-2026-what-we-got-wrong",
+      "title": "Service mesh in 2026: what we got wrong",
+      "summary": "A colleague asked me about service mesh during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In 2"
     }
   ]
 }

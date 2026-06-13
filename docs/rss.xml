@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 12:14:37 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 12:19:55 +0000</lastBuildDate>
+    <item>
+      <title>Service mesh in 2026: what we got wrong</title>
+      <link>https://kubaik.github.io/service-mesh-in-2026-what-we-got-wrong/</link>
+      <description>Service mesh in 2026 costs 18 ms latency and 22% memory overhead — real production data from payments, healthcare, and e-commerce systems</description>
+      <pubDate>Sat, 13 Jun 2026 12:19:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/service-mesh-in-2026-what-we-got-wrong/</guid>
+    </item>
     <item>
       <title>5 experimentation platforms I wish I’d tested sooner</title>
       <link>https://kubaik.github.io/5-experimentation-platforms-i-wish-id-tested-sooner/</link>
@@ -138,13 +145,6 @@
       <description>Cut on-call pages 80% with AI alert triage — Prometheus 3.0, Qdrant 1.9 and a 120-line Python router. False negatives below 3% and $8k yearly savings.</description>
       <pubDate>Fri, 12 Jun 2026 21:55:33 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/</guid>
-    </item>
-    <item>
-      <title>Pick one API style: gRPC, REST, or tRPC</title>
-      <link>https://kubaik.github.io/pick-one-api-style-grpc-rest-or-trpc/</link>
-      <description>Cut API latency 60% by picking the right protocol — gRPC, REST, or tRPC — with real numbers from 5k RPS load tests on Graviton3</description>
-      <pubDate>Fri, 12 Jun 2026 21:31:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-one-api-style-grpc-rest-or-trpc/</guid>
     </item>
   </channel>
 </rss>
