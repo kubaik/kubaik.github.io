@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 19:03:15 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 19:12:55 +0000</lastBuildDate>
+    <item>
+      <title>Bundle size: 70% lighter with server components</title>
+      <link>https://kubaik.github.io/bundle-size-70-lighter-with-server-components/</link>
+      <description>Cut client bundle size 62% with Server Components — real numbers, code samples, and the hydration errors that broke production. See how 1.6 MB replaced 4.2 MB without rewriting everything.</description>
+      <pubDate>Sat, 13 Jun 2026 19:12:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/bundle-size-70-lighter-with-server-components/</guid>
+    </item>
     <item>
       <title>AI built my SaaS in 6 weeks—for real</title>
       <link>https://kubaik.github.io/ai-built-my-saas-in-6-weeksfor-real/</link>
@@ -138,13 +145,6 @@
       <description>Cut vulnerability remediation time 78% with AI static analysis — CodeQL AI vs Semgrep 1.55 in real CI/CD pipelines with SOC 2 compliance data for 2026.</description>
       <pubDate>Sat, 13 Jun 2026 08:40:42 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-static-analysis-vs-legacy-sast-5x-faster-scans/</guid>
-    </item>
-    <item>
-      <title>Pick the right broker: Kafka vs Redpanda vs NATS in</title>
-      <link>https://kubaik.github.io/pick-the-right-broker-kafka-vs-redpanda-vs-nats-in/</link>
-      <description>Cut event broker latency 85% in 2026 — Kafka vs Redpanda vs NATS benchmark with exact configs, AWS costs, and the one tuning mistake 90% of teams make.</description>
-      <pubDate>Sat, 13 Jun 2026 08:01:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-the-right-broker-kafka-vs-redpanda-vs-nats-in/</guid>
     </item>
   </channel>
 </rss>
