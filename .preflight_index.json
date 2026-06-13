@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T15:00:39.415309",
+  "built_at": "2026-06-13T15:10:10.895898",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -970,6 +970,11 @@
       "slug": "human-in-the-loop-vs-full-auto-ai-agents-in-2026",
       "title": "Human-in-the-loop vs full auto: AI agents in 2026",
       "summary": "I've seen the same most agents mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, AI agents are everywhere. They route support tickets, approve exp"
+    },
+    {
+      "slug": "ai-prompt-injection-why-most-systems-fail",
+      "title": "AI prompt injection: why most systems fail",
+      "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs A month after we launched our AI"
     }
   ]
 }

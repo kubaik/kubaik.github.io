@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 15:04:56 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 15:10:15 +0000</lastBuildDate>
+    <item>
+      <title>AI prompt injection: why most systems fail</title>
+      <link>https://kubaik.github.io/ai-prompt-injection-why-most-systems-fail/</link>
+      <description>Cut prompt-injection leakage to zero with 35 ms overhead — learn the real attack vectors LangChain docs ignore and the tools that actually work in 2026.</description>
+      <pubDate>Sat, 13 Jun 2026 15:10:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-prompt-injection-why-most-systems-fail/</guid>
+    </item>
     <item>
       <title>Human-in-the-loop vs full auto: AI agents in 2026</title>
       <link>https://kubaik.github.io/human-in-the-loop-vs-full-auto-ai-agents-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>AI-first solo SaaS stacks cost 27% more to run than AI-assisted stacks — real numbers from 30 days of prod traffic in 2026. Learn which 2026 stack actually saves time and money.</description>
       <pubDate>Sat, 13 Jun 2026 00:02:39 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-solo-saas-build-vs-buy-the-stack-in-2026/</guid>
-    </item>
-    <item>
-      <title>Webhooks 2026: delivery you can trust</title>
-      <link>https://kubaik.github.io/webhooks-2026-delivery-you-can-trust/</link>
-      <description>Stop losing webhook events — delivery guarantees, retries, and idempotency patterns that cut losses 14% and costs 51% in 2026</description>
-      <pubDate>Fri, 12 Jun 2026 23:26:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/webhooks-2026-delivery-you-can-trust/</guid>
     </item>
   </channel>
 </rss>

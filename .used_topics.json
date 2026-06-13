@@ -8,5 +8,6 @@
   "The skills that protect your salary when AI automates junior developer tasks",
   "Python 3.13 in production: the free-threaded GIL change and what it means for web apps",
   "How I migrated a monolith to services in 2026 without a big-bang rewrite",
-  "Why most AI agents in production still need a human in the loop"
+  "Why most AI agents in production still need a human in the loop",
+  "How prompt injection attacks work and why your AI product is probably vulnerable"
 ]
