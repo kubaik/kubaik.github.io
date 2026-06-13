@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 10:18:26 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 10:23:35 +0000</lastBuildDate>
+    <item>
+      <title>Tool calls under load: async batch vs fire-and-forget</title>
+      <link>https://kubaik.github.io/tool-calls-under-load-async-batch-vs-fire-and-forget/</link>
+      <description>Cut cloud costs 60% with async batch tool calls — real P99 latency, Redis 7.2 cost, and the fire-and-forget trap most teams hit at scale.</description>
+      <pubDate>Sat, 13 Jun 2026 10:23:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/tool-calls-under-load-async-batch-vs-fire-and-forget/</guid>
+    </item>
     <item>
       <title>Pick the right LLM in 500ms or less</title>
       <link>https://kubaik.github.io/pick-the-right-llm-in-500ms-or-less/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG hallucinations from 12% to 2.8% in 2026 with hybrid search + reranking. Latency &lt;250 ms, cost &lt;$0.0008/query on c6i.large.</description>
       <pubDate>Fri, 12 Jun 2026 19:41:05 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-needs-reranking-2026s-default-search-stack/</guid>
-    </item>
-    <item>
-      <title>JSON mode fails: 3 real workflows that broke ours</title>
-      <link>https://kubaik.github.io/json-mode-fails-3-real-workflows-that-broke-ours/</link>
-      <description>Cut LLM parsing errors 97% with structured function calls — how we went from 12% JSON failures to 0.4% and saved $720/month on OpenRouter tokens</description>
-      <pubDate>Fri, 12 Jun 2026 19:32:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/json-mode-fails-3-real-workflows-that-broke-ours/</guid>
     </item>
   </channel>
 </rss>

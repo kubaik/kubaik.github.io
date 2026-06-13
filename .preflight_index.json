@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T09:55:02.304237",
+  "built_at": "2026-06-13T10:23:30.896905",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -925,6 +925,11 @@
       "slug": "pick-the-right-llm-in-500ms-or-less",
       "title": "Pick the right LLM in 500ms or less",
       "summary": "The official documentation for model routing is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams start with a single LLM "
+    },
+    {
+      "slug": "tool-calls-under-load-async-batch-vs-fire-and-forget",
+      "title": "Tool calls under load: async batch vs fire-and-forget",
+      "summary": "I've seen the same toolcalling patterns mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now I once shipped a feature that looked perfect in staging but melte"
     }
   ]
 }
