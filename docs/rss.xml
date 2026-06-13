@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 11:27:55 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 11:33:20 +0000</lastBuildDate>
+    <item>
+      <title>Sigstore + SLSA: why repos will break in 2026</title>
+      <link>https://kubaik.github.io/sigstore-slsa-why-repos-will-break-in-2026/</link>
+      <description>Sigstore + SLSA cut tamper detection from 12 hours to 2 minutes and saved $8k in SLA credits. Here’s the exact 2026 setup we use at 6 engineers.</description>
+      <pubDate>Sat, 13 Jun 2026 11:33:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/sigstore-slsa-why-repos-will-break-in-2026/</guid>
+    </item>
     <item>
       <title>Store audit logs where latency can’t hide</title>
       <link>https://kubaik.github.io/store-audit-logs-where-latency-cant-hide/</link>
@@ -138,13 +145,6 @@
       <description>The system was supposed to retry failed tasks three times, but after a weekend of AWS Lambda cold starts the queue backed up for 12 hours and we lost 27%…</description>
       <pubDate>Fri, 12 Jun 2026 21:27:30 +0000</pubDate>
       <guid>https://kubaik.github.io/replace-job-queues-with-temporal-in-2026/</guid>
-    </item>
-    <item>
-      <title>Route tasks to LLMs automatically in 2026</title>
-      <link>https://kubaik.github.io/route-tasks-to-llms-automatically-in-2026/</link>
-      <description>The gap between what the docs say and what production needs I spent two weeks tuning a system that routed every query to the biggest model available —…</description>
-      <pubDate>Fri, 12 Jun 2026 19:58:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/route-tasks-to-llms-automatically-in-2026/</guid>
     </item>
   </channel>
 </rss>

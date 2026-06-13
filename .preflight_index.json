@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T10:39:24.005611",
+  "built_at": "2026-06-13T11:33:16.850588",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -935,6 +935,11 @@
       "slug": "store-audit-logs-where-latency-cant-hide",
       "title": "Store audit logs where latency can’t hide",
       "summary": "I've seen the same building audit mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now When your product hits scale and a compliance team walks in with a 90-d"
+    },
+    {
+      "slug": "sigstore-slsa-why-repos-will-break-in-2026",
+      "title": "Sigstore + SLSA: why repos will break in 2026",
+      "summary": "Most supply chain guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we shipped a Python monolith to AWS ECS. It was 47k lines across 6 repos, bu"
     }
   ]
 }
