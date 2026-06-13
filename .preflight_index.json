@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T12:19:51.574610",
+  "built_at": "2026-06-13T12:34:53.700187",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -950,6 +950,11 @@
       "slug": "service-mesh-in-2026-what-we-got-wrong",
       "title": "Service mesh in 2026: what we got wrong",
       "summary": "A colleague asked me about service mesh during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In 2"
+    },
+    {
+      "slug": "survive-ai-3-skills-that-beat-automation",
+      "title": "Survive AI: 3 skills that beat automation",
+      "summary": "After reviewing a lot of code that touches skills that, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing Last year I saw a junior engineer with a $78k salary get replaced by an AI pair programmer i"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 12:29:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 12:34:58 +0000</lastBuildDate>
+    <item>
+      <title>Survive AI: 3 skills that beat automation</title>
+      <link>https://kubaik.github.io/survive-ai-3-skills-that-beat-automation/</link>
+      <description>Protect your $95k salary: three skills AI can’t automate yet — system design, debugging, and performance tuning — with benchmarks and the mistakes I made.</description>
+      <pubDate>Sat, 13 Jun 2026 12:34:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/survive-ai-3-skills-that-beat-automation/</guid>
+    </item>
     <item>
       <title>Service mesh in 2026: what we got wrong</title>
       <link>https://kubaik.github.io/service-mesh-in-2026-what-we-got-wrong/</link>
@@ -138,13 +145,6 @@
       <description>Cut debugging time 40% by constraining AI tools — guardrails, metrics, and the rollback numbers most teams miss in 2026.</description>
       <pubDate>Fri, 12 Jun 2026 22:09:24 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-tools-broke-my-stack-heres-what-i-changed/</guid>
-    </item>
-    <item>
-      <title>AI alert triage: cut pages 80% in production</title>
-      <link>https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/</link>
-      <description>Cut on-call pages 80% with AI alert triage — Prometheus 3.0, Qdrant 1.9 and a 120-line Python router. False negatives below 3% and $8k yearly savings.</description>
-      <pubDate>Fri, 12 Jun 2026 21:55:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/</guid>
     </item>
   </channel>
 </rss>
