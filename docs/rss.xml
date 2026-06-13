@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 01:54:06 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 01:58:24 +0000</lastBuildDate>
+    <item>
+      <title>Internal platforms: the size gap you missed</title>
+      <link>https://kubaik.github.io/internal-platforms-the-size-gap-you-missed/</link>
+      <description>Cut deployment time 69% by moving from GitHub Actions to Argo CD — the concrete thresholds, costs, and code for platforms at 20, 100, 500, and 2000 engineers in 2026.</description>
+      <pubDate>Sat, 13 Jun 2026 01:58:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/internal-platforms-the-size-gap-you-missed/</guid>
+    </item>
     <item>
       <title>AI solo SaaS: build vs buy the stack in 2026</title>
       <link>https://kubaik.github.io/ai-solo-saas-build-vs-buy-the-stack-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut API failure 99.9% with 5 outage-proof patterns — outbox, saga, CRDTs, event sourcing, and versioned cache. Benchmarked at 120k orders/minute with DynamoDB Global Tables and Redis 7.2.</description>
       <pubDate>Fri, 12 Jun 2026 14:24:14 +0000</pubDate>
       <guid>https://kubaik.github.io/5-patterns-to-keep-systems-up-when-consistency-breaks/</guid>
-    </item>
-    <item>
-      <title>Lose the .env files: what replaced them in 2026</title>
-      <link>https://kubaik.github.io/lose-the-env-files-what-replaced-them-in-2026/</link>
-      <description>Cut secrets leak risk 99% in 2026 with runtime-zeroed secrets — AWS Lambda Extensions, Vault 1.17, and SOPS workarounds for teams still stuck on .env files.</description>
-      <pubDate>Fri, 12 Jun 2026 12:34:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/lose-the-env-files-what-replaced-them-in-2026/</guid>
     </item>
   </channel>
 </rss>

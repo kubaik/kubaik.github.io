@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T00:02:42.620949",
+  "built_at": "2026-06-13T01:58:21.627903",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -880,6 +880,11 @@
       "slug": "ai-solo-saas-build-vs-buy-the-stack-in-2026",
       "title": "AI solo SaaS: build vs buy the stack in 2026",
       "summary": "I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026 the marginal cost of building a SaaS feature is often cheape"
+    },
+    {
+      "slug": "internal-platforms-the-size-gap-you-missed",
+      "title": "Internal platforms: the size gap you missed",
+      "summary": "The official documentation for platform engineering is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. I’ll admit it: I thought a single Argo CD instance was enough to bridge our developer pa"
     }
   ]
 }
