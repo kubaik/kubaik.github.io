@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T11:33:16.850588",
+  "built_at": "2026-06-13T11:51:29.539273",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -940,6 +940,11 @@
       "slug": "sigstore-slsa-why-repos-will-break-in-2026",
       "title": "Sigstore + SLSA: why repos will break in 2026",
       "summary": "Most supply chain guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we shipped a Python monolith to AWS ECS. It was 47k lines across 6 repos, bu"
+    },
+    {
+      "slug": "5-experimentation-platforms-i-wish-id-tested-sooner",
+      "title": "5 experimentation platforms I wish I’d tested sooner",
+      "summary": "I ran into this feature flag problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026, I joined a Nairobi-based NGO running"
     }
   ]
 }

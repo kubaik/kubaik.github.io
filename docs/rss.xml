@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 11:33:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 11:51:33 +0000</lastBuildDate>
+    <item>
+      <title>5 experimentation platforms I wish I’d tested sooner</title>
+      <link>https://kubaik.github.io/5-experimentation-platforms-i-wish-id-tested-sooner/</link>
+      <description>Cut experiment costs 60% with Statsig — one SDK, offline sync, and stats that work on $20 KaiOS phones</description>
+      <pubDate>Sat, 13 Jun 2026 11:51:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-experimentation-platforms-i-wish-id-tested-sooner/</guid>
+    </item>
     <item>
       <title>Sigstore + SLSA: why repos will break in 2026</title>
       <link>https://kubaik.github.io/sigstore-slsa-why-repos-will-break-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 60% by picking the right protocol — gRPC, REST, or tRPC — with real numbers from 5k RPS load tests on Graviton3</description>
       <pubDate>Fri, 12 Jun 2026 21:31:22 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-one-api-style-grpc-rest-or-trpc/</guid>
-    </item>
-    <item>
-      <title>Replace job queues with Temporal in 2026</title>
-      <link>https://kubaik.github.io/replace-job-queues-with-temporal-in-2026/</link>
-      <description>The system was supposed to retry failed tasks three times, but after a weekend of AWS Lambda cold starts the queue backed up for 12 hours and we lost 27%…</description>
-      <pubDate>Fri, 12 Jun 2026 21:27:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/replace-job-queues-with-temporal-in-2026/</guid>
     </item>
   </channel>
 </rss>
