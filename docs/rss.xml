@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 07:56:45 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 08:02:01 +0000</lastBuildDate>
+    <item>
+      <title>Pick the right broker: Kafka vs Redpanda vs NATS in</title>
+      <link>https://kubaik.github.io/pick-the-right-broker-kafka-vs-redpanda-vs-nats-in/</link>
+      <description>Cut event broker latency 85% in 2026 — Kafka vs Redpanda vs NATS benchmark with exact configs, AWS costs, and the one tuning mistake 90% of teams make.</description>
+      <pubDate>Sat, 13 Jun 2026 08:01:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-the-right-broker-kafka-vs-redpanda-vs-nats-in/</guid>
+    </item>
     <item>
       <title>AI agents lose context after restart: how to fix</title>
       <link>https://kubaik.github.io/ai-agents-lose-context-after-restart-how-to-fix/</link>
@@ -138,13 +145,6 @@
       <description>Astro islands 2026: cut JavaScript 90%, TTI 83% — Vercel 7.2 adapter, Preact hydration, and the bundle budget mistake most teams repeat.</description>
       <pubDate>Fri, 12 Jun 2026 17:42:03 +0000</pubDate>
       <guid>https://kubaik.github.io/astro-islands-cut-js-80-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI incident bots: PagerDuty vs Opsgenie 2026</title>
-      <link>https://kubaik.github.io/ai-incident-bots-pagerduty-vs-opsgenie-2026/</link>
-      <description>Cut incident response time 41% with AI bots — PagerDuty vs Opsgenie 2026 comparison with concrete costs, latency, and setup steps.</description>
-      <pubDate>Fri, 12 Jun 2026 17:38:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-incident-bots-pagerduty-vs-opsgenie-2026/</guid>
     </item>
   </channel>
 </rss>

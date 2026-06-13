@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T06:53:57.979827",
+  "built_at": "2026-06-13T08:01:57.286775",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -910,6 +910,11 @@
       "slug": "ai-agents-lose-context-after-restart-how-to-fix",
       "title": "AI agents lose context after restart: how to fix",
       "summary": "After reviewing a lot of code that touches memory systems, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing Your AI agent works perfectly in the first session, remembers everything you ask, but the"
+    },
+    {
+      "slug": "pick-the-right-broker-kafka-vs-redpanda-vs-nats-in",
+      "title": "Pick the right broker: Kafka vs Redpanda vs NATS in",
+      "summary": "After reviewing a lot of code that touches eventdriven architecture, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You’ve built an event-driven pipeline. Messages arrive, but processing crawls a"
     }
   ]
 }
