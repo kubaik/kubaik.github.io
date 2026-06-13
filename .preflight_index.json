@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T08:40:45.626937",
+  "built_at": "2026-06-13T09:55:02.304237",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -920,6 +920,11 @@
       "slug": "ai-static-analysis-vs-legacy-sast-5x-faster-scans",
       "title": "AI static analysis vs legacy SAST: 5x faster scans",
       "summary": "Most pair programming guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. Why this comparison matters right now Two years ago I inherited a Python codebase at a Nairobi fintech that had just passed a SOC "
+    },
+    {
+      "slug": "pick-the-right-llm-in-500ms-or-less",
+      "title": "Pick the right LLM in 500ms or less",
+      "summary": "The official documentation for model routing is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams start with a single LLM "
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 08:40:49 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 09:55:06 +0000</lastBuildDate>
+    <item>
+      <title>Pick the right LLM in 500ms or less</title>
+      <link>https://kubaik.github.io/pick-the-right-llm-in-500ms-or-less/</link>
+      <description>Cut LLM token spend 34% without raising latency with a 200 ms router. Learn the exact model scoring weights, canary tricks, and Redis 7.2 tricks that saved $2,340/month in production.</description>
+      <pubDate>Sat, 13 Jun 2026 09:54:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-the-right-llm-in-500ms-or-less/</guid>
+    </item>
     <item>
       <title>AI static analysis vs legacy SAST: 5x faster scans</title>
       <link>https://kubaik.github.io/ai-static-analysis-vs-legacy-sast-5x-faster-scans/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM parsing errors 97% with structured function calls — how we went from 12% JSON failures to 0.4% and saved $720/month on OpenRouter tokens</description>
       <pubDate>Fri, 12 Jun 2026 19:32:35 +0000</pubDate>
       <guid>https://kubaik.github.io/json-mode-fails-3-real-workflows-that-broke-ours/</guid>
-    </item>
-    <item>
-      <title>AI sales cycles: why dev tools now need 3 demos</title>
-      <link>https://kubaik.github.io/ai-sales-cycles-why-dev-tools-now-need-3-demos/</link>
-      <description>Cut sales cycle 84% with live Debug Sessions — how one CLI tool moved from videos to GitHub issues in 2026 and turned prospects into buyers in 6 days.</description>
-      <pubDate>Fri, 12 Jun 2026 19:14:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-sales-cycles-why-dev-tools-now-need-3-demos/</guid>
     </item>
   </channel>
 </rss>
