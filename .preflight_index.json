@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T22:39:59.199753",
+  "built_at": "2026-06-13T22:51:51.387681",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1045,6 +1045,11 @@
       "slug": "css-2026-container-queries-retired-our-utility-class",
       "title": "CSS 2026: container queries retired our utility class",
       "summary": "Most css 2026 guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our mobile-first fintech app in Vietnam had ballooned to 2.3 million monthly ac"
+    },
+    {
+      "slug": "stripe-lost-my-trust-heres-my-2026-stack",
+      "title": "Stripe lost my trust — here's my 2026 stack",
+      "summary": "A colleague asked me about stripe lemon during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete\\n\\nSt"
     }
   ]
 }

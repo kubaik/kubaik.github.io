@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 22:46:34 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 22:51:56 +0000</lastBuildDate>
+    <item>
+      <title>Stripe lost my trust — here&apos;s my 2026 stack</title>
+      <link>https://kubaik.github.io/stripe-lost-my-trust-heres-my-2026-stack/</link>
+      <description>Stripe vs Lemon Squeezy vs Paddle in 2026 — pick the right provider by comparing fees, tax handling, and complexity. Includes real costs, code examples, and decision matrix.</description>
+      <pubDate>Sat, 13 Jun 2026 22:51:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/stripe-lost-my-trust-heres-my-2026-stack/</guid>
+    </item>
     <item>
       <title>CSS 2026: container queries retired our utility class</title>
       <link>https://kubaik.github.io/css-2026-container-queries-retired-our-utility-class/</link>
@@ -138,13 +145,6 @@
       <description>Protect your $95k salary: three skills AI can’t automate yet — system design, debugging, and performance tuning — with benchmarks and the mistakes I made.</description>
       <pubDate>Sat, 13 Jun 2026 12:34:50 +0000</pubDate>
       <guid>https://kubaik.github.io/survive-ai-3-skills-that-beat-automation/</guid>
-    </item>
-    <item>
-      <title>Service mesh in 2026: what we got wrong</title>
-      <link>https://kubaik.github.io/service-mesh-in-2026-what-we-got-wrong/</link>
-      <description>Service mesh in 2026 costs 18 ms latency and 22% memory overhead — real production data from payments, healthcare, and e-commerce systems</description>
-      <pubDate>Sat, 13 Jun 2026 12:19:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/service-mesh-in-2026-what-we-got-wrong/</guid>
     </item>
   </channel>
 </rss>
