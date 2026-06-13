@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 22:51:56 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 22:58:40 +0000</lastBuildDate>
+    <item>
+      <title>2026 islands: Astro’s hydration edge</title>
+      <link>https://kubaik.github.io/2026-islands-astros-hydration-edge/</link>
+      <description>Cut API response time 44% with Astro islands: bundle shrinks 79%, LCP drops to 1.9 s on 3G, and infra costs fall 45% — here’s the exact strategy we used in 2026.</description>
+      <pubDate>Sat, 13 Jun 2026 22:58:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-islands-astros-hydration-edge/</guid>
+    </item>
     <item>
       <title>Stripe lost my trust — here&apos;s my 2026 stack</title>
       <link>https://kubaik.github.io/stripe-lost-my-trust-heres-my-2026-stack/</link>
@@ -138,13 +145,6 @@
       <description>Cut Python 3.13 free-threaded web app latency 62% — real benchmarks, cost savings, and the GIL change that actually matters in production</description>
       <pubDate>Sat, 13 Jun 2026 13:31:18 +0000</pubDate>
       <guid>https://kubaik.github.io/free-threaded-python-313-cpu-bound-web-wins/</guid>
-    </item>
-    <item>
-      <title>Survive AI: 3 skills that beat automation</title>
-      <link>https://kubaik.github.io/survive-ai-3-skills-that-beat-automation/</link>
-      <description>Protect your $95k salary: three skills AI can’t automate yet — system design, debugging, and performance tuning — with benchmarks and the mistakes I made.</description>
-      <pubDate>Sat, 13 Jun 2026 12:34:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/survive-ai-3-skills-that-beat-automation/</guid>
     </item>
   </channel>
 </rss>

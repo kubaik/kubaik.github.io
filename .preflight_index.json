@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T22:51:51.387681",
+  "built_at": "2026-06-13T22:58:36.256864",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1050,6 +1050,11 @@
       "slug": "stripe-lost-my-trust-heres-my-2026-stack",
       "title": "Stripe lost my trust — here's my 2026 stack",
       "summary": "A colleague asked me about stripe lemon during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete\\n\\nSt"
+    },
+    {
+      "slug": "2026-islands-astros-hydration-edge",
+      "title": "2026 islands: Astro’s hydration edge",
+      "summary": "Most islands architecture guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we launched a redesign of our developer portal with Next.js 15 and s"
     }
   ]
 }
