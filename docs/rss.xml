@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 06:43:54 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 06:49:18 +0000</lastBuildDate>
+    <item>
+      <title>Which React meta-framework won in 2026?</title>
+      <link>https://kubaik.github.io/which-react-meta-framework-won-in-2026/</link>
+      <description>Cut latency 60%: Next.js 15 edges out Remix and SvelteKit in 2026 real projects — with concrete costs, p95 numbers, and the caching gotcha that cost 40% more dev time.</description>
+      <pubDate>Sat, 13 Jun 2026 06:49:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/which-react-meta-framework-won-in-2026/</guid>
+    </item>
     <item>
       <title>Kubernetes in 2026: what teams offload</title>
       <link>https://kubaik.github.io/kubernetes-in-2026-what-teams-offload/</link>
@@ -138,13 +145,6 @@
       <description>Cut render time 90% with Signals — Preact Signals vs vanilla Signals vs SolidJS Signals ranked with 2026 benchmarks and memory growth numbers.</description>
       <pubDate>Fri, 12 Jun 2026 17:25:50 +0000</pubDate>
       <guid>https://kubaik.github.io/signals-killed-react-context-4-real-wins-outside/</guid>
-    </item>
-    <item>
-      <title>Async Python traps: sync vs trio vs asyncio 2026</title>
-      <link>https://kubaik.github.io/async-python-traps-sync-vs-trio-vs-asyncio-2026/</link>
-      <description>Cut async Python surprises 70% by choosing trio over asyncio — memory leaks, cancellation storms, and debugger traps exposed with Python 3.11 benchmarks.</description>
-      <pubDate>Fri, 12 Jun 2026 16:28:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/async-python-traps-sync-vs-trio-vs-asyncio-2026/</guid>
     </item>
   </channel>
 </rss>

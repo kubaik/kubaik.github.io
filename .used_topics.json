@@ -147,5 +147,6 @@
   "Platform engineering in 2026: what internal developer platforms look like at different company sizes",
   "Remote work in 2026: which companies pulled back and which doubled down",
   "Prompt injection in production AI systems: the attack surface most teams are ignoring",
-  "Kubernetes in 2026: what teams are offloading to managed platforms and what they keep"
+  "Kubernetes in 2026: what teams are offloading to managed platforms and what they keep",
+  "Next.js 15 vs Remix vs SvelteKit in 2026: a framework comparison after shipping real projects"
 ]
