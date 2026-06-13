@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 08:35:29 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 08:40:49 +0000</lastBuildDate>
+    <item>
+      <title>AI static analysis vs legacy SAST: 5x faster scans</title>
+      <link>https://kubaik.github.io/ai-static-analysis-vs-legacy-sast-5x-faster-scans/</link>
+      <description>Cut vulnerability remediation time 78% with AI static analysis — CodeQL AI vs Semgrep 1.55 in real CI/CD pipelines with SOC 2 compliance data for 2026.</description>
+      <pubDate>Sat, 13 Jun 2026 08:40:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-static-analysis-vs-legacy-sast-5x-faster-scans/</guid>
+    </item>
     <item>
       <title>Pick the right broker: Kafka vs Redpanda vs NATS in</title>
       <link>https://kubaik.github.io/pick-the-right-broker-kafka-vs-redpanda-vs-nats-in/</link>
@@ -138,13 +145,6 @@
       <description>Cut sales cycle 84% with live Debug Sessions — how one CLI tool moved from videos to GitHub issues in 2026 and turned prospects into buyers in 6 days.</description>
       <pubDate>Fri, 12 Jun 2026 19:14:54 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-sales-cycles-why-dev-tools-now-need-3-demos/</guid>
-    </item>
-    <item>
-      <title>Astro islands cut JS 80% in 2026</title>
-      <link>https://kubaik.github.io/astro-islands-cut-js-80-in-2026/</link>
-      <description>Astro islands 2026: cut JavaScript 90%, TTI 83% — Vercel 7.2 adapter, Preact hydration, and the bundle budget mistake most teams repeat.</description>
-      <pubDate>Fri, 12 Jun 2026 17:42:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/astro-islands-cut-js-80-in-2026/</guid>
     </item>
   </channel>
 </rss>
