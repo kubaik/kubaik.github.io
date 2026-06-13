@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 17:27:53 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 17:32:59 +0000</lastBuildDate>
+    <item>
+      <title>gRPC vs REST vs tRPC: Latency and cost in 2026</title>
+      <link>https://kubaik.github.io/grpc-vs-rest-vs-trpc-latency-and-cost-in-2026/</link>
+      <description>Pick one protocol: REST, gRPC or tRPC in 2026 for 60% lower latency or 40% cheaper bills. Real benchmarks on AWS m5.large and mobile in Singapore.</description>
+      <pubDate>Sat, 13 Jun 2026 17:32:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/grpc-vs-rest-vs-trpc-latency-and-cost-in-2026/</guid>
+    </item>
     <item>
       <title>$5k remote roles: Nairobi-Lagos playbook</title>
       <link>https://kubaik.github.io/5k-remote-roles-nairobi-lagos-playbook/</link>
@@ -138,13 +145,6 @@
       <description>Cut latency 60%: Next.js 15 edges out Remix and SvelteKit in 2026 real projects — with concrete costs, p95 numbers, and the caching gotcha that cost 40% more dev time.</description>
       <pubDate>Sat, 13 Jun 2026 06:49:11 +0000</pubDate>
       <guid>https://kubaik.github.io/which-react-meta-framework-won-in-2026/</guid>
-    </item>
-    <item>
-      <title>Kubernetes in 2026: what teams offload</title>
-      <link>https://kubaik.github.io/kubernetes-in-2026-what-teams-offload/</link>
-      <description>Cut Kubernetes costs 30% by fixing resource limits, admission timeouts, and kubelet timeouts in 2026 — GPU and Wasm workloads need new defaults or your cluster will break</description>
-      <pubDate>Sat, 13 Jun 2026 05:01:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/kubernetes-in-2026-what-teams-offload/</guid>
     </item>
   </channel>
 </rss>
