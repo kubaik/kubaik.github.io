@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 18:48:53 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 18:54:05 +0000</lastBuildDate>
+    <item>
+      <title>AI UI tools: what they fix and what they break</title>
+      <link>https://kubaik.github.io/ai-ui-tools-what-they-fix-and-what-they-break/</link>
+      <description>Cut frontend boilerplate 83% with AI UI tools in 2026 — the real wins and the hidden traps most teams miss. Includes version-pinned tools, accessibility audits, and a worked Next.js example.</description>
+      <pubDate>Sat, 13 Jun 2026 18:53:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ui-tools-what-they-fix-and-what-they-break/</guid>
+    </item>
     <item>
       <title>gRPC vs REST vs tRPC: Latency and cost in 2026</title>
       <link>https://kubaik.github.io/grpc-vs-rest-vs-trpc-latency-and-cost-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>AI agents forget context after restart — 3 concrete fixes for session persistence in 2026. Includes LangChain 0.2, Redis 7.2, and Kubernetes race fixes with exact latency and cost numbers.</description>
       <pubDate>Sat, 13 Jun 2026 06:53:54 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-lose-context-after-restart-how-to-fix/</guid>
-    </item>
-    <item>
-      <title>Which React meta-framework won in 2026?</title>
-      <link>https://kubaik.github.io/which-react-meta-framework-won-in-2026/</link>
-      <description>Cut latency 60%: Next.js 15 edges out Remix and SvelteKit in 2026 real projects — with concrete costs, p95 numbers, and the caching gotcha that cost 40% more dev time.</description>
-      <pubDate>Sat, 13 Jun 2026 06:49:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/which-react-meta-framework-won-in-2026/</guid>
     </item>
   </channel>
 </rss>
