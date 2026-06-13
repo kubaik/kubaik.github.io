@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-12T23:26:38.867887",
+  "built_at": "2026-06-13T00:02:42.620949",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -875,6 +875,11 @@
       "slug": "webhooks-2026-delivery-you-can-trust",
       "title": "Webhooks 2026: delivery you can trust",
       "summary": "Most building webhook guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we launched a new feature that let customers push events from their SaaS"
+    },
+    {
+      "slug": "ai-solo-saas-build-vs-buy-the-stack-in-2026",
+      "title": "AI solo SaaS: build vs buy the stack in 2026",
+      "summary": "I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026 the marginal cost of building a SaaS feature is often cheape"
     }
   ]
 }
