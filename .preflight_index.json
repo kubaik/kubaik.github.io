@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T20:59:31.923389",
+  "built_at": "2026-06-13T21:06:31.526178",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1030,6 +1030,11 @@
       "slug": "ai-freelance-rates-2026-which-stacks-still-pay",
       "title": "AI freelance rates 2026: which stacks still pay",
       "summary": "The short version: the conventional advice on freelance developer is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. Advanced edge cases you personally encountered In 2026 I ran into four edge cases that cost real money and almost killed a"
+    },
+    {
+      "slug": "self-healing-vs-traditional-pipelines-3x-faster-mttr",
+      "title": "Self-healing vs traditional pipelines: 3x faster MTTR",
+      "summary": "I've seen the same built selfhealing mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the average production incident costs $4,800 per minute acc"
     }
   ]
 }

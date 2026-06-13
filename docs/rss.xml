@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 20:59:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 21:06:35 +0000</lastBuildDate>
+    <item>
+      <title>Self-healing vs traditional pipelines: 3x faster MTTR</title>
+      <link>https://kubaik.github.io/self-healing-vs-traditional-pipelines-3x-faster-mttr/</link>
+      <description>Cut MTTR 95% with agent-driven pipelines — when Mistral 0.2 agents beat CloudWatch alarms in 2026 benchmarks</description>
+      <pubDate>Sat, 13 Jun 2026 21:06:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/self-healing-vs-traditional-pipelines-3x-faster-mttr/</guid>
+    </item>
     <item>
       <title>AI freelance rates 2026: which stacks still pay</title>
       <link>https://kubaik.github.io/ai-freelance-rates-2026-which-stacks-still-pay/</link>
@@ -138,13 +145,6 @@
       <description>Sigstore + SLSA cut tamper detection from 12 hours to 2 minutes and saved $8k in SLA credits. Here’s the exact 2026 setup we use at 6 engineers.</description>
       <pubDate>Sat, 13 Jun 2026 11:33:14 +0000</pubDate>
       <guid>https://kubaik.github.io/sigstore-slsa-why-repos-will-break-in-2026/</guid>
-    </item>
-    <item>
-      <title>Store audit logs where latency can’t hide</title>
-      <link>https://kubaik.github.io/store-audit-logs-where-latency-cant-hide/</link>
-      <description>Cut 90% storage and halve latency for audit logs — PostgreSQL 16 vs ClickHouse 25.1 under 1M writes/s with real benchmarks and cost data</description>
-      <pubDate>Sat, 13 Jun 2026 10:39:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/store-audit-logs-where-latency-cant-hide/</guid>
     </item>
   </channel>
 </rss>
