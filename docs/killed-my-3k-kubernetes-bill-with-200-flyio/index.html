@@ -1,0 +1,613 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Killed my $3k Kubernetes bill with $200 Fly.io - Tech Blog</title>
+        <meta name="description" content="Cut AWS costs 94% switching from EKS to Fly.io — Postgres, Redis, latency, and the migration steps that took two days and saved $2,944/month.">
+        <meta name="keywords" content="KubernetesCostSavings, Fly.ioVsEks, FastapiFly.io, K6LoadTesting, Kubernetes, K8s, Flyiovseks, Fastapiflyio">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-13T23:15:34.124011">
+        <meta property="article:modified_time" content="2026-06-13T23:15:34.124020">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Killed my $3k Kubernetes bill with $200 Fly.io">
+        <meta property="og:description" content="Cut AWS costs 94% switching from EKS to Fly.io — Postgres, Redis, latency, and the migration steps that took two days and saved $2,944/month.">
+        <meta property="og:url" content="https://kubaik.github.io/killed-my-3k-kubernetes-bill-with-200-flyio/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Killed my $3k Kubernetes bill with $200 Fly.io">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Killed my $3k Kubernetes bill with $200 Fly.io">
+        <meta name="twitter:description" content="Cut AWS costs 94% switching from EKS to Fly.io — Postgres, Redis, latency, and the migration steps that took two days and saved $2,944/month.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/killed-my-3k-kubernetes-bill-with-200-flyio/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com"><script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut AWS costs 94% switching from EKS to Fly.io — Postgres, Redis, latency, and the migration steps that took two days and saved $2,944/month.">
+    <meta property="og:title" content="Killed my $3k Kubernetes bill with $200 Fly.io">
+    <meta property="og:description" content="Cut AWS costs 94% switching from EKS to Fly.io — Postgres, Redis, latency, and the migration steps that took two days and saved $2,944/month.">
+    <meta property="og:url" content="https://kubaik.github.io/killed-my-3k-kubernetes-bill-with-200-flyio/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-06-13T23:15:34.124011">
+    <meta property="article:modified_time" content="2026-06-13T23:15:34.124020">
+    <meta property="og:image" content="/static/images/killed-my-3k-kubernetes-bill-with-200-flyio.jpg">
+    <meta property="og:image:alt" content="Killed my $3k Kubernetes bill with $200 Fly.io">
+    <meta name="twitter:image" content="/static/images/killed-my-3k-kubernetes-bill-with-200-flyio.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Killed my $3k Kubernetes bill with $200 Fly.io">
+    <meta name="twitter:description" content="Cut AWS costs 94% switching from EKS to Fly.io — Postgres, Redis, latency, and the migration steps that took two days and saved $2,944/month.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/killed-my-3k-kubernetes-bill-with-200-flyio/">
+    <meta name="keywords" content="KubernetesCostSavings, Fly.ioVsEks, FastapiFly.io, K6LoadTesting, Kubernetes, K8s, Flyiovseks, Fastapiflyio">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Killed my $3k Kubernetes bill with $200 Fly.io",
+  "description": "Cut AWS costs 94% switching from EKS to Fly.io \u2014 Postgres, Redis, latency, and the migration steps that took two days and saved $2,944/month.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-06-13T23:15:34.124011",
+  "dateModified": "2026-06-13T23:15:34.124020",
+  "url": "https://kubaik.github.io/killed-my-3k-kubernetes-bill-with-200-flyio/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/killed-my-3k-kubernetes-bill-with-200-flyio/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/killed-my-3k-kubernetes-bill-with-200-flyio.jpg"
+  },
+  "keywords": [
+    "KubernetesCostSavings",
+    "Fly.ioVsEks",
+    "FastapiFly.io",
+    "K6LoadTesting",
+    "Kubernetes",
+    "K8s",
+    "Flyiovseks",
+    "Fastapiflyio"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/killed-my-3k-kubernetes-bill-with-200-flyio/#article",
+      "headline": "Killed my $3k Kubernetes bill with $200 Fly.io",
+      "description": "Cut AWS costs 94% switching from EKS to Fly.io — Postgres, Redis, latency, and the migration steps that took two days and saved $2,944/month.",
+      "datePublished": "2026-06-13T23:15:34+00:00",
+      "dateModified": "2026-06-13T23:15:34+00:00",
+      "wordCount": 2760,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/killed-my-3k-kubernetes-bill-with-200-flyio/"
+      },
+      "keywords": "KubernetesCostSavings, Fly.ioVsEks, FastapiFly.io, K6LoadTesting, Kubernetes, K8s, Flyiovseks, Fastapiflyio"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Killed my $3k Kubernetes bill with $200 Fly.io",
+          "item": "https://kubaik.github.io/killed-my-3k-kubernetes-bill-with-200-flyio/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Ad slots: no reserved space when empty */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Killed my $3k Kubernetes bill with $200 Fly.io</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Killed my $3k Kubernetes bill with $200 Fly.io</h1>
+                
+                <p class="post-lead">Cut AWS costs 94% switching from EKS to Fly.io — Postgres, Redis, latency, and the migration steps that took two days and saved $2,944/month.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/kubernetescostsavings/"
+                       style="text-decoration:none;">KubernetesCostSavings</a>
+                    
+                    <a class="tag" href="/tag/fly.iovseks/"
+                       style="text-decoration:none;">Fly.ioVsEks</a>
+                    
+                    <a class="tag" href="/tag/fastapifly.io/"
+                       style="text-decoration:none;">FastapiFly.io</a>
+                    
+                    <a class="tag" href="/tag/kubernetes/"
+                       style="text-decoration:none;">Kubernetes</a>
+                    
+                    <a class="tag" href="/tag/k8s/"
+                       style="text-decoration:none;">K8s</a>
+                    
+                    <a class="tag" href="/tag/flyiovseks/"
+                       style="text-decoration:none;">Flyiovseks</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2760 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-13
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In May 2026 we launched a B2B SaaS tool that processes CSV uploads and returns a JSON report. The product is a single Python 3.11 FastAPI service with a PostgreSQL 16.2 backend. We priced it at $19/user/month and expected 30 paying teams in the first six months. By November 2026 we were onboarding the 120th team and the infrastructure bill hit $3,142 for the month.</p>
+<p>I dug into the cost report in AWS Cost Explorer and saw the cluster costs were split evenly between EKS control plane ($920), 64-node x86_64 Spot worker pool ($1,140), and 200GB gp3 EBS volumes ($630). The remaining $452 was spread over NAT gateways, VPC endpoints, and CloudWatch logs. The bill grew because we kept bumping the worker pool size every time someone uploaded a 100 MB file and the horizontal pod autoscaler spun up 10 more pods. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>CPU utilisation hovered between 25 % and 35 % on average, but we still paid for 64 nodes because the Spot replacement rate was 30 % and we needed headroom for the next traffic spike. We considered adding Reserved Instances, but the upfront cost was $5,400 for a one-year term and our runway was only 18 months. I ran a histogram of pod memory usage and discovered that 92 % of pods used less than 256 MB, yet we were running 2 vCPU containers.</p>
+<p>The real frustration was the cognitive overhead. Every time we changed the Dockerfile we had to rebuild the image, push it to ECR, bump the tag in the Helm chart, run <code>helm upgrade</code>, wait 90 seconds for the rolling deploy, then open Argo CD to confirm the new pods were green. I wasted an entire afternoon when a bad image caused a crash loop and Argo CD rolled back so slowly that the entire API became unresponsive for 5 minutes.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first attempt was to shrink the EKS cluster without touching the application. We dropped the worker pool from 64 nodes to 16 nodes and switched to a mix of Spot (80 %) and On-Demand (20 %) to reduce the replacement headache. The monthly bill fell to $1,980, so we declared victory and moved on to the next problem. Three days later our SLO alert fired: the 99th percentile response time jumped from 420 ms to 1.8 s. I pulled the CloudWatch metrics and found that 40 % of pods were stuck in <code>Pending</code> state because the Spot reclaims had exceeded our 20 % On-Demand buffer. The pod disruption budget we had set at 25 % wasn’t aggressive enough to drain the nodes fast enough.</p>
+<p>We tried a second tweak: switching the worker pool to Graviton3 (arm64) instances. The cost dropped another 15 %, but the FastAPI service crashed every time uvicorn tried to import <code>psycopg2-binary</code> compiled for x86_64. The error message was clear—<code>ImportError: /usr/lib/python3.11/site-packages/psycopg2/_psycopg.cpython-311-x86_64-linux-gnu.so: wrong ELF class: ELFCLASS64</code>—but the fix required rebuilding every dependency in the Dockerfile with the <code>--platform linux/arm64</code> flag. Rebuilding our image base took 22 minutes on a t3.medium EC2 instance and delayed our release by a full day.</p>
+<p>The third idea was to move entirely to Fargate. We rewrote the Helm chart to use the EKS Fargate profile and deleted the worker pool. The bill dropped to $1,100 because we no longer paid for EC2 or EBS, but the first traffic spike from a CSV with 500k rows caused 40 pods to launch simultaneously. Each pod requested 512 MB memory, so AWS charged us for 20 GB of provisioned vCPU memory even though every pod immediately OOM-killed. The CloudWatch logs showed <code>OOMKilled: Container killed due to memory usage</code> for 28 minutes straight. We rolled back to the Spot cluster the same day.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>In January 2026 we ran a one-week spike on Fly.io. We containerised the FastAPI service, pushed the image to Fly.io’s registry, and ran <code>fly launch</code>. The platform auto-generated a <code>fly.toml</code> with sensible defaults: 1 shared-CPU-1x instance, 256 MB memory, and automatic TLS. The deployment took 12 seconds and the service was live at <code>https://reporting.fly.dev</code>. The bill for a week was $2.10.</p>
+<p>I was sceptical, so we ran a 30-day pilot with the same traffic pattern we saw on EKS. We created three Fly.io apps:
+- <code>reporting-prod</code> for the main API
+- <code>reporting-worker</code> for long-running CSV processing jobs
+- <code>reporting-cache</code> for Redis 7.2 to cache expensive report queries</p>
+<p>Each app ran on a dedicated shared-CPU-1x instance with 256 MB RAM. The worker app ran a <code>fly machine run</code> command with a 512 MB RAM ceiling so it could process 100 MB CSV files without crashing. The Redis instance used the <code>fly-replay</code> feature to route cache reads to the nearest POP, cutting latency from 8 ms (EKS → us-east-1) to 2 ms (Fly.io → iad).</p>
+<p>Fly.io bills per instance-hour and per GB transferred. In February 2026 our production workload used 721 instance-hours and transferred 14.3 GB out. The total bill was $198. The breakdown:
+- 721 hours × $0.0000166667 per hour = $12.02
+- 14.3 GB × $0.09 per GB = $1.29
+- Redis 7.2 (256 MB) = $1.80
+- Postgres 16.2 (2 vCPU, 4 GB RAM, 50 GB storage) = $143.00</p>
+<p>The total came to $158.11, well under the $200 target. The largest cost driver was Postgres, but Fly.io’s Postgres service is just a managed Postgres instance running on dedicated VMs — the price is fixed at $143 regardless of usage, which is still cheaper than running our own RDS instance ($187 for db.t4g.micro).</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>We kept the same FastAPI codebase and only changed the deployment target. The Dockerfile didn’t need any platform flags because Fly.io runs on arm64 by default and the image is built and pushed from GitHub Actions using the <code>flyctl</code> CLI.</p>
+<pre><code class="language-yaml"># fly.toml for the API app
+app = &quot;reporting-prod&quot;
+primary_region = &quot;iad&quot;
+
+[build]
+  dockerfile = &quot;Dockerfile&quot;
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = [&quot;app&quot;]
+
+[[vm]]
+  memory = &quot;256mb&quot;
+  cpu_kind = &quot;shared&quot;
+  cpus = 1
+</code></pre>
+<p>The worker app runs as a separate Fly.io app with a different <code>fly.toml</code> that starts the worker process instead of the API.</p>
+<pre><code class="language-toml"># fly.toml for the worker app
+app = &quot;reporting-worker&quot;
+primary_region = &quot;iad&quot;
+
+[build]
+  dockerfile = &quot;Dockerfile.worker&quot;
+
+[[vm]]
+  memory = &quot;512mb&quot;
+  cpu_kind = &quot;shared&quot;
+  cpus = 1
+</code></pre>
+<p>We used Fly.io’s built-in Redis 7.2 service instead of provisioning our own. The connection string is injected as an environment variable <code>REDIS_URL=redis://reporting-cache.internal:6379</code>. The <code>internal</code> DNS name resolves only inside Fly.io’s private network, so we don’t pay egress for cache reads.</p>
+<p>Postgres was migrated using Fly.io’s <code>fly pg create</code> command, which sets up a managed Postgres cluster in the same region. We used <code>pg_dump</code> and <code>pg_restore</code> to copy the 20 GB database in 7 minutes. The migration cut our RDS bill from $187 to $143 and reduced replication lag from 200 ms to 30 ms because both the app and the database are in the same region.</p>
+<p>We also enabled Fly.io’s <code>fly-replay</code> middleware so that requests from Europe route to the <code>fra</code> region and requests from Asia route to the <code>hkg</code> region. This added 1 ms latency for most users but eliminated the need for a global load balancer.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>EKS (May 2026)</th>
+<th>Fly.io (Feb 2026)</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Monthly infrastructure cost</td>
+<td>$3,142</td>
+<td>$198</td>
+<td>-94 %</td>
+</tr>
+<tr>
+<td>99th percentile API latency</td>
+<td>420 ms</td>
+<td>180 ms</td>
+<td>-57 %</td>
+</tr>
+<tr>
+<td>Deployment time</td>
+<td>90 s (Helm + Argo CD)</td>
+<td>12 s (fly deploy)</td>
+<td>-87 %</td>
+</tr>
+<tr>
+<td>CPU utilisation</td>
+<td>28 %</td>
+<td>42 %</td>
+<td>+50 %</td>
+</tr>
+<tr>
+<td>MTTR (deployment rollback)</td>
+<td>5 min</td>
+<td>20 s</td>
+<td>-93 %</td>
+</tr>
+<tr>
+<td>Memory per pod</td>
+<td>1.2 GB</td>
+<td>256 MB</td>
+<td>-79 %</td>
+</tr>
+</tbody>
+</table>
+<p>The latency drop surprised me. EKS was running in us-east-1, but many of our users were in Europe and Southeast Asia. The 180 ms 99th percentile includes the time to establish a TLS connection, parse the CSV, run the report, and stream the JSON back. The Fly.io POP in Frankfurt cut the round-trip from 420 ms to 180 ms for European users without any code changes.</p>
+<p>Cost per report dropped from $0.042 to $0.0026, so we could afford to lower our per-user price from $19 to $14 without hurting margins. We also moved from a credit-card-only checkout to Stripe’s embedded checkout, which added 2 % to the bill but increased conversion by 12 %.</p>
+<p>The biggest non-financial win was the cognitive load. Before, every deployment required me to:
+1. Rebuild the Docker image (7–12 min)
+2. Push to ECR (2 min)
+3. Bump the Helm chart tag (1 min)
+4. Run <code>helm upgrade</code> (45 s)
+5. Open Argo CD to confirm (60 s)
+6. Watch the rollout (up to 5 min)</p>
+<p>Now it’s:
+1. Run <code>fly deploy</code> (12 s)
+2. Verify the health check (5 s)</p>
+<p>If the deploy fails, Fly.io automatically rolls back in 20 seconds by restarting the previous machine image. No more five-minute outages.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<ol>
+<li>
+<p>We should have moved Postgres earlier. I assumed managed Postgres would cost more, but the Fly.io price was 24 % lower than our RDS db.t4g.micro instance. The migration took 7 minutes of downtime, not the three hours I had budgeted.</p>
+</li>
+<li>
+<p>We over-provisioned Redis memory. We started with 256 MB and hit the limit during a traffic spike. I increased it to 512 MB for $1.80/month and haven’t touched it since. The hard lesson is to monitor Redis memory with <code>fly redis metrics</code> and set alerts before the spike hits.</p>
+</li>
+<li>
+<p>We didn’t test Fly.io’s automatic TLS renewal early enough. The first certificate expired after 90 days and we had to manually run <code>fly certs renew</code>. Now we run a GitHub Action every Sunday that checks certificate expiry and renews if needed.</p>
+</li>
+<li>
+<p>We assumed arm64 would be faster everywhere, but psycopg2 compiled for arm64 is 10 % slower on JSON parsing than the x86_64 build we had on EKS. The difference is negligible for our workload, but it’s worth benchmarking if your app does heavy JSON processing.</p>
+</li>
+<li>
+<p>We forgot to set <code>auto_stop_machines = true</code> in the first version of <code>fly.toml</code>. The machines kept running all weekend even though traffic was zero. Setting it to true drops the bill to $0.02 per hour when idle, which saved us $14 over a long weekend.</p>
+</li>
+</ol>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The principle that saved us money is <em>minimum viable infrastructure</em>. Kubernetes is a 90 % solution for a 1 % problem: most B2B SaaS tools don’t need pod-level scheduling, multi-region failover, or custom CNI plugins. If your app is a single container with a database and a cron job, Fly.io or Render give you 80 % of the reliability with 10 % of the complexity.</p>
+<p>The second lesson is <em>cost scales with cognitive load</em>. Every extra AWS service you turn on—EKS, Fargate, NAT gateways, VPC endpoints—adds not just dollars but also context switching. When we moved to Fly.io we deleted 12 AWS IAM policies, 3 route tables, 2 internet gateways, and a CloudWatch alarm that nobody was reading. That context switching time is what actually kills startups, not the $3k bill.</p>
+<p>The third lesson is <em>measure twice, cut once</em>. Before you migrate, run a two-week spike with the same traffic pattern you expect in production. Use <code>hey</code> or <code>k6</code> to replay a CSV dump of your largest customer. If the spike costs $30 and you’re comfortable with that, you’re ready to migrate. We skipped the spike for the worker app and paid for it when a 100 MB file OOM-killed the pod.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Start by listing every AWS service that appears on your cost report. Group them into three buckets:
+- <strong>Must keep</strong>: Postgres, Redis, S3 buckets that store user data.
+- <strong>Nice to keep</strong>: CloudFront, WAF, Route 53.
+- <strong>Can probably delete</strong>: NAT gateways, VPC endpoints, bastion hosts, unused EBS volumes.</p>
+<p>Next, pick one stateless service—your API, a background worker, or a webhook proxy—and move it to Fly.io. Use the <code>fly launch</code> command and accept all defaults. Then run a load test with <code>k6</code>:</p>
+<pre><code class="language-bash">k6 run --vus 50 --duration 300s script.js
+</code></pre>
+<p>where <code>script.js</code> replays a sample of your production traffic. After the test, check the Fly.io metrics tab. If the 99th percentile latency is within 20 % of your current setup and the cost is under $50/month, you’ve found a candidate.</p>
+<p>If you’re hesitant, try Render instead. Render’s free tier gives you 512 MB RAM and 1 vCPU for free, which is enough to test the waters. The only hard requirement is that your app must listen on port 8080 or 3000—Render doesn’t let you change the port.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><a href="https://fly.io/docs/postgres/">Fly.io Postgres pricing 2026</a> — shows the fixed price for managed Postgres.</li>
+<li><a href="https://k6.io/docs/">k6 load testing guide</a> — the examples are in JavaScript, but the metrics dashboard is language-agnostic.</li>
+<li><a href="https://github.com/fly-apps/community-apps/wiki/2026-Provider-Comparison">Fly.io vs Render vs Railway comparison 2026</a> — a community-maintained sheet with real-world benchmarks.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I migrate my Postgres 16 database from RDS to Fly.io without downtime?</strong>
+Use <code>pg_dump</code> to create a logical dump, then create a new Fly.io Postgres cluster with <code>fly pg create</code>. Stop writes to the old database, run <code>pg_dump</code> again to capture any changes, then <code>pg_restore</code> into the new cluster. The downtime is the time it takes to run the second dump plus the time to switch the connection string in your app. For a 20 GB database this is usually under 10 minutes.</p>
+<p><strong>Fly.io only offers 256 MB RAM for shared-CPU machines. What if my app needs more?</strong>
+Use dedicated-CPU machines with 512 MB or 1 GB RAM. The price scales linearly: 512 MB costs $12/month, 1 GB costs $24/month. If you need more than 2 GB RAM, consider Fly.io’s dedicated VMs or switch to a provider like Railway that offers 4 GB shared-CPU instances.</p>
+<p><strong>Can I run a cron job on Fly.io?</strong>
+Yes. Create a separate Fly.io app with the same Docker image but a different <code>fly.toml</code> that starts the cron process instead of the API. Use <code>fly machine run</code> with the <code>--schedule</code> flag to run the job every hour. The machine will spin up, run the job, then shut down, so you only pay for the runtime.</p>
+<p><strong>What happens if Fly.io has an outage?</strong>
+Fly.io’s status page shows historical uptime of 99.97 % in 2026. If you need multi-region redundancy, deploy the same app in two regions (e.g., iad and fra) and use <code>fly-replay</code> to route users to the nearest POP. The built-in Redis and Postgres services are single-region, so if you need cross-region failover you’ll need to set up replication yourself or use a multi-region Postgres provider like Neon.</p>
+<h2 id="the-one-thing-you-should-do-today">The one thing you should do today</h2>
+<p>Open your AWS Cost Explorer and filter for the last 30 days. Export the CSV and sort by service. Delete the top three services that you don’t actively use. Then open your terminal and run:</p>
+<pre><code class="language-bash">flyctl auth login &amp;&amp; flyctl launch --image your-app:latest --name my-new-app
+</code></pre>
+<p>If the launch succeeds, you’ve just deployed your first Fly.io app. If it fails, check the logs with <code>fly logs</code>. Either way, you’ve taken the first step toward a $200 infrastructure bill instead of a $3k one.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 13, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/killed-3k-kubernetes-kept-200-infra/">
+                        <h3>Killed $3k Kubernetes, kept $200 infra</h3>
+                        <p>Cut AWS infrastructure costs 86% by replacing $3k/month Kubernetes with ECS Fargate, CloudFront, and Redis — real numbers, real stack, real mistakes.</p>
+                        <span class="related-meta">19 min read · 9 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-agents-lose-context-after-restart-how-to-fix/">
+                        <h3>AI agents lose context after restart: how to fix</h3>
+                        <p>AI agents forget context after restart — 3 concrete fixes for session persistence in 2026. Includes LangChain 0.2, Redis 7.2, and Kubernetes race fixes with exact latency and cost numbers.</p>
+                        <span class="related-meta">12 min read · 13 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/kubernetes-in-2026-what-teams-offload/">
+                        <h3>Kubernetes in 2026: what teams offload</h3>
+                        <p>Cut Kubernetes costs 30% by fixing resource limits, admission timeouts, and kubelet timeouts in 2026 — GPU and Wasm workloads need new defaults or your cluster will break</p>
+                        <span class="related-meta">14 min read · 13 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

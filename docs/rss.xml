@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 23:10:22 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 23:15:41 +0000</lastBuildDate>
+    <item>
+      <title>Killed my $3k Kubernetes bill with $200 Fly.io</title>
+      <link>https://kubaik.github.io/killed-my-3k-kubernetes-bill-with-200-flyio/</link>
+      <description>Cut AWS costs 94% switching from EKS to Fly.io — Postgres, Redis, latency, and the migration steps that took two days and saved $2,944/month.</description>
+      <pubDate>Sat, 13 Jun 2026 23:15:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/killed-my-3k-kubernetes-bill-with-200-flyio/</guid>
+    </item>
     <item>
       <title>2026 islands: Astro’s hydration edge</title>
       <link>https://kubaik.github.io/2026-islands-astros-hydration-edge/</link>
@@ -138,13 +145,6 @@
       <description>Cut migration risk 60% with incremental monolith splitting — strangler facade, gradual traffic routing, and when to avoid dual writes in 2026</description>
       <pubDate>Sat, 13 Jun 2026 14:37:07 +0000</pubDate>
       <guid>https://kubaik.github.io/split-the-monolith-slowly-no-rewrite-needed/</guid>
-    </item>
-    <item>
-      <title>Free-threaded Python 3.13: CPU-bound web wins</title>
-      <link>https://kubaik.github.io/free-threaded-python-313-cpu-bound-web-wins/</link>
-      <description>Cut Python 3.13 free-threaded web app latency 62% — real benchmarks, cost savings, and the GIL change that actually matters in production</description>
-      <pubDate>Sat, 13 Jun 2026 13:31:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/free-threaded-python-313-cpu-bound-web-wins/</guid>
     </item>
   </channel>
 </rss>

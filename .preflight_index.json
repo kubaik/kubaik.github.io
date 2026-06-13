@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T22:58:36.256864",
+  "built_at": "2026-06-13T23:15:37.130724",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1055,6 +1055,11 @@
       "slug": "2026-islands-astros-hydration-edge",
       "title": "2026 islands: Astro’s hydration edge",
       "summary": "Most islands architecture guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we launched a redesign of our developer portal with Next.js 15 and s"
+    },
+    {
+      "slug": "killed-my-3k-kubernetes-bill-with-200-flyio",
+      "title": "Killed my $3k Kubernetes bill with $200 Fly.io",
+      "summary": "Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In May 2026 we launched a B2B SaaS tool that processes CSV uploads and returns a JSON"
     }
   ]
 }
