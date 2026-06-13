@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 21:21:42 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 21:27:23 +0000</lastBuildDate>
+    <item>
+      <title>API security: the attacks rising in 2026</title>
+      <link>https://kubaik.github.io/api-security-the-attacks-rising-in-2026/</link>
+      <description>Block API attacks in 2026: stop token recycling, IP rotation, and JSON bombs with layered defense. See 64% latency drop and $1.3k monthly savings.</description>
+      <pubDate>Sat, 13 Jun 2026 21:27:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-security-the-attacks-rising-in-2026/</guid>
+    </item>
     <item>
       <title>Self-healing vs traditional pipelines: 3x faster MTTR</title>
       <link>https://kubaik.github.io/self-healing-vs-traditional-pipelines-3x-faster-mttr/</link>
@@ -138,13 +145,6 @@
       <description>Cut experiment costs 60% with Statsig — one SDK, offline sync, and stats that work on $20 KaiOS phones</description>
       <pubDate>Sat, 13 Jun 2026 11:51:26 +0000</pubDate>
       <guid>https://kubaik.github.io/5-experimentation-platforms-i-wish-id-tested-sooner/</guid>
-    </item>
-    <item>
-      <title>Sigstore + SLSA: why repos will break in 2026</title>
-      <link>https://kubaik.github.io/sigstore-slsa-why-repos-will-break-in-2026/</link>
-      <description>Sigstore + SLSA cut tamper detection from 12 hours to 2 minutes and saved $8k in SLA credits. Here’s the exact 2026 setup we use at 6 engineers.</description>
-      <pubDate>Sat, 13 Jun 2026 11:33:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/sigstore-slsa-why-repos-will-break-in-2026/</guid>
     </item>
   </channel>
 </rss>

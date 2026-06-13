@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T21:06:31.526178",
+  "built_at": "2026-06-13T21:27:19.837389",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1035,6 +1035,11 @@
       "slug": "self-healing-vs-traditional-pipelines-3x-faster-mttr",
       "title": "Self-healing vs traditional pipelines: 3x faster MTTR",
       "summary": "I've seen the same built selfhealing mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the average production incident costs $4,800 per minute acc"
+    },
+    {
+      "slug": "api-security-the-attacks-rising-in-2026",
+      "title": "API security: the attacks rising in 2026",
+      "summary": "Most api security guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, our API gateway at a B2B SaaS startup started getting hit with a new kind of abu"
     }
   ]
 }
