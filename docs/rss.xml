@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 20:54:16 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 20:59:36 +0000</lastBuildDate>
+    <item>
+      <title>AI freelance rates 2026: which stacks still pay</title>
+      <link>https://kubaik.github.io/ai-freelance-rates-2026-which-stacks-still-pay/</link>
+      <description>2026 freelance rates fell 28% for templated AI apps, but projects needing SOC-2 or PCI still pay $170–$220 because AI cannot replace the janitor work. Real cost and rate benchmarks inside.</description>
+      <pubDate>Sat, 13 Jun 2026 20:59:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-freelance-rates-2026-which-stacks-still-pay/</guid>
+    </item>
     <item>
       <title>AI prompt injection: the silent AWS bill killer</title>
       <link>https://kubaik.github.io/ai-prompt-injection-the-silent-aws-bill-killer/</link>
@@ -138,13 +145,6 @@
       <description>Cut 90% storage and halve latency for audit logs — PostgreSQL 16 vs ClickHouse 25.1 under 1M writes/s with real benchmarks and cost data</description>
       <pubDate>Sat, 13 Jun 2026 10:39:21 +0000</pubDate>
       <guid>https://kubaik.github.io/store-audit-logs-where-latency-cant-hide/</guid>
-    </item>
-    <item>
-      <title>Tool calls under load: async batch vs fire-and-forget</title>
-      <link>https://kubaik.github.io/tool-calls-under-load-async-batch-vs-fire-and-forget/</link>
-      <description>Cut cloud costs 60% with async batch tool calls — real P99 latency, Redis 7.2 cost, and the fire-and-forget trap most teams hit at scale.</description>
-      <pubDate>Sat, 13 Jun 2026 10:23:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/tool-calls-under-load-async-batch-vs-fire-and-forget/</guid>
     </item>
   </channel>
 </rss>

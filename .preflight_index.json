@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T20:49:56.554600",
+  "built_at": "2026-06-13T20:59:31.923389",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1025,6 +1025,11 @@
       "slug": "ai-prompt-injection-the-silent-aws-bill-killer",
       "title": "AI prompt injection: the silent AWS bill killer",
       "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams treat AI like a state"
+    },
+    {
+      "slug": "ai-freelance-rates-2026-which-stacks-still-pay",
+      "title": "AI freelance rates 2026: which stacks still pay",
+      "summary": "The short version: the conventional advice on freelance developer is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. Advanced edge cases you personally encountered In 2026 I ran into four edge cases that cost real money and almost killed a"
     }
   ]
 }
