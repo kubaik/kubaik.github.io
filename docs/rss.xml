@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 14:55:26 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 15:00:43 +0000</lastBuildDate>
+    <item>
+      <title>Human-in-the-loop vs full auto: AI agents in 2026</title>
+      <link>https://kubaik.github.io/human-in-the-loop-vs-full-auto-ai-agents-in-2026/</link>
+      <description>Cut AI agent incidents 80% with human review — latency benchmarks, cost breakdowns, and the hybrid setup most teams miss in 2026.</description>
+      <pubDate>Sat, 13 Jun 2026 15:00:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/human-in-the-loop-vs-full-auto-ai-agents-in-2026/</guid>
+    </item>
     <item>
       <title>Split the monolith slowly — no rewrite needed</title>
       <link>https://kubaik.github.io/split-the-monolith-slowly-no-rewrite-needed/</link>
@@ -138,13 +145,6 @@
       <description>Stop losing webhook events — delivery guarantees, retries, and idempotency patterns that cut losses 14% and costs 51% in 2026</description>
       <pubDate>Fri, 12 Jun 2026 23:26:36 +0000</pubDate>
       <guid>https://kubaik.github.io/webhooks-2026-delivery-you-can-trust/</guid>
-    </item>
-    <item>
-      <title>5 AI tools beating higher-cost teams from Nairobi</title>
-      <link>https://kubaik.github.io/5-ai-tools-beating-higher-cost-teams-from-nairobi/</link>
-      <description>Cut dev time 50% with these 5 AI tools — real cost, latency, and bug data from Nairobi teams in 2026. Includes code examples and ROI calculator.</description>
-      <pubDate>Fri, 12 Jun 2026 23:14:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-ai-tools-beating-higher-cost-teams-from-nairobi/</guid>
     </item>
   </channel>
 </rss>

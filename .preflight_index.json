@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T14:37:10.092136",
+  "built_at": "2026-06-13T15:00:39.415309",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -965,6 +965,11 @@
       "slug": "split-the-monolith-slowly-no-rewrite-needed",
       "title": "Split the monolith slowly — no rewrite needed",
       "summary": "A colleague asked me about migrated monolith during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete)"
+    },
+    {
+      "slug": "human-in-the-loop-vs-full-auto-ai-agents-in-2026",
+      "title": "Human-in-the-loop vs full auto: AI agents in 2026",
+      "summary": "I've seen the same most agents mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, AI agents are everywhere. They route support tickets, approve exp"
     }
   ]
 }
