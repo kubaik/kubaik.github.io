@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 17:04:27 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 17:09:30 +0000</lastBuildDate>
+    <item>
+      <title>HTMX: 5 things I gave up to run it in prod</title>
+      <link>https://kubaik.github.io/htmx-5-things-i-gave-up-to-run-it-in-prod/</link>
+      <description>Cut local setup from 12 minutes to 45 seconds with HTMX — setup time, error rates, and the exact tools I swapped out in 2026</description>
+      <pubDate>Sat, 13 Jun 2026 17:09:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/htmx-5-things-i-gave-up-to-run-it-in-prod/</guid>
+    </item>
     <item>
       <title>WCAG chat fails: the 4 silent ARIA traps</title>
       <link>https://kubaik.github.io/wcag-chat-fails-the-4-silent-aria-traps/</link>
@@ -138,13 +145,6 @@
       <description>Block 1,284 injection attempts in production with 3ms overhead using Guardrails AI 0.2.7 and Pydantic 2.7. Learn the data pipeline risks most teams miss and the exact code to fix them.</description>
       <pubDate>Sat, 13 Jun 2026 04:06:16 +0000</pubDate>
       <guid>https://kubaik.github.io/prompt-injection-the-leak-you-cant-see/</guid>
-    </item>
-    <item>
-      <title>Remote work in 2026: which tools survived</title>
-      <link>https://kubaik.github.io/remote-work-in-2026-which-tools-survived/</link>
-      <description>Cut remote work costs 40% with async Matrix chat and self-hosted runners — latency benchmarks, Synapse 1.116.0, and the mistake most teams still make in 2026.</description>
-      <pubDate>Sat, 13 Jun 2026 02:36:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/remote-work-in-2026-which-tools-survived/</guid>
     </item>
   </channel>
 </rss>
