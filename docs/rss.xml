@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 01:58:24 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 02:37:00 +0000</lastBuildDate>
+    <item>
+      <title>Remote work in 2026: which tools survived</title>
+      <link>https://kubaik.github.io/remote-work-in-2026-which-tools-survived/</link>
+      <description>Cut remote work costs 40% with async Matrix chat and self-hosted runners — latency benchmarks, Synapse 1.116.0, and the mistake most teams still make in 2026.</description>
+      <pubDate>Sat, 13 Jun 2026 02:36:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/remote-work-in-2026-which-tools-survived/</guid>
+    </item>
     <item>
       <title>Internal platforms: the size gap you missed</title>
       <link>https://kubaik.github.io/internal-platforms-the-size-gap-you-missed/</link>
@@ -138,13 +145,6 @@
       <description>Cut test maintenance 50% with 9 concrete techniques that test behavior, not AI output. From OpenAPI contracts to property-based tests — here’s what actually works in 2026.</description>
       <pubDate>Fri, 12 Jun 2026 14:33:41 +0000</pubDate>
       <guid>https://kubaik.github.io/9-tests-to-chase-ai-bugs-without-testing-ai/</guid>
-    </item>
-    <item>
-      <title>5 patterns to keep systems up when consistency breaks</title>
-      <link>https://kubaik.github.io/5-patterns-to-keep-systems-up-when-consistency-breaks/</link>
-      <description>Cut API failure 99.9% with 5 outage-proof patterns — outbox, saga, CRDTs, event sourcing, and versioned cache. Benchmarked at 120k orders/minute with DynamoDB Global Tables and Redis 7.2.</description>
-      <pubDate>Fri, 12 Jun 2026 14:24:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-patterns-to-keep-systems-up-when-consistency-breaks/</guid>
     </item>
   </channel>
 </rss>
