@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T13:31:21.280776",
+  "built_at": "2026-06-13T14:37:10.092136",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -960,6 +960,11 @@
       "slug": "free-threaded-python-313-cpu-bound-web-wins",
       "title": "Free-threaded Python 3.13: CPU-bound web wins",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026, our Jakarta-based startup hit 1.2M daily active users on a single Python 3.11 F"
+    },
+    {
+      "slug": "split-the-monolith-slowly-no-rewrite-needed",
+      "title": "Split the monolith slowly — no rewrite needed",
+      "summary": "A colleague asked me about migrated monolith during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete)"
     }
   ]
 }
