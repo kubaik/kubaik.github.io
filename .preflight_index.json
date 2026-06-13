@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T02:36:56.745295",
+  "built_at": "2026-06-13T04:06:19.045941",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -890,6 +890,11 @@
       "slug": "remote-work-in-2026-which-tools-survived",
       "title": "Remote work in 2026: which tools survived",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) By 2026, the remote-work tooling landscape had fractured into two camps: companies that "
+    },
+    {
+      "slug": "prompt-injection-the-leak-you-cant-see",
+      "title": "Prompt injection: the leak you can’t see",
+      "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams treat AI prompts like"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 04:01:13 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 04:06:23 +0000</lastBuildDate>
+    <item>
+      <title>Prompt injection: the leak you can’t see</title>
+      <link>https://kubaik.github.io/prompt-injection-the-leak-you-cant-see/</link>
+      <description>Block 1,284 injection attempts in production with 3ms overhead using Guardrails AI 0.2.7 and Pydantic 2.7. Learn the data pipeline risks most teams miss and the exact code to fix them.</description>
+      <pubDate>Sat, 13 Jun 2026 04:06:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/prompt-injection-the-leak-you-cant-see/</guid>
+    </item>
     <item>
       <title>Remote work in 2026: which tools survived</title>
       <link>https://kubaik.github.io/remote-work-in-2026-which-tools-survived/</link>
@@ -138,13 +145,6 @@
       <description>Reduce AI incident minutes 40% with feature flags in 2026 — 15 ms p95 latency, GDPR-ready audit trails, and $3/month DynamoDB costs using Node 20 LTS and AWS Lambda arm64.</description>
       <pubDate>Fri, 12 Jun 2026 14:40:14 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-rollouts-live-or-die-by-flags/</guid>
-    </item>
-    <item>
-      <title>9 tests to chase AI bugs without testing AI</title>
-      <link>https://kubaik.github.io/9-tests-to-chase-ai-bugs-without-testing-ai/</link>
-      <description>Cut test maintenance 50% with 9 concrete techniques that test behavior, not AI output. From OpenAPI contracts to property-based tests — here’s what actually works in 2026.</description>
-      <pubDate>Fri, 12 Jun 2026 14:33:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/9-tests-to-chase-ai-bugs-without-testing-ai/</guid>
     </item>
   </channel>
 </rss>

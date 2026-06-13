@@ -145,5 +145,6 @@
   "Building webhook systems in 2026: delivery guarantees, retries, and idempotency",
   "How AI changed the economics of building a solo SaaS in 2026",
   "Platform engineering in 2026: what internal developer platforms look like at different company sizes",
-  "Remote work in 2026: which companies pulled back and which doubled down"
+  "Remote work in 2026: which companies pulled back and which doubled down",
+  "Prompt injection in production AI systems: the attack surface most teams are ignoring"
 ]
