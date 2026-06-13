@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T10:23:30.896905",
+  "built_at": "2026-06-13T10:39:24.005611",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -930,6 +930,11 @@
       "slug": "tool-calls-under-load-async-batch-vs-fire-and-forget",
       "title": "Tool calls under load: async batch vs fire-and-forget",
       "summary": "I've seen the same toolcalling patterns mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now I once shipped a feature that looked perfect in staging but melte"
+    },
+    {
+      "slug": "store-audit-logs-where-latency-cant-hide",
+      "title": "Store audit logs where latency can’t hide",
+      "summary": "I've seen the same building audit mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now When your product hits scale and a compliance team walks in with a 90-d"
     }
   ]
 }

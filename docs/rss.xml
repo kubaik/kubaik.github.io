@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 10:34:14 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 10:39:28 +0000</lastBuildDate>
+    <item>
+      <title>Store audit logs where latency can’t hide</title>
+      <link>https://kubaik.github.io/store-audit-logs-where-latency-cant-hide/</link>
+      <description>Cut 90% storage and halve latency for audit logs — PostgreSQL 16 vs ClickHouse 25.1 under 1M writes/s with real benchmarks and cost data</description>
+      <pubDate>Sat, 13 Jun 2026 10:39:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/store-audit-logs-where-latency-cant-hide/</guid>
+    </item>
     <item>
       <title>Tool calls under load: async batch vs fire-and-forget</title>
       <link>https://kubaik.github.io/tool-calls-under-load-async-batch-vs-fire-and-forget/</link>
@@ -138,13 +145,6 @@
       <description>The gap between what the docs say and what production needs I spent two weeks tuning a system that routed every query to the biggest model available —…</description>
       <pubDate>Fri, 12 Jun 2026 19:58:19 +0000</pubDate>
       <guid>https://kubaik.github.io/route-tasks-to-llms-automatically-in-2026/</guid>
-    </item>
-    <item>
-      <title>RAG needs reranking: 2026’s default search stack</title>
-      <link>https://kubaik.github.io/rag-needs-reranking-2026s-default-search-stack/</link>
-      <description>Cut RAG hallucinations from 12% to 2.8% in 2026 with hybrid search + reranking. Latency &lt;250 ms, cost &lt;$0.0008/query on c6i.large.</description>
-      <pubDate>Fri, 12 Jun 2026 19:41:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-needs-reranking-2026s-default-search-stack/</guid>
     </item>
   </channel>
 </rss>
