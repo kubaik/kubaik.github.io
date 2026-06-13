@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T12:34:53.700187",
+  "built_at": "2026-06-13T13:31:21.280776",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -955,6 +955,11 @@
       "slug": "survive-ai-3-skills-that-beat-automation",
       "title": "Survive AI: 3 skills that beat automation",
       "summary": "After reviewing a lot of code that touches skills that, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing Last year I saw a junior engineer with a $78k salary get replaced by an AI pair programmer i"
+    },
+    {
+      "slug": "free-threaded-python-313-cpu-bound-web-wins",
+      "title": "Free-threaded Python 3.13: CPU-bound web wins",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026, our Jakarta-based startup hit 1.2M daily active users on a single Python 3.11 F"
     }
   ]
 }
