@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T19:47:52.993727",
+  "built_at": "2026-06-13T20:49:56.554600",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1020,6 +1020,11 @@
       "slug": "marketing-without-budget-5k-mrr-in-18-months",
       "title": "Marketing without budget: $5k MRR in 18 months",
       "summary": "The short version: the conventional advice on got mrr is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) I built a $5,000 monthly recurring revenue SaaS with zero marketing budget, no ads, and no"
+    },
+    {
+      "slug": "ai-prompt-injection-the-silent-aws-bill-killer",
+      "title": "AI prompt injection: the silent AWS bill killer",
+      "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams treat AI like a state"
     }
   ]
 }

@@ -18,5 +18,6 @@
   "How AI UI generation tools changed my frontend workflow (and what they still cannot do)",
   "How I built and launched a SaaS in 6 weeks using AI tools for 80% of the code",
   "How I use server components to cut client bundle size without rewriting everything",
-  "How I got to $5k MRR without a marketing team or a growth budget"
+  "How I got to $5k MRR without a marketing team or a growth budget",
+  "Prompt injection in production AI systems: the attack surface most teams are ignoring"
 ]

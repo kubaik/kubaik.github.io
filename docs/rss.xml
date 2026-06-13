@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 20:44:37 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 20:50:01 +0000</lastBuildDate>
+    <item>
+      <title>AI prompt injection: the silent AWS bill killer</title>
+      <link>https://kubaik.github.io/ai-prompt-injection-the-silent-aws-bill-killer/</link>
+      <description>Cut API cost 21% and block 100% of prompt leaks with a 30-minute refactor — the firewall, sanitizer, and history rules teams ignore in 2026.</description>
+      <pubDate>Sat, 13 Jun 2026 20:49:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-prompt-injection-the-silent-aws-bill-killer/</guid>
+    </item>
     <item>
       <title>Marketing without budget: $5k MRR in 18 months</title>
       <link>https://kubaik.github.io/marketing-without-budget-5k-mrr-in-18-months/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud costs 60% with async batch tool calls — real P99 latency, Redis 7.2 cost, and the fire-and-forget trap most teams hit at scale.</description>
       <pubDate>Sat, 13 Jun 2026 10:23:27 +0000</pubDate>
       <guid>https://kubaik.github.io/tool-calls-under-load-async-batch-vs-fire-and-forget/</guid>
-    </item>
-    <item>
-      <title>Pick the right LLM in 500ms or less</title>
-      <link>https://kubaik.github.io/pick-the-right-llm-in-500ms-or-less/</link>
-      <description>Cut LLM token spend 34% without raising latency with a 200 ms router. Learn the exact model scoring weights, canary tricks, and Redis 7.2 tricks that saved $2,340/month in production.</description>
-      <pubDate>Sat, 13 Jun 2026 09:54:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-the-right-llm-in-500ms-or-less/</guid>
     </item>
   </channel>
 </rss>
