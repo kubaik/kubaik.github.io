@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T17:09:26.397592",
+  "built_at": "2026-06-13T17:16:29.789111",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -990,6 +990,11 @@
       "slug": "htmx-5-things-i-gave-up-to-run-it-in-prod",
       "title": "HTMX: 5 things I gave up to run it in prod",
       "summary": "I ran into this htmx changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I still remember the day I pushed a React com"
+    },
+    {
+      "slug": "5k-remote-roles-nairobi-lagos-playbook",
+      "title": "$5k remote roles: Nairobi-Lagos playbook",
+      "summary": "Most developers nairobi guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026 a Nairobi-based friend upgraded from a $1,800/month local salary to a $5,00"
     }
   ]
 }

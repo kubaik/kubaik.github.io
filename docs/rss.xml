@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 17:09:30 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 13 Jun 2026 17:16:34 +0000</lastBuildDate>
+    <item>
+      <title>$5k remote roles: Nairobi-Lagos playbook</title>
+      <link>https://kubaik.github.io/5k-remote-roles-nairobi-lagos-playbook/</link>
+      <description>Land $5k remote roles with three artifacts: a live demo, runbook, and postmortem. Proven playbook from Nairobi and Lagos engineers in 2026.</description>
+      <pubDate>Sat, 13 Jun 2026 17:16:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/5k-remote-roles-nairobi-lagos-playbook/</guid>
+    </item>
     <item>
       <title>HTMX: 5 things I gave up to run it in prod</title>
       <link>https://kubaik.github.io/htmx-5-things-i-gave-up-to-run-it-in-prod/</link>
@@ -138,13 +145,6 @@
       <description>Cut Kubernetes costs 30% by fixing resource limits, admission timeouts, and kubelet timeouts in 2026 — GPU and Wasm workloads need new defaults or your cluster will break</description>
       <pubDate>Sat, 13 Jun 2026 05:01:40 +0000</pubDate>
       <guid>https://kubaik.github.io/kubernetes-in-2026-what-teams-offload/</guid>
-    </item>
-    <item>
-      <title>Prompt injection: the leak you can’t see</title>
-      <link>https://kubaik.github.io/prompt-injection-the-leak-you-cant-see/</link>
-      <description>Block 1,284 injection attempts in production with 3ms overhead using Guardrails AI 0.2.7 and Pydantic 2.7. Learn the data pipeline risks most teams miss and the exact code to fix them.</description>
-      <pubDate>Sat, 13 Jun 2026 04:06:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/prompt-injection-the-leak-you-cant-see/</guid>
     </item>
   </channel>
 </rss>
