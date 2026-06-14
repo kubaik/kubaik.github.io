@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T02:06:43.908183",
+  "built_at": "2026-06-14T04:25:35.798069",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1075,6 +1075,11 @@
       "slug": "ai-agent-postmortems-trace-vs-logs-vs-code",
       "title": "AI agent postmortems: trace vs logs vs code",
       "summary": "I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now AI agent failures don’t look like regular incidents. A 500 ms latency"
+    },
+    {
+      "slug": "postgres-17-beat-redis-kafka-and-s3-what-we-dropped",
+      "title": "Postgres 17 beat Redis, Kafka, and S3: what we dropped",
+      "summary": "I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In late 2026 we ran a simple experiment: could we remove three separate "
     }
   ]
 }
