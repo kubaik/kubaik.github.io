@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 01:40:43 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 01:45:56 +0000</lastBuildDate>
+    <item>
+      <title>3 ways container builds got 3x faster in 2026</title>
+      <link>https://kubaik.github.io/3-ways-container-builds-got-3x-faster-in-2026/</link>
+      <description>Cut container build time 70% in 2026 with depot.dev, BuildKit 1.6, and remote caching — cache hit rates, latency, and cost breakdown for GitHub Actions and AWS</description>
+      <pubDate>Sun, 14 Jun 2026 01:45:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-ways-container-builds-got-3x-faster-in-2026/</guid>
+    </item>
     <item>
       <title>LLM metrics that stop wasting time</title>
       <link>https://kubaik.github.io/llm-metrics-that-stop-wasting-time/</link>
@@ -138,13 +145,6 @@
       <description>Cut prompt-injection leakage to zero with 35 ms overhead — learn the real attack vectors LangChain docs ignore and the tools that actually work in 2026.</description>
       <pubDate>Sat, 13 Jun 2026 15:10:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-prompt-injection-why-most-systems-fail/</guid>
-    </item>
-    <item>
-      <title>Human-in-the-loop vs full auto: AI agents in 2026</title>
-      <link>https://kubaik.github.io/human-in-the-loop-vs-full-auto-ai-agents-in-2026/</link>
-      <description>Cut AI agent incidents 80% with human review — latency benchmarks, cost breakdowns, and the hybrid setup most teams miss in 2026.</description>
-      <pubDate>Sat, 13 Jun 2026 15:00:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/human-in-the-loop-vs-full-auto-ai-agents-in-2026/</guid>
     </item>
   </channel>
 </rss>

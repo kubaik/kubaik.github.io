@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T00:02:21.791989",
+  "built_at": "2026-06-14T01:45:51.683074",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1065,6 +1065,11 @@
       "slug": "llm-metrics-that-stop-wasting-time",
       "title": "LLM metrics that stop wasting time",
       "summary": "The official documentation for evaluating llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams start their LLM evaluat"
+    },
+    {
+      "slug": "3-ways-container-builds-got-3x-faster-in-2026",
+      "title": "3 ways container builds got 3x faster in 2026",
+      "summary": "I ran into this container builds problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In mid-2026 I inherited a pipeline that r"
     }
   ]
 }
