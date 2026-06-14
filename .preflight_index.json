@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T07:17:24.168339",
+  "built_at": "2026-06-14T08:40:14.776158",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1090,6 +1090,11 @@
       "slug": "build-apps-that-still-work-on-500-ms-latency",
       "title": "Build apps that still work on 500 ms latency",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. In March 2026, Starlink dishes landed in Kenya and Uganda. Overnight, every telco tower in East Africa had a new upstream: 60–120 Mbps"
+    },
+    {
+      "slug": "ai-interviews-4-questions-that-caught-80-of-weak",
+      "title": "AI interviews: 4 questions that caught 80% of weak",
+      "summary": "The official documentation for changed hiring is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs In 2026, most interview guides sti"
     }
   ]
 }
