@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T22:56:18.376308",
+  "built_at": "2026-06-14T23:03:12.086504",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1230,6 +1230,11 @@
       "slug": "tech-pay-in-2026-where-the-dust-settled",
       "title": "Tech pay in 2026: where the dust settled",
       "summary": "The short version: the conventional advice on tech salaries is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Two years after the 2026–2025 correction, base salaries in Nairobi’s tech market set"
+    },
+    {
+      "slug": "passkeys-killed-our-password-reset-queue",
+      "title": "Passkeys killed our password reset queue",
+      "summary": "Most passkeys changed guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026 our mobile app had 2.1 million monthly active users in Vietnam and Indone"
     }
   ]
 }

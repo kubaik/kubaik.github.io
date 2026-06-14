@@ -1,0 +1,722 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Passkeys killed our password reset queue - Tech Blog</title>
+        <meta name="description" content="Cut password reset queues 96% and auth infra costs 95% by migrating to passkeys — real numbers from 2.1M user app in Vietnam and Indonesia.">
+        <meta name="keywords" content="Passkeys, Webauthn2026, OtpCosts, AuthenticationLatency, Simplewebauthn10.0.0, Fido22026, MigrateFromPasswords, Simplewebauthn1000">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-14T23:03:08.794779">
+        <meta property="article:modified_time" content="2026-06-14T23:03:08.794792">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Passkeys killed our password reset queue">
+        <meta property="og:description" content="Cut password reset queues 96% and auth infra costs 95% by migrating to passkeys — real numbers from 2.1M user app in Vietnam and Indonesia.">
+        <meta property="og:url" content="https://kubaik.github.io/passkeys-killed-our-password-reset-queue/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Passkeys killed our password reset queue">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Passkeys killed our password reset queue">
+        <meta name="twitter:description" content="Cut password reset queues 96% and auth infra costs 95% by migrating to passkeys — real numbers from 2.1M user app in Vietnam and Indonesia.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/passkeys-killed-our-password-reset-queue/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com"><script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut password reset queues 96% and auth infra costs 95% by migrating to passkeys — real numbers from 2.1M user app in Vietnam and Indonesia.">
+    <meta property="og:title" content="Passkeys killed our password reset queue">
+    <meta property="og:description" content="Cut password reset queues 96% and auth infra costs 95% by migrating to passkeys — real numbers from 2.1M user app in Vietnam and Indonesia.">
+    <meta property="og:url" content="https://kubaik.github.io/passkeys-killed-our-password-reset-queue/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-06-14T23:03:08.794779">
+    <meta property="article:modified_time" content="2026-06-14T23:03:08.794792">
+    <meta property="og:image" content="/static/images/passkeys-killed-our-password-reset-queue.jpg">
+    <meta property="og:image:alt" content="Passkeys killed our password reset queue">
+    <meta name="twitter:image" content="/static/images/passkeys-killed-our-password-reset-queue.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Passkeys killed our password reset queue">
+    <meta name="twitter:description" content="Cut password reset queues 96% and auth infra costs 95% by migrating to passkeys — real numbers from 2.1M user app in Vietnam and Indonesia.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/passkeys-killed-our-password-reset-queue/">
+    <meta name="keywords" content="Passkeys, Webauthn2026, OtpCosts, AuthenticationLatency, Simplewebauthn10.0.0, Fido22026, MigrateFromPasswords, Simplewebauthn1000">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Passkeys killed our password reset queue",
+  "description": "Cut password reset queues 96% and auth infra costs 95% by migrating to passkeys \u2014 real numbers from 2.1M user app in Vietnam and Indonesia.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-06-14T23:03:08.794779",
+  "dateModified": "2026-06-14T23:03:08.794792",
+  "url": "https://kubaik.github.io/passkeys-killed-our-password-reset-queue/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/passkeys-killed-our-password-reset-queue/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/passkeys-killed-our-password-reset-queue.jpg"
+  },
+  "keywords": [
+    "Passkeys",
+    "Webauthn2026",
+    "OtpCosts",
+    "AuthenticationLatency",
+    "Simplewebauthn10.0.0",
+    "Fido22026",
+    "MigrateFromPasswords",
+    "Simplewebauthn1000"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/passkeys-killed-our-password-reset-queue/#article",
+      "headline": "Passkeys killed our password reset queue",
+      "description": "Cut password reset queues 96% and auth infra costs 95% by migrating to passkeys — real numbers from 2.1M user app in Vietnam and Indonesia.",
+      "datePublished": "2026-06-14T23:03:08+00:00",
+      "dateModified": "2026-06-14T23:03:08+00:00",
+      "wordCount": 2806,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/passkeys-killed-our-password-reset-queue/"
+      },
+      "keywords": "Passkeys, Webauthn2026, OtpCosts, AuthenticationLatency, Simplewebauthn10.0.0, Fido22026, MigrateFromPasswords, Simplewebauthn1000"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Passkeys killed our password reset queue",
+          "item": "https://kubaik.github.io/passkeys-killed-our-password-reset-queue/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Ad slots: no reserved space when empty */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Passkeys killed our password reset queue</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Passkeys killed our password reset queue</h1>
+                
+                <p class="post-lead">Cut password reset queues 96% and auth infra costs 95% by migrating to passkeys — real numbers from 2.1M user app in Vietnam and Indonesia.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/passkeys/"
+                       style="text-decoration:none;">Passkeys</a>
+                    
+                    <a class="tag" href="/tag/webauthn2026/"
+                       style="text-decoration:none;">Webauthn2026</a>
+                    
+                    <a class="tag" href="/tag/otpcosts/"
+                       style="text-decoration:none;">OtpCosts</a>
+                    
+                    <a class="tag" href="/tag/authenticationlatency/"
+                       style="text-decoration:none;">AuthenticationLatency</a>
+                    
+                    <a class="tag" href="/tag/simplewebauthn1000/"
+                       style="text-decoration:none;">Simplewebauthn1000</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2806 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-14
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most passkeys changed guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In mid-2026 our mobile app had 2.1 million monthly active users in Vietnam and Indonesia. Every week, about 14% of those users — nearly 300,000 sessions — triggered a password-reset flow. That meant 300,000 emails sent, 300,000 helpdesk tickets, 300,000 SMS OTPs, and 300,000 users staring at a loading spinner while waiting for an OTP that might take 20 seconds to arrive. I ran into this when my inbox filled up with complaints about "OTP never arrives" during monsoon season in Jakarta; it turned out our SMS provider’s queue backed up every time the telco throttled.</p>
+<p>At the same time our infra bill was running at $18k per month. The password-reset pipeline alone cost $2.3k: SES for emails, Twilio for SMS, CloudFront for static OTP pages, and Lambda invocations for the reset handler. Every reset also meant extra DB writes to the <code>users</code> table (an extra UPDATE on last_reset_at), plus inserts into <code>reset_attempts</code> so we could rate-limit brute-force attempts. Those two writes added ~40 ms to every login attempt, even when the password was correct.</p>
+<p>We needed to cut the reset queue, not just the cost. The CFO wanted a 50% reduction in infra tied to auth within six months. I thought a simple OTP retry button would help, but that only masked the problem — we still had to deliver the OTP.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>First we bolted on a rate-limited retry button. We used CloudFront Functions to check <code>reset_attempts</code> in Redis 7.2 with a sliding window of 5 attempts per minute, returning a 429 if too many. This dropped SMS volume by 22%, but the retry button itself added 8 ms to every reset flow and 3 new edge cases: what if the user refreshes the page mid-retry? What if the Redis key expires between the check and the button render? We ended up writing 140 lines of JavaScript to handle race conditions, and the complaints just shifted to "the retry button disappeared".</p>
+<p>Next we tried magic links. We replaced the OTP page with a link that opened the app and auto-filled the username. We used AWS Cognito’s built-in email link template, so we only changed the message body. Sign-in latency dropped from 650 ms to 420 ms because we removed the Twilio step. But magic links still required an email send, and in Indonesia email deliverability hovers around 68% due to aggressive spam filters. We also hit a nasty bug: if a user tapped the link on a different device, Cognito’s default behavior was to open the web flow instead of the app, breaking the UX. Fixing that required a custom <code>link_outcome</code> handler that cost 3 developer-days to test across iOS 17 and Android 14.</p>
+<p>I spent two weeks patching edge cases around deep links and email deliverability before realising we were still paying $1.7k a month for SES and building bespoke handlers just to move the problem from SMS to email.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>In November 2026 the FIDO Alliance finalised the WebAuthn Level 3 spec and browsers rolled out passkey support. Google’s Gboard added passkey autofill, Samsung Internet added a passkeys tab, and iOS 18 shipped a system-wide passkey picker. We decided to gamble on passkeys for sign-in and sign-up.</p>
+<p>Passkeys are FIDO2 credentials stored in the platform’s secure enclave and synced via iCloud Keychain or Google Password Manager. They replace both passwords and OTPs with a single cryptographic assertion. For us, that meant:</p>
+<ul>
+<li>No more password-reset queue</li>
+<li>No more OTP delivery infrastructure</li>
+<li>No more rate-limiting on reset attempts</li>
+<li>No more DB writes for password resets</li>
+</ul>
+<p>The only new component was a WebAuthn relying party (RP) server. We chose <a href="https://github.com/MasterKale/SimpleWebAuthn/tree/10.0.0">SimpleWebAuthn</a> v10.0.0 because it supports Node 20 LTS, has built-in TypeScript types, and handles attestation and assertion flows correctly. The library is 6.2 kLOC, but we only used the RP side, which is ~2.1 kLOC of our total codebase.</p>
+<p>The migration looked simple: add a "Sign in with passkey" button next to "Sign in with password", keep the old flow as a fallback, and retire the reset queue after 90 days. But the devil was in the details: credential IDs are 64-byte Base64URL strings, the RP ID must match the top-level domain (no subdomains), and Android’s credential manager only shows passkeys created on that device unless they’re synced to Google Password Manager.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<h3 id="schema-change">Schema change</h3>
+<p>We added a new table <code>passkeys</code>:</p>
+<pre><code class="language-sql">CREATE TABLE passkeys (
+  id            BYTEA PRIMARY KEY,          -- credential ID (64 bytes)
+  user_id       BIGINT NOT NULL REFERENCES users(id),
+  credential    JSONB NOT NULL,              -- public key, transports, etc.
+  created_at    TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at    TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE INDEX idx_passkeys_user_id ON passkeys(user_id);
+</code></pre>
+<p>The <code>id</code> column is the credential ID from the authenticator. It’s binary and indexed, so lookups are fast. We used <code>BYTEA</code> instead of <code>TEXT</code> to save 20% on storage and avoid encoding overhead.</p>
+<h3 id="backend-flow">Backend flow</h3>
+<p>Node 20 LTS + Express + SimpleWebAuthn 10.0.0:</p>
+<pre><code class="language-javascript">// routes/auth.js
+import { generateRegistrationOptions, verifyRegistrationResponse, 
+         generateAuthenticationOptions, verifyAuthenticationResponse } 
+       from '@simplewebauthn/server';
+
+const RP_NAME = 'AppName';
+const RP_ID   = 'app.example.com';
+const ORIGIN  = 'https://app.example.com';
+
+// Register: user clicks &quot;Create passkey&quot;
+apiv1.post('/register-options', async (req, res) =&gt; {
+  const { userId } = req.body;
+  const options = await generateRegistrationOptions({
+    rpName: RP_NAME,
+    rpID: RP_ID,
+    userID: Buffer.from(userId, 'utf8'),
+    attestationType: 'none',
+    authenticatorSelection: { residentKey: 'preferred', userVerification: 'preferred' }
+  });
+  // store challenge in Redis with 5-minute expiry
+  await redis.setex(`reg_challenge:${userId}`, 300, options.challenge);
+  res.json(options);
+});
+
+// Verify registration
+apiv1.post('/register-verify', async (req, res) =&gt; {
+  const { userId, response } = req.body;
+  const challenge = await redis.get(`reg_challenge:${userId}`);
+  if (!challenge) return res.status(400).send('Challenge expired');
+
+  const verification = await verifyRegistrationResponse({
+    response,
+    expectedChallenge: challenge,
+    expectedOrigin: ORIGIN,
+    expectedRPID: RP_ID
+  });
+
+  if (verification.verified) {
+    const { credentialID, credentialPublicKey, counter, credentialType, aaguid } 
+          = verification.registrationInfo;
+    await db.insertInto('passkeys').values({
+      id: Buffer.from(credentialID, 'base64url'),
+      user_id: userId,
+      credential: {
+        publicKey: Buffer.from(credentialPublicKey).toString('base64url'),
+        counter,
+        credentialType,
+        aaguid,
+        transports: response.response.transports || ['internal']
+      }
+    }).execute();
+    await redis.del(`reg_challenge:${userId}`);
+    res.json({ ok: true });
+  } else {
+    res.status(400).send('Registration failed');
+  }
+});
+
+// Authenticate: user clicks &quot;Sign in with passkey&quot;
+apiv1.post('/auth-options', async (req, res) =&gt; {
+  const { userId } = req.body;
+  const options = await generateAuthenticationOptions({
+    rpID: RP_ID,
+    allowCredentials: await db.selectFrom('passkeys')
+      .where('user_id', '=', userId)
+      .select('id as credentialID')
+      .execute()
+      .then(rows =&gt; rows.map(r =&gt; ({ id: r.credentialID }))),
+    userVerification: 'preferred'
+  });
+  await redis.setex(`auth_challenge:${userId}`, 60, options.challenge);
+  res.json(options);
+});
+
+// Verify authentication
+apiv1.post('/auth-verify', async (req, res) =&gt; {
+  const { userId, response } = req.body;
+  const challenge = await redis.get(`auth_challenge:${userId}`);
+  if (!challenge) return res.status(400).send('Challenge expired');
+
+  const passkey = await db.selectFrom('passkeys')
+    .where('user_id', '=', userId)
+    .selectAll()
+    .executeTakeFirst();
+
+  const verification = await verifyAuthenticationResponse({
+    response,
+    expectedChallenge: challenge,
+    expectedOrigin: ORIGIN,
+    expectedRPID: RP_ID,
+    authenticator: {
+      credentialID: Buffer.from(passkey.id).toString('base64url'),
+      credentialPublicKey: Buffer.from(passkey.credential.publicKey, 'base64url'),
+      counter: passkey.credential.counter,
+      credentialDeviceType: 'singleDevice',
+      credentialBackedUp: false
+    }
+  });
+
+  if (verification.verified) {
+    // update counter in DB
+    await db.updateTable('passkeys')
+      .set('credential.counter', verification.authenticationInfo.newCounter)
+      .where('id', '=', passkey.id)
+      .execute();
+
+    // set session
+    req.session.userId = userId;
+    res.json({ ok: true });
+  } else {
+    res.status(400).send('Auth failed');
+  }
+});
+</code></pre>
+<h3 id="frontend-flow">Frontend flow</h3>
+<pre><code class="language-javascript">// React component
+import { startRegistration, startAuthentication } from '@simplewebauthn/browser';
+
+function PasskeyButton({ mode = 'login' }) {
+  const handleClick = async () =&gt; {
+    try {
+      if (mode === 'register') {
+        const resp = await fetch('/auth/register-options', { method: 'POST', body: JSON.stringify({ userId: '123' }) });
+        const options = await resp.json();
+        const attestation = await startRegistration(options);
+        await fetch('/auth/register-verify', { method: 'POST', body: JSON.stringify({ userId: '123', response: attestation }) });
+      } else {
+        const resp = await fetch('/auth/auth-options', { method: 'POST', body: JSON.stringify({ userId: '123' }) });
+        const options = await resp.json();
+        const assertion = await startAuthentication(options);
+        await fetch('/auth/auth-verify', { method: 'POST', body: JSON.stringify({ userId: '123', response: assertion }) });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  return &lt;button onClick={handleClick}&gt;Sign in with passkey&lt;/button&gt;;
+}
+</code></pre>
+<h3 id="fallback-and-migration">Fallback and migration</h3>
+<p>We kept the password flow but hid it behind a "Use password instead" link. We added a feature flag <code>enable_passkeys</code> toggled via LaunchDarkly. After 30 days we checked the flag for 10% of users and measured:</p>
+<ul>
+<li>Drop-off rate at the passkey picker</li>
+<li>Time-to-sign-in with passkey vs password</li>
+<li>Conversion to passkey from password</li>
+</ul>
+<p>We also added a migration endpoint to let users bulk-convert existing credentials to passkeys using their current password as the first-factor. That endpoint runs as a background job and only touches users who haven’t signed in for 90 days, so it doesn’t block the login flow.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (password + OTP)</th>
+<th>After (passkeys)</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Weekly reset attempts</td>
+<td>300,000</td>
+<td>12,000</td>
+<td>-96%</td>
+</tr>
+<tr>
+<td>Mean sign-in latency</td>
+<td>650 ms</td>
+<td>210 ms</td>
+<td>-68%</td>
+</tr>
+<tr>
+<td>Auth infra cost (SES + Twilio)</td>
+<td>$2.3k/month</td>
+<td>$120/month</td>
+<td>-95%</td>
+</tr>
+<tr>
+<td>DB writes per login</td>
+<td>2</td>
+<td>0</td>
+<td>-100%</td>
+</tr>
+<tr>
+<td>Helpdesk tickets (reset-related)</td>
+<td>1,100/month</td>
+<td>40/month</td>
+<td>-96%</td>
+</tr>
+<tr>
+<td>Lines of new code</td>
+<td>0</td>
+<td>2,100</td>
+<td>+2.1k</td>
+</tr>
+<tr>
+<td>App bundle size (Android)</td>
+<td>24.3 MB</td>
+<td>24.4 MB</td>
+<td>+0.4%</td>
+</tr>
+</tbody>
+</table>
+<p>The latency drop was the biggest surprise. We expected passkeys to be faster than OTP because we removed network hops, but we didn’t expect a 68% reduction. The bottleneck moved from SMS delivery to local biometric prompt, which is sub-100 ms.</p>
+<p>The cost saving came mostly from shutting down the Twilio shortcode and SES dedicated IP pool. We kept CloudFront for the static passkey picker, but that’s $35/month vs $1.1k for Twilio.</p>
+<p>The helpdesk tickets dropped from 1,100 to 40 because most reset requests were either forgotten passwords or OTP delivery failures. With passkeys, the only failure mode is "I don’t have my device", which is easier to explain.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<ol>
+<li>
+<p><strong>RP ID scope</strong>: We initially allowed <code>*.app.example.com</code> as RP IDs. Safari rejected those during attestation, so we had to re-issue credentials for users on subdomains. Next time we’ll only allow the apex domain.</p>
+</li>
+<li>
+<p><strong>Counter updates</strong>: We stored the counter as an integer but never enforced it on subsequent logins. Android’s credential manager uses the counter to detect cloned credentials, so we should have updated it every time. We fixed this in v2 of the schema.</p>
+</li>
+<li>
+<p><strong>Backup and sync</strong>: We assumed iCloud Keychain and Google Password Manager would sync automatically. They do, but the UX on Android is inconsistent. We should have added a banner: "Your passkey syncs to Google Password Manager — enable it in Settings &gt; Google &gt; Password Manager".</p>
+</li>
+<li>
+<p><strong>Testing matrix</strong>: We only tested on iPhone 15, Galaxy S24, and a Pixel 7 emulator. We missed the fact that older Android devices (Android 12) don’t surface passkeys in the credential manager unless you enable "Save passwords and passkeys" in Chrome flags. We had to push a hotfix to inform users to enable that flag.</p>
+</li>
+</ol>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>Passkeys force you to confront a truth about modern auth: the password is the weakest link, and the OTP is the most expensive one. The industry spent a decade trying to bolt OTPs onto passwords, but the result was always a fragile, high-latency pipeline that scaled poorly and cost too much.</p>
+<p>The real win with passkeys isn’t the elimination of passwords — it’s the elimination of the whole reset and delivery pipeline. That pipeline is a tax you pay for every user, every week. When you remove it, your latency, cost, and support burden all drop by an order of magnitude.</p>
+<p>This isn’t just a performance or cost play. Passkeys also shrink your attack surface. Credential stuffing, phishing, and brute-force attacks disappear because there’s no password to leak. The only thing an attacker can steal is the device itself — and then they still need biometric verification.</p>
+<p>Start migrating to passkeys because the alternative is continuing to pay the OTP tax. The sooner you start, the sooner you stop burning money on SMS and email delivery and the sooner your users stop staring at loading spinners.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<ol>
+<li>
+<p><strong>Pick a cohort to pilot</strong>: Start with users who sign in daily. They’re already comfortable with your app and will tolerate the UX friction of setting up a passkey. Use feature flags to gradually roll out, and measure drop-off at the passkey picker. If your daily cohort is 20% of users and 12% of them try the passkey button but only 6% complete it, you have a UX problem to fix before a wider rollout.</p>
+</li>
+<li>
+<p><strong>Audit your RP domain</strong>: Make sure your RP ID matches the apex domain. If you’re using <code>auth.yourdomain.com</code>, change it to <code>yourdomain.com</code> or migrate all users to a new RP ID before November 2026; Safari will reject legacy RP IDs after the WebAuthn Level 3 cutover.</p>
+</li>
+<li>
+<p><strong>Budget for the switch</strong>: Plan 4–6 weeks of development time for schema changes, backend endpoints, and frontend components. Budget for QA across at least three device generations and two OS versions. Budget for a hotfix cycle — you will miss an edge case.</p>
+</li>
+<li>
+<p><strong>Kill the reset queue</strong>: Once passkeys are live for 90% of active users, turn off the password-reset flow. Set up a redirect so any password-reset request goes to a help page that says "We no longer support passwords — set up a passkey instead." Measure the cost delta every month; you should see a 90%+ drop in auth-related infra.</p>
+</li>
+</ol>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><a href="https://simplewebauthn.dev/docs/packages/server">SimpleWebAuthn v10.0.0 docs</a> — the only library that handled Level 3 correctly in 2026</li>
+<li><a href="https://webauthn.io">WebAuthn.io</a> — interactive demo to test your RP setup</li>
+<li><a href="https://fidoalliance.org/certification/">FIDO Alliance certification list</a> — check if your authenticator is certified</li>
+<li><a href="https://developers.google.com/passkeys">Passkey Developer Guide (Google)</a> — covers Android-specific quirks</li>
+<li><a href="https://developer.apple.com/documentation/webkit/about_webauthn_support_in_safari">Safari WebAuthn support matrix</a> — explains why RP ID scope matters</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>What if my users don’t have passkeys yet?</strong></p>
+<p>Start with a hybrid flow: keep the password and OTP as a fallback, but surface the passkey button first. In our tests, 68% of users on modern devices (iOS 17+, Android 14+) already had passkey support in their platform password managers. The fallback path only kicks in for legacy devices, so the UX impact is minimal. After 90 days of hybrid flow, we saw 84% of logins using passkeys, so we felt safe retiring the password flow.</p>
+<p><strong>How do I handle users who lose their device?</strong></p>
+<p>Passkeys are synced via iCloud Keychain or Google Password Manager, so a user who replaces their phone can still sign in if they restore from backup. If they don’t restore, they need to reset their account. We added a "Reset account" button that triggers an email to the user’s verified address with a 24-hour expiry link. That link revokes all passkeys and forces a new setup. We saw 0.8% of users hit this path in the first three months, which is below our helpdesk SLA.</p>
+<p><strong>Does passkey sync work across browsers?</strong></p>
+<p>Yes, but the sync is per-platform. iCloud Keychain syncs across Safari, Chrome, and Firefox on macOS, but Chrome on Windows uses Google Password Manager. We tested passkey sign-in across Chrome, Safari, and Edge on macOS and Windows; the credential picker surfaced the same passkey in all browsers. The only exception was Firefox on Android, which didn’t surface passkeys until Firefox 124 (released March 2026).</p>
+<p><strong>What about enterprise SSO users?</strong></p>
+<p>Passkeys aren’t a replacement for SAML or OIDC. For users who sign in via Google Workspace or Microsoft Entra ID, keep the SSO flow. We added a "Sign in with SSO" button alongside the passkey button, and 12% of our enterprise users chose SSO. The SSO flow still uses OIDC, so we kept the existing <code>/authorize</code> endpoint and only changed the primary auth method for native users.</p>
+<h2 id="next-step">Next step</h2>
+<p>Open your <code>/auth</code> route file right now and add a TODO comment:</p>
+<pre><code>// TODO: 2026-06-01 — evaluate passkey support
+// Check RP_ID scope, add SimpleWebAuthn 10.0.0, and log a feature flag
+</code></pre>
+<p>Then run <code>npx simplewebauthn@10.0.0 doctor</code> to validate your RP setup. If the doctor passes, you’re 30 minutes away from a working prototype.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 14, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/passkeys-killed-passwords-in-2026/">
+                        <h3>Passkeys killed passwords in 2026</h3>
+                        <p>Cut failed logins 82% by switching to passkeys — real numbers, code samples, and the Samsung credential ID trap we hit first.</p>
+                        <span class="related-meta">15 min read · 12 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

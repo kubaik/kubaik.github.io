@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 22:56:23 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 23:03:17 +0000</lastBuildDate>
+    <item>
+      <title>Passkeys killed our password reset queue</title>
+      <link>https://kubaik.github.io/passkeys-killed-our-password-reset-queue/</link>
+      <description>Cut password reset queues 96% and auth infra costs 95% by migrating to passkeys — real numbers from 2.1M user app in Vietnam and Indonesia.</description>
+      <pubDate>Sun, 14 Jun 2026 23:03:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/passkeys-killed-our-password-reset-queue/</guid>
+    </item>
     <item>
       <title>Tech pay in 2026: where the dust settled</title>
       <link>https://kubaik.github.io/tech-pay-in-2026-where-the-dust-settled/</link>
@@ -138,13 +145,6 @@
       <description>Custom agents beat frameworks in 2026 — latency, cost, and error-rate data from Nigerian 3G systems shows why CrewAI and LangGraph fail under partial failures and how a Redis-backed orchestrator handles them.</description>
       <pubDate>Sun, 14 Jun 2026 14:15:27 +0000</pubDate>
       <guid>https://kubaik.github.io/custom-agents-beat-frameworks-in-2026/</guid>
-    </item>
-    <item>
-      <title>Small model fine-tuning wins in 2026</title>
-      <link>https://kubaik.github.io/small-model-fine-tuning-wins-in-2026/</link>
-      <description>Cut LLM costs 75% in 2026 by fine-tuning 7B models — real latency, security, and cost numbers from a live system serving 500k daily requests.</description>
-      <pubDate>Sun, 14 Jun 2026 13:33:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/small-model-fine-tuning-wins-in-2026/</guid>
     </item>
   </channel>
 </rss>
