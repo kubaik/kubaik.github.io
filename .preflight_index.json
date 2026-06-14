@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T18:22:53.290828",
+  "built_at": "2026-06-14T18:53:53.030357",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1180,6 +1180,11 @@
       "slug": "compare-kafka-redpanda-nats-for-event-driven-systems",
       "title": "Compare Kafka, Redpanda, NATS for event-driven systems",
       "summary": "After reviewing a lot of code that touches eventdriven architecture, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You’re standing in front of three logos—Kafka, Redpanda, and NATS—each promisin"
+    },
+    {
+      "slug": "zero-trust-on-0-budget-cloudflare-vs-tailscale",
+      "title": "Zero-trust on $0 budget: Cloudflare vs Tailscale",
+      "summary": "I've seen the same zerotrust practice mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Zero-trust isn’t optional anymore. In 2026, small teams are still t"
     }
   ]
 }
