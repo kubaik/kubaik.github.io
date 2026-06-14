@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 08:44:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 08:49:50 +0000</lastBuildDate>
+    <item>
+      <title>4 AI tools that level the dev salary gap in 2026</title>
+      <link>https://kubaik.github.io/4-ai-tools-that-level-the-dev-salary-gap-in-2026/</link>
+      <description>Cut dev cycle time 73% with AI — which tools actually saved money in Nairobi fintech in 2026. Concrete benchmarks, cost per 1k calls, and the licensing trap most teams miss.</description>
+      <pubDate>Sun, 14 Jun 2026 08:49:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/4-ai-tools-that-level-the-dev-salary-gap-in-2026/</guid>
+    </item>
     <item>
       <title>AI interviews: 4 questions that caught 80% of weak</title>
       <link>https://kubaik.github.io/ai-interviews-4-questions-that-caught-80-of-weak/</link>
@@ -138,13 +145,6 @@
       <description>Cut frontend boilerplate 83% with AI UI tools in 2026 — the real wins and the hidden traps most teams miss. Includes version-pinned tools, accessibility audits, and a worked Next.js example.</description>
       <pubDate>Sat, 13 Jun 2026 18:53:58 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ui-tools-what-they-fix-and-what-they-break/</guid>
-    </item>
-    <item>
-      <title>gRPC vs REST vs tRPC: Latency and cost in 2026</title>
-      <link>https://kubaik.github.io/grpc-vs-rest-vs-trpc-latency-and-cost-in-2026/</link>
-      <description>Pick one protocol: REST, gRPC or tRPC in 2026 for 60% lower latency or 40% cheaper bills. Real benchmarks on AWS m5.large and mobile in Singapore.</description>
-      <pubDate>Sat, 13 Jun 2026 17:32:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/grpc-vs-rest-vs-trpc-latency-and-cost-in-2026/</guid>
     </item>
   </channel>
 </rss>
