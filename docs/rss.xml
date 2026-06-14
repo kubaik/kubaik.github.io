@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 20:44:51 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 20:50:11 +0000</lastBuildDate>
+    <item>
+      <title>AI won’t fix your legacy code — but my script did</title>
+      <link>https://kubaik.github.io/ai-wont-fix-your-legacy-code-but-my-script-did/</link>
+      <description>Reduce legacy maintenance fear 40% with a $12/month local LLM system — AST parsing, Redis graph, and grounded inference on Python 2.7 codebases in 2026</description>
+      <pubDate>Sun, 14 Jun 2026 20:50:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-wont-fix-your-legacy-code-but-my-script-did/</guid>
+    </item>
     <item>
       <title>Maintain 40% AI code: test first, lint always</title>
       <link>https://kubaik.github.io/maintain-40-ai-code-test-first-lint-always/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI rollout risk 78% using LaunchDarkly 2026.2.1 — flag-based routing, sampling, rollback, and Prometheus observability in under 2 hours.</description>
       <pubDate>Sun, 14 Jun 2026 10:40:51 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-rollout-with-launchdarkly-2026/</guid>
-    </item>
-    <item>
-      <title>4 AI tools that level the dev salary gap in 2026</title>
-      <link>https://kubaik.github.io/4-ai-tools-that-level-the-dev-salary-gap-in-2026/</link>
-      <description>Cut dev cycle time 73% with AI — which tools actually saved money in Nairobi fintech in 2026. Concrete benchmarks, cost per 1k calls, and the licensing trap most teams miss.</description>
-      <pubDate>Sun, 14 Jun 2026 08:49:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/4-ai-tools-that-level-the-dev-salary-gap-in-2026/</guid>
     </item>
   </channel>
 </rss>
