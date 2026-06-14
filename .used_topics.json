@@ -57,5 +57,6 @@
   "How to maintain a codebase where 40% of the code was written by an AI",
   "How I use AI to maintain legacy codebases nobody wants to touch",
   "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress",
-  "The data pipeline stack in 2026: what replaced Airflow for teams that couldn't afford the overhead"
+  "The data pipeline stack in 2026: what replaced Airflow for teams that couldn't afford the overhead",
+  "Building for eventual consistency: the real-world patterns behind systems that stay up"
 ]

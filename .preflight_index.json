@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T21:03:24.581707",
+  "built_at": "2026-06-14T22:21:10.326484",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1215,6 +1215,11 @@
       "slug": "airflows-replacement-what-80-of-teams-moved-to-in",
       "title": "Airflow’s replacement: what 80% of teams moved to in",
       "summary": "Most data pipeline guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026 we inherited a data pipeline that ran on Apache Airflow 2.3. We were told "
+    },
+    {
+      "slug": "7-patterns-for-systems-that-wont-die-when-networks",
+      "title": "7 patterns for systems that won’t die when networks",
+      "summary": "I ran into this building eventual problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks debugging a ‘random’"
     }
   ]
 }

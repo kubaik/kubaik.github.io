@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 22:15:51 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 22:21:15 +0000</lastBuildDate>
+    <item>
+      <title>7 patterns for systems that won’t die when networks</title>
+      <link>https://kubaik.github.io/7-patterns-for-systems-that-wont-die-when-networks/</link>
+      <description>Why this list exists (what I was actually trying to solve) I spent three weeks debugging a ‘random’ failure in a payment service that only happened when…</description>
+      <pubDate>Sun, 14 Jun 2026 22:21:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/7-patterns-for-systems-that-wont-die-when-networks/</guid>
+    </item>
     <item>
       <title>Airflow’s replacement: what 80% of teams moved to in</title>
       <link>https://kubaik.github.io/airflows-replacement-what-80-of-teams-moved-to-in/</link>
@@ -138,13 +145,6 @@
       <description>Cut webhook latency 95% and AWS costs 58% with Step Functions Express, DynamoDB idempotency, and circuit breakers — the delivery guarantees we actually trust in 2026</description>
       <pubDate>Sun, 14 Jun 2026 12:37:14 +0000</pubDate>
       <guid>https://kubaik.github.io/avoid-webhook-delivery-nightmares-in-2026/</guid>
-    </item>
-    <item>
-      <title>Schema-per-tenant: the 3ms trap we fell into</title>
-      <link>https://kubaik.github.io/schema-per-tenant-the-3ms-trap-we-fell-into/</link>
-      <description>Cut SaaS costs 53% with a hybrid tenant model — see how Aurora PostgreSQL 15, Envoy 1.28, and schema-per-tenant worked where RLS fell apart at 1,200 tenants.</description>
-      <pubDate>Sun, 14 Jun 2026 11:40:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/schema-per-tenant-the-3ms-trap-we-fell-into/</guid>
     </item>
   </channel>
 </rss>
