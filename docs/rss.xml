@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 07:11:43 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 07:17:28 +0000</lastBuildDate>
+    <item>
+      <title>Build apps that still work on 500 ms latency</title>
+      <link>https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/</link>
+      <description>Cut TTI 70% by moving to ECDSA TLS and Redis 7.2 edge cache — the exact changes teams made when Starlink beams lit up East Africa in 2026.</description>
+      <pubDate>Sun, 14 Jun 2026 07:17:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-apps-that-still-work-on-500-ms-latency/</guid>
+    </item>
     <item>
       <title>Breakdown: Nairobi SaaS stack costs in 2026</title>
       <link>https://kubaik.github.io/breakdown-nairobi-saas-stack-costs-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Land $5k remote roles with three artifacts: a live demo, runbook, and postmortem. Proven playbook from Nairobi and Lagos engineers in 2026.</description>
       <pubDate>Sat, 13 Jun 2026 17:16:26 +0000</pubDate>
       <guid>https://kubaik.github.io/5k-remote-roles-nairobi-lagos-playbook/</guid>
-    </item>
-    <item>
-      <title>HTMX: 5 things I gave up to run it in prod</title>
-      <link>https://kubaik.github.io/htmx-5-things-i-gave-up-to-run-it-in-prod/</link>
-      <description>Cut local setup from 12 minutes to 45 seconds with HTMX — setup time, error rates, and the exact tools I swapped out in 2026</description>
-      <pubDate>Sat, 13 Jun 2026 17:09:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/htmx-5-things-i-gave-up-to-run-it-in-prod/</guid>
     </item>
   </channel>
 </rss>
