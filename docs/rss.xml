@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 10:44:35 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 10:50:10 +0000</lastBuildDate>
+    <item>
+      <title>Secrets die in .env files</title>
+      <link>https://kubaik.github.io/secrets-die-in-env-files/</link>
+      <description>We bumped the retry count to 6 and the backoff to 1 second, which reduced the failure rate from 12% to 1.8% during peak hours.</description>
+      <pubDate>Sun, 14 Jun 2026 10:50:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/secrets-die-in-env-files/</guid>
+    </item>
     <item>
       <title>AI rollout with LaunchDarkly 2026</title>
       <link>https://kubaik.github.io/ai-rollout-with-launchdarkly-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut client bundle size 62% with Server Components — real numbers, code samples, and the hydration errors that broke production. See how 1.6 MB replaced 4.2 MB without rewriting everything.</description>
       <pubDate>Sat, 13 Jun 2026 19:12:48 +0000</pubDate>
       <guid>https://kubaik.github.io/bundle-size-70-lighter-with-server-components/</guid>
-    </item>
-    <item>
-      <title>AI built my SaaS in 6 weeks—for real</title>
-      <link>https://kubaik.github.io/ai-built-my-saas-in-6-weeksfor-real/</link>
-      <description>The conventional wisdom (and why it&apos;s incomplete) The hype says AI tools can write 80% of your SaaS in a weekend.</description>
-      <pubDate>Sat, 13 Jun 2026 19:03:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-built-my-saas-in-6-weeksfor-real/</guid>
     </item>
   </channel>
 </rss>
