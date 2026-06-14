@@ -40,5 +40,6 @@
   "On-call in 2026: how AI alert triage is changing what wakes engineers up at night",
   "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant",
   "Building webhook systems in 2026: delivery guarantees, retries, and idempotency",
-  "Agentic coding in 2026: what Claude Code actually gets right after a year of daily use"
+  "Agentic coding in 2026: what Claude Code actually gets right after a year of daily use",
+  "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff"
 ]
