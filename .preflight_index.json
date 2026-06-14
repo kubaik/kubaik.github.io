@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T16:31:44.731003",
+  "built_at": "2026-06-14T16:58:51.082724",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1160,6 +1160,11 @@
       "slug": "make-offline-apps-work-when-the-network-dies",
       "title": "Make offline apps work when the network dies",
       "summary": "Most build offlinefirst guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026 we launched a health-tech micro-lending app for rural farmers in East Afric"
+    },
+    {
+      "slug": "pr-checklists-are-dead-ai-agents-do-reviews-now",
+      "title": "PR checklists are dead: AI agents do reviews now",
+      "summary": "The short version: the conventional advice on code review is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Most teams still run PR checklists—lint rules, static analyzers, security scanners—sta"
     }
   ]
 }
