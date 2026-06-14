@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 10:35:42 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 10:40:59 +0000</lastBuildDate>
+    <item>
+      <title>AI rollout with LaunchDarkly 2026</title>
+      <link>https://kubaik.github.io/ai-rollout-with-launchdarkly-2026/</link>
+      <description>Cut AI rollout risk 78% using LaunchDarkly 2026.2.1 — flag-based routing, sampling, rollback, and Prometheus observability in under 2 hours.</description>
+      <pubDate>Sun, 14 Jun 2026 10:40:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-rollout-with-launchdarkly-2026/</guid>
+    </item>
     <item>
       <title>4 AI tools that level the dev salary gap in 2026</title>
       <link>https://kubaik.github.io/4-ai-tools-that-level-the-dev-salary-gap-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>The conventional wisdom (and why it&apos;s incomplete) The hype says AI tools can write 80% of your SaaS in a weekend.</description>
       <pubDate>Sat, 13 Jun 2026 19:03:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-built-my-saas-in-6-weeksfor-real/</guid>
-    </item>
-    <item>
-      <title>AI UI tools: what they fix and what they break</title>
-      <link>https://kubaik.github.io/ai-ui-tools-what-they-fix-and-what-they-break/</link>
-      <description>Cut frontend boilerplate 83% with AI UI tools in 2026 — the real wins and the hidden traps most teams miss. Includes version-pinned tools, accessibility audits, and a worked Next.js example.</description>
-      <pubDate>Sat, 13 Jun 2026 18:53:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ui-tools-what-they-fix-and-what-they-break/</guid>
     </item>
   </channel>
 </rss>
