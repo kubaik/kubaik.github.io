@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 22:51:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 22:56:23 +0000</lastBuildDate>
+    <item>
+      <title>Tech pay in 2026: where the dust settled</title>
+      <link>https://kubaik.github.io/tech-pay-in-2026-where-the-dust-settled/</link>
+      <description>KES 650k–1.4m in Nairobi 2026 — where the dust settled and how infra wins unlock raises</description>
+      <pubDate>Sun, 14 Jun 2026 22:56:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-pay-in-2026-where-the-dust-settled/</guid>
+    </item>
     <item>
       <title>Zero-downtime migrations: what works and what wastes</title>
       <link>https://kubaik.github.io/zero-downtime-migrations-what-works-and-what-wastes/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM costs 75% in 2026 by fine-tuning 7B models — real latency, security, and cost numbers from a live system serving 500k daily requests.</description>
       <pubDate>Sun, 14 Jun 2026 13:33:39 +0000</pubDate>
       <guid>https://kubaik.github.io/small-model-fine-tuning-wins-in-2026/</guid>
-    </item>
-    <item>
-      <title>Agentic coding’s year in prod: Claude Code’s wins</title>
-      <link>https://kubaik.github.io/agentic-codings-year-in-prod-claude-codes-wins/</link>
-      <description>Cut PR review time 95% with Claude Code in 2026 — exact workspace config, policies, and audit trail that passed a GDPR audit. Learn what actually works after a year of daily use.</description>
-      <pubDate>Sun, 14 Jun 2026 13:12:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/agentic-codings-year-in-prod-claude-codes-wins/</guid>
     </item>
   </channel>
 </rss>

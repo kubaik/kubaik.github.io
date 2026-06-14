@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T22:43:57.026867",
+  "built_at": "2026-06-14T22:56:18.376308",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1225,6 +1225,11 @@
       "slug": "zero-downtime-migrations-what-works-and-what-wastes",
       "title": "Zero-downtime migrations: what works and what wastes",
       "summary": "A colleague asked me about handle database during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) M"
+    },
+    {
+      "slug": "tech-pay-in-2026-where-the-dust-settled",
+      "title": "Tech pay in 2026: where the dust settled",
+      "summary": "The short version: the conventional advice on tech salaries is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Two years after the 2026–2025 correction, base salaries in Nairobi’s tech market set"
     }
   ]
 }

@@ -59,5 +59,6 @@
   "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress",
   "The data pipeline stack in 2026: what replaced Airflow for teams that couldn't afford the overhead",
   "Building for eventual consistency: the real-world patterns behind systems that stay up",
-  "How I handle database schema migrations in a zero-downtime deployment pipeline"
+  "How I handle database schema migrations in a zero-downtime deployment pipeline",
+  "Tech salaries in 2026: what the market correction settled at and where it's growing"
 ]
