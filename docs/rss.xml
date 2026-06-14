@@ -5,13 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 10:50:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 11:27:51 +0000</lastBuildDate>
     <item>
-      <title>Secrets die in .env files</title>
-      <link>https://kubaik.github.io/secrets-die-in-env-files/</link>
-      <description>We bumped the retry count to 6 and the backoff to 1 second, which reduced the failure rate from 12% to 1.8% during peak hours.</description>
-      <pubDate>Sun, 14 Jun 2026 10:50:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/secrets-die-in-env-files/</guid>
+      <title>AI alert triage cuts pages 60% in 2026</title>
+      <link>https://kubaik.github.io/ai-alert-triage-cuts-pages-60-in-2026/</link>
+      <description>Cut pages 60% with AI alert triage — PagerDuty, Lambda, and scikit-learn 1.5 in a 400-line agent that costs $2 per 10k alerts and slashes wake-up fatigue in 2026.</description>
+      <pubDate>Sun, 14 Jun 2026 11:27:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-alert-triage-cuts-pages-60-in-2026/</guid>
     </item>
     <item>
       <title>AI rollout with LaunchDarkly 2026</title>
