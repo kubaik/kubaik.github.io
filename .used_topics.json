@@ -41,5 +41,6 @@
   "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant",
   "Building webhook systems in 2026: delivery guarantees, retries, and idempotency",
   "Agentic coding in 2026: what Claude Code actually gets right after a year of daily use",
-  "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff"
+  "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff",
+  "How multi-agent orchestration frameworks compare in 2026: LangGraph vs CrewAI vs custom"
 ]
