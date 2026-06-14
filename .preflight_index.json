@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T19:14:02.962338",
+  "built_at": "2026-06-14T20:27:41.962146",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1195,6 +1195,11 @@
       "slug": "claude-4-prompts-broke-my-prod",
       "title": "Claude 4 prompts broke my prod",
       "summary": "After reviewing a lot of code that touches claude gpt5, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. Why Claude 4 and GPT-5 changed how I structure prompts for production systems I spent three weeks rewriting our prompt templa"
+    },
+    {
+      "slug": "maintain-40-ai-code-test-first-lint-always",
+      "title": "Maintain 40% AI code: test first, lint always",
+      "summary": "I've seen the same maintain codebase mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, most teams building in sub-Saharan Africa have at least 30%"
     }
   ]
 }
