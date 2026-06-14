@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 22:38:48 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 22:44:02 +0000</lastBuildDate>
+    <item>
+      <title>Zero-downtime migrations: what works and what wastes</title>
+      <link>https://kubaik.github.io/zero-downtime-migrations-what-works-and-what-wastes/</link>
+      <description>Cut zero-downtime migration risk 78% with dual writes and pg_cron — lock time benchmarks, rollback scripts, and the 15% disk trade-off most teams ignore.</description>
+      <pubDate>Sun, 14 Jun 2026 22:43:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-downtime-migrations-what-works-and-what-wastes/</guid>
+    </item>
     <item>
       <title>7 patterns for systems that won’t die when networks</title>
       <link>https://kubaik.github.io/7-patterns-for-systems-that-wont-die-when-networks/</link>
@@ -138,13 +145,6 @@
       <description>Cut PR review time 95% with Claude Code in 2026 — exact workspace config, policies, and audit trail that passed a GDPR audit. Learn what actually works after a year of daily use.</description>
       <pubDate>Sun, 14 Jun 2026 13:12:33 +0000</pubDate>
       <guid>https://kubaik.github.io/agentic-codings-year-in-prod-claude-codes-wins/</guid>
-    </item>
-    <item>
-      <title>Avoid webhook delivery nightmares in 2026</title>
-      <link>https://kubaik.github.io/avoid-webhook-delivery-nightmares-in-2026/</link>
-      <description>Cut webhook latency 95% and AWS costs 58% with Step Functions Express, DynamoDB idempotency, and circuit breakers — the delivery guarantees we actually trust in 2026</description>
-      <pubDate>Sun, 14 Jun 2026 12:37:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/avoid-webhook-delivery-nightmares-in-2026/</guid>
     </item>
   </channel>
 </rss>

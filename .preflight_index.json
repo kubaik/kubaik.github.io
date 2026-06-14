@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T22:21:10.326484",
+  "built_at": "2026-06-14T22:43:57.026867",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1220,6 +1220,11 @@
       "slug": "7-patterns-for-systems-that-wont-die-when-networks",
       "title": "7 patterns for systems that won’t die when networks",
       "summary": "I ran into this building eventual problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks debugging a ‘random’"
+    },
+    {
+      "slug": "zero-downtime-migrations-what-works-and-what-wastes",
+      "title": "Zero-downtime migrations: what works and what wastes",
+      "summary": "A colleague asked me about handle database during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) M"
     }
   ]
 }
