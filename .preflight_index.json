@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T14:15:30.643719",
+  "built_at": "2026-06-14T15:06:43.034186",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1140,6 +1140,11 @@
       "slug": "custom-agents-beat-frameworks-in-2026",
       "title": "Custom agents beat frameworks in 2026",
       "summary": "A colleague asked me about multiagent orchestration during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's inco"
+    },
+    {
+      "slug": "typescript-53-changed-how-we-model-domains",
+      "title": "TypeScript 5.3 changed how we model domains",
+      "summary": "Most typescript features guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. Advanced edge cases you personally encountered 1. The cursed collision in branded types In our first pass, we declared branded "
     }
   ]
 }

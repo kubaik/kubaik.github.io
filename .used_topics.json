@@ -42,5 +42,6 @@
   "Building webhook systems in 2026: delivery guarantees, retries, and idempotency",
   "Agentic coding in 2026: what Claude Code actually gets right after a year of daily use",
   "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff",
-  "How multi-agent orchestration frameworks compare in 2026: LangGraph vs CrewAI vs custom"
+  "How multi-agent orchestration frameworks compare in 2026: LangGraph vs CrewAI vs custom",
+  "TypeScript 5.x features that changed how I model domain logic"
 ]

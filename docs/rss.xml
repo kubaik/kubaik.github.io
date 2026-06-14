@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 15:01:03 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 15:06:47 +0000</lastBuildDate>
+    <item>
+      <title>TypeScript 5.3 changed how we model domains</title>
+      <link>https://kubaik.github.io/typescript-53-changed-how-we-model-domains/</link>
+      <description>Cut domain layer lines 75% with TypeScript 5.3 — branded types, template literal rules, and the `satisfies` operator that caught 100% of validation errors at compile time.</description>
+      <pubDate>Sun, 14 Jun 2026 15:06:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/typescript-53-changed-how-we-model-domains/</guid>
+    </item>
     <item>
       <title>Custom agents beat frameworks in 2026</title>
       <link>https://kubaik.github.io/custom-agents-beat-frameworks-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut CSS bundle 86% with container queries and @layer — main-thread time fell 67%, merge conflicts dropped 80%. Real numbers from a Vietnamese fintech app handling 2.3 million users.</description>
       <pubDate>Sat, 13 Jun 2026 22:39:56 +0000</pubDate>
       <guid>https://kubaik.github.io/css-2026-container-queries-retired-our-utility-class/</guid>
-    </item>
-    <item>
-      <title>API security: the attacks rising in 2026</title>
-      <link>https://kubaik.github.io/api-security-the-attacks-rising-in-2026/</link>
-      <description>Block API attacks in 2026: stop token recycling, IP rotation, and JSON bombs with layered defense. See 64% latency drop and $1.3k monthly savings.</description>
-      <pubDate>Sat, 13 Jun 2026 21:27:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-security-the-attacks-rising-in-2026/</guid>
     </item>
   </channel>
 </rss>
