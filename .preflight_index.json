@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T15:46:51.893544",
+  "built_at": "2026-06-14T16:31:44.731003",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1155,6 +1155,11 @@
       "slug": "why-ai-monitoring-fails-traditional-tools",
       "title": "Why AI monitoring fails traditional tools",
       "summary": "The official documentation for observability different is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs If you’re running LLMs or"
+    },
+    {
+      "slug": "make-offline-apps-work-when-the-network-dies",
+      "title": "Make offline apps work when the network dies",
+      "summary": "Most build offlinefirst guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026 we launched a health-tech micro-lending app for rural farmers in East Afric"
     }
   ]
 }
