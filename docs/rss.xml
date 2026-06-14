@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 13 Jun 2026 23:15:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 00:02:25 +0000</lastBuildDate>
+    <item>
+      <title>LLM metrics that stop wasting time</title>
+      <link>https://kubaik.github.io/llm-metrics-that-stop-wasting-time/</link>
+      <description>A seemingly minor change — adding a one-sentence preamble — can increase the output token count by 15%.</description>
+      <pubDate>Sun, 14 Jun 2026 00:02:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-metrics-that-stop-wasting-time/</guid>
+    </item>
     <item>
       <title>Killed my $3k Kubernetes bill with $200 Fly.io</title>
       <link>https://kubaik.github.io/killed-my-3k-kubernetes-bill-with-200-flyio/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI agent incidents 80% with human review — latency benchmarks, cost breakdowns, and the hybrid setup most teams miss in 2026.</description>
       <pubDate>Sat, 13 Jun 2026 15:00:36 +0000</pubDate>
       <guid>https://kubaik.github.io/human-in-the-loop-vs-full-auto-ai-agents-in-2026/</guid>
-    </item>
-    <item>
-      <title>Split the monolith slowly — no rewrite needed</title>
-      <link>https://kubaik.github.io/split-the-monolith-slowly-no-rewrite-needed/</link>
-      <description>Cut migration risk 60% with incremental monolith splitting — strangler facade, gradual traffic routing, and when to avoid dual writes in 2026</description>
-      <pubDate>Sat, 13 Jun 2026 14:37:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/split-the-monolith-slowly-no-rewrite-needed/</guid>
     </item>
   </channel>
 </rss>

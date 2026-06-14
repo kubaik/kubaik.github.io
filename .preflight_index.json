@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-13T23:15:37.130724",
+  "built_at": "2026-06-14T00:02:21.791989",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1060,6 +1060,11 @@
       "slug": "killed-my-3k-kubernetes-bill-with-200-flyio",
       "title": "Killed my $3k Kubernetes bill with $200 Fly.io",
       "summary": "Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In May 2026 we launched a B2B SaaS tool that processes CSV uploads and returns a JSON"
+    },
+    {
+      "slug": "llm-metrics-that-stop-wasting-time",
+      "title": "LLM metrics that stop wasting time",
+      "summary": "The official documentation for evaluating llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams start their LLM evaluat"
     }
   ]
 }

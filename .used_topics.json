@@ -26,5 +26,6 @@
   "CSS in 2026: container queries, @layer, and the features that finally retired my utility framework",
   "Stripe vs Lemon Squeezy vs Paddle in 2026: which one I use and why",
   "The islands architecture in 2026: when Astro and partial hydration are the right choice",
-  "How I replaced a $3k/month Kubernetes cluster with a $200/month alternative"
+  "How I replaced a $3k/month Kubernetes cluster with a $200/month alternative",
+  "Evaluating LLM output quality at scale: the metrics that actually matter"
 ]
