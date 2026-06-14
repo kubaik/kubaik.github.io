@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 15:28:16 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 15:46:56 +0000</lastBuildDate>
+    <item>
+      <title>Why AI monitoring fails traditional tools</title>
+      <link>https://kubaik.github.io/why-ai-monitoring-fails-traditional-tools/</link>
+      <description>Cut AI hallucinations 74% with observability — prompt drift, context changes, and agent decisions you can’t see with traditional logs. 2026 metrics from a live system.</description>
+      <pubDate>Sun, 14 Jun 2026 15:46:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-ai-monitoring-fails-traditional-tools/</guid>
+    </item>
     <item>
       <title>Cut origin load 80% with Workers</title>
       <link>https://kubaik.github.io/cut-origin-load-80-with-workers/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 44% with Astro islands: bundle shrinks 79%, LCP drops to 1.9 s on 3G, and infra costs fall 45% — here’s the exact strategy we used in 2026.</description>
       <pubDate>Sat, 13 Jun 2026 22:58:33 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-islands-astros-hydration-edge/</guid>
-    </item>
-    <item>
-      <title>Stripe lost my trust — here&apos;s my 2026 stack</title>
-      <link>https://kubaik.github.io/stripe-lost-my-trust-heres-my-2026-stack/</link>
-      <description>Stripe vs Lemon Squeezy vs Paddle in 2026 — pick the right provider by comparing fees, tax handling, and complexity. Includes real costs, code examples, and decision matrix.</description>
-      <pubDate>Sat, 13 Jun 2026 22:51:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/stripe-lost-my-trust-heres-my-2026-stack/</guid>
     </item>
   </channel>
 </rss>
