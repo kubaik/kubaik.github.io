@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T19:03:20.449840",
+  "built_at": "2026-06-14T19:14:02.962338",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1190,6 +1190,11 @@
       "slug": "stop-burning-cash-on-multi-region-backends",
       "title": "Stop burning cash on multi-region backends",
       "summary": "The official documentation for design multiregion is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams start with a single"
+    },
+    {
+      "slug": "claude-4-prompts-broke-my-prod",
+      "title": "Claude 4 prompts broke my prod",
+      "summary": "After reviewing a lot of code that touches claude gpt5, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. Why Claude 4 and GPT-5 changed how I structure prompts for production systems I spent three weeks rewriting our prompt templa"
     }
   ]
 }

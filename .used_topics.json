@@ -52,5 +52,6 @@
   "How to build payment systems that work across Kenya, Nigeria, and Ghana without three separate integrations",
   "Event-driven architecture in 2026: what Kafka, Redpanda, and NATS each do best",
   "Zero-trust in practice for small teams: what you can implement without an enterprise budget",
-  "How to design multi-region backends without triple the infrastructure cost"
+  "How to design multi-region backends without triple the infrastructure cost",
+  "Why Claude 4 and GPT-5 changed how I structure prompts for production systems"
 ]
