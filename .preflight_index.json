@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T16:58:51.082724",
+  "built_at": "2026-06-14T17:09:32.778002",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1165,6 +1165,11 @@
       "slug": "pr-checklists-are-dead-ai-agents-do-reviews-now",
       "title": "PR checklists are dead: AI agents do reviews now",
       "summary": "The short version: the conventional advice on code review is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Most teams still run PR checklists—lint rules, static analyzers, security scanners—sta"
+    },
+    {
+      "slug": "why-ai-interviewers-failed-68-of-us-in-2026",
+      "title": "Why AI interviewers failed 68% of us in 2026",
+      "summary": "After reviewing a lot of code that touches system design, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing In 2026, most tech interviews now include an AI assistant that asks you to design a system"
     }
   ]
 }
