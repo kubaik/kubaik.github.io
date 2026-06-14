@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T20:50:05.965159",
+  "built_at": "2026-06-14T20:58:28.940197",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1205,6 +1205,11 @@
       "slug": "ai-wont-fix-your-legacy-code-but-my-script-did",
       "title": "AI won’t fix your legacy code — but my script did",
       "summary": "The official documentation for use maintain is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Legacy code isn’t just old code — it"
+    },
+    {
+      "slug": "frontend-testing-2026-3-tools-i-trust",
+      "title": "Frontend testing 2026: 3 tools I trust",
+      "summary": "I ran into this test frontend problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In early 2026 I inherited a React codebase w"
     }
   ]
 }

@@ -55,5 +55,6 @@
   "How to design multi-region backends without triple the infrastructure cost",
   "Why Claude 4 and GPT-5 changed how I structure prompts for production systems",
   "How to maintain a codebase where 40% of the code was written by an AI",
-  "How I use AI to maintain legacy codebases nobody wants to touch"
+  "How I use AI to maintain legacy codebases nobody wants to touch",
+  "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress"
 ]

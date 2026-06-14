@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 20:53:14 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 20:58:34 +0000</lastBuildDate>
+    <item>
+      <title>Frontend testing 2026: 3 tools I trust</title>
+      <link>https://kubaik.github.io/frontend-testing-2026-3-tools-i-trust/</link>
+      <description>Cut frontend test time 70% in 2026 with Playwright 1.44 and Vitest 1.6 — real CI speeds, flake rates, and the Cypress mistake I won’t repeat</description>
+      <pubDate>Sun, 14 Jun 2026 20:58:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/frontend-testing-2026-3-tools-i-trust/</guid>
+    </item>
     <item>
       <title>AI won’t fix your legacy code — but my script did</title>
       <link>https://kubaik.github.io/ai-wont-fix-your-legacy-code-but-my-script-did/</link>
@@ -138,13 +145,6 @@
       <description>Cut pages 60% with AI alert triage — PagerDuty, Lambda, and scikit-learn 1.5 in a 400-line agent that costs $2 per 10k alerts and slashes wake-up fatigue in 2026.</description>
       <pubDate>Sun, 14 Jun 2026 11:27:43 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-alert-triage-cuts-pages-60-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI rollout with LaunchDarkly 2026</title>
-      <link>https://kubaik.github.io/ai-rollout-with-launchdarkly-2026/</link>
-      <description>Cut AI rollout risk 78% using LaunchDarkly 2026.2.1 — flag-based routing, sampling, rollback, and Prometheus observability in under 2 hours.</description>
-      <pubDate>Sun, 14 Jun 2026 10:40:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-rollout-with-launchdarkly-2026/</guid>
     </item>
   </channel>
 </rss>
