@@ -28,5 +28,6 @@
   "The islands architecture in 2026: when Astro and partial hydration are the right choice",
   "How I replaced a $3k/month Kubernetes cluster with a $200/month alternative",
   "Evaluating LLM output quality at scale: the metrics that actually matter",
-  "How container builds changed in 2026: BuildKit, depot.dev, and why CI pipelines got faster"
+  "How container builds changed in 2026: BuildKit, depot.dev, and why CI pipelines got faster",
+  "How to do a postmortem on an AI agent failure: it's different from a regular incident"
 ]

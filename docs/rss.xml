@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 02:01:32 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 02:06:48 +0000</lastBuildDate>
+    <item>
+      <title>AI agent postmortems: trace vs logs vs code</title>
+      <link>https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/</link>
+      <description>Cut AI agent postmortem time 70% with the right tool — evaluation logs vs tracing in 2026 with concrete numbers, costs, and code samples.</description>
+      <pubDate>Sun, 14 Jun 2026 02:06:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/</guid>
+    </item>
     <item>
       <title>3 ways container builds got 3x faster in 2026</title>
       <link>https://kubaik.github.io/3-ways-container-builds-got-3x-faster-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Discover how a team cut nitpick comments 68% with AI pair programming. Real metrics from 60 days of testing GitHub Copilot, Cursor, Amazon Q and more — plus the exact commands to onboard in 30 minutes.</description>
       <pubDate>Sat, 13 Jun 2026 15:29:44 +0000</pubDate>
       <guid>https://kubaik.github.io/3-ai-pair-programming-tools-we-dropped-after-60-days/</guid>
-    </item>
-    <item>
-      <title>AI prompt injection: why most systems fail</title>
-      <link>https://kubaik.github.io/ai-prompt-injection-why-most-systems-fail/</link>
-      <description>Cut prompt-injection leakage to zero with 35 ms overhead — learn the real attack vectors LangChain docs ignore and the tools that actually work in 2026.</description>
-      <pubDate>Sat, 13 Jun 2026 15:10:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-prompt-injection-why-most-systems-fail/</guid>
     </item>
   </channel>
 </rss>
