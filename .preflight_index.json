@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T11:27:46.755545",
+  "built_at": "2026-06-14T11:40:51.949746",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1115,6 +1115,11 @@
       "slug": "ai-alert-triage-cuts-pages-60-in-2026",
       "title": "AI alert triage cuts pages 60% in 2026",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In late 2026 I joined a team that used PagerDuty + linear escalation to handle 120 servi"
+    },
+    {
+      "slug": "schema-per-tenant-the-3ms-trap-we-fell-into",
+      "title": "Schema-per-tenant: the 3ms trap we fell into",
+      "summary": "Most designing multitenant guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026 we launched a SaaS for dental clinics that let them book appointme"
     }
   ]
 }

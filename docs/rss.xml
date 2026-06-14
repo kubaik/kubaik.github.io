@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 11:35:24 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 11:40:56 +0000</lastBuildDate>
+    <item>
+      <title>Schema-per-tenant: the 3ms trap we fell into</title>
+      <link>https://kubaik.github.io/schema-per-tenant-the-3ms-trap-we-fell-into/</link>
+      <description>Cut SaaS costs 53% with a hybrid tenant model — see how Aurora PostgreSQL 15, Envoy 1.28, and schema-per-tenant worked where RLS fell apart at 1,200 tenants.</description>
+      <pubDate>Sun, 14 Jun 2026 11:40:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/schema-per-tenant-the-3ms-trap-we-fell-into/</guid>
+    </item>
     <item>
       <title>AI alert triage cuts pages 60% in 2026</title>
       <link>https://kubaik.github.io/ai-alert-triage-cuts-pages-60-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Hit $5k MRR with zero marketing spend — the exact Stack Overflow, GitHub, and package manager tactics that worked in 2026.</description>
       <pubDate>Sat, 13 Jun 2026 19:47:50 +0000</pubDate>
       <guid>https://kubaik.github.io/marketing-without-budget-5k-mrr-in-18-months/</guid>
-    </item>
-    <item>
-      <title>Bundle size: 70% lighter with server components</title>
-      <link>https://kubaik.github.io/bundle-size-70-lighter-with-server-components/</link>
-      <description>Cut client bundle size 62% with Server Components — real numbers, code samples, and the hydration errors that broke production. See how 1.6 MB replaced 4.2 MB without rewriting everything.</description>
-      <pubDate>Sat, 13 Jun 2026 19:12:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/bundle-size-70-lighter-with-server-components/</guid>
     </item>
   </channel>
 </rss>
