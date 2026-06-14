@@ -38,5 +38,6 @@
   "Feature flags in 2026: how they became the backbone of AI rollout strategies",
   "Secrets management in 2026: the approaches that replaced .env files in serious projects",
   "On-call in 2026: how AI alert triage is changing what wakes engineers up at night",
-  "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant"
+  "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant",
+  "Building webhook systems in 2026: delivery guarantees, retries, and idempotency"
 ]

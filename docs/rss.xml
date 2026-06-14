@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 12:31:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 12:37:22 +0000</lastBuildDate>
+    <item>
+      <title>Avoid webhook delivery nightmares in 2026</title>
+      <link>https://kubaik.github.io/avoid-webhook-delivery-nightmares-in-2026/</link>
+      <description>Cut webhook latency 95% and AWS costs 58% with Step Functions Express, DynamoDB idempotency, and circuit breakers — the delivery guarantees we actually trust in 2026</description>
+      <pubDate>Sun, 14 Jun 2026 12:37:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/avoid-webhook-delivery-nightmares-in-2026/</guid>
+    </item>
     <item>
       <title>Schema-per-tenant: the 3ms trap we fell into</title>
       <link>https://kubaik.github.io/schema-per-tenant-the-3ms-trap-we-fell-into/</link>
@@ -138,13 +145,6 @@
       <description>Cut API cost 21% and block 100% of prompt leaks with a 30-minute refactor — the firewall, sanitizer, and history rules teams ignore in 2026.</description>
       <pubDate>Sat, 13 Jun 2026 20:49:53 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-prompt-injection-the-silent-aws-bill-killer/</guid>
-    </item>
-    <item>
-      <title>Marketing without budget: $5k MRR in 18 months</title>
-      <link>https://kubaik.github.io/marketing-without-budget-5k-mrr-in-18-months/</link>
-      <description>Hit $5k MRR with zero marketing spend — the exact Stack Overflow, GitHub, and package manager tactics that worked in 2026.</description>
-      <pubDate>Sat, 13 Jun 2026 19:47:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/marketing-without-budget-5k-mrr-in-18-months/</guid>
     </item>
   </channel>
 </rss>
