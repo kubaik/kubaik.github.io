@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T18:53:53.030357",
+  "built_at": "2026-06-14T19:03:20.449840",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1185,6 +1185,11 @@
       "slug": "zero-trust-on-0-budget-cloudflare-vs-tailscale",
       "title": "Zero-trust on $0 budget: Cloudflare vs Tailscale",
       "summary": "I've seen the same zerotrust practice mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Zero-trust isn’t optional anymore. In 2026, small teams are still t"
+    },
+    {
+      "slug": "stop-burning-cash-on-multi-region-backends",
+      "title": "Stop burning cash on multi-region backends",
+      "summary": "The official documentation for design multiregion is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams start with a single"
     }
   ]
 }
