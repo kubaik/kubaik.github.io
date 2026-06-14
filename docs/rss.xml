@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 20:58:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 21:03:29 +0000</lastBuildDate>
+    <item>
+      <title>Airflow’s replacement: what 80% of teams moved to in</title>
+      <link>https://kubaik.github.io/airflows-replacement-what-80-of-teams-moved-to-in/</link>
+      <description>Cut pipeline overhead 95%: how 80% of teams replaced Airflow in 2026 with Kubernetes-native workflows, sub-second latency, and $58/month Postgres.</description>
+      <pubDate>Sun, 14 Jun 2026 21:03:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/airflows-replacement-what-80-of-teams-moved-to-in/</guid>
+    </item>
     <item>
       <title>Frontend testing 2026: 3 tools I trust</title>
       <link>https://kubaik.github.io/frontend-testing-2026-3-tools-i-trust/</link>
@@ -138,13 +145,6 @@
       <description>Cut SaaS costs 53% with a hybrid tenant model — see how Aurora PostgreSQL 15, Envoy 1.28, and schema-per-tenant worked where RLS fell apart at 1,200 tenants.</description>
       <pubDate>Sun, 14 Jun 2026 11:40:48 +0000</pubDate>
       <guid>https://kubaik.github.io/schema-per-tenant-the-3ms-trap-we-fell-into/</guid>
-    </item>
-    <item>
-      <title>AI alert triage cuts pages 60% in 2026</title>
-      <link>https://kubaik.github.io/ai-alert-triage-cuts-pages-60-in-2026/</link>
-      <description>Cut pages 60% with AI alert triage — PagerDuty, Lambda, and scikit-learn 1.5 in a 400-line agent that costs $2 per 10k alerts and slashes wake-up fatigue in 2026.</description>
-      <pubDate>Sun, 14 Jun 2026 11:27:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-alert-triage-cuts-pages-60-in-2026/</guid>
     </item>
   </channel>
 </rss>

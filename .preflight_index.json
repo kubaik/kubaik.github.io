@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T20:58:28.940197",
+  "built_at": "2026-06-14T21:03:24.581707",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1210,6 +1210,11 @@
       "slug": "frontend-testing-2026-3-tools-i-trust",
       "title": "Frontend testing 2026: 3 tools I trust",
       "summary": "I ran into this test frontend problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In early 2026 I inherited a React codebase w"
+    },
+    {
+      "slug": "airflows-replacement-what-80-of-teams-moved-to-in",
+      "title": "Airflow’s replacement: what 80% of teams moved to in",
+      "summary": "Most data pipeline guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026 we inherited a data pipeline that ran on Apache Airflow 2.3. We were told "
     }
   ]
 }
