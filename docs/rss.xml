@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 13:07:24 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 13:12:40 +0000</lastBuildDate>
+    <item>
+      <title>Agentic coding’s year in prod: Claude Code’s wins</title>
+      <link>https://kubaik.github.io/agentic-codings-year-in-prod-claude-codes-wins/</link>
+      <description>Cut PR review time 95% with Claude Code in 2026 — exact workspace config, policies, and audit trail that passed a GDPR audit. Learn what actually works after a year of daily use.</description>
+      <pubDate>Sun, 14 Jun 2026 13:12:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/agentic-codings-year-in-prod-claude-codes-wins/</guid>
+    </item>
     <item>
       <title>Avoid webhook delivery nightmares in 2026</title>
       <link>https://kubaik.github.io/avoid-webhook-delivery-nightmares-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>2026 freelance rates fell 28% for templated AI apps, but projects needing SOC-2 or PCI still pay $170–$220 because AI cannot replace the janitor work. Real cost and rate benchmarks inside.</description>
       <pubDate>Sat, 13 Jun 2026 20:59:28 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-freelance-rates-2026-which-stacks-still-pay/</guid>
-    </item>
-    <item>
-      <title>AI prompt injection: the silent AWS bill killer</title>
-      <link>https://kubaik.github.io/ai-prompt-injection-the-silent-aws-bill-killer/</link>
-      <description>Cut API cost 21% and block 100% of prompt leaks with a 30-minute refactor — the firewall, sanitizer, and history rules teams ignore in 2026.</description>
-      <pubDate>Sat, 13 Jun 2026 20:49:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-prompt-injection-the-silent-aws-bill-killer/</guid>
     </item>
   </channel>
 </rss>
