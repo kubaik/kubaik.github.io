@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 18:17:38 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 18:22:58 +0000</lastBuildDate>
+    <item>
+      <title>Compare Kafka, Redpanda, NATS for event-driven systems</title>
+      <link>https://kubaik.github.io/compare-kafka-redpanda-nats-for-event-driven-systems/</link>
+      <description>Pick the right event broker in 2026: Kafka vs Redpanda vs NATS with concrete benchmarks, tuning steps, and cost figures to cut latency and avoid message loss.</description>
+      <pubDate>Sun, 14 Jun 2026 18:22:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/compare-kafka-redpanda-nats-for-event-driven-systems/</guid>
+    </item>
     <item>
       <title>Skip M-Pesa: build one API for 3 African markets</title>
       <link>https://kubaik.github.io/skip-m-pesa-build-one-api-for-3-african-markets/</link>
@@ -138,13 +145,6 @@
       <description>Cut $1.4k/month and three dashboards by replacing Redis, Kafka, and S3 with Postgres 17 in 2026. Cache, event streaming, and blobs under one roof — the latency numbers, cost breakdown, and the exact queries to check first.</description>
       <pubDate>Sun, 14 Jun 2026 04:25:32 +0000</pubDate>
       <guid>https://kubaik.github.io/postgres-17-beat-redis-kafka-and-s3-what-we-dropped/</guid>
-    </item>
-    <item>
-      <title>AI agent postmortems: trace vs logs vs code</title>
-      <link>https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/</link>
-      <description>Cut AI agent postmortem time 70% with the right tool — evaluation logs vs tracing in 2026 with concrete numbers, costs, and code samples.</description>
-      <pubDate>Sun, 14 Jun 2026 02:06:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/</guid>
     </item>
   </channel>
 </rss>
