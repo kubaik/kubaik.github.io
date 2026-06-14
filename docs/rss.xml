@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 17:09:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 17:14:18 +0000</lastBuildDate>
+    <item>
+      <title>Skip M-Pesa: build one API for 3 African markets</title>
+      <link>https://kubaik.github.io/skip-m-pesa-build-one-api-for-3-african-markets/</link>
+      <description>Cut payment integration work 60% with one API for Kenya, Nigeria, Ghana — latency benchmarks, sandbox pitfalls, and the adapter strategy most teams miss</description>
+      <pubDate>Sun, 14 Jun 2026 17:14:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-m-pesa-build-one-api-for-3-african-markets/</guid>
+    </item>
     <item>
       <title>Why AI interviewers failed 68% of us in 2026</title>
       <link>https://kubaik.github.io/why-ai-interviewers-failed-68-of-us-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI agent postmortem time 70% with the right tool — evaluation logs vs tracing in 2026 with concrete numbers, costs, and code samples.</description>
       <pubDate>Sun, 14 Jun 2026 02:06:40 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/</guid>
-    </item>
-    <item>
-      <title>3 ways container builds got 3x faster in 2026</title>
-      <link>https://kubaik.github.io/3-ways-container-builds-got-3x-faster-in-2026/</link>
-      <description>Cut container build time 70% in 2026 with depot.dev, BuildKit 1.6, and remote caching — cache hit rates, latency, and cost breakdown for GitHub Actions and AWS</description>
-      <pubDate>Sun, 14 Jun 2026 01:45:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/3-ways-container-builds-got-3x-faster-in-2026/</guid>
     </item>
   </channel>
 </rss>
