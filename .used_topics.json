@@ -30,5 +30,6 @@
   "Evaluating LLM output quality at scale: the metrics that actually matter",
   "How container builds changed in 2026: BuildKit, depot.dev, and why CI pipelines got faster",
   "How to do a postmortem on an AI agent failure: it's different from a regular incident",
-  "Postgres in 2026: the features that replaced three separate tools in our stack"
+  "Postgres in 2026: the features that replaced three separate tools in our stack",
+  "The infrastructure stack for a Nairobi-based SaaS in 2026: a real cost breakdown"
 ]

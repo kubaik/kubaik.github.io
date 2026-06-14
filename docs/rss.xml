@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 14 Jun 2026 07:01:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 14 Jun 2026 07:07:29 +0000</lastBuildDate>
+    <item>
+      <title>Breakdown: Nairobi SaaS stack costs in 2026</title>
+      <link>https://kubaik.github.io/breakdown-nairobi-saas-stack-costs-in-2026/</link>
+      <description>Nairobi SaaS stack 2026 bill: $2.7 k/month for 100 k requests, real cost breakdown, latency data, and the Redis pool mistake most teams repeat.</description>
+      <pubDate>Sun, 14 Jun 2026 07:07:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/breakdown-nairobi-saas-stack-costs-in-2026/</guid>
+    </item>
     <item>
       <title>Postgres 17 beat Redis, Kafka, and S3: what we dropped</title>
       <link>https://kubaik.github.io/postgres-17-beat-redis-kafka-and-s3-what-we-dropped/</link>
@@ -138,13 +145,6 @@
       <description>Cut local setup from 12 minutes to 45 seconds with HTMX — setup time, error rates, and the exact tools I swapped out in 2026</description>
       <pubDate>Sat, 13 Jun 2026 17:09:23 +0000</pubDate>
       <guid>https://kubaik.github.io/htmx-5-things-i-gave-up-to-run-it-in-prod/</guid>
-    </item>
-    <item>
-      <title>WCAG chat fails: the 4 silent ARIA traps</title>
-      <link>https://kubaik.github.io/wcag-chat-fails-the-4-silent-aria-traps/</link>
-      <description>WCAG chat fails: cut silent ARIA bugs 90% with assertive live regions, atomic updates, and cross-engine fixes tested on VoiceOver, NVDA, and TalkBack in 2026.</description>
-      <pubDate>Sat, 13 Jun 2026 16:57:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/wcag-chat-fails-the-4-silent-aria-traps/</guid>
     </item>
   </channel>
 </rss>
