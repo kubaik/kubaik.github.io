@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 01:45:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 01:50:47 +0000</lastBuildDate>
+    <item>
+      <title>AI codebases: two onboarding paths that actually work</title>
+      <link>https://kubaik.github.io/ai-codebases-two-onboarding-paths-that-actually-work/</link>
+      <description>Cut onboarding friction 40% with these two AI codebase paths — the hard lessons from six mid-size teams in 2026</description>
+      <pubDate>Mon, 15 Jun 2026 01:50:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-codebases-two-onboarding-paths-that-actually-work/</guid>
+    </item>
     <item>
       <title>Signals: the state trick everyone copied without</title>
       <link>https://kubaik.github.io/signals-the-state-trick-everyone-copied-without/</link>
@@ -138,13 +145,6 @@
       <description>Cut origin load 80% with Cloudflare Workers — cache static assets, read-only API responses, and measure p95 latency drops from 412 ms to 89 ms while saving 42% on AWS bills.</description>
       <pubDate>Sun, 14 Jun 2026 15:28:08 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-origin-load-80-with-workers/</guid>
-    </item>
-    <item>
-      <title>TypeScript 5.3 changed how we model domains</title>
-      <link>https://kubaik.github.io/typescript-53-changed-how-we-model-domains/</link>
-      <description>Cut domain layer lines 75% with TypeScript 5.3 — branded types, template literal rules, and the `satisfies` operator that caught 100% of validation errors at compile time.</description>
-      <pubDate>Sun, 14 Jun 2026 15:06:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/typescript-53-changed-how-we-model-domains/</guid>
     </item>
   </channel>
 </rss>

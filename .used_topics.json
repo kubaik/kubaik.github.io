@@ -62,5 +62,6 @@
   "How I handle database schema migrations in a zero-downtime deployment pipeline",
   "Tech salaries in 2026: what the market correction settled at and where it's growing",
   "How passkeys changed authentication and what that means for the apps you're building",
-  "How Signals changed state management and whether it matters outside of frameworks"
+  "How Signals changed state management and whether it matters outside of frameworks",
+  "How to onboard a developer to a partially AI-generated codebase"
 ]
