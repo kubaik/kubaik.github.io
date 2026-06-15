@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-15T01:50:42.354842",
+  "built_at": "2026-06-15T02:11:40.359883",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1245,6 +1245,11 @@
       "slug": "ai-codebases-two-onboarding-paths-that-actually-work",
       "title": "AI codebases: two onboarding paths that actually work",
       "summary": "I've seen the same onboard developer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 78% of new codebases at mid-size tech companies are born wi"
+    },
+    {
+      "slug": "price-saas-tools-in-2026-what-we-learned-pricing-a",
+      "title": "Price SaaS tools in 2026: what we learned pricing a",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026 I helped launch an internal dev tool at a Series B startup in Jakarta. By early "
     }
   ]
 }

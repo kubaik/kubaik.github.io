@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 02:06:25 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 02:11:45 +0000</lastBuildDate>
+    <item>
+      <title>Price SaaS tools in 2026: what we learned pricing a</title>
+      <link>https://kubaik.github.io/price-saas-tools-in-2026-what-we-learned-pricing-a/</link>
+      <description>Cut pricing guesswork 70%: how to model infra cost, support tickets and concurrency in 2026 with real numbers and a free toolkit — Node 20, Redis 7.2, Prometheus 2.52.</description>
+      <pubDate>Mon, 15 Jun 2026 02:11:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/price-saas-tools-in-2026-what-we-learned-pricing-a/</guid>
+    </item>
     <item>
       <title>AI codebases: two onboarding paths that actually work</title>
       <link>https://kubaik.github.io/ai-codebases-two-onboarding-paths-that-actually-work/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI hallucinations 74% with observability — prompt drift, context changes, and agent decisions you can’t see with traditional logs. 2026 metrics from a live system.</description>
       <pubDate>Sun, 14 Jun 2026 15:46:48 +0000</pubDate>
       <guid>https://kubaik.github.io/why-ai-monitoring-fails-traditional-tools/</guid>
-    </item>
-    <item>
-      <title>Cut origin load 80% with Workers</title>
-      <link>https://kubaik.github.io/cut-origin-load-80-with-workers/</link>
-      <description>Cut origin load 80% with Cloudflare Workers — cache static assets, read-only API responses, and measure p95 latency drops from 412 ms to 89 ms while saving 42% on AWS bills.</description>
-      <pubDate>Sun, 14 Jun 2026 15:28:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-origin-load-80-with-workers/</guid>
     </item>
   </channel>
 </rss>
