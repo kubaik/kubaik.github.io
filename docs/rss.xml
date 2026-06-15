@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 02:11:45 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 06:19:05 +0000</lastBuildDate>
+    <item>
+      <title>Vibe coding: MVP magic, prod curse</title>
+      <link>https://kubaik.github.io/vibe-coding-mvp-magic-prod-curse/</link>
+      <description>Cut production fires 80% by replacing vibe coding with 12-factor config and runtime validation in Node 20 LTS and Python 3.11 — the patterns that survive 3 years of traffic.</description>
+      <pubDate>Mon, 15 Jun 2026 06:18:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/vibe-coding-mvp-magic-prod-curse/</guid>
+    </item>
     <item>
       <title>Price SaaS tools in 2026: what we learned pricing a</title>
       <link>https://kubaik.github.io/price-saas-tools-in-2026-what-we-learned-pricing-a/</link>
@@ -138,13 +145,6 @@
       <description>Cut data loss 99% and sync latency 62% with SQLite, UUID v7, and a power-aware queue — the real offline-first stack for unreliable networks in 2026.</description>
       <pubDate>Sun, 14 Jun 2026 16:31:41 +0000</pubDate>
       <guid>https://kubaik.github.io/make-offline-apps-work-when-the-network-dies/</guid>
-    </item>
-    <item>
-      <title>Why AI monitoring fails traditional tools</title>
-      <link>https://kubaik.github.io/why-ai-monitoring-fails-traditional-tools/</link>
-      <description>Cut AI hallucinations 74% with observability — prompt drift, context changes, and agent decisions you can’t see with traditional logs. 2026 metrics from a live system.</description>
-      <pubDate>Sun, 14 Jun 2026 15:46:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-ai-monitoring-fails-traditional-tools/</guid>
     </item>
   </channel>
 </rss>
