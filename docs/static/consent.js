@@ -1,21 +1,10 @@
-/* consent.js — GDPR Cookie Consent v2 with Consent Mode v2 support
- *
- * FIXES applied:
- *   1. Cookie regex fixed: \s* is now inside RegExp() correctly via raw string
- *   2. Consent default is signalled synchronously on script parse (not DOMContentLoaded)
- *      so it fires BEFORE the AdSense <script> tag that follows it in <head>.
- *   3. Returning visitor consent restoration on page load
- *   4. Smooth banner animations
- */
+/* consent.js — GDPR Cookie Consent v2 with Consent Mode v2 support */
 (function () {
   'use strict';
 
   var CONSENT_KEY = 'cookie_consent_v1';
   var BANNER_ID   = 'cookie-consent-banner';
 
-  // FIX 1: Build the regex via RegExp so escape sequences are interpreted
-  // correctly. The original '\s*' inside a plain string literal became a
-  // literal backslash-s, not a whitespace quantifier.
   function getCookie(name) {
     var escapedName = name.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1');
     var pattern = '(?:^|;)\\s*' + escapedName + '=([^;]*)';
@@ -43,9 +32,6 @@
     }
   }
 
-  // FIX 2: Push the consent *default* synchronously so it is in the dataLayer
-  // before the AdSense/GTM script tag (which follows in <head>) executes.
-  // This function is called immediately at the bottom of this IIFE.
   function pushConsentDefault(granted) {
     window.dataLayer = window.dataLayer || [];
     function gtag() { window.dataLayer.push(arguments); }
@@ -154,9 +140,6 @@
     });
   }
 
-  // ── Synchronous consent default (FIX 2) ─────────────────────────────────
-  // Read cookie now, before any async work, and push the default state
-  // immediately so AdSense/GTM (loaded right after this script) sees it.
   var existing = getCookie(CONSENT_KEY);
 
   if (existing === 'accepted') {
@@ -166,7 +149,6 @@
     pushConsentDefault(false);
     updateConsent(false);
   } else {
-    // Unknown / first visit — default denied, show banner asynchronously
     pushConsentDefault(false);
 
     var basePath = (

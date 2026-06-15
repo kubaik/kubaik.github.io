@@ -57,14 +57,22 @@ MIN_WORD_PURGE = 1500
 MAX_GENERATION_ATTEMPTS = 5
 MIN_ACCEPTABLE_WORDS = 1500
 
+# PATCH-2: tightened from 24 → 20
 _HASHTAG_MAX_SOURCE_WORDS = 3
-_HASHTAG_MAX_CHARS = 24
+_HASHTAG_MAX_CHARS = 20
 
 # Stale content refresh threshold (days)
 STALE_THRESHOLD_DAYS = 90
 
+# PATCH-2: question starters to filter from hashtag generation
+_QUESTION_STARTERS = {
+    "how", "what", "why", "when", "where", "which", "who", "is", "are",
+    "does", "do", "can", "should", "will", "would", "could",
+}
+
 
 def _to_single_word_tags(tags: List[str]) -> List[str]:
+    # PATCH-2: filters question-starter tags, tighter char cap, fallback to first word
     result = []
     seen: set = set()
 
@@ -75,12 +83,22 @@ def _to_single_word_tags(tags: List[str]) -> List[str]:
 
         words = [w for w in re.split(r'[\s\-_/]+', tag) if w]
 
+        # PATCH-2 FIX: skip question-phrase tags entirely — they make terrible
+        # hashtags and signal low-quality content to automated reviewers.
+        if words and words[0].lower() in _QUESTION_STARTERS:
+            continue
+
         if len(words) > _HASHTAG_MAX_SOURCE_WORDS:
             continue
 
         camel = ''.join(w.capitalize() for w in words if w)
 
+        # If CamelCase is still too long after word-count cap, try just the
+        # first meaningful word so we always emit something usable.
         if len(camel) > _HASHTAG_MAX_CHARS:
+            camel = words[0].capitalize() if words else ''
+
+        if not camel or len(camel) > _HASHTAG_MAX_CHARS or len(camel) < 2:
             continue
 
         key = camel.lower()
@@ -312,13 +330,17 @@ def audit_posts(docs_dir: Path) -> Dict:
 
 
 # ─────────────────────────────────────────────────────────────────
-# Content quality validation
+# Content quality validation — PATCH-3 applied
 # ─────────────────────────────────────────────────────────────────
 
 def _validate_content_quality(content: str, title: str):
+    # PATCH-3: removed over-aggressive title-overlap hard failure;
+    # replaced with a high-threshold (0.95) warning only when word_count < 1800.
     warnings = []
     hard_failures = []
     word_count = len(content.split())
+
+    # ── Hard failures (post is discarded) ────────────────────────────────────
 
     if word_count < 1500:
         hard_failures.append(
@@ -341,21 +363,26 @@ def _validate_content_quality(content: str, title: str):
                 "This post will be rejected as low-value/AI-generated content."
             )
 
+    # PATCH-3 FIX: removed the title-overlap hard failure that was here.
+    # A quality intro naturally echoes the title's keywords — that is SEO
+    # best practice, not a quality problem. We keep a WARNING at a much
+    # higher threshold (0.95) so genuinely copy-pasted intros are still
+    # flagged without discarding legitimate content.
     title_words = set(re.sub(r'[^\w\s]', '', title.lower()).split())
-    title_words.discard('the')
-    title_words.discard('a')
-    title_words.discard('an')
-    if title_words:
-        first_para = content[:500]
+    title_words -= {'the', 'a', 'an'}
+    if title_words and word_count < 1800:
         first_para_words = set(
-            re.sub(r'[^\w\s]', '', first_para.lower()).split())
+            re.sub(r'[^\w\s]', '', content[:500].lower()).split()
+        )
         title_overlap = len(title_words & first_para_words) / len(title_words)
-        if title_overlap > 0.85 and word_count < 2000:
-            hard_failures.append(
-                f"Opening section appears to be a generic restatement of the title "
+        if title_overlap > 0.95:
+            warnings.append(
+                f"Opening section may be a near-verbatim restatement of the title "
                 f"({title_overlap:.0%} title word overlap in first 500 chars). "
-                "This pattern is flagged as low-value content."
+                "Consider a more specific, experience-driven opening paragraph."
             )
+
+    # ── Warnings (logged; post still publishes) ───────────────────────────────
 
     if word_count < 2000:
         warnings.append(f"Word count low: {word_count} (target ≥ 2000)")
@@ -387,20 +414,18 @@ def _validate_content_quality(content: str, title: str):
     )
     if not version_re.search(content):
         warnings.append(
-            "No version-pinned tool reference found (e.g. 'Python 3.11', 'Redis 7.2'). "
-            "Version pins are a specificity signal that distinguishes original from generic content."
+            "No version-pinned tool reference found (e.g. 'Python 3.13', 'Redis 7.2'). "
+            "Version pins distinguish original from generic content."
         )
 
     if "frequently asked questions" not in content.lower() and "## faq" not in content.lower():
         warnings.append(
-            "No FAQ section found. A 'Frequently Asked Questions' section enables "
-            "FAQ structured data, which improves AdSense eligibility signals."
+            "No FAQ section found. FAQ structured data improves AdSense eligibility signals."
         )
 
     if "|" not in content:
         warnings.append(
-            "No markdown table found. A comparison table signals substantive, "
-            "structured content — reviewers notice its absence in technical posts."
+            "No markdown table found. A comparison table signals substantive content."
         )
 
     if "### About this article" not in content:
@@ -1376,12 +1401,31 @@ class PreFlightIndex:
             f"  PreFlightIndex: rebuilt {len(self._entries)} entries from docs/.")
 
     def _save_cache(self) -> None:
+        # PATCH-4: atomic write — prevents cache corruption from concurrent runs
+        import os as _os
+        import tempfile as _tempfile
+
         payload = {
             "built_at": datetime.now().isoformat(),
             "entries": self._entries,
         }
-        with open(self.cache_file, "w", encoding="utf-8") as f:
-            json.dump(payload, f, ensure_ascii=False, indent=2)
+        cache_dir = self.cache_file.parent
+        try:
+            fd, tmp_path = _tempfile.mkstemp(dir=cache_dir, suffix=".tmp")
+            try:
+                with _os.fdopen(fd, 'w', encoding='utf-8') as f:
+                    json.dump(payload, f, ensure_ascii=False, indent=2)
+                # os.replace is atomic: readers see old file or new, never partial
+                _os.replace(tmp_path, self.cache_file)
+            except Exception:
+                try:
+                    _os.unlink(tmp_path)
+                except OSError:
+                    pass
+                raise
+        except Exception as exc:
+            print(
+                f"  ⚠️  PreFlightIndex._save_cache atomic write failed: {exc}")
 
     def _make_summary(self, content: str, max_chars: int = 300) -> str:
         text = re.sub(r"```[\s\S]*?```", " ", content)
@@ -1557,22 +1601,6 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def refresh_stale_posts(self, limit: int = 2) -> dict:
-        """
-        Identify top-priority stale posts and refresh them using the LLM.
-
-        Preserves slug, SEO keywords, and E-E-A-T signals while modernizing
-        outdated technical content.
-
-        Args:
-            limit: Maximum number of posts to refresh per run (default 2)
-
-        Returns:
-            {
-                "refreshed": ["slug1", "slug2"],
-                "skipped":   ["reason1"],
-                "errors":    ["error1"]
-            }
-        """
         from adsense_fixes.content_freshness import mark_stale_posts
 
         results = {
@@ -1589,7 +1617,6 @@ class BlogSystem:
             print("✅  No stale posts detected.")
             return results
 
-        # Sort: high priority first, then oldest first
         stale_posts.sort(
             key=lambda x: (
                 0 if x['priority'] == 'high' else 1,
@@ -1711,10 +1738,8 @@ class BlogSystem:
         days_stale: int,
         is_fast_decay: bool,
     ) -> str:
-        """
-        Use the LLM to refresh stale content while preserving SEO structure.
-        """
-        excerpt = " ".join(original_content.split()[:400])
+        # PATCH-5: removed redundant 400-word excerpt from the user message;
+        # the system prompt already instructs the model to read full content carefully.
         keywords_str = ", ".join(seo_keywords[:8])
 
         decay_context = (
@@ -1778,10 +1803,6 @@ class BlogSystem:
                     f"Decay type: {decay_context}\n"
                     f"Title (DO NOT CHANGE): {original_title}\n"
                     f"SEO Keywords (preserve in content): {keywords_str}\n\n"
-                    f"ORIGINAL CONTENT (excerpt, first 400 words for review):\n"
-                    f"─────────────────────────────────────────────────────────────\n"
-                    f"{excerpt}\n"
-                    f"─────────────────────────────────────────────────────────────\n\n"
                     f"FULL ORIGINAL CONTENT:\n"
                     f"{original_content}\n\n"
                     f"TASK:\n"
@@ -2145,7 +2166,7 @@ class BlogSystem:
     # CONTENT GENERATION
     # ─────────────────────────────────────────────────────────────
 
-    async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> BlogPost:
+    async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> "BlogPost":
         if not self.api_key:
             print("No API keys configured. Using local template content.")
             return self._generate_fallback_post(topic)
@@ -3185,10 +3206,6 @@ def _scrub_stale_years(text: str) -> str:
 # ─────────────────────────────────────────────────────────────────
 
 def _inject_freshness_footer_inline(post_data: dict) -> None:
-    """
-    Update the 'Last reviewed' date in the E-E-A-T footer stored in
-    post_data['content'].  Works on a plain dict (not a BlogPost object).
-    """
     if not post_data.get('content', ''):
         return
 
@@ -3885,7 +3902,6 @@ if __name__ == "__main__":
 
             print("=" * 70 + "\n")
 
-            # Output flags for Watchdog workflow / shell scripts
             if refresh_results['refreshed']:
                 print(f"has_refreshed=true")
                 print(
@@ -3893,7 +3909,6 @@ if __name__ == "__main__":
             else:
                 print(f"has_refreshed=false")
 
-            # Rebuild site if anything changed
             if refresh_results['refreshed']:
                 StaticSiteGenerator(blog_system).generate_site()
                 print("Site rebuilt after stale-post refresh.")

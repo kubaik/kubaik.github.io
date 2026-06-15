@@ -35,7 +35,7 @@ class BlogPost:
             'created_at': self.created_at,
             'updated_at': self.updated_at,
             'seo_keywords': self.seo_keywords,
-            'affiliate_links': [],
+            'affiliate_links': self.affiliate_links,
             'monetization_data': self.monetization_data,
             'twitter_hashtags': self.twitter_hashtags,
         }

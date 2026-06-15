@@ -85,7 +85,6 @@
         </div>
     </footer>
     <script>
-    // Populate recent posts from posts.json — no redirect, user chooses
     fetch('/posts.json')
         .then(r => r.ok ? r.json() : [])
         .then(posts => {

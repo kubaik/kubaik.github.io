@@ -53,34 +53,37 @@ def _safe_excerpt(meta_description: str, content: str, title: str = "",
     return fallback
 
 
-# FIX 3 & 6: Helper to strip Markdown link artifacts from URLs
 def _clean_url(url: str) -> str:
     """Remove Markdown link-formatting artifacts like [text](url) -> url."""
     import re
-    # Strip [text](url) patterns, returning just the url
     cleaned = re.sub(r'\[([^\]]*)\]\(([^)]+)\)', r'\2', url)
     return cleaned.strip()
 
 
 def _normalize_iso_date(dt_str: str) -> str:
-    """FIX 5: Normalize ISO datetime to YYYY-MM-DDTHH:MM:SS+00:00 (no microseconds)."""
+    """
+    Normalize an ISO datetime string to YYYY-MM-DDTHH:MM:SS+00:00.
+
+    Google's Structured Data validator rejects microsecond precision
+    (e.g. "2026-06-15T10:30:45.123456") — only second-precision with an
+    explicit timezone offset is accepted.  This function strips microseconds
+    and appends +00:00 if no timezone is present.
+    """
     if not dt_str:
         return dt_str
     try:
-        # Parse and reformat, stripping microseconds
         dt = datetime.fromisoformat(dt_str.replace('Z', '+00:00'))
         return dt.strftime('%Y-%m-%dT%H:%M:%S+00:00')
     except Exception:
-        # Fallback: strip microseconds by truncating at the dot
+        # Fallback: manually strip microseconds, preserve any trailing tz offset
         if '.' in dt_str:
             base, frac = dt_str.split('.', 1)
-            # preserve timezone offset if present after microseconds
             tz = ''
             for sep in ('+', '-'):
                 if sep in frac:
                     tz = sep + frac.split(sep, 1)[1]
                     break
-            return base + tz
+            return base + (tz or '+00:00')
         return dt_str
 
 
@@ -379,7 +382,10 @@ Sitemap: {base_url}/rss.xml
         word_count = len(post.content.split())
         reading_time = max(1, round(word_count / 200))
 
-        # FIX 5: Normalize dates — strip microseconds so Google validates them
+        # FIX BUG-6: _normalize_iso_date() existed in this file but was NOT
+        # called here — dates were passed raw with microseconds (e.g.
+        # "2026-06-15T10:30:45.123456") which Google's Structured Data
+        # validator rejects. Now normalized to second precision with UTC offset.
         published = _normalize_iso_date(post.created_at)
         modified = _normalize_iso_date(post.updated_at)
 
@@ -450,7 +456,6 @@ Sitemap: {base_url}/rss.xml
         return '\n'.join(output_blocks)
 
     def _generate_security_headers(self):
-        # FIX 7: Expanded frame-src and script-src to include all AdSense-required origins
         headers_content = """\
 /*
 X-Frame-Options: SAMEORIGIN
@@ -469,11 +474,10 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
     Header always set X-Content-Type-Options "nosniff"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
     Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-    # FIX 7: Full AdSense-compatible CSP
     Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://www.googletagmanager.com https://www.google-analytics.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://adservice.google.com https://googletagservices.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://googletagservices.com https://adservice.google.com https://www.google.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://adservice.google.com"
 </IfModule>
 
-# Gzip compression (improves Core Web Vitals / LCP — positive AdSense signal)
+# Gzip compression
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json text/xml
 </IfModule>
@@ -494,29 +498,13 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         print("Generated docs/_headers (Netlify/Cloudflare) and docs/.htaccess (Apache)")
 
     def _generate_privacy_consent_banner(self):
-        # FIX 1: Fixed cookie regex (\s* inside string literal was broken),
-        # and FIX 2: consent default must fire BEFORE the AdSense script tag.
-        # The generated consent.js now exports a correctly-escaped regex and
-        # uses a proper whitespace match. Pages must load consent.js as the
-        # FIRST script in <head> (before global_meta_tags / AdSense snippet).
-        consent_js = r"""/* consent.js — GDPR Cookie Consent v2 with Consent Mode v2 support
- *
- * FIXES applied:
- *   1. Cookie regex fixed: \s* is now inside RegExp() correctly via raw string
- *   2. Consent default is signalled synchronously on script parse (not DOMContentLoaded)
- *      so it fires BEFORE the AdSense <script> tag that follows it in <head>.
- *   3. Returning visitor consent restoration on page load
- *   4. Smooth banner animations
- */
+        consent_js = r"""/* consent.js — GDPR Cookie Consent v2 with Consent Mode v2 support */
 (function () {
   'use strict';
 
   var CONSENT_KEY = 'cookie_consent_v1';
   var BANNER_ID   = 'cookie-consent-banner';
 
-  // FIX 1: Build the regex via RegExp so escape sequences are interpreted
-  // correctly. The original '\s*' inside a plain string literal became a
-  // literal backslash-s, not a whitespace quantifier.
   function getCookie(name) {
     var escapedName = name.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1');
     var pattern = '(?:^|;)\\s*' + escapedName + '=([^;]*)';
@@ -544,9 +532,6 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
     }
   }
 
-  // FIX 2: Push the consent *default* synchronously so it is in the dataLayer
-  // before the AdSense/GTM script tag (which follows in <head>) executes.
-  // This function is called immediately at the bottom of this IIFE.
   function pushConsentDefault(granted) {
     window.dataLayer = window.dataLayer || [];
     function gtag() { window.dataLayer.push(arguments); }
@@ -655,9 +640,6 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
     });
   }
 
-  // ── Synchronous consent default (FIX 2) ─────────────────────────────────
-  // Read cookie now, before any async work, and push the default state
-  // immediately so AdSense/GTM (loaded right after this script) sees it.
   var existing = getCookie(CONSENT_KEY);
 
   if (existing === 'accepted') {
@@ -667,7 +649,6 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
     pushConsentDefault(false);
     updateConsent(false);
   } else {
-    // Unknown / first visit — default denied, show banner asynchronously
     pushConsentDefault(false);
 
     var basePath = (
@@ -691,7 +672,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         static_dir.mkdir(exist_ok=True)
         with open(static_dir / "consent.js", "w", encoding="utf-8") as f:
             f.write(consent_js)
-        print("Generated docs/static/consent.js (GDPR Consent Mode v2 banner — regex + ordering fixed)")
+        print("Generated docs/static/consent.js")
 
     def _generate_post_pages(self, posts: List[BlogPost]):
         config = self.blog_system.config
@@ -716,11 +697,29 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             post_dict['meta_description'] = _safe_excerpt(
                 post.meta_description, post.content, post.title)
             post_dict['review_date'] = datetime.now().strftime('%B %Y')
-            post_dict['last_updated_iso'] = post.updated_at.split(
-                'T')[0] if 'T' in post.updated_at else post.updated_at
+
+            # FIX BUG-13: normalize before splitting so we handle ISO strings
+            # that lack a 'T' separator (e.g. recovered posts from
+            # from_markdown_file() which use datetime.now().isoformat() and
+            # always have 'T', but belt-and-suspenders is correct here).
+            updated_normalized = _normalize_iso_date(post.updated_at)
+            post_dict['last_updated_iso'] = (
+                updated_normalized.split('T')[0]
+                if 'T' in updated_normalized
+                else updated_normalized
+            )
+
             post_dict['has_code'] = '```' in post.content
             post_dict['estimated_accuracy'] = 'Reviewed by author before publishing'
             post_dict['affiliate_links'] = post.affiliate_links or []
+
+            # FIX BUG-7: has_og_image was never set on post_dict, so the Jinja
+            # template's {{ og_img_png if post.has_og_image else og_img_fallback }}
+            # always fell through to the generic icon PNG, defeating Twitter card
+            # sharing for every post.  We check whether the PNG generated by
+            # generate_og_card() actually exists on disk before setting the flag.
+            og_card_path = Path("./docs/static/og") / f"{post.slug}.png"
+            post_dict['has_og_image'] = og_card_path.exists()
 
             context = {
                 'site_name': config.get('site_name', 'Tech Blog'),
@@ -871,7 +870,11 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             tag_title = tag.title()
             og_image = f"{base_url}/static/og-default.png"
 
-            # FIX 3 & 6: Use plain https://schema.org (no Markdown link artifacts)
+            # FIX BUG-10: consent.js was loaded with `defer` at the bottom of
+            # <body> on tag pages, causing it to fire AFTER the AdSense snippet
+            # in <head>. Consent Mode v2 requires the default state to be pushed
+            # to dataLayer BEFORE any Google tag loads.
+            # Moved to a synchronous <script> as the first element of <head>.
             html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -880,7 +883,9 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
   <title>{tag_title} Articles — {site_name}</title>
   <meta name="description" content="All articles tagged {tag_title} on {site_name}. Practical guides for developers.">
   <meta name="robots" content="{robots_directive}">
+  <meta name="base-path" content="{base_path}">
   <link rel="canonical" href="{base_url}/tag/{tag_slug}/">
+  <script src="{base_path}/static/consent.js"></script>
   <link rel="stylesheet" href="{base_path}/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="{tag_title} Articles — {site_name}">
@@ -921,13 +926,13 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
   <footer><div class="container">
     <p>&copy; {current_year} {site_name}</p>
   </div></footer>
-  <script defer src="{base_path}/static/consent.js"></script>
 </body>
 </html>'''
 
             with open(tag_dir / "index.html", 'w', encoding='utf-8') as f:
                 f.write(html)
 
+        # FIX BUG-10 (cont.): same fix applied to the /tag/ index page.
         all_tags_html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -936,7 +941,9 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
   <title>All Topics — {site_name}</title>
   <meta name="description" content="Browse all topics covered on {site_name}.">
   <meta name="robots" content="noindex, follow">
+  <meta name="base-path" content="{base_path}">
   <link rel="canonical" href="{base_url}/tag/">
+  <script src="{base_path}/static/consent.js"></script>
   <link rel="stylesheet" href="{base_path}/static/style.css">
 </head>
 <body>
@@ -968,7 +975,6 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
   <footer><div class="container">
     <p>&copy; {current_year} {site_name}</p>
   </div></footer>
-  <script defer src="{base_path}/static/consent.js"></script>
 </body>
 </html>'''
 
@@ -1016,7 +1022,6 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         config = self.blog_system.config
         base_url = config.get('base_url', '')
         today = datetime.now().strftime('%Y-%m-%d')
-        # FIX 3: Use plain sitemaps.org URL (no Markdown link artifacts)
         urls = [
             f'<url><loc>{base_url}/</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>',
             f'<url><loc>{base_url}/about/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>',
@@ -1044,11 +1049,18 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
                 f'<changefreq>{changefreq}</changefreq>'
                 f'<priority>{priority}</priority></url>'
             )
-        # FIX 3: Plain sitemaps.org namespace URL
-        sitemap = f"""<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  {chr(10).join(urls)}
-</urlset>"""
+
+        # FIX BUG-9: The original used chr(10).join(urls) inside an f-string
+        # that opened with "  " indentation. This caused the first <url> to
+        # have no leading whitespace while subsequent ones did, producing
+        # inconsistent indentation that some XML validators reject.
+        # Fixed by joining with '\n  ' so every entry is uniformly indented.
+        sitemap = (
+            '<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  '
+            + '\n  '.join(urls)
+            + '\n</urlset>'
+        )
         with open("./docs/sitemap.xml", 'w', encoding='utf-8') as f:
             f.write(sitemap)
         print("Generated sitemap")
@@ -1086,11 +1098,6 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
 def _build_templates() -> dict:
     from jinja2 import Environment, BaseLoader
 
-    # FIX 2: consent.js is now the FIRST script in <head>, before global_meta_tags
-    # (which contains the AdSense snippet). This ensures the consent default
-    # state is pushed to dataLayer before AdSense reads it.
-    # FIX 4: OG image now uses /static/og/{slug}.png (generated PNG, not missing JPG)
-    # with correct fallback. SVG cards are pre-rendered to PNG by the build pipeline.
     POST_TMPL = """\
     <!DOCTYPE html>
     <html lang="en">
@@ -1112,8 +1119,6 @@ def _build_templates() -> dict:
         <meta property="og:url" content="{{ base_url }}/{{ post.slug }}/">
         <meta property="og:site_name" content="{{ site_name }}">
         <meta property="og:locale" content="en_US">
-        {#- FIX 4: Use pre-rendered PNG OG image at /static/og/{slug}.png.
-            SVG is not supported by social crawlers. Fallback to icon PNG. -#}
         {%- set og_img_png = base_url + '/static/og/' + post.slug + '.png' %}
         {%- set og_img_fallback = base_url + '/static/icons/icon-512x512.png' %}
         <meta property="og:image" content="{{ og_img_png if post.has_og_image else og_img_fallback }}">
@@ -1132,8 +1137,6 @@ def _build_templates() -> dict:
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
         <link rel="preconnect" href="https://www.google-analytics.com">
 
-        {#- FIX 2: consent.js MUST be first — it pushes consent default to
-            dataLayer synchronously before AdSense (in global_meta_tags) loads. -#}
         <script src="{{ base_path }}/static/consent.js"></script>
 
         {{ global_meta_tags | safe }}
@@ -1158,9 +1161,7 @@ def _build_templates() -> dict:
                 z-index: 9999; transition: width 0.1s linear;
             }
             .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-            /* Table overflow on mobile */
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            /* Ad slots: no reserved space when empty */
             .ad-inline,
             .ad-header,
             .ad-footer,
@@ -1344,7 +1345,6 @@ def _build_templates() -> dict:
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
-    {#- FIX 2: consent.js MUST load before global_meta_tags (AdSense) -#}
     <script src="{{ base_path }}/static/consent.js"></script>
     {{ global_meta_tags | safe }}
     {{ homepage_meta_tags | safe }}
@@ -1839,6 +1839,13 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
+    # FIX BUG-8: ABOUT_TMPL had consent.js loaded with `defer` at the BOTTOM
+    # of <body>. POST_TMPL and INDEX_TMPL correctly load it as the first
+    # synchronous <script> in <head>. ABOUT_TMPL was the outlier, meaning the
+    # AdSense snippet (inside global_meta_tags) fired before consent defaults
+    # were pushed to dataLayer — a Consent Mode v2 violation.
+    # Fix: move consent.js to a synchronous load as the FIRST script in <head>,
+    # before global_meta_tags, and remove the deferred bottom-of-body tag.
     ABOUT_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -1855,6 +1862,7 @@ def _build_templates() -> dict:
     <meta property="og:url" content="{{ base_url }}/about/">
     <meta property="profile:first_name" content="Kevin">
     <meta property="profile:last_name" content="Kubai">
+    <script src="{{ base_path }}/static/consent.js"></script>
     {{ global_meta_tags | safe }}
     <script type="application/ld+json">
     {
@@ -2185,10 +2193,15 @@ def _build_templates() -> dict:
     </footer>
     <script src="{{ base_path }}/static/navigation.js"></script>
     <script defer src="{{ base_path }}/static/pwa.js"></script>
-    <script defer src="{{ base_path }}/static/consent.js"></script>
 </body>
 </html>"""
 
+    # FIX BUG-11: PRIVACY_TMPL used href="../static/style.css" (relative path).
+    # On a subdirectory deploy (e.g. GitHub Pages project site at /blog/) the
+    # privacy page lives at /blog/privacy-policy/index.html, so "../static/"
+    # resolves to /blog/static/ correctly — but ONLY on exact one-level-deep
+    # paths. The base_path variable already handles all deployment configurations
+    # correctly; using it here makes the template deployment-agnostic.
     PRIVACY_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -2198,8 +2211,9 @@ def _build_templates() -> dict:
     <meta name="description" content="Privacy Policy for {{ site_name }}">
     <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/privacy-policy/">
+    <script src="{{ base_path }}/static/consent.js"></script>
     {{ global_meta_tags | safe }}
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="manifest" href="{{ base_path }}/manifest.json">
     <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
     <style>
@@ -2215,9 +2229,9 @@ def _build_templates() -> dict:
 </head>
 <body>
     <header><div class="container">
-        <h1><a href="../">{{ site_name }}</a></h1>
-        <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+        <nav><a href="{{ base_path }}/">Home</a><a href="{{ base_path }}/about/">About</a><a href="{{ base_path }}/contact/">Contact</a>
+        <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a><a href="{{ base_path }}/terms-of-service/">Terms of Service</a></nav>
     </div></header>
     <main class="container">
         <div class="hero"><h2>Privacy Policy</h2><p>How we protect and handle your information</p></div>
@@ -2253,12 +2267,12 @@ def _build_templates() -> dict:
         </article>
     </main>
     <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
-    <script src="../static/navigation.js"></script>
+    <script src="{{ base_path }}/static/navigation.js"></script>
     <script defer src="{{ base_path }}/static/pwa.js"></script>
-    <script defer src="{{ base_path }}/static/consent.js"></script>
 </body>
 </html>"""
 
+    # FIX BUG-12: TERMS_TMPL had the same relative path bug as PRIVACY_TMPL.
     TERMS_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -2268,8 +2282,9 @@ def _build_templates() -> dict:
     <meta name="description" content="Terms of Service for {{ site_name }}">
     <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/terms-of-service/">
+    <script src="{{ base_path }}/static/consent.js"></script>
     {{ global_meta_tags | safe }}
-    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="manifest" href="{{ base_path }}/manifest.json">
     <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
     <style>
@@ -2282,9 +2297,9 @@ def _build_templates() -> dict:
 </head>
 <body>
     <header><div class="container">
-        <h1><a href="../">{{ site_name }}</a></h1>
-        <nav><a href="../">Home</a><a href="../about/">About</a><a href="../contact/">Contact</a>
-        <a href="../privacy-policy/">Privacy Policy</a><a href="../terms-of-service/">Terms of Service</a></nav>
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+        <nav><a href="{{ base_path }}/">Home</a><a href="{{ base_path }}/about/">About</a><a href="{{ base_path }}/contact/">Contact</a>
+        <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a><a href="{{ base_path }}/terms-of-service/">Terms of Service</a></nav>
     </div></header>
     <main class="container">
         <div class="hero"><h2>Terms of Service</h2><p>Please read these terms carefully before using our site</p></div>
@@ -2305,9 +2320,8 @@ def _build_templates() -> dict:
         </article>
     </main>
     <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
-    <script src="../static/navigation.js"></script>
+    <script src="{{ base_path }}/static/navigation.js"></script>
     <script defer src="{{ base_path }}/static/pwa.js"></script>
-    <script defer src="{{ base_path }}/static/consent.js"></script>
 </body>
 </html>"""
 
@@ -2321,6 +2335,7 @@ def _build_templates() -> dict:
     <meta name="description" content="Contact Kubai Kevin, software developer and author of {{ site_name }}. Based in Nairobi, Kenya. Responds within 3–5 business days.">
     <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/contact/">
+    <script src="{{ base_path }}/static/consent.js"></script>
     {{ global_meta_tags | safe }}
     <script type="application/ld+json">
     {
@@ -2470,7 +2485,6 @@ def _build_templates() -> dict:
     </footer>
     <script src="{{ base_path }}/static/navigation.js"></script>
     <script defer src="{{ base_path }}/static/pwa.js"></script>
-    <script defer src="{{ base_path }}/static/consent.js"></script>
 </body>
 </html>"""
 
@@ -2549,7 +2563,6 @@ def _build_templates() -> dict:
         </div>
     </footer>
     <script>
-    // Populate recent posts from posts.json — no redirect, user chooses
     fetch('{{ base_path }}/posts.json')
         .then(r => r.ok ? r.json() : [])
         .then(posts => {
@@ -2581,6 +2594,7 @@ def _build_templates() -> dict:
     <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/ai-content-policy/">
     <meta name="robots" content="index, follow">
+    <script src="{{ base_path }}/static/consent.js"></script>
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="manifest" href="{{ base_path }}/manifest.json">
@@ -2721,6 +2735,7 @@ def _build_templates() -> dict:
     <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/dmca/">
     <meta name="robots" content="index, follow">
+    <script src="{{ base_path }}/static/consent.js"></script>
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="manifest" href="{{ base_path }}/manifest.json">
