@@ -61,5 +61,6 @@
   "Building for eventual consistency: the real-world patterns behind systems that stay up",
   "How I handle database schema migrations in a zero-downtime deployment pipeline",
   "Tech salaries in 2026: what the market correction settled at and where it's growing",
-  "How passkeys changed authentication and what that means for the apps you're building"
+  "How passkeys changed authentication and what that means for the apps you're building",
+  "How Signals changed state management and whether it matters outside of frameworks"
 ]

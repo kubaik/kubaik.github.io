@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-14T23:03:12.086504",
+  "built_at": "2026-06-15T00:21:50.818436",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1235,6 +1235,11 @@
       "slug": "passkeys-killed-our-password-reset-queue",
       "title": "Passkeys killed our password reset queue",
       "summary": "Most passkeys changed guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026 our mobile app had 2.1 million monthly active users in Vietnam and Indone"
+    },
+    {
+      "slug": "signals-the-state-trick-everyone-copied-without",
+      "title": "Signals: the state trick everyone copied without",
+      "summary": "I ran into this signals changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I was debugging a dashboard that rendered "
     }
   ]
 }

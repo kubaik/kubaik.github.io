@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 00:16:25 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 00:21:56 +0000</lastBuildDate>
+    <item>
+      <title>Signals: the state trick everyone copied without</title>
+      <link>https://kubaik.github.io/signals-the-state-trick-everyone-copied-without/</link>
+      <description>Cut state layer memory 30% and render time 15× with Signals outside frameworks — 2026 benchmarks, code, and migration tips</description>
+      <pubDate>Mon, 15 Jun 2026 00:21:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/signals-the-state-trick-everyone-copied-without/</guid>
+    </item>
     <item>
       <title>Passkeys killed our password reset queue</title>
       <link>https://kubaik.github.io/passkeys-killed-our-password-reset-queue/</link>
@@ -138,13 +145,6 @@
       <description>Cut domain layer lines 75% with TypeScript 5.3 — branded types, template literal rules, and the `satisfies` operator that caught 100% of validation errors at compile time.</description>
       <pubDate>Sun, 14 Jun 2026 15:06:39 +0000</pubDate>
       <guid>https://kubaik.github.io/typescript-53-changed-how-we-model-domains/</guid>
-    </item>
-    <item>
-      <title>Custom agents beat frameworks in 2026</title>
-      <link>https://kubaik.github.io/custom-agents-beat-frameworks-in-2026/</link>
-      <description>Custom agents beat frameworks in 2026 — latency, cost, and error-rate data from Nigerian 3G systems shows why CrewAI and LangGraph fail under partial failures and how a Redis-backed orchestrator handles them.</description>
-      <pubDate>Sun, 14 Jun 2026 14:15:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/custom-agents-beat-frameworks-in-2026/</guid>
     </item>
   </channel>
 </rss>
