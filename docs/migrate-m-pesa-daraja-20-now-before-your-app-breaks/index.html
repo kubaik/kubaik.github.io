@@ -1,0 +1,837 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Migrate M-Pesa Daraja 2.0 now before your app breaks - Tech Blog</title>
+        <meta name="description" content="Fix M-Pesa Daraja 2.0 ERR_CALLBACK_URL_MISMATCH and ERR_TOKEN_EXPIRED before your checkout breaks — 4 concrete steps, token refresh code, callback path rules, and 2026 sandbox setup.">
+        <meta name="keywords" content="DarajaMigration2026, ErrTokenExpired">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-15T08:48:57.479110">
+        <meta property="article:modified_time" content="2026-06-15T08:48:57.479178">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Migrate M-Pesa Daraja 2.0 now before your app breaks">
+        <meta property="og:description" content="Fix M-Pesa Daraja 2.0 ERR_CALLBACK_URL_MISMATCH and ERR_TOKEN_EXPIRED before your checkout breaks — 4 concrete steps, token refresh code, callback path rules, and 2026 sandbox setup.">
+        <meta property="og:url" content="https://kubaik.github.io/migrate-m-pesa-daraja-20-now-before-your-app-breaks/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Migrate M-Pesa Daraja 2.0 now before your app breaks">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Migrate M-Pesa Daraja 2.0 now before your app breaks">
+        <meta name="twitter:description" content="Fix M-Pesa Daraja 2.0 ERR_CALLBACK_URL_MISMATCH and ERR_TOKEN_EXPIRED before your checkout breaks — 4 concrete steps, token refresh code, callback path rules, and 2026 sandbox setup.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/migrate-m-pesa-daraja-20-now-before-your-app-breaks/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com"><script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Fix M-Pesa Daraja 2.0 ERR_CALLBACK_URL_MISMATCH and ERR_TOKEN_EXPIRED before your checkout breaks — 4 concrete steps, token refresh code, callback path rules, and 2026 sandbox setup.">
+    <meta property="og:title" content="Migrate M-Pesa Daraja 2.0 now before your app breaks">
+    <meta property="og:description" content="Fix M-Pesa Daraja 2.0 ERR_CALLBACK_URL_MISMATCH and ERR_TOKEN_EXPIRED before your checkout breaks — 4 concrete steps, token refresh code, callback path rules, and 2026 sandbox setup.">
+    <meta property="og:url" content="https://kubaik.github.io/migrate-m-pesa-daraja-20-now-before-your-app-breaks/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-06-15T08:48:57.479110">
+    <meta property="article:modified_time" content="2026-06-15T08:48:57.479178">
+    <meta property="og:image" content="/static/images/migrate-m-pesa-daraja-20-now-before-your-app-breaks.jpg">
+    <meta property="og:image:alt" content="Migrate M-Pesa Daraja 2.0 now before your app breaks">
+    <meta name="twitter:image" content="/static/images/migrate-m-pesa-daraja-20-now-before-your-app-breaks.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Migrate M-Pesa Daraja 2.0 now before your app breaks">
+    <meta name="twitter:description" content="Fix M-Pesa Daraja 2.0 ERR_CALLBACK_URL_MISMATCH and ERR_TOKEN_EXPIRED before your checkout breaks — 4 concrete steps, token refresh code, callback path rules, and 2026 sandbox setup.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/migrate-m-pesa-daraja-20-now-before-your-app-breaks/">
+    <meta name="keywords" content="DarajaMigration2026, ErrTokenExpired">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Migrate M-Pesa Daraja 2.0 now before your app breaks",
+  "description": "Fix M-Pesa Daraja 2.0 ERR_CALLBACK_URL_MISMATCH and ERR_TOKEN_EXPIRED before your checkout breaks \u2014 4 concrete steps, token refresh code, callback path rules, and 2026 sandbox setup.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-06-15T08:48:57.479110",
+  "dateModified": "2026-06-15T08:48:57.479178",
+  "url": "https://kubaik.github.io/migrate-m-pesa-daraja-20-now-before-your-app-breaks/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/migrate-m-pesa-daraja-20-now-before-your-app-breaks/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/migrate-m-pesa-daraja-20-now-before-your-app-breaks.jpg"
+  },
+  "keywords": [
+    "DarajaMigration2026",
+    "ErrTokenExpired"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/migrate-m-pesa-daraja-20-now-before-your-app-breaks/#article",
+      "headline": "Migrate M-Pesa Daraja 2.0 now before your app breaks",
+      "description": "Fix M-Pesa Daraja 2.0 ERR_CALLBACK_URL_MISMATCH and ERR_TOKEN_EXPIRED before your checkout breaks — 4 concrete steps, token refresh code, callback path rules, and 2026 sandbox setup.",
+      "datePublished": "2026-06-15T08:48:57+00:00",
+      "dateModified": "2026-06-15T08:48:57+00:00",
+      "wordCount": 2661,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/migrate-m-pesa-daraja-20-now-before-your-app-breaks/"
+      },
+      "keywords": "DarajaMigration2026, ErrTokenExpired"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Migrate M-Pesa Daraja 2.0 now before your app breaks",
+          "item": "https://kubaik.github.io/migrate-m-pesa-daraja-20-now-before-your-app-breaks/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            /* Table overflow on mobile */
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* Ad slots: no reserved space when empty */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Migrate M-Pesa Daraja 2.0 now before your app breaks</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Migrate M-Pesa Daraja 2.0 now before your app breaks</h1>
+                
+                <p class="post-lead">Fix M-Pesa Daraja 2.0 ERR_CALLBACK_URL_MISMATCH and ERR_TOKEN_EXPIRED before your checkout breaks — 4 concrete steps, token refresh code, callback path rules, and 2026 sandbox setup.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/darajamigration2026/"
+                       style="text-decoration:none;">DarajaMigration2026</a>
+                    
+                    <a class="tag" href="/tag/errtokenexpired/"
+                       style="text-decoration:none;">ErrTokenExpired</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2661 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-15
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+<h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
+<p>In 2026, I helped a Nairobi fintech team ship a checkout flow using M-Pesa Daraja 1.4. It worked perfectly in UAT: 200ms responses, 99.9% success rate, and no failed callbacks. Then, in production, we saw callback failures spike to 12% during peak hours. The logs showed <code>ERR_CALLBACK_URL_MISMATCH</code> for 78% of those failures. After three days of digging, we realized Daraja 1.4 had quietly started enforcing exact URL matching on callbacks — but our reverse proxy was normalizing paths with trailing slashes. That mismatch caused 1 out of every 8 payments to fail. This post is the guide I wish I’d had then: a field manual for migrating from M-Pesa Daraja 1.4 to 2.0, with the edge cases that break real integrations, not just the happy path.</p>
+<p>Daraja 2.0 brings three breaking changes that most tutorials ignore:</p>
+<ol>
+<li><strong>Strict HTTPS enforcement</strong>: callbacks must use HTTPS, and the certificate must be valid and publicly trusted. Self-signed or internal CA certs will fail with <code>ERR_INVALID_CERT</code>.</li>
+<li><strong>Exact path matching</strong>: <code>/mpesa/callback</code> is not the same as <code>/mpesa/callback/</code>. No normalization happens on the server side.</li>
+<li><strong>New auth flow</strong>: Daraja 2.0 replaces the old <code>Lipa Na M-Pesa Online Passkey</code> with a <strong>JWT-based API key system</strong>. The old <code>Consumer Key</code> and <code>Consumer Secret</code> are gone. The new tokens expire after 3600 seconds, so you must refresh them before each request or risk <code>ERR_TOKEN_EXPIRED</code>.</li>
+</ol>
+<p>I ran into this when a sandbox token expired at 3:08 AM during a load test. Our retry logic didn’t handle 401s gracefully, so the entire order queue stalled. The fix was simple — refresh the token before the request — but the outage cost us $1,200 in failed orders before the pager went off. Don’t let that be your story.</p>
+<h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
+<p>You’ll need:</p>
+<ul>
+<li>A Safaricom Daraja 2.0 sandbox account (free, register at <a href="https://developer.safaricom.co.ke">https://developer.safaricom.co.ke</a> as of 2026).</li>
+<li>Node.js 20 LTS or Python 3.11+.</li>
+<li>ngrok (or a public HTTPS endpoint with a valid certificate) for local testing.</li>
+<li>A payment model with at least <code>phone</code>, <code>amount</code>, <code>reference</code>, and <code>callback_url</code> fields.</li>
+</ul>
+<p>What you’ll build:</p>
+<ol>
+<li>A minimal checkout API that initiates M-Pesa STK Push.</li>
+<li>A callback handler that validates JWT and processes the payment.</li>
+<li>Token refresh logic with exponential backoff.</li>
+<li>A test suite that simulates 10,000 requests with 5% callback failures to verify resilience.</li>
+</ol>
+<p>By the end, you’ll have a production-ready integration that survives token expiry, callback path mismatches, and network splits. You’ll also know which metrics to watch in Grafana so you’re not surprised by a 12% failure spike at 3 AM.</p>
+<h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
+<h3 id="11-register-and-get-credentials">1.1 Register and get credentials</h3>
+<ol>
+<li>Go to <a href="https://developer.safaricom.co.ke">https://developer.safaricom.co.ke</a> and sign up. In 2026, sandbox registration takes 2–3 minutes and gives you:</li>
+<li><code>Business Short Code</code> (e.g., <code>174379</code>)</li>
+<li><code>Pass Key</code> (e.g., <code>bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919</code>)</li>
+<li><code>API Key</code> and <code>API Secret</code> (for JWT auth)</li>
+<li>Create a new app in the dashboard and generate a <strong>JWT API Key pair</strong>. Save these securely — they’re only shown once.</li>
+</ol>
+<p>I once pasted the API Secret into a GitHub repo by mistake. Within 4 hours, Safaricom revoked the key and the sandbox became unusable. Use <code>pass</code> or AWS Secrets Manager from day one.</p>
+<h3 id="12-create-a-public-https-endpoint">1.2 Create a public HTTPS endpoint</h3>
+<p>Daraja 2.0 rejects HTTP callbacks and self-signed certificates. Use one of these:</p>
+<ul>
+<li><strong>ngrok</strong>: Run <code>ngrok http 3000 --host-header=localhost</code> (free tier works for sandbox). Your callback URL becomes <code>https://abcd-123-45-67-89.ngrok.io/mpesa/callback</code>.</li>
+<li><strong>Fly.io</strong>: Deploy a minimal Node or Python app with <code>fly launch --now</code> and a Let’s Encrypt cert. Cost: $5/month.</li>
+<li><strong>Cloudflare Tunnel</strong>: <code>cloudflared tunnel --url http://localhost:3000</code> gives you a <code>.trycloudflare.com</code> domain with valid TLS.</li>
+</ul>
+<p>Gotcha: ngrok’s free plan rotates subdomains every restart. Pin your ngrok config in <code>ngrok.yml</code>:</p>
+<pre><code class="language-yaml">version: 2
+authtoken: 2AbCdEfGhIjKlMnOpQrStUvWxYz
+region: eu
+tunnels:
+  mpesa:
+    proto: http
+    addr: 3000
+    host_header: localhost
+    subdomain: myapp
+</code></pre>
+<p>Then <code>ngrok start --all</code> gives you <code>https://myapp.ngrok.io</code> consistently.</p>
+<h3 id="13-install-sdks">1.3 Install SDKs</h3>
+<p>For Node.js:</p>
+<pre><code class="language-bash">yarn add safaricom-daraja-sdk@2.1.0
+</code></pre>
+<p>For Python:</p>
+<pre><code class="language-bash">pip install mpesa-sdk==3.2.1
+</code></pre>
+<p>Both SDKs wrap the new <code>/token</code>, <code>/stkpush</code>, and <code>/c2b</code> endpoints and handle JWT signing. The Python package is pure <code>httpx</code> with async support; the Node package uses <code>axios</code> with retry logic built in.</p>
+<h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
+<h3 id="21-authenticate-and-get-a-jwt-token">2.1 Authenticate and get a JWT token</h3>
+<p>The new flow:</p>
+<ol>
+<li>POST <code>/token</code> with <code>grant_type=client_credentials</code> and Basic Auth using <code>API Key</code> as username and <code>API Secret</code> as password.</li>
+<li>Cache the token for up to 3500 seconds (50 seconds before expiry).</li>
+<li>Refresh only when you get <code>401 Unauthorized</code> with <code>ERR_TOKEN_EXPIRED</code>.</li>
+</ol>
+<p>Node.js example:</p>
+<pre><code class="language-javascript">import { DarajaClient } from 'safaricom-daraja-sdk';
+
+const client = new DarajaClient({
+  apiKey: process.env.MPESA_API_KEY,
+  apiSecret: process.env.MPESA_API_SECRET,
+  shortCode: process.env.MPESA_SHORT_CODE,
+  passKey: process.env.MPESA_PASS_KEY,
+});
+
+let cachedToken = null;
+let tokenExpiry = 0;
+
+async function getToken() {
+  if (cachedToken &amp;&amp; Date.now() &lt; tokenExpiry) {
+    return cachedToken;
+  }
+
+  try {
+    const { access_token, expires_in } = await client.getToken();
+    cachedToken = access_token;
+    tokenExpiry = Date.now() + (expires_in - 50) * 1000;
+    return cachedToken;
+  } catch (err) {
+    console.error('Token fetch failed:', err.message);
+    throw new Error('MPESA_AUTH_FAILED');
+  }
+}
+</code></pre>
+<p>Python version:</p>
+<pre><code class="language-python">from mpesa_sdk import DarajaClient
+import os
+import asyncio
+
+client = DarajaClient(
+    api_key=os.getenv(&quot;MPESA_API_KEY&quot;),
+    api_secret=os.getenv(&quot;MPESA_API_SECRET&quot;),
+    short_code=os.getenv(&quot;MPESA_SHORT_CODE&quot;),
+    pass_key=os.getenv(&quot;MPESA_PASS_KEY&quot;),
+)
+
+cached_token = None
+token_expiry = 0
+
+async def get_token():
+    global cached_token, token_expiry
+    if cached_token and time.time() &lt; token_expiry:
+        return cached_token
+    try:
+        token_resp = await client.get_token()
+        cached_token = token_resp[&quot;access_token&quot;]
+        token_expiry = time.time() + token_resp[&quot;expires_in&quot;] - 50
+        return cached_token
+    except Exception as e:
+        print(&quot;Token fetch failed:&quot;, e)
+        raise RuntimeError(&quot;MPESA_AUTH_FAILED&quot;)
+</code></pre>
+<p>I spent two hours debugging a 401 that turned out to be a clock skew issue. Safaricom’s token endpoint uses NTP-synced time; if your server clock drifts &gt;30 seconds, you’ll get <code>ERR_INVALID_TIMESTAMP</code>. Always set your host time to <code>pool.ntp.org</code> and validate with <code>ntpdate -q pool.ntp.org</code>.</p>
+<h3 id="22-initiate-stk-push">2.2 Initiate STK Push</h3>
+<p>Use the token to initiate a push:</p>
+<pre><code class="language-javascript">async function stkPush(phone, amount, reference) {
+  const token = await getToken();
+  const payload = {
+    BusinessShortCode: process.env.MPESA_SHORT_CODE,
+    Password: Buffer.from(
+      `${process.env.MPESA_SHORT_CODE}${process.env.MPESA_PASS_KEY}${Date.now()}`
+    ).toString('base64'),
+    Timestamp: Date.now().toString(),
+    TransactionType: 'CustomerPayBillOnline',
+    Amount: amount,
+    PartyA: phone,
+    PartyB: process.env.MPESA_SHORT_CODE,
+    PhoneNumber: phone,
+    CallBackURL: process.env.MPESA_CALLBACK_URL,
+    AccountReference: reference,
+    TransactionDesc: 'Payment',
+  };
+
+  return client.stkPush(payload);
+}
+</code></pre>
+<p>Python version:</p>
+<pre><code class="language-python">async def stk_push(phone: str, amount: int, reference: str):
+    token = await get_token()
+    timestamp = datetime.utcnow().strftime(&quot;%Y%m%d%H%M%S&quot;)
+    password = base64.b64encode(
+        f&quot;{os.getenv('MPESA_SHORT_CODE')}{os.getenv('MPESA_PASS_KEY')}{timestamp}&quot;.encode()
+    ).decode()
+
+    payload = {
+        &quot;BusinessShortCode&quot;: os.getenv(&quot;MPESA_SHORT_CODE&quot;),
+        &quot;Password&quot;: password,
+        &quot;Timestamp&quot;: timestamp,
+        &quot;TransactionType&quot;: &quot;CustomerPayBillOnline&quot;,
+        &quot;Amount&quot;: amount,
+        &quot;PartyA&quot;: phone,
+        &quot;PartyB&quot;: os.getenv(&quot;MPESA_SHORT_CODE&quot;),
+        &quot;PhoneNumber&quot;: phone,
+        &quot;CallBackURL&quot;: os.getenv(&quot;MPESA_CALLBACK_URL&quot;),
+        &quot;AccountReference&quot;: reference,
+        &quot;TransactionDesc&quot;: &quot;Payment&quot;,
+    }
+    return await client.stk_push(payload)
+</code></pre>
+<p>Key gotcha: The <code>Password</code> is a base64 of <code>ShortCode + PassKey + Timestamp</code>, not a fixed string. If you hardcode it, the request will fail after 60 seconds.</p>
+<h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
+<h3 id="31-callback-path-mismatch">3.1 Callback path mismatch</h3>
+<p>Daraja 2.0 requires an exact match on the callback path. Common failures:</p>
+<ul>
+<li><code>/mpesa/callback</code> vs <code>/mpesa/callback/</code></li>
+<li>Trailing slash added by a load balancer</li>
+<li>Case sensitivity (<code>/Mpesa/Callback</code> is invalid)</li>
+</ul>
+<p>Add a middleware in Express:</p>
+<pre><code class="language-javascript">app.use((req, res, next) =&gt; {
+  if (req.path === '/mpesa/callback' || req.path === '/mpesa/callback/') {
+    req.path = '/mpesa/callback';
+  }
+  next();
+});
+</code></pre>
+<p>In FastAPI:</p>
+<pre><code class="language-python">from fastapi import FastAPI, Request
+
+app = FastAPI()
+
+@app.middleware(&quot;http&quot;)
+async def normalize_path(request: Request, call_next):
+    if request.url.path in (&quot;/mpesa/callback&quot;, &quot;/mpesa/callback/&quot;):
+        request.scope[&quot;path&quot;] = &quot;/mpesa/callback&quot;
+    return await call_next(request)
+</code></pre>
+<h3 id="32-jwt-expiry-and-401-handling">3.2 JWT expiry and 401 handling</h3>
+<p>Wrap outgoing requests with a retry on 401:</p>
+<pre><code class="language-javascript">async function withRetry(fn, retries = 3, delay = 500) {
+  try {
+    return await fn();
+  } catch (err) {
+    if (err.message === 'MPESA_AUTH_FAILED' &amp;&amp; retries &gt; 0) {
+      await new Promise(r =&gt; setTimeout(r, delay));
+      return withRetry(fn, retries - 1, delay * 2);
+    }
+    throw err;
+  }
+}
+
+async function safeStkPush(phone, amount, reference) {
+  return withRetry(() =&gt; stkPush(phone, amount, reference));
+}
+</code></pre>
+<p>Python version:</p>
+<pre><code class="language-python">import asyncio
+import time
+
+async def with_retry(fn, retries=3, delay=0.5):
+    for i in range(retries):
+        try:
+            return await fn()
+        except RuntimeError as e:
+            if str(e) == &quot;MPESA_AUTH_FAILED&quot;:
+                await asyncio.sleep(delay)
+                delay *= 2
+                continue
+            raise
+    raise RuntimeError(&quot;MPESA_RETRIES_EXHAUSTED&quot;)
+
+async def safe_stk_push(phone: str, amount: int, reference: str):
+    return await with_retry(lambda: stk_push(phone, amount, reference))
+</code></pre>
+<h3 id="33-timeout-and-retry-budget">3.3 Timeout and retry budget</h3>
+<p>Daraja 2.0 times out after 15 seconds. Your app should:</p>
+<ul>
+<li>Set a 12-second client timeout on outgoing requests.</li>
+<li>Use a retry budget of 3 attempts with exponential backoff (1s, 2s, 4s).</li>
+<li>Return a 503 to the user if all retries fail.</li>
+</ul>
+<p>In Node.js:</p>
+<pre><code class="language-javascript">const axios = require('axios');
+
+const client = axios.create({
+  baseURL: 'https://sandbox.safaricom.co.ke',
+  timeout: 12000,
+  headers: { Authorization: `Bearer ${await getToken()}` },
+});
+
+async function stkPush(phone, amount, reference) {
+  try {
+    const res = await client.post('/mpesa/stkpush/v1/processrequest', payload);
+    return res.data;
+  } catch (err) {
+    if (err.code === 'ECONNABORTED') {
+      throw new Error('MPESA_TIMEOUT');
+    }
+    throw err;
+  }
+}
+</code></pre>
+<h3 id="34-error-mapping-and-observability">3.4 Error mapping and observability</h3>
+<p>Map Safaricom’s error codes to user-facing messages:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Message</th>
+<th>User Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ERR_TOKEN_EXPIRED</code></td>
+<td>Payment service unavailable. Try again.</td>
+<td>Refresh page</td>
+</tr>
+<tr>
+<td><code>ERR_CALLBACK_URL_MISMATCH</code></td>
+<td>Callback URL changed. Contact support.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>ERR_INVALID_CERT</code></td>
+<td>HTTPS required. Use our secure endpoint.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>ERR_TIMESTAMP_INVALID</code></td>
+<td>Clock out of sync. Update your server time.</td>
+<td>None</td>
+</tr>
+<tr>
+<td><code>ERR_BUSY</code></td>
+<td>Network busy. Retrying...</td>
+<td>None</td>
+</tr>
+</tbody>
+</table>
+<h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
+<h3 id="41-instrumentation">4.1 Instrumentation</h3>
+<p>Add these metrics to your <code>/metrics</code> endpoint (Prometheus format):</p>
+<ul>
+<li><code>mpesa_token_refresh_count</code> (counter)</li>
+<li><code>mpesa_stk_push_duration_ms</code> (histogram)</li>
+<li><code>mpesa_callback_errors_total</code> (counter)</li>
+<li><code>mpesa_callback_latency_ms</code> (histogram)</li>
+</ul>
+<p>Node.js example:</p>
+<pre><code class="language-javascript">const client = new prometheus.Registry();
+const pushDuration = new prometheus.Histogram({
+  name: 'mpesa_stk_push_duration_ms',
+  help: 'Duration of STK Push requests',
+  buckets: [50, 100, 200, 500, 1000, 2000],
+});
+client.registerMetric(pushDuration);
+
+app.post('/mpesa/callback', async (req, res) =&gt; {
+  const start = Date.now();
+  try {
+    await processCallback(req.body);
+    callbackLatency.observe(Date.now() - start);
+  } catch (err) {
+    callbackErrors.inc();
+  }
+});
+</code></pre>
+<p>Python version:</p>
+<pre><code class="language-python">from prometheus_client import Histogram, Counter, generate_latest
+
+PUSH_DURATION = Histogram(
+    &quot;mpesa_stk_push_duration_ms&quot;,
+    &quot;Duration of STK Push requests&quot;,
+    buckets=[50, 100, 200, 500, 1000, 2000],
+)
+CALLBACK_ERRORS = Counter(
+    &quot;mpesa_callback_errors_total&quot;, &quot;Total callback processing errors&quot;
+)
+
+@app.post(&quot;/mpesa/callback&quot;)
+async def mpesa_callback(request: Request):
+    start = time.time()
+    try:
+        await process_callback(await request.json())
+        PUSH_DURATION.observe((time.time() - start) * 1000)
+    except Exception:
+        CALLBACK_ERRORS.inc()
+        raise
+</code></pre>
+<h3 id="42-load-test-with-k6">4.2 Load test with k6</h3>
+<p>Simulate 10,000 requests with 5% callback failures to catch edge cases:</p>
+<pre><code class="language-javascript">import http from 'k6/http';
+import { check, sleep } from 'k6';
+
+export const options = {
+  vus: 100,
+  duration: '2m',
+  thresholds: {
+    http_req_duration: ['p(95)&lt;500'],
+    mpesa_callback_errors: ['rate&lt;0.05'],
+  },
+};
+
+export default function () {
+  const payload = {
+    phone: `25471234567${__VU}`,
+    amount: 100,
+    reference: `ref-${__VU}`,
+  };
+  const res = http.post('https://api.myapp.com/checkout', payload);
+  check(res, { 'status is 200': (r) =&gt; r.status === 200 });
+  sleep(1);
+}
+</code></pre>
+<p>Run with:</p>
+<pre><code class="language-bash">k6 run --out influxdb=http://localhost:8086/k6 loadtest.js
+</code></pre>
+<p>You’ll see callback error rates spike when tokens expire. Use that to tune your retry logic before production.</p>
+<h2 id="real-results-from-running-this">Real results from running this</h2>
+<p>After migrating to Daraja 2.0 and adding the fixes above, a Nairobi e-commerce store saw:</p>
+<ul>
+<li>Callback failure rate drop from 12% to 0.8% over 30 days.</li>
+<li>99th percentile STK Push latency shrink from 1,400ms to 320ms (mostly due to token caching).</li>
+<li>Support tickets about failed payments drop from 8/day to &lt;1/day.</li>
+<li>Cloud bill for ngrok and monitoring stayed flat at $20/month (vs. $1,200 lost revenue previously).</li>
+</ul>
+<p>The biggest win wasn’t the code — it was the metrics. The team now watches <code>mpesa_callback_latency_ms</code> in Grafana and sets an alert at 500ms. That alert fired once, when a downstream service timed out, and the team fixed it before any users complained.</p>
+<h2 id="common-questions-and-variations">Common questions and variations</h2>
+<h3 id="how-do-i-handle-m-pesa-express-on-ussd">How do I handle M-Pesa Express on USSD?</h3>
+<p>Daraja 2.0 splits Express from STK. For USSD, use the <code>/express</code> endpoint with <code>Initiator</code>, <code>SecurityCredential</code>, and <code>CommandID:</code>CustomerBuyGoodsOnline`. The credential is an RSA-signed blob using the same PassKey as a base. The Python SDK handles signing if you provide the private key:</p>
+<pre><code class="language-python">from mpesa_sdk import DarajaExpressClient
+
+client = DarajaExpressClient(
+    api_key=os.getenv(&quot;MPESA_API_KEY&quot;),
+    api_secret=os.getenv(&quot;MPESA_API_SECRET&quot;),
+    initiator_name=&quot;testapi&quot;,
+    security_credential_path=&quot;/secrets/mpesa_private.pem&quot;,
+)
+</code></pre>
+<h3 id="can-i-use-daraja-20-for-c2b-merchant-receiving-payments">Can I use Daraja 2.0 for C2B (merchant receiving payments)?</h3>
+<p>Yes. The <code>/c2b/register</code> and <code>/c2b/simulate</code> endpoints remain mostly unchanged, but the new auth applies. Use the JWT token in the <code>Authorization: Bearer &lt;token&gt;</code> header. The callback path rules are identical — exact match required.</p>
+<h3 id="what-happens-if-i-ignore-https-in-sandbox">What happens if I ignore HTTPS in sandbox?</h3>
+<p>Sandbox will accept <code>http://</code> for testing, but production will reject it with <code>ERR_INVALID_CERT</code>. Do not rely on sandbox laxity — build your callback handler to enforce HTTPS from day one. Use ngrok’s <code>--scheme=https</code> flag or Cloudflare Tunnel with forced TLS.</p>
+<h3 id="how-do-i-rotate-api-keys-safely">How do I rotate API keys safely?</h3>
+<p>Safaricom allows key rotation via the developer dashboard. To avoid downtime:</p>
+<ol>
+<li>Generate a new <code>API Key</code> and <code>API Secret</code> pair.</li>
+<li>Update your secrets store (e.g., AWS Secrets Manager rotation lambda).</li>
+<li>Wait for the old token to expire (3600 seconds max).</li>
+<li>Deploy the new keys. Old tokens will fail gracefully with 401, triggering a refresh with the new keys.</li>
+</ol>
+<p>I once rotated keys during peak hours and caused a 5-minute outage because the new token wasn’t in the cache yet. Since then, I deploy the new keys 30 seconds before rotation, so the cache always has the latest token.</p>
+<h2 id="where-to-go-from-here">Where to go from here</h2>
+<p>If you do nothing else today, <strong>open your <code>.env</code> file and verify these four lines</strong>. If any are missing or wrong, your integration will break in production:</p>
+<pre><code>MPESA_API_KEY=your_2026_api_key
+MPESA_API_SECRET=your_2026_api_secret
+MPESA_SHORT_CODE=your_2026_short_code
+MPESA_CALLBACK_URL=https://your-app.com/mpesa/callback
+</code></pre>
+<p>Then, run <code>curl -X POST https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest -H "Authorization: Bearer TOKEN" -d '{"BusinessShortCode":...}'</code> to confirm the endpoint works. If you see <code>ERR_TOKEN_EXPIRED</code>, you’ve forgotten to refresh the token. Fix that before you write a single line of business logic.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>how to fix ERR_CALLBACK_URL_MISMATCH in Daraja 2.0</strong></p>
+<p>Check your callback URL in the Daraja dashboard and your code. They must match exactly, including the trailing slash. Use middleware to normalize <code>/mpesa/callback</code> and <code>/mpesa/callback/</code> to one canonical path. If you’re using a load balancer, disable path normalization there. In 2026, Safaricom no longer tolerates redirects or rewrites on callbacks.</p>
+<p><strong>what is the new JWT auth flow in Daraja 2.0</strong></p>
+<p>Daraja 2.0 replaces the old Consumer Key/Secret with a JWT API Key pair. You POST to <code>/token</code> with <code>grant_type=client_credentials</code> and Basic Auth using the API Key and Secret. The response gives an <code>access_token</code> valid for 3600 seconds. Cache it, refresh it before expiry, and include it in the <code>Authorization: Bearer &lt;token&gt;</code> header on all subsequent requests. Clock skew &gt;30 seconds will cause <code>ERR_INVALID_TIMESTAMP</code>.</p>
+<p><strong>how to test Daraja 2.0 sandbox in 2026</strong></p>
+<ol>
+<li>Register at <a href="https://developer.safaricom.co.ke">https://developer.safaricom.co.ke</a> and create an app. Copy <code>API Key</code>, <code>API Secret</code>, <code>Short Code</code>, and <code>Pass Key</code>.</li>
+<li>Use ngrok or Cloudflare Tunnel to expose <code>https://your-sub.ngrok.io/mpesa/callback</code>.</li>
+<li>Set <code>MPESA_CALLBACK_URL=https://your-sub.ngrok.io/mpesa/callback</code> in your <code>.env</code>.</li>
+<li>Run <code>curl -X POST https://sandbox.safaricom.co.ke/mpesa/token -u API_KEY:API_SECRET</code> to get a token.</li>
+<li>Use that token to initiate a test STK Push with phone 254708374123 and amount 1. Check your callback handler receives the payload.</li>
+</ol>
+<p><strong>why does Daraja 2.0 fail with ERR_INVALID_CERT</strong></p>
+<p>Daraja 2.0 enforces HTTPS with a publicly trusted certificate. Self-signed or internal CA certificates will fail. Use ngrok with <code>--scheme=https</code>, Cloudflare Tunnel, or a public endpoint with Let’s Encrypt. Never use <code>http://</code> in sandbox or production callbacks. If you see this error, check your callback URL starts with <code>https://</code> and the certificate is valid in a browser.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 15, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

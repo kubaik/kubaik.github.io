@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 08:43:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 08:49:06 +0000</lastBuildDate>
+    <item>
+      <title>Migrate M-Pesa Daraja 2.0 now before your app breaks</title>
+      <link>https://kubaik.github.io/migrate-m-pesa-daraja-20-now-before-your-app-breaks/</link>
+      <description>Fix M-Pesa Daraja 2.0 ERR_CALLBACK_URL_MISMATCH and ERR_TOKEN_EXPIRED before your checkout breaks — 4 concrete steps, token refresh code, callback path rules, and 2026 sandbox setup.</description>
+      <pubDate>Mon, 15 Jun 2026 08:48:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/migrate-m-pesa-daraja-20-now-before-your-app-breaks/</guid>
+    </item>
     <item>
       <title>React 19 compiler: my components changed how</title>
       <link>https://kubaik.github.io/react-19-compiler-my-components-changed-how/</link>
@@ -138,13 +145,6 @@
       <description>Cut payment integration work 60% with one API for Kenya, Nigeria, Ghana — latency benchmarks, sandbox pitfalls, and the adapter strategy most teams miss</description>
       <pubDate>Sun, 14 Jun 2026 17:14:09 +0000</pubDate>
       <guid>https://kubaik.github.io/skip-m-pesa-build-one-api-for-3-african-markets/</guid>
-    </item>
-    <item>
-      <title>Why AI interviewers failed 68% of us in 2026</title>
-      <link>https://kubaik.github.io/why-ai-interviewers-failed-68-of-us-in-2026/</link>
-      <description>AI interviewers reject 68% of candidates in 2026 — here’s the real reason and how to fix it in 30 minutes: rediscover Redis and PostgreSQL, beat the keyword trap, and game the system ethically.</description>
-      <pubDate>Sun, 14 Jun 2026 17:09:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-ai-interviewers-failed-68-of-us-in-2026/</guid>
     </item>
   </channel>
 </rss>
