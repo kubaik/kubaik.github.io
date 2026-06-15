@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-15T14:45:17.002034",
+  "built_at": "2026-06-15T14:56:28.265036",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1295,6 +1295,11 @@
       "slug": "found-niche-in-2026-saas-that-ai-cant-copy",
       "title": "Found niche in 2026: SaaS that AI can’t copy",
       "summary": "Most pick saas guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, the AI wave had already eaten half the niches I’d normally consider for a SaaS side"
+    },
+    {
+      "slug": "ai-scans-your-code-find-flaws-faster",
+      "title": "AI scans your code: find flaws faster",
+      "summary": "The short version: the conventional advice on being used is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI vulnerability scanners don’t replace pen-testers — they let them focus on what human"
     }
   ]
 }
