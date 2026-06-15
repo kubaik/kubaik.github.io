@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 21:48:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 21:53:33 +0000</lastBuildDate>
+    <item>
+      <title>AI code debt: the silent killer in 2026</title>
+      <link>https://kubaik.github.io/ai-code-debt-the-silent-killer-in-2026/</link>
+      <description>Cut AI code debt 60% with guardrails — AFRS vs HAPP: which debt you choose to carry in 2026. Real benchmarks, 3 concrete numbers, and the setup you can run in 30 minutes.</description>
+      <pubDate>Mon, 15 Jun 2026 21:53:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-code-debt-the-silent-killer-in-2026/</guid>
+    </item>
     <item>
       <title>Core Web Vitals 2026: INP is now stable</title>
       <link>https://kubaik.github.io/core-web-vitals-2026-inp-is-now-stable/</link>
@@ -138,13 +145,6 @@
       <description>Cut password reset queues 96% and auth infra costs 95% by migrating to passkeys — real numbers from 2.1M user app in Vietnam and Indonesia.</description>
       <pubDate>Sun, 14 Jun 2026 23:03:08 +0000</pubDate>
       <guid>https://kubaik.github.io/passkeys-killed-our-password-reset-queue/</guid>
-    </item>
-    <item>
-      <title>Tech pay in 2026: where the dust settled</title>
-      <link>https://kubaik.github.io/tech-pay-in-2026-where-the-dust-settled/</link>
-      <description>KES 650k–1.4m in Nairobi 2026 — where the dust settled and how infra wins unlock raises</description>
-      <pubDate>Sun, 14 Jun 2026 22:56:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/tech-pay-in-2026-where-the-dust-settled/</guid>
     </item>
   </channel>
 </rss>

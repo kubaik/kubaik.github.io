@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-15T20:50:10.133995",
+  "built_at": "2026-06-15T21:53:28.058698",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1325,6 +1325,11 @@
       "slug": "core-web-vitals-2026-inp-is-now-stable",
       "title": "Core Web Vitals 2026: INP is now stable",
       "summary": "Most web performance guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, Google promoted Interaction to Next Paint (INP) from an experimental me"
+    },
+    {
+      "slug": "ai-code-debt-the-silent-killer-in-2026",
+      "title": "AI code debt: the silent killer in 2026",
+      "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, pull requests that look ‘clean’ are killing teams. Not because"
     }
   ]
 }
