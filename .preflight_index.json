@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-15T06:34:38.776616",
+  "built_at": "2026-06-15T07:49:48.983507",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1260,6 +1260,11 @@
       "slug": "json-mode-breaks-enforce-schemas-at-scale",
       "title": "JSON mode breaks: enforce schemas at scale",
       "summary": "Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our team at KodeFlow rolled out a new AI-powered issue triager for ou"
+    },
+    {
+      "slug": "react-19-compiler-my-components-changed-how",
+      "title": "React 19 compiler: my components changed how",
+      "summary": "I've seen the same react production mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now React 19 shipped with a compiler that promises to rewrite components "
     }
   ]
 }

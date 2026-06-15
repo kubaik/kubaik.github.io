@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 07:44:02 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 07:49:53 +0000</lastBuildDate>
+    <item>
+      <title>React 19 compiler: my components changed how</title>
+      <link>https://kubaik.github.io/react-19-compiler-my-components-changed-how/</link>
+      <description>Cut React 19 render time 57% with the new compiler — but only if you silence its edge-case bugs first. Real benchmarks, real bugs, and a decision table to pick the right path.</description>
+      <pubDate>Mon, 15 Jun 2026 07:49:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-19-compiler-my-components-changed-how/</guid>
+    </item>
     <item>
       <title>JSON mode breaks: enforce schemas at scale</title>
       <link>https://kubaik.github.io/json-mode-breaks-enforce-schemas-at-scale/</link>
@@ -138,13 +145,6 @@
       <description>AI interviewers reject 68% of candidates in 2026 — here’s the real reason and how to fix it in 30 minutes: rediscover Redis and PostgreSQL, beat the keyword trap, and game the system ethically.</description>
       <pubDate>Sun, 14 Jun 2026 17:09:29 +0000</pubDate>
       <guid>https://kubaik.github.io/why-ai-interviewers-failed-68-of-us-in-2026/</guid>
-    </item>
-    <item>
-      <title>PR checklists are dead: AI agents do reviews now</title>
-      <link>https://kubaik.github.io/pr-checklists-are-dead-ai-agents-do-reviews-now/</link>
-      <description>Cut PR review time 70% with agentic pipelines — 90s latency, $0.0012 cost, and 42% fewer escapes — without rewriting your stack.</description>
-      <pubDate>Sun, 14 Jun 2026 16:58:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/pr-checklists-are-dead-ai-agents-do-reviews-now/</guid>
     </item>
   </channel>
 </rss>
