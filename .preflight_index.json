@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-15T06:19:00.042241",
+  "built_at": "2026-06-15T06:34:38.776616",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1255,6 +1255,11 @@
       "slug": "vibe-coding-mvp-magic-prod-curse",
       "title": "Vibe coding: MVP magic, prod curse",
       "summary": "I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) Three years ago I joined a team building a com"
+    },
+    {
+      "slug": "json-mode-breaks-enforce-schemas-at-scale",
+      "title": "JSON mode breaks: enforce schemas at scale",
+      "summary": "Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our team at KodeFlow rolled out a new AI-powered issue triager for ou"
     }
   ]
 }

@@ -65,5 +65,6 @@
   "How Signals changed state management and whether it matters outside of frameworks",
   "How to onboard a developer to a partially AI-generated codebase",
   "Pricing a developer tool in 2026: what the market teaches you fast",
-  "Why vibe coding works for MVPs and fails for anything you need to maintain"
+  "Why vibe coding works for MVPs and fails for anything you need to maintain",
+  "Structured outputs from LLMs: why JSON mode is not enough for real workflows"
 ]

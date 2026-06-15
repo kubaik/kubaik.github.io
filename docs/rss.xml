@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 06:29:13 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 06:34:44 +0000</lastBuildDate>
+    <item>
+      <title>JSON mode breaks: enforce schemas at scale</title>
+      <link>https://kubaik.github.io/json-mode-breaks-enforce-schemas-at-scale/</link>
+      <description>Cut AI triage errors 99% with JSON Schema-guided decoding — how we enforced structured outputs at 12 kreq/min without breaking the 40 ms latency budget.</description>
+      <pubDate>Mon, 15 Jun 2026 06:34:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/json-mode-breaks-enforce-schemas-at-scale/</guid>
+    </item>
     <item>
       <title>Vibe coding: MVP magic, prod curse</title>
       <link>https://kubaik.github.io/vibe-coding-mvp-magic-prod-curse/</link>
@@ -138,13 +145,6 @@
       <description>Cut PR review time 70% with agentic pipelines — 90s latency, $0.0012 cost, and 42% fewer escapes — without rewriting your stack.</description>
       <pubDate>Sun, 14 Jun 2026 16:58:47 +0000</pubDate>
       <guid>https://kubaik.github.io/pr-checklists-are-dead-ai-agents-do-reviews-now/</guid>
-    </item>
-    <item>
-      <title>Make offline apps work when the network dies</title>
-      <link>https://kubaik.github.io/make-offline-apps-work-when-the-network-dies/</link>
-      <description>Cut data loss 99% and sync latency 62% with SQLite, UUID v7, and a power-aware queue — the real offline-first stack for unreliable networks in 2026.</description>
-      <pubDate>Sun, 14 Jun 2026 16:31:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/make-offline-apps-work-when-the-network-dies/</guid>
     </item>
   </channel>
 </rss>
