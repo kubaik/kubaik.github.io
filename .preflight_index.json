@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-15T19:39:42.226938",
+  "built_at": "2026-06-15T20:50:10.133995",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1320,6 +1320,11 @@
       "slug": "hybrid-search-cuts-rags-irrelevance-5x",
       "title": "Hybrid search cuts RAG’s irrelevance 5x",
       "summary": "The short version: the conventional advice on rag not is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) If you’re running a RAG pipeline today and still shipping answers that feel like a keyword"
+    },
+    {
+      "slug": "core-web-vitals-2026-inp-is-now-stable",
+      "title": "Core Web Vitals 2026: INP is now stable",
+      "summary": "Most web performance guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, Google promoted Interaction to Next Paint (INP) from an experimental me"
     }
   ]
 }

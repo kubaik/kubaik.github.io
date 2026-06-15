@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 19:39:47 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 20:50:15 +0000</lastBuildDate>
+    <item>
+      <title>Core Web Vitals 2026: INP is now stable</title>
+      <link>https://kubaik.github.io/core-web-vitals-2026-inp-is-now-stable/</link>
+      <description>Cut INP 65% without adding servers by optimizing event loops, Web Workers, and passive listeners — real numbers from a Kenyan health portal on $50 Android Go phones.</description>
+      <pubDate>Mon, 15 Jun 2026 20:50:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/core-web-vitals-2026-inp-is-now-stable/</guid>
+    </item>
     <item>
       <title>Hybrid search cuts RAG’s irrelevance 5x</title>
       <link>https://kubaik.github.io/hybrid-search-cuts-rags-irrelevance-5x/</link>
@@ -138,13 +145,6 @@
       <description>KES 650k–1.4m in Nairobi 2026 — where the dust settled and how infra wins unlock raises</description>
       <pubDate>Sun, 14 Jun 2026 22:56:15 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-pay-in-2026-where-the-dust-settled/</guid>
-    </item>
-    <item>
-      <title>Zero-downtime migrations: what works and what wastes</title>
-      <link>https://kubaik.github.io/zero-downtime-migrations-what-works-and-what-wastes/</link>
-      <description>Cut zero-downtime migration risk 78% with dual writes and pg_cron — lock time benchmarks, rollback scripts, and the 15% disk trade-off most teams ignore.</description>
-      <pubDate>Sun, 14 Jun 2026 22:43:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-downtime-migrations-what-works-and-what-wastes/</guid>
     </item>
   </channel>
 </rss>
