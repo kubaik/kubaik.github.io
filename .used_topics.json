@@ -68,5 +68,6 @@
   "Why vibe coding works for MVPs and fails for anything you need to maintain",
   "Structured outputs from LLMs: why JSON mode is not enough for real workflows",
   "React 19 in production: what the compiler actually changed about how I write components",
-  "M-Pesa Daraja 2.0 in 2026: what changed and how to migrate your integration"
+  "M-Pesa Daraja 2.0 in 2026: what changed and how to migrate your integration",
+  "How post-quantum cryptography affects the TLS stack you're running today"
 ]
