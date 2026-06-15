@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-15T22:03:13.101289",
+  "built_at": "2026-06-15T22:11:38.271407",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1335,6 +1335,11 @@
       "slug": "soft-deletes-break-at-scale-3-mistakes-to-stop-now",
       "title": "Soft deletes break at scale: 3 mistakes to stop now",
       "summary": "The short version: the conventional advice on soft deletes is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) If your soft-delete pattern looks like a deletedat timestamp and a global scope in Ra"
+    },
+    {
+      "slug": "tame-async-python-before-it-burns-you",
+      "title": "Tame async Python before it burns you",
+      "summary": "I've seen the same async python mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. When you run your async Python code in production, 89% of the time it behaves. The other 11% is why you’re read"
     }
   ]
 }
