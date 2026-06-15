@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-15T13:02:31.245603",
+  "built_at": "2026-06-15T13:25:34.076582",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1285,6 +1285,11 @@
       "slug": "ai-changed-my-workflowheres-what-i-stopped-trusting",
       "title": "AI changed my workflow—here’s what I stopped trusting",
       "summary": "A colleague asked me about engineering principles during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomp"
+    },
+    {
+      "slug": "ai-ate-my-niche-3-still-safe-in-2026",
+      "title": "AI ate my niche — 3 still safe in 2026",
+      "summary": "A colleague asked me about microsaas 2026 during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In"
     }
   ]
 }
