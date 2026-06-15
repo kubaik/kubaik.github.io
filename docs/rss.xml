@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 19:34:21 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 19:39:47 +0000</lastBuildDate>
+    <item>
+      <title>Hybrid search cuts RAG’s irrelevance 5x</title>
+      <link>https://kubaik.github.io/hybrid-search-cuts-rags-irrelevance-5x/</link>
+      <description>Cut irrelevant RAG chunks 26% and latency 48% by adding hybrid search + reranker in 2026. See Elasticsearch 8.12, Cohere rerank v3.1, Mistral-7B-Instruct costs and benchmarks.</description>
+      <pubDate>Mon, 15 Jun 2026 19:39:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/hybrid-search-cuts-rags-irrelevance-5x/</guid>
+    </item>
     <item>
       <title>AI apps: stop building like 2023</title>
       <link>https://kubaik.github.io/ai-apps-stop-building-like-2023/</link>
@@ -138,13 +145,6 @@
       <description>Cut zero-downtime migration risk 78% with dual writes and pg_cron — lock time benchmarks, rollback scripts, and the 15% disk trade-off most teams ignore.</description>
       <pubDate>Sun, 14 Jun 2026 22:43:53 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-downtime-migrations-what-works-and-what-wastes/</guid>
-    </item>
-    <item>
-      <title>7 patterns for systems that won’t die when networks</title>
-      <link>https://kubaik.github.io/7-patterns-for-systems-that-wont-die-when-networks/</link>
-      <description>Why this list exists (what I was actually trying to solve) I spent three weeks debugging a ‘random’ failure in a payment service that only happened when…</description>
-      <pubDate>Sun, 14 Jun 2026 22:21:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-patterns-for-systems-that-wont-die-when-networks/</guid>
     </item>
   </channel>
 </rss>

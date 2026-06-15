@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-15T19:17:53.088612",
+  "built_at": "2026-06-15T19:39:42.226938",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1315,6 +1315,11 @@
       "slug": "ai-apps-stop-building-like-2023",
       "title": "AI apps: stop building like 2023",
       "summary": "A colleague asked me about design ainative during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) T"
+    },
+    {
+      "slug": "hybrid-search-cuts-rags-irrelevance-5x",
+      "title": "Hybrid search cuts RAG’s irrelevance 5x",
+      "summary": "The short version: the conventional advice on rag not is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) If you’re running a RAG pipeline today and still shipping answers that feel like a keyword"
     }
   ]
 }
