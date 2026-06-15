@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-15T13:25:34.076582",
+  "built_at": "2026-06-15T14:45:17.002034",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1290,6 +1290,11 @@
       "slug": "ai-ate-my-niche-3-still-safe-in-2026",
       "title": "AI ate my niche — 3 still safe in 2026",
       "summary": "A colleague asked me about microsaas 2026 during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In"
+    },
+    {
+      "slug": "found-niche-in-2026-saas-that-ai-cant-copy",
+      "title": "Found niche in 2026: SaaS that AI can’t copy",
+      "summary": "Most pick saas guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, the AI wave had already eaten half the niches I’d normally consider for a SaaS side"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 14:39:12 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 14:45:21 +0000</lastBuildDate>
+    <item>
+      <title>Found niche in 2026: SaaS that AI can’t copy</title>
+      <link>https://kubaik.github.io/found-niche-in-2026-saas-that-ai-cant-copy/</link>
+      <description>SaaS niches that survive AI in 2026: regulatory compliance, audited logic, and human-in-the-loop workflows. Real MRR jump from $2.8k to $8.4k, cost cuts from $380 to $167, and the exact stack we used.</description>
+      <pubDate>Mon, 15 Jun 2026 14:45:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/found-niche-in-2026-saas-that-ai-cant-copy/</guid>
+    </item>
     <item>
       <title>AI ate my niche — 3 still safe in 2026</title>
       <link>https://kubaik.github.io/ai-ate-my-niche-3-still-safe-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut test time 80% while catching AI bugs — Jest vs Codium in 2026. Compare deterministic vs probabilistic guardrails for teams where 40% of code is AI-written.</description>
       <pubDate>Sun, 14 Jun 2026 20:27:38 +0000</pubDate>
       <guid>https://kubaik.github.io/maintain-40-ai-code-test-first-lint-always/</guid>
-    </item>
-    <item>
-      <title>Claude 4 prompts broke my prod</title>
-      <link>https://kubaik.github.io/claude-4-prompts-broke-my-prod/</link>
-      <description>Cut prompt rejection 90% by avoiding imperative questions — Claude 4 and GPT-5 tone filters block direct commands, not just bad content</description>
-      <pubDate>Sun, 14 Jun 2026 19:13:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/claude-4-prompts-broke-my-prod/</guid>
     </item>
   </channel>
 </rss>
