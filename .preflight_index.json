@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-15T12:27:39.925425",
+  "built_at": "2026-06-15T13:02:31.245603",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1280,6 +1280,11 @@
       "slug": "ussd-still-rules-build-a-2026-fintech-bridge",
       "title": "USSD still rules: build a 2026 fintech bridge",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I spent three weeks in 2026 trying to convince a Lagos-based microfinance team that USSD"
+    },
+    {
+      "slug": "ai-changed-my-workflowheres-what-i-stopped-trusting",
+      "title": "AI changed my workflow—here’s what I stopped trusting",
+      "summary": "A colleague asked me about engineering principles during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomp"
     }
   ]
 }

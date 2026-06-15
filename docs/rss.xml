@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 12:27:45 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 13:02:36 +0000</lastBuildDate>
+    <item>
+      <title>AI changed my workflow—here’s what I stopped trusting</title>
+      <link>https://kubaik.github.io/ai-changed-my-workflowheres-what-i-stopped-trusting/</link>
+      <description>Cut post-deployment incidents 67% by treating AI like an intern instead of a senior engineer. Local models, PR size limits, and diff tests that actually work in 2026.</description>
+      <pubDate>Mon, 15 Jun 2026 13:02:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-changed-my-workflowheres-what-i-stopped-trusting/</guid>
+    </item>
     <item>
       <title>USSD still rules: build a 2026 fintech bridge</title>
       <link>https://kubaik.github.io/ussd-still-rules-build-a-2026-fintech-bridge/</link>
@@ -138,13 +145,6 @@
       <description>A SaaS product with 80% of users in APAC sees 5x more writes to the eu-west-1 region than us-east-1, yet eu-west-1’s database is only 12% larger.</description>
       <pubDate>Sun, 14 Jun 2026 19:03:17 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-burning-cash-on-multi-region-backends/</guid>
-    </item>
-    <item>
-      <title>Zero-trust on $0 budget: Cloudflare vs Tailscale</title>
-      <link>https://kubaik.github.io/zero-trust-on-0-budget-cloudflare-vs-tailscale/</link>
-      <description>Cut per-seat cloud costs 95% with Tailscale’s WireGuard mesh instead of Cloudflare Zero Trust — ACLs in Git, 1–3 ms latency, and $5/month total for 20 devices.</description>
-      <pubDate>Sun, 14 Jun 2026 18:53:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-on-0-budget-cloudflare-vs-tailscale/</guid>
     </item>
   </channel>
 </rss>
