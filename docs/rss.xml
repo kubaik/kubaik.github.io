@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 21:57:44 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 22:03:18 +0000</lastBuildDate>
+    <item>
+      <title>Soft deletes break at scale: 3 mistakes to stop now</title>
+      <link>https://kubaik.github.io/soft-deletes-break-at-scale-3-mistakes-to-stop-now/</link>
+      <description>Cut API response time 60% with PostgreSQL 16 soft-delete patterns — when global scopes fail and 3 fixes that work at 10M rows</description>
+      <pubDate>Mon, 15 Jun 2026 22:03:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/soft-deletes-break-at-scale-3-mistakes-to-stop-now/</guid>
+    </item>
     <item>
       <title>AI code debt: the silent killer in 2026</title>
       <link>https://kubaik.github.io/ai-code-debt-the-silent-killer-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut state layer memory 30% and render time 15× with Signals outside frameworks — 2026 benchmarks, code, and migration tips</description>
       <pubDate>Mon, 15 Jun 2026 00:21:47 +0000</pubDate>
       <guid>https://kubaik.github.io/signals-the-state-trick-everyone-copied-without/</guid>
-    </item>
-    <item>
-      <title>Passkeys killed our password reset queue</title>
-      <link>https://kubaik.github.io/passkeys-killed-our-password-reset-queue/</link>
-      <description>Cut password reset queues 96% and auth infra costs 95% by migrating to passkeys — real numbers from 2.1M user app in Vietnam and Indonesia.</description>
-      <pubDate>Sun, 14 Jun 2026 23:03:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/passkeys-killed-our-password-reset-queue/</guid>
     </item>
   </channel>
 </rss>

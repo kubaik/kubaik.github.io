@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-15T21:53:28.058698",
+  "built_at": "2026-06-15T22:03:13.101289",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1330,6 +1330,11 @@
       "slug": "ai-code-debt-the-silent-killer-in-2026",
       "title": "AI code debt: the silent killer in 2026",
       "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, pull requests that look ‘clean’ are killing teams. Not because"
+    },
+    {
+      "slug": "soft-deletes-break-at-scale-3-mistakes-to-stop-now",
+      "title": "Soft deletes break at scale: 3 mistakes to stop now",
+      "summary": "The short version: the conventional advice on soft deletes is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) If your soft-delete pattern looks like a deletedat timestamp and a global scope in Ra"
     }
   ]
 }
