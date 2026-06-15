@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 23:50:15 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 23:55:39 +0000</lastBuildDate>
+    <item>
+      <title>Rebalance pay when AI fills half your role</title>
+      <link>https://kubaik.github.io/rebalance-pay-when-ai-fills-half-your-role/</link>
+      <description>Raise your 2026 salary 20% with GitHub Copilot Enterprise stats — concrete numbers, Levels.fyi 2026 bands, and the memo template managers actually read.</description>
+      <pubDate>Mon, 15 Jun 2026 23:55:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/rebalance-pay-when-ai-fills-half-your-role/</guid>
+    </item>
     <item>
       <title>Ship a solo project pipeline under $20/month</title>
       <link>https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/</link>
@@ -138,13 +145,6 @@
       <description>Cut production fires 80% by replacing vibe coding with 12-factor config and runtime validation in Node 20 LTS and Python 3.11 — the patterns that survive 3 years of traffic.</description>
       <pubDate>Mon, 15 Jun 2026 06:18:56 +0000</pubDate>
       <guid>https://kubaik.github.io/vibe-coding-mvp-magic-prod-curse/</guid>
-    </item>
-    <item>
-      <title>Price SaaS tools in 2026: what we learned pricing a</title>
-      <link>https://kubaik.github.io/price-saas-tools-in-2026-what-we-learned-pricing-a/</link>
-      <description>Cut pricing guesswork 70%: how to model infra cost, support tickets and concurrency in 2026 with real numbers and a free toolkit — Node 20, Redis 7.2, Prometheus 2.52.</description>
-      <pubDate>Mon, 15 Jun 2026 02:11:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/price-saas-tools-in-2026-what-we-learned-pricing-a/</guid>
     </item>
   </channel>
 </rss>
