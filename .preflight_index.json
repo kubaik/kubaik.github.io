@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-15T14:56:28.265036",
+  "built_at": "2026-06-15T18:02:36.726486",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1300,6 +1300,11 @@
       "slug": "ai-scans-your-code-find-flaws-faster",
       "title": "AI scans your code: find flaws faster",
       "summary": "The short version: the conventional advice on being used is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI vulnerability scanners don’t replace pen-testers — they let them focus on what human"
+    },
+    {
+      "slug": "african-devs-ai-tools-that-work-now-2026",
+      "title": "African devs: AI tools that work now (2026)",
+      "summary": "After reviewing a lot of code that touches tools built, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. AI tools for African developers in 2026: what actually exists now The error and why it's confusing In 2026, every developer o"
     }
   ]
 }
