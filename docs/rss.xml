@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 19:12:24 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 19:17:58 +0000</lastBuildDate>
+    <item>
+      <title>AI apps: stop building like 2023</title>
+      <link>https://kubaik.github.io/ai-apps-stop-building-like-2023/</link>
+      <description>Cut AI app costs 60% with prompt registry: versioned prompts, in-process planner, and streaming responses. Real examples from Lagos, Bangalore, and São Paulo in 2026.</description>
+      <pubDate>Mon, 15 Jun 2026 19:17:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-apps-stop-building-like-2023/</guid>
+    </item>
     <item>
       <title>MCP servers 2026: connection refused in production</title>
       <link>https://kubaik.github.io/mcp-servers-2026-connection-refused-in-production/</link>
@@ -138,13 +145,6 @@
       <description>Why this list exists (what I was actually trying to solve) I spent three weeks debugging a ‘random’ failure in a payment service that only happened when…</description>
       <pubDate>Sun, 14 Jun 2026 22:21:06 +0000</pubDate>
       <guid>https://kubaik.github.io/7-patterns-for-systems-that-wont-die-when-networks/</guid>
-    </item>
-    <item>
-      <title>Airflow’s replacement: what 80% of teams moved to in</title>
-      <link>https://kubaik.github.io/airflows-replacement-what-80-of-teams-moved-to-in/</link>
-      <description>Cut pipeline overhead 95%: how 80% of teams replaced Airflow in 2026 with Kubernetes-native workflows, sub-second latency, and $58/month Postgres.</description>
-      <pubDate>Sun, 14 Jun 2026 21:03:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/airflows-replacement-what-80-of-teams-moved-to-in/</guid>
     </item>
   </channel>
 </rss>
