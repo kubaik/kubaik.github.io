@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 15 Jun 2026 22:11:44 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 15 Jun 2026 23:01:11 +0000</lastBuildDate>
+    <item>
+      <title>Ship a solo project pipeline under $20/month</title>
+      <link>https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/</link>
+      <description>Ship a solo project pipeline in 10 minutes under $20/month — Fly.io, GitHub Actions, and the trade-offs you won’t read in the docs</description>
+      <pubDate>Mon, 15 Jun 2026 23:01:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/</guid>
+    </item>
     <item>
       <title>Tame async Python before it burns you</title>
       <link>https://kubaik.github.io/tame-async-python-before-it-burns-you/</link>
@@ -138,13 +145,6 @@
       <description>Cut pricing guesswork 70%: how to model infra cost, support tickets and concurrency in 2026 with real numbers and a free toolkit — Node 20, Redis 7.2, Prometheus 2.52.</description>
       <pubDate>Mon, 15 Jun 2026 02:11:37 +0000</pubDate>
       <guid>https://kubaik.github.io/price-saas-tools-in-2026-what-we-learned-pricing-a/</guid>
-    </item>
-    <item>
-      <title>AI codebases: two onboarding paths that actually work</title>
-      <link>https://kubaik.github.io/ai-codebases-two-onboarding-paths-that-actually-work/</link>
-      <description>Cut onboarding friction 40% with these two AI codebase paths — the hard lessons from six mid-size teams in 2026</description>
-      <pubDate>Mon, 15 Jun 2026 01:50:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-codebases-two-onboarding-paths-that-actually-work/</guid>
     </item>
   </channel>
 </rss>
