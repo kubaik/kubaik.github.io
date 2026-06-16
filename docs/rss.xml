@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Jun 2026 00:06:27 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jun 2026 00:12:09 +0000</lastBuildDate>
+    <item>
+      <title>AI pair programming stole my code review job</title>
+      <link>https://kubaik.github.io/ai-pair-programming-stole-my-code-review-job/</link>
+      <description>Cut PR review time 82% and Sev-2 incidents 100% using AI pair programming — precision tuning, domain rules, and the $39 tool stack that actually worked in 2026.</description>
+      <pubDate>Tue, 16 Jun 2026 00:12:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pair-programming-stole-my-code-review-job/</guid>
+    </item>
     <item>
       <title>Rebalance pay when AI fills half your role</title>
       <link>https://kubaik.github.io/rebalance-pay-when-ai-fills-half-your-role/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI triage errors 99% with JSON Schema-guided decoding — how we enforced structured outputs at 12 kreq/min without breaking the 40 ms latency budget.</description>
       <pubDate>Mon, 15 Jun 2026 06:34:35 +0000</pubDate>
       <guid>https://kubaik.github.io/json-mode-breaks-enforce-schemas-at-scale/</guid>
-    </item>
-    <item>
-      <title>Vibe coding: MVP magic, prod curse</title>
-      <link>https://kubaik.github.io/vibe-coding-mvp-magic-prod-curse/</link>
-      <description>Cut production fires 80% by replacing vibe coding with 12-factor config and runtime validation in Node 20 LTS and Python 3.11 — the patterns that survive 3 years of traffic.</description>
-      <pubDate>Mon, 15 Jun 2026 06:18:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/vibe-coding-mvp-magic-prod-curse/</guid>
     </item>
   </channel>
 </rss>
