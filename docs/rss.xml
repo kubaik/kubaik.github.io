@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Jun 2026 12:03:49 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jun 2026 12:09:19 +0000</lastBuildDate>
+    <item>
+      <title>LLM apps: OWASP risks you missed</title>
+      <link>https://kubaik.github.io/llm-apps-owasp-risks-you-missed/</link>
+      <description>Implement OWASP Top 10 for LLM apps: prompt injection, insecure output, data leakage guardrails with Redis caching, Mistral 7B, and FastAPI/Express examples.</description>
+      <pubDate>Tue, 16 Jun 2026 12:09:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-apps-owasp-risks-you-missed/</guid>
+    </item>
     <item>
       <title>Cut AWS bills 35%: FinOps levers that work in 2026</title>
       <link>https://kubaik.github.io/cut-aws-bills-35-finops-levers-that-work-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut vulnerability triage time 58% with AI scanners — false-positive sources, tuning rules, and the one metric that matters in 2026</description>
       <pubDate>Mon, 15 Jun 2026 14:56:24 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-scans-your-code-find-flaws-faster/</guid>
-    </item>
-    <item>
-      <title>Found niche in 2026: SaaS that AI can’t copy</title>
-      <link>https://kubaik.github.io/found-niche-in-2026-saas-that-ai-cant-copy/</link>
-      <description>SaaS niches that survive AI in 2026: regulatory compliance, audited logic, and human-in-the-loop workflows. Real MRR jump from $2.8k to $8.4k, cost cuts from $380 to $167, and the exact stack we used.</description>
-      <pubDate>Mon, 15 Jun 2026 14:45:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/found-niche-in-2026-saas-that-ai-cant-copy/</guid>
     </item>
   </channel>
 </rss>

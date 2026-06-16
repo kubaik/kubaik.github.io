@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-16T12:03:45.497278",
+  "built_at": "2026-06-16T12:09:13.589253",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1395,6 +1395,11 @@
       "slug": "cut-aws-bills-35-finops-levers-that-work-in-2026",
       "title": "Cut AWS bills 35%: FinOps levers that work in 2026",
       "summary": "I've seen the same finops 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, AWS bills for mid-size teams are still growing faster than headco"
+    },
+    {
+      "slug": "llm-apps-owasp-risks-you-missed",
+      "title": "LLM apps: OWASP risks you missed",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Advanced edge cases you personally encountered 1. Prompt-injection via Unicode homoglyphs In August 2026 we deployed a support bot tha"
     }
   ]
 }
