@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Jun 2026 17:40:07 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jun 2026 17:46:12 +0000</lastBuildDate>
+    <item>
+      <title>AI sales cycle: what changed for devtool founders</title>
+      <link>https://kubaik.github.io/ai-sales-cycle-what-changed-for-devtool-founders/</link>
+      <description>Trial-to-paid conversion fell 64% in 2025 — here’s how a devtool founder rebuilt the sales cycle around AI-native expectations and cut the cycle from 8 weeks to 3 weeks</description>
+      <pubDate>Tue, 16 Jun 2026 17:46:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-sales-cycle-what-changed-for-devtool-founders/</guid>
+    </item>
     <item>
       <title>Mobile money reconciliation traps that cost $5k/month</title>
       <link>https://kubaik.github.io/mobile-money-reconciliation-traps-that-cost-5kmonth/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI app costs 60% with prompt registry: versioned prompts, in-process planner, and streaming responses. Real examples from Lagos, Bangalore, and São Paulo in 2026.</description>
       <pubDate>Mon, 15 Jun 2026 19:17:49 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-apps-stop-building-like-2023/</guid>
-    </item>
-    <item>
-      <title>MCP servers 2026: connection refused in production</title>
-      <link>https://kubaik.github.io/mcp-servers-2026-connection-refused-in-production/</link>
-      <description>Cut MCP connection refused errors in 2026: port binding, DNS timing, and Istio routing — with concrete fixes, latency benchmarks, and cost comparisons.</description>
-      <pubDate>Mon, 15 Jun 2026 18:37:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-servers-2026-connection-refused-in-production/</guid>
     </item>
   </channel>
 </rss>

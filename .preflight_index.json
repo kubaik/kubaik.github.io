@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-16T17:31:42.116302",
+  "built_at": "2026-06-16T17:46:06.369374",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1410,6 +1410,11 @@
       "slug": "mobile-money-reconciliation-traps-that-cost-5kmonth",
       "title": "Mobile money reconciliation traps that cost $5k/month",
       "summary": "Most building mobile guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) We built a B2B payments reconciliation system in 2026 that matched transactions betwee"
+    },
+    {
+      "slug": "ai-sales-cycle-what-changed-for-devtool-founders",
+      "title": "AI sales cycle: what changed for devtool founders",
+      "summary": "Most building developer guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) We launched a developer tool in early 2026 — a CLI that automatically generates Ope"
     }
   ]
 }
