@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-16T19:50:36.770531",
+  "built_at": "2026-06-16T20:39:11.696408",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1425,6 +1425,11 @@
       "slug": "serverless-db-cold-starts-neon-planetscale-turso",
       "title": "Serverless DB cold starts: Neon, PlanetScale, Turso",
       "summary": "After reviewing a lot of code that touches serverless databases, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You fire up a cold-start Lambda in Frankfurt, hit your API endpoint, and the first "
+    },
+    {
+      "slug": "ai-saas-solo-builder-vs-boilerplate-in-2026",
+      "title": "AI SaaS solo: Builder vs Boilerplate in 2026",
+      "summary": "I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the solo founder can ship a production SaaS faster than eve"
     }
   ]
 }

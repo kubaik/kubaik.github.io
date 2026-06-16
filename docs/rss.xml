@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Jun 2026 20:34:04 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jun 2026 20:39:16 +0000</lastBuildDate>
+    <item>
+      <title>AI SaaS solo: Builder vs Boilerplate in 2026</title>
+      <link>https://kubaik.github.io/ai-saas-solo-builder-vs-boilerplate-in-2026/</link>
+      <description>Cut SaaS time-to-market 50% with AI — Builder vs Boilerplate 2026: latency, cost, and the plugin trap most founders miss.</description>
+      <pubDate>Tue, 16 Jun 2026 20:39:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-saas-solo-builder-vs-boilerplate-in-2026/</guid>
+    </item>
     <item>
       <title>Serverless DB cold starts: Neon, PlanetScale, Turso</title>
       <link>https://kubaik.github.io/serverless-db-cold-starts-neon-planetscale-turso/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI code debt 60% with guardrails — AFRS vs HAPP: which debt you choose to carry in 2026. Real benchmarks, 3 concrete numbers, and the setup you can run in 30 minutes.</description>
       <pubDate>Mon, 15 Jun 2026 21:53:24 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-code-debt-the-silent-killer-in-2026/</guid>
-    </item>
-    <item>
-      <title>Core Web Vitals 2026: INP is now stable</title>
-      <link>https://kubaik.github.io/core-web-vitals-2026-inp-is-now-stable/</link>
-      <description>Cut INP 65% without adding servers by optimizing event loops, Web Workers, and passive listeners — real numbers from a Kenyan health portal on $50 Android Go phones.</description>
-      <pubDate>Mon, 15 Jun 2026 20:50:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/core-web-vitals-2026-inp-is-now-stable/</guid>
     </item>
   </channel>
 </rss>
