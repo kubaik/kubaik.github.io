@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-16T17:46:06.369374",
+  "built_at": "2026-06-16T17:58:51.968412",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1415,6 +1415,11 @@
       "slug": "ai-sales-cycle-what-changed-for-devtool-founders",
       "title": "AI sales cycle: what changed for devtool founders",
       "summary": "Most building developer guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) We launched a developer tool in early 2026 — a CLI that automatically generates Ope"
+    },
+    {
+      "slug": "3-side-gigs-developers-use-for-12kmo-in-2026",
+      "title": "3 side gigs developers use for $1.2k/mo in 2026",
+      "summary": "I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I needed to add a second income stream wit"
     }
   ]
 }

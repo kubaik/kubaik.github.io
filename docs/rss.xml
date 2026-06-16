@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Jun 2026 17:46:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jun 2026 17:58:57 +0000</lastBuildDate>
+    <item>
+      <title>3 side gigs developers use for $1.2k/mo in 2026</title>
+      <link>https://kubaik.github.io/3-side-gigs-developers-use-for-12kmo-in-2026/</link>
+      <description>3 side gigs developers use for $1.2k/month in Nairobi 2026 — Freelance APIs, code audits, AI fine-tuning — with concrete tools, benchmarks, and first-week steps</description>
+      <pubDate>Tue, 16 Jun 2026 17:58:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-side-gigs-developers-use-for-12kmo-in-2026/</guid>
+    </item>
     <item>
       <title>AI sales cycle: what changed for devtool founders</title>
       <link>https://kubaik.github.io/ai-sales-cycle-what-changed-for-devtool-founders/</link>
@@ -138,13 +145,6 @@
       <description>Cut irrelevant RAG chunks 26% and latency 48% by adding hybrid search + reranker in 2026. See Elasticsearch 8.12, Cohere rerank v3.1, Mistral-7B-Instruct costs and benchmarks.</description>
       <pubDate>Mon, 15 Jun 2026 19:39:38 +0000</pubDate>
       <guid>https://kubaik.github.io/hybrid-search-cuts-rags-irrelevance-5x/</guid>
-    </item>
-    <item>
-      <title>AI apps: stop building like 2023</title>
-      <link>https://kubaik.github.io/ai-apps-stop-building-like-2023/</link>
-      <description>Cut AI app costs 60% with prompt registry: versioned prompts, in-process planner, and streaming responses. Real examples from Lagos, Bangalore, and São Paulo in 2026.</description>
-      <pubDate>Mon, 15 Jun 2026 19:17:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-apps-stop-building-like-2023/</guid>
     </item>
   </channel>
 </rss>
