@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-16T00:12:04.147931",
+  "built_at": "2026-06-16T00:31:22.206215",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1355,6 +1355,11 @@
       "slug": "ai-pair-programming-stole-my-code-review-job",
       "title": "AI pair programming stole my code review job",
       "summary": "Most pair programming guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In Q1 2026 our team at KodeHaul — a logistics API platform running on Node 20 LTS and"
+    },
+    {
+      "slug": "neon-planetscale-branch-your-db-like-git",
+      "title": "Neon & PlanetScale: branch your DB like Git",
+      "summary": "After reviewing a lot of code that touches database branching, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You run and your CI pipeline fails with: No changes touched , and the table exists in"
     }
   ]
 }
