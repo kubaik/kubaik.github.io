@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-16T04:33:13.180914",
+  "built_at": "2026-06-16T05:44:41.375521",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1365,6 +1365,11 @@
       "slug": "portfolio-that-hires-show-constraints-not-code",
       "title": "Portfolio that hires: show constraints, not code",
       "summary": "Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, hiring managers in Lagos and Nairobi see a flood of résumés that look identic"
+    },
+    {
+      "slug": "build-in-public-without-burning-out",
+      "title": "Build in public without burning out",
+      "summary": "A colleague asked me about build public during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In 2"
     }
   ]
 }
