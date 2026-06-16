@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-16T20:39:11.696408",
+  "built_at": "2026-06-16T20:43:41.429853",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1430,6 +1430,11 @@
       "slug": "ai-saas-solo-builder-vs-boilerplate-in-2026",
       "title": "AI SaaS solo: Builder vs Boilerplate in 2026",
       "summary": "I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the solo founder can ship a production SaaS faster than eve"
+    },
+    {
+      "slug": "pgvector-cut-costs-80-ditching-pinecone",
+      "title": "pgvector cut costs 80%: ditching Pinecone",
+      "summary": "A colleague asked me about pgvector changed during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) "
     }
   ]
 }

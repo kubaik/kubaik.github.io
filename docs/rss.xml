@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Jun 2026 20:39:16 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jun 2026 20:43:47 +0000</lastBuildDate>
+    <item>
+      <title>pgvector cut costs 80%: ditching Pinecone</title>
+      <link>https://kubaik.github.io/pgvector-cut-costs-80-ditching-pinecone/</link>
+      <description>Cut pgvector monthly costs 80% vs Pinecone — real benchmarks, schema, and the schema mistake I made first try. Compare latency, cost, and ops for 10M vectors in 2026.</description>
+      <pubDate>Tue, 16 Jun 2026 20:43:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/pgvector-cut-costs-80-ditching-pinecone/</guid>
+    </item>
     <item>
       <title>AI SaaS solo: Builder vs Boilerplate in 2026</title>
       <link>https://kubaik.github.io/ai-saas-solo-builder-vs-boilerplate-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% with PostgreSQL 16 soft-delete patterns — when global scopes fail and 3 fixes that work at 10M rows</description>
       <pubDate>Mon, 15 Jun 2026 22:03:09 +0000</pubDate>
       <guid>https://kubaik.github.io/soft-deletes-break-at-scale-3-mistakes-to-stop-now/</guid>
-    </item>
-    <item>
-      <title>AI code debt: the silent killer in 2026</title>
-      <link>https://kubaik.github.io/ai-code-debt-the-silent-killer-in-2026/</link>
-      <description>Cut AI code debt 60% with guardrails — AFRS vs HAPP: which debt you choose to carry in 2026. Real benchmarks, 3 concrete numbers, and the setup you can run in 30 minutes.</description>
-      <pubDate>Mon, 15 Jun 2026 21:53:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-code-debt-the-silent-killer-in-2026/</guid>
     </item>
   </channel>
 </rss>
