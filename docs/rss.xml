@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Jun 2026 16:00:03 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jun 2026 16:05:48 +0000</lastBuildDate>
+    <item>
+      <title>Freelance platforms African devs tried in 2026</title>
+      <link>https://kubaik.github.io/freelance-platforms-african-devs-tried-in-2026/</link>
+      <description>Find which dev platforms pay fastest and charge least in 2026 with concrete numbers and a free monitoring dashboard for African developers on Andela, Toptal, Arc, and Contra.</description>
+      <pubDate>Tue, 16 Jun 2026 16:05:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-platforms-african-devs-tried-in-2026/</guid>
+    </item>
     <item>
       <title>LLM apps: OWASP risks you missed</title>
       <link>https://kubaik.github.io/llm-apps-owasp-risks-you-missed/</link>
@@ -138,13 +145,6 @@
       <description>Save 200MB/day with AI tools for African devs in 2026: offline models, 4G-friendly options, and real cost comparisons. Find what actually works now.</description>
       <pubDate>Mon, 15 Jun 2026 18:02:33 +0000</pubDate>
       <guid>https://kubaik.github.io/african-devs-ai-tools-that-work-now-2026/</guid>
-    </item>
-    <item>
-      <title>AI scans your code: find flaws faster</title>
-      <link>https://kubaik.github.io/ai-scans-your-code-find-flaws-faster/</link>
-      <description>Cut vulnerability triage time 58% with AI scanners — false-positive sources, tuning rules, and the one metric that matters in 2026</description>
-      <pubDate>Mon, 15 Jun 2026 14:56:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-scans-your-code-find-flaws-faster/</guid>
     </item>
   </channel>
 </rss>
