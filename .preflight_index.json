@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-16T05:44:41.375521",
+  "built_at": "2026-06-16T06:24:06.427312",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1370,6 +1370,11 @@
       "slug": "build-in-public-without-burning-out",
       "title": "Build in public without burning out",
       "summary": "A colleague asked me about build public during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In 2"
+    },
+    {
+      "slug": "nextjs-15-vs-remix-vs-sveltekit-2026-choices",
+      "title": "Next.js 15 vs Remix vs SvelteKit: 2026 choices",
+      "summary": "The short version: the conventional advice on nextjs remix is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) If you’re building a production app in 2026 and need to pick a meta-framework, the th"
     }
   ]
 }
