@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Jun 2026 06:24:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jun 2026 06:29:28 +0000</lastBuildDate>
+    <item>
+      <title>AI agents burn 3× more tokens than you expect</title>
+      <link>https://kubaik.github.io/ai-agents-burn-3-more-tokens-than-you-expect/</link>
+      <description>Cut AI agent costs 48% by tracking tokens, retries, and timeouts — the hidden costs most teams miss before production traffic hits</description>
+      <pubDate>Tue, 16 Jun 2026 06:29:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-burn-3-more-tokens-than-you-expect/</guid>
+    </item>
     <item>
       <title>Next.js 15 vs Remix vs SvelteKit: 2026 choices</title>
       <link>https://kubaik.github.io/nextjs-15-vs-remix-vs-sveltekit-2026-choices/</link>
@@ -138,13 +145,6 @@
       <description>Cut post-deployment incidents 67% by treating AI like an intern instead of a senior engineer. Local models, PR size limits, and diff tests that actually work in 2026.</description>
       <pubDate>Mon, 15 Jun 2026 13:02:27 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-changed-my-workflowheres-what-i-stopped-trusting/</guid>
-    </item>
-    <item>
-      <title>USSD still rules: build a 2026 fintech bridge</title>
-      <link>https://kubaik.github.io/ussd-still-rules-build-a-2026-fintech-bridge/</link>
-      <description>Cut USSD latency 72% with Node 20 + Twilio Super SIM — the real tricks for fintech in 2026 that keep feature phones alive.</description>
-      <pubDate>Mon, 15 Jun 2026 12:27:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/ussd-still-rules-build-a-2026-fintech-bridge/</guid>
     </item>
   </channel>
 </rss>

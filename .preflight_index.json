@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-16T06:24:06.427312",
+  "built_at": "2026-06-16T06:29:22.358783",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1375,6 +1375,11 @@
       "slug": "nextjs-15-vs-remix-vs-sveltekit-2026-choices",
       "title": "Next.js 15 vs Remix vs SvelteKit: 2026 choices",
       "summary": "The short version: the conventional advice on nextjs remix is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) If you’re building a production app in 2026 and need to pick a meta-framework, the th"
+    },
+    {
+      "slug": "ai-agents-burn-3-more-tokens-than-you-expect",
+      "title": "AI agents burn 3× more tokens than you expect",
+      "summary": "The official documentation for hidden costs is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Last year we shipped an AI agent tha"
     }
   ]
 }
