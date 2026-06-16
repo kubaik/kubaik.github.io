@@ -92,5 +92,6 @@
   "Next.js 15 vs Remix vs SvelteKit in 2026: a framework comparison after shipping real projects",
   "The hidden costs of running AI agents in production: tokens, retries, and timeouts",
   "How to implement least-privilege IAM in AWS without spending a week on policies",
-  "Designing notification systems that work across push, email, SMS, and WhatsApp"
+  "Designing notification systems that work across push, email, SMS, and WhatsApp",
+  "FinOps in 2026: the AWS cost levers that actually move the needle for mid-size teams"
 ]

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-16T11:45:18.889861",
+  "built_at": "2026-06-16T12:03:45.497278",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1390,6 +1390,11 @@
       "slug": "3-notification-stacks-that-actually-scale-to-whatsapp",
       "title": "3 notification stacks that actually scale to WhatsApp",
       "summary": "I ran into this designing notification problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026, our team launched a SaaS f"
+    },
+    {
+      "slug": "cut-aws-bills-35-finops-levers-that-work-in-2026",
+      "title": "Cut AWS bills 35%: FinOps levers that work in 2026",
+      "summary": "I've seen the same finops 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, AWS bills for mid-size teams are still growing faster than headco"
     }
   ]
 }
