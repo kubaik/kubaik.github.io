@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Jun 2026 19:45:05 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jun 2026 19:50:42 +0000</lastBuildDate>
+    <item>
+      <title>Serverless DB cold starts: Neon, PlanetScale, Turso</title>
+      <link>https://kubaik.github.io/serverless-db-cold-starts-neon-planetscale-turso/</link>
+      <description>Cut serverless database latency 75% with Neon, PlanetScale, Turso — real 2026 numbers, connection pooling, DNS pinning, and the $32 VPC mistake most teams miss.</description>
+      <pubDate>Tue, 16 Jun 2026 19:50:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-db-cold-starts-neon-planetscale-turso/</guid>
+    </item>
     <item>
       <title>3 side gigs developers use for $1.2k/mo in 2026</title>
       <link>https://kubaik.github.io/3-side-gigs-developers-use-for-12kmo-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut INP 65% without adding servers by optimizing event loops, Web Workers, and passive listeners — real numbers from a Kenyan health portal on $50 Android Go phones.</description>
       <pubDate>Mon, 15 Jun 2026 20:50:06 +0000</pubDate>
       <guid>https://kubaik.github.io/core-web-vitals-2026-inp-is-now-stable/</guid>
-    </item>
-    <item>
-      <title>Hybrid search cuts RAG’s irrelevance 5x</title>
-      <link>https://kubaik.github.io/hybrid-search-cuts-rags-irrelevance-5x/</link>
-      <description>Cut irrelevant RAG chunks 26% and latency 48% by adding hybrid search + reranker in 2026. See Elasticsearch 8.12, Cohere rerank v3.1, Mistral-7B-Instruct costs and benchmarks.</description>
-      <pubDate>Mon, 15 Jun 2026 19:39:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/hybrid-search-cuts-rags-irrelevance-5x/</guid>
     </item>
   </channel>
 </rss>
