@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-16T10:19:01.435544",
+  "built_at": "2026-06-16T11:45:18.889861",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1385,6 +1385,11 @@
       "slug": "aws-iam-in-2-hours-no-more-policy-hell",
       "title": "AWS IAM in 2 hours: no more policy hell",
       "summary": "The short version: the conventional advice on implement leastprivilege is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) This post shows how to implement least-privilege IAM in AWS without losin"
+    },
+    {
+      "slug": "3-notification-stacks-that-actually-scale-to-whatsapp",
+      "title": "3 notification stacks that actually scale to WhatsApp",
+      "summary": "I ran into this designing notification problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026, our team launched a SaaS f"
     }
   ]
 }
