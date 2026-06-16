@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Jun 2026 17:26:05 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 16 Jun 2026 17:31:48 +0000</lastBuildDate>
+    <item>
+      <title>Mobile money reconciliation traps that cost $5k/month</title>
+      <link>https://kubaik.github.io/mobile-money-reconciliation-traps-that-cost-5kmonth/</link>
+      <description>Cut mobile money reconciliation mismatches 93% with PostgreSQL state machines — timezone traps, duplicate webhooks, and provider idempotency keys that Paystack and Flutterwave won’t tell you.</description>
+      <pubDate>Tue, 16 Jun 2026 17:31:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-money-reconciliation-traps-that-cost-5kmonth/</guid>
+    </item>
     <item>
       <title>Freelance platforms African devs tried in 2026</title>
       <link>https://kubaik.github.io/freelance-platforms-african-devs-tried-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut MCP connection refused errors in 2026: port binding, DNS timing, and Istio routing — with concrete fixes, latency benchmarks, and cost comparisons.</description>
       <pubDate>Mon, 15 Jun 2026 18:37:30 +0000</pubDate>
       <guid>https://kubaik.github.io/mcp-servers-2026-connection-refused-in-production/</guid>
-    </item>
-    <item>
-      <title>African devs: AI tools that work now (2026)</title>
-      <link>https://kubaik.github.io/african-devs-ai-tools-that-work-now-2026/</link>
-      <description>Save 200MB/day with AI tools for African devs in 2026: offline models, 4G-friendly options, and real cost comparisons. Find what actually works now.</description>
-      <pubDate>Mon, 15 Jun 2026 18:02:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/african-devs-ai-tools-that-work-now-2026/</guid>
     </item>
   </channel>
 </rss>
