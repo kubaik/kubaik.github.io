@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 10:24:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 11:32:10 +0000</lastBuildDate>
+    <item>
+      <title>LLM latency: 3 patterns that never lie</title>
+      <link>https://kubaik.github.io/llm-latency-3-patterns-that-never-lie/</link>
+      <description>Cut LLM p99 latency 87% with 3 patterns: token shaping, isolated pools, and cache-as-queue — connection pool tuning, Redis 7.2 eviction, and the cache stampede mistake most teams miss.</description>
+      <pubDate>Wed, 17 Jun 2026 11:32:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-latency-3-patterns-that-never-lie/</guid>
+    </item>
     <item>
       <title>AI incident response: when it helps and when it burns</title>
       <link>https://kubaik.github.io/ai-incident-response-when-it-helps-and-when-it-burns/</link>
@@ -138,13 +145,6 @@
       <description>Cut IAM policy churn 76% with AWS Access Analyzer — permission boundaries, Terraform 1.9 snippets, and a GitHub Actions diff bot included</description>
       <pubDate>Tue, 16 Jun 2026 10:18:57 +0000</pubDate>
       <guid>https://kubaik.github.io/aws-iam-in-2-hours-no-more-policy-hell/</guid>
-    </item>
-    <item>
-      <title>Next.js 15 vs Remix vs SvelteKit: 2026 choices</title>
-      <link>https://kubaik.github.io/nextjs-15-vs-remix-vs-sveltekit-2026-choices/</link>
-      <description>Cut 40 % latency on 3G: Next.js 15 vs Remix vs SvelteKit benchmarks with real deployments in Senegal, Kenya, and Nigeria — bundle sizes, Turbopack pitfalls, and the state-leak bug we chased for two days.</description>
-      <pubDate>Tue, 16 Jun 2026 06:24:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/nextjs-15-vs-remix-vs-sveltekit-2026-choices/</guid>
     </item>
   </channel>
 </rss>

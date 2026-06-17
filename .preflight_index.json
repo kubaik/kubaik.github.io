@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T10:24:36.939769",
+  "built_at": "2026-06-17T11:32:05.607092",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1480,6 +1480,11 @@
       "slug": "ai-incident-response-when-it-helps-and-when-it-burns",
       "title": "AI incident response: when it helps and when it burns",
       "summary": "I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, every oncall rotation has at least one AI tool shoved int"
+    },
+    {
+      "slug": "llm-latency-3-patterns-that-never-lie",
+      "title": "LLM latency: 3 patterns that never lie",
+      "summary": "The official documentation for design llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Every LLM latency guide starts with th"
     }
   ]
 }
