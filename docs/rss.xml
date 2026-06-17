@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 23:29:05 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 23:34:05 +0000</lastBuildDate>
+    <item>
+      <title>AI UI tools: where they shine (and crash)</title>
+      <link>https://kubaik.github.io/ai-ui-tools-where-they-shine-and-crash/</link>
+      <description>Cut frontend build time 85% with AI UI tools — but design drift, responsive breaks, and accessibility debt lurk. Learn where these tools work, where they fail, and how to audit their output in 2026.</description>
+      <pubDate>Wed, 17 Jun 2026 23:33:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ui-tools-where-they-shine-and-crash/</guid>
+    </item>
     <item>
       <title>SLSA and Sigstore: the 2026 supply chain baseline</title>
       <link>https://kubaik.github.io/slsa-and-sigstore-the-2026-supply-chain-baseline/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% and failed transactions 80% by switching from REST+JSON to binary protocols and offline queues. Real-world data from Nigeria, Ghana, and Kenya in 2026.</description>
       <pubDate>Wed, 17 Jun 2026 10:17:15 +0000</pubDate>
       <guid>https://kubaik.github.io/regulators-broke-our-api-design/</guid>
-    </item>
-    <item>
-      <title>AI ops: Datadog vs Granfa for infra automation</title>
-      <link>https://kubaik.github.io/ai-ops-datadog-vs-granfa-for-infra-automation/</link>
-      <description>Cut cloud costs 61% and reduce incident response time 40% with the right AI ops tool — Datadog vs Granfa in 2026 benchmarks, real runbooks, and the resize loop mistake I made.</description>
-      <pubDate>Wed, 17 Jun 2026 09:45:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ops-datadog-vs-granfa-for-infra-automation/</guid>
     </item>
   </channel>
 </rss>

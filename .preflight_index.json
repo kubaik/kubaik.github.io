@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T23:00:38.867690",
+  "built_at": "2026-06-17T23:33:59.709613",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1565,6 +1565,11 @@
       "slug": "slsa-and-sigstore-the-2026-supply-chain-baseline",
       "title": "SLSA and Sigstore: the 2026 supply chain baseline",
       "summary": "Most supply chain guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we shipped a new payments service that processed 12 M transactions/month for"
+    },
+    {
+      "slug": "ai-ui-tools-where-they-shine-and-crash",
+      "title": "AI UI tools: where they shine (and crash)",
+      "summary": "The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. Advanced edge cases you personally encountered In 2026, I’ve seen AI UI generators fail on edge cases that aren’t in their tr"
     }
   ]
 }
