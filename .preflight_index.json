@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T17:48:28.026349",
+  "built_at": "2026-06-17T18:26:35.687367",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1525,6 +1525,11 @@
       "slug": "zombie-rows-soft-deletes-at-scale",
       "title": "Zombie rows: soft deletes at scale",
       "summary": "The short version: the conventional advice on soft deletes is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Soft deletes look simple: mark a record as deleted instead of actually removing it. M"
+    },
+    {
+      "slug": "ai-triage-vs-human-escalation-which-breaks-oncall",
+      "title": "AI triage vs human escalation: which breaks oncall",
+      "summary": "I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, oncall engineers are drowning in 3,200 alerts per month o"
     }
   ]
 }

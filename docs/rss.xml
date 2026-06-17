@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 18:22:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 18:26:39 +0000</lastBuildDate>
+    <item>
+      <title>AI triage vs human escalation: which breaks oncall</title>
+      <link>https://kubaik.github.io/ai-triage-vs-human-escalation-which-breaks-oncall/</link>
+      <description>Cut pages 63% with AI triage — but only if you have 100+ labeled incidents and a kill switch. Otherwise, human-first wins by $10k/month at 15 engineers.</description>
+      <pubDate>Wed, 17 Jun 2026 18:26:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-triage-vs-human-escalation-which-breaks-oncall/</guid>
+    </item>
     <item>
       <title>Zombie rows: soft deletes at scale</title>
       <link>https://kubaik.github.io/zombie-rows-soft-deletes-at-scale/</link>
@@ -138,13 +145,6 @@
       <description>Cut SaaS time-to-market 50% with AI — Builder vs Boilerplate 2026: latency, cost, and the plugin trap most founders miss.</description>
       <pubDate>Tue, 16 Jun 2026 20:39:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-saas-solo-builder-vs-boilerplate-in-2026/</guid>
-    </item>
-    <item>
-      <title>Serverless DB cold starts: Neon, PlanetScale, Turso</title>
-      <link>https://kubaik.github.io/serverless-db-cold-starts-neon-planetscale-turso/</link>
-      <description>Cut serverless database latency 75% with Neon, PlanetScale, Turso — real 2026 numbers, connection pooling, DNS pinning, and the $32 VPC mistake most teams miss.</description>
-      <pubDate>Tue, 16 Jun 2026 19:50:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-db-cold-starts-neon-planetscale-turso/</guid>
     </item>
   </channel>
 </rss>
