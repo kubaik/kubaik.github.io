@@ -52,3 +52,10 @@ Thumbs.db
 *secret*
 *token*
 config_local.yaml
+
+# Runtime caches — rebuilt automatically from docs/, never commit these
+.similarity_index.json
+.preflight_index.json
+.used_topics.json
+.publish_velocity.json
+.trending_hashtag_cache.json
