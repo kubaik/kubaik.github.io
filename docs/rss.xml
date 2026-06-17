@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 19:50:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 19:55:09 +0000</lastBuildDate>
+    <item>
+      <title>AI ate the niches first</title>
+      <link>https://kubaik.github.io/ai-ate-the-niches-first/</link>
+      <description>2026 niches that survived AI commoditisation — proprietary data loops, compliance signatures, and real-time state. Learn which Micro-SaaS moats still work and which collapsed.</description>
+      <pubDate>Wed, 17 Jun 2026 19:55:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ate-the-niches-first/</guid>
+    </item>
     <item>
       <title>AI triage vs human escalation: which breaks oncall</title>
       <link>https://kubaik.github.io/ai-triage-vs-human-escalation-which-breaks-oncall/</link>
@@ -138,13 +145,6 @@
       <description>Cut pgvector monthly costs 80% vs Pinecone — real benchmarks, schema, and the schema mistake I made first try. Compare latency, cost, and ops for 10M vectors in 2026.</description>
       <pubDate>Tue, 16 Jun 2026 20:43:37 +0000</pubDate>
       <guid>https://kubaik.github.io/pgvector-cut-costs-80-ditching-pinecone/</guid>
-    </item>
-    <item>
-      <title>AI SaaS solo: Builder vs Boilerplate in 2026</title>
-      <link>https://kubaik.github.io/ai-saas-solo-builder-vs-boilerplate-in-2026/</link>
-      <description>Cut SaaS time-to-market 50% with AI — Builder vs Boilerplate 2026: latency, cost, and the plugin trap most founders miss.</description>
-      <pubDate>Tue, 16 Jun 2026 20:39:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-saas-solo-builder-vs-boilerplate-in-2026/</guid>
     </item>
   </channel>
 </rss>

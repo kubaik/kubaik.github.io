@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T18:26:35.687367",
+  "built_at": "2026-06-17T19:55:04.091601",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1530,6 +1530,11 @@
       "slug": "ai-triage-vs-human-escalation-which-breaks-oncall",
       "title": "AI triage vs human escalation: which breaks oncall",
       "summary": "I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, oncall engineers are drowning in 3,200 alerts per month o"
+    },
+    {
+      "slug": "ai-ate-the-niches-first",
+      "title": "AI ate the niches first",
+      "summary": "A colleague asked me about microsaas 2026 during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In"
     }
   ]
 }
