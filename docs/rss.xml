@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 22:31:04 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 22:34:13 +0000</lastBuildDate>
+    <item>
+      <title>Built $5k MRR in 6 months: no ads, no team</title>
+      <link>https://kubaik.github.io/built-5k-mrr-in-6-months-no-ads-no-team/</link>
+      <description>Hit $5,120 MRR in 6 months bootstrapping a B2B tool—no ads, no team, no investor money. Real numbers, real stack, and the exact onboarding tweak that doubled conversions.</description>
+      <pubDate>Wed, 17 Jun 2026 22:34:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/built-5k-mrr-in-6-months-no-ads-no-team/</guid>
+    </item>
     <item>
       <title>Multi-agent frameworks in 2026: LangGraph wins</title>
       <link>https://kubaik.github.io/multi-agent-frameworks-in-2026-langgraph-wins/</link>
@@ -138,13 +145,6 @@
       <description>Cut page weight 70% and cut server costs to zero with 2026 PWA APIs — Periodic Background Sync and File System Access finally work everywhere. Real production numbers included.</description>
       <pubDate>Wed, 17 Jun 2026 08:30:36 +0000</pubDate>
       <guid>https://kubaik.github.io/pwas-hit-parity-in-2026/</guid>
-    </item>
-    <item>
-      <title>Platforms at 10, 100, 1k devs: the real stack</title>
-      <link>https://kubaik.github.io/platforms-at-10-100-1k-devs-the-real-stack/</link>
-      <description>Platform cost per developer dropped 35% with quotas and Redis 7.2 — the real stack sizes, quotas, and failure modes in 2026.</description>
-      <pubDate>Wed, 17 Jun 2026 08:23:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/platforms-at-10-100-1k-devs-the-real-stack/</guid>
     </item>
   </channel>
 </rss>
