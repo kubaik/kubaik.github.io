@@ -103,5 +103,6 @@
   "How AI changed the economics of building a solo SaaS in 2026",
   "How pgvector changed our architecture: replacing Pinecone with what we already had",
   "How I write tests for AI-assisted code without testing the AI",
-  "AI memory systems: giving your agent context that persists across sessions"
+  "AI memory systems: giving your agent context that persists across sessions",
+  "Pulumi vs Terraform vs OpenTofu in 2026: the infrastructure-as-code landscape after the HashiCorp fork"
 ]

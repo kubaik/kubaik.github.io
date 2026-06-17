@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T07:44:16.257646",
+  "built_at": "2026-06-17T08:17:59.933911",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1445,6 +1445,11 @@
       "slug": "ai-memory-loss-why-your-agent-forgets-everything",
       "title": "AI memory loss: why your agent forgets everything",
       "summary": "After reviewing a lot of code that touches memory systems, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You call your AI agent in the morning, ask it about yesterday’s conversation, and get thi"
+    },
+    {
+      "slug": "3-iac-tools-in-2026-which-one-bites-you-first",
+      "title": "3 IaC tools in 2026: which one bites you first",
+      "summary": "I ran into this pulumi terraform problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. I spent two weeks debugging a Terraform state corruption after a command failed mid-flight. That’s w"
     }
   ]
 }

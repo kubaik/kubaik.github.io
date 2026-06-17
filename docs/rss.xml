@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 11:11:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 08:18:05 +0000</lastBuildDate>
+    <item>
+      <title>3 IaC tools in 2026: which one bites you first</title>
+      <link>https://kubaik.github.io/3-iac-tools-in-2026-which-one-bites-you-first/</link>
+      <description>Cut plan/apply time 23% with Pulumi in 2026 — benchmark results, state recovery times, and the real latency numbers every team should measure first.</description>
+      <pubDate>Wed, 17 Jun 2026 08:17:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-iac-tools-in-2026-which-one-bites-you-first/</guid>
+    </item>
     <item>
       <title>AI memory loss: why your agent forgets everything</title>
       <link>https://kubaik.github.io/ai-memory-loss-why-your-agent-forgets-everything/</link>
@@ -138,13 +145,6 @@
       <description>Raise your 2026 salary 20% with GitHub Copilot Enterprise stats — concrete numbers, Levels.fyi 2026 bands, and the memo template managers actually read.</description>
       <pubDate>Mon, 15 Jun 2026 23:55:31 +0000</pubDate>
       <guid>https://kubaik.github.io/rebalance-pay-when-ai-fills-half-your-role/</guid>
-    </item>
-    <item>
-      <title>Ship a solo project pipeline under $20/month</title>
-      <link>https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/</link>
-      <description>Ship a solo project pipeline in 10 minutes under $20/month — Fly.io, GitHub Actions, and the trade-offs you won’t read in the docs</description>
-      <pubDate>Mon, 15 Jun 2026 23:01:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/</guid>
     </item>
   </channel>
 </rss>
