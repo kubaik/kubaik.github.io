@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 20:33:46 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 20:38:21 +0000</lastBuildDate>
+    <item>
+      <title>80% AI code? Here’s the catch</title>
+      <link>https://kubaik.github.io/80-ai-code-heres-the-catch/</link>
+      <description>Launched a SaaS in 6 weeks using 80% AI code — here’s where it worked, where it broke, and the hidden costs most guides ignore.</description>
+      <pubDate>Wed, 17 Jun 2026 20:38:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/80-ai-code-heres-the-catch/</guid>
+    </item>
     <item>
       <title>Self-healing pipelines: LLMs vs agents in 2026</title>
       <link>https://kubaik.github.io/self-healing-pipelines-llms-vs-agents-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI context loss overnight by 90% with PostgreSQL memory store — 12 ms fetch latency, $18/month cost, and the session ID format that prevents forgetting in 2026.</description>
       <pubDate>Wed, 17 Jun 2026 07:44:14 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-memory-loss-why-your-agent-forgets-everything/</guid>
-    </item>
-    <item>
-      <title>Test AI code without testing the AI: 9 hard rules</title>
-      <link>https://kubaik.github.io/test-ai-code-without-testing-the-ai-9-hard-rules/</link>
-      <description>Cut test flakiness 78% with property-based tests — Python 3.11, Hypothesis 6.94, and the property-first rule to avoid testing AI outputs</description>
-      <pubDate>Wed, 17 Jun 2026 07:34:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-ai-code-without-testing-the-ai-9-hard-rules/</guid>
     </item>
   </channel>
 </rss>

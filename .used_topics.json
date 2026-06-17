@@ -5,5 +5,6 @@
   "Soft deletes at scale: why the simple pattern breaks and what to do instead",
   "AI-assisted incident response: what works and what makes oncall worse",
   "Micro-SaaS in 2026: the niches that are working and the ones that got commoditised by AI",
-  "How I built a self-healing deployment pipeline using AI agents"
+  "How I built a self-healing deployment pipeline using AI agents",
+  "How I built and launched a SaaS in 6 weeks using AI tools for 80% of the code"
 ]
