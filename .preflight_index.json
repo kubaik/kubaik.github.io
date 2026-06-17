@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T14:10:51.949586",
+  "built_at": "2026-06-17T14:25:48.684034",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1495,6 +1495,11 @@
       "slug": "9-ai-wrapper-plays-that-worked-in-2026",
       "title": "9 AI wrapper plays that worked in 2026",
       "summary": "I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In early 2026 I joined a small team bui"
+    },
+    {
+      "slug": "edge-backends-when-50-locations-break-your-api",
+      "title": "Edge backends: when 50 locations break your API",
+      "summary": "The short version: the conventional advice on edgenative backends is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. Edge backends: when 50 locations break your API You can run the same API code in 50 edge locations, but that doesn’t mean "
     }
   ]
 }

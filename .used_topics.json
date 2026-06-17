@@ -113,5 +113,6 @@
   "AI-assisted incident response: what works and what makes oncall worse",
   "How I design for LLM latency: the patterns that keep AI features feeling fast",
   "SBOM requirements in 2026: what software bill of materials means for your release process",
-  "AI wrapper businesses in 2026: why most failed and the ones that survived"
+  "AI wrapper businesses in 2026: why most failed and the ones that survived",
+  "Edge-native backends in 2026: what changes when your API runs in 50 locations"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 14:20:51 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 14:25:53 +0000</lastBuildDate>
+    <item>
+      <title>Edge backends: when 50 locations break your API</title>
+      <link>https://kubaik.github.io/edge-backends-when-50-locations-break-your-api/</link>
+      <description>Latency drops from 200 ms to 15 ms for 90% of users, but suddenly you’re debugging cache stampedes at 3 AM because everyone hit the same stale endpoint.</description>
+      <pubDate>Wed, 17 Jun 2026 14:25:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-backends-when-50-locations-break-your-api/</guid>
+    </item>
     <item>
       <title>9 AI wrapper plays that worked in 2026</title>
       <link>https://kubaik.github.io/9-ai-wrapper-plays-that-worked-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Implement OWASP Top 10 for LLM apps: prompt injection, insecure output, data leakage guardrails with Redis caching, Mistral 7B, and FastAPI/Express examples.</description>
       <pubDate>Tue, 16 Jun 2026 12:09:10 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-apps-owasp-risks-you-missed/</guid>
-    </item>
-    <item>
-      <title>Cut AWS bills 35%: FinOps levers that work in 2026</title>
-      <link>https://kubaik.github.io/cut-aws-bills-35-finops-levers-that-work-in-2026/</link>
-      <description>Cut AWS bills 35% with FinOps levers that work in 2026 — Graviton3 Lambda, Compute Savings Plans with flexible targets, and the hidden refactor cost most teams miss.</description>
-      <pubDate>Tue, 16 Jun 2026 12:03:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-aws-bills-35-finops-levers-that-work-in-2026/</guid>
     </item>
   </channel>
 </rss>
