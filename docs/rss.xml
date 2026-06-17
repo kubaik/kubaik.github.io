@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 22:26:55 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 22:31:04 +0000</lastBuildDate>
+    <item>
+      <title>Multi-agent frameworks in 2026: LangGraph wins</title>
+      <link>https://kubaik.github.io/multi-agent-frameworks-in-2026-langgraph-wins/</link>
+      <description>Cut multi-agent framework timeouts 80% by matching tool to mobile network reality — CrewAI vs LangGraph vs custom with 2026 benchmarks and code examples</description>
+      <pubDate>Wed, 17 Jun 2026 22:30:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/multi-agent-frameworks-in-2026-langgraph-wins/</guid>
+    </item>
     <item>
       <title>Agents cost more than you think</title>
       <link>https://kubaik.github.io/agents-cost-more-than-you-think/</link>
@@ -138,13 +145,6 @@
       <description>Platform cost per developer dropped 35% with quotas and Redis 7.2 — the real stack sizes, quotas, and failure modes in 2026.</description>
       <pubDate>Wed, 17 Jun 2026 08:23:42 +0000</pubDate>
       <guid>https://kubaik.github.io/platforms-at-10-100-1k-devs-the-real-stack/</guid>
-    </item>
-    <item>
-      <title>3 IaC tools in 2026: which one bites you first</title>
-      <link>https://kubaik.github.io/3-iac-tools-in-2026-which-one-bites-you-first/</link>
-      <description>Cut plan/apply time 23% with Pulumi in 2026 — benchmark results, state recovery times, and the real latency numbers every team should measure first.</description>
-      <pubDate>Wed, 17 Jun 2026 08:17:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/3-iac-tools-in-2026-which-one-bites-you-first/</guid>
     </item>
   </channel>
 </rss>

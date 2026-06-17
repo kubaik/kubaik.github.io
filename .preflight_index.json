@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T21:16:21.749649",
+  "built_at": "2026-06-17T22:30:59.733483",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1550,6 +1550,11 @@
       "slug": "agents-cost-more-than-you-think",
       "title": "Agents cost more than you think",
       "summary": "The official documentation for hidden costs is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most AI agent frameworks treat costs"
+    },
+    {
+      "slug": "multi-agent-frameworks-in-2026-langgraph-wins",
+      "title": "Multi-agent frameworks in 2026: LangGraph wins",
+      "summary": "A colleague asked me about multiagent orchestration during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's inco"
     }
   ]
 }
