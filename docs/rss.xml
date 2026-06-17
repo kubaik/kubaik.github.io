@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 06:17:53 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 07:34:52 +0000</lastBuildDate>
+    <item>
+      <title>Test AI code without testing the AI: 9 hard rules</title>
+      <link>https://kubaik.github.io/test-ai-code-without-testing-the-ai-9-hard-rules/</link>
+      <description>Cut test flakiness 78% with property-based tests — Python 3.11, Hypothesis 6.94, and the property-first rule to avoid testing AI outputs</description>
+      <pubDate>Wed, 17 Jun 2026 07:34:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-ai-code-without-testing-the-ai-9-hard-rules/</guid>
+    </item>
     <item>
       <title>pgvector cut costs 80%: ditching Pinecone</title>
       <link>https://kubaik.github.io/pgvector-cut-costs-80-ditching-pinecone/</link>
@@ -138,13 +145,6 @@
       <description>Cut async Python surprises 89%: trio vs asyncio latency, cancellation leaks, and the 4 safety nets every team needs in 2026 production code.</description>
       <pubDate>Mon, 15 Jun 2026 22:11:34 +0000</pubDate>
       <guid>https://kubaik.github.io/tame-async-python-before-it-burns-you/</guid>
-    </item>
-    <item>
-      <title>Soft deletes break at scale: 3 mistakes to stop now</title>
-      <link>https://kubaik.github.io/soft-deletes-break-at-scale-3-mistakes-to-stop-now/</link>
-      <description>Cut API response time 60% with PostgreSQL 16 soft-delete patterns — when global scopes fail and 3 fixes that work at 10M rows</description>
-      <pubDate>Mon, 15 Jun 2026 22:03:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/soft-deletes-break-at-scale-3-mistakes-to-stop-now/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-16T20:43:41.429853",
+  "built_at": "2026-06-17T07:34:47.262440",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1435,6 +1435,11 @@
       "slug": "pgvector-cut-costs-80-ditching-pinecone",
       "title": "pgvector cut costs 80%: ditching Pinecone",
       "summary": "A colleague asked me about pgvector changed during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) "
+    },
+    {
+      "slug": "test-ai-code-without-testing-the-ai-9-hard-rules",
+      "title": "Test AI code without testing the AI: 9 hard rules",
+      "summary": "I ran into this write tests problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I got burned in 2026 shipping a feature where "
     }
   ]
 }
