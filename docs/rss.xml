@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 17:38:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 17:43:04 +0000</lastBuildDate>
+    <item>
+      <title>Zero-trust on $500/month: WireGuard vs Cloudflare</title>
+      <link>https://kubaik.github.io/zero-trust-on-500month-wireguard-vs-cloudflare/</link>
+      <description>Cut API exposure 100% with $6/month or $15 hardware: WireGuard vs Cloudflare Tunnel benchmarked in 2026 with latency, cost, and setup time.</description>
+      <pubDate>Wed, 17 Jun 2026 17:42:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-on-500month-wireguard-vs-cloudflare/</guid>
+    </item>
     <item>
       <title>AI agents need human loop: cost, trust, and the 78%</title>
       <link>https://kubaik.github.io/ai-agents-need-human-loop-cost-trust-and-the-78/</link>
@@ -138,13 +145,6 @@
       <description>3 side gigs developers use for $1.2k/month in Nairobi 2026 — Freelance APIs, code audits, AI fine-tuning — with concrete tools, benchmarks, and first-week steps</description>
       <pubDate>Tue, 16 Jun 2026 17:58:48 +0000</pubDate>
       <guid>https://kubaik.github.io/3-side-gigs-developers-use-for-12kmo-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI sales cycle: what changed for devtool founders</title>
-      <link>https://kubaik.github.io/ai-sales-cycle-what-changed-for-devtool-founders/</link>
-      <description>Trial-to-paid conversion fell 64% in 2025 — here’s how a devtool founder rebuilt the sales cycle around AI-native expectations and cut the cycle from 8 weeks to 3 weeks</description>
-      <pubDate>Tue, 16 Jun 2026 17:46:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-sales-cycle-what-changed-for-devtool-founders/</guid>
     </item>
   </channel>
 </rss>

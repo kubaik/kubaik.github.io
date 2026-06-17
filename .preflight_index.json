@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T17:33:11.662297",
+  "built_at": "2026-06-17T17:42:59.026276",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1515,6 +1515,11 @@
       "slug": "ai-agents-need-human-loop-cost-trust-and-the-78",
       "title": "AI agents need human loop: cost, trust, and the 78%",
       "summary": "I've seen the same most agents mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, teams are shipping AI agents faster than ever — but production re"
+    },
+    {
+      "slug": "zero-trust-on-500month-wireguard-vs-cloudflare",
+      "title": "Zero-trust on $500/month: WireGuard vs Cloudflare",
+      "summary": "I've seen the same zerotrust practice mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, small teams still get hacked through the same holes we pat"
     }
   ]
 }
