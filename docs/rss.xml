@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 22:55:58 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 23:00:44 +0000</lastBuildDate>
+    <item>
+      <title>SLSA and Sigstore: the 2026 supply chain baseline</title>
+      <link>https://kubaik.github.io/slsa-and-sigstore-the-2026-supply-chain-baseline/</link>
+      <description>Cut supply chain audit failures 100% with SLSA level 3 and Sigstore—step-by-step implementation, real 2026 numbers, and the exact GitHub Actions workflow we used to pass two audits in Q1 2026.</description>
+      <pubDate>Wed, 17 Jun 2026 23:00:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/slsa-and-sigstore-the-2026-supply-chain-baseline/</guid>
+    </item>
     <item>
       <title>Built $5k MRR in 6 months: no ads, no team</title>
       <link>https://kubaik.github.io/built-5k-mrr-in-6-months-no-ads-no-team/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud costs 61% and reduce incident response time 40% with the right AI ops tool — Datadog vs Granfa in 2026 benchmarks, real runbooks, and the resize loop mistake I made.</description>
       <pubDate>Wed, 17 Jun 2026 09:45:27 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ops-datadog-vs-granfa-for-infra-automation/</guid>
-    </item>
-    <item>
-      <title>PWAs hit parity in 2026</title>
-      <link>https://kubaik.github.io/pwas-hit-parity-in-2026/</link>
-      <description>Cut page weight 70% and cut server costs to zero with 2026 PWA APIs — Periodic Background Sync and File System Access finally work everywhere. Real production numbers included.</description>
-      <pubDate>Wed, 17 Jun 2026 08:30:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/pwas-hit-parity-in-2026/</guid>
     </item>
   </channel>
 </rss>

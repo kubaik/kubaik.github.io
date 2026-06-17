@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T22:34:07.965919",
+  "built_at": "2026-06-17T23:00:38.867690",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1560,6 +1560,11 @@
       "slug": "built-5k-mrr-in-6-months-no-ads-no-team",
       "title": "Built $5k MRR in 6 months: no ads, no team",
       "summary": "The short version: the conventional advice on got mrr is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) I bootstrapped a B2B tool to $5,120 monthly recurring revenue (MRR) in six months without "
+    },
+    {
+      "slug": "slsa-and-sigstore-the-2026-supply-chain-baseline",
+      "title": "SLSA and Sigstore: the 2026 supply chain baseline",
+      "summary": "Most supply chain guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we shipped a new payments service that processed 12 M transactions/month for"
     }
   ]
 }
