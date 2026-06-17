@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T14:25:48.684034",
+  "built_at": "2026-06-17T14:55:35.452278",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1500,6 +1500,11 @@
       "slug": "edge-backends-when-50-locations-break-your-api",
       "title": "Edge backends: when 50 locations break your API",
       "summary": "The short version: the conventional advice on edgenative backends is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. Edge backends: when 50 locations break your API You can run the same API code in 50 edge locations, but that doesn’t mean "
+    },
+    {
+      "slug": "build-a-static-analyzer-in-14-days-with-tree-sitter",
+      "title": "Build a static analyzer in 14 days with Tree-sitter",
+      "summary": "Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The gap between what the docs say and what production needs Most teams start with ESLint, SonarQube, or Semgrep because the READMEs m"
     }
   ]
 }

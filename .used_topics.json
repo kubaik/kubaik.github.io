@@ -114,5 +114,6 @@
   "How I design for LLM latency: the patterns that keep AI features feeling fast",
   "SBOM requirements in 2026: what software bill of materials means for your release process",
   "AI wrapper businesses in 2026: why most failed and the ones that survived",
-  "Edge-native backends in 2026: what changes when your API runs in 50 locations"
+  "Edge-native backends in 2026: what changes when your API runs in 50 locations",
+  "How I run automated security scanning in CI without drowning in false positives"
 ]

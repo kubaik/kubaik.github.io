@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 14:25:53 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 14:55:40 +0000</lastBuildDate>
+    <item>
+      <title>Build a static analyzer in 14 days with Tree-sitter</title>
+      <link>https://kubaik.github.io/build-a-static-analyzer-in-14-days-with-tree-sitter/</link>
+      <description>Cut static analysis runtime 7.9× with Tree-sitter 0.22.6 — parse 1.2M lines in 18 ms median, enforce policy in pre-commit hooks, and drop CI queue time 85 %.</description>
+      <pubDate>Wed, 17 Jun 2026 14:55:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-a-static-analyzer-in-14-days-with-tree-sitter/</guid>
+    </item>
     <item>
       <title>Edge backends: when 50 locations break your API</title>
       <link>https://kubaik.github.io/edge-backends-when-50-locations-break-your-api/</link>
@@ -138,13 +145,6 @@
       <description>Find which dev platforms pay fastest and charge least in 2026 with concrete numbers and a free monitoring dashboard for African developers on Andela, Toptal, Arc, and Contra.</description>
       <pubDate>Tue, 16 Jun 2026 16:05:39 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-platforms-african-devs-tried-in-2026/</guid>
-    </item>
-    <item>
-      <title>LLM apps: OWASP risks you missed</title>
-      <link>https://kubaik.github.io/llm-apps-owasp-risks-you-missed/</link>
-      <description>Implement OWASP Top 10 for LLM apps: prompt injection, insecure output, data leakage guardrails with Redis caching, Mistral 7B, and FastAPI/Express examples.</description>
-      <pubDate>Tue, 16 Jun 2026 12:09:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-apps-owasp-risks-you-missed/</guid>
     </item>
   </channel>
 </rss>
