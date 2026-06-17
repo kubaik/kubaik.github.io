@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 19:55:09 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 20:04:00 +0000</lastBuildDate>
+    <item>
+      <title>Self-healing pipelines: LLMs vs agents in 2026</title>
+      <link>https://kubaik.github.io/self-healing-pipelines-llms-vs-agents-in-2026/</link>
+      <description>Cut self-healing pipeline cost 28% and false positives 74% with agent-ops — Terraform agents beat LLMs in SOC 2 environments and on-call load</description>
+      <pubDate>Wed, 17 Jun 2026 20:03:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/self-healing-pipelines-llms-vs-agents-in-2026/</guid>
+    </item>
     <item>
       <title>AI ate the niches first</title>
       <link>https://kubaik.github.io/ai-ate-the-niches-first/</link>
@@ -138,13 +145,6 @@
       <description>Cut test flakiness 78% with property-based tests — Python 3.11, Hypothesis 6.94, and the property-first rule to avoid testing AI outputs</description>
       <pubDate>Wed, 17 Jun 2026 07:34:45 +0000</pubDate>
       <guid>https://kubaik.github.io/test-ai-code-without-testing-the-ai-9-hard-rules/</guid>
-    </item>
-    <item>
-      <title>pgvector cut costs 80%: ditching Pinecone</title>
-      <link>https://kubaik.github.io/pgvector-cut-costs-80-ditching-pinecone/</link>
-      <description>Cut pgvector monthly costs 80% vs Pinecone — real benchmarks, schema, and the schema mistake I made first try. Compare latency, cost, and ops for 10M vectors in 2026.</description>
-      <pubDate>Tue, 16 Jun 2026 20:43:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/pgvector-cut-costs-80-ditching-pinecone/</guid>
     </item>
   </channel>
 </rss>

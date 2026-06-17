@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T19:55:04.091601",
+  "built_at": "2026-06-17T20:03:55.266225",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1535,6 +1535,11 @@
       "slug": "ai-ate-the-niches-first",
       "title": "AI ate the niches first",
       "summary": "A colleague asked me about microsaas 2026 during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In"
+    },
+    {
+      "slug": "self-healing-pipelines-llms-vs-agents-in-2026",
+      "title": "Self-healing pipelines: LLMs vs agents in 2026",
+      "summary": "I've seen the same built selfhealing mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, teams shipping to production every day are drowning in aler"
     }
   ]
 }
