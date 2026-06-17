@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T08:35:42.207377",
+  "built_at": "2026-06-17T09:45:28.721626",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1465,6 +1465,11 @@
       "slug": "1m-tokens-didnt-change-my-workflow",
       "title": "1M tokens didn't change my workflow",
       "summary": "A colleague asked me about context window during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Th"
+    },
+    {
+      "slug": "ai-ops-datadog-vs-granfa-for-infra-automation",
+      "title": "AI ops: Datadog vs Granfa for infra automation",
+      "summary": "I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, engineers still waste 30-40% of their week on toil li"
     }
   ]
 }
