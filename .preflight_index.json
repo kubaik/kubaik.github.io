@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T08:17:59.933911",
+  "built_at": "2026-06-17T08:23:43.367426",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1450,6 +1450,11 @@
       "slug": "3-iac-tools-in-2026-which-one-bites-you-first",
       "title": "3 IaC tools in 2026: which one bites you first",
       "summary": "I ran into this pulumi terraform problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. I spent two weeks debugging a Terraform state corruption after a command failed mid-flight. That’s w"
+    },
+    {
+      "slug": "platforms-at-10-100-1k-devs-the-real-stack",
+      "title": "Platforms at 10, 100, 1k devs: the real stack",
+      "summary": "The official documentation for platform engineering is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs In 2026, internal developer "
     }
   ]
 }
