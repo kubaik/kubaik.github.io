@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 15:39:31 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 15:44:22 +0000</lastBuildDate>
+    <item>
+      <title>SaaS niche in 2026: pick a sliver no LLM can eat</title>
+      <link>https://kubaik.github.io/saas-niche-in-2026-pick-a-sliver-no-llm-can-eat/</link>
+      <description>Pick a SaaS niche in 2026 that no LLM can eat — we cut churn 63% by focusing on vendor cleanup for Kenyan manufacturers. Benchmarks, infra costs, and the CLI-first approach that worked.</description>
+      <pubDate>Wed, 17 Jun 2026 15:44:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/saas-niche-in-2026-pick-a-sliver-no-llm-can-eat/</guid>
+    </item>
     <item>
       <title>Build a static analyzer in 14 days with Tree-sitter</title>
       <link>https://kubaik.github.io/build-a-static-analyzer-in-14-days-with-tree-sitter/</link>
@@ -138,13 +145,6 @@
       <description>Cut mobile money reconciliation mismatches 93% with PostgreSQL state machines — timezone traps, duplicate webhooks, and provider idempotency keys that Paystack and Flutterwave won’t tell you.</description>
       <pubDate>Tue, 16 Jun 2026 17:31:38 +0000</pubDate>
       <guid>https://kubaik.github.io/mobile-money-reconciliation-traps-that-cost-5kmonth/</guid>
-    </item>
-    <item>
-      <title>Freelance platforms African devs tried in 2026</title>
-      <link>https://kubaik.github.io/freelance-platforms-african-devs-tried-in-2026/</link>
-      <description>Find which dev platforms pay fastest and charge least in 2026 with concrete numbers and a free monitoring dashboard for African developers on Andela, Toptal, Arc, and Contra.</description>
-      <pubDate>Tue, 16 Jun 2026 16:05:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-platforms-african-devs-tried-in-2026/</guid>
     </item>
   </channel>
 </rss>
