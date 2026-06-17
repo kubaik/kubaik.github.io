@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 10:12:44 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 10:17:21 +0000</lastBuildDate>
+    <item>
+      <title>Regulators broke our API design</title>
+      <link>https://kubaik.github.io/regulators-broke-our-api-design/</link>
+      <description>Cut API response time 60% and failed transactions 80% by switching from REST+JSON to binary protocols and offline queues. Real-world data from Nigeria, Ghana, and Kenya in 2026.</description>
+      <pubDate>Wed, 17 Jun 2026 10:17:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/regulators-broke-our-api-design/</guid>
+    </item>
     <item>
       <title>AI ops: Datadog vs Granfa for infra automation</title>
       <link>https://kubaik.github.io/ai-ops-datadog-vs-granfa-for-infra-automation/</link>
@@ -138,13 +145,6 @@
       <description>Cut burnout 65% with controlled transparency — the real way to build in public in 2026 without the performance tax</description>
       <pubDate>Tue, 16 Jun 2026 05:44:37 +0000</pubDate>
       <guid>https://kubaik.github.io/build-in-public-without-burning-out/</guid>
-    </item>
-    <item>
-      <title>Portfolio that hires: show constraints, not code</title>
-      <link>https://kubaik.github.io/portfolio-that-hires-show-constraints-not-code/</link>
-      <description>Portfolio that hires: show constraints, not code — median page load 320 ms on 3G, API p95 145 ms, $12/month. PortfolioOS template included.</description>
-      <pubDate>Tue, 16 Jun 2026 04:33:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-that-hires-show-constraints-not-code/</guid>
     </item>
   </channel>
 </rss>
