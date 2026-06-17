@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T08:30:37.928457",
+  "built_at": "2026-06-17T08:35:42.207377",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1460,6 +1460,11 @@
       "slug": "pwas-hit-parity-in-2026",
       "title": "PWAs hit parity in 2026",
       "summary": "The short version: the conventional advice on progressive web is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In 2026, running a PWA in production feels like shipping a desktop app from the br"
+    },
+    {
+      "slug": "1m-tokens-didnt-change-my-workflow",
+      "title": "1M tokens didn't change my workflow",
+      "summary": "A colleague asked me about context window during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Th"
     }
   ]
 }

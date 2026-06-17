@@ -106,5 +106,6 @@
   "AI memory systems: giving your agent context that persists across sessions",
   "Pulumi vs Terraform vs OpenTofu in 2026: the infrastructure-as-code landscape after the HashiCorp fork",
   "Platform engineering in 2026: what internal developer platforms look like at different company sizes",
-  "Progressive Web Apps in 2026: what the browser APIs finally made possible"
+  "Progressive Web Apps in 2026: what the browser APIs finally made possible",
+  "The context window arms race: what 1M token models actually change in practice"
 ]
