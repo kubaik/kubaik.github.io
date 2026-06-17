@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 08:23:48 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 08:30:42 +0000</lastBuildDate>
+    <item>
+      <title>PWAs hit parity in 2026</title>
+      <link>https://kubaik.github.io/pwas-hit-parity-in-2026/</link>
+      <description>Cut page weight 70% and cut server costs to zero with 2026 PWA APIs — Periodic Background Sync and File System Access finally work everywhere. Real production numbers included.</description>
+      <pubDate>Wed, 17 Jun 2026 08:30:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/pwas-hit-parity-in-2026/</guid>
+    </item>
     <item>
       <title>Platforms at 10, 100, 1k devs: the real stack</title>
       <link>https://kubaik.github.io/platforms-at-10-100-1k-devs-the-real-stack/</link>
@@ -138,13 +145,6 @@
       <description>Cut local DB setup from 2 hours to 5 minutes with Neon &amp; PlanetScale branches — the real migration order and cache traps most teams miss in 2026</description>
       <pubDate>Tue, 16 Jun 2026 00:31:18 +0000</pubDate>
       <guid>https://kubaik.github.io/neon-planetscale-branch-your-db-like-git/</guid>
-    </item>
-    <item>
-      <title>AI pair programming stole my code review job</title>
-      <link>https://kubaik.github.io/ai-pair-programming-stole-my-code-review-job/</link>
-      <description>Cut PR review time 82% and Sev-2 incidents 100% using AI pair programming — precision tuning, domain rules, and the $39 tool stack that actually worked in 2026.</description>
-      <pubDate>Tue, 16 Jun 2026 00:12:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-pair-programming-stole-my-code-review-job/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T08:23:43.367426",
+  "built_at": "2026-06-17T08:30:37.928457",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1455,6 +1455,11 @@
       "slug": "platforms-at-10-100-1k-devs-the-real-stack",
       "title": "Platforms at 10, 100, 1k devs: the real stack",
       "summary": "The official documentation for platform engineering is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs In 2026, internal developer "
+    },
+    {
+      "slug": "pwas-hit-parity-in-2026",
+      "title": "PWAs hit parity in 2026",
+      "summary": "The short version: the conventional advice on progressive web is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In 2026, running a PWA in production feels like shipping a desktop app from the br"
     }
   ]
 }
