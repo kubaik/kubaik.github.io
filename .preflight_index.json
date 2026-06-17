@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T10:17:17.025396",
+  "built_at": "2026-06-17T10:24:36.939769",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1475,6 +1475,11 @@
       "slug": "regulators-broke-our-api-design",
       "title": "Regulators broke our API design",
       "summary": "A colleague asked me about african fintech during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete Th"
+    },
+    {
+      "slug": "ai-incident-response-when-it-helps-and-when-it-burns",
+      "title": "AI incident response: when it helps and when it burns",
+      "summary": "I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, every oncall rotation has at least one AI tool shoved int"
     }
   ]
 }
