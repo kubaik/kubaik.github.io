@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T15:44:17.508453",
+  "built_at": "2026-06-17T17:33:11.662297",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1510,6 +1510,11 @@
       "slug": "saas-niche-in-2026-pick-a-sliver-no-llm-can-eat",
       "title": "SaaS niche in 2026: pick a sliver no LLM can eat",
       "summary": "Most pick saas guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In January 2026 we had a 12-person fintech team shipping a B2B spend-analytics dashboard. Re"
+    },
+    {
+      "slug": "ai-agents-need-human-loop-cost-trust-and-the-78",
+      "title": "AI agents need human loop: cost, trust, and the 78%",
+      "summary": "I've seen the same most agents mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, teams are shipping AI agents faster than ever — but production re"
     }
   ]
 }

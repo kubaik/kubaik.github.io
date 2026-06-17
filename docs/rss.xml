@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 17:28:32 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 17:33:16 +0000</lastBuildDate>
+    <item>
+      <title>AI agents need human loop: cost, trust, and the 78%</title>
+      <link>https://kubaik.github.io/ai-agents-need-human-loop-cost-trust-and-the-78/</link>
+      <description>Cut failed AI agent actions 85% with a review queue — latency, cost, and the 78% trap most teams miss until production breaks.</description>
+      <pubDate>Wed, 17 Jun 2026 17:33:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-need-human-loop-cost-trust-and-the-78/</guid>
+    </item>
     <item>
       <title>SaaS niche in 2026: pick a sliver no LLM can eat</title>
       <link>https://kubaik.github.io/saas-niche-in-2026-pick-a-sliver-no-llm-can-eat/</link>
@@ -138,13 +145,6 @@
       <description>Trial-to-paid conversion fell 64% in 2025 — here’s how a devtool founder rebuilt the sales cycle around AI-native expectations and cut the cycle from 8 weeks to 3 weeks</description>
       <pubDate>Tue, 16 Jun 2026 17:46:03 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-sales-cycle-what-changed-for-devtool-founders/</guid>
-    </item>
-    <item>
-      <title>Mobile money reconciliation traps that cost $5k/month</title>
-      <link>https://kubaik.github.io/mobile-money-reconciliation-traps-that-cost-5kmonth/</link>
-      <description>Cut mobile money reconciliation mismatches 93% with PostgreSQL state machines — timezone traps, duplicate webhooks, and provider idempotency keys that Paystack and Flutterwave won’t tell you.</description>
-      <pubDate>Tue, 16 Jun 2026 17:31:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-money-reconciliation-traps-that-cost-5kmonth/</guid>
     </item>
   </channel>
 </rss>
