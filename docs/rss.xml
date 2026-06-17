@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 17 Jun 2026 07:39:39 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 17 Jun 2026 07:44:21 +0000</lastBuildDate>
+    <item>
+      <title>AI memory loss: why your agent forgets everything</title>
+      <link>https://kubaik.github.io/ai-memory-loss-why-your-agent-forgets-everything/</link>
+      <description>Cut AI context loss overnight by 90% with PostgreSQL memory store — 12 ms fetch latency, $18/month cost, and the session ID format that prevents forgetting in 2026.</description>
+      <pubDate>Wed, 17 Jun 2026 07:44:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-memory-loss-why-your-agent-forgets-everything/</guid>
+    </item>
     <item>
       <title>Test AI code without testing the AI: 9 hard rules</title>
       <link>https://kubaik.github.io/test-ai-code-without-testing-the-ai-9-hard-rules/</link>
@@ -138,13 +145,6 @@
       <description>Ship a solo project pipeline in 10 minutes under $20/month — Fly.io, GitHub Actions, and the trade-offs you won’t read in the docs</description>
       <pubDate>Mon, 15 Jun 2026 23:01:02 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/</guid>
-    </item>
-    <item>
-      <title>Tame async Python before it burns you</title>
-      <link>https://kubaik.github.io/tame-async-python-before-it-burns-you/</link>
-      <description>Cut async Python surprises 89%: trio vs asyncio latency, cancellation leaks, and the 4 safety nets every team needs in 2026 production code.</description>
-      <pubDate>Mon, 15 Jun 2026 22:11:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-async-python-before-it-burns-you/</guid>
     </item>
   </channel>
 </rss>

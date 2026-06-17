@@ -102,5 +102,6 @@
   "Serverless databases in 2026: Neon vs PlanetScale vs Turso after real production use",
   "How AI changed the economics of building a solo SaaS in 2026",
   "How pgvector changed our architecture: replacing Pinecone with what we already had",
-  "How I write tests for AI-assisted code without testing the AI"
+  "How I write tests for AI-assisted code without testing the AI",
+  "AI memory systems: giving your agent context that persists across sessions"
 ]
