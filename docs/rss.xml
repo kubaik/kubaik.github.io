@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 12:58:09 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 13:02:50 +0000</lastBuildDate>
+    <item>
+      <title>AI-proof skills: the 3 skills worth $100k in 2026</title>
+      <link>https://kubaik.github.io/ai-proof-skills-the-3-skills-worth-100k-in-2026/</link>
+      <description>Protect your $100k salary from AI automation: the 3 non-automatable skills every solo founder must master in 2026 — latency, cost, and debuggability</description>
+      <pubDate>Thu, 18 Jun 2026 13:02:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-proof-skills-the-3-skills-worth-100k-in-2026/</guid>
+    </item>
     <item>
       <title>Land $5K roles from Nairobi &amp; Lagos in 2026</title>
       <link>https://kubaik.github.io/land-5k-roles-from-nairobi-lagos-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut pages 63% with AI triage — but only if you have 100+ labeled incidents and a kill switch. Otherwise, human-first wins by $10k/month at 15 engineers.</description>
       <pubDate>Wed, 17 Jun 2026 18:26:34 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-triage-vs-human-escalation-which-breaks-oncall/</guid>
-    </item>
-    <item>
-      <title>Zombie rows: soft deletes at scale</title>
-      <link>https://kubaik.github.io/zombie-rows-soft-deletes-at-scale/</link>
-      <description>Cut storage 68% and query latency 99% by replacing soft deletes with a two-table archival pattern — benchmarks from PostgreSQL 16 and Node 20 in 2026.</description>
-      <pubDate>Wed, 17 Jun 2026 17:48:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/zombie-rows-soft-deletes-at-scale/</guid>
     </item>
   </channel>
 </rss>

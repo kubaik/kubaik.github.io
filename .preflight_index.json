@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T11:25:39.902420",
+  "built_at": "2026-06-18T13:02:45.562806",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1620,6 +1620,11 @@
       "slug": "land-5k-roles-from-nairobi-lagos-in-2026",
       "title": "Land $5K roles from Nairobi & Lagos in 2026",
       "summary": "Most developers nairobi guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, three Nairobi devs—myself included—decided to pivot from freelancing into "
+    },
+    {
+      "slug": "ai-proof-skills-the-3-skills-worth-100k-in-2026",
+      "title": "AI-proof skills: the 3 skills worth $100k in 2026",
+      "summary": "After reviewing a lot of code that touches skills that, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You’ve seen the posts: AI can now write loops, handle PR reviews, and even refactor entire c"
     }
   ]
 }
