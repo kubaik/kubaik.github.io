@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-17T23:33:59.709613",
+  "built_at": "2026-06-18T00:11:17.412469",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1570,6 +1570,11 @@
       "slug": "ai-ui-tools-where-they-shine-and-crash",
       "title": "AI UI tools: where they shine (and crash)",
       "summary": "The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. Advanced edge cases you personally encountered In 2026, I’ve seen AI UI generators fail on edge cases that aren’t in their tr"
+    },
+    {
+      "slug": "passkeys-cut-logins-83-the-real-costs",
+      "title": "Passkeys cut logins 83% — the real costs",
+      "summary": "Most passkeys changed guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026, we shipped a new marketplace for SMEs in Vietnam and Indonesia. Users ha"
     }
   ]
 }

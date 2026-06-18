@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 00:04:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 00:11:22 +0000</lastBuildDate>
+    <item>
+      <title>Passkeys cut logins 83% — the real costs</title>
+      <link>https://kubaik.github.io/passkeys-cut-logins-83-the-real-costs/</link>
+      <description>Passkeys cut login failures 83% and cut infra costs 83% — how we replaced passwords and OTPs without breaking users or burning cash in 2026.</description>
+      <pubDate>Thu, 18 Jun 2026 00:11:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/passkeys-cut-logins-83-the-real-costs/</guid>
+    </item>
     <item>
       <title>AI UI tools: where they shine (and crash)</title>
       <link>https://kubaik.github.io/ai-ui-tools-where-they-shine-and-crash/</link>
@@ -138,13 +145,6 @@
       <description>Cut oncall time 20% with the right AI incident tool — triage vs root-cause agents, with benchmark data and real screw-ups from 2026.</description>
       <pubDate>Wed, 17 Jun 2026 10:24:35 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-incident-response-when-it-helps-and-when-it-burns/</guid>
-    </item>
-    <item>
-      <title>Regulators broke our API design</title>
-      <link>https://kubaik.github.io/regulators-broke-our-api-design/</link>
-      <description>Cut API response time 60% and failed transactions 80% by switching from REST+JSON to binary protocols and offline queues. Real-world data from Nigeria, Ghana, and Kenya in 2026.</description>
-      <pubDate>Wed, 17 Jun 2026 10:17:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/regulators-broke-our-api-design/</guid>
     </item>
   </channel>
 </rss>
