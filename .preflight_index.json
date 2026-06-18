@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T10:09:16.048803",
+  "built_at": "2026-06-18T11:25:39.902420",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1615,6 +1615,11 @@
       "slug": "ai-pair-programming-cut-our-reviews-in-half",
       "title": "AI pair programming cut our reviews in half",
       "summary": "I ran into this pair programming problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026, our team at [redacted] adopted A"
+    },
+    {
+      "slug": "land-5k-roles-from-nairobi-lagos-in-2026",
+      "title": "Land $5K roles from Nairobi & Lagos in 2026",
+      "summary": "Most developers nairobi guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, three Nairobi devs—myself included—decided to pivot from freelancing into "
     }
   ]
 }

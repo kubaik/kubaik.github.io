@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 11:20:55 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 11:25:45 +0000</lastBuildDate>
+    <item>
+      <title>Land $5K roles from Nairobi &amp; Lagos in 2026</title>
+      <link>https://kubaik.github.io/land-5k-roles-from-nairobi-lagos-in-2026/</link>
+      <description>Land $5k/month remote roles with US startups from Nairobi and Lagos — the Nairobi/Lagos playbook with metrics, tools, and case studies from 2026 hires.</description>
+      <pubDate>Thu, 18 Jun 2026 11:25:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/land-5k-roles-from-nairobi-lagos-in-2026/</guid>
+    </item>
     <item>
       <title>AI pair programming cut our reviews in half</title>
       <link>https://kubaik.github.io/ai-pair-programming-cut-our-reviews-in-half/</link>
@@ -138,13 +145,6 @@
       <description>Cut storage 68% and query latency 99% by replacing soft deletes with a two-table archival pattern — benchmarks from PostgreSQL 16 and Node 20 in 2026.</description>
       <pubDate>Wed, 17 Jun 2026 17:48:26 +0000</pubDate>
       <guid>https://kubaik.github.io/zombie-rows-soft-deletes-at-scale/</guid>
-    </item>
-    <item>
-      <title>Zero-trust on $500/month: WireGuard vs Cloudflare</title>
-      <link>https://kubaik.github.io/zero-trust-on-500month-wireguard-vs-cloudflare/</link>
-      <description>Cut API exposure 100% with $6/month or $15 hardware: WireGuard vs Cloudflare Tunnel benchmarked in 2026 with latency, cost, and setup time.</description>
-      <pubDate>Wed, 17 Jun 2026 17:42:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-on-500month-wireguard-vs-cloudflare/</guid>
     </item>
   </channel>
 </rss>
