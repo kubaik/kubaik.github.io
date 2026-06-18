@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 17:48:24 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 17:53:37 +0000</lastBuildDate>
+    <item>
+      <title>Code AI won’t rewrite</title>
+      <link>https://kubaik.github.io/code-ai-wont-rewrite/</link>
+      <description>Cut PR review time 65% with AI and semgrep on legacy Java/Python monoliths — $38/month for 200k tx/day, concrete prompts, and the race condition AI caught before production.</description>
+      <pubDate>Thu, 18 Jun 2026 17:53:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/code-ai-wont-rewrite/</guid>
+    </item>
     <item>
       <title>Move images 50% faster in 2026 with Starlink CDN</title>
       <link>https://kubaik.github.io/move-images-50-faster-in-2026-with-starlink-cdn/</link>
@@ -138,13 +145,6 @@
       <description>Hit $5,120 MRR in 6 months bootstrapping a B2B tool—no ads, no team, no investor money. Real numbers, real stack, and the exact onboarding tweak that doubled conversions.</description>
       <pubDate>Wed, 17 Jun 2026 22:34:06 +0000</pubDate>
       <guid>https://kubaik.github.io/built-5k-mrr-in-6-months-no-ads-no-team/</guid>
-    </item>
-    <item>
-      <title>Multi-agent frameworks in 2026: LangGraph wins</title>
-      <link>https://kubaik.github.io/multi-agent-frameworks-in-2026-langgraph-wins/</link>
-      <description>Cut multi-agent framework timeouts 80% by matching tool to mobile network reality — CrewAI vs LangGraph vs custom with 2026 benchmarks and code examples</description>
-      <pubDate>Wed, 17 Jun 2026 22:30:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-agent-frameworks-in-2026-langgraph-wins/</guid>
     </item>
   </channel>
 </rss>
