@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 20:42:12 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 20:47:19 +0000</lastBuildDate>
+    <item>
+      <title>HTMX swapped React for me in 2026</title>
+      <link>https://kubaik.github.io/htmx-swapped-react-for-me-in-2026/</link>
+      <description>Cut 74 % of JavaScript and slash AWS bills 60 % by switching to HTMX in 2026 — real benchmarks, real trade-offs, and the exact versions that worked.</description>
+      <pubDate>Thu, 18 Jun 2026 20:47:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/htmx-swapped-react-for-me-in-2026/</guid>
+    </item>
     <item>
       <title>Frontend testing stack 2026: Playwright beats Vitest +</title>
       <link>https://kubaik.github.io/frontend-testing-stack-2026-playwright-beats-vitest/</link>
@@ -138,13 +145,6 @@
       <description>Cut sync latency 68% and reduce crashes 97% with an offline-first POS app in Africa — SQLite vs WatermelonDB, version vectors, and the conflict resolution mistake most teams make in 2026.</description>
       <pubDate>Thu, 18 Jun 2026 01:51:24 +0000</pubDate>
       <guid>https://kubaik.github.io/survive-africas-spotty-internet-with-offline-apps/</guid>
-    </item>
-    <item>
-      <title>Passkeys cut logins 83% — the real costs</title>
-      <link>https://kubaik.github.io/passkeys-cut-logins-83-the-real-costs/</link>
-      <description>Passkeys cut login failures 83% and cut infra costs 83% — how we replaced passwords and OTPs without breaking users or burning cash in 2026.</description>
-      <pubDate>Thu, 18 Jun 2026 00:11:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/passkeys-cut-logins-83-the-real-costs/</guid>
     </item>
   </channel>
 </rss>
