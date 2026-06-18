@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T20:47:14.054948",
+  "built_at": "2026-06-18T21:18:23.357931",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1675,6 +1675,11 @@
       "slug": "htmx-swapped-react-for-me-in-2026",
       "title": "HTMX swapped React for me in 2026",
       "summary": "I ran into this htmx changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I got hired in 2026 to rebuild a 5-year-old D"
+    },
+    {
+      "slug": "progressive-web-apps-what-browser-apis-finally-fixed",
+      "title": "Progressive Web Apps: what browser APIs finally fixed",
+      "summary": "The short version: the conventional advice on progressive web is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In 2026, Progressive Web Apps (PWAs) stopped being an experiment and became the de"
     }
   ]
 }
