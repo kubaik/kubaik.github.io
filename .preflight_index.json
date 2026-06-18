@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T21:18:23.357931",
+  "built_at": "2026-06-18T22:00:51.433330",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1680,6 +1680,11 @@
       "slug": "progressive-web-apps-what-browser-apis-finally-fixed",
       "title": "Progressive Web Apps: what browser APIs finally fixed",
       "summary": "The short version: the conventional advice on progressive web is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In 2026, Progressive Web Apps (PWAs) stopped being an experiment and became the de"
+    },
+    {
+      "slug": "postmortem-ai-agent-failures-human-review-vs-pure",
+      "title": "Postmortem AI agent failures: human review vs pure",
+      "summary": "I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. When an AI agent deletes your production dataset or hallucinates a $1M refund, the postmortem is nothing li"
     }
   ]
 }

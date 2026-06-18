@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 21:18:28 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 22:00:56 +0000</lastBuildDate>
+    <item>
+      <title>Postmortem AI agent failures: human review vs pure</title>
+      <link>https://kubaik.github.io/postmortem-ai-agent-failures-human-review-vs-pure/</link>
+      <description>AI agent postmortem methods compared: human review vs automated metrics with concrete numbers on latency, cost, and error rates. Use this to pick the right approach for your 2026 workload.</description>
+      <pubDate>Thu, 18 Jun 2026 22:00:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/postmortem-ai-agent-failures-human-review-vs-pure/</guid>
+    </item>
     <item>
       <title>Progressive Web Apps: what browser APIs finally fixed</title>
       <link>https://kubaik.github.io/progressive-web-apps-what-browser-apis-finally-fixed/</link>
@@ -138,13 +145,6 @@
       <description>Cut outage time 62% with AI runbooks — static vs AI runbook costs, hallucination traps, and the 30-day experiment to pick the right one.</description>
       <pubDate>Thu, 18 Jun 2026 05:28:24 +0000</pubDate>
       <guid>https://kubaik.github.io/runbooks-vs-ai-which-cuts-outages-50/</guid>
-    </item>
-    <item>
-      <title>Handle 80% of traffic with Cloudflare Workers</title>
-      <link>https://kubaik.github.io/handle-80-of-traffic-with-cloudflare-workers/</link>
-      <description>Cut API latency 95% and save $1100/month with Cloudflare Workers caching — real numbers, step-by-step setup for any origin</description>
-      <pubDate>Thu, 18 Jun 2026 04:17:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/handle-80-of-traffic-with-cloudflare-workers/</guid>
     </item>
   </channel>
 </rss>
