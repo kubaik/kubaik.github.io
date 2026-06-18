@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T07:18:55.179453",
+  "built_at": "2026-06-18T09:23:06.034476",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1600,6 +1600,11 @@
       "slug": "ship-sboms-in-30-mins-with-syft-18",
       "title": "Ship SBOMs in 30 mins with Syft 1.8",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In early 2026 I joined a Jakarta-based fintech building a wallet app that had just passe"
+    },
+    {
+      "slug": "replace-pr-checklists-with-agents",
+      "title": "Replace PR checklists with agents",
+      "summary": "The short version: the conventional advice on code review is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Teams are moving from static PR checklists—lint rules, unit-test counts, coverage thre"
     }
   ]
 }
