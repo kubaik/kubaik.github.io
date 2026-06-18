@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 05:23:53 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 05:28:31 +0000</lastBuildDate>
+    <item>
+      <title>Runbooks vs AI: which cuts outages 50%</title>
+      <link>https://kubaik.github.io/runbooks-vs-ai-which-cuts-outages-50/</link>
+      <description>Cut outage time 62% with AI runbooks — static vs AI runbook costs, hallucination traps, and the 30-day experiment to pick the right one.</description>
+      <pubDate>Thu, 18 Jun 2026 05:28:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/runbooks-vs-ai-which-cuts-outages-50/</guid>
+    </item>
     <item>
       <title>Handle 80% of traffic with Cloudflare Workers</title>
       <link>https://kubaik.github.io/handle-80-of-traffic-with-cloudflare-workers/</link>
@@ -138,13 +145,6 @@
       <description>9 AI wrapper businesses survived 2026 — the ones that got pricing right made $12M ARR, the rest died. Find the exact model that fits your assets and start charging today.</description>
       <pubDate>Wed, 17 Jun 2026 14:10:50 +0000</pubDate>
       <guid>https://kubaik.github.io/9-ai-wrapper-plays-that-worked-in-2026/</guid>
-    </item>
-    <item>
-      <title>Meet 2026 SBOM requirements in 30 mins</title>
-      <link>https://kubaik.github.io/meet-2026-sbom-requirements-in-30-mins/</link>
-      <description>Cut release cycles 2 days by auto-generating signed SBOMs in 110 s — Syft 1.14 + Cosign 2.2 walkthrough for regulated startups</description>
-      <pubDate>Wed, 17 Jun 2026 11:56:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/meet-2026-sbom-requirements-in-30-mins/</guid>
     </item>
   </channel>
 </rss>
