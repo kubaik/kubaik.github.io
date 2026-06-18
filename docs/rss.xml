@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 13:54:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 13:58:33 +0000</lastBuildDate>
+    <item>
+      <title>AWS FinOps levers: what mid-size teams ignore in 2026</title>
+      <link>https://kubaik.github.io/aws-finops-levers-what-mid-size-teams-ignore-in-2026/</link>
+      <description>Save 25–35% on AWS bills in 2026: why Compute Savings Plans beat Reserved Instances for mid-size teams, with real benchmarks and Terraform examples.</description>
+      <pubDate>Thu, 18 Jun 2026 13:58:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/aws-finops-levers-what-mid-size-teams-ignore-in-2026/</guid>
+    </item>
     <item>
       <title>AI-proof skills: the 3 skills worth $100k in 2026</title>
       <link>https://kubaik.github.io/ai-proof-skills-the-3-skills-worth-100k-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>2026 niches that survived AI commoditisation — proprietary data loops, compliance signatures, and real-time state. Learn which Micro-SaaS moats still work and which collapsed.</description>
       <pubDate>Wed, 17 Jun 2026 19:55:02 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ate-the-niches-first/</guid>
-    </item>
-    <item>
-      <title>AI triage vs human escalation: which breaks oncall</title>
-      <link>https://kubaik.github.io/ai-triage-vs-human-escalation-which-breaks-oncall/</link>
-      <description>Cut pages 63% with AI triage — but only if you have 100+ labeled incidents and a kill switch. Otherwise, human-first wins by $10k/month at 15 engineers.</description>
-      <pubDate>Wed, 17 Jun 2026 18:26:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-triage-vs-human-escalation-which-breaks-oncall/</guid>
     </item>
   </channel>
 </rss>
