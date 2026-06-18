@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 22:13:36 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 22:18:24 +0000</lastBuildDate>
+    <item>
+      <title>Replace .env with these in 2026</title>
+      <link>https://kubaik.github.io/replace-env-with-these-in-2026/</link>
+      <description>Cut secrets-related outages 90% with AWS Secrets Manager and Teller — rotation without downtime, cache stampede fixes, and the $18k mistake most teams repeat.</description>
+      <pubDate>Thu, 18 Jun 2026 22:18:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/replace-env-with-these-in-2026/</guid>
+    </item>
     <item>
       <title>Postmortem AI agent failures: human review vs pure</title>
       <link>https://kubaik.github.io/postmortem-ai-agent-failures-human-review-vs-pure/</link>
@@ -138,13 +145,6 @@
       <description>Cut Postgres stack cost 76% with built-in caching and pub/sub — the 2026 migration guide with latency benchmarks and rollback plan.</description>
       <pubDate>Thu, 18 Jun 2026 05:31:33 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-three-stacks-to-one-with-postgres-17/</guid>
-    </item>
-    <item>
-      <title>Runbooks vs AI: which cuts outages 50%</title>
-      <link>https://kubaik.github.io/runbooks-vs-ai-which-cuts-outages-50/</link>
-      <description>Cut outage time 62% with AI runbooks — static vs AI runbook costs, hallucination traps, and the 30-day experiment to pick the right one.</description>
-      <pubDate>Thu, 18 Jun 2026 05:28:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/runbooks-vs-ai-which-cuts-outages-50/</guid>
     </item>
   </channel>
 </rss>

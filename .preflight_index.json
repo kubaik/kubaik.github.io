@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T22:00:51.433330",
+  "built_at": "2026-06-18T22:18:18.681196",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1685,6 +1685,11 @@
       "slug": "postmortem-ai-agent-failures-human-review-vs-pure",
       "title": "Postmortem AI agent failures: human review vs pure",
       "summary": "I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. When an AI agent deletes your production dataset or hallucinates a $1M refund, the postmortem is nothing li"
+    },
+    {
+      "slug": "replace-env-with-these-in-2026",
+      "title": "Replace .env with these in 2026",
+      "summary": "The official documentation for secrets management is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs When the first engineer joins "
     }
   ]
 }
