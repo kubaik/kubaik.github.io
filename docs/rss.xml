@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 10:04:26 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 10:09:21 +0000</lastBuildDate>
+    <item>
+      <title>AI pair programming cut our reviews in half</title>
+      <link>https://kubaik.github.io/ai-pair-programming-cut-our-reviews-in-half/</link>
+      <description>Cut PR review time 38% with Cursor v2.5.0 — the AI pair tool that actually bridged ticket context and code changes</description>
+      <pubDate>Thu, 18 Jun 2026 10:09:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pair-programming-cut-our-reviews-in-half/</guid>
+    </item>
     <item>
       <title>Daraja 2.0: 3 changes that broke my checkout flow</title>
       <link>https://kubaik.github.io/daraja-20-3-changes-that-broke-my-checkout-flow/</link>
@@ -138,13 +145,6 @@
       <description>Cut API exposure 100% with $6/month or $15 hardware: WireGuard vs Cloudflare Tunnel benchmarked in 2026 with latency, cost, and setup time.</description>
       <pubDate>Wed, 17 Jun 2026 17:42:57 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-on-500month-wireguard-vs-cloudflare/</guid>
-    </item>
-    <item>
-      <title>AI agents need human loop: cost, trust, and the 78%</title>
-      <link>https://kubaik.github.io/ai-agents-need-human-loop-cost-trust-and-the-78/</link>
-      <description>Cut failed AI agent actions 85% with a review queue — latency, cost, and the 78% trap most teams miss until production breaks.</description>
-      <pubDate>Wed, 17 Jun 2026 17:33:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-need-human-loop-cost-trust-and-the-78/</guid>
     </item>
   </channel>
 </rss>
