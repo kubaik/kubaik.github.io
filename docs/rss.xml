@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 18:14:12 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 18:22:59 +0000</lastBuildDate>
+    <item>
+      <title>Compare 3 IaC tools post-HashiCorp fork</title>
+      <link>https://kubaik.github.io/compare-3-iac-tools-post-hashicorp-fork/</link>
+      <description>Cut Terraform apply time 40% with Pulumi in 2026 — licensing, speed, and hiring trade-offs after the HashiCorp fork</description>
+      <pubDate>Thu, 18 Jun 2026 18:22:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/compare-3-iac-tools-post-hashicorp-fork/</guid>
+    </item>
     <item>
       <title>Code AI won’t rewrite</title>
       <link>https://kubaik.github.io/code-ai-wont-rewrite/</link>
@@ -138,13 +145,6 @@
       <description>Cut supply chain audit failures 100% with SLSA level 3 and Sigstore—step-by-step implementation, real 2026 numbers, and the exact GitHub Actions workflow we used to pass two audits in Q1 2026.</description>
       <pubDate>Wed, 17 Jun 2026 23:00:37 +0000</pubDate>
       <guid>https://kubaik.github.io/slsa-and-sigstore-the-2026-supply-chain-baseline/</guid>
-    </item>
-    <item>
-      <title>Built $5k MRR in 6 months: no ads, no team</title>
-      <link>https://kubaik.github.io/built-5k-mrr-in-6-months-no-ads-no-team/</link>
-      <description>Hit $5,120 MRR in 6 months bootstrapping a B2B tool—no ads, no team, no investor money. Real numbers, real stack, and the exact onboarding tweak that doubled conversions.</description>
-      <pubDate>Wed, 17 Jun 2026 22:34:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/built-5k-mrr-in-6-months-no-ads-no-team/</guid>
     </item>
   </channel>
 </rss>

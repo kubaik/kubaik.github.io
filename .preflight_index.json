@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T17:53:31.691187",
+  "built_at": "2026-06-18T18:22:53.882728",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1655,6 +1655,11 @@
       "slug": "code-ai-wont-rewrite",
       "title": "Code AI won’t rewrite",
       "summary": "The official documentation for use maintain is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Legacy codebases aren’t just old cod"
+    },
+    {
+      "slug": "compare-3-iac-tools-post-hashicorp-fork",
+      "title": "Compare 3 IaC tools post-HashiCorp fork",
+      "summary": "I ran into this pulumi terraform problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I’m writing this because in late 2026 I g"
     }
   ]
 }
