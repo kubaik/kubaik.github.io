@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 23:13:52 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 23:18:01 +0000</lastBuildDate>
+    <item>
+      <title>37% of mobile money reconciliations fail</title>
+      <link>https://kubaik.github.io/37-of-mobile-money-reconciliations-fail/</link>
+      <description>Reconciled 98.4% of mobile money transactions by switching to webhooks and ledger-line matching — the edge cases Flutterwave and Paystack don’t document and how to fix them</description>
+      <pubDate>Thu, 18 Jun 2026 23:17:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/37-of-mobile-money-reconciliations-fail/</guid>
+    </item>
     <item>
       <title>Replace .env with these in 2026</title>
       <link>https://kubaik.github.io/replace-env-with-these-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Automate SBOM generation and vulnerability scanning in 30 minutes using Syft 1.8 and GitHub Actions to meet 2026 EU/US requirements and slash manual checklist time 92%</description>
       <pubDate>Thu, 18 Jun 2026 07:18:53 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-sboms-in-30-mins-with-syft-18/</guid>
-    </item>
-    <item>
-      <title>Cut three stacks to one with Postgres 17</title>
-      <link>https://kubaik.github.io/cut-three-stacks-to-one-with-postgres-17/</link>
-      <description>Cut Postgres stack cost 76% with built-in caching and pub/sub — the 2026 migration guide with latency benchmarks and rollback plan.</description>
-      <pubDate>Thu, 18 Jun 2026 05:31:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-three-stacks-to-one-with-postgres-17/</guid>
     </item>
   </channel>
 </rss>
