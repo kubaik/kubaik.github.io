@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 13:58:33 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 14:02:09 +0000</lastBuildDate>
+    <item>
+      <title>African devs: Arc vs Andela vs Toptal in 2026</title>
+      <link>https://kubaik.github.io/african-devs-arc-vs-andela-vs-toptal-in-2026/</link>
+      <description>Pick the best freelance platform for African devs in 2026 — Contra, Toptal, Andela, or Arc — with real payout data, error fixes, and a 30-minute setup plan.</description>
+      <pubDate>Thu, 18 Jun 2026 14:02:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/african-devs-arc-vs-andela-vs-toptal-in-2026/</guid>
+    </item>
     <item>
       <title>AWS FinOps levers: what mid-size teams ignore in 2026</title>
       <link>https://kubaik.github.io/aws-finops-levers-what-mid-size-teams-ignore-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut self-healing pipeline cost 28% and false positives 74% with agent-ops — Terraform agents beat LLMs in SOC 2 environments and on-call load</description>
       <pubDate>Wed, 17 Jun 2026 20:03:53 +0000</pubDate>
       <guid>https://kubaik.github.io/self-healing-pipelines-llms-vs-agents-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI ate the niches first</title>
-      <link>https://kubaik.github.io/ai-ate-the-niches-first/</link>
-      <description>2026 niches that survived AI commoditisation — proprietary data loops, compliance signatures, and real-time state. Learn which Micro-SaaS moats still work and which collapsed.</description>
-      <pubDate>Wed, 17 Jun 2026 19:55:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ate-the-niches-first/</guid>
     </item>
   </channel>
 </rss>
