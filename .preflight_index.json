@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T23:17:57.243547",
+  "built_at": "2026-06-18T23:29:47.886481",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1695,6 +1695,11 @@
       "slug": "37-of-mobile-money-reconciliations-fail",
       "title": "37% of mobile money reconciliations fail",
       "summary": "Most building mobile guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026 we launched a B2B payments reconciliation tool for merchants in Nigeria, Ghana"
+    },
+    {
+      "slug": "trust-ai-code-faster",
+      "title": "Trust AI code faster",
+      "summary": "I've seen the same onboard developer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 68% of production codebases contain AI-generated files—eith"
     }
   ]
 }

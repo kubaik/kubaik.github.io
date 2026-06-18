@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 23:25:17 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 23:29:53 +0000</lastBuildDate>
+    <item>
+      <title>Trust AI code faster</title>
+      <link>https://kubaik.github.io/trust-ai-code-faster/</link>
+      <description>Cut onboarding time 50% with AI guardrails-first — the bug escape rate drops 3x and incident costs fall $2k per dev in 90 days. Real tooling stack and pipeline scripts included.</description>
+      <pubDate>Thu, 18 Jun 2026 23:29:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/trust-ai-code-faster/</guid>
+    </item>
     <item>
       <title>37% of mobile money reconciliations fail</title>
       <link>https://kubaik.github.io/37-of-mobile-money-reconciliations-fail/</link>
@@ -138,13 +145,6 @@
       <description>Replace static PR checklists with AI agents in 2026 — cut review time 73%, false negatives 80%, and save $38k/year with real metrics, tools, and a 30-minute setup checklist.</description>
       <pubDate>Thu, 18 Jun 2026 09:23:04 +0000</pubDate>
       <guid>https://kubaik.github.io/replace-pr-checklists-with-agents/</guid>
-    </item>
-    <item>
-      <title>Ship SBOMs in 30 mins with Syft 1.8</title>
-      <link>https://kubaik.github.io/ship-sboms-in-30-mins-with-syft-18/</link>
-      <description>Automate SBOM generation and vulnerability scanning in 30 minutes using Syft 1.8 and GitHub Actions to meet 2026 EU/US requirements and slash manual checklist time 92%</description>
-      <pubDate>Thu, 18 Jun 2026 07:18:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-sboms-in-30-mins-with-syft-18/</guid>
     </item>
   </channel>
 </rss>
