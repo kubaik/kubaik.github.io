@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 16:39:18 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 16:43:59 +0000</lastBuildDate>
+    <item>
+      <title>LLM evals: the 3 metrics that pay off</title>
+      <link>https://kubaik.github.io/llm-evals-the-3-metrics-that-pay-off/</link>
+      <description>Cut API response cost 63% by measuring only 3 LLM metrics — latency P95, cost per resolved conversation, and trust drift. Real Nairobi fintech numbers, code, and the mistakes that cost money.</description>
+      <pubDate>Thu, 18 Jun 2026 16:43:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-evals-the-3-metrics-that-pay-off/</guid>
+    </item>
     <item>
       <title>4 experimentation platforms worth running in production</title>
       <link>https://kubaik.github.io/4-experimentation-platforms-worth-running-in-production/</link>
@@ -138,13 +145,6 @@
       <description>Cut agent costs 50% with the right retry, timeout, and token logic — the mistakes most teams make when moving from demo to production</description>
       <pubDate>Wed, 17 Jun 2026 21:16:20 +0000</pubDate>
       <guid>https://kubaik.github.io/agents-cost-more-than-you-think/</guid>
-    </item>
-    <item>
-      <title>80% AI code? Here’s the catch</title>
-      <link>https://kubaik.github.io/80-ai-code-heres-the-catch/</link>
-      <description>Launched a SaaS in 6 weeks using 80% AI code — here’s where it worked, where it broke, and the hidden costs most guides ignore.</description>
-      <pubDate>Wed, 17 Jun 2026 20:38:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/80-ai-code-heres-the-catch/</guid>
     </item>
   </channel>
 </rss>

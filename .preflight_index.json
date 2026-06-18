@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T14:32:53.232982",
+  "built_at": "2026-06-18T16:43:54.034810",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1640,6 +1640,11 @@
       "slug": "4-experimentation-platforms-worth-running-in-production",
       "title": "4 experimentation platforms worth running in production",
       "summary": "I ran into this feature flag problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026, my team at a Nairobi-based NGO had t"
+    },
+    {
+      "slug": "llm-evals-the-3-metrics-that-pay-off",
+      "title": "LLM evals: the 3 metrics that pay off",
+      "summary": "The official documentation for evaluating llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most LLM evaluation tutorials tell"
     }
   ]
 }
