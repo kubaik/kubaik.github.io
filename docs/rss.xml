@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 16:43:59 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 16:57:30 +0000</lastBuildDate>
+    <item>
+      <title>Move images 50% faster in 2026 with Starlink CDN</title>
+      <link>https://kubaik.github.io/move-images-50-faster-in-2026-with-starlink-cdn/</link>
+      <description>Cut image upload time 60% with Starlink CDN — Lambda@Edge, sharp 0.33.2, and the resize mistakes most teams make.</description>
+      <pubDate>Thu, 18 Jun 2026 16:57:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/move-images-50-faster-in-2026-with-starlink-cdn/</guid>
+    </item>
     <item>
       <title>LLM evals: the 3 metrics that pay off</title>
       <link>https://kubaik.github.io/llm-evals-the-3-metrics-that-pay-off/</link>
@@ -138,13 +145,6 @@
       <description>Cut multi-agent framework timeouts 80% by matching tool to mobile network reality — CrewAI vs LangGraph vs custom with 2026 benchmarks and code examples</description>
       <pubDate>Wed, 17 Jun 2026 22:30:58 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-agent-frameworks-in-2026-langgraph-wins/</guid>
-    </item>
-    <item>
-      <title>Agents cost more than you think</title>
-      <link>https://kubaik.github.io/agents-cost-more-than-you-think/</link>
-      <description>Cut agent costs 50% with the right retry, timeout, and token logic — the mistakes most teams make when moving from demo to production</description>
-      <pubDate>Wed, 17 Jun 2026 21:16:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/agents-cost-more-than-you-think/</guid>
     </item>
   </channel>
 </rss>
