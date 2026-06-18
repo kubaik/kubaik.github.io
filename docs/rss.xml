@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 05:28:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 05:31:40 +0000</lastBuildDate>
+    <item>
+      <title>Cut three stacks to one with Postgres 17</title>
+      <link>https://kubaik.github.io/cut-three-stacks-to-one-with-postgres-17/</link>
+      <description>Cut Postgres stack cost 76% with built-in caching and pub/sub — the 2026 migration guide with latency benchmarks and rollback plan.</description>
+      <pubDate>Thu, 18 Jun 2026 05:31:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-three-stacks-to-one-with-postgres-17/</guid>
+    </item>
     <item>
       <title>Runbooks vs AI: which cuts outages 50%</title>
       <link>https://kubaik.github.io/runbooks-vs-ai-which-cuts-outages-50/</link>
@@ -138,13 +145,6 @@
       <description>Latency drops from 200 ms to 15 ms for 90% of users, but suddenly you’re debugging cache stampedes at 3 AM because everyone hit the same stale endpoint.</description>
       <pubDate>Wed, 17 Jun 2026 14:25:47 +0000</pubDate>
       <guid>https://kubaik.github.io/edge-backends-when-50-locations-break-your-api/</guid>
-    </item>
-    <item>
-      <title>9 AI wrapper plays that worked in 2026</title>
-      <link>https://kubaik.github.io/9-ai-wrapper-plays-that-worked-in-2026/</link>
-      <description>9 AI wrapper businesses survived 2026 — the ones that got pricing right made $12M ARR, the rest died. Find the exact model that fits your assets and start charging today.</description>
-      <pubDate>Wed, 17 Jun 2026 14:10:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/9-ai-wrapper-plays-that-worked-in-2026/</guid>
     </item>
   </channel>
 </rss>

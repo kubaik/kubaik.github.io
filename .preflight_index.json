@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T05:28:25.999741",
+  "built_at": "2026-06-18T05:31:35.288062",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1590,6 +1590,11 @@
       "slug": "runbooks-vs-ai-which-cuts-outages-50",
       "title": "Runbooks vs AI: which cuts outages 50%",
       "summary": "I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In January 2026, 73% of SRE teams at companies running 100+ se"
+    },
+    {
+      "slug": "cut-three-stacks-to-one-with-postgres-17",
+      "title": "Cut three stacks to one with Postgres 17",
+      "summary": "I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, we ran a side-by-side test between a traditional stack (Postgre"
     }
   ]
 }
