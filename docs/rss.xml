@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 10:00:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 10:04:26 +0000</lastBuildDate>
+    <item>
+      <title>Daraja 2.0: 3 changes that broke my checkout flow</title>
+      <link>https://kubaik.github.io/daraja-20-3-changes-that-broke-my-checkout-flow/</link>
+      <description>Cut M-Pesa checkout timeout 75% by migrating to Daraja 2.0 OAuth and TLS 1.3 — exact Node.js steps, error codes, and webhook signature verification</description>
+      <pubDate>Thu, 18 Jun 2026 10:04:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/daraja-20-3-changes-that-broke-my-checkout-flow/</guid>
+    </item>
     <item>
       <title>Replace PR checklists with agents</title>
       <link>https://kubaik.github.io/replace-pr-checklists-with-agents/</link>
@@ -138,13 +145,6 @@
       <description>Cut failed AI agent actions 85% with a review queue — latency, cost, and the 78% trap most teams miss until production breaks.</description>
       <pubDate>Wed, 17 Jun 2026 17:33:10 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-need-human-loop-cost-trust-and-the-78/</guid>
-    </item>
-    <item>
-      <title>SaaS niche in 2026: pick a sliver no LLM can eat</title>
-      <link>https://kubaik.github.io/saas-niche-in-2026-pick-a-sliver-no-llm-can-eat/</link>
-      <description>Pick a SaaS niche in 2026 that no LLM can eat — we cut churn 63% by focusing on vendor cleanup for Kenyan manufacturers. Benchmarks, infra costs, and the CLI-first approach that worked.</description>
-      <pubDate>Wed, 17 Jun 2026 15:44:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/saas-niche-in-2026-pick-a-sliver-no-llm-can-eat/</guid>
     </item>
   </channel>
 </rss>
