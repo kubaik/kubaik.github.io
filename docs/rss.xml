@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 01:47:02 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 01:51:31 +0000</lastBuildDate>
+    <item>
+      <title>Survive Africa’s spotty internet with offline apps</title>
+      <link>https://kubaik.github.io/survive-africas-spotty-internet-with-offline-apps/</link>
+      <description>Cut sync latency 68% and reduce crashes 97% with an offline-first POS app in Africa — SQLite vs WatermelonDB, version vectors, and the conflict resolution mistake most teams make in 2026.</description>
+      <pubDate>Thu, 18 Jun 2026 01:51:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/survive-africas-spotty-internet-with-offline-apps/</guid>
+    </item>
     <item>
       <title>Passkeys cut logins 83% — the real costs</title>
       <link>https://kubaik.github.io/passkeys-cut-logins-83-the-real-costs/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM p99 latency 87% with 3 patterns: token shaping, isolated pools, and cache-as-queue — connection pool tuning, Redis 7.2 eviction, and the cache stampede mistake most teams miss.</description>
       <pubDate>Wed, 17 Jun 2026 11:32:04 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-latency-3-patterns-that-never-lie/</guid>
-    </item>
-    <item>
-      <title>AI incident response: when it helps and when it burns</title>
-      <link>https://kubaik.github.io/ai-incident-response-when-it-helps-and-when-it-burns/</link>
-      <description>Cut oncall time 20% with the right AI incident tool — triage vs root-cause agents, with benchmark data and real screw-ups from 2026.</description>
-      <pubDate>Wed, 17 Jun 2026 10:24:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-incident-response-when-it-helps-and-when-it-burns/</guid>
     </item>
   </channel>
 </rss>

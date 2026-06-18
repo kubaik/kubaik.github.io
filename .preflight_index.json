@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T00:11:17.412469",
+  "built_at": "2026-06-18T01:51:26.204648",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1575,6 +1575,11 @@
       "slug": "passkeys-cut-logins-83-the-real-costs",
       "title": "Passkeys cut logins 83% — the real costs",
       "summary": "Most passkeys changed guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026, we shipped a new marketplace for SMEs in Vietnam and Indonesia. Users ha"
+    },
+    {
+      "slug": "survive-africas-spotty-internet-with-offline-apps",
+      "title": "Survive Africa’s spotty internet with offline apps",
+      "summary": "Most build offlinefirst guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, we launched a point-of-sale (POS) app for micro-retailers in Nigeria, Ghan"
     }
   ]
 }
