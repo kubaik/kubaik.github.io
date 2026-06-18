@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 14:28:11 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 14:32:58 +0000</lastBuildDate>
+    <item>
+      <title>4 experimentation platforms worth running in production</title>
+      <link>https://kubaik.github.io/4-experimentation-platforms-worth-running-in-production/</link>
+      <description>Cut experiment rollout costs 60% with these 4 experimentation platforms — median latency, rollback time, and the kill switch mistake most teams miss.</description>
+      <pubDate>Thu, 18 Jun 2026 14:32:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/4-experimentation-platforms-worth-running-in-production/</guid>
+    </item>
     <item>
       <title>African devs: Arc vs Andela vs Toptal in 2026</title>
       <link>https://kubaik.github.io/african-devs-arc-vs-andela-vs-toptal-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Launched a SaaS in 6 weeks using 80% AI code — here’s where it worked, where it broke, and the hidden costs most guides ignore.</description>
       <pubDate>Wed, 17 Jun 2026 20:38:15 +0000</pubDate>
       <guid>https://kubaik.github.io/80-ai-code-heres-the-catch/</guid>
-    </item>
-    <item>
-      <title>Self-healing pipelines: LLMs vs agents in 2026</title>
-      <link>https://kubaik.github.io/self-healing-pipelines-llms-vs-agents-in-2026/</link>
-      <description>Cut self-healing pipeline cost 28% and false positives 74% with agent-ops — Terraform agents beat LLMs in SOC 2 environments and on-call load</description>
-      <pubDate>Wed, 17 Jun 2026 20:03:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/self-healing-pipelines-llms-vs-agents-in-2026/</guid>
     </item>
   </channel>
 </rss>
