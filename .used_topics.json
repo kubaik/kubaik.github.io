@@ -16,5 +16,6 @@
   "How to build offline-first apps for markets where connectivity is still unreliable",
   "How I use Cloudflare Workers to handle 80% of traffic before it hits my origin server",
   "How AI is changing infrastructure: automated capacity planning, anomaly detection, and runbooks",
-  "Postgres in 2026: the features that replaced three separate tools in our stack"
+  "Postgres in 2026: the features that replaced three separate tools in our stack",
+  "SBOM requirements in 2026: what software bill of materials means for your release process"
 ]

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T05:31:35.288062",
+  "built_at": "2026-06-18T07:18:55.179453",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1595,6 +1595,11 @@
       "slug": "cut-three-stacks-to-one-with-postgres-17",
       "title": "Cut three stacks to one with Postgres 17",
       "summary": "I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, we ran a side-by-side test between a traditional stack (Postgre"
+    },
+    {
+      "slug": "ship-sboms-in-30-mins-with-syft-18",
+      "title": "Ship SBOMs in 30 mins with Syft 1.8",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In early 2026 I joined a Jakarta-based fintech building a wallet app that had just passe"
     }
   ]
 }

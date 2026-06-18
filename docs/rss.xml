@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 07:14:24 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 07:19:00 +0000</lastBuildDate>
+    <item>
+      <title>Ship SBOMs in 30 mins with Syft 1.8</title>
+      <link>https://kubaik.github.io/ship-sboms-in-30-mins-with-syft-18/</link>
+      <description>Automate SBOM generation and vulnerability scanning in 30 minutes using Syft 1.8 and GitHub Actions to meet 2026 EU/US requirements and slash manual checklist time 92%</description>
+      <pubDate>Thu, 18 Jun 2026 07:18:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-sboms-in-30-mins-with-syft-18/</guid>
+    </item>
     <item>
       <title>Cut three stacks to one with Postgres 17</title>
       <link>https://kubaik.github.io/cut-three-stacks-to-one-with-postgres-17/</link>
@@ -138,13 +145,6 @@
       <description>Cut static analysis runtime 7.9× with Tree-sitter 0.22.6 — parse 1.2M lines in 18 ms median, enforce policy in pre-commit hooks, and drop CI queue time 85 %.</description>
       <pubDate>Wed, 17 Jun 2026 14:55:34 +0000</pubDate>
       <guid>https://kubaik.github.io/build-a-static-analyzer-in-14-days-with-tree-sitter/</guid>
-    </item>
-    <item>
-      <title>Edge backends: when 50 locations break your API</title>
-      <link>https://kubaik.github.io/edge-backends-when-50-locations-break-your-api/</link>
-      <description>Latency drops from 200 ms to 15 ms for 90% of users, but suddenly you’re debugging cache stampedes at 3 AM because everyone hit the same stale endpoint.</description>
-      <pubDate>Wed, 17 Jun 2026 14:25:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/edge-backends-when-50-locations-break-your-api/</guid>
     </item>
   </channel>
 </rss>
