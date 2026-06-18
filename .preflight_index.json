@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T23:29:47.886481",
+  "built_at": "2026-06-18T23:47:29.060065",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1700,6 +1700,11 @@
       "slug": "trust-ai-code-faster",
       "title": "Trust AI code faster",
       "summary": "I've seen the same onboard developer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 68% of production codebases contain AI-generated files—eith"
+    },
+    {
+      "slug": "ai-wrappers-in-2026-94-failed-heres-the-rest",
+      "title": "AI wrappers in 2026: 94% failed, here’s the rest",
+      "summary": "I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In early 2026 I joined a fintech startu"
     }
   ]
 }
