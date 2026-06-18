@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T19:21:32.638517",
+  "built_at": "2026-06-18T19:40:14.157784",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1665,6 +1665,11 @@
       "slug": "platforms-that-scale-the-3-sizes-that-actually-work",
       "title": "Platforms that scale: the 3 sizes that actually work",
       "summary": "The official documentation for platform engineering is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most platform docs promise “"
+    },
+    {
+      "slug": "frontend-testing-stack-2026-playwright-beats-vitest",
+      "title": "Frontend testing stack 2026: Playwright beats Vitest +",
+      "summary": "I ran into this test frontend problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026 I inherited a frontend codebase with"
     }
   ]
 }

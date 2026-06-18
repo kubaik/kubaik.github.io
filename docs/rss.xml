@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 18 Jun 2026 19:35:40 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2026 19:40:19 +0000</lastBuildDate>
+    <item>
+      <title>Frontend testing stack 2026: Playwright beats Vitest +</title>
+      <link>https://kubaik.github.io/frontend-testing-stack-2026-playwright-beats-vitest/</link>
+      <description>Cut frontend test flakes 95% and build time 83% by dropping Cypress for Playwright + Vitest in 2026 — real numbers, real migrations, and the one mistake that cost me days</description>
+      <pubDate>Thu, 18 Jun 2026 19:40:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/frontend-testing-stack-2026-playwright-beats-vitest/</guid>
+    </item>
     <item>
       <title>Platforms that scale: the 3 sizes that actually work</title>
       <link>https://kubaik.github.io/platforms-that-scale-the-3-sizes-that-actually-work/</link>
@@ -138,13 +145,6 @@
       <description>Passkeys cut login failures 83% and cut infra costs 83% — how we replaced passwords and OTPs without breaking users or burning cash in 2026.</description>
       <pubDate>Thu, 18 Jun 2026 00:11:15 +0000</pubDate>
       <guid>https://kubaik.github.io/passkeys-cut-logins-83-the-real-costs/</guid>
-    </item>
-    <item>
-      <title>AI UI tools: where they shine (and crash)</title>
-      <link>https://kubaik.github.io/ai-ui-tools-where-they-shine-and-crash/</link>
-      <description>Cut frontend build time 85% with AI UI tools — but design drift, responsive breaks, and accessibility debt lurk. Learn where these tools work, where they fail, and how to audit their output in 2026.</description>
-      <pubDate>Wed, 17 Jun 2026 23:33:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ui-tools-where-they-shine-and-crash/</guid>
     </item>
   </channel>
 </rss>

@@ -30,5 +30,6 @@
   "Building for 4G-as-baseline users in 2026: what changed when Starlink reached East Africa",
   "How I use AI to maintain legacy codebases nobody wants to touch",
   "Pulumi vs Terraform vs OpenTofu in 2026: the infrastructure-as-code landscape after the HashiCorp fork",
-  "Platform engineering in 2026: what internal developer platforms look like at different company sizes"
+  "Platform engineering in 2026: what internal developer platforms look like at different company sizes",
+  "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress"
 ]
