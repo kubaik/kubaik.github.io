@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T20:27:31.990515",
+  "built_at": "2026-06-19T20:47:45.574993",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1820,6 +1820,11 @@
       "slug": "signals-5-state-hacks-that-actually-work",
       "title": "Signals: 5 state hacks that actually work",
       "summary": "I ran into this signals changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I started this deep dive because our Next."
+    },
+    {
+      "slug": "vibe-coding-mvp-gem-prod-albatross",
+      "title": "Vibe coding: MVP gem, prod albatross",
+      "summary": "I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I got hooked on vibe coding after shipping thr"
     }
   ]
 }
