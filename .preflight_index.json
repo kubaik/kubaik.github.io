@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T02:28:00.943657",
+  "built_at": "2026-06-19T03:30:19.346879",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1720,6 +1720,11 @@
       "slug": "why-monoliths-die-slowly-in-2026",
       "title": "Why monoliths die slowly in 2026",
       "summary": "A colleague asked me about migrated monolith during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete)"
+    },
+    {
+      "slug": "1m-tokens-wont-save-you",
+      "title": "1M tokens won't save you",
+      "summary": "A colleague asked me about context window during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In"
     }
   ]
 }
