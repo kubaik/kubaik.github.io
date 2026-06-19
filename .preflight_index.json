@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T08:25:35.645312",
+  "built_at": "2026-06-19T09:01:44.888436",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1740,6 +1740,11 @@
       "slug": "shrink-multi-region-bills-55-without-losing-users",
       "title": "Shrink multi-region bills 55% without losing users",
       "summary": "The official documentation for design multiregion is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most multi-region guides start"
+    },
+    {
+      "slug": "tool-calling-stateless-beats-stateful-under-load",
+      "title": "Tool calling: stateless beats stateful under load",
+      "summary": "I've seen the same toolcalling patterns mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, every microservice I touch either talks to Postgres, Red"
     }
   ]
 }
