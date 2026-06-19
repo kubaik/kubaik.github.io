@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 12:36:51 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 12:41:38 +0000</lastBuildDate>
+    <item>
+      <title>Design AI-native apps: agents leak</title>
+      <link>https://kubaik.github.io/design-ai-native-apps-agents-leak/</link>
+      <description>Cut AI agent costs 65% with stateful agents and idempotency keys — prompt drift, token creep, and the 3 mistakes every team makes first</description>
+      <pubDate>Fri, 19 Jun 2026 12:41:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-ai-native-apps-agents-leak/</guid>
+    </item>
     <item>
       <title>Replace Pinecone with pgvector now</title>
       <link>https://kubaik.github.io/replace-pinecone-with-pgvector-now/</link>
@@ -138,13 +145,6 @@
       <description>Cut Terraform apply time 40% with Pulumi in 2026 — licensing, speed, and hiring trade-offs after the HashiCorp fork</description>
       <pubDate>Thu, 18 Jun 2026 18:22:52 +0000</pubDate>
       <guid>https://kubaik.github.io/compare-3-iac-tools-post-hashicorp-fork/</guid>
-    </item>
-    <item>
-      <title>Code AI won’t rewrite</title>
-      <link>https://kubaik.github.io/code-ai-wont-rewrite/</link>
-      <description>Cut PR review time 65% with AI and semgrep on legacy Java/Python monoliths — $38/month for 200k tx/day, concrete prompts, and the race condition AI caught before production.</description>
-      <pubDate>Thu, 18 Jun 2026 17:53:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/code-ai-wont-rewrite/</guid>
     </item>
   </channel>
 </rss>

@@ -48,5 +48,6 @@
   "How to design multi-region backends without triple the infrastructure cost",
   "Tool-calling patterns that work in production vs the ones that break under load",
   "How to build a portfolio that gets you hired in a market where everyone has AI-assisted projects",
-  "How pgvector changed our architecture: replacing Pinecone with what we already had"
+  "How pgvector changed our architecture: replacing Pinecone with what we already had",
+  "How to design AI-native applications: architecture patterns that didn't exist three years ago"
 ]

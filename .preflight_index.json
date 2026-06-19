@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T12:25:18.441483",
+  "built_at": "2026-06-19T12:41:32.594457",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1755,6 +1755,11 @@
       "slug": "replace-pinecone-with-pgvector-now",
       "title": "Replace Pinecone with pgvector now",
       "summary": "A colleague asked me about pgvector changed during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) "
+    },
+    {
+      "slug": "design-ai-native-apps-agents-leak",
+      "title": "Design AI-native apps: agents leak",
+      "summary": "A colleague asked me about design ainative during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) M"
     }
   ]
 }
