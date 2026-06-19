@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 19:08:40 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 19:29:30 +0000</lastBuildDate>
+    <item>
+      <title>Audit logs: append-only DB vs sidecar queues</title>
+      <link>https://kubaik.github.io/audit-logs-append-only-db-vs-sidecar-queues/</link>
+      <description>Cut audit log latency 4× with PostgreSQL 15 logical decoding vs Kafka 3.7 sidecar queues — concrete benchmarks, costs, and the compliance trick most teams miss</description>
+      <pubDate>Fri, 19 Jun 2026 19:29:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/audit-logs-append-only-db-vs-sidecar-queues/</guid>
+    </item>
     <item>
       <title>AI agents break when users cheat</title>
       <link>https://kubaik.github.io/ai-agents-break-when-users-cheat/</link>
@@ -138,13 +145,6 @@
       <description>Cut rollbacks 78% with AI Gateway in 2026 — Prometheus 2.50 and OpenTelemetry 1.30 metrics you must track to catch AI debt before it melts your cluster.</description>
       <pubDate>Fri, 19 Jun 2026 01:50:57 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-code-debt-the-blind-spot-teams-ignore/</guid>
-    </item>
-    <item>
-      <title>AI wrappers in 2026: 94% failed, here’s the rest</title>
-      <link>https://kubaik.github.io/ai-wrappers-in-2026-94-failed-heres-the-rest/</link>
-      <description>Cut AI wrapper costs 70% in 2026 — the 4 wrappers that paid off vs the 33 that wasted runway. Benchmarks, latency deltas, and escape hatches exposed.</description>
-      <pubDate>Thu, 18 Jun 2026 23:47:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-wrappers-in-2026-94-failed-heres-the-rest/</guid>
     </item>
   </channel>
 </rss>
