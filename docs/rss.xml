@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 02:09:21 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 02:13:45 +0000</lastBuildDate>
+    <item>
+      <title>5 delivery channels that actually scale</title>
+      <link>https://kubaik.github.io/5-delivery-channels-that-actually-scale/</link>
+      <description>Cut notification latency 60% and avoid 429s with this ranked list of channels and tools — benchmarks, costs, and code for push, email, SMS, and WhatsApp in 2026.</description>
+      <pubDate>Fri, 19 Jun 2026 02:13:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-delivery-channels-that-actually-scale/</guid>
+    </item>
     <item>
       <title>AI code debt: the blind spot teams ignore</title>
       <link>https://kubaik.github.io/ai-code-debt-the-blind-spot-teams-ignore/</link>
@@ -138,13 +145,6 @@
       <description>Land $5k/month remote roles with US startups from Nairobi and Lagos — the Nairobi/Lagos playbook with metrics, tools, and case studies from 2026 hires.</description>
       <pubDate>Thu, 18 Jun 2026 11:25:38 +0000</pubDate>
       <guid>https://kubaik.github.io/land-5k-roles-from-nairobi-lagos-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI pair programming cut our reviews in half</title>
-      <link>https://kubaik.github.io/ai-pair-programming-cut-our-reviews-in-half/</link>
-      <description>Cut PR review time 38% with Cursor v2.5.0 — the AI pair tool that actually bridged ticket context and code changes</description>
-      <pubDate>Thu, 18 Jun 2026 10:09:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-pair-programming-cut-our-reviews-in-half/</guid>
     </item>
   </channel>
 </rss>

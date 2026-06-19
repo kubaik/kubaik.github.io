@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T01:50:59.063918",
+  "built_at": "2026-06-19T02:13:39.598511",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1710,6 +1710,11 @@
       "slug": "ai-code-debt-the-blind-spot-teams-ignore",
       "title": "AI code debt: the blind spot teams ignore",
       "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. This isn’t another post about how AI will replace us. It’s about the new class of bugs no one sees until they"
+    },
+    {
+      "slug": "5-delivery-channels-that-actually-scale",
+      "title": "5 delivery channels that actually scale",
+      "summary": "I ran into this designing notification problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026 I joined a 12-person SaaS t"
     }
   ]
 }
