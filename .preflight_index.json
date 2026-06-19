@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T21:43:41.738256",
+  "built_at": "2026-06-19T21:55:06.054569",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1835,6 +1835,11 @@
       "slug": "webhooks-2026-retries-idempotency-and-the-9995",
       "title": "Webhooks 2026: retries, idempotency, and the 99.95%",
       "summary": "Most building webhook guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our team at Acme Corp was building a new financial integration platform"
+    },
+    {
+      "slug": "run-apis-in-50-spots-what-breaks-first",
+      "title": "Run APIs in 50 spots: what breaks first",
+      "summary": "The short version: the conventional advice on edgenative backends is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Running your API in 50 edge locations isn’t just deploying to 50 servers—it’s "
     }
   ]
 }

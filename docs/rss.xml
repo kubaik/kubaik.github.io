@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 21:50:37 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 21:55:12 +0000</lastBuildDate>
+    <item>
+      <title>Run APIs in 50 spots: what breaks first</title>
+      <link>https://kubaik.github.io/run-apis-in-50-spots-what-breaks-first/</link>
+      <description>Cut API latency 60% by running in 50 edge locations — cache stampedes, clock drift, and write fan-out mistakes most teams make in 2026.</description>
+      <pubDate>Fri, 19 Jun 2026 21:55:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/run-apis-in-50-spots-what-breaks-first/</guid>
+    </item>
     <item>
       <title>Webhooks 2026: retries, idempotency, and the 99.95%</title>
       <link>https://kubaik.github.io/webhooks-2026-retries-idempotency-and-the-9995/</link>
@@ -138,13 +145,6 @@
       <description>Cut p99 latency 60% and save $41 per 1000 RPS by switching from stateful to stateless tool calls — the one metric to watch first and the three-line config that prevents the next outage.</description>
       <pubDate>Fri, 19 Jun 2026 09:01:43 +0000</pubDate>
       <guid>https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/</guid>
-    </item>
-    <item>
-      <title>Shrink multi-region bills 55% without losing users</title>
-      <link>https://kubaik.github.io/shrink-multi-region-bills-55-without-losing-users/</link>
-      <description>Cut multi-region AWS bills 55% with Redis caching — latency drops from 142 ms to 28 ms, cache hit ratio 96%, and the cache stampede mistake most teams miss.</description>
-      <pubDate>Fri, 19 Jun 2026 08:25:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/shrink-multi-region-bills-55-without-losing-users/</guid>
     </item>
   </channel>
 </rss>
