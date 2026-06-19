@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T15:52:05.671885",
+  "built_at": "2026-06-19T16:00:07.338164",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1770,6 +1770,11 @@
       "slug": "wcag-chat-bots-miss-4-invisible-traps",
       "title": "WCAG chat bots miss: 4 invisible traps",
       "summary": "After reviewing a lot of code that touches building accessible, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing If your AI chat widget works in Chrome on macOS at 100% zoom but fails in Firefox on"
+    },
+    {
+      "slug": "price-dev-tools-right-in-2026",
+      "title": "Price dev tools right in 2026",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) Southeast Asia startups I’ve worked with burn money on developer tools before they even "
     }
   ]
 }
