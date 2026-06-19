@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 07:34:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 07:38:39 +0000</lastBuildDate>
+    <item>
+      <title>AWS IAM: write policies in 20 mins</title>
+      <link>https://kubaik.github.io/aws-iam-write-policies-in-20-mins/</link>
+      <description>Cut AWS IAM policy churn 78% with managed policies + conditions — 2026 guide with Node 20 LTS examples and 3 concrete numbers.</description>
+      <pubDate>Fri, 19 Jun 2026 07:38:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/aws-iam-write-policies-in-20-mins/</guid>
+    </item>
     <item>
       <title>Attack vectors hiding in AI’s data pipelines</title>
       <link>https://kubaik.github.io/attack-vectors-hiding-in-ais-data-pipelines/</link>
@@ -138,13 +145,6 @@
       <description>Pick the best freelance platform for African devs in 2026 — Contra, Toptal, Andela, or Arc — with real payout data, error fixes, and a 30-minute setup plan.</description>
       <pubDate>Thu, 18 Jun 2026 14:02:02 +0000</pubDate>
       <guid>https://kubaik.github.io/african-devs-arc-vs-andela-vs-toptal-in-2026/</guid>
-    </item>
-    <item>
-      <title>AWS FinOps levers: what mid-size teams ignore in 2026</title>
-      <link>https://kubaik.github.io/aws-finops-levers-what-mid-size-teams-ignore-in-2026/</link>
-      <description>Save 25–35% on AWS bills in 2026: why Compute Savings Plans beat Reserved Instances for mid-size teams, with real benchmarks and Terraform examples.</description>
-      <pubDate>Thu, 18 Jun 2026 13:58:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/aws-finops-levers-what-mid-size-teams-ignore-in-2026/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T07:15:15.614418",
+  "built_at": "2026-06-19T07:38:33.788955",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1730,6 +1730,11 @@
       "slug": "attack-vectors-hiding-in-ais-data-pipelines",
       "title": "Attack vectors hiding in AI’s data pipelines",
       "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams treat prompt injectio"
+    },
+    {
+      "slug": "aws-iam-write-policies-in-20-mins",
+      "title": "AWS IAM: write policies in 20 mins",
+      "summary": "The short version: the conventional advice on implement leastprivilege is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Writing AWS IAM policies from scratch usually means staring at the JSON e"
     }
   ]
 }
