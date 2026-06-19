@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 23:46:59 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 23:51:36 +0000</lastBuildDate>
+    <item>
+      <title>LLM security mistakes in 2026: OWASP Top 10 fixes</title>
+      <link>https://kubaik.github.io/llm-security-mistakes-in-2026-owasp-top-10-fixes/</link>
+      <description>Cut LLM security risks 65% with OWASP Top 10 fixes — 3 concrete numbers, code samples, and the 2026 edition of the OWASP LLM Top 10.</description>
+      <pubDate>Fri, 19 Jun 2026 23:51:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-security-mistakes-in-2026-owasp-top-10-fixes/</guid>
+    </item>
     <item>
       <title>USSD apps: why African fintech still needs them in 2026</title>
       <link>https://kubaik.github.io/ussd-apps-why-african-fintech-still-needs-them-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>AI coding tools cut freelance rates 28-35% unless you track real speed gains — here’s the math and the 2026 rate tiers.</description>
       <pubDate>Fri, 19 Jun 2026 12:49:13 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-tools-crashed-freelance-rates-heres-the-math/</guid>
-    </item>
-    <item>
-      <title>Design AI-native apps: agents leak</title>
-      <link>https://kubaik.github.io/design-ai-native-apps-agents-leak/</link>
-      <description>Cut AI agent costs 65% with stateful agents and idempotency keys — prompt drift, token creep, and the 3 mistakes every team makes first</description>
-      <pubDate>Fri, 19 Jun 2026 12:41:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-ai-native-apps-agents-leak/</guid>
     </item>
   </channel>
 </rss>
