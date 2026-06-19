@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 01:46:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 01:51:04 +0000</lastBuildDate>
+    <item>
+      <title>AI code debt: the blind spot teams ignore</title>
+      <link>https://kubaik.github.io/ai-code-debt-the-blind-spot-teams-ignore/</link>
+      <description>Cut rollbacks 78% with AI Gateway in 2026 — Prometheus 2.50 and OpenTelemetry 1.30 metrics you must track to catch AI debt before it melts your cluster.</description>
+      <pubDate>Fri, 19 Jun 2026 01:50:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-code-debt-the-blind-spot-teams-ignore/</guid>
+    </item>
     <item>
       <title>AI wrappers in 2026: 94% failed, here’s the rest</title>
       <link>https://kubaik.github.io/ai-wrappers-in-2026-94-failed-heres-the-rest/</link>
@@ -138,13 +145,6 @@
       <description>Cut PR review time 38% with Cursor v2.5.0 — the AI pair tool that actually bridged ticket context and code changes</description>
       <pubDate>Thu, 18 Jun 2026 10:09:14 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-pair-programming-cut-our-reviews-in-half/</guid>
-    </item>
-    <item>
-      <title>Daraja 2.0: 3 changes that broke my checkout flow</title>
-      <link>https://kubaik.github.io/daraja-20-3-changes-that-broke-my-checkout-flow/</link>
-      <description>Cut M-Pesa checkout timeout 75% by migrating to Daraja 2.0 OAuth and TLS 1.3 — exact Node.js steps, error codes, and webhook signature verification</description>
-      <pubDate>Thu, 18 Jun 2026 10:04:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/daraja-20-3-changes-that-broke-my-checkout-flow/</guid>
     </item>
   </channel>
 </rss>

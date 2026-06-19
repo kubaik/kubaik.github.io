@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-18T23:47:29.060065",
+  "built_at": "2026-06-19T01:50:59.063918",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1705,6 +1705,11 @@
       "slug": "ai-wrappers-in-2026-94-failed-heres-the-rest",
       "title": "AI wrappers in 2026: 94% failed, here’s the rest",
       "summary": "I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In early 2026 I joined a fintech startu"
+    },
+    {
+      "slug": "ai-code-debt-the-blind-spot-teams-ignore",
+      "title": "AI code debt: the blind spot teams ignore",
+      "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. This isn’t another post about how AI will replace us. It’s about the new class of bugs no one sees until they"
     }
   ]
 }
