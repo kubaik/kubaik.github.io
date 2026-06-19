@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 16:13:45 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 17:53:50 +0000</lastBuildDate>
+    <item>
+      <title>RAG isn’t enough in 2026</title>
+      <link>https://kubaik.github.io/rag-isnt-enough-in-2026/</link>
+      <description>Cut hallucinations 75% with hybrid search + reranking — benchmarked on 1,084 questions with Python 3.11, costing $0.00012 extra per query on AWS Bedrock 2026.</description>
+      <pubDate>Fri, 19 Jun 2026 17:53:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-isnt-enough-in-2026/</guid>
+    </item>
     <item>
       <title>Dagster replaced Airflow in 2026 — here’s the stack we</title>
       <link>https://kubaik.github.io/dagster-replaced-airflow-in-2026-heres-the-stack-we/</link>
@@ -138,13 +145,6 @@
       <description>AI agent postmortem methods compared: human review vs automated metrics with concrete numbers on latency, cost, and error rates. Use this to pick the right approach for your 2026 workload.</description>
       <pubDate>Thu, 18 Jun 2026 22:00:49 +0000</pubDate>
       <guid>https://kubaik.github.io/postmortem-ai-agent-failures-human-review-vs-pure/</guid>
-    </item>
-    <item>
-      <title>Progressive Web Apps: what browser APIs finally fixed</title>
-      <link>https://kubaik.github.io/progressive-web-apps-what-browser-apis-finally-fixed/</link>
-      <description>Cut dev cost 40% with PWA in 2026 — Service Worker, manifest v3, and the iOS cache limit that breaks offline promises.</description>
-      <pubDate>Thu, 18 Jun 2026 21:18:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/progressive-web-apps-what-browser-apis-finally-fixed/</guid>
     </item>
   </channel>
 </rss>

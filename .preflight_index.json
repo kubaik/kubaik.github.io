@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T16:13:39.066192",
+  "built_at": "2026-06-19T17:53:44.694256",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1780,6 +1780,11 @@
       "slug": "dagster-replaced-airflow-in-2026-heres-the-stack-we",
       "title": "Dagster replaced Airflow in 2026 — here’s the stack we",
       "summary": "Most data pipeline guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our data team faced a classic scaling wall: the Airflow cluster we’d loved"
+    },
+    {
+      "slug": "rag-isnt-enough-in-2026",
+      "title": "RAG isn’t enough in 2026",
+      "summary": "The short version: the conventional advice on rag not is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) If your RAG pipeline only appends the top 5 chunks to your prompt, you’re leaving 30–50% o"
     }
   ]
 }
