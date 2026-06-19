@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T20:47:45.574993",
+  "built_at": "2026-06-19T21:04:18.974031",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1825,6 +1825,11 @@
       "slug": "vibe-coding-mvp-gem-prod-albatross",
       "title": "Vibe coding: MVP gem, prod albatross",
       "summary": "I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I got hooked on vibe coding after shipping thr"
+    },
+    {
+      "slug": "11-patterns-for-eventual-consistency-that-dont-wake",
+      "title": "11 patterns for eventual consistency that don’t wake",
+      "summary": "I ran into this building eventual problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026 I joined a team running a checko"
     }
   ]
 }

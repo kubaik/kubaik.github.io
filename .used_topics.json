@@ -62,5 +62,6 @@
   "Building audit logs that satisfy compliance requirements without killing performance",
   "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff",
   "How Signals changed state management and whether it matters outside of frameworks",
-  "Why vibe coding works for MVPs and fails for anything you need to maintain"
+  "Why vibe coding works for MVPs and fails for anything you need to maintain",
+  "Building for eventual consistency: the real-world patterns behind systems that stay up"
 ]
