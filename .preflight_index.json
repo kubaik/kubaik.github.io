@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T02:13:39.598511",
+  "built_at": "2026-06-19T02:28:00.943657",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1715,6 +1715,11 @@
       "slug": "5-delivery-channels-that-actually-scale",
       "title": "5 delivery channels that actually scale",
       "summary": "I ran into this designing notification problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026 I joined a 12-person SaaS t"
+    },
+    {
+      "slug": "why-monoliths-die-slowly-in-2026",
+      "title": "Why monoliths die slowly in 2026",
+      "summary": "A colleague asked me about migrated monolith during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete)"
     }
   ]
 }
