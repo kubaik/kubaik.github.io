@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 18:11:36 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 18:16:12 +0000</lastBuildDate>
+    <item>
+      <title>Branching databases locally: the Neon gotcha nobody</title>
+      <link>https://kubaik.github.io/branching-databases-locally-the-neon-gotcha-nobody/</link>
+      <description>Cut local DB setup time 70% with Neon and PlanetScale branches — the missing query parameter that wastes hours and the 3 fixes that actually work in 2026.</description>
+      <pubDate>Fri, 19 Jun 2026 18:16:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/branching-databases-locally-the-neon-gotcha-nobody/</guid>
+    </item>
     <item>
       <title>RAG isn’t enough in 2026</title>
       <link>https://kubaik.github.io/rag-isnt-enough-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut secrets-related outages 90% with AWS Secrets Manager and Teller — rotation without downtime, cache stampede fixes, and the $18k mistake most teams repeat.</description>
       <pubDate>Thu, 18 Jun 2026 22:18:17 +0000</pubDate>
       <guid>https://kubaik.github.io/replace-env-with-these-in-2026/</guid>
-    </item>
-    <item>
-      <title>Postmortem AI agent failures: human review vs pure</title>
-      <link>https://kubaik.github.io/postmortem-ai-agent-failures-human-review-vs-pure/</link>
-      <description>AI agent postmortem methods compared: human review vs automated metrics with concrete numbers on latency, cost, and error rates. Use this to pick the right approach for your 2026 workload.</description>
-      <pubDate>Thu, 18 Jun 2026 22:00:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/postmortem-ai-agent-failures-human-review-vs-pure/</guid>
     </item>
   </channel>
 </rss>
