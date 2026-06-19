@@ -44,5 +44,6 @@
   "How I migrated a monolith to services in 2026 without a big-bang rewrite",
   "The context window arms race: what 1M token models actually change in practice",
   "Prompt injection in production AI systems: the attack surface most teams are ignoring",
-  "How to implement least-privilege IAM in AWS without spending a week on policies"
+  "How to implement least-privilege IAM in AWS without spending a week on policies",
+  "How to design multi-region backends without triple the infrastructure cost"
 ]

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T07:38:33.788955",
+  "built_at": "2026-06-19T08:25:35.645312",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1735,6 +1735,11 @@
       "slug": "aws-iam-write-policies-in-20-mins",
       "title": "AWS IAM: write policies in 20 mins",
       "summary": "The short version: the conventional advice on implement leastprivilege is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Writing AWS IAM policies from scratch usually means staring at the JSON e"
+    },
+    {
+      "slug": "shrink-multi-region-bills-55-without-losing-users",
+      "title": "Shrink multi-region bills 55% without losing users",
+      "summary": "The official documentation for design multiregion is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most multi-region guides start"
     }
   ]
 }
