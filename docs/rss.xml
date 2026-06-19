@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 20:07:03 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 20:11:48 +0000</lastBuildDate>
+    <item>
+      <title>Fine-tune vs prompt: 40% cheaper with 3% accuracy loss</title>
+      <link>https://kubaik.github.io/fine-tune-vs-prompt-40-cheaper-with-3-accuracy-loss/</link>
+      <description>By late 2025, every vendor’s README shows a 1-shot accuracy number on the MMLU-Pro 2026 benchmark that looks impressive: 87.3%.</description>
+      <pubDate>Fri, 19 Jun 2026 20:11:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/fine-tune-vs-prompt-40-cheaper-with-3-accuracy-loss/</guid>
+    </item>
     <item>
       <title>Audit logs: append-only DB vs sidecar queues</title>
       <link>https://kubaik.github.io/audit-logs-append-only-db-vs-sidecar-queues/</link>
@@ -138,13 +145,6 @@
       <description>Cut notification latency 60% and avoid 429s with this ranked list of channels and tools — benchmarks, costs, and code for push, email, SMS, and WhatsApp in 2026.</description>
       <pubDate>Fri, 19 Jun 2026 02:13:38 +0000</pubDate>
       <guid>https://kubaik.github.io/5-delivery-channels-that-actually-scale/</guid>
-    </item>
-    <item>
-      <title>AI code debt: the blind spot teams ignore</title>
-      <link>https://kubaik.github.io/ai-code-debt-the-blind-spot-teams-ignore/</link>
-      <description>Cut rollbacks 78% with AI Gateway in 2026 — Prometheus 2.50 and OpenTelemetry 1.30 metrics you must track to catch AI debt before it melts your cluster.</description>
-      <pubDate>Fri, 19 Jun 2026 01:50:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-code-debt-the-blind-spot-teams-ignore/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T19:29:24.583942",
+  "built_at": "2026-06-19T20:11:42.209385",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1810,6 +1810,11 @@
       "slug": "audit-logs-append-only-db-vs-sidecar-queues",
       "title": "Audit logs: append-only DB vs sidecar queues",
       "summary": "I've seen the same building audit mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, regulators aren’t just asking for logs — they’re asking for lo"
+    },
+    {
+      "slug": "fine-tune-vs-prompt-40-cheaper-with-3-accuracy-loss",
+      "title": "Fine-tune vs prompt: 40% cheaper with 3% accuracy loss",
+      "summary": "The official documentation for finetuning small is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams start with the big mo"
     }
   ]
 }

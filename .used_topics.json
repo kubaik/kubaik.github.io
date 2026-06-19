@@ -59,5 +59,6 @@
   "Stripe vs Lemon Squeezy vs Paddle in 2026: which one I use and why",
   "How AI changed the economics of building a solo SaaS in 2026",
   "How prompt injection attacks work and why your AI product is probably vulnerable",
-  "Building audit logs that satisfy compliance requirements without killing performance"
+  "Building audit logs that satisfy compliance requirements without killing performance",
+  "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff"
 ]
