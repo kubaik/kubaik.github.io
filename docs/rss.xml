@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 16:08:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 16:13:45 +0000</lastBuildDate>
+    <item>
+      <title>Dagster replaced Airflow in 2026 — here’s the stack we</title>
+      <link>https://kubaik.github.io/dagster-replaced-airflow-in-2026-heres-the-stack-we/</link>
+      <description>Cut pipeline orchestration costs 74% and latency 92% by swapping Airflow for Dagster 1.7.0 — the asset-based model, RDS metadata, and IAM secrets that actually scaled to 60 engineers in 2026.</description>
+      <pubDate>Fri, 19 Jun 2026 16:13:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/dagster-replaced-airflow-in-2026-heres-the-stack-we/</guid>
+    </item>
     <item>
       <title>Price dev tools right in 2026</title>
       <link>https://kubaik.github.io/price-dev-tools-right-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut dev cost 40% with PWA in 2026 — Service Worker, manifest v3, and the iOS cache limit that breaks offline promises.</description>
       <pubDate>Thu, 18 Jun 2026 21:18:21 +0000</pubDate>
       <guid>https://kubaik.github.io/progressive-web-apps-what-browser-apis-finally-fixed/</guid>
-    </item>
-    <item>
-      <title>HTMX swapped React for me in 2026</title>
-      <link>https://kubaik.github.io/htmx-swapped-react-for-me-in-2026/</link>
-      <description>Cut 74 % of JavaScript and slash AWS bills 60 % by switching to HTMX in 2026 — real benchmarks, real trade-offs, and the exact versions that worked.</description>
-      <pubDate>Thu, 18 Jun 2026 20:47:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/htmx-swapped-react-for-me-in-2026/</guid>
     </item>
   </channel>
 </rss>
