@@ -5,7 +5,21 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 22:03:48 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 19:08:40 +0000</lastBuildDate>
+    <item>
+      <title>AI agents break when users cheat</title>
+      <link>https://kubaik.github.io/ai-agents-break-when-users-cheat/</link>
+      <description>Cut prompt injection 94% with a 3-layer firewall — token sanitizer, context filter, and model guardrail. Latency +25%, cost +17%, real production data from 50k daily prompts in 2026.</description>
+      <pubDate>Fri, 19 Jun 2026 19:08:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-break-when-users-cheat/</guid>
+    </item>
+    <item>
+      <title>AI SaaS build: solo vs agent team in 2026</title>
+      <link>https://kubaik.github.io/ai-saas-build-solo-vs-agent-team-in-2026/</link>
+      <description>Spend $3k vs $700 to build a solo SaaS in 2026? Benchmarks from two real products show why targeted AI beats full agent teams — with concrete numbers, pitfalls, and the 30-minute audit you can run today.</description>
+      <pubDate>Fri, 19 Jun 2026 19:04:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-saas-build-solo-vs-agent-team-in-2026/</guid>
+    </item>
     <item>
       <title>Paddle over Stripe? 2026’s real winner</title>
       <link>https://kubaik.github.io/paddle-over-stripe-2026s-real-winner/</link>
@@ -131,13 +145,6 @@
       <description>Cut AI wrapper costs 70% in 2026 — the 4 wrappers that paid off vs the 33 that wasted runway. Benchmarks, latency deltas, and escape hatches exposed.</description>
       <pubDate>Thu, 18 Jun 2026 23:47:27 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-wrappers-in-2026-94-failed-heres-the-rest/</guid>
-    </item>
-    <item>
-      <title>Trust AI code faster</title>
-      <link>https://kubaik.github.io/trust-ai-code-faster/</link>
-      <description>Cut onboarding time 50% with AI guardrails-first — the bug escape rate drops 3x and incident costs fall $2k per dev in 90 days. Real tooling stack and pipeline scripts included.</description>
-      <pubDate>Thu, 18 Jun 2026 23:29:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/trust-ai-code-faster/</guid>
     </item>
   </channel>
 </rss>

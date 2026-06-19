@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T19:04:03.169985",
+  "built_at": "2026-06-19T19:08:34.398058",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1800,6 +1800,11 @@
       "slug": "ai-saas-build-solo-vs-agent-team-in-2026",
       "title": "AI SaaS build: solo vs agent team in 2026",
       "summary": "I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the solo SaaS founder faces a brutal choice: hand every dec"
+    },
+    {
+      "slug": "ai-agents-break-when-users-cheat",
+      "title": "AI agents break when users cheat",
+      "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most prompt injection articles t"
     }
   ]
 }
