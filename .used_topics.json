@@ -66,5 +66,6 @@
   "Building for eventual consistency: the real-world patterns behind systems that stay up",
   "Building webhook systems in 2026: delivery guarantees, retries, and idempotency",
   "Edge-native backends in 2026: what changes when your API runs in 50 locations",
-  "How I run automated security scanning in CI without drowning in false positives"
+  "How I run automated security scanning in CI without drowning in false positives",
+  "How to maintain a codebase where 40% of the code was written by an AI"
 ]

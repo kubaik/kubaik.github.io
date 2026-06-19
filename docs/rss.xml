@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 22:12:53 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 22:47:00 +0000</lastBuildDate>
+    <item>
+      <title>AI codebase? Guardrails over guardrails</title>
+      <link>https://kubaik.github.io/ai-codebase-guardrails-over-guardrails/</link>
+      <description>Cut false-positive alerts 30% with SonarQube 10.4 vs GitHub Advanced Security — connection pool crashes, XPath rules, and the $81 monthly price tag most teams miss.</description>
+      <pubDate>Fri, 19 Jun 2026 22:46:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-codebase-guardrails-over-guardrails/</guid>
+    </item>
     <item>
       <title>False positives killed our CI scans — here’s how we</title>
       <link>https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/</link>
@@ -138,13 +145,6 @@
       <description>Cut 85% off your vector search bill by replacing Pinecone with pgvector on Aurora PostgreSQL — real benchmarks, $7k savings, and the index bloat mistake most teams miss.</description>
       <pubDate>Fri, 19 Jun 2026 12:25:16 +0000</pubDate>
       <guid>https://kubaik.github.io/replace-pinecone-with-pgvector-now/</guid>
-    </item>
-    <item>
-      <title>Portfolio projects that beat AI clones: 4 signals</title>
-      <link>https://kubaik.github.io/portfolio-projects-that-beat-ai-clones-4-signals/</link>
-      <description>Beat AI clones: 4 portfolio signals African teams check first – real deployment, failure handling, cost under $10, and network-aware UI. 80% callback rate vs. 0% for generic repos.</description>
-      <pubDate>Fri, 19 Jun 2026 12:15:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-projects-that-beat-ai-clones-4-signals/</guid>
     </item>
   </channel>
 </rss>

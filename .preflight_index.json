@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T22:12:47.427145",
+  "built_at": "2026-06-19T22:46:54.807925",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1845,6 +1845,11 @@
       "slug": "false-positives-killed-our-ci-scans-heres-how-we",
       "title": "False positives killed our CI scans — here’s how we",
       "summary": "Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we had 47 repos, 11 of them public, and a CI pipeline that ran 200+ scans p"
+    },
+    {
+      "slug": "ai-codebase-guardrails-over-guardrails",
+      "title": "AI codebase? Guardrails over guardrails",
+      "summary": "I've seen the same maintain codebase mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In Q4 2026, our team shipped a new citizen-services portal for a Wes"
     }
   ]
 }
