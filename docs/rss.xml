@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 23:19:01 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 23:24:09 +0000</lastBuildDate>
+    <item>
+      <title>USSD apps: why African fintech still needs them in 2026</title>
+      <link>https://kubaik.github.io/ussd-apps-why-african-fintech-still-needs-them-in-2026/</link>
+      <description>USSD apps still drive 34% of new signups in African fintech in 2026. Build a production-grade USSD interface with Redis 7.2, FastAPI, and Twilio in 450 lines. Latency, cost, and hiring data included.</description>
+      <pubDate>Fri, 19 Jun 2026 23:24:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/ussd-apps-why-african-fintech-still-needs-them-in-2026/</guid>
+    </item>
     <item>
       <title>AI codebase? Guardrails over guardrails</title>
       <link>https://kubaik.github.io/ai-codebase-guardrails-over-guardrails/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI agent costs 65% with stateful agents and idempotency keys — prompt drift, token creep, and the 3 mistakes every team makes first</description>
       <pubDate>Fri, 19 Jun 2026 12:41:30 +0000</pubDate>
       <guid>https://kubaik.github.io/design-ai-native-apps-agents-leak/</guid>
-    </item>
-    <item>
-      <title>Replace Pinecone with pgvector now</title>
-      <link>https://kubaik.github.io/replace-pinecone-with-pgvector-now/</link>
-      <description>Cut 85% off your vector search bill by replacing Pinecone with pgvector on Aurora PostgreSQL — real benchmarks, $7k savings, and the index bloat mistake most teams miss.</description>
-      <pubDate>Fri, 19 Jun 2026 12:25:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/replace-pinecone-with-pgvector-now/</guid>
     </item>
   </channel>
 </rss>
