@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 12:41:38 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 12:49:20 +0000</lastBuildDate>
+    <item>
+      <title>AI tools crashed freelance rates — here’s the math</title>
+      <link>https://kubaik.github.io/ai-tools-crashed-freelance-rates-heres-the-math/</link>
+      <description>AI coding tools cut freelance rates 28-35% unless you track real speed gains — here’s the math and the 2026 rate tiers.</description>
+      <pubDate>Fri, 19 Jun 2026 12:49:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-tools-crashed-freelance-rates-heres-the-math/</guid>
+    </item>
     <item>
       <title>Design AI-native apps: agents leak</title>
       <link>https://kubaik.github.io/design-ai-native-apps-agents-leak/</link>
@@ -138,13 +145,6 @@
       <description>Stop writing IaaC wrappers: the 3 platform patterns that actually work in 2026 with concrete numbers, code, and failure modes nobody documents.</description>
       <pubDate>Thu, 18 Jun 2026 19:21:31 +0000</pubDate>
       <guid>https://kubaik.github.io/platforms-that-scale-the-3-sizes-that-actually-work/</guid>
-    </item>
-    <item>
-      <title>Compare 3 IaC tools post-HashiCorp fork</title>
-      <link>https://kubaik.github.io/compare-3-iac-tools-post-hashicorp-fork/</link>
-      <description>Cut Terraform apply time 40% with Pulumi in 2026 — licensing, speed, and hiring trade-offs after the HashiCorp fork</description>
-      <pubDate>Thu, 18 Jun 2026 18:22:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/compare-3-iac-tools-post-hashicorp-fork/</guid>
     </item>
   </channel>
 </rss>

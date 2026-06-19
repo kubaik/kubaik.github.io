@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T12:41:32.594457",
+  "built_at": "2026-06-19T12:49:14.751091",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1760,6 +1760,11 @@
       "slug": "design-ai-native-apps-agents-leak",
       "title": "Design AI-native apps: agents leak",
       "summary": "A colleague asked me about design ainative during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) M"
+    },
+    {
+      "slug": "ai-tools-crashed-freelance-rates-heres-the-math",
+      "title": "AI tools crashed freelance rates — here’s the math",
+      "summary": "The short version: the conventional advice on freelance developer is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In 2026, freelance developer rates for AI-assisted tasks have fallen 28–35% be"
     }
   ]
 }
