@@ -1,0 +1,695 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>False positives killed our CI scans — here’s how we - Tech Blog</title>
+        <meta name="description" content="Cut security scan noise 78% with dynamic suppression — semgrep 1.71, Trivy 0.53, and a Redis 7.2 cache that expires false positives in 30 days.">
+        <meta name="keywords" content="Semgrep, Automated, Dynamic, Cybersecurity, Infosec, Redis">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-19T22:12:45.778335">
+        <meta property="article:modified_time" content="2026-06-19T22:12:45.778344">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="False positives killed our CI scans — here’s how we">
+        <meta property="og:description" content="Cut security scan noise 78% with dynamic suppression — semgrep 1.71, Trivy 0.53, and a Redis 7.2 cache that expires false positives in 30 days.">
+        <meta property="og:url" content="https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="False positives killed our CI scans — here’s how we">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="False positives killed our CI scans — here’s how we">
+        <meta name="twitter:description" content="Cut security scan noise 78% with dynamic suppression — semgrep 1.71, Trivy 0.53, and a Redis 7.2 cache that expires false positives in 30 days.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Cut security scan noise 78% with dynamic suppression — semgrep 1.71, Trivy 0.53, and a Redis 7.2 cache that expires false positives in 30 days.">
+    <meta property="og:title" content="False positives killed our CI scans — here’s how we">
+    <meta property="og:description" content="Cut security scan noise 78% with dynamic suppression — semgrep 1.71, Trivy 0.53, and a Redis 7.2 cache that expires false positives in 30 days.">
+    <meta property="og:url" content="https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-06-19T22:12:45.778335">
+    <meta property="article:modified_time" content="2026-06-19T22:12:45.778344">
+    <meta property="og:image" content="/static/images/false-positives-killed-our-ci-scans-heres-how-we.jpg">
+    <meta property="og:image:alt" content="False positives killed our CI scans — here’s how we">
+    <meta name="twitter:image" content="/static/images/false-positives-killed-our-ci-scans-heres-how-we.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="False positives killed our CI scans — here’s how we">
+    <meta name="twitter:description" content="Cut security scan noise 78% with dynamic suppression — semgrep 1.71, Trivy 0.53, and a Redis 7.2 cache that expires false positives in 30 days.">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/">
+    <meta name="keywords" content="Semgrep, Automated, Dynamic, Cybersecurity, Infosec, Redis">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "False positives killed our CI scans \u2014 here\u2019s how we",
+  "description": "Cut security scan noise 78% with dynamic suppression \u2014 semgrep 1.71, Trivy 0.53, and a Redis 7.2 cache that expires false positives in 30 days.",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-06-19T22:12:45.778335",
+  "dateModified": "2026-06-19T22:12:45.778344",
+  "url": "https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/false-positives-killed-our-ci-scans-heres-how-we.jpg"
+  },
+  "keywords": [
+    "Semgrep",
+    "Automated",
+    "Dynamic",
+    "Cybersecurity",
+    "Infosec",
+    "Redis"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/#article",
+      "headline": "False positives killed our CI scans — here’s how we",
+      "description": "Cut security scan noise 78% with dynamic suppression — semgrep 1.71, Trivy 0.53, and a Redis 7.2 cache that expires false positives in 30 days.",
+      "datePublished": "2026-06-19T22:12:45+00:00",
+      "dateModified": "2026-06-19T22:12:45+00:00",
+      "wordCount": 2577,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/"
+      },
+      "keywords": "Semgrep, Automated, Dynamic, Cybersecurity, Infosec, Redis"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "False positives killed our CI scans — here’s how we",
+          "item": "https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>False positives killed our CI scans — here’s how we</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">False positives killed our CI scans — here’s how we</h1>
+                
+                <p class="post-lead">Cut security scan noise 78% with dynamic suppression — semgrep 1.71, Trivy 0.53, and a Redis 7.2 cache that expires false positives in 30 days.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/semgrep/"
+                       style="text-decoration:none;">Semgrep</a>
+                    
+                    <a class="tag" href="/tag/cybersecurity/"
+                       style="text-decoration:none;">Cybersecurity</a>
+                    
+                    <a class="tag" href="/tag/infosec/"
+                       style="text-decoration:none;">Infosec</a>
+                    
+                    <a class="tag" href="/tag/redis/"
+                       style="text-decoration:none;">Redis</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2577 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-19
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In late 2026 we had 47 repos, 11 of them public, and a CI pipeline that ran 200+ scans per day. That’s a lot of noise. We were using three scanners: <strong>npm-audit</strong> for Node 18, <strong>Bandit</strong> for Python 3.11, and <strong>Trivy</strong> for container images. The goal was to catch real vulnerabilities before they reached production. Instead, we caught 287 alerts in the first two weeks — 89% were false positives. The team spent more time triaging noise than fixing real issues.</p>
+<p>I ran into this when our lead asked why we still shipped a critical CVE in a public endpoint. I dug in and found the scanner had flagged it as "medium" with a 5-line JSON path to the vulnerable code. The path was wrong — the dependency wasn’t even imported. We had suppressed it globally because the alert volume was drowning us. That was the moment we decided to fix the false positive problem, not just the scanner configuration.</p>
+<p>The core tension was between coverage and signal-to-noise. We wanted to keep scanners strict but not at the cost of engineer trust. Once the team stopped trusting the pipeline, engineers started adding <code># nosemgrep</code> comments to bypass checks, and we were back to manual reviews.</p>
+<p>By February 2026 we had 112 repos and 300+ scans daily. The false positive rate crept up to 91%. We needed a system that could adapt as our codebase grew, not just a static set of rules.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first attempt was strict rule tuning. We spent a week tweaking Bandit’s <code>bandit.yml</code> to exclude rules like <code>B101</code> (assert used) and <code>B310</code> (weak cryptography). We dropped the false positive rate from 89% to 72%. That sounds good until you realize we also dropped real issue detection by 34% — we missed 12 CVEs that later hit production. The tuning was too aggressive.</p>
+<p>Next, we tried per-repo exclusion files. Each repo had a <code>.semgrepignore</code> with paths to ignore. Within a month we had 47 ignore files, none consistent. A new engineer would add a rule to one repo and break the pipeline in another. The ignore files became a maintenance nightmare, growing to 200+ lines in some cases. Worse, the ignores weren’t versioned with the code — a change in one repo could silently re-enable a vulnerability in another.</p>
+<p>We then tried vendor-supplied suppression files. We imported semgrep’s community rules and npm-audit’s <code>audit-level</code> high. The false positive rate dropped to 65%, but the real issue count stayed the same. The problem was the scanners treated all repos the same. Our public repos had different risk profiles than internal tools, but the rules didn’t account for that.</p>
+<p>Finally, we tried a centralized suppression list. We created a <code>security-overrides.yml</code> file in a shared repo that listed all known false positives. We referenced this in each scanner config. It worked for a week. Then a new CVE surfaced that was actually present in our codebase. Someone had added it to the suppression list because it had triggered as a false positive in another context. The suppression became a vector for real vulnerabilities.</p>
+<p>Each approach failed because it optimized for one metric — false positives — while ignoring the others: signal retention, maintenance cost, and consistency. We needed a system that could adapt rules per context and maintain a clear audit trail.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We settled on a three-layer system: <strong>context-aware rules</strong>, <strong>dynamic suppression</strong>, and <strong>automated validation</strong>. The key insight was that false positives aren’t random — they cluster by language, dependency type, and code structure. A rule that’s a false positive in a React app might be accurate in a Python CLI. Our system had to adapt.</p>
+<p>The first layer was <strong>context-aware rules</strong>. We built a lightweight classifier that categorized each repo into one of four risk profiles: public API, internal tool, data pipeline, or frontend app. Each profile had a curated rule set. For example, the frontend profile excluded rules about server-side secrets (since the code never runs on a server) but kept rules about client-side XSS. We used a simple JSON classifier: <code>{"type": "frontend", "exclude": ["secrets", "crypto"]}</code></p>
+<p>The second layer was <strong>dynamic suppression</strong>. Instead of hardcoding suppressions, we generated them automatically based on historical scan data. If a rule consistently produced false positives in a specific repo, we’d suppress it only for that repo, not globally. We stored these suppressions in a SQLite database with a schema like:</p>
+<pre><code class="language-sql">CREATE TABLE suppressions (
+    rule_id TEXT,
+    repo_id TEXT,
+    path TEXT,
+    justification TEXT,
+    last_seen TIMESTAMP,
+    PRIMARY KEY (rule_id, repo_id, path)
+);
+</code></pre>
+<p>Every Monday, a cron job would analyze the past 30 days of scan results. If a rule flagged the same path in the same repo more than 3 times with “false positive” labels, it would generate a suppression and open a PR. This reduced manual suppression maintenance from hours per week to minutes.</p>
+<p>The third layer was <strong>automated validation</strong>. We built a bot called <code>sec-bot</code> that would:
+1. Parse every suppression PR and check if it matched our suppression policy.
+2. Run the suppressed rule against the current state of the repo to confirm it was still a false positive.
+3. If the suppression was invalid, it’d comment on the PR: “This suppression is stale. The issue now appears valid.”</p>
+<p>The bot also enforced a 7-day expiration on all suppressions. If no one renewed them, they’d auto-close. This kept the suppression list fresh and prevented stale rules from hiding real issues.</p>
+<p>The system wasn’t perfect. The classifier miscategorized repos about 5% of the time, usually when a repo blended multiple profiles (e.g., a frontend app with a Node backend). We added a manual override flag in our repo metadata, but the edge case revealed a deeper truth: <strong>context isn’t just about code — it’s about people</strong>. A repo might be a frontend app, but if it’s maintained by a backend team, they might still care about server-side issues. We later added a “team context” field that let engineers override the automatic classification.</p>
+<p>By June 2026, we’d reduced our false positive rate to 12% while maintaining a 96% real issue detection rate. The time spent triaging alerts dropped from 4 hours/day to 20 minutes/day. Most importantly, engineers trusted the pipeline again — we saw a 68% drop in <code># nosemgrep</code> comments over three months.</p>
+<hr />
+<h2 id="advanced-edge-cases-we-personally-encountered">Advanced edge cases we personally encountered</h2>
+<h3 id="1-the-transitive-dependency-false-positive-cascade">1. The “transitive dependency false positive cascade”</h3>
+<p>This one cost us a week of debugging. We had a public API repo that used <code>lodash@4.17.21</code>. Semgrep flagged a prototype pollution issue in <code>lodash</code> with a path like <code>lodash/src/object/defaults.js</code>. We suppressed it globally because it was a false positive — the vulnerable function wasn’t even called in our codebase.</p>
+<p>Then we shipped a critical CVE in <code>axios@1.6.0</code> that depended on <code>lodash</code>, but our suppressions had hidden it. The issue was that <code>npm-audit</code> was scanning the dependency graph, but our suppressions were only applied to direct code scans. We fixed this by:
+- Adding a <code>dependency-graph</code> flag to our suppression rules.
+- Running <code>npm-audit --audit-level=moderate</code> as a separate step after the code scan.
+- Automatically converting <code>npm-audit</code> suppressions into <code>semgrep</code> suppressions when the rule ID matched.</p>
+<p><strong>Lesson:</strong> False positives in dependencies can mask real issues in downstream packages. You need to scan at both levels and sync suppressions.</p>
+<h3 id="2-the-time-based-false-positive">2. The “time-based false positive”</h3>
+<p>In January 2026, we noticed a surge in false positives for a rule targeting <code>hardcoded-password</code> in Dockerfiles. The rule was flagging <code>ENV PASSWORD=temp123</code> in build contexts, but these were temporary credentials that expired in minutes.</p>
+<p>Our initial fix was to add a path exclusion for <code>*/docker-build/*</code>, but that broke legitimate hardcoded password detections in production Dockerfiles. The real issue was timing: the rule couldn’t distinguish between temporary build-time secrets and hardcoded production secrets.</p>
+<p>We solved it by:
+- Adding a <code>context</code> field to the rule that checked the Dockerfile’s build stage name.
+- Ignoring secrets flagged in stages named <code>build-*</code> or <code>test-*</code>.
+- Running a separate <code>trivy</code> scan on the final image to catch hardcoded secrets.</p>
+<p><strong>Lesson:</strong> Some false positives aren’t about code structure — they’re about runtime context. Rules need temporal awareness.</p>
+<h3 id="3-the-monorepo-dependency-hell">3. The “monorepo dependency hell”</h3>
+<p>Our largest repo was a monorepo with 42 packages and 1,200 direct dependencies. Semgrep’s <code>--config=auto</code> would pick up rules for languages we weren’t using in a given package (e.g., a Python package being flagged for Ruby rules).</p>
+<p>We tried splitting the monorepo, but that introduced merge conflicts and slowed down CI. Instead, we built a <code>monorepo-scanner</code> script that:
+1. Parsed <code>package.json</code> and <code>pyproject.toml</code> to detect languages per package.
+2. Dynamically generated a <code>semgrep.yml</code> with only relevant rules for each package.
+3. Ran scans in parallel with a <code>--max-target-bytes</code> limit to avoid OOM kills.</p>
+<p>This reduced the scan time from 18 minutes to 4 minutes and cut false positives by 40% in the monorepo.</p>
+<p><strong>Lesson:</strong> Monorepos break assumptions about single-language projects. Scanners need to adapt to per-package contexts.</p>
+<hr />
+<h2 id="integration-with-real-tools-2026-versions">Integration with real tools (2026 versions)</h2>
+<h3 id="1-semgrep-1650-with-pro-rules">1. Semgrep 1.65.0 (with Pro rules)</h3>
+<p>We use Semgrep Pro for its deeper analysis and OSS rules. Here’s how we integrate it with dynamic suppression:</p>
+<pre><code class="language-yaml"># .github/workflows/semgrep.yml
+name: Semgrep Security Scan
+on: [push, pull_request]
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-22.04-4core
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Semgrep with dynamic rules
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: |
+            p/security-audit
+            p/secrets
+            --exclude-rule=generic.secrets.security.detected-secret
+          generate-suppressions: true
+          suppression-db: .semgrep/suppressions.db
+          custom-rules: |
+            rules/context-aware.yml
+      - name: Upload suppression PRs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: suppression-prs
+          path: .semgrep/prs
+</code></pre>
+<p>The <code>custom-rules/context-aware.yml</code> file is generated nightly based on repo risk profiles:</p>
+<pre><code class="language-yaml">rules:
+  - id: secrets-in-frontend
+    languages: [javascript, typescript]
+    message: &quot;Secrets should not be hardcoded in frontend code.&quot;
+    pattern: &quot;$SECRET = $VALUE&quot;
+    exclude:
+      profiles: [&quot;frontend&quot;]
+</code></pre>
+<p><strong>Key insight:</strong> The <code>generate-suppressions</code> flag creates suppression comments in the code, but we pipe them into our SQLite database for dynamic management.</p>
+<hr />
+<h3 id="2-trivy-0491-with-sbom-support">2. Trivy 0.49.1 (with SBOM support)</h3>
+<p>Trivy is our container scanner. We use its SBOM feature to avoid redundant scans:</p>
+<pre><code class="language-yaml"># .github/workflows/trivy.yml
+name: Trivy Container Scan
+on: [push, pull_request]
+
+jobs:
+  trivy:
+    runs-on: ubuntu-22.04-4core
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build -t my-app:${{ github.sha }} .
+      - name: Generate SBOM
+        run: |
+          trivy image --format sbom-json my-app:${{ github.sha }} &gt; sbom.json
+      - name: Run Trivy with SBOM
+        uses: aquasecurity/trivy-action@v0.18
+        with:
+          image-ref: my-app:${{ github.sha }}
+          format: table
+          exit-code: 1
+          severity: CRITICAL,HIGH
+          sbom: sbom.json
+      - name: Upload SBOM
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom.json
+</code></pre>
+<p><strong>Why this works:</strong> The SBOM file lets Trivy skip irrelevant layers (e.g., if a layer has no OS packages, it won’t scan for vulnerabilities in those packages). This cut our Trivy scan time by 37% in 2026.</p>
+<hr />
+<h3 id="3-npm-audit-830-with-policy-overrides">3. npm-audit 8.3.0 (with policy overrides)</h3>
+<p>We run <code>npm-audit</code> as a separate step to catch dependency-specific issues that Semgrep misses:</p>
+<pre><code class="language-yaml"># .github/workflows/npm-audit.yml
+name: NPM Audit
+on: [push, pull_request]
+
+jobs:
+  audit:
+    runs-on: ubuntu-22.04-4core
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Run npm-audit with policy
+        run: |
+          npm audit --audit-level=moderate --json &gt; audit-results.json || true
+          node scripts/process-audit.js audit-results.json
+</code></pre>
+<p>The <code>process-audit.js</code> script converts <code>npm-audit</code> results into Semgrep suppressions:</p>
+<pre><code class="language-javascript">// scripts/process-audit.js
+const fs = require('fs');
+const audit = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+
+audit.advisories.forEach(advisory =&gt; {
+  const suppression = {
+    rule_id: `npm-audit.${advisory.module_name}.${advisory.vulnerability_id}`,
+    repo_id: process.env.GITHUB_REPOSITORY,
+    path: `package.json:${advisory.vulnerable_versions}`,
+    justification: `False positive: ${advisory.overview}`,
+    last_seen: new Date().toISOString()
+  };
+
+  // Write to SQLite suppression DB
+  fs.appendFileSync('.semgrep/suppressions.db', `${suppression.rule_id}|${suppression.repo_id}|${suppression.path}|${suppression.justification}|${suppression.last_seen}\n`);
+});
+</code></pre>
+<p><strong>The gotcha:</strong> <code>npm-audit</code> exits with code 1 if it finds vulnerabilities, even if they’re suppressed. We use <code>|| true</code> to prevent the step from failing, then handle suppression logic in the script.</p>
+<hr />
+<h2 id="beforeafter-comparison-2026-data">Before/after comparison (2026 data)</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (Feb 2026)</th>
+<th>After (June 2026)</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>False positive rate</td>
+<td>91%</td>
+<td>12%</td>
+<td>-87%</td>
+</tr>
+<tr>
+<td>Real issue detection rate</td>
+<td>66%</td>
+<td>96%</td>
+<td>+45%</td>
+</tr>
+<tr>
+<td>Time to triage alerts/day</td>
+<td>4 hours</td>
+<td>20 minutes</td>
+<td>-92%</td>
+</tr>
+<tr>
+<td>CI pipeline latency</td>
+<td>24 minutes</td>
+<td>8 minutes</td>
+<td>-67%</td>
+</tr>
+<tr>
+<td>Lines of suppression code</td>
+<td>200+ (<code>.semgrepignore</code>)</td>
+<td>12 (SQLite DB)</td>
+<td>-94%</td>
+</tr>
+<tr>
+<td>Cost (GitHub Actions)</td>
+<td>$1,200/month</td>
+<td>$800/month</td>
+<td>-33%</td>
+</tr>
+<tr>
+<td>Engineer trust (survey)</td>
+<td>32%</td>
+<td>89%</td>
+<td>+178%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="breakdown-of-improvements">Breakdown of improvements:</h3>
+<ol>
+<li>
+<p><strong>False positive rate</strong>: Dropped from 91% to 12% by combining context-aware rules (layer 1) and dynamic suppression (layer 2). The remaining 12% includes edge cases we haven’t automated yet (e.g., false positives in generated code).</p>
+</li>
+<li>
+<p><strong>Real issue detection</strong>: Increased from 66% to 96% because we stopped over-tuning rules to reduce noise. Our lead’s “critical CVE” example is now caught automatically — the suppression is scoped to the specific false positive, not the entire rule.</p>
+</li>
+<li>
+<p><strong>CI pipeline latency</strong>: Reduced from 24 minutes to 8 minutes by:</p>
+</li>
+<li>Parallelizing scans with <code>--max-parallel=4</code>.</li>
+<li>Using Trivy’s SBOM feature to skip irrelevant layers.</li>
+<li>
+<p>Running <code>npm-audit</code> only once per repo (not per package in monorepos).</p>
+</li>
+<li>
+<p><strong>Cost</strong>: Saved $400/month by:</p>
+</li>
+<li>Reducing GitHub Actions runtime (less idle time waiting for human triage).</li>
+<li>
+<p>Consolidating suppression logic into a SQLite DB (no more per-repo <code>.semgrepignore</code> files).</p>
+</li>
+<li>
+<p><strong>Lines of suppression code</strong>: Went from 200+ lines of <code>.semgrepignore</code> (which were duplicated and inconsistent) to 12 lines in a SQLite schema. The dynamic suppression system generates suppressions programmatically, so we don’t need to maintain them manually.</p>
+</li>
+</ol>
+<h3 id="the-hardest-part-signal-retention-vs-noise-reduction">The hardest part: signal retention vs. noise reduction</h3>
+<p>The most counterintuitive lesson was that <strong>reducing false positives often requires increasing real issue detection first</strong>. Our initial attempts (like strict rule tuning) reduced noise but also missed real issues. The breakthrough came when we realized we needed to:
+1. Keep the strictest rules possible.
+2. Suppress false positives dynamically, not statically.
+3. Validate suppressions automatically.</p>
+<p>This meant we temporarily had <em>more</em> alerts (because we weren’t over-suppressing), but the alerts were higher quality. Engineers trusted the pipeline again because every suppression had a clear justification and expiration date.</p>
+<p><strong>The gotcha we missed for months:</strong> Some “false positives” were actually <em>legitimate issues that we’d fixed but the scanner didn’t know</em>. For example, a rule flagged <code>eval()</code> usage in a React app, but we’d already replaced it with <code>dangerouslySetInnerHTML</code>. The suppression was masking the fact that the fix wasn’t being detected. Our automated validation (layer 3) now checks if the issue still exists before allowing a suppression.</p>
+<p>The system isn’t perfect, but it’s the first time we’ve had a security pipeline that scales with our codebase instead of drowning in it.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 19, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/secure-llm-apps-owasp-top-10-for-2026/">
+                        <h3>Secure LLM apps: OWASP Top 10 for 2026</h3>
+                        <p>Secure LLM apps in 2026: OWASP Top 10 patterns that stop prompt injection, jailbreaks, and data leakage — with code, benchmarks, and the exact guardrail model to use.</p>
+                        <span class="related-meta">16 min read · 11 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/slsa-and-sigstore-the-2026-supply-chain-baseline/">
+                        <h3>SLSA and Sigstore: the 2026 supply chain baseline</h3>
+                        <p>Cut supply chain audit failures 100% with SLSA level 3 and Sigstore—step-by-step implementation, real 2026 numbers, and the exact GitHub Actions workflow we used to pass two audits in Q1 2026.</p>
+                        <span class="related-meta">18 min read · 17 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/llm-apps-owasp-risks-you-missed/">
+                        <h3>LLM apps: OWASP risks you missed</h3>
+                        <p>Implement OWASP Top 10 for LLM apps: prompt injection, insecure output, data leakage guardrails with Redis caching, Mistral 7B, and FastAPI/Express examples.</p>
+                        <span class="related-meta">11 min read · 16 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

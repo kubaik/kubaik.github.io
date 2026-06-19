@@ -65,5 +65,6 @@
   "Why vibe coding works for MVPs and fails for anything you need to maintain",
   "Building for eventual consistency: the real-world patterns behind systems that stay up",
   "Building webhook systems in 2026: delivery guarantees, retries, and idempotency",
-  "Edge-native backends in 2026: what changes when your API runs in 50 locations"
+  "Edge-native backends in 2026: what changes when your API runs in 50 locations",
+  "How I run automated security scanning in CI without drowning in false positives"
 ]

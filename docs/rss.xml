@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 22:07:51 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 22:12:53 +0000</lastBuildDate>
+    <item>
+      <title>False positives killed our CI scans — here’s how we</title>
+      <link>https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/</link>
+      <description>Cut security scan noise 78% with dynamic suppression — semgrep 1.71, Trivy 0.53, and a Redis 7.2 cache that expires false positives in 30 days.</description>
+      <pubDate>Fri, 19 Jun 2026 22:12:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/</guid>
+    </item>
     <item>
       <title>Run APIs in 50 spots: what breaks first</title>
       <link>https://kubaik.github.io/run-apis-in-50-spots-what-breaks-first/</link>
@@ -138,13 +145,6 @@
       <description>Beat AI clones: 4 portfolio signals African teams check first – real deployment, failure handling, cost under $10, and network-aware UI. 80% callback rate vs. 0% for generic repos.</description>
       <pubDate>Fri, 19 Jun 2026 12:15:12 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-projects-that-beat-ai-clones-4-signals/</guid>
-    </item>
-    <item>
-      <title>Tool calling: stateless beats stateful under load</title>
-      <link>https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/</link>
-      <description>Cut p99 latency 60% and save $41 per 1000 RPS by switching from stateful to stateless tool calls — the one metric to watch first and the three-line config that prevents the next outage.</description>
-      <pubDate>Fri, 19 Jun 2026 09:01:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/</guid>
     </item>
   </channel>
 </rss>
