@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 18:59:27 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 19:04:09 +0000</lastBuildDate>
+    <item>
+      <title>AI SaaS build: solo vs agent team in 2026</title>
+      <link>https://kubaik.github.io/ai-saas-build-solo-vs-agent-team-in-2026/</link>
+      <description>Spend $3k vs $700 to build a solo SaaS in 2026? Benchmarks from two real products show why targeted AI beats full agent teams — with concrete numbers, pitfalls, and the 30-minute audit you can run today.</description>
+      <pubDate>Fri, 19 Jun 2026 19:04:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-saas-build-solo-vs-agent-team-in-2026/</guid>
+    </item>
     <item>
       <title>Paddle over Stripe? 2026’s real winner</title>
       <link>https://kubaik.github.io/paddle-over-stripe-2026s-real-winner/</link>
@@ -138,13 +145,6 @@
       <description>Cut onboarding time 50% with AI guardrails-first — the bug escape rate drops 3x and incident costs fall $2k per dev in 90 days. Real tooling stack and pipeline scripts included.</description>
       <pubDate>Thu, 18 Jun 2026 23:29:46 +0000</pubDate>
       <guid>https://kubaik.github.io/trust-ai-code-faster/</guid>
-    </item>
-    <item>
-      <title>37% of mobile money reconciliations fail</title>
-      <link>https://kubaik.github.io/37-of-mobile-money-reconciliations-fail/</link>
-      <description>Reconciled 98.4% of mobile money transactions by switching to webhooks and ledger-line matching — the edge cases Flutterwave and Paystack don’t document and how to fix them</description>
-      <pubDate>Thu, 18 Jun 2026 23:17:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/37-of-mobile-money-reconciliations-fail/</guid>
     </item>
   </channel>
 </rss>
