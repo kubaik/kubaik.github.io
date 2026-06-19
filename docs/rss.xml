@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 12:10:09 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 12:15:20 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio projects that beat AI clones: 4 signals</title>
+      <link>https://kubaik.github.io/portfolio-projects-that-beat-ai-clones-4-signals/</link>
+      <description>Beat AI clones: 4 portfolio signals African teams check first – real deployment, failure handling, cost under $10, and network-aware UI. 80% callback rate vs. 0% for generic repos.</description>
+      <pubDate>Fri, 19 Jun 2026 12:15:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-projects-that-beat-ai-clones-4-signals/</guid>
+    </item>
     <item>
       <title>Tool calling: stateless beats stateful under load</title>
       <link>https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/</link>
@@ -138,13 +145,6 @@
       <description>Cut image upload time 60% with Starlink CDN — Lambda@Edge, sharp 0.33.2, and the resize mistakes most teams make.</description>
       <pubDate>Thu, 18 Jun 2026 16:57:23 +0000</pubDate>
       <guid>https://kubaik.github.io/move-images-50-faster-in-2026-with-starlink-cdn/</guid>
-    </item>
-    <item>
-      <title>LLM evals: the 3 metrics that pay off</title>
-      <link>https://kubaik.github.io/llm-evals-the-3-metrics-that-pay-off/</link>
-      <description>Cut API response cost 63% by measuring only 3 LLM metrics — latency P95, cost per resolved conversation, and trust drift. Real Nairobi fintech numbers, code, and the mistakes that cost money.</description>
-      <pubDate>Thu, 18 Jun 2026 16:43:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-evals-the-3-metrics-that-pay-off/</guid>
     </item>
   </channel>
 </rss>

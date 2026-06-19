@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T09:01:44.888436",
+  "built_at": "2026-06-19T12:15:14.173268",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1745,6 +1745,11 @@
       "slug": "tool-calling-stateless-beats-stateful-under-load",
       "title": "Tool calling: stateless beats stateful under load",
       "summary": "I've seen the same toolcalling patterns mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, every microservice I touch either talks to Postgres, Red"
+    },
+    {
+      "slug": "portfolio-projects-that-beat-ai-clones-4-signals",
+      "title": "Portfolio projects that beat AI clones: 4 signals",
+      "summary": "Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, every junior dev in Lagos, Nairobi, or Accra can generate a React dashboard w"
     }
   ]
 }
