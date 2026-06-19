@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 21:39:11 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 21:43:47 +0000</lastBuildDate>
+    <item>
+      <title>Webhooks 2026: retries, idempotency, and the 99.95%</title>
+      <link>https://kubaik.github.io/webhooks-2026-retries-idempotency-and-the-9995/</link>
+      <description>Cut webhook failures 95% with Redis Streams, Lambda SnapStart, and idempotency keys — p99 latency 780 ms, cost $1.01 per 1,000 events in 2026</description>
+      <pubDate>Fri, 19 Jun 2026 21:43:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/webhooks-2026-retries-idempotency-and-the-9995/</guid>
+    </item>
     <item>
       <title>11 patterns for eventual consistency that don’t wake</title>
       <link>https://kubaik.github.io/11-patterns-for-eventual-consistency-that-dont-wake/</link>
@@ -138,13 +145,6 @@
       <description>Cut multi-region AWS bills 55% with Redis caching — latency drops from 142 ms to 28 ms, cache hit ratio 96%, and the cache stampede mistake most teams miss.</description>
       <pubDate>Fri, 19 Jun 2026 08:25:34 +0000</pubDate>
       <guid>https://kubaik.github.io/shrink-multi-region-bills-55-without-losing-users/</guid>
-    </item>
-    <item>
-      <title>AWS IAM: write policies in 20 mins</title>
-      <link>https://kubaik.github.io/aws-iam-write-policies-in-20-mins/</link>
-      <description>Cut AWS IAM policy churn 78% with managed policies + conditions — 2026 guide with Node 20 LTS examples and 3 concrete numbers.</description>
-      <pubDate>Fri, 19 Jun 2026 07:38:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/aws-iam-write-policies-in-20-mins/</guid>
     </item>
   </channel>
 </rss>
