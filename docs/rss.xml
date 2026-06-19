@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 18:22:46 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 18:27:16 +0000</lastBuildDate>
+    <item>
+      <title>Paddle over Stripe? 2026’s real winner</title>
+      <link>https://kubaik.github.io/paddle-over-stripe-2026s-real-winner/</link>
+      <description>Save 20% on EU VAT compliance with Paddle — real fees, benchmarks, and the mistake most teams make when choosing Stripe vs Paddle vs Lemon Squeezy in 2026.</description>
+      <pubDate>Fri, 19 Jun 2026 18:27:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/paddle-over-stripe-2026s-real-winner/</guid>
+    </item>
     <item>
       <title>Branching databases locally: the Neon gotcha nobody</title>
       <link>https://kubaik.github.io/branching-databases-locally-the-neon-gotcha-nobody/</link>
@@ -138,13 +145,6 @@
       <description>Reconciled 98.4% of mobile money transactions by switching to webhooks and ledger-line matching — the edge cases Flutterwave and Paystack don’t document and how to fix them</description>
       <pubDate>Thu, 18 Jun 2026 23:17:55 +0000</pubDate>
       <guid>https://kubaik.github.io/37-of-mobile-money-reconciliations-fail/</guid>
-    </item>
-    <item>
-      <title>Replace .env with these in 2026</title>
-      <link>https://kubaik.github.io/replace-env-with-these-in-2026/</link>
-      <description>Cut secrets-related outages 90% with AWS Secrets Manager and Teller — rotation without downtime, cache stampede fixes, and the $18k mistake most teams repeat.</description>
-      <pubDate>Thu, 18 Jun 2026 22:18:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/replace-env-with-these-in-2026/</guid>
     </item>
   </channel>
 </rss>
