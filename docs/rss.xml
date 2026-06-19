@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 15:47:25 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 15:52:11 +0000</lastBuildDate>
+    <item>
+      <title>WCAG chat bots miss: 4 invisible traps</title>
+      <link>https://kubaik.github.io/wcag-chat-bots-miss-4-invisible-traps/</link>
+      <description>WCAG chat bots miss: 4 invisible traps — how to fix aria-live duplication, missing roles, and Safari VoiceOver failures in 2026</description>
+      <pubDate>Fri, 19 Jun 2026 15:52:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/wcag-chat-bots-miss-4-invisible-traps/</guid>
+    </item>
     <item>
       <title>AI tools crashed freelance rates — here’s the math</title>
       <link>https://kubaik.github.io/ai-tools-crashed-freelance-rates-heres-the-math/</link>
@@ -138,13 +145,6 @@
       <description>Cut frontend test flakes 95% and build time 83% by dropping Cypress for Playwright + Vitest in 2026 — real numbers, real migrations, and the one mistake that cost me days</description>
       <pubDate>Thu, 18 Jun 2026 19:40:12 +0000</pubDate>
       <guid>https://kubaik.github.io/frontend-testing-stack-2026-playwright-beats-vitest/</guid>
-    </item>
-    <item>
-      <title>Platforms that scale: the 3 sizes that actually work</title>
-      <link>https://kubaik.github.io/platforms-that-scale-the-3-sizes-that-actually-work/</link>
-      <description>Stop writing IaaC wrappers: the 3 platform patterns that actually work in 2026 with concrete numbers, code, and failure modes nobody documents.</description>
-      <pubDate>Thu, 18 Jun 2026 19:21:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/platforms-that-scale-the-3-sizes-that-actually-work/</guid>
     </item>
   </channel>
 </rss>

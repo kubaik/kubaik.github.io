@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T12:49:14.751091",
+  "built_at": "2026-06-19T15:52:05.671885",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1765,6 +1765,11 @@
       "slug": "ai-tools-crashed-freelance-rates-heres-the-math",
       "title": "AI tools crashed freelance rates — here’s the math",
       "summary": "The short version: the conventional advice on freelance developer is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In 2026, freelance developer rates for AI-assisted tasks have fallen 28–35% be"
+    },
+    {
+      "slug": "wcag-chat-bots-miss-4-invisible-traps",
+      "title": "WCAG chat bots miss: 4 invisible traps",
+      "summary": "After reviewing a lot of code that touches building accessible, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing If your AI chat widget works in Chrome on macOS at 100% zoom but fails in Firefox on"
     }
   ]
 }
