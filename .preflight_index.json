@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T03:30:19.346879",
+  "built_at": "2026-06-19T07:15:15.614418",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1725,6 +1725,11 @@
       "slug": "1m-tokens-wont-save-you",
       "title": "1M tokens won't save you",
       "summary": "A colleague asked me about context window during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In"
+    },
+    {
+      "slug": "attack-vectors-hiding-in-ais-data-pipelines",
+      "title": "Attack vectors hiding in AI’s data pipelines",
+      "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams treat prompt injectio"
     }
   ]
 }

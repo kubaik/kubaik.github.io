@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 07:11:31 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 07:15:18 +0000</lastBuildDate>
+    <item>
+      <title>Attack vectors hiding in AI’s data pipelines</title>
+      <link>https://kubaik.github.io/attack-vectors-hiding-in-ais-data-pipelines/</link>
+      <description>Cut prompt injection risk 80% with structured prompts and sanitization — Unicode pitfalls, metadata poisoning, and the logging trap most teams miss in 2026 AI systems.</description>
+      <pubDate>Fri, 19 Jun 2026 07:15:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/attack-vectors-hiding-in-ais-data-pipelines/</guid>
+    </item>
     <item>
       <title>Why monoliths die slowly in 2026</title>
       <link>https://kubaik.github.io/why-monoliths-die-slowly-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Save 25–35% on AWS bills in 2026: why Compute Savings Plans beat Reserved Instances for mid-size teams, with real benchmarks and Terraform examples.</description>
       <pubDate>Thu, 18 Jun 2026 13:58:26 +0000</pubDate>
       <guid>https://kubaik.github.io/aws-finops-levers-what-mid-size-teams-ignore-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI-proof skills: the 3 skills worth $100k in 2026</title>
-      <link>https://kubaik.github.io/ai-proof-skills-the-3-skills-worth-100k-in-2026/</link>
-      <description>Protect your $100k salary from AI automation: the 3 non-automatable skills every solo founder must master in 2026 — latency, cost, and debuggability</description>
-      <pubDate>Thu, 18 Jun 2026 13:02:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-proof-skills-the-3-skills-worth-100k-in-2026/</guid>
     </item>
   </channel>
 </rss>

@@ -42,5 +42,6 @@
   "Technical debt in 2026: the new category created by AI-generated code",
   "Designing notification systems that work across push, email, SMS, and WhatsApp",
   "How I migrated a monolith to services in 2026 without a big-bang rewrite",
-  "The context window arms race: what 1M token models actually change in practice"
+  "The context window arms race: what 1M token models actually change in practice",
+  "Prompt injection in production AI systems: the attack surface most teams are ignoring"
 ]
