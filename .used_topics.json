@@ -60,5 +60,6 @@
   "How AI changed the economics of building a solo SaaS in 2026",
   "How prompt injection attacks work and why your AI product is probably vulnerable",
   "Building audit logs that satisfy compliance requirements without killing performance",
-  "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff"
+  "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff",
+  "How Signals changed state management and whether it matters outside of frameworks"
 ]

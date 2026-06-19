@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 20:22:31 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 20:27:38 +0000</lastBuildDate>
+    <item>
+      <title>Signals: 5 state hacks that actually work</title>
+      <link>https://kubaik.github.io/signals-5-state-hacks-that-actually-work/</link>
+      <description>Cut React render time 99% with Signals — benchmarks, code, and the one mistake teams keep making</description>
+      <pubDate>Fri, 19 Jun 2026 20:27:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/signals-5-state-hacks-that-actually-work/</guid>
+    </item>
     <item>
       <title>Fine-tune vs prompt: 40% cheaper with 3% accuracy loss</title>
       <link>https://kubaik.github.io/fine-tune-vs-prompt-40-cheaper-with-3-accuracy-loss/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 30% and save $325/month by extracting a monolith with Redis 7.2 and NGINX 1.25—without a big-bang rewrite</description>
       <pubDate>Fri, 19 Jun 2026 02:27:59 +0000</pubDate>
       <guid>https://kubaik.github.io/why-monoliths-die-slowly-in-2026/</guid>
-    </item>
-    <item>
-      <title>5 delivery channels that actually scale</title>
-      <link>https://kubaik.github.io/5-delivery-channels-that-actually-scale/</link>
-      <description>Cut notification latency 60% and avoid 429s with this ranked list of channels and tools — benchmarks, costs, and code for push, email, SMS, and WhatsApp in 2026.</description>
-      <pubDate>Fri, 19 Jun 2026 02:13:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-delivery-channels-that-actually-scale/</guid>
     </item>
   </channel>
 </rss>

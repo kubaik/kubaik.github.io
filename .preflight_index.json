@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T20:11:42.209385",
+  "built_at": "2026-06-19T20:27:31.990515",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1815,6 +1815,11 @@
       "slug": "fine-tune-vs-prompt-40-cheaper-with-3-accuracy-loss",
       "title": "Fine-tune vs prompt: 40% cheaper with 3% accuracy loss",
       "summary": "The official documentation for finetuning small is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams start with the big mo"
+    },
+    {
+      "slug": "signals-5-state-hacks-that-actually-work",
+      "title": "Signals: 5 state hacks that actually work",
+      "summary": "I ran into this signals changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I started this deep dive because our Next."
     }
   ]
 }
