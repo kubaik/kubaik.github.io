@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 19 Jun 2026 12:20:52 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 19 Jun 2026 12:25:24 +0000</lastBuildDate>
+    <item>
+      <title>Replace Pinecone with pgvector now</title>
+      <link>https://kubaik.github.io/replace-pinecone-with-pgvector-now/</link>
+      <description>Cut 85% off your vector search bill by replacing Pinecone with pgvector on Aurora PostgreSQL — real benchmarks, $7k savings, and the index bloat mistake most teams miss.</description>
+      <pubDate>Fri, 19 Jun 2026 12:25:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/replace-pinecone-with-pgvector-now/</guid>
+    </item>
     <item>
       <title>Portfolio projects that beat AI clones: 4 signals</title>
       <link>https://kubaik.github.io/portfolio-projects-that-beat-ai-clones-4-signals/</link>
@@ -138,13 +145,6 @@
       <description>Cut PR review time 65% with AI and semgrep on legacy Java/Python monoliths — $38/month for 200k tx/day, concrete prompts, and the race condition AI caught before production.</description>
       <pubDate>Thu, 18 Jun 2026 17:53:30 +0000</pubDate>
       <guid>https://kubaik.github.io/code-ai-wont-rewrite/</guid>
-    </item>
-    <item>
-      <title>Move images 50% faster in 2026 with Starlink CDN</title>
-      <link>https://kubaik.github.io/move-images-50-faster-in-2026-with-starlink-cdn/</link>
-      <description>Cut image upload time 60% with Starlink CDN — Lambda@Edge, sharp 0.33.2, and the resize mistakes most teams make.</description>
-      <pubDate>Thu, 18 Jun 2026 16:57:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/move-images-50-faster-in-2026-with-starlink-cdn/</guid>
     </item>
   </channel>
 </rss>

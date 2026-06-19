@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-19T12:15:14.173268",
+  "built_at": "2026-06-19T12:25:18.441483",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1750,6 +1750,11 @@
       "slug": "portfolio-projects-that-beat-ai-clones-4-signals",
       "title": "Portfolio projects that beat AI clones: 4 signals",
       "summary": "Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, every junior dev in Lagos, Nairobi, or Accra can generate a React dashboard w"
+    },
+    {
+      "slug": "replace-pinecone-with-pgvector-now",
+      "title": "Replace Pinecone with pgvector now",
+      "summary": "A colleague asked me about pgvector changed during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) "
     }
   ]
 }
