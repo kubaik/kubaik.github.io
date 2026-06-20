@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 14:23:53 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 14:28:50 +0000</lastBuildDate>
+    <item>
+      <title>AI interviews need real logs: the 401 you never</title>
+      <link>https://kubaik.github.io/ai-interviews-need-real-logs-the-401-you-never/</link>
+      <description>Cut interview callbacks 40% by adding OpenTelemetry SDK 1.26 and Redis 7.2 — the logging, tracing, and rate-limiting setup AI screeners now demand before they review your code.</description>
+      <pubDate>Sat, 20 Jun 2026 14:28:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-interviews-need-real-logs-the-401-you-never/</guid>
+    </item>
     <item>
       <title>Agent memory vanishes: why your AI forgets at 3 AM</title>
       <link>https://kubaik.github.io/agent-memory-vanishes-why-your-ai-forgets-at-3-am/</link>
@@ -138,13 +145,6 @@
       <description>Cut false-positive alerts 30% with SonarQube 10.4 vs GitHub Advanced Security — connection pool crashes, XPath rules, and the $81 monthly price tag most teams miss.</description>
       <pubDate>Fri, 19 Jun 2026 22:46:53 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-codebase-guardrails-over-guardrails/</guid>
-    </item>
-    <item>
-      <title>False positives killed our CI scans — here’s how we</title>
-      <link>https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/</link>
-      <description>Cut security scan noise 78% with dynamic suppression — semgrep 1.71, Trivy 0.53, and a Redis 7.2 cache that expires false positives in 30 days.</description>
-      <pubDate>Fri, 19 Jun 2026 22:12:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/</guid>
     </item>
   </channel>
 </rss>
