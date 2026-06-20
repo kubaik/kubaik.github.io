@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T16:27:47.304429",
+  "built_at": "2026-06-20T17:00:09.257265",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1965,6 +1965,11 @@
       "slug": "api-abuse-2026-5-attacks-we-missed-until-costs-spiked",
       "title": "API abuse 2026: 5 attacks we missed until costs spiked",
       "summary": "Most api security guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In March 2026 we had a simple problem: our REST API running on AWS Lambda (Python 3.12, F"
+    },
+    {
+      "slug": "stop-async-python-from-burning-your-production",
+      "title": "Stop async Python from burning your production",
+      "summary": "I've seen the same async python mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now If you’re running Python in production in 2026, you’ve probably hit the a"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 16:55:30 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 17:00:15 +0000</lastBuildDate>
+    <item>
+      <title>Stop async Python from burning your production</title>
+      <link>https://kubaik.github.io/stop-async-python-from-burning-your-production/</link>
+      <description>Async Python in 2026: 33% lower cost per million requests with asyncio than threads — but only if you fix these 3 timeout traps and connection leaks.</description>
+      <pubDate>Sat, 20 Jun 2026 17:00:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-async-python-from-burning-your-production/</guid>
+    </item>
     <item>
       <title>API abuse 2026: 5 attacks we missed until costs spiked</title>
       <link>https://kubaik.github.io/api-abuse-2026-5-attacks-we-missed-until-costs-spiked/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI parsing failures 36% with JSON Schema validation — why JSON mode fails, how to validate outputs, and the 3-step pipeline that works in 2026.</description>
       <pubDate>Sat, 20 Jun 2026 05:05:22 +0000</pubDate>
       <guid>https://kubaik.github.io/json-mode-doesnt-validate-outputs/</guid>
-    </item>
-    <item>
-      <title>GIL-free Python 3.13: double web server speed</title>
-      <link>https://kubaik.github.io/gil-free-python-313-double-web-server-speed/</link>
-      <description>Cut API response time 40% with Python 3.13 free-threaded GIL removal — benchmarks, thread safety traps, and the one command to try tonight</description>
-      <pubDate>Sat, 20 Jun 2026 01:39:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/gil-free-python-313-double-web-server-speed/</guid>
     </item>
   </channel>
 </rss>

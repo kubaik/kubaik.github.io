@@ -90,5 +90,6 @@
   "The infrastructure stack for a Nairobi-based SaaS in 2026: a real cost breakdown",
   "How AI is being used to find vulnerabilities and what that means for defenders",
   "How to negotiate compensation in 2026 when AI can do parts of your job description",
-  "API security in 2026: the attack patterns that are becoming more common and how to block them"
+  "API security in 2026: the attack patterns that are becoming more common and how to block them",
+  "Why async Python still surprises people and how to stop getting burned by it"
 ]
