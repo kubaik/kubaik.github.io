@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 10:16:37 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 10:21:39 +0000</lastBuildDate>
+    <item>
+      <title>MCP servers crash: tool call timeout after 5s</title>
+      <link>https://kubaik.github.io/mcp-servers-crash-tool-call-timeout-after-5s/</link>
+      <description>Cut MCP server timeouts 100% by overriding the hidden 5s default — exact commands, SDK pins, and the Istio timeout trap most teams miss.</description>
+      <pubDate>Sat, 20 Jun 2026 10:21:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-servers-crash-tool-call-timeout-after-5s/</guid>
+    </item>
     <item>
       <title>2026 alert triage: when Opsgenie slept for you</title>
       <link>https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/</link>
@@ -138,13 +145,6 @@
       <description>By late 2025, every vendor’s README shows a 1-shot accuracy number on the MMLU-Pro 2026 benchmark that looks impressive: 87.3%.</description>
       <pubDate>Fri, 19 Jun 2026 20:11:40 +0000</pubDate>
       <guid>https://kubaik.github.io/fine-tune-vs-prompt-40-cheaper-with-3-accuracy-loss/</guid>
-    </item>
-    <item>
-      <title>Audit logs: append-only DB vs sidecar queues</title>
-      <link>https://kubaik.github.io/audit-logs-append-only-db-vs-sidecar-queues/</link>
-      <description>Cut audit log latency 4× with PostgreSQL 15 logical decoding vs Kafka 3.7 sidecar queues — concrete benchmarks, costs, and the compliance trick most teams miss</description>
-      <pubDate>Fri, 19 Jun 2026 19:29:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/audit-logs-append-only-db-vs-sidecar-queues/</guid>
     </item>
   </channel>
 </rss>

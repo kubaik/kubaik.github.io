@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T09:25:42.740226",
+  "built_at": "2026-06-20T10:21:33.246389",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1905,6 +1905,11 @@
       "slug": "2026-alert-triage-when-opsgenie-slept-for-you",
       "title": "2026 alert triage: when Opsgenie slept for you",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In early 2026 I inherited an on-call rotation that woke me up 4–6 times a night. Not bec"
+    },
+    {
+      "slug": "mcp-servers-crash-tool-call-timeout-after-5s",
+      "title": "MCP servers crash: tool call timeout after 5s",
+      "summary": "After reviewing a lot of code that touches mcp servers, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. I ran into this when a fresh MCP server on my $200/month DigitalOcean 8GB Droplet started timing out after exactly five secon"
     }
   ]
 }
