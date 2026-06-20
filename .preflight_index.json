@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T20:23:32.835622",
+  "built_at": "2026-06-20T20:49:07.948401",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2005,6 +2005,11 @@
       "slug": "dumped-kubernetes-for-200-and-no-one-noticed",
       "title": "Dumped Kubernetes for $200 and no one noticed",
       "summary": "Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. We spent $3k/month on Kubernetes. Then we nuked it. For 18 months our flagship product ran on a managed Kubernetes cluster in AWS "
+    },
+    {
+      "slug": "use-feature-flags-to-deploy-ai-models-safely",
+      "title": "Use feature flags to deploy AI models safely",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In late 2026 I inherited a codebase that had just rolled out a new LLM-powered recommend"
     }
   ]
 }

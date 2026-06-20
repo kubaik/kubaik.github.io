@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 20:44:35 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 20:49:14 +0000</lastBuildDate>
+    <item>
+      <title>Use feature flags to deploy AI models safely</title>
+      <link>https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/</link>
+      <description>Deploy AI models 80% faster with feature flags — canary splits, instant kill switches, and 5-minute rollbacks in 2026. FastAPI, Flagsmith 3.18, Prometheus 2.48.</description>
+      <pubDate>Sat, 20 Jun 2026 20:49:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/</guid>
+    </item>
     <item>
       <title>Dumped Kubernetes for $200 and no one noticed</title>
       <link>https://kubaik.github.io/dumped-kubernetes-for-200-and-no-one-noticed/</link>
@@ -138,13 +145,6 @@
       <description>Zero-downtime migrations fail when rollback scripts hit 45-minute locks on 200 GB tables. Measure impact, not uptime. Use backward-compatible changes, batch backfills, and rollforward.</description>
       <pubDate>Sat, 20 Jun 2026 11:07:15 +0000</pubDate>
       <guid>https://kubaik.github.io/migrations-break-prod-rollback-is-the-real-test/</guid>
-    </item>
-    <item>
-      <title>MCP servers crash: tool call timeout after 5s</title>
-      <link>https://kubaik.github.io/mcp-servers-crash-tool-call-timeout-after-5s/</link>
-      <description>Cut MCP server timeouts 100% by overriding the hidden 5s default — exact commands, SDK pins, and the Istio timeout trap most teams miss.</description>
-      <pubDate>Sat, 20 Jun 2026 10:21:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-servers-crash-tool-call-timeout-after-5s/</guid>
     </item>
   </channel>
 </rss>
