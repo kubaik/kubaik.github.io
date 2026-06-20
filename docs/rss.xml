@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 15:31:03 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 15:34:06 +0000</lastBuildDate>
+    <item>
+      <title>Ask for 20% more in 2026</title>
+      <link>https://kubaik.github.io/ask-for-20-more-in-2026/</link>
+      <description>Get 10-15% more salary in 2026 — AI code tools cut routine work, benchmark the overhead, and counter with hard numbers from your repo</description>
+      <pubDate>Sat, 20 Jun 2026 15:33:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/ask-for-20-more-in-2026/</guid>
+    </item>
     <item>
       <title>AI scanners miss real flaws — here’s how to use them</title>
       <link>https://kubaik.github.io/ai-scanners-miss-real-flaws-heres-how-to-use-them/</link>
@@ -138,13 +145,6 @@
       <description>The symptom is consistent: the candidate submits a Go 1.22 service, a Node 20 LTS frontend, and a Terraform 1.6 stack, but the build fails with this exact…</description>
       <pubDate>Sat, 20 Jun 2026 00:04:24 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-interviews-break-systems-5-real-mistakes-in-2026/</guid>
-    </item>
-    <item>
-      <title>LLM security mistakes in 2026: OWASP Top 10 fixes</title>
-      <link>https://kubaik.github.io/llm-security-mistakes-in-2026-owasp-top-10-fixes/</link>
-      <description>Cut LLM security risks 65% with OWASP Top 10 fixes — 3 concrete numbers, code samples, and the 2026 edition of the OWASP LLM Top 10.</description>
-      <pubDate>Fri, 19 Jun 2026 23:51:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-security-mistakes-in-2026-owasp-top-10-fixes/</guid>
     </item>
   </channel>
 </rss>
