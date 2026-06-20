@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 05:18:47 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 05:23:27 +0000</lastBuildDate>
+    <item>
+      <title>7 passive income streams for devs in 2026</title>
+      <link>https://kubaik.github.io/7-passive-income-streams-for-devs-in-2026/</link>
+      <description>Earn KES 50k–250k/month without SaaS — 7 tested ways with AWS, GitHub, and Stripe in 2026. Compare setup time, revenue ceiling, and real AWS costs.</description>
+      <pubDate>Sat, 20 Jun 2026 05:23:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/7-passive-income-streams-for-devs-in-2026/</guid>
+    </item>
     <item>
       <title>Tech salaries 2026: what corrected, what grew</title>
       <link>https://kubaik.github.io/tech-salaries-2026-what-corrected-what-grew/</link>
@@ -138,13 +145,6 @@
       <description>Cut local DB setup time 70% with Neon and PlanetScale branches — the missing query parameter that wastes hours and the 3 fixes that actually work in 2026.</description>
       <pubDate>Fri, 19 Jun 2026 18:16:04 +0000</pubDate>
       <guid>https://kubaik.github.io/branching-databases-locally-the-neon-gotcha-nobody/</guid>
-    </item>
-    <item>
-      <title>RAG isn’t enough in 2026</title>
-      <link>https://kubaik.github.io/rag-isnt-enough-in-2026/</link>
-      <description>Cut hallucinations 75% with hybrid search + reranking — benchmarked on 1,084 questions with Python 3.11, costing $0.00012 extra per query on AWS Bedrock 2026.</description>
-      <pubDate>Fri, 19 Jun 2026 17:53:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-isnt-enough-in-2026/</guid>
     </item>
   </channel>
 </rss>

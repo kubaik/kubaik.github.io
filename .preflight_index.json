@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T05:08:41.158451",
+  "built_at": "2026-06-20T05:23:21.190220",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1880,6 +1880,11 @@
       "slug": "tech-salaries-2026-what-corrected-what-grew",
       "title": "Tech salaries 2026: what corrected, what grew",
       "summary": "The short version: the conventional advice on tech salaries is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In 2026 the Kenyan tech salary curve has two clear segments: one flat or down 15-20%"
+    },
+    {
+      "slug": "7-passive-income-streams-for-devs-in-2026",
+      "title": "7 passive income streams for devs in 2026",
+      "summary": "I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I started looking for a second income stre"
     }
   ]
 }
