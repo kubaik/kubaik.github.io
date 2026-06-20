@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 18:16:20 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 18:21:04 +0000</lastBuildDate>
+    <item>
+      <title>Islands beat SPAs in 2026</title>
+      <link>https://kubaik.github.io/islands-beat-spas-in-2026/</link>
+      <description>Cut web vitals 58% by switching to Astro 4.8 islands in 2026 — payloads down 90%, TTI from 5.8 s to 1.2 s, infra bill unchanged.</description>
+      <pubDate>Sat, 20 Jun 2026 18:20:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/islands-beat-spas-in-2026/</guid>
+    </item>
     <item>
       <title>Service mesh is a tax you can skip</title>
       <link>https://kubaik.github.io/service-mesh-is-a-tax-you-can-skip/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI test failures 60% with contract-first testing — OpenAPI snapshots, Pydantic validations, and behavior-driven tests that ignore AI internals</description>
       <pubDate>Sat, 20 Jun 2026 06:49:39 +0000</pubDate>
       <guid>https://kubaik.github.io/test-ai-code-not-the-ai/</guid>
-    </item>
-    <item>
-      <title>7 passive income streams for devs in 2026</title>
-      <link>https://kubaik.github.io/7-passive-income-streams-for-devs-in-2026/</link>
-      <description>Earn KES 50k–250k/month without SaaS — 7 tested ways with AWS, GitHub, and Stripe in 2026. Compare setup time, revenue ceiling, and real AWS costs.</description>
-      <pubDate>Sat, 20 Jun 2026 05:23:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-passive-income-streams-for-devs-in-2026/</guid>
     </item>
   </channel>
 </rss>
