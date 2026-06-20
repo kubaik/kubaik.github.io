@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 08:41:27 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 08:44:43 +0000</lastBuildDate>
+    <item>
+      <title>Year one: Claude Code’s slow-burn wins</title>
+      <link>https://kubaik.github.io/year-one-claude-codes-slow-burn-wins/</link>
+      <description>Cut 80% of PR review time using Claude Code 1.6 in 2026 with strict type, lint, and coverage gates that actually stick.</description>
+      <pubDate>Sat, 20 Jun 2026 08:44:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/year-one-claude-codes-slow-burn-wins/</guid>
+    </item>
     <item>
       <title>Regulations forced better APIs: the 2026 fintech</title>
       <link>https://kubaik.github.io/regulations-forced-better-apis-the-2026-fintech/</link>
@@ -138,13 +145,6 @@
       <description>Cut prompt injection 94% with a 3-layer firewall — token sanitizer, context filter, and model guardrail. Latency +25%, cost +17%, real production data from 50k daily prompts in 2026.</description>
       <pubDate>Fri, 19 Jun 2026 19:08:32 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-break-when-users-cheat/</guid>
-    </item>
-    <item>
-      <title>AI SaaS build: solo vs agent team in 2026</title>
-      <link>https://kubaik.github.io/ai-saas-build-solo-vs-agent-team-in-2026/</link>
-      <description>Spend $3k vs $700 to build a solo SaaS in 2026? Benchmarks from two real products show why targeted AI beats full agent teams — with concrete numbers, pitfalls, and the 30-minute audit you can run today.</description>
-      <pubDate>Fri, 19 Jun 2026 19:04:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-saas-build-solo-vs-agent-team-in-2026/</guid>
     </item>
   </channel>
 </rss>

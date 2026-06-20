@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T08:41:21.291986",
+  "built_at": "2026-06-20T08:44:37.392425",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1895,6 +1895,11 @@
       "slug": "regulations-forced-better-apis-the-2026-fintech",
       "title": "Regulations forced better APIs: the 2026 fintech",
       "summary": "A colleague asked me about african fintech during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) T"
+    },
+    {
+      "slug": "year-one-claude-codes-slow-burn-wins",
+      "title": "Year one: Claude Code’s slow-burn wins",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I spent three weeks in 2026 trying to automate our internal API client generation using "
     }
   ]
 }
