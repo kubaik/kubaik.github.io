@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 08:36:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 08:41:27 +0000</lastBuildDate>
+    <item>
+      <title>Regulations forced better APIs: the 2026 fintech</title>
+      <link>https://kubaik.github.io/regulations-forced-better-apis-the-2026-fintech/</link>
+      <description>Reduce API callback loss 99% with durable state machines — Nigeria, Ghana, and Kenya fintech compliance in 2026 without over-engineering</description>
+      <pubDate>Sat, 20 Jun 2026 08:41:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/regulations-forced-better-apis-the-2026-fintech/</guid>
+    </item>
     <item>
       <title>Test AI code, not the AI</title>
       <link>https://kubaik.github.io/test-ai-code-not-the-ai/</link>
@@ -138,13 +145,6 @@
       <description>Spend $3k vs $700 to build a solo SaaS in 2026? Benchmarks from two real products show why targeted AI beats full agent teams — with concrete numbers, pitfalls, and the 30-minute audit you can run today.</description>
       <pubDate>Fri, 19 Jun 2026 19:04:01 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-saas-build-solo-vs-agent-team-in-2026/</guid>
-    </item>
-    <item>
-      <title>Paddle over Stripe? 2026’s real winner</title>
-      <link>https://kubaik.github.io/paddle-over-stripe-2026s-real-winner/</link>
-      <description>Save 20% on EU VAT compliance with Paddle — real fees, benchmarks, and the mistake most teams make when choosing Stripe vs Paddle vs Lemon Squeezy in 2026.</description>
-      <pubDate>Fri, 19 Jun 2026 18:27:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/paddle-over-stripe-2026s-real-winner/</guid>
     </item>
   </channel>
 </rss>
