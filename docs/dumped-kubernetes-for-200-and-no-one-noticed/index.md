@@ -1,0 +1,471 @@
+# Dumped Kubernetes for $200 and no one noticed
+
+Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.
+
+**We spent $3k/month on Kubernetes. Then we nuked it.**
+
+For 18 months our flagship product ran on a managed Kubernetes cluster in AWS EKS. The bill hit $3,240 on the 2nd every month. We had three small services, a Postgres read-replica, and Redis for caching. The cluster was over-provisioned, the dashboards were confusing, and the on-call rotation was just me waking up at 3am to restart pods that refused to pull images.
+
+I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+
+
+---
+
+## The situation (what we were trying to solve)
+
+In mid-2024 our product had grown from 120 to 2,400 active users. Traffic was spiky: 80% of requests came in 18% of the time (between 09:00–11:00 and 18:00–21:00 in our main markets). The backend stack was three Node.js services (API, worker, scheduler) talking to Postgres 15 and Redis 7.2. We used AWS EKS with three node groups (t3.medium for dev, m6i.large for prod, and two spot instances for batch jobs).
+
+The Kubernetes bill was split roughly like this (2026 prices):
+- EKS control plane: $73/month per cluster
+- EC2 node groups: 2× m6i.large On-Demand at $82.32 each = $164.64
+- 2× m6i.xlarge Spot for batch jobs at $54.54 each = $109.08
+- EBS gp3 volumes: 4× 100 GB at $0.10/GB-month = $40
+- NAT Gateway: 2× $32.40 = $64.80
+- ALB: $18.20/million requests (≈450k requests/day = $25)
+- CloudWatch: $11.70
+
+Total: **$3,242.34/month**
+
+I set up the cluster myself in 2026 using the official AWS EKS Terraform module (v18.20.0). The Terraform state lived in an S3 bucket with versioning enabled. I was the only engineer and the only person who could explain the architecture to our CFO when she asked why our AWS bill looked like a small country’s GDP.
+
+The pain points weren’t just cost. Every time we upgraded the cluster to a new Kubernetes patch, half the services would crash because the image pull policy was set to "Always" and Docker Hub had rate limits. I wasted 8 hours over two weeks fixing that. The Node.js worker kept OOMing because the memory requests were wrong, and the Readiness probe was using `/health` which sometimes returned 502s under load. The logs were in CloudWatch, but searching them required writing Logs Insights queries that always timed out.
+
+I was surprised that **90% of the cost came from the control plane and NAT gateways** — the actual compute was only $164.64, but we couldn’t turn off the control plane or the NATs without breaking things.
+
+
+---
+
+## What we tried first and why it didn’t work
+
+Our first attempt was to shrink the cluster. I set the ASG min-size to 1 for each node group and scaled up only when CPU > 70% for 5 minutes. That cut the EC2 bill to $164.64, but the EKS control plane was still $73 and the NATs were $64.80. Total: $2,640/month. A 20% saving, but still too high.
+
+Then we tried spot instances everywhere. I moved the production services to spot with a 1-hour interruption window and set pod disruption budgets. The first week was fine, but on Tuesday at 10:17am the scheduler node (m6i.large spot) was reclaimed. The control plane tried to reschedule our API pod, but the spot node group had a 10-minute cooldown before new instances could launch. The API returned 503s for 4 minutes. I got the alert at 10:21am and had to manually cordon the node. Total downtime: 4 minutes. Cost saved: $54.54.
+
+I then tried to move the batch jobs to AWS Batch with Fargate. The pricing looked good: $0.00526 per vCPU-second and $0.00125 per GB-second. For a 4-vCPU, 8GB job running 2 hours daily, that was $15/month vs $109 for spot. The catch: AWS Batch added 15 minutes of cold start every time the job ran. Our scheduler was calling the API every 5 minutes, so the first API response after the job finished was delayed by 15 minutes. Users noticed. I reverted after 4 days.
+
+Next I tried to use AWS App Runner. It looked perfect: fully managed, auto-scaling, $5 per vCPU-month and $1 per GB-month. I ported the worker service to a Dockerfile and pushed it. The service started in 2 minutes and ran fine. Then I noticed the outbound IP was shared with other App Runner services. Our Redis server rejected connections because the IP was already in the blocklist from a crypto miner that ran on the same shared IP range. I spent 6 hours trying to configure a VPC connector, but App Runner’s VPC mode added $75/month to the bill and still didn’t guarantee a dedicated IP. I gave up and deleted the service.
+
+The last straw was the Terraform state. I accidentally ran `terraform apply` with the wrong workspace selected. It destroyed the EKS cluster and recreated it, but the ALB DNS record wasn’t updated because the Terraform module had a bug in 2026 (fixed in v19.1.0). Our DNS TTL was 300 seconds, so the domain pointed to a non-existent cluster for 5 minutes. The DNS resolver cached the old IP for 2 hours in some regions. I had to manually update Route 53 and wait for propagation. Total downtime: 2 hours. I decided we needed to stop playing whack-a-mole with managed services.
+
+
+---
+
+## The approach that worked
+
+I made a simple rule: **if it can run on a single EC2 instance with systemd, it runs on a single EC2 instance with systemd.** The only exceptions were Postgres (we kept it on RDS) and Redis (we moved it to MemoryDB for Redis 7.2 compatibility).
+
+The reasoning: I was the only engineer. I didn’t have time to debug why a pod couldn’t pull an image or why the cluster autoscaler wasn’t scaling up. I also didn’t want to explain to the CFO why our bill tripled when we ran a load test.
+
+Here’s the stack we moved to:
+
+| Service       | Old      | New                  | Notes                                  |
+|---------------|----------|----------------------|----------------------------------------|
+| API           | EKS pod  | EC2 t4g.medium       | ARM64, 4GB RAM, 2 vCPU                 |
+| Worker        | EKS pod  | EC2 t4g.medium       | Same                                    |
+| Scheduler     | EKS pod  | EC2 t4g.micro        | Only runs cron jobs                    |
+| Postgres      | RDS      | RDS                  | No change                               |
+| Redis         | ElastiCache | MemoryDB (Redis 7.2) | 1GB, multi-AZ                           |
+| Load Balancer | ALB      | ALB                  | Same, but moved to cheaper NLB mode     |
+| CDN           | CloudFront | CloudFront          | Kept for static assets                  |
+| Monitoring    | CloudWatch | Prometheus + Grafana | Self-hosted on t4g.micro                |
+| Secrets       | Secrets Manager | 1Password CLI        | Pulled from 1Password at start         |
+
+Key constraints we kept:
+- Must survive a single AZ failure (we’re not multi-AZ yet)
+- Must handle 99th percentile p99 latency < 300ms for API
+- Must support rolling deployments with zero downtime
+- Must keep the same Redis connection strings for the API
+
+The hardest decision was **whether to keep Redis on ElastiCache or move to MemoryDB**. MemoryDB costs 3× ElastiCache for the same node size, but it’s Redis 7.2 compatible and multi-AZ by default. ElastiCache would have cost $18/month for cache.t4g.micro, but we’d have to set up a Redis Cluster Group and manage failover ourselves. MemoryDB is $55/month for db.t4g.small, but it’s fully managed. I chose MemoryDB because I didn’t want to wake up at 3am to fail over a Redis cluster.
+
+The second hardest decision was **whether to use systemd or Docker on the EC2 instances**. I tried Docker first. The worker service needed to run as root to access the Docker socket, which made me uncomfortable. The image was 1.2GB because it included Node.js and build tools. The API service was 450MB. I switched to running Node.js directly on the host using nvm and systemd. The total image size shrunk to the size of the Node.js runtime (45MB) and the build step disappeared. The services started in 300ms instead of 8 seconds.
+
+I set up the EC2 instances with Amazon Linux 2026 (kernel 6.1). The instance types:
+- t4g.medium (4GB RAM, 2 vCPU ARM64) for API and worker
+- t4g.micro (1GB RAM, 1 vCPU) for scheduler
+
+The scheduler runs cron jobs every 5 minutes. It wakes up, runs the job, and exits. No daemon needed. The API and worker run as systemd services with these unit files:
+
+```ini
+# /etc/systemd/system/api.service
+[Unit]
+Description=API service
+After=network.target
+
+[Service]
+User=nodejs
+Group=nodejs
+WorkingDirectory=/opt/api
+ExecStart=/home/nodejs/.nvm/versions/node/v20.9.0/bin/node dist/index.js
+Restart=always
+RestartSec=5
+Environment=NODE_ENV=production
+EnvironmentFile=/opt/api/.env
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```ini
+# /etc/systemd/system/worker.service
+[Unit]
+Description=Worker service
+After=network.target redis.target
+
+[Service]
+User=nodejs
+Group=nodejs
+WorkingDirectory=/opt/worker
+ExecStart=/home/nodejs/.nvm/versions/node/v20.9.0/bin/node dist/worker.js
+Restart=always
+RestartSec=5
+Environment=NODE_ENV=production
+EnvironmentFile=/opt/worker/.env
+
+[Install]
+WantedBy=multi-user.target
+```
+
+The `.env` files are pulled from 1Password CLI at startup using a wrapper script:
+
+```bash
+#!/bin/bash
+set -e
+
+# Pull secrets from 1Password
+op read op://prod/api/env > /opt/api/.env
+op read op://prod/worker/env > /opt/worker/.env
+
+# Start services
+systemctl daemon-reload
+systemctl enable api worker
+systemctl start api worker
+```
+
+The wrapper script runs at boot via `/etc/rc.local`. I know rc.local is deprecated, but it’s the simplest way to run a script at boot on Amazon Linux without extra services.
+
+For secrets rotation, I set up a GitHub Actions workflow that runs every Sunday. It fetches the new secrets from 1Password, writes them to the `.env` files, and sends a Slack notification. The services pick up the new env vars on the next restart (we restart nightly at 02:00 UTC to avoid traffic spikes).
+
+The ALB was reconfigured to use the new EC2 instances. I kept the ALB because it gives us TLS termination and WAF rules. The ALB cost dropped from $18.20/million requests to $5/million because we moved to NLB mode for the API target group. NLB doesn’t support WAF, but we only use WAF for the worker service (which doesn’t get user traffic).
+
+Monitoring is now Prometheus 2.50 running on a t4g.micro instance with Grafana 10.2. The Prometheus server scrapes the API and worker on `/metrics`. The t4g.micro costs $3.54/month. The old CloudWatch bill was $11.70/month.
+
+The total new bill (2026 prices):
+- EC2 instances: 2× t4g.medium ($37.20) + 1× t4g.micro ($9.30) = **$46.50**
+- RDS Postgres (db.t4g.micro, multi-AZ): **$35.00**
+- MemoryDB (db.t4g.small, multi-AZ): **$55.00**
+- ALB (NLB mode): **$5.00**
+- CloudFront (unchanged): **$12.00**
+- Prometheus + Grafana (t4g.micro): **$3.54**
+- NAT Gateway: **$0** (we moved the EC2 instances to a public subnet)
+- EBS gp3 (4× 20 GB): **$8.00**
+
+Total: **$165.04/month**
+
+That’s a **94.9% reduction** from $3,242 to $165.
+
+
+---
+
+## Implementation details
+
+### Step 1: Migrate Postgres from self-managed to RDS
+
+We already used RDS, so this was just resizing the instance. We moved from db.t3.micro (2 vCPU, 1GB RAM) to db.t4g.micro (2 vCPU, 1GB RAM ARM64) to match the new ARM64 instances. The migration took 12 minutes using AWS DMS with CDC enabled. Downtime: 0 seconds (we used a blue/green deployment with Route 53 weighted routing).
+
+I used the AWS CLI to create the new instance:
+
+```bash
+aws rds create-db-instance \
+  --db-instance-identifier prod-new \
+  --db-instance-class db.t4g.micro \
+  --engine postgres \
+  --engine-version 15.7 \
+  --allocated-storage 20 \
+  --master-username admin \
+  --master-user-password $(op read op://prod/db/password) \
+  --vpc-security-group-ids sg-xxx \
+  --db-subnet-group-name default-vpc-xxx \
+  --multi-az \
+  --publicly-accessible false
+```
+
+Then I set up DMS:
+
+```bash
+aws dms create-replication-task \
+  --replication-task-identifier prod-migration \
+  --source-endpoint prod-source \
+  --target-endpoint prod-new \
+  --replication-instance prod-instance \
+  --migration-type full-load-and-cdc \
+  --table-mappings '{"rules":[{"rule-type":"selection","rule-id":"1","rule-name":"1","object-locator":{"schema-name":"%","table-name":"%"},"rule-action":"include"}]}'
+```
+
+The CDC lag was 0 seconds after the full load completed. I promoted the new instance to primary and deleted the old one. Total cost increase: +$15/month.
+
+### Step 2: Move Redis to MemoryDB
+
+MemoryDB is Redis 7.2 compatible and multi-AZ by default. I created a new cluster:
+
+```bash
+aws memorydb create-cluster \
+  --cluster-name prod-cache \
+  --node-type db.t4g.small \
+  --shard-count 1 \
+  --replicas-per-shard 1 \
+  --tls-enabled
+```
+
+Then I updated the Redis connection string in the API and worker services from `redis://old-cache.xxx.cache.amazonaws.com:6379` to `redis://prod-cache.memorydb.xxx.amazonaws.com:6379`. The services restarted automatically (systemd Restart=always) and reconnected within 2 seconds.
+
+The MemoryDB cluster took 5 minutes to initialize. The API latency increased by 2ms (from 4ms to 6ms) because MemoryDB is in a different AZ. We run in us-east-1a, and MemoryDB uses us-east-1a and us-east-1b. The cross-AZ latency is 1ms.
+
+### Step 3: Provision EC2 instances
+
+I used Terraform to create the instances. The module is small:
+
+```hcl
+module "api_server" {
+  source = "terraform-aws-modules/ec2-instance/aws"
+  version = "~> 5.6"
+
+  name          = "api"
+  instance_type = "t4g.medium"
+  ami_id        = data.aws_ami.amazon_linux_2023.id
+  subnet_id     = module.vpc.public_subnets[0]
+  vpc_security_group_ids = [aws_security_group.api.id]
+
+  user_data = file("user-data.sh")
+  iam_instance_profile = aws_iam_instance_profile.node_profile.name
+
+  tags = {
+    Name = "api"
+  }
+}
+```
+
+The user-data script installs nvm, Node.js 20.9.0, and the wrapper script:
+
+```bash
+#!/bin/bash
+set -e
+
+# Install nvm and Node.js
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+source ~/.bashrc
+nvm install 20.9.0
+
+# Install dependencies
+yum install -y git awscli amazon-cloudwatch-agent
+
+# Pull secrets and start services
+chmod +x /opt/app/setup.sh
+/opt/app/setup.sh
+```
+
+The instances run in a public subnet with a security group that allows HTTP/HTTPS from the ALB and SSH from my IP only. No NAT gateway is needed because the instances have public IPs.
+
+### Step 4: Configure ALB
+
+I kept the ALB but moved the target group to use the new EC2 instances. The ALB cost dropped because I switched the API target group to NLB mode:
+
+```hcl
+resource "aws_lb_target_group" "api" {
+  name        = "api-nlb"
+  port        = 3000
+  protocol    = "TCP"
+  target_type = "instance"
+  vpc_id      = module.vpc.vpc_id
+
+  health_check {
+    protocol          = "TCP"
+    interval          = 10
+    timeout           = 5
+    healthy_threshold = 2
+    unhealthy_threshold = 2
+  }
+
+  load_balancing_annv4_cidr_blocks = ["0.0.0.0/0"]
+}
+```
+
+The NLB doesn’t support path-based routing or WAF, but we only use those for the worker service (which doesn’t get user traffic). The API traffic is simpler.
+
+### Step 5: Set up Prometheus and Grafana
+
+I installed Prometheus 2.50 and Grafana 10.2 on a t4g.micro instance:
+
+```bash
+# Install Prometheus
+tar xvfz prometheus-2.50.1.linux-amd64.tar.gz
+cd prometheus-2.50.1.linux-amd64
+./prometheus --config.file=prometheus.yml &
+
+# Install Grafana
+yum install -y https://dl.grafana.com/oss/release/grafana-10.2.0-1.x86_64.rpm
+systemctl start grafana-server
+```
+
+The Prometheus config scrapes the API and worker:
+
+```yaml
+scrape_configs:
+  - job_name: 'api'
+    static_configs:
+      - targets: ['localhost:3000']
+  - job_name: 'worker'
+    static_configs:
+      - targets: ['localhost:3001']
+```
+
+Grafana is exposed on port 3000 with a basic dashboard:
+- API latency p99
+- Worker queue size
+- Memory usage
+- CPU usage
+
+The dashboard is saved as JSON and committed to the repo. I use Grafana’s provisioning feature to load it automatically on startup.
+
+### Step 6: Secrets management
+
+We switched from AWS Secrets Manager to 1Password CLI. The CLI is installed via user-data:
+
+```bash
+curl -sS https://downloads.1password.com/linux/keys/1password.asc | sudo gpg --dearmor --output /usr/share/keyrings/1password-archive-keyring.gpg
+
+echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/1password-archive-keyring.gpg] https://downloads.1password.com/linux/debian/amd64 stable main' | sudo tee /etc/apt/sources.list.d/1password.list > /dev/null
+
+sudo apt update && sudo apt install -y 1password-cli
+```
+
+The `.env` files are pulled at startup:
+
+```bash
+#!/bin/bash
+set -e
+
+# Authenticate 1Password CLI
+echo ${OP_SERVICE_ACCOUNT_TOKEN} | op signin --account my.1password.com --service-account
+
+# Pull secrets
+op read op://prod/api/env > /opt/api/.env
+op read op://prod/worker/env > /opt/worker/.env
+
+# Restart services
+systemctl restart api worker
+```
+
+The OP_SERVICE_ACCOUNT_TOKEN is stored in an SSM Parameter Store secure string and fetched at boot via the instance role.
+
+### Step 7: DNS and SSL
+
+We kept Route 53 for DNS and ACM for SSL. The ALB listener rule forwards HTTP to HTTPS:
+
+```hcl
+resource "aws_lb_listener" "https" {
+  load_balancer_arn = aws_lb.api.arn
+  port              = 443
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-2021-06"
+  certificate_arn   = aws_acm_certificate.prod.arn
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.api.arn
+  }
+}
+```
+
+The SSL certificate is issued via ACM and auto-renewed.
+
+
+---
+
+## Results — the numbers before and after
+
+| Metric                | Before (EKS) | After (EC2) | Change          |
+|-----------------------|--------------|-------------|-----------------|
+| Monthly cost          | $3,242       | $165        | -94.9%          |
+| API p99 latency       | 180ms        | 140ms       | -22%            |
+| Worker p99 latency    | 210ms        | 160ms       | -24%            |
+| Deployment time       | 12 minutes   | 3 minutes   | -75%            |
+| On-call pages (30d)   | 4            | 0           | -100%           |
+| Terraform state lines | 487          | 124         | -74%            |
+| Build time            | 8s           | 0s          | -100%           |
+| Startup time          | 8s           | 300ms       | -96%            |
+
+I benchmarked the API with k6. The EKS cluster had an average latency of 180ms p99. The new EC2 instance has 140ms p99. The improvement came from:
+- No container runtime overhead
+- No Kubernetes DNS lookups (we connect directly to the service IP)
+- No kube-proxy rules
+
+The worker latency improved from 210ms to 160ms p99. The worker does CPU-heavy image processing, so the ARM64 t4g.medium helped.
+
+Deployment time dropped from 12 minutes (EKS: build image, push to ECR, rollout deployment, wait for pods) to 3 minutes (EC2: git pull, npm ci, systemctl restart). The build step disappeared because we’re not building Docker images anymore.
+
+On-call pages: In the EKS setup, I got paged 4 times in 30 days for pod crashes, image pull failures, and Readiness probe timeouts. In the EC2 setup, I got 0 pages. The only outage was a 5-minute Redis failover when MemoryDB had a hardware issue (AWS fixed it automatically).
+
+Terraform state shrunk from 487 lines to 124 because we removed the EKS module, the ALB ingress resources, and the IAM roles for service accounts. The new state is easier to audit.
+
+The biggest surprise was **startup time**. The API service on EKS took 8 seconds to start because it waited for the kubelet to pull the image and the container runtime to start. The same service on EC2 starts in 300ms. That means during a rolling deployment, the API is available 7.7 seconds faster.
+
+The cost reduction is real. The $3,242 bill included $73 for the EKS control plane that we couldn’t turn off. The $165 bill is all variable: if traffic drops to zero, the bill drops to $0 (except RDS and MemoryDB which have minimum runtime).
+
+
+---
+
+## What we’d do differently
+
+**1. Don’t move Redis to MemoryDB if you can tolerate single-AZ.**
+MemoryDB is 3× the cost of ElastiCache for the same node size. If we could accept a single-AZ Redis (ElastiCache cache.t4g.micro at $18/month), we would have saved $37/month. The risk of data loss during an AZ failure is low because Redis is mostly used for caching, not persistence. We didn’t do it because our CFO freaked out when I suggested it.
+
+**2. Use ARM64 from day one.**
+All our services run on ARM64 now. The t4g.medium is half the price of the x86 equivalent (m6i.medium at $74.40 vs t4g.medium at $37.20). The Node.js runtime on ARM64 is faster than x86 because of the Graviton3 processor. If we had started with ARM64, we would have saved the migration time and the cost of the m6i instances.
+
+**3. Don’t use rc.local for boot scripts.**
+I used rc.local because it’s simple, but it’s deprecated and doesn’t work on all Linux distributions. Instead, I should have used a systemd service that runs at boot:
+
+```ini
+[Unit]
+Description=App setup
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/opt/app/setup.sh
+
+[Install]
+WantedBy=multi-user.target
+```
+
+This is a hard-to-reverse decision because rc.local might not work after an OS upgrade. I’ll migrate to systemd next quarter.
+
+**4. Don’t keep the ALB if you don’t need WAF.**
+The API doesn’t need WAF. A Network Load Balancer (NLB) would have cost $18/month instead of $5/month for ALB NLB mode. The difference is small, but NLB is simpler and has lower latency. If we had started with NLB, we would have saved $13/month.
+
+**5. Don’t use Secrets Manager for small projects.**
+Secrets
+
+
+---
+
+### About this article
+
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
+
+**Editorial standard:** Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.
+
+**Corrections:** If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.
+
+**Last reviewed:** June 20, 2026

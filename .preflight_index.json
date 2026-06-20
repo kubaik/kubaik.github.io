@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T19:13:15.986620",
+  "built_at": "2026-06-20T20:23:32.835622",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2000,6 +2000,11 @@
       "slug": "6-ai-tools-that-paid-off-for-nairobi-teams-in-2026",
       "title": "6 AI tools that paid off for Nairobi teams in 2026",
       "summary": "I ran into this east african problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In mid-2026 I was leading the backend squad a"
+    },
+    {
+      "slug": "dumped-kubernetes-for-200-and-no-one-noticed",
+      "title": "Dumped Kubernetes for $200 and no one noticed",
+      "summary": "Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. We spent $3k/month on Kubernetes. Then we nuked it. For 18 months our flagship product ran on a managed Kubernetes cluster in AWS "
     }
   ]
 }
