@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T22:16:27.213560",
+  "built_at": "2026-06-20T22:43:21.029209",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2025,6 +2025,11 @@
       "slug": "api-attacks-rising-40-the-3-patterns-to-block-now",
       "title": "API attacks rising 40%: the 3 patterns to block now",
       "summary": "Most api security guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our team at Kubai Systems noticed two things that didn’t add up: 1. Our API"
+    },
+    {
+      "slug": "ai-agent-postmortem-human-loop-vs-blind-replay",
+      "title": "AI agent postmortem: human loop vs blind replay",
+      "summary": "I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, companies are shipping AI agents faster than they can audit "
     }
   ]
 }

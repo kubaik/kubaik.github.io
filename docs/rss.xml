@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 22:38:51 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 22:43:27 +0000</lastBuildDate>
+    <item>
+      <title>AI agent postmortem: human loop vs blind replay</title>
+      <link>https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/</link>
+      <description>AI agent postmortems: human-loop vs blind replay — 432 injected failures show which catches mistakes faster, cuts false positives 75%, and saves $38 per 1k incidents at scale</description>
+      <pubDate>Sat, 20 Jun 2026 22:43:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/</guid>
+    </item>
     <item>
       <title>API attacks rising 40%: the 3 patterns to block now</title>
       <link>https://kubaik.github.io/api-attacks-rising-40-the-3-patterns-to-block-now/</link>
@@ -138,13 +145,6 @@
       <description>Cut PR review time 77% using AI pair coding — but only after we encoded invariants as human-owned tests. Token costs, pitfalls, and the guardrails that worked in 2026.</description>
       <pubDate>Sat, 20 Jun 2026 13:17:04 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-pair-coding-who-owns-the-diff-now/</guid>
-    </item>
-    <item>
-      <title>AI observability: the 3 things logs miss</title>
-      <link>https://kubaik.github.io/ai-observability-the-3-things-logs-miss/</link>
-      <description>AI observability cuts support tickets 80% by tracking prompt drift, semantic fidelity, and data lineage — not just latency and errors. Learn the 3 missing signals and how to instrument them with concrete code and real production numbers from a 2026 system.</description>
-      <pubDate>Sat, 20 Jun 2026 12:18:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-observability-the-3-things-logs-miss/</guid>
     </item>
   </channel>
 </rss>
