@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 13:17:12 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 13:32:34 +0000</lastBuildDate>
+    <item>
+      <title>Agent memory vanishes: why your AI forgets at 3 AM</title>
+      <link>https://kubaik.github.io/agent-memory-vanishes-why-your-ai-forgets-at-3-am/</link>
+      <description>Fix AI agents that forget users overnight — Redis TTL, token budgeting, and the 3 AM cold start mistake most teams miss. Learn how to scope memory to the user and avoid silent context loss.</description>
+      <pubDate>Sat, 20 Jun 2026 13:32:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-memory-vanishes-why-your-ai-forgets-at-3-am/</guid>
+    </item>
     <item>
       <title>AI pair coding: who owns the diff now?</title>
       <link>https://kubaik.github.io/ai-pair-coding-who-owns-the-diff-now/</link>
@@ -138,13 +145,6 @@
       <description>Cut security scan noise 78% with dynamic suppression — semgrep 1.71, Trivy 0.53, and a Redis 7.2 cache that expires false positives in 30 days.</description>
       <pubDate>Fri, 19 Jun 2026 22:12:45 +0000</pubDate>
       <guid>https://kubaik.github.io/false-positives-killed-our-ci-scans-heres-how-we/</guid>
-    </item>
-    <item>
-      <title>Run APIs in 50 spots: what breaks first</title>
-      <link>https://kubaik.github.io/run-apis-in-50-spots-what-breaks-first/</link>
-      <description>Cut API latency 60% by running in 50 edge locations — cache stampedes, clock drift, and write fan-out mistakes most teams make in 2026.</description>
-      <pubDate>Fri, 19 Jun 2026 21:55:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/run-apis-in-50-spots-what-breaks-first/</guid>
     </item>
   </channel>
 </rss>
