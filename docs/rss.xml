@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 17:09:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 17:14:10 +0000</lastBuildDate>
+    <item>
+      <title>AI changed my workflow. 3 old rules I dropped</title>
+      <link>https://kubaik.github.io/ai-changed-my-workflow-3-old-rules-i-dropped/</link>
+      <description>Cut API response time 60% with Redis caching — connection pooling, eviction policies, and the cache stampede mistake most teams make.</description>
+      <pubDate>Sat, 20 Jun 2026 17:14:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-changed-my-workflow-3-old-rules-i-dropped/</guid>
+    </item>
     <item>
       <title>Stop async Python from burning your production</title>
       <link>https://kubaik.github.io/stop-async-python-from-burning-your-production/</link>
@@ -138,13 +145,6 @@
       <description>In 2026 Nairobi tech salaries split 35-50% between generalist CRUD roles and high-leverage platform roles — compare exact numbers and learn which skills moved up and which stayed flat.</description>
       <pubDate>Sat, 20 Jun 2026 05:08:39 +0000</pubDate>
       <guid>https://kubaik.github.io/tech-salaries-2026-what-corrected-what-grew/</guid>
-    </item>
-    <item>
-      <title>JSON mode doesn’t validate outputs</title>
-      <link>https://kubaik.github.io/json-mode-doesnt-validate-outputs/</link>
-      <description>Cut AI parsing failures 36% with JSON Schema validation — why JSON mode fails, how to validate outputs, and the 3-step pipeline that works in 2026.</description>
-      <pubDate>Sat, 20 Jun 2026 05:05:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/json-mode-doesnt-validate-outputs/</guid>
     </item>
   </channel>
 </rss>
