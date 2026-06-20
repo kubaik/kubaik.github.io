@@ -82,5 +82,6 @@
   "MCP servers in 2026: the protocol that quietly became infrastructure",
   "How I handle database schema migrations in a zero-downtime deployment pipeline",
   "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant",
-  "How to build payment systems that work across Kenya, Nigeria, and Ghana without three separate integrations"
+  "How to build payment systems that work across Kenya, Nigeria, and Ghana without three separate integrations",
+  "How AI observability is different from traditional application monitoring"
 ]
