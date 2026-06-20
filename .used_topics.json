@@ -92,5 +92,6 @@
   "How to negotiate compensation in 2026 when AI can do parts of your job description",
   "API security in 2026: the attack patterns that are becoming more common and how to block them",
   "Why async Python still surprises people and how to stop getting burned by it",
-  "The engineering principles I updated after AI tools changed my daily workflow"
+  "The engineering principles I updated after AI tools changed my daily workflow",
+  "How service mesh adoption actually went: what Istio and Cilium look like in real production"
 ]

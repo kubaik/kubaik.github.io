@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T17:14:04.238049",
+  "built_at": "2026-06-20T17:19:07.445081",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1975,6 +1975,11 @@
       "slug": "ai-changed-my-workflow-3-old-rules-i-dropped",
       "title": "AI changed my workflow. 3 old rules I dropped",
       "summary": "A colleague asked me about engineering principles during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomp"
+    },
+    {
+      "slug": "service-mesh-is-a-tax-you-can-skip",
+      "title": "Service mesh is a tax you can skip",
+      "summary": "A colleague asked me about service mesh during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) The "
     }
   ]
 }
