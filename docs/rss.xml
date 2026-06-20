@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 19:00:44 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 19:05:24 +0000</lastBuildDate>
+    <item>
+      <title>TLS 1.3 breaks with post-quantum crypto — fix now</title>
+      <link>https://kubaik.github.io/tls-13-breaks-with-post-quantum-crypto-fix-now/</link>
+      <description>TLS handshake latency jumped 10× with post-quantum crypto — here’s how we fixed it, the real numbers, and the one sysctl change that mattered in 2026.</description>
+      <pubDate>Sat, 20 Jun 2026 19:05:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/tls-13-breaks-with-post-quantum-crypto-fix-now/</guid>
+    </item>
     <item>
       <title>AI killed our dev tool sales until we fixed this</title>
       <link>https://kubaik.github.io/ai-killed-our-dev-tool-sales-until-we-fixed-this/</link>
@@ -138,13 +145,6 @@
       <description>Cut 80% of PR review time using Claude Code 1.6 in 2026 with strict type, lint, and coverage gates that actually stick.</description>
       <pubDate>Sat, 20 Jun 2026 08:44:35 +0000</pubDate>
       <guid>https://kubaik.github.io/year-one-claude-codes-slow-burn-wins/</guid>
-    </item>
-    <item>
-      <title>Regulations forced better APIs: the 2026 fintech</title>
-      <link>https://kubaik.github.io/regulations-forced-better-apis-the-2026-fintech/</link>
-      <description>Reduce API callback loss 99% with durable state machines — Nigeria, Ghana, and Kenya fintech compliance in 2026 without over-engineering</description>
-      <pubDate>Sat, 20 Jun 2026 08:41:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/regulations-forced-better-apis-the-2026-fintech/</guid>
     </item>
   </channel>
 </rss>
