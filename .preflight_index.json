@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T20:49:07.948401",
+  "built_at": "2026-06-20T21:00:18.949597",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2010,6 +2010,11 @@
       "slug": "use-feature-flags-to-deploy-ai-models-safely",
       "title": "Use feature flags to deploy AI models safely",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In late 2026 I inherited a codebase that had just rolled out a new LLM-powered recommend"
+    },
+    {
+      "slug": "ai-glue-code-3-ways-to-avoid-duct-taping-models",
+      "title": "AI glue code: 3 ways to avoid duct-taping models",
+      "summary": "After reviewing a lot of code that touches tools built, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You ship a slick MVP in three weeks using a low-code AI platform like Predibase LoRA 2.0 or "
     }
   ]
 }
