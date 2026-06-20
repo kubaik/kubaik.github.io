@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 14:35:49 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 14:40:32 +0000</lastBuildDate>
+    <item>
+      <title>Nairobi SaaS stack 2026: real costs exposed</title>
+      <link>https://kubaik.github.io/nairobi-saas-stack-2026-real-costs-exposed/</link>
+      <description>Cut Nairobi SaaS costs 42% with a concrete bill of materials — Fly Machines, Crunchy Bridge, Redis 7.2, and Backblaze B2 with real latency and spend numbers for 2026.</description>
+      <pubDate>Sat, 20 Jun 2026 14:40:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/nairobi-saas-stack-2026-real-costs-exposed/</guid>
+    </item>
     <item>
       <title>AI interviews need real logs: the 401 you never</title>
       <link>https://kubaik.github.io/ai-interviews-need-real-logs-the-401-you-never/</link>
@@ -138,13 +145,6 @@
       <description>USSD apps still drive 34% of new signups in African fintech in 2026. Build a production-grade USSD interface with Redis 7.2, FastAPI, and Twilio in 450 lines. Latency, cost, and hiring data included.</description>
       <pubDate>Fri, 19 Jun 2026 23:24:02 +0000</pubDate>
       <guid>https://kubaik.github.io/ussd-apps-why-african-fintech-still-needs-them-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI codebase? Guardrails over guardrails</title>
-      <link>https://kubaik.github.io/ai-codebase-guardrails-over-guardrails/</link>
-      <description>Cut false-positive alerts 30% with SonarQube 10.4 vs GitHub Advanced Security — connection pool crashes, XPath rules, and the $81 monthly price tag most teams miss.</description>
-      <pubDate>Fri, 19 Jun 2026 22:46:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-codebase-guardrails-over-guardrails/</guid>
     </item>
   </channel>
 </rss>
