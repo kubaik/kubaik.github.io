@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T22:43:21.029209",
+  "built_at": "2026-06-20T22:54:23.724447",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2030,6 +2030,11 @@
       "slug": "ai-agent-postmortem-human-loop-vs-blind-replay",
       "title": "AI agent postmortem: human loop vs blind replay",
       "summary": "I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, companies are shipping AI agents faster than they can audit "
+    },
+    {
+      "slug": "vibe-code-works-great-fails-forever",
+      "title": "Vibe code: works great, fails forever",
+      "summary": "I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026 I joined a seed-stage startup as the f"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 22:49:26 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 22:54:30 +0000</lastBuildDate>
+    <item>
+      <title>Vibe code: works great, fails forever</title>
+      <link>https://kubaik.github.io/vibe-code-works-great-fails-forever/</link>
+      <description>Cut production outages 70% by avoiding these 7 vibe-coding shortcuts — connection pools, logging, and cache mistakes most teams repeat in 2026.</description>
+      <pubDate>Sat, 20 Jun 2026 22:54:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/vibe-code-works-great-fails-forever/</guid>
+    </item>
     <item>
       <title>AI agent postmortem: human loop vs blind replay</title>
       <link>https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/</link>
@@ -138,13 +145,6 @@
       <description>Fix AI agents that forget users overnight — Redis TTL, token budgeting, and the 3 AM cold start mistake most teams miss. Learn how to scope memory to the user and avoid silent context loss.</description>
       <pubDate>Sat, 20 Jun 2026 13:32:27 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-memory-vanishes-why-your-ai-forgets-at-3-am/</guid>
-    </item>
-    <item>
-      <title>AI pair coding: who owns the diff now?</title>
-      <link>https://kubaik.github.io/ai-pair-coding-who-owns-the-diff-now/</link>
-      <description>Cut PR review time 77% using AI pair coding — but only after we encoded invariants as human-owned tests. Token costs, pitfalls, and the guardrails that worked in 2026.</description>
-      <pubDate>Sat, 20 Jun 2026 13:17:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-pair-coding-who-owns-the-diff-now/</guid>
     </item>
   </channel>
 </rss>
