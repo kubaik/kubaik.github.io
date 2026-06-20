@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 13:12:44 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 13:17:12 +0000</lastBuildDate>
+    <item>
+      <title>AI pair coding: who owns the diff now?</title>
+      <link>https://kubaik.github.io/ai-pair-coding-who-owns-the-diff-now/</link>
+      <description>Cut PR review time 77% using AI pair coding — but only after we encoded invariants as human-owned tests. Token costs, pitfalls, and the guardrails that worked in 2026.</description>
+      <pubDate>Sat, 20 Jun 2026 13:17:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pair-coding-who-owns-the-diff-now/</guid>
+    </item>
     <item>
       <title>AI observability: the 3 things logs miss</title>
       <link>https://kubaik.github.io/ai-observability-the-3-things-logs-miss/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 60% by running in 50 edge locations — cache stampedes, clock drift, and write fan-out mistakes most teams make in 2026.</description>
       <pubDate>Fri, 19 Jun 2026 21:55:04 +0000</pubDate>
       <guid>https://kubaik.github.io/run-apis-in-50-spots-what-breaks-first/</guid>
-    </item>
-    <item>
-      <title>Webhooks 2026: retries, idempotency, and the 99.95%</title>
-      <link>https://kubaik.github.io/webhooks-2026-retries-idempotency-and-the-9995/</link>
-      <description>Cut webhook failures 95% with Redis Streams, Lambda SnapStart, and idempotency keys — p99 latency 780 ms, cost $1.01 per 1,000 events in 2026</description>
-      <pubDate>Fri, 19 Jun 2026 21:43:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/webhooks-2026-retries-idempotency-and-the-9995/</guid>
     </item>
   </channel>
 </rss>
