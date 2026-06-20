@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 22:54:30 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 23:01:47 +0000</lastBuildDate>
+    <item>
+      <title>AI agents lose context: 3 fixes for persistent memory</title>
+      <link>https://kubaik.github.io/ai-agents-lose-context-3-fixes-for-persistent-memory/</link>
+      <description>Persistent AI memory fails on restart — 3 fixes with Redis 7.2, PostgreSQL 15, and LangChain 0.2.0. Cut context loss to zero with volume mounts, circuit breakers, and shared stores.</description>
+      <pubDate>Sat, 20 Jun 2026 23:01:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-lose-context-3-fixes-for-persistent-memory/</guid>
+    </item>
     <item>
       <title>Vibe code: works great, fails forever</title>
       <link>https://kubaik.github.io/vibe-code-works-great-fails-forever/</link>
@@ -138,13 +145,6 @@
       <description>Cut interview callbacks 40% by adding OpenTelemetry SDK 1.26 and Redis 7.2 — the logging, tracing, and rate-limiting setup AI screeners now demand before they review your code.</description>
       <pubDate>Sat, 20 Jun 2026 14:28:42 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-interviews-need-real-logs-the-401-you-never/</guid>
-    </item>
-    <item>
-      <title>Agent memory vanishes: why your AI forgets at 3 AM</title>
-      <link>https://kubaik.github.io/agent-memory-vanishes-why-your-ai-forgets-at-3-am/</link>
-      <description>Fix AI agents that forget users overnight — Redis TTL, token budgeting, and the 3 AM cold start mistake most teams miss. Learn how to scope memory to the user and avoid silent context loss.</description>
-      <pubDate>Sat, 20 Jun 2026 13:32:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-memory-vanishes-why-your-ai-forgets-at-3-am/</guid>
     </item>
   </channel>
 </rss>
