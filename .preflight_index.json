@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T00:04:25.942279",
+  "built_at": "2026-06-20T01:39:31.902595",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1865,6 +1865,11 @@
       "slug": "ai-interviews-break-systems-5-real-mistakes-in-2026",
       "title": "AI interviews break systems: 5 real mistakes in 2026",
       "summary": "After reviewing a lot of code that touches system design, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing In 2026, teams that used to hire backend engineers every quarter started getting candidate"
+    },
+    {
+      "slug": "gil-free-python-313-double-web-server-speed",
+      "title": "GIL-free Python 3.13: double web server speed",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026, we moved a 300k daily-user e-commerce API from Django 4.2 to FastAPI 0.109 on P"
     }
   ]
 }

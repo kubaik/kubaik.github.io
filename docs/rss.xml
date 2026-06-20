@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 01:34:59 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 01:39:38 +0000</lastBuildDate>
+    <item>
+      <title>GIL-free Python 3.13: double web server speed</title>
+      <link>https://kubaik.github.io/gil-free-python-313-double-web-server-speed/</link>
+      <description>Cut API response time 40% with Python 3.13 free-threaded GIL removal — benchmarks, thread safety traps, and the one command to try tonight</description>
+      <pubDate>Sat, 20 Jun 2026 01:39:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/gil-free-python-313-double-web-server-speed/</guid>
+    </item>
     <item>
       <title>AI interviews break systems: 5 real mistakes in 2026</title>
       <link>https://kubaik.github.io/ai-interviews-break-systems-5-real-mistakes-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut dev tool pricing mistakes before Series A — real usage data, CLI code, and $4,300/month CI bill saved to $780.</description>
       <pubDate>Fri, 19 Jun 2026 16:00:05 +0000</pubDate>
       <guid>https://kubaik.github.io/price-dev-tools-right-in-2026/</guid>
-    </item>
-    <item>
-      <title>WCAG chat bots miss: 4 invisible traps</title>
-      <link>https://kubaik.github.io/wcag-chat-bots-miss-4-invisible-traps/</link>
-      <description>WCAG chat bots miss: 4 invisible traps — how to fix aria-live duplication, missing roles, and Safari VoiceOver failures in 2026</description>
-      <pubDate>Fri, 19 Jun 2026 15:52:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/wcag-chat-bots-miss-4-invisible-traps/</guid>
     </item>
   </channel>
 </rss>
