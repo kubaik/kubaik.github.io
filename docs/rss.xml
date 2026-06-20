@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 11:02:55 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 11:07:23 +0000</lastBuildDate>
+    <item>
+      <title>Migrations break prod: rollback is the real test</title>
+      <link>https://kubaik.github.io/migrations-break-prod-rollback-is-the-real-test/</link>
+      <description>Zero-downtime migrations fail when rollback scripts hit 45-minute locks on 200 GB tables. Measure impact, not uptime. Use backward-compatible changes, batch backfills, and rollforward.</description>
+      <pubDate>Sat, 20 Jun 2026 11:07:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/migrations-break-prod-rollback-is-the-real-test/</guid>
+    </item>
     <item>
       <title>MCP servers crash: tool call timeout after 5s</title>
       <link>https://kubaik.github.io/mcp-servers-crash-tool-call-timeout-after-5s/</link>
@@ -138,13 +145,6 @@
       <description>Cut React render time 99% with Signals — benchmarks, code, and the one mistake teams keep making</description>
       <pubDate>Fri, 19 Jun 2026 20:27:30 +0000</pubDate>
       <guid>https://kubaik.github.io/signals-5-state-hacks-that-actually-work/</guid>
-    </item>
-    <item>
-      <title>Fine-tune vs prompt: 40% cheaper with 3% accuracy loss</title>
-      <link>https://kubaik.github.io/fine-tune-vs-prompt-40-cheaper-with-3-accuracy-loss/</link>
-      <description>By late 2025, every vendor’s README shows a 1-shot accuracy number on the MMLU-Pro 2026 benchmark that looks impressive: 87.3%.</description>
-      <pubDate>Fri, 19 Jun 2026 20:11:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/fine-tune-vs-prompt-40-cheaper-with-3-accuracy-loss/</guid>
     </item>
   </channel>
 </rss>
