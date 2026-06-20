@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 06:44:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 06:49:47 +0000</lastBuildDate>
+    <item>
+      <title>Test AI code, not the AI</title>
+      <link>https://kubaik.github.io/test-ai-code-not-the-ai/</link>
+      <description>Cut AI test failures 60% with contract-first testing — OpenAPI snapshots, Pydantic validations, and behavior-driven tests that ignore AI internals</description>
+      <pubDate>Sat, 20 Jun 2026 06:49:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-ai-code-not-the-ai/</guid>
+    </item>
     <item>
       <title>7 passive income streams for devs in 2026</title>
       <link>https://kubaik.github.io/7-passive-income-streams-for-devs-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Save 20% on EU VAT compliance with Paddle — real fees, benchmarks, and the mistake most teams make when choosing Stripe vs Paddle vs Lemon Squeezy in 2026.</description>
       <pubDate>Fri, 19 Jun 2026 18:27:09 +0000</pubDate>
       <guid>https://kubaik.github.io/paddle-over-stripe-2026s-real-winner/</guid>
-    </item>
-    <item>
-      <title>Branching databases locally: the Neon gotcha nobody</title>
-      <link>https://kubaik.github.io/branching-databases-locally-the-neon-gotcha-nobody/</link>
-      <description>Cut local DB setup time 70% with Neon and PlanetScale branches — the missing query parameter that wastes hours and the 3 fixes that actually work in 2026.</description>
-      <pubDate>Fri, 19 Jun 2026 18:16:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/branching-databases-locally-the-neon-gotcha-nobody/</guid>
     </item>
   </channel>
 </rss>

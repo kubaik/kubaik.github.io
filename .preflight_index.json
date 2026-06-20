@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T05:23:21.190220",
+  "built_at": "2026-06-20T06:49:41.326525",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1885,6 +1885,11 @@
       "slug": "7-passive-income-streams-for-devs-in-2026",
       "title": "7 passive income streams for devs in 2026",
       "summary": "I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I started looking for a second income stre"
+    },
+    {
+      "slug": "test-ai-code-not-the-ai",
+      "title": "Test AI code, not the AI",
+      "summary": "I ran into this write tests problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks in 2026 debugging a Python"
     }
   ]
 }
