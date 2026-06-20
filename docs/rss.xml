@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 05:05:30 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 05:08:47 +0000</lastBuildDate>
+    <item>
+      <title>Tech salaries 2026: what corrected, what grew</title>
+      <link>https://kubaik.github.io/tech-salaries-2026-what-corrected-what-grew/</link>
+      <description>In 2026 Nairobi tech salaries split 35-50% between generalist CRUD roles and high-leverage platform roles — compare exact numbers and learn which skills moved up and which stayed flat.</description>
+      <pubDate>Sat, 20 Jun 2026 05:08:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/tech-salaries-2026-what-corrected-what-grew/</guid>
+    </item>
     <item>
       <title>JSON mode doesn’t validate outputs</title>
       <link>https://kubaik.github.io/json-mode-doesnt-validate-outputs/</link>
@@ -138,13 +145,6 @@
       <description>Cut hallucinations 75% with hybrid search + reranking — benchmarked on 1,084 questions with Python 3.11, costing $0.00012 extra per query on AWS Bedrock 2026.</description>
       <pubDate>Fri, 19 Jun 2026 17:53:43 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-isnt-enough-in-2026/</guid>
-    </item>
-    <item>
-      <title>Dagster replaced Airflow in 2026 — here’s the stack we</title>
-      <link>https://kubaik.github.io/dagster-replaced-airflow-in-2026-heres-the-stack-we/</link>
-      <description>Cut pipeline orchestration costs 74% and latency 92% by swapping Airflow for Dagster 1.7.0 — the asset-based model, RDS metadata, and IAM secrets that actually scaled to 60 engineers in 2026.</description>
-      <pubDate>Fri, 19 Jun 2026 16:13:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/dagster-replaced-airflow-in-2026-heres-the-stack-we/</guid>
     </item>
   </channel>
 </rss>

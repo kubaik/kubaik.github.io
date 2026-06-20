@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T05:05:24.478655",
+  "built_at": "2026-06-20T05:08:41.158451",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1875,6 +1875,11 @@
       "slug": "json-mode-doesnt-validate-outputs",
       "title": "JSON mode doesn’t validate outputs",
       "summary": "Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026, our team at Kinetik Data started shipping a product called ExtractAI—a"
+    },
+    {
+      "slug": "tech-salaries-2026-what-corrected-what-grew",
+      "title": "Tech salaries 2026: what corrected, what grew",
+      "summary": "The short version: the conventional advice on tech salaries is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In 2026 the Kenyan tech salary curve has two clear segments: one flat or down 15-20%"
     }
   ]
 }
