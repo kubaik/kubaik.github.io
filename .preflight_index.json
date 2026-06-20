@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T08:44:37.392425",
+  "built_at": "2026-06-20T09:25:42.740226",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1900,6 +1900,11 @@
       "slug": "year-one-claude-codes-slow-burn-wins",
       "title": "Year one: Claude Code’s slow-burn wins",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I spent three weeks in 2026 trying to automate our internal API client generation using "
+    },
+    {
+      "slug": "2026-alert-triage-when-opsgenie-slept-for-you",
+      "title": "2026 alert triage: when Opsgenie slept for you",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In early 2026 I inherited an on-call rotation that woke me up 4–6 times a night. Not bec"
     }
   ]
 }

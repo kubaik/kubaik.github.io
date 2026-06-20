@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 09:21:03 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 09:25:49 +0000</lastBuildDate>
+    <item>
+      <title>2026 alert triage: when Opsgenie slept for you</title>
+      <link>https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/</link>
+      <description>They suppress alerts that have a 92% chance of resolving on their own, they collapse related incidents into one ticket, and they surface only the…</description>
+      <pubDate>Sat, 20 Jun 2026 09:25:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/2026-alert-triage-when-opsgenie-slept-for-you/</guid>
+    </item>
     <item>
       <title>Year one: Claude Code’s slow-burn wins</title>
       <link>https://kubaik.github.io/year-one-claude-codes-slow-burn-wins/</link>
@@ -138,13 +145,6 @@
       <description>Cut audit log latency 4× with PostgreSQL 15 logical decoding vs Kafka 3.7 sidecar queues — concrete benchmarks, costs, and the compliance trick most teams miss</description>
       <pubDate>Fri, 19 Jun 2026 19:29:22 +0000</pubDate>
       <guid>https://kubaik.github.io/audit-logs-append-only-db-vs-sidecar-queues/</guid>
-    </item>
-    <item>
-      <title>AI agents break when users cheat</title>
-      <link>https://kubaik.github.io/ai-agents-break-when-users-cheat/</link>
-      <description>Cut prompt injection 94% with a 3-layer firewall — token sanitizer, context filter, and model guardrail. Latency +25%, cost +17%, real production data from 50k daily prompts in 2026.</description>
-      <pubDate>Fri, 19 Jun 2026 19:08:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-break-when-users-cheat/</guid>
     </item>
   </channel>
 </rss>
