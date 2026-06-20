@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T21:00:18.949597",
+  "built_at": "2026-06-20T21:07:58.851827",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2015,6 +2015,11 @@
       "slug": "ai-glue-code-3-ways-to-avoid-duct-taping-models",
       "title": "AI glue code: 3 ways to avoid duct-taping models",
       "summary": "After reviewing a lot of code that touches tools built, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You ship a slick MVP in three weeks using a low-code AI platform like Predibase LoRA 2.0 or "
+    },
+    {
+      "slug": "cut-cold-starts-70-lambda-cost-hack",
+      "title": "Cut cold starts 70%: Lambda cost hack",
+      "summary": "After reviewing a lot of code that touches claude gpt5, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The one-paragraph version (read this first) Cold starts in serverless add 200–800 ms of latency and can spike AWS Lambda cost"
     }
   ]
 }
