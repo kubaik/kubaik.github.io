@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 18:51:02 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 18:55:39 +0000</lastBuildDate>
+    <item>
+      <title>AI killed our dev tool sales until we fixed this</title>
+      <link>https://kubaik.github.io/ai-killed-our-dev-tool-sales-until-we-fixed-this/</link>
+      <description>Turn AI skepticism into sales: how a Nigerian dev tool went from $2.8k to $6.3k MRR by selling compliance artifacts, not CLIs. SARIF, offline-first retries, and the real buyer in 2026.</description>
+      <pubDate>Sat, 20 Jun 2026 18:55:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-killed-our-dev-tool-sales-until-we-fixed-this/</guid>
+    </item>
     <item>
       <title>Islands beat SPAs in 2026</title>
       <link>https://kubaik.github.io/islands-beat-spas-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Reduce API callback loss 99% with durable state machines — Nigeria, Ghana, and Kenya fintech compliance in 2026 without over-engineering</description>
       <pubDate>Sat, 20 Jun 2026 08:41:19 +0000</pubDate>
       <guid>https://kubaik.github.io/regulations-forced-better-apis-the-2026-fintech/</guid>
-    </item>
-    <item>
-      <title>Test AI code, not the AI</title>
-      <link>https://kubaik.github.io/test-ai-code-not-the-ai/</link>
-      <description>Cut AI test failures 60% with contract-first testing — OpenAPI snapshots, Pydantic validations, and behavior-driven tests that ignore AI internals</description>
-      <pubDate>Sat, 20 Jun 2026 06:49:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-ai-code-not-the-ai/</guid>
     </item>
   </channel>
 </rss>

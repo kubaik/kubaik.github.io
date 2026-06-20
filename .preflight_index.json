@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T18:20:57.634850",
+  "built_at": "2026-06-20T18:55:33.024419",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1985,6 +1985,11 @@
       "slug": "islands-beat-spas-in-2026",
       "title": "Islands beat SPAs in 2026",
       "summary": "Most islands architecture guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we rebuilt the marketing site for our SaaS product. The old Next.js "
+    },
+    {
+      "slug": "ai-killed-our-dev-tool-sales-until-we-fixed-this",
+      "title": "AI killed our dev tool sales until we fixed this",
+      "summary": "Most building developer guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, our startup built a CLI that automated security scans for Python and"
     }
   ]
 }
