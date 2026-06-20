@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-20T11:11:43.318246",
+  "built_at": "2026-06-20T12:04:02.729784",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -1920,6 +1920,11 @@
       "slug": "schema-per-tenant-cost-us-170-more-than-rls",
       "title": "Schema-per-tenant cost us 170% more than RLS",
       "summary": "Most designing multitenant guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, we launched a multi-tenant SaaS for small businesses running on Postgre"
+    },
+    {
+      "slug": "one-payment-stack-for-kenya-nigeria-ghana",
+      "title": "One payment stack for Kenya, Nigeria, Ghana",
+      "summary": "A colleague asked me about build payment during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Mos"
     }
   ]
 }

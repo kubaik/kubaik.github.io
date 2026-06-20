@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 11:59:30 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 12:04:09 +0000</lastBuildDate>
+    <item>
+      <title>One payment stack for Kenya, Nigeria, Ghana</title>
+      <link>https://kubaik.github.io/one-payment-stack-for-kenya-nigeria-ghana/</link>
+      <description>Reduce payment failure rates 60% with one abstraction layer instead of three integrations — latency benchmarks, cost savings, and the mistake that cost $2k</description>
+      <pubDate>Sat, 20 Jun 2026 12:04:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/one-payment-stack-for-kenya-nigeria-ghana/</guid>
+    </item>
     <item>
       <title>Schema-per-tenant cost us 170% more than RLS</title>
       <link>https://kubaik.github.io/schema-per-tenant-cost-us-170-more-than-rls/</link>
@@ -138,13 +145,6 @@
       <description>Cut duplicate processing 68% with idempotent messages — the 11 patterns that keep systems up when parts are out of sync, including code, cost, and the outage that taught me the hard way.</description>
       <pubDate>Fri, 19 Jun 2026 21:04:17 +0000</pubDate>
       <guid>https://kubaik.github.io/11-patterns-for-eventual-consistency-that-dont-wake/</guid>
-    </item>
-    <item>
-      <title>Vibe coding: MVP gem, prod albatross</title>
-      <link>https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/</link>
-      <description>Cut long-term debugging time 70% by swapping vibe coding for typed, tested, linted code from day one — with concrete benchmarks, error rates, and a 5-minute action step.</description>
-      <pubDate>Fri, 19 Jun 2026 20:47:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/</guid>
     </item>
   </channel>
 </rss>
