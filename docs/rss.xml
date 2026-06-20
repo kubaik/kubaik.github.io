@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 11:07:23 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 11:11:49 +0000</lastBuildDate>
+    <item>
+      <title>Schema-per-tenant cost us 170% more than RLS</title>
+      <link>https://kubaik.github.io/schema-per-tenant-cost-us-170-more-than-rls/</link>
+      <description>Cut database costs 60% by swapping schema-per-tenant for row-level security — benchmark data, RLS policies, and the one mistake that cost us 170% more than RLS in 2026</description>
+      <pubDate>Sat, 20 Jun 2026 11:11:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/schema-per-tenant-cost-us-170-more-than-rls/</guid>
+    </item>
     <item>
       <title>Migrations break prod: rollback is the real test</title>
       <link>https://kubaik.github.io/migrations-break-prod-rollback-is-the-real-test/</link>
@@ -138,13 +145,6 @@
       <description>Cut long-term debugging time 70% by swapping vibe coding for typed, tested, linted code from day one — with concrete benchmarks, error rates, and a 5-minute action step.</description>
       <pubDate>Fri, 19 Jun 2026 20:47:43 +0000</pubDate>
       <guid>https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/</guid>
-    </item>
-    <item>
-      <title>Signals: 5 state hacks that actually work</title>
-      <link>https://kubaik.github.io/signals-5-state-hacks-that-actually-work/</link>
-      <description>Cut React render time 99% with Signals — benchmarks, code, and the one mistake teams keep making</description>
-      <pubDate>Fri, 19 Jun 2026 20:27:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/signals-5-state-hacks-that-actually-work/</guid>
     </item>
   </channel>
 </rss>
