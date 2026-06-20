@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 20 Jun 2026 05:00:55 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 20 Jun 2026 05:05:30 +0000</lastBuildDate>
+    <item>
+      <title>JSON mode doesn’t validate outputs</title>
+      <link>https://kubaik.github.io/json-mode-doesnt-validate-outputs/</link>
+      <description>Cut AI parsing failures 36% with JSON Schema validation — why JSON mode fails, how to validate outputs, and the 3-step pipeline that works in 2026.</description>
+      <pubDate>Sat, 20 Jun 2026 05:05:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/json-mode-doesnt-validate-outputs/</guid>
+    </item>
     <item>
       <title>GIL-free Python 3.13: double web server speed</title>
       <link>https://kubaik.github.io/gil-free-python-313-double-web-server-speed/</link>
@@ -138,13 +145,6 @@
       <description>Cut pipeline orchestration costs 74% and latency 92% by swapping Airflow for Dagster 1.7.0 — the asset-based model, RDS metadata, and IAM secrets that actually scaled to 60 engineers in 2026.</description>
       <pubDate>Fri, 19 Jun 2026 16:13:37 +0000</pubDate>
       <guid>https://kubaik.github.io/dagster-replaced-airflow-in-2026-heres-the-stack-we/</guid>
-    </item>
-    <item>
-      <title>Price dev tools right in 2026</title>
-      <link>https://kubaik.github.io/price-dev-tools-right-in-2026/</link>
-      <description>Cut dev tool pricing mistakes before Series A — real usage data, CLI code, and $4,300/month CI bill saved to $780.</description>
-      <pubDate>Fri, 19 Jun 2026 16:00:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/price-dev-tools-right-in-2026/</guid>
     </item>
   </channel>
 </rss>
