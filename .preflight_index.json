@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T01:48:03.232876",
+  "built_at": "2026-06-21T05:56:20.629375",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2050,6 +2050,11 @@
       "slug": "aws-iam-in-10-minutes-least-privilege-without-the-pain",
       "title": "AWS IAM in 10 minutes: least privilege without the pain",
       "summary": "The short version: the conventional advice on implement leastprivilege is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Most teams copy-paste AWS IAM policies from tutorials, then spend months "
+    },
+    {
+      "slug": "build-webhooks-that-never-fail-twice",
+      "title": "Build webhooks that never fail twice",
+      "summary": "Most building webhook guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 our payments team asked us to build a new webhook system. Their goal was"
     }
   ]
 }

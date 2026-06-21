@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 02:05:06 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 05:56:27 +0000</lastBuildDate>
+    <item>
+      <title>Build webhooks that never fail twice</title>
+      <link>https://kubaik.github.io/build-webhooks-that-never-fail-twice/</link>
+      <description>Cut webhook delivery failures 100% with SQS FIFO, Redis 7.2, and idempotency keys — latency drops 87%, cost falls 50%, and PCI-DSS passes in 2026.</description>
+      <pubDate>Sun, 21 Jun 2026 05:56:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-webhooks-that-never-fail-twice/</guid>
+    </item>
     <item>
       <title>AWS IAM in 10 minutes: least privilege without the pain</title>
       <link>https://kubaik.github.io/aws-iam-in-10-minutes-least-privilege-without-the-pain/</link>
@@ -138,13 +145,6 @@
       <description>Get 10-15% more salary in 2026 — AI code tools cut routine work, benchmark the overhead, and counter with hard numbers from your repo</description>
       <pubDate>Sat, 20 Jun 2026 15:33:58 +0000</pubDate>
       <guid>https://kubaik.github.io/ask-for-20-more-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI scanners miss real flaws — here’s how to use them</title>
-      <link>https://kubaik.github.io/ai-scanners-miss-real-flaws-heres-how-to-use-them/</link>
-      <description>Cut AI scanner noise 42% by pairing deterministic and AI tools — real benchmarks, false positive rates, and a 30-minute fix for your semgrep.yml file in 2026.</description>
-      <pubDate>Sat, 20 Jun 2026 15:30:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-scanners-miss-real-flaws-heres-how-to-use-them/</guid>
     </item>
   </channel>
 </rss>
