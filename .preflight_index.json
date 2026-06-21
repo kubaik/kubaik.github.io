@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T16:59:39.526737",
+  "built_at": "2026-06-21T17:17:04.040923",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2135,6 +2135,11 @@
       "slug": "self-healing-pipelines-github-actions-vs-argo",
       "title": "Self-healing pipelines: GitHub Actions vs Argo",
       "summary": "I've seen the same built selfhealing mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, self-healing deployment pipelines are no longer a curiosity"
+    },
+    {
+      "slug": "database-branching-3-neon-mistakes-that-cost-me-weeks",
+      "title": "Database branching: 3 Neon mistakes that cost me weeks",
+      "summary": "After reviewing a lot of code that touches database branching, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You branch, push, and suddenly your local or Neon CLI command hangs for 30 seconds be"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 17:12:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 17:17:11 +0000</lastBuildDate>
+    <item>
+      <title>Database branching: 3 Neon mistakes that cost me weeks</title>
+      <link>https://kubaik.github.io/database-branching-3-neon-mistakes-that-cost-me-weeks/</link>
+      <description>Save 80% on database costs with cloud branching — Neon and PlanetScale CLI timeout fixes, connection string mistakes, and the 3 errors that break local workflows in 2026</description>
+      <pubDate>Sun, 21 Jun 2026 17:17:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/database-branching-3-neon-mistakes-that-cost-me-weeks/</guid>
+    </item>
     <item>
       <title>Self-healing pipelines: GitHub Actions vs Argo</title>
       <link>https://kubaik.github.io/self-healing-pipelines-github-actions-vs-argo/</link>
@@ -138,13 +145,6 @@
       <description>Persistent AI memory fails on restart — 3 fixes with Redis 7.2, PostgreSQL 15, and LangChain 0.2.0. Cut context loss to zero with volume mounts, circuit breakers, and shared stores.</description>
       <pubDate>Sat, 20 Jun 2026 23:01:39 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-lose-context-3-fixes-for-persistent-memory/</guid>
-    </item>
-    <item>
-      <title>Vibe code: works great, fails forever</title>
-      <link>https://kubaik.github.io/vibe-code-works-great-fails-forever/</link>
-      <description>Cut production outages 70% by avoiding these 7 vibe-coding shortcuts — connection pools, logging, and cache mistakes most teams repeat in 2026.</description>
-      <pubDate>Sat, 20 Jun 2026 22:54:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/vibe-code-works-great-fails-forever/</guid>
     </item>
   </channel>
 </rss>
