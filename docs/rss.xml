@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 01:43:23 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 01:48:09 +0000</lastBuildDate>
+    <item>
+      <title>AWS IAM in 10 minutes: least privilege without the pain</title>
+      <link>https://kubaik.github.io/aws-iam-in-10-minutes-least-privilege-without-the-pain/</link>
+      <description>Cut AWS IAM policy lines 70% with least privilege in 10 minutes — use Access Analyzer 2026 and IAM Policy Simulator to avoid the wildcard trap.</description>
+      <pubDate>Sun, 21 Jun 2026 01:48:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/aws-iam-in-10-minutes-least-privilege-without-the-pain/</guid>
+    </item>
     <item>
       <title>HTMX swapped 5 dev tools for me</title>
       <link>https://kubaik.github.io/htmx-swapped-5-dev-tools-for-me/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI scanner noise 42% by pairing deterministic and AI tools — real benchmarks, false positive rates, and a 30-minute fix for your semgrep.yml file in 2026.</description>
       <pubDate>Sat, 20 Jun 2026 15:30:54 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-scanners-miss-real-flaws-heres-how-to-use-them/</guid>
-    </item>
-    <item>
-      <title>Nairobi SaaS stack 2026: real costs exposed</title>
-      <link>https://kubaik.github.io/nairobi-saas-stack-2026-real-costs-exposed/</link>
-      <description>Cut Nairobi SaaS costs 42% with a concrete bill of materials — Fly Machines, Crunchy Bridge, Redis 7.2, and Backblaze B2 with real latency and spend numbers for 2026.</description>
-      <pubDate>Sat, 20 Jun 2026 14:40:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/nairobi-saas-stack-2026-real-costs-exposed/</guid>
     </item>
   </channel>
 </rss>

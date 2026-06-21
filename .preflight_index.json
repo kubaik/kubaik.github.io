@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T00:10:42.492131",
+  "built_at": "2026-06-21T01:48:03.232876",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2045,6 +2045,11 @@
       "slug": "htmx-swapped-5-dev-tools-for-me",
       "title": "HTMX swapped 5 dev tools for me",
       "summary": "I ran into this htmx changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026 my team shipped a SaaS product that h"
+    },
+    {
+      "slug": "aws-iam-in-10-minutes-least-privilege-without-the-pain",
+      "title": "AWS IAM in 10 minutes: least privilege without the pain",
+      "summary": "The short version: the conventional advice on implement leastprivilege is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Most teams copy-paste AWS IAM policies from tutorials, then spend months "
     }
   ]
 }
