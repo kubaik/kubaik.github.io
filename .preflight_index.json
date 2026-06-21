@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T13:14:35.352269",
+  "built_at": "2026-06-21T13:25:41.090167",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2100,6 +2100,11 @@
       "slug": "own-the-ai-changed-pull-request",
       "title": "Own the AI-changed pull request",
       "summary": "Most pair programming guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 our team shipped a new B2B API that handles real-time inventory updates."
+    },
+    {
+      "slug": "build-a-portfolio-that-beats-the-ai-clone-pile",
+      "title": "Build a portfolio that beats the AI clone pile",
+      "summary": "Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, the Nigerian tech hiring market is flooded with candidates who have identical"
     }
   ]
 }

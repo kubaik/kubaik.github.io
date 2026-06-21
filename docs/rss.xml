@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 13:21:07 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 13:25:48 +0000</lastBuildDate>
+    <item>
+      <title>Build a portfolio that beats the AI clone pile</title>
+      <link>https://kubaik.github.io/build-a-portfolio-that-beats-the-ai-clone-pile/</link>
+      <description>Portfolio projects with AI wrappers get ignored in 2026 — here’s how we built a boring expense tracker that hiring leads actually reviewed, with 4% error rate on 2G and $2.30/month infra cost.</description>
+      <pubDate>Sun, 21 Jun 2026 13:25:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-a-portfolio-that-beats-the-ai-clone-pile/</guid>
+    </item>
     <item>
       <title>Own the AI-changed pull request</title>
       <link>https://kubaik.github.io/own-the-ai-changed-pull-request/</link>
@@ -138,13 +145,6 @@
       <description>Deploy AI models 80% faster with feature flags — canary splits, instant kill switches, and 5-minute rollbacks in 2026. FastAPI, Flagsmith 3.18, Prometheus 2.48.</description>
       <pubDate>Sat, 20 Jun 2026 20:49:06 +0000</pubDate>
       <guid>https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/</guid>
-    </item>
-    <item>
-      <title>Dumped Kubernetes for $200 and no one noticed</title>
-      <link>https://kubaik.github.io/dumped-kubernetes-for-200-and-no-one-noticed/</link>
-      <description>The bill hit $3,240 on the 2nd every month.</description>
-      <pubDate>Sat, 20 Jun 2026 20:23:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/dumped-kubernetes-for-200-and-no-one-noticed/</guid>
     </item>
   </channel>
 </rss>
