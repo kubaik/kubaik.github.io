@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 13:47:14 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 10:51:23 +0000</lastBuildDate>
+    <item>
+      <title>MCP servers 2026: why your agent keeps crashing</title>
+      <link>https://kubaik.github.io/mcp-servers-2026-why-your-agent-keeps-crashing/</link>
+      <description>Reduce MCP server crashes 90% with error handling, memory limits, and sandbox profiles in 2026 — fixes for Node 20 LTS and Python 3.11 MCP SDKs.</description>
+      <pubDate>Sun, 21 Jun 2026 10:51:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-servers-2026-why-your-agent-keeps-crashing/</guid>
+    </item>
     <item>
       <title>Offline-first apps: what 3G markets taught us</title>
       <link>https://kubaik.github.io/offline-first-apps-what-3g-markets-taught-us/</link>
@@ -138,13 +145,6 @@
       <description>Turn AI skepticism into sales: how a Nigerian dev tool went from $2.8k to $6.3k MRR by selling compliance artifacts, not CLIs. SARIF, offline-first retries, and the real buyer in 2026.</description>
       <pubDate>Sat, 20 Jun 2026 18:55:31 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-killed-our-dev-tool-sales-until-we-fixed-this/</guid>
-    </item>
-    <item>
-      <title>Islands beat SPAs in 2026</title>
-      <link>https://kubaik.github.io/islands-beat-spas-in-2026/</link>
-      <description>Cut web vitals 58% by switching to Astro 4.8 islands in 2026 — payloads down 90%, TTI from 5.8 s to 1.2 s, infra bill unchanged.</description>
-      <pubDate>Sat, 20 Jun 2026 18:20:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/islands-beat-spas-in-2026/</guid>
     </item>
   </channel>
 </rss>

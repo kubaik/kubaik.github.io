@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T10:38:09.904299",
+  "built_at": "2026-06-21T10:51:17.084649",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2080,6 +2080,11 @@
       "slug": "offline-first-apps-what-3g-markets-taught-us",
       "title": "Offline-first apps: what 3G markets taught us",
       "summary": "Most build offlinefirst guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, we launched a personal finance app for users in Nigeria, Kenya, and Ghana "
+    },
+    {
+      "slug": "mcp-servers-2026-why-your-agent-keeps-crashing",
+      "title": "MCP servers 2026: why your agent keeps crashing",
+      "summary": "After reviewing a lot of code that touches mcp servers, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. MCP servers in 2026: the protocol that quietly became infrastructure --------------------------------------------------------"
     }
   ]
 }
