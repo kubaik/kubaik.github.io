@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 10:33:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 10:38:16 +0000</lastBuildDate>
+    <item>
+      <title>Offline-first apps: what 3G markets taught us</title>
+      <link>https://kubaik.github.io/offline-first-apps-what-3g-markets-taught-us/</link>
+      <description>Cut sync failures 39% in Nigeria and Kenya with offline-first design — SQLite, SQLCipher, and WatermelonDB 1.6 powering 92% crash-free sessions.</description>
+      <pubDate>Sun, 21 Jun 2026 10:38:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/offline-first-apps-what-3g-markets-taught-us/</guid>
+    </item>
     <item>
       <title>Postgres 17 replaces Redis, Kafka, and S3 in our stack</title>
       <link>https://kubaik.github.io/postgres-17-replaces-redis-kafka-and-s3-in-our-stack/</link>
@@ -138,13 +145,6 @@
       <description>Cut web vitals 58% by switching to Astro 4.8 islands in 2026 — payloads down 90%, TTI from 5.8 s to 1.2 s, infra bill unchanged.</description>
       <pubDate>Sat, 20 Jun 2026 18:20:55 +0000</pubDate>
       <guid>https://kubaik.github.io/islands-beat-spas-in-2026/</guid>
-    </item>
-    <item>
-      <title>Service mesh is a tax you can skip</title>
-      <link>https://kubaik.github.io/service-mesh-is-a-tax-you-can-skip/</link>
-      <description>Cut 22% cloud costs and 60% incident time by ditching service mesh in production — real Istio, Cilium, and Linkerd benchmarks from 2026 systems with code and costs.</description>
-      <pubDate>Sat, 20 Jun 2026 17:19:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/service-mesh-is-a-tax-you-can-skip/</guid>
     </item>
   </channel>
 </rss>

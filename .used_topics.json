@@ -9,5 +9,6 @@
   "How Signals changed state management and whether it matters outside of frameworks",
   "Technical debt in 2026: the new category created by AI-generated code",
   "Building for mobile money reconciliation: the edge cases that Paystack and Flutterwave don't document",
-  "Postgres in 2026: the features that replaced three separate tools in our stack"
+  "Postgres in 2026: the features that replaced three separate tools in our stack",
+  "How to build offline-first apps for markets where connectivity is still unreliable"
 ]
