@@ -22,5 +22,6 @@
   "Stripe vs Lemon Squeezy vs Paddle in 2026: which one I use and why",
   "How post-quantum cryptography affects the TLS stack you're running today",
   "How I built a self-healing deployment pipeline using AI agents",
-  "Database branching workflows: how Neon and PlanetScale changed how I develop locally"
+  "Database branching workflows: how Neon and PlanetScale changed how I develop locally",
+  "How I run automated security scanning in CI without drowning in false positives"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 17:17:11 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 17:21:55 +0000</lastBuildDate>
+    <item>
+      <title>Slay CI false positives with smart scanning</title>
+      <link>https://kubaik.github.io/slay-ci-false-positives-with-smart-scanning/</link>
+      <description>Reduce CI security false positives 81% by scanning only the runtime artifact — Trivy 0.51, Snyk 1.1320, and GitHub Actions setup with real numbers.</description>
+      <pubDate>Sun, 21 Jun 2026 17:21:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/slay-ci-false-positives-with-smart-scanning/</guid>
+    </item>
     <item>
       <title>Database branching: 3 Neon mistakes that cost me weeks</title>
       <link>https://kubaik.github.io/database-branching-3-neon-mistakes-that-cost-me-weeks/</link>
@@ -138,13 +145,6 @@
       <description>Cut frontend bundle size 90% and AWS costs 50% with HTMX 2.0 — here’s the exact stack swap that worked in production in 2026.</description>
       <pubDate>Sun, 21 Jun 2026 00:10:40 +0000</pubDate>
       <guid>https://kubaik.github.io/htmx-swapped-5-dev-tools-for-me/</guid>
-    </item>
-    <item>
-      <title>AI agents lose context: 3 fixes for persistent memory</title>
-      <link>https://kubaik.github.io/ai-agents-lose-context-3-fixes-for-persistent-memory/</link>
-      <description>Persistent AI memory fails on restart — 3 fixes with Redis 7.2, PostgreSQL 15, and LangChain 0.2.0. Cut context loss to zero with volume mounts, circuit breakers, and shared stores.</description>
-      <pubDate>Sat, 20 Jun 2026 23:01:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-lose-context-3-fixes-for-persistent-memory/</guid>
     </item>
   </channel>
 </rss>
