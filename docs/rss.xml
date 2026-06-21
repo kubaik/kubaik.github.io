@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 10:54:28 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 10:58:29 +0000</lastBuildDate>
+    <item>
+      <title>Stop async Python surprises before they burn you</title>
+      <link>https://kubaik.github.io/stop-async-python-surprises-before-they-burn-you/</link>
+      <description>Cut async Python memory 38% and p99 latency 14ms with trio — connection pool leaks, nursery scopes, and the AWS Lambda gotcha most teams miss in 2026.</description>
+      <pubDate>Sun, 21 Jun 2026 10:58:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-async-python-surprises-before-they-burn-you/</guid>
+    </item>
     <item>
       <title>MCP servers 2026: why your agent keeps crashing</title>
       <link>https://kubaik.github.io/mcp-servers-2026-why-your-agent-keeps-crashing/</link>
@@ -138,13 +145,6 @@
       <description>TLS handshake latency jumped 10× with post-quantum crypto — here’s how we fixed it, the real numbers, and the one sysctl change that mattered in 2026.</description>
       <pubDate>Sat, 20 Jun 2026 19:05:16 +0000</pubDate>
       <guid>https://kubaik.github.io/tls-13-breaks-with-post-quantum-crypto-fix-now/</guid>
-    </item>
-    <item>
-      <title>AI killed our dev tool sales until we fixed this</title>
-      <link>https://kubaik.github.io/ai-killed-our-dev-tool-sales-until-we-fixed-this/</link>
-      <description>Turn AI skepticism into sales: how a Nigerian dev tool went from $2.8k to $6.3k MRR by selling compliance artifacts, not CLIs. SARIF, offline-first retries, and the real buyer in 2026.</description>
-      <pubDate>Sat, 20 Jun 2026 18:55:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-killed-our-dev-tool-sales-until-we-fixed-this/</guid>
     </item>
   </channel>
 </rss>

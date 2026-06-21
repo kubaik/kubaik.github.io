@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T10:51:17.084649",
+  "built_at": "2026-06-21T10:58:23.979775",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2085,6 +2085,11 @@
       "slug": "mcp-servers-2026-why-your-agent-keeps-crashing",
       "title": "MCP servers 2026: why your agent keeps crashing",
       "summary": "After reviewing a lot of code that touches mcp servers, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. MCP servers in 2026: the protocol that quietly became infrastructure --------------------------------------------------------"
+    },
+    {
+      "slug": "stop-async-python-surprises-before-they-burn-you",
+      "title": "Stop async Python surprises before they burn you",
+      "summary": "I've seen the same async python mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, async Python is no longer a niche experiment — it’s the default "
     }
   ]
 }
