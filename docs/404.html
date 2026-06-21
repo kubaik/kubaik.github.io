@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found — Tech Blog</title>
+    <title>Redirecting… — Tech Blog</title>
     <meta name="robots" content="noindex, nofollow">
     <meta name="base-path" content="">
     
-    <meta http-equiv="refresh" content="8;url=/">
+    <meta http-equiv="refresh" content="0;url=/">
         <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
     <!-- Google Analytics -->
@@ -22,175 +22,45 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
             crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="/static/style.css">
-    <link rel="manifest" href="/manifest.json">
-    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
     <style>
-        .error-container {
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; min-height: 60vh; text-align: center; padding: 2rem;
+        html, body {
+            margin: 0; padding: 0; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #fff; color: #555;
         }
-        .error-code {
-            font-size: 5rem; font-weight: 700; color: #6366f1;
-            line-height: 1; margin-bottom: 0.5rem;
+        .fallback { text-align: center; padding: 2rem; }
+        .fallback a {
+            color: #6366f1; font-weight: 600; text-decoration: none;
         }
-        /* ── redirect notice ── */
-        .redirect-notice {
-            margin-top: 1.5rem;
-            background: #f0f4ff;
-            border: 1px solid #c7d2fe;
-            border-radius: 8px;
-            padding: 0.9rem 1.5rem;
-            font-size: 0.95rem;
-            color: #3730a3;
-            max-width: 380px;
-            width: 100%;
+        .fallback a:hover { text-decoration: underline; }
+        .spinner {
+            width: 28px; height: 28px; margin: 0 auto 1rem;
+            border: 3px solid #e0e7ff; border-top-color: #6366f1;
+            border-radius: 50%; animation: spin 0.7s linear infinite;
         }
-        .redirect-notice strong {
-            font-variant-numeric: tabular-nums;
-        }
-        .redirect-bar-wrap {
-            width: 100%; height: 4px;
-            background: #e0e7ff; border-radius: 2px;
-            margin-top: 0.75rem; overflow: hidden;
-        }
-        .redirect-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 2px;
-            width: 100%;
-            /* transition kicks in after the first rAF pair sets width to 0% */
-            transition: width 1s linear;
-        }
-        /* ── action buttons ── */
-        .error-links {
-            margin-top: 1.25rem; display: flex;
-            gap: 1rem; flex-wrap: wrap; justify-content: center;
-        }
-        .btn-primary {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white; padding: 0.75rem 2rem; border-radius: 50px;
-            text-decoration: none; font-weight: 600;
-        }
-        .btn-secondary {
-            display: inline-block; background: #f0f4ff; color: #6366f1;
-            padding: 0.75rem 2rem; border-radius: 50px;
-            text-decoration: none; font-weight: 600; border: 2px solid #6366f1;
-        }
-        /* ── recent posts ── */
-        .popular-posts { margin-top: 2.5rem; max-width: 480px; text-align: left; }
-        .popular-posts h3 { margin-bottom: 0.75rem; font-size: 1rem; color: #555; }
-        .popular-posts ul { list-style: none; padding: 0; margin: 0; }
-        .popular-posts li { margin-bottom: 0.5rem; }
-        .popular-posts a { color: #6366f1; text-decoration: none; font-size: 0.9rem; }
-        .popular-posts a:hover { text-decoration: underline; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><a href="/">Tech Blog</a></h1>
-            <nav>
-                <a href="/">Home</a>
-                <a href="/about/">About</a>
-                <a href="/contact/">Contact</a>
-            </nav>
-        </div>
-    </header>
-    <main class="container">
-        <div class="error-container">
-            <div class="error-code">404</div>
-            <h2>Page Not Found</h2>
-            <p style="color:#666; max-width:400px;">
-                This page may have moved or been removed.
-            </p>
-
-            <div class="redirect-notice" role="status" aria-live="polite">
-                Redirecting to the home page in
-                <strong id="countdown">8</strong>
-                second<span id="plural">s</span>&hellip;
-                <div class="redirect-bar-wrap">
-                    <div class="redirect-bar" id="redirect-bar"></div>
-                </div>
-            </div>
-
-            <div class="error-links">
-                <a href="/" class="btn-primary">Take me home now</a>
-                <a href="/about/" class="btn-secondary">About</a>
-            </div>
-
-            <div class="popular-posts">
-                <h3>Or browse recent posts:</h3>
-                <ul id="recent-links">
-                    <li><a href="/">View all articles &rarr;</a></li>
-                </ul>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <div class="container">
-            <p>&copy; 2026 Tech Blog</p>
-        </div>
-    </footer>
+    <!--
+        Redirect fires immediately on script execution below.
+        This fallback content only renders if a browser/proxy blocks
+        BOTH the meta-refresh above and JavaScript execution.
+    -->
+    <div class="fallback">
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Taking you to the homepage&hellip;</p>
+        <p><a href="/">Click here if you are not redirected automatically</a></p>
+    </div>
     <script>
     (function () {
         'use strict';
-
         var BASE_PATH = '';
-        var HOME_URL  = BASE_PATH + '/';
-        var SECONDS   = 8;
-
-        // ── countdown + shrinking progress bar ────────────────────────────
-        var countEl   = document.getElementById('countdown');
-        var pluralEl  = document.getElementById('plural');
-        var barEl     = document.getElementById('redirect-bar');
-        var remaining = SECONDS;
-
-        // Two nested rAF calls ensure the browser has painted width:100%
-        // before we set width:0% and let the CSS transition animate the bar.
-        if (barEl) {
-            requestAnimationFrame(function () {
-                requestAnimationFrame(function () {
-                    barEl.style.width = '0%';
-                });
-            });
-        }
-
-        var ticker = setInterval(function () {
-            remaining -= 1;
-            if (countEl)  countEl.textContent  = remaining;
-            if (pluralEl) pluralEl.textContent = remaining === 1 ? '' : 's';
-            if (remaining <= 0) {
-                clearInterval(ticker);
-                // replace() keeps the 404 out of browser history so
-                // pressing Back takes the user to their previous page,
-                // not back to the 404.
-                window.location.replace(HOME_URL);
-            }
-        }, 1000);
-
-        // ── populate recent posts from posts.json ─────────────────────────
-        fetch(BASE_PATH + '/posts.json')
-            .then(function (r) { return r.ok ? r.json() : []; })
-            .then(function (posts) {
-                if (!Array.isArray(posts) || !posts.length) return;
-                var ul = document.getElementById('recent-links');
-                if (!ul) return;
-                ul.innerHTML = '';
-                posts.slice(0, 5).forEach(function (p) {
-                    var li = document.createElement('li');
-                    var a  = document.createElement('a');
-                    a.href        = BASE_PATH + '/' + p.slug + '/';
-                    a.textContent = p.title;
-                    li.appendChild(a);
-                    ul.appendChild(li);
-                });
-            })
-            .catch(function () {
-                // Silently ignored — the fallback "View all articles" link
-                // is already present in the static HTML above.
-            });
+        // replace() keeps this 404 URL out of browser history, so the
+        // Back button returns the user to wherever they came from
+        // rather than bouncing back into this redirect.
+        window.location.replace(BASE_PATH + '/');
     }());
     </script>
 </body>

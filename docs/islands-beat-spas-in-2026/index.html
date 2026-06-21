@@ -512,13 +512,15 @@ npx wrangler pages publish dist --project-name=saas-marketing
 <hr />
 <p>const { websiteId, host } = Astro.props;</p>
 <hr />
-<p><script
+<p>&lt;script
      async
-     src={`${host}/script.js`}
-     data-website-id={websiteId}
-   ></script></p>
-<p><code>``
+     src={<code>${host}/script.js</code>}
+     data-website-id={websiteId}</p>
+<blockquote>
+<p></script>
+   <code>``
    We configured the script to load from our Umami Cloud instance in Frankfurt, which added 20 ms to the edge TTFB. The island’s</code>client:load` ensures the script executes after the page is interactive, so it doesn’t block the main thread during navigation.</p>
+</blockquote>
 <h2 id="before-after-comparison-2026-numbers">Before / After comparison (2026 numbers)</h2>
 <table>
 <thead>

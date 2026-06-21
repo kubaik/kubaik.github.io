@@ -2485,23 +2485,35 @@ def _build_templates() -> dict:
 </html>"""
 
     # ─────────────────────────────────────────────────────────────────────────
-    # NOT_FOUND_TMPL — 404 page with auto-redirect to home
+    # NOT_FOUND_TMPL — instant redirect to home page (no visible 404 UI)
     #
-    # Changes vs original:
-    #   1. Added <meta http-equiv="refresh" content="8;url={{ base_path }}/">
-    #      — a no-JS fallback that triggers after 8 s (same duration as JS).
-    #   2. Added .redirect-notice UI block with a live countdown and an
-    #      animated progress bar so the user can see the redirect coming.
-    #   3. Replaced the old plain `fetch` + `then`/`catch` script block with a
-    #      self-contained IIFE that drives both the countdown/bar AND the
-    #      recent-posts population.
-    #   4. Uses window.location.replace() instead of window.location.href so
-    #      the 404 page is NOT added to the browser history (back button goes
-    #      to wherever the user came from, not back to the 404).
-    #   5. "Take me home now" CTA replaces the generic "Go to Homepage" label
-    #      to make the intent immediately obvious.
-    #   6. base_path is used consistently for all URLs, so this works on both
-    #      root-domain and GitHub Pages project-site subdirectory deployments.
+    # Changes vs the countdown version:
+    #   1. Meta refresh interval dropped from 8s -> 0s, so browsers with JS
+    #      disabled redirect immediately instead of waiting.
+    #   2. The JS redirect now fires synchronously on script execution
+    #      (no setInterval/countdown) — the user is sent to "/" as soon as
+    #      the 404 page's <script> tag runs, before first paint completes
+    #      in most browsers.
+    #   3. Removed the countdown/progress-bar UI entirely (.redirect-notice,
+    #      #countdown, #redirect-bar, the ticker) since nothing is shown
+    #      to the user under normal conditions.
+    #   4. Kept a minimal static fallback (heading + "Go to homepage" link)
+    #      that only becomes visible if BOTH the meta-refresh and the JS
+    #      redirect are blocked by the browser/network (e.g. some corporate
+    #      proxies strip meta-refresh and disable JS) — this prevents a
+    #      true dead end for that edge case.
+    #   5. Still uses window.location.replace() so the 404 URL is never
+    #      added to browser history — pressing Back goes to wherever the
+    #      user came from, not back into the redirect.
+    #   6. base_path is used consistently, so this still works correctly
+    #      on root-domain and GitHub Pages project-site subdirectory
+    #      deployments.
+    #   7. docs/404.html is still generated and still carries
+    #      <meta name="robots" content="noindex, nofollow">, so hosts that
+    #      serve it with a real 404 HTTP status (GitHub Pages, Netlify,
+    #      Apache via ErrorDocument) continue to report "not found"
+    #      correctly to crawlers/monitoring even though end users never
+    #      see this page rendered.
     # ─────────────────────────────────────────────────────────────────────────
     NOT_FOUND_TMPL = """\
 <!DOCTYPE html>
@@ -2509,181 +2521,51 @@ def _build_templates() -> dict:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found — {{ site_name }}</title>
+    <title>Redirecting… — {{ site_name }}</title>
     <meta name="robots" content="noindex, nofollow">
     <meta name="base-path" content="{{ base_path }}">
-    {# No-JS redirect fallback: browser redirects after 8 s even without JS #}
-    <meta http-equiv="refresh" content="8;url={{ base_path }}/">
+    {# No-JS fallback: redirect immediately (0s delay) even without JS #}
+    <meta http-equiv="refresh" content="0;url={{ base_path }}/">
     {{ global_meta_tags | safe }}
-    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
-    <link rel="manifest" href="{{ base_path }}/manifest.json">
-    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
     <style>
-        .error-container {
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; min-height: 60vh; text-align: center; padding: 2rem;
+        html, body {
+            margin: 0; padding: 0; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #fff; color: #555;
         }
-        .error-code {
-            font-size: 5rem; font-weight: 700; color: #6366f1;
-            line-height: 1; margin-bottom: 0.5rem;
+        .fallback { text-align: center; padding: 2rem; }
+        .fallback a {
+            color: #6366f1; font-weight: 600; text-decoration: none;
         }
-        /* ── redirect notice ── */
-        .redirect-notice {
-            margin-top: 1.5rem;
-            background: #f0f4ff;
-            border: 1px solid #c7d2fe;
-            border-radius: 8px;
-            padding: 0.9rem 1.5rem;
-            font-size: 0.95rem;
-            color: #3730a3;
-            max-width: 380px;
-            width: 100%;
+        .fallback a:hover { text-decoration: underline; }
+        .spinner {
+            width: 28px; height: 28px; margin: 0 auto 1rem;
+            border: 3px solid #e0e7ff; border-top-color: #6366f1;
+            border-radius: 50%; animation: spin 0.7s linear infinite;
         }
-        .redirect-notice strong {
-            font-variant-numeric: tabular-nums;
-        }
-        .redirect-bar-wrap {
-            width: 100%; height: 4px;
-            background: #e0e7ff; border-radius: 2px;
-            margin-top: 0.75rem; overflow: hidden;
-        }
-        .redirect-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            border-radius: 2px;
-            width: 100%;
-            /* transition kicks in after the first rAF pair sets width to 0% */
-            transition: width 1s linear;
-        }
-        /* ── action buttons ── */
-        .error-links {
-            margin-top: 1.25rem; display: flex;
-            gap: 1rem; flex-wrap: wrap; justify-content: center;
-        }
-        .btn-primary {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white; padding: 0.75rem 2rem; border-radius: 50px;
-            text-decoration: none; font-weight: 600;
-        }
-        .btn-secondary {
-            display: inline-block; background: #f0f4ff; color: #6366f1;
-            padding: 0.75rem 2rem; border-radius: 50px;
-            text-decoration: none; font-weight: 600; border: 2px solid #6366f1;
-        }
-        /* ── recent posts ── */
-        .popular-posts { margin-top: 2.5rem; max-width: 480px; text-align: left; }
-        .popular-posts h3 { margin-bottom: 0.75rem; font-size: 1rem; color: #555; }
-        .popular-posts ul { list-style: none; padding: 0; margin: 0; }
-        .popular-posts li { margin-bottom: 0.5rem; }
-        .popular-posts a { color: #6366f1; text-decoration: none; font-size: 0.9rem; }
-        .popular-posts a:hover { text-decoration: underline; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
-            <nav>
-                <a href="{{ base_path }}/">Home</a>
-                <a href="{{ base_path }}/about/">About</a>
-                <a href="{{ base_path }}/contact/">Contact</a>
-            </nav>
-        </div>
-    </header>
-    <main class="container">
-        <div class="error-container">
-            <div class="error-code">404</div>
-            <h2>Page Not Found</h2>
-            <p style="color:#666; max-width:400px;">
-                This page may have moved or been removed.
-            </p>
-
-            <div class="redirect-notice" role="status" aria-live="polite">
-                Redirecting to the home page in
-                <strong id="countdown">8</strong>
-                second<span id="plural">s</span>&hellip;
-                <div class="redirect-bar-wrap">
-                    <div class="redirect-bar" id="redirect-bar"></div>
-                </div>
-            </div>
-
-            <div class="error-links">
-                <a href="{{ base_path }}/" class="btn-primary">Take me home now</a>
-                <a href="{{ base_path }}/about/" class="btn-secondary">About</a>
-            </div>
-
-            <div class="popular-posts">
-                <h3>Or browse recent posts:</h3>
-                <ul id="recent-links">
-                    <li><a href="{{ base_path }}/">View all articles &rarr;</a></li>
-                </ul>
-            </div>
-        </div>
-    </main>
-    <footer>
-        <div class="container">
-            <p>&copy; {{ current_year }} {{ site_name }}</p>
-        </div>
-    </footer>
+    <!--
+        Redirect fires immediately on script execution below.
+        This fallback content only renders if a browser/proxy blocks
+        BOTH the meta-refresh above and JavaScript execution.
+    -->
+    <div class="fallback">
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Taking you to the homepage&hellip;</p>
+        <p><a href="{{ base_path }}/">Click here if you are not redirected automatically</a></p>
+    </div>
     <script>
     (function () {
         'use strict';
-
         var BASE_PATH = '{{ base_path }}';
-        var HOME_URL  = BASE_PATH + '/';
-        var SECONDS   = 8;
-
-        // ── countdown + shrinking progress bar ────────────────────────────
-        var countEl   = document.getElementById('countdown');
-        var pluralEl  = document.getElementById('plural');
-        var barEl     = document.getElementById('redirect-bar');
-        var remaining = SECONDS;
-
-        // Two nested rAF calls ensure the browser has painted width:100%
-        // before we set width:0% and let the CSS transition animate the bar.
-        if (barEl) {
-            requestAnimationFrame(function () {
-                requestAnimationFrame(function () {
-                    barEl.style.width = '0%';
-                });
-            });
-        }
-
-        var ticker = setInterval(function () {
-            remaining -= 1;
-            if (countEl)  countEl.textContent  = remaining;
-            if (pluralEl) pluralEl.textContent = remaining === 1 ? '' : 's';
-            if (remaining <= 0) {
-                clearInterval(ticker);
-                // replace() keeps the 404 out of browser history so
-                // pressing Back takes the user to their previous page,
-                // not back to the 404.
-                window.location.replace(HOME_URL);
-            }
-        }, 1000);
-
-        // ── populate recent posts from posts.json ─────────────────────────
-        fetch(BASE_PATH + '/posts.json')
-            .then(function (r) { return r.ok ? r.json() : []; })
-            .then(function (posts) {
-                if (!Array.isArray(posts) || !posts.length) return;
-                var ul = document.getElementById('recent-links');
-                if (!ul) return;
-                ul.innerHTML = '';
-                posts.slice(0, 5).forEach(function (p) {
-                    var li = document.createElement('li');
-                    var a  = document.createElement('a');
-                    a.href        = BASE_PATH + '/' + p.slug + '/';
-                    a.textContent = p.title;
-                    li.appendChild(a);
-                    ul.appendChild(li);
-                });
-            })
-            .catch(function () {
-                // Silently ignored — the fallback "View all articles" link
-                // is already present in the static HTML above.
-            });
+        // replace() keeps this 404 URL out of browser history, so the
+        // Back button returns the user to wherever they came from
+        // rather than bouncing back into this redirect.
+        window.location.replace(BASE_PATH + '/');
     }());
     </script>
 </body>
