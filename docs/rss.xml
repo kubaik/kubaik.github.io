@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 22:49:18 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 22:54:07 +0000</lastBuildDate>
+    <item>
+      <title>WireGuard vs Tailscale for $5/month zero trust</title>
+      <link>https://kubaik.github.io/wireguard-vs-tailscale-for-5month-zero-trust/</link>
+      <description>Cut breach risk 80% with zero-trust for $60/year — Tailscale vs WireGuard on latency, cost, and DX in 2026</description>
+      <pubDate>Sun, 21 Jun 2026 22:53:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/wireguard-vs-tailscale-for-5month-zero-trust/</guid>
+    </item>
     <item>
       <title>Platform engineering: what our IDPs really cost in 2026</title>
       <link>https://kubaik.github.io/platform-engineering-what-our-idps-really-cost-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut review time 71% and defects 79% by using AI as a pre-review partner — not a replacement — with concrete configs, costs, and metrics from a 2026 production rollout.</description>
       <pubDate>Sun, 21 Jun 2026 13:14:33 +0000</pubDate>
       <guid>https://kubaik.github.io/own-the-ai-changed-pull-request/</guid>
-    </item>
-    <item>
-      <title>AI finds vulns: what defenders miss</title>
-      <link>https://kubaik.github.io/ai-finds-vulns-what-defenders-miss/</link>
-      <description>Reduce AI scanner noise 40% in one step — precision vs recall, thresholds, and the concrete config you can apply today.</description>
-      <pubDate>Sun, 21 Jun 2026 12:08:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-finds-vulns-what-defenders-miss/</guid>
     </item>
   </channel>
 </rss>
