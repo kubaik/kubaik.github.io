@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T10:58:23.979775",
+  "built_at": "2026-06-21T12:08:02.386331",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2090,6 +2090,11 @@
       "slug": "stop-async-python-surprises-before-they-burn-you",
       "title": "Stop async Python surprises before they burn you",
       "summary": "I've seen the same async python mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, async Python is no longer a niche experiment — it’s the default "
+    },
+    {
+      "slug": "ai-finds-vulns-what-defenders-miss",
+      "title": "AI finds vulns: what defenders miss",
+      "summary": "The short version: the conventional advice on being used is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI is already finding 3–7 new vulnerabilities per day in open-source repos with fewer f"
     }
   ]
 }

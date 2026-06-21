@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 10:58:29 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 12:08:09 +0000</lastBuildDate>
+    <item>
+      <title>AI finds vulns: what defenders miss</title>
+      <link>https://kubaik.github.io/ai-finds-vulns-what-defenders-miss/</link>
+      <description>Reduce AI scanner noise 40% in one step — precision vs recall, thresholds, and the concrete config you can apply today.</description>
+      <pubDate>Sun, 21 Jun 2026 12:08:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-finds-vulns-what-defenders-miss/</guid>
+    </item>
     <item>
       <title>Stop async Python surprises before they burn you</title>
       <link>https://kubaik.github.io/stop-async-python-surprises-before-they-burn-you/</link>
@@ -138,13 +145,6 @@
       <description>Cut dev time 38% with AI tools — Nairobi teams using GitHub Copilot 2026, Cursor IDE v0.28, and Sourcegraph Cody Pro hit London-level velocity at local infra cost in 2026.</description>
       <pubDate>Sat, 20 Jun 2026 19:13:14 +0000</pubDate>
       <guid>https://kubaik.github.io/6-ai-tools-that-paid-off-for-nairobi-teams-in-2026/</guid>
-    </item>
-    <item>
-      <title>TLS 1.3 breaks with post-quantum crypto — fix now</title>
-      <link>https://kubaik.github.io/tls-13-breaks-with-post-quantum-crypto-fix-now/</link>
-      <description>TLS handshake latency jumped 10× with post-quantum crypto — here’s how we fixed it, the real numbers, and the one sysctl change that mattered in 2026.</description>
-      <pubDate>Sat, 20 Jun 2026 19:05:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/tls-13-breaks-with-post-quantum-crypto-fix-now/</guid>
     </item>
   </channel>
 </rss>
