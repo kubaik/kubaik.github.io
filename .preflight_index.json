@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T21:03:19.703456",
+  "built_at": "2026-06-21T21:07:59.210567",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2180,6 +2180,11 @@
       "slug": "json-modes-silent-failures-exposed",
       "title": "JSON mode’s silent failures exposed",
       "summary": "Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026, we built an internal agentic system that scheduled nightly batch jobs "
+    },
+    {
+      "slug": "5-ai-pair-tools-that-actually-improved-our-sprints",
+      "title": "5 AI pair tools that actually improved our sprints",
+      "summary": "I ran into this pair programming problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) A year ago we ran a simple experiment: re"
     }
   ]
 }
