@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T15:26:22.078863",
+  "built_at": "2026-06-21T15:36:59.964485",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2120,6 +2120,11 @@
       "slug": "secrets-that-survive-3g-and-aws-outages",
       "title": "Secrets that survive 3G and AWS outages",
       "summary": "The official documentation for secrets management is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Every team ships their first s"
+    },
+    {
+      "slug": "2026-why-i-switched-from-stripe-to-paddle",
+      "title": "2026: Why I Switched from Stripe to Paddle",
+      "summary": "A colleague asked me about stripe lemon during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Most"
     }
   ]
 }
