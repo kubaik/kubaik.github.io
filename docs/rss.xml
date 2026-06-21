@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 22:54:07 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 23:04:18 +0000</lastBuildDate>
+    <item>
+      <title>Replace alert noise in 2026</title>
+      <link>https://kubaik.github.io/replace-alert-noise-in-2026/</link>
+      <description>Cut nighttime pages 78% with PagerDuty alert triage in 2026 — AI suppression rules, LangChain prompts, and real cost numbers from a production rollout.</description>
+      <pubDate>Sun, 21 Jun 2026 23:04:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/replace-alert-noise-in-2026/</guid>
+    </item>
     <item>
       <title>WireGuard vs Tailscale for $5/month zero trust</title>
       <link>https://kubaik.github.io/wireguard-vs-tailscale-for-5month-zero-trust/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio projects with AI wrappers get ignored in 2026 — here’s how we built a boring expense tracker that hiring leads actually reviewed, with 4% error rate on 2G and $2.30/month infra cost.</description>
       <pubDate>Sun, 21 Jun 2026 13:25:39 +0000</pubDate>
       <guid>https://kubaik.github.io/build-a-portfolio-that-beats-the-ai-clone-pile/</guid>
-    </item>
-    <item>
-      <title>Own the AI-changed pull request</title>
-      <link>https://kubaik.github.io/own-the-ai-changed-pull-request/</link>
-      <description>Cut review time 71% and defects 79% by using AI as a pre-review partner — not a replacement — with concrete configs, costs, and metrics from a 2026 production rollout.</description>
-      <pubDate>Sun, 21 Jun 2026 13:14:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/own-the-ai-changed-pull-request/</guid>
     </item>
   </channel>
 </rss>

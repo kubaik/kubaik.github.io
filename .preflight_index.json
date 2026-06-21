@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T22:54:00.119932",
+  "built_at": "2026-06-21T23:04:11.750936",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2200,6 +2200,11 @@
       "slug": "wireguard-vs-tailscale-for-5month-zero-trust",
       "title": "WireGuard vs Tailscale for $5/month zero trust",
       "summary": "I've seen the same zerotrust practice mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, small teams still get hacked because they copied the enter"
+    },
+    {
+      "slug": "replace-alert-noise-in-2026",
+      "title": "Replace alert noise in 2026",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I spent three weeks in 2026 watching a single noisy alert wake me up every night at 2:17"
     }
   ]
 }
