@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T17:47:17.292677",
+  "built_at": "2026-06-21T19:01:21.984744",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2150,6 +2150,11 @@
       "slug": "2026-salary-hacks-prove-ai-didnt-steal-your-value",
       "title": "2026 salary hacks: Prove AI didn’t steal your value",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I spent two weeks in 2026 arguing with a CFO about why our team still deserved a 6 % rai"
+    },
+    {
+      "slug": "ai-wrappers-failed-in-2026-what-survived",
+      "title": "AI wrappers failed in 2026: what survived",
+      "summary": "I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. I spent six months in 2026 building an AI wrapper that wrapped another AI wrapper. The stack had t"
     }
   ]
 }

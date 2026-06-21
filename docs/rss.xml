@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 18:56:38 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 19:01:29 +0000</lastBuildDate>
+    <item>
+      <title>AI wrappers failed in 2026: what survived</title>
+      <link>https://kubaik.github.io/ai-wrappers-failed-in-2026-what-survived/</link>
+      <description>Cut AI wrapper costs 70% in 2026 by wrapping workflows, not models. See the 3 wrappers that survived and the 5 that failed with concrete numbers, benchmarks, and code.</description>
+      <pubDate>Sun, 21 Jun 2026 19:01:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-wrappers-failed-in-2026-what-survived/</guid>
+    </item>
     <item>
       <title>2026 salary hacks: Prove AI didn’t steal your value</title>
       <link>https://kubaik.github.io/2026-salary-hacks-prove-ai-didnt-steal-your-value/</link>
@@ -138,13 +145,6 @@
       <description>Cut webhook delivery failures 100% with SQS FIFO, Redis 7.2, and idempotency keys — latency drops 87%, cost falls 50%, and PCI-DSS passes in 2026.</description>
       <pubDate>Sun, 21 Jun 2026 05:56:18 +0000</pubDate>
       <guid>https://kubaik.github.io/build-webhooks-that-never-fail-twice/</guid>
-    </item>
-    <item>
-      <title>AWS IAM in 10 minutes: least privilege without the pain</title>
-      <link>https://kubaik.github.io/aws-iam-in-10-minutes-least-privilege-without-the-pain/</link>
-      <description>Cut AWS IAM policy lines 70% with least privilege in 10 minutes — use Access Analyzer 2026 and IAM Policy Simulator to avoid the wildcard trap.</description>
-      <pubDate>Sun, 21 Jun 2026 01:48:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/aws-iam-in-10-minutes-least-privilege-without-the-pain/</guid>
     </item>
   </channel>
 </rss>
