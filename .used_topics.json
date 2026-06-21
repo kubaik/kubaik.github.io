@@ -7,5 +7,6 @@
   "How to implement least-privilege IAM in AWS without spending a week on policies",
   "Building webhook systems in 2026: delivery guarantees, retries, and idempotency",
   "How Signals changed state management and whether it matters outside of frameworks",
-  "Technical debt in 2026: the new category created by AI-generated code"
+  "Technical debt in 2026: the new category created by AI-generated code",
+  "Building for mobile money reconciliation: the edge cases that Paystack and Flutterwave don't document"
 ]

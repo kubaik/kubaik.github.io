@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 07:21:19 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 07:26:37 +0000</lastBuildDate>
+    <item>
+      <title>Handle mobile money refunds Paystack missed</title>
+      <link>https://kubaik.github.io/handle-mobile-money-refunds-paystack-missed/</link>
+      <description>By the time we saw the bulk download at 02:15, the customer had already opened a dispute and our reconciliation score dropped from 99.8% to 87.3%…</description>
+      <pubDate>Sun, 21 Jun 2026 07:26:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/handle-mobile-money-refunds-paystack-missed/</guid>
+    </item>
     <item>
       <title>AI debt vs human debt: pick the right one</title>
       <link>https://kubaik.github.io/ai-debt-vs-human-debt-pick-the-right-one/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% with Redis caching — connection pooling, eviction policies, and the cache stampede mistake most teams make.</description>
       <pubDate>Sat, 20 Jun 2026 17:14:02 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-changed-my-workflow-3-old-rules-i-dropped/</guid>
-    </item>
-    <item>
-      <title>Stop async Python from burning your production</title>
-      <link>https://kubaik.github.io/stop-async-python-from-burning-your-production/</link>
-      <description>Async Python in 2026: 33% lower cost per million requests with asyncio than threads — but only if you fix these 3 timeout traps and connection leaks.</description>
-      <pubDate>Sat, 20 Jun 2026 17:00:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-async-python-from-burning-your-production/</guid>
     </item>
   </channel>
 </rss>

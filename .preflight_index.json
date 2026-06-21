@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T07:18:10.151966",
+  "built_at": "2026-06-21T07:26:30.151341",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2065,6 +2065,11 @@
       "slug": "ai-debt-vs-human-debt-pick-the-right-one",
       "title": "AI debt vs human debt: pick the right one",
       "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 68% of new code in GitHub repositories comes from AI assistant"
+    },
+    {
+      "slug": "handle-mobile-money-refunds-paystack-missed",
+      "title": "Handle mobile money refunds Paystack missed",
+      "summary": "Most building mobile guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, we launched a payments reconciliation tool for a fintech app targeting Africa"
     }
   ]
 }
