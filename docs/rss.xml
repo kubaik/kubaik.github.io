@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 15:56:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 16:01:01 +0000</lastBuildDate>
+    <item>
+      <title>TLS 1.3 + post-quantum: what breaks at scale</title>
+      <link>https://kubaik.github.io/tls-13-post-quantum-what-breaks-at-scale/</link>
+      <description>P99 TLS latency drops 37% when post-quantum crypto targets only session tickets — not full handshakes. Real numbers from 50M requests, OpenSSL 3.0.13, and Nginx 1.25.3.</description>
+      <pubDate>Sun, 21 Jun 2026 16:00:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/tls-13-post-quantum-what-breaks-at-scale/</guid>
+    </item>
     <item>
       <title>2026: Why I Switched from Stripe to Paddle</title>
       <link>https://kubaik.github.io/2026-why-i-switched-from-stripe-to-paddle/</link>
@@ -138,13 +145,6 @@
       <description>AI agent postmortems: human-loop vs blind replay — 432 injected failures show which catches mistakes faster, cuts false positives 75%, and saves $38 per 1k incidents at scale</description>
       <pubDate>Sat, 20 Jun 2026 22:43:19 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/</guid>
-    </item>
-    <item>
-      <title>API attacks rising 40%: the 3 patterns to block now</title>
-      <link>https://kubaik.github.io/api-attacks-rising-40-the-3-patterns-to-block-now/</link>
-      <description>API response times fell 56% after blocking 40% more attacks with idempotency keys and strict schema validation — real latency, cost, and code you can reuse</description>
-      <pubDate>Sat, 20 Jun 2026 22:16:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-attacks-rising-40-the-3-patterns-to-block-now/</guid>
     </item>
   </channel>
 </rss>

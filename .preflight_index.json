@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T15:36:59.964485",
+  "built_at": "2026-06-21T16:00:54.233684",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2125,6 +2125,11 @@
       "slug": "2026-why-i-switched-from-stripe-to-paddle",
       "title": "2026: Why I Switched from Stripe to Paddle",
       "summary": "A colleague asked me about stripe lemon during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Most"
+    },
+    {
+      "slug": "tls-13-post-quantum-what-breaks-at-scale",
+      "title": "TLS 1.3 + post-quantum: what breaks at scale",
+      "summary": "Most postquantum cryptography guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we rolled out TLS 1.3 across our edge network for all customer t"
     }
   ]
 }
