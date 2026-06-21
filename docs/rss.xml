@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 07:26:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 09:39:25 +0000</lastBuildDate>
+    <item>
+      <title>Postgres 17 replaces Redis, Kafka, and S3 in our stack</title>
+      <link>https://kubaik.github.io/postgres-17-replaces-redis-kafka-and-s3-in-our-stack/</link>
+      <description>Cut cloud costs 25% by replacing Redis, Kafka, and S3 with a single Postgres 17 instance — connection pooling, logical decoding, and toast compression benchmarks from Jakarta and Dublin clusters.</description>
+      <pubDate>Sun, 21 Jun 2026 09:39:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/postgres-17-replaces-redis-kafka-and-s3-in-our-stack/</guid>
+    </item>
     <item>
       <title>Handle mobile money refunds Paystack missed</title>
       <link>https://kubaik.github.io/handle-mobile-money-refunds-paystack-missed/</link>
@@ -138,13 +145,6 @@
       <description>Cut 22% cloud costs and 60% incident time by ditching service mesh in production — real Istio, Cilium, and Linkerd benchmarks from 2026 systems with code and costs.</description>
       <pubDate>Sat, 20 Jun 2026 17:19:05 +0000</pubDate>
       <guid>https://kubaik.github.io/service-mesh-is-a-tax-you-can-skip/</guid>
-    </item>
-    <item>
-      <title>AI changed my workflow. 3 old rules I dropped</title>
-      <link>https://kubaik.github.io/ai-changed-my-workflow-3-old-rules-i-dropped/</link>
-      <description>Cut API response time 60% with Redis caching — connection pooling, eviction policies, and the cache stampede mistake most teams make.</description>
-      <pubDate>Sat, 20 Jun 2026 17:14:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-changed-my-workflow-3-old-rules-i-dropped/</guid>
     </item>
   </channel>
 </rss>

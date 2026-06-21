@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T07:26:30.151341",
+  "built_at": "2026-06-21T09:39:18.324819",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2070,6 +2070,11 @@
       "slug": "handle-mobile-money-refunds-paystack-missed",
       "title": "Handle mobile money refunds Paystack missed",
       "summary": "Most building mobile guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, we launched a payments reconciliation tool for a fintech app targeting Africa"
+    },
+    {
+      "slug": "postgres-17-replaces-redis-kafka-and-s3-in-our-stack",
+      "title": "Postgres 17 replaces Redis, Kafka, and S3 in our stack",
+      "summary": "I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, Postgres 17 is no longer just a relational database. We replace"
     }
   ]
 }
