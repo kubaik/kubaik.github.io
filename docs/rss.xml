@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 20:58:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 21:03:25 +0000</lastBuildDate>
+    <item>
+      <title>JSON mode’s silent failures exposed</title>
+      <link>https://kubaik.github.io/json-modes-silent-failures-exposed/</link>
+      <description>Cut LLM output failures 98% with a 3-layer protocol: schema-first design, text envelope, and repair pipeline — all using Pydantic 2.7 and Redis 7.2 in 2026 workflows.</description>
+      <pubDate>Sun, 21 Jun 2026 21:03:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/json-modes-silent-failures-exposed/</guid>
+    </item>
     <item>
       <title>AI agents: why devtools now sell like SaaS in 2026</title>
       <link>https://kubaik.github.io/ai-agents-why-devtools-now-sell-like-saas-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut sync failures 39% in Nigeria and Kenya with offline-first design — SQLite, SQLCipher, and WatermelonDB 1.6 powering 92% crash-free sessions.</description>
       <pubDate>Sun, 21 Jun 2026 10:38:08 +0000</pubDate>
       <guid>https://kubaik.github.io/offline-first-apps-what-3g-markets-taught-us/</guid>
-    </item>
-    <item>
-      <title>Postgres 17 replaces Redis, Kafka, and S3 in our stack</title>
-      <link>https://kubaik.github.io/postgres-17-replaces-redis-kafka-and-s3-in-our-stack/</link>
-      <description>Cut cloud costs 25% by replacing Redis, Kafka, and S3 with a single Postgres 17 instance — connection pooling, logical decoding, and toast compression benchmarks from Jakarta and Dublin clusters.</description>
-      <pubDate>Sun, 21 Jun 2026 09:39:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/postgres-17-replaces-redis-kafka-and-s3-in-our-stack/</guid>
     </item>
   </channel>
 </rss>
