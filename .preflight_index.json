@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T19:11:56.572120",
+  "built_at": "2026-06-21T19:19:00.493008",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2160,6 +2160,11 @@
       "slug": "ditch-pinecone-keep-pgvector",
       "title": "Ditch Pinecone, keep pgvector",
       "summary": "A colleague asked me about pgvector changed during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) "
+    },
+    {
+      "slug": "synchronous-vs-async-tool-calls-latency-traps-at-1000",
+      "title": "Synchronous vs async tool calls: latency traps at 1000",
+      "summary": "I've seen the same toolcalling patterns mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, every microservice is a client that calls other services"
     }
   ]
 }

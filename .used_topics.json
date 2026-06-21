@@ -26,5 +26,6 @@
   "How I run automated security scanning in CI without drowning in false positives",
   "How to negotiate compensation in 2026 when AI can do parts of your job description",
   "AI wrapper businesses in 2026: why most failed and the ones that survived",
-  "How pgvector changed our architecture: replacing Pinecone with what we already had"
+  "How pgvector changed our architecture: replacing Pinecone with what we already had",
+  "Tool-calling patterns that work in production vs the ones that break under load"
 ]
