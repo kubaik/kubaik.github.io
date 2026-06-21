@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 13:10:14 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 13:14:42 +0000</lastBuildDate>
+    <item>
+      <title>Own the AI-changed pull request</title>
+      <link>https://kubaik.github.io/own-the-ai-changed-pull-request/</link>
+      <description>Cut review time 71% and defects 79% by using AI as a pre-review partner — not a replacement — with concrete configs, costs, and metrics from a 2026 production rollout.</description>
+      <pubDate>Sun, 21 Jun 2026 13:14:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/own-the-ai-changed-pull-request/</guid>
+    </item>
     <item>
       <title>AI finds vulns: what defenders miss</title>
       <link>https://kubaik.github.io/ai-finds-vulns-what-defenders-miss/</link>
@@ -138,13 +145,6 @@
       <description>The bill hit $3,240 on the 2nd every month.</description>
       <pubDate>Sat, 20 Jun 2026 20:23:31 +0000</pubDate>
       <guid>https://kubaik.github.io/dumped-kubernetes-for-200-and-no-one-noticed/</guid>
-    </item>
-    <item>
-      <title>6 AI tools that paid off for Nairobi teams in 2026</title>
-      <link>https://kubaik.github.io/6-ai-tools-that-paid-off-for-nairobi-teams-in-2026/</link>
-      <description>Cut dev time 38% with AI tools — Nairobi teams using GitHub Copilot 2026, Cursor IDE v0.28, and Sourcegraph Cody Pro hit London-level velocity at local infra cost in 2026.</description>
-      <pubDate>Sat, 20 Jun 2026 19:13:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/6-ai-tools-that-paid-off-for-nairobi-teams-in-2026/</guid>
     </item>
   </channel>
 </rss>

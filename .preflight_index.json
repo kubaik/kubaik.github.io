@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T12:08:02.386331",
+  "built_at": "2026-06-21T13:14:35.352269",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2095,6 +2095,11 @@
       "slug": "ai-finds-vulns-what-defenders-miss",
       "title": "AI finds vulns: what defenders miss",
       "summary": "The short version: the conventional advice on being used is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI is already finding 3–7 new vulnerabilities per day in open-source repos with fewer f"
+    },
+    {
+      "slug": "own-the-ai-changed-pull-request",
+      "title": "Own the AI-changed pull request",
+      "summary": "Most pair programming guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 our team shipped a new B2B API that handles real-time inventory updates."
     }
   ]
 }
