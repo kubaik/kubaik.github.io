@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 15:21:02 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 15:26:29 +0000</lastBuildDate>
+    <item>
+      <title>Secrets that survive 3G and AWS outages</title>
+      <link>https://kubaik.github.io/secrets-that-survive-3g-and-aws-outages/</link>
+      <description>Cut secret leaks 90% and API costs 88% by ditching .env files in 2026. Learn the three production-grade patterns (federated IAM, Vault sidecar, SOPS KMS) used by teams in Nigeria and Kenya to survive 3G networks and AWS outages.</description>
+      <pubDate>Sun, 21 Jun 2026 15:26:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/secrets-that-survive-3g-and-aws-outages/</guid>
+    </item>
     <item>
       <title>AI stole system design</title>
       <link>https://kubaik.github.io/ai-stole-system-design/</link>
@@ -138,13 +145,6 @@
       <description>API response times fell 56% after blocking 40% more attacks with idempotency keys and strict schema validation — real latency, cost, and code you can reuse</description>
       <pubDate>Sat, 20 Jun 2026 22:16:25 +0000</pubDate>
       <guid>https://kubaik.github.io/api-attacks-rising-40-the-3-patterns-to-block-now/</guid>
-    </item>
-    <item>
-      <title>Cut cold starts 70%: Lambda cost hack</title>
-      <link>https://kubaik.github.io/cut-cold-starts-70-lambda-cost-hack/</link>
-      <description>Cut cold starts 70% and save $1,200/month on AWS Lambda — idle timeout tuning, ARM64, and SnapStart steps that actually work in 2026.</description>
-      <pubDate>Sat, 20 Jun 2026 21:07:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/cut-cold-starts-70-lambda-cost-hack/</guid>
     </item>
   </channel>
 </rss>
