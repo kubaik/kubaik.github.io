@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T06:11:09.793376",
+  "built_at": "2026-06-21T07:18:10.151966",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2060,6 +2060,11 @@
       "slug": "signals-beat-hooks-5-state-tricks-that-stuck-in-2026",
       "title": "Signals beat hooks: 5 state tricks that stuck in 2026",
       "summary": "I ran into this signals changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I needed to fix a React UI that re-rendere"
+    },
+    {
+      "slug": "ai-debt-vs-human-debt-pick-the-right-one",
+      "title": "AI debt vs human debt: pick the right one",
+      "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 68% of new code in GitHub repositories comes from AI assistant"
     }
   ]
 }

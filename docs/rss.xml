@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 07:13:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 07:18:17 +0000</lastBuildDate>
+    <item>
+      <title>AI debt vs human debt: pick the right one</title>
+      <link>https://kubaik.github.io/ai-debt-vs-human-debt-pick-the-right-one/</link>
+      <description>Cut AI technical debt 40% with human-first reviews — the 3 gates every PR needs, the staging requirement most teams miss, and the $5,510 monthly cost of skipping them.</description>
+      <pubDate>Sun, 21 Jun 2026 07:18:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-debt-vs-human-debt-pick-the-right-one/</guid>
+    </item>
     <item>
       <title>Signals beat hooks: 5 state tricks that stuck in 2026</title>
       <link>https://kubaik.github.io/signals-beat-hooks-5-state-tricks-that-stuck-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Async Python in 2026: 33% lower cost per million requests with asyncio than threads — but only if you fix these 3 timeout traps and connection leaks.</description>
       <pubDate>Sat, 20 Jun 2026 17:00:07 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-async-python-from-burning-your-production/</guid>
-    </item>
-    <item>
-      <title>API abuse 2026: 5 attacks we missed until costs spiked</title>
-      <link>https://kubaik.github.io/api-abuse-2026-5-attacks-we-missed-until-costs-spiked/</link>
-      <description>Cut API abuse costs 42% with tiered defenses: Redis 7.2 sliding windows, JWT kid swap blocking, and GraphQL depth limits — real numbers from a 2026 production system.</description>
-      <pubDate>Sat, 20 Jun 2026 16:27:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-abuse-2026-5-attacks-we-missed-until-costs-spiked/</guid>
     </item>
   </channel>
 </rss>
