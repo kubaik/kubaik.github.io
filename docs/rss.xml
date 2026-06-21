@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 19:47:27 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 19:52:32 +0000</lastBuildDate>
+    <item>
+      <title>Flag your AI rollouts in 2026</title>
+      <link>https://kubaik.github.io/flag-your-ai-rollouts-in-2026/</link>
+      <description>Cut AI rollback time 99% with LaunchDarkly 5.17 — flag evaluation latency, GDPR compliance, and Prometheus dashboards inside.</description>
+      <pubDate>Sun, 21 Jun 2026 19:52:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/flag-your-ai-rollouts-in-2026/</guid>
+    </item>
     <item>
       <title>Synchronous vs async tool calls: latency traps at 1000</title>
       <link>https://kubaik.github.io/synchronous-vs-async-tool-calls-latency-traps-at-1000/</link>
@@ -138,13 +145,6 @@
       <description>By the time we saw the bulk download at 02:15, the customer had already opened a dispute and our reconciliation score dropped from 99.8% to 87.3%…</description>
       <pubDate>Sun, 21 Jun 2026 07:26:28 +0000</pubDate>
       <guid>https://kubaik.github.io/handle-mobile-money-refunds-paystack-missed/</guid>
-    </item>
-    <item>
-      <title>AI debt vs human debt: pick the right one</title>
-      <link>https://kubaik.github.io/ai-debt-vs-human-debt-pick-the-right-one/</link>
-      <description>Cut AI technical debt 40% with human-first reviews — the 3 gates every PR needs, the staging requirement most teams miss, and the $5,510 monthly cost of skipping them.</description>
-      <pubDate>Sun, 21 Jun 2026 07:18:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-debt-vs-human-debt-pick-the-right-one/</guid>
     </item>
   </channel>
 </rss>

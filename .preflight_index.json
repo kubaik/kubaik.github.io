@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T19:19:00.493008",
+  "built_at": "2026-06-21T19:52:25.349138",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2165,6 +2165,11 @@
       "slug": "synchronous-vs-async-tool-calls-latency-traps-at-1000",
       "title": "Synchronous vs async tool calls: latency traps at 1000",
       "summary": "I've seen the same toolcalling patterns mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, every microservice is a client that calls other services"
+    },
+    {
+      "slug": "flag-your-ai-rollouts-in-2026",
+      "title": "Flag your AI rollouts in 2026",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. I spent two weeks debugging why our AI feature flags kept flipping to 0% rollout during peak load, only to realize the Redis cluster w"
     }
   ]
 }
