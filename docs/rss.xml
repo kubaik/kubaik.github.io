@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 06:06:24 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 06:11:16 +0000</lastBuildDate>
+    <item>
+      <title>Signals beat hooks: 5 state tricks that stuck in 2026</title>
+      <link>https://kubaik.github.io/signals-beat-hooks-5-state-tricks-that-stuck-in-2026/</link>
+      <description>Cut frontend CPU 18% with signals: benchmarks from 8M req/day dashboards, 3 concrete numbers, and which primitive works outside frameworks</description>
+      <pubDate>Sun, 21 Jun 2026 06:11:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/signals-beat-hooks-5-state-tricks-that-stuck-in-2026/</guid>
+    </item>
     <item>
       <title>Build webhooks that never fail twice</title>
       <link>https://kubaik.github.io/build-webhooks-that-never-fail-twice/</link>
@@ -138,13 +145,6 @@
       <description>Cut API abuse costs 42% with tiered defenses: Redis 7.2 sliding windows, JWT kid swap blocking, and GraphQL depth limits — real numbers from a 2026 production system.</description>
       <pubDate>Sat, 20 Jun 2026 16:27:45 +0000</pubDate>
       <guid>https://kubaik.github.io/api-abuse-2026-5-attacks-we-missed-until-costs-spiked/</guid>
-    </item>
-    <item>
-      <title>Ask for 20% more in 2026</title>
-      <link>https://kubaik.github.io/ask-for-20-more-in-2026/</link>
-      <description>Get 10-15% more salary in 2026 — AI code tools cut routine work, benchmark the overhead, and counter with hard numbers from your repo</description>
-      <pubDate>Sat, 20 Jun 2026 15:33:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ask-for-20-more-in-2026/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T05:56:20.629375",
+  "built_at": "2026-06-21T06:11:09.793376",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2055,6 +2055,11 @@
       "slug": "build-webhooks-that-never-fail-twice",
       "title": "Build webhooks that never fail twice",
       "summary": "Most building webhook guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 our payments team asked us to build a new webhook system. Their goal was"
+    },
+    {
+      "slug": "signals-beat-hooks-5-state-tricks-that-stuck-in-2026",
+      "title": "Signals beat hooks: 5 state tricks that stuck in 2026",
+      "summary": "I ran into this signals changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I needed to fix a React UI that re-rendere"
     }
   ]
 }

@@ -5,5 +5,6 @@
   "AI memory systems: giving your agent context that persists across sessions",
   "How HTMX changed my stack and what I gave up to get there",
   "How to implement least-privilege IAM in AWS without spending a week on policies",
-  "Building webhook systems in 2026: delivery guarantees, retries, and idempotency"
+  "Building webhook systems in 2026: delivery guarantees, retries, and idempotency",
+  "How Signals changed state management and whether it matters outside of frameworks"
 ]
