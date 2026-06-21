@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 19:07:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 19:12:03 +0000</lastBuildDate>
+    <item>
+      <title>Ditch Pinecone, keep pgvector</title>
+      <link>https://kubaik.github.io/ditch-pinecone-keep-pgvector/</link>
+      <description>Cut Pinecone costs 90% with pgvector — real benchmarks, $12k savings, and the Postgres-only setup that beat managed services</description>
+      <pubDate>Sun, 21 Jun 2026 19:11:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/ditch-pinecone-keep-pgvector/</guid>
+    </item>
     <item>
       <title>AI wrappers failed in 2026: what survived</title>
       <link>https://kubaik.github.io/ai-wrappers-failed-in-2026-what-survived/</link>
@@ -138,13 +145,6 @@
       <description>Cut frontend CPU 18% with signals: benchmarks from 8M req/day dashboards, 3 concrete numbers, and which primitive works outside frameworks</description>
       <pubDate>Sun, 21 Jun 2026 06:11:07 +0000</pubDate>
       <guid>https://kubaik.github.io/signals-beat-hooks-5-state-tricks-that-stuck-in-2026/</guid>
-    </item>
-    <item>
-      <title>Build webhooks that never fail twice</title>
-      <link>https://kubaik.github.io/build-webhooks-that-never-fail-twice/</link>
-      <description>Cut webhook delivery failures 100% with SQS FIFO, Redis 7.2, and idempotency keys — latency drops 87%, cost falls 50%, and PCI-DSS passes in 2026.</description>
-      <pubDate>Sun, 21 Jun 2026 05:56:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-webhooks-that-never-fail-twice/</guid>
     </item>
   </channel>
 </rss>

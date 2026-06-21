@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T19:01:21.984744",
+  "built_at": "2026-06-21T19:11:56.572120",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2155,6 +2155,11 @@
       "slug": "ai-wrappers-failed-in-2026-what-survived",
       "title": "AI wrappers failed in 2026: what survived",
       "summary": "I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. I spent six months in 2026 building an AI wrapper that wrapped another AI wrapper. The stack had t"
+    },
+    {
+      "slug": "ditch-pinecone-keep-pgvector",
+      "title": "Ditch Pinecone, keep pgvector",
+      "summary": "A colleague asked me about pgvector changed during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) "
     }
   ]
 }
