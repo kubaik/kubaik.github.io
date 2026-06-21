@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 20:50:21 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 20:54:58 +0000</lastBuildDate>
+    <item>
+      <title>AI agents: why devtools now sell like SaaS in 2026</title>
+      <link>https://kubaik.github.io/ai-agents-why-devtools-now-sell-like-saas-in-2026/</link>
+      <description>Sentinel cut MTTR 91% by shifting from developer-first to platform-first sales in 2026 — with real Go 1.22 and Node 20 LTS stacks, SOC 2 Type I, and Jira OAuth 2.0 integrations used in production. Learn the exact pivot that turned 3 paid conversions into 4 enterprise deals at $52k ARR.</description>
+      <pubDate>Sun, 21 Jun 2026 20:54:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-why-devtools-now-sell-like-saas-in-2026/</guid>
+    </item>
     <item>
       <title>Flag your AI rollouts in 2026</title>
       <link>https://kubaik.github.io/flag-your-ai-rollouts-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud costs 25% by replacing Redis, Kafka, and S3 with a single Postgres 17 instance — connection pooling, logical decoding, and toast compression benchmarks from Jakarta and Dublin clusters.</description>
       <pubDate>Sun, 21 Jun 2026 09:39:16 +0000</pubDate>
       <guid>https://kubaik.github.io/postgres-17-replaces-redis-kafka-and-s3-in-our-stack/</guid>
-    </item>
-    <item>
-      <title>Handle mobile money refunds Paystack missed</title>
-      <link>https://kubaik.github.io/handle-mobile-money-refunds-paystack-missed/</link>
-      <description>By the time we saw the bulk download at 02:15, the customer had already opened a dispute and our reconciliation score dropped from 99.8% to 87.3%…</description>
-      <pubDate>Sun, 21 Jun 2026 07:26:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/handle-mobile-money-refunds-paystack-missed/</guid>
     </item>
   </channel>
 </rss>
