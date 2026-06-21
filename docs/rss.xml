@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 21:18:42 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 21:23:20 +0000</lastBuildDate>
+    <item>
+      <title>Price SaaS dev tools in 2026 without guessing</title>
+      <link>https://kubaik.github.io/price-saas-dev-tools-in-2026-without-guessing/</link>
+      <description>2026 pricing playbook for dev tools with real MRR, Stripe limits, and AWS costs — seat-based vs usage-based, seat limits, and the $49 plan surprise.</description>
+      <pubDate>Sun, 21 Jun 2026 21:23:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/price-saas-dev-tools-in-2026-without-guessing/</guid>
+    </item>
     <item>
       <title>5 AI pair tools that actually improved our sprints</title>
       <link>https://kubaik.github.io/5-ai-pair-tools-that-actually-improved-our-sprints/</link>
@@ -138,13 +145,6 @@
       <description>Cut async Python memory 38% and p99 latency 14ms with trio — connection pool leaks, nursery scopes, and the AWS Lambda gotcha most teams miss in 2026.</description>
       <pubDate>Sun, 21 Jun 2026 10:58:22 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-async-python-surprises-before-they-burn-you/</guid>
-    </item>
-    <item>
-      <title>MCP servers 2026: why your agent keeps crashing</title>
-      <link>https://kubaik.github.io/mcp-servers-2026-why-your-agent-keeps-crashing/</link>
-      <description>Reduce MCP server crashes 90% with error handling, memory limits, and sandbox profiles in 2026 — fixes for Node 20 LTS and Python 3.11 MCP SDKs.</description>
-      <pubDate>Sun, 21 Jun 2026 10:51:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-servers-2026-why-your-agent-keeps-crashing/</guid>
     </item>
   </channel>
 </rss>
