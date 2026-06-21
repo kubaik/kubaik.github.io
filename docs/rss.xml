@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 22:39:07 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 22:43:54 +0000</lastBuildDate>
+    <item>
+      <title>Platform engineering: what our IDPs really cost in 2026</title>
+      <link>https://kubaik.github.io/platform-engineering-what-our-idps-really-cost-in-2026/</link>
+      <description>AWS EKS clusters cost $72 per node per month in 2026 for m6g.xlarge instances, and if your platform team runs 150 nodes across dev, staging, and prod…</description>
+      <pubDate>Sun, 21 Jun 2026 22:43:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/platform-engineering-what-our-idps-really-cost-in-2026/</guid>
+    </item>
     <item>
       <title>Price SaaS dev tools in 2026 without guessing</title>
       <link>https://kubaik.github.io/price-saas-dev-tools-in-2026-without-guessing/</link>
@@ -138,13 +145,6 @@
       <description>Reduce AI scanner noise 40% in one step — precision vs recall, thresholds, and the concrete config you can apply today.</description>
       <pubDate>Sun, 21 Jun 2026 12:08:00 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-finds-vulns-what-defenders-miss/</guid>
-    </item>
-    <item>
-      <title>Stop async Python surprises before they burn you</title>
-      <link>https://kubaik.github.io/stop-async-python-surprises-before-they-burn-you/</link>
-      <description>Cut async Python memory 38% and p99 latency 14ms with trio — connection pool leaks, nursery scopes, and the AWS Lambda gotcha most teams miss in 2026.</description>
-      <pubDate>Sun, 21 Jun 2026 10:58:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-async-python-surprises-before-they-burn-you/</guid>
     </item>
   </channel>
 </rss>

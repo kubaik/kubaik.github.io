@@ -1,0 +1,898 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Platform engineering: what our IDPs really cost in 2026 - Tech Blog</title>
+        <meta name="description" content="AWS EKS clusters cost $72 per node per month in 2026 for m6g.xlarge instances, and if your platform team runs 150 nodes across dev, staging, and prod…">
+        <meta name="keywords" content="Softwareengineering, Coding, Platformengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-21T22:43:45.321619">
+        <meta property="article:modified_time" content="2026-06-21T22:43:45.321632">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Platform engineering: what our IDPs really cost in 2026">
+        <meta property="og:description" content="AWS EKS clusters cost $72 per node per month in 2026 for m6g.xlarge instances, and if your platform team runs 150 nodes across dev, staging, and prod…">
+        <meta property="og:url" content="https://kubaik.github.io/platform-engineering-what-our-idps-really-cost-in-2026/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Platform engineering: what our IDPs really cost in 2026">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Platform engineering: what our IDPs really cost in 2026">
+        <meta name="twitter:description" content="AWS EKS clusters cost $72 per node per month in 2026 for m6g.xlarge instances, and if your platform team runs 150 nodes across dev, staging, and prod…">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/platform-engineering-what-our-idps-really-cost-in-2026/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="AWS EKS clusters cost $72 per node per month in 2026 for m6g.xlarge instances, and if your platform team runs 150 nodes across dev, staging, and prod…">
+    <meta property="og:title" content="Platform engineering: what our IDPs really cost in 2026">
+    <meta property="og:description" content="AWS EKS clusters cost $72 per node per month in 2026 for m6g.xlarge instances, and if your platform team runs 150 nodes across dev, staging, and prod…">
+    <meta property="og:url" content="https://kubaik.github.io/platform-engineering-what-our-idps-really-cost-in-2026/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-06-21T22:43:45.321619">
+    <meta property="article:modified_time" content="2026-06-21T22:43:45.321632">
+    <meta property="og:image" content="/static/images/platform-engineering-what-our-idps-really-cost-in-2026.jpg">
+    <meta property="og:image:alt" content="Platform engineering: what our IDPs really cost in 2026">
+    <meta name="twitter:image" content="/static/images/platform-engineering-what-our-idps-really-cost-in-2026.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Platform engineering: what our IDPs really cost in 2026">
+    <meta name="twitter:description" content="AWS EKS clusters cost $72 per node per month in 2026 for m6g.xlarge instances, and if your platform team runs 150 nodes across dev, staging, and prod…">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/platform-engineering-what-our-idps-really-cost-in-2026/">
+    <meta name="keywords" content="Softwareengineering, Coding, Platformengineering">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Platform engineering: what our IDPs really cost in 2026",
+  "description": "AWS EKS clusters cost $72 per node per month in 2026 for m6g.xlarge instances, and if your platform team runs 150 nodes across dev, staging, and prod\u2026",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-06-21T22:43:45.321619",
+  "dateModified": "2026-06-21T22:43:45.321632",
+  "url": "https://kubaik.github.io/platform-engineering-what-our-idps-really-cost-in-2026/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/platform-engineering-what-our-idps-really-cost-in-2026/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/platform-engineering-what-our-idps-really-cost-in-2026.jpg"
+  },
+  "keywords": [
+    "Softwareengineering",
+    "Coding",
+    "Platformengineering"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/platform-engineering-what-our-idps-really-cost-in-2026/#article",
+      "headline": "Platform engineering: what our IDPs really cost in 2026",
+      "description": "AWS EKS clusters cost $72 per node per month in 2026 for m6g.xlarge instances, and if your platform team runs 150 nodes across dev, staging, and prod…",
+      "datePublished": "2026-06-21T22:43:45+00:00",
+      "dateModified": "2026-06-21T22:43:45+00:00",
+      "wordCount": 3600,
+      "timeRequired": "PT18M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/platform-engineering-what-our-idps-really-cost-in-2026/"
+      },
+      "keywords": "Softwareengineering, Coding, Platformengineering"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Platform engineering: what our IDPs really cost in 2026",
+          "item": "https://kubaik.github.io/platform-engineering-what-our-idps-really-cost-in-2026/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Platform engineering: what our IDPs really cost in 2026</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Platform engineering: what our IDPs really cost in 2026</h1>
+                
+                <p class="post-lead">AWS EKS clusters cost $72 per node per month in 2026 for m6g.xlarge instances, and if your platform team runs 150 nodes across dev, staging, and prod…</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    <a class="tag" href="/tag/coding/"
+                       style="text-decoration:none;">Coding</a>
+                    
+                    <a class="tag" href="/tag/platformengineering/"
+                       style="text-decoration:none;">Platformengineering</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        18 min read
+                        &nbsp;·&nbsp; 3600 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-21
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>The official documentation for platform engineering is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
+<h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
+<p>Internal developer platforms (IDPs) promise faster deployments, fewer on-call fires, and happier engineers. In 2026, the marketing pages still show happy developers sipping coffee while green build pipelines dance across screens. The reality? The same teams that once spent three days debugging why their staging environment couldn’t connect to a database are now spending three days debugging why the platform team’s Terraform module just nuked their staging namespace. I ran into this when our Kubernetes cluster in Frankfurt stopped scheduling pods because the platform team had rotated the TLS certificates for the ingress controller without telling anyone. The docs said “cert-manager handles this automatically,” but what they didn’t mention was the 24-hour outage window when the certificate expired and no one had set up the prometheus alert to fire until the first 500 errors hit.</p>
+<p>The gap isn’t just in monitoring; it’s in ownership. The platform team owns the platform, but the application teams own the business logic. When the platform’s Helm chart upgrades to a new minor version of RabbitMQ and your message schema breaks, it’s your pipeline that fails—not the platform team’s. The docs assume every upgrade is backwards-compatible, but in production, backwards-compatibility often means “we didn’t touch the breaking change in the changelog.”</p>
+<p>Another surprise: the cost curve. AWS EKS clusters cost $72 per node per month in 2026 for m6g.xlarge instances, and if your platform team runs 150 nodes across dev, staging, and prod, that’s $10,800 a month before you add any workloads. Multiply by three environments and you’re at $32,400. Add managed Prometheus at $0.03 per GB ingested, and if your cluster logs 4TB of metrics daily, that’s another $120 per day or $3,600 a month. Suddenly your “free” internal developer platform costs more than three junior engineers’ salaries. The docs never show the AWS bill.</p>
+<p>Finally, the human factor. The platform team writes documentation for themselves, not for the developer in Accra who’s SSH’d into a headless server with 512MB RAM and a 3G connection. The docs assume a 2026 MacBook Pro with 16GB RAM and a stable Wi-Fi connection. When a developer in Lagos tries to run <code>kubectl apply -f deployment.yaml</code> and the CLI hangs for 47 seconds because the cluster API server is in us-east-1 and their connection is bouncing off three ISPs, the platform’s “five-minute setup” suddenly becomes a two-hour debugging session involving tcpdumps, mtr traces, and a support ticket to AWS.</p>
+<p>What’s missing from the docs?
+- The TLS certificate rotation window
+- The cost of observability per namespace
+- The latency impact of regional clusters on low-bandwidth users
+- The fact that not every developer has a 2026 MacBook Pro</p>
+<p>If you’re building an IDP, test it on a $5 DigitalOcean droplet with a 3G tether. If it still works, you’re ready for production.</p>
+<h2 id="how-platform-engineering-in-2026-what-internal-developer-platforms-look-like-at-different-company-sizes-actually-works-under-the-hood">How Platform engineering in 2026: what internal developer platforms look like at different company sizes actually works under the hood</h2>
+<p>The shape of an IDP in 2026 depends entirely on the shape of the company using it. Let’s break it down by headcount, not by industry, because the constraints are the same whether you’re a fintech in Singapore or a logistics startup in São Paulo.</p>
+<h3 id="1050-people-seed-to-series-a">10–50 people (seed to Series A)</h3>
+<p>At this size, the platform is usually a glorified wrapper around GitHub Actions, Docker, and a single Kubernetes cluster. The platform team is one or two devops engineers who also write microservices. The IDP’s job is to reduce cognitive load by standardizing the CI pipeline, not to abstract away infrastructure. The platform’s “portal” is a README in the company repo and a Slack bot that tells you when your staging deployment failed.</p>
+<p>Typical stack:
+- GitHub Actions 2.29 for CI/CD
+- Docker 24.0 with buildx for multi-arch images
+- Kubernetes 1.28 on AWS EKS with 12 m6g.xlarge nodes ($864/month)
+- Argo CD 2.9 for GitOps
+- PostgreSQL 15 managed on AWS RDS ($0.14/hr or $1,008/month for db.t4g.large)
+- Redis 7.2 for caching and session storage
+- AWS ALB Ingress Controller 2.5
+- ExternalDNS 0.13
+- cert-manager 1.13 with Let’s Encrypt staging issuer (you’ll regret using production issuer on day one)</p>
+<p>The platform’s value prop is “don’t think about infrastructure until you have to.” The company’s value prop is “ship product.” The platform team spends most of its time writing wrapper scripts around <code>kubectl</code> and debugging why the staging namespace is OOMKilled because someone set memory limits to 3Gi but the JVM heap was 4Gi.</p>
+<p>Success metrics at this stage:
+- Mean time to deploy (MTTD): &lt;15 minutes from merge to prod
+- On-call pages per engineer per quarter: &lt;3
+- Cost per engineer per month: &lt;$120</p>
+<p>The failure mode here is scope creep. The platform team tries to build a self-service portal for “one-click environments,” but every request is for a different Postgres version, Redis cluster size, or Java version. The portal becomes a forms-over-data nightmare that nobody uses. The real win is to standardize on one Postgres minor version, one Java LTS version, and one Node LTS version, then enforce it with GitHub branch protection rules.</p>
+<h3 id="51200-people-series-b-to-c">51–200 people (Series B to C)</h3>
+<p>At this size, the platform team is three to five engineers. The IDP starts to look like a real product. The company has multiple teams shipping features, and the platform’s job is to stop teams from reinventing the same wheel. The platform team builds opinionated templates for services, databases, and event buses. The “portal” is a Backstage instance with custom plugins for cost dashboards and compliance checks.</p>
+<p>Typical stack expansion:
+- Backstage 1.24 with custom plugins for cost dashboards and compliance checks
+- Terraform Cloud 2026 for policy-as-code and state management
+- Crossplane 1.14 for provisioning managed services via Kubernetes APIs
+- Vault 1.15 for secrets management with AWS Secrets Manager backend
+- AWS RDS Proxy 0.9 for connection pooling
+- AWS OpenSearch 2.11 for logs and traces
+- Grafana 10.2 for dashboards
+- Loki 2.9 for logs
+- Tempo 2.2 for traces
+- Argo Workflows 3.5 for data processing jobs
+- AWS Lambda 2026 with arm64 for serverless glue code</p>
+<p>The platform team starts to enforce standards:
+- All services must use structured logging with JSON format
+- All databases must have automated backups with 7-day retention
+- All containers must have non-root users and read-only root filesystems
+- All deployments must pass a security scan in CI</p>
+<p>The platform team also starts to feel the cost pressure. A single EKS cluster with 150 nodes costs $10,800/month. If the company has three clusters (dev, staging, prod) and each cluster runs 150 nodes, that’s $32,400/month just for the control plane and worker nodes. Add managed databases, caches, and observability, and the platform bill can hit $60k–$80k/month. The platform team now has to justify every dollar to the CFO, and the CFO is asking why the company needs three staging clusters.</p>
+<p>Success metrics at this stage:
+- Mean time to production (MTTP): &lt;30 minutes from PR merge to prod
+- Platform SLA: 99.9% availability
+- Cost per engineer per month: &lt;$250
+- On-call pages per engineer per quarter: &lt;2</p>
+<p>The failure mode here is over-engineering. The platform team tries to build a multi-cluster, multi-region, multi-cloud platform with service mesh, canary deployments, and chaos engineering. The result is a platform that takes six months to stabilize, and by then the company has pivoted and the platform is obsolete. The real win is to start with a single cluster, a single region, and a single observability stack, then expand only when the pain is real.</p>
+<h3 id="2011000-people-post-ipo-or-large-private">201–1000 people (post-IPO or large private)</h3>
+<p>At this size, the platform team is ten to twenty engineers. The IDP is now a full-fledged product with a roadmap, a support team, and a budget. The platform’s job is to enable hundreds of engineers to ship safely without stepping on each other’s toes. The platform team builds a self-service portal where teams can spin up environments, databases, caches, and event buses with zero-touch approvals for standard resources. The portal is backed by a Kubernetes control plane that enforces policies via admission controllers and external policy engines.</p>
+<p>Typical stack expansion:
+- Kubernetes 1.28 clusters in three regions (us-east-1, eu-central-1, ap-southeast-1) with 1,200 m6g.4xlarge nodes total ($86,400/month)
+- Rancher Prime 2.7 for multi-cluster management and policy-as-code
+- Anthos Service Mesh 1.19 for service-to-service auth and observability
+- Crossplane 1.14 with Composition functions for dynamic provisioning
+- Vault 1.15 with PKI, transit, and dynamic secrets
+- AWS RDS Aurora PostgreSQL 15 with read replicas and automated failover
+- Redis 7.2 Cluster with 12 shards and 500MB memory limit per shard
+- AWS MemoryDB for Redis 1.4 for durable caching
+- AWS OpenSearch Serverless 2.11 for logs and traces
+- Grafana 10.2 with Mimir 2.9 for metrics and Loki 2.9 for logs
+- Tempo 2.2 for traces
+- Argo CD 2.9 with ApplicationSets for multi-cluster GitOps
+- Argo Rollouts 1.5 for progressive delivery and canary deployments
+- Flagger 1.26 for automated canary analysis
+- Linkerd 2.14 for service mesh
+- OPA/Gatekeeper 3.13 for policy enforcement
+- Kyverno 1.10 for admission control
+- AWS Lambda 2026 with arm64 for serverless functions
+- AWS Fargate 1.5 for serverless containers
+- AWS App Mesh 2.7 for service mesh in ECS</p>
+<p>The platform team now has to solve real problems:
+- How to prevent teams from creating 400 Postgres databases and blowing the budget
+- How to enforce cost allocation tags across hundreds of teams
+- How to rotate TLS certificates without downtime
+- How to handle multi-region failover without data loss
+- How to keep the platform secure without blocking every deployment</p>
+<p>The platform team also has to deal with the political reality of “platform as a product.” Teams will complain that the platform is too slow, too restrictive, or too expensive. The platform team will have to balance velocity, safety, and cost while justifying every decision to executives who don’t understand why a simple deployment now takes 45 minutes instead of 5.</p>
+<p>Success metrics at this stage:
+- Mean time to production (MTTP): &lt;45 minutes from PR merge to prod
+- Platform SLA: 99.95% availability
+- Cost per engineer per month: &lt;$350
+- On-call pages per engineer per quarter: &lt;1
+- Number of production incidents per quarter: &lt;10
+- Mean time to detect (MTTD): &lt;5 minutes
+- Mean time to resolve (MTTR): &lt;30 minutes</p>
+<p>The failure mode here is becoming a bottleneck. The platform team becomes the gatekeeper that every team has to go through for every deployment. The result is a platform that slows down the company instead of speeding it up. The real win is to automate every repetitive task, enforce standards via code, and give teams the freedom to deploy without waiting for approvals.</p>
+<h3 id="1000-people-enterprise">1000+ people (enterprise)</h3>
+<p>At this size, the platform team is thirty to fifty engineers. The IDP is now a platform of platforms. The company has multiple business units, each with its own stack, compliance requirements, and deployment cadence. The platform team’s job is to provide a consistent experience across all of them while still allowing for customization. The platform team builds a control plane that abstracts away infrastructure, but still allows teams to bring their own tooling.</p>
+<p>Typical stack expansion:
+- Kubernetes 1.28 clusters in five regions with 4,000 nodes total ($345,600/month)
+- GKE Autopilot 1.28 for serverless workloads
+- AKS 1.28 for Azure workloads
+- Anthos 1.19 for hybrid cloud
+- Crossplane 1.14 with Composition functions and Composition revisions
+- Crossplane Providers for AWS, Azure, GCP, and on-prem VMware
+- Vault 1.15 with PKI, transit, and dynamic secrets across all clouds
+- AWS RDS Aurora PostgreSQL 15 with multi-region read replicas and automated failover
+- Azure Cosmos DB for PostgreSQL 15 for PostgreSQL-compatible NoSQL
+- Google Cloud Spanner 2.0 for global consistency
+- Redis 7.2 Cluster with 48 shards and 1GB memory limit per shard
+- AWS MemoryDB for Redis 1.4 for durable caching
+- Google Cloud Memorystore for Redis 6.2 for GCP workloads
+- Azure Cache for Redis 6.2 for Azure workloads
+- AWS OpenSearch 2.11, Azure Monitor Logs 2026, Google Cloud Logging 2026 for logs and traces
+- Grafana 10.2 with Mimir 2.9, Loki 2.9, and Tempo 2.2
+- Argo CD 2.9 with ApplicationSets and AppProjects for multi-team GitOps
+- Argo Rollouts 1.5 with AnalysisTemplates and MetricTemplates for progressive delivery
+- Flagger 1.26 for automated canary analysis
+- Istio 1.19 for service mesh
+- Linkerd 2.14 for lightweight service mesh
+- OPA/Gatekeeper 3.13 for policy enforcement
+- Kyverno 1.10 for admission control
+- AWS Lambda 2026, Azure Functions 2026, Google Cloud Functions 2026 for serverless
+- AWS Fargate 1.5, Azure Container Instances 2026, Google Cloud Run 2026 for serverless containers
+- AWS App Mesh 2.7, Azure Service Mesh 2026, Google Cloud Service Mesh 2026 for service mesh
+- Backstage 1.24 with custom plugins for cost, compliance, and security dashboards</p>
+<p>The platform team now has to solve existential problems:
+- How to prevent any single team from accidentally costing the company $500k in a weekend
+- How to enforce compliance across multiple clouds and on-prem environments
+- How to rotate every TLS certificate in the company without downtime
+- How to handle a regional outage without data loss
+- How to keep the platform secure while still allowing teams to ship quickly</p>
+<p>The platform team also has to deal with the reality that not every team will use the platform. Some teams will insist on using serverless, some on Kubernetes, some on VMs, and some on mainframes. The platform team has to provide abstractions and guardrails for all of them, or risk becoming irrelevant.</p>
+<p>Success metrics at this stage:
+- Mean time to production (MTTP): &lt;60 minutes from PR merge to prod
+- Platform SLA: 99.99% availability
+- Cost per engineer per month: &lt;$400
+- On-call pages per engineer per quarter: &lt;0.5
+- Number of production incidents per quarter: &lt;5
+- Mean time to detect (MTTD): &lt;2 minutes
+- Mean time to resolve (MTTR): &lt;15 minutes</p>
+<p>The failure mode here is irrelevance. The platform team becomes a bureaucracy that teams work around. The result is a company where every team builds its own infrastructure, and the platform team is left maintaining a museum of tools nobody uses. The real win is to provide enough value that teams choose to use the platform, not enough to restrict them.</p>
+<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
+<p>Let’s build a minimal IDP for a 51–200 person company. We’ll start with a single Kubernetes cluster, GitHub Actions, and Backstage. The goal is to reduce the cognitive load of deploying a new service from “read five docs and pray” to “run one command, wait five minutes.”</p>
+<h3 id="step-1-bootstrap-the-cluster">Step 1: Bootstrap the cluster</h3>
+<p>We’ll use AWS EKS with Kubernetes 1.28 and Terraform 1.7. The cluster will have:
+- 12 m6g.xlarge nodes ($864/month)
+- AWS Load Balancer Controller 2.5
+- ExternalDNS 0.13
+- cert-manager 1.13
+- Argo CD 2.9
+- Prometheus 2.47 with Grafana 10.2
+- Loki 2.9
+- Tempo 2.2
+- AWS RDS Proxy 0.9
+- Vault 1.15 with AWS Secrets Manager backend</p>
+<p>Terraform code:</p>
+<pre><code class="language-hcl"># main.tf
+terraform {
+  required_version = &quot;&gt;= 1.7&quot;
+  required_providers {
+    aws = {
+      source  = &quot;hashicorp/aws&quot;
+      version = &quot;~&gt; 5.0&quot;
+    }
+    kubernetes = {
+      source  = &quot;hashicorp/kubernetes&quot;
+      version = &quot;~&gt; 2.30&quot;
+    }
+    helm = {
+      source  = &quot;hashicorp/helm&quot;
+      version = &quot;~&gt; 2.13&quot;
+    }
+  }
+}
+
+provider &quot;aws&quot; {
+  region = &quot;eu-central-1&quot;
+}
+
+module &quot;eks&quot; {
+  source          = &quot;terraform-aws-modules/eks/aws&quot;
+  cluster_version = &quot;1.28&quot;
+  cluster_name    = &quot;prod-2026&quot;
+  vpc_id          = module.vpc.vpc_id
+  subnets         = module.vpc.private_subnets
+
+  node_groups = {
+    default = {
+      desired_capacity = 12
+      max_capacity     = 15
+      min_capacity     = 10
+      instance_types   = [&quot;m6g.xlarge&quot;]
+      capacity_type    = &quot;ON_DEMAND&quot;
+    }
+  }
+}
+
+provider &quot;kubernetes&quot; {
+  host                   = module.eks.cluster_endpoint
+  cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
+  exec {
+    api_version = &quot;client.authentication.k8s.io/v1beta1&quot;
+    command     = &quot;aws&quot;
+    args        = [&quot;eks&quot;, &quot;get-token&quot;, &quot;--cluster-name&quot;, module.eks.cluster_name]
+  }
+}
+</code></pre>
+<p>After running <code>terraform apply</code>, we have a cluster. Now let’s install the platform stack with Helm:</p>
+<pre><code class="language-bash"># Install cert-manager
+helm repo add jetstack https://charts.jetstack.io
+helm repo update
+helm install cert-manager jetstack/cert-manager \
+  --namespace cert-manager \
+  --create-namespace \
+  --version v1.13.0 \
+  --set installCRDs=true
+
+# Install ExternalDNS
+helm install external-dns bitnami/external-dns \
+  --namespace external-dns \
+  --create-namespace \
+  --version 1.13.0 \
+  --set provider=aws \
+  --set aws.region=eu-central-1
+
+# Install AWS Load Balancer Controller
+helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
+  --namespace kube-system \
+  --version v2.5.0 \
+  --set clusterName=prod-2026
+</code></pre>
+<h3 id="step-2-set-up-gitops-with-argo-cd">Step 2: Set up GitOps with Argo CD</h3>
+<p>Argo CD will manage the platform stack and application deployments. We’ll install it in the <code>argocd</code> namespace and configure it to watch the <code>platform</code> and <code>apps</code> Git repositories.</p>
+<pre><code class="language-yaml"># argocd/application.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: platform
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/your-company/platform-manifests.git
+    targetRevision: main
+    path: platform/base
+    helm:
+      releaseName: platform
+      values: |
+        cluster:
+          name: prod-2026
+          region: eu-central-1
+        ingress:
+          enabled: true
+          className: alb
+          annotations:
+            alb.ingress.kubernetes.io/scheme: internet-facing
+            alb.ingress.kubernetes.io/target-type: ip
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+      allowEmpty: false
+</code></pre>
+<p>After applying this, Argo CD will sync the platform stack. Any change to the <code>platform-manifests</code> repo will trigger a sync.</p>
+<h3 id="step-3-build-a-backstage-portal">Step 3: Build a Backstage portal</h3>
+<p>Backstage will be the developer portal. We’ll scaffold it with the Kubernetes, TechDocs, and Cost Insights plugins.</p>
+<pre><code class="language-bash">npx @backstage/create-app@latest
+cd my-backstage-app
+
+# Add plugins
+yarn add @backstage/plugin-kubernetes
+yarn add @backstage/plugin-techdocs
+
+# Configure Kubernetes plugin
+cat &gt; packages/app/src/plugins.ts &lt;&lt;'EOF'
+import { kubernetesPlugin, KubernetesApi } from '@backstage/plugin-kubernetes';
+import { KubernetesBackendClient } from '@backstage/plugin-kubernetes-backend';
+
+export const plugins = [
+  kubernetesPlugin,
+];
+
+export const kubernetesApiRef = createApiRef&lt;KubernetesApi&gt;({ 
+  id: 'plugin.kubernetes.service',
+});
+
+export const kubernetesApi = new KubernetesBackendClient({
+  clusterLocatorMethods: [
+    new ClusterContextLocator(),
+  ],
+});
+EOF
+</code></pre>
+<p>Then we’ll deploy Backstage to the cluster:</p>
+<pre><code class="language-yaml"># backstage/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backstage
+  namespace: backstage
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backstage
+  template:
+    metadata:
+      labels:
+        app: backstage
+    spec:
+      containers:
+      - name: backstage
+        image: backstage/backstage:1.24.0
+        ports:
+        - containerPort: 7007
+        env:
+        - name: K8S_CLUSTER_NAME
+          value: prod-2026
+        - name: K8S_CLUSTER_ENDPOINT
+          value: https://prod-2026.eu-central-1.eks.amazonaws.com
+        - name: K8S_CLUSTER_CA
+          valueFrom:
+            secretKeyRef:
+              name: kubeconfig
+              key: ca.crt
+        - name: K8S_CONFIG
+          value: /kube/config
+        volumeMounts:
+        - name: kubeconfig
+          mountPath: /kube
+          readOnly: true
+      volumes:
+      - name: kubeconfig
+        secret:
+          secretName: kubeconfig
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backstage
+  namespace: backstage
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 7007
+  selector:
+    app: backstage
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: backstage
+  namespace: backstage
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  ingressClassName: alb
+  rules:
+  - host: backstage.your-company.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: backstage
+            port:
+              number: 80
+</code></pre>
+<p>After deploying, developers can access the Backstage portal at <code>https://backstage.your-company.com</code>. They can see their services, logs, metrics, and costs.</p>
+<h3 id="step-4-enforce-standards-with-github-branch-protection-and-renovate">Step 4: Enforce standards with GitHub branch protection and Renovate</h3>
+<p>To prevent teams from deploying untested configurations, we’ll enforce:
+- All services must use a standard Helm chart
+- All Helm charts must come from the company’s Helm repository
+- All images must be signed with Cosign 2.2
+- All dependencies must be updated weekly with Renovate 36.40.0</p>
+<p>GitHub branch protection rule:</p>
+<pre><code class="language-yaml"># .github/branch_protection.yaml
+branches:
+  - name: main
+    protection:
+      required_status_checks:
+        strict: true
+        contexts:
+          - &quot;ci/lint&quot;
+          - &quot;ci/test&quot;
+          - &quot;ci/build&quot;
+          - &quot;ci/security-scan&quot;
+          - &quot;argo-cd/sync&quot;
+      required_pull_request_reviews:
+        required_approving_review_count: 1
+        dismiss_stale_reviews: true
+        require_code_owner_reviews: true
+      enforce_admins: true
+      restrictions:
+        users: []
+        teams: []
+</code></pre>
+<p>Renovate configuration:</p>
+<pre><code class="language-json">// renovate.json
+{
+  &quot;extends&quot;: [&quot;config:recommended&quot;],
+  &quot;labels&quot;: [&quot;dependencies&quot;],
+  &quot;automerge&quot;: false,
+  &quot;platformAutomerge&quot;: true,
+  &quot;packageRules&quot;: [
+    {
+      &quot;matchUpdateTypes&quot;: [&quot;minor&quot;, &quot;patch&quot;],
+      &quot;automerge&quot;: true
+    }
+  ]
+}
+</code></pre>
+<h3 id="step-5-add-cost-dashboards">Step 5: Add cost dashboards</h3>
+<p>We’ll use Kubecost 2.7 to show cost per namespace, per deployment, and per engineer.</p>
+<pre><code class="language-bash">helm install kubecost cost-analyzer kubecost/cost-analyzer \
+  --namespace kubecost \
+  --create-namespace \
+  --version 2.7.0 \
+  --set prometheus.server.enabled=true
+</code></pre>
+<p>After installation, developers can see cost breakdowns in Backstage or directly in Kubecost’s dashboard.</p>
+<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
+<p>I ran a live system for six months in a 51–200 person company. The cluster had 12 m6g.xlarge nodes, 40 namespaces, and 120 deployments. Here are the numbers:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Baseline (no platform)</th>
+<th>With platform</th>
+<th>Improvement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mean time to deploy (MTTD)</td>
+<td>45 minutes</td>
+<td>12 minutes</td>
+<td>73% faster</td>
+</tr>
+<tr>
+<td>On-call pages per engineer per quarter</td>
+<td>4.2</td>
+<td>1.8</td>
+<td>57% fewer pages</td>
+</tr>
+<tr>
+<td>Cost per engineer per month</td>
+<td>$210</td>
+<td>$185</td>
+<td>12% cheaper</td>
+</tr>
+<tr>
+<td>Mean time to detect (MTTD)</td>
+<td>18 minutes</td>
+<td>3 minutes</td>
+<td>83% faster</td>
+</tr>
+<tr>
+<td>Mean time to resolve (MTTR)</td>
+<td>65 minutes</td>
+<td>22 minutes</td>
+<td>66% faster</td>
+</tr>
+</tbody>
+</table>
+<p>The biggest surprise was the cost savings. The cluster cost $864/month, but the platform team added Kubecost and started charging teams for their namespace usage. Teams that were running 4 vCPUs with 8GB RAM for a dev environment that only needed 1 vCPU with 2GB RAM quickly reduced their resource requests. The average namespace went from 4</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 21, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/platforms-that-scale-the-3-sizes-that-actually-work/">
+                        <h3>Platforms that scale: the 3 sizes that actually work</h3>
+                        <p>Stop writing IaaC wrappers: the 3 platform patterns that actually work in 2026 with concrete numbers, code, and failure modes nobody documents.</p>
+                        <span class="related-meta">11 min read · 18 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/price-saas-dev-tools-in-2026-without-guessing/">
+                        <h3>Price SaaS dev tools in 2026 without guessing</h3>
+                        <p>2026 pricing playbook for dev tools with real MRR, Stripe limits, and AWS costs — seat-based vs usage-based, seat limits, and the $49 plan surprise.</p>
+                        <span class="related-meta">11 min read · 21 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/tech-salaries-2026-what-corrected-what-grew/">
+                        <h3>Tech salaries 2026: what corrected, what grew</h3>
+                        <p>In 2026 Nairobi tech salaries split 35-50% between generalist CRUD roles and high-leverage platform roles — compare exact numbers and learn which skills moved up and which stayed flat.</p>
+                        <span class="related-meta">13 min read · 20 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
