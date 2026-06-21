@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-21T13:25:41.090167",
+  "built_at": "2026-06-21T13:32:14.776320",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2105,6 +2105,11 @@
       "slug": "build-a-portfolio-that-beats-the-ai-clone-pile",
       "title": "Build a portfolio that beats the AI clone pile",
       "summary": "Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, the Nigerian tech hiring market is flooded with candidates who have identical"
+    },
+    {
+      "slug": "unlearn-these-ai-workflow-rules-in-2026",
+      "title": "Unlearn these AI workflow rules in 2026",
+      "summary": "A colleague asked me about engineering principles during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomp"
     }
   ]
 }

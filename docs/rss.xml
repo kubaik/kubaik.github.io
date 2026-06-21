@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 21 Jun 2026 13:27:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2026 13:32:21 +0000</lastBuildDate>
+    <item>
+      <title>Unlearn these AI workflow rules in 2026</title>
+      <link>https://kubaik.github.io/unlearn-these-ai-workflow-rules-in-2026/</link>
+      <description>AI workflows fail when teams treat AI like a tool instead of a collaborator — blast radius, confidence scores, and rollback triggers that actually work in 2026.</description>
+      <pubDate>Sun, 21 Jun 2026 13:32:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/unlearn-these-ai-workflow-rules-in-2026/</guid>
+    </item>
     <item>
       <title>Build a portfolio that beats the AI clone pile</title>
       <link>https://kubaik.github.io/build-a-portfolio-that-beats-the-ai-clone-pile/</link>
@@ -138,13 +145,6 @@
       <description>Cut irrelevant AI answers 80% by fixing prompt drift, adapter decay, and cold starts — concrete costs, Lambda code, and rollback commands for Nairobi startups using Predibase and NVIDIA NIM in 2026.</description>
       <pubDate>Sat, 20 Jun 2026 21:00:17 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-glue-code-3-ways-to-avoid-duct-taping-models/</guid>
-    </item>
-    <item>
-      <title>Use feature flags to deploy AI models safely</title>
-      <link>https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/</link>
-      <description>Deploy AI models 80% faster with feature flags — canary splits, instant kill switches, and 5-minute rollbacks in 2026. FastAPI, Flagsmith 3.18, Prometheus 2.48.</description>
-      <pubDate>Sat, 20 Jun 2026 20:49:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/use-feature-flags-to-deploy-ai-models-safely/</guid>
     </item>
   </channel>
 </rss>
