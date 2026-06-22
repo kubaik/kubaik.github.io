@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 08:49:33 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 08:53:06 +0000</lastBuildDate>
+    <item>
+      <title>5 notification systems ranked: push, email, SMS</title>
+      <link>https://kubaik.github.io/5-notification-systems-ranked-push-email-sms/</link>
+      <description>Cut notification delivery time 40% and costs 30% with Courier v2.18 — compare push, email, SMS, and WhatsApp systems with real latency, cost, and bounce data.</description>
+      <pubDate>Mon, 22 Jun 2026 08:52:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-notification-systems-ranked-push-email-sms/</guid>
+    </item>
     <item>
       <title>AI proof your salary: the 3 skills worth 40% more</title>
       <link>https://kubaik.github.io/ai-proof-your-salary-the-3-skills-worth-40-more/</link>
@@ -138,13 +145,6 @@
       <description>Get 5.5 % higher raises in 2026 by translating AI-augmented work into business metrics — revenue per engineer, cost saved, displacement risk, and senior recognition index.</description>
       <pubDate>Sun, 21 Jun 2026 17:47:15 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-salary-hacks-prove-ai-didnt-steal-your-value/</guid>
-    </item>
-    <item>
-      <title>Slay CI false positives with smart scanning</title>
-      <link>https://kubaik.github.io/slay-ci-false-positives-with-smart-scanning/</link>
-      <description>Reduce CI security false positives 81% by scanning only the runtime artifact — Trivy 0.51, Snyk 1.1320, and GitHub Actions setup with real numbers.</description>
-      <pubDate>Sun, 21 Jun 2026 17:21:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/slay-ci-false-positives-with-smart-scanning/</guid>
     </item>
   </channel>
 </rss>

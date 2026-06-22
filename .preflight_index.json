@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-22T08:49:25.977024",
+  "built_at": "2026-06-22T08:52:59.360965",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2240,6 +2240,11 @@
       "slug": "ai-proof-your-salary-the-3-skills-worth-40-more",
       "title": "AI proof your salary: the 3 skills worth 40% more",
       "summary": "After reviewing a lot of code that touches skills that, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You open your performance review and the first question is: “Why should we still pay you whe"
+    },
+    {
+      "slug": "5-notification-systems-ranked-push-email-sms",
+      "title": "5 notification systems ranked: push, email, SMS",
+      "summary": "I ran into this designing notification problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) Last year we rebuilt the notificati"
     }
   ]
 }
