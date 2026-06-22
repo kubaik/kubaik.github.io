@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 15:10:36 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 15:15:25 +0000</lastBuildDate>
+    <item>
+      <title>Rewrite monolith without disaster: 2026’s safe path</title>
+      <link>https://kubaik.github.io/rewrite-monolith-without-disaster-2026s-safe-path/</link>
+      <description>Cut API response time 60% by extracting services incrementally — why big-bang rewrites fail in 2026’s distributed stacks and the safer path teams actually use.</description>
+      <pubDate>Mon, 22 Jun 2026 15:15:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/rewrite-monolith-without-disaster-2026s-safe-path/</guid>
+    </item>
     <item>
       <title>AI codebases: guardrails vs chaos in 2026</title>
       <link>https://kubaik.github.io/ai-codebases-guardrails-vs-chaos-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI rollback time 99% with LaunchDarkly 5.17 — flag evaluation latency, GDPR compliance, and Prometheus dashboards inside.</description>
       <pubDate>Sun, 21 Jun 2026 19:52:23 +0000</pubDate>
       <guid>https://kubaik.github.io/flag-your-ai-rollouts-in-2026/</guid>
-    </item>
-    <item>
-      <title>Synchronous vs async tool calls: latency traps at 1000</title>
-      <link>https://kubaik.github.io/synchronous-vs-async-tool-calls-latency-traps-at-1000/</link>
-      <description>Async tool calls cut API latency 7–10x at 1000 RPS — connection pool tuning, timeout gotchas, and the async vs sync benchmark that changed our Jakarta and Dublin clusters</description>
-      <pubDate>Sun, 21 Jun 2026 19:18:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/synchronous-vs-async-tool-calls-latency-traps-at-1000/</guid>
     </item>
   </channel>
 </rss>

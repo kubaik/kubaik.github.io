@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-22T14:30:12.695271",
+  "built_at": "2026-06-22T15:15:17.882028",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2260,6 +2260,11 @@
       "slug": "ai-codebases-guardrails-vs-chaos-in-2026",
       "title": "AI codebases: guardrails vs chaos in 2026",
       "summary": "I've seen the same maintain codebase mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, teams building software for NGOs, governments, and rural de"
+    },
+    {
+      "slug": "rewrite-monolith-without-disaster-2026s-safe-path",
+      "title": "Rewrite monolith without disaster: 2026’s safe path",
+      "summary": "A colleague asked me about migrated monolith during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete)"
     }
   ]
 }
