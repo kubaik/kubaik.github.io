@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 02:14:10 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 02:54:13 +0000</lastBuildDate>
+    <item>
+      <title>Fintech APIs broke in Nigeria — here’s why</title>
+      <link>https://kubaik.github.io/fintech-apis-broke-in-nigeria-heres-why/</link>
+      <description>Cut fintech API response time 50% and pass CBN audits — how Nigerian APIs broke in 2025 and what to do in 2026</description>
+      <pubDate>Mon, 22 Jun 2026 02:54:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/fintech-apis-broke-in-nigeria-heres-why/</guid>
+    </item>
     <item>
       <title>Attack AI systems before users do</title>
       <link>https://kubaik.github.io/attack-ai-systems-before-users-do/</link>
@@ -138,13 +145,6 @@
       <description>P99 TLS latency drops 37% when post-quantum crypto targets only session tickets — not full handshakes. Real numbers from 50M requests, OpenSSL 3.0.13, and Nginx 1.25.3.</description>
       <pubDate>Sun, 21 Jun 2026 16:00:52 +0000</pubDate>
       <guid>https://kubaik.github.io/tls-13-post-quantum-what-breaks-at-scale/</guid>
-    </item>
-    <item>
-      <title>2026: Why I Switched from Stripe to Paddle</title>
-      <link>https://kubaik.github.io/2026-why-i-switched-from-stripe-to-paddle/</link>
-      <description>Paddle beats Stripe on EU tax compliance and dunning — saving 23 errors/month and 96 hours/year in reconciliation time for €3.1M ARR SaaS. Compare fees, exit costs, and real production numbers.</description>
-      <pubDate>Sun, 21 Jun 2026 15:36:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-why-i-switched-from-stripe-to-paddle/</guid>
     </item>
   </channel>
 </rss>
