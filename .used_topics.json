@@ -57,5 +57,6 @@
   "How to onboard a developer to a partially AI-generated codebase",
   "How I got to $5k MRR without a marketing team or a growth budget",
   "The islands architecture in 2026: when Astro and partial hydration are the right choice",
-  "Building for eventual consistency: the real-world patterns behind systems that stay up"
+  "Building for eventual consistency: the real-world patterns behind systems that stay up",
+  "The context window arms race: what 1M token models actually change in practice"
 ]
