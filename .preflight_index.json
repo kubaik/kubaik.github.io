@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-22T08:52:59.360965",
+  "built_at": "2026-06-22T10:47:31.743401",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2245,6 +2245,11 @@
       "slug": "5-notification-systems-ranked-push-email-sms",
       "title": "5 notification systems ranked: push, email, SMS",
       "summary": "I ran into this designing notification problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) Last year we rebuilt the notificati"
+    },
+    {
+      "slug": "ai-solo-saas-build-vs-buy-agents-in-2026",
+      "title": "AI solo SaaS: build vs buy agents in 2026",
+      "summary": "I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, launching a solo SaaS no longer requires a team of five eng"
     }
   ]
 }

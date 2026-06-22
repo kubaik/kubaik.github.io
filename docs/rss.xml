@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 10:42:52 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 10:47:39 +0000</lastBuildDate>
+    <item>
+      <title>AI solo SaaS: build vs buy agents in 2026</title>
+      <link>https://kubaik.github.io/ai-solo-saas-build-vs-buy-agents-in-2026/</link>
+      <description>Cut solo SaaS launch time from 72 days to 18 days using CrewAI v0.25 — learn when to build your own agent loop and when to buy the runtime, with real latency, cost, and code samples from 2026.</description>
+      <pubDate>Mon, 22 Jun 2026 10:47:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-solo-saas-build-vs-buy-agents-in-2026/</guid>
+    </item>
     <item>
       <title>5 notification systems ranked: push, email, SMS</title>
       <link>https://kubaik.github.io/5-notification-systems-ranked-push-email-sms/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI wrapper costs 70% in 2026 by wrapping workflows, not models. See the 3 wrappers that survived and the 5 that failed with concrete numbers, benchmarks, and code.</description>
       <pubDate>Sun, 21 Jun 2026 19:01:20 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-wrappers-failed-in-2026-what-survived/</guid>
-    </item>
-    <item>
-      <title>2026 salary hacks: Prove AI didn’t steal your value</title>
-      <link>https://kubaik.github.io/2026-salary-hacks-prove-ai-didnt-steal-your-value/</link>
-      <description>Get 5.5 % higher raises in 2026 by translating AI-augmented work into business metrics — revenue per engineer, cost saved, displacement risk, and senior recognition index.</description>
-      <pubDate>Sun, 21 Jun 2026 17:47:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-salary-hacks-prove-ai-didnt-steal-your-value/</guid>
     </item>
   </channel>
 </rss>
