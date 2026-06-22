@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-22T23:15:41.301558",
+  "built_at": "2026-06-22T23:59:45.053974",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2320,6 +2320,11 @@
       "slug": "1m-token-models-wont-save-your-app",
       "title": "1M token models won't save your app",
       "summary": "A colleague asked me about context window during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Ev"
+    },
+    {
+      "slug": "passkeys-apps-cut-auth-costs-70",
+      "title": "Passkeys: apps cut auth costs 70%",
+      "summary": "Most passkeys changed guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026 our Jakarta-based fintech, NusantaraPay, launched a P2P wallet for 1.2 mi"
     }
   ]
 }
