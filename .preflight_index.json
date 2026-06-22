@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-22T18:43:44.447775",
+  "built_at": "2026-06-22T19:05:43.979241",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2280,6 +2280,11 @@
       "slug": "why-rag-alone-fails-2026-search",
       "title": "Why RAG alone fails 2026 search",
       "summary": "The short version: the conventional advice on rag not is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. Why RAG alone fails 2026 search I once shipped a RAG pipeline that looked perfect on paper but delivered 0.4 recall on production quer"
+    },
+    {
+      "slug": "log-audit-costs-without-breaking-compliance",
+      "title": "Log audit costs without breaking compliance",
+      "summary": "I've seen the same building audit mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Three years ago, the EU’s Digital Operational Resilience Act (DORA) cam"
     }
   ]
 }

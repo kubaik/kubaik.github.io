@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 19:01:10 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 19:05:51 +0000</lastBuildDate>
+    <item>
+      <title>Log audit costs without breaking compliance</title>
+      <link>https://kubaik.github.io/log-audit-costs-without-breaking-compliance/</link>
+      <description>Cut audit log costs 40%: PostgreSQL vs ClickHouse at 2026 scale — 9 800 events/sec, 28 ms queries, and the write amplification trap most teams miss.</description>
+      <pubDate>Mon, 22 Jun 2026 19:05:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/log-audit-costs-without-breaking-compliance/</guid>
+    </item>
     <item>
       <title>Why RAG alone fails 2026 search</title>
       <link>https://kubaik.github.io/why-rag-alone-fails-2026-search/</link>
@@ -138,13 +145,6 @@
       <description>2026 pricing playbook for dev tools with real MRR, Stripe limits, and AWS costs — seat-based vs usage-based, seat limits, and the $49 plan surprise.</description>
       <pubDate>Sun, 21 Jun 2026 21:23:11 +0000</pubDate>
       <guid>https://kubaik.github.io/price-saas-dev-tools-in-2026-without-guessing/</guid>
-    </item>
-    <item>
-      <title>5 AI pair tools that actually improved our sprints</title>
-      <link>https://kubaik.github.io/5-ai-pair-tools-that-actually-improved-our-sprints/</link>
-      <description>Cut review comments 69% and delivery time 114× with AI pair programming — GitHub Copilot Workspace 1.55 vs Cursor vs Amazon Q vs Zed vs Codeium benchmarked over 15 real tickets</description>
-      <pubDate>Sun, 21 Jun 2026 21:07:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-ai-pair-tools-that-actually-improved-our-sprints/</guid>
     </item>
   </channel>
 </rss>
