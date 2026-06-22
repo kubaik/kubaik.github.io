@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 08:45:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 08:49:33 +0000</lastBuildDate>
+    <item>
+      <title>AI proof your salary: the 3 skills worth 40% more</title>
+      <link>https://kubaik.github.io/ai-proof-your-salary-the-3-skills-worth-40-more/</link>
+      <description>Cut AI replacement risk by 40% with these 3 skills: schema contracts, blast radius metrics, and runtime kill switches. Real-world fixes for Copilot PRs and agent spirals in 2026.</description>
+      <pubDate>Mon, 22 Jun 2026 08:49:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-proof-your-salary-the-3-skills-worth-40-more/</guid>
+    </item>
     <item>
       <title>50 locations, 50 headaches: edge-native backends in</title>
       <link>https://kubaik.github.io/50-locations-50-headaches-edge-native-backends-in/</link>
@@ -138,13 +145,6 @@
       <description>Reduce CI security false positives 81% by scanning only the runtime artifact — Trivy 0.51, Snyk 1.1320, and GitHub Actions setup with real numbers.</description>
       <pubDate>Sun, 21 Jun 2026 17:21:49 +0000</pubDate>
       <guid>https://kubaik.github.io/slay-ci-false-positives-with-smart-scanning/</guid>
-    </item>
-    <item>
-      <title>Database branching: 3 Neon mistakes that cost me weeks</title>
-      <link>https://kubaik.github.io/database-branching-3-neon-mistakes-that-cost-me-weeks/</link>
-      <description>Save 80% on database costs with cloud branching — Neon and PlanetScale CLI timeout fixes, connection string mistakes, and the 3 errors that break local workflows in 2026</description>
-      <pubDate>Sun, 21 Jun 2026 17:17:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/database-branching-3-neon-mistakes-that-cost-me-weeks/</guid>
     </item>
   </channel>
 </rss>

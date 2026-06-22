@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-22T07:49:51.170914",
+  "built_at": "2026-06-22T08:49:25.977024",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2235,6 +2235,11 @@
       "slug": "50-locations-50-headaches-edge-native-backends-in",
       "title": "50 locations, 50 headaches: edge-native backends in",
       "summary": "The short version: the conventional advice on edgenative backends is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Running an API from 50 edge locations isn’t scaling horizontally—it’s scaling "
+    },
+    {
+      "slug": "ai-proof-your-salary-the-3-skills-worth-40-more",
+      "title": "AI proof your salary: the 3 skills worth 40% more",
+      "summary": "After reviewing a lot of code that touches skills that, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You open your performance review and the first question is: “Why should we still pay you whe"
     }
   ]
 }
