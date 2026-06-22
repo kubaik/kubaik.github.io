@@ -55,5 +55,6 @@
   "Python 3.13 in production: the free-threaded GIL change and what it means for web apps",
   "How service mesh adoption actually went: what Istio and Cilium look like in real production",
   "How to onboard a developer to a partially AI-generated codebase",
-  "How I got to $5k MRR without a marketing team or a growth budget"
+  "How I got to $5k MRR without a marketing team or a growth budget",
+  "The islands architecture in 2026: when Astro and partial hydration are the right choice"
 ]

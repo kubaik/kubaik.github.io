@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-22T21:54:14.685552",
+  "built_at": "2026-06-22T22:11:56.374604",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2305,6 +2305,11 @@
       "slug": "hit-5k-mrr-without-paid-ads",
       "title": "Hit $5k MRR without paid ads",
       "summary": "The short version: the conventional advice on got mrr is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) You don’t need a marketing team or a growth budget to hit $5,000 monthly recurring revenue"
+    },
+    {
+      "slug": "islands-beat-monoliths-in-2026",
+      "title": "Islands beat monoliths in 2026",
+      "summary": "Most islands architecture guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 our marketing site was a Next.js 14 monolith served from AWS CloudFr"
     }
   ]
 }
