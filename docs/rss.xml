@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 18:21:43 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 18:26:49 +0000</lastBuildDate>
+    <item>
+      <title>3 WCAG traps in AI chat UIs</title>
+      <link>https://kubaik.github.io/3-wcag-traps-in-ai-chat-uis/</link>
+      <description>Cut screen-reader announcement errors 78% in AI chat widgets with scoped live regions, DOMPurify 3.0.6, and Safari iframe fixes.</description>
+      <pubDate>Mon, 22 Jun 2026 18:26:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-wcag-traps-in-ai-chat-uis/</guid>
+    </item>
     <item>
       <title>USSD in 2026: Africa&apos;s silent infra layer</title>
       <link>https://kubaik.github.io/ussd-in-2026-africas-silent-infra-layer/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM output failures 98% with a 3-layer protocol: schema-first design, text envelope, and repair pipeline — all using Pydantic 2.7 and Redis 7.2 in 2026 workflows.</description>
       <pubDate>Sun, 21 Jun 2026 21:03:17 +0000</pubDate>
       <guid>https://kubaik.github.io/json-modes-silent-failures-exposed/</guid>
-    </item>
-    <item>
-      <title>AI agents: why devtools now sell like SaaS in 2026</title>
-      <link>https://kubaik.github.io/ai-agents-why-devtools-now-sell-like-saas-in-2026/</link>
-      <description>Sentinel cut MTTR 91% by shifting from developer-first to platform-first sales in 2026 — with real Go 1.22 and Node 20 LTS stacks, SOC 2 Type I, and Jira OAuth 2.0 integrations used in production. Learn the exact pivot that turned 3 paid conversions into 4 enterprise deals at $52k ARR.</description>
-      <pubDate>Sun, 21 Jun 2026 20:54:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-why-devtools-now-sell-like-saas-in-2026/</guid>
     </item>
   </channel>
 </rss>

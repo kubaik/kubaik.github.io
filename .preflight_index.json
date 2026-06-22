@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-22T16:00:54.109793",
+  "built_at": "2026-06-22T18:26:42.023540",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2270,6 +2270,11 @@
       "slug": "ussd-in-2026-africas-silent-infra-layer",
       "title": "USSD in 2026: Africa's silent infra layer",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I spent two weeks in 2026 trying to convince a Lagos-based fintech that USSD was still r"
+    },
+    {
+      "slug": "3-wcag-traps-in-ai-chat-uis",
+      "title": "3 WCAG traps in AI chat UIs",
+      "summary": "After reviewing a lot of code that touches building accessible, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You ship an AI chat widget that looks fine in Chrome on a 1440p monitor, passes axe-"
     }
   ]
 }
