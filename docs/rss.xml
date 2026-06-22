@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 21:24:10 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 21:30:56 +0000</lastBuildDate>
+    <item>
+      <title>AI codebase: onboarding 2 devs in 2 hours or quit</title>
+      <link>https://kubaik.github.io/ai-codebase-onboarding-2-devs-in-2-hours-or-quit/</link>
+      <description>Cut onboarding time 60% with AI codebase rules — versioned prompts, OWNERS files, and the SOC 2 trick most teams skip. Benchmarks, costs, and the 2026 playbook.</description>
+      <pubDate>Mon, 22 Jun 2026 21:30:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-codebase-onboarding-2-devs-in-2-hours-or-quit/</guid>
+    </item>
     <item>
       <title>Service mesh in 2026: why most teams drop it</title>
       <link>https://kubaik.github.io/service-mesh-in-2026-why-most-teams-drop-it/</link>
@@ -138,13 +145,6 @@
       <description>Cut nighttime pages 78% with PagerDuty alert triage in 2026 — AI suppression rules, LangChain prompts, and real cost numbers from a production rollout.</description>
       <pubDate>Sun, 21 Jun 2026 23:04:09 +0000</pubDate>
       <guid>https://kubaik.github.io/replace-alert-noise-in-2026/</guid>
-    </item>
-    <item>
-      <title>WireGuard vs Tailscale for $5/month zero trust</title>
-      <link>https://kubaik.github.io/wireguard-vs-tailscale-for-5month-zero-trust/</link>
-      <description>Cut breach risk 80% with zero-trust for $60/year — Tailscale vs WireGuard on latency, cost, and DX in 2026</description>
-      <pubDate>Sun, 21 Jun 2026 22:53:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/wireguard-vs-tailscale-for-5month-zero-trust/</guid>
     </item>
   </channel>
 </rss>

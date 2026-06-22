@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-22T21:24:02.740612",
+  "built_at": "2026-06-22T21:30:49.292659",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2295,6 +2295,11 @@
       "slug": "service-mesh-in-2026-why-most-teams-drop-it",
       "title": "Service mesh in 2026: why most teams drop it",
       "summary": "A colleague asked me about service mesh during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) The "
+    },
+    {
+      "slug": "ai-codebase-onboarding-2-devs-in-2-hours-or-quit",
+      "title": "AI codebase: onboarding 2 devs in 2 hours or quit",
+      "summary": "I've seen the same onboard developer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, nearly 70% of new pull requests in mid-size tech companies "
     }
   ]
 }
