@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 15:56:20 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 16:01:01 +0000</lastBuildDate>
+    <item>
+      <title>USSD in 2026: Africa&apos;s silent infra layer</title>
+      <link>https://kubaik.github.io/ussd-in-2026-africas-silent-infra-layer/</link>
+      <description>USSD delivers 1.2 million transactions/hour in Africa — here’s how to plug it into your 2026 fintech stack for 94% loan completion rates on 2G networks</description>
+      <pubDate>Mon, 22 Jun 2026 16:00:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/ussd-in-2026-africas-silent-infra-layer/</guid>
+    </item>
     <item>
       <title>Rewrite monolith without disaster: 2026’s safe path</title>
       <link>https://kubaik.github.io/rewrite-monolith-without-disaster-2026s-safe-path/</link>
@@ -138,13 +145,6 @@
       <description>Sentinel cut MTTR 91% by shifting from developer-first to platform-first sales in 2026 — with real Go 1.22 and Node 20 LTS stacks, SOC 2 Type I, and Jira OAuth 2.0 integrations used in production. Learn the exact pivot that turned 3 paid conversions into 4 enterprise deals at $52k ARR.</description>
       <pubDate>Sun, 21 Jun 2026 20:54:49 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-why-devtools-now-sell-like-saas-in-2026/</guid>
-    </item>
-    <item>
-      <title>Flag your AI rollouts in 2026</title>
-      <link>https://kubaik.github.io/flag-your-ai-rollouts-in-2026/</link>
-      <description>Cut AI rollback time 99% with LaunchDarkly 5.17 — flag evaluation latency, GDPR compliance, and Prometheus dashboards inside.</description>
-      <pubDate>Sun, 21 Jun 2026 19:52:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/flag-your-ai-rollouts-in-2026/</guid>
     </item>
   </channel>
 </rss>
