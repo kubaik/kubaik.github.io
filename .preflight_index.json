@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-22T22:11:56.374604",
+  "built_at": "2026-06-22T23:04:12.415601",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2310,6 +2310,11 @@
       "slug": "islands-beat-monoliths-in-2026",
       "title": "Islands beat monoliths in 2026",
       "summary": "Most islands architecture guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 our marketing site was a Next.js 14 monolith served from AWS CloudFr"
+    },
+    {
+      "slug": "7-patterns-for-systems-that-stay-up-when-everything",
+      "title": "7 patterns for systems that stay up when everything",
+      "summary": "I ran into this building eventual problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026 I was on call for a checkou"
     }
   ]
 }
