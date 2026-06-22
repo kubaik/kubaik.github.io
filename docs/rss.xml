@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 21:49:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 21:54:22 +0000</lastBuildDate>
+    <item>
+      <title>Hit $5k MRR without paid ads</title>
+      <link>https://kubaik.github.io/hit-5k-mrr-without-paid-ads/</link>
+      <description>Hit $5k MRR without paid ads — the exact channels, pricing tweaks, and leak fixes that worked in 2026. Organic growth tactics that compound, with concrete numbers and code examples.</description>
+      <pubDate>Mon, 22 Jun 2026 21:54:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/hit-5k-mrr-without-paid-ads/</guid>
+    </item>
     <item>
       <title>AI codebase: onboarding 2 devs in 2 hours or quit</title>
       <link>https://kubaik.github.io/ai-codebase-onboarding-2-devs-in-2-hours-or-quit/</link>
@@ -138,13 +145,6 @@
       <description>Cut hallucinations 64% by tracking prompt and embedding drift — concrete numbers, code, and the hidden costs most teams miss when moving AI to production in 2026.</description>
       <pubDate>Sun, 21 Jun 2026 23:23:16 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-hallucinations-expose-blind-spots/</guid>
-    </item>
-    <item>
-      <title>Replace alert noise in 2026</title>
-      <link>https://kubaik.github.io/replace-alert-noise-in-2026/</link>
-      <description>Cut nighttime pages 78% with PagerDuty alert triage in 2026 — AI suppression rules, LangChain prompts, and real cost numbers from a production rollout.</description>
-      <pubDate>Sun, 21 Jun 2026 23:04:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/replace-alert-noise-in-2026/</guid>
     </item>
   </channel>
 </rss>

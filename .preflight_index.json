@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-22T21:30:49.292659",
+  "built_at": "2026-06-22T21:54:14.685552",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2300,6 +2300,11 @@
       "slug": "ai-codebase-onboarding-2-devs-in-2-hours-or-quit",
       "title": "AI codebase: onboarding 2 devs in 2 hours or quit",
       "summary": "I've seen the same onboard developer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, nearly 70% of new pull requests in mid-size tech companies "
+    },
+    {
+      "slug": "hit-5k-mrr-without-paid-ads",
+      "title": "Hit $5k MRR without paid ads",
+      "summary": "The short version: the conventional advice on got mrr is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) You don’t need a marketing team or a growth budget to hit $5,000 monthly recurring revenue"
     }
   ]
 }
