@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 18:26:49 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 18:43:51 +0000</lastBuildDate>
+    <item>
+      <title>Why RAG alone fails 2026 search</title>
+      <link>https://kubaik.github.io/why-rag-alone-fails-2026-search/</link>
+      <description>Cut search latency 50% and costs 70% with hybrid BM25 + reranker — DistilBERT-base-uncased-distilled + ONNX Runtime 1.17 on a $5 VPS in 2026.</description>
+      <pubDate>Mon, 22 Jun 2026 18:43:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-rag-alone-fails-2026-search/</guid>
+    </item>
     <item>
       <title>3 WCAG traps in AI chat UIs</title>
       <link>https://kubaik.github.io/3-wcag-traps-in-ai-chat-uis/</link>
@@ -138,13 +145,6 @@
       <description>Cut review comments 69% and delivery time 114× with AI pair programming — GitHub Copilot Workspace 1.55 vs Cursor vs Amazon Q vs Zed vs Codeium benchmarked over 15 real tickets</description>
       <pubDate>Sun, 21 Jun 2026 21:07:57 +0000</pubDate>
       <guid>https://kubaik.github.io/5-ai-pair-tools-that-actually-improved-our-sprints/</guid>
-    </item>
-    <item>
-      <title>JSON mode’s silent failures exposed</title>
-      <link>https://kubaik.github.io/json-modes-silent-failures-exposed/</link>
-      <description>Cut LLM output failures 98% with a 3-layer protocol: schema-first design, text envelope, and repair pipeline — all using Pydantic 2.7 and Redis 7.2 in 2026 workflows.</description>
-      <pubDate>Sun, 21 Jun 2026 21:03:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/json-modes-silent-failures-exposed/</guid>
     </item>
   </channel>
 </rss>

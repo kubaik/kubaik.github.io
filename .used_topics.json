@@ -49,5 +49,6 @@
   "How to maintain a codebase where 40% of the code was written by an AI",
   "How I migrated a monolith to services in 2026 without a big-bang rewrite",
   "USSD is not dead: why feature phone interfaces still matter for African fintech in 2026",
-  "Building accessible AI chat interfaces: the WCAG requirements most teams miss"
+  "Building accessible AI chat interfaces: the WCAG requirements most teams miss",
+  "RAG is not enough: why hybrid search + reranking is the 2026 baseline"
 ]
