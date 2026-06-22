@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 13:46:59 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 13:51:45 +0000</lastBuildDate>
+    <item>
+      <title>Hiring engineers: the 3 things AI cares about now</title>
+      <link>https://kubaik.github.io/hiring-engineers-the-3-things-ai-cares-about-now/</link>
+      <description>Cut engineering interview time 51% with AI probes that measure time-to-first-insight — not keywords. 62% fewer incidents, 78% more onsite candidates, and the real code that made it work.</description>
+      <pubDate>Mon, 22 Jun 2026 13:51:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/hiring-engineers-the-3-things-ai-cares-about-now/</guid>
+    </item>
     <item>
       <title>AI solo SaaS: build vs buy agents in 2026</title>
       <link>https://kubaik.github.io/ai-solo-saas-build-vs-buy-agents-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut Pinecone costs 90% with pgvector — real benchmarks, $12k savings, and the Postgres-only setup that beat managed services</description>
       <pubDate>Sun, 21 Jun 2026 19:11:54 +0000</pubDate>
       <guid>https://kubaik.github.io/ditch-pinecone-keep-pgvector/</guid>
-    </item>
-    <item>
-      <title>AI wrappers failed in 2026: what survived</title>
-      <link>https://kubaik.github.io/ai-wrappers-failed-in-2026-what-survived/</link>
-      <description>Cut AI wrapper costs 70% in 2026 by wrapping workflows, not models. See the 3 wrappers that survived and the 5 that failed with concrete numbers, benchmarks, and code.</description>
-      <pubDate>Sun, 21 Jun 2026 19:01:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-wrappers-failed-in-2026-what-survived/</guid>
     </item>
   </channel>
 </rss>

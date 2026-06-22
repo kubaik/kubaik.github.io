@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-22T10:47:31.743401",
+  "built_at": "2026-06-22T13:51:37.743119",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2250,6 +2250,11 @@
       "slug": "ai-solo-saas-build-vs-buy-agents-in-2026",
       "title": "AI solo SaaS: build vs buy agents in 2026",
       "summary": "I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, launching a solo SaaS no longer requires a team of five eng"
+    },
+    {
+      "slug": "hiring-engineers-the-3-things-ai-cares-about-now",
+      "title": "Hiring engineers: the 3 things AI cares about now",
+      "summary": "The official documentation for changed hiring is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Let me tell you something that sur"
     }
   ]
 }
