@@ -52,5 +52,6 @@
   "Building accessible AI chat interfaces: the WCAG requirements most teams miss",
   "RAG is not enough: why hybrid search + reranking is the 2026 baseline",
   "Building audit logs that satisfy compliance requirements without killing performance",
-  "Python 3.13 in production: the free-threaded GIL change and what it means for web apps"
+  "Python 3.13 in production: the free-threaded GIL change and what it means for web apps",
+  "How service mesh adoption actually went: what Istio and Cilium look like in real production"
 ]
