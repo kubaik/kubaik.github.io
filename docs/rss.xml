@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 01:44:22 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 01:49:10 +0000</lastBuildDate>
+    <item>
+      <title>LLM evals: skip the hype, track these 4 metrics</title>
+      <link>https://kubaik.github.io/llm-evals-skip-the-hype-track-these-4-metrics/</link>
+      <description>Cut hallucinations 74% and latency 52% using 4 production metrics — not BLEU or perplexity. Real code, real AWS services, real ROI.</description>
+      <pubDate>Mon, 22 Jun 2026 01:49:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-evals-skip-the-hype-track-these-4-metrics/</guid>
+    </item>
     <item>
       <title>AI hallucinations expose blind spots</title>
       <link>https://kubaik.github.io/ai-hallucinations-expose-blind-spots/</link>
@@ -138,13 +145,6 @@
       <description>Detect AI-generated system designs in 2026 interviews — 3 concrete red flags, a live debugging fix, and the exact Terraform command to audit Terraform pasted from Copilot.</description>
       <pubDate>Sun, 21 Jun 2026 15:10:03 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-stole-system-design/</guid>
-    </item>
-    <item>
-      <title>Unlearn these AI workflow rules in 2026</title>
-      <link>https://kubaik.github.io/unlearn-these-ai-workflow-rules-in-2026/</link>
-      <description>AI workflows fail when teams treat AI like a tool instead of a collaborator — blast radius, confidence scores, and rollback triggers that actually work in 2026.</description>
-      <pubDate>Sun, 21 Jun 2026 13:32:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlearn-these-ai-workflow-rules-in-2026/</guid>
     </item>
   </channel>
 </rss>
