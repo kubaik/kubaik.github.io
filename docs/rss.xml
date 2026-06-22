@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 07:45:24 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 07:49:58 +0000</lastBuildDate>
+    <item>
+      <title>50 locations, 50 headaches: edge-native backends in</title>
+      <link>https://kubaik.github.io/50-locations-50-headaches-edge-native-backends-in/</link>
+      <description>Cut API latency 60 % by running your backend in 50 locations — connection pooling, replication lag, and the $12k mistake most teams make in 2026.</description>
+      <pubDate>Mon, 22 Jun 2026 07:49:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/50-locations-50-headaches-edge-native-backends-in/</guid>
+    </item>
     <item>
       <title>Meet 2026 SBOM demands in minutes</title>
       <link>https://kubaik.github.io/meet-2026-sbom-demands-in-minutes/</link>
@@ -138,13 +145,6 @@
       <description>Save 80% on database costs with cloud branching — Neon and PlanetScale CLI timeout fixes, connection string mistakes, and the 3 errors that break local workflows in 2026</description>
       <pubDate>Sun, 21 Jun 2026 17:17:02 +0000</pubDate>
       <guid>https://kubaik.github.io/database-branching-3-neon-mistakes-that-cost-me-weeks/</guid>
-    </item>
-    <item>
-      <title>Self-healing pipelines: GitHub Actions vs Argo</title>
-      <link>https://kubaik.github.io/self-healing-pipelines-github-actions-vs-argo/</link>
-      <description>Cut self-healing pipeline MTTR 60%: GitHub Actions vs Argo Workflows with concrete benchmarks, cost data, and rollback latency figures.</description>
-      <pubDate>Sun, 21 Jun 2026 16:59:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/self-healing-pipelines-github-actions-vs-argo/</guid>
     </item>
   </channel>
 </rss>
