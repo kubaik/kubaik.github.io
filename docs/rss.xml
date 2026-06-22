@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 04:29:17 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 22 Jun 2026 04:33:58 +0000</lastBuildDate>
+    <item>
+      <title>Meet 2026 SBOM demands in minutes</title>
+      <link>https://kubaik.github.io/meet-2026-sbom-demands-in-minutes/</link>
+      <description>Generate SBOMs in 20 mins with Syft 1.11 to meet 2026 compliance — no manual mapping, 95% time saved, SPDX 2.3 ready</description>
+      <pubDate>Mon, 22 Jun 2026 04:33:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/meet-2026-sbom-demands-in-minutes/</guid>
+    </item>
     <item>
       <title>Fintech APIs broke in Nigeria — here’s why</title>
       <link>https://kubaik.github.io/fintech-apis-broke-in-nigeria-heres-why/</link>
@@ -138,13 +145,6 @@
       <description>Cut self-healing pipeline MTTR 60%: GitHub Actions vs Argo Workflows with concrete benchmarks, cost data, and rollback latency figures.</description>
       <pubDate>Sun, 21 Jun 2026 16:59:37 +0000</pubDate>
       <guid>https://kubaik.github.io/self-healing-pipelines-github-actions-vs-argo/</guid>
-    </item>
-    <item>
-      <title>TLS 1.3 + post-quantum: what breaks at scale</title>
-      <link>https://kubaik.github.io/tls-13-post-quantum-what-breaks-at-scale/</link>
-      <description>P99 TLS latency drops 37% when post-quantum crypto targets only session tickets — not full handshakes. Real numbers from 50M requests, OpenSSL 3.0.13, and Nginx 1.25.3.</description>
-      <pubDate>Sun, 21 Jun 2026 16:00:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/tls-13-post-quantum-what-breaks-at-scale/</guid>
     </item>
   </channel>
 </rss>
