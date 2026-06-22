@@ -5,14 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jun 2026 23:15:47 +0000</lastBuildDate>
-    <item>
-      <title>1M token models won&apos;t save your app</title>
-      <link>https://kubaik.github.io/1m-token-models-wont-save-your-app/</link>
-      <description>Cut 80% of hallucinations by shrinking prompts — real data from Nairobi fintech systems using 1M token models vs 128K models with retrieval. See latency, cost, and error rate deltas.</description>
-      <pubDate>Mon, 22 Jun 2026 23:15:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/1m-token-models-wont-save-your-app/</guid>
-    </item>
+    <lastBuildDate>Mon, 22 Jun 2026 23:55:36 +0000</lastBuildDate>
     <item>
       <title>7 patterns for systems that stay up when everything</title>
       <link>https://kubaik.github.io/7-patterns-for-systems-that-stay-up-when-everything/</link>
@@ -145,6 +138,13 @@
       <description>Cut fintech API response time 50% and pass CBN audits — how Nigerian APIs broke in 2025 and what to do in 2026</description>
       <pubDate>Mon, 22 Jun 2026 02:54:04 +0000</pubDate>
       <guid>https://kubaik.github.io/fintech-apis-broke-in-nigeria-heres-why/</guid>
+    </item>
+    <item>
+      <title>Attack AI systems before users do</title>
+      <link>https://kubaik.github.io/attack-ai-systems-before-users-do/</link>
+      <description>Cut prompt injection incidents 86% with LlamaGuard-2-8B and a document sanitizer — the real costs, latency figures, and the retrieval poisoning attack teams miss in 2026.</description>
+      <pubDate>Mon, 22 Jun 2026 02:14:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/attack-ai-systems-before-users-do/</guid>
     </item>
   </channel>
 </rss>
