@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 01:27:20 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 01:31:19 +0000</lastBuildDate>
+    <item>
+      <title>AI ops vs human ops: the incidents that broke them</title>
+      <link>https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/</link>
+      <description>Cut incident MTTR 82% with AI ops — PagerDuty AI Copilot vs Rootly autonomous agents compared on 100 real incidents in 2026. Cost, latency, and false-positive data included.</description>
+      <pubDate>Tue, 23 Jun 2026 01:31:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/</guid>
+    </item>
     <item>
       <title>Trimmed $3k/month Kubernetes to $200 with Fly.io</title>
       <link>https://kubaik.github.io/trimmed-3kmonth-kubernetes-to-200-with-flyio/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 60 % by running your backend in 50 locations — connection pooling, replication lag, and the $12k mistake most teams make in 2026.</description>
       <pubDate>Mon, 22 Jun 2026 07:49:49 +0000</pubDate>
       <guid>https://kubaik.github.io/50-locations-50-headaches-edge-native-backends-in/</guid>
-    </item>
-    <item>
-      <title>Meet 2026 SBOM demands in minutes</title>
-      <link>https://kubaik.github.io/meet-2026-sbom-demands-in-minutes/</link>
-      <description>Generate SBOMs in 20 mins with Syft 1.11 to meet 2026 compliance — no manual mapping, 95% time saved, SPDX 2.3 ready</description>
-      <pubDate>Mon, 22 Jun 2026 04:33:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/meet-2026-sbom-demands-in-minutes/</guid>
     </item>
   </channel>
 </rss>

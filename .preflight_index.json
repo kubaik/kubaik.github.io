@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T00:15:25.932916",
+  "built_at": "2026-06-23T01:31:14.942383",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2330,6 +2330,11 @@
       "slug": "trimmed-3kmonth-kubernetes-to-200-with-flyio",
       "title": "Trimmed $3k/month Kubernetes to $200 with Fly.io",
       "summary": "Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026 we launched a SaaS that let indie hackers spin up disposable staging envi"
+    },
+    {
+      "slug": "ai-ops-vs-human-ops-the-incidents-that-broke-them",
+      "title": "AI ops vs human ops: the incidents that broke them",
+      "summary": "I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Oncall in 2026 is a different beast: distributed traces span 17 se"
     }
   ]
 }
