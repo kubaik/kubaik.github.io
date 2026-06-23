@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 00:10:52 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 00:15:33 +0000</lastBuildDate>
+    <item>
+      <title>Trimmed $3k/month Kubernetes to $200 with Fly.io</title>
+      <link>https://kubaik.github.io/trimmed-3kmonth-kubernetes-to-200-with-flyio/</link>
+      <description>Cut monthly infrastructure bill 95% by moving from EKS to Fly.io — $3,966 down to $187, latency dropped 64%, and we saved 12 engineering hours/month</description>
+      <pubDate>Tue, 23 Jun 2026 00:15:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/trimmed-3kmonth-kubernetes-to-200-with-flyio/</guid>
+    </item>
     <item>
       <title>Passkeys: apps cut auth costs 70%</title>
       <link>https://kubaik.github.io/passkeys-apps-cut-auth-costs-70/</link>
@@ -138,13 +145,6 @@
       <description>Generate SBOMs in 20 mins with Syft 1.11 to meet 2026 compliance — no manual mapping, 95% time saved, SPDX 2.3 ready</description>
       <pubDate>Mon, 22 Jun 2026 04:33:49 +0000</pubDate>
       <guid>https://kubaik.github.io/meet-2026-sbom-demands-in-minutes/</guid>
-    </item>
-    <item>
-      <title>Fintech APIs broke in Nigeria — here’s why</title>
-      <link>https://kubaik.github.io/fintech-apis-broke-in-nigeria-heres-why/</link>
-      <description>Cut fintech API response time 50% and pass CBN audits — how Nigerian APIs broke in 2025 and what to do in 2026</description>
-      <pubDate>Mon, 22 Jun 2026 02:54:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/fintech-apis-broke-in-nigeria-heres-why/</guid>
     </item>
   </channel>
 </rss>

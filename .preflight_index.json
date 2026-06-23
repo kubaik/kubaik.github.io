@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-22T23:59:45.053974",
+  "built_at": "2026-06-23T00:15:25.932916",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2325,6 +2325,11 @@
       "slug": "passkeys-apps-cut-auth-costs-70",
       "title": "Passkeys: apps cut auth costs 70%",
       "summary": "Most passkeys changed guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026 our Jakarta-based fintech, NusantaraPay, launched a P2P wallet for 1.2 mi"
+    },
+    {
+      "slug": "trimmed-3kmonth-kubernetes-to-200-with-flyio",
+      "title": "Trimmed $3k/month Kubernetes to $200 with Fly.io",
+      "summary": "Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026 we launched a SaaS that let indie hackers spin up disposable staging envi"
     }
   ]
 }
