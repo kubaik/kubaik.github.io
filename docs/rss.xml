@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 21:21:10 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 21:26:05 +0000</lastBuildDate>
+    <item>
+      <title>Map legacy code with AI before it breaks</title>
+      <link>https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/</link>
+      <description>The gap between what the docs say and what production needs I once inherited a 12-year-old PHP monolith running on a single t3.medium in AWS, processing…</description>
+      <pubDate>Tue, 23 Jun 2026 21:25:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/</guid>
+    </item>
     <item>
       <title>Tune small or prompt big: 2026 costs revealed</title>
       <link>https://kubaik.github.io/tune-small-or-prompt-big-2026-costs-revealed/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS costs 48% with Savings Plans and right-sizing in 2026 — the levers mid-size teams actually need, with benchmarks, Terraform snippets, and the checkpointing mistake most teams still make.</description>
       <pubDate>Tue, 23 Jun 2026 06:43:16 +0000</pubDate>
       <guid>https://kubaik.github.io/trim-18k-aws-bills-2026-levers-mid-size-teams-miss/</guid>
-    </item>
-    <item>
-      <title>Daraja 2.0: 60-minute migration checklist</title>
-      <link>https://kubaik.github.io/daraja-20-60-minute-migration-checklist/</link>
-      <description>Cut Daraja 2026 migration time 70% — new OAuth2 flow, HTTPS-only callbacks, and the TLS 1.3 surprise most teams miss.</description>
-      <pubDate>Tue, 23 Jun 2026 06:36:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/daraja-20-60-minute-migration-checklist/</guid>
     </item>
   </channel>
 </rss>

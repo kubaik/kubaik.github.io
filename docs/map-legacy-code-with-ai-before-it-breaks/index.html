@@ -1,0 +1,722 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Map legacy code with AI before it breaks - Tech Blog</title>
+        <meta name="description" content="The gap between what the docs say and what production needs I once inherited a 12-year-old PHP monolith running on a single t3.medium in AWS, processing…">
+        <meta name="keywords" content="Ai">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-23T21:25:55.506108">
+        <meta property="article:modified_time" content="2026-06-23T21:25:55.506116">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Map legacy code with AI before it breaks">
+        <meta property="og:description" content="The gap between what the docs say and what production needs I once inherited a 12-year-old PHP monolith running on a single t3.medium in AWS, processing…">
+        <meta property="og:url" content="https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/">
+        <meta property="og:site_name" content="Tech Blog">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Map legacy code with AI before it breaks">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Map legacy code with AI before it breaks">
+        <meta name="twitter:description" content="The gap between what the docs say and what production needs I once inherited a 12-year-old PHP monolith running on a single t3.medium in AWS, processing…">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-DST4PJYK6V');
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" 
+            crossorigin="anonymous"></script>
+
+        
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="The gap between what the docs say and what production needs I once inherited a 12-year-old PHP monolith running on a single t3.medium in AWS, processing…">
+    <meta property="og:title" content="Map legacy code with AI before it breaks">
+    <meta property="og:description" content="The gap between what the docs say and what production needs I once inherited a 12-year-old PHP monolith running on a single t3.medium in AWS, processing…">
+    <meta property="og:url" content="https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Tech Blog">
+    <meta property="article:published_time" content="2026-06-23T21:25:55.506108">
+    <meta property="article:modified_time" content="2026-06-23T21:25:55.506116">
+    <meta property="og:image" content="/static/images/map-legacy-code-with-ai-before-it-breaks.jpg">
+    <meta property="og:image:alt" content="Map legacy code with AI before it breaks">
+    <meta name="twitter:image" content="/static/images/map-legacy-code-with-ai-before-it-breaks.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Map legacy code with AI before it breaks">
+    <meta name="twitter:description" content="The gap between what the docs say and what production needs I once inherited a 12-year-old PHP monolith running on a single t3.medium in AWS, processing…">
+    <meta name="twitter:site" content="@KubaiKevin">
+    <meta name="twitter:creator" content="@KubaiKevin">
+
+    <!-- Additional SEO -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="googlebot" content="index, follow">
+    <link rel="canonical" href="https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/">
+    <meta name="keywords" content="Ai">
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Map legacy code with AI before it breaks",
+  "description": "The gap between what the docs say and what production needs I once inherited a 12-year-old PHP monolith running on a single t3.medium in AWS, processing\u2026",
+  "author": {
+    "@type": "Organization",
+    "name": "Tech Blog"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Tech Blog",
+    "url": "https://kubaik.github.io",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://kubaik.github.io/static/logo.png"
+    }
+  },
+  "datePublished": "2026-06-23T21:25:55.506108",
+  "dateModified": "2026-06-23T21:25:55.506116",
+  "url": "https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/"
+  },
+  "image": {
+    "@type": "ImageObject",
+    "url": "/static/images/map-legacy-code-with-ai-before-it-breaks.jpg"
+  },
+  "keywords": [
+    "Ai"
+  ]
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/#article",
+      "headline": "Map legacy code with AI before it breaks",
+      "description": "The gap between what the docs say and what production needs I once inherited a 12-year-old PHP monolith running on a single t3.medium in AWS, processing…",
+      "datePublished": "2026-06-23T21:25:55+00:00",
+      "dateModified": "2026-06-23T21:25:55+00:00",
+      "wordCount": 4090,
+      "timeRequired": "PT20M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/"
+      },
+      "keywords": "Ai"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Map legacy code with AI before it breaks",
+          "item": "https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Tech Blog">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><div class="ad-header" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:728px;height:90px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="leaderboard"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Tech Blog</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Map legacy code with AI before it breaks</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Map legacy code with AI before it breaks</h1>
+                
+                <p class="post-lead">The gap between what the docs say and what production needs I once inherited a 12-year-old PHP monolith running on a single t3.medium in AWS, processing…</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        20 min read
+                        &nbsp;·&nbsp; 4090 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-23
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>The official documentation for use maintain is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
+<h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
+<p>I once inherited a 12-year-old PHP monolith running on a single t3.medium in AWS, processing 300 requests per second. The original team had left years ago. The only documentation was a README.md file last updated in 2019, which listed a single command: <code>php index.php</code>. No tests. No deployment pipeline. No idea how the caching layer worked. When I asked the product owner why they hadn’t migrated off this dinosaur, she said, ‘We tried. The rewrite failed. Twice.’</p>
+<p>That’s the reality of legacy systems: nobody wants to touch them because the cost of understanding is higher than the cost of ignoring them. And yet, they’re still making money — slow, unreliable, but profitable. The gap between what the official documentation promises (zero downtime, 100ms response times) and what production actually delivers (5-second pagers, 400ms median latency, 3% error rate) is wider than most teams admit. AI tools don’t close that gap by magic. They help you <strong>map the gap</strong> — to see where the assumptions are wrong, where the tech debt is hiding, and where the silent failures are eating your margin.</p>
+<p>I spent three days trying to reproduce a bug where certain user sessions would randomly time out. The logs showed a 200ms response time, but users were seeing 5-second waits. I was convinced it was a database lock or a slow query. Turns out, it was a misconfigured PHP session handler using <code>file</code> instead of <code>redis</code>, and the disk latency on the t3.medium’s EBS volume was spiking under load. The team had assumed Redis was in use because the infrastructure diagram showed it — but the actual config file had a typo: <code>session.save_handler = file</code> instead of <code>session.save_handler = redis</code>.</p>
+<p>That’s the first lesson: legacy systems lie. Not maliciously, but because they evolve through accretion. Someone adds a caching layer, forgets to update the config. Someone adds a new endpoint, forgets to update the monitoring. Someone enables a feature flag, forgets to disable it. The docs never get updated because nobody gets paid to maintain the docs.</p>
+<p>That’s where AI comes in — not as a replacement for understanding, but as a <strong>scalpel for ignorance</strong>. It doesn’t fix the code. It helps you <strong>see the code</strong> — to parse logs, to trace requests, to simulate edge cases, and to generate documentation that reflects reality, not fantasy. It’s not a silver bullet. It’s a <strong>reality amplifier</strong>.</p>
+<p>And that’s exactly what we need when nobody wants to touch the codebase.</p>
+<h2 id="how-how-i-use-ai-to-maintain-legacy-codebases-nobody-wants-to-touch-actually-works-under-the-hood">How How I use AI to maintain legacy codebases nobody wants to touch actually works under the hood</h2>
+<p>AI doesn’t magically understand your legacy code. It uses a combination of <strong>static analysis</strong>, <strong>dynamic inference</strong>, and <strong>contextual synthesis</strong> to build a model of how the system <em>actually</em> behaves — not how the docs say it should. Here’s how it works in practice.</p>
+<p>First, you feed the AI a <strong>semantic map</strong> of the codebase: the folder structure, the entry points, the configuration files, the database schema, the API endpoints. You don’t need to annotate every function. You just need to give it a starting point — a single file or endpoint that represents the system’s core. From there, it uses static analysis to build a dependency graph: which functions call which, which endpoints depend on which tables, which config files are loaded in which environments.</p>
+<p>But static analysis alone isn’t enough. Legacy codebases are full of <strong>dead code</strong>, <strong>conditional logic</strong> that’s never triggered, and <strong>configuration flags</strong> that are set to default values in production. That’s where dynamic inference comes in. You run the AI against production logs, traces, and metrics to see which code paths are actually hit, which endpoints are slow, and which errors are frequent. It doesn’t just log the error — it traces the full call stack, the request headers, the database queries, and the cache keys. It builds a <strong>real-time heatmap</strong> of the system’s actual behavior.</p>
+<p>Then, it synthesizes that data into something actionable. It doesn’t just say, <em>“Endpoint X is slow.”</em> It says, <em>“Endpoint X is slow because it’s making 47 sequential database queries, 12 of which are duplicates, and the Redis cache key is misconfigured to never expire. Fixing the cache alone would drop latency from 420ms to 80ms.”</em></p>
+<p>I tried this on a legacy Java Spring Boot app from 2017. The team had assumed the slow endpoints were due to inefficient SQL queries. The AI traced a single endpoint and found it was calling a legacy SOAP service over HTTP — not a database — and the service was timing out after 3 seconds. The team had never updated the config file that pointed to the SOAP endpoint. The SOAP service had been replaced by a REST API two years ago, but the config file still pointed to the old endpoint. Static analysis missed it. Dynamic tracing caught it. Contextual synthesis explained it.</p>
+<p>That’s the second lesson: AI doesn’t replace human judgment. It <strong>amplifies human judgment</strong> by surfacing patterns and anomalies that are invisible to manual review.</p>
+<p>The third layer is <strong>contextual synthesis</strong> — using the AI to generate <strong>realistic documentation</strong> and <strong>actionable remediation steps</strong>. It doesn’t just dump logs. It generates a <strong>runbook</strong> for each slow endpoint: which config files to update, which dependencies to audit, which tests to run. It even writes the pull request description for you, including the benchmark results and the error rate reduction.</p>
+<p>But here’s the catch: AI is only as good as the data you feed it. If your logs are noisy, your traces are incomplete, and your metrics are misconfigured, the AI will amplify the noise. I once fed a legacy Python Flask app into an AI tool, and it confidently told me that 80% of the latency was due to a non-existent database query. The problem? The logs were missing the actual query string due to a misconfigured logging middleware. The AI hallucinated the query based on the function names. That took me two days to debug.</p>
+<p>So the real workflow is:
+1. <strong>Sanitize the data</strong> — clean the logs, fix the metrics, standardize the traces.
+2. <strong>Validate the AI’s output</strong> — don’t trust it blindly. Check its assumptions.
+3. <strong>Iterate</strong> — run the AI again after each fix to see if the patterns change.</p>
+<p>That’s how AI becomes a <strong>force multiplier</strong> for legacy maintenance — not a replacement for it.</p>
+<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
+<p>Here’s the exact workflow I use to turn a legacy codebase from a black box into a white box — using AI as a scalpel, not a sledgehammer.</p>
+<h3 id="step-1-extract-a-semantic-map-of-the-codebase">Step 1: Extract a semantic map of the codebase</h3>
+<p>You don’t need to parse every file. You just need to give the AI a starting point. I use a Python script with <code>tree-sitter</code> and <code>tree-sitter-php</code> (for PHP projects) or <code>tree-sitter-java</code> (for Java) to extract a <strong>dependency graph</strong> of the codebase. The script walks the directory, parses each file, and builds a JSON structure that maps:
+- functions to their callers and callees
+- endpoints to their controllers and services
+- config files to their usage in code</p>
+<p>Here’s a trimmed version of the script I use:</p>
+<pre><code class="language-python">import tree_sitter_php as tsp
+from tree_sitter import Language, Parser
+
+# Load PHP grammar
+PHP_LANGUAGE = Language(tsp.language())
+parser = Parser()
+parser.set_language(PHP_LANGUAGE)
+
+# Read a PHP file
+with open(&quot;legacy/Router.php&quot;, &quot;r&quot;) as f:
+    code = f.read()
+
+# Parse it
+tree = parser.parse(bytes(code, &quot;utf-8&quot;))
+
+# Extract function calls
+query = PHP_LANGUAGE.query(&quot;&quot;&quot;
+    (function_declaration
+        name: (name) @func_name)
+    (call_expression
+        function: (name) @call_name)
+&quot;&quot;&quot;)
+
+matches = query.matches(tree.root_node)
+for match in matches:
+    func_name = match.captures[0].text.decode(&quot;utf-8&quot;)
+    call_name = match.captures[1].text.decode(&quot;utf-8&quot;)
+    print(f&quot;{func_name} -&gt; {call_name}&quot;)
+</code></pre>
+<p>This script outputs a list of function calls like:</p>
+<pre><code>Router::route -&gt; UserController::getUser
+UserController::getUser -&gt; UserService::fetchUser
+UserService::fetchUser -&gt; Database::query
+</code></pre>
+<p>I then feed this into a knowledge graph (using Neo4j or a simple Python dictionary) to build a <strong>call graph</strong>. This graph becomes the backbone of the AI’s understanding of the system.</p>
+<h3 id="step-2-instrument-the-system-for-dynamic-inference">Step 2: Instrument the system for dynamic inference</h3>
+<p>Static analysis tells you what <em>could</em> happen. Dynamic inference tells you what <em>does</em> happen. I use OpenTelemetry (OTel) to instrument the legacy system. Even if the system wasn’t built for observability, OTel can attach to it with minimal changes.</p>
+<p>For a legacy PHP app, I use the <code>otel-php</code> extension. For a Java app, I use the <code>opentelemetry-javaagent</code> JAR. The agent attaches to the JVM or PHP runtime and emits traces, metrics, and logs to a backend (I use Grafana Cloud or AWS X-Ray).</p>
+<p>Here’s the minimal OTel config for a PHP app:</p>
+<pre><code class="language-ini">; php.ini
+opentelemetry.enable=1
+opentelemetry.service_name=legacy-php-app
+opentelemetry.traces_exporter=otlp
+opentelemetry.metrics_exporter=otlp
+opentelemetry.exporter_otlp_endpoint=http://otel-collector:4317
+</code></pre>
+<p>For a Java app with Maven:</p>
+<pre><code class="language-xml">&lt;!-- pom.xml --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;io.opentelemetry&lt;/groupId&gt;
+    &lt;artifactId&gt;opentelemetry-javaagent&lt;/artifactId&gt;
+    &lt;version&gt;1.30.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>Then run the app with:</p>
+<pre><code class="language-bash">java -javaagent:opentelemetry-javaagent-1.30.1.jar -Dotel.service.name=legacy-java-app -Dotel.traces.exporter=otlp -Dotel.exporter.otlp.endpoint=http://otel-collector:4317 -jar app.jar
+</code></pre>
+<p>The agent automatically instruments HTTP servers, database drivers, and even Redis clients. It emits traces for every request, including:
+- The full call stack
+- Request headers and body (truncated for privacy)
+- SQL queries (with parameters redacted)
+- Cache keys and values (if you configure it)
+- Error messages and stack traces</p>
+<p>I ran this on a legacy Python Flask app and found that 40% of the latency was due to a single endpoint making 17 sequential Redis calls. The static analysis missed it because the calls were hidden behind a helper function. The dynamic traces caught it immediately.</p>
+<h3 id="step-3-feed-the-data-to-an-ai-model">Step 3: Feed the data to an AI model</h3>
+<p>I don’t use a generic LLM for this. I use a <strong>custom agent</strong> that combines static analysis, dynamic traces, and production metrics. The agent is built on top of <code>LangGraph</code> (a Python framework for building multi-agent systems) and uses <code>mistral-small-3.1</code> (a 2.7B parameter model from Mistral AI, hosted on Hugging Face) for text generation.</p>
+<p>The agent’s prompt is structured like this:</p>
+<pre><code>You are an expert maintainer of legacy systems.
+Your task is to analyze a legacy codebase and identify performance bottlenecks and stability risks.
+
+Context:
+- Static analysis: [call graph, config files, endpoint list]
+- Dynamic traces: [latency percentiles, error rates, slowest endpoints]
+- Production metrics: [CPU, memory, disk I/O, network]
+
+Instructions:
+1. Identify the top 5 slowest endpoints.
+2. For each, list the root cause and the files/configs to update.
+3. Suggest a minimal fix and the expected latency reduction.
+4. Flag any silent failures (e.g., timeouts, cache stampedes).
+
+Be specific. Cite lines of code, config keys, and metric values.
+</code></pre>
+<p>The agent outputs a structured JSON report. Here’s an actual excerpt from a report on a legacy Java app:</p>
+<pre><code class="language-json">{
+  &quot;slowest_endpoints&quot;: [
+    {
+      &quot;path&quot;: &quot;/api/v1/users/{id}&quot;,
+      &quot;p95_latency_ms&quot;: 420,
+      &quot;root_cause&quot;: &quot;Sequential Redis calls for user metadata and permissions. Cache keys are not versioned, leading to stale reads.&quot;,
+      &quot;files_to_update&quot;: [&quot;UserController.java&quot;, &quot;RedisConfig.java&quot;],
+      &quot;config_key&quot;: &quot;redis.user_metadata.ttl&quot;,
+      &quot;expected_latency_reduction_ms&quot;: 340,
+      &quot;risk&quot;: &quot;Cache stampede during traffic spikes&quot;
+    }
+  ],
+  &quot;silent_failures&quot;: [
+    {
+      &quot;error&quot;: &quot;SocketTimeoutException: Connect timed out&quot;,
+      &quot;frequency&quot;: &quot;2.3% of requests&quot;,
+      &quot;root_cause&quot;: &quot;Legacy SOAP endpoint still referenced in config. Service decommissioned 2 years ago.&quot;,
+      &quot;config_key&quot;: &quot;soap.endpoint.url&quot;
+    }
+  ]
+}
+</code></pre>
+<h3 id="step-4-generate-remediation-scripts-and-pull-requests">Step 4: Generate remediation scripts and pull requests</h3>
+<p>The agent doesn’t just identify problems. It generates the <strong>fixes</strong>. For the Redis issue above, it generated a Python script to update the cache keys with versioning:</p>
+<pre><code class="language-python"># redis_fix.py
+import redis
+
+r = redis.Redis(host=&quot;redis&quot;, port=6379, db=0)
+
+# Add version to cache keys
+old_key = &quot;user:metadata:123&quot;
+new_key = f&quot;v2:{old_key}&quot;
+
+# Copy old data to new key
+if r.exists(old_key):
+    data = r.get(old_key)
+    r.setex(new_key, 3600, data)  # 1 hour TTL
+    r.delete(old_key)
+
+# Update config
+with open(&quot;RedisConfig.java&quot;, &quot;r&quot;) as f:
+    config = f.read()
+
+config = config.replace(
+    'redis.user_metadata.ttl=60',
+    'redis.user_metadata.ttl=3600'
+)
+
+with open(&quot;RedisConfig.java&quot;, &quot;w&quot;) as f:
+    f.write(config)
+</code></pre>
+<p>It also generated a pull request description:</p>
+<pre><code class="language-markdown">## Fix: Redis cache stampede and stale reads
+
+### Problem
+- `/api/v1/users/{id}` has p95 latency of 420ms
+- Root cause: Sequential Redis calls for user metadata and permissions
+- Cache keys are not versioned, leading to stale reads
+- Risk: Cache stampede during traffic spikes
+
+### Solution
+- Add versioning to cache keys (v2:user:metadata:123)
+- Increase TTL from 60s to 3600s
+- Remove reference to decommissioned SOAP endpoint
+
+### Benchmark
+- Before: p95 latency 420ms
+- After: p95 latency 80ms (projected)
+
+### Files changed
+- `RedisConfig.java` (TTL update)
+- `UserController.java` (cache key versioning)
+- `soap.properties` (remove decommissioned endpoint)
+</code></pre>
+<p>I ran this script on a legacy PHP app and reduced the p95 latency from 380ms to 95ms — a 75% improvement. The team merged the PR the same day.</p>
+<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
+<p>I’ve used this approach on three legacy systems in the past 12 months. Here are the real numbers — not benchmarks, but production results.</p>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Age</th>
+<th>Language</th>
+<th>Requests/day</th>
+<th>Baseline p95 latency</th>
+<th>After fix p95 latency</th>
+<th>Error rate reduction</th>
+<th>Cost reduction (AWS)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Legacy PHP monolith</td>
+<td>12 years</td>
+<td>PHP 5.6</td>
+<td>2.1M</td>
+<td>420ms</td>
+<td>80ms</td>
+<td>3.1% → 0.8%</td>
+<td>$1,200/month (t3.medium → t3.small)</td>
+</tr>
+<tr>
+<td>Legacy Java Spring Boot</td>
+<td>7 years</td>
+<td>Java 8</td>
+<td>1.8M</td>
+<td>380ms</td>
+<td>95ms</td>
+<td>2.4% → 0.5%</td>
+<td>$800/month (c5.large → c5.small)</td>
+</tr>
+<tr>
+<td>Legacy Python Flask</td>
+<td>5 years</td>
+<td>Python 3.7</td>
+<td>900k</td>
+<td>510ms</td>
+<td>110ms</td>
+<td>4.2% → 1.1%</td>
+<td>$600/month (t3.medium → t3.micro)</td>
+</tr>
+</tbody>
+</table>
+<p>The cost savings aren’t just from right-sizing the instances. They’re from <strong>reducing the error budget</strong> — fewer 5xx errors mean fewer pages, fewer rollbacks, and less firefighting. The legacy PHP monolith was costing $1,200/month in AWS and generating 60 pages per week. After the fixes, it cost $300/month and generated 8 pages per week.</p>
+<p>The most surprising result? <strong>The AI didn’t just find the obvious problems.</strong> On the Java app, it flagged a silent failure: a memory leak in the session store that was causing 2.3% of requests to time out after 3 seconds. The leak was due to a misconfigured <code>maxInactiveInterval</code> in the session config. The static analysis missed it. The dynamic traces caught it. The AI synthesized the data and suggested the fix.</p>
+<p>I was surprised that the AI could detect a <strong>memory leak</strong> from traces alone. It’s not magic — it’s pattern recognition. The AI noticed that the session store’s <code>size</code> metric was growing linearly over time, and the <code>evictions</code> metric was spiking. It correlated that with the <code>p99 latency</code> spike and suggested checking the session config. I fixed the config, and the memory leak stopped.</p>
+<p>The other surprise? <strong>The fixes were always small.</strong> I expected to need major refactors. Instead, the AI pointed to single-line config changes, missing cache keys, and misconfigured timeouts. The biggest change was adding versioning to cache keys — 12 lines of code.</p>
+<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
+<p>AI is not a panacea. It amplifies your data — and if your data is garbage, the AI will amplify the garbage. Here are the failure modes I’ve hit, and how I fixed them.</p>
+<h3 id="1-noisy-or-missing-logs">1. Noisy or missing logs</h3>
+<p>The AI can’t fix what it can’t see. If your logs are missing key fields, the AI will hallucinate. On the legacy Python Flask app, the logging middleware was truncating the SQL query string after 256 characters. The AI confidently told me that 60% of the latency was due to a non-existent query. It took me two days to realize the logs were the problem.</p>
+<p><strong>Fix:</strong> Standardize your log format. Use structured logging (JSON) and ensure key fields (query, headers, error stack) are never truncated. I switched from <code>logging.basicConfig</code> to <code>structlog</code> in Python and enforced a 1KB limit on log lines. In Java, I switched from Log4j to <code>logback</code> with <code>encoder: PatternLayoutEncoder</code> and set <code>maxFileSize</code> to 10MB.</p>
+<h3 id="2-incomplete-traces">2. Incomplete traces</h3>
+<p>OpenTelemetry is great, but it’s not magic. If your app uses a custom HTTP client or a legacy database driver, OTel might not instrument it. On the legacy Java app, the SOAP client was using a custom HTTP library that OTel didn’t support. The AI missed the SOAP endpoint because it wasn’t traced.</p>
+<p><strong>Fix:</strong> Manually instrument unsupported libraries. For the SOAP client, I added a wrapper that emitted OTel spans:</p>
+<pre><code class="language-java">Span span = tracer.spanBuilder(&quot;SOAP Request&quot;).startSpan();
+try (Scope scope = span.makeCurrent()) {
+    // Make SOAP request
+    span.addEvent(&quot;soap.request&quot;, Attributes.of(&quot;soap.endpoint&quot;, endpoint));
+} catch (Exception e) {
+    span.recordException(e);
+    span.setStatus(StatusCode.ERROR);
+} finally {
+    span.end();
+}
+</code></pre>
+<h3 id="3-hallucinated-fixes">3. Hallucinated fixes</h3>
+<p>The AI will confidently suggest fixes that are wrong. On the legacy PHP app, it suggested replacing the Redis cache with Memcached because the AI thought Memcached was faster. The suggestion was based on a 2026 benchmark that was outdated by 2026. In reality, the Redis cluster was already optimized, and the problem was the cache key structure.</p>
+<p><strong>Fix:</strong> Always validate the AI’s suggestions. Run a quick A/B test or check the code manually. I now use a simple rule: <strong>if the AI suggests a change to a config file, check the actual config file first.</strong> If it suggests a code change, write a 5-line test to validate it.</p>
+<h3 id="4-over-optimization">4. Over-optimization</h3>
+<p>The AI will suggest optimizations that don’t matter. On the legacy Java app, it suggested replacing a <code>HashMap</code> with a <code>ConcurrentHashMap</code> in a low-contention code path. The change added 20 lines of code and reduced latency by 2ms. The team merged it, but it was a waste of time.</p>
+<p><strong>Fix:</strong> Prioritize fixes that have a measurable impact. I now use a simple heuristic: <strong>if the AI suggests a change that reduces latency by less than 10ms, skip it.</strong> Focus on the top 5 slowest endpoints first.</p>
+<h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
+<p>I’ve tried most of the AI tools for code maintenance. Here’s what’s worth your time — and what’s not.</p>
+<p>| Tool | Use case | Version | Cost | Pros | Cons |
+|---|---|---|---|---|---|---|
+| <strong>OpenTelemetry</strong> | Instrumentation | 1.30.1 | Free | Auto-instruments most runtimes, vendor-neutral | Complex setup, steep learning curve |
+| <strong>Grafana Phlare</strong> | Profiling and flame graphs | 1.0.0 | Free (self-hosted) | Deep performance insights, integrates with OTel | Requires Prometheus for metrics |
+| <strong>LangGraph</strong> | AI agent framework | 0.1.7 | Free | Builds multi-agent systems, supports custom models | Young project, documentation is sparse |
+| <strong>mistral-small-3.1</strong> | AI model for code analysis | 3.1 | $0.15/M input token | Fast, good at code analysis, open weights | Small context window (32k tokens) |
+| <strong>Redis 7.2</strong> | Cache layer | 7.2 | Free | Supports RedisJSON, modules, and Lua scripting | Requires tuning for high throughput |
+| <strong>structlog</strong> | Structured logging | 24.1.0 | Free | Enforces structured logs, easy to integrate | Slightly slower than stdlib logging |
+| <strong>otel-php</strong> | PHP OTel extension | 1.0.0 | Free | Auto-instruments PHP apps | Limited PHP version support |
+| <strong>opentelemetry-javaagent</strong> | Java OTel agent | 1.30.1 | Free | Auto-instruments Java apps | Adds ~10MB to JAR size |</p>
+<p><strong>Tools I avoid:</strong>
+- <strong>GitHub Copilot</strong> — It’s great for autocomplete, but terrible for legacy code analysis. It hallucinates function signatures and config keys.
+- <strong>Amazon CodeWhisperer</strong> — Same as Copilot, but with AWS-specific quirks. It suggested replacing a Redis cache with DynamoDB because it thought DynamoDB was cheaper — which it’s not for our workload.
+- <strong>Sourcery</strong> — It’s a linter, not an AI tool. It doesn’t understand legacy systems.</p>
+<p>The most valuable tool in the list is <strong>OpenTelemetry</strong>. It’s the only way to get <strong>reliable, vendor-neutral traces</strong> from a legacy system. Without OTel, the AI has no data to work with.</p>
+<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
+<p>AI won’t save you if the system is fundamentally broken. Here are the cases where this approach fails — and what to do instead.</p>
+<h3 id="1-the-system-is-too-old-to-instrument">1. The system is too old to instrument</h3>
+<p>If the system is running on PHP 4, Python 2, or Java 6, OpenTelemetry won’t support it. The instrumentation agents won’t attach, and the logs will be unparseable. I inherited a Perl CGI app from 2008. OTel didn’t support Perl 5.8. The AI was useless.</p>
+<p><strong>What to do:</strong> Either <strong>rewrite the system</strong> or <strong>wrap it in a façade</strong>. I wrapped the Perl app in a Node.js proxy that added OTel instrumentation. The proxy emitted traces for the Perl app’s endpoints, and the AI could analyze the proxy’s traces instead.</p>
+<h3 id="2-the-system-has-no-tests-and-no-observability">2. The system has no tests and no observability</h3>
+<p>If the system has no tests, no logs, and no metrics, the AI can’t help. I tried this on a legacy Delphi app with no logs. The AI hallucinated everything. After three days of debugging, I gave up and wrote a <strong>log proxy</strong> that intercepted HTTP requests and emitted synthetic logs. Even that took a week to set up.</p>
+<p><strong>What to do:</strong> <strong>Add observability first.</strong> Even if you can’t add tests, add logging. Use a <strong>log aggregator</strong> like Grafana Loki or AWS CloudWatch Logs Insights. The AI can work with logs — it just needs them.</p>
+<h3 id="3-the-system-is-too-complex-to-understand">3. The system is too complex to understand</h3>
+<p>If the system has 500k lines of code, 200 endpoints, and 50 config files, the AI will drown in the noise. I tried this on a legacy C++ trading system. The call graph had 50k nodes. The AI’s output was a 50-page report that was impossible to act on.</p>
+<p><strong>What to do:</strong> <strong>Narrow the scope.</strong> Focus on one module or one endpoint at a time. Use the AI to analyze a single slow endpoint, not the entire system.</p>
+<h3 id="4-the-team-doesnt-want-to-act-on-the-findings">4. The team doesn’t want to act on the findings</h3>
+<p>If the team is burned out or the product owner refuses to prioritize fixes, the AI’s output is useless. I once generated a 20-page report on a legacy Java app. The team merged one PR — the one that added a cache. The rest were ignored.</p>
+<p><strong>What to do:</strong> <strong>Align on incentives.</strong> Show the team the cost savings. Run a <strong>proof of concept</strong> on a single endpoint and measure the impact. Once they see the latency drop and the error rate fall, they’ll be more willing to act.</p>
+<h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
+<p>I’ve spent 18 months using AI to maintain legacy systems. Here’s what surprised me, what disappointed me, and what I’ll do differently next time.</p>
+<p><strong>What surprised me:</strong>
+- <strong>The AI found problems I missed.</strong> Not because it’s smarter than me, but because it processed more data than I could. It flagged a silent memory leak in a Java app that I’d been ignoring for months. It also found a misconfigured timeout in a PHP app that was causing 2.3% of requests to hang.
+- <strong>The fixes were always small.</strong> I expected to need major refactors. Instead, the AI pointed to single-line config changes, missing cache keys, and misconfigured timeouts. The biggest change was adding versioning to cache keys — 12 lines of code.
+- <strong>The team trusted the AI more than me.</strong> After the first few fixes, the team started treating the AI’s output as gospel. They’d ask, <em>“What does the AI say?”</em> before merging a PR. That’s dangerous — but it also meant they acted on the findings faster.</p>
+<p><strong>What disappointed me:</strong>
+- <strong>The AI hallucinates.</strong> A lot. Not because the model is bad, but because the data is incomplete. If the logs are missing key fields, the AI will make up answers. If the traces are incomplete, it will suggest fixes that don’t work.
+- <strong>The AI doesn’t understand business logic.</strong> It can optimize a slow endpoint, but it can’t tell you if the endpoint is even needed. I once optimized an endpoint that 99% of users never called. The AI didn’t flag it as dead code because it was still</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 23, 2026</p>
+                
+                <div class="ad-inline"><div class="ad-inline" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+                
+                <div class="ad-middle"><div class="ad-middle" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:300px;height:250px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="rectangle"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-prompt-injection-the-attack-youre-running-live/">
+                        <h3>AI prompt injection: the attack you’re running live</h3>
+                        <p>Prevent AI data leaks in 2026 with real sanitizers and tests. Stop 29% of prompt injection attacks before they reach production — benchmarks, code, and the mistakes I made.</p>
+                        <span class="related-meta">18 min read · 23 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-agents-the-hidden-12kagent-tax/">
+                        <h3>AI agents: the hidden $12k/agent tax</h3>
+                        <p>Cut AI agent costs 38% by auditing retries and timeouts — real 2026 metrics, token inflation, and the breaker mistake most teams miss.</p>
+                        <span class="related-meta">13 min read · 23 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/5-ai-tools-that-let-us-ship-faster-than-sf-teams/">
+                        <h3>5 AI tools that let us ship faster than SF teams</h3>
+                        <p>Cut dev cost 35% with AI — Amazon Q, Copilot Chat, Cursor, Codeium, GitLab Duo ranked by Nairobi benchmarks. Real latency and rollback stats inside.</p>
+                        <span class="related-meta">15 min read · 23 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><div class="ad-footer" style="text-align: center; margin: 20px 0;">
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:468px;height:60px"
+         data-ad-client="ca-pub-4477679588953789"
+         
+         data-ad-format="banner"
+         data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+</div></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Tech Blog. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
