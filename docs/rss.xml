@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 09:50:31 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 10:31:49 +0000</lastBuildDate>
+    <item>
+      <title>Debug Nairobi SaaS infra costs 2026</title>
+      <link>https://kubaik.github.io/debug-nairobi-saas-infra-costs-2026/</link>
+      <description>Nairobi SaaS 2026 cost: $1,104/month at 2.1k DAU — real breakdown with Terraform, FastAPI, Redis, and Cloudflare. Includes latency SLA and NAT savings.</description>
+      <pubDate>Tue, 23 Jun 2026 10:31:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-nairobi-saas-infra-costs-2026/</guid>
+    </item>
     <item>
       <title>Frontend tests 2026: Playwright won, Cypress lost</title>
       <link>https://kubaik.github.io/frontend-tests-2026-playwright-won-cypress-lost/</link>
@@ -138,13 +145,6 @@
       <description>Cut screen-reader announcement errors 78% in AI chat widgets with scoped live regions, DOMPurify 3.0.6, and Safari iframe fixes.</description>
       <pubDate>Mon, 22 Jun 2026 18:26:39 +0000</pubDate>
       <guid>https://kubaik.github.io/3-wcag-traps-in-ai-chat-uis/</guid>
-    </item>
-    <item>
-      <title>USSD in 2026: Africa&apos;s silent infra layer</title>
-      <link>https://kubaik.github.io/ussd-in-2026-africas-silent-infra-layer/</link>
-      <description>USSD delivers 1.2 million transactions/hour in Africa — here’s how to plug it into your 2026 fintech stack for 94% loan completion rates on 2G networks</description>
-      <pubDate>Mon, 22 Jun 2026 16:00:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/ussd-in-2026-africas-silent-infra-layer/</guid>
     </item>
   </channel>
 </rss>
