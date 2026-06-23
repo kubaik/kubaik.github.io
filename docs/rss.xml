@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 19:33:10 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 19:37:48 +0000</lastBuildDate>
+    <item>
+      <title>Handle Starlink 4G fallbacks in FastAPI 0.115</title>
+      <link>https://kubaik.github.io/handle-starlink-4g-fallbacks-in-fastapi-0115/</link>
+      <description>Cut 504 errors 68% with FastAPI 0.115 retries and Redis 7.2 caching under 400 ms Starlink latency — connection pool, stampede guard, and cache stampede mistake most teams make.</description>
+      <pubDate>Tue, 23 Jun 2026 19:37:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/handle-starlink-4g-fallbacks-in-fastapi-0115/</guid>
+    </item>
     <item>
       <title>AI prompt injection: the attack you’re running live</title>
       <link>https://kubaik.github.io/ai-prompt-injection-the-attack-youre-running-live/</link>
@@ -138,13 +145,6 @@
       <description>Micro-SaaS niches that survived AI commoditisation in 2026 — domain knowledge, hardware optimisation, and AI output auditing. Learn which $29–$500/month tools are still working.</description>
       <pubDate>Tue, 23 Jun 2026 05:10:20 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ate-my-niche-niches-that-survived-2026/</guid>
-    </item>
-    <item>
-      <title>Freelance rates after AI took the boilerplate</title>
-      <link>https://kubaik.github.io/freelance-rates-after-ai-took-the-boilerplate/</link>
-      <description>2026 freelance rates dropped 28–40% for AI-assisted tasks. Learn how to price the remaining 20% of work clients still need — compliance, edge cases, and audit trails. Real numbers and code included.</description>
-      <pubDate>Tue, 23 Jun 2026 04:51:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-rates-after-ai-took-the-boilerplate/</guid>
     </item>
   </channel>
 </rss>
