@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T23:02:59.772080",
+  "built_at": "2026-06-23T23:38:21.137062",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2480,6 +2480,11 @@
       "slug": "llm-latency-the-cache-patterns-that-still-fool-me",
       "title": "LLM latency: the cache patterns that still fool me",
       "summary": "The official documentation for design llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs I spent six weeks last quarter tuning "
+    },
+    {
+      "slug": "cost-vs-accuracy-fine-tune-small-or-prompt-large",
+      "title": "Cost vs accuracy: fine-tune small or prompt large?",
+      "summary": "The official documentation for finetuning small is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most tutorials tell you to pick "
     }
   ]
 }

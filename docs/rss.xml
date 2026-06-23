@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 23:33:55 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 23:38:27 +0000</lastBuildDate>
+    <item>
+      <title>Cost vs accuracy: fine-tune small or prompt large?</title>
+      <link>https://kubaik.github.io/cost-vs-accuracy-fine-tune-small-or-prompt-large/</link>
+      <description>Cut AI inference cost 73% without sacrificing accuracy — the dirty traffic, latency, and tokeniser gotchas most teams miss when choosing between fine-tuning small models or prompting large ones in 2026.</description>
+      <pubDate>Tue, 23 Jun 2026 23:38:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/cost-vs-accuracy-fine-tune-small-or-prompt-large/</guid>
+    </item>
     <item>
       <title>LLM latency: the cache patterns that still fool me</title>
       <link>https://kubaik.github.io/llm-latency-the-cache-patterns-that-still-fool-me/</link>
@@ -138,13 +145,6 @@
       <description>AI ops vs manual runbooks: 25% cloud savings, 40% faster MTTR — the real numbers from 2026 and which tool to pick first</description>
       <pubDate>Tue, 23 Jun 2026 12:41:34 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ops-showdown-automated-runbooks-vs-manual/</guid>
-    </item>
-    <item>
-      <title>Pick SaaS niches AI can&apos;t erode</title>
-      <link>https://kubaik.github.io/pick-saas-niches-ai-cant-erode/</link>
-      <description>Cut SaaS churn 50% by picking niches AI can&apos;t erode — regulatory complexity, data scarcity, and trust asymmetry give you defensibility in 2026</description>
-      <pubDate>Tue, 23 Jun 2026 12:30:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-saas-niches-ai-cant-erode/</guid>
     </item>
   </channel>
 </rss>
