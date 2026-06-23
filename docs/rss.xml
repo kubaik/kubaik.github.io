@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 20:20:07 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 20:25:04 +0000</lastBuildDate>
+    <item>
+      <title>Tune small or prompt big: 2026 costs revealed</title>
+      <link>https://kubaik.github.io/tune-small-or-prompt-big-2026-costs-revealed/</link>
+      <description>Fine-tune a 2.7B model and cut costs 78 % — but lose 31 % accuracy. Prompt a 70B model and pay $0.11 extra per 1k requests — but gain 26 % safety accuracy and beat SLA latency. 2026 real numbers included.</description>
+      <pubDate>Tue, 23 Jun 2026 20:24:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/tune-small-or-prompt-big-2026-costs-revealed/</guid>
+    </item>
     <item>
       <title>Handle Starlink 4G fallbacks in FastAPI 0.115</title>
       <link>https://kubaik.github.io/handle-starlink-4g-fallbacks-in-fastapi-0115/</link>
@@ -138,13 +145,6 @@
       <description>Cut Daraja 2026 migration time 70% — new OAuth2 flow, HTTPS-only callbacks, and the TLS 1.3 surprise most teams miss.</description>
       <pubDate>Tue, 23 Jun 2026 06:36:01 +0000</pubDate>
       <guid>https://kubaik.github.io/daraja-20-60-minute-migration-checklist/</guid>
-    </item>
-    <item>
-      <title>AI ate my niche — niches that survived 2026</title>
-      <link>https://kubaik.github.io/ai-ate-my-niche-niches-that-survived-2026/</link>
-      <description>Micro-SaaS niches that survived AI commoditisation in 2026 — domain knowledge, hardware optimisation, and AI output auditing. Learn which $29–$500/month tools are still working.</description>
-      <pubDate>Tue, 23 Jun 2026 05:10:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ate-my-niche-niches-that-survived-2026/</guid>
     </item>
   </channel>
 </rss>

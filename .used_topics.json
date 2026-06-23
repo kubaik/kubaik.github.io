@@ -83,5 +83,6 @@
   "Pulumi vs Terraform vs OpenTofu in 2026: the infrastructure-as-code landscape after the HashiCorp fork",
   "The hidden costs of running AI agents in production: tokens, retries, and timeouts",
   "How prompt injection attacks work and why your AI product is probably vulnerable",
-  "Building for 4G-as-baseline users in 2026: what changed when Starlink reached East Africa"
+  "Building for 4G-as-baseline users in 2026: what changed when Starlink reached East Africa",
+  "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff"
 ]
