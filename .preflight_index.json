@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T12:41:36.192423",
+  "built_at": "2026-06-23T13:39:40.738473",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2390,6 +2390,11 @@
       "slug": "ai-ops-showdown-automated-runbooks-vs-manual",
       "title": "AI ops showdown: automated runbooks vs. manual",
       "summary": "I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, teams that still manually tune capacity plans or debu"
+    },
+    {
+      "slug": "ai-native-apps-break-when-you-copy-old-rules",
+      "title": "AI-native apps break when you copy old rules",
+      "summary": "A colleague asked me about design ainative during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) T"
     }
   ]
 }

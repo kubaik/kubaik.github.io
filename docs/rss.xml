@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 12:41:44 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 13:39:49 +0000</lastBuildDate>
+    <item>
+      <title>AI-native apps break when you copy old rules</title>
+      <link>https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/</link>
+      <description>Cut AI API latency 60% by ditching REST endpoints. Token budgeting, prompt hashing, and task queues now matter more than CPU. Real systems show the wins.</description>
+      <pubDate>Tue, 23 Jun 2026 13:39:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/</guid>
+    </item>
     <item>
       <title>AI ops showdown: automated runbooks vs. manual</title>
       <link>https://kubaik.github.io/ai-ops-showdown-automated-runbooks-vs-manual/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 60% by choosing the right service mesh. Istio vs Cilium vs Linkerd in 2026 production systems with real benchmarks and cost data.</description>
       <pubDate>Mon, 22 Jun 2026 21:24:00 +0000</pubDate>
       <guid>https://kubaik.github.io/service-mesh-in-2026-why-most-teams-drop-it/</guid>
-    </item>
-    <item>
-      <title>Unlock Python 3.13&apos;s free-threaded GIL for web apps</title>
-      <link>https://kubaik.github.io/unlock-python-313s-free-threaded-gil-for-web-apps/</link>
-      <description>Cut API latency 42% and raise throughput 62% by switching Python 3.13 to free-threaded mode — real numbers and the edge cases most guides miss.</description>
-      <pubDate>Mon, 22 Jun 2026 19:38:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/unlock-python-313s-free-threaded-gil-for-web-apps/</guid>
     </item>
   </channel>
 </rss>
