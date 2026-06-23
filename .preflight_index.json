@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T21:29:36.935609",
+  "built_at": "2026-06-23T21:59:52.978474",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2460,6 +2460,11 @@
       "slug": "5-side-hustles-that-pay-developers-in-2026",
       "title": "5 side hustles that pay developers in 2026",
       "summary": "I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026, I hit a wall: my main gig as a fi"
+    },
+    {
+      "slug": "test-ai-glue-code-not-the-model",
+      "title": "Test AI glue code, not the model",
+      "summary": "I ran into this write tests problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I got burned by AI code in production three ti"
     }
   ]
 }

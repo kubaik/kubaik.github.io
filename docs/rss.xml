@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 21:54:52 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 22:00:01 +0000</lastBuildDate>
+    <item>
+      <title>Test AI glue code, not the model</title>
+      <link>https://kubaik.github.io/test-ai-glue-code-not-the-model/</link>
+      <description>Cut test flakes 100% with 8 AI code testing methods — local stubs, property tests, golden masters, and the one trick that caught my production bugs without testing the AI. Real benchmarks and cost figures for 2026.</description>
+      <pubDate>Tue, 23 Jun 2026 21:59:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-ai-glue-code-not-the-model/</guid>
+    </item>
     <item>
       <title>5 side hustles that pay developers in 2026</title>
       <link>https://kubaik.github.io/5-side-hustles-that-pay-developers-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut frontend test time 77% and flake rate 86% with Vitest 1.6 + Playwright 1.44 — real CI costs, setup commands, and the Cypress migration trap most teams miss.</description>
       <pubDate>Tue, 23 Jun 2026 09:50:21 +0000</pubDate>
       <guid>https://kubaik.github.io/frontend-tests-2026-playwright-won-cypress-lost/</guid>
-    </item>
-    <item>
-      <title>Claude Code in 2026: one year of lessons learned</title>
-      <link>https://kubaik.github.io/claude-code-in-2026-one-year-of-lessons-learned/</link>
-      <description>Claude Code 2026 saves 39% PR review time but silently fails audits unless you capture agent events — here’s the 120-line shim we built and the real numbers after 90 days of use.</description>
-      <pubDate>Tue, 23 Jun 2026 08:52:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/claude-code-in-2026-one-year-of-lessons-learned/</guid>
     </item>
   </channel>
 </rss>
