@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T06:36:03.176003",
+  "built_at": "2026-06-23T06:43:18.251338",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2355,6 +2355,11 @@
       "slug": "daraja-20-60-minute-migration-checklist",
       "title": "Daraja 2.0: 60-minute migration checklist",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I spent three days in December 2026 debugging why my sandbox STK push callback would ret"
+    },
+    {
+      "slug": "trim-18k-aws-bills-2026-levers-mid-size-teams-miss",
+      "title": "Trim $18k AWS bills: 2026 levers mid-size teams miss",
+      "summary": "I've seen the same finops 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, mid-size teams running on AWS are burning an average of $18k–$42k"
     }
   ]
 }
