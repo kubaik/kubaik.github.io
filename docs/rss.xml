@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 09:45:45 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 09:50:31 +0000</lastBuildDate>
+    <item>
+      <title>Frontend tests 2026: Playwright won, Cypress lost</title>
+      <link>https://kubaik.github.io/frontend-tests-2026-playwright-won-cypress-lost/</link>
+      <description>Cut frontend test time 77% and flake rate 86% with Vitest 1.6 + Playwright 1.44 — real CI costs, setup commands, and the Cypress migration trap most teams miss.</description>
+      <pubDate>Tue, 23 Jun 2026 09:50:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/frontend-tests-2026-playwright-won-cypress-lost/</guid>
+    </item>
     <item>
       <title>Claude Code in 2026: one year of lessons learned</title>
       <link>https://kubaik.github.io/claude-code-in-2026-one-year-of-lessons-learned/</link>
@@ -138,13 +145,6 @@
       <description>USSD delivers 1.2 million transactions/hour in Africa — here’s how to plug it into your 2026 fintech stack for 94% loan completion rates on 2G networks</description>
       <pubDate>Mon, 22 Jun 2026 16:00:52 +0000</pubDate>
       <guid>https://kubaik.github.io/ussd-in-2026-africas-silent-infra-layer/</guid>
-    </item>
-    <item>
-      <title>Rewrite monolith without disaster: 2026’s safe path</title>
-      <link>https://kubaik.github.io/rewrite-monolith-without-disaster-2026s-safe-path/</link>
-      <description>Cut API response time 60% by extracting services incrementally — why big-bang rewrites fail in 2026’s distributed stacks and the safer path teams actually use.</description>
-      <pubDate>Mon, 22 Jun 2026 15:15:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/rewrite-monolith-without-disaster-2026s-safe-path/</guid>
     </item>
   </channel>
 </rss>
