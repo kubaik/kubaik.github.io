@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 17:31:46 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 17:36:47 +0000</lastBuildDate>
+    <item>
+      <title>5 AI tools that let us ship faster than SF teams</title>
+      <link>https://kubaik.github.io/5-ai-tools-that-let-us-ship-faster-than-sf-teams/</link>
+      <description>Cut dev cost 35% with AI — Amazon Q, Copilot Chat, Cursor, Codeium, GitLab Duo ranked by Nairobi benchmarks. Real latency and rollback stats inside.</description>
+      <pubDate>Tue, 23 Jun 2026 17:36:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-ai-tools-that-let-us-ship-faster-than-sf-teams/</guid>
+    </item>
     <item>
       <title>7 experiment platforms that replaced our flag system</title>
       <link>https://kubaik.github.io/7-experiment-platforms-that-replaced-our-flag-system/</link>
@@ -138,13 +145,6 @@
       <description>Cut monthly infrastructure bill 95% by moving from EKS to Fly.io — $3,966 down to $187, latency dropped 64%, and we saved 12 engineering hours/month</description>
       <pubDate>Tue, 23 Jun 2026 00:15:23 +0000</pubDate>
       <guid>https://kubaik.github.io/trimmed-3kmonth-kubernetes-to-200-with-flyio/</guid>
-    </item>
-    <item>
-      <title>Passkeys: apps cut auth costs 70%</title>
-      <link>https://kubaik.github.io/passkeys-apps-cut-auth-costs-70/</link>
-      <description>Cut auth costs 70% by switching from SMS OTP to passkeys — latency dropped from 6 s to 180 ms, $18 k to $120 monthly bills, and unlocked 2.1 M DAU in 2026.</description>
-      <pubDate>Mon, 22 Jun 2026 23:59:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/passkeys-apps-cut-auth-costs-70/</guid>
     </item>
   </channel>
 </rss>
