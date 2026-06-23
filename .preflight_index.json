@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T18:05:30.528019",
+  "built_at": "2026-06-23T19:07:00.283684",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2430,6 +2430,11 @@
       "slug": "post-mortem-iac-tools-after-hashicorp-fork",
       "title": "Post-mortem: IaC tools after HashiCorp fork",
       "summary": "I ran into this pulumi terraform problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I walked into work on a Monday to discove"
+    },
+    {
+      "slug": "ai-agents-the-hidden-12kagent-tax",
+      "title": "AI agents: the hidden $12k/agent tax",
+      "summary": "The official documentation for hidden costs is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs The marketing copy for AI agents usu"
     }
   ]
 }

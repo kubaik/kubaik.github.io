@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 18:05:38 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 19:07:07 +0000</lastBuildDate>
+    <item>
+      <title>AI agents: the hidden $12k/agent tax</title>
+      <link>https://kubaik.github.io/ai-agents-the-hidden-12kagent-tax/</link>
+      <description>Cut AI agent costs 38% by auditing retries and timeouts — real 2026 metrics, token inflation, and the breaker mistake most teams miss.</description>
+      <pubDate>Tue, 23 Jun 2026 19:06:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-the-hidden-12kagent-tax/</guid>
+    </item>
     <item>
       <title>Post-mortem: IaC tools after HashiCorp fork</title>
       <link>https://kubaik.github.io/post-mortem-iac-tools-after-hashicorp-fork/</link>
@@ -138,13 +145,6 @@
       <description>Zero-downtime migrations: why most playbooks fail and one proven split-step method that cut our outage time from 12 minutes to under 30 seconds — with PostgreSQL 15, Aurora metrics, and rollback scripts tested in staging.</description>
       <pubDate>Tue, 23 Jun 2026 02:29:36 +0000</pubDate>
       <guid>https://kubaik.github.io/migrations-kill-prod-do-this-instead/</guid>
-    </item>
-    <item>
-      <title>AI ops vs human ops: the incidents that broke them</title>
-      <link>https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/</link>
-      <description>Cut incident MTTR 82% with AI ops — PagerDuty AI Copilot vs Rootly autonomous agents compared on 100 real incidents in 2026. Cost, latency, and false-positive data included.</description>
-      <pubDate>Tue, 23 Jun 2026 01:31:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/</guid>
     </item>
   </channel>
 </rss>
