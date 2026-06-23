@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 12:26:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 12:30:11 +0000</lastBuildDate>
+    <item>
+      <title>Pick SaaS niches AI can&apos;t erode</title>
+      <link>https://kubaik.github.io/pick-saas-niches-ai-cant-erode/</link>
+      <description>Cut SaaS churn 50% by picking niches AI can&apos;t erode — regulatory complexity, data scarcity, and trust asymmetry give you defensibility in 2026</description>
+      <pubDate>Tue, 23 Jun 2026 12:30:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/pick-saas-niches-ai-cant-erode/</guid>
+    </item>
     <item>
       <title>LLM apps: OWASP’s 10 new attack paths</title>
       <link>https://kubaik.github.io/llm-apps-owasps-10-new-attack-paths/</link>
@@ -138,13 +145,6 @@
       <description>Cut audit log costs 40%: PostgreSQL vs ClickHouse at 2026 scale — 9 800 events/sec, 28 ms queries, and the write amplification trap most teams miss.</description>
       <pubDate>Mon, 22 Jun 2026 19:05:41 +0000</pubDate>
       <guid>https://kubaik.github.io/log-audit-costs-without-breaking-compliance/</guid>
-    </item>
-    <item>
-      <title>Why RAG alone fails 2026 search</title>
-      <link>https://kubaik.github.io/why-rag-alone-fails-2026-search/</link>
-      <description>Cut search latency 50% and costs 70% with hybrid BM25 + reranker — DistilBERT-base-uncased-distilled + ONNX Runtime 1.17 on a $5 VPS in 2026.</description>
-      <pubDate>Mon, 22 Jun 2026 18:43:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-rag-alone-fails-2026-search/</guid>
     </item>
   </channel>
 </rss>

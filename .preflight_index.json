@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T10:52:04.575924",
+  "built_at": "2026-06-23T12:30:05.849769",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2380,6 +2380,11 @@
       "slug": "llm-apps-owasps-10-new-attack-paths",
       "title": "LLM apps: OWASP’s 10 new attack paths",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026 I helped a team launch a customer-facing LLM app that allowed users to upload PD"
+    },
+    {
+      "slug": "pick-saas-niches-ai-cant-erode",
+      "title": "Pick SaaS niches AI can't erode",
+      "summary": "Most pick saas guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 our Nairobi fintech had built a promising AI-first expense categorisation servi"
     }
   ]
 }
