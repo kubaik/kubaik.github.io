@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 05:05:42 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 05:10:30 +0000</lastBuildDate>
+    <item>
+      <title>AI ate my niche — niches that survived 2026</title>
+      <link>https://kubaik.github.io/ai-ate-my-niche-niches-that-survived-2026/</link>
+      <description>Micro-SaaS niches that survived AI commoditisation in 2026 — domain knowledge, hardware optimisation, and AI output auditing. Learn which $29–$500/month tools are still working.</description>
+      <pubDate>Tue, 23 Jun 2026 05:10:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ate-my-niche-niches-that-survived-2026/</guid>
+    </item>
     <item>
       <title>Freelance rates after AI took the boilerplate</title>
       <link>https://kubaik.github.io/freelance-rates-after-ai-took-the-boilerplate/</link>
@@ -138,13 +145,6 @@
       <description>Cut solo SaaS launch time from 72 days to 18 days using CrewAI v0.25 — learn when to build your own agent loop and when to buy the runtime, with real latency, cost, and code samples from 2026.</description>
       <pubDate>Mon, 22 Jun 2026 10:47:29 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-solo-saas-build-vs-buy-agents-in-2026/</guid>
-    </item>
-    <item>
-      <title>5 notification systems ranked: push, email, SMS</title>
-      <link>https://kubaik.github.io/5-notification-systems-ranked-push-email-sms/</link>
-      <description>Cut notification delivery time 40% and costs 30% with Courier v2.18 — compare push, email, SMS, and WhatsApp systems with real latency, cost, and bounce data.</description>
-      <pubDate>Mon, 22 Jun 2026 08:52:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-notification-systems-ranked-push-email-sms/</guid>
     </item>
   </channel>
 </rss>
