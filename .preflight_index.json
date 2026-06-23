@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T01:31:14.942383",
+  "built_at": "2026-06-23T02:29:38.518707",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2335,6 +2335,11 @@
       "slug": "ai-ops-vs-human-ops-the-incidents-that-broke-them",
       "title": "AI ops vs human ops: the incidents that broke them",
       "summary": "I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Oncall in 2026 is a different beast: distributed traces span 17 se"
+    },
+    {
+      "slug": "migrations-kill-prod-do-this-instead",
+      "title": "Migrations kill prod: do this instead",
+      "summary": "A colleague asked me about handle database during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) T"
     }
   ]
 }

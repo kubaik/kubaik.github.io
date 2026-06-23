@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 01:31:19 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 02:29:46 +0000</lastBuildDate>
+    <item>
+      <title>Migrations kill prod: do this instead</title>
+      <link>https://kubaik.github.io/migrations-kill-prod-do-this-instead/</link>
+      <description>Zero-downtime migrations: why most playbooks fail and one proven split-step method that cut our outage time from 12 minutes to under 30 seconds — with PostgreSQL 15, Aurora metrics, and rollback scripts tested in staging.</description>
+      <pubDate>Tue, 23 Jun 2026 02:29:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/migrations-kill-prod-do-this-instead/</guid>
+    </item>
     <item>
       <title>AI ops vs human ops: the incidents that broke them</title>
       <link>https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI replacement risk by 40% with these 3 skills: schema contracts, blast radius metrics, and runtime kill switches. Real-world fixes for Copilot PRs and agent spirals in 2026.</description>
       <pubDate>Mon, 22 Jun 2026 08:49:23 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-proof-your-salary-the-3-skills-worth-40-more/</guid>
-    </item>
-    <item>
-      <title>50 locations, 50 headaches: edge-native backends in</title>
-      <link>https://kubaik.github.io/50-locations-50-headaches-edge-native-backends-in/</link>
-      <description>Cut API latency 60 % by running your backend in 50 locations — connection pooling, replication lag, and the $12k mistake most teams make in 2026.</description>
-      <pubDate>Mon, 22 Jun 2026 07:49:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/50-locations-50-headaches-edge-native-backends-in/</guid>
     </item>
   </channel>
 </rss>
