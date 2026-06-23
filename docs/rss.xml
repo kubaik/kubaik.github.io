@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 22:57:41 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 23:03:07 +0000</lastBuildDate>
+    <item>
+      <title>LLM latency: the cache patterns that still fool me</title>
+      <link>https://kubaik.github.io/llm-latency-the-cache-patterns-that-still-fool-me/</link>
+      <description>Cut LLM response time 67% with semantic caching, prompt compression, and edge layers — the real numbers from 8 k RPM in 2026</description>
+      <pubDate>Tue, 23 Jun 2026 23:02:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-latency-the-cache-patterns-that-still-fool-me/</guid>
+    </item>
     <item>
       <title>CI/CD for AI code: test, secure, rollback fast</title>
       <link>https://kubaik.github.io/cicd-for-ai-code-test-secure-rollback-fast/</link>
@@ -138,13 +145,6 @@
       <description>Cut SaaS churn 50% by picking niches AI can&apos;t erode — regulatory complexity, data scarcity, and trust asymmetry give you defensibility in 2026</description>
       <pubDate>Tue, 23 Jun 2026 12:30:04 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-saas-niches-ai-cant-erode/</guid>
-    </item>
-    <item>
-      <title>LLM apps: OWASP’s 10 new attack paths</title>
-      <link>https://kubaik.github.io/llm-apps-owasps-10-new-attack-paths/</link>
-      <description>Reduce prompt injection losses 95% with OWASP Top 10 guardrails for LLM apps — concrete latency, cost, and incident data from 2026 deployments.</description>
-      <pubDate>Tue, 23 Jun 2026 10:52:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-apps-owasps-10-new-attack-paths/</guid>
     </item>
   </channel>
 </rss>
