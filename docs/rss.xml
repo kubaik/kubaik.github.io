@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 15:40:32 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 15:45:36 +0000</lastBuildDate>
+    <item>
+      <title>AI UI tools broke my React flow — here’s why</title>
+      <link>https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/</link>
+      <description>Cut frontend component delivery 75% with AI UI tools — but expect to refactor 60% for accessibility, responsive design, and state integration. Real benchmarks, prompts, and CI setups from a 2026 production team.</description>
+      <pubDate>Tue, 23 Jun 2026 15:45:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/</guid>
+    </item>
     <item>
       <title>Shrink multi-region costs 40%: the real levers</title>
       <link>https://kubaik.github.io/shrink-multi-region-costs-40-the-real-levers/</link>
@@ -138,13 +145,6 @@
       <description>Hit $5k MRR without paid ads — the exact channels, pricing tweaks, and leak fixes that worked in 2026. Organic growth tactics that compound, with concrete numbers and code examples.</description>
       <pubDate>Mon, 22 Jun 2026 21:54:12 +0000</pubDate>
       <guid>https://kubaik.github.io/hit-5k-mrr-without-paid-ads/</guid>
-    </item>
-    <item>
-      <title>AI codebase: onboarding 2 devs in 2 hours or quit</title>
-      <link>https://kubaik.github.io/ai-codebase-onboarding-2-devs-in-2-hours-or-quit/</link>
-      <description>Cut onboarding time 60% with AI codebase rules — versioned prompts, OWNERS files, and the SOC 2 trick most teams skip. Benchmarks, costs, and the 2026 playbook.</description>
-      <pubDate>Mon, 22 Jun 2026 21:30:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-codebase-onboarding-2-devs-in-2-hours-or-quit/</guid>
     </item>
   </channel>
 </rss>

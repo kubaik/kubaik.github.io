@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T13:55:13.111595",
+  "built_at": "2026-06-23T15:45:28.298516",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2400,6 +2400,11 @@
       "slug": "shrink-multi-region-costs-40-the-real-levers",
       "title": "Shrink multi-region costs 40%: the real levers",
       "summary": "The official documentation for design multiregion is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most multi-region backend tuto"
+    },
+    {
+      "slug": "ai-ui-tools-broke-my-react-flow-heres-why",
+      "title": "AI UI tools broke my React flow — here’s why",
+      "summary": "The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. AI UI generation tools broke my React flow — here’s why I spent two weeks rewriting a React dashboard with an AI UI generator"
     }
   ]
 }
