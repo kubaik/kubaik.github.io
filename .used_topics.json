@@ -76,5 +76,6 @@
   "How to design AI-native applications: architecture patterns that didn't exist three years ago",
   "How to design multi-region backends without triple the infrastructure cost",
   "How AI UI generation tools changed my frontend workflow (and what they still cannot do)",
-  "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant"
+  "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant",
+  "How I built and launched a SaaS in 6 weeks using AI tools for 80% of the code"
 ]
