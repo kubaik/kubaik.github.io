@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 19:22:50 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 19:27:43 +0000</lastBuildDate>
+    <item>
+      <title>AI prompt injection: the attack you’re running live</title>
+      <link>https://kubaik.github.io/ai-prompt-injection-the-attack-youre-running-live/</link>
+      <description>Prevent AI data leaks in 2026 with real sanitizers and tests. Stop 29% of prompt injection attacks before they reach production — benchmarks, code, and the mistakes I made.</description>
+      <pubDate>Tue, 23 Jun 2026 19:27:33 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-prompt-injection-the-attack-youre-running-live/</guid>
+    </item>
     <item>
       <title>AI agents: the hidden $12k/agent tax</title>
       <link>https://kubaik.github.io/ai-agents-the-hidden-12kagent-tax/</link>
@@ -138,13 +145,6 @@
       <description>2026 freelance rates dropped 28–40% for AI-assisted tasks. Learn how to price the remaining 20% of work clients still need — compliance, edge cases, and audit trails. Real numbers and code included.</description>
       <pubDate>Tue, 23 Jun 2026 04:51:51 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-rates-after-ai-took-the-boilerplate/</guid>
-    </item>
-    <item>
-      <title>Migrations kill prod: do this instead</title>
-      <link>https://kubaik.github.io/migrations-kill-prod-do-this-instead/</link>
-      <description>Zero-downtime migrations: why most playbooks fail and one proven split-step method that cut our outage time from 12 minutes to under 30 seconds — with PostgreSQL 15, Aurora metrics, and rollback scripts tested in staging.</description>
-      <pubDate>Tue, 23 Jun 2026 02:29:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/migrations-kill-prod-do-this-instead/</guid>
     </item>
   </channel>
 </rss>

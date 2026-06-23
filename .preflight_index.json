@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T19:07:00.283684",
+  "built_at": "2026-06-23T19:27:36.105100",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2435,6 +2435,11 @@
       "slug": "ai-agents-the-hidden-12kagent-tax",
       "title": "AI agents: the hidden $12k/agent tax",
       "summary": "The official documentation for hidden costs is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs The marketing copy for AI agents usu"
+    },
+    {
+      "slug": "ai-prompt-injection-the-attack-youre-running-live",
+      "title": "AI prompt injection: the attack you’re running live",
+      "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams treat prompt injectio"
     }
   ]
 }
