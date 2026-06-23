@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 22:18:33 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 22:23:28 +0000</lastBuildDate>
+    <item>
+      <title>AI backend costs in Africa: 3 hidden taxes</title>
+      <link>https://kubaik.github.io/ai-backend-costs-in-africa-3-hidden-taxes/</link>
+      <description>Cut AI backend costs 60% with caching, regional placement, and circuit breakers — latency, compliance, and cloud bills measured on real African networks.</description>
+      <pubDate>Tue, 23 Jun 2026 22:23:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-backend-costs-in-africa-3-hidden-taxes/</guid>
+    </item>
     <item>
       <title>Test AI glue code, not the model</title>
       <link>https://kubaik.github.io/test-ai-glue-code-not-the-model/</link>
@@ -138,13 +145,6 @@
       <description>Nairobi SaaS 2026 cost: $1,104/month at 2.1k DAU — real breakdown with Terraform, FastAPI, Redis, and Cloudflare. Includes latency SLA and NAT savings.</description>
       <pubDate>Tue, 23 Jun 2026 10:31:39 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-nairobi-saas-infra-costs-2026/</guid>
-    </item>
-    <item>
-      <title>Frontend tests 2026: Playwright won, Cypress lost</title>
-      <link>https://kubaik.github.io/frontend-tests-2026-playwright-won-cypress-lost/</link>
-      <description>Cut frontend test time 77% and flake rate 86% with Vitest 1.6 + Playwright 1.44 — real CI costs, setup commands, and the Cypress migration trap most teams miss.</description>
-      <pubDate>Tue, 23 Jun 2026 09:50:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/frontend-tests-2026-playwright-won-cypress-lost/</guid>
     </item>
   </channel>
 </rss>

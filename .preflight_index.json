@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T21:59:52.978474",
+  "built_at": "2026-06-23T22:23:19.982518",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2465,6 +2465,11 @@
       "slug": "test-ai-glue-code-not-the-model",
       "title": "Test AI glue code, not the model",
       "summary": "I ran into this write tests problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I got burned by AI code in production three ti"
+    },
+    {
+      "slug": "ai-backend-costs-in-africa-3-hidden-taxes",
+      "title": "AI backend costs in Africa: 3 hidden taxes",
+      "summary": "After reviewing a lot of code that touches tools built, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. Why I wrote this (the problem I kept hitting) I spent three weeks debugging a Slack-bot integration that worked fine on my la"
     }
   ]
 }
