@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T12:30:05.849769",
+  "built_at": "2026-06-23T12:41:36.192423",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2385,6 +2385,11 @@
       "slug": "pick-saas-niches-ai-cant-erode",
       "title": "Pick SaaS niches AI can't erode",
       "summary": "Most pick saas guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 our Nairobi fintech had built a promising AI-first expense categorisation servi"
+    },
+    {
+      "slug": "ai-ops-showdown-automated-runbooks-vs-manual",
+      "title": "AI ops showdown: automated runbooks vs. manual",
+      "summary": "I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, teams that still manually tune capacity plans or debu"
     }
   ]
 }
