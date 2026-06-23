@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T17:36:39.527783",
+  "built_at": "2026-06-23T18:05:30.528019",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2425,6 +2425,11 @@
       "slug": "5-ai-tools-that-let-us-ship-faster-than-sf-teams",
       "title": "5 AI tools that let us ship faster than SF teams",
       "summary": "I ran into this east african problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) Back in 2024 we had a six-person squad in Nai"
+    },
+    {
+      "slug": "post-mortem-iac-tools-after-hashicorp-fork",
+      "title": "Post-mortem: IaC tools after HashiCorp fork",
+      "summary": "I ran into this pulumi terraform problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I walked into work on a Monday to discove"
     }
   ]
 }

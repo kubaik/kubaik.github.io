@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 18:00:49 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 18:05:38 +0000</lastBuildDate>
+    <item>
+      <title>Post-mortem: IaC tools after HashiCorp fork</title>
+      <link>https://kubaik.github.io/post-mortem-iac-tools-after-hashicorp-fork/</link>
+      <description>Cut registry latency 75% with OpenTofu in 2026. Compare Pulumi vs Terraform vs OpenTofu after HashiCorp fork with registry benchmarks, memory usage, and provider parity numbers.</description>
+      <pubDate>Tue, 23 Jun 2026 18:05:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/post-mortem-iac-tools-after-hashicorp-fork/</guid>
+    </item>
     <item>
       <title>5 AI tools that let us ship faster than SF teams</title>
       <link>https://kubaik.github.io/5-ai-tools-that-let-us-ship-faster-than-sf-teams/</link>
@@ -138,13 +145,6 @@
       <description>Cut incident MTTR 82% with AI ops — PagerDuty AI Copilot vs Rootly autonomous agents compared on 100 real incidents in 2026. Cost, latency, and false-positive data included.</description>
       <pubDate>Tue, 23 Jun 2026 01:31:13 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ops-vs-human-ops-the-incidents-that-broke-them/</guid>
-    </item>
-    <item>
-      <title>Trimmed $3k/month Kubernetes to $200 with Fly.io</title>
-      <link>https://kubaik.github.io/trimmed-3kmonth-kubernetes-to-200-with-flyio/</link>
-      <description>Cut monthly infrastructure bill 95% by moving from EKS to Fly.io — $3,966 down to $187, latency dropped 64%, and we saved 12 engineering hours/month</description>
-      <pubDate>Tue, 23 Jun 2026 00:15:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/trimmed-3kmonth-kubernetes-to-200-with-flyio/</guid>
     </item>
   </channel>
 </rss>
