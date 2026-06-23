@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 08:47:53 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 08:52:59 +0000</lastBuildDate>
+    <item>
+      <title>Claude Code in 2026: one year of lessons learned</title>
+      <link>https://kubaik.github.io/claude-code-in-2026-one-year-of-lessons-learned/</link>
+      <description>Claude Code 2026 saves 39% PR review time but silently fails audits unless you capture agent events — here’s the 120-line shim we built and the real numbers after 90 days of use.</description>
+      <pubDate>Tue, 23 Jun 2026 08:52:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/claude-code-in-2026-one-year-of-lessons-learned/</guid>
+    </item>
     <item>
       <title>Trim $18k AWS bills: 2026 levers mid-size teams miss</title>
       <link>https://kubaik.github.io/trim-18k-aws-bills-2026-levers-mid-size-teams-miss/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% by extracting services incrementally — why big-bang rewrites fail in 2026’s distributed stacks and the safer path teams actually use.</description>
       <pubDate>Mon, 22 Jun 2026 15:15:15 +0000</pubDate>
       <guid>https://kubaik.github.io/rewrite-monolith-without-disaster-2026s-safe-path/</guid>
-    </item>
-    <item>
-      <title>AI codebases: guardrails vs chaos in 2026</title>
-      <link>https://kubaik.github.io/ai-codebases-guardrails-vs-chaos-in-2026/</link>
-      <description>Cut AI-generated bugs 70% with guardrails — ESLint, AST checks, and human gates that work on $3k/month AWS budgets in 2026</description>
-      <pubDate>Mon, 22 Jun 2026 14:30:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-codebases-guardrails-vs-chaos-in-2026/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T06:43:18.251338",
+  "built_at": "2026-06-23T08:52:51.192321",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2360,6 +2360,11 @@
       "slug": "trim-18k-aws-bills-2026-levers-mid-size-teams-miss",
       "title": "Trim $18k AWS bills: 2026 levers mid-size teams miss",
       "summary": "I've seen the same finops 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, mid-size teams running on AWS are burning an average of $18k–$42k"
+    },
+    {
+      "slug": "claude-code-in-2026-one-year-of-lessons-learned",
+      "title": "Claude Code in 2026: one year of lessons learned",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In mid-2026, my team moved from Copilot to Claude Code for our Python codebase. For the "
     }
   ]
 }
