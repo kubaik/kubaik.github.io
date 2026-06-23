@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 22:52:59 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 22:57:41 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD for AI code: test, secure, rollback fast</title>
+      <link>https://kubaik.github.io/cicd-for-ai-code-test-secure-rollback-fast/</link>
+      <description>Cut CI pipeline latency 63% with lightweight AI code testing and rollback in 2026. Learn GitHub Actions, Semgrep, Prometheus, and blue-green deployments that work under $30/month.</description>
+      <pubDate>Tue, 23 Jun 2026 22:57:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-for-ai-code-test-secure-rollback-fast/</guid>
+    </item>
     <item>
       <title>AI backend costs in Africa: 3 hidden taxes</title>
       <link>https://kubaik.github.io/ai-backend-costs-in-africa-3-hidden-taxes/</link>
@@ -138,13 +145,6 @@
       <description>Reduce prompt injection losses 95% with OWASP Top 10 guardrails for LLM apps — concrete latency, cost, and incident data from 2026 deployments.</description>
       <pubDate>Tue, 23 Jun 2026 10:52:02 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-apps-owasps-10-new-attack-paths/</guid>
-    </item>
-    <item>
-      <title>Debug Nairobi SaaS infra costs 2026</title>
-      <link>https://kubaik.github.io/debug-nairobi-saas-infra-costs-2026/</link>
-      <description>Nairobi SaaS 2026 cost: $1,104/month at 2.1k DAU — real breakdown with Terraform, FastAPI, Redis, and Cloudflare. Includes latency SLA and NAT savings.</description>
-      <pubDate>Tue, 23 Jun 2026 10:31:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-nairobi-saas-infra-costs-2026/</guid>
     </item>
   </channel>
 </rss>
