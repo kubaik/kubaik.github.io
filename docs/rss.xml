@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 13:50:24 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 13:55:21 +0000</lastBuildDate>
+    <item>
+      <title>Shrink multi-region costs 40%: the real levers</title>
+      <link>https://kubaik.github.io/shrink-multi-region-costs-40-the-real-levers/</link>
+      <description>The docs never mention that every extra region adds 20–30 % to your cloud bill even if you leave the database idle.</description>
+      <pubDate>Tue, 23 Jun 2026 13:55:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/shrink-multi-region-costs-40-the-real-levers/</guid>
+    </item>
     <item>
       <title>AI-native apps break when you copy old rules</title>
       <link>https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/</link>
@@ -138,13 +145,6 @@
       <description>Cut onboarding time 60% with AI codebase rules — versioned prompts, OWNERS files, and the SOC 2 trick most teams skip. Benchmarks, costs, and the 2026 playbook.</description>
       <pubDate>Mon, 22 Jun 2026 21:30:47 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-codebase-onboarding-2-devs-in-2-hours-or-quit/</guid>
-    </item>
-    <item>
-      <title>Service mesh in 2026: why most teams drop it</title>
-      <link>https://kubaik.github.io/service-mesh-in-2026-why-most-teams-drop-it/</link>
-      <description>Cut API latency 60% by choosing the right service mesh. Istio vs Cilium vs Linkerd in 2026 production systems with real benchmarks and cost data.</description>
-      <pubDate>Mon, 22 Jun 2026 21:24:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/service-mesh-in-2026-why-most-teams-drop-it/</guid>
     </item>
   </channel>
 </rss>
