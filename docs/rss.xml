@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 16:46:11 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 16:51:03 +0000</lastBuildDate>
+    <item>
+      <title>7 experiment platforms that replaced our flag system</title>
+      <link>https://kubaik.github.io/7-experiment-platforms-that-replaced-our-flag-system/</link>
+      <description>Cut experiment setup time 70% with PostHog 1.43 — offline support, real-time analytics, and self-hosting under $20/month for 50k users</description>
+      <pubDate>Tue, 23 Jun 2026 16:50:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/7-experiment-platforms-that-replaced-our-flag-system/</guid>
+    </item>
     <item>
       <title>6 weeks to SaaS: 80% code AI-built</title>
       <link>https://kubaik.github.io/6-weeks-to-saas-80-code-ai-built/</link>
@@ -138,13 +145,6 @@
       <description>Cut auth costs 70% by switching from SMS OTP to passkeys — latency dropped from 6 s to 180 ms, $18 k to $120 monthly bills, and unlocked 2.1 M DAU in 2026.</description>
       <pubDate>Mon, 22 Jun 2026 23:59:43 +0000</pubDate>
       <guid>https://kubaik.github.io/passkeys-apps-cut-auth-costs-70/</guid>
-    </item>
-    <item>
-      <title>7 patterns for systems that stay up when everything</title>
-      <link>https://kubaik.github.io/7-patterns-for-systems-that-stay-up-when-everything/</link>
-      <description>Cut duplicate payments and cascade failures 90% with 7 production-grade eventual consistency patterns — benchmarks, code, and the mistake that cost $48k</description>
-      <pubDate>Mon, 22 Jun 2026 23:04:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-patterns-for-systems-that-stay-up-when-everything/</guid>
     </item>
   </channel>
 </rss>

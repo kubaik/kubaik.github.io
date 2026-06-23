@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T16:24:33.145070",
+  "built_at": "2026-06-23T16:50:55.792138",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2415,6 +2415,11 @@
       "slug": "6-weeks-to-saas-80-code-ai-built",
       "title": "6 weeks to SaaS: 80% code AI-built",
       "summary": "A colleague asked me about built launched during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Mo"
+    },
+    {
+      "slug": "7-experiment-platforms-that-replaced-our-flag-system",
+      "title": "7 experiment platforms that replaced our flag system",
+      "summary": "I ran into this feature flag problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026, our NGO pilot in rural Kenya needed "
     }
   ]
 }
