@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jun 2026 15:53:32 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jun 2026 15:59:05 +0000</lastBuildDate>
+    <item>
+      <title>Schema-per-tenant cost us weeks. Here’s what worked</title>
+      <link>https://kubaik.github.io/schema-per-tenant-cost-us-weeks-heres-what-worked/</link>
+      <description>Cut PostgreSQL costs 60% and latency 82% by switching from schema-per-tenant to database-per-tenant with tenant grouping — the real numbers and Terraform code most tutorials skip.</description>
+      <pubDate>Tue, 23 Jun 2026 15:58:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/schema-per-tenant-cost-us-weeks-heres-what-worked/</guid>
+    </item>
     <item>
       <title>AI UI tools broke my React flow — here’s why</title>
       <link>https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/</link>
@@ -138,13 +145,6 @@
       <description>Cut Lighthouse TTI 69% and SEO rankings recovered 12% by moving to Astro 5.2 Islands partial hydration — JavaScript dropped 95%, bundle size 240 KB, and costs fell 40%.</description>
       <pubDate>Mon, 22 Jun 2026 22:11:54 +0000</pubDate>
       <guid>https://kubaik.github.io/islands-beat-monoliths-in-2026/</guid>
-    </item>
-    <item>
-      <title>Hit $5k MRR without paid ads</title>
-      <link>https://kubaik.github.io/hit-5k-mrr-without-paid-ads/</link>
-      <description>Hit $5k MRR without paid ads — the exact channels, pricing tweaks, and leak fixes that worked in 2026. Organic growth tactics that compound, with concrete numbers and code examples.</description>
-      <pubDate>Mon, 22 Jun 2026 21:54:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/hit-5k-mrr-without-paid-ads/</guid>
     </item>
   </channel>
 </rss>

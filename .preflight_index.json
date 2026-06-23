@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T15:45:28.298516",
+  "built_at": "2026-06-23T15:58:58.114780",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2405,6 +2405,11 @@
       "slug": "ai-ui-tools-broke-my-react-flow-heres-why",
       "title": "AI UI tools broke my React flow — here’s why",
       "summary": "The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. AI UI generation tools broke my React flow — here’s why I spent two weeks rewriting a React dashboard with an AI UI generator"
+    },
+    {
+      "slug": "schema-per-tenant-cost-us-weeks-heres-what-worked",
+      "title": "Schema-per-tenant cost us weeks. Here’s what worked",
+      "summary": "Most designing multitenant guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, we launched a B2B SaaS product aimed at small law firms. Our init"
     }
   ]
 }
