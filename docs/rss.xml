@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 23:07:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 23:12:04 +0000</lastBuildDate>
+    <item>
+      <title>AWS IAM in 10 minutes: stop writing policies by hand</title>
+      <link>https://kubaik.github.io/aws-iam-in-10-minutes-stop-writing-policies-by-hand/</link>
+      <description>Cut IAM policy work 70% with AWS Identity Center — permission sets, boundaries, and Access Analyzer in 2026 with concrete AWS services and real results.</description>
+      <pubDate>Wed, 24 Jun 2026 23:11:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/aws-iam-in-10-minutes-stop-writing-policies-by-hand/</guid>
+    </item>
     <item>
       <title>Fix LLM vulns: OWASP Top 10 for AI apps</title>
       <link>https://kubaik.github.io/fix-llm-vulns-owasp-top-10-for-ai-apps/</link>
@@ -138,13 +145,6 @@
       <description>Catch AI agent failures 60 % faster with shadowing vs logging — real QPS, cost, and alert-latency numbers from Brazilian, Colombian, and Mexican production systems in 2026.</description>
       <pubDate>Wed, 24 Jun 2026 11:53:53 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agent-postmortems-the-three-surprises/</guid>
-    </item>
-    <item>
-      <title>AI agents forget overnight — how to keep memory alive</title>
-      <link>https://kubaik.github.io/ai-agents-forget-overnight-how-to-keep-memory-alive/</link>
-      <description>The agent’s response time stayed under 200ms, so we blamed the retrieval layer.</description>
-      <pubDate>Wed, 24 Jun 2026 10:07:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-forget-overnight-how-to-keep-memory-alive/</guid>
     </item>
   </channel>
 </rss>

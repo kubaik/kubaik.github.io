@@ -34,5 +34,6 @@
   "Platform engineering in 2026: what internal developer platforms look like at different company sizes",
   "Feature flags in 2026: how they became the backbone of AI rollout strategies",
   "The context window arms race: what 1M token models actually change in practice",
-  "The OWASP Top 10 for LLM applications: the vulnerabilities specific to AI-powered apps"
+  "The OWASP Top 10 for LLM applications: the vulnerabilities specific to AI-powered apps",
+  "How to implement least-privilege IAM in AWS without spending a week on policies"
 ]
