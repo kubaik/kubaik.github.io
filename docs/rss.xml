@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 05:50:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 05:55:12 +0000</lastBuildDate>
+    <item>
+      <title>Rerankers beat raw RAG every time</title>
+      <link>https://kubaik.github.io/rerankers-beat-raw-rag-every-time/</link>
+      <description>Cut search errors 76% with hybrid retrieval + reranking — BM25 + embeddings + cross-encoder on CPU in 2026</description>
+      <pubDate>Wed, 24 Jun 2026 05:55:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/rerankers-beat-raw-rag-every-time/</guid>
+    </item>
     <item>
       <title>AI steals junior tasks: 3 skills that protect pay</title>
       <link>https://kubaik.github.io/ai-steals-junior-tasks-3-skills-that-protect-pay/</link>
@@ -138,13 +145,6 @@
       <description>Cut experiment setup time 70% with PostHog 1.43 — offline support, real-time analytics, and self-hosting under $20/month for 50k users</description>
       <pubDate>Tue, 23 Jun 2026 16:50:53 +0000</pubDate>
       <guid>https://kubaik.github.io/7-experiment-platforms-that-replaced-our-flag-system/</guid>
-    </item>
-    <item>
-      <title>6 weeks to SaaS: 80% code AI-built</title>
-      <link>https://kubaik.github.io/6-weeks-to-saas-80-code-ai-built/</link>
-      <description>Cut dev time 80%: 6-week SaaS built with AI tools for 82% of the code — Vercel, Supabase, FastAPI, and Cursor in 2026.</description>
-      <pubDate>Tue, 23 Jun 2026 16:24:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/6-weeks-to-saas-80-code-ai-built/</guid>
     </item>
   </channel>
 </rss>

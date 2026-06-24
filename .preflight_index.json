@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T05:02:03.268690",
+  "built_at": "2026-06-24T05:55:05.781787",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2510,6 +2510,11 @@
       "slug": "ai-steals-junior-tasks-3-skills-that-protect-pay",
       "title": "AI steals junior tasks: 3 skills that protect pay",
       "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. AI steals junior tasks: 3 skills that protect your salary in 2026 The error and why it's con"
+    },
+    {
+      "slug": "rerankers-beat-raw-rag-every-time",
+      "title": "Rerankers beat raw RAG every time",
+      "summary": "The short version: the conventional advice on rag not is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) If you ship a RAG pipeline and stop there, you’re delivering 60-70% of the possible qualit"
     }
   ]
 }
