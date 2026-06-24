@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T20:31:15.063542",
+  "built_at": "2026-06-24T21:18:56.613066",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2625,6 +2625,11 @@
       "slug": "stop-async-python-from-burning-your-budget",
       "title": "Stop async Python from burning your budget",
       "summary": "I've seen the same async python mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Async Python isn’t new—asyncio shipped in Python 3.4 (2014) and became st"
+    },
+    {
+      "slug": "scan-10k-repos-daily-without-false-positives",
+      "title": "Scan 10k repos daily without false positives",
+      "summary": "Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we had 10,247 GitHub repositories scattered across 14 organizations. Every "
     }
   ]
 }

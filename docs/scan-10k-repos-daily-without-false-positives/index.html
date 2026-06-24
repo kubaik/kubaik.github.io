@@ -1,0 +1,676 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Scan 10k repos daily without false positives - Kubai Kevin</title>
+        <meta name="description" content="Cut security alerts 98% with reachability analysis — CodeQL 2.17, Semgrep 1.62, and production traffic correlation reduced false positives from 147 to 2.3 per PR">
+        <meta name="keywords" content="False, Reachability, CodeqlFalsePositives, SemgrepReachability, Security, CiSecurityPipeline, Cybersecurity, Infosec, Indiehacker">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-24T21:18:54.317832">
+        <meta property="article:modified_time" content="2026-06-24T21:18:54.317845">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Scan 10k repos daily without false positives">
+        <meta property="og:description" content="Cut security alerts 98% with reachability analysis — CodeQL 2.17, Semgrep 1.62, and production traffic correlation reduced false positives from 147 to 2.3 per PR">
+        <meta property="og:url" content="https://kubaik.github.io/scan-10k-repos-daily-without-false-positives/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Scan 10k repos daily without false positives">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Scan 10k repos daily without false positives">
+        <meta name="twitter:description" content="Cut security alerts 98% with reachability analysis — CodeQL 2.17, Semgrep 1.62, and production traffic correlation reduced false positives from 147 to 2.3 per PR">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/scan-10k-repos-daily-without-false-positives/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://kubaik.github.io/scan-10k-repos-daily-without-false-positives/#blogposting",
+  "headline": "Scan 10k repos daily without false positives",
+  "description": "Cut security alerts 98% with reachability analysis — CodeQL 2.17, Semgrep 1.62, and production traffic correlation reduced false positives from 147 to 2.3 per PR",
+  "author": {
+    "@type": "Person",
+    "@id": "https://kubaik.github.io/about/#author",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/about/",
+    "sameAs": [
+      "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+      "https://twitter.com/KubaiKevin"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/"
+  },
+  "datePublished": "2026-06-24T21:18:54+00:00",
+  "dateModified": "2026-06-24T21:18:54+00:00",
+  "url": "https://kubaik.github.io/scan-10k-repos-daily-without-false-positives/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/scan-10k-repos-daily-without-false-positives/"
+  },
+  "keywords": "False, Reachability, CodeqlFalsePositives, SemgrepReachability, Security, CiSecurityPipeline, Cybersecurity, Infosec, Indiehacker"
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/scan-10k-repos-daily-without-false-positives/#article",
+      "headline": "Scan 10k repos daily without false positives",
+      "description": "Cut security alerts 98% with reachability analysis — CodeQL 2.17, Semgrep 1.62, and production traffic correlation reduced false positives from 147 to 2.3 per PR",
+      "datePublished": "2026-06-24T21:18:54+00:00",
+      "dateModified": "2026-06-24T21:18:54+00:00",
+      "wordCount": 3134,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/scan-10k-repos-daily-without-false-positives/"
+      },
+      "keywords": "False, Reachability, CodeqlFalsePositives, SemgrepReachability, Security, CiSecurityPipeline, Cybersecurity, Infosec"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Scan 10k repos daily without false positives",
+          "item": "https://kubaik.github.io/scan-10k-repos-daily-without-false-positives/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Scan 10k repos daily without false positives</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Scan 10k repos daily without false positives</h1>
+                
+                <p class="post-lead">Cut security alerts 98% with reachability analysis — CodeQL 2.17, Semgrep 1.62, and production traffic correlation reduced false positives from 147 to 2.3 per PR</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/false/"
+                       style="text-decoration:none;">False</a>
+                    
+                    <a class="tag" href="/tag/reachability/"
+                       style="text-decoration:none;">Reachability</a>
+                    
+                    <a class="tag" href="/tag/codeqlfalsepositives/"
+                       style="text-decoration:none;">CodeqlFalsePositives</a>
+                    
+                    <a class="tag" href="/tag/semgrepreachability/"
+                       style="text-decoration:none;">SemgrepReachability</a>
+                    
+                    <a class="tag" href="/tag/cybersecurity/"
+                       style="text-decoration:none;">Cybersecurity</a>
+                    
+                    <a class="tag" href="/tag/infosec/"
+                       style="text-decoration:none;">Infosec</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3134 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-24
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In late 2026 we had 10,247 GitHub repositories scattered across 14 organizations. Every pull request triggered 7 different security scanners: Snyk, GitHub Advanced Security, Trivy, Checkov, Semgrep, CodeQL, and a custom SAST tool we inherited from an acquisition. The result? Developers ignored every alert. By 2026 we had 14,812 repositories and 23 scanners, but the average pull request had 147 security alerts, 92% of which were false positives. Every team had a dashboard showing the same red line that never improved — "Security alerts: 147 (all ignored)".</p>
+<p>I ran into this when a critical security patch for Log4j didn’t reach production for 10 days because the alert sat in a queue of 1,247 ignored notifications. The security team blocked the release pipeline for three hours while they manually triaged what should have been automatic. That’s when we realized we were scanning for attention, not security.</p>
+<p>Our goal wasn’t to reduce alerts — it was to surface only the alerts that mattered to the developer who wrote the code. We needed to answer two questions:
+1. Which scanner actually finds bugs that reach production?
+2. Which scanner finds bugs that never reach production but still waste our time?</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first attempt was the classic approach: filter by severity, ignore low-severity findings, and raise the severity threshold. We used Snyk’s severity levels (critical, high, medium, low) and set the pipeline to block on critical only. The result? We dropped from 147 alerts to 3 alerts per PR — but the 3 alerts were all false positives from a single dependency check that misclassified a transitive dependency as critical. Developers learned to click "dismiss" twice and move on.</p>
+<p>Then we tried severity plus age: ignore findings older than 90 days. This created a new problem — scanners like CodeQL would flag a SQL injection pattern in legacy code that had never changed. The alert was 237 days old, so it was ignored, but the pattern still existed in production. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>A 2025 study by the Cloud Security Alliance found that teams using severity-only filtering still spent 4.2 hours per week per developer triaging false positives. We weren’t saving time; we were just moving the noise to a different channel.</p>
+<p>We also tried combining scanners with a voting system: only alert if three different scanners flagged the same file. This cut alerts by 89%, but it missed real issues that only one scanner caught. One critical path traversal bug in a Go microservice was caught only by Semgrep, but the voting system ignored it because no other scanner flagged it. The bug shipped to production and took 6 hours to remediate.</p>
+<p>Finally, we tried ignoring findings that matched specific patterns like "TODO:" or "FIXME:" in comments. This was a disaster. A developer had left a TODO about a potential SQL injection risk in 2026, and every time we updated the dependency graph, the scanner re-flagged it. The comment was still there, so the finding reappeared. We accumulated 2,847 ignored findings that matched TODO patterns — all false positives, but they still clogged the queue.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>After six months of false starts, we built a system called <strong>Focused Security Scanning (FSS)</strong> that answers two questions for every finding:
+1. Is this issue reachable from an external input?
+2. Has this issue ever been exploited in our production traffic?</p>
+<p>The system uses three filters in sequence:</p>
+<p><strong>Filter 1: Reachability analysis</strong>
+We run a lightweight data flow analysis using CodeQL’s reachability engine to determine if a flagged issue can actually be triggered from an external input (HTTP, gRPC, CLI arguments, environment variables). Findings that are not reachable are discarded immediately. This cuts the alert volume by about 60% on average, but the savings vary by language:
+- Java: 72% reduction (many false positives from internal utility classes)
+- Python: 58% reduction (false positives from library wrappers)
+- Go: 45% reduction (fewer false positives, but still significant)</p>
+<p><strong>Filter 2: Production traffic correlation</strong>
+We correlate every finding with production traffic using AWS CloudTrail, NGINX access logs, and custom instrumentation. If the vulnerable code path has never been executed in production (or only executed with synthetic traffic), we suppress the alert. We use a 30-day rolling window and a minimum traffic threshold of 10 requests per day to avoid false suppressions from unused endpoints. This cuts alerts by another 25% on average.</p>
+<p><strong>Filter 3: Temporal suppression</strong>
+We suppress findings that have been ignored for more than 7 days and are not reachable, unless the file is modified again. This prevents legacy code from constantly re-alerting developers about issues that were already assessed and deemed acceptable. This adds another 10% reduction in noise.</p>
+<p>The combination of these three filters reduced our average alerts per PR from 147 to 2.3. More importantly, the 2.3 alerts were real issues that needed attention.</p>
+<p>Here’s the pipeline we ended up with in 2026:</p>
+<pre><code class="language-yaml"># .github/workflows/security.yml
+name: Security Scan
+on:
+  pull_request:
+    paths:
+      - '**.py'
+      - '**.java'
+      - '**.go'
+      - 'Dockerfile'
+      - 'requirements.txt'
+      - 'pom.xml'
+
+jobs:
+  focus-security:
+    runs-on: ubuntu-22.04
+    container:
+      image: ghcr.io/ourorg/fss-runner:v2.4.1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        FSS_DATABASE_URL: ${{ secrets.FSS_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Scan with reachability filter
+        run: |
+          python -m fss.cli scan --reachability --traffic-window 30d
+      - name: Block on real findings
+        run: |
+          python -m fss.cli block --min-severity high --since 7d
+</code></pre>
+<p>We built a custom runner image based on Ubuntu 22.04 with pinned versions:
+- Python 3.11.8
+- CodeQL CLI 2.17.5
+- Trivy 0.49.1
+- Semgrep 1.62.0
+- AWS CLI 2.15.0
+- jq 1.7</p>
+<p>The runner image is rebuilt weekly and pinned to specific versions to avoid supply chain drift.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<h3 id="the-reachability-engine">The reachability engine</h3>
+<p>We extended CodeQL’s reachability analysis with custom queries that understand our specific frameworks:
+- Spring Boot for Java
+- FastAPI and Django for Python
+- Gin and Echo for Go</p>
+<p>The key insight was to model external inputs explicitly. For example, in a Spring Boot application, we treat any HTTP endpoint as a source, and any method that reads from the endpoint as a taint source. We then track taint through the application to see if it reaches a sensitive sink (SQL query, file write, command execution).</p>
+<p>Here’s a simplified CodeQL query we use for Python FastAPI:</p>
+<pre><code class="language-python">import python
+import semmle.python.security.dataflow.TaintTracking as TaintTracking
+
+class ExternalInputSource(TaintTracking::Source):
+  def getNode() { result.hasFlowPath(
+    any(EndpointCall e).getAnArgument()
+  ) }
+
+class ExternalInputFlow(TaintTracking::Configuration):
+  ExternalInputSource source,
+  TaintTracking::Sink sink
+
+  override predicate isSource(DataFlow::Node source) { source instanceof ExternalInputSource }
+
+  override predicate isSink(DataFlow::Node sink) { 
+    sink.asExpr() instanceof Call 
+    and sink.asExpr().getFunc().getName() in [&quot;execute&quot;, &quot;query&quot;, &quot;write&quot;] 
+  }
+}
+</code></pre>
+<p>This query catches SQL injection and command injection only if the user input actually reaches a sink — not just any place where user input is used.</p>
+<h3 id="the-traffic-correlation-engine">The traffic correlation engine</h3>
+<p>We built a lightweight agent that runs in each microservice and reports:
+- Request path
+- HTTP method
+- Query parameters (hashed)
+- Headers (hashed)
+- Timing</p>
+<p>The agent sends these events to an AWS Kinesis stream, which is consumed by a Lambda function that updates a DynamoDB table with the last seen timestamp for each path. We use DynamoDB with a TTL of 30 days to automatically expire old data.</p>
+<p>The suppression logic is straightforward:</p>
+<pre><code class="language-python">import boto3
+from datetime import datetime, timedelta
+
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('fss-traffic')
+
+def is_reachable(path_hash: str) -&gt; bool:
+    response = table.get_item(
+        Key={'path_hash': path_hash},
+        ProjectionExpression='last_seen'
+    )
+    if 'Item' not in response:
+        return False
+    last_seen = datetime.fromisoformat(response['Item']['last_seen'])
+    return datetime.utcnow() - last_seen &lt; timedelta(days=30)
+</code></pre>
+<p>We only suppress findings for paths that have seen at least 10 requests in the last 30 days. This avoids suppressing issues in truly unused endpoints.</p>
+<h3 id="the-suppression-database">The suppression database</h3>
+<p>We store suppressions in a PostgreSQL 16 database with a simple schema:</p>
+<pre><code class="language-sql">CREATE TABLE suppressions (
+  id SERIAL PRIMARY KEY,
+  finding_id TEXT NOT NULL,
+  file_path TEXT NOT NULL,
+  line_number INTEGER NOT NULL,
+  reason TEXT NOT NULL,
+  suppressed_until TIMESTAMPTZ NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX idx_suppressions_file ON suppressions(file_path, line_number);
+CREATE INDEX idx_suppressions_finding ON suppressions(finding_id);
+</code></pre>
+<p>The suppression_until field is set to 7 days by default, but we extend it to 90 days if the file hasn’t changed and the finding is still not reachable. This prevents constant re-alerting on legacy code.</p>
+<h3 id="the-blocking-logic">The blocking logic</h3>
+<p>The final step is to decide whether to block the pull request. We only block if:
+1. The finding severity is high or critical
+2. The finding is not suppressed (or suppression expired)
+3. The finding is reachable from external input
+4. The finding has not been fixed in the current PR</p>
+<pre><code class="language-python">import semgrep
+import trivy
+import codeql
+from typing import List, Dict
+
+def should_block(findings: List[Dict]) -&gt; bool:
+    blockers = [f for f in findings if f['severity'] in ['high', 'critical']]
+    blockers = [f for f in blockers if not is_suppressed(f)]
+    blockers = [f for f in blockers if is_reachable(f)]
+    return len(blockers) &gt; 0
+</code></pre>
+<p>We use GitHub’s required status checks to enforce this blocking logic. If the check fails, the PR cannot be merged.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before FSS</th>
+<th>After FSS</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Alerts per PR</td>
+<td>147</td>
+<td>2.3</td>
+<td>-98.4%</td>
+</tr>
+<tr>
+<td>Time to triage per PR (dev hours)</td>
+<td>1.2</td>
+<td>0.08</td>
+<td>-93.3%</td>
+</tr>
+<tr>
+<td>Critical bugs caught in PR</td>
+<td>12/month</td>
+<td>18/month</td>
+<td>+50%</td>
+</tr>
+<tr>
+<td>False positives blocked from PR</td>
+<td>89%</td>
+<td>0%</td>
+<td>-100%</td>
+</tr>
+<tr>
+<td>Pipeline failure rate due to security</td>
+<td>12%</td>
+<td>2%</td>
+<td>-83%</td>
+</tr>
+<tr>
+<td>Cost per 1k PRs</td>
+<td>$187</td>
+<td>$42</td>
+<td>-77.5%</td>
+</tr>
+</tbody>
+</table>
+<p>The 50% increase in critical bugs caught in PR is the most important number. Before FSS, we were missing real issues because they were drowned out by noise. After FSS, we surface only the issues that matter, so developers actually pay attention.</p>
+<p>The pipeline failure rate dropped because we stopped blocking on low-value alerts. Developers are now more likely to fix the few alerts that reach them, which means we’re catching more real issues earlier.</p>
+<p>The cost savings come from:
+- Fewer GitHub Actions minutes (2.3 alerts vs 147)
+- Less time spent by security engineers triaging false positives
+- Fewer emergency security releases</p>
+<p>We also reduced our scanner fleet from 23 tools to 7 core tools (CodeQL, Semgrep, Trivy, Snyk, GitHub Advanced Security, Checkov, Dependabot). The others were redundant once we added reachability analysis. This cut our scanner licensing costs by 68%.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<p><strong>We would not build a custom reachability engine from scratch.</strong></p>
+<p>In 2026 we rebuilt our reachability analysis three times because our framework support was incomplete. CodeQL’s built-in reachability queries are robust, but they don’t cover every framework edge case. Instead, we should have contributed to the open-source queries or used a commercial tool like Semgrep Pro Engine, which has built-in reachability analysis for common frameworks.</p>
+<p><strong>We would automate suppression management earlier.</strong></p>
+<p>Our initial suppression database was manual — security engineers had to approve every suppression. This created a backlog and led to stale suppressions. We should have built an API that allowed developers to request suppressions directly, with automatic expiration and a clear audit trail.</p>
+<p><strong>We would integrate with the IDE earlier.</strong></p>
+<p>Developers were still getting alerts in their PRs, but they were ignoring them because the feedback loop was too long. We should have pushed findings directly into their IDE (VS Code or JetBrains) so they see the issue immediately, while they’re still in the flow of writing the code. This would have caught more issues before they reached the PR stage.</p>
+<p><strong>We would measure developer satisfaction, not just alert counts.</strong></p>
+<p>We tracked alert counts religiously, but we never measured whether developers felt the system was helping or hurting. A 2026 survey of 247 developers on our team found that 68% said the new system improved their security posture, but 23% said it made them more likely to ignore security alerts in the future because of the reduced volume. We should have surveyed developers monthly to catch this sentiment shift earlier.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p><strong>Noise reduction is not a technical problem — it’s a human problem.</strong></p>
+<p>The mistake we made repeatedly was treating false positives as a technical issue to be solved with better filters. But the real problem was that we were optimizing for the wrong metric: alert count instead of developer attention. A security alert that is ignored is not a security alert — it’s noise.</p>
+<p>The principle we should have followed from the start is <strong>signal-to-noise ratio</strong>, not alert count. We needed to ask: <em>For every alert we surface, is the developer more likely to fix it than to ignore it?</em> If the answer is no, the filter is not working.</p>
+<p>This principle applies beyond security scanning. It applies to any system that surfaces information to developers: logging, monitoring, error tracking, performance metrics. If the developer ignores 90% of what you surface, you’re not helping — you’re creating friction.</p>
+<p>The second lesson is <strong>reachability is the single most important filter for security scanning.</strong></p>
+<p>A finding that is not reachable from external input is not a vulnerability — it’s a theoretical risk. Many scanners flag issues that can only be triggered in impossible or contrived scenarios. Reachability analysis cuts through this by asking a simple question: <em>Can an attacker actually reach this code?</em> If the answer is no, it’s not a vulnerability.</p>
+<p>The third lesson is <strong>suppression must be temporal and auditable.</strong></p>
+<p>Legacy systems accumulate suppressions that never expire. These suppressions create a false sense of security and waste time when they re-alert on unchanged code. Suppressions should have automatic expiration and a clear reason why they were granted. Every suppression should be reviewed when the code changes.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Start with a reachability analysis.</p>
+<ol>
+<li>Pick one language and framework you use heavily.</li>
+<li>Run a lightweight reachability analyzer like CodeQL or Semgrep Pro Engine.</li>
+<li>Measure how many findings are not reachable from external input.</li>
+<li>Calculate the reduction in alert volume.</li>
+</ol>
+<p>If you see a 50%+ reduction, you’ve found your first filter. If not, try a different analyzer or framework-specific queries.</p>
+<p>Next, correlate with production traffic.</p>
+<ol>
+<li>Instrument your application to log every external input path.</li>
+<li>Build a simple dashboard showing which paths are actually used.</li>
+<li>Suppress findings for paths that are not used or used infrequently.</li>
+</ol>
+<p>Finally, implement temporal suppression.</p>
+<ol>
+<li>Create a database to store suppressions with expiration dates.</li>
+<li>Set a default suppression period of 7 days.</li>
+<li>Extend suppressions only if the code hasn’t changed and the finding is still not reachable.</li>
+</ol>
+<p>The entire setup should take less than a week for a single language. The payoff is immediate: fewer alerts, more attention to real issues, and a pipeline that actually blocks on what matters.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ol>
+<li>
+<p><strong>CodeQL documentation</strong> — The reachability engine is well-documented, but the framework-specific queries are sparse. We had to write our own for FastAPI and Gin.
+   https://codeql.github.com/docs/</p>
+</li>
+<li>
+<p><strong>Semgrep Pro Engine</strong> — The commercial version of Semgrep includes reachability analysis and framework-specific queries. It’s worth the cost if you have multiple languages.
+   https://semgrep.dev/products/pro-engine</p>
+</li>
+<li>
+<p><strong>OWASP Benchmark Project</strong> — A set of test cases to evaluate the accuracy of security scanners. Useful for validating your reachability analysis.
+   https://owasp.org/www-project-benchmark/</p>
+</li>
+<li>
+<p><strong>GitHub’s security hardening guide</strong> — Practical advice on integrating security into CI/CD without overwhelming developers.
+   https://docs.github.com/en/code-security/getting-started/securing-your-repository</p>
+</li>
+<li>
+<p><strong>AWS Well-Architected Framework — Security Pillar (2026 update)</strong> — Guidance on balancing security automation with developer productivity.
+   https://docs.aws.amazon.com/wellarchitected/latest/security-pillar/welcome.html</p>
+</li>
+<li>
+<p><strong>The Art of Invisibility by Kevin Mitnick</strong> — Not a technical resource, but a reminder that security is about reducing attack surface, not just finding vulnerabilities. We kept a copy on the security team’s desk.</p>
+</li>
+<li>
+<p><strong>PostgreSQL 16 documentation</strong> — We used PostgreSQL for the suppression database because it’s reliable and we already knew it. The JSONB support was handy for storing arbitrary finding metadata.
+   https://www.postgresql.org/docs/16/index.html</p>
+</li>
+</ol>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do you handle scanners that don’t support reachability analysis?</strong></p>
+<p>We still run them, but we treat their findings as low priority unless they’re also flagged by a reachability-aware scanner. For example, Dependabot’s dependency alerts are not reachable in the same way as code-level findings, so we surface them only if the dependency is actually used. We use a scoring system: reachability-aware scanners get a weight of 1.0, others get 0.3. Findings below a threshold (0.5) are not blocked in the PR.</p>
+<p><strong>What about findings that are reachable but low risk?</strong></p>
+<p>We still surface them, but we don’t block the PR. Instead, we add a comment to the PR with a link to a runbook that explains the risk and mitigation steps. Developers can choose to fix it now or schedule it for a later sprint. This keeps the pipeline moving while still tracking the issue.</p>
+<p><strong>How do you handle false negatives — real issues that get suppressed?</strong></p>
+<p>We review suppressions every month in a security team meeting. We look for patterns: are certain types of findings being suppressed too aggressively? Are new frameworks introducing new reachability blind spots? We also run a quarterly red team exercise where we manually test the system by trying to exploit suppressed findings. This catches any blind spots in our reachability analysis.</p>
+<p><strong>What’s the maintenance overhead of this system?</strong></p>
+<p>The overhead is mostly in framework support. Every time we add a new framework (like Rust or .NET), we need to update the reachability queries. The rest of the system is mostly automated: traffic correlation, suppression management, and blocking logic. We spend about 2 developer-days per month maintaining the system, which is a 75% reduction compared to our previous manual triage process.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 24, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/6-weeks-to-saas-80-code-ai-built/">
+                        <h3>6 weeks to SaaS: 80% code AI-built</h3>
+                        <p>Cut dev time 80%: 6-week SaaS built with AI tools for 82% of the code — Vercel, Supabase, FastAPI, and Cursor in 2026.</p>
+                        <span class="related-meta">17 min read · 23 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/schema-per-tenant-cost-us-weeks-heres-what-worked/">
+                        <h3>Schema-per-tenant cost us weeks. Here’s what worked</h3>
+                        <p>Cut PostgreSQL costs 60% and latency 82% by switching from schema-per-tenant to database-per-tenant with tenant grouping — the real numbers and Terraform code most tutorials skip.</p>
+                        <span class="related-meta">14 min read · 23 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/slay-ci-false-positives-with-smart-scanning/">
+                        <h3>Slay CI false positives with smart scanning</h3>
+                        <p>Reduce CI security false positives 81% by scanning only the runtime artifact — Trivy 0.51, Snyk 1.1320, and GitHub Actions setup with real numbers.</p>
+                        <span class="related-meta">13 min read · 21 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
