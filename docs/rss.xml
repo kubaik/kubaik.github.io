@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 20:14:41 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 20:19:36 +0000</lastBuildDate>
+    <item>
+      <title>Engineering interviews: what AI wants now</title>
+      <link>https://kubaik.github.io/engineering-interviews-what-ai-wants-now/</link>
+      <description>Cut engineering hiring failures 70% by testing incident response instead of whiteboard puzzles — concrete interview rubric with Prometheus, Jaeger, and real AWS cost data from Nairobi fintech 2026.</description>
+      <pubDate>Wed, 24 Jun 2026 20:19:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/engineering-interviews-what-ai-wants-now/</guid>
+    </item>
     <item>
       <title>AI keeps legacy code alive — here’s how</title>
       <link>https://kubaik.github.io/ai-keeps-legacy-code-alive-heres-how/</link>
@@ -138,13 +145,6 @@
       <description>Cut search errors 76% with hybrid retrieval + reranking — BM25 + embeddings + cross-encoder on CPU in 2026</description>
       <pubDate>Wed, 24 Jun 2026 05:55:03 +0000</pubDate>
       <guid>https://kubaik.github.io/rerankers-beat-raw-rag-every-time/</guid>
-    </item>
-    <item>
-      <title>AI steals junior tasks: 3 skills that protect pay</title>
-      <link>https://kubaik.github.io/ai-steals-junior-tasks-3-skills-that-protect-pay/</link>
-      <description>Protect your 2026 salary: cut AI-driven boilerplate, validate features first, and measure revenue per hour. 3 skills that shield pay when AI automates junior work.</description>
-      <pubDate>Wed, 24 Jun 2026 05:02:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-steals-junior-tasks-3-skills-that-protect-pay/</guid>
     </item>
   </channel>
 </rss>
