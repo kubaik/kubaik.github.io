@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>Tech Blog</title>
+    <title>Kubai Kevin — Backend & AI Engineering</title>
     <link>https://kubaik.github.io</link>
-    <description>Cutting-edge insights into technology, AI, and development</description>
+    <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 08:27:19 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 11:29:52 +0000</lastBuildDate>
     <item>
       <title>SBOMs in 2026: automate releases with Syft 1.12</title>
       <link>https://kubaik.github.io/sboms-in-2026-automate-releases-with-syft-112/</link>

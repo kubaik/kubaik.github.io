@@ -3331,7 +3331,7 @@ def create_sample_config():
         "amazon_affiliate_tag":        "aiblogcontent-20",
         "google_analytics_id":         "G-DST4PJYK6V",
         "google_adsense_id":           "ca-pub-4477679588953789",
-        "google_search_console_key":   "AIzaSyBqIII5-K2quNev9w7iJoH5U4uqIqKDkEQ",
+        "google_search_console_key":   "GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI",
         "google_adsense_verification": "ca-pub-4477679588953789",
         "hook_style": "auto",
         "social_accounts": {
