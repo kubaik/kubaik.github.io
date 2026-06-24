@@ -20,5 +20,6 @@
   "Building for eventual consistency: the real-world patterns behind systems that stay up",
   "Secrets management in 2026: the approaches that replaced .env files in serious projects",
   "On-call in 2026: how AI alert triage is changing what wakes engineers up at night",
-  "How feature flag systems evolved into full experimentation platforms"
+  "How feature flag systems evolved into full experimentation platforms",
+  "How to maintain a codebase where 40% of the code was written by an AI"
 ]

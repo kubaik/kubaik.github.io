@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T15:31:59.542898",
+  "built_at": "2026-06-24T17:02:35.735874",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2580,6 +2580,11 @@
       "slug": "5-feature-flag-tools-that-became-ab-platforms",
       "title": "5 feature flag tools that became A/B platforms",
       "summary": "I ran into this feature flag problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026 the Kenya Revenue Authority asked us "
+    },
+    {
+      "slug": "ai-codebases-lock-it-down-with-strict-mode",
+      "title": "AI codebases: lock it down with strict mode",
+      "summary": "I've seen the same maintain codebase mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, many teams still treat AI-generated code like a junior dev "
     }
   ]
 }
