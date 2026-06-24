@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 15:27:22 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 15:32:07 +0000</lastBuildDate>
+    <item>
+      <title>5 feature flag tools that became A/B platforms</title>
+      <link>https://kubaik.github.io/5-feature-flag-tools-that-became-ab-platforms/</link>
+      <description>Cut API response time 65% with a self-hosted feature flag system — latency, cost, and offline sync numbers for Flagsmith, LaunchDarkly, and PostHog in 2026.</description>
+      <pubDate>Wed, 24 Jun 2026 15:31:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-feature-flag-tools-that-became-ab-platforms/</guid>
+    </item>
     <item>
       <title>Alerts 2026: AI turns false alarms to silence</title>
       <link>https://kubaik.github.io/alerts-2026-ai-turns-false-alarms-to-silence/</link>
@@ -138,13 +145,6 @@
       <description>Cut CI pipeline latency 63% with lightweight AI code testing and rollback in 2026. Learn GitHub Actions, Semgrep, Prometheus, and blue-green deployments that work under $30/month.</description>
       <pubDate>Tue, 23 Jun 2026 22:57:31 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-for-ai-code-test-secure-rollback-fast/</guid>
-    </item>
-    <item>
-      <title>AI backend costs in Africa: 3 hidden taxes</title>
-      <link>https://kubaik.github.io/ai-backend-costs-in-africa-3-hidden-taxes/</link>
-      <description>Cut AI backend costs 60% with caching, regional placement, and circuit breakers — latency, compliance, and cloud bills measured on real African networks.</description>
-      <pubDate>Tue, 23 Jun 2026 22:23:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-backend-costs-in-africa-3-hidden-taxes/</guid>
     </item>
   </channel>
 </rss>
