@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T04:45:59.315430",
+  "built_at": "2026-06-24T05:02:03.268690",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2505,6 +2505,11 @@
       "slug": "ai-pair-cuts-code-review-time-75",
       "title": "AI pair cuts code review time 75%",
       "summary": "I ran into this pair programming problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In early 2026 our team at KodePilot hit a"
+    },
+    {
+      "slug": "ai-steals-junior-tasks-3-skills-that-protect-pay",
+      "title": "AI steals junior tasks: 3 skills that protect pay",
+      "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. AI steals junior tasks: 3 skills that protect your salary in 2026 The error and why it's con"
     }
   ]
 }

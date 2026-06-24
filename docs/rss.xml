@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 04:46:07 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 05:02:11 +0000</lastBuildDate>
+    <item>
+      <title>AI steals junior tasks: 3 skills that protect pay</title>
+      <link>https://kubaik.github.io/ai-steals-junior-tasks-3-skills-that-protect-pay/</link>
+      <description>Protect your 2026 salary: cut AI-driven boilerplate, validate features first, and measure revenue per hour. 3 skills that shield pay when AI automates junior work.</description>
+      <pubDate>Wed, 24 Jun 2026 05:02:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-steals-junior-tasks-3-skills-that-protect-pay/</guid>
+    </item>
     <item>
       <title>AI pair cuts code review time 75%</title>
       <link>https://kubaik.github.io/ai-pair-cuts-code-review-time-75/</link>
@@ -138,13 +145,6 @@
       <description>Cut dev time 80%: 6-week SaaS built with AI tools for 82% of the code — Vercel, Supabase, FastAPI, and Cursor in 2026.</description>
       <pubDate>Tue, 23 Jun 2026 16:24:30 +0000</pubDate>
       <guid>https://kubaik.github.io/6-weeks-to-saas-80-code-ai-built/</guid>
-    </item>
-    <item>
-      <title>Schema-per-tenant cost us weeks. Here’s what worked</title>
-      <link>https://kubaik.github.io/schema-per-tenant-cost-us-weeks-heres-what-worked/</link>
-      <description>Cut PostgreSQL costs 60% and latency 82% by switching from schema-per-tenant to database-per-tenant with tenant grouping — the real numbers and Terraform code most tutorials skip.</description>
-      <pubDate>Tue, 23 Jun 2026 15:58:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/schema-per-tenant-cost-us-weeks-heres-what-worked/</guid>
     </item>
   </channel>
 </rss>
