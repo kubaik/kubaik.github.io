@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 10:02:50 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 10:07:45 +0000</lastBuildDate>
+    <item>
+      <title>AI agents forget overnight — how to keep memory alive</title>
+      <link>https://kubaik.github.io/ai-agents-forget-overnight-how-to-keep-memory-alive/</link>
+      <description>The agent’s response time stayed under 200ms, so we blamed the retrieval layer.</description>
+      <pubDate>Wed, 24 Jun 2026 10:07:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-forget-overnight-how-to-keep-memory-alive/</guid>
+    </item>
     <item>
       <title>Istio and Cilium: what really breaks in production</title>
       <link>https://kubaik.github.io/istio-and-cilium-what-really-breaks-in-production/</link>
@@ -138,13 +145,6 @@
       <description>Cut 504 errors 68% with FastAPI 0.115 retries and Redis 7.2 caching under 400 ms Starlink latency — connection pool, stampede guard, and cache stampede mistake most teams make.</description>
       <pubDate>Tue, 23 Jun 2026 19:37:40 +0000</pubDate>
       <guid>https://kubaik.github.io/handle-starlink-4g-fallbacks-in-fastapi-0115/</guid>
-    </item>
-    <item>
-      <title>AI prompt injection: the attack you’re running live</title>
-      <link>https://kubaik.github.io/ai-prompt-injection-the-attack-youre-running-live/</link>
-      <description>Prevent AI data leaks in 2026 with real sanitizers and tests. Stop 29% of prompt injection attacks before they reach production — benchmarks, code, and the mistakes I made.</description>
-      <pubDate>Tue, 23 Jun 2026 19:27:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-prompt-injection-the-attack-youre-running-live/</guid>
     </item>
   </channel>
 </rss>
