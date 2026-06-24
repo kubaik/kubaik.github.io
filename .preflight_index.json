@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T20:19:28.156696",
+  "built_at": "2026-06-24T20:31:15.063542",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2620,6 +2620,11 @@
       "slug": "engineering-interviews-what-ai-wants-now",
       "title": "Engineering interviews: what AI wants now",
       "summary": "The official documentation for changed hiring is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs In 2026, every engineer memorized "
+    },
+    {
+      "slug": "stop-async-python-from-burning-your-budget",
+      "title": "Stop async Python from burning your budget",
+      "summary": "I've seen the same async python mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Async Python isn’t new—asyncio shipped in Python 3.4 (2014) and became st"
     }
   ]
 }

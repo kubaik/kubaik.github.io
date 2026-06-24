@@ -28,5 +28,6 @@
   "Evaluating LLM output quality at scale: the metrics that actually matter",
   "How to build a portfolio that gets you hired in a market where everyone has AI-assisted projects",
   "How I use AI to maintain legacy codebases nobody wants to touch",
-  "How AI changed what hiring managers are looking for in engineering interviews"
+  "How AI changed what hiring managers are looking for in engineering interviews",
+  "Why async Python still surprises people and how to stop getting burned by it"
 ]

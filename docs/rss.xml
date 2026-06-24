@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 20:19:36 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 20:31:23 +0000</lastBuildDate>
+    <item>
+      <title>Stop async Python from burning your budget</title>
+      <link>https://kubaik.github.io/stop-async-python-from-burning-your-budget/</link>
+      <description>The logs showed no obvious bottlenecks: CPU was 28%, RAM 42%, and the database had spare capacity.</description>
+      <pubDate>Wed, 24 Jun 2026 20:31:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-async-python-from-burning-your-budget/</guid>
+    </item>
     <item>
       <title>Engineering interviews: what AI wants now</title>
       <link>https://kubaik.github.io/engineering-interviews-what-ai-wants-now/</link>
@@ -138,13 +145,6 @@
       <description>Cut 65% SBOM storage costs with Syft 1.12 and OCI registries — automate CycloneDX SBOMs in CI, fail builds on CVEs, and pass audits in 2026</description>
       <pubDate>Wed, 24 Jun 2026 08:23:47 +0000</pubDate>
       <guid>https://kubaik.github.io/sboms-in-2026-automate-releases-with-syft-112/</guid>
-    </item>
-    <item>
-      <title>Rerankers beat raw RAG every time</title>
-      <link>https://kubaik.github.io/rerankers-beat-raw-rag-every-time/</link>
-      <description>Cut search errors 76% with hybrid retrieval + reranking — BM25 + embeddings + cross-encoder on CPU in 2026</description>
-      <pubDate>Wed, 24 Jun 2026 05:55:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/rerankers-beat-raw-rag-every-time/</guid>
     </item>
   </channel>
 </rss>
