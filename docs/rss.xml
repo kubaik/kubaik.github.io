@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 04:41:17 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 04:46:07 +0000</lastBuildDate>
+    <item>
+      <title>AI pair cuts code review time 75%</title>
+      <link>https://kubaik.github.io/ai-pair-cuts-code-review-time-75/</link>
+      <description>Cut code review time 78% with AI pair tools — GitHub Copilot Workspace vs CodeRabbit vs Amazon Q in a 6-month team experiment with concrete metrics and the one tool that paid for itself in 14 days.</description>
+      <pubDate>Wed, 24 Jun 2026 04:45:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pair-cuts-code-review-time-75/</guid>
+    </item>
     <item>
       <title>AI rewrote my docs: the docs I deleted</title>
       <link>https://kubaik.github.io/ai-rewrote-my-docs-the-docs-i-deleted/</link>
@@ -138,13 +145,6 @@
       <description>Cut PostgreSQL costs 60% and latency 82% by switching from schema-per-tenant to database-per-tenant with tenant grouping — the real numbers and Terraform code most tutorials skip.</description>
       <pubDate>Tue, 23 Jun 2026 15:58:56 +0000</pubDate>
       <guid>https://kubaik.github.io/schema-per-tenant-cost-us-weeks-heres-what-worked/</guid>
-    </item>
-    <item>
-      <title>AI UI tools broke my React flow — here’s why</title>
-      <link>https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/</link>
-      <description>Cut frontend component delivery 75% with AI UI tools — but expect to refactor 60% for accessibility, responsive design, and state integration. Real benchmarks, prompts, and CI setups from a 2026 production team.</description>
-      <pubDate>Tue, 23 Jun 2026 15:45:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/</guid>
     </item>
   </channel>
 </rss>
