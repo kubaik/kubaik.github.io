@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 17:27:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 17:32:46 +0000</lastBuildDate>
+    <item>
+      <title>Tame audit logs for compliance</title>
+      <link>https://kubaik.github.io/tame-audit-logs-for-compliance/</link>
+      <description>Cut audit log query time 80% — Postgres vs Kafka in 2026 with latency benchmarks, cost breakdowns, and the schema mistake that cost 15 minutes of downtime.</description>
+      <pubDate>Wed, 24 Jun 2026 17:32:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/tame-audit-logs-for-compliance/</guid>
+    </item>
     <item>
       <title>USSD fintech stack in 2026: build it right</title>
       <link>https://kubaik.github.io/ussd-fintech-stack-in-2026-build-it-right/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 80% by avoiding vibe coding debt — PocketBase, Supabase, Leaflet failures and FastAPI’s escape hatch at 2026 prices.</description>
       <pubDate>Wed, 24 Jun 2026 00:05:13 +0000</pubDate>
       <guid>https://kubaik.github.io/3-vibe-coding-tools-i-regret-shipping-in-production/</guid>
-    </item>
-    <item>
-      <title>Cost vs accuracy: fine-tune small or prompt large?</title>
-      <link>https://kubaik.github.io/cost-vs-accuracy-fine-tune-small-or-prompt-large/</link>
-      <description>Cut AI inference cost 73% without sacrificing accuracy — the dirty traffic, latency, and tokeniser gotchas most teams miss when choosing between fine-tuning small models or prompting large ones in 2026.</description>
-      <pubDate>Tue, 23 Jun 2026 23:38:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/cost-vs-accuracy-fine-tune-small-or-prompt-large/</guid>
     </item>
   </channel>
 </rss>

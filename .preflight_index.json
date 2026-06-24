@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T17:17:56.661408",
+  "built_at": "2026-06-24T17:32:38.461438",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2590,6 +2590,11 @@
       "slug": "ussd-fintech-stack-in-2026-build-it-right",
       "title": "USSD fintech stack in 2026: build it right",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I still remember the first time I tried to run a USSD menu that worked on both a Nokia 2"
+    },
+    {
+      "slug": "tame-audit-logs-for-compliance",
+      "title": "Tame audit logs for compliance",
+      "summary": "I've seen the same building audit mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, audit logging isn’t just a checkbox for SOC 2 or ISO 27001 any"
     }
   ]
 }
