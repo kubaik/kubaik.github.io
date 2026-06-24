@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T21:18:56.613066",
+  "built_at": "2026-06-24T21:31:50.104069",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2630,6 +2630,11 @@
       "slug": "scan-10k-repos-daily-without-false-positives",
       "title": "Scan 10k repos daily without false positives",
       "summary": "Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we had 10,247 GitHub repositories scattered across 14 organizations. Every "
+    },
+    {
+      "slug": "build-idps-that-dont-crumble-in-2026",
+      "title": "Build IDPs that don’t crumble in 2026",
+      "summary": "The official documentation for platform engineering is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Two years ago I helped a 300"
     }
   ]
 }

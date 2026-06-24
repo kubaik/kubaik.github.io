@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 21:27:02 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 21:31:58 +0000</lastBuildDate>
+    <item>
+      <title>Build IDPs that don’t crumble in 2026</title>
+      <link>https://kubaik.github.io/build-idps-that-dont-crumble-in-2026/</link>
+      <description>Cut platform toil 40% with Backstage 1.26, Argo CD 2.9, and Crossplane 1.15 — real code, latency benchmarks, and the RBAC explosion nobody warns you about.</description>
+      <pubDate>Wed, 24 Jun 2026 21:31:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-idps-that-dont-crumble-in-2026/</guid>
+    </item>
     <item>
       <title>Scan 10k repos daily without false positives</title>
       <link>https://kubaik.github.io/scan-10k-repos-daily-without-false-positives/</link>
@@ -138,13 +145,6 @@
       <description>Cut API abuse 92% with edge filters — CloudFront Functions, Akamai Bot Manager, and Redis 7.2 beat JavaScript challenges and WAFs on latency and cost in 2026.</description>
       <pubDate>Wed, 24 Jun 2026 08:43:50 +0000</pubDate>
       <guid>https://kubaik.github.io/api-abuse-patterns-rising-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI infra: capacity planning vs runbooks — what I’d</title>
-      <link>https://kubaik.github.io/ai-infra-capacity-planning-vs-runbooks-what-id/</link>
-      <description>Cut cloud waste 73% and downtime 63% with AI capacity and runbooks in 2026. Compare Kubernetes VPA vs PagerDuty AI playbooks with concrete benchmarks and cost data.</description>
-      <pubDate>Wed, 24 Jun 2026 08:35:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-infra-capacity-planning-vs-runbooks-what-id/</guid>
     </item>
   </channel>
 </rss>
