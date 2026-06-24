@@ -15,5 +15,6 @@
   "AI memory systems: giving your agent context that persists across sessions",
   "The hidden costs of running AI agents in production: tokens, retries, and timeouts",
   "How to do a postmortem on an AI agent failure: it's different from a regular incident",
-  "How AI changed the economics of building a solo SaaS in 2026"
+  "How AI changed the economics of building a solo SaaS in 2026",
+  "Postgres in 2026: the features that replaced three separate tools in our stack"
 ]
