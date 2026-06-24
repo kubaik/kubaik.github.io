@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 11:49:21 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 11:54:04 +0000</lastBuildDate>
+    <item>
+      <title>AI agent postmortems: the three surprises</title>
+      <link>https://kubaik.github.io/ai-agent-postmortems-the-three-surprises/</link>
+      <description>Catch AI agent failures 60 % faster with shadowing vs logging — real QPS, cost, and alert-latency numbers from Brazilian, Colombian, and Mexican production systems in 2026.</description>
+      <pubDate>Wed, 24 Jun 2026 11:53:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agent-postmortems-the-three-surprises/</guid>
+    </item>
     <item>
       <title>AI agents forget overnight — how to keep memory alive</title>
       <link>https://kubaik.github.io/ai-agents-forget-overnight-how-to-keep-memory-alive/</link>
@@ -138,13 +145,6 @@
       <description>Fine-tune a 2.7B model and cut costs 78 % — but lose 31 % accuracy. Prompt a 70B model and pay $0.11 extra per 1k requests — but gain 26 % safety accuracy and beat SLA latency. 2026 real numbers included.</description>
       <pubDate>Tue, 23 Jun 2026 20:24:53 +0000</pubDate>
       <guid>https://kubaik.github.io/tune-small-or-prompt-big-2026-costs-revealed/</guid>
-    </item>
-    <item>
-      <title>Handle Starlink 4G fallbacks in FastAPI 0.115</title>
-      <link>https://kubaik.github.io/handle-starlink-4g-fallbacks-in-fastapi-0115/</link>
-      <description>Cut 504 errors 68% with FastAPI 0.115 retries and Redis 7.2 caching under 400 ms Starlink latency — connection pool, stampede guard, and cache stampede mistake most teams make.</description>
-      <pubDate>Tue, 23 Jun 2026 19:37:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/handle-starlink-4g-fallbacks-in-fastapi-0115/</guid>
     </item>
   </channel>
 </rss>

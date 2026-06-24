@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T11:41:56.103429",
+  "built_at": "2026-06-24T11:53:55.939676",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2545,6 +2545,11 @@
       "slug": "tokens-retries-timeouts-ai-agent-ops-costs",
       "title": "Tokens, retries, timeouts: AI agent ops costs",
       "summary": "The official documentation for hidden costs is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs The marketing for AI agents promises"
+    },
+    {
+      "slug": "ai-agent-postmortems-the-three-surprises",
+      "title": "AI agent postmortems: the three surprises",
+      "summary": "I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now AI agents don’t fail like regular services. A cron job that retries e"
     }
   ]
 }
