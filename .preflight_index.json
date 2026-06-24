@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T08:23:49.530584",
+  "built_at": "2026-06-24T08:35:28.308385",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2520,6 +2520,11 @@
       "slug": "sboms-in-2026-automate-releases-with-syft-112",
       "title": "SBOMs in 2026: automate releases with Syft 1.12",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I spent three weeks arguing with compliance teams about what a \"bill of materials\" actua"
+    },
+    {
+      "slug": "ai-infra-capacity-planning-vs-runbooks-what-id",
+      "title": "AI infra: capacity planning vs runbooks — what I’d",
+      "summary": "I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, teams that still treat capacity planning and anomaly "
     }
   ]
 }
