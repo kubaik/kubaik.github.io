@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 04:21:48 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 04:26:40 +0000</lastBuildDate>
+    <item>
+      <title>AI rewrote my docs: the docs I deleted</title>
+      <link>https://kubaik.github.io/ai-rewrote-my-docs-the-docs-i-deleted/</link>
+      <description>Cut review time 60% with AI docs — but only after fixing contracts, tests, and specs. The constraints most teams skip that prevent AI from making things worse.</description>
+      <pubDate>Wed, 24 Jun 2026 04:26:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-rewrote-my-docs-the-docs-i-deleted/</guid>
+    </item>
     <item>
       <title>AI codebase onboarding: 2 paths tested</title>
       <link>https://kubaik.github.io/ai-codebase-onboarding-2-paths-tested/</link>
@@ -138,13 +145,6 @@
       <description>Cut frontend component delivery 75% with AI UI tools — but expect to refactor 60% for accessibility, responsive design, and state integration. Real benchmarks, prompts, and CI setups from a 2026 production team.</description>
       <pubDate>Tue, 23 Jun 2026 15:45:26 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/</guid>
-    </item>
-    <item>
-      <title>Shrink multi-region costs 40%: the real levers</title>
-      <link>https://kubaik.github.io/shrink-multi-region-costs-40-the-real-levers/</link>
-      <description>The docs never mention that every extra region adds 20–30 % to your cloud bill even if you leave the database idle.</description>
-      <pubDate>Tue, 23 Jun 2026 13:55:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/shrink-multi-region-costs-40-the-real-levers/</guid>
     </item>
   </channel>
 </rss>
