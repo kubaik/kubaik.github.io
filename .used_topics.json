@@ -12,5 +12,6 @@
   "How AI is changing infrastructure: automated capacity planning, anomaly detection, and runbooks",
   "API security in 2026: the attack patterns that are becoming more common and how to block them",
   "How service mesh adoption actually went: what Istio and Cilium look like in real production",
-  "AI memory systems: giving your agent context that persists across sessions"
+  "AI memory systems: giving your agent context that persists across sessions",
+  "The hidden costs of running AI agents in production: tokens, retries, and timeouts"
 ]
