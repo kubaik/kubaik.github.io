@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 12:04:51 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 12:09:47 +0000</lastBuildDate>
+    <item>
+      <title>Run AI SaaS solo in 2026</title>
+      <link>https://kubaik.github.io/run-ai-saas-solo-in-2026/</link>
+      <description>Build a solo AI SaaS 5x faster in 2026 — $328 vs $495 monthly cost breakdown, 14k vs 1.2k lines of code, and the SOC 2 compliance trick most miss.</description>
+      <pubDate>Wed, 24 Jun 2026 12:09:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/run-ai-saas-solo-in-2026/</guid>
+    </item>
     <item>
       <title>AI agent postmortems: the three surprises</title>
       <link>https://kubaik.github.io/ai-agent-postmortems-the-three-surprises/</link>
@@ -138,13 +145,6 @@
       <description>The gap between what the docs say and what production needs I once inherited a 12-year-old PHP monolith running on a single t3.medium in AWS, processing…</description>
       <pubDate>Tue, 23 Jun 2026 21:25:55 +0000</pubDate>
       <guid>https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/</guid>
-    </item>
-    <item>
-      <title>Tune small or prompt big: 2026 costs revealed</title>
-      <link>https://kubaik.github.io/tune-small-or-prompt-big-2026-costs-revealed/</link>
-      <description>Fine-tune a 2.7B model and cut costs 78 % — but lose 31 % accuracy. Prompt a 70B model and pay $0.11 extra per 1k requests — but gain 26 % safety accuracy and beat SLA latency. 2026 real numbers included.</description>
-      <pubDate>Tue, 23 Jun 2026 20:24:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/tune-small-or-prompt-big-2026-costs-revealed/</guid>
     </item>
   </channel>
 </rss>

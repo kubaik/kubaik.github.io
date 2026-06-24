@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T11:53:55.939676",
+  "built_at": "2026-06-24T12:09:39.278329",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2550,6 +2550,11 @@
       "slug": "ai-agent-postmortems-the-three-surprises",
       "title": "AI agent postmortems: the three surprises",
       "summary": "I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now AI agents don’t fail like regular services. A cron job that retries e"
+    },
+    {
+      "slug": "run-ai-saas-solo-in-2026",
+      "title": "Run AI SaaS solo in 2026",
+      "summary": "I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the solo SaaS founder has two clear paths to launch: build "
     }
   ]
 }
