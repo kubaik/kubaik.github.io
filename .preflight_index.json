@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T23:11:57.656119",
+  "built_at": "2026-06-24T23:42:40.553331",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2655,6 +2655,11 @@
       "slug": "aws-iam-in-10-minutes-stop-writing-policies-by-hand",
       "title": "AWS IAM in 10 minutes: stop writing policies by hand",
       "summary": "The short version: the conventional advice on implement leastprivilege is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. Advanced edge cases I personally encountered (and how we fixed them) 1. The \"Cross-Account AssumeRole with Temporary "
+    },
+    {
+      "slug": "3-side-gigs-that-paid-me-2k-usdmonth-in-2026",
+      "title": "3 side gigs that paid me 2k USD/month in 2026",
+      "summary": "I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In mid-2026 I hit a wall: my Nairobi finte"
     }
   ]
 }
