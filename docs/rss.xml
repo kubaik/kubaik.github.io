@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 05:55:12 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 08:23:57 +0000</lastBuildDate>
+    <item>
+      <title>SBOMs in 2026: automate releases with Syft 1.12</title>
+      <link>https://kubaik.github.io/sboms-in-2026-automate-releases-with-syft-112/</link>
+      <description>Cut 65% SBOM storage costs with Syft 1.12 and OCI registries — automate CycloneDX SBOMs in CI, fail builds on CVEs, and pass audits in 2026</description>
+      <pubDate>Wed, 24 Jun 2026 08:23:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/sboms-in-2026-automate-releases-with-syft-112/</guid>
+    </item>
     <item>
       <title>Rerankers beat raw RAG every time</title>
       <link>https://kubaik.github.io/rerankers-beat-raw-rag-every-time/</link>
@@ -138,13 +145,6 @@
       <description>Cut dev cost 35% with AI — Amazon Q, Copilot Chat, Cursor, Codeium, GitLab Duo ranked by Nairobi benchmarks. Real latency and rollback stats inside.</description>
       <pubDate>Tue, 23 Jun 2026 17:36:37 +0000</pubDate>
       <guid>https://kubaik.github.io/5-ai-tools-that-let-us-ship-faster-than-sf-teams/</guid>
-    </item>
-    <item>
-      <title>7 experiment platforms that replaced our flag system</title>
-      <link>https://kubaik.github.io/7-experiment-platforms-that-replaced-our-flag-system/</link>
-      <description>Cut experiment setup time 70% with PostHog 1.43 — offline support, real-time analytics, and self-hosting under $20/month for 50k users</description>
-      <pubDate>Tue, 23 Jun 2026 16:50:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-experiment-platforms-that-replaced-our-flag-system/</guid>
     </item>
   </channel>
 </rss>
