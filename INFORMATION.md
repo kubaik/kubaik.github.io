@@ -190,3 +190,17 @@ python test_schema_validator.py --quiet --delete 3
 
 Point at a non-default docs path
 hpython test_schema_validator.py --docs /path/to/docs --delete 2
+
+# adsense_slots: uncomment and add real slot IDs once AdSense approves the site.
+
+# Until then, Auto Ads format is used (safer for the approval review).
+
+# adsense_slots:
+
+# header: "1234567890"
+
+# inline: "0987654321"
+
+# middle: "1122334455"
+
+# footer: "5544332211"

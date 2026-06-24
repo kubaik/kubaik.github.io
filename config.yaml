@@ -1,3 +1,4 @@
+adsense_slots: {}
 amazon_affiliate_tag: aiblogcontent-20
 base_path: ""
 base_url: https://kubaik.github.io
@@ -189,24 +190,13 @@ content_topics:
 google_adsense_id: ca-pub-4477679588953789
 google_adsense_verification: ca-pub-4477679588953789
 google_analytics_id: G-DST4PJYK6V
-# google_search_console_key: paste the HTML meta verification token here,
-# NOT an API key. Get it from Search Console → Settings → Ownership verification
-# → HTML tag. It looks like: "abc123XYZ..." (no "AIza" prefix).
-# Leave blank until you have the correct token.
 google_search_console_key: GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI
 hook_style: auto
-site_description: >-
-  Practical backend engineering, AI tooling, and developer career advice
-  by Kubai Kevin — a software developer with 10+ years building production
+site_description:
+  Practical backend engineering, AI tooling, and developer career
+  advice by Kubai Kevin — a software developer with 10+ years building production
   systems in fintech and AI.
-site_name: Kubai Kevin — Backend & AI Engineering
-# adsense_slots: uncomment and add real slot IDs once AdSense approves the site.
-# Until then, Auto Ads format is used (safer for the approval review).
-# adsense_slots:
-#   header: "1234567890"
-#   inline: "0987654321"
-#   middle: "1122334455"
-#   footer: "5544332211"
+site_name: Kubai Kevin
 social_accounts:
   facebook: your-facebook-page
   linkedin: your-linkedin-page

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
   <channel>
-    <title>Kubai Kevin — Backend & AI Engineering</title>
+    <title>Kubai Kevin</title>
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 08:44:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 12:23:17 +0000</lastBuildDate>
     <item>
       <title>API abuse patterns rising in 2026</title>
       <link>https://kubaik.github.io/api-abuse-patterns-rising-in-2026/</link>

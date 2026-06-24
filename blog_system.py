@@ -1930,7 +1930,7 @@ class BlogSystem:
             "Authorization": f"Bearer {self.openrouter_key}",
             "Content-Type": "application/json",
             "HTTP-Referer": self.config.get("base_url", "https://kubaik.github.io"),
-            "X-Title": self.config.get("site_name", "Tech Blog"),
+            "X-Title": self.config.get("site_name", "Kubai Kevin"),
         }
         data = {
             "model": "openai/gpt-oss-120b:free",
@@ -3322,24 +3322,97 @@ def pick_next_topic(
 # CONFIG INITIALISER
 # ─────────────────────────────────────────────────────────────────
 
-def create_sample_config():
-    config = {
-        "site_name":        "Tech Blog",
-        "site_description": "Cutting-edge insights into technology, AI, and development",
-        "base_url":         "https://kubaik.github.io",
-        "base_path":        "",
-        "amazon_affiliate_tag":        "aiblogcontent-20",
-        "google_analytics_id":         "G-DST4PJYK6V",
-        "google_adsense_id":           "ca-pub-4477679588953789",
-        "google_search_console_key":   "GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI",
-        "google_adsense_verification": "ca-pub-4477679588953789",
-        "hook_style": "auto",
-        "social_accounts": {
-            "twitter":  "@KubaiKevin",
-            "linkedin": "your-linkedin-page",
-            "facebook": "your-facebook-page",
-        },
-        "content_topics": [
+def create_sample_config(config_path: str = "config.yaml"):
+    """
+    Safe idempotent init — never overwrites keys the user has already set.
+
+    Behaviour:
+    - First run (no config.yaml): writes the full default config.
+    - Subsequent runs: reads the existing file, adds any MISSING keys,
+      appends any NEW topics not already in the list, then writes back.
+      Every key the user has already customised is left untouched.
+    """
+    CONFIG_FILE = config_path
+
+    # ── Load existing config (empty dict on first run) ──────────────────────
+    existing: dict = {}
+    is_new_file = not os.path.exists(CONFIG_FILE)
+    if not is_new_file:
+        try:
+            with open(CONFIG_FILE, "r", encoding="utf-8") as _f:
+                existing = yaml.safe_load(_f) or {}
+            print(f"  Found existing {CONFIG_FILE} — merging new defaults only.")
+        except Exception as _e:
+            print(f"  Warning: could not read {CONFIG_FILE} ({_e}). "
+                  "Treating as new file.")
+            existing = {}
+            is_new_file = True
+
+    # ── Scalar defaults (only written when key is absent) ───────────────────
+    # Keys that contain real credentials are intentionally left as empty
+    # strings so a first-run user sees clearly what they need to fill in,
+    # while a returning user never has their live values clobbered.
+    SCALAR_DEFAULTS = {
+        "site_name":               "Kubai Kevin",
+        "site_description": (
+            "Practical backend engineering, AI tooling, and developer career "
+            "advice by Kubai Kevin — 10+ years building production systems."
+        ),
+        "base_url":                "https://kubaik.github.io",
+        "base_path":               "",
+        "amazon_affiliate_tag":    "aiblogcontent-20",
+        "google_analytics_id":     "",
+        "google_adsense_id":       "",
+        # Must be the HTML-meta verification token from Search Console
+        # (Settings → Ownership verification → HTML tag), NOT an API key.
+        "google_search_console_key": "",
+        "hook_style":              "auto",
+    }
+
+    changed_keys: list[str] = []
+    for key, default in SCALAR_DEFAULTS.items():
+        if key not in existing:
+            existing[key] = default
+            changed_keys.append(key)
+
+    # ── google_search_console_key: silently clear accidental API keys ────────
+    gsc = existing.get("google_search_console_key", "")
+    if isinstance(gsc, str) and gsc.startswith("AIza"):
+        print(f"  ⚠️  google_search_console_key looks like a Google API key "
+              f"(starts with 'AIza'). Clearing it — paste the HTML-meta "
+              f"verification token from Search Console instead.")
+        existing["google_search_console_key"] = ""
+        changed_keys.append("google_search_console_key (cleared bad value)")
+
+    # ── social_accounts: merge sub-keys, never overwrite existing values ─────
+    social_defaults = {
+        "twitter":  "@KubaiKevin",
+        "linkedin": "your-linkedin-page",
+        "facebook": "your-facebook-page",
+    }
+    if "social_accounts" not in existing:
+        existing["social_accounts"] = social_defaults
+        changed_keys.append("social_accounts")
+    else:
+        for k, v in social_defaults.items():
+            if k not in existing["social_accounts"]:
+                existing["social_accounts"][k] = v
+                changed_keys.append(f"social_accounts.{k}")
+
+    # ── adsense_slots: add placeholder block when absent ─────────────────────
+    if "adsense_slots" not in existing:
+        existing["adsense_slots"] = {
+            # Uncomment and paste real slot IDs once AdSense approves the site.
+            # "header": "",
+            # "inline": "",
+            # "middle": "",
+            # "footer": "",
+        }
+        changed_keys.append("adsense_slots")
+
+    config = existing  # alias for clarity below
+    # ── content_topics: append only topics not already present ───────────────
+    NEW_TOPICS = [
             # ── AI & LLM Engineering ──────────────────────────────────────────────────
             "Why Claude 4 and GPT-5 changed how I structure prompts for production systems",
             "MCP servers in 2026: the protocol that quietly became infrastructure",
@@ -3499,17 +3572,36 @@ def create_sample_config():
             "Pair programming with AI: how it changed collaboration on my team",
             "How to onboard a developer to a partially AI-generated codebase",
             "Feature flags in 2026: how they became the backbone of AI rollout strategies",
-        ],
-    }
+    ]
 
-    with open("config.yaml", "w") as f:
-        yaml.dump(config, f, default_flow_style=False, indent=2)
+    existing_topics: list = config.get("content_topics") or []
+    existing_topic_set = set(existing_topics)
+    appended_topics = [t for t in NEW_TOPICS if t not in existing_topic_set]
+    config["content_topics"] = existing_topics + appended_topics
+    if appended_topics:
+        changed_keys.append(
+            f"content_topics (+{len(appended_topics)} new, "
+            f"{len(existing_topics)} preserved)"
+        )
 
-    print("Created sample config.yaml")
+    # ── Write back ───────────────────────────────────────────────────────────
+    with open(CONFIG_FILE, "w", encoding="utf-8") as _f:
+        yaml.dump(config, _f, default_flow_style=False,
+                  indent=2, allow_unicode=True)
+
+    if is_new_file:
+        print(f"Created {CONFIG_FILE} with default configuration.")
+    elif changed_keys:
+        print(f"Updated {CONFIG_FILE} — added missing keys:")
+        for k in changed_keys:
+            print(f"  + {k}")
+    else:
+        print(f"{CONFIG_FILE} is already up to date — nothing changed.")
+
     print(
-        "\nAdd GitHub secrets: GROQ_API_KEY, OPENROUTER_API_KEY, "
+        "\nRequired GitHub secrets: GROQ_API_KEY, OPENROUTER_API_KEY, "
         "CEREBRAS_API_KEY, MISTRAL_API_KEY, NVIDIA_API_KEY, GEMINI_API_KEY, "
-        "GITHUB_TOKEN, CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID"
+        "BLOGGITHUB_TOKEN, CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID"
     )
 
 
@@ -3525,7 +3617,8 @@ if __name__ == "__main__":
 
         if mode == "init":
             print("Initializing blog system...")
-            create_sample_config()
+            cfg_path = sys.argv[2] if len(sys.argv) > 2 else "config.yaml"
+            create_sample_config(config_path=cfg_path)
             os.makedirs("docs/static", exist_ok=True)
             os.makedirs("analytics", exist_ok=True)
             print(
@@ -3644,7 +3737,7 @@ if __name__ == "__main__":
                 generate_og_card(
                     blog_post,
                     output_dir=blog_system.output_dir,
-                    site_name=config.get('site_name', 'Tech Blog'),
+                    site_name=config.get('site_name', 'Kubai Kevin'),
                 )
             except Exception as e:
                 print(f"  ⚠️  OG card generation failed (non-fatal): {e}")
