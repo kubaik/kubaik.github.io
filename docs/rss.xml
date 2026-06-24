@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 12:42:56 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 14:11:15 +0000</lastBuildDate>
+    <item>
+      <title>Survive network chaos: 9 eventuality patterns</title>
+      <link>https://kubaik.github.io/survive-network-chaos-9-eventuality-patterns/</link>
+      <description>Cut 4.2 % order failures with 9 eventual-consistency patterns — which one saved $28k Black-Friday weekend? Real code, real AWS bills, real mistakes.</description>
+      <pubDate>Wed, 24 Jun 2026 14:11:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/survive-network-chaos-9-eventuality-patterns/</guid>
+    </item>
     <item>
       <title>Postgres 17 replaced Redis, Kafka, and Prometheus</title>
       <link>https://kubaik.github.io/postgres-17-replaced-redis-kafka-and-prometheus/</link>
@@ -138,13 +145,6 @@
       <description>Cut test flakes 100% with 8 AI code testing methods — local stubs, property tests, golden masters, and the one trick that caught my production bugs without testing the AI. Real benchmarks and cost figures for 2026.</description>
       <pubDate>Tue, 23 Jun 2026 21:59:50 +0000</pubDate>
       <guid>https://kubaik.github.io/test-ai-glue-code-not-the-model/</guid>
-    </item>
-    <item>
-      <title>5 side hustles that pay developers in 2026</title>
-      <link>https://kubaik.github.io/5-side-hustles-that-pay-developers-in-2026/</link>
-      <description>2026 guide to developer side hustles that pay — reusable components, GitHub Sponsors, freelance micro-contracts, and more with real numbers and code examples.</description>
-      <pubDate>Tue, 23 Jun 2026 21:29:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-side-hustles-that-pay-developers-in-2026/</guid>
     </item>
   </channel>
 </rss>
