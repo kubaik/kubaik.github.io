@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T14:11:07.213716",
+  "built_at": "2026-06-24T14:42:06.983283",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2565,6 +2565,11 @@
       "slug": "survive-network-chaos-9-eventuality-patterns",
       "title": "Survive network chaos: 9 eventuality patterns",
       "summary": "I ran into this building eventual problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I joined a team in 2026 that ran a shopp"
+    },
+    {
+      "slug": "secrets-in-2026-ditch-env-forever",
+      "title": "Secrets in 2026: ditch .env forever",
+      "summary": "The official documentation for secrets management is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. Secrets management in 2026: the approaches that replaced .env files in serious projects I "
     }
   ]
 }

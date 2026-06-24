@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 14:37:29 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 14:42:15 +0000</lastBuildDate>
+    <item>
+      <title>Secrets in 2026: ditch .env forever</title>
+      <link>https://kubaik.github.io/secrets-in-2026-ditch-env-forever/</link>
+      <description>Cut secrets rotation time 60% with AWS Secrets Manager 2026 and mobile caching under 450 ms on 3G — real production numbers from 120k daily users in Nigeria and Ghana.</description>
+      <pubDate>Wed, 24 Jun 2026 14:42:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/secrets-in-2026-ditch-env-forever/</guid>
+    </item>
     <item>
       <title>Survive network chaos: 9 eventuality patterns</title>
       <link>https://kubaik.github.io/survive-network-chaos-9-eventuality-patterns/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI backend costs 60% with caching, regional placement, and circuit breakers — latency, compliance, and cloud bills measured on real African networks.</description>
       <pubDate>Tue, 23 Jun 2026 22:23:17 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-backend-costs-in-africa-3-hidden-taxes/</guid>
-    </item>
-    <item>
-      <title>Test AI glue code, not the model</title>
-      <link>https://kubaik.github.io/test-ai-glue-code-not-the-model/</link>
-      <description>Cut test flakes 100% with 8 AI code testing methods — local stubs, property tests, golden masters, and the one trick that caught my production bugs without testing the AI. Real benchmarks and cost figures for 2026.</description>
-      <pubDate>Tue, 23 Jun 2026 21:59:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-ai-glue-code-not-the-model/</guid>
     </item>
   </channel>
 </rss>
