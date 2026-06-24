@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T00:05:15.399830",
+  "built_at": "2026-06-24T01:35:33.038576",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2490,6 +2490,11 @@
       "slug": "3-vibe-coding-tools-i-regret-shipping-in-production",
       "title": "3 vibe coding tools I regret shipping in production",
       "summary": "I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026 I joined a startup building a real-tim"
+    },
+    {
+      "slug": "ai-codebase-onboarding-2-paths-tested",
+      "title": "AI codebase onboarding: 2 paths tested",
+      "summary": "I've seen the same onboard developer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now If your repo has 10,000+ lines already touched by an LLM, the usual "
     }
   ]
 }

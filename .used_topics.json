@@ -1,5 +1,6 @@
 [
   "How I design for LLM latency: the patterns that keep AI features feeling fast",
   "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff",
-  "Why vibe coding works for MVPs and fails for anything you need to maintain"
+  "Why vibe coding works for MVPs and fails for anything you need to maintain",
+  "How to onboard a developer to a partially AI-generated codebase"
 ]

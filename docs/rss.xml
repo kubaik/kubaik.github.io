@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 01:31:07 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 01:35:41 +0000</lastBuildDate>
+    <item>
+      <title>AI codebase onboarding: 2 paths tested</title>
+      <link>https://kubaik.github.io/ai-codebase-onboarding-2-paths-tested/</link>
+      <description>Cut onboarding time 60% with guided generation in AI codebases — tooling cost, CI queue drops, and the exact prompts that worked</description>
+      <pubDate>Wed, 24 Jun 2026 01:35:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-codebase-onboarding-2-paths-tested/</guid>
+    </item>
     <item>
       <title>3 vibe coding tools I regret shipping in production</title>
       <link>https://kubaik.github.io/3-vibe-coding-tools-i-regret-shipping-in-production/</link>
@@ -138,13 +145,6 @@
       <description>The docs never mention that every extra region adds 20–30 % to your cloud bill even if you leave the database idle.</description>
       <pubDate>Tue, 23 Jun 2026 13:55:10 +0000</pubDate>
       <guid>https://kubaik.github.io/shrink-multi-region-costs-40-the-real-levers/</guid>
-    </item>
-    <item>
-      <title>AI-native apps break when you copy old rules</title>
-      <link>https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/</link>
-      <description>Cut AI API latency 60% by ditching REST endpoints. Token budgeting, prompt hashing, and task queues now matter more than CPU. Real systems show the wins.</description>
-      <pubDate>Tue, 23 Jun 2026 13:39:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/</guid>
     </item>
   </channel>
 </rss>
