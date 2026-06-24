@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-23T23:38:21.137062",
+  "built_at": "2026-06-24T00:05:15.399830",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2485,6 +2485,11 @@
       "slug": "cost-vs-accuracy-fine-tune-small-or-prompt-large",
       "title": "Cost vs accuracy: fine-tune small or prompt large?",
       "summary": "The official documentation for finetuning small is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most tutorials tell you to pick "
+    },
+    {
+      "slug": "3-vibe-coding-tools-i-regret-shipping-in-production",
+      "title": "3 vibe coding tools I regret shipping in production",
+      "summary": "I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026 I joined a startup building a real-tim"
     }
   ]
 }

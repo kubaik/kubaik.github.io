@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Cutting-edge insights into technology, AI, and development</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 00:02:06 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 00:05:23 +0000</lastBuildDate>
+    <item>
+      <title>3 vibe coding tools I regret shipping in production</title>
+      <link>https://kubaik.github.io/3-vibe-coding-tools-i-regret-shipping-in-production/</link>
+      <description>Cut API response time 80% by avoiding vibe coding debt — PocketBase, Supabase, Leaflet failures and FastAPI’s escape hatch at 2026 prices.</description>
+      <pubDate>Wed, 24 Jun 2026 00:05:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-vibe-coding-tools-i-regret-shipping-in-production/</guid>
+    </item>
     <item>
       <title>Cost vs accuracy: fine-tune small or prompt large?</title>
       <link>https://kubaik.github.io/cost-vs-accuracy-fine-tune-small-or-prompt-large/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI API latency 60% by ditching REST endpoints. Token budgeting, prompt hashing, and task queues now matter more than CPU. Real systems show the wins.</description>
       <pubDate>Tue, 23 Jun 2026 13:39:38 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/</guid>
-    </item>
-    <item>
-      <title>AI ops showdown: automated runbooks vs. manual</title>
-      <link>https://kubaik.github.io/ai-ops-showdown-automated-runbooks-vs-manual/</link>
-      <description>AI ops vs manual runbooks: 25% cloud savings, 40% faster MTTR — the real numbers from 2026 and which tool to pick first</description>
-      <pubDate>Tue, 23 Jun 2026 12:41:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ops-showdown-automated-runbooks-vs-manual/</guid>
     </item>
   </channel>
 </rss>
