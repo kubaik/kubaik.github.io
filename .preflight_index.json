@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T08:35:28.308385",
+  "built_at": "2026-06-24T08:43:52.759470",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2525,6 +2525,11 @@
       "slug": "ai-infra-capacity-planning-vs-runbooks-what-id",
       "title": "AI infra: capacity planning vs runbooks — what I’d",
       "summary": "I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, teams that still treat capacity planning and anomaly "
+    },
+    {
+      "slug": "api-abuse-patterns-rising-in-2026",
+      "title": "API abuse patterns rising in 2026",
+      "summary": "Most api security guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026 our SaaS platform saw API call volume double every six weeks. The traffic s"
     }
   ]
 }

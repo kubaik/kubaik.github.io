@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 08:39:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 08:44:00 +0000</lastBuildDate>
+    <item>
+      <title>API abuse patterns rising in 2026</title>
+      <link>https://kubaik.github.io/api-abuse-patterns-rising-in-2026/</link>
+      <description>Cut API abuse 92% with edge filters — CloudFront Functions, Akamai Bot Manager, and Redis 7.2 beat JavaScript challenges and WAFs on latency and cost in 2026.</description>
+      <pubDate>Wed, 24 Jun 2026 08:43:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/api-abuse-patterns-rising-in-2026/</guid>
+    </item>
     <item>
       <title>AI infra: capacity planning vs runbooks — what I’d</title>
       <link>https://kubaik.github.io/ai-infra-capacity-planning-vs-runbooks-what-id/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI agent costs 38% by auditing retries and timeouts — real 2026 metrics, token inflation, and the breaker mistake most teams miss.</description>
       <pubDate>Tue, 23 Jun 2026 19:06:58 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-the-hidden-12kagent-tax/</guid>
-    </item>
-    <item>
-      <title>Post-mortem: IaC tools after HashiCorp fork</title>
-      <link>https://kubaik.github.io/post-mortem-iac-tools-after-hashicorp-fork/</link>
-      <description>Cut registry latency 75% with OpenTofu in 2026. Compare Pulumi vs Terraform vs OpenTofu after HashiCorp fork with registry benchmarks, memory usage, and provider parity numbers.</description>
-      <pubDate>Tue, 23 Jun 2026 18:05:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/post-mortem-iac-tools-after-hashicorp-fork/</guid>
     </item>
   </channel>
 </rss>
