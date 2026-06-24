@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T18:56:11.427392",
+  "built_at": "2026-06-24T19:23:34.625239",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2605,6 +2605,11 @@
       "slug": "llm-evals-the-two-metrics-that-bite-you",
       "title": "LLM evals: the two metrics that bite you",
       "summary": "The official documentation for evaluating llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams start by copying the me"
+    },
+    {
+      "slug": "why-your-ai-portfolio-bombs-in-nigeria",
+      "title": "Why your AI portfolio bombs in Nigeria",
+      "summary": "Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, every junior developer in Lagos, Nairobi, and Accra can drop a prompt into Cu"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 19:18:55 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 19:23:43 +0000</lastBuildDate>
+    <item>
+      <title>Why your AI portfolio bombs in Nigeria</title>
+      <link>https://kubaik.github.io/why-your-ai-portfolio-bombs-in-nigeria/</link>
+      <description>Cut hiring noise 73% with constraint-first filtering — latency under 1s on 3G, recovery under 3s offline, and data cost lines in READMEs. Proven pipeline in 2026.</description>
+      <pubDate>Wed, 24 Jun 2026 19:23:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-your-ai-portfolio-bombs-in-nigeria/</guid>
+    </item>
     <item>
       <title>LLM evals: the two metrics that bite you</title>
       <link>https://kubaik.github.io/llm-evals-the-two-metrics-that-bite-you/</link>
@@ -138,13 +145,6 @@
       <description>Cut code review time 78% with AI pair tools — GitHub Copilot Workspace vs CodeRabbit vs Amazon Q in a 6-month team experiment with concrete metrics and the one tool that paid for itself in 14 days.</description>
       <pubDate>Wed, 24 Jun 2026 04:45:57 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-pair-cuts-code-review-time-75/</guid>
-    </item>
-    <item>
-      <title>AI rewrote my docs: the docs I deleted</title>
-      <link>https://kubaik.github.io/ai-rewrote-my-docs-the-docs-i-deleted/</link>
-      <description>Cut review time 60% with AI docs — but only after fixing contracts, tests, and specs. The constraints most teams skip that prevent AI from making things worse.</description>
-      <pubDate>Wed, 24 Jun 2026 04:26:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-rewrote-my-docs-the-docs-i-deleted/</guid>
     </item>
   </channel>
 </rss>
