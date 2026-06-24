@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jun 2026 21:50:57 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jun 2026 21:56:02 +0000</lastBuildDate>
+    <item>
+      <title>AI rollouts: feature flags in 2026</title>
+      <link>https://kubaik.github.io/ai-rollouts-feature-flags-in-2026/</link>
+      <description>Cut AI rollout latency 84% with feature flags in 2026 — Redis 7.2 cache, PostgreSQL audit trails, and the silent failure you’ll avoid by building observability from day one.</description>
+      <pubDate>Wed, 24 Jun 2026 21:55:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-rollouts-feature-flags-in-2026/</guid>
+    </item>
     <item>
       <title>Build IDPs that don’t crumble in 2026</title>
       <link>https://kubaik.github.io/build-idps-that-dont-crumble-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut mesh-induced latency 60% with Istio 1.21 and Cilium 1.16 — the control-plane backlog, certificate storms, and telemetry sampling mistakes most teams miss in 2026.</description>
       <pubDate>Wed, 24 Jun 2026 09:26:52 +0000</pubDate>
       <guid>https://kubaik.github.io/istio-and-cilium-what-really-breaks-in-production/</guid>
-    </item>
-    <item>
-      <title>API abuse patterns rising in 2026</title>
-      <link>https://kubaik.github.io/api-abuse-patterns-rising-in-2026/</link>
-      <description>Cut API abuse 92% with edge filters — CloudFront Functions, Akamai Bot Manager, and Redis 7.2 beat JavaScript challenges and WAFs on latency and cost in 2026.</description>
-      <pubDate>Wed, 24 Jun 2026 08:43:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/api-abuse-patterns-rising-in-2026/</guid>
     </item>
   </channel>
 </rss>
