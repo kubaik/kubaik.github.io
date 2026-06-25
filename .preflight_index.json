@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T19:04:54.587426",
+  "built_at": "2026-06-25T19:14:15.279782",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2775,6 +2775,11 @@
       "slug": "pulumi-vs-terraform-vs-opentofu-in-2026",
       "title": "Pulumi vs Terraform vs OpenTofu in 2026",
       "summary": "I ran into this pulumi terraform problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026 I inherited a Terraform 1.5 "
+    },
+    {
+      "slug": "ai-code-debt-llm-debt-vs-prompt-debt",
+      "title": "AI code debt: LLM debt vs prompt debt",
+      "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, production teams aren’t debugging broken deploys—they’re debug"
     }
   ]
 }
