@@ -43,5 +43,6 @@
   "Agentic coding in 2026: what Claude Code actually gets right after a year of daily use",
   "How African fintech regulations changed API design requirements in 2026",
   "Tool-calling patterns that work in production vs the ones that break under load",
-  "Prompt injection in production AI systems: the attack surface most teams are ignoring"
+  "Prompt injection in production AI systems: the attack surface most teams are ignoring",
+  "How pgvector changed our architecture: replacing Pinecone with what we already had"
 ]
