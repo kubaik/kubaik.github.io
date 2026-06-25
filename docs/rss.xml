@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 20:37:14 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 20:42:05 +0000</lastBuildDate>
+    <item>
+      <title>Reconcile mobile money in 3 days — edge cases Paystack</title>
+      <link>https://kubaik.github.io/reconcile-mobile-money-in-3-days-edge-cases-paystack/</link>
+      <description>Cut false mobile-money discrepancies 97% with a 2-hour tolerance band — MTN MoMo CSV quirks, Airtel duplicates, and the BRIN index that saved 8 minutes per reconcile</description>
+      <pubDate>Thu, 25 Jun 2026 20:41:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/reconcile-mobile-money-in-3-days-edge-cases-paystack/</guid>
+    </item>
     <item>
       <title>Bootstrapped $5k MRR without ads</title>
       <link>https://kubaik.github.io/bootstrapped-5k-mrr-without-ads/</link>
@@ -138,13 +145,6 @@
       <description>Block 0.28% of malicious prompts before they poison your AI — regex vs ML guardrails, latency costs, and the €6.4k incidents most teams miss in 2026</description>
       <pubDate>Thu, 25 Jun 2026 07:37:51 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-prompts-poisoned-3-real-attacks-on-live-systems/</guid>
-    </item>
-    <item>
-      <title>Tool calls at scale: sync vs async patterns that live</title>
-      <link>https://kubaik.github.io/tool-calls-at-scale-sync-vs-async-patterns-that-live/</link>
-      <description>Cut API latency 62% and infra cost 17% with async tool calls — connection pools, queue depths, and the async leak mistake most teams miss.</description>
-      <pubDate>Thu, 25 Jun 2026 05:56:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/tool-calls-at-scale-sync-vs-async-patterns-that-live/</guid>
     </item>
   </channel>
 </rss>
