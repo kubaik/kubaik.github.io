@@ -38,5 +38,6 @@
   "How to implement least-privilege IAM in AWS without spending a week on policies",
   "Building a second income stream as a developer in 2026 without building a SaaS",
   "M-Pesa Daraja 2.0 in 2026: what changed and how to migrate your integration",
-  "How I handle database schema migrations in a zero-downtime deployment pipeline"
+  "How I handle database schema migrations in a zero-downtime deployment pipeline",
+  "How to design AI-native applications: architecture patterns that didn't exist three years ago"
 ]

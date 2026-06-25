@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T01:42:20.959848",
+  "built_at": "2026-06-25T03:51:54.394009",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2670,6 +2670,11 @@
       "slug": "roll-your-own-migrations-why-blue-green-fails-you",
       "title": "Roll your own migrations: why blue-green fails you",
       "summary": "A colleague asked me about handle database during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) M"
+    },
+    {
+      "slug": "design-ai-flows-not-chat-uis",
+      "title": "Design AI flows, not chat UIs",
+      "summary": "A colleague asked me about design ainative during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) T"
     }
   ]
 }
