@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T22:56:05.949534",
+  "built_at": "2026-06-25T23:11:42.212187",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2810,6 +2810,11 @@
       "slug": "webhooks-done-right-retries-that-dont-explode-in-2026",
       "title": "Webhooks done right: retries that don’t explode in 2026",
       "summary": "Most building webhook guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. Advanced edge cases we personally encountered 1. “Silent 429s” from downstream APIs that still return 200 Twice in Q3 2026 a payme"
+    },
+    {
+      "slug": "ship-to-nairobi-users-starlink-latency-guide-2026",
+      "title": "Ship to Nairobi users: Starlink latency guide 2026",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In mid-2026 I helped a team in Nairobi move their B2B dashboard from AWS eu-central-1 to"
     }
   ]
 }

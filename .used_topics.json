@@ -66,5 +66,6 @@
   "How AI observability is different from traditional application monitoring",
   "How I write tests for AI-assisted code without testing the AI",
   "The islands architecture in 2026: when Astro and partial hydration are the right choice",
-  "Building webhook systems in 2026: delivery guarantees, retries, and idempotency"
+  "Building webhook systems in 2026: delivery guarantees, retries, and idempotency",
+  "Building for 4G-as-baseline users in 2026: what changed when Starlink reached East Africa"
 ]

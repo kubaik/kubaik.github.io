@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 22:56:13 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 23:11:50 +0000</lastBuildDate>
+    <item>
+      <title>Ship to Nairobi users: Starlink latency guide 2026</title>
+      <link>https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/</link>
+      <description>Cut Nairobi SaaS page load times 70% — Starlink 2026 edge cache with CloudFront Functions, Redis 7.2, and k6 load tests from Kenya</description>
+      <pubDate>Thu, 25 Jun 2026 23:11:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/</guid>
+    </item>
     <item>
       <title>Webhooks done right: retries that don’t explode in 2026</title>
       <link>https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 40% and skip VPN costs with Cloudflare Tunnel or Tailscale in 2026. Benchmark numbers, cost breakdowns, and the exact setup I use for small teams.</description>
       <pubDate>Thu, 25 Jun 2026 10:51:11 +0000</pubDate>
       <guid>https://kubaik.github.io/skip-the-vpn-tax-zero-trust-on-200month/</guid>
-    </item>
-    <item>
-      <title>7 AI tools Nairobi devs use to beat global teams</title>
-      <link>https://kubaik.github.io/7-ai-tools-nairobi-devs-use-to-beat-global-teams/</link>
-      <description>Cut feature delivery time 35% with GitHub Copilot Enterprise — the tools Nairobi devs use to beat global teams without burning cash</description>
-      <pubDate>Thu, 25 Jun 2026 10:37:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-ai-tools-nairobi-devs-use-to-beat-global-teams/</guid>
     </item>
   </channel>
 </rss>
