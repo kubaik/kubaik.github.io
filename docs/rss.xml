@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 22:11:19 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 22:16:14 +0000</lastBuildDate>
+    <item>
+      <title>When Astro islands shine in 2026</title>
+      <link>https://kubaik.github.io/when-astro-islands-shine-in-2026/</link>
+      <description>Cut page load time 75% with Astro islands in 2026 — how we replaced React hydration with static shells and lazy-loaded islands to hit 1.0s TTI on 2G.</description>
+      <pubDate>Thu, 25 Jun 2026 22:16:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/when-astro-islands-shine-in-2026/</guid>
+    </item>
     <item>
       <title>Test AI code without AI tests</title>
       <link>https://kubaik.github.io/test-ai-code-without-ai-tests/</link>
@@ -138,13 +145,6 @@
       <description>Cut false positives 75% with minimal paging alerts — Prometheus Alertmanager 0.26 beats FireHydrant AI 2.6 in 2026 by trusting humans over LLMs.</description>
       <pubDate>Thu, 25 Jun 2026 10:03:01 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ops-vs-dumb-alerts-the-incident-that-broke-us/</guid>
-    </item>
-    <item>
-      <title>Store data once, serve everywhere: cheaper</title>
-      <link>https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/</link>
-      <description>Cut cross-region egress 70% with edge caching — real latency, cost, and failure modes from a 2026 health-data backend serving Nigeria, Kenya, and South Africa.</description>
-      <pubDate>Thu, 25 Jun 2026 08:39:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/</guid>
     </item>
   </channel>
 </rss>
