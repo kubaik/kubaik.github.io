@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 23:22:30 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 23:27:15 +0000</lastBuildDate>
+    <item>
+      <title>Lessons from 3 SaaS price pivots in 2026</title>
+      <link>https://kubaik.github.io/lessons-from-3-saas-price-pivots-in-2026/</link>
+      <description>Cut pricing guesswork 50% with real infra costs — 3 pricing models, 3 concrete numbers, and the Stripe webhook that cut churn 10%.</description>
+      <pubDate>Thu, 25 Jun 2026 23:27:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/lessons-from-3-saas-price-pivots-in-2026/</guid>
+    </item>
     <item>
       <title>Ship to Nairobi users: Starlink latency guide 2026</title>
       <link>https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI transcription costs 36% with wrappers that actually work — Speechmatics 2.2, AssemblyAI 2025.11, and Deepgram Nova-3 Fast 3.1 are the only ones that survived 2026.</description>
       <pubDate>Thu, 25 Jun 2026 12:04:11 +0000</pubDate>
       <guid>https://kubaik.github.io/9-ai-wrapper-apis-that-paid-off-in-2026/</guid>
-    </item>
-    <item>
-      <title>Skip the VPN tax: Zero-trust on $200/month</title>
-      <link>https://kubaik.github.io/skip-the-vpn-tax-zero-trust-on-200month/</link>
-      <description>Cut API latency 40% and skip VPN costs with Cloudflare Tunnel or Tailscale in 2026. Benchmark numbers, cost breakdowns, and the exact setup I use for small teams.</description>
-      <pubDate>Thu, 25 Jun 2026 10:51:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-the-vpn-tax-zero-trust-on-200month/</guid>
     </item>
   </channel>
 </rss>
