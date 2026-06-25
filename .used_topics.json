@@ -45,5 +45,6 @@
   "Tool-calling patterns that work in production vs the ones that break under load",
   "Prompt injection in production AI systems: the attack surface most teams are ignoring",
   "How pgvector changed our architecture: replacing Pinecone with what we already had",
-  "How to design multi-region backends without triple the infrastructure cost"
+  "How to design multi-region backends without triple the infrastructure cost",
+  "AI-assisted incident response: what works and what makes oncall worse"
 ]

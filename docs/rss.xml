@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 09:58:48 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 10:03:10 +0000</lastBuildDate>
+    <item>
+      <title>AI ops vs dumb alerts: the incident that broke us</title>
+      <link>https://kubaik.github.io/ai-ops-vs-dumb-alerts-the-incident-that-broke-us/</link>
+      <description>Cut false positives 75% with minimal paging alerts — Prometheus Alertmanager 0.26 beats FireHydrant AI 2.6 in 2026 by trusting humans over LLMs.</description>
+      <pubDate>Thu, 25 Jun 2026 10:03:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ops-vs-dumb-alerts-the-incident-that-broke-us/</guid>
+    </item>
     <item>
       <title>Store data once, serve everywhere: cheaper</title>
       <link>https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/</link>
@@ -138,13 +145,6 @@
       <description>Cut hiring noise 73% with constraint-first filtering — latency under 1s on 3G, recovery under 3s offline, and data cost lines in READMEs. Proven pipeline in 2026.</description>
       <pubDate>Wed, 24 Jun 2026 19:23:32 +0000</pubDate>
       <guid>https://kubaik.github.io/why-your-ai-portfolio-bombs-in-nigeria/</guid>
-    </item>
-    <item>
-      <title>LLM evals: the two metrics that bite you</title>
-      <link>https://kubaik.github.io/llm-evals-the-two-metrics-that-bite-you/</link>
-      <description>We measured 87% accuracy on the test set and felt good—until we looked at production logs.</description>
-      <pubDate>Wed, 24 Jun 2026 18:56:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-evals-the-two-metrics-that-bite-you/</guid>
     </item>
   </channel>
 </rss>
