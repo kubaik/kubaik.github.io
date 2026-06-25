@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T21:26:00.121111",
+  "built_at": "2026-06-25T21:51:51.797264",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2795,6 +2795,11 @@
       "slug": "ai-observability-isnt-monitoring-heres-why",
       "title": "AI observability isn’t monitoring — here’s why",
       "summary": "The official documentation for observability different is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs I spent three days debugg"
+    },
+    {
+      "slug": "test-ai-code-without-ai-tests",
+      "title": "Test AI code without AI tests",
+      "summary": "I ran into this write tests problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) Two years ago I stopped writing tests that try"
     }
   ]
 }
