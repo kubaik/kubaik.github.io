@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T04:42:39.760030",
+  "built_at": "2026-06-25T05:56:36.346059",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2685,6 +2685,11 @@
       "slug": "regulations-killed-our-elegant-apis",
       "title": "Regulations killed our elegant APIs",
       "summary": "A colleague asked me about african fintech during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) I"
+    },
+    {
+      "slug": "tool-calls-at-scale-sync-vs-async-patterns-that-live",
+      "title": "Tool calls at scale: sync vs async patterns that live",
+      "summary": "I've seen the same toolcalling patterns mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026 every microservice is a state machine wrapped in HTTP, an"
     }
   ]
 }
