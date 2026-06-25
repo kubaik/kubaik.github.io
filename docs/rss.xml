@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 17:27:52 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 17:32:46 +0000</lastBuildDate>
+    <item>
+      <title>Nairobi SaaS infra 2026: real cost data</title>
+      <link>https://kubaik.github.io/nairobi-saas-infra-2026-real-cost-data/</link>
+      <description>Cut Nairobi SaaS infra costs to $847/month with exact services, configs, and the mistakes I made. Real 30-day bill, latency, and scaling limits you can copy.</description>
+      <pubDate>Thu, 25 Jun 2026 17:32:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/nairobi-saas-infra-2026-real-cost-data/</guid>
+    </item>
     <item>
       <title>Redesign auth after passkeys</title>
       <link>https://kubaik.github.io/redesign-auth-after-passkeys/</link>
@@ -138,13 +145,6 @@
       <description>Zero-downtime PostgreSQL migrations cost $7k/year in blue-green setups — here’s the pattern that cut our downtime to 0 seconds without extra infra 2026</description>
       <pubDate>Thu, 25 Jun 2026 01:42:18 +0000</pubDate>
       <guid>https://kubaik.github.io/roll-your-own-migrations-why-blue-green-fails-you/</guid>
-    </item>
-    <item>
-      <title>Fix Daraja 2.0 breaks in 2026</title>
-      <link>https://kubaik.github.io/fix-daraja-20-breaks-in-2026/</link>
-      <description>Cut M-Pesa Daraja 2.0 migration time 70% — Business Shortcode, TLS 1.3, SHA-256 signatures and C2B webhooks with step-by-step code and error codes</description>
-      <pubDate>Thu, 25 Jun 2026 00:02:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/fix-daraja-20-breaks-in-2026/</guid>
     </item>
   </channel>
 </rss>

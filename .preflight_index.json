@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T16:39:26.666061",
+  "built_at": "2026-06-25T17:32:37.458444",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2760,6 +2760,11 @@
       "slug": "redesign-auth-after-passkeys",
       "title": "Redesign auth after passkeys",
       "summary": "Most passkeys changed guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026 we rolled out passkeys to 1.2M monthly active users on a Southeast Asian "
+    },
+    {
+      "slug": "nairobi-saas-infra-2026-real-cost-data",
+      "title": "Nairobi SaaS infra 2026: real cost data",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026 I joined a Nairobi SaaS that had just raised from a US fund. The runway was 18 m"
     }
   ]
 }
