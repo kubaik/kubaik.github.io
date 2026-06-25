@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-24T23:42:40.553331",
+  "built_at": "2026-06-25T00:02:05.523669",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2660,6 +2660,11 @@
       "slug": "3-side-gigs-that-paid-me-2k-usdmonth-in-2026",
       "title": "3 side gigs that paid me 2k USD/month in 2026",
       "summary": "I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In mid-2026 I hit a wall: my Nairobi finte"
+    },
+    {
+      "slug": "fix-daraja-20-breaks-in-2026",
+      "title": "Fix Daraja 2.0 breaks in 2026",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) By mid-2026, any M-Pesa integration older than 18 months is likely broken. I learned thi"
     }
   ]
 }
