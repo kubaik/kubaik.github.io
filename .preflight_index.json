@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T13:11:51.802602",
+  "built_at": "2026-06-25T13:16:32.176378",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2730,6 +2730,11 @@
       "slug": "freelance-ai-pricing-drops-40-by-2026",
       "title": "Freelance AI pricing drops 40% by 2026",
       "summary": "The short version: the conventional advice on freelance developer is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Across 2026–2026, freelance developers using AI productivity tools saw their e"
+    },
+    {
+      "slug": "self-healing-pipelines-argo-vs-crossplane-in-2026",
+      "title": "Self-healing pipelines: Argo vs Crossplane in 2026",
+      "summary": "I've seen the same built selfhealing mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, self-healing deployment pipelines aren’t just a nice-to-hav"
     }
   ]
 }

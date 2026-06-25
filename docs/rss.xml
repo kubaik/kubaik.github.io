@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 13:12:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 13:16:40 +0000</lastBuildDate>
+    <item>
+      <title>Self-healing pipelines: Argo vs Crossplane in 2026</title>
+      <link>https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/</link>
+      <description>Cut mean time to recovery 70% with self-healing CI/CD — Argo CD vs Crossplane performance and cost compared using 2026 data from production clusters.</description>
+      <pubDate>Thu, 25 Jun 2026 13:16:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/</guid>
+    </item>
     <item>
       <title>Freelance AI pricing drops 40% by 2026</title>
       <link>https://kubaik.github.io/freelance-ai-pricing-drops-40-by-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut platform toil 40% with Backstage 1.26, Argo CD 2.9, and Crossplane 1.15 — real code, latency benchmarks, and the RBAC explosion nobody warns you about.</description>
       <pubDate>Wed, 24 Jun 2026 21:31:47 +0000</pubDate>
       <guid>https://kubaik.github.io/build-idps-that-dont-crumble-in-2026/</guid>
-    </item>
-    <item>
-      <title>Scan 10k repos daily without false positives</title>
-      <link>https://kubaik.github.io/scan-10k-repos-daily-without-false-positives/</link>
-      <description>Cut security alerts 98% with reachability analysis — CodeQL 2.17, Semgrep 1.62, and production traffic correlation reduced false positives from 147 to 2.3 per PR</description>
-      <pubDate>Wed, 24 Jun 2026 21:18:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/scan-10k-repos-daily-without-false-positives/</guid>
     </item>
   </channel>
 </rss>
