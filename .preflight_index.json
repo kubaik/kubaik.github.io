@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T18:43:23.384046",
+  "built_at": "2026-06-25T19:04:54.587426",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2770,6 +2770,11 @@
       "slug": "pick-niches-ai-wont-eat-in-2026",
       "title": "Pick niches AI won’t eat in 2026",
       "summary": "Most pick saas guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, the board gave us one directive: find a SaaS niche that wouldn’t be eaten by AI by "
+    },
+    {
+      "slug": "pulumi-vs-terraform-vs-opentofu-in-2026",
+      "title": "Pulumi vs Terraform vs OpenTofu in 2026",
+      "summary": "I ran into this pulumi terraform problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026 I inherited a Terraform 1.5 "
     }
   ]
 }

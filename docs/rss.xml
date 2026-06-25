@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 18:43:30 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 19:05:03 +0000</lastBuildDate>
+    <item>
+      <title>Pulumi vs Terraform vs OpenTofu in 2026</title>
+      <link>https://kubaik.github.io/pulumi-vs-terraform-vs-opentofu-in-2026/</link>
+      <description>Cut IaC licensing risk 100% and save $14/month per CI runner — OpenTofu 1.8.0 vs Terraform 1.9 BSL vs Pulumi Python 3.12 after the HashiCorp fork.</description>
+      <pubDate>Thu, 25 Jun 2026 19:04:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/pulumi-vs-terraform-vs-opentofu-in-2026/</guid>
+    </item>
     <item>
       <title>Pick niches AI won’t eat in 2026</title>
       <link>https://kubaik.github.io/pick-niches-ai-wont-eat-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut patch review time 74% with Claude Code in 2026 — real costs, rollback logic, and the one metric your team should watch first</description>
       <pubDate>Thu, 25 Jun 2026 03:55:14 +0000</pubDate>
       <guid>https://kubaik.github.io/claude-code-after-a-year-daily-wins/</guid>
-    </item>
-    <item>
-      <title>Design AI flows, not chat UIs</title>
-      <link>https://kubaik.github.io/design-ai-flows-not-chat-uis/</link>
-      <description>Cut AI app latency 60% with structured state machines instead of chat UIs. Learn the event-driven patterns that work in production today — schemas, validation, and cache strategies most tutorials skip.</description>
-      <pubDate>Thu, 25 Jun 2026 03:51:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-ai-flows-not-chat-uis/</guid>
     </item>
   </channel>
 </rss>
