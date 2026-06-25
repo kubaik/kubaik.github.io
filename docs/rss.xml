@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 13:07:02 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 13:12:00 +0000</lastBuildDate>
+    <item>
+      <title>Freelance AI pricing drops 40% by 2026</title>
+      <link>https://kubaik.github.io/freelance-ai-pricing-drops-40-by-2026/</link>
+      <description>AI tools cut freelance rates 40% in 2026 — $60–$90/h is the new baseline when clients audit Copilot usage. Learn the deliverable-based pricing playbook and the exact contract clauses to keep invoices above $80/h.</description>
+      <pubDate>Thu, 25 Jun 2026 13:11:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-ai-pricing-drops-40-by-2026/</guid>
+    </item>
     <item>
       <title>9 AI wrapper APIs that paid off in 2026</title>
       <link>https://kubaik.github.io/9-ai-wrapper-apis-that-paid-off-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut security alerts 98% with reachability analysis — CodeQL 2.17, Semgrep 1.62, and production traffic correlation reduced false positives from 147 to 2.3 per PR</description>
       <pubDate>Wed, 24 Jun 2026 21:18:54 +0000</pubDate>
       <guid>https://kubaik.github.io/scan-10k-repos-daily-without-false-positives/</guid>
-    </item>
-    <item>
-      <title>Stop async Python from burning your budget</title>
-      <link>https://kubaik.github.io/stop-async-python-from-burning-your-budget/</link>
-      <description>The logs showed no obvious bottlenecks: CPU was 28%, RAM 42%, and the database had spare capacity.</description>
-      <pubDate>Wed, 24 Jun 2026 20:31:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-async-python-from-burning-your-budget/</guid>
     </item>
   </channel>
 </rss>
