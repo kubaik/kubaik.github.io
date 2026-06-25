@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 16:10:15 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 16:15:31 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate pay in 2026 with AI proof points</title>
+      <link>https://kubaik.github.io/negotiate-pay-in-2026-with-ai-proof-points/</link>
+      <description>Prove your value in 2026 with AI-proof compensation evidence — human-commit ratios, delivery metrics, and negotiation slides that finance actually accepts.</description>
+      <pubDate>Thu, 25 Jun 2026 16:15:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-pay-in-2026-with-ai-proof-points/</guid>
+    </item>
     <item>
       <title>AWS cost levers 2026: the 3 that cut bills 30%</title>
       <link>https://kubaik.github.io/aws-cost-levers-2026-the-3-that-cut-bills-30/</link>
@@ -138,13 +145,6 @@
       <description>Cut IAM policy work 70% with AWS Identity Center — permission sets, boundaries, and Access Analyzer in 2026 with concrete AWS services and real results.</description>
       <pubDate>Wed, 24 Jun 2026 23:11:55 +0000</pubDate>
       <guid>https://kubaik.github.io/aws-iam-in-10-minutes-stop-writing-policies-by-hand/</guid>
-    </item>
-    <item>
-      <title>Fix LLM vulns: OWASP Top 10 for AI apps</title>
-      <link>https://kubaik.github.io/fix-llm-vulns-owasp-top-10-for-ai-apps/</link>
-      <description>Cut LLM security incidents 98% with OWASP Top 10 guardrails for 2026 — prompt injection, output sanitization, vector poisoning, and supply chain fixes.</description>
-      <pubDate>Wed, 24 Jun 2026 22:57:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/fix-llm-vulns-owasp-top-10-for-ai-apps/</guid>
     </item>
   </channel>
 </rss>
