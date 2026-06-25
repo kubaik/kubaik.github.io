@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 20:25:45 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 20:30:25 +0000</lastBuildDate>
+    <item>
+      <title>Bootstrapped $5k MRR without ads</title>
+      <link>https://kubaik.github.io/bootstrapped-5k-mrr-without-ads/</link>
+      <description>Hit $5k MRR with zero marketing budget — the exact playbook, tools, and spreadsheets used. Learn how Slack integrations, product-led SEO, and team invites drove 40% MoM growth.</description>
+      <pubDate>Thu, 25 Jun 2026 20:30:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/bootstrapped-5k-mrr-without-ads/</guid>
+    </item>
     <item>
       <title>AI code debt: LLM debt vs prompt debt</title>
       <link>https://kubaik.github.io/ai-code-debt-llm-debt-vs-prompt-debt/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 62% and infra cost 17% with async tool calls — connection pools, queue depths, and the async leak mistake most teams miss.</description>
       <pubDate>Thu, 25 Jun 2026 05:56:34 +0000</pubDate>
       <guid>https://kubaik.github.io/tool-calls-at-scale-sync-vs-async-patterns-that-live/</guid>
-    </item>
-    <item>
-      <title>Regulations killed our elegant APIs</title>
-      <link>https://kubaik.github.io/regulations-killed-our-elegant-apis/</link>
-      <description>Cut API breach risk 100% with idempotency keys and 425 Too Early responses — how Nigeria’s 2025 Data Protection Act rewrote fintech API design in 2026.</description>
-      <pubDate>Thu, 25 Jun 2026 04:42:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/regulations-killed-our-elegant-apis/</guid>
     </item>
   </channel>
 </rss>

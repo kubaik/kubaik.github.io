@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T19:14:15.279782",
+  "built_at": "2026-06-25T20:30:16.775541",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2780,6 +2780,11 @@
       "slug": "ai-code-debt-llm-debt-vs-prompt-debt",
       "title": "AI code debt: LLM debt vs prompt debt",
       "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, production teams aren’t debugging broken deploys—they’re debug"
+    },
+    {
+      "slug": "bootstrapped-5k-mrr-without-ads",
+      "title": "Bootstrapped $5k MRR without ads",
+      "summary": "The short version: the conventional advice on got mrr is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) You don’t need ads, influencers, or a growth team to hit $5k monthly recurring revenue (MR"
     }
   ]
 }
