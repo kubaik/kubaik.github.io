@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T10:03:03.474778",
+  "built_at": "2026-06-25T10:37:25.750573",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2710,6 +2710,11 @@
       "slug": "ai-ops-vs-dumb-alerts-the-incident-that-broke-us",
       "title": "AI ops vs dumb alerts: the incident that broke us",
       "summary": "I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026 the average on-call engineer still sees 2–3 false positive"
+    },
+    {
+      "slug": "7-ai-tools-nairobi-devs-use-to-beat-global-teams",
+      "title": "7 AI tools Nairobi devs use to beat global teams",
+      "summary": "I ran into this east african problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) Back in 2024, our Nairobi fintech team was as"
     }
   ]
 }

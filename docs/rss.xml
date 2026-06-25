@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 10:03:10 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 10:37:34 +0000</lastBuildDate>
+    <item>
+      <title>7 AI tools Nairobi devs use to beat global teams</title>
+      <link>https://kubaik.github.io/7-ai-tools-nairobi-devs-use-to-beat-global-teams/</link>
+      <description>Cut feature delivery time 35% with GitHub Copilot Enterprise — the tools Nairobi devs use to beat global teams without burning cash</description>
+      <pubDate>Thu, 25 Jun 2026 10:37:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/7-ai-tools-nairobi-devs-use-to-beat-global-teams/</guid>
+    </item>
     <item>
       <title>AI ops vs dumb alerts: the incident that broke us</title>
       <link>https://kubaik.github.io/ai-ops-vs-dumb-alerts-the-incident-that-broke-us/</link>
@@ -138,13 +145,6 @@
       <description>The migration target was a containerized Go microservice on EKS, but the blocker wasn’t the tech—it was the 300,000 lines of undocumented business logic…</description>
       <pubDate>Wed, 24 Jun 2026 19:56:41 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-keeps-legacy-code-alive-heres-how/</guid>
-    </item>
-    <item>
-      <title>Why your AI portfolio bombs in Nigeria</title>
-      <link>https://kubaik.github.io/why-your-ai-portfolio-bombs-in-nigeria/</link>
-      <description>Cut hiring noise 73% with constraint-first filtering — latency under 1s on 3G, recovery under 3s offline, and data cost lines in READMEs. Proven pipeline in 2026.</description>
-      <pubDate>Wed, 24 Jun 2026 19:23:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-ai-portfolio-bombs-in-nigeria/</guid>
     </item>
   </channel>
 </rss>
