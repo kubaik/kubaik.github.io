@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 10:46:30 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 10:51:23 +0000</lastBuildDate>
+    <item>
+      <title>Skip the VPN tax: Zero-trust on $200/month</title>
+      <link>https://kubaik.github.io/skip-the-vpn-tax-zero-trust-on-200month/</link>
+      <description>Cut API latency 40% and skip VPN costs with Cloudflare Tunnel or Tailscale in 2026. Benchmark numbers, cost breakdowns, and the exact setup I use for small teams.</description>
+      <pubDate>Thu, 25 Jun 2026 10:51:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-the-vpn-tax-zero-trust-on-200month/</guid>
+    </item>
     <item>
       <title>7 AI tools Nairobi devs use to beat global teams</title>
       <link>https://kubaik.github.io/7-ai-tools-nairobi-devs-use-to-beat-global-teams/</link>
@@ -138,13 +145,6 @@
       <description>Cut engineering hiring failures 70% by testing incident response instead of whiteboard puzzles — concrete interview rubric with Prometheus, Jaeger, and real AWS cost data from Nairobi fintech 2026.</description>
       <pubDate>Wed, 24 Jun 2026 20:19:25 +0000</pubDate>
       <guid>https://kubaik.github.io/engineering-interviews-what-ai-wants-now/</guid>
-    </item>
-    <item>
-      <title>AI keeps legacy code alive — here’s how</title>
-      <link>https://kubaik.github.io/ai-keeps-legacy-code-alive-heres-how/</link>
-      <description>The migration target was a containerized Go microservice on EKS, but the blocker wasn’t the tech—it was the 300,000 lines of undocumented business logic…</description>
-      <pubDate>Wed, 24 Jun 2026 19:56:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-keeps-legacy-code-alive-heres-how/</guid>
     </item>
   </channel>
 </rss>
