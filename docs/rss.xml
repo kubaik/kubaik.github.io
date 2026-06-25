@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 03:52:03 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 03:55:25 +0000</lastBuildDate>
+    <item>
+      <title>Claude Code after a year: daily wins</title>
+      <link>https://kubaik.github.io/claude-code-after-a-year-daily-wins/</link>
+      <description>Cut patch review time 74% with Claude Code in 2026 — real costs, rollback logic, and the one metric your team should watch first</description>
+      <pubDate>Thu, 25 Jun 2026 03:55:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/claude-code-after-a-year-daily-wins/</guid>
+    </item>
     <item>
       <title>Design AI flows, not chat UIs</title>
       <link>https://kubaik.github.io/design-ai-flows-not-chat-uis/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 65% with a self-hosted feature flag system — latency, cost, and offline sync numbers for Flagsmith, LaunchDarkly, and PostHog in 2026.</description>
       <pubDate>Wed, 24 Jun 2026 15:31:57 +0000</pubDate>
       <guid>https://kubaik.github.io/5-feature-flag-tools-that-became-ab-platforms/</guid>
-    </item>
-    <item>
-      <title>Alerts 2026: AI turns false alarms to silence</title>
-      <link>https://kubaik.github.io/alerts-2026-ai-turns-false-alarms-to-silence/</link>
-      <description>Cut on-call wake-ups 70% with AI alert triage — Prometheus 2.47, Node 20, and a 128-line service that silences staging noise in 2026</description>
-      <pubDate>Wed, 24 Jun 2026 15:17:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/alerts-2026-ai-turns-false-alarms-to-silence/</guid>
     </item>
   </channel>
 </rss>
