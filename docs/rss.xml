@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 16:15:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 16:27:24 +0000</lastBuildDate>
+    <item>
+      <title>Miss WCAG live region pitfalls</title>
+      <link>https://kubaik.github.io/miss-wcag-live-region-pitfalls/</link>
+      <description>Cut missed announcements 90% with WCAG chat fixes — live region roles, focus traps, and streaming rate limits most teams overlook in 2026</description>
+      <pubDate>Thu, 25 Jun 2026 16:27:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/miss-wcag-live-region-pitfalls/</guid>
+    </item>
     <item>
       <title>Negotiate pay in 2026 with AI proof points</title>
       <link>https://kubaik.github.io/negotiate-pay-in-2026-with-ai-proof-points/</link>
@@ -138,13 +145,6 @@
       <description>Earn 2k USD/month in 2026 without building a SaaS — real tools, real numbers, and the exact scripts I reused three times to hit 1,800 USD in two weeks.</description>
       <pubDate>Wed, 24 Jun 2026 23:42:38 +0000</pubDate>
       <guid>https://kubaik.github.io/3-side-gigs-that-paid-me-2k-usdmonth-in-2026/</guid>
-    </item>
-    <item>
-      <title>AWS IAM in 10 minutes: stop writing policies by hand</title>
-      <link>https://kubaik.github.io/aws-iam-in-10-minutes-stop-writing-policies-by-hand/</link>
-      <description>Cut IAM policy work 70% with AWS Identity Center — permission sets, boundaries, and Access Analyzer in 2026 with concrete AWS services and real results.</description>
-      <pubDate>Wed, 24 Jun 2026 23:11:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/aws-iam-in-10-minutes-stop-writing-policies-by-hand/</guid>
     </item>
   </channel>
 </rss>

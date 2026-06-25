@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T16:15:23.737601",
+  "built_at": "2026-06-25T16:27:16.964179",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2750,6 +2750,11 @@
       "slug": "negotiate-pay-in-2026-with-ai-proof-points",
       "title": "Negotiate pay in 2026 with AI proof points",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In late 2026 I was reviewing our internal compensation model for the engineering team at"
+    },
+    {
+      "slug": "miss-wcag-live-region-pitfalls",
+      "title": "Miss WCAG live region pitfalls",
+      "summary": "After reviewing a lot of code that touches building accessible, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You’ve built an AI chat interface that passes automated accessibility scans with 100"
     }
   ]
 }
