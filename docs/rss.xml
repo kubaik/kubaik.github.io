@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 01:37:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 01:42:29 +0000</lastBuildDate>
+    <item>
+      <title>Roll your own migrations: why blue-green fails you</title>
+      <link>https://kubaik.github.io/roll-your-own-migrations-why-blue-green-fails-you/</link>
+      <description>Zero-downtime PostgreSQL migrations cost $7k/year in blue-green setups — here’s the pattern that cut our downtime to 0 seconds without extra infra 2026</description>
+      <pubDate>Thu, 25 Jun 2026 01:42:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/roll-your-own-migrations-why-blue-green-fails-you/</guid>
+    </item>
     <item>
       <title>Fix Daraja 2.0 breaks in 2026</title>
       <link>https://kubaik.github.io/fix-daraja-20-breaks-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut 4.2 % order failures with 9 eventual-consistency patterns — which one saved $28k Black-Friday weekend? Real code, real AWS bills, real mistakes.</description>
       <pubDate>Wed, 24 Jun 2026 14:11:04 +0000</pubDate>
       <guid>https://kubaik.github.io/survive-network-chaos-9-eventuality-patterns/</guid>
-    </item>
-    <item>
-      <title>Postgres 17 replaced Redis, Kafka, and Prometheus</title>
-      <link>https://kubaik.github.io/postgres-17-replaced-redis-kafka-and-prometheus/</link>
-      <description>Postgres 17 beats Redis, Kafka, and Prometheus in cost and simplicity — cache, metrics, and events consolidated with 30% lower bills and 60% fewer alerts.</description>
-      <pubDate>Wed, 24 Jun 2026 12:42:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/postgres-17-replaced-redis-kafka-and-prometheus/</guid>
     </item>
   </channel>
 </rss>
