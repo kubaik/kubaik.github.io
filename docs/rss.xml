@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 15:20:28 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 15:25:17 +0000</lastBuildDate>
+    <item>
+      <title>AWS cost levers 2026: the 3 that cut bills 30%</title>
+      <link>https://kubaik.github.io/aws-cost-levers-2026-the-3-that-cut-bills-30/</link>
+      <description>Cut AWS bills 30% with the 3 levers that actually work in 2026 — Savings Plans, Compute Optimizer, and Cost Anomaly Detection — and the exact commitment math most teams get wrong.</description>
+      <pubDate>Thu, 25 Jun 2026 15:25:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/aws-cost-levers-2026-the-3-that-cut-bills-30/</guid>
+    </item>
     <item>
       <title>Pick one: Stripe, Lemon Squeezy, Paddle in 2026</title>
       <link>https://kubaik.github.io/pick-one-stripe-lemon-squeezy-paddle-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM security incidents 98% with OWASP Top 10 guardrails for 2026 — prompt injection, output sanitization, vector poisoning, and supply chain fixes.</description>
       <pubDate>Wed, 24 Jun 2026 22:57:14 +0000</pubDate>
       <guid>https://kubaik.github.io/fix-llm-vulns-owasp-top-10-for-ai-apps/</guid>
-    </item>
-    <item>
-      <title>AI rollouts: feature flags in 2026</title>
-      <link>https://kubaik.github.io/ai-rollouts-feature-flags-in-2026/</link>
-      <description>Cut AI rollout latency 84% with feature flags in 2026 — Redis 7.2 cache, PostgreSQL audit trails, and the silent failure you’ll avoid by building observability from day one.</description>
-      <pubDate>Wed, 24 Jun 2026 21:55:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-rollouts-feature-flags-in-2026/</guid>
     </item>
   </channel>
 </rss>

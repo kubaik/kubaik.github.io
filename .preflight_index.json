@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T13:28:18.037565",
+  "built_at": "2026-06-25T15:25:08.316937",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2740,6 +2740,11 @@
       "slug": "pick-one-stripe-lemon-squeezy-paddle-in-2026",
       "title": "Pick one: Stripe, Lemon Squeezy, Paddle in 2026",
       "summary": "A colleague asked me about stripe lemon during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In a"
+    },
+    {
+      "slug": "aws-cost-levers-2026-the-3-that-cut-bills-30",
+      "title": "AWS cost levers 2026: the 3 that cut bills 30%",
+      "summary": "I've seen the same finops 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Mid-size teams running workloads on AWS often chase the wrong cost levers."
     }
   ]
 }
