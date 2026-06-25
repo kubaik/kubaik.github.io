@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 08:34:32 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 08:39:26 +0000</lastBuildDate>
+    <item>
+      <title>Store data once, serve everywhere: cheaper</title>
+      <link>https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/</link>
+      <description>Cut cross-region egress 70% with edge caching — real latency, cost, and failure modes from a 2026 health-data backend serving Nigeria, Kenya, and South Africa.</description>
+      <pubDate>Thu, 25 Jun 2026 08:39:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/</guid>
+    </item>
     <item>
       <title>Replace Pinecone with pgvector</title>
       <link>https://kubaik.github.io/replace-pinecone-with-pgvector/</link>
@@ -138,13 +145,6 @@
       <description>We measured 87% accuracy on the test set and felt good—until we looked at production logs.</description>
       <pubDate>Wed, 24 Jun 2026 18:56:09 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-evals-the-two-metrics-that-bite-you/</guid>
-    </item>
-    <item>
-      <title>AI coded my SaaS in 42 days</title>
-      <link>https://kubaik.github.io/ai-coded-my-saas-in-42-days/</link>
-      <description>Built SaaS in 6 weeks using AI for 80% of code — latency benchmarks, cost breakdown, and the exact prompts that worked in 2026</description>
-      <pubDate>Wed, 24 Jun 2026 17:45:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-coded-my-saas-in-42-days/</guid>
     </item>
   </channel>
 </rss>

@@ -44,5 +44,6 @@
   "How African fintech regulations changed API design requirements in 2026",
   "Tool-calling patterns that work in production vs the ones that break under load",
   "Prompt injection in production AI systems: the attack surface most teams are ignoring",
-  "How pgvector changed our architecture: replacing Pinecone with what we already had"
+  "How pgvector changed our architecture: replacing Pinecone with what we already had",
+  "How to design multi-region backends without triple the infrastructure cost"
 ]
