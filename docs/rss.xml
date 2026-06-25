@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 11:59:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 12:04:22 +0000</lastBuildDate>
+    <item>
+      <title>9 AI wrapper APIs that paid off in 2026</title>
+      <link>https://kubaik.github.io/9-ai-wrapper-apis-that-paid-off-in-2026/</link>
+      <description>Cut AI transcription costs 36% with wrappers that actually work — Speechmatics 2.2, AssemblyAI 2025.11, and Deepgram Nova-3 Fast 3.1 are the only ones that survived 2026.</description>
+      <pubDate>Thu, 25 Jun 2026 12:04:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/9-ai-wrapper-apis-that-paid-off-in-2026/</guid>
+    </item>
     <item>
       <title>Skip the VPN tax: Zero-trust on $200/month</title>
       <link>https://kubaik.github.io/skip-the-vpn-tax-zero-trust-on-200month/</link>
@@ -138,13 +145,6 @@
       <description>The logs showed no obvious bottlenecks: CPU was 28%, RAM 42%, and the database had spare capacity.</description>
       <pubDate>Wed, 24 Jun 2026 20:31:12 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-async-python-from-burning-your-budget/</guid>
-    </item>
-    <item>
-      <title>Engineering interviews: what AI wants now</title>
-      <link>https://kubaik.github.io/engineering-interviews-what-ai-wants-now/</link>
-      <description>Cut engineering hiring failures 70% by testing incident response instead of whiteboard puzzles — concrete interview rubric with Prometheus, Jaeger, and real AWS cost data from Nairobi fintech 2026.</description>
-      <pubDate>Wed, 24 Jun 2026 20:19:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/engineering-interviews-what-ai-wants-now/</guid>
     </item>
   </channel>
 </rss>

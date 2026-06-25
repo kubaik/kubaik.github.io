@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T10:51:14.280939",
+  "built_at": "2026-06-25T12:04:13.750644",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2720,6 +2720,11 @@
       "slug": "skip-the-vpn-tax-zero-trust-on-200month",
       "title": "Skip the VPN tax: Zero-trust on $200/month",
       "summary": "I've seen the same zerotrust practice mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, small teams in Latin America still get told they need ente"
+    },
+    {
+      "slug": "9-ai-wrapper-apis-that-paid-off-in-2026",
+      "title": "9 AI wrapper APIs that paid off in 2026",
+      "summary": "I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In early 2026 I built a SaaS for dental"
     }
   ]
 }
