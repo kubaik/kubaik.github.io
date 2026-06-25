@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T20:41:56.633480",
+  "built_at": "2026-06-25T21:26:00.121111",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2790,6 +2790,11 @@
       "slug": "reconcile-mobile-money-in-3-days-edge-cases-paystack",
       "title": "Reconcile mobile money in 3 days — edge cases Paystack",
       "summary": "Most building mobile guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) Our product lets informal retailers in Lagos reconcile their daily mobile-money floats"
+    },
+    {
+      "slug": "ai-observability-isnt-monitoring-heres-why",
+      "title": "AI observability isn’t monitoring — here’s why",
+      "summary": "The official documentation for observability different is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs I spent three days debugg"
     }
   ]
 }
