@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T16:27:16.964179",
+  "built_at": "2026-06-25T16:39:26.666061",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2755,6 +2755,11 @@
       "slug": "miss-wcag-live-region-pitfalls",
       "title": "Miss WCAG live region pitfalls",
       "summary": "After reviewing a lot of code that touches building accessible, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You’ve built an AI chat interface that passes automated accessibility scans with 100"
+    },
+    {
+      "slug": "redesign-auth-after-passkeys",
+      "title": "Redesign auth after passkeys",
+      "summary": "Most passkeys changed guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026 we rolled out passkeys to 1.2M monthly active users on a Southeast Asian "
     }
   ]
 }
