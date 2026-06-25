@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 22:50:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 22:56:13 +0000</lastBuildDate>
+    <item>
+      <title>Webhooks done right: retries that don’t explode in 2026</title>
+      <link>https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/</link>
+      <description>Cut 62 % on webhook costs and eliminated 8 % duplicates with Step Functions + Redis 7.2 retries and atomic idempotency in 2026 — the real patterns that replace 2020-era Lambda-only designs.</description>
+      <pubDate>Thu, 25 Jun 2026 22:56:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/</guid>
+    </item>
     <item>
       <title>When Astro islands shine in 2026</title>
       <link>https://kubaik.github.io/when-astro-islands-shine-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut feature delivery time 35% with GitHub Copilot Enterprise — the tools Nairobi devs use to beat global teams without burning cash</description>
       <pubDate>Thu, 25 Jun 2026 10:37:23 +0000</pubDate>
       <guid>https://kubaik.github.io/7-ai-tools-nairobi-devs-use-to-beat-global-teams/</guid>
-    </item>
-    <item>
-      <title>AI ops vs dumb alerts: the incident that broke us</title>
-      <link>https://kubaik.github.io/ai-ops-vs-dumb-alerts-the-incident-that-broke-us/</link>
-      <description>Cut false positives 75% with minimal paging alerts — Prometheus Alertmanager 0.26 beats FireHydrant AI 2.6 in 2026 by trusting humans over LLMs.</description>
-      <pubDate>Thu, 25 Jun 2026 10:03:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ops-vs-dumb-alerts-the-incident-that-broke-us/</guid>
     </item>
   </channel>
 </rss>

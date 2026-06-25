@@ -65,5 +65,6 @@
   "Building for mobile money reconciliation: the edge cases that Paystack and Flutterwave don't document",
   "How AI observability is different from traditional application monitoring",
   "How I write tests for AI-assisted code without testing the AI",
-  "The islands architecture in 2026: when Astro and partial hydration are the right choice"
+  "The islands architecture in 2026: when Astro and partial hydration are the right choice",
+  "Building webhook systems in 2026: delivery guarantees, retries, and idempotency"
 ]

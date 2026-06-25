@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T22:16:05.626938",
+  "built_at": "2026-06-25T22:56:05.949534",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2805,6 +2805,11 @@
       "slug": "when-astro-islands-shine-in-2026",
       "title": "When Astro islands shine in 2026",
       "summary": "Most islands architecture guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026, our team at Naiwa Labs launched a developer-focused documentation si"
+    },
+    {
+      "slug": "webhooks-done-right-retries-that-dont-explode-in-2026",
+      "title": "Webhooks done right: retries that don’t explode in 2026",
+      "summary": "Most building webhook guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. Advanced edge cases we personally encountered 1. “Silent 429s” from downstream APIs that still return 200 Twice in Q3 2026 a payme"
     }
   ]
 }
