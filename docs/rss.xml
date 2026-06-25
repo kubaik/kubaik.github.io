@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jun 2026 05:56:45 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jun 2026 07:38:02 +0000</lastBuildDate>
+    <item>
+      <title>AI prompts poisoned: 3 real attacks on live systems</title>
+      <link>https://kubaik.github.io/ai-prompts-poisoned-3-real-attacks-on-live-systems/</link>
+      <description>Block 0.28% of malicious prompts before they poison your AI — regex vs ML guardrails, latency costs, and the €6.4k incidents most teams miss in 2026</description>
+      <pubDate>Thu, 25 Jun 2026 07:37:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-prompts-poisoned-3-real-attacks-on-live-systems/</guid>
+    </item>
     <item>
       <title>Tool calls at scale: sync vs async patterns that live</title>
       <link>https://kubaik.github.io/tool-calls-at-scale-sync-vs-async-patterns-that-live/</link>
@@ -138,13 +145,6 @@
       <description>Cut audit log query time 80% — Postgres vs Kafka in 2026 with latency benchmarks, cost breakdowns, and the schema mistake that cost 15 minutes of downtime.</description>
       <pubDate>Wed, 24 Jun 2026 17:32:36 +0000</pubDate>
       <guid>https://kubaik.github.io/tame-audit-logs-for-compliance/</guid>
-    </item>
-    <item>
-      <title>USSD fintech stack in 2026: build it right</title>
-      <link>https://kubaik.github.io/ussd-fintech-stack-in-2026-build-it-right/</link>
-      <description>That’s roughly 20% of the continent’s mobile connections.</description>
-      <pubDate>Wed, 24 Jun 2026 17:17:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/ussd-fintech-stack-in-2026-build-it-right/</guid>
     </item>
   </channel>
 </rss>

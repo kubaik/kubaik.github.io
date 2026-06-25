@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-25T05:56:36.346059",
+  "built_at": "2026-06-25T07:37:54.070761",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2690,6 +2690,11 @@
       "slug": "tool-calls-at-scale-sync-vs-async-patterns-that-live",
       "title": "Tool calls at scale: sync vs async patterns that live",
       "summary": "I've seen the same toolcalling patterns mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026 every microservice is a state machine wrapped in HTTP, an"
+    },
+    {
+      "slug": "ai-prompts-poisoned-3-real-attacks-on-live-systems",
+      "title": "AI prompts poisoned: 3 real attacks on live systems",
+      "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most AI docs treat prompt inject"
     }
   ]
 }
