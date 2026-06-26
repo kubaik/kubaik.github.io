@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 20:59:32 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 21:04:20 +0000</lastBuildDate>
+    <item>
+      <title>Postgres 17 buried Redis, S3, cron</title>
+      <link>https://kubaik.github.io/postgres-17-buried-redis-s3-cron/</link>
+      <description>Cut stack costs 88% with Postgres 17 caching, cron jobs, and blob storage — latency benchmarks, migration steps, and the 1 mistake we made</description>
+      <pubDate>Fri, 26 Jun 2026 21:04:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/postgres-17-buried-redis-s3-cron/</guid>
+    </item>
     <item>
       <title>Nairobi SaaS infra costs: real 2026 stack</title>
       <link>https://kubaik.github.io/nairobi-saas-infra-costs-real-2026-stack/</link>
@@ -138,13 +145,6 @@
       <description>AI commoditised 70% of Micro-SaaS niches by 2026 — the 5 niches still worth building deliver private-data workflows, regulatory nuance, or physical integration; build the workflow first, bolt on AI later.</description>
       <pubDate>Fri, 26 Jun 2026 10:17:47 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ate-my-niche-5-micro-saas-types-still-worth/</guid>
-    </item>
-    <item>
-      <title>Why I switched from Cypress to Playwright in 2026</title>
-      <link>https://kubaik.github.io/why-i-switched-from-cypress-to-playwright-in-2026/</link>
-      <description>Cut frontend test flakes 96% with Playwright 1.44 and Vitest 2.0 — real CI costs, migration steps, and the Cypress mistake most teams still make.</description>
-      <pubDate>Fri, 26 Jun 2026 08:47:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-i-switched-from-cypress-to-playwright-in-2026/</guid>
     </item>
   </channel>
 </rss>
