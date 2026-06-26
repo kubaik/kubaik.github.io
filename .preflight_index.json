@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T11:39:03.231228",
+  "built_at": "2026-06-26T13:06:11.131529",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2885,6 +2885,11 @@
       "slug": "htmx-stack-swap-5-things-i-gained-3-i-lost",
       "title": "HTMX stack swap: 5 things I gained, 3 I lost",
       "summary": "I ran into this htmx changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three days debugging a connection poo"
+    },
+    {
+      "slug": "ai-pair-code-reviews-broke-our-repo",
+      "title": "AI pair code reviews broke our repo",
+      "summary": "Most pair programming guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, our team at Nairobi-based fintech startup PesaFlow ran into a quiet cr"
     }
   ]
 }

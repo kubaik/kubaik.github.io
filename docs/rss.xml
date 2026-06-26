@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 11:39:12 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 13:06:20 +0000</lastBuildDate>
+    <item>
+      <title>AI pair code reviews broke our repo</title>
+      <link>https://kubaik.github.io/ai-pair-code-reviews-broke-our-repo/</link>
+      <description>Cut PR review time 55% with AI pre-filtering — Copilot, CodeWhisperer, and the trick to keep code ownership intact.</description>
+      <pubDate>Fri, 26 Jun 2026 13:06:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pair-code-reviews-broke-our-repo/</guid>
+    </item>
     <item>
       <title>HTMX stack swap: 5 things I gained, 3 I lost</title>
       <link>https://kubaik.github.io/htmx-stack-swap-5-things-i-gained-3-i-lost/</link>
@@ -138,13 +145,6 @@
       <description>The gap between what the docs say and what production needs I spent three days debugging a production incident where our AI feature was returning 18%…</description>
       <pubDate>Thu, 25 Jun 2026 21:25:57 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-observability-isnt-monitoring-heres-why/</guid>
-    </item>
-    <item>
-      <title>Reconcile mobile money in 3 days — edge cases Paystack</title>
-      <link>https://kubaik.github.io/reconcile-mobile-money-in-3-days-edge-cases-paystack/</link>
-      <description>Cut false mobile-money discrepancies 97% with a 2-hour tolerance band — MTN MoMo CSV quirks, Airtel duplicates, and the BRIN index that saved 8 minutes per reconcile</description>
-      <pubDate>Thu, 25 Jun 2026 20:41:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/reconcile-mobile-money-in-3-days-edge-cases-paystack/</guid>
     </item>
   </channel>
 </rss>

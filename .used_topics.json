@@ -81,5 +81,6 @@
   "Micro-SaaS in 2026: the niches that are working and the ones that got commoditised by AI",
   "How AI is being used to find vulnerabilities and what that means for defenders",
   "How post-quantum cryptography affects the TLS stack you're running today",
-  "How HTMX changed my stack and what I gave up to get there"
+  "How HTMX changed my stack and what I gave up to get there",
+  "How AI pair programming changes code ownership and review responsibility"
 ]
