@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 04:56:51 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 05:01:41 +0000</lastBuildDate>
+    <item>
+      <title>K8s to Fly.io: from $3k to $200/month</title>
+      <link>https://kubaik.github.io/k8s-to-flyio-from-3k-to-200month/</link>
+      <description>Cut cloud costs 91% by moving from EKS to Fly.io — API latency dropped 49%, uptime hit 100%, and we saved $3.5k/month. See the migration steps and benchmarks.</description>
+      <pubDate>Fri, 26 Jun 2026 05:01:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/k8s-to-flyio-from-3k-to-200month/</guid>
+    </item>
     <item>
       <title>Signals vs state: does it matter?</title>
       <link>https://kubaik.github.io/signals-vs-state-does-it-matter/</link>
@@ -138,13 +145,6 @@
       <description>Prove your value in 2026 with AI-proof compensation evidence — human-commit ratios, delivery metrics, and negotiation slides that finance actually accepts.</description>
       <pubDate>Thu, 25 Jun 2026 16:15:21 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-pay-in-2026-with-ai-proof-points/</guid>
-    </item>
-    <item>
-      <title>AWS cost levers 2026: the 3 that cut bills 30%</title>
-      <link>https://kubaik.github.io/aws-cost-levers-2026-the-3-that-cut-bills-30/</link>
-      <description>Cut AWS bills 30% with the 3 levers that actually work in 2026 — Savings Plans, Compute Optimizer, and Cost Anomaly Detection — and the exact commitment math most teams get wrong.</description>
-      <pubDate>Thu, 25 Jun 2026 15:25:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/aws-cost-levers-2026-the-3-that-cut-bills-30/</guid>
     </item>
   </channel>
 </rss>

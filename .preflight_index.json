@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T04:02:04.307855",
+  "built_at": "2026-06-26T05:01:31.902251",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2840,6 +2840,11 @@
       "slug": "signals-vs-state-does-it-matter",
       "title": "Signals vs state: does it matter?",
       "summary": "I ran into this signals changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I was debugging a Next.js dashboard that f"
+    },
+    {
+      "slug": "k8s-to-flyio-from-3k-to-200month",
+      "title": "K8s to Fly.io: from $3k to $200/month",
+      "summary": "Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our SaaS product started getting traction. We were running a managed Ku"
     }
   ]
 }
