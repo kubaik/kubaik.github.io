@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T08:03:11.552353",
+  "built_at": "2026-06-26T08:47:13.271578",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2860,6 +2860,11 @@
       "slug": "json-mode-isnt-your-golden-ticket",
       "title": "JSON mode isn't your golden ticket",
       "summary": "Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, we built a compliance pipeline that took PDF regulatory filings, ext"
+    },
+    {
+      "slug": "why-i-switched-from-cypress-to-playwright-in-2026",
+      "title": "Why I switched from Cypress to Playwright in 2026",
+      "summary": "I ran into this test frontend problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I was running a 50-person team in 2026 with "
     }
   ]
 }

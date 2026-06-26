@@ -76,5 +76,6 @@
   "How I replaced a $3k/month Kubernetes cluster with a $200/month alternative",
   "How to build offline-first apps for markets where connectivity is still unreliable",
   "How AI UI generation tools changed my frontend workflow (and what they still cannot do)",
-  "Structured outputs from LLMs: why JSON mode is not enough for real workflows"
+  "Structured outputs from LLMs: why JSON mode is not enough for real workflows",
+  "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress"
 ]

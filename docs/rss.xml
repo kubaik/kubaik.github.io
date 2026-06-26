@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 08:42:34 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 08:47:22 +0000</lastBuildDate>
+    <item>
+      <title>Why I switched from Cypress to Playwright in 2026</title>
+      <link>https://kubaik.github.io/why-i-switched-from-cypress-to-playwright-in-2026/</link>
+      <description>Cut frontend test flakes 96% with Playwright 1.44 and Vitest 2.0 — real CI costs, migration steps, and the Cypress mistake most teams still make.</description>
+      <pubDate>Fri, 26 Jun 2026 08:47:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-i-switched-from-cypress-to-playwright-in-2026/</guid>
+    </item>
     <item>
       <title>JSON mode isn&apos;t your golden ticket</title>
       <link>https://kubaik.github.io/json-mode-isnt-your-golden-ticket/</link>
@@ -138,13 +145,6 @@
       <description>Survive AI disruption in 2026: pick SaaS niches where human judgment beats bots. Healthcare regulatory reporting in Kenya cut churn 26% and saved $710/year per customer.</description>
       <pubDate>Thu, 25 Jun 2026 18:43:21 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-niches-ai-wont-eat-in-2026/</guid>
-    </item>
-    <item>
-      <title>Nairobi SaaS infra 2026: real cost data</title>
-      <link>https://kubaik.github.io/nairobi-saas-infra-2026-real-cost-data/</link>
-      <description>Cut Nairobi SaaS infra costs to $847/month with exact services, configs, and the mistakes I made. Real 30-day bill, latency, and scaling limits you can copy.</description>
-      <pubDate>Thu, 25 Jun 2026 17:32:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/nairobi-saas-infra-2026-real-cost-data/</guid>
     </item>
   </channel>
 </rss>
