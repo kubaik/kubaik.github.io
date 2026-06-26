@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 21:53:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 21:58:02 +0000</lastBuildDate>
+    <item>
+      <title>Skip the VPN: zero-trust for under $100</title>
+      <link>https://kubaik.github.io/skip-the-vpn-zero-trust-for-under-100/</link>
+      <description>Two months later, we moved to Tailscale and Cloudflare Tunnel—both costing $0 for our scale—and cut our infrastructure spend by 80%.</description>
+      <pubDate>Fri, 26 Jun 2026 21:57:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/skip-the-vpn-zero-trust-for-under-100/</guid>
+    </item>
     <item>
       <title>Postgres 17 buried Redis, S3, cron</title>
       <link>https://kubaik.github.io/postgres-17-buried-redis-s3-cron/</link>
@@ -138,13 +145,6 @@
       <description>Cut vulnerability noise 40% with AI scanners — 2026’s reality on false positives, GPU costs, and the one policy rule that saves $12k per engineer-year</description>
       <pubDate>Fri, 26 Jun 2026 10:37:41 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-finds-bugs-faster-what-defenders-must-do-now/</guid>
-    </item>
-    <item>
-      <title>AI ate my niche: 5 Micro-SaaS types still worth</title>
-      <link>https://kubaik.github.io/ai-ate-my-niche-5-micro-saas-types-still-worth/</link>
-      <description>AI commoditised 70% of Micro-SaaS niches by 2026 — the 5 niches still worth building deliver private-data workflows, regulatory nuance, or physical integration; build the workflow first, bolt on AI later.</description>
-      <pubDate>Fri, 26 Jun 2026 10:17:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ate-my-niche-5-micro-saas-types-still-worth/</guid>
     </item>
   </channel>
 </rss>

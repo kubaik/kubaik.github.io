@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T21:04:10.912272",
+  "built_at": "2026-06-26T21:57:53.522545",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2965,6 +2965,11 @@
       "slug": "postgres-17-buried-redis-s3-cron",
       "title": "Postgres 17 buried Redis, S3, cron",
       "summary": "I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, Postgres has quietly become the Swiss Army knife of backend inf"
+    },
+    {
+      "slug": "skip-the-vpn-zero-trust-for-under-100",
+      "title": "Skip the VPN: zero-trust for under $100",
+      "summary": "I've seen the same zerotrust practice mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, small teams still think zero-trust means buying enterprise"
     }
   ]
 }
