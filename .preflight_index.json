@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T19:01:12.416270",
+  "built_at": "2026-06-26T19:13:45.693918",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2940,6 +2940,11 @@
       "slug": "llm-structured-output-json-mode-fails-at-scale",
       "title": "LLM structured output: JSON mode fails at scale",
       "summary": "Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026, our team built an internal tool that used LLMs to extract structured d"
+    },
+    {
+      "slug": "llm-output-metrics-that-actually-move-the-needle",
+      "title": "LLM output metrics that actually move the needle",
+      "summary": "The official documentation for evaluating llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Almost every LLM tutorial you read"
     }
   ]
 }

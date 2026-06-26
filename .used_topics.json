@@ -4,5 +4,6 @@
   "How African fintech regulations changed API design requirements in 2026",
   "How pgvector changed our architecture: replacing Pinecone with what we already had",
   "Why vibe coding works for MVPs and fails for anything you need to maintain",
-  "Structured outputs from LLMs: why JSON mode is not enough for real workflows"
+  "Structured outputs from LLMs: why JSON mode is not enough for real workflows",
+  "Evaluating LLM output quality at scale: the metrics that actually matter"
 ]
