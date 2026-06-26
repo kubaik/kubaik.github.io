@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 20:29:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 20:32:16 +0000</lastBuildDate>
+    <item>
+      <title>AI wrote 80% of my SaaS in 6 weeks — here’s what broke</title>
+      <link>https://kubaik.github.io/ai-wrote-80-of-my-saas-in-6-weeks-heres-what-broke/</link>
+      <description>Launched a SaaS in 6 weeks using AI for 80% of the code — the real breakdown: costs, bugs, and what actually went wrong in production with tools like FastAPI, Go, and Redis 7.2.</description>
+      <pubDate>Fri, 26 Jun 2026 20:32:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-wrote-80-of-my-saas-in-6-weeks-heres-what-broke/</guid>
+    </item>
     <item>
       <title>Monitor AI like a model, not a machine</title>
       <link>https://kubaik.github.io/monitor-ai-like-a-model-not-a-machine/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM validation failures 95% with JSON Schema — why JSON mode alone fails in production workflows and how to fix it with validation, transformation, and fallback logic in 2026.</description>
       <pubDate>Fri, 26 Jun 2026 08:03:09 +0000</pubDate>
       <guid>https://kubaik.github.io/json-mode-isnt-your-golden-ticket/</guid>
-    </item>
-    <item>
-      <title>AI UI tools: speed vs. the rewrite</title>
-      <link>https://kubaik.github.io/ai-ui-tools-speed-vs-the-rewrite/</link>
-      <description>Cut component time 65% with AI UI tools — but design tokens, tests, and breakpoints still need humans. Figma Make Design, Cursor, and Radix UI in 2026.</description>
-      <pubDate>Fri, 26 Jun 2026 06:46:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ui-tools-speed-vs-the-rewrite/</guid>
     </item>
   </channel>
 </rss>
