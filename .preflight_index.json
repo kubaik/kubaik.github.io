@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T11:02:19.541785",
+  "built_at": "2026-06-26T11:39:03.231228",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2880,6 +2880,11 @@
       "slug": "prepare-tls-for-post-quantum-reality",
       "title": "Prepare TLS for post-quantum reality",
       "summary": "Most postquantum cryptography guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our team noticed a quiet but urgent alert in the AWS Certificat"
+    },
+    {
+      "slug": "htmx-stack-swap-5-things-i-gained-3-i-lost",
+      "title": "HTMX stack swap: 5 things I gained, 3 I lost",
+      "summary": "I ran into this htmx changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three days debugging a connection poo"
     }
   ]
 }

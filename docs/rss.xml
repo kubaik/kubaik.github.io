@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 11:34:25 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 11:39:12 +0000</lastBuildDate>
+    <item>
+      <title>HTMX stack swap: 5 things I gained, 3 I lost</title>
+      <link>https://kubaik.github.io/htmx-stack-swap-5-things-i-gained-3-i-lost/</link>
+      <description>HTMX 2.0 cut our frontend bundle from 245 KiB to 8 KiB and dropped AWS fees 48% — here’s the real trade-off we made and what we gained by swapping React for HTML-over-the-wire</description>
+      <pubDate>Fri, 26 Jun 2026 11:39:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/htmx-stack-swap-5-things-i-gained-3-i-lost/</guid>
+    </item>
     <item>
       <title>Prepare TLS for post-quantum reality</title>
       <link>https://kubaik.github.io/prepare-tls-for-post-quantum-reality/</link>
@@ -138,13 +145,6 @@
       <description>Cut false mobile-money discrepancies 97% with a 2-hour tolerance band — MTN MoMo CSV quirks, Airtel duplicates, and the BRIN index that saved 8 minutes per reconcile</description>
       <pubDate>Thu, 25 Jun 2026 20:41:54 +0000</pubDate>
       <guid>https://kubaik.github.io/reconcile-mobile-money-in-3-days-edge-cases-paystack/</guid>
-    </item>
-    <item>
-      <title>Bootstrapped $5k MRR without ads</title>
-      <link>https://kubaik.github.io/bootstrapped-5k-mrr-without-ads/</link>
-      <description>Hit $5k MRR with zero marketing budget — the exact playbook, tools, and spreadsheets used. Learn how Slack integrations, product-led SEO, and team invites drove 40% MoM growth.</description>
-      <pubDate>Thu, 25 Jun 2026 20:30:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/bootstrapped-5k-mrr-without-ads/</guid>
     </item>
   </channel>
 </rss>
