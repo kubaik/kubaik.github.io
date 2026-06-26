@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 16:00:29 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 16:05:23 +0000</lastBuildDate>
+    <item>
+      <title>Land a $45k remote job? Africa’s 2026 map</title>
+      <link>https://kubaik.github.io/land-a-45k-remote-job-africas-2026-map/</link>
+      <description>Land remote jobs paying $45k+ with Africa’s 2026 salary map and tech hubs—plus tools, code, and negotiation scripts that actually work.</description>
+      <pubDate>Fri, 26 Jun 2026 16:05:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/land-a-45k-remote-job-africas-2026-map/</guid>
+    </item>
     <item>
       <title>AI benchmarking: 3 mistakes we made first</title>
       <link>https://kubaik.github.io/ai-benchmarking-3-mistakes-we-made-first/</link>
@@ -138,13 +145,6 @@
       <description>Cut Nairobi SaaS page load times 70% — Starlink 2026 edge cache with CloudFront Functions, Redis 7.2, and k6 load tests from Kenya</description>
       <pubDate>Thu, 25 Jun 2026 23:11:40 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/</guid>
-    </item>
-    <item>
-      <title>Webhooks done right: retries that don’t explode in 2026</title>
-      <link>https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/</link>
-      <description>Cut 62 % on webhook costs and eliminated 8 % duplicates with Step Functions + Redis 7.2 retries and atomic idempotency in 2026 — the real patterns that replace 2020-era Lambda-only designs.</description>
-      <pubDate>Thu, 25 Jun 2026 22:56:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/</guid>
     </item>
   </channel>
 </rss>
