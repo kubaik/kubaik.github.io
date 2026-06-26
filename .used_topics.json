@@ -71,5 +71,6 @@
   "Pricing a developer tool in 2026: what the market teaches you fast",
   "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant",
   "Database branching workflows: how Neon and PlanetScale changed how I develop locally",
-  "Building developer tools as a business: what the AI era changed about the sales cycle"
+  "Building developer tools as a business: what the AI era changed about the sales cycle",
+  "How Signals changed state management and whether it matters outside of frameworks"
 ]

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T02:34:35.806116",
+  "built_at": "2026-06-26T04:02:04.307855",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2835,6 +2835,11 @@
       "slug": "ai-tools-killed-your-dev-sales-cycle",
       "title": "AI tools killed your dev sales cycle",
       "summary": "Most building developer guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, we launched a CLI tool called that analyzes Python package dependency grap"
+    },
+    {
+      "slug": "signals-vs-state-does-it-matter",
+      "title": "Signals vs state: does it matter?",
+      "summary": "I ran into this signals changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I was debugging a Next.js dashboard that f"
     }
   ]
 }
