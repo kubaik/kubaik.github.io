@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T10:17:50.078232",
+  "built_at": "2026-06-26T10:37:43.358625",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2870,6 +2870,11 @@
       "slug": "ai-ate-my-niche-5-micro-saas-types-still-worth",
       "title": "AI ate my niche: 5 Micro-SaaS types still worth",
       "summary": "A colleague asked me about microsaas 2026 during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Mo"
+    },
+    {
+      "slug": "ai-finds-bugs-faster-what-defenders-must-do-now",
+      "title": "AI finds bugs faster: what defenders must do now",
+      "summary": "The short version: the conventional advice on being used is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI-powered vulnerability scanners are now spotting 40–60% more bugs than static analysi"
     }
   ]
 }

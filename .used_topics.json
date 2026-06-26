@@ -78,5 +78,6 @@
   "How AI UI generation tools changed my frontend workflow (and what they still cannot do)",
   "Structured outputs from LLMs: why JSON mode is not enough for real workflows",
   "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress",
-  "Micro-SaaS in 2026: the niches that are working and the ones that got commoditised by AI"
+  "Micro-SaaS in 2026: the niches that are working and the ones that got commoditised by AI",
+  "How AI is being used to find vulnerabilities and what that means for defenders"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 10:32:31 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 10:37:51 +0000</lastBuildDate>
+    <item>
+      <title>AI finds bugs faster: what defenders must do now</title>
+      <link>https://kubaik.github.io/ai-finds-bugs-faster-what-defenders-must-do-now/</link>
+      <description>Cut vulnerability noise 40% with AI scanners — 2026’s reality on false positives, GPU costs, and the one policy rule that saves $12k per engineer-year</description>
+      <pubDate>Fri, 26 Jun 2026 10:37:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-finds-bugs-faster-what-defenders-must-do-now/</guid>
+    </item>
     <item>
       <title>AI ate my niche: 5 Micro-SaaS types still worth</title>
       <link>https://kubaik.github.io/ai-ate-my-niche-5-micro-saas-types-still-worth/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI code debt 60% with LLM debt vs prompt debt — the decision framework, benchmarks, and rollback plan most teams skip</description>
       <pubDate>Thu, 25 Jun 2026 19:14:12 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-code-debt-llm-debt-vs-prompt-debt/</guid>
-    </item>
-    <item>
-      <title>Pulumi vs Terraform vs OpenTofu in 2026</title>
-      <link>https://kubaik.github.io/pulumi-vs-terraform-vs-opentofu-in-2026/</link>
-      <description>Cut IaC licensing risk 100% and save $14/month per CI runner — OpenTofu 1.8.0 vs Terraform 1.9 BSL vs Pulumi Python 3.12 after the HashiCorp fork.</description>
-      <pubDate>Thu, 25 Jun 2026 19:04:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/pulumi-vs-terraform-vs-opentofu-in-2026/</guid>
     </item>
   </channel>
 </rss>
