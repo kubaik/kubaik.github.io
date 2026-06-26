@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 10:57:35 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 11:02:29 +0000</lastBuildDate>
+    <item>
+      <title>Prepare TLS for post-quantum reality</title>
+      <link>https://kubaik.github.io/prepare-tls-for-post-quantum-reality/</link>
+      <description>Cut TLS handshake latency 86% with hybrid certificates in 2026 — the real cost of post-quantum crypto on RSA, ECDSA, and Envoy deployments.</description>
+      <pubDate>Fri, 26 Jun 2026 11:02:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/prepare-tls-for-post-quantum-reality/</guid>
+    </item>
     <item>
       <title>AI finds bugs faster: what defenders must do now</title>
       <link>https://kubaik.github.io/ai-finds-bugs-faster-what-defenders-must-do-now/</link>
@@ -138,13 +145,6 @@
       <description>Hit $5k MRR with zero marketing budget — the exact playbook, tools, and spreadsheets used. Learn how Slack integrations, product-led SEO, and team invites drove 40% MoM growth.</description>
       <pubDate>Thu, 25 Jun 2026 20:30:14 +0000</pubDate>
       <guid>https://kubaik.github.io/bootstrapped-5k-mrr-without-ads/</guid>
-    </item>
-    <item>
-      <title>AI code debt: LLM debt vs prompt debt</title>
-      <link>https://kubaik.github.io/ai-code-debt-llm-debt-vs-prompt-debt/</link>
-      <description>Cut AI code debt 60% with LLM debt vs prompt debt — the decision framework, benchmarks, and rollback plan most teams skip</description>
-      <pubDate>Thu, 25 Jun 2026 19:14:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-code-debt-llm-debt-vs-prompt-debt/</guid>
     </item>
   </channel>
 </rss>

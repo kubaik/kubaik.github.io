@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T10:37:43.358625",
+  "built_at": "2026-06-26T11:02:19.541785",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2875,6 +2875,11 @@
       "slug": "ai-finds-bugs-faster-what-defenders-must-do-now",
       "title": "AI finds bugs faster: what defenders must do now",
       "summary": "The short version: the conventional advice on being used is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI-powered vulnerability scanners are now spotting 40–60% more bugs than static analysi"
+    },
+    {
+      "slug": "prepare-tls-for-post-quantum-reality",
+      "title": "Prepare TLS for post-quantum reality",
+      "summary": "Most postquantum cryptography guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our team noticed a quiet but urgent alert in the AWS Certificat"
     }
   ]
 }
