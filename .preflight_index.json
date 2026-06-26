@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T05:01:31.902251",
+  "built_at": "2026-06-26T06:38:01.943428",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2845,6 +2845,11 @@
       "slug": "k8s-to-flyio-from-3k-to-200month",
       "title": "K8s to Fly.io: from $3k to $200/month",
       "summary": "Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our SaaS product started getting traction. We were running a managed Ku"
+    },
+    {
+      "slug": "build-offline-first-apps-that-sync-in-2026",
+      "title": "Build offline-first apps that sync in 2026",
+      "summary": "Most build offlinefirst guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026 we launched a health-data app for small clinics in Nigeria, Ghana, an"
     }
   ]
 }
