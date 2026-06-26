@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T16:27:10.965913",
+  "built_at": "2026-06-26T16:36:55.088045",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2920,6 +2920,11 @@
       "slug": "maintain-40-ai-code-two-battle-tested-paths",
       "title": "Maintain 40% AI code: two battle-tested paths",
       "summary": "I've seen the same maintain codebase mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Last year we shipped a public-facing feature that handled 12,000 req"
+    },
+    {
+      "slug": "ndpr-2026-broke-fintech-apis",
+      "title": "NDPR 2026 broke fintech APIs",
+      "summary": "A colleague asked me about african fintech during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) M"
     }
   ]
 }

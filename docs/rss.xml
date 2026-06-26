@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 16:32:06 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 16:37:04 +0000</lastBuildDate>
+    <item>
+      <title>NDPR 2026 broke fintech APIs</title>
+      <link>https://kubaik.github.io/ndpr-2026-broke-fintech-apis/</link>
+      <description>The sandbox logs showed our average response time had climbed from 180 ms to 420 ms under load, which triggered CBN’s new &amp;quot;real-time risk scoring&amp;quot;…</description>
+      <pubDate>Fri, 26 Jun 2026 16:36:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/ndpr-2026-broke-fintech-apis/</guid>
+    </item>
     <item>
       <title>Maintain 40% AI code: two battle-tested paths</title>
       <link>https://kubaik.github.io/maintain-40-ai-code-two-battle-tested-paths/</link>
@@ -138,13 +145,6 @@
       <description>Fix database branch errors 60% faster with Neon and PlanetScale 2026 fixes — connection strings, auto-pause, and local Docker traps that most teams miss.</description>
       <pubDate>Fri, 26 Jun 2026 01:38:26 +0000</pubDate>
       <guid>https://kubaik.github.io/branching-databases-neon-and-planetscale-fixes-that/</guid>
-    </item>
-    <item>
-      <title>Row-level security for SaaS in 2026: the surprise cost</title>
-      <link>https://kubaik.github.io/row-level-security-for-saas-in-2026-the-surprise-cost/</link>
-      <description>Cut SaaS infra cost 75% by tiering tenants: RLS for small, schema-per-tenant for medium, dedicated DB for large. PostgreSQL 16.2, PgBouncer 1.21, Redis 7.2 benchmarks included.</description>
-      <pubDate>Fri, 26 Jun 2026 00:03:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/row-level-security-for-saas-in-2026-the-surprise-cost/</guid>
     </item>
   </channel>
 </rss>
