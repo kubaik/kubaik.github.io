@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T16:05:14.680016",
+  "built_at": "2026-06-26T16:10:23.835775",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2910,6 +2910,11 @@
       "slug": "land-a-45k-remote-job-africas-2026-map",
       "title": "Land a $45k remote job? Africa’s 2026 map",
       "summary": "After reviewing a lot of code that touches tools built, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The gap between what the docs say and what production needs In 2026, the African developer job market is a paradox: every rec"
+    },
+    {
+      "slug": "compound-nairobi-6-dev-income-streams-2026",
+      "title": "Compound Nairobi: 6 dev income streams 2026",
+      "summary": "I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) A year ago, I hit a wall. After shipping m"
     }
   ]
 }
