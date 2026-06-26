@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 20:50:42 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 20:55:23 +0000</lastBuildDate>
+    <item>
+      <title>Nairobi SaaS infra costs: real 2026 stack</title>
+      <link>https://kubaik.github.io/nairobi-saas-infra-costs-real-2026-stack/</link>
+      <description>Cut Nairobi SaaS infra costs 40% with ARM Lambda, Redis, and multi-region failover — concrete numbers and the stack we actually run in 2026.</description>
+      <pubDate>Fri, 26 Jun 2026 20:55:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/nairobi-saas-infra-costs-real-2026-stack/</guid>
+    </item>
     <item>
       <title>AI wrote 80% of my SaaS in 6 weeks — here’s what broke</title>
       <link>https://kubaik.github.io/ai-wrote-80-of-my-saas-in-6-weeks-heres-what-broke/</link>
@@ -138,13 +145,6 @@
       <description>Cut frontend test flakes 96% with Playwright 1.44 and Vitest 2.0 — real CI costs, migration steps, and the Cypress mistake most teams still make.</description>
       <pubDate>Fri, 26 Jun 2026 08:47:10 +0000</pubDate>
       <guid>https://kubaik.github.io/why-i-switched-from-cypress-to-playwright-in-2026/</guid>
-    </item>
-    <item>
-      <title>JSON mode isn&apos;t your golden ticket</title>
-      <link>https://kubaik.github.io/json-mode-isnt-your-golden-ticket/</link>
-      <description>Cut LLM validation failures 95% with JSON Schema — why JSON mode alone fails in production workflows and how to fix it with validation, transformation, and fallback logic in 2026.</description>
-      <pubDate>Fri, 26 Jun 2026 08:03:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/json-mode-isnt-your-golden-ticket/</guid>
     </item>
   </channel>
 </rss>
