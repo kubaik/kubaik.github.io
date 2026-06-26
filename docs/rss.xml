@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 22:18:15 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 22:23:07 +0000</lastBuildDate>
+    <item>
+      <title>Starlink 4G fallback: serve pages under 800ms</title>
+      <link>https://kubaik.github.io/starlink-4g-fallback-serve-pages-under-800ms/</link>
+      <description>Cut page load time 60% on 4G in East Africa with Next.js 15, Redis 7.2, and a 120 kB client bundle — the exact steps teams used when Starlink lit up the region.</description>
+      <pubDate>Fri, 26 Jun 2026 22:22:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/starlink-4g-fallback-serve-pages-under-800ms/</guid>
+    </item>
     <item>
       <title>Flip your dev-tool sales cycle in 2026</title>
       <link>https://kubaik.github.io/flip-your-dev-tool-sales-cycle-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>HTMX 2.0 cut our frontend bundle from 245 KiB to 8 KiB and dropped AWS fees 48% — here’s the real trade-off we made and what we gained by swapping React for HTML-over-the-wire</description>
       <pubDate>Fri, 26 Jun 2026 11:39:00 +0000</pubDate>
       <guid>https://kubaik.github.io/htmx-stack-swap-5-things-i-gained-3-i-lost/</guid>
-    </item>
-    <item>
-      <title>Prepare TLS for post-quantum reality</title>
-      <link>https://kubaik.github.io/prepare-tls-for-post-quantum-reality/</link>
-      <description>Cut TLS handshake latency 86% with hybrid certificates in 2026 — the real cost of post-quantum crypto on RSA, ECDSA, and Envoy deployments.</description>
-      <pubDate>Fri, 26 Jun 2026 11:02:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/prepare-tls-for-post-quantum-reality/</guid>
     </item>
   </channel>
 </rss>
