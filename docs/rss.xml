@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 13:37:27 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 13:42:26 +0000</lastBuildDate>
+    <item>
+      <title>AI benchmarking: 3 mistakes we made first</title>
+      <link>https://kubaik.github.io/ai-benchmarking-3-mistakes-we-made-first/</link>
+      <description>Cut AI inference cost 32% without hurting conversions — real latency benchmarks, CPI scoring, and the shadow-traffic mistake most teams make.</description>
+      <pubDate>Fri, 26 Jun 2026 13:42:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-benchmarking-3-mistakes-we-made-first/</guid>
+    </item>
     <item>
       <title>Zero-trust MCP servers: auth trap you’ll hit first</title>
       <link>https://kubaik.github.io/zero-trust-mcp-servers-auth-trap-youll-hit-first/</link>
@@ -138,13 +145,6 @@
       <description>Cut 62 % on webhook costs and eliminated 8 % duplicates with Step Functions + Redis 7.2 retries and atomic idempotency in 2026 — the real patterns that replace 2020-era Lambda-only designs.</description>
       <pubDate>Thu, 25 Jun 2026 22:56:03 +0000</pubDate>
       <guid>https://kubaik.github.io/webhooks-done-right-retries-that-dont-explode-in-2026/</guid>
-    </item>
-    <item>
-      <title>When Astro islands shine in 2026</title>
-      <link>https://kubaik.github.io/when-astro-islands-shine-in-2026/</link>
-      <description>Cut page load time 75% with Astro islands in 2026 — how we replaced React hydration with static shells and lazy-loaded islands to hit 1.0s TTI on 2G.</description>
-      <pubDate>Thu, 25 Jun 2026 22:16:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/when-astro-islands-shine-in-2026/</guid>
     </item>
   </channel>
 </rss>

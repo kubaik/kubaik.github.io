@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T13:29:48.919356",
+  "built_at": "2026-06-26T13:42:17.425569",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2900,6 +2900,11 @@
       "slug": "zero-trust-mcp-servers-auth-trap-youll-hit-first",
       "title": "Zero-trust MCP servers: auth trap you’ll hit first",
       "summary": "After reviewing a lot of code that touches mcp servers, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The gap between what the docs say and what production needs The MCP specification promises interoperability across agents, LL"
+    },
+    {
+      "slug": "ai-benchmarking-3-mistakes-we-made-first",
+      "title": "AI benchmarking: 3 mistakes we made first",
+      "summary": "After reviewing a lot of code that touches claude gpt5, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The situation (what we were trying to solve) In late 2026, our small team at DevBench was hired to build a real-time recommen"
     }
   ]
 }
