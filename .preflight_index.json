@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T18:26:50.215534",
+  "built_at": "2026-06-26T19:01:12.416270",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2935,6 +2935,11 @@
       "slug": "3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that",
       "title": "3 vibe-coding tricks that kill MVPs — and 5 tools that",
       "summary": "I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) Three years ago we rebuilt our entire customer"
+    },
+    {
+      "slug": "llm-structured-output-json-mode-fails-at-scale",
+      "title": "LLM structured output: JSON mode fails at scale",
+      "summary": "Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026, our team built an internal tool that used LLMs to extract structured d"
     }
   ]
 }
