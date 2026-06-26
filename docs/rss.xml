@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 08:47:22 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 10:17:58 +0000</lastBuildDate>
+    <item>
+      <title>AI ate my niche: 5 Micro-SaaS types still worth</title>
+      <link>https://kubaik.github.io/ai-ate-my-niche-5-micro-saas-types-still-worth/</link>
+      <description>AI commoditised 70% of Micro-SaaS niches by 2026 — the 5 niches still worth building deliver private-data workflows, regulatory nuance, or physical integration; build the workflow first, bolt on AI later.</description>
+      <pubDate>Fri, 26 Jun 2026 10:17:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ate-my-niche-5-micro-saas-types-still-worth/</guid>
+    </item>
     <item>
       <title>Why I switched from Cypress to Playwright in 2026</title>
       <link>https://kubaik.github.io/why-i-switched-from-cypress-to-playwright-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut IaC licensing risk 100% and save $14/month per CI runner — OpenTofu 1.8.0 vs Terraform 1.9 BSL vs Pulumi Python 3.12 after the HashiCorp fork.</description>
       <pubDate>Thu, 25 Jun 2026 19:04:52 +0000</pubDate>
       <guid>https://kubaik.github.io/pulumi-vs-terraform-vs-opentofu-in-2026/</guid>
-    </item>
-    <item>
-      <title>Pick niches AI won’t eat in 2026</title>
-      <link>https://kubaik.github.io/pick-niches-ai-wont-eat-in-2026/</link>
-      <description>Survive AI disruption in 2026: pick SaaS niches where human judgment beats bots. Healthcare regulatory reporting in Kenya cut churn 26% and saved $710/year per customer.</description>
-      <pubDate>Thu, 25 Jun 2026 18:43:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-niches-ai-wont-eat-in-2026/</guid>
     </item>
   </channel>
 </rss>
