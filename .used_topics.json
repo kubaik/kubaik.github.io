@@ -83,5 +83,6 @@
   "How post-quantum cryptography affects the TLS stack you're running today",
   "How HTMX changed my stack and what I gave up to get there",
   "How AI pair programming changes code ownership and review responsibility",
-  "How I migrated a monolith to services in 2026 without a big-bang rewrite"
+  "How I migrated a monolith to services in 2026 without a big-bang rewrite",
+  "MCP servers in 2026: the protocol that quietly became infrastructure"
 ]
