@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T22:22:58.617508",
+  "built_at": "2026-06-26T22:44:45.351572",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2980,6 +2980,11 @@
       "slug": "starlink-4g-fallback-serve-pages-under-800ms",
       "title": "Starlink 4G fallback: serve pages under 800ms",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) When Starlink lit up East Africa in March 2026, our logs showed a jump in 4G-only traffi"
+    },
+    {
+      "slug": "tls-13-and-post-quantum-crypto-200-latency-spike",
+      "title": "TLS 1.3 and post-quantum crypto: 200% latency spike",
+      "summary": "Most postquantum cryptography guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, our team at a mid-sized SaaS company in Nairobi rolled out a new API"
     }
   ]
 }
