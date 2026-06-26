@@ -68,5 +68,6 @@
   "The islands architecture in 2026: when Astro and partial hydration are the right choice",
   "Building webhook systems in 2026: delivery guarantees, retries, and idempotency",
   "Building for 4G-as-baseline users in 2026: what changed when Starlink reached East Africa",
-  "Pricing a developer tool in 2026: what the market teaches you fast"
+  "Pricing a developer tool in 2026: what the market teaches you fast",
+  "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant"
 ]
