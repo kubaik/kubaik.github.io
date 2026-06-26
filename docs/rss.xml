@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 18:17:37 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 18:22:30 +0000</lastBuildDate>
+    <item>
+      <title>Pinecone? No thanks — pgvector handled 1M v/s</title>
+      <link>https://kubaik.github.io/pinecone-no-thanks-pgvector-handled-1m-vs/</link>
+      <description>Cut vector search costs 85% by replacing Pinecone with Postgres 16 + pgvector — real benchmarks, code, and the exact SQL to migrate today</description>
+      <pubDate>Fri, 26 Jun 2026 18:22:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/pinecone-no-thanks-pgvector-handled-1m-vs/</guid>
+    </item>
     <item>
       <title>NDPR 2026 broke fintech APIs</title>
       <link>https://kubaik.github.io/ndpr-2026-broke-fintech-apis/</link>
@@ -138,13 +145,6 @@
       <description>AI sales cycle for dev tools: how $49/month became $15k deals after reframing the narrative. 60% conversion lift, team-based pricing, and the Go CLI rewrite that cut cold starts to 80ms.</description>
       <pubDate>Fri, 26 Jun 2026 02:34:33 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-tools-killed-your-dev-sales-cycle/</guid>
-    </item>
-    <item>
-      <title>Branching databases: Neon and PlanetScale fixes that</title>
-      <link>https://kubaik.github.io/branching-databases-neon-and-planetscale-fixes-that/</link>
-      <description>Fix database branch errors 60% faster with Neon and PlanetScale 2026 fixes — connection strings, auto-pause, and local Docker traps that most teams miss.</description>
-      <pubDate>Fri, 26 Jun 2026 01:38:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/branching-databases-neon-and-planetscale-fixes-that/</guid>
     </item>
   </channel>
 </rss>
