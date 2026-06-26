@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T16:10:23.835775",
+  "built_at": "2026-06-26T16:27:10.965913",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2915,6 +2915,11 @@
       "slug": "compound-nairobi-6-dev-income-streams-2026",
       "title": "Compound Nairobi: 6 dev income streams 2026",
       "summary": "I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) A year ago, I hit a wall. After shipping m"
+    },
+    {
+      "slug": "maintain-40-ai-code-two-battle-tested-paths",
+      "title": "Maintain 40% AI code: two battle-tested paths",
+      "summary": "I've seen the same maintain codebase mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Last year we shipped a public-facing feature that handled 12,000 req"
     }
   ]
 }
