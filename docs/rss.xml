@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 01:33:57 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 01:38:38 +0000</lastBuildDate>
+    <item>
+      <title>Branching databases: Neon and PlanetScale fixes that</title>
+      <link>https://kubaik.github.io/branching-databases-neon-and-planetscale-fixes-that/</link>
+      <description>Fix database branch errors 60% faster with Neon and PlanetScale 2026 fixes — connection strings, auto-pause, and local Docker traps that most teams miss.</description>
+      <pubDate>Fri, 26 Jun 2026 01:38:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/branching-databases-neon-and-planetscale-fixes-that/</guid>
+    </item>
     <item>
       <title>Row-level security for SaaS in 2026: the surprise cost</title>
       <link>https://kubaik.github.io/row-level-security-for-saas-in-2026-the-surprise-cost/</link>
@@ -138,13 +145,6 @@
       <description>Cut mean time to recovery 70% with self-healing CI/CD — Argo CD vs Crossplane performance and cost compared using 2026 data from production clusters.</description>
       <pubDate>Thu, 25 Jun 2026 13:16:29 +0000</pubDate>
       <guid>https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/</guid>
-    </item>
-    <item>
-      <title>Freelance AI pricing drops 40% by 2026</title>
-      <link>https://kubaik.github.io/freelance-ai-pricing-drops-40-by-2026/</link>
-      <description>AI tools cut freelance rates 40% in 2026 — $60–$90/h is the new baseline when clients audit Copilot usage. Learn the deliverable-based pricing playbook and the exact contract clauses to keep invoices above $80/h.</description>
-      <pubDate>Thu, 25 Jun 2026 13:11:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-ai-pricing-drops-40-by-2026/</guid>
     </item>
   </channel>
 </rss>
