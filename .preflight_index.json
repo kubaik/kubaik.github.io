@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T18:22:20.460631",
+  "built_at": "2026-06-26T18:26:50.215534",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2930,6 +2930,11 @@
       "slug": "pinecone-no-thanks-pgvector-handled-1m-vs",
       "title": "Pinecone? No thanks — pgvector handled 1M v/s",
       "summary": "A colleague asked me about pgvector changed during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) "
+    },
+    {
+      "slug": "3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that",
+      "title": "3 vibe-coding tricks that kill MVPs — and 5 tools that",
+      "summary": "I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) Three years ago we rebuilt our entire customer"
     }
   ]
 }

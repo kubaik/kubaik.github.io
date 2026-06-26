@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 18:22:30 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 18:26:59 +0000</lastBuildDate>
+    <item>
+      <title>3 vibe-coding tricks that kill MVPs — and 5 tools that</title>
+      <link>https://kubaik.github.io/3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that/</link>
+      <description>Cut API response time 60% with FastAPI + Redis 7.2 — connection pooling, schema validation, and the migration step most teams skip.</description>
+      <pubDate>Fri, 26 Jun 2026 18:26:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that/</guid>
+    </item>
     <item>
       <title>Pinecone? No thanks — pgvector handled 1M v/s</title>
       <link>https://kubaik.github.io/pinecone-no-thanks-pgvector-handled-1m-vs/</link>
@@ -138,13 +145,6 @@
       <description>Cut UI re-renders 70% with Preact Signals — bundle size 1.8KB, 0.4ms updates, and works outside frameworks in 2026</description>
       <pubDate>Fri, 26 Jun 2026 04:02:01 +0000</pubDate>
       <guid>https://kubaik.github.io/signals-vs-state-does-it-matter/</guid>
-    </item>
-    <item>
-      <title>AI tools killed your dev sales cycle</title>
-      <link>https://kubaik.github.io/ai-tools-killed-your-dev-sales-cycle/</link>
-      <description>AI sales cycle for dev tools: how $49/month became $15k deals after reframing the narrative. 60% conversion lift, team-based pricing, and the Go CLI rewrite that cut cold starts to 80ms.</description>
-      <pubDate>Fri, 26 Jun 2026 02:34:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-tools-killed-your-dev-sales-cycle/</guid>
     </item>
   </channel>
 </rss>
