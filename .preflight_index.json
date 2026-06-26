@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T19:13:45.693918",
+  "built_at": "2026-06-26T20:28:53.300548",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2945,6 +2945,11 @@
       "slug": "llm-output-metrics-that-actually-move-the-needle",
       "title": "LLM output metrics that actually move the needle",
       "summary": "The official documentation for evaluating llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Almost every LLM tutorial you read"
+    },
+    {
+      "slug": "monitor-ai-like-a-model-not-a-machine",
+      "title": "Monitor AI like a model, not a machine",
+      "summary": "The official documentation for observability different is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Traditional application m"
     }
   ]
 }

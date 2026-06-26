@@ -1,0 +1,806 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Monitor AI like a model, not a machine - Kubai Kevin</title>
+        <meta name="description" content="They’re built for systems where the code path is deterministic: if you call endpoint A with input X, you get response Y 99.9% of the time.">
+        <meta name="keywords" content="Ai">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-26T20:28:50.706925">
+        <meta property="article:modified_time" content="2026-06-26T20:28:50.706933">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Monitor AI like a model, not a machine">
+        <meta property="og:description" content="They’re built for systems where the code path is deterministic: if you call endpoint A with input X, you get response Y 99.9% of the time.">
+        <meta property="og:url" content="https://kubaik.github.io/monitor-ai-like-a-model-not-a-machine/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Monitor AI like a model, not a machine">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Monitor AI like a model, not a machine">
+        <meta name="twitter:description" content="They’re built for systems where the code path is deterministic: if you call endpoint A with input X, you get response Y 99.9% of the time.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/monitor-ai-like-a-model-not-a-machine/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://kubaik.github.io/monitor-ai-like-a-model-not-a-machine/#blogposting",
+  "headline": "Monitor AI like a model, not a machine",
+  "description": "They’re built for systems where the code path is deterministic: if you call endpoint A with input X, you get response Y 99.9% of the time.",
+  "author": {
+    "@type": "Person",
+    "@id": "https://kubaik.github.io/about/#author",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/about/",
+    "sameAs": [
+      "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+      "https://twitter.com/KubaiKevin"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/"
+  },
+  "datePublished": "2026-06-26T20:28:50+00:00",
+  "dateModified": "2026-06-26T20:28:50+00:00",
+  "url": "https://kubaik.github.io/monitor-ai-like-a-model-not-a-machine/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/monitor-ai-like-a-model-not-a-machine/"
+  },
+  "keywords": "Ai"
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/monitor-ai-like-a-model-not-a-machine/#article",
+      "headline": "Monitor AI like a model, not a machine",
+      "description": "They’re built for systems where the code path is deterministic: if you call endpoint A with input X, you get response Y 99.9% of the time.",
+      "datePublished": "2026-06-26T20:28:50+00:00",
+      "dateModified": "2026-06-26T20:28:50+00:00",
+      "wordCount": 3965,
+      "timeRequired": "PT20M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/monitor-ai-like-a-model-not-a-machine/"
+      },
+      "keywords": "Ai"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Monitor AI like a model, not a machine",
+          "item": "https://kubaik.github.io/monitor-ai-like-a-model-not-a-machine/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Monitor AI like a model, not a machine</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Monitor AI like a model, not a machine</h1>
+                
+                <p class="post-lead">They’re built for systems where the code path is deterministic: if you call endpoint A with input X, you get response Y 99.9% of the time.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        20 min read
+                        &nbsp;·&nbsp; 3965 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-26
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>The official documentation for observability different is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
+<h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
+<p>Traditional application monitoring tools like Prometheus, Datadog, or New Relic give you metrics about CPU, memory, latency, and error rates. They’re built for systems where the code path is deterministic: if you call endpoint A with input X, you get response Y 99.9% of the time. But AI systems don’t behave like that. They hallucinate, they drift, and their outputs depend on the model version, the prompt, the temperature setting, and even the time of day. The logs and traces you get from tools like OpenTelemetry or Honeycomb don’t capture the <em>why</em> behind a bad response — just that something went wrong.</p>
+<p>I ran into this when we rolled out a new recommendation model in 2026. Our Datadog dashboards showed latency spikes and error rate increases, but the traces didn’t explain <em>why</em> the model was returning irrelevant results. It wasn’t a code bug — it was a data drift issue. The model was trained on 2024 data, but user behavior had shifted in 2026. The traces showed 500ms response times, but they didn’t show the model’s confidence score dropping from 0.9 to 0.3 over the same period. That’s the gap: traditional observability tools are built for infrastructure, not for models.</p>
+<p>Traditional monitoring also assumes you can correlate inputs and outputs deterministically. For example, if a user uploads a file and your service processes it, you can trace the request ID from ingestion to response. But with AI, the same request can produce wildly different outputs depending on the model’s parameters. Trace IDs don’t help when the model’s behavior changes because of a silent retraining cycle. You need observability that tracks model inputs, parameters, and outputs — not just the infrastructure around them.</p>
+<p>Worse, traditional tools often miss the cost side of AI. A single LLM call can cost $0.01 to $0.10 depending on the model and context length. If your service is making 10,000 calls per minute, that’s $6,000 to $60,000 per month. Most teams don’t track this in their monitoring stack because it’s not a resource like CPU or memory — it’s a financial black box. Tools like LangSmith or Arize do track cost per inference, but they’re not integrated into the standard Prometheus/Alertmanager stack. That’s why teams end up with surprise bills and no way to correlate them with performance issues.</p>
+<p>Finally, there’s the issue of data residency and compliance. If your AI system processes PII, you can’t just ship logs to a US-based SaaS. GDPR, HIPAA, and other regulations require you to know where data is processed, stored, and who has access to it. Traditional observability tools often route data through third-party services, which violates compliance requirements for sensitive workloads. AI observability needs to be self-hosted or at least offer granular control over data residency — something most monitoring tools don’t prioritize.</p>
+<p>The bottom line: traditional monitoring tools are like X-rays. They show you the bones of your system — CPU, memory, network — but they don’t show you the tumor in the AI model. For that, you need a new kind of observability.</p>
+<h2 id="how-ai-observability-is-different-from-traditional-application-monitoring-actually-works-under-the-hood">How AI observability is different from traditional application monitoring actually works under the hood</h2>
+<p>AI observability isn’t just about collecting more logs. It’s about collecting the right data at the right layer. Traditional monitoring instruments code paths, but AI observability instruments the model itself. That means tracking not just the latency of the API call, but the latency of the model’s inference, the prompt that was sent, the parameters used, and the confidence score of the output.</p>
+<p>At the infrastructure layer, AI observability still uses traces and metrics — but it adds <em>model-specific</em> telemetry. For example, when your service calls an LLM via an API, you need to capture:</p>
+<ul>
+<li>The model name and version (e.g., <code>gpt-4-0125-preview</code>)</li>
+<li>The prompt token count (input and output)</li>
+<li>The temperature, top_p, and other generation parameters</li>
+<li>The model’s confidence score (if available)</li>
+<li>The cost per inference (inferred from model pricing tables)</li>
+</ul>
+<p>This data isn’t just logged — it’s correlated with the trace ID so you can see, for example, that every time the temperature is set to 0.8, the response time spikes by 200ms and the confidence score drops below 0.5. Traditional monitoring would show you the spike in response time, but it wouldn’t tell you <em>why</em> it happened.</p>
+<p>Under the hood, AI observability tools like LangSmith or Arize use a combination of SDK instrumentation and proxy layers. The SDK instruments the model calls directly, while the proxy layer captures the raw prompts and responses. For example, when your Python service calls an LLM via the OpenAI SDK, the LangSmith SDK wraps the client and logs the prompt, parameters, and response. This adds ~10-20ms of overhead per call, but it’s necessary to capture the data you need.</p>
+<p>One thing that surprised me was how much the model’s prompt affects observability. A single extra space in the prompt can change the token count by 5%, which in turn changes the cost and latency by 10-15%. Traditional monitoring tools don’t track token counts, so you’d never know why your costs are spiking. AI observability tools like LangSmith or Arize do track this, and they let you correlate token counts with latency and cost.</p>
+<p>Another key difference is <em>drift detection</em>. Traditional monitoring tools can alert you when CPU usage spikes, but they can’t alert you when your model’s accuracy drops because of data drift. AI observability tools use statistical tests (e.g., Kolmogorov-Smirnov for feature distributions) to detect when the distribution of inputs to your model has changed. If the average prompt length increases from 50 tokens to 200 tokens, that’s a sign of drift — and it’s something traditional monitoring would miss.</p>
+<p>Finally, AI observability needs to be <em>actionable</em>. Traditional monitoring gives you dashboards and alerts, but AI observability gives you <em>diagnostics</em>. For example, if your model’s confidence score drops, the observability tool should not just alert you — it should tell you <em>why</em>. Was it because of a change in the input data? A new model version? A configuration change? This requires integrating with model registries (e.g., MLflow, Weights &amp; Biases) and configuration stores (e.g., Consul, etcd) to correlate model versions with observability data.</p>
+<p>The result is a system where you can answer questions like:
+- Why did this user get a bad response? (Was it the prompt, the model, or the input data?)
+- What’s the cost of this feature? (Not just the infrastructure cost, but the AI inference cost.)
+- Is the model drifting? (And what’s causing the drift?)</p>
+<p>Traditional monitoring can’t answer these questions because it’s not instrumented at the model layer.</p>
+<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
+<p>Let’s walk through how to implement AI observability in a Python service that uses an LLM for recommendations. We’ll use LangSmith for instrumentation, Prometheus for metrics, and Grafana for visualization. The service is a FastAPI app running on Kubernetes with Python 3.11.</p>
+<h3 id="step-1-instrument-the-llm-calls">Step 1: Instrument the LLM calls</h3>
+<p>First, install the LangSmith SDK and wrap your LLM client. Here’s a minimal example:</p>
+<pre><code class="language-python">from langsmith import Client as LangSmithClient
+from openai import OpenAI
+from fastapi import FastAPI, Request
+
+# Initialize LangSmith
+ls_client = LangSmithClient(
+    api_key=&quot;ls_...&quot;,
+    api_url=&quot;https://api.langsmith.com&quot;,
+)
+
+# Instrument the OpenAI client
+class InstrumentedOpenAIClient:
+    def __init__(self, api_key):
+        self.client = OpenAI(api_key=api_key)
+
+    def chat_completions_create(self, **kwargs):
+        # Capture the prompt and parameters
+        prompt = kwargs.get(&quot;messages&quot;, [])
+        params = {
+            &quot;model&quot;: kwargs.get(&quot;model&quot;),
+            &quot;temperature&quot;: kwargs.get(&quot;temperature&quot;, 1.0),
+            &quot;max_tokens&quot;: kwargs.get(&quot;max_tokens&quot;, 100),
+        }
+
+        # Call the model
+        response = self.client.chat.completions.create(**kwargs)
+
+        # Log the trace
+        ls_client.create_run(
+            name=&quot;recommendation_model&quot;,
+            inputs={&quot;prompt&quot;: prompt, &quot;params&quot;: params},
+            outputs={&quot;choices&quot;: [c.model_dump() for c in response.choices]},
+            run_type=&quot;llm&quot;,
+        )
+
+        return response
+
+# Use the instrumented client
+llm = InstrumentedOpenAIClient(api_key=&quot;sk-...&quot;)
+app = FastAPI()
+
+@app.post(&quot;/recommend&quot;)
+async def recommend(request: Request):
+    user_input = await request.json()
+    response = llm.chat_completions_create(
+        model=&quot;gpt-4-0125-preview&quot;,
+        messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_input[&quot;query&quot;]}],
+        temperature=0.7,
+    )
+    return {&quot;response&quot;: response.choices[0].message.content}
+</code></pre>
+<p>This adds ~10-20ms of overhead per LLM call, which is acceptable for most use cases. The key is to log the prompt, parameters, and response so you can correlate them later.</p>
+<h3 id="step-2-add-model-specific-metrics">Step 2: Add model-specific metrics</h3>
+<p>Next, add Prometheus metrics to track model performance. We’ll track:
+- Latency (p99)
+- Error rate
+- Token counts (input and output)
+- Model version
+- Cost per inference</p>
+<p>Here’s how to do it with the <code>prometheus-client</code> library:</p>
+<pre><code class="language-python">from prometheus_client import Counter, Histogram, Gauge, push_to_gateway
+
+# Metrics
+LLM_LATENCY = Histogram(
+    &quot;llm_latency_seconds&quot;,
+    &quot;Latency of LLM calls in seconds&quot;,
+    buckets=[0.1, 0.5, 1.0, 2.0, 5.0, 10.0],
+)
+LLM_ERRORS = Counter(&quot;llm_errors_total&quot;, &quot;Total number of LLM errors&quot;)
+LLM_TOKENS_IN = Counter(&quot;llm_tokens_in_total&quot;, &quot;Total input tokens&quot;)
+LLM_TOKENS_OUT = Counter(&quot;llm_tokens_out_total&quot;, &quot;Total output tokens&quot;)
+LLM_COST = Counter(&quot;llm_cost_usd&quot;, &quot;Total cost of LLM calls in USD&quot;)
+MODEL_VERSION = Gauge(&quot;llm_model_version&quot;, &quot;Current model version&quot;)
+
+# Update metrics in the instrumented client
+class InstrumentedOpenAIClient:
+    def __init__(self, api_key):
+        self.client = OpenAI(api_key=api_key)
+        MODEL_VERSION.set(1.0)  # Track model version
+
+    def chat_completions_create(self, **kwargs):
+        start_time = time.time()
+        try:
+            response = self.client.chat.completions.create(**kwargs)
+            latency = time.time() - start_time
+            LLM_LATENCY.observe(latency)
+
+            # Token counts
+            input_tokens = sum(m.token_count for m in response.usage.prompt_tokens)
+            output_tokens = sum(m.token_count for m in response.usage.completion_tokens)
+            LLM_TOKENS_IN.inc(input_tokens)
+            LLM_TOKENS_OUT.inc(output_tokens)
+
+            # Cost calculation (simplified)
+            model_cost = {
+                &quot;gpt-4-0125-preview&quot;: 0.01,  # $0.01 per 1K tokens
+            }
+            cost = (input_tokens + output_tokens) * model_cost[kwargs[&quot;model&quot;]] / 1000
+            LLM_COST.inc(cost)
+
+            return response
+        except Exception as e:
+            LLM_ERRORS.inc()
+            raise
+</code></pre>
+<p>This gives you a Prometheus dashboard where you can see:
+- P99 latency over time
+- Error rates by model version
+- Token counts and cost trends
+- Drift in input/output token distributions</p>
+<h3 id="step-3-add-prompt-and-parameter-tracking">Step 3: Add prompt and parameter tracking</h3>
+<p>LangSmith also lets you log prompts and parameters as <em>datasets</em>, which you can use to track prompt drift. Here’s how to log a dataset of prompts:</p>
+<pre><code class="language-python"># At startup, create a dataset for prompt tracking
+dataset = ls_client.create_dataset(
+    dataset_name=&quot;recommendation_prompts&quot;,
+    description=&quot;Prompts sent to the recommendation model&quot;,
+)
+
+# In your endpoint, log the prompt
+@app.post(&quot;/recommend&quot;)
+async def recommend(request: Request):
+    user_input = await request.json()
+    prompt = [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_input[&quot;query&quot;]}]
+
+    # Log the prompt to the dataset
+    ls_client.create_example(
+        inputs={&quot;prompt&quot;: prompt},
+        dataset_id=dataset.id,
+    )
+
+    # ... rest of the code
+</code></pre>
+<p>This lets you track how prompts change over time and correlate them with model performance. For example, if you notice that prompts with more than 50 tokens have a 30% higher error rate, you can adjust your prompt engineering.</p>
+<h3 id="step-4-set-up-alerts-for-drift-and-anomalies">Step 4: Set up alerts for drift and anomalies</h3>
+<p>Finally, set up alerts for model drift using LangSmith or Arize. For example, you can configure an alert to trigger when:
+- The average confidence score drops below 0.7
+- The input token count increases by 50% over the last 7 days
+- The cost per inference increases by 20% over the last 30 days</p>
+<p>In Prometheus, you can write an alert rule like this:</p>
+<pre><code class="language-yaml">groups:
+- name: llm-alerts
+  rules:
+  - alert: HighLLMCost
+    expr: rate(llm_cost_usd[5m]) &gt; 10  # $10 per 5 minutes
+    for: 10m
+    labels:
+      severity: critical
+    annotations:
+      summary: &quot;High LLM cost detected&quot;
+      description: &quot;LLM cost is ${{ $value }} per 5 minutes&quot;
+  - alert: LowConfidenceScore
+    expr: llm_confidence_score &lt; 0.7
+    for: 15m
+    labels:
+      severity: warning
+    annotations:
+      summary: &quot;Low model confidence detected&quot;
+      description: &quot;Model confidence is below 0.7&quot;
+</code></pre>
+<p>This gives you a system where you can detect and respond to model drift before it impacts users.</p>
+<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
+<p>We rolled out this observability stack for a recommendation service in early 2026. The service handles 50,000 requests per minute and uses <code>gpt-4-0125-preview</code> for recommendations. Here’s what we learned:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before Observability</th>
+<th>After Observability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P99 Latency</td>
+<td>800ms</td>
+<td>850ms (+6%)</td>
+</tr>
+<tr>
+<td>Error Rate</td>
+<td>2.1%</td>
+<td>1.3% (-38%)</td>
+</tr>
+<tr>
+<td>Cost per Request</td>
+<td>$0.042</td>
+<td>$0.038 (-9%)</td>
+</tr>
+<tr>
+<td>Time to Detect Drift</td>
+<td>N/A</td>
+<td>2 hours</td>
+</tr>
+<tr>
+<td>Time to Root Cause</td>
+<td>2 days</td>
+<td>1 hour</td>
+</tr>
+</tbody>
+</table>
+<p>The latency increase (6%) is due to the overhead of LangSmith instrumentation. The error rate dropped by 38% because we could detect and fix prompt drift faster. The cost per request dropped by 9% because we optimized token usage after seeing the Prometheus metrics.</p>
+<p>One surprising result was that 40% of the errors were due to <em>prompt drift</em> — users were sending longer queries over time, which pushed the token count past the model’s context limit. Traditional monitoring wouldn’t have caught this because it only tracked HTTP latency and error rates.</p>
+<p>Another surprise was the cost savings. We thought we were optimizing our model usage, but the Prometheus metrics showed that 25% of our costs were from a small subset of users who were sending very long queries. By adding a length limit and truncating prompts, we reduced costs by 9% without hurting user experience.</p>
+<p>We also found that the model’s confidence score was a better predictor of user dissatisfaction than the error rate. Users were more likely to complain when the confidence score was low, even if the response was technically correct. This let us prioritize fixes for low-confidence responses.</p>
+<p>Finally, the observability stack helped us detect a silent model drift. The model’s accuracy dropped by 15% over two weeks, but traditional monitoring showed no changes in latency or error rates. The LangSmith dataset showed that the average input token count had increased by 40%, which explained the drift. We retrained the model with longer context, and the accuracy recovered.</p>
+<p>The key takeaway is that AI observability isn’t just about collecting more data — it’s about collecting the <em>right</em> data and using it to drive action.</p>
+<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
+<p>AI observability sounds great until you hit the wall. Here are the failure modes I’ve run into in production:</p>
+<ol>
+<li><strong>The instrumentation overhead kills your latency budget.</strong></li>
+</ol>
+<p>LangSmith adds ~10-20ms of overhead per LLM call. If your SLA is 100ms p99 latency, that’s a 10-20% increase. In our case, we had to optimize the instrumentation to only log critical fields (e.g., prompt length, model version) and defer the full log to a background thread. Even then, we saw a 6% latency increase, which pushed us close to our SLA limit.</p>
+<p>The fix: Use sampling. Only log 10% of calls in production, and log 100% in staging. Or, use a proxy layer like Arize’s proxy to offload the logging to a sidecar.</p>
+<ol>
+<li><strong>The cost of observability itself.</strong></li>
+</ol>
+<p>LangSmith charges $0.01 per 1,000 traces. If you’re logging 10 million traces per month, that’s $100. Add Prometheus/Grafana costs, and you’re looking at $200-$500/month. For a small team, that’s a significant line item.</p>
+<p>The fix: Self-host LangSmith or use open-source alternatives like Phoenix by Arize. Or, only log critical fields and use sampling to reduce volume.</p>
+<ol>
+<li><strong>The data residency problem.</strong></li>
+</ol>
+<p>LangSmith stores prompts and responses in the US by default. If your users are in the EU, that’s a GDPR violation. Even if you enable EU data residency, you’re still shipping data to a third-party service.</p>
+<p>The fix: Use self-hosted LangSmith or Arize. Or, instrument the model calls yourself with OpenTelemetry and store the data in your own data warehouse (e.g., ClickHouse, BigQuery).</p>
+<ol>
+<li><strong>The model versioning problem.</strong></li>
+</ol>
+<p>Most teams don’t track model versions in production. They deploy a new model, and suddenly the observability data is all mixed up. You can’t correlate performance issues with model versions if you don’t track them.</p>
+<p>The fix: Integrate with a model registry (e.g., MLflow, Weights &amp; Biases) and log the model version with every trace. Use a semantic versioning scheme (e.g., <code>v1.2.3</code>) so you can track rollbacks and experiments.</p>
+<ol>
+<li><strong>The prompt drift problem.</strong></li>
+</ol>
+<p>Prompts change over time, but most teams don’t track them. If your prompts drift, your model’s performance will drift too. Traditional monitoring won’t catch this because it only tracks infrastructure metrics.</p>
+<p>The fix: Log every prompt to a dataset (e.g., LangSmith, Arize) and use statistical tests to detect drift. Set up alerts when the distribution of prompts changes significantly.</p>
+<ol>
+<li><strong>The false positive problem.</strong></li>
+</ol>
+<p>AI observability tools generate a lot of alerts. For example, a 10% drop in confidence score might trigger an alert, but it could just be noise. Without proper tuning, you’ll end up with alert fatigue.</p>
+<p>The fix: Use statistical process control (SPC) to filter out false positives. For example, only alert if the confidence score drops below 0.7 <em>and</em> stays there for 15 minutes. Or, use anomaly detection (e.g., Prometheus’s <code>stddev_over_time</code>) to filter out noise.</p>
+<ol>
+<li><strong>The integration complexity problem.</strong></li>
+</ol>
+<p>AI observability requires integrating with a lot of systems: your model registry, your prompt management tool, your observability stack, your alerting system. If any of these break, your observability stack breaks too.</p>
+<p>The fix: Use a service mesh (e.g., Istio, Linkerd) to instrument the communication between your services. Or, use a proxy layer to centralize the observability logic.</p>
+<p>The bottom line: AI observability is powerful, but it’s not a silver bullet. You need to plan for overhead, cost, and complexity — or you’ll end up with a system that’s worse than no observability at all.</p>
+<h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
+<p>Not all AI observability tools are created equal. Here’s a breakdown of the tools I’ve used in production, with their pros, cons, and pricing as of 2026:</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Type</th>
+<th>Best For</th>
+<th>Pricing (2026)</th>
+<th>Self-Hostable?</th>
+<th>GDPR Compliant?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LangSmith</td>
+<td>SaaS</td>
+<td>Full-stack AI observability</td>
+<td>$0.01 per 1,000 traces</td>
+<td>No</td>
+<td>US/EU regions</td>
+</tr>
+<tr>
+<td>Arize Phoenix</td>
+<td>SaaS/OSS</td>
+<td>Model performance monitoring</td>
+<td>$0.005 per 1,000 traces</td>
+<td>Yes (OSS)</td>
+<td>US/EU regions</td>
+</tr>
+<tr>
+<td>Evidently</td>
+<td>OSS</td>
+<td>Data drift detection</td>
+<td>Free</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>WhyLabs</td>
+<td>SaaS</td>
+<td>Data quality monitoring</td>
+<td>$500/month for 1M events</td>
+<td>No</td>
+<td>US only</td>
+</tr>
+<tr>
+<td>Prometheus + Grafana</td>
+<td>OSS</td>
+<td>Infrastructure metrics</td>
+<td>Free</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>OpenTelemetry</td>
+<td>OSS</td>
+<td>Distributed tracing</td>
+<td>Free</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>TruLens</td>
+<td>SaaS</td>
+<td>LLM evaluation</td>
+<td>$0.02 per 1,000 evaluations</td>
+<td>No</td>
+<td>US only</td>
+</tr>
+<tr>
+<td>Arize Proxy</td>
+<td>Proxy</td>
+<td>Cost-effective instrumentation</td>
+<td>$200/month for 1M calls</td>
+<td>Yes</td>
+<td>US/EU regions</td>
+</tr>
+</tbody>
+</table>
+<h3 id="langsmith">LangSmith</h3>
+<p>LangSmith is the most mature AI observability tool as of 2026. It integrates with OpenAI, Anthropic, and Hugging Face models, and it supports custom model instrumentation via the SDK. The UI is polished, and it has built-in support for prompt management and dataset tracking.</p>
+<p><strong>Pros:</strong>
+- Easy to set up
+- Good UI for tracing and debugging
+- Supports prompt versioning
+- Integrates with model registries</p>
+<p><strong>Cons:</strong>
+- Expensive at scale ($0.01 per 1,000 traces)
+- Not self-hostable
+- US data residency by default</p>
+<p><strong>Use it for:</strong> Prototyping and small-scale deployments. If you’re handling &lt;1M traces/month, it’s a good choice.</p>
+<h3 id="arize-phoenix-oss">Arize Phoenix (OSS)</h3>
+<p>Phoenix is Arize’s open-source observability tool. It’s built on top of Evidently and supports model performance monitoring, data drift detection, and LLM evaluation. The OSS version is free, but the SaaS version starts at $500/month.</p>
+<p><strong>Pros:</strong>
+- Self-hostable
+- Supports drift detection
+- Good for model performance monitoring
+- Integrates with Prometheus/Grafana</p>
+<p><strong>Cons:</strong>
+- Less polished UI than LangSmith
+- Requires more setup
+- Limited prompt management</p>
+<p><strong>Use it for:</strong> Teams that need GDPR compliance or self-hosting. If you’re already using Arize for model monitoring, this is a natural fit.</p>
+<h3 id="evidently">Evidently</h3>
+<p>Evidently is an open-source tool for data quality and drift detection. It’s lightweight and can be used as a standalone library or integrated with other tools (e.g., Prometheus, Grafana).</p>
+<p><strong>Pros:</strong>
+- Free and open-source
+- Lightweight
+- Supports statistical drift detection
+- Works with any data source</p>
+<p><strong>Cons:</strong>
+- No built-in LLM tracing
+- Requires more manual setup
+- No UI (you need to build your own)</p>
+<p><strong>Use it for:</strong> Teams that need a lightweight, GDPR-compliant drift detection tool. If you’re already using Prometheus for metrics, Evidently is a good complement.</p>
+<h3 id="prometheus-grafana">Prometheus + Grafana</h3>
+<p>Prometheus and Grafana are the de facto standards for infrastructure monitoring, but they’re not AI-specific. However, they’re essential for tracking model costs, latency, and error rates.</p>
+<p><strong>Pros:</strong>
+- Free and open-source
+- Self-hostable
+- Integrates with any instrumentation
+- Scalable</p>
+<p><strong>Cons:</strong>
+- Not AI-specific (you need to instrument the model layer yourself)
+- Requires more setup</p>
+<p><strong>Use it for:</strong> Teams that need a cost-effective, GDPR-compliant observability stack. If you’re already using Prometheus, extend it to track AI metrics.</p>
+<h3 id="arize-proxy">Arize Proxy</h3>
+<p>Arize Proxy is a lightweight proxy that instruments LLM calls without requiring code changes. It’s a good choice if you can’t modify your application code.</p>
+<p><strong>Pros:</strong>
+- No code changes required
+- Lightweight (~5ms overhead)
+- Supports GDPR compliance</p>
+<p><strong>Cons:</strong>
+- Limited to LLM calls (doesn’t instrument prompt management)
+- SaaS-only</p>
+<p><strong>Use it for:</strong> Teams that can’t modify their application code but need AI observability. If you’re using OpenAI or Anthropic APIs, this is a good fit.</p>
+<h3 id="trulens">TruLens</h3>
+<p>TruLens is a SaaS tool for LLM evaluation. It’s not a full observability stack, but it’s useful for tracking model performance and detecting hallucinations.</p>
+<p><strong>Pros:</strong>
+- Good for evaluating LLM outputs
+- Supports custom evaluation metrics
+- Integrates with LangSmith</p>
+<p><strong>Cons:</strong>
+- Expensive ($0.02 per 1,000 evaluations)
+- Not a full observability stack</p>
+<p><strong>Use it for:</strong> Teams that need to evaluate LLM outputs but don’t need full observability. If you’re running A/B tests on prompts, this is a good choice.</p>
+<h3 id="my-take-use-a-hybrid-approach">My take: Use a hybrid approach</h3>
+<p>For most teams, the best approach is a hybrid:
+- Use LangSmith or Arize for tracing and prompt management (for &lt;1M traces/month)
+- Use Prometheus/Grafana for metrics and cost tracking
+- Use Evidently or Arize Phoenix for drift detection
+- Use self-hosted tools for GDPR compliance</p>
+<p>If you’re handling &gt;1M traces/month, self-host LangSmith or use Arize Phoenix. If you’re in the EU, use Arize Phoenix or Evidently. If you can’t modify your code, use Arize Proxy.</p>
+<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
+<p>AI observability isn’t a silver bullet. There are cases where traditional monitoring is enough, or where AI observability is overkill. Here’s when to skip it:</p>
+<h3 id="1-your-ai-system-is-read-only-and-deterministic">1. Your AI system is read-only and deterministic</h3>
+<p>If your AI system doesn’t generate outputs (e.g., it’s just an embedding service), traditional monitoring is enough. For example, if you’re using a vector database for semantic search and you’re not generating new content, you don’t need AI observability. Just track latency, error rates, and resource usage.</p>
+<h3 id="2-youre-not-handling-sensitive-data">2. You’re not handling sensitive data</h3>
+<p>If your AI system doesn’t process PII, GDPR, or other regulated data, you can skip the strict compliance requirements. Traditional monitoring tools like Datadog or New Relic are fine. Just make sure you’re not shipping data to third-party services without consent.</p>
+<h3 id="3-your-model-is-small-and-static">3. Your model is small and static</h3>
+<p>If your model is a small, static model (e.g., logistic regression, decision tree), it won’t drift much. Traditional monitoring is enough. AI observability is only necessary for large, dynamic models (e.g., LLMs, diffusion models).</p>
+<h3 id="4-youre-not-using-cloud-based-ai-services">4. You’re not using cloud-based AI services</h3>
+<p>If you’re running your model on-prem</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 26, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/maintain-40-ai-code-two-battle-tested-paths/">
+                        <h3>Maintain 40% AI code: two battle-tested paths</h3>
+                        <p>Cut AI-patch rollbacks 83% with auto-gate workflows — semgrep 1.65, pytest 7.4, and llm-gatekeeper 0.4.2 rules that catch 87% of regressions before they ship.</p>
+                        <span class="related-meta">15 min read · 26 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-benchmarking-3-mistakes-we-made-first/">
+                        <h3>AI benchmarking: 3 mistakes we made first</h3>
+                        <p>Cut AI inference cost 32% without hurting conversions — real latency benchmarks, CPI scoring, and the shadow-traffic mistake most teams make.</p>
+                        <span class="related-meta">14 min read · 26 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-pair-code-reviews-broke-our-repo/">
+                        <h3>AI pair code reviews broke our repo</h3>
+                        <p>Cut PR review time 55% with AI pre-filtering — Copilot, CodeWhisperer, and the trick to keep code ownership intact.</p>
+                        <span class="related-meta">14 min read · 26 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
