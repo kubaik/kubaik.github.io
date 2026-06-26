@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 21:58:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 22:06:29 +0000</lastBuildDate>
+    <item>
+      <title>Flip your dev-tool sales cycle in 2026</title>
+      <link>https://kubaik.github.io/flip-your-dev-tool-sales-cycle-in-2026/</link>
+      <description>Cut sales cycle from 42 days to 8 days with a one-liner that produces a PDF with three ROI numbers — how we rebuilt our dev tool funnel in 2026.</description>
+      <pubDate>Fri, 26 Jun 2026 22:06:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/flip-your-dev-tool-sales-cycle-in-2026/</guid>
+    </item>
     <item>
       <title>Skip the VPN: zero-trust for under $100</title>
       <link>https://kubaik.github.io/skip-the-vpn-zero-trust-for-under-100/</link>
@@ -138,13 +145,6 @@
       <description>Cut TLS handshake latency 86% with hybrid certificates in 2026 — the real cost of post-quantum crypto on RSA, ECDSA, and Envoy deployments.</description>
       <pubDate>Fri, 26 Jun 2026 11:02:17 +0000</pubDate>
       <guid>https://kubaik.github.io/prepare-tls-for-post-quantum-reality/</guid>
-    </item>
-    <item>
-      <title>AI finds bugs faster: what defenders must do now</title>
-      <link>https://kubaik.github.io/ai-finds-bugs-faster-what-defenders-must-do-now/</link>
-      <description>Cut vulnerability noise 40% with AI scanners — 2026’s reality on false positives, GPU costs, and the one policy rule that saves $12k per engineer-year</description>
-      <pubDate>Fri, 26 Jun 2026 10:37:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-finds-bugs-faster-what-defenders-must-do-now/</guid>
     </item>
   </channel>
 </rss>

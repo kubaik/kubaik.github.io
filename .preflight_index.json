@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T21:57:53.522545",
+  "built_at": "2026-06-26T22:06:20.053756",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2970,6 +2970,11 @@
       "slug": "skip-the-vpn-zero-trust-for-under-100",
       "title": "Skip the VPN: zero-trust for under $100",
       "summary": "I've seen the same zerotrust practice mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, small teams still think zero-trust means buying enterprise"
+    },
+    {
+      "slug": "flip-your-dev-tool-sales-cycle-in-2026",
+      "title": "Flip your dev-tool sales cycle in 2026",
+      "summary": "Most building developer guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) By mid-2026 our small team had built a CLI that auto-generated Python type hints fr"
     }
   ]
 }
