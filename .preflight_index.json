@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T01:38:29.236246",
+  "built_at": "2026-06-26T02:34:35.806116",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2830,6 +2830,11 @@
       "slug": "branching-databases-neon-and-planetscale-fixes-that",
       "title": "Branching databases: Neon and PlanetScale fixes that",
       "summary": "After reviewing a lot of code that touches database branching, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You run , your CI pipeline spins up, and suddenly tests flake with: This happens even"
+    },
+    {
+      "slug": "ai-tools-killed-your-dev-sales-cycle",
+      "title": "AI tools killed your dev sales cycle",
+      "summary": "Most building developer guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, we launched a CLI tool called that analyzes Python package dependency grap"
     }
   ]
 }
