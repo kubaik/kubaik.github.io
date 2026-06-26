@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T22:44:45.351572",
+  "built_at": "2026-06-26T23:52:25.853293",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2985,6 +2985,11 @@
       "slug": "tls-13-and-post-quantum-crypto-200-latency-spike",
       "title": "TLS 1.3 and post-quantum crypto: 200% latency spike",
       "summary": "Most postquantum cryptography guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, our team at a mid-sized SaaS company in Nairobi rolled out a new API"
+    },
+    {
+      "slug": "8-ai-tools-that-let-us-outrun-nairobis-rivals",
+      "title": "8 AI tools that let us outrun Nairobi’s rivals",
+      "summary": "I ran into this east african problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) One week before our seed round last October, "
     }
   ]
 }
