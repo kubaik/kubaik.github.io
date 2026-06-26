@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T06:38:01.943428",
+  "built_at": "2026-06-26T06:47:01.781825",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2850,6 +2850,11 @@
       "slug": "build-offline-first-apps-that-sync-in-2026",
       "title": "Build offline-first apps that sync in 2026",
       "summary": "Most build offlinefirst guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026 we launched a health-data app for small clinics in Nigeria, Ghana, an"
+    },
+    {
+      "slug": "ai-ui-tools-speed-vs-the-rewrite",
+      "title": "AI UI tools: speed vs. the rewrite",
+      "summary": "The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI UI generation tools like Figma’s ‘Make Design’ and Cursor’s inline generation "
     }
   ]
 }
