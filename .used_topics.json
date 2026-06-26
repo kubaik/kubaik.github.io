@@ -82,5 +82,6 @@
   "How AI is being used to find vulnerabilities and what that means for defenders",
   "How post-quantum cryptography affects the TLS stack you're running today",
   "How HTMX changed my stack and what I gave up to get there",
-  "How AI pair programming changes code ownership and review responsibility"
+  "How AI pair programming changes code ownership and review responsibility",
+  "How I migrated a monolith to services in 2026 without a big-bang rewrite"
 ]

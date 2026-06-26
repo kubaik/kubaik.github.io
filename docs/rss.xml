@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 13:16:04 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 13:20:44 +0000</lastBuildDate>
+    <item>
+      <title>Split monoliths without the latency tax</title>
+      <link>https://kubaik.github.io/split-monoliths-without-the-latency-tax/</link>
+      <description>Split monolith 30% faster with 1–3% storage overhead — latency budgets, WAL streams, and the mistake most teams make that adds 188% latency</description>
+      <pubDate>Fri, 26 Jun 2026 13:20:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/split-monoliths-without-the-latency-tax/</guid>
+    </item>
     <item>
       <title>AI pair code reviews broke our repo</title>
       <link>https://kubaik.github.io/ai-pair-code-reviews-broke-our-repo/</link>
@@ -138,13 +145,6 @@
       <description>Cut test maintenance 60% with contract tests, property tests, and golden files that validate intent—not AI output—in 2026.</description>
       <pubDate>Thu, 25 Jun 2026 21:51:49 +0000</pubDate>
       <guid>https://kubaik.github.io/test-ai-code-without-ai-tests/</guid>
-    </item>
-    <item>
-      <title>AI observability isn’t monitoring — here’s why</title>
-      <link>https://kubaik.github.io/ai-observability-isnt-monitoring-heres-why/</link>
-      <description>The gap between what the docs say and what production needs I spent three days debugging a production incident where our AI feature was returning 18%…</description>
-      <pubDate>Thu, 25 Jun 2026 21:25:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-observability-isnt-monitoring-heres-why/</guid>
     </item>
   </channel>
 </rss>
