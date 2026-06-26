@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 26 Jun 2026 07:58:36 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 26 Jun 2026 08:03:21 +0000</lastBuildDate>
+    <item>
+      <title>JSON mode isn&apos;t your golden ticket</title>
+      <link>https://kubaik.github.io/json-mode-isnt-your-golden-ticket/</link>
+      <description>Cut LLM validation failures 95% with JSON Schema — why JSON mode alone fails in production workflows and how to fix it with validation, transformation, and fallback logic in 2026.</description>
+      <pubDate>Fri, 26 Jun 2026 08:03:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/json-mode-isnt-your-golden-ticket/</guid>
+    </item>
     <item>
       <title>AI UI tools: speed vs. the rewrite</title>
       <link>https://kubaik.github.io/ai-ui-tools-speed-vs-the-rewrite/</link>
@@ -138,13 +145,6 @@
       <description>Cut Nairobi SaaS infra costs to $847/month with exact services, configs, and the mistakes I made. Real 30-day bill, latency, and scaling limits you can copy.</description>
       <pubDate>Thu, 25 Jun 2026 17:32:35 +0000</pubDate>
       <guid>https://kubaik.github.io/nairobi-saas-infra-2026-real-cost-data/</guid>
-    </item>
-    <item>
-      <title>Redesign auth after passkeys</title>
-      <link>https://kubaik.github.io/redesign-auth-after-passkeys/</link>
-      <description>Cut auth costs 70% by moving from sessions to passkeys and refresh tokens — latency dropped 55%, SMS OTPs vanished, and AWS bill fell 33%. Real numbers from a 1.2M-user fintech app.</description>
-      <pubDate>Thu, 25 Jun 2026 16:39:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/redesign-auth-after-passkeys/</guid>
     </item>
   </channel>
 </rss>

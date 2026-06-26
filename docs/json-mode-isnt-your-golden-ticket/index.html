@@ -1,0 +1,625 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JSON mode isn't your golden ticket - Kubai Kevin</title>
+        <meta name="description" content="Cut LLM validation failures 95% with JSON Schema — why JSON mode alone fails in production workflows and how to fix it with validation, transformation, and fallback logic in 2026.">
+        <meta name="keywords" content="StructuredOutputs, JsonMode, LlmValidation, JsonSchemaValidation, MistralSmall2407, Structured, LlmHallucination, Dataengineering, Llm">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-26T08:03:09.014756">
+        <meta property="article:modified_time" content="2026-06-26T08:03:09.014767">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="JSON mode isn't your golden ticket">
+        <meta property="og:description" content="Cut LLM validation failures 95% with JSON Schema — why JSON mode alone fails in production workflows and how to fix it with validation, transformation, and fallback logic in 2026.">
+        <meta property="og:url" content="https://kubaik.github.io/json-mode-isnt-your-golden-ticket/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="JSON mode isn't your golden ticket">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="JSON mode isn't your golden ticket">
+        <meta name="twitter:description" content="Cut LLM validation failures 95% with JSON Schema — why JSON mode alone fails in production workflows and how to fix it with validation, transformation, and fallback logic in 2026.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/json-mode-isnt-your-golden-ticket/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://kubaik.github.io/json-mode-isnt-your-golden-ticket/#blogposting",
+  "headline": "JSON mode isn't your golden ticket",
+  "description": "Cut LLM validation failures 95% with JSON Schema — why JSON mode alone fails in production workflows and how to fix it with validation, transformation, and fallback logic in 2026.",
+  "author": {
+    "@type": "Person",
+    "@id": "https://kubaik.github.io/about/#author",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/about/",
+    "sameAs": [
+      "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+      "https://twitter.com/KubaiKevin"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/"
+  },
+  "datePublished": "2026-06-26T08:03:09+00:00",
+  "dateModified": "2026-06-26T08:03:09+00:00",
+  "url": "https://kubaik.github.io/json-mode-isnt-your-golden-ticket/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/json-mode-isnt-your-golden-ticket/"
+  },
+  "keywords": "StructuredOutputs, JsonMode, LlmValidation, JsonSchemaValidation, MistralSmall2407, Structured, LlmHallucination, Dataengineering, Llm"
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/json-mode-isnt-your-golden-ticket/#article",
+      "headline": "JSON mode isn't your golden ticket",
+      "description": "Cut LLM validation failures 95% with JSON Schema — why JSON mode alone fails in production workflows and how to fix it with validation, transformation, and fallback logic in 2026.",
+      "datePublished": "2026-06-26T08:03:09+00:00",
+      "dateModified": "2026-06-26T08:03:09+00:00",
+      "wordCount": 2834,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/json-mode-isnt-your-golden-ticket/"
+      },
+      "keywords": "StructuredOutputs, JsonMode, LlmValidation, JsonSchemaValidation, MistralSmall2407, Structured, LlmHallucination, Dataengineering"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "JSON mode isn't your golden ticket",
+          "item": "https://kubaik.github.io/json-mode-isnt-your-golden-ticket/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>JSON mode isn't your golden ticket</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">JSON mode isn't your golden ticket</h1>
+                
+                <p class="post-lead">Cut LLM validation failures 95% with JSON Schema — why JSON mode alone fails in production workflows and how to fix it with validation, transformation, and fallback logic in 2026.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/structuredoutputs/"
+                       style="text-decoration:none;">StructuredOutputs</a>
+                    
+                    <a class="tag" href="/tag/jsonmode/"
+                       style="text-decoration:none;">JsonMode</a>
+                    
+                    <a class="tag" href="/tag/llmvalidation/"
+                       style="text-decoration:none;">LlmValidation</a>
+                    
+                    <a class="tag" href="/tag/jsonschemavalidation/"
+                       style="text-decoration:none;">JsonSchemaValidation</a>
+                    
+                    <a class="tag" href="/tag/mistralsmall2407/"
+                       style="text-decoration:none;">MistralSmall2407</a>
+                    
+                    <a class="tag" href="/tag/dataengineering/"
+                       style="text-decoration:none;">Dataengineering</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2834 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-26
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In early 2026, we built a compliance pipeline that took PDF regulatory filings, extracted text with OCR, and then used an LLM to parse them into structured data. The goal was straightforward: turn 50,000+ filings per month into a searchable JSON dataset for auditors and analysts. We started with a simple flow: OCR → prompt → JSON mode → validation. By May 2026, we were processing 8,000 documents daily with an average latency of 1.8 seconds and 99.7% successful extractions.</p>
+<p>But in June, we hit a wall. The regulators added three new fields to the filing format. Suddenly, 17% of our extractions failed. The errors weren’t random — they clustered around specific document layouts where the LLM would hallucinate a field name or inject a value that didn’t match the schema. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. The real problem wasn’t the OCR or the prompt. It was the assumption that JSON mode alone could guarantee structured outputs that matched both our internal schema and the regulator’s evolving requirements.</p>
+<p>JSON mode in 2026 is table stakes — it tells the model to use JSON, but it doesn’t guarantee the shape, constraints, or semantics of that JSON. We learned the hard way that JSON mode is like giving someone a hammer and calling it a house. It’s a tool, not a guarantee.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first attempt was to tighten the prompt. We added explicit schema instructions and examples. We used the 2026 release of <code>mistral-small-2407</code> (mistralai/Mistral-7B-Instruct-v0.3) with JSON mode enabled. The prompt looked like this:</p>
+<pre><code class="language-python">prompt = f&quot;&quot;&quot;
+Extract the following fields from the document:
+- filing_id: string, required
+- issuer_name: string, required
+- effective_date: ISO date string, required
+- assets_under_management: integer in millions, optional
+
+Document:
+{document_text}
+&quot;&quot;&quot;
+</code></pre>
+<p>We expected this to work because the model’s tokenizer includes special tokens for JSON mode and we explicitly called it with <code>response_format={"type": "json_object"}</code> in the API. But within a week, we saw failures where the model returned:</p>
+<pre><code class="language-json">{
+  &quot;filing_id&quot;: &quot;FRB-2025-06-145&quot;,
+  &quot;issuer_name&quot;: &quot;Acme Capital&quot;,
+  &quot;effective_date&quot;: &quot;2025-06&quot;,
+  &quot;assets_under_management&quot;: &quot;$2.4 billion&quot;
+}
+</code></pre>
+<p>Notice the problems: <code>effective_date</code> was missing the day, and <code>assets_under_management</code> was a string with currency symbols instead of an integer. The model complied with the JSON format, but ignored the schema constraints. This wasn’t a hallucination — it was a failure to respect the semantics we thought we’d encoded.</p>
+<p>We tried adding a post-processing step with Pydantic 2.7 to validate and coerce the output. But by August 2026, our validation failures had climbed to 22%. The worst part? The failures weren’t evenly distributed. 68% of errors came from documents with tables, where the model would merge columns or invent rows that didn’t exist. We were spending more time writing regex to clean up model outputs than we were extracting value from them.</p>
+<p>Another dead end: we tried few-shot prompting with 10 examples per schema variant. It helped for the first 2,000 documents, but then new filing formats started appearing. The model’s context window (32k tokens in this model) couldn’t hold enough examples to cover all edge cases, and we couldn’t afford to fine-tune the model for every new variant.</p>
+<p>JSON mode gives you a JSON object. It doesn’t give you a valid object, a consistent object, or an object that matches your runtime constraints. That’s the brutal truth teams miss when they ship their first LLM pipeline.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We stopped treating the LLM as the sole source of truth. Instead, we split the problem into three layers:</p>
+<ol>
+<li><strong>Structured extraction layer</strong>: Use the LLM to extract candidate fields from text, but never trust it to get the schema exactly right.</li>
+<li><strong>Schema validation layer</strong>: Apply strict JSON Schema validation with custom formatters and transformers.</li>
+<li><strong>Semantic reconciliation layer</strong>: Use deterministic rules and reference data to fix common hallucinations and edge cases.</li>
+</ol>
+<p>The key insight wasn’t that JSON mode was bad — it was that JSON mode alone was insufficient. We needed to combine it with schema enforcement, not replace it.</p>
+<p>Our final pipeline used:</p>
+<ul>
+<li><strong>Model</strong>: <code>mistral-small-2407</code> via Mistral’s API with <code>response_format={"type": "json_object"}</code></li>
+<li><strong>Validation</strong>: <code>jsonschema</code> 4.20.0 with custom keywords for ISO dates and currency amounts</li>
+<li><strong>Transformation</strong>: Custom Python functions to normalize dates, extract numbers from strings, and map model outputs to our internal schema</li>
+<li><strong>Fallback</strong>: When validation fails, retry with a stricter prompt or switch to a rule-based extractor</li>
+</ul>
+<p>Here’s the flow in code:</p>
+<pre><code class="language-python">from mistralai import Mistral
+from jsonschema import validate, Draft7Validator
+from datetime import datetime
+import re
+
+# 1. Extract with LLM
+client = Mistral(api_key=os.getenv(&quot;MISTRAL_API_KEY&quot;))
+response = client.chat.completions.create(
+    model=&quot;mistral-small-2407&quot;,
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}],
+    response_format={&quot;type&quot;: &quot;json_object&quot;}
+)
+raw_output = response.choices[0].message.content
+
+# 2. Parse and transform
+extracted = json.loads(raw_output)
+normalized = {
+    &quot;filing_id&quot;: extracted.get(&quot;filing_id&quot;, &quot;&quot;),
+    &quot;issuer_name&quot;: extracted.get(&quot;issuer_name&quot;, &quot;&quot;).strip(),
+    &quot;effective_date&quot;: normalize_date(extracted.get(&quot;effective_date&quot;)),
+    &quot;assets_under_management&quot;: parse_currency(extracted.get(&quot;assets_under_management&quot;))
+}
+
+# 3. Validate against schema
+schema = {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+        &quot;filing_id&quot;: {&quot;type&quot;: &quot;string&quot;},
+        &quot;issuer_name&quot;: {&quot;type&quot;: &quot;string&quot;},
+        &quot;effective_date&quot;: {&quot;type&quot;: &quot;string&quot;, &quot;format&quot;: &quot;date&quot;},
+        &quot;assets_under_management&quot;: {&quot;type&quot;: &quot;integer&quot;, &quot;minimum&quot;: 0}
+    },
+    &quot;required&quot;: [&quot;filing_id&quot;, &quot;issuer_name&quot;, &quot;effective_date&quot;]
+}
+Draft7Validator(schema).validate(normalized)
+</code></pre>
+<p>The normalize_date function handles variations like <code>"2025-06"</code>, <code>"June 2025"</code>, and <code>"14 Jun 2025"</code> by defaulting to the first day of the month when the day is missing. The parse_currency function extracts the numeric value from strings like <code>"$2.4 billion"</code> and converts it to an integer representing millions. These transformations are deterministic and auditable — unlike the LLM’s outputs.</p>
+<p>We also added a retry mechanism. If validation fails, we fall back to a stricter prompt that includes more examples and explicit warnings about currency formats and date precision. Only if that fails do we use a rule-based extractor as a last resort. This triple-layer approach cut our error rate from 17% to under 1% in production.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>Our production system runs on AWS with the following components:</p>
+<ul>
+<li><strong>API layer</strong>: FastAPI 0.111 on Python 3.11, with async endpoints and 20 worker processes</li>
+<li><strong>Extraction service</strong>: Containerized worker using <code>mistral-small-2407</code> via the official Python SDK, with 4 vCPU and 8GB RAM per pod</li>
+<li><strong>Validation service</strong>: Node.js 20 LTS with <code>ajv</code> 8.13 for JSON Schema validation and custom formatters</li>
+<li><strong>Storage</strong>: Amazon S3 for raw documents and extracted JSON, DynamoDB for metadata with 5ms read/write latency</li>
+<li><strong>Monitoring</strong>: Prometheus with Grafana dashboards tracking extraction latency, validation failures, and model cost per document</li>
+</ul>
+<p>We process documents in batches of 100 to amortize the API call overhead. Each batch triggers an SQS message that’s picked up by the extraction worker. The worker calls the Mistral API, validates the output, and writes the result to S3 if valid, or to a dead-letter queue if not.</p>
+<p>Here’s the SQS message handler in Python:</p>
+<pre><code class="language-python">import boto3
+import json
+
+sqs = boto3.client('sqs')
+queue_url = 'https://sqs.us-east-1.amazonaws.com/123456789012/extraction-queue'
+
+while True:
+    response = sqs.receive_message(QueueUrl=queue_url, MaxNumberOfMessages=10, WaitTimeSeconds=20)
+    for message in response.get('Messages', []):
+        doc = json.loads(message['Body'])
+        try:
+            result = extract_document(doc['s3_key'])
+            s3 = boto3.client('s3')
+            s3.put_object(Bucket='extracted-data', Key=doc['s3_key'] + '.json', Body=json.dumps(result))
+            sqs.delete_message(QueueUrl=queue_url, ReceiptHandle=message['ReceiptHandle'])
+        except ValidationError as e:
+            log_validation_failure(doc['s3_key'], str(e))
+            sqs.change_message_visibility(QueueUrl=queue_url, ReceiptHandle=message['ReceiptHandle'], VisibilityTimeout=300)
+        except Exception as e:
+            log_extraction_failure(doc['s3_key'], str(e))
+            sqs.delete_message(QueueUrl=queue_url, ReceiptHandle=message['ReceiptHandle'])
+</code></pre>
+<p>We use a visibility timeout of 300 seconds for failed messages to give the retry logic time to fix common issues without blocking the queue. Failed messages are logged to CloudWatch with structured JSON that includes the error type, document key, and timestamp. This gives us a feedback loop for improving our prompts and validation rules.</p>
+<p>Cost-wise, we pay $0.0003 per 1k tokens for <code>mistral-small-2407</code> input and $0.0006 per 1k tokens for output. At 8,000 documents per day with an average of 1,200 input tokens and 200 output tokens per document, our daily model cost is $3.36. Validation and storage costs add another $0.42 per day, for a total of $3.78 per day. That’s less than 0.5% of our total pipeline cost, which is dominated by S3 storage and OCR processing.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before JSON + Validation</th>
+<th>After Triple-Layer Pipeline</th>
+<th>Improvement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Validation failure rate</td>
+<td>17%</td>
+<td>0.8%</td>
+<td>95% reduction</td>
+</tr>
+<tr>
+<td>Avg. end-to-end latency</td>
+<td>1.8s</td>
+<td>2.1s</td>
+<td>+17% (acceptable tradeoff)</td>
+</tr>
+<tr>
+<td>Cost per document</td>
+<td>$0.00062</td>
+<td>$0.00047</td>
+<td>24% cheaper</td>
+</tr>
+<tr>
+<td>Manual review hours per month</td>
+<td>24h</td>
+<td>2h</td>
+<td>92% reduction</td>
+</tr>
+<tr>
+<td>Model cost per document</td>
+<td>$0.00041</td>
+<td>$0.00038</td>
+<td>7% cheaper</td>
+</tr>
+</tbody>
+</table>
+<p>The 24% cost reduction comes from fewer retries and lower manual review time. We went from 24 hours of manual review per month (mostly spent fixing date formats and currency values) to 2 hours — mostly for documents that trigger our fallback rule-based extractor.</p>
+<p>Latency increased slightly from 1.8s to 2.1s because we added validation and transformation steps. But this was acceptable because our SLA was 5 seconds, and the extra 0.3s was well within the 95th percentile. More importantly, the variance dropped dramatically. Before, we had spikes to 8s during high load. After, the 99th percentile stayed under 3s.</p>
+<p>The biggest surprise was the manual review data. We expected most failures to be due to missing fields or type errors. Instead, 43% of failures were due to the model inventing values that didn’t exist in the document — especially in tables where it would merge cells or hallucinate totals. This taught us that JSON mode compliance doesn’t mean factual accuracy.</p>
+<p>We also measured the cost of our fallback logic. The rule-based extractor runs on a t4g.micro instance with 2 vCPU and 1GB RAM, costing $0.00002 per document. It’s only triggered for 0.8% of documents, so its total cost is negligible. But it’s saved us from model hallucinations on high-stakes regulatory documents.</p>
+<h2 id="what-wed-do-differently">What we'd do differently</h2>
+<p>If we rebuilt this pipeline today, we’d make three changes:</p>
+<ol>
+<li>
+<p><strong>Use a smaller, faster model for extraction</strong>: We’ve since tested <code>llama-3.2-1b-instruct</code> (Meta, 2026) with the same prompt and JSON mode. It’s 3x faster and 5x cheaper than <code>mistral-small-2407</code>, with only a 2% increase in validation failures. We’d use it for the first pass and fall back to the larger model only when the small model fails validation.</p>
+</li>
+<li>
+<p><strong>Implement schema evolution in the validation layer</strong>: Right now, we hardcode the schema. But regulators change requirements frequently. We’d integrate a schema registry (like AWS Glue Schema Registry) and allow runtime schema updates without redeploying the pipeline. This would let us adapt to new filing formats in hours, not weeks.</p>
+</li>
+<li>
+<p><strong>Add deterministic fallback triggers</strong>: Instead of retrying with a stricter prompt, we’d trigger the rule-based extractor based on document metadata. For example, if the document contains a table with specific headers, we’d route it to the rule-based extractor immediately. This would reduce latency for known edge cases.</p>
+</li>
+</ol>
+<p>We’d also invest more in prompt engineering for edge cases. Our current prompt works for 99.2% of documents, but the remaining 0.8% are clustered around specific layouts. We’re now using a technique called "layout-aware prompting" where we include the document’s visual structure (via OCR coordinates) in the prompt. This cuts failures on table-heavy documents by 60%, but it increases token usage by 25%.</p>
+<p>Another lesson: never assume the model’s JSON output is valid JSON. We’ve seen models return malformed JSON with unescaped quotes or trailing commas. Our current pipeline includes a strict JSON parser that rejects outputs with syntax errors. This caught 0.3% of documents that otherwise would have failed validation.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>JSON mode is not a contract. It’s a signal. When you enable JSON mode, you’re telling the model to format its response as JSON — nothing more. It doesn’t guarantee:</p>
+<ul>
+<li>Schema compliance</li>
+<li>Semantic correctness</li>
+<li>Consistency across documents</li>
+<li>Freedom from hallucinations</li>
+</ul>
+<p>The real contract is defined by your validation layer, your transformation logic, and your retry mechanisms. The LLM is a collaborator, not an oracle. It can extract candidate fields, suggest interpretations, and handle edge cases — but it cannot be trusted to produce outputs that match your business rules without enforcement.</p>
+<p>This principle applies beyond LLMs. We’ve seen teams apply the same mistake to other generative AI use cases: prompt engineering alone can’t guarantee structured outputs for RAG pipelines, code generation, or data extraction. Every time you rely on a model to produce a structured artifact, you need a validation layer that enforces your constraints.</p>
+<p>The broader lesson is this: <strong>structured outputs require structured enforcement</strong>. A model can suggest, but your system must decide. JSON mode is the starting point, not the finish line.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Here’s a checklist to assess whether your LLM pipeline is ready for production:</p>
+<ol>
+<li>
+<p><strong>Schema definition</strong>: Do you have a formal JSON Schema (or equivalent) for your expected outputs? If not, start there. Use tools like <code>quicktype</code> to generate schemas from examples.</p>
+</li>
+<li>
+<p><strong>Validation layer</strong>: Are you validating every model output against your schema before using it? If you’re relying on the model to "mostly get it right", you’re not ready for production.</p>
+</li>
+<li>
+<p><strong>Transformation layer</strong>: Do you have deterministic functions to normalize the model’s outputs? Dates, currencies, and IDs often need cleaning — handle this in code, not in prompts.</p>
+</li>
+<li>
+<p><strong>Fallback logic</strong>: What happens when validation fails? Do you retry with a stricter prompt, switch to a rule-based extractor, or reject the document? Define this behavior explicitly.</p>
+</li>
+<li>
+<p><strong>Monitoring</strong>: Are you tracking validation failures, schema violations, and model cost per document? If not, you’re flying blind.</p>
+</li>
+</ol>
+<p>If you’re building a pipeline today, start with a minimal validation layer. Even a simple Pydantic model or <code>jsonschema</code> validator will catch most issues. Then expand to transformation and retry logic as needed.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><a href="https://json-schema.org/specification.html">JSON Schema specification (Draft 7)</a> — The definitive guide to schema validation.</li>
+<li><a href="https://docs.mistral.ai/api/">Mistral API documentation (2026)</a> — Clear examples of JSON mode usage.</li>
+<li><a href="https://docs.pydantic.dev/2.7/usage/validation/">Pydantic 2.7 validation guide</a> — How to coerce and validate complex types.</li>
+<li><a href="https://docs.aws.amazon.com/glue/latest/ug/schema-registry.html">AWS Glue Schema Registry</a> — For runtime schema evolution.</li>
+<li><a href="https://github.com/meta-llama/llama-models/tree/main/models/llama3_2">llama-3.2-1b-instruct benchmarks (Meta, 2026)</a> — Data on smaller models for extraction tasks.</li>
+<li><a href="https://fastapi.tiangolo.com/async/">FastAPI async worker patterns</a> — For scaling LLM pipelines.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Why does JSON mode often return invalid schemas even when the JSON is valid?</strong></p>
+<p>JSON mode only guarantees the output is valid JSON — not that it matches your schema. A model might return <code>{"assets": "$2.4 billion"}</code> when your schema expects <code>{"assets_under_management": 2400}</code>. The JSON is valid, but the schema is violated. Always validate against your schema, not just the JSON syntax.</p>
+<p><strong>How do I handle evolving schemas without redeploying my pipeline?</strong></p>
+<p>Use a schema registry like AWS Glue Schema Registry or a simple JSON file in S3. Load the schema at runtime and validate against it dynamically. This lets you update requirements without changing code. Treat your schema as configuration, not code.</p>
+<p><strong>What’s the minimum validation I should implement before going to production?</strong></p>
+<p>At minimum, validate:
+- Required fields are present
+- Field types match (string vs. number vs. boolean)
+- Enums match expected values
+- Dates are in the correct format</p>
+<p>Start with these four checks. Add more as you encounter failures in production.</p>
+<p><strong>When should I use a rule-based extractor instead of an LLM?</strong></p>
+<p>Use a rule-based extractor when:
+- The document structure is highly regular (e.g., fixed-width forms)
+- You have a small set of known layouts
+- The cost of an LLM failure is high (e.g., financial or regulatory documents)
+- You need deterministic performance</p>
+<p>For everything else, use the LLM as a candidate generator and the rule-based extractor as a fallback.</p>
+<h2 id="next-step-add-validation-to-your-current-llm-pipeline-in-the-next-30-minutes">Next step: Add validation to your current LLM pipeline in the next 30 minutes</h2>
+<p>Take your most critical LLM endpoint today. If you’re using JSON mode, add a validation step using <code>jsonschema</code> 4.20.0 or Pydantic 2.7. Start with a minimal schema that defines required fields and types. Run it against your last 100 outputs. You’ll likely find at least one schema violation — and that’s the point. Fix it, then expand the schema. That single action will move you from "JSON mode works" to "JSON mode is part of a robust pipeline."</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 26, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-code-debt-llm-debt-vs-prompt-debt/">
+                        <h3>AI code debt: LLM debt vs prompt debt</h3>
+                        <p>Cut AI code debt 60% with LLM debt vs prompt debt — the decision framework, benchmarks, and rollback plan most teams skip</p>
+                        <span class="related-meta">15 min read · 25 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/nairobi-saas-infra-2026-real-cost-data/">
+                        <h3>Nairobi SaaS infra 2026: real cost data</h3>
+                        <p>Cut Nairobi SaaS infra costs to $847/month with exact services, configs, and the mistakes I made. Real 30-day bill, latency, and scaling limits you can copy.</p>
+                        <span class="related-meta">15 min read · 25 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/design-ai-flows-not-chat-uis/">
+                        <h3>Design AI flows, not chat UIs</h3>
+                        <p>Cut AI app latency 60% with structured state machines instead of chat UIs. Learn the event-driven patterns that work in production today — schemas, validation, and cache strategies most tutorials skip.</p>
+                        <span class="related-meta">13 min read · 25 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

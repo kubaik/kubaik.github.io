@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T06:47:01.781825",
+  "built_at": "2026-06-26T08:03:11.552353",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2855,6 +2855,11 @@
       "slug": "ai-ui-tools-speed-vs-the-rewrite",
       "title": "AI UI tools: speed vs. the rewrite",
       "summary": "The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI UI generation tools like Figma’s ‘Make Design’ and Cursor’s inline generation "
+    },
+    {
+      "slug": "json-mode-isnt-your-golden-ticket",
+      "title": "JSON mode isn't your golden ticket",
+      "summary": "Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, we built a compliance pipeline that took PDF regulatory filings, ext"
     }
   ]
 }
