@@ -5,13 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 06:10:55 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 06:25:31 +0000</lastBuildDate>
     <item>
-      <title>Token math kills AI agent budgets</title>
-      <link>https://kubaik.github.io/token-math-kills-ai-agent-budgets/</link>
-      <description>Cut AI agent costs 66% by measuring tokens, retries, and timeouts — real production numbers from CrewAI 0.25 on Mistral 8x7B with Redis 7.2 caching.</description>
-      <pubDate>Sat, 27 Jun 2026 06:10:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/token-math-kills-ai-agent-budgets/</guid>
+      <title>Webhooks done right: 3 mistakes that cost us 12 hours</title>
+      <link>https://kubaik.github.io/webhooks-done-right-3-mistakes-that-cost-us-12-hours/</link>
+      <description>Cut duplicate webhook events from 14% to 0.03% with SQS FIFO and idempotency keys — the 2026 guide teams actually use in production</description>
+      <pubDate>Sat, 27 Jun 2026 06:25:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/webhooks-done-right-3-mistakes-that-cost-us-12-hours/</guid>
     </item>
     <item>
       <title>AI UI tools: 6 months in, what I gained and lost</title>
