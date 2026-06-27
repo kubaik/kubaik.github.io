@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 21:44:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 21:49:15 +0000</lastBuildDate>
+    <item>
+      <title>Grew $5k MRR on a $29 VPS</title>
+      <link>https://kubaik.github.io/grew-5k-mrr-on-a-29-vps/</link>
+      <description>Hit $5k MRR without ads or a team — the exact stack, conversion targets, and mistakes I made in 2026 that saved $1,800 on referral programs and cut churn from 18% to 6%.</description>
+      <pubDate>Sat, 27 Jun 2026 21:49:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/grew-5k-mrr-on-a-29-vps/</guid>
+    </item>
     <item>
       <title>Slay false positives in CI scans</title>
       <link>https://kubaik.github.io/slay-false-positives-in-ci-scans/</link>
@@ -138,13 +145,6 @@
       <description>Cut M-Pesa integration failures 91% with Daraja 2.0 migration checklist, endpoint changes, timestamp format fixes, and idempotent keys. 180 ms latency after switch.</description>
       <pubDate>Sat, 27 Jun 2026 12:17:19 +0000</pubDate>
       <guid>https://kubaik.github.io/migrate-to-daraja-20-now-what-broke-and-how-to-fix/</guid>
-    </item>
-    <item>
-      <title>Platform teams in 2026: Docs vs. production reality</title>
-      <link>https://kubaik.github.io/platform-teams-in-2026-docs-vs-production-reality/</link>
-      <description>A 2025 survey of 1,200 platform engineers found that 63% of teams using Kubernetes in production still run clusters with misconfigured pod limits that…</description>
-      <pubDate>Sat, 27 Jun 2026 12:07:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/platform-teams-in-2026-docs-vs-production-reality/</guid>
     </item>
   </channel>
 </rss>

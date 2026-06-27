@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T21:38:18.246142",
+  "built_at": "2026-06-27T21:49:05.182258",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3175,6 +3175,11 @@
       "slug": "slay-false-positives-in-ci-scans",
       "title": "Slay false positives in CI scans",
       "summary": "Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we rolled out a new micro-service framework at my company. By March 2026 we"
+    },
+    {
+      "slug": "grew-5k-mrr-on-a-29-vps",
+      "title": "Grew $5k MRR on a $29 VPS",
+      "summary": "The short version: the conventional advice on got mrr is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In 2026 I launched a small SaaS for indie makers that hit $5,280 monthly recurring revenue"
     }
   ]
 }
