@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 16:40:32 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 17:01:30 +0000</lastBuildDate>
+    <item>
+      <title>Frontend testing in 2026: Playwright beats Cypress</title>
+      <link>https://kubaik.github.io/frontend-testing-in-2026-playwright-beats-cypress/</link>
+      <description>Cut test flakes 85% and suite runtime 70% with Playwright 1.45 and Vitest 1.5.0 — the real migration path from Cypress, with MSW mocking and Percy visual tests.</description>
+      <pubDate>Sat, 27 Jun 2026 17:01:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/frontend-testing-in-2026-playwright-beats-cypress/</guid>
+    </item>
     <item>
       <title>AI tools broke my principles</title>
       <link>https://kubaik.github.io/ai-tools-broke-my-principles/</link>
@@ -138,13 +145,6 @@
       <description>Cut duplicate webhook events from 14% to 0.03% with SQS FIFO and idempotency keys — the 2026 guide teams actually use in production</description>
       <pubDate>Sat, 27 Jun 2026 06:25:19 +0000</pubDate>
       <guid>https://kubaik.github.io/webhooks-done-right-3-mistakes-that-cost-us-12-hours/</guid>
-    </item>
-    <item>
-      <title>AI UI tools: 6 months in, what I gained and lost</title>
-      <link>https://kubaik.github.io/ai-ui-tools-6-months-in-what-i-gained-and-lost/</link>
-      <description>Cut UI generation time 40% with AI tools — but only after fixing design tokens and adding visual regression tests. Real numbers, real bugs, and the workflow that works in 2026.</description>
-      <pubDate>Sat, 27 Jun 2026 05:01:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ui-tools-6-months-in-what-i-gained-and-lost/</guid>
     </item>
   </channel>
 </rss>

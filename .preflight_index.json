@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T16:40:24.532653",
+  "built_at": "2026-06-27T17:01:20.111405",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3125,6 +3125,11 @@
       "slug": "ai-tools-broke-my-principles",
       "title": "AI tools broke my principles",
       "summary": "A colleague asked me about engineering principles during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomp"
+    },
+    {
+      "slug": "frontend-testing-in-2026-playwright-beats-cypress",
+      "title": "Frontend testing in 2026: Playwright beats Cypress",
+      "summary": "I ran into this test frontend problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026, our team decided to rebuild the fro"
     }
   ]
 }
