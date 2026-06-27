@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 16:36:13 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 16:40:32 +0000</lastBuildDate>
+    <item>
+      <title>AI tools broke my principles</title>
+      <link>https://kubaik.github.io/ai-tools-broke-my-principles/</link>
+      <description>AI tools increased production incidents 18% in 2026 — here’s the mental model and tooling changes to make them safe: contracts, contract tests, and rollback plans before merging any AI output.</description>
+      <pubDate>Sat, 27 Jun 2026 16:40:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-tools-broke-my-principles/</guid>
+    </item>
     <item>
       <title>Database branches: Neon vs PlanetScale locally</title>
       <link>https://kubaik.github.io/database-branches-neon-vs-planetscale-locally/</link>
@@ -138,13 +145,6 @@
       <description>Cut UI generation time 40% with AI tools — but only after fixing design tokens and adding visual regression tests. Real numbers, real bugs, and the workflow that works in 2026.</description>
       <pubDate>Sat, 27 Jun 2026 05:01:58 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ui-tools-6-months-in-what-i-gained-and-lost/</guid>
-    </item>
-    <item>
-      <title>6 micro-SaaS niches AI couldn&apos;t commoditise</title>
-      <link>https://kubaik.github.io/6-micro-saas-niches-ai-couldnt-commoditise/</link>
-      <description>Discover 6 micro-SaaS niches that survived AI commoditisation in 2026 — with revenue, churn, and moat data. Stop AI-washing your product and start building defensible moats.</description>
-      <pubDate>Sat, 27 Jun 2026 04:46:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/6-micro-saas-niches-ai-couldnt-commoditise/</guid>
     </item>
   </channel>
 </rss>

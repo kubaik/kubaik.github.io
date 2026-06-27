@@ -40,5 +40,6 @@
   "How to do a postmortem on an AI agent failure: it's different from a regular incident",
   "How to design multi-region backends without triple the infrastructure cost",
   "Database branching workflows: how Neon and PlanetScale changed how I develop locally",
-  "The context window arms race: what 1M token models actually change in practice"
+  "The context window arms race: what 1M token models actually change in practice",
+  "The engineering principles I updated after AI tools changed my daily workflow"
 ]

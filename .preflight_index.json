@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T16:13:57.336906",
+  "built_at": "2026-06-27T16:40:24.532653",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3120,6 +3120,11 @@
       "slug": "1m-tokens-mostly-wasted",
       "title": "1M tokens? Mostly wasted",
       "summary": "A colleague asked me about context window during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Th"
+    },
+    {
+      "slug": "ai-tools-broke-my-principles",
+      "title": "AI tools broke my principles",
+      "summary": "A colleague asked me about engineering principles during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomp"
     }
   ]
 }
