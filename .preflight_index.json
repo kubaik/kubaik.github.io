@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T09:26:44.323580",
+  "built_at": "2026-06-27T09:58:11.020324",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3050,6 +3050,11 @@
       "slug": "rag-is-not-enough-hybrid-search-reranking-in-2026",
       "title": "RAG is not enough: hybrid search + reranking in 2026",
       "summary": "The short version: the conventional advice on rag not is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) If you’re shipping Retrieval-Augmented Generation (RAG) in 2026 and still getting answers "
+    },
+    {
+      "slug": "ai-fixes-legacy-code-nobody-owns",
+      "title": "AI fixes legacy code nobody owns",
+      "summary": "The official documentation for use maintain is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Legacy code is like a garden. When n"
     }
   ]
 }
