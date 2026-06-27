@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T04:46:41.237901",
+  "built_at": "2026-06-27T05:02:01.421198",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3015,6 +3015,11 @@
       "slug": "6-micro-saas-niches-ai-couldnt-commoditise",
       "title": "6 micro-SaaS niches AI couldn't commoditise",
       "summary": "A colleague asked me about microsaas 2026 during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In"
+    },
+    {
+      "slug": "ai-ui-tools-6-months-in-what-i-gained-and-lost",
+      "title": "AI UI tools: 6 months in, what I gained and lost",
+      "summary": "The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI UI generation tools like v0 by Vercel, Figma AI, and Bolt.new cut my component"
     }
   ]
 }
