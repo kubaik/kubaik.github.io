@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 14:58:38 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 15:03:21 +0000</lastBuildDate>
+    <item>
+      <title>Debug AI agent failures differently</title>
+      <link>https://kubaik.github.io/debug-ai-agent-failures-differently/</link>
+      <description>Cut AI agent incident detection time from days to hours with agent behavior traces. Structured logs miss hallucinations and prompt drift; traces catch them. Benchmark shows 200x faster detection — see the setup.</description>
+      <pubDate>Sat, 27 Jun 2026 15:03:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-ai-agent-failures-differently/</guid>
+    </item>
     <item>
       <title>HTMX: 5 things I dropped to make it work</title>
       <link>https://kubaik.github.io/htmx-5-things-i-dropped-to-make-it-work/</link>
@@ -138,13 +145,6 @@
       <description>Cut API abuse 85% in 2026 with token behavior tracking — the attacks most teams miss and why Redis Streams blocks them while rate limiting fails. Real numbers from a fintech in Lagos.</description>
       <pubDate>Sat, 27 Jun 2026 01:31:04 +0000</pubDate>
       <guid>https://kubaik.github.io/block-api-replay-attacks-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI vs Solo SaaS: Costs, speed, rewrite risks</title>
-      <link>https://kubaik.github.io/ai-vs-solo-saas-costs-speed-rewrite-risks/</link>
-      <description>AI-first SaaS stacks cut build time 80% but can cost 7.6x more at 5k users. See the real cost, latency, and DX numbers from two solo founder projects.</description>
-      <pubDate>Sat, 27 Jun 2026 00:17:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-vs-solo-saas-costs-speed-rewrite-risks/</guid>
     </item>
   </channel>
 </rss>

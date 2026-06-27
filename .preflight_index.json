@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T14:50:38.463606",
+  "built_at": "2026-06-27T15:03:12.207390",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3100,6 +3100,11 @@
       "slug": "htmx-5-things-i-dropped-to-make-it-work",
       "title": "HTMX: 5 things I dropped to make it work",
       "summary": "I ran into this htmx changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks in 2026 trying to ship a "
+    },
+    {
+      "slug": "debug-ai-agent-failures-differently",
+      "title": "Debug AI agent failures differently",
+      "summary": "I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Most incident runbooks assume the system is deterministic. That assum"
     }
   ]
 }
