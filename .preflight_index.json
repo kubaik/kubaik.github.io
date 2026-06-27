@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T13:15:04.709761",
+  "built_at": "2026-06-27T14:22:39.270968",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3090,6 +3090,11 @@
       "slug": "ai-debt-trap-llm-code-vs-human-code-in-prod",
       "title": "AI debt trap: LLM code vs human code in prod",
       "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 78% of new pull requests in mid-sized companies contain at lea"
+    },
+    {
+      "slug": "tool-calling-patterns-patterns-that-survive-load-vs",
+      "title": "Tool calling patterns: patterns that survive load vs",
+      "summary": "I've seen the same toolcalling patterns mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the cost of a single misfiring tool call isn’t just a lo"
     }
   ]
 }

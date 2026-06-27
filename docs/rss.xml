@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 14:18:03 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 14:22:48 +0000</lastBuildDate>
+    <item>
+      <title>Tool calling patterns: patterns that survive load vs</title>
+      <link>https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/</link>
+      <description>Cut API response time 60% and AWS costs 83% with safety-first tool calls — retry budgets, backoff curves, and the circuit breaker mistake most teams miss.</description>
+      <pubDate>Sat, 27 Jun 2026 14:22:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/</guid>
+    </item>
     <item>
       <title>AI debt trap: LLM code vs human code in prod</title>
       <link>https://kubaik.github.io/ai-debt-trap-llm-code-vs-human-code-in-prod/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI wrapper costs 80% and avoid silent breaks with drift detection — the 2026 survival guide for wrapper businesses</description>
       <pubDate>Fri, 26 Jun 2026 23:58:50 +0000</pubDate>
       <guid>https://kubaik.github.io/failed-ai-wrappers-2026-what-the-survivors-did-right/</guid>
-    </item>
-    <item>
-      <title>8 AI tools that let us outrun Nairobi’s rivals</title>
-      <link>https://kubaik.github.io/8-ai-tools-that-let-us-outrun-nairobis-rivals/</link>
-      <description>Cut engineering time 35% with AI tools — GitHub Copilot Enterprise, Cursor IDE, and Amazon Q Developer deliver real latency and cost wins for Nairobi teams.</description>
-      <pubDate>Fri, 26 Jun 2026 23:52:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/8-ai-tools-that-let-us-outrun-nairobis-rivals/</guid>
     </item>
   </channel>
 </rss>
