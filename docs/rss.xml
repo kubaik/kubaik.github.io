@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 06:06:02 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 06:10:55 +0000</lastBuildDate>
+    <item>
+      <title>Token math kills AI agent budgets</title>
+      <link>https://kubaik.github.io/token-math-kills-ai-agent-budgets/</link>
+      <description>Cut AI agent costs 66% by measuring tokens, retries, and timeouts — real production numbers from CrewAI 0.25 on Mistral 8x7B with Redis 7.2 caching.</description>
+      <pubDate>Sat, 27 Jun 2026 06:10:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/token-math-kills-ai-agent-budgets/</guid>
+    </item>
     <item>
       <title>AI UI tools: 6 months in, what I gained and lost</title>
       <link>https://kubaik.github.io/ai-ui-tools-6-months-in-what-i-gained-and-lost/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector search costs 85% by replacing Pinecone with Postgres 16 + pgvector — real benchmarks, code, and the exact SQL to migrate today</description>
       <pubDate>Fri, 26 Jun 2026 18:22:17 +0000</pubDate>
       <guid>https://kubaik.github.io/pinecone-no-thanks-pgvector-handled-1m-vs/</guid>
-    </item>
-    <item>
-      <title>NDPR 2026 broke fintech APIs</title>
-      <link>https://kubaik.github.io/ndpr-2026-broke-fintech-apis/</link>
-      <description>The sandbox logs showed our average response time had climbed from 180 ms to 420 ms under load, which triggered CBN’s new &amp;quot;real-time risk scoring&amp;quot;…</description>
-      <pubDate>Fri, 26 Jun 2026 16:36:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/ndpr-2026-broke-fintech-apis/</guid>
     </item>
   </channel>
 </rss>
