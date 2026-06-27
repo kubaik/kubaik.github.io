@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 09:13:42 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 09:26:53 +0000</lastBuildDate>
+    <item>
+      <title>RAG is not enough: hybrid search + reranking in 2026</title>
+      <link>https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/</link>
+      <description>Cut RAG hallucinations 40% with hybrid search + reranking in 2026 — BM25 first, CrossEncoder second, Mistral last — latency under 100 ms, cost under $0.004/query.</description>
+      <pubDate>Sat, 27 Jun 2026 09:26:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/</guid>
+    </item>
     <item>
       <title>Portfolio that hires: 6 projects I actually used to</title>
       <link>https://kubaik.github.io/portfolio-that-hires-6-projects-i-actually-used-to/</link>
@@ -138,13 +145,6 @@
       <description>They’re built for systems where the code path is deterministic: if you call endpoint A with input X, you get response Y 99.9% of the time.</description>
       <pubDate>Fri, 26 Jun 2026 20:28:50 +0000</pubDate>
       <guid>https://kubaik.github.io/monitor-ai-like-a-model-not-a-machine/</guid>
-    </item>
-    <item>
-      <title>LLM output metrics that actually move the needle</title>
-      <link>https://kubaik.github.io/llm-output-metrics-that-actually-move-the-needle/</link>
-      <description>Cut LLM costs 40% and improve fact accuracy 9% with four production metrics — p95 latency, cost per 1000, structured correctness, and user retention delta. Real 90-day numbers from a Nairobi fintech app.</description>
-      <pubDate>Fri, 26 Jun 2026 19:13:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-output-metrics-that-actually-move-the-needle/</guid>
     </item>
   </channel>
 </rss>
