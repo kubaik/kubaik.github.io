@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 18:21:26 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 18:26:24 +0000</lastBuildDate>
+    <item>
+      <title>Use-based pricing for dev tools in 2026</title>
+      <link>https://kubaik.github.io/use-based-pricing-for-dev-tools-in-2026/</link>
+      <description>Cut pricing churn 38% by switching to usage-based billing — learn from three SE Asia startups that grew from 0 to 100k users on lean infra. Real numbers, real mistakes, real Stripe setup.</description>
+      <pubDate>Sat, 27 Jun 2026 18:26:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/use-based-pricing-for-dev-tools-in-2026/</guid>
+    </item>
     <item>
       <title>AI apps break when you treat them like regular software</title>
       <link>https://kubaik.github.io/ai-apps-break-when-you-treat-them-like-regular-software/</link>
@@ -138,13 +145,6 @@
       <description>Cut RAG hallucinations 40% with hybrid search + reranking in 2026 — BM25 first, CrossEncoder second, Mistral last — latency under 100 ms, cost under $0.004/query.</description>
       <pubDate>Sat, 27 Jun 2026 09:26:41 +0000</pubDate>
       <guid>https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/</guid>
-    </item>
-    <item>
-      <title>Portfolio that hires: 6 projects I actually used to</title>
-      <link>https://kubaik.github.io/portfolio-that-hires-6-projects-i-actually-used-to/</link>
-      <description>Portfolio projects that get hired in 2026: 3 real systems with latency, cost, and payment data. Built for 2G networks, offline-first, and local payment integrations on $5/month servers.</description>
-      <pubDate>Sat, 27 Jun 2026 09:13:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/portfolio-that-hires-6-projects-i-actually-used-to/</guid>
     </item>
   </channel>
 </rss>
