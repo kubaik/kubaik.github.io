@@ -37,5 +37,6 @@
   "Technical debt in 2026: the new category created by AI-generated code",
   "Tool-calling patterns that work in production vs the ones that break under load",
   "How HTMX changed my stack and what I gave up to get there",
-  "How to do a postmortem on an AI agent failure: it's different from a regular incident"
+  "How to do a postmortem on an AI agent failure: it's different from a regular incident",
+  "How to design multi-region backends without triple the infrastructure cost"
 ]

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T15:03:12.207390",
+  "built_at": "2026-06-27T15:10:44.217826",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3105,6 +3105,11 @@
       "slug": "debug-ai-agent-failures-differently",
       "title": "Debug AI agent failures differently",
       "summary": "I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Most incident runbooks assume the system is deterministic. That assum"
+    },
+    {
+      "slug": "design-multi-region-systems-without-3-the-cost",
+      "title": "Design multi-region systems without 3× the cost",
+      "summary": "The official documentation for design multiregion is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most tutorials sell multi-regi"
     }
   ]
 }

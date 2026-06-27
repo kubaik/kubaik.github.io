@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 15:03:21 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 15:10:49 +0000</lastBuildDate>
+    <item>
+      <title>Design multi-region systems without 3× the cost</title>
+      <link>https://kubaik.github.io/design-multi-region-systems-without-3-the-cost/</link>
+      <description>Cut global infra bill 40% using regional Redis + Cloudflare Workers — cache hit ratios, secret rotation, and the surprise write latency win nobody mentions.</description>
+      <pubDate>Sat, 27 Jun 2026 15:10:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/design-multi-region-systems-without-3-the-cost/</guid>
+    </item>
     <item>
       <title>Debug AI agent failures differently</title>
       <link>https://kubaik.github.io/debug-ai-agent-failures-differently/</link>
@@ -138,13 +145,6 @@
       <description>Cut false alerts 82% using PagerDuty AI triage in 2026 — noise-to-value ratio drops from 0.4 to 0.08, saving 342 engineer-hours per quarter</description>
       <pubDate>Sat, 27 Jun 2026 02:38:23 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-on-call-fires-70-with-ai-triage/</guid>
-    </item>
-    <item>
-      <title>Block API replay attacks in 2026</title>
-      <link>https://kubaik.github.io/block-api-replay-attacks-in-2026/</link>
-      <description>Cut API abuse 85% in 2026 with token behavior tracking — the attacks most teams miss and why Redis Streams blocks them while rate limiting fails. Real numbers from a fintech in Lagos.</description>
-      <pubDate>Sat, 27 Jun 2026 01:31:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/block-api-replay-attacks-in-2026/</guid>
     </item>
   </channel>
 </rss>
