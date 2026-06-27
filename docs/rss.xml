@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 16:09:06 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 16:14:07 +0000</lastBuildDate>
+    <item>
+      <title>1M tokens? Mostly wasted</title>
+      <link>https://kubaik.github.io/1m-tokens-mostly-wasted/</link>
+      <description>Cut inference costs 60% by right-sizing context windows — how teams waste $50k/month on 1M token models while RAG delivers better results at a fraction of the cost.</description>
+      <pubDate>Sat, 27 Jun 2026 16:13:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/1m-tokens-mostly-wasted/</guid>
+    </item>
     <item>
       <title>Database branches: Neon vs PlanetScale locally</title>
       <link>https://kubaik.github.io/database-branches-neon-vs-planetscale-locally/</link>
@@ -138,13 +145,6 @@
       <description>Cut UI generation time 40% with AI tools — but only after fixing design tokens and adding visual regression tests. Real numbers, real bugs, and the workflow that works in 2026.</description>
       <pubDate>Sat, 27 Jun 2026 05:01:58 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ui-tools-6-months-in-what-i-gained-and-lost/</guid>
-    </item>
-    <item>
-      <title>6 micro-SaaS niches AI couldn&apos;t commoditise</title>
-      <link>https://kubaik.github.io/6-micro-saas-niches-ai-couldnt-commoditise/</link>
-      <description>Discover 6 micro-SaaS niches that survived AI commoditisation in 2026 — with revenue, churn, and moat data. Stop AI-washing your product and start building defensible moats.</description>
-      <pubDate>Sat, 27 Jun 2026 04:46:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/6-micro-saas-niches-ai-couldnt-commoditise/</guid>
     </item>
   </channel>
 </rss>
