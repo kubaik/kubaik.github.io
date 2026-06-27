@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 22:11:42 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 22:58:50 +0000</lastBuildDate>
+    <item>
+      <title>Saved $3k/month by ditching Kubernetes</title>
+      <link>https://kubaik.github.io/saved-3kmonth-by-ditching-kubernetes/</link>
+      <description>Cut AWS costs 93% from $3k to $200/month — single EC2, Lambda, RDS Proxy, and the mistakes most teams repeat when downsizing Kubernetes</description>
+      <pubDate>Sat, 27 Jun 2026 22:58:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/saved-3kmonth-by-ditching-kubernetes/</guid>
+    </item>
     <item>
       <title>Negotiate salaries with AI skills in 2026</title>
       <link>https://kubaik.github.io/negotiate-salaries-with-ai-skills-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% and AWS costs 83% with safety-first tool calls — retry budgets, backoff curves, and the circuit breaker mistake most teams miss.</description>
       <pubDate>Sat, 27 Jun 2026 14:22:36 +0000</pubDate>
       <guid>https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/</guid>
-    </item>
-    <item>
-      <title>AI debt trap: LLM code vs human code in prod</title>
-      <link>https://kubaik.github.io/ai-debt-trap-llm-code-vs-human-code-in-prod/</link>
-      <description>Cut production incidents 50% by choosing between LLM code and human code in 2026. Learn the exact metrics, tool versions, and guardrails that separate safe AI adoption from hidden technical debt.</description>
-      <pubDate>Sat, 27 Jun 2026 13:15:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-debt-trap-llm-code-vs-human-code-in-prod/</guid>
     </item>
   </channel>
 </rss>
