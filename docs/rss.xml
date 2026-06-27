@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 04:42:01 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 04:46:50 +0000</lastBuildDate>
+    <item>
+      <title>6 micro-SaaS niches AI couldn&apos;t commoditise</title>
+      <link>https://kubaik.github.io/6-micro-saas-niches-ai-couldnt-commoditise/</link>
+      <description>Discover 6 micro-SaaS niches that survived AI commoditisation in 2026 — with revenue, churn, and moat data. Stop AI-washing your product and start building defensible moats.</description>
+      <pubDate>Sat, 27 Jun 2026 04:46:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/6-micro-saas-niches-ai-couldnt-commoditise/</guid>
+    </item>
     <item>
       <title>Cut on-call fires 70% with AI triage</title>
       <link>https://kubaik.github.io/cut-on-call-fires-70-with-ai-triage/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI-patch rollbacks 83% with auto-gate workflows — semgrep 1.65, pytest 7.4, and llm-gatekeeper 0.4.2 rules that catch 87% of regressions before they ship.</description>
       <pubDate>Fri, 26 Jun 2026 16:27:08 +0000</pubDate>
       <guid>https://kubaik.github.io/maintain-40-ai-code-two-battle-tested-paths/</guid>
-    </item>
-    <item>
-      <title>Compound Nairobi: 6 dev income streams 2026</title>
-      <link>https://kubaik.github.io/compound-nairobi-6-dev-income-streams-2026/</link>
-      <description>Earn KES 50k/month without SaaS — 7 Nairobi-tested ways using Python, Node.js, AWS Lambda, and GitHub Sponsors with real KES numbers and code samples.</description>
-      <pubDate>Fri, 26 Jun 2026 16:10:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/compound-nairobi-6-dev-income-streams-2026/</guid>
     </item>
   </channel>
 </rss>
