@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 22:07:04 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 22:11:42 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate salaries with AI skills in 2026</title>
+      <link>https://kubaik.github.io/negotiate-salaries-with-ai-skills-in-2026/</link>
+      <description>Negotiate 20% higher salaries in 2026 by filtering AI-automated roles — Python 3.11 scraper, 1,200 job data, human-skills premium table</description>
+      <pubDate>Sat, 27 Jun 2026 22:11:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-salaries-with-ai-skills-in-2026/</guid>
+    </item>
     <item>
       <title>AI codebase onboarding: ship fast or ship safe?</title>
       <link>https://kubaik.github.io/ai-codebase-onboarding-ship-fast-or-ship-safe/</link>
@@ -138,13 +145,6 @@
       <description>Cut production incidents 50% by choosing between LLM code and human code in 2026. Learn the exact metrics, tool versions, and guardrails that separate safe AI adoption from hidden technical debt.</description>
       <pubDate>Sat, 27 Jun 2026 13:15:02 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-debt-trap-llm-code-vs-human-code-in-prod/</guid>
-    </item>
-    <item>
-      <title>Survive 90s DB failover without melting</title>
-      <link>https://kubaik.github.io/survive-90s-db-failover-without-melting/</link>
-      <description>Cut failover downtime to 0.3 s with SQLite client-side buffering — the real patterns teams use to keep systems up when databases crash in 2026.</description>
-      <pubDate>Sat, 27 Jun 2026 12:51:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/survive-90s-db-failover-without-melting/</guid>
     </item>
   </channel>
 </rss>
