@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T18:26:15.344539",
+  "built_at": "2026-06-27T19:55:45.347697",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3150,6 +3150,11 @@
       "slug": "use-based-pricing-for-dev-tools-in-2026",
       "title": "Use-based pricing for dev tools in 2026",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I ran into this when we tried to price a developer tool in Vietnam in 2026. We had 12,00"
+    },
+    {
+      "slug": "batteries-included-offline-mode-for-unreliable-networks",
+      "title": "Batteries-included offline mode for unreliable networks",
+      "summary": "Most build offlinefirst guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. We needed to ship a financial-tracking app in Nigeria where users lose connectivity mid-session 3–4 times a day. After two month"
     }
   ]
 }

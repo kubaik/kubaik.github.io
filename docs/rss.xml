@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 19:51:16 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 19:55:55 +0000</lastBuildDate>
+    <item>
+      <title>Batteries-included offline mode for unreliable networks</title>
+      <link>https://kubaik.github.io/batteries-included-offline-mode-for-unreliable-networks/</link>
+      <description>Cut data loss 98% with offline-first CRDT sync in unreliable networks — Yjs 13.6, IndexedDB compaction, and the battery guard most teams skip</description>
+      <pubDate>Sat, 27 Jun 2026 19:55:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/batteries-included-offline-mode-for-unreliable-networks/</guid>
+    </item>
     <item>
       <title>Use-based pricing for dev tools in 2026</title>
       <link>https://kubaik.github.io/use-based-pricing-for-dev-tools-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>In one case, a Colombian fintech’s legacy batch processing system took 45 minutes to redeploy, with a 12% failure rate on production deployments.</description>
       <pubDate>Sat, 27 Jun 2026 09:58:08 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-fixes-legacy-code-nobody-owns/</guid>
-    </item>
-    <item>
-      <title>RAG is not enough: hybrid search + reranking in 2026</title>
-      <link>https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/</link>
-      <description>Cut RAG hallucinations 40% with hybrid search + reranking in 2026 — BM25 first, CrossEncoder second, Mistral last — latency under 100 ms, cost under $0.004/query.</description>
-      <pubDate>Sat, 27 Jun 2026 09:26:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-is-not-enough-hybrid-search-reranking-in-2026/</guid>
     </item>
   </channel>
 </rss>
