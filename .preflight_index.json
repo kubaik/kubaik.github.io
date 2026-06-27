@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T17:01:20.111405",
+  "built_at": "2026-06-27T17:50:00.084795",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3130,6 +3130,11 @@
       "slug": "frontend-testing-in-2026-playwright-beats-cypress",
       "title": "Frontend testing in 2026: Playwright beats Cypress",
       "summary": "I ran into this test frontend problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026, our team decided to rebuild the fro"
+    },
+    {
+      "slug": "slay-prompt-injection-before-it-bleeds-your-cloud",
+      "title": "Slay prompt injection before it bleeds your cloud",
+      "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs The first time I saw prompt inje"
     }
   ]
 }

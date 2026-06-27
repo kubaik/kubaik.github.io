@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 17:45:22 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 17:50:09 +0000</lastBuildDate>
+    <item>
+      <title>Slay prompt injection before it bleeds your cloud</title>
+      <link>https://kubaik.github.io/slay-prompt-injection-before-it-bleeds-your-cloud/</link>
+      <description>Cut cloud costs 20% by blocking prompt injection — the 42 attack vectors our staging tests missed and the one-line fix that caught them.</description>
+      <pubDate>Sat, 27 Jun 2026 17:49:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/slay-prompt-injection-before-it-bleeds-your-cloud/</guid>
+    </item>
     <item>
       <title>Frontend testing in 2026: Playwright beats Cypress</title>
       <link>https://kubaik.github.io/frontend-testing-in-2026-playwright-beats-cypress/</link>
@@ -138,13 +145,6 @@
       <description>Cut interview failure 25% with prompt hacking tests — token budgets, guardrail bypasses, and latency regression scripts that actually predict on-call performance.</description>
       <pubDate>Sat, 27 Jun 2026 07:46:47 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-interviews-now-want-prompt-budgets/</guid>
-    </item>
-    <item>
-      <title>Webhooks done right: 3 mistakes that cost us 12 hours</title>
-      <link>https://kubaik.github.io/webhooks-done-right-3-mistakes-that-cost-us-12-hours/</link>
-      <description>Cut duplicate webhook events from 14% to 0.03% with SQS FIFO and idempotency keys — the 2026 guide teams actually use in production</description>
-      <pubDate>Sat, 27 Jun 2026 06:25:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/webhooks-done-right-3-mistakes-that-cost-us-12-hours/</guid>
     </item>
   </channel>
 </rss>
