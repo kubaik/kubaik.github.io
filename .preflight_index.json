@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T07:57:50.702687",
+  "built_at": "2026-06-27T09:13:33.017446",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3040,6 +3040,11 @@
       "slug": "stop-async-python-from-freezing-your-stack",
       "title": "Stop async Python from freezing your stack",
       "summary": "I've seen the same async python mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, async Python is everywhere—FastAPI in production, Quart for web "
+    },
+    {
+      "slug": "portfolio-that-hires-6-projects-i-actually-used-to",
+      "title": "Portfolio that hires: 6 projects I actually used to",
+      "summary": "Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, every junior engineer has an AI-generated project on their GitHub. Resumes wi"
     }
   ]
 }

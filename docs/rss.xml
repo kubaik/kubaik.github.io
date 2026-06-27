@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 09:08:58 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 09:13:42 +0000</lastBuildDate>
+    <item>
+      <title>Portfolio that hires: 6 projects I actually used to</title>
+      <link>https://kubaik.github.io/portfolio-that-hires-6-projects-i-actually-used-to/</link>
+      <description>Portfolio projects that get hired in 2026: 3 real systems with latency, cost, and payment data. Built for 2G networks, offline-first, and local payment integrations on $5/month servers.</description>
+      <pubDate>Sat, 27 Jun 2026 09:13:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/portfolio-that-hires-6-projects-i-actually-used-to/</guid>
+    </item>
     <item>
       <title>Stop async Python from freezing your stack</title>
       <link>https://kubaik.github.io/stop-async-python-from-freezing-your-stack/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM costs 40% and improve fact accuracy 9% with four production metrics — p95 latency, cost per 1000, structured correctness, and user retention delta. Real 90-day numbers from a Nairobi fintech app.</description>
       <pubDate>Fri, 26 Jun 2026 19:13:43 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-output-metrics-that-actually-move-the-needle/</guid>
-    </item>
-    <item>
-      <title>LLM structured output: JSON mode fails at scale</title>
-      <link>https://kubaik.github.io/llm-structured-output-json-mode-fails-at-scale/</link>
-      <description>Cut API latency 93% and token waste 62% by enforcing strict JSON schemas with vLLM — the real way to get reliable structured outputs from LLMs</description>
-      <pubDate>Fri, 26 Jun 2026 19:01:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-structured-output-json-mode-fails-at-scale/</guid>
     </item>
   </channel>
 </rss>
