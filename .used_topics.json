@@ -48,5 +48,6 @@
   "How to design AI-native applications: architecture patterns that didn't exist three years ago",
   "Pricing a developer tool in 2026: what the market teaches you fast",
   "How to build offline-first apps for markets where connectivity is still unreliable",
-  "Building accessible AI chat interfaces: the WCAG requirements most teams miss"
+  "Building accessible AI chat interfaces: the WCAG requirements most teams miss",
+  "How I migrated a monolith to services in 2026 without a big-bang rewrite"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 20:04:01 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 20:07:19 +0000</lastBuildDate>
+    <item>
+      <title>Monolith to services without a rewrite</title>
+      <link>https://kubaik.github.io/monolith-to-services-without-a-rewrite/</link>
+      <description>Cut API response time 20% by decoupling first—database-first refactor beats service extraction for most teams in 2026.</description>
+      <pubDate>Sat, 27 Jun 2026 20:07:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/monolith-to-services-without-a-rewrite/</guid>
+    </item>
     <item>
       <title>WCAG chatbots miss: aria-live traps in AI UIs</title>
       <link>https://kubaik.github.io/wcag-chatbots-miss-aria-live-traps-in-ai-uis/</link>
@@ -138,13 +145,6 @@
       <description>Cut USSD latency 40% with Redis caching and session recovery — Safaricom MTN error codes, Nokia 105 quirks, and the real telecom limits you must test in 2026.</description>
       <pubDate>Sat, 27 Jun 2026 11:11:59 +0000</pubDate>
       <guid>https://kubaik.github.io/ussd-menus-2026-fintech-survival-guide/</guid>
-    </item>
-    <item>
-      <title>Stop blaming passwords</title>
-      <link>https://kubaik.github.io/stop-blaming-passwords/</link>
-      <description>Passkeys cut login bounce 71% and support tickets 75% in six weeks — Firebase Auth migration guide with code samples and latency benchmarks</description>
-      <pubDate>Sat, 27 Jun 2026 10:18:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-blaming-passwords/</guid>
     </item>
   </channel>
 </rss>
