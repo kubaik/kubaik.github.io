@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 07:42:12 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 07:46:59 +0000</lastBuildDate>
+    <item>
+      <title>AI interviews now want prompt budgets</title>
+      <link>https://kubaik.github.io/ai-interviews-now-want-prompt-budgets/</link>
+      <description>Cut interview failure 25% with prompt hacking tests — token budgets, guardrail bypasses, and latency regression scripts that actually predict on-call performance.</description>
+      <pubDate>Sat, 27 Jun 2026 07:46:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-interviews-now-want-prompt-budgets/</guid>
+    </item>
     <item>
       <title>Webhooks done right: 3 mistakes that cost us 12 hours</title>
       <link>https://kubaik.github.io/webhooks-done-right-3-mistakes-that-cost-us-12-hours/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% with FastAPI + Redis 7.2 — connection pooling, schema validation, and the migration step most teams skip.</description>
       <pubDate>Fri, 26 Jun 2026 18:26:47 +0000</pubDate>
       <guid>https://kubaik.github.io/3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that/</guid>
-    </item>
-    <item>
-      <title>Pinecone? No thanks — pgvector handled 1M v/s</title>
-      <link>https://kubaik.github.io/pinecone-no-thanks-pgvector-handled-1m-vs/</link>
-      <description>Cut vector search costs 85% by replacing Pinecone with Postgres 16 + pgvector — real benchmarks, code, and the exact SQL to migrate today</description>
-      <pubDate>Fri, 26 Jun 2026 18:22:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/pinecone-no-thanks-pgvector-handled-1m-vs/</guid>
     </item>
   </channel>
 </rss>

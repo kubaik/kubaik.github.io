@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T06:25:21.829333",
+  "built_at": "2026-06-27T07:46:50.241116",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3030,6 +3030,11 @@
       "slug": "webhooks-done-right-3-mistakes-that-cost-us-12-hours",
       "title": "Webhooks done right: 3 mistakes that cost us 12 hours",
       "summary": "Most building webhook guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. Webhooks are a deceptively simple concept that turns into a reliability nightmare when traffic grows beyond a handful of calls per"
+    },
+    {
+      "slug": "ai-interviews-now-want-prompt-budgets",
+      "title": "AI interviews now want prompt budgets",
+      "summary": "The official documentation for changed hiring is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs By 2026, every engineering intervi"
     }
   ]
 }
