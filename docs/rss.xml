@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 14:46:08 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 14:50:48 +0000</lastBuildDate>
+    <item>
+      <title>HTMX: 5 things I dropped to make it work</title>
+      <link>https://kubaik.github.io/htmx-5-things-i-dropped-to-make-it-work/</link>
+      <description>Cut frontend build time 95% and memory 60% by swapping React for HTMX — the exact changes teams made in 2026 and what they gave up to get there.</description>
+      <pubDate>Sat, 27 Jun 2026 14:50:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/htmx-5-things-i-dropped-to-make-it-work/</guid>
+    </item>
     <item>
       <title>Tool calling patterns: patterns that survive load vs</title>
       <link>https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/</link>
@@ -138,13 +145,6 @@
       <description>AI-first SaaS stacks cut build time 80% but can cost 7.6x more at 5k users. See the real cost, latency, and DX numbers from two solo founder projects.</description>
       <pubDate>Sat, 27 Jun 2026 00:17:28 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-vs-solo-saas-costs-speed-rewrite-risks/</guid>
-    </item>
-    <item>
-      <title>Failed AI wrappers 2026: what the survivors did right</title>
-      <link>https://kubaik.github.io/failed-ai-wrappers-2026-what-the-survivors-did-right/</link>
-      <description>Cut AI wrapper costs 80% and avoid silent breaks with drift detection — the 2026 survival guide for wrapper businesses</description>
-      <pubDate>Fri, 26 Jun 2026 23:58:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/failed-ai-wrappers-2026-what-the-survivors-did-right/</guid>
     </item>
   </channel>
 </rss>
