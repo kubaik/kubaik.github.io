@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 01:31:16 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 02:38:33 +0000</lastBuildDate>
+    <item>
+      <title>Cut on-call fires 70% with AI triage</title>
+      <link>https://kubaik.github.io/cut-on-call-fires-70-with-ai-triage/</link>
+      <description>Cut false alerts 82% using PagerDuty AI triage in 2026 — noise-to-value ratio drops from 0.4 to 0.08, saving 342 engineer-hours per quarter</description>
+      <pubDate>Sat, 27 Jun 2026 02:38:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-on-call-fires-70-with-ai-triage/</guid>
+    </item>
     <item>
       <title>Block API replay attacks in 2026</title>
       <link>https://kubaik.github.io/block-api-replay-attacks-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Earn KES 50k/month without SaaS — 7 Nairobi-tested ways using Python, Node.js, AWS Lambda, and GitHub Sponsors with real KES numbers and code samples.</description>
       <pubDate>Fri, 26 Jun 2026 16:10:21 +0000</pubDate>
       <guid>https://kubaik.github.io/compound-nairobi-6-dev-income-streams-2026/</guid>
-    </item>
-    <item>
-      <title>Land a $45k remote job? Africa’s 2026 map</title>
-      <link>https://kubaik.github.io/land-a-45k-remote-job-africas-2026-map/</link>
-      <description>Land remote jobs paying $45k+ with Africa’s 2026 salary map and tech hubs—plus tools, code, and negotiation scripts that actually work.</description>
-      <pubDate>Fri, 26 Jun 2026 16:05:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/land-a-45k-remote-job-africas-2026-map/</guid>
     </item>
   </channel>
 </rss>
