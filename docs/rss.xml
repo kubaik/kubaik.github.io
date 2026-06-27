@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 11:12:11 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 11:23:51 +0000</lastBuildDate>
+    <item>
+      <title>Who owns AI-generated code?</title>
+      <link>https://kubaik.github.io/who-owns-ai-generated-code/</link>
+      <description>Cut review time 51% with AI pair coding — the ownership model, security gates, and Bandit scan that dropped incidents 100%.</description>
+      <pubDate>Sat, 27 Jun 2026 11:23:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/who-owns-ai-generated-code/</guid>
+    </item>
     <item>
       <title>USSD menus: 2026 fintech survival guide</title>
       <link>https://kubaik.github.io/ussd-menus-2026-fintech-survival-guide/</link>
@@ -138,13 +145,6 @@
       <description>Two months later, we moved to Tailscale and Cloudflare Tunnel—both costing $0 for our scale—and cut our infrastructure spend by 80%.</description>
       <pubDate>Fri, 26 Jun 2026 21:57:50 +0000</pubDate>
       <guid>https://kubaik.github.io/skip-the-vpn-zero-trust-for-under-100/</guid>
-    </item>
-    <item>
-      <title>Postgres 17 buried Redis, S3, cron</title>
-      <link>https://kubaik.github.io/postgres-17-buried-redis-s3-cron/</link>
-      <description>Cut stack costs 88% with Postgres 17 caching, cron jobs, and blob storage — latency benchmarks, migration steps, and the 1 mistake we made</description>
-      <pubDate>Fri, 26 Jun 2026 21:04:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/postgres-17-buried-redis-s3-cron/</guid>
     </item>
   </channel>
 </rss>
