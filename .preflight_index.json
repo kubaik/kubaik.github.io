@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T00:17:30.740001",
+  "built_at": "2026-06-27T01:31:07.467366",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3000,6 +3000,11 @@
       "slug": "ai-vs-solo-saas-costs-speed-rewrite-risks",
       "title": "AI vs Solo SaaS: Costs, speed, rewrite risks",
       "summary": "I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the solo SaaS founder can go from idea to first paying cust"
+    },
+    {
+      "slug": "block-api-replay-attacks-in-2026",
+      "title": "Block API replay attacks in 2026",
+      "summary": "Most api security guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, our API gateway at a B2B fintech startup in Lagos started throwing 503 err"
     }
   ]
 }
