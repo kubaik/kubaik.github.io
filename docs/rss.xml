@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 23:20:47 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 23:25:38 +0000</lastBuildDate>
+    <item>
+      <title>AI agent memory: context that survives restarts</title>
+      <link>https://kubaik.github.io/ai-agent-memory-context-that-survives-restarts/</link>
+      <description>Persist AI agent context across restarts with Redis 7.2 and langgraph 0.2.14 — flush writes, raise liveness probes, and stop losing sessions after a crash or rollout.</description>
+      <pubDate>Sat, 27 Jun 2026 23:25:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agent-memory-context-that-survives-restarts/</guid>
+    </item>
     <item>
       <title>Saved $3k/month by ditching Kubernetes</title>
       <link>https://kubaik.github.io/saved-3kmonth-by-ditching-kubernetes/</link>
@@ -138,13 +145,6 @@
       <description>Cut frontend build time 95% and memory 60% by swapping React for HTMX — the exact changes teams made in 2026 and what they gave up to get there.</description>
       <pubDate>Sat, 27 Jun 2026 14:50:35 +0000</pubDate>
       <guid>https://kubaik.github.io/htmx-5-things-i-dropped-to-make-it-work/</guid>
-    </item>
-    <item>
-      <title>Tool calling patterns: patterns that survive load vs</title>
-      <link>https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/</link>
-      <description>Cut API response time 60% and AWS costs 83% with safety-first tool calls — retry budgets, backoff curves, and the circuit breaker mistake most teams miss.</description>
-      <pubDate>Sat, 27 Jun 2026 14:22:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/</guid>
     </item>
   </channel>
 </rss>
