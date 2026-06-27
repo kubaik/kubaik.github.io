@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T12:17:21.707615",
+  "built_at": "2026-06-27T12:51:25.815416",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3080,6 +3080,11 @@
       "slug": "migrate-to-daraja-20-now-what-broke-and-how-to-fix",
       "title": "Migrate to Daraja 2.0 now — what broke and how to fix",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) Last year I helped three teams update their M-Pesa Daraja integrations. Two of them pani"
+    },
+    {
+      "slug": "survive-90s-db-failover-without-melting",
+      "title": "Survive 90s DB failover without melting",
+      "summary": "I ran into this building eventual problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. We built a shopping cart service in 2026 that handled 12,000 orders per minute at peak on Black Fri"
     }
   ]
 }
