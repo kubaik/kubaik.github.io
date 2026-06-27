@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 12:12:21 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 12:17:31 +0000</lastBuildDate>
+    <item>
+      <title>Migrate to Daraja 2.0 now — what broke and how to fix</title>
+      <link>https://kubaik.github.io/migrate-to-daraja-20-now-what-broke-and-how-to-fix/</link>
+      <description>Cut M-Pesa integration failures 91% with Daraja 2.0 migration checklist, endpoint changes, timestamp format fixes, and idempotent keys. 180 ms latency after switch.</description>
+      <pubDate>Sat, 27 Jun 2026 12:17:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/migrate-to-daraja-20-now-what-broke-and-how-to-fix/</guid>
+    </item>
     <item>
       <title>Platform teams in 2026: Docs vs. production reality</title>
       <link>https://kubaik.github.io/platform-teams-in-2026-docs-vs-production-reality/</link>
@@ -138,13 +145,6 @@
       <description>Cut page load time 60% on 4G in East Africa with Next.js 15, Redis 7.2, and a 120 kB client bundle — the exact steps teams used when Starlink lit up the region.</description>
       <pubDate>Fri, 26 Jun 2026 22:22:56 +0000</pubDate>
       <guid>https://kubaik.github.io/starlink-4g-fallback-serve-pages-under-800ms/</guid>
-    </item>
-    <item>
-      <title>Flip your dev-tool sales cycle in 2026</title>
-      <link>https://kubaik.github.io/flip-your-dev-tool-sales-cycle-in-2026/</link>
-      <description>Cut sales cycle from 42 days to 8 days with a one-liner that produces a PDF with three ROI numbers — how we rebuilt our dev tool funnel in 2026.</description>
-      <pubDate>Fri, 26 Jun 2026 22:06:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/flip-your-dev-tool-sales-cycle-in-2026/</guid>
     </item>
   </channel>
 </rss>
