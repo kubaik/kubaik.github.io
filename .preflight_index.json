@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-26T23:58:52.854729",
+  "built_at": "2026-06-27T00:17:30.740001",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -2995,6 +2995,11 @@
       "slug": "failed-ai-wrappers-2026-what-the-survivors-did-right",
       "title": "Failed AI wrappers 2026: what the survivors did right",
       "summary": "I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I started 2026 building an AI wrapper a"
+    },
+    {
+      "slug": "ai-vs-solo-saas-costs-speed-rewrite-risks",
+      "title": "AI vs Solo SaaS: Costs, speed, rewrite risks",
+      "summary": "I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the solo SaaS founder can go from idea to first paying cust"
     }
   ]
 }

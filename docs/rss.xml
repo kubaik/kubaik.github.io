@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 00:12:51 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 00:17:40 +0000</lastBuildDate>
+    <item>
+      <title>AI vs Solo SaaS: Costs, speed, rewrite risks</title>
+      <link>https://kubaik.github.io/ai-vs-solo-saas-costs-speed-rewrite-risks/</link>
+      <description>AI-first SaaS stacks cut build time 80% but can cost 7.6x more at 5k users. See the real cost, latency, and DX numbers from two solo founder projects.</description>
+      <pubDate>Sat, 27 Jun 2026 00:17:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-vs-solo-saas-costs-speed-rewrite-risks/</guid>
+    </item>
     <item>
       <title>Failed AI wrappers 2026: what the survivors did right</title>
       <link>https://kubaik.github.io/failed-ai-wrappers-2026-what-the-survivors-did-right/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI inference cost 32% without hurting conversions — real latency benchmarks, CPI scoring, and the shadow-traffic mistake most teams make.</description>
       <pubDate>Fri, 26 Jun 2026 13:42:14 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-benchmarking-3-mistakes-we-made-first/</guid>
-    </item>
-    <item>
-      <title>Zero-trust MCP servers: auth trap you’ll hit first</title>
-      <link>https://kubaik.github.io/zero-trust-mcp-servers-auth-trap-youll-hit-first/</link>
-      <description>Cut MCP server breaches 89% with gVisor, SPIFFE IDs, and OPA policy — latency +47%, cost +25%, containment time −92% in 2026 benchmarks.</description>
-      <pubDate>Fri, 26 Jun 2026 13:29:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-mcp-servers-auth-trap-youll-hit-first/</guid>
     </item>
   </channel>
 </rss>
