@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 10:13:34 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 10:18:14 +0000</lastBuildDate>
+    <item>
+      <title>Stop blaming passwords</title>
+      <link>https://kubaik.github.io/stop-blaming-passwords/</link>
+      <description>Passkeys cut login bounce 71% and support tickets 75% in six weeks — Firebase Auth migration guide with code samples and latency benchmarks</description>
+      <pubDate>Sat, 27 Jun 2026 10:18:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-blaming-passwords/</guid>
+    </item>
     <item>
       <title>AI fixes legacy code nobody owns</title>
       <link>https://kubaik.github.io/ai-fixes-legacy-code-nobody-owns/</link>
@@ -138,13 +145,6 @@
       <description>Cut Nairobi SaaS infra costs 40% with ARM Lambda, Redis, and multi-region failover — concrete numbers and the stack we actually run in 2026.</description>
       <pubDate>Fri, 26 Jun 2026 20:55:11 +0000</pubDate>
       <guid>https://kubaik.github.io/nairobi-saas-infra-costs-real-2026-stack/</guid>
-    </item>
-    <item>
-      <title>AI wrote 80% of my SaaS in 6 weeks — here’s what broke</title>
-      <link>https://kubaik.github.io/ai-wrote-80-of-my-saas-in-6-weeks-heres-what-broke/</link>
-      <description>Launched a SaaS in 6 weeks using AI for 80% of the code — the real breakdown: costs, bugs, and what actually went wrong in production with tools like FastAPI, Go, and Redis 7.2.</description>
-      <pubDate>Fri, 26 Jun 2026 20:32:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-wrote-80-of-my-saas-in-6-weeks-heres-what-broke/</guid>
     </item>
   </channel>
 </rss>

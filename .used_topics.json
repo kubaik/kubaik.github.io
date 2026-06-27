@@ -27,5 +27,6 @@
   "Why async Python still surprises people and how to stop getting burned by it",
   "How to build a portfolio that gets you hired in a market where everyone has AI-assisted projects",
   "RAG is not enough: why hybrid search + reranking is the 2026 baseline",
-  "How I use AI to maintain legacy codebases nobody wants to touch"
+  "How I use AI to maintain legacy codebases nobody wants to touch",
+  "How passkeys changed authentication and what that means for the apps you're building"
 ]
