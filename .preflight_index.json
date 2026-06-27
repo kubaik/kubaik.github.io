@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T17:50:00.084795",
+  "built_at": "2026-06-27T18:05:42.412360",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3135,6 +3135,11 @@
       "slug": "slay-prompt-injection-before-it-bleeds-your-cloud",
       "title": "Slay prompt injection before it bleeds your cloud",
       "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs The first time I saw prompt inje"
+    },
+    {
+      "slug": "pair-programming-with-ai-5-tools-we-tried",
+      "title": "Pair programming with AI: 5 tools we tried",
+      "summary": "I ran into this pair programming problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I joined a 12-person backend team in 2026"
     }
   ]
 }
