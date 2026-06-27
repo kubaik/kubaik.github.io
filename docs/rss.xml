@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 12:51:36 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 13:15:13 +0000</lastBuildDate>
+    <item>
+      <title>AI debt trap: LLM code vs human code in prod</title>
+      <link>https://kubaik.github.io/ai-debt-trap-llm-code-vs-human-code-in-prod/</link>
+      <description>Cut production incidents 50% by choosing between LLM code and human code in 2026. Learn the exact metrics, tool versions, and guardrails that separate safe AI adoption from hidden technical debt.</description>
+      <pubDate>Sat, 27 Jun 2026 13:15:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-debt-trap-llm-code-vs-human-code-in-prod/</guid>
+    </item>
     <item>
       <title>Survive 90s DB failover without melting</title>
       <link>https://kubaik.github.io/survive-90s-db-failover-without-melting/</link>
@@ -138,13 +145,6 @@
       <description>Cut engineering time 35% with AI tools — GitHub Copilot Enterprise, Cursor IDE, and Amazon Q Developer deliver real latency and cost wins for Nairobi teams.</description>
       <pubDate>Fri, 26 Jun 2026 23:52:23 +0000</pubDate>
       <guid>https://kubaik.github.io/8-ai-tools-that-let-us-outrun-nairobis-rivals/</guid>
-    </item>
-    <item>
-      <title>TLS 1.3 and post-quantum crypto: 200% latency spike</title>
-      <link>https://kubaik.github.io/tls-13-and-post-quantum-crypto-200-latency-spike/</link>
-      <description>Post-quantum TLS handshake latency spiked 200% in 2026 — how we fixed it with OpenSSL 3.2.1, Node.js 20 LTS, and a 62% speedup.</description>
-      <pubDate>Fri, 26 Jun 2026 22:44:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/tls-13-and-post-quantum-crypto-200-latency-spike/</guid>
     </item>
   </channel>
 </rss>

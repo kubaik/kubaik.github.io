@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T12:51:25.815416",
+  "built_at": "2026-06-27T13:15:04.709761",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3085,6 +3085,11 @@
       "slug": "survive-90s-db-failover-without-melting",
       "title": "Survive 90s DB failover without melting",
       "summary": "I ran into this building eventual problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. We built a shopping cart service in 2026 that handled 12,000 orders per minute at peak on Black Fri"
+    },
+    {
+      "slug": "ai-debt-trap-llm-code-vs-human-code-in-prod",
+      "title": "AI debt trap: LLM code vs human code in prod",
+      "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 78% of new pull requests in mid-sized companies contain at lea"
     }
   ]
 }
