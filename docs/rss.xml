@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 23:41:14 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 23:46:05 +0000</lastBuildDate>
+    <item>
+      <title>Stop SBOM surprises: Syft 1.10 in CI/CD</title>
+      <link>https://kubaik.github.io/stop-sbom-surprises-syft-110-in-cicd/</link>
+      <description>Cut compliance risk 100% with Syft 1.10 SBOMs in CI/CD — fail builds on new CVEs, attach SPDX files to releases, and run for $0.04 per build.</description>
+      <pubDate>Sat, 27 Jun 2026 23:45:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-sbom-surprises-syft-110-in-cicd/</guid>
+    </item>
     <item>
       <title>AI agent memory: context that survives restarts</title>
       <link>https://kubaik.github.io/ai-agent-memory-context-that-survives-restarts/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI agent incident detection time from days to hours with agent behavior traces. Structured logs miss hallucinations and prompt drift; traces catch them. Benchmark shows 200x faster detection — see the setup.</description>
       <pubDate>Sat, 27 Jun 2026 15:03:09 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-ai-agent-failures-differently/</guid>
-    </item>
-    <item>
-      <title>HTMX: 5 things I dropped to make it work</title>
-      <link>https://kubaik.github.io/htmx-5-things-i-dropped-to-make-it-work/</link>
-      <description>Cut frontend build time 95% and memory 60% by swapping React for HTMX — the exact changes teams made in 2026 and what they gave up to get there.</description>
-      <pubDate>Sat, 27 Jun 2026 14:50:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/htmx-5-things-i-dropped-to-make-it-work/</guid>
     </item>
   </channel>
 </rss>
