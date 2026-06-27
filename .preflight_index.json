@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T19:55:45.347697",
+  "built_at": "2026-06-27T20:03:51.679503",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3155,6 +3155,11 @@
       "slug": "batteries-included-offline-mode-for-unreliable-networks",
       "title": "Batteries-included offline mode for unreliable networks",
       "summary": "Most build offlinefirst guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. We needed to ship a financial-tracking app in Nigeria where users lose connectivity mid-session 3–4 times a day. After two month"
+    },
+    {
+      "slug": "wcag-chatbots-miss-aria-live-traps-in-ai-uis",
+      "title": "WCAG chatbots miss: aria-live traps in AI UIs",
+      "summary": "After reviewing a lot of code that touches building accessible, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing Most teams building AI chat interfaces assume that adding an region is enough to mak"
     }
   ]
 }
