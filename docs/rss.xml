@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 12:02:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 12:07:41 +0000</lastBuildDate>
+    <item>
+      <title>Platform teams in 2026: Docs vs. production reality</title>
+      <link>https://kubaik.github.io/platform-teams-in-2026-docs-vs-production-reality/</link>
+      <description>A 2025 survey of 1,200 platform engineers found that 63% of teams using Kubernetes in production still run clusters with misconfigured pod limits that…</description>
+      <pubDate>Sat, 27 Jun 2026 12:07:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/platform-teams-in-2026-docs-vs-production-reality/</guid>
+    </item>
     <item>
       <title>Who owns AI-generated code?</title>
       <link>https://kubaik.github.io/who-owns-ai-generated-code/</link>
@@ -138,13 +145,6 @@
       <description>Cut sales cycle from 42 days to 8 days with a one-liner that produces a PDF with three ROI numbers — how we rebuilt our dev tool funnel in 2026.</description>
       <pubDate>Fri, 26 Jun 2026 22:06:17 +0000</pubDate>
       <guid>https://kubaik.github.io/flip-your-dev-tool-sales-cycle-in-2026/</guid>
-    </item>
-    <item>
-      <title>Skip the VPN: zero-trust for under $100</title>
-      <link>https://kubaik.github.io/skip-the-vpn-zero-trust-for-under-100/</link>
-      <description>Two months later, we moved to Tailscale and Cloudflare Tunnel—both costing $0 for our scale—and cut our infrastructure spend by 80%.</description>
-      <pubDate>Fri, 26 Jun 2026 21:57:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/skip-the-vpn-zero-trust-for-under-100/</guid>
     </item>
   </channel>
 </rss>

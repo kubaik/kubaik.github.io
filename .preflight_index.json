@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T11:23:41.360949",
+  "built_at": "2026-06-27T12:07:31.074630",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3070,6 +3070,11 @@
       "slug": "who-owns-ai-generated-code",
       "title": "Who owns AI-generated code?",
       "summary": "Most pair programming guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our team at NairaPay had to double our engineering output in six months"
+    },
+    {
+      "slug": "platform-teams-in-2026-docs-vs-production-reality",
+      "title": "Platform teams in 2026: Docs vs. production reality",
+      "summary": "The official documentation for platform engineering is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most platform teams start wi"
     }
   ]
 }
