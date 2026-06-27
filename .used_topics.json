@@ -23,5 +23,6 @@
   "How AI UI generation tools changed my frontend workflow (and what they still cannot do)",
   "The hidden costs of running AI agents in production: tokens, retries, and timeouts",
   "Building webhook systems in 2026: delivery guarantees, retries, and idempotency",
-  "How AI changed what hiring managers are looking for in engineering interviews"
+  "How AI changed what hiring managers are looking for in engineering interviews",
+  "Why async Python still surprises people and how to stop getting burned by it"
 ]

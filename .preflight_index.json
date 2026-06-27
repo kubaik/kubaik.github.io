@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T07:46:50.241116",
+  "built_at": "2026-06-27T07:57:50.702687",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3035,6 +3035,11 @@
       "slug": "ai-interviews-now-want-prompt-budgets",
       "title": "AI interviews now want prompt budgets",
       "summary": "The official documentation for changed hiring is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs By 2026, every engineering intervi"
+    },
+    {
+      "slug": "stop-async-python-from-freezing-your-stack",
+      "title": "Stop async Python from freezing your stack",
+      "summary": "I've seen the same async python mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, async Python is everywhere—FastAPI in production, Quart for web "
     }
   ]
 }

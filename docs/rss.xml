@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 07:53:11 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 07:58:01 +0000</lastBuildDate>
+    <item>
+      <title>Stop async Python from freezing your stack</title>
+      <link>https://kubaik.github.io/stop-async-python-from-freezing-your-stack/</link>
+      <description>Cut async Python latency 268 ms and memory 260 MB by choosing trio over asyncio in 2026 — the benchmark, traps, and the one metric to check first.</description>
+      <pubDate>Sat, 27 Jun 2026 07:57:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-async-python-from-freezing-your-stack/</guid>
+    </item>
     <item>
       <title>AI interviews now want prompt budgets</title>
       <link>https://kubaik.github.io/ai-interviews-now-want-prompt-budgets/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 93% and token waste 62% by enforcing strict JSON schemas with vLLM — the real way to get reliable structured outputs from LLMs</description>
       <pubDate>Fri, 26 Jun 2026 19:01:09 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-structured-output-json-mode-fails-at-scale/</guid>
-    </item>
-    <item>
-      <title>3 vibe-coding tricks that kill MVPs — and 5 tools that</title>
-      <link>https://kubaik.github.io/3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that/</link>
-      <description>Cut API response time 60% with FastAPI + Redis 7.2 — connection pooling, schema validation, and the migration step most teams skip.</description>
-      <pubDate>Fri, 26 Jun 2026 18:26:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that/</guid>
     </item>
   </channel>
 </rss>
