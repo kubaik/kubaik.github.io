@@ -52,5 +52,6 @@
   "How I migrated a monolith to services in 2026 without a big-bang rewrite",
   "AI-assisted incident response: what works and what makes oncall worse",
   "How I run automated security scanning in CI without drowning in false positives",
-  "How I got to $5k MRR without a marketing team or a growth budget"
+  "How I got to $5k MRR without a marketing team or a growth budget",
+  "How to onboard a developer to a partially AI-generated codebase"
 ]

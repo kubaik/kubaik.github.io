@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T21:49:05.182258",
+  "built_at": "2026-06-27T21:57:51.734889",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3180,6 +3180,11 @@
       "slug": "grew-5k-mrr-on-a-29-vps",
       "title": "Grew $5k MRR on a $29 VPS",
       "summary": "The short version: the conventional advice on got mrr is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In 2026 I launched a small SaaS for indie makers that hit $5,280 monthly recurring revenue"
+    },
+    {
+      "slug": "ai-codebase-onboarding-ship-fast-or-ship-safe",
+      "title": "AI codebase onboarding: ship fast or ship safe?",
+      "summary": "I've seen the same onboard developer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 68% of mid-size teams ship at least one microservice partia"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 21:49:15 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 21:58:01 +0000</lastBuildDate>
+    <item>
+      <title>AI codebase onboarding: ship fast or ship safe?</title>
+      <link>https://kubaik.github.io/ai-codebase-onboarding-ship-fast-or-ship-safe/</link>
+      <description>Cut onboarding time 40% with AI codebases — guardrails that work, benchmarks, and the $48k/year incident savings most teams miss.</description>
+      <pubDate>Sat, 27 Jun 2026 21:57:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-codebase-onboarding-ship-fast-or-ship-safe/</guid>
+    </item>
     <item>
       <title>Grew $5k MRR on a $29 VPS</title>
       <link>https://kubaik.github.io/grew-5k-mrr-on-a-29-vps/</link>
@@ -138,13 +145,6 @@
       <description>Cut failover downtime to 0.3 s with SQLite client-side buffering — the real patterns teams use to keep systems up when databases crash in 2026.</description>
       <pubDate>Sat, 27 Jun 2026 12:51:23 +0000</pubDate>
       <guid>https://kubaik.github.io/survive-90s-db-failover-without-melting/</guid>
-    </item>
-    <item>
-      <title>Migrate to Daraja 2.0 now — what broke and how to fix</title>
-      <link>https://kubaik.github.io/migrate-to-daraja-20-now-what-broke-and-how-to-fix/</link>
-      <description>Cut M-Pesa integration failures 91% with Daraja 2.0 migration checklist, endpoint changes, timestamp format fixes, and idempotent keys. 180 ms latency after switch.</description>
-      <pubDate>Sat, 27 Jun 2026 12:17:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/migrate-to-daraja-20-now-what-broke-and-how-to-fix/</guid>
     </item>
   </channel>
 </rss>
