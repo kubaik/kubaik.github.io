@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T18:05:42.412360",
+  "built_at": "2026-06-27T18:14:03.326252",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3140,6 +3140,11 @@
       "slug": "pair-programming-with-ai-5-tools-we-tried",
       "title": "Pair programming with AI: 5 tools we tried",
       "summary": "I ran into this pair programming problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I joined a 12-person backend team in 2026"
+    },
+    {
+      "slug": "ai-apps-break-when-you-treat-them-like-regular-software",
+      "title": "AI apps break when you treat them like regular software",
+      "summary": "A colleague asked me about design ainative during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) T"
     }
   ]
 }
