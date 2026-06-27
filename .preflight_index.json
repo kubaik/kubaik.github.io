@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T20:07:09.952828",
+  "built_at": "2026-06-27T20:16:21.721142",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3165,6 +3165,11 @@
       "slug": "monolith-to-services-without-a-rewrite",
       "title": "Monolith to services without a rewrite",
       "summary": "A colleague asked me about migrated monolith during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete)"
+    },
+    {
+      "slug": "ai-ops-tools-what-oncall-actually-needs",
+      "title": "AI ops tools: what oncall actually needs",
+      "summary": "I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Most teams I’ve audited in 2026 are running two stacks in parallel"
     }
   ]
 }
