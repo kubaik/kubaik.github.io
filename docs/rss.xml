@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 21:33:42 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jun 2026 21:38:28 +0000</lastBuildDate>
+    <item>
+      <title>Slay false positives in CI scans</title>
+      <link>https://kubaik.github.io/slay-false-positives-in-ci-scans/</link>
+      <description>Cut security scan noise 89% in CI — real numbers from 87 repos, scanner versions, and the ignore-patterns.yaml template that finally worked.</description>
+      <pubDate>Sat, 27 Jun 2026 21:38:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/slay-false-positives-in-ci-scans/</guid>
+    </item>
     <item>
       <title>AI ops tools: what oncall actually needs</title>
       <link>https://kubaik.github.io/ai-ops-tools-what-oncall-actually-needs/</link>
@@ -138,13 +145,6 @@
       <description>A 2025 survey of 1,200 platform engineers found that 63% of teams using Kubernetes in production still run clusters with misconfigured pod limits that…</description>
       <pubDate>Sat, 27 Jun 2026 12:07:28 +0000</pubDate>
       <guid>https://kubaik.github.io/platform-teams-in-2026-docs-vs-production-reality/</guid>
-    </item>
-    <item>
-      <title>Who owns AI-generated code?</title>
-      <link>https://kubaik.github.io/who-owns-ai-generated-code/</link>
-      <description>Cut review time 51% with AI pair coding — the ownership model, security gates, and Bandit scan that dropped incidents 100%.</description>
-      <pubDate>Sat, 27 Jun 2026 11:23:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/who-owns-ai-generated-code/</guid>
     </item>
   </channel>
 </rss>

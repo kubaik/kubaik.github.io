@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T20:16:21.721142",
+  "built_at": "2026-06-27T21:38:18.246142",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3170,6 +3170,11 @@
       "slug": "ai-ops-tools-what-oncall-actually-needs",
       "title": "AI ops tools: what oncall actually needs",
       "summary": "I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Most teams I’ve audited in 2026 are running two stacks in parallel"
+    },
+    {
+      "slug": "slay-false-positives-in-ci-scans",
+      "title": "Slay false positives in CI scans",
+      "summary": "Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026 we rolled out a new micro-service framework at my company. By March 2026 we"
     }
   ]
 }
