@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T17:55:49.268201",
+  "built_at": "2026-06-28T18:09:13.496839",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3350,6 +3350,11 @@
       "slug": "pick-niches-ai-cant-automate-by-2026",
       "title": "Pick niches AI can't automate by 2026",
       "summary": "Most pick saas guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026 we ran a small fintech API shop in Nairobi—think 12 engineers, three payment i"
+    },
+    {
+      "slug": "llm-outputs-break-workflows-unless-you-do-this",
+      "title": "LLM outputs break workflows unless you do this",
+      "summary": "Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026 we rebuilt the data extraction pipeline for a large e-commerce price tr"
     }
   ]
 }

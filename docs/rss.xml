@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 17:55:59 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 18:09:23 +0000</lastBuildDate>
+    <item>
+      <title>LLM outputs break workflows unless you do this</title>
+      <link>https://kubaik.github.io/llm-outputs-break-workflows-unless-you-do-this/</link>
+      <description>Cut LLM output parsing time 80% by enforcing semantic guarantees, not just JSON syntax. Real results from a 1.2M-page/day pipeline in 2026.</description>
+      <pubDate>Sun, 28 Jun 2026 18:09:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-outputs-break-workflows-unless-you-do-this/</guid>
+    </item>
     <item>
       <title>Pick niches AI can&apos;t automate by 2026</title>
       <link>https://kubaik.github.io/pick-niches-ai-cant-automate-by-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM security incidents 99% with OWASP Top 10 LLM controls — prompt injection, output sanitization, and rate limits that actually work in 2026.</description>
       <pubDate>Sun, 28 Jun 2026 08:36:38 +0000</pubDate>
       <guid>https://kubaik.github.io/fix-llm-top-10-risks-before-prod-2026/</guid>
-    </item>
-    <item>
-      <title>Feature flags to experimentation: 9 platforms compared</title>
-      <link>https://kubaik.github.io/feature-flags-to-experimentation-9-platforms-compared/</link>
-      <description>9 flag platforms compared: latency, cost, offline resilience — pick the one that won’t break on 2G. Save $400/month and keep experiments running when the carrier drops packets.</description>
-      <pubDate>Sun, 28 Jun 2026 06:59:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/feature-flags-to-experimentation-9-platforms-compared/</guid>
     </item>
   </channel>
 </rss>

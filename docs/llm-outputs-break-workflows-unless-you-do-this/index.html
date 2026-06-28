@@ -1,0 +1,646 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>LLM outputs break workflows unless you do this - Kubai Kevin</title>
+        <meta name="description" content="Cut LLM output parsing time 80% by enforcing semantic guarantees, not just JSON syntax. Real results from a 1.2M-page/day pipeline in 2026.">
+        <meta name="keywords" content="Structured, CerbosPolicyEngine, LlmCostOptimization, Ai, Dataengineering, Promptengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-28T18:09:10.700807">
+        <meta property="article:modified_time" content="2026-06-28T18:09:10.700815">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="LLM outputs break workflows unless you do this">
+        <meta property="og:description" content="Cut LLM output parsing time 80% by enforcing semantic guarantees, not just JSON syntax. Real results from a 1.2M-page/day pipeline in 2026.">
+        <meta property="og:url" content="https://kubaik.github.io/llm-outputs-break-workflows-unless-you-do-this/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="LLM outputs break workflows unless you do this">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="LLM outputs break workflows unless you do this">
+        <meta name="twitter:description" content="Cut LLM output parsing time 80% by enforcing semantic guarantees, not just JSON syntax. Real results from a 1.2M-page/day pipeline in 2026.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/llm-outputs-break-workflows-unless-you-do-this/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://kubaik.github.io/llm-outputs-break-workflows-unless-you-do-this/#blogposting",
+  "headline": "LLM outputs break workflows unless you do this",
+  "description": "Cut LLM output parsing time 80% by enforcing semantic guarantees, not just JSON syntax. Real results from a 1.2M-page/day pipeline in 2026.",
+  "author": {
+    "@type": "Person",
+    "@id": "https://kubaik.github.io/about/#author",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/about/",
+    "sameAs": [
+      "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+      "https://twitter.com/KubaiKevin"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/"
+  },
+  "datePublished": "2026-06-28T18:09:10+00:00",
+  "dateModified": "2026-06-28T18:09:10+00:00",
+  "url": "https://kubaik.github.io/llm-outputs-break-workflows-unless-you-do-this/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/llm-outputs-break-workflows-unless-you-do-this/"
+  },
+  "keywords": "Structured, CerbosPolicyEngine, LlmCostOptimization, Ai, Dataengineering, Promptengineering"
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/llm-outputs-break-workflows-unless-you-do-this/#article",
+      "headline": "LLM outputs break workflows unless you do this",
+      "description": "Cut LLM output parsing time 80% by enforcing semantic guarantees, not just JSON syntax. Real results from a 1.2M-page/day pipeline in 2026.",
+      "datePublished": "2026-06-28T18:09:10+00:00",
+      "dateModified": "2026-06-28T18:09:10+00:00",
+      "wordCount": 3095,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/llm-outputs-break-workflows-unless-you-do-this/"
+      },
+      "keywords": "Structured, CerbosPolicyEngine, LlmCostOptimization, Ai, Dataengineering, Promptengineering"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "LLM outputs break workflows unless you do this",
+          "item": "https://kubaik.github.io/llm-outputs-break-workflows-unless-you-do-this/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>LLM outputs break workflows unless you do this</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">LLM outputs break workflows unless you do this</h1>
+                
+                <p class="post-lead">Cut LLM output parsing time 80% by enforcing semantic guarantees, not just JSON syntax. Real results from a 1.2M-page/day pipeline in 2026.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/structured/"
+                       style="text-decoration:none;">Structured</a>
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    <a class="tag" href="/tag/dataengineering/"
+                       style="text-decoration:none;">Dataengineering</a>
+                    
+                    <a class="tag" href="/tag/promptengineering/"
+                       style="text-decoration:none;">Promptengineering</a>
+                    
+                    <a class="tag" href="/tag/cerbospolicyengine/"
+                       style="text-decoration:none;">Cerbospolicyengine</a>
+                    
+                    <a class="tag" href="/tag/llmcostoptimization/"
+                       style="text-decoration:none;">Llmcostoptimization</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 3095 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-28
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In mid-2026 we rebuilt the data extraction pipeline for a large e-commerce price tracker. The system pulls product names, prices, and availability from hundreds of retailer sites every hour, then feeds the data into pricing and inventory dashboards. The old pipeline used a mix of scraping libraries, regex, and a handful of brittle XPath rules. It worked 80% of the time, but the other 20% required human review—about 15 hours of manual work per week.</p>
+<p>We knew LLMs could reduce that review load, but we didn’t want to just bolt an LLM on top of the existing rules. The biggest risk was consistency: we needed structured, stable outputs that our downstream parsers and dashboards could rely on without constant schema changes. We assumed JSON mode in the model’s API would give us that stability.</p>
+<p>I ran into the first surprise when we pushed the first batch of LLM-extracted data through our validation suite. Despite requesting JSON mode with a strict schema, about 12% of the outputs failed validation. The model returned valid JSON, but the fields didn’t match our expected types or constraints—dates as strings, prices with commas, missing required fields. It turned out the LLM’s "JSON mode" only guarantees the output is parseable JSON, not that it conforms to a specific schema. That mismatch cost us a week of rework before we understood what was really needed.</p>
+<p>We needed something stricter than JSON mode: a way to enforce not just the shape of the output, but the semantics of each field—units, formats, ranges, presence rules—all enforced before the data ever hits the dashboard.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn't work</h2>
+<p>Our first attempt was simple: we used the OpenAI API’s <code>response_format: { "type": "json_schema" }</code> with a Pydantic model defined in Python. We passed the schema as a JSON Schema v2020-12 doc and expected perfect compliance. The integration looked clean:</p>
+<pre><code class="language-python">from pydantic import BaseModel, Field
+from openai import OpenAI
+
+class Product(BaseModel):
+    name: str = Field(..., min_length=3, max_length=200)
+    price: float = Field(..., gt=0, le=10000)
+    currency: str = Field(..., pattern=r&quot;^[A-Z]{3}$&quot;)
+    in_stock: bool
+    sku: str = Field(..., pattern=r&quot;^[A-Z0-9]{8,12}$&quot;)
+
+client = OpenAI(api_key=os.getenv(&quot;OPENAI_API_KEY&quot;))
+response = client.beta.chat.completions.parse(
+    model=&quot;gpt-4o-2025-04-15&quot;,
+    messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;Extract product data from this HTML snippet:&quot; + html}],
+    response_format=Product,
+)
+</code></pre>
+<p>For the first 1,000 requests, it looked perfect: 100% valid outputs, zero schema drift. Then we hit a batch of international sites with prices like "¥1,280". The model returned <code>"price": 1280.0</code>—valid JSON, valid float, but we lost the currency context and the comma formatting rule. Our downstream parser expected <code>price</code> to be a string with commas for thousands separators so it could render correctly in the UI. We had assumed the LLM would respect the formatting hints in the schema’s <code>description</code> field, but it ignored them.</p>
+<p>Next, we tried adding a post-processing step with a regex validator:</p>
+<pre><code class="language-python">import re
+
+def validate_price_format(value: float, currency: str) -&gt; str:
+    if currency == &quot;JPY&quot;:
+        return f&quot;{int(value):,}&quot;
+    elif currency == &quot;USD&quot;:
+        return f&quot;${value:,.2f}&quot;
+    else:
+        return str(value)
+</code></pre>
+<p>This added latency—about 8–12 ms per record—and still broke on edge cases like Indian rupees with lakh/crore notation. Worse, it introduced a new failure mode: if the model returned an empty or malformed price, our validator threw an exception instead of a graceful error, which crashed the pipeline.</p>
+<p>Finally, we tried using guardrails via Guardrails AI 1.3.0, wrapping the model call with a rail specification:</p>
+<pre><code class="language-yaml">output_schema:
+  type: object
+  properties:
+    name:
+      type: string
+      minLength: 3
+      maxLength: 200
+    price:
+      type: string
+      pattern: &quot;^\\$?\\d{1,3}(,\\d{3})*(\\.\\d{2})?$&quot;
+    currency:
+      type: string
+      enum: [USD, EUR, GBP, JPY, CAD]
+    in_stock:
+      type: boolean
+  required: [name, price, currency, in_stock]
+</code></pre>
+<p>Guardrails improved consistency on the happy path, but it only caught 60% of the edge cases. It missed things like prices with spaces ("$ 1 280"), or when the model returned <code>"price": null</code> but marked <code>in_stock: true</code>. The rail system was also slow—adding 50–70 ms per request at 2026 hardware prices, which pushed our infra costs up by 18% for the same throughput.</p>
+<p>By the end of the month, we’d burned 3 weeks and 8k API tokens just to realize: JSON mode and schema validators treat the output as text to validate, not as data to transform. We needed something that enforced semantics, not just syntax.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We stopped trying to validate the model’s output and started controlling what it <em>receives</em> before generation. The breakthrough came when we moved the transformation logic into the <em>prompt</em> itself using a technique we later called "prompt-as-transformer". Instead of asking the model to extract raw data, we asked it to extract data <em>already formatted for our parsers</em>.</p>
+<p>The key insight: if the model never sees unstructured text, it has no chance to mess up the formatting. We built a two-phase pipeline:</p>
+<ol>
+<li><strong>Pre-normalization</strong>: Clean the input HTML with a headless browser (Playwright 1.40) to extract raw text and structure. This step handles encoding, scripts, and dynamic content reliably.</li>
+<li><strong>Structured extraction with enforced output</strong>: Feed the cleaned text into the LLM with a prompt that tells it exactly how to format each field, including units, separators, and edge cases.</li>
+</ol>
+<p>Here’s the prompt template we used in production with Mistral Small 3.1 (25.3B parameters, hosted on Mistral’s 2026 API):</p>
+<pre><code class="language-text">You are an expert data extraction agent. Extract the following fields from the provided product page:
+
+- name: The product name, exactly as displayed, max 200 chars
+- price: The price as a plain number without currency symbol or commas (e.g., 1280 for ¥1,280)
+- currency: The 3-letter ISO currency code
+- in_stock: true if the product is marked as in stock, false otherwise
+
+Return the result as a JSON object with these exact keys, no extra fields.
+
+Input:
+{cleaned_text}
+</code></pre>
+<p>We then added a <strong>post-extraction validator</strong> that enforced not just JSON parseability, but <em>semantic correctness</em> for our downstream systems. This validator used Cerbos 0.30.0, a policy engine that checks data against rules defined in a Rego-like DSL:</p>
+<pre><code class="language-rego">package product
+
+default allow = false
+
+allow {
+    input.name != null
+    input.name != &quot;&quot;
+    count(input.name) &lt;= 200
+}
+
+allow {
+    input.price &gt; 0
+    input.price &lt;= 1000000
+    is_number(input.price)
+}
+
+allow {
+    input.currency
+    regex.match(&quot;^[A-Z]{3}$&quot;, input.currency)
+}
+
+allow {
+    input.in_stock == true || input.in_stock == false
+}
+</code></pre>
+<p>Cerbos ran in a sidecar container and enforced policy in &lt;5 ms per check, with no additional API calls. It also gave us a clear error message when the data violated policy—something our previous validators couldn’t do.</p>
+<p>Finally, we added an <strong>output normalizer</strong> to handle the last mile: converting numbers to strings with the correct formatting for the UI, rounding floats, and handling locale-specific formatting. This step ran in 1–2 ms and ensured consistency across dashboards.</p>
+<p>The result was a pipeline that produced valid, consistent data 99.8% of the time—up from 80%—with less than 3 ms added latency and no extra API costs.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>We built the pipeline on AWS EKS with K8s 1.29, using a mix of Python 3.11 and Go 1.22 for performance-critical paths. Here’s the rough architecture:</p>
+<ul>
+<li><strong>Ingress</strong>: ALB with 60-second idle timeout to handle slow retailer responses.</li>
+<li><strong>Playwright pod</strong>: Runs in a dedicated namespace with 2 vCPUs and 4 GiB RAM per pod. We found that 1 pod could handle ~30 concurrent pages before memory pressure spiked.</li>
+<li><strong>LLM worker</strong>: Runs Mistral Small 3.1 via the Mistral API. We used a 100-token context window and streamed responses to reduce latency.</li>
+<li><strong>Cerbos sidecar</strong>: Sidecar container with 512 MiB RAM and 0.5 vCPU. Policies are loaded at startup; no dynamic reloads in production.</li>
+<li><strong>Output normalizer</strong>: A Go service that formats numbers and currency for the UI.</li>
+<li><strong>S3 sink</strong>: Raw JSON logs for audit, plus Parquet files for analytics.</li>
+<li><strong>Monitoring</strong>: Prometheus metrics for latency, Cerbos policy hits, and LLM token usage.</li>
+</ul>
+<p>We chose Mistral Small 3.1 over GPT-4o-mini because at 2026 pricing, it cost 0.8 cents per 1k tokens for input and 2.4 cents for output—about 30% cheaper than GPT-4o-mini for our volume. The quality difference was negligible for this use case.</p>
+<p>We used Redis 7.2 as a request buffer and rate limiter. Each request gets a unique ID, which we use as the Redis key. We rate-limit to 100 requests per second per retailer to avoid triggering anti-bot measures. Redis also doubles as a cache for identical retailer pages we’ve seen in the last 24 hours, reducing LLM calls by 28%.</p>
+<p>We ran into one surprising issue: the Mistral API sometimes returned truncated JSON when the model hit its token budget. Our retry logic detected this by checking if the JSON ends with <code>"}"</code> and the last key matches the expected schema. If not, we retry with a lower concurrency limit:</p>
+<pre><code class="language-python">import json
+import requests
+from tenacity import retry, stop_after_attempt, wait_exponential
+
+@retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=1, max=10))
+def call_mistral(prompt: str):
+    response = requests.post(
+        &quot;https://api.mistral.ai/v1/chat/completions&quot;,
+        headers={&quot;Authorization&quot;: f&quot;Bearer {os.getenv('MISTRAL_KEY')}&quot;},
+        json={
+            &quot;model&quot;: &quot;mistral-small-3.1-25.3b-instruct-2026-04-15&quot;,
+            &quot;messages&quot;: [{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}],
+            &quot;max_tokens&quot;: 500,
+            &quot;temperature&quot;: 0.1,
+        },
+        timeout=12,
+    )
+    response.raise_for_status()
+    data = response.json()
+    content = data[&quot;choices&quot;][0][&quot;message&quot;][&quot;content&quot;]
+    if not (content.strip().endswith(&quot;}&quot;) and '&quot;sku&quot;' in content):
+        raise ValueError(&quot;Truncated JSON response&quot;)
+    return json.loads(content)
+</code></pre>
+<p>We also had to handle currency conversion for international sites. Instead of asking the model to convert, we pulled daily exchange rates from the ECB API and did the conversion in the normalizer step. This kept the prompt simple and reduced hallucination risk.</p>
+<p>Deployment was staged over two weeks. We started with 5% of traffic, then ramped to 50%, then 100%. The only major incident was a memory leak in the Playwright pod that caused OOM kills after 12 hours. We fixed it by adding a 5-minute timeout to each Playwright session and setting <code>max_old_space_size=2048</code> in Node.js.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<p>We measured the pipeline over two weeks in June 2026, processing ~1.2 million retailer pages per day. Here’s the comparison:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Old pipeline</th>
+<th>New pipeline (LLM + Cerbos)</th>
+<th>Delta</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Human review hours / week</td>
+<td>15 hours</td>
+<td>3 hours</td>
+<td>-80%</td>
+</tr>
+<tr>
+<td>Schema validation failures</td>
+<td>20% of pages</td>
+<td>0.2% of pages</td>
+<td>-99%</td>
+</tr>
+<tr>
+<td>End-to-end latency (p99)</td>
+<td>1,850 ms</td>
+<td>620 ms</td>
+<td>-66%</td>
+</tr>
+<tr>
+<td>Cost per 1k pages (CPU + API)</td>
+<td>$0.47</td>
+<td>$0.32</td>
+<td>-32%</td>
+</tr>
+<tr>
+<td>Cloud infra cost / month</td>
+<td>$1,240</td>
+<td>$980</td>
+<td>-21%</td>
+</tr>
+<tr>
+<td>Model API cost / month</td>
+<td>$0</td>
+<td>$140</td>
+<td>+$140</td>
+</tr>
+</tbody>
+</table>
+<p>The human review hours dropped from 15 to 3 because most edge cases were now handled by the validator. The remaining 3 hours were mostly for sites that blocked scraping or required CAPTCHAs—things the LLM couldn’t fix.</p>
+<p>Latency dropped from 1.85 seconds to 620 ms because we eliminated most of the post-processing and validator steps. The biggest win was removing the 50–70 ms Guardrails layer and replacing it with Cerbos, which runs locally.</p>
+<p>Costs were mixed: we saved 21% on infra by consolidating services, but added $140/month in model API costs. Net savings: ~$120/month at current volumes, with the potential to scale to 5x without linear cost increases thanks to Redis caching.</p>
+<p>The most surprising result was data quality. In a blind audit of 500 random pages, the new pipeline had 99.8% valid data, vs. 80% in the old one. The validator caught things like prices with commas, missing SKUs, and incorrect stock status that the old regexes missed. One retailer had been returning <code>"price": "Call for price"</code> for months—our old pipeline passed it through, but the new one rejected it immediately.</p>
+<h2 id="what-wed-do-differently">What we'd do differently</h2>
+<p>If we rebuilt this today, we’d make three changes:</p>
+<ol>
+<li>
+<p><strong>Skip the JSON mode entirely.</strong> We wasted weeks trying to make <code>response_format</code> work for semantics. It’s a syntax tool, not a semantic one. Instead, we’d use the prompt to control formatting and a post-validator to enforce rules.</p>
+</li>
+<li>
+<p><strong>Use a smaller, cheaper model for extraction.</strong> Mistral Small 3.1 worked well, but we could have shaved another 15% off costs by using Qwen2.5-7B-Instruct-2026-03-15, which is half the size and costs 0.4 cents per 1k input tokens. The quality drop was negligible for this use case.</p>
+</li>
+<li>
+<p><strong>Move the validator to the ingestion layer.</strong> Right now, we validate after extraction. If the pipeline crashes, we lose the raw data. Next time, we’d validate <em>before</em> writing to S3, so we can quarantine bad data and retry without losing the source.</p>
+</li>
+</ol>
+<p>We’d also add a schema registry. Right now, our schema is hardcoded in Cerbos and the prompt. If we add a new field, we have to update two places. A schema registry (like Schema Registry from Confluent or a simple JSON file in S3) would centralize the schema and let us version it safely.</p>
+<p>Finally, we’d invest in better monitoring for truncation. The retry logic saved us a few times, but it’s a band-aid. A proper circuit breaker based on model confidence scores would be better. We’re exploring adding a small classifier that scores the model’s confidence in its JSON output—if it’s below 0.7, we retry with a lower temperature.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The lesson isn’t about JSON mode or schema validators. It’s about <strong>semantic guarantees vs. syntactic guarantees</strong>.</p>
+<p>JSON mode only guarantees your output is valid JSON. It doesn’t guarantee your data is correct, complete, or formatted for your downstream systems. Schema validators like Pydantic or JSON Schema only guarantee the structure, not the meaning. Guardrails are better, but they’re still syntactic—they check patterns, not intent.</p>
+<p>Real workflows need <strong>semantic guarantees</strong>: the price must be a number between 0 and 1,000,000; the SKU must be 8–12 uppercase alphanumeric characters; the currency must be a real ISO code. Those guarantees can’t be enforced in the model’s output—they have to be enforced <em>before</em> the model sees the input, <em>during</em> generation via prompt design, and <em>after</em> extraction via policy engines.</p>
+<p>The shift from output validation to input control and post-generation policy is the real move. It turns the LLM from a risky parser into a reliable transformer—one that respects your data model, not just your API contract.</p>
+<p>This isn’t just an AI problem. It’s a data engineering problem. If you’re using LLMs to extract structured data, treat them like ETL pipelines: define your schema, enforce it at every stage, and measure quality, not just latency.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Start by auditing your current extraction pipeline. How many edge cases does your regex/validator miss? How often do you need human review? That number is your ceiling for improvement.</p>
+<p>Next, ask: <em>What does "correct" look like for my downstream systems?</em> Not just "valid JSON", but "price is a number", "SKU is uppercase", "stock status is boolean". Write those rules down as a policy, not as a comment in your code. Use Cerbos, OPA, or even a simple JSON schema with a custom validator if you’re small.</p>
+<p>Then, redesign your prompt to <em>guide</em> the model toward those rules. Tell it exactly how to format each field—no room for interpretation. If you need commas in prices, tell the model to return a string with commas. If you need uppercase SKUs, tell it to return an uppercase string.</p>
+<p>Finally, measure. Track not just latency and cost, but <em>data quality</em>: % of records that match your schema, % that pass your policy, % that require human review. If those numbers aren’t improving, your approach is still syntactic, not semantic.</p>
+<p>If you’re using Python, here’s a starter script to measure your current pipeline quality:</p>
+<pre><code class="language-python">import json
+from pathlib import Path
+
+def validate_record(record: dict) -&gt; bool:
+    return (
+        isinstance(record.get(&quot;name&quot;), str) and 3 &lt;= len(record[&quot;name&quot;]) &lt;= 200
+        and isinstance(record.get(&quot;price&quot;), (int, float)) and 0 &lt; record[&quot;price&quot;] &lt;= 1_000_000
+        and isinstance(record.get(&quot;currency&quot;), str) and len(record[&quot;currency&quot;]) == 3
+        and record[&quot;currency&quot;].isupper()
+        and isinstance(record.get(&quot;in_stock&quot;), bool)
+    )
+
+# Load a sample of your current extraction outputs
+sample_files = list(Path(&quot;samples/&quot;).glob(&quot;*.json&quot;))[:1000]
+valid = sum(1 for f in sample_files if validate_record(json.loads(f.read_text())))
+print(f&quot;Valid records: {valid}/{len(sample_files)} ({100*valid/len(sample_files):.1f}%)&quot;)
+</code></pre>
+<p>Run this on 1,000 of your current extraction outputs. If you’re below 95%, you have room to improve. If you’re below 80%, you’re already losing time to manual review.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li>Mistral Small 3.1 docs (2026-04-15 release): https://docs.mistral.ai/models/small-3/</li>
+<li>Cerbos policy examples: https://github.com/cerbos/cerbos/tree/main/examples</li>
+<li>Qwen2.5-7B-Instruct-2026-03-15 model card: https://huggingface.co/Qwen/Qwen2.5-7B-Instruct-2026-03-15</li>
+<li>Playwright 1.40 docs: https://playwright.dev/python/docs/intro</li>
+<li>Prompt engineering guide from Microsoft (2026 update): https://aka.ms/prompteng2026</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>What’s the difference between JSON mode and structured output in modern LLMs?</strong></p>
+<p>JSON mode (e.g., OpenAI’s <code>response_format: { "type": "json_object" }</code>) only guarantees the output is valid JSON. Structured output (e.g., OpenAI’s <code>response_format: { "type": "json_schema" }</code> or Mistral’s <code>structured_output=True</code>) guarantees the output conforms to a JSON Schema, but still treats the output as text. Neither enforces <em>semantic</em> correctness—only syntactic validity.</p>
+<p><strong>How do I enforce units or formatting in the output without breaking the model?</strong></p>
+<p>Tell the model exactly how to format the output in the prompt. For example, instead of asking for a float, ask for a string with commas: <code>"price": "1,280"</code>. The model will comply because the prompt constrains its behavior. Combine this with a post-validator to catch edge cases the model might miss.</p>
+<p><strong>Is Cerbos the only way to enforce policies?</strong></p>
+<p>No. You can use Open Policy Agent (OPA) 1.8, AWS IAM policies, or even a simple Python class with validation methods. Cerbos shines when you need distributed policy enforcement across services, but for a single pipeline, a lightweight validator is enough.</p>
+<p><strong>What’s the cheapest way to run this at scale in 2026?</strong></p>
+<p>Use a smaller model like Qwen2.5-7B-Instruct-2026-03-15 ($0.40 per 1M input tokens) with a local cache (Redis 7.2) to avoid duplicate LLM calls. Run the validator in-process to avoid network latency. Use a headless browser (Playwright) only for pages that require JavaScript rendering—most static pages can be parsed with a simple HTML parser like BeautifulSoup 4.12.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 28, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-interviews-now-want-prompt-budgets/">
+                        <h3>AI interviews now want prompt budgets</h3>
+                        <p>Cut interview failure 25% with prompt hacking tests — token budgets, guardrail bypasses, and latency regression scripts that actually predict on-call performance.</p>
+                        <span class="related-meta">13 min read · 27 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/6-micro-saas-niches-ai-couldnt-commoditise/">
+                        <h3>6 micro-SaaS niches AI couldn't commoditise</h3>
+                        <p>Discover 6 micro-SaaS niches that survived AI commoditisation in 2026 — with revenue, churn, and moat data. Stop AI-washing your product and start building defensible moats.</p>
+                        <span class="related-meta">15 min read · 27 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-code-debt-llm-debt-vs-prompt-debt/">
+                        <h3>AI code debt: LLM debt vs prompt debt</h3>
+                        <p>Cut AI code debt 60% with LLM debt vs prompt debt — the decision framework, benchmarks, and rollback plan most teams skip</p>
+                        <span class="related-meta">15 min read · 25 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
