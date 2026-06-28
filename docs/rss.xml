@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 21:33:24 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 21:38:17 +0000</lastBuildDate>
+    <item>
+      <title>AWS costs for Nairobi SaaS: 2026 bill split</title>
+      <link>https://kubaik.github.io/aws-costs-for-nairobi-saas-2026-bill-split/</link>
+      <description>Break down a Nairobi SaaS AWS bill in 2026: compute, storage, and egress costs for 500 users, with concrete numbers and CDK scripts you can run today.</description>
+      <pubDate>Sun, 28 Jun 2026 21:38:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/aws-costs-for-nairobi-saas-2026-bill-split/</guid>
+    </item>
     <item>
       <title>When flags become experiments</title>
       <link>https://kubaik.github.io/when-flags-become-experiments/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI observability ingest cost 70% while slashing dashboard latency from 8.2s to 220ms using NATS JetStream, OTel Collector Lua transforms, and Loki boltdb-shipper in 2026.</description>
       <pubDate>Sun, 28 Jun 2026 12:18:09 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-observability-real-time-dashboards-without-the/</guid>
-    </item>
-    <item>
-      <title>AWS Local Zones vs LocalStack: AI microservices in</title>
-      <link>https://kubaik.github.io/aws-local-zones-vs-localstack-ai-microservices-in/</link>
-      <description>Cut AI microservice latency 60% with AWS Local Zones in Africa — cost, performance, and the LocalStack trap most teams miss.</description>
-      <pubDate>Sun, 28 Jun 2026 12:14:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/aws-local-zones-vs-localstack-ai-microservices-in/</guid>
     </item>
   </channel>
 </rss>

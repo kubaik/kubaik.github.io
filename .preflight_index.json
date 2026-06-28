@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T21:11:00.772952",
+  "built_at": "2026-06-28T21:38:06.313868",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3385,6 +3385,11 @@
       "slug": "when-flags-become-experiments",
       "title": "When flags become experiments",
       "summary": "I ran into this feature flag problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks in 2026 trying to add A/B"
+    },
+    {
+      "slug": "aws-costs-for-nairobi-saas-2026-bill-split",
+      "title": "AWS costs for Nairobi SaaS: 2026 bill split",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I spent two weeks in mid-2026 tracking down why a simple CSV export endpoint in our Nair"
     }
   ]
 }
