@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T12:18:12.441348",
+  "built_at": "2026-06-28T12:52:52.202739",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3290,6 +3290,11 @@
       "slug": "ai-observability-real-time-dashboards-without-the",
       "title": "AI observability: real-time dashboards without the",
       "summary": "I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. The situation (what we were trying to solve) In 2026, our AI platform ingested ~2.1 billion telemetr"
+    },
+    {
+      "slug": "unified-signals-replace-three-pillars-in-2026",
+      "title": "Unified signals replace three pillars in 2026",
+      "summary": "The short version: the conventional advice on observability 2026 is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) The three pillars—metrics, logs, and traces—are being replaced by a single, uni"
     }
   ]
 }

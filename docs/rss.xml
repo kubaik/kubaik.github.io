@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 12:48:24 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 12:53:02 +0000</lastBuildDate>
+    <item>
+      <title>Unified signals replace three pillars in 2026</title>
+      <link>https://kubaik.github.io/unified-signals-replace-three-pillars-in-2026/</link>
+      <description>Cut observability costs 64% by replacing three separate pipelines with one unified OTLP stream in 2026 — real benchmarks, migration steps, and the mistake most teams repeat.</description>
+      <pubDate>Sun, 28 Jun 2026 12:52:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/unified-signals-replace-three-pillars-in-2026/</guid>
+    </item>
     <item>
       <title>AI observability: real-time dashboards without the</title>
       <link>https://kubaik.github.io/ai-observability-real-time-dashboards-without-the/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS costs 93% from $3k to $200/month — single EC2, Lambda, RDS Proxy, and the mistakes most teams repeat when downsizing Kubernetes</description>
       <pubDate>Sat, 27 Jun 2026 22:58:37 +0000</pubDate>
       <guid>https://kubaik.github.io/saved-3kmonth-by-ditching-kubernetes/</guid>
-    </item>
-    <item>
-      <title>Negotiate salaries with AI skills in 2026</title>
-      <link>https://kubaik.github.io/negotiate-salaries-with-ai-skills-in-2026/</link>
-      <description>Negotiate 20% higher salaries in 2026 by filtering AI-automated roles — Python 3.11 scraper, 1,200 job data, human-skills premium table</description>
-      <pubDate>Sat, 27 Jun 2026 22:11:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-salaries-with-ai-skills-in-2026/</guid>
     </item>
   </channel>
 </rss>
