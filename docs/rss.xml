@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 12:53:02 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 13:21:32 +0000</lastBuildDate>
+    <item>
+      <title>Eventual consistency patterns that prevent outages</title>
+      <link>https://kubaik.github.io/eventual-consistency-patterns-that-prevent-outages/</link>
+      <description>Cut API errors 28% with eventual consistency — the 10 battle-tested patterns ranked by latency, cost, and operational overhead in 2026. Includes code and config you can deploy today.</description>
+      <pubDate>Sun, 28 Jun 2026 13:21:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/eventual-consistency-patterns-that-prevent-outages/</guid>
+    </item>
     <item>
       <title>Unified signals replace three pillars in 2026</title>
       <link>https://kubaik.github.io/unified-signals-replace-three-pillars-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Persist AI agent context across restarts with Redis 7.2 and langgraph 0.2.14 — flush writes, raise liveness probes, and stop losing sessions after a crash or rollout.</description>
       <pubDate>Sat, 27 Jun 2026 23:25:26 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agent-memory-context-that-survives-restarts/</guid>
-    </item>
-    <item>
-      <title>Saved $3k/month by ditching Kubernetes</title>
-      <link>https://kubaik.github.io/saved-3kmonth-by-ditching-kubernetes/</link>
-      <description>Cut AWS costs 93% from $3k to $200/month — single EC2, Lambda, RDS Proxy, and the mistakes most teams repeat when downsizing Kubernetes</description>
-      <pubDate>Sat, 27 Jun 2026 22:58:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/saved-3kmonth-by-ditching-kubernetes/</guid>
     </item>
   </channel>
 </rss>
