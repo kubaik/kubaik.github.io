@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T11:16:34.378120",
+  "built_at": "2026-06-28T11:24:23.772699",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3270,6 +3270,11 @@
       "slug": "harden-aws-iam-in-30-minutes",
       "title": "Harden AWS IAM in 30 minutes",
       "summary": "The short version: the conventional advice on implement leastprivilege is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. Advanced edge cases you personally encountered Here are the three edge cases that burned me the most between 2026 and"
+    },
+    {
+      "slug": "zero-trust-10k-services-no-shared-secrets-mistake",
+      "title": "Zero-trust 10k services: no shared secrets mistake",
+      "summary": "The official documentation for secrets management is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The error and why it's confusing You’re running more than 10,000 services and every time a"
     }
   ]
 }

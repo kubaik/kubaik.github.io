@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 11:19:45 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 11:24:33 +0000</lastBuildDate>
+    <item>
+      <title>Zero-trust 10k services: no shared secrets mistake</title>
+      <link>https://kubaik.github.io/zero-trust-10k-services-no-shared-secrets-mistake/</link>
+      <description>Cut cert-manager rotation errors 98% by removing shared Secrets — admission controller race, HSM sidecar timeouts, and the projected token fix most teams miss</description>
+      <pubDate>Sun, 28 Jun 2026 11:24:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-trust-10k-services-no-shared-secrets-mistake/</guid>
+    </item>
     <item>
       <title>Harden AWS IAM in 30 minutes</title>
       <link>https://kubaik.github.io/harden-aws-iam-in-30-minutes/</link>
@@ -138,13 +145,6 @@
       <description>Hit $5k MRR without ads or a team — the exact stack, conversion targets, and mistakes I made in 2026 that saved $1,800 on referral programs and cut churn from 18% to 6%.</description>
       <pubDate>Sat, 27 Jun 2026 21:49:02 +0000</pubDate>
       <guid>https://kubaik.github.io/grew-5k-mrr-on-a-29-vps/</guid>
-    </item>
-    <item>
-      <title>Slay false positives in CI scans</title>
-      <link>https://kubaik.github.io/slay-false-positives-in-ci-scans/</link>
-      <description>Cut security scan noise 89% in CI — real numbers from 87 repos, scanner versions, and the ignore-patterns.yaml template that finally worked.</description>
-      <pubDate>Sat, 27 Jun 2026 21:38:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/slay-false-positives-in-ci-scans/</guid>
     </item>
   </channel>
 </rss>
