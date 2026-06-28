@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 15:21:50 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 15:26:44 +0000</lastBuildDate>
+    <item>
+      <title>Signals vs Stores: 7 state tools ranked</title>
+      <link>https://kubaik.github.io/signals-vs-stores-7-state-tools-ranked/</link>
+      <description>Cut state management boilerplate 60% with Signals — React, Vue, Svelte, and Node picks ranked with benchmarks and migration tips.</description>
+      <pubDate>Sun, 28 Jun 2026 15:26:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/signals-vs-stores-7-state-tools-ranked/</guid>
+    </item>
     <item>
       <title>AI memory leaks: context lost after sessions</title>
       <link>https://kubaik.github.io/ai-memory-leaks-context-lost-after-sessions/</link>
@@ -138,13 +145,6 @@
       <description>Find a SaaS niche immune to AI disruption — local regulation, offline constraints, and incumbents’ blind spots. PowerRec went from zero to 1,200 merchants by targeting Kenya Power receipts.</description>
       <pubDate>Sun, 28 Jun 2026 02:56:58 +0000</pubDate>
       <guid>https://kubaik.github.io/survive-ai-saas-disruption-in-2026/</guid>
-    </item>
-    <item>
-      <title>Migrations? Stop running them live</title>
-      <link>https://kubaik.github.io/migrations-stop-running-them-live/</link>
-      <description>Cut migration downtime 70% by versioning schemas before deploy — concrete patterns from 3 outages and 18 months of metrics.</description>
-      <pubDate>Sun, 28 Jun 2026 01:58:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/migrations-stop-running-them-live/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T15:15:30.261023",
+  "built_at": "2026-06-28T15:26:33.713554",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3320,6 +3320,11 @@
       "slug": "ai-memory-leaks-context-lost-after-sessions",
       "title": "AI memory leaks: context lost after sessions",
       "summary": "After reviewing a lot of code that touches memory systems, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You boot up your AI agent in the morning, it remembers your name, your last project, even"
+    },
+    {
+      "slug": "signals-vs-stores-7-state-tools-ranked",
+      "title": "Signals vs Stores: 7 state tools ranked",
+      "summary": "I ran into this signals changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent two weeks debugging a React compon"
     }
   ]
 }
