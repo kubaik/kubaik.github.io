@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T13:21:22.370121",
+  "built_at": "2026-06-28T13:56:54.174922",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3300,6 +3300,11 @@
       "slug": "eventual-consistency-patterns-that-prevent-outages",
       "title": "Eventual consistency patterns that prevent outages",
       "summary": "I ran into this building eventual problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026 we rebuilt the checkout pipeline"
+    },
+    {
+      "slug": "webhook-delivery-retries-idempotency-2026-guide",
+      "title": "Webhook delivery: retries, idempotency, 2026 guide",
+      "summary": "Most building webhook guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026 we migrated our payments microservice from a pull-based cron job to a p"
     }
   ]
 }

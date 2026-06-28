@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 13:52:40 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 13:57:03 +0000</lastBuildDate>
+    <item>
+      <title>Webhook delivery: retries, idempotency, 2026 guide</title>
+      <link>https://kubaik.github.io/webhook-delivery-retries-idempotency-2026-guide/</link>
+      <description>Cut webhook latency from 40s to 1.2s with idempotency and retries — AWS EventBridge Pipes, DynamoDB, and Lambda 2026 patterns</description>
+      <pubDate>Sun, 28 Jun 2026 13:56:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/webhook-delivery-retries-idempotency-2026-guide/</guid>
+    </item>
     <item>
       <title>Eventual consistency patterns that prevent outages</title>
       <link>https://kubaik.github.io/eventual-consistency-patterns-that-prevent-outages/</link>
@@ -138,13 +145,6 @@
       <description>Cut compliance risk 100% with Syft 1.10 SBOMs in CI/CD — fail builds on new CVEs, attach SPDX files to releases, and run for $0.04 per build.</description>
       <pubDate>Sat, 27 Jun 2026 23:45:53 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-sbom-surprises-syft-110-in-cicd/</guid>
-    </item>
-    <item>
-      <title>AI agent memory: context that survives restarts</title>
-      <link>https://kubaik.github.io/ai-agent-memory-context-that-survives-restarts/</link>
-      <description>Persist AI agent context across restarts with Redis 7.2 and langgraph 0.2.14 — flush writes, raise liveness probes, and stop losing sessions after a crash or rollout.</description>
-      <pubDate>Sat, 27 Jun 2026 23:25:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agent-memory-context-that-survives-restarts/</guid>
     </item>
   </channel>
 </rss>

@@ -1,4 +1,5 @@
 [
   "Observability in 2026: why the three pillars model is being replaced and what comes next",
-  "Building for eventual consistency: the real-world patterns behind systems that stay up"
+  "Building for eventual consistency: the real-world patterns behind systems that stay up",
+  "Building webhook systems in 2026: delivery guarantees, retries, and idempotency"
 ]
