@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 00:07:01 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 00:12:04 +0000</lastBuildDate>
+    <item>
+      <title>AI scanners find vulns: what actually works</title>
+      <link>https://kubaik.github.io/ai-scanners-find-vulns-what-actually-works/</link>
+      <description>AI scanners catch 42% more vulnerabilities than static analysis alone — but only when paired with a 200-line policy file and threat context. Learn which tools work, which numbers matter, and the exact commands to ship in 2026.</description>
+      <pubDate>Sun, 28 Jun 2026 00:11:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-scanners-find-vulns-what-actually-works/</guid>
+    </item>
     <item>
       <title>AI agents vs Argo, Tekton: which pipeline heals itself?</title>
       <link>https://kubaik.github.io/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/</link>
@@ -138,13 +145,6 @@
       <description>Cut local branch spin-up time 50% with PlanetScale and Neon CLI flags — delays, errors, and the exact commands that fixed them in 2026.</description>
       <pubDate>Sat, 27 Jun 2026 15:58:31 +0000</pubDate>
       <guid>https://kubaik.github.io/database-branches-neon-vs-planetscale-locally/</guid>
-    </item>
-    <item>
-      <title>Design multi-region systems without 3× the cost</title>
-      <link>https://kubaik.github.io/design-multi-region-systems-without-3-the-cost/</link>
-      <description>Cut global infra bill 40% using regional Redis + Cloudflare Workers — cache hit ratios, secret rotation, and the surprise write latency win nobody mentions.</description>
-      <pubDate>Sat, 27 Jun 2026 15:10:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-multi-region-systems-without-3-the-cost/</guid>
     </item>
   </channel>
 </rss>

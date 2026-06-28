@@ -58,5 +58,6 @@
   "How I replaced a $3k/month Kubernetes cluster with a $200/month alternative",
   "AI memory systems: giving your agent context that persists across sessions",
   "SBOM requirements in 2026: what software bill of materials means for your release process",
-  "How I built a self-healing deployment pipeline using AI agents"
+  "How I built a self-healing deployment pipeline using AI agents",
+  "How AI is being used to find vulnerabilities and what that means for defenders"
 ]

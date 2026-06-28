@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-27T23:59:55.022605",
+  "built_at": "2026-06-28T00:11:54.891362",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3210,6 +3210,11 @@
       "slug": "ai-agents-vs-argo-tekton-which-pipeline-heals-itself",
       "title": "AI agents vs Argo, Tekton: which pipeline heals itself?",
       "summary": "I've seen the same built selfhealing mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, teams that ship multiple times a day without a human touchi"
+    },
+    {
+      "slug": "ai-scanners-find-vulns-what-actually-works",
+      "title": "AI scanners find vulns: what actually works",
+      "summary": "The short version: the conventional advice on being used is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI scanners now detect 30–50% more security flaws than static analysis alone, but only "
     }
   ]
 }
