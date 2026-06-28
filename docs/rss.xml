@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 Jun 2026 23:46:05 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 00:00:05 +0000</lastBuildDate>
+    <item>
+      <title>AI agents vs Argo, Tekton: which pipeline heals itself?</title>
+      <link>https://kubaik.github.io/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/</link>
+      <description>Self-healing pipelines 2026: Argo Workflows vs Tekton — 23% latency gap, 98% agent speed difference, and the tuning mistake that cost $1,620</description>
+      <pubDate>Sat, 27 Jun 2026 23:59:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/</guid>
+    </item>
     <item>
       <title>Stop SBOM surprises: Syft 1.10 in CI/CD</title>
       <link>https://kubaik.github.io/stop-sbom-surprises-syft-110-in-cicd/</link>
@@ -138,13 +145,6 @@
       <description>Cut global infra bill 40% using regional Redis + Cloudflare Workers — cache hit ratios, secret rotation, and the surprise write latency win nobody mentions.</description>
       <pubDate>Sat, 27 Jun 2026 15:10:42 +0000</pubDate>
       <guid>https://kubaik.github.io/design-multi-region-systems-without-3-the-cost/</guid>
-    </item>
-    <item>
-      <title>Debug AI agent failures differently</title>
-      <link>https://kubaik.github.io/debug-ai-agent-failures-differently/</link>
-      <description>Cut AI agent incident detection time from days to hours with agent behavior traces. Structured logs miss hallucinations and prompt drift; traces catch them. Benchmark shows 200x faster detection — see the setup.</description>
-      <pubDate>Sat, 27 Jun 2026 15:03:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-ai-agent-failures-differently/</guid>
     </item>
   </channel>
 </rss>

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://kubaik.github.io/</loc><lastmod>2026-06-27</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
-  <url><loc>https://kubaik.github.io/about/</loc><lastmod>2026-06-27</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://kubaik.github.io/contact/</loc><lastmod>2026-06-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-06-27</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-06-27</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://kubaik.github.io/tag/</loc><lastmod>2026-06-27</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://kubaik.github.io/dmca/</loc><lastmod>2026-06-27</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
-  <url><loc>https://kubaik.github.io/ai-content-policy/</loc><lastmod>2026-06-27</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://kubaik.github.io/</loc><lastmod>2026-06-28</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>https://kubaik.github.io/about/</loc><lastmod>2026-06-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://kubaik.github.io/contact/</loc><lastmod>2026-06-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://kubaik.github.io/privacy-policy/</loc><lastmod>2026-06-28</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kubaik.github.io/terms-of-service/</loc><lastmod>2026-06-28</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://kubaik.github.io/tag/</loc><lastmod>2026-06-28</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://kubaik.github.io/dmca/</loc><lastmod>2026-06-28</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://kubaik.github.io/ai-content-policy/</loc><lastmod>2026-06-28</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://kubaik.github.io/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/</loc><lastmod>2026-06-27</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://kubaik.github.io/stop-sbom-surprises-syft-110-in-cicd/</loc><lastmod>2026-06-27</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://kubaik.github.io/ai-agent-memory-context-that-survives-restarts/</loc><lastmod>2026-06-27</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://kubaik.github.io/saved-3kmonth-by-ditching-kubernetes/</loc><lastmod>2026-06-27</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
