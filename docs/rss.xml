@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 19:25:52 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 19:30:50 +0000</lastBuildDate>
+    <item>
+      <title>AI observability: the metrics that matter</title>
+      <link>https://kubaik.github.io/ai-observability-the-metrics-that-matter/</link>
+      <description>AI observability cuts false alerts 8× by tracking drift vectors and confidence histograms instead of just latency and errors. Learn the metrics that actually matter and how to instrument them in 2026.</description>
+      <pubDate>Sun, 28 Jun 2026 19:30:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-observability-the-metrics-that-matter/</guid>
+    </item>
     <item>
       <title>380k logins lost: passkeys fixed it</title>
       <link>https://kubaik.github.io/380k-logins-lost-passkeys-fixed-it/</link>
@@ -138,13 +145,6 @@
       <description>A 405B model might reach 82 % accuracy on GSM8K, but if it costs $2.10 per 1M tokens and adds 470 ms of processing, it loses to a fine-tuned 3B model that…</description>
       <pubDate>Sun, 28 Jun 2026 09:58:31 +0000</pubDate>
       <guid>https://kubaik.github.io/fine-tune-or-prompt-pick-the-wrong-one-in-2026/</guid>
-    </item>
-    <item>
-      <title>Test AI code, not the AI</title>
-      <link>https://kubaik.github.io/test-ai-code-not-the-ai/</link>
-      <description>Cut false positives 80% with property tests and fake adapters — the exact tools, numbers, and scripts teams use in 2026 to test AI code without testing the AI itself.</description>
-      <pubDate>Sun, 28 Jun 2026 09:01:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/test-ai-code-not-the-ai/</guid>
     </item>
   </channel>
 </rss>
