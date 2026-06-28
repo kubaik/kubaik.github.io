@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 09:02:05 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 09:58:59 +0000</lastBuildDate>
+    <item>
+      <title>Fine-tune or prompt: pick the wrong one in 2026</title>
+      <link>https://kubaik.github.io/fine-tune-or-prompt-pick-the-wrong-one-in-2026/</link>
+      <description>A 405B model might reach 82 % accuracy on GSM8K, but if it costs $2.10 per 1M tokens and adds 470 ms of processing, it loses to a fine-tuned 3B model that…</description>
+      <pubDate>Sun, 28 Jun 2026 09:58:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/fine-tune-or-prompt-pick-the-wrong-one-in-2026/</guid>
+    </item>
     <item>
       <title>Test AI code, not the AI</title>
       <link>https://kubaik.github.io/test-ai-code-not-the-ai/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 20% by decoupling first—database-first refactor beats service extraction for most teams in 2026.</description>
       <pubDate>Sat, 27 Jun 2026 20:07:07 +0000</pubDate>
       <guid>https://kubaik.github.io/monolith-to-services-without-a-rewrite/</guid>
-    </item>
-    <item>
-      <title>WCAG chatbots miss: aria-live traps in AI UIs</title>
-      <link>https://kubaik.github.io/wcag-chatbots-miss-aria-live-traps-in-ai-uis/</link>
-      <description>If there’s a delay of more than 200ms between a token arriving and the announcement, the user experience will feel sluggish.</description>
-      <pubDate>Sat, 27 Jun 2026 20:03:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/wcag-chatbots-miss-aria-live-traps-in-ai-uis/</guid>
     </item>
   </channel>
 </rss>
