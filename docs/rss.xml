@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 04:58:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 05:02:51 +0000</lastBuildDate>
+    <item>
+      <title>Spot AI’s hidden cost spike in your stack</title>
+      <link>https://kubaik.github.io/spot-ais-hidden-cost-spike-in-your-stack/</link>
+      <description>Protect your salary from AI automation by mastering 3 skills — cache hit ratios, connection pools, and environment rewrites — before the bill spikes 300 % and the CFO calls.</description>
+      <pubDate>Sun, 28 Jun 2026 05:02:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/spot-ais-hidden-cost-spike-in-your-stack/</guid>
+    </item>
     <item>
       <title>Survive AI SaaS disruption in 2026</title>
       <link>https://kubaik.github.io/survive-ai-saas-disruption-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut cloud costs 20% by blocking prompt injection — the 42 attack vectors our staging tests missed and the one-line fix that caught them.</description>
       <pubDate>Sat, 27 Jun 2026 17:49:57 +0000</pubDate>
       <guid>https://kubaik.github.io/slay-prompt-injection-before-it-bleeds-your-cloud/</guid>
-    </item>
-    <item>
-      <title>Frontend testing in 2026: Playwright beats Cypress</title>
-      <link>https://kubaik.github.io/frontend-testing-in-2026-playwright-beats-cypress/</link>
-      <description>Cut test flakes 85% and suite runtime 70% with Playwright 1.45 and Vitest 1.5.0 — the real migration path from Cypress, with MSW mocking and Percy visual tests.</description>
-      <pubDate>Sat, 27 Jun 2026 17:01:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/frontend-testing-in-2026-playwright-beats-cypress/</guid>
     </item>
   </channel>
 </rss>

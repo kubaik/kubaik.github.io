@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T02:57:01.195752",
+  "built_at": "2026-06-28T05:02:41.060904",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3225,6 +3225,11 @@
       "slug": "survive-ai-saas-disruption-in-2026",
       "title": "Survive AI SaaS disruption in 2026",
       "summary": "Most pick saas guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026, our Nairobi fintech team shipped a vertical SaaS for Kenyan SMEs that automated"
+    },
+    {
+      "slug": "spot-ais-hidden-cost-spike-in-your-stack",
+      "title": "Spot AI’s hidden cost spike in your stack",
+      "summary": "After reviewing a lot of code that touches skills that, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it’s confusing You show up to work tomorrow and the AI pair programmer you trusted refactored every junior "
     }
   ]
 }
