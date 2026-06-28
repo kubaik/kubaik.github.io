@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 10:17:59 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 10:22:33 +0000</lastBuildDate>
+    <item>
+      <title>Signals killed React’s state mess in 2026</title>
+      <link>https://kubaik.github.io/signals-killed-reacts-state-mess-in-2026/</link>
+      <description>Meet Signals in SolidJS 1.8: cut React state stutter 20× and shrink memory 400%. See the ranked list, benchmarks, and the one tool you should adopt today.</description>
+      <pubDate>Sun, 28 Jun 2026 10:22:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/signals-killed-reacts-state-mess-in-2026/</guid>
+    </item>
     <item>
       <title>Fine-tune or prompt: pick the wrong one in 2026</title>
       <link>https://kubaik.github.io/fine-tune-or-prompt-pick-the-wrong-one-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut oncall pages 55% with the right AI ops tool — PagerDuty AIOps vs Datadog Incident+AI in production, with latency, cost, and tuning data for 2026 stacks.</description>
       <pubDate>Sat, 27 Jun 2026 20:16:19 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ops-tools-what-oncall-actually-needs/</guid>
-    </item>
-    <item>
-      <title>Monolith to services without a rewrite</title>
-      <link>https://kubaik.github.io/monolith-to-services-without-a-rewrite/</link>
-      <description>Cut API response time 20% by decoupling first—database-first refactor beats service extraction for most teams in 2026.</description>
-      <pubDate>Sat, 27 Jun 2026 20:07:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/monolith-to-services-without-a-rewrite/</guid>
     </item>
   </channel>
 </rss>

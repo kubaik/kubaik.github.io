@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T09:58:36.396402",
+  "built_at": "2026-06-28T10:22:23.372338",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3260,6 +3260,11 @@
       "slug": "fine-tune-or-prompt-pick-the-wrong-one-in-2026",
       "title": "Fine-tune or prompt: pick the wrong one in 2026",
       "summary": "The official documentation for finetuning small is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. Advanced edge cases I personally encountered in 2026 1. The LoRA Adapter Explosion in a HIPA"
+    },
+    {
+      "slug": "signals-killed-reacts-state-mess-in-2026",
+      "title": "Signals killed React’s state mess in 2026",
+      "summary": "I ran into this signals changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks rewriting a 22k-line R"
     }
   ]
 }
