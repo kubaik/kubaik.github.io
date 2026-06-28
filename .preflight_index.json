@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T13:56:54.174922",
+  "built_at": "2026-06-28T14:32:50.268497",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3305,6 +3305,11 @@
       "slug": "webhook-delivery-retries-idempotency-2026-guide",
       "title": "Webhook delivery: retries, idempotency, 2026 guide",
       "summary": "Most building webhook guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026 we migrated our payments microservice from a pull-based cron job to a p"
+    },
+    {
+      "slug": "tls-stack-2026-post-quantum-is-here",
+      "title": "TLS stack 2026: post-quantum is here",
+      "summary": "Most postquantum cryptography guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, our team at OpsTrace got a support ticket that scared us. A cu"
     }
   ]
 }

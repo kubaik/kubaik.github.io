@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 14:28:16 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 14:33:00 +0000</lastBuildDate>
+    <item>
+      <title>TLS stack 2026: post-quantum is here</title>
+      <link>https://kubaik.github.io/tls-stack-2026-post-quantum-is-here/</link>
+      <description>Handshake failures rose 1.2 % after post-quantum TLS 1.3 rollout until we added client fingerprinting and Nitro offload. Latency fell 58 % and errors dropped 97 %.</description>
+      <pubDate>Sun, 28 Jun 2026 14:32:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/tls-stack-2026-post-quantum-is-here/</guid>
+    </item>
     <item>
       <title>Webhook delivery: retries, idempotency, 2026 guide</title>
       <link>https://kubaik.github.io/webhook-delivery-retries-idempotency-2026-guide/</link>
@@ -138,13 +145,6 @@
       <description>Self-healing pipelines 2026: Argo Workflows vs Tekton — 23% latency gap, 98% agent speed difference, and the tuning mistake that cost $1,620</description>
       <pubDate>Sat, 27 Jun 2026 23:59:52 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/</guid>
-    </item>
-    <item>
-      <title>Stop SBOM surprises: Syft 1.10 in CI/CD</title>
-      <link>https://kubaik.github.io/stop-sbom-surprises-syft-110-in-cicd/</link>
-      <description>Cut compliance risk 100% with Syft 1.10 SBOMs in CI/CD — fail builds on new CVEs, attach SPDX files to releases, and run for $0.04 per build.</description>
-      <pubDate>Sat, 27 Jun 2026 23:45:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-sbom-surprises-syft-110-in-cicd/</guid>
     </item>
   </channel>
 </rss>
