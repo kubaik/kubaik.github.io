@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T21:57:52.943982",
+  "built_at": "2026-06-28T22:58:13.143618",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3400,6 +3400,11 @@
       "slug": "hit-5k-mrr-without-a-marketing-team",
       "title": "Hit $5k MRR without a marketing team",
       "summary": "The short version: the conventional advice on got mrr is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) I bootstrapped a SaaS to $5,237 MRR in 18 months with zero budget for ads, PR, or a growth"
+    },
+    {
+      "slug": "consolidate-redis-kafka-pgbouncer-into-postgres-17",
+      "title": "Consolidate Redis, Kafka, pgBouncer into Postgres 17",
+      "summary": "I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In late 2026 our Jakarta team faced a classic scaling cliff: writes to K"
     }
   ]
 }
