@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 21:50:39 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 21:58:04 +0000</lastBuildDate>
+    <item>
+      <title>Hit $5k MRR without a marketing team</title>
+      <link>https://kubaik.github.io/hit-5k-mrr-without-a-marketing-team/</link>
+      <description>Hit $5k MRR on Shopify app — no ads, no team, just reliability and pricing that matters. Integration, churn, and referral tactics that paid off in 2026.</description>
+      <pubDate>Sun, 28 Jun 2026 21:57:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/hit-5k-mrr-without-a-marketing-team/</guid>
+    </item>
     <item>
       <title>Tool-calling patterns: stable vs breakable under load</title>
       <link>https://kubaik.github.io/tool-calling-patterns-stable-vs-breakable-under-load/</link>
@@ -138,13 +145,6 @@
       <description>Cut API errors 28% with eventual consistency — the 10 battle-tested patterns ranked by latency, cost, and operational overhead in 2026. Includes code and config you can deploy today.</description>
       <pubDate>Sun, 28 Jun 2026 13:21:19 +0000</pubDate>
       <guid>https://kubaik.github.io/eventual-consistency-patterns-that-prevent-outages/</guid>
-    </item>
-    <item>
-      <title>Unified signals replace three pillars in 2026</title>
-      <link>https://kubaik.github.io/unified-signals-replace-three-pillars-in-2026/</link>
-      <description>Cut observability costs 64% by replacing three separate pipelines with one unified OTLP stream in 2026 — real benchmarks, migration steps, and the mistake most teams repeat.</description>
-      <pubDate>Sun, 28 Jun 2026 12:52:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/unified-signals-replace-three-pillars-in-2026/</guid>
     </item>
   </channel>
 </rss>
