@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 06:53:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 06:59:22 +0000</lastBuildDate>
+    <item>
+      <title>Feature flags to experimentation: 9 platforms compared</title>
+      <link>https://kubaik.github.io/feature-flags-to-experimentation-9-platforms-compared/</link>
+      <description>9 flag platforms compared: latency, cost, offline resilience — pick the one that won’t break on 2G. Save $400/month and keep experiments running when the carrier drops packets.</description>
+      <pubDate>Sun, 28 Jun 2026 06:59:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/feature-flags-to-experimentation-9-platforms-compared/</guid>
+    </item>
     <item>
       <title>MCP errors: why servers go quiet in 2026</title>
       <link>https://kubaik.github.io/mcp-errors-why-servers-go-quiet-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut pricing churn 38% by switching to usage-based billing — learn from three SE Asia startups that grew from 0 to 100k users on lean infra. Real numbers, real mistakes, real Stripe setup.</description>
       <pubDate>Sat, 27 Jun 2026 18:26:12 +0000</pubDate>
       <guid>https://kubaik.github.io/use-based-pricing-for-dev-tools-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI apps break when you treat them like regular software</title>
-      <link>https://kubaik.github.io/ai-apps-break-when-you-treat-them-like-regular-software/</link>
-      <description>Cut API latency 75% with AI-native architecture — state machines, bounded staleness, and managed vector stores that most teams miss in 2026.</description>
-      <pubDate>Sat, 27 Jun 2026 18:14:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-apps-break-when-you-treat-them-like-regular-software/</guid>
     </item>
   </channel>
 </rss>
