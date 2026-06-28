@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T18:09:13.496839",
+  "built_at": "2026-06-28T18:25:26.856058",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3355,6 +3355,11 @@
       "slug": "llm-outputs-break-workflows-unless-you-do-this",
       "title": "LLM outputs break workflows unless you do this",
       "summary": "Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026 we rebuilt the data extraction pipeline for a large e-commerce price tr"
+    },
+    {
+      "slug": "380k-logins-lost-passkeys-fixed-it",
+      "title": "380k logins lost: passkeys fixed it",
+      "summary": "Most passkeys changed guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026 we launched a B2C social app in Indonesia with 1.2 million monthly active use"
     }
   ]
 }
