@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T23:11:10.480787",
+  "built_at": "2026-06-28T23:38:30.638182",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3410,6 +3410,11 @@
       "slug": "10-ai-wrappers-that-shipped-in-2026-8-died-fast",
       "title": "10 AI wrappers that shipped in 2026 — 8 died fast",
       "summary": "I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026, I joined a 14-person star"
+    },
+    {
+      "slug": "6-ai-stacks-that-level-the-dev-playing-field-in-2026",
+      "title": "6 AI stacks that level the dev playing field in 2026",
+      "summary": "I ran into this east african problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026 I was asked to help a Nairobi fi"
     }
   ]
 }
