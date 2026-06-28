@@ -5,13 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 11:24:33 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 11:46:11 +0000</lastBuildDate>
     <item>
-      <title>Zero-trust 10k services: no shared secrets mistake</title>
-      <link>https://kubaik.github.io/zero-trust-10k-services-no-shared-secrets-mistake/</link>
-      <description>Cut cert-manager rotation errors 98% by removing shared Secrets — admission controller race, HSM sidecar timeouts, and the projected token fix most teams miss</description>
-      <pubDate>Sun, 28 Jun 2026 11:24:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-10k-services-no-shared-secrets-mistake/</guid>
+      <title>CI/CD pipelines stall with GPU pods: 2026 benchmarks</title>
+      <link>https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/</link>
+      <description>Cut CI/CD pipeline stalls 80% with GPU quotas and scheduler fixes — 2026 benchmarks, cost trade-offs, and rollout playbooks for AI workloads.</description>
+      <pubDate>Sun, 28 Jun 2026 11:45:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/</guid>
     </item>
     <item>
       <title>Harden AWS IAM in 30 minutes</title>

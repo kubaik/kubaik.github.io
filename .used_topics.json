@@ -72,5 +72,6 @@
   "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff",
   "How Signals changed state management and whether it matters outside of frameworks",
   "How to implement least-privilege IAM in AWS without spending a week on policies",
-  "Secrets management in 2026: the approaches that replaced .env files in serious projects"
+  "Secrets management in 2026: the approaches that replaced .env files in serious projects",
+  "Why Claude 4 and GPT-5 changed how I structure prompts for production systems"
 ]
