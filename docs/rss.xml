@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 15:00:02 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 15:04:57 +0000</lastBuildDate>
+    <item>
+      <title>Fix AI chat UIs for screen readers</title>
+      <link>https://kubaik.github.io/fix-ai-chat-uis-for-screen-readers/</link>
+      <description>Fix WCAG violations in AI chat UIs with 3 silent failures: live region announcements, focus traps, and Safari containment bugs. Reduce support tickets by 12% with these fixes.</description>
+      <pubDate>Sun, 28 Jun 2026 15:04:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-ai-chat-uis-for-screen-readers/</guid>
+    </item>
     <item>
       <title>TLS stack 2026: post-quantum is here</title>
       <link>https://kubaik.github.io/tls-stack-2026-post-quantum-is-here/</link>
@@ -138,13 +145,6 @@
       <description>AI scanners catch 42% more vulnerabilities than static analysis alone — but only when paired with a 200-line policy file and threat context. Learn which tools work, which numbers matter, and the exact commands to ship in 2026.</description>
       <pubDate>Sun, 28 Jun 2026 00:11:52 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-scanners-find-vulns-what-actually-works/</guid>
-    </item>
-    <item>
-      <title>AI agents vs Argo, Tekton: which pipeline heals itself?</title>
-      <link>https://kubaik.github.io/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/</link>
-      <description>Self-healing pipelines 2026: Argo Workflows vs Tekton — 23% latency gap, 98% agent speed difference, and the tuning mistake that cost $1,620</description>
-      <pubDate>Sat, 27 Jun 2026 23:59:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/</guid>
     </item>
   </channel>
 </rss>
