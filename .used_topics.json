@@ -59,5 +59,6 @@
   "AI memory systems: giving your agent context that persists across sessions",
   "SBOM requirements in 2026: what software bill of materials means for your release process",
   "How I built a self-healing deployment pipeline using AI agents",
-  "How AI is being used to find vulnerabilities and what that means for defenders"
+  "How AI is being used to find vulnerabilities and what that means for defenders",
+  "How I handle database schema migrations in a zero-downtime deployment pipeline"
 ]

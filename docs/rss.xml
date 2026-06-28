@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 01:54:18 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 01:59:05 +0000</lastBuildDate>
+    <item>
+      <title>Migrations? Stop running them live</title>
+      <link>https://kubaik.github.io/migrations-stop-running-them-live/</link>
+      <description>Cut migration downtime 70% by versioning schemas before deploy — concrete patterns from 3 outages and 18 months of metrics.</description>
+      <pubDate>Sun, 28 Jun 2026 01:58:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/migrations-stop-running-them-live/</guid>
+    </item>
     <item>
       <title>AI scanners find vulns: what actually works</title>
       <link>https://kubaik.github.io/ai-scanners-find-vulns-what-actually-works/</link>
@@ -138,13 +145,6 @@
       <description>AI tools increased production incidents 18% in 2026 — here’s the mental model and tooling changes to make them safe: contracts, contract tests, and rollback plans before merging any AI output.</description>
       <pubDate>Sat, 27 Jun 2026 16:40:22 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-tools-broke-my-principles/</guid>
-    </item>
-    <item>
-      <title>Database branches: Neon vs PlanetScale locally</title>
-      <link>https://kubaik.github.io/database-branches-neon-vs-planetscale-locally/</link>
-      <description>Cut local branch spin-up time 50% with PlanetScale and Neon CLI flags — delays, errors, and the exact commands that fixed them in 2026.</description>
-      <pubDate>Sat, 27 Jun 2026 15:58:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/database-branches-neon-vs-planetscale-locally/</guid>
     </item>
   </channel>
 </rss>

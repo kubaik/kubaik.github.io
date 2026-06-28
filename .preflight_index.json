@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T00:11:54.891362",
+  "built_at": "2026-06-28T01:58:55.493377",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3215,6 +3215,11 @@
       "slug": "ai-scanners-find-vulns-what-actually-works",
       "title": "AI scanners find vulns: what actually works",
       "summary": "The short version: the conventional advice on being used is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI scanners now detect 30–50% more security flaws than static analysis alone, but only "
+    },
+    {
+      "slug": "migrations-stop-running-them-live",
+      "title": "Migrations? Stop running them live",
+      "summary": "A colleague asked me about handle database during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) T"
     }
   ]
 }
