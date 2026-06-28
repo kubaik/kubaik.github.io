@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 15:57:07 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 16:01:54 +0000</lastBuildDate>
+    <item>
+      <title>Side-channel prompt attacks: the 60ms latency you</title>
+      <link>https://kubaik.github.io/side-channel-prompt-attacks-the-60ms-latency-you/</link>
+      <description>Cut API latency 60% by capping prompt size at 1.5k tokens — tokenizer overhead, Redis cache misses, and the injection vectors most teams miss</description>
+      <pubDate>Sun, 28 Jun 2026 16:01:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/side-channel-prompt-attacks-the-60ms-latency-you/</guid>
+    </item>
     <item>
       <title>Signals vs Stores: 7 state tools ranked</title>
       <link>https://kubaik.github.io/signals-vs-stores-7-state-tools-ranked/</link>
@@ -138,13 +145,6 @@
       <description>Protect your salary from AI automation by mastering 3 skills — cache hit ratios, connection pools, and environment rewrites — before the bill spikes 300 % and the CFO calls.</description>
       <pubDate>Sun, 28 Jun 2026 05:02:38 +0000</pubDate>
       <guid>https://kubaik.github.io/spot-ais-hidden-cost-spike-in-your-stack/</guid>
-    </item>
-    <item>
-      <title>Survive AI SaaS disruption in 2026</title>
-      <link>https://kubaik.github.io/survive-ai-saas-disruption-in-2026/</link>
-      <description>Find a SaaS niche immune to AI disruption — local regulation, offline constraints, and incumbents’ blind spots. PowerRec went from zero to 1,200 merchants by targeting Kenya Power receipts.</description>
-      <pubDate>Sun, 28 Jun 2026 02:56:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/survive-ai-saas-disruption-in-2026/</guid>
     </item>
   </channel>
 </rss>
