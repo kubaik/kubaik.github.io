@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 12:14:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 12:18:23 +0000</lastBuildDate>
+    <item>
+      <title>AI observability: real-time dashboards without the</title>
+      <link>https://kubaik.github.io/ai-observability-real-time-dashboards-without-the/</link>
+      <description>Cut AI observability ingest cost 70% while slashing dashboard latency from 8.2s to 220ms using NATS JetStream, OTel Collector Lua transforms, and Loki boltdb-shipper in 2026.</description>
+      <pubDate>Sun, 28 Jun 2026 12:18:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-observability-real-time-dashboards-without-the/</guid>
+    </item>
     <item>
       <title>AWS Local Zones vs LocalStack: AI microservices in</title>
       <link>https://kubaik.github.io/aws-local-zones-vs-localstack-ai-microservices-in/</link>
@@ -138,13 +145,6 @@
       <description>Negotiate 20% higher salaries in 2026 by filtering AI-automated roles — Python 3.11 scraper, 1,200 job data, human-skills premium table</description>
       <pubDate>Sat, 27 Jun 2026 22:11:29 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-salaries-with-ai-skills-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI codebase onboarding: ship fast or ship safe?</title>
-      <link>https://kubaik.github.io/ai-codebase-onboarding-ship-fast-or-ship-safe/</link>
-      <description>Cut onboarding time 40% with AI codebases — guardrails that work, benchmarks, and the $48k/year incident savings most teams miss.</description>
-      <pubDate>Sat, 27 Jun 2026 21:57:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-codebase-onboarding-ship-fast-or-ship-safe/</guid>
     </item>
   </channel>
 </rss>

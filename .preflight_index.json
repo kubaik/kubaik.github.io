@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T12:14:48.287076",
+  "built_at": "2026-06-28T12:18:12.441348",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3285,6 +3285,11 @@
       "slug": "aws-local-zones-vs-localstack-ai-microservices-in",
       "title": "AWS Local Zones vs LocalStack: AI microservices in",
       "summary": "After reviewing a lot of code that touches tools built, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. Why this comparison matters right now In 2026, African fintech and healthtech startups are racing to deploy AI microservices "
+    },
+    {
+      "slug": "ai-observability-real-time-dashboards-without-the",
+      "title": "AI observability: real-time dashboards without the",
+      "summary": "I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. The situation (what we were trying to solve) In 2026, our AI platform ingested ~2.1 billion telemetr"
     }
   ]
 }
