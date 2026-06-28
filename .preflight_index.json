@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T05:25:57.047767",
+  "built_at": "2026-06-28T06:53:35.623478",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3235,6 +3235,11 @@
       "slug": "freelance-rates-halved-by-ai-tools",
       "title": "Freelance rates halved by AI tools",
       "summary": "The short version: the conventional advice on freelance developer is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Freelance rates for developers in 2026 are half what they were in 2026 because"
+    },
+    {
+      "slug": "mcp-errors-why-servers-go-quiet-in-2026",
+      "title": "MCP errors: why servers go quiet in 2026",
+      "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. I first hit this in a production MCP (Model Context Protocol) cluster in Q1 2026. We’d rolle"
     }
   ]
 }

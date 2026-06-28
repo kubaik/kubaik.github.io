@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 06:48:02 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 06:53:46 +0000</lastBuildDate>
+    <item>
+      <title>MCP errors: why servers go quiet in 2026</title>
+      <link>https://kubaik.github.io/mcp-errors-why-servers-go-quiet-in-2026/</link>
+      <description>Cut MCP 204 errors 90% with keep-alive headers and 60s timeouts — connection pooling, CDN traps, and the $40 DigitalOcean fix most teams miss in 2026.</description>
+      <pubDate>Sun, 28 Jun 2026 06:53:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-errors-why-servers-go-quiet-in-2026/</guid>
+    </item>
     <item>
       <title>Freelance rates halved by AI tools</title>
       <link>https://kubaik.github.io/freelance-rates-halved-by-ai-tools/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 75% with AI-native architecture — state machines, bounded staleness, and managed vector stores that most teams miss in 2026.</description>
       <pubDate>Sat, 27 Jun 2026 18:14:00 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-apps-break-when-you-treat-them-like-regular-software/</guid>
-    </item>
-    <item>
-      <title>Pair programming with AI: 5 tools we tried</title>
-      <link>https://kubaik.github.io/pair-programming-with-ai-5-tools-we-tried/</link>
-      <description>Cut PR review time 71% with GitHub Copilot Workspace—real numbers, prompts, and the calibration mistake most teams make first</description>
-      <pubDate>Sat, 27 Jun 2026 18:05:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/pair-programming-with-ai-5-tools-we-tried/</guid>
     </item>
   </channel>
 </rss>
