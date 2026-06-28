@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T19:30:40.136938",
+  "built_at": "2026-06-28T19:56:59.865996",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3365,6 +3365,11 @@
       "slug": "ai-observability-the-metrics-that-matter",
       "title": "AI observability: the metrics that matter",
       "summary": "The official documentation for observability different is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Traditional application m"
+    },
+    {
+      "slug": "ai-hiring-what-actually-moves-the-bar",
+      "title": "AI hiring: what actually moves the bar",
+      "summary": "The official documentation for changed hiring is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs In 2026, the average Kenyan fintec"
     }
   ]
 }

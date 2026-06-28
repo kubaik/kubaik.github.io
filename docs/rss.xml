@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 19:52:16 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 19:57:10 +0000</lastBuildDate>
+    <item>
+      <title>AI hiring: what actually moves the bar</title>
+      <link>https://kubaik.github.io/ai-hiring-what-actually-moves-the-bar/</link>
+      <description>Cut first-round review time 65% with AI resume ranking and live coding scoring — pgvector, pytest 7.4, and sentences-transformers 2.3.1 bring hidden requirements to light.</description>
+      <pubDate>Sun, 28 Jun 2026 19:56:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-hiring-what-actually-moves-the-bar/</guid>
+    </item>
     <item>
       <title>AI observability: the metrics that matter</title>
       <link>https://kubaik.github.io/ai-observability-the-metrics-that-matter/</link>
@@ -138,13 +145,6 @@
       <description>Meet Signals in SolidJS 1.8: cut React state stutter 20× and shrink memory 400%. See the ranked list, benchmarks, and the one tool you should adopt today.</description>
       <pubDate>Sun, 28 Jun 2026 10:22:20 +0000</pubDate>
       <guid>https://kubaik.github.io/signals-killed-reacts-state-mess-in-2026/</guid>
-    </item>
-    <item>
-      <title>Fine-tune or prompt: pick the wrong one in 2026</title>
-      <link>https://kubaik.github.io/fine-tune-or-prompt-pick-the-wrong-one-in-2026/</link>
-      <description>A 405B model might reach 82 % accuracy on GSM8K, but if it costs $2.10 per 1M tokens and adds 470 ms of processing, it loses to a fine-tuned 3B model that…</description>
-      <pubDate>Sun, 28 Jun 2026 09:58:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/fine-tune-or-prompt-pick-the-wrong-one-in-2026/</guid>
     </item>
   </channel>
 </rss>
