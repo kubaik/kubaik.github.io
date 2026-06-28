@@ -14,5 +14,6 @@
   "Structured outputs from LLMs: why JSON mode is not enough for real workflows",
   "How passkeys changed authentication and what that means for the apps you're building",
   "How AI observability is different from traditional application monitoring",
-  "How AI changed what hiring managers are looking for in engineering interviews"
+  "How AI changed what hiring managers are looking for in engineering interviews",
+  "The OWASP Top 10 for LLM applications: the vulnerabilities specific to AI-powered apps"
 ]

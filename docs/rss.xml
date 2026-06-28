@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 20:00:31 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 20:05:46 +0000</lastBuildDate>
+    <item>
+      <title>LLMs&apos; hidden OWASP pitfalls in 2026</title>
+      <link>https://kubaik.github.io/llms-hidden-owasp-pitfalls-in-2026/</link>
+      <description>Detect 95% of LLM prompt injection attacks with input validation, caching, and Redis 7.2 observability in 2026</description>
+      <pubDate>Sun, 28 Jun 2026 20:05:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/llms-hidden-owasp-pitfalls-in-2026/</guid>
+    </item>
     <item>
       <title>AI hiring: what actually moves the bar</title>
       <link>https://kubaik.github.io/ai-hiring-what-actually-moves-the-bar/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS IAM spending and blast radius 70% in 30 minutes using Access Analyzer, simulate-principal-policy, and CloudFormation ManagedPolicy — no hand-crafted JSON needed.</description>
       <pubDate>Sun, 28 Jun 2026 11:16:31 +0000</pubDate>
       <guid>https://kubaik.github.io/harden-aws-iam-in-30-minutes/</guid>
-    </item>
-    <item>
-      <title>Signals killed React’s state mess in 2026</title>
-      <link>https://kubaik.github.io/signals-killed-reacts-state-mess-in-2026/</link>
-      <description>Meet Signals in SolidJS 1.8: cut React state stutter 20× and shrink memory 400%. See the ranked list, benchmarks, and the one tool you should adopt today.</description>
-      <pubDate>Sun, 28 Jun 2026 10:22:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/signals-killed-reacts-state-mess-in-2026/</guid>
     </item>
   </channel>
 </rss>
