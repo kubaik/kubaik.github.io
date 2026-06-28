@@ -70,5 +70,6 @@
   "The OWASP Top 10 for LLM applications: the vulnerabilities specific to AI-powered apps",
   "How I write tests for AI-assisted code without testing the AI",
   "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff",
-  "How Signals changed state management and whether it matters outside of frameworks"
+  "How Signals changed state management and whether it matters outside of frameworks",
+  "How to implement least-privilege IAM in AWS without spending a week on policies"
 ]

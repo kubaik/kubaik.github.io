@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T10:22:23.372338",
+  "built_at": "2026-06-28T11:16:34.378120",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3265,6 +3265,11 @@
       "slug": "signals-killed-reacts-state-mess-in-2026",
       "title": "Signals killed React’s state mess in 2026",
       "summary": "I ran into this signals changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks rewriting a 22k-line R"
+    },
+    {
+      "slug": "harden-aws-iam-in-30-minutes",
+      "title": "Harden AWS IAM in 30 minutes",
+      "summary": "The short version: the conventional advice on implement leastprivilege is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. Advanced edge cases you personally encountered Here are the three edge cases that burned me the most between 2026 and"
     }
   ]
 }
