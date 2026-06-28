@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T16:01:43.811480",
+  "built_at": "2026-06-28T16:45:09.823658",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3330,6 +3330,11 @@
       "slug": "side-channel-prompt-attacks-the-60ms-latency-you",
       "title": "Side-channel prompt attacks: the 60ms latency you",
       "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams copy the LLM playgrou"
+    },
+    {
+      "slug": "ci-scanning-kill-false-positives-or-die-slow",
+      "title": "CI scanning: kill false positives or die slow",
+      "summary": "Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026 we rolled out SCA, SAST, and DAST scanners in every repo’s CI pipeline. By Febru"
     }
   ]
 }

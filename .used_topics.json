@@ -6,5 +6,6 @@
   "Building accessible AI chat interfaces: the WCAG requirements most teams miss",
   "AI memory systems: giving your agent context that persists across sessions",
   "How Signals changed state management and whether it matters outside of frameworks",
-  "Prompt injection in production AI systems: the attack surface most teams are ignoring"
+  "Prompt injection in production AI systems: the attack surface most teams are ignoring",
+  "How I run automated security scanning in CI without drowning in false positives"
 ]

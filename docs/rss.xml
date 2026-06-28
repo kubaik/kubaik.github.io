@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 16:40:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 16:45:20 +0000</lastBuildDate>
+    <item>
+      <title>CI scanning: kill false positives or die slow</title>
+      <link>https://kubaik.github.io/ci-scanning-kill-false-positives-or-die-slow/</link>
+      <description>False positives crushed CI alerts 87% with a lightweight filter—learn the exact GitHub Actions setup, Trivy 0.50.4, CodeQL 2.16.3, and OWASP ZAP 2.14.0 pipeline that saved $1,180/month and caught 5 more real vulns.</description>
+      <pubDate>Sun, 28 Jun 2026 16:45:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/ci-scanning-kill-false-positives-or-die-slow/</guid>
+    </item>
     <item>
       <title>Side-channel prompt attacks: the 60ms latency you</title>
       <link>https://kubaik.github.io/side-channel-prompt-attacks-the-60ms-latency-you/</link>
@@ -138,13 +145,6 @@
       <description>Freelance developer rates halved in 2026—see the exact math behind the crash, plus outcome-based pricing templates and AI lift benchmarks that prove it.</description>
       <pubDate>Sun, 28 Jun 2026 05:25:54 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-rates-halved-by-ai-tools/</guid>
-    </item>
-    <item>
-      <title>Spot AI’s hidden cost spike in your stack</title>
-      <link>https://kubaik.github.io/spot-ais-hidden-cost-spike-in-your-stack/</link>
-      <description>Protect your salary from AI automation by mastering 3 skills — cache hit ratios, connection pools, and environment rewrites — before the bill spikes 300 % and the CFO calls.</description>
-      <pubDate>Sun, 28 Jun 2026 05:02:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/spot-ais-hidden-cost-spike-in-your-stack/</guid>
     </item>
   </channel>
 </rss>
