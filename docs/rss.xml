@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 21:06:12 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 21:11:11 +0000</lastBuildDate>
+    <item>
+      <title>When flags become experiments</title>
+      <link>https://kubaik.github.io/when-flags-become-experiments/</link>
+      <description>Cut experimentation costs 90% with feature flags that work offline. Compare 7 platforms for SMS, low-bandwidth, and $5/month budgets — benchmarks, code, and rollback tricks included.</description>
+      <pubDate>Sun, 28 Jun 2026 21:10:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/when-flags-become-experiments/</guid>
+    </item>
     <item>
       <title>IDPs in 2026: by team size, by pain</title>
       <link>https://kubaik.github.io/idps-in-2026-by-team-size-by-pain/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI microservice latency 60% with AWS Local Zones in Africa — cost, performance, and the LocalStack trap most teams miss.</description>
       <pubDate>Sun, 28 Jun 2026 12:14:45 +0000</pubDate>
       <guid>https://kubaik.github.io/aws-local-zones-vs-localstack-ai-microservices-in/</guid>
-    </item>
-    <item>
-      <title>CI/CD pipelines stall with GPU pods: 2026 benchmarks</title>
-      <link>https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/</link>
-      <description>Cut CI/CD pipeline stalls 80% with GPU quotas and scheduler fixes — 2026 benchmarks, cost trade-offs, and rollout playbooks for AI workloads.</description>
-      <pubDate>Sun, 28 Jun 2026 11:45:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/</guid>
     </item>
   </channel>
 </rss>

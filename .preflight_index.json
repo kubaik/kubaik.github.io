@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T20:09:53.078534",
+  "built_at": "2026-06-28T21:11:00.772952",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3380,6 +3380,11 @@
       "slug": "idps-in-2026-by-team-size-by-pain",
       "title": "IDPs in 2026: by team size, by pain",
       "summary": "The official documentation for platform engineering is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Internal Developer Platforms"
+    },
+    {
+      "slug": "when-flags-become-experiments",
+      "title": "When flags become experiments",
+      "summary": "I ran into this feature flag problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks in 2026 trying to add A/B"
     }
   ]
 }
