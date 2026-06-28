@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T08:36:41.763409",
+  "built_at": "2026-06-28T09:01:56.741665",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3250,6 +3250,11 @@
       "slug": "fix-llm-top-10-risks-before-prod-2026",
       "title": "Fix LLM top 10 risks before prod 2026",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026, after shipping three LLM-powered production apps, I ran into the same four issu"
+    },
+    {
+      "slug": "test-ai-code-not-the-ai",
+      "title": "Test AI code, not the AI",
+      "summary": "I ran into this write tests problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026 I joined a team building a custom"
     }
   ]
 }

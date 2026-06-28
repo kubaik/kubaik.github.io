@@ -67,5 +67,6 @@
   "How prompt injection attacks work and why your AI product is probably vulnerable",
   "MCP servers in 2026: the protocol that quietly became infrastructure",
   "How feature flag systems evolved into full experimentation platforms",
-  "The OWASP Top 10 for LLM applications: the vulnerabilities specific to AI-powered apps"
+  "The OWASP Top 10 for LLM applications: the vulnerabilities specific to AI-powered apps",
+  "How I write tests for AI-assisted code without testing the AI"
 ]
