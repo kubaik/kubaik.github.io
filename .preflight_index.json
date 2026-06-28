@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T01:58:55.493377",
+  "built_at": "2026-06-28T02:57:01.195752",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3220,6 +3220,11 @@
       "slug": "migrations-stop-running-them-live",
       "title": "Migrations? Stop running them live",
       "summary": "A colleague asked me about handle database during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) T"
+    },
+    {
+      "slug": "survive-ai-saas-disruption-in-2026",
+      "title": "Survive AI SaaS disruption in 2026",
+      "summary": "Most pick saas guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026, our Nairobi fintech team shipped a vertical SaaS for Kenyan SMEs that automated"
     }
   ]
 }

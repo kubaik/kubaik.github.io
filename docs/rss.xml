@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 01:59:05 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 02:57:11 +0000</lastBuildDate>
+    <item>
+      <title>Survive AI SaaS disruption in 2026</title>
+      <link>https://kubaik.github.io/survive-ai-saas-disruption-in-2026/</link>
+      <description>Find a SaaS niche immune to AI disruption — local regulation, offline constraints, and incumbents’ blind spots. PowerRec went from zero to 1,200 merchants by targeting Kenya Power receipts.</description>
+      <pubDate>Sun, 28 Jun 2026 02:56:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/survive-ai-saas-disruption-in-2026/</guid>
+    </item>
     <item>
       <title>Migrations? Stop running them live</title>
       <link>https://kubaik.github.io/migrations-stop-running-them-live/</link>
@@ -138,13 +145,6 @@
       <description>Cut test flakes 85% and suite runtime 70% with Playwright 1.45 and Vitest 1.5.0 — the real migration path from Cypress, with MSW mocking and Percy visual tests.</description>
       <pubDate>Sat, 27 Jun 2026 17:01:17 +0000</pubDate>
       <guid>https://kubaik.github.io/frontend-testing-in-2026-playwright-beats-cypress/</guid>
-    </item>
-    <item>
-      <title>AI tools broke my principles</title>
-      <link>https://kubaik.github.io/ai-tools-broke-my-principles/</link>
-      <description>AI tools increased production incidents 18% in 2026 — here’s the mental model and tooling changes to make them safe: contracts, contract tests, and rollback plans before merging any AI output.</description>
-      <pubDate>Sat, 27 Jun 2026 16:40:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-tools-broke-my-principles/</guid>
     </item>
   </channel>
 </rss>
