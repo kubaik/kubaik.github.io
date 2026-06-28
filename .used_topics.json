@@ -3,5 +3,6 @@
   "Building for eventual consistency: the real-world patterns behind systems that stay up",
   "Building webhook systems in 2026: delivery guarantees, retries, and idempotency",
   "How post-quantum cryptography affects the TLS stack you're running today",
-  "Building accessible AI chat interfaces: the WCAG requirements most teams miss"
+  "Building accessible AI chat interfaces: the WCAG requirements most teams miss",
+  "AI memory systems: giving your agent context that persists across sessions"
 ]
