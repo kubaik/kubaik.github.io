@@ -2514,37 +2514,6 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
-    # ─────────────────────────────────────────────────────────────────────────
-    # NOT_FOUND_TMPL — instant redirect to home page (no visible 404 UI)
-    #
-    # Changes vs the countdown version:
-    #   1. Meta refresh interval dropped from 8s -> 0s, so browsers with JS
-    #      disabled redirect immediately instead of waiting.
-    #   2. The JS redirect now fires synchronously on script execution
-    #      (no setInterval/countdown) — the user is sent to "/" as soon as
-    #      the 404 page's <script> tag runs, before first paint completes
-    #      in most browsers.
-    #   3. Removed the countdown/progress-bar UI entirely (.redirect-notice,
-    #      #countdown, #redirect-bar, the ticker) since nothing is shown
-    #      to the user under normal conditions.
-    #   4. Kept a minimal static fallback (heading + "Go to homepage" link)
-    #      that only becomes visible if BOTH the meta-refresh and the JS
-    #      redirect are blocked by the browser/network (e.g. some corporate
-    #      proxies strip meta-refresh and disable JS) — this prevents a
-    #      true dead end for that edge case.
-    #   5. Still uses window.location.replace() so the 404 URL is never
-    #      added to browser history — pressing Back goes to wherever the
-    #      user came from, not back into the redirect.
-    #   6. base_path is used consistently, so this still works correctly
-    #      on root-domain and GitHub Pages project-site subdirectory
-    #      deployments.
-    #   7. docs/404.html is still generated and still carries
-    #      <meta name="robots" content="noindex, nofollow">, so hosts that
-    #      serve it with a real 404 HTTP status (GitHub Pages, Netlify,
-    #      Apache via ErrorDocument) continue to report "not found"
-    #      correctly to crawlers/monitoring even though end users never
-    #      see this page rendered.
-    # ─────────────────────────────────────────────────────────────────────────
     NOT_FOUND_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
