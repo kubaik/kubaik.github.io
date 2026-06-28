@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T22:58:13.143618",
+  "built_at": "2026-06-28T23:11:10.480787",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3405,6 +3405,11 @@
       "slug": "consolidate-redis-kafka-pgbouncer-into-postgres-17",
       "title": "Consolidate Redis, Kafka, pgBouncer into Postgres 17",
       "summary": "I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In late 2026 our Jakarta team faced a classic scaling cliff: writes to K"
+    },
+    {
+      "slug": "10-ai-wrappers-that-shipped-in-2026-8-died-fast",
+      "title": "10 AI wrappers that shipped in 2026 — 8 died fast",
+      "summary": "I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026, I joined a 14-person star"
     }
   ]
 }
