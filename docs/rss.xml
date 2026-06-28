@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 05:21:26 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 05:26:07 +0000</lastBuildDate>
+    <item>
+      <title>Freelance rates halved by AI tools</title>
+      <link>https://kubaik.github.io/freelance-rates-halved-by-ai-tools/</link>
+      <description>Freelance developer rates halved in 2026—see the exact math behind the crash, plus outcome-based pricing templates and AI lift benchmarks that prove it.</description>
+      <pubDate>Sun, 28 Jun 2026 05:25:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-rates-halved-by-ai-tools/</guid>
+    </item>
     <item>
       <title>Spot AI’s hidden cost spike in your stack</title>
       <link>https://kubaik.github.io/spot-ais-hidden-cost-spike-in-your-stack/</link>
@@ -138,13 +145,6 @@
       <description>Cut PR review time 71% with GitHub Copilot Workspace—real numbers, prompts, and the calibration mistake most teams make first</description>
       <pubDate>Sat, 27 Jun 2026 18:05:39 +0000</pubDate>
       <guid>https://kubaik.github.io/pair-programming-with-ai-5-tools-we-tried/</guid>
-    </item>
-    <item>
-      <title>Slay prompt injection before it bleeds your cloud</title>
-      <link>https://kubaik.github.io/slay-prompt-injection-before-it-bleeds-your-cloud/</link>
-      <description>Cut cloud costs 20% by blocking prompt injection — the 42 attack vectors our staging tests missed and the one-line fix that caught them.</description>
-      <pubDate>Sat, 27 Jun 2026 17:49:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/slay-prompt-injection-before-it-bleeds-your-cloud/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T05:02:41.060904",
+  "built_at": "2026-06-28T05:25:57.047767",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3230,6 +3230,11 @@
       "slug": "spot-ais-hidden-cost-spike-in-your-stack",
       "title": "Spot AI’s hidden cost spike in your stack",
       "summary": "After reviewing a lot of code that touches skills that, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it’s confusing You show up to work tomorrow and the AI pair programmer you trusted refactored every junior "
+    },
+    {
+      "slug": "freelance-rates-halved-by-ai-tools",
+      "title": "Freelance rates halved by AI tools",
+      "summary": "The short version: the conventional advice on freelance developer is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Freelance rates for developers in 2026 are half what they were in 2026 because"
     }
   ]
 }
