@@ -18,5 +18,6 @@
   "The OWASP Top 10 for LLM applications: the vulnerabilities specific to AI-powered apps",
   "Platform engineering in 2026: what internal developer platforms look like at different company sizes",
   "How feature flag systems evolved into full experimentation platforms",
-  "The infrastructure stack for a Nairobi-based SaaS in 2026: a real cost breakdown"
+  "The infrastructure stack for a Nairobi-based SaaS in 2026: a real cost breakdown",
+  "Tool-calling patterns that work in production vs the ones that break under load"
 ]
