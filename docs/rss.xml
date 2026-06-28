@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 17:17:26 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 17:22:16 +0000</lastBuildDate>
+    <item>
+      <title>Bank APIs broke under African 2G</title>
+      <link>https://kubaik.github.io/bank-apis-broke-under-african-2g/</link>
+      <description>Cut fintech disputes 75% with shorter cache TTLs and event-driven invalidation — the real rules African APIs need in 2026</description>
+      <pubDate>Sun, 28 Jun 2026 17:22:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/bank-apis-broke-under-african-2g/</guid>
+    </item>
     <item>
       <title>CI scanning: kill false positives or die slow</title>
       <link>https://kubaik.github.io/ci-scanning-kill-false-positives-or-die-slow/</link>
@@ -138,13 +145,6 @@
       <description>Cut MCP 204 errors 90% with keep-alive headers and 60s timeouts — connection pooling, CDN traps, and the $40 DigitalOcean fix most teams miss in 2026.</description>
       <pubDate>Sun, 28 Jun 2026 06:53:32 +0000</pubDate>
       <guid>https://kubaik.github.io/mcp-errors-why-servers-go-quiet-in-2026/</guid>
-    </item>
-    <item>
-      <title>Freelance rates halved by AI tools</title>
-      <link>https://kubaik.github.io/freelance-rates-halved-by-ai-tools/</link>
-      <description>Freelance developer rates halved in 2026—see the exact math behind the crash, plus outcome-based pricing templates and AI lift benchmarks that prove it.</description>
-      <pubDate>Sun, 28 Jun 2026 05:25:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-rates-halved-by-ai-tools/</guid>
     </item>
   </channel>
 </rss>

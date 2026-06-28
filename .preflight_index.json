@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T17:01:58.810181",
+  "built_at": "2026-06-28T17:22:05.723038",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3340,6 +3340,11 @@
       "slug": "hidden-ai-agent-costs-tokens-retries-timeouts",
       "title": "Hidden AI agent costs: tokens, retries, timeouts",
       "summary": "The official documentation for hidden costs is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs The marketing copy says AI agents ar"
+    },
+    {
+      "slug": "bank-apis-broke-under-african-2g",
+      "title": "Bank APIs broke under African 2G",
+      "summary": "A colleague asked me about african fintech during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) M"
     }
   ]
 }

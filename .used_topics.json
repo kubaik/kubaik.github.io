@@ -8,5 +8,6 @@
   "How Signals changed state management and whether it matters outside of frameworks",
   "Prompt injection in production AI systems: the attack surface most teams are ignoring",
   "How I run automated security scanning in CI without drowning in false positives",
-  "The hidden costs of running AI agents in production: tokens, retries, and timeouts"
+  "The hidden costs of running AI agents in production: tokens, retries, and timeouts",
+  "How African fintech regulations changed API design requirements in 2026"
 ]
