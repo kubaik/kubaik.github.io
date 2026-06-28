@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T23:38:30.638182",
+  "built_at": "2026-06-28T23:51:27.494759",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3415,6 +3415,11 @@
       "slug": "6-ai-stacks-that-level-the-dev-playing-field-in-2026",
       "title": "6 AI stacks that level the dev playing field in 2026",
       "summary": "I ran into this east african problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026 I was asked to help a Nairobi fi"
+    },
+    {
+      "slug": "1m-tokens-wont-fix-your-prompt",
+      "title": "1M tokens won’t fix your prompt",
+      "summary": "A colleague asked me about context window during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Mo"
     }
   ]
 }
