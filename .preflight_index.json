@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-28T20:05:36.759570",
+  "built_at": "2026-06-28T20:09:53.078534",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3375,6 +3375,11 @@
       "slug": "llms-hidden-owasp-pitfalls-in-2026",
       "title": "LLMs' hidden OWASP pitfalls in 2026",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I spent three days debugging why our LLM app started returning plausible but factually w"
+    },
+    {
+      "slug": "idps-in-2026-by-team-size-by-pain",
+      "title": "IDPs in 2026: by team size, by pain",
+      "summary": "The official documentation for platform engineering is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Internal Developer Platforms"
     }
   ]
 }

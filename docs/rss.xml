@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 28 Jun 2026 20:05:46 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jun 2026 20:10:03 +0000</lastBuildDate>
+    <item>
+      <title>IDPs in 2026: by team size, by pain</title>
+      <link>https://kubaik.github.io/idps-in-2026-by-team-size-by-pain/</link>
+      <description>A 2026 survey by the Platform Engineering Guild found that 68% of teams reported their IDP slowed down new engineers in the first month — not because the…</description>
+      <pubDate>Sun, 28 Jun 2026 20:09:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/idps-in-2026-by-team-size-by-pain/</guid>
+    </item>
     <item>
       <title>LLMs&apos; hidden OWASP pitfalls in 2026</title>
       <link>https://kubaik.github.io/llms-hidden-owasp-pitfalls-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut CI/CD pipeline stalls 80% with GPU quotas and scheduler fixes — 2026 benchmarks, cost trade-offs, and rollout playbooks for AI workloads.</description>
       <pubDate>Sun, 28 Jun 2026 11:45:59 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/</guid>
-    </item>
-    <item>
-      <title>Harden AWS IAM in 30 minutes</title>
-      <link>https://kubaik.github.io/harden-aws-iam-in-30-minutes/</link>
-      <description>Cut AWS IAM spending and blast radius 70% in 30 minutes using Access Analyzer, simulate-principal-policy, and CloudFormation ManagedPolicy — no hand-crafted JSON needed.</description>
-      <pubDate>Sun, 28 Jun 2026 11:16:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/harden-aws-iam-in-30-minutes/</guid>
     </item>
   </channel>
 </rss>
