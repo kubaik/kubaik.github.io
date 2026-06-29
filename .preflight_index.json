@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-29T22:16:27.556800",
+  "built_at": "2026-06-29T22:42:07.235848",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3540,6 +3540,11 @@
       "slug": "pagerduty-ai-alerts-3-fixes-that-cut-wake-ups-83",
       "title": "PagerDuty + AI alerts: 3 fixes that cut wake-ups 83%",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In late 2026 I joined an e-commerce platform that handled ~12M orders/day with a 99.95% "
+    },
+    {
+      "slug": "ai-code-review-the-20-trap-in-production",
+      "title": "AI code review: the 20% trap in production",
+      "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 47% of pull requests reviewed in GitHub Enterprise Cloud still"
     }
   ]
 }
