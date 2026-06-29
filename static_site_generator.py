@@ -2628,6 +2628,7 @@ def _build_templates() -> dict:
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="{{ base_path }}/static/consent.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Content Policy — {{ site_name }}</title>
@@ -2635,7 +2636,6 @@ def _build_templates() -> dict:
     <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/ai-content-policy/">
     <meta name="robots" content="index, follow">
-    <script src="{{ base_path }}/static/consent.js"></script>
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="manifest" href="{{ base_path }}/manifest.json">
@@ -2769,6 +2769,7 @@ def _build_templates() -> dict:
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="{{ base_path }}/static/consent.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DMCA &amp; Copyright Policy — {{ site_name }}</title>
@@ -2776,7 +2777,6 @@ def _build_templates() -> dict:
     <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/dmca/">
     <meta name="robots" content="index, follow">
-    <script src="{{ base_path }}/static/consent.js"></script>
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="manifest" href="{{ base_path }}/manifest.json">
