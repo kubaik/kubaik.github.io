@@ -522,6 +522,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
 
   var CONSENT_KEY = 'cookie_consent_v1';
   var BANNER_ID   = 'cookie-consent-banner';
+  var STYLE_ID    = 'cookie-consent-banner-styles';
 
   function getCookie(name) {
     var escapedName = name.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1');
@@ -543,10 +544,10 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
     var el = document.getElementById(BANNER_ID);
     if (el) {
       el.style.opacity = '0';
-      el.style.transform = 'translateY(100%)';
+      el.style.transform = 'translateY(20px)';
       setTimeout(function () {
         if (el.parentNode) el.remove();
-      }, 350);
+      }, 300);
     }
   }
 
@@ -597,46 +598,77 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
     removeBanner();
   }
 
+  // FIX: banner styling now lives in an injected <style> tag (rather than
+  // inline JS styles) so it can respond to `prefers-color-scheme` — dark
+  // theme by default, lighter theme for users who have light mode set,
+  // matching the design used elsewhere on the site. This also gives us
+  // a proper :focus-visible ring for keyboard users.
+  function injectStyles() {
+    if (document.getElementById(STYLE_ID)) return;
+    var style = document.createElement('style');
+    style.id = STYLE_ID;
+    style.textContent = [
+      '#' + BANNER_ID + '{',
+        'position:fixed;bottom:0;left:0;right:0;z-index:99999;',
+        'background:#1e1b4b;color:#e0e7ff;padding:16px 24px;',
+        'font-family:system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;',
+        'box-shadow:0 -4px 24px rgba(0,0,0,0.3);',
+        'opacity:0;transform:translateY(20px);',
+        'transition:opacity .3s ease,transform .3s ease;',
+      '}',
+      '#' + BANNER_ID + ' .cc-inner{',
+        'max-width:1024px;margin:0 auto;display:flex;',
+        'align-items:center;gap:16px;flex-wrap:wrap;',
+      '}',
+      '#' + BANNER_ID + ' .cc-text{flex:1 1 260px;min-width:240px;margin:0;}',
+      '#' + BANNER_ID + ' .cc-text a{color:#a5b4fc;}',
+      '#' + BANNER_ID + ' .cc-buttons{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap;}',
+      '#' + BANNER_ID + ' .cc-btn{',
+        'padding:8px 18px;border-radius:6px;border:none;',
+        'font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap;',
+      '}',
+      '#' + BANNER_ID + ' .cc-btn:focus-visible{outline:3px solid #818cf8;outline-offset:2px;}',
+      '#' + BANNER_ID + ' .cc-accept{background:#6366f1;color:#fff;}',
+      '#' + BANNER_ID + ' .cc-accept:hover{background:#4f46e5;}',
+      '#' + BANNER_ID + ' .cc-decline{background:transparent;color:#e0e7ff;border:1px solid #6366f1;}',
+      '#' + BANNER_ID + ' .cc-decline:hover{background:rgba(99,102,241,0.15);}',
+      '@media (prefers-color-scheme: light){',
+        '#' + BANNER_ID + '{background:#f5f3ff;color:#1e1b4b;box-shadow:0 -4px 24px rgba(0,0,0,0.12);}',
+        '#' + BANNER_ID + ' .cc-text a{color:#4f46e5;}',
+        '#' + BANNER_ID + ' .cc-decline{color:#1e1b4b;border-color:#4f46e5;}',
+        '#' + BANNER_ID + ' .cc-decline:hover{background:rgba(79,70,229,0.08);}',
+      '}'
+    ].join('');
+    document.head.appendChild(style);
+  }
+
   function showBanner(privacyUrl) {
     if (document.getElementById(BANNER_ID)) return;
 
+    injectStyles();
+
     var banner = document.createElement('div');
     banner.id = BANNER_ID;
+    // FIX: role="dialog" + aria-modal="true" + aria-hidden management,
+    // matching the accessible banner pattern (was aria-modal="false" with
+    // no aria-hidden state before).
     banner.setAttribute('role', 'dialog');
+    banner.setAttribute('aria-modal', 'true');
     banner.setAttribute('aria-label', 'Cookie consent');
-    banner.setAttribute('aria-modal', 'false');
-    banner.setAttribute('aria-live', 'polite');
+    banner.setAttribute('aria-hidden', 'false');
 
     banner.innerHTML = [
-      '<div style="max-width:760px;margin:0 auto;display:flex;flex-wrap:wrap;',
-      'align-items:center;gap:0.75rem 1.5rem;justify-content:space-between;">',
-      '<p style="margin:0;font-size:0.86rem;color:#333;flex:1 1 260px;line-height:1.5;">',
-      'We use cookies to improve your experience and serve relevant ads. ',
-      '<a href="' + privacyUrl + '" style="color:#6366f1;text-decoration:underline;">',
-      'Privacy Policy</a>',
-      '</p>',
-      '<div style="display:flex;gap:0.5rem;flex-shrink:0;">',
-      '<button id="cc-accept" aria-label="Accept cookies" style="background:#6366f1;color:#fff;border:none;padding:0.45rem 1.1rem;border-radius:20px;cursor:pointer;font-size:0.84rem;font-weight:600;">Accept</button>',
-      '<button id="cc-decline" aria-label="Decline cookies" style="background:#f0f0f0;color:#555;border:none;padding:0.45rem 1.1rem;border-radius:20px;cursor:pointer;font-size:0.84rem;">Decline</button>',
-      '</div></div>'
+      '<div class="cc-inner">',
+        '<p class="cc-text">',
+          'We use cookies to improve your experience and serve relevant ads. ',
+          '<a href="' + privacyUrl + '">Privacy Policy</a>',
+        '</p>',
+        '<div class="cc-buttons">',
+          '<button type="button" class="cc-btn cc-decline" id="cc-decline" aria-label="Decline cookies">Decline</button>',
+          '<button type="button" class="cc-btn cc-accept" id="cc-accept" aria-label="Accept cookies">Accept</button>',
+        '</div>',
+      '</div>'
     ].join('');
-
-    Object.assign(banner.style, {
-      position:           'fixed',
-      bottom:             '0',
-      left:               '0',
-      right:              '0',
-      background:         'rgba(255,255,255,0.97)',
-      backdropFilter:     'blur(8px)',
-      WebkitBackdropFilter: 'blur(8px)',
-      borderTop:          '1px solid #e0e0e0',
-      padding:            '0.9rem 1.25rem',
-      zIndex:             '99999',
-      boxShadow:          '0 -2px 16px rgba(0,0,0,0.07)',
-      opacity:            '0',
-      transform:          'translateY(20px)',
-      transition:         'opacity 0.3s ease, transform 0.3s ease'
-    });
 
     document.body.appendChild(banner);
 
@@ -649,6 +681,28 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
 
     document.getElementById('cc-accept').addEventListener('click', accept);
     document.getElementById('cc-decline').addEventListener('click', decline);
+
+    // FIX: focus management — move focus into the banner once it renders,
+    // so keyboard and screen-reader users land on it immediately rather
+    // than having to tab through the rest of the page first.
+    var firstBtn = banner.querySelector('.cc-btn');
+    if (firstBtn) {
+      setTimeout(function () { firstBtn.focus(); }, 100);
+    }
+
+    // FIX: keyboard trap (WCAG 2.1 SC 2.1.2) — Tab/Shift+Tab cycle between
+    // the two buttons while the banner is open, instead of letting focus
+    // escape into the rest of the page.
+    banner.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab') return;
+      var focusable = this.querySelectorAll('.cc-btn');
+      var first = focusable[0], last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
+    });
 
     document.addEventListener('keydown', function onKey(e) {
       if (e.key === 'Escape') {
