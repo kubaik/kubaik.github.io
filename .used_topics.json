@@ -38,5 +38,6 @@
   "How I built and launched a SaaS in 6 weeks using AI tools for 80% of the code",
   "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress",
   "How pgvector changed our architecture: replacing Pinecone with what we already had",
-  "M-Pesa Daraja 2.0 in 2026: what changed and how to migrate your integration"
+  "M-Pesa Daraja 2.0 in 2026: what changed and how to migrate your integration",
+  "Why vibe coding works for MVPs and fails for anything you need to maintain"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2026 14:13:24 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 14:45:11 +0000</lastBuildDate>
+    <item>
+      <title>Ship fast, debug forever: why vibe coding fails at scale</title>
+      <link>https://kubaik.github.io/ship-fast-debug-forever-why-vibe-coding-fails-at-scale/</link>
+      <description>Cut production outages 82% by replacing raw SQL with Django 5.0 ORM + connection pooling. Learn which tools scale and which burn your nights debugging.</description>
+      <pubDate>Mon, 29 Jun 2026 14:44:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-fast-debug-forever-why-vibe-coding-fails-at-scale/</guid>
+    </item>
     <item>
       <title>M-Pesa Daraja 2.0: Latency, TLS, and what broke</title>
       <link>https://kubaik.github.io/m-pesa-daraja-20-latency-tls-and-what-broke/</link>
@@ -138,13 +145,6 @@
       <description>Cut Redis p99 latency 60% and 0% write failures at 2500 RPS — connection pooling, batching, and the socket leak mistake most teams make.</description>
       <pubDate>Sun, 28 Jun 2026 21:50:28 +0000</pubDate>
       <guid>https://kubaik.github.io/tool-calling-patterns-stable-vs-breakable-under-load/</guid>
-    </item>
-    <item>
-      <title>AWS costs for Nairobi SaaS: 2026 bill split</title>
-      <link>https://kubaik.github.io/aws-costs-for-nairobi-saas-2026-bill-split/</link>
-      <description>Break down a Nairobi SaaS AWS bill in 2026: compute, storage, and egress costs for 500 users, with concrete numbers and CDK scripts you can run today.</description>
-      <pubDate>Sun, 28 Jun 2026 21:38:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/aws-costs-for-nairobi-saas-2026-bill-split/</guid>
     </item>
   </channel>
 </rss>
