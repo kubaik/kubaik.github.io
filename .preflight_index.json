@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-29T19:46:53.085855",
+  "built_at": "2026-06-29T20:08:04.767620",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3520,6 +3520,11 @@
       "slug": "ai-revives-unloved-legacy-codebases",
       "title": "AI revives unloved legacy codebases",
       "summary": "The official documentation for use maintain is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Legacy codebases don’t rot because t"
+    },
+    {
+      "slug": "ai-ops-pagerduty-vs-opsgenie-which-burns-your-team",
+      "title": "AI ops: PagerDuty vs Opsgenie — which burns your team",
+      "summary": "I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now I ran into a situation last year where our on-call rotation starte"
     }
   ]
 }
