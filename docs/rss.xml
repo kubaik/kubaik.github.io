@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2026 14:08:22 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 14:13:24 +0000</lastBuildDate>
+    <item>
+      <title>M-Pesa Daraja 2.0: Latency, TLS, and what broke</title>
+      <link>https://kubaik.github.io/m-pesa-daraja-20-latency-tls-and-what-broke/</link>
+      <description>Migrate M-Pesa Daraja API to 2.0 in 2026 to avoid 300 ms latency spikes and 401 errors — JWT auth, TLS 1.3, signature header and production gotchas included.</description>
+      <pubDate>Mon, 29 Jun 2026 14:13:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/m-pesa-daraja-20-latency-tls-and-what-broke/</guid>
+    </item>
     <item>
       <title>pgvector’s RAM trick outshone Pinecone</title>
       <link>https://kubaik.github.io/pgvectors-ram-trick-outshone-pinecone/</link>
@@ -138,13 +145,6 @@
       <description>Break down a Nairobi SaaS AWS bill in 2026: compute, storage, and egress costs for 500 users, with concrete numbers and CDK scripts you can run today.</description>
       <pubDate>Sun, 28 Jun 2026 21:38:03 +0000</pubDate>
       <guid>https://kubaik.github.io/aws-costs-for-nairobi-saas-2026-bill-split/</guid>
-    </item>
-    <item>
-      <title>When flags become experiments</title>
-      <link>https://kubaik.github.io/when-flags-become-experiments/</link>
-      <description>Cut experimentation costs 90% with feature flags that work offline. Compare 7 platforms for SMS, low-bandwidth, and $5/month budgets — benchmarks, code, and rollback tricks included.</description>
-      <pubDate>Sun, 28 Jun 2026 21:10:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/when-flags-become-experiments/</guid>
     </item>
   </channel>
 </rss>
