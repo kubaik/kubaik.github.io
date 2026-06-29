@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2026 14:31:01 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 11:44:35 +0000</lastBuildDate>
+    <item>
+      <title>Debugging AI&apos;s 80% SaaS shortcut in production</title>
+      <link>https://kubaik.github.io/debugging-ais-80-saas-shortcut-in-production/</link>
+      <description>Built a SaaS in 6 weeks using AI for 80% of the code — here’s what actually worked, the mistakes I made, and the hard numbers from production in 2026.</description>
+      <pubDate>Mon, 29 Jun 2026 11:44:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/debugging-ais-80-saas-shortcut-in-production/</guid>
+    </item>
     <item>
       <title>Defend your stack for $5/user</title>
       <link>https://kubaik.github.io/defend-your-stack-for-5user/</link>
@@ -138,13 +145,6 @@
       <description>Detect 95% of LLM prompt injection attacks with input validation, caching, and Redis 7.2 observability in 2026</description>
       <pubDate>Sun, 28 Jun 2026 20:05:34 +0000</pubDate>
       <guid>https://kubaik.github.io/llms-hidden-owasp-pitfalls-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI hiring: what actually moves the bar</title>
-      <link>https://kubaik.github.io/ai-hiring-what-actually-moves-the-bar/</link>
-      <description>Cut first-round review time 65% with AI resume ranking and live coding scoring — pgvector, pytest 7.4, and sentences-transformers 2.3.1 bring hidden requirements to light.</description>
-      <pubDate>Sun, 28 Jun 2026 19:56:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-hiring-what-actually-moves-the-bar/</guid>
     </item>
   </channel>
 </rss>
