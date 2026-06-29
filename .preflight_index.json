@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-29T17:45:59.305490",
+  "built_at": "2026-06-29T19:28:17.505974",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3510,6 +3510,11 @@
       "slug": "tame-python-asyncs-hidden-traps",
       "title": "Tame Python async’s hidden traps",
       "summary": "I've seen the same async python mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Async Python in 2026 is everywhere — FastAPI 0.111, Django 5.1 async view"
+    },
+    {
+      "slug": "show-real-work-not-ai-clones",
+      "title": "Show real work, not AI clones",
+      "summary": "Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, our Lagos team hired 12 engineers for our fintech product used by 3 mil"
     }
   ]
 }

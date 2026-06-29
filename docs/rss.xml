@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2026 19:23:03 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 19:28:29 +0000</lastBuildDate>
+    <item>
+      <title>Show real work, not AI clones</title>
+      <link>https://kubaik.github.io/show-real-work-not-ai-clones/</link>
+      <description>Build a portfolio that beats AI clones — show constraints, resilience code, and failure metrics. In 2026, shipping under real conditions beats feature lists every time.</description>
+      <pubDate>Mon, 29 Jun 2026 19:28:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/show-real-work-not-ai-clones/</guid>
+    </item>
     <item>
       <title>Tame Python async’s hidden traps</title>
       <link>https://kubaik.github.io/tame-python-asyncs-hidden-traps/</link>
@@ -138,13 +145,6 @@
       <description>Cut dev time 42% with AI: GitHub Copilot Enterprise, Cursor IDE and the exact ROI numbers Nairobi teams reported in 2026</description>
       <pubDate>Sun, 28 Jun 2026 23:38:27 +0000</pubDate>
       <guid>https://kubaik.github.io/6-ai-stacks-that-level-the-dev-playing-field-in-2026/</guid>
-    </item>
-    <item>
-      <title>10 AI wrappers that shipped in 2026 — 8 died fast</title>
-      <link>https://kubaik.github.io/10-ai-wrappers-that-shipped-in-2026-8-died-fast/</link>
-      <description>Cut LLM latency 57% and costs 24% with LlamaStack v1.3 — the only AI wrapper that survived 2026 without getting dropped</description>
-      <pubDate>Sun, 28 Jun 2026 23:11:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/10-ai-wrappers-that-shipped-in-2026-8-died-fast/</guid>
     </item>
   </channel>
 </rss>
