@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2026 10:25:04 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 10:29:05 +0000</lastBuildDate>
+    <item>
+      <title>Defend your stack for $5/user</title>
+      <link>https://kubaik.github.io/defend-your-stack-for-5user/</link>
+      <description>Cut zero-trust costs 80%: Cloudflare vs Tailscale latency, setup time, and ISP egress fees in 2026. Real numbers from a 12-person Latin America team.</description>
+      <pubDate>Mon, 29 Jun 2026 10:28:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/defend-your-stack-for-5user/</guid>
+    </item>
     <item>
       <title>3 HTMX trade-offs nobody told you about</title>
       <link>https://kubaik.github.io/3-htmx-trade-offs-nobody-told-you-about/</link>
@@ -138,13 +145,6 @@
       <description>Cut first-round review time 65% with AI resume ranking and live coding scoring — pgvector, pytest 7.4, and sentences-transformers 2.3.1 bring hidden requirements to light.</description>
       <pubDate>Sun, 28 Jun 2026 19:56:57 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-hiring-what-actually-moves-the-bar/</guid>
-    </item>
-    <item>
-      <title>AI observability: the metrics that matter</title>
-      <link>https://kubaik.github.io/ai-observability-the-metrics-that-matter/</link>
-      <description>AI observability cuts false alerts 8× by tracking drift vectors and confidence histograms instead of just latency and errors. Learn the metrics that actually matter and how to instrument them in 2026.</description>
-      <pubDate>Sun, 28 Jun 2026 19:30:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-observability-the-metrics-that-matter/</guid>
     </item>
   </channel>
 </rss>
