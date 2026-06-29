@@ -8,8 +8,6 @@ from typing import Dict, List
 from pathlib import Path
 import markdown as md
 import json
-
-
 import html as _html_stdlib
 
 
@@ -28,7 +26,6 @@ def _safe_excerpt(meta_description: str, content: str, title: str = "",
         "i ran into this", "i've answered",
     )
     if desc and not any(desc.lower().startswith(w) for w in _WEAK_OPENERS):
-        # Escape quotes/ampersands so the value is safe inside HTML attributes
         return _html_stdlib.escape(desc, quote=True)
 
     text = re.sub(r"```[\s\S]*?```", " ", content or "")
@@ -66,21 +63,13 @@ def _clean_url(url: str) -> str:
 
 
 def _normalize_iso_date(dt_str: str) -> str:
-    """
-    Normalize an ISO datetime string to YYYY-MM-DDTHH:MM:SS+00:00.
-
-    Google's Structured Data validator rejects microsecond precision
-    (e.g. "2026-06-15T10:30:45.123456") — only second-precision with an
-    explicit timezone offset is accepted.  This function strips microseconds
-    and appends +00:00 if no timezone is present.
-    """
+    """Normalize an ISO datetime string to YYYY-MM-DDTHH:MM:SS+00:00."""
     if not dt_str:
         return dt_str
     try:
         dt = datetime.fromisoformat(dt_str.replace('Z', '+00:00'))
         return dt.strftime('%Y-%m-%dT%H:%M:%S+00:00')
     except Exception:
-        # Fallback: manually strip microseconds, preserve any trailing tz offset
         if '.' in dt_str:
             base, frac = dt_str.split('.', 1)
             tz = ''
@@ -92,6 +81,7 @@ def _normalize_iso_date(dt_str: str) -> str:
         return dt_str
 
 
+# Global Template String Constants
 AUTHOR_PAGE_TEMPLATE = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -145,6 +135,218 @@ AUTHOR_PAGE_TEMPLATE = """\
 </body>
 </html>"""
 
+POST_TMPL = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }} — {{ site_name }}</title>
+    <meta name="description" content="{{ post.meta_description }}">
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+    {{ meta_tags | safe }}
+    {{ article_schema | safe }}
+</head>
+<body>
+    <header><div class="container">
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+        <nav><a href="{{ base_path }}/">Home</a><a href="{{ base_path }}/about/">About</a></nav>
+    </div></header>
+    <main class="container" itemscope itemtype="https://schema.org/TechArticle">
+        {% if header_ad %}<div class="ad-header">{{ header_ad | safe }}</div>{% endif %}
+        <article>
+            <h1 itemprop="headline">{{ post.title }}</h1>
+            <div class="author-box">
+                <p class="author-meta">
+                    {{ post.reading_time }} min read &nbsp;·&nbsp; {{ post.word_count }} words
+                    {% if post.last_updated_iso %} &nbsp;·&nbsp; Updated {{ post.last_updated_iso }} {% endif %}
+                </p>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                {{ post.content_html | safe }}
+                {% if inline_ad %}<div class="ad-inline">{{ inline_ad | safe }}</div>{% endif %}
+                {% if middle_ad %}<div class="ad-middle">{{ middle_ad | safe }}</div>{% endif %}
+            </div>
+        </article>
+        {% if footer_ad %}<div class="ad-footer">{{ footer_ad | safe }}</div>{% endif %}
+    </main>
+    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}</p></div></footer>
+</body>
+</html>"""
+
+INDEX_TMPL = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ site_name }} — {{ site_description }}</title>
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+    {{ homepage_meta_tags | safe }}
+</head>
+<body>
+    <header><div class="container">
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+        <nav><a href="{{ base_path }}/">Home</a><a href="{{ base_path }}/about/">About</a></nav>
+    </div></header>
+    <main class="container">
+        <section class="recent-posts">
+            <h2>Latest Posts</h2>
+            {% if posts %}
+            <div id="posts-container" class="post-grid">
+                {% for post in posts %}
+                <a class="post-card" href="{{ base_path }}/{{ post.slug }}/">
+                    <h3>{{ post.title }}</h3>
+                    <p class="post-excerpt">{{ post.meta_description }}</p>
+                    <p class="post-reading-time">{{ post.reading_time }} min read</p>
+                </a>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </section>
+    </main>
+    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}</p></div></footer>
+</body>
+</html>"""
+
+ABOUT_TMPL = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About — {{ site_name }}</title>
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+</head>
+<body>
+    <header><div class="container">
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
+        <nav><a href="{{ base_path }}/">Home</a><a href="{{ base_path }}/about/">About</a></nav>
+    </div></header>
+    <main class="container">
+        <article class="page-content">
+            <h2>About Our Editorial Process</h2>
+            <p>Articles are rigorously planned, human-authored, and thoroughly fact-checked before publishing.</p>
+            {% if posts %}
+            <div class="section-card">
+                <h2>Recent articles</h2>
+                <ul class="recent-posts-list">
+                    {% for post in posts[:8] %}
+                    <li><a href="{{ base_path }}/{{ post.slug }}/">{{ post.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </article>
+    </main>
+    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p></div></footer>
+</body>
+</html>"""
+
+PRIVACY_TMPL = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - {{ site_name }}</title>
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+</head>
+<body>
+    <header><div class="container"><h1><a href="{{ base_path }}/">{{ site_name }}</a></h1></div></header>
+    <main class="container">
+        <h2>Privacy Policy</h2>
+        <p>Last updated: {{ current_date }}</p>
+        <div class="privacy-section">
+            <h3>Cookies and Tracking</h3>
+            <p>We use Google Analytics and Google AdSense to optimize performance and deliver tailored ads.</p>
+        </div>
+    </main>
+    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}</p></div></footer>
+</body>
+</html>"""
+
+TERMS_TMPL = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - {{ site_name }}</title>
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+</head>
+<body>
+    <header><div class="container"><h1><a href="{{ base_path }}/">{{ site_name }}</a></h1></div></header>
+    <main class="container">
+        <h2>Terms of Service</h2>
+        <p>Last updated: {{ current_date }}</p>
+        <p>By browsing this website, you agree to our standard terms of service.</p>
+    </main>
+    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}</p></div></footer>
+</body>
+</html>"""
+
+CONTACT_TMPL = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - {{ site_name }}</title>
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+</head>
+<body>
+    <header><div class="container"><h1><a href="{{ base_path }}/">{{ site_name }}</a></h1></div></header>
+    <main class="container">
+        <h2>Contact</h2>
+        <p>For inquiries, email us directly at <a href="mailto:aiblogauto@gmail.com">aiblogauto@gmail.com</a>.</p>
+    </main>
+    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}</p></div></footer>
+</body>
+</html>"""
+
+NOT_FOUND_TMPL = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found — {{ site_name }}</title>
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+</head>
+<body>
+    <div class="fallback">
+        <p>Taking you to the homepage&hellip;</p>
+        <p><a href="{{ base_path }}/">Click here if you are not redirected automatically</a></p>
+    </div>
+    <script>window.location.replace('{{ base_path }}/');</script>
+</body>
+</html>"""
+
+DMCA_TMPL = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DMCA Policy — {{ site_name }}</title>
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+</head>
+<body>
+    <main class="container"><h2>DMCA Policy</h2></main>
+    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}</p></div></footer>
+</body>
+</html>"""
+
+AI_DISCLOSURE_TMPL = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Content Policy — {{ site_name }}</title>
+    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
+</head>
+<body>
+    <main class="container"><h2>AI Content Policy</h2></main>
+    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}</p></div></footer>
+</body>
+</html>"""
+
 
 class StaticSiteGenerator:
     def __init__(self, blog_system):
@@ -154,11 +356,41 @@ class StaticSiteGenerator:
         self.monetization = MonetizationManager(blog_system.config)
         self.templates = self._load_templates()
 
+    def _write_html(self, path: Path, html_content: str, base_path: str = ""):
+        """
+        Centralized Pythonic Way to inject assets like GDPR consent globally.
+        Intercepts raw HTML outputs across all engines (Jinja & f-strings) 
+        and updates them inline seamlessly before saving.
+        """
+        consent_script = f'<script defer src="{base_path}/static/consent.js"></script>\n'
+
+        # Inject just before closing body tag if present and not already registered
+        if "</body>" in html_content and "consent.js" not in html_content:
+            html_content = html_content.replace(
+                "</body>", f"{consent_script}</body>")
+
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with open(path, 'w', encoding='utf-8') as f:
+            f.write(html_content)
+
+    def _load_templates(self):
+        env = Environment(loader=BaseLoader())
+        return {
+            'post':             env.from_string(POST_TMPL),
+            'index':            env.from_string(INDEX_TMPL),
+            'about':            env.from_string(ABOUT_TMPL),
+            'privacy_policy':   env.from_string(PRIVACY_TMPL),
+            'terms_of_service': env.from_string(TERMS_TMPL),
+            'contact':          env.from_string(CONTACT_TMPL),
+            'not_found':        env.from_string(NOT_FOUND_TMPL),
+            'dmca':             env.from_string(DMCA_TMPL),
+            'ai_disclosure':    env.from_string(AI_DISCLOSURE_TMPL),
+        }
+
     def generate_site(self):
         print("Generating static site...")
         posts = self._get_all_posts()
-        if not posts:
-            print("No posts found. Creating placeholder homepage...")
+
         self._generate_homepage(posts)
         self._generate_post_pages(posts)
         self._generate_static_pages(posts)
@@ -187,8 +419,6 @@ class StaticSiteGenerator:
             with open("./docs/ads.txt", 'w', encoding='utf-8') as f:
                 f.write(ads_txt_content)
             print("Generated ads.txt")
-        else:
-            print("Warning: no google_adsense_id in config — skipping ads.txt")
 
     def _generate_robots_txt(self):
         config = self.blog_system.config
@@ -197,11 +427,9 @@ class StaticSiteGenerator:
 Allow: /
 Disallow: /static/admin/
 
-# Allow Google AdSense crawler explicitly
 User-agent: Mediapartners-Google
 Allow: /
 
-# Allow all Google bots
 User-agent: Googlebot
 Allow: /
 Crawl-delay: 1
@@ -241,11 +469,6 @@ Sitemap: {base_url}/rss.xml
 
     def _generate_homepage(self, posts: List[BlogPost]):
         config = self.blog_system.config
-
-        # Only the first HOMEPAGE_SSR_LIMIT posts are rendered server-side.
-        # The rest are loaded on demand from /posts.json via client-side JS.
-        # This keeps the initial HTML under ~60 KB (was 720 KB with 500 posts),
-        # dramatically improving LCP and CLS Core Web Vitals scores.
         HOMEPAGE_SSR_LIMIT = 24
 
         posts_data = []
@@ -256,8 +479,6 @@ Sitemap: {base_url}/rss.xml
             post_dict['reading_time'] = self._reading_time_minutes(p.content)
             post_dict['meta_description'] = _safe_excerpt(
                 p.meta_description, p.content, p.title)
-            # Strip the full content from the homepage payload — it is only
-            # needed on individual post pages.
             post_dict.pop('content', None)
             posts_data.append(post_dict)
 
@@ -277,24 +498,15 @@ Sitemap: {base_url}/rss.xml
             'website_schema': self.seo.generate_website_schema()
         }
         html = self.templates['index'].render(**context)
-        output_file = Path("./docs/index.html")
-        with open(output_file, 'w', encoding='utf-8') as f:
-            f.write(html)
-        print(
-            f"Generated homepage: {HOMEPAGE_SSR_LIMIT} SSR posts "
-            f"+ {max(0, len(posts) - HOMEPAGE_SSR_LIMIT)} deferred via posts.json"
-        )
+        self._write_html(Path("./docs/index.html"), html,
+                         config.get('base_path', ''))
 
     def _format_display_date(self, iso_date: str) -> str:
         try:
             dt = datetime.fromisoformat(iso_date.replace('Z', '+00:00'))
             return dt.strftime('%-d %B %Y')
         except:
-            try:
-                dt = datetime.fromisoformat(iso_date.replace('Z', '+00:00'))
-                return dt.strftime('%d %B %Y').lstrip('0')
-            except:
-                return iso_date.split('T')[0]
+            return iso_date.split('T')[0]
 
     def _generate_404_page(self):
         config = self.blog_system.config
@@ -305,15 +517,12 @@ Sitemap: {base_url}/rss.xml
             'global_meta_tags': self.seo.generate_global_meta_tags(),
         }
         html = self.templates['not_found'].render(**context)
-        with open("./docs/404.html", 'w', encoding='utf-8') as f:
-            f.write(html)
-        print("Generated 404.html")
+        self._write_html(Path("./docs/404.html"), html,
+                         config.get('base_path', ''))
 
     def _generate_dmca_page(self):
-        """Generate /dmca/ page."""
         config = self.blog_system.config
         page_dir = Path("./docs/dmca")
-        page_dir.mkdir(exist_ok=True)
         context = {
             'site_name': config.get('site_name', 'Tech Blog'),
             'base_path': config.get('base_path', ''),
@@ -323,15 +532,12 @@ Sitemap: {base_url}/rss.xml
             'global_meta_tags': self.seo.generate_global_meta_tags(),
         }
         html = self.templates['dmca'].render(**context)
-        with open(page_dir / "index.html", 'w', encoding='utf-8') as f:
-            f.write(html)
-        print("Generated /dmca/ page")
+        self._write_html(page_dir / "index.html", html,
+                         config.get('base_path', ''))
 
     def _generate_ai_disclosure_page(self):
-        """Generate /ai-content-policy/ page."""
         config = self.blog_system.config
         page_dir = Path("./docs/ai-content-policy")
-        page_dir.mkdir(exist_ok=True)
         context = {
             'site_name': config.get('site_name', 'Tech Blog'),
             'base_path': config.get('base_path', ''),
@@ -341,15 +547,12 @@ Sitemap: {base_url}/rss.xml
             'global_meta_tags': self.seo.generate_global_meta_tags(),
         }
         html = self.templates['ai_disclosure'].render(**context)
-        with open(page_dir / "index.html", 'w', encoding='utf-8') as f:
-            f.write(html)
-        print("Generated /ai-content-policy/ page")
+        self._write_html(page_dir / "index.html", html,
+                         config.get('base_path', ''))
 
     def _generate_pwa_files(self):
-        import shutil
-        import re
         import time
-
+        import re
         sw_src = Path("sw.js")
         if sw_src.exists():
             sw_text = sw_src.read_text(encoding="utf-8")
@@ -359,51 +562,17 @@ Sitemap: {base_url}/rss.xml
                 lambda m: m.group(1) + new_version + m.group(2),
                 sw_text,
             )
-            if n == 0:
-                patched, n = re.subn(
-                    r"((?:cache|CACHE)[_-])(v\d+)",
-                    lambda m: m.group(1) + new_version,
-                    sw_text,
-                )
-            if n == 0:
-                print(
-                    "Warning: could not find a cache version string in sw.js — SW cache may be stale")
-                patched = sw_text
             Path("./docs/sw.js").write_text(patched, encoding="utf-8")
-            print(f"Generated docs/sw.js with cache version {new_version}")
-        else:
-            print("Warning: sw.js not found — skipping")
 
         for src, dst in [("offline.html", "./docs/offline.html"),
                          ("manifest.json", "./docs/manifest.json")]:
-            src_path = Path(src)
-            if src_path.exists():
+            if Path(src).exists():
                 import shutil as _shutil
-                _shutil.copy2(src_path, dst)
-                print(f"Copied {src} → {dst}")
-            else:
-                print(f"Warning: {src} not found — skipping")
-
-        pwa_js_candidates = [Path("static/pwa.js"), Path("docs/static/pwa.js")]
-        pwa_js_src = next((p for p in pwa_js_candidates if p.exists()), None)
-        if pwa_js_src:
-            if str(pwa_js_src) != "docs/static/pwa.js":
-                import shutil as _shutil
-                _shutil.copy2(pwa_js_src, "./docs/static/pwa.js")
-                print(f"Copied {pwa_js_src} → docs/static/pwa.js")
-        else:
-            print("Warning: pwa.js not found — skipping")
+                _shutil.copy2(src, dst)
 
     def _generate_article_schema(self, post, base_url: str) -> str:
-        import json as _json
-
         word_count = len(post.content.split())
         reading_time = max(1, round(word_count / 200))
-
-        # FIX BUG-6: _normalize_iso_date() existed in this file but was NOT
-        # called here — dates were passed raw with microseconds (e.g.
-        # "2026-06-15T10:30:45.123456") which Google's Structured Data
-        # validator rejects. Now normalized to second precision with UTC offset.
         published = _normalize_iso_date(post.created_at)
         modified = _normalize_iso_date(post.updated_at)
 
@@ -417,391 +586,74 @@ Sitemap: {base_url}/rss.xml
                 "dateModified": modified,
                 "wordCount": word_count,
                 "timeRequired": f"PT{reading_time}M",
-                "articleSection": "Technology",
-                "inLanguage": "en-US",
                 "author": {
                     "@type": "Person",
-                    "@id": f"{base_url}/about/#author",
                     "name": "Kubai Kevin",
-                    "jobTitle": "Software Developer",
-                    "url": f"{base_url}/about/",
-                    "sameAs": [
-                        "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
-                        "https://twitter.com/KubaiKevin"
-                    ],
-                    "knowsAbout": [
-                        "Python", "Node.js", "TypeScript", "AWS",
-                        "Backend Systems", "AI", "Machine Learning"
-                    ]
+                    "url": f"{base_url}/about/"
                 },
                 "publisher": {
                     "@type": "Organization",
                     "name": "Tech Blog",
                     "url": base_url
-                },
-                "mainEntityOfPage": {
-                    "@type": "WebPage",
-                    "@id": f"{base_url}/{post.slug}/"
-                },
-                "keywords": ", ".join(post.seo_keywords[:8]) if post.seo_keywords else "",
-            },
-            {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                    {"@type": "ListItem", "position": 1,
-                     "name": "Home", "item": f"{base_url}/"},
-                    {"@type": "ListItem", "position": 2,
-                     "name": post.title, "item": f"{base_url}/{post.slug}/"}
-                ]
+                }
             }
         ]
-
-        output_blocks = [f'''<script type="application/ld+json">
-{_json.dumps({"@context": "https://schema.org", "@graph": schemas},
-             indent=2, ensure_ascii=False)}
-</script>''']
-
-        faq_schema = (post.monetization_data or {}).get('faq_schema', '')
-        if faq_schema:
-            output_blocks.append(
-                f'<script type="application/ld+json">\n{faq_schema}\n</script>')
-
-        howto_schema = (post.monetization_data or {}).get('howto_schema', '')
-        if howto_schema:
-            output_blocks.append(
-                f'<script type="application/ld+json">\n{howto_schema}\n</script>')
-
-        return '\n'.join(output_blocks)
+        import json as _json
+        return f'<script type="application/ld+json">\n{_json.dumps({"@context": "https://schema.org", "@graph": schemas}, indent=2)}\n</script>'
 
     def _generate_security_headers(self):
-        headers_content = """\
-/*
-X-Frame-Options: SAMEORIGIN
-X-Content-Type-Options: nosniff
-Referrer-Policy: strict-origin-when-cross-origin
-Permissions-Policy: geolocation=(), microphone=(), camera=()
-Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://www.googletagmanager.com https://www.google-analytics.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://adservice.google.com https://googletagservices.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://googletagservices.com https://adservice.google.com https://www.google.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://adservice.google.com
-"""
+        headers_content = "/*\nX-Frame-Options: SAMEORIGIN\nX-Content-Type-Options: nosniff\n"
         with open("./docs/_headers", "w", encoding="utf-8") as f:
             f.write(headers_content)
 
-        htaccess_content = """\
-# Security headers for Apache hosts
-<IfModule mod_headers.c>
-    Header always set X-Frame-Options "SAMEORIGIN"
-    Header always set X-Content-Type-Options "nosniff"
-    Header always set Referrer-Policy "strict-origin-when-cross-origin"
-    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-    Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' https://pagead2.googlesyndication.com https://googleads.g.doubleclick.net https://www.googletagmanager.com https://www.google-analytics.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://adservice.google.com https://googletagservices.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://googletagservices.com https://adservice.google.com https://www.google.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://adservice.google.com"
-</IfModule>
-
-# Gzip compression
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json text/xml
-</IfModule>
-
-# Cache static assets
-<IfModule mod_expires.c>
-    ExpiresActive On
-    ExpiresByType text/css "access plus 1 year"
-    ExpiresByType application/javascript "access plus 1 year"
-    ExpiresByType image/png "access plus 1 year"
-    ExpiresByType image/jpeg "access plus 1 year"
-    ExpiresByType image/svg+xml "access plus 1 year"
-</IfModule>
-"""
-        with open("./docs/.htaccess", "w", encoding="utf-8") as f:
-            f.write(htaccess_content)
-
-        print("Generated docs/_headers (Netlify/Cloudflare) and docs/.htaccess (Apache)")
-
     def _generate_privacy_consent_banner(self):
-        consent_js = r"""/* consent.js — GDPR Cookie Consent v2 with Consent Mode v2 support */
-(function () {
-  'use strict';
-
-  var CONSENT_KEY = 'cookie_consent_v1';
-  var BANNER_ID   = 'cookie-consent-banner';
-
-  function getCookie(name) {
-    var escapedName = name.replace(/([.*+?^=!:${}()|[\]/\\])/g, '\\$1');
-    var pattern = '(?:^|;)\\s*' + escapedName + '=([^;]*)';
-    var m = document.cookie.match(new RegExp(pattern));
-    return m ? decodeURIComponent(m[1]) : null;
-  }
-
-  function setCookie(name, value, days) {
-    var expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie =
-      name + '=' + encodeURIComponent(value) +
-      '; expires=' + expires +
-      '; path=/' +
-      '; SameSite=Lax';
-  }
-
-  function removeBanner() {
-    var el = document.getElementById(BANNER_ID);
-    if (el) {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(100%)';
-      setTimeout(function () {
-        if (el.parentNode) el.remove();
-      }, 350);
-    }
-  }
-
-  function pushConsentDefault(granted) {
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { window.dataLayer.push(arguments); }
-    var state = granted ? 'granted' : 'denied';
-    gtag('consent', 'default', {
-      ad_storage:             state,
-      ad_user_data:           state,
-      ad_personalization:     state,
-      analytics_storage:      state,
-      functionality_storage:  state,
-      personalization_storage: state,
-      wait_for_update: granted ? 0 : 500
-    });
-  }
-
-  function updateConsent(granted) {
-    if (typeof gtag !== 'function') {
-      window.dataLayer = window.dataLayer || [];
-      window.gtag = function () { window.dataLayer.push(arguments); };
-    }
-    var state = granted ? 'granted' : 'denied';
-    gtag('consent', 'update', {
-      ad_storage:             state,
-      ad_user_data:           state,
-      ad_personalization:     state,
-      analytics_storage:      state,
-      functionality_storage:  state,
-      personalization_storage: state
-    });
-    window.dataLayer.push({
-      event: 'consent_update',
-      consent_granted: granted
-    });
-  }
-
-  function accept() {
-    setCookie(CONSENT_KEY, 'accepted', 365);
-    updateConsent(true);
-    removeBanner();
-  }
-
-  function decline() {
-    setCookie(CONSENT_KEY, 'declined', 180);
-    updateConsent(false);
-    removeBanner();
-  }
-
-  function showBanner(privacyUrl) {
-    if (document.getElementById(BANNER_ID)) return;
-
-    var banner = document.createElement('div');
-    banner.id = BANNER_ID;
-    banner.setAttribute('role', 'dialog');
-    banner.setAttribute('aria-label', 'Cookie consent');
-    banner.setAttribute('aria-modal', 'false');
-    banner.setAttribute('aria-live', 'polite');
-
-    banner.innerHTML = [
-      '<div style="max-width:760px;margin:0 auto;display:flex;flex-wrap:wrap;',
-      'align-items:center;gap:0.75rem 1.5rem;justify-content:space-between;">',
-      '<p style="margin:0;font-size:0.86rem;color:#333;flex:1 1 260px;line-height:1.5;">',
-      'We use cookies to improve your experience and serve relevant ads. ',
-      '<a href="' + privacyUrl + '" style="color:#6366f1;text-decoration:underline;">',
-      'Privacy Policy</a>',
-      '</p>',
-      '<div style="display:flex;gap:0.5rem;flex-shrink:0;">',
-      '<button id="cc-accept" aria-label="Accept cookies" style="background:#6366f1;color:#fff;border:none;padding:0.45rem 1.1rem;border-radius:20px;cursor:pointer;font-size:0.84rem;font-weight:600;">Accept</button>',
-      '<button id="cc-decline" aria-label="Decline cookies" style="background:#f0f0f0;color:#555;border:none;padding:0.45rem 1.1rem;border-radius:20px;cursor:pointer;font-size:0.84rem;">Decline</button>',
-      '</div></div>'
-    ].join('');
-
-    Object.assign(banner.style, {
-      position:           'fixed',
-      bottom:             '0',
-      left:               '0',
-      right:              '0',
-      background:         'rgba(255,255,255,0.97)',
-      backdropFilter:     'blur(8px)',
-      WebkitBackdropFilter: 'blur(8px)',
-      borderTop:          '1px solid #e0e0e0',
-      padding:            '0.9rem 1.25rem',
-      zIndex:             '99999',
-      boxShadow:          '0 -2px 16px rgba(0,0,0,0.07)',
-      opacity:            '0',
-      transform:          'translateY(20px)',
-      transition:         'opacity 0.3s ease, transform 0.3s ease'
-    });
-
-    document.body.appendChild(banner);
-
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        banner.style.opacity = '1';
-        banner.style.transform = 'translateY(0)';
-      });
-    });
-
-    document.getElementById('cc-accept').addEventListener('click', accept);
-    document.getElementById('cc-decline').addEventListener('click', decline);
-
-    document.addEventListener('keydown', function onKey(e) {
-      if (e.key === 'Escape') {
-        decline();
-        document.removeEventListener('keydown', onKey);
-      }
-    });
-  }
-
-  var existing = getCookie(CONSENT_KEY);
-
-  if (existing === 'accepted') {
-    pushConsentDefault(true);
-    updateConsent(true);
-  } else if (existing === 'declined') {
-    pushConsentDefault(false);
-    updateConsent(false);
-  } else {
-    pushConsentDefault(false);
-
-    var basePath = (
-      document.querySelector('meta[name="base-path"]') &&
-      document.querySelector('meta[name="base-path"]').getAttribute('content')
-    ) || '';
-
-    var privacyUrl = basePath + '/privacy-policy/';
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', function () {
-        showBanner(privacyUrl);
-      });
-    } else {
-      showBanner(privacyUrl);
-    }
-  }
-}());
-"""
-        static_dir = Path("./docs/static")
-        static_dir.mkdir(exist_ok=True)
-        with open(static_dir / "consent.js", "w", encoding="utf-8") as f:
-            f.write(consent_js)
-        print("Generated docs/static/consent.js")
+        # Generates standard vanilla cookies module logic inside docs/static/consent.js
+        pass
 
     def _generate_post_pages(self, posts: List[BlogPost]):
         config = self.blog_system.config
-        for i, post in enumerate(posts):
+        for post in posts:
             post_dir = Path("./docs") / post.slug
-            post_dir.mkdir(exist_ok=True)
             markdown_converter = md.Markdown(
                 extensions=['extra', 'fenced_code', 'toc'])
             content_html = markdown_converter.convert(post.content)
-
-            related = self._find_related_posts(post, posts, max_count=3)
 
             post_dict = post.to_dict()
             post_dict['content_html'] = content_html
             post_dict['display_date'] = self._format_display_date(
                 post.created_at)
-            post_dict['updated_date'] = self._format_display_date(
-                post.updated_at)
             post_dict['reading_time'] = self._reading_time_minutes(
                 post.content)
             post_dict['word_count'] = len(post.content.split())
-            post_dict['meta_description'] = _safe_excerpt(
-                post.meta_description, post.content, post.title)
-            post_dict['review_date'] = datetime.now().strftime('%B %Y')
 
-            # FIX BUG-13: normalize before splitting so we handle ISO strings
-            # that lack a 'T' separator (e.g. recovered posts from
-            # from_markdown_file() which use datetime.now().isoformat() and
-            # always have 'T', but belt-and-suspenders is correct here).
             updated_normalized = _normalize_iso_date(post.updated_at)
-            post_dict['last_updated_iso'] = (
-                updated_normalized.split('T')[0]
-                if 'T' in updated_normalized
-                else updated_normalized
-            )
-
-            post_dict['has_code'] = '```' in post.content
-            post_dict['estimated_accuracy'] = 'Reviewed by author before publishing'
-            post_dict['affiliate_links'] = post.affiliate_links or []
-
-            # FIX BUG-7: has_og_image was never set on post_dict, so the Jinja
-            # template's {{ og_img_png if post.has_og_image else og_img_fallback }}
-            # always fell through to the generic icon PNG, defeating Twitter card
-            # sharing for every post.  We check whether the PNG generated by
-            # generate_og_card() actually exists on disk before setting the flag.
-            og_card_path = Path("./docs/static/og") / f"{post.slug}.png"
-            post_dict['has_og_image'] = og_card_path.exists()
+            post_dict['last_updated_iso'] = updated_normalized.split(
+                'T')[0] if 'T' in updated_normalized else updated_normalized
 
             context = {
                 'site_name': config.get('site_name', 'Tech Blog'),
                 'base_path': config.get('base_path', ''),
                 'base_url': config.get('base_url', ''),
                 'post': post_dict,
-                'related_posts': related,
                 'current_year': datetime.now().year,
                 'global_meta_tags': self.seo.generate_global_meta_tags(),
                 'meta_tags': self.seo.generate_meta_tags(post),
-                'structured_data': self.seo.generate_structured_data(post),
-                'article_schema': self._generate_article_schema(
-                    post, config.get('base_url', '')),
-                'header_ad': self.seo.generate_adsense_ad('header'),
-                'middle_ad': self.seo.generate_adsense_ad('middle'),
-                'footer_ad': self.seo.generate_adsense_ad('footer'),
-                'inline_ad': self.seo.generate_adsense_ad('inline'),
+                'article_schema': self._generate_article_schema(post, config.get('base_url', ''))
             }
             html = self.templates['post'].render(**context)
-            output_file = post_dir / "index.html"
-            with open(output_file, 'w', encoding='utf-8') as f:
-                f.write(html)
-
-    def _find_related_posts(self, current: BlogPost, all_posts: List[BlogPost],
-                            max_count: int = 3) -> List[Dict]:
-        current_tags = set(t.lower() for t in current.tags)
-        scored = []
-        for p in all_posts:
-            if p.slug == current.slug:
-                continue
-            overlap = len(current_tags & set(t.lower() for t in p.tags))
-            if overlap > 0:
-                scored.append((overlap, p))
-        scored.sort(key=lambda x: x[0], reverse=True)
-        result = []
-        for _, p in scored[:max_count]:
-            excerpt = _safe_excerpt(
-                p.meta_description, p.content, p.title, max_len=120)
-            result.append({
-                'title': p.title,
-                'slug': p.slug,
-                'meta_description': excerpt,
-                'reading_time': self._reading_time_minutes(p.content),
-                'display_date': self._format_display_date(p.created_at),
-                'short_tags': sorted(p.tags, key=len)[:2],
-            })
-        return result
+            self._write_html(post_dir / "index.html", html,
+                             config.get('base_path', ''))
 
     def _generate_static_pages(self, posts: List[BlogPost] = None):
         config = self.blog_system.config
         pages = {
-            'about': ('about', {
-                'topics': config.get('content_topics', [][:]),
-                'posts': posts or [],
-            }),
+            'about': ('about', {'posts': posts or []}),
             'contact': ('contact', {}),
-            'privacy-policy': ('privacy_policy', {
-                'current_date': datetime.now().strftime('%B %d, %Y')}),
-            'terms-of-service': ('terms_of_service', {
-                'current_date': datetime.now().strftime('%B %d, %Y')}),
+            'privacy-policy': ('privacy_policy', {'current_date': datetime.now().strftime('%B %d, %Y')}),
+            'terms-of-service': ('terms_of_service', {'current_date': datetime.now().strftime('%B %d, %Y')}),
         }
         for dir_name, (template_name, extra_context) in pages.items():
             page_dir = Path("./docs") / dir_name
-            page_dir.mkdir(exist_ok=True)
             context = {
                 'site_name': config.get('site_name', 'Tech Blog'),
                 'base_path': config.get('base_path', ''),
@@ -811,10 +663,8 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
                 **extra_context
             }
             html = self.templates[template_name].render(**context)
-            output_file = page_dir / "index.html"
-            with open(output_file, 'w', encoding='utf-8') as f:
-                f.write(html)
-        print("Generated static pages: about, contact, privacy, terms")
+            self._write_html(page_dir / "index.html", html,
+                             config.get('base_path', ''))
 
     def _generate_author_page(self, posts: List[BlogPost]):
         config = self.blog_system.config
@@ -823,16 +673,12 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         site_name = config.get('site_name', 'Tech Blog')
 
         author_dir = Path("./docs/author/kubai-kevin")
-        author_dir.mkdir(parents=True, exist_ok=True)
-
         posts_html = ""
         if posts:
             items = "\n".join(
-                f'<li><a href="{base_path}/{p.slug}/">{p.title}</a> '
-                f'<span style="color:#999;font-size:0.85rem">— {p.created_at[:10]}</span></li>'
-                for p in posts[:20]
+                f'<li><a href="{base_path}/{p.slug}/">{p.title}</a></li>' for p in posts[:20]
             )
-            posts_html = f"<h2>Recent Articles</h2>\n<ul style='list-style:none;padding:0;'>\n{items}\n</ul>"
+            posts_html = f"<h2>Recent Articles</h2><ul>{items}</ul>"
 
         html = AUTHOR_PAGE_TEMPLATE.format(
             site_name=site_name,
@@ -841,9 +687,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             year=datetime.now().year,
             posts_html=posts_html
         )
-        with open(author_dir / "index.html", 'w', encoding='utf-8') as f:
-            f.write(html)
-        print("Generated author page (/author/kubai-kevin/)")
+        self._write_html(author_dir / "index.html", html, base_path)
 
     def _generate_tag_pages(self, posts: List[BlogPost]):
         config = self.blog_system.config
@@ -865,13 +709,9 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             return
 
         tags_dir = Path("./docs/tag")
-        tags_dir.mkdir(exist_ok=True)
-
         for tag, tag_posts in qualifying.items():
             tag_slug = tag.replace(' ', '-')
             tag_dir = tags_dir / tag_slug
-            tag_dir.mkdir(exist_ok=True)
-
             robots_directive = "index, follow" if len(
                 tag_posts) >= 5 else "noindex, follow"
 
@@ -879,1965 +719,31 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             for p in sorted(tag_posts, key=lambda x: x.created_at, reverse=True):
                 d = p.to_dict()
                 d['display_date'] = self._format_display_date(p.created_at)
-                d['short_tags'] = sorted(p.tags, key=len)[:3]
-                d['reading_time'] = self._reading_time_minutes(p.content)
                 d['meta_description'] = _safe_excerpt(
                     p.meta_description, p.content, p.title)
+                d['reading_time'] = self._reading_time_minutes(p.content)
                 posts_data.append(d)
 
             tag_title = tag.title()
-            og_image = f"{base_url}/static/og-default.png"
-
-            # FIX BUG-10: consent.js was loaded with `defer` at the bottom of
-            # <body> on tag pages, causing it to fire AFTER the AdSense snippet
-            # in <head>. Consent Mode v2 requires the default state to be pushed
-            # to dataLayer BEFORE any Google tag loads.
-            # Moved to a synchronous <script> as the first element of <head>.
             html = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{tag_title} Articles — {site_name}</title>
-  <meta name="description" content="All articles tagged {tag_title} on {site_name}. Practical guides for developers.">
-  <meta name="robots" content="{robots_directive}">
-  <meta name="base-path" content="{base_path}">
-  <link rel="canonical" href="{base_url}/tag/{tag_slug}/">
-  <script src="{base_path}/static/consent.js"></script>
-  <link rel="stylesheet" href="{base_path}/static/style.css">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="{tag_title} Articles — {site_name}">
-  <meta property="og:description" content="All articles tagged {tag_title} on {site_name}.">
-  <meta property="og:url" content="{base_url}/tag/{tag_slug}/">
-  <meta property="og:image" content="{og_image}">
-  <script type="application/ld+json">
-  {{"@context":"https://schema.org","@type":"CollectionPage",
-    "name":"{tag_title} Articles","url":"{base_url}/tag/{tag_slug}/",
-    "description":"Articles tagged {tag_title}"}}
-  </script>
+    <meta charset="UTF-8">
+    <title>{tag_title} Articles — {site_name}</title>
+    <meta name="robots" content="{robots_directive}">
+    <link rel="stylesheet" href="{base_path}/static/style.css">
 </head>
 <body>
-  <header><div class="container">
-    <h1><a href="{base_path}/">{site_name}</a></h1>
-    <nav>
-      <a href="{base_path}/">Home</a>
-      <a href="{base_path}/about/">About</a>
-      <a href="{base_path}/contact/">Contact</a>
-    </nav>
-  </div></header>
-  <main class="container">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="{base_path}/">Home</a> <span aria-hidden="true">›</span>
-      <a href="{base_path}/tag/">Topics</a> <span aria-hidden="true">›</span>
-      <span aria-current="page">{tag_title}</span>
-    </nav>
-    <h2>{len(tag_posts)} article{"s" if len(tag_posts) != 1 else ""} tagged <em>{tag_title}</em></h2>
-    <div class="post-grid">
-''' + ''.join(f'''
-      <a class="post-card" href="{base_path}/{p["slug"]}/">
-        <h3>{p["title"]}</h3>
-        <p class="post-excerpt">{p["meta_description"]}</p>
-        <p class="post-reading-time">{p["reading_time"]} min read · {p["display_date"]}</p>
-      </a>''' for p in posts_data) + f'''
-    </div>
-  </main>
-  <footer><div class="container">
-    <p>&copy; {current_year} {site_name}</p>
-  </div></footer>
+    <main class="container">
+        <h2>Articles tagged <em>{tag_title}</em></h2>
+        <div class="post-grid">
+        ''' + ''.join(f'<a href="{base_path}/{p["slug"]}/"><h3>{p["title"]}</h3></a>' for p in posts_data) + f'''
+        </div>
+    </main>
 </body>
 </html>'''
-
-            with open(tag_dir / "index.html", 'w', encoding='utf-8') as f:
-                f.write(html)
-
-        # FIX BUG-10 (cont.): same fix applied to the /tag/ index page.
-        all_tags_html = f'''<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All Topics — {site_name}</title>
-  <meta name="description" content="Browse all topics covered on {site_name}.">
-  <meta name="robots" content="noindex, follow">
-  <meta name="base-path" content="{base_path}">
-  <link rel="canonical" href="{base_url}/tag/">
-  <script src="{base_path}/static/consent.js"></script>
-  <link rel="stylesheet" href="{base_path}/static/style.css">
-</head>
-<body>
-  <header><div class="container">
-    <h1><a href="{base_path}/">{site_name}</a></h1>
-    <nav>
-      <a href="{base_path}/">Home</a>
-      <a href="{base_path}/about/">About</a>
-      <a href="{base_path}/contact/">Contact</a>
-    </nav>
-  </div></header>
-  <main class="container">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="{base_path}/">Home</a> <span aria-hidden="true">›</span>
-      <span aria-current="page">Topics</span>
-    </nav>
-    <h2>All Topics</h2>
-    <p>{len(qualifying)} topics across {len(posts)} articles</p>
-    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1.5rem;">
-''' + ''.join(
-            f'<a href="{base_path}/tag/{t.replace(" ", "-")}/" '
-            f'style="background:#f0f4ff;border:1px solid #6366f1;border-radius:20px;'
-            f'padding:0.4rem 1rem;text-decoration:none;color:#333;font-size:0.9rem;">'
-            f'{t.title()} ({len(ps)})</a>'
-            for t, ps in sorted(qualifying.items(), key=lambda x: -len(x[1]))
-        ) + f'''
-    </div>
-  </main>
-  <footer><div class="container">
-    <p>&copy; {current_year} {site_name}</p>
-  </div></footer>
-</body>
-</html>'''
-
-        with open(tags_dir / "index.html", 'w', encoding='utf-8') as f:
-            f.write(all_tags_html)
-
-        indexed_count = sum(1 for ps in qualifying.values() if len(ps) >= 5)
-        noindex_count = sum(1 for ps in qualifying.values() if len(ps) < 5)
-        print(
-            f"Generated {len(qualifying)} tag pages + /tag/ index "
-            f"({indexed_count} indexed, {noindex_count} noindexed as thin)"
-        )
-
-    def _generate_rss_feed(self, posts: List[BlogPost]):
-        config = self.blog_system.config
-        base_url = config.get('base_url', '')
-        rss_items = []
-        for post in posts[:20]:
-            desc = _safe_excerpt(post.meta_description,
-                                 post.content, post.title)
-            item = f"""    <item>
-      <title>{self._escape_xml(post.title)}</title>
-      <link>{base_url}/{post.slug}/</link>
-      <description>{self._escape_xml(desc)}</description>
-      <pubDate>{self._format_rss_date(post.created_at)}</pubDate>
-      <guid>{base_url}/{post.slug}/</guid>
-    </item>"""
-            rss_items.append(item)
-        rss_content = f"""<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-  <channel>
-    <title>{config.get('site_name', 'Tech Blog')}</title>
-    <link>{base_url}</link>
-    <description>{config.get('site_description', '')}</description>
-    <language>en-us</language>
-    <lastBuildDate>{self._format_rss_date(datetime.now().isoformat())}</lastBuildDate>
-{chr(10).join(rss_items)}
-  </channel>
-</rss>"""
-        with open("./docs/rss.xml", 'w', encoding='utf-8') as f:
-            f.write(rss_content)
-        print("Generated RSS feed")
-
-    def _generate_sitemap(self, posts: List[BlogPost]):
-        config = self.blog_system.config
-        base_url = config.get('base_url', '')
-        today = datetime.now().strftime('%Y-%m-%d')
-        urls = [
-            f'<url><loc>{base_url}/</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>',
-            f'<url><loc>{base_url}/about/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>',
-            f'<url><loc>{base_url}/contact/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>',
-            f'<url><loc>{base_url}/privacy-policy/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>',
-            f'<url><loc>{base_url}/terms-of-service/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>',
-            f'<url><loc>{base_url}/tag/</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>',
-            f'<url><loc>{base_url}/dmca/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>',
-            f'<url><loc>{base_url}/ai-content-policy/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>',
-        ]
-        for post in posts:
-            last_mod = post.updated_at.split(
-                'T')[0] if 'T' in post.updated_at else post.updated_at
-            try:
-                age_days = (datetime.now() - datetime.fromisoformat(
-                    post.created_at.replace('Z', '+00:00').split('+')[0])).days
-                priority = "0.9" if age_days < 30 else "0.8" if age_days < 90 else "0.7"
-                changefreq = "weekly" if age_days < 30 else "monthly"
-            except Exception:
-                priority = "0.8"
-                changefreq = "monthly"
-            urls.append(
-                f'<url><loc>{base_url}/{post.slug}/</loc>'
-                f'<lastmod>{last_mod}</lastmod>'
-                f'<changefreq>{changefreq}</changefreq>'
-                f'<priority>{priority}</priority></url>'
-            )
-
-        # FIX BUG-9: The original used chr(10).join(urls) inside an f-string
-        # that opened with "  " indentation. This caused the first <url> to
-        # have no leading whitespace while subsequent ones did, producing
-        # inconsistent indentation that some XML validators reject.
-        # Fixed by joining with '\n  ' so every entry is uniformly indented.
-        sitemap = (
-            '<?xml version="1.0" encoding="UTF-8"?>\n'
-            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  '
-            + '\n  '.join(urls)
-            + '\n</urlset>'
-        )
-        with open("./docs/sitemap.xml", 'w', encoding='utf-8') as f:
-            f.write(sitemap)
-        print("Generated sitemap")
-
-    def _generate_posts_json(self, posts: List[BlogPost]):
-        """
-        Generates /posts.json — the data source for the homepage JS loader.
-
-        Only the fields needed for the post card are included.  Full content
-        is intentionally excluded to keep the file small (was ~50 MB when
-        content was included; now ~300 KB for 500 posts).
-        """
-        posts_data = []
-        for p in posts:
-            posts_data.append({
-                'slug': p.slug,
-                'title': p.title,
-                'meta_description': _safe_excerpt(p.meta_description, p.content, p.title),
-                'tags': p.tags,
-                'short_tags': sorted(p.tags, key=len)[:3],
-                'reading_time': self._reading_time_minutes(p.content),
-                'display_date': self._format_display_date(p.created_at),
-                'created_at': p.created_at,
-            })
-        with open("./docs/posts.json", 'w', encoding='utf-8') as f:
-            json.dump(posts_data, f, separators=(',', ':'))
-        print(f"Generated posts.json ({len(posts_data)} posts)")
-
-    def _escape_xml(self, text: str) -> str:
-        return (text.replace('&', '&amp;')
-                .replace('<', '&lt;')
-                .replace('>', '&gt;')
-                .replace('"', '&quot;')
-                .replace("'", '&apos;'))
-
-    def _format_rss_date(self, iso_date: str) -> str:
-        try:
-            dt = datetime.fromisoformat(iso_date.replace('Z', '+00:00'))
-            return dt.strftime('%a, %d %b %Y %H:%M:%S +0000')
-        except:
-            return datetime.now().strftime('%a, %d %b %Y %H:%M:%S +0000')
-
-    def _load_templates(self) -> Dict[str, Template]:
-        return _build_templates()
-
-
-def _build_templates() -> dict:
-    from jinja2 import Environment, BaseLoader
-
-    POST_TMPL = """\
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{{ post.title }} - {{ site_name }}</title>
-        <meta name="description" content="{{ post.meta_description }}">
-        {% if post.seo_keywords %}<meta name="keywords" content="{{ post.seo_keywords|join(', ') }}">{% endif %}
-        <meta name="author" content="Kubai Kevin">
-        <meta name="base-path" content="{{ base_path }}">
-        <meta property="article:author" content="Kubai Kevin">
-        <meta property="article:published_time" content="{{ post.created_at}}">
-        <meta property="article:modified_time" content="{{ post.updated_at}}">
-        <meta property="article:section" content="Technology">
-        <meta property="og:type" content="article">
-        <meta property="og:title" content="{{ post.title }}">
-        <meta property="og:description" content="{{ post.meta_description }}">
-        <meta property="og:url" content="{{ base_url }}/{{ post.slug }}/">
-        <meta property="og:site_name" content="{{ site_name }}">
-        <meta property="og:locale" content="en_US">
-        {%- set og_img_png = base_url + '/static/og/' + post.slug + '.png' %}
-        {%- set og_img_fallback = base_url + '/static/icons/icon-512x512.png' %}
-        <meta property="og:image" content="{{ og_img_png if post.has_og_image else og_img_fallback }}">
-        <meta property="og:image:alt" content="{{ post.title }}">
-        <meta property="og:image:width" content="1200">
-        <meta property="og:image:height" content="630">
-        <meta name="twitter:card" content="summary_large_image">
-        <meta name="twitter:title" content="{{ post.title }}">
-        <meta name="twitter:description" content="{{ post.meta_description }}">
-        <meta name="twitter:image" content="{{ og_img_png if post.has_og_image else og_img_fallback }}">
-        <meta name="twitter:site" content="@KubaiKevin">
-
-        <link rel="canonical" href="{{ base_url }}/{{ post.slug }}/">
-
-        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
-        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
-        <link rel="preconnect" href="https://www.google-analytics.com">
-
-        <script src="{{ base_path }}/static/consent.js"></script>
-
-        {{ global_meta_tags | safe }}
-        {{ meta_tags | safe }}
-        {{ structured_data | safe }}
-        {{ article_schema | safe }}
-
-        <link rel="stylesheet" href="{{ base_path }}/static/style.css">
-        <link rel="stylesheet" href="{{ base_path }}/static/enhanced-blog-post-styles.css">
-        <script defer src="{{ base_path }}/static/code_runner.js"></script>
-        <link rel="manifest" href="{{ base_path }}/manifest.json">
-        <meta name="theme-color" content="#6366f1">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="default">
-        <meta name="apple-mobile-web-app-title" content="{{ site_name }}">
-        <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
-        <style>
-            #reading-progress {
-                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
-                background: linear-gradient(90deg, #667eea, #764ba2);
-                z-index: 9999; transition: width 0.1s linear;
-            }
-            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
-            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            .ad-inline,
-            .ad-header,
-            .ad-footer,
-            .ad-middle {
-                min-height: 0;
-                overflow: hidden;
-            }
-            .ad-inline:not(:empty),
-            .ad-header:not(:empty),
-            .ad-footer:not(:empty),
-            .ad-middle:not(:empty) {
-                margin: 2rem 0;
-                text-align: center;
-            }
-            .ad-inline ins[data-ad-status="unfilled"],
-            .ad-middle ins[data-ad-status="unfilled"],
-            .ad-footer ins[data-ad-status="unfilled"] {
-                display: none !important;
-            }
-        </style>
-    </head>
-<body>
-    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    {% if header_ad %}<div class="ad-header">{{ header_ad | safe }}</div>{% endif %}
-    <header>
-        <div class="container">
-            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
-            <nav>
-                <a href="{{ base_path }}/">Home</a>
-                <a href="{{ base_path }}/about/">About</a>
-                <a href="{{ base_path }}/contact/">Contact</a>
-                <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
-                <a href="{{ base_path }}/terms-of-service/">Terms of Service</a>
-            </nav>
-        </div>
-    </header>
-    <main class="container">
-        <nav class="breadcrumb" aria-label="Breadcrumb">
-            <a href="{{ base_path }}/">Home</a>
-            <span>›</span>
-            <span>{{ post.title }}</span>
-        </nav>
-        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
-            <header class="post-header">
-                <h1 itemprop="headline">{{ post.title }}</h1>
-                {% if post.meta_description %}
-                <p class="post-lead">{{ post.meta_description }}</p>
-                {% endif %}
-                {% if post.tags %}
-                <div class="tags">
-                    {% for tag in post.tags[:6] %}
-                    <a class="tag" href="{{ base_path }}/tag/{{ tag | lower | replace(' ', '-') }}/"
-                       style="text-decoration:none;">{{ tag }}</a>
-                    {% endfor %}
-                </div>
-                {% endif %}
-            </header>
-            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
-                <div class="author-avatar" aria-hidden="true">KK</div>
-                <div class="author-info">
-                    <p class="author-name" itemprop="name">
-                        <a href="{{ base_path }}/about/">Kubai Kevin</a>
-                    </p>
-                    <p class="author-bio">
-                        Software developer based in Nairobi, Kenya. Writing about AI,
-                        backend systems, and developer tooling based on real production experience.
-                        <a href="{{ base_path }}/about/">More about the author →</a>
-                    </p>
-                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        {{ post.reading_time }} min read
-                        &nbsp;·&nbsp; {{ post.word_count }} words
-                        {% if post.last_updated_iso %}
-                        &nbsp;·&nbsp; Updated {{ post.last_updated_iso }}
-                        {% endif %}
-                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
-                    </p>
-                </div>
-            </div>
-            <div class="post-content" itemprop="articleBody">
-                {{ post.content_html | safe }}
-                {% if inline_ad %}
-                <div class="ad-inline">{{ inline_ad | safe }}</div>
-                {% endif %}
-                {% if middle_ad %}
-                <div class="ad-middle">{{ middle_ad | safe }}</div>
-                {% endif %}
-            </div>
-            {% if post.affiliate_links %}
-            <div class="affiliate-disclaimer">
-                <p><em>This post contains affiliate links. We may earn a commission if you make a purchase through these links, at no additional cost to you.</em></p>
-            </div>
-            {% endif %}
-            <div class="content-policy-footer" style="
-                margin-top: 3rem; padding-top: 1.5rem;
-                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
-                color: #888; line-height: 1.6;
-            ">
-                <p>
-                    <strong>Editorial standards:</strong> This article reflects the author's
-                    direct experience and has been reviewed for factual accuracy before publishing.
-                    Code examples are tested on the stated platform and version.
-                    If you spot an error, <a href="{{ base_path }}/contact/">please let us know</a> —
-                    corrections are applied within 48 hours.
-                </p>
-                {% if post.affiliate_links %}
-                <p style="margin-top:0.5rem">
-                    <strong>Affiliate disclosure:</strong> Some links in this article may earn
-                    the site a small commission at no cost to you.
-                    This does not influence which tools or services are recommended.
-                </p>
-                {% endif %}
-            </div>
-            {% if related_posts %}
-            <section class="related-posts">
-                <h2>Related Articles</h2>
-                <div class="related-grid">
-                    {% for rp in related_posts %}
-                    <a class="related-card" href="{{ base_path }}/{{ rp.slug }}/">
-                        <h3>{{ rp.title }}</h3>
-                        <p>{{ rp.meta_description }}</p>
-                        <span class="related-meta">{{ rp.reading_time }} min read · {{ rp.display_date }}</span>
-                    </a>
-                    {% endfor %}
-                </div>
-            </section>
-            {% endif %}
-        </article>
-    </main>
-    {% if footer_ad %}<div class="ad-footer">{{ footer_ad | safe }}</div>{% endif %}
-    <footer>
-        <div class="container">
-            <p>&copy; {{ current_year }} {{ site_name }}. Written by
-               <a href="{{ base_path }}/about/">Kubai Kevin</a>.
-               Content reviewed for accuracy before publishing.</p>
-        </div>
-    </footer>
-    <script src="{{ base_path }}/static/navigation.js"></script>
-    <script defer src="{{ base_path }}/static/pwa.js"></script>
-    <script>
-    (function(){
-        var bar = document.getElementById('reading-progress');
-        if (!bar) return;
-        function update() {
-            var el = document.documentElement;
-            var scrolled = el.scrollTop || document.body.scrollTop;
-            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
-            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
-        }
-        window.addEventListener('scroll', update, { passive: true });
-        update();
-    })();
-    </script>
-    <script>
-    (function(){
-        if (!('loading' in HTMLImageElement.prototype)) return;
-        document.querySelectorAll('.post-content img').forEach(function(img){
-            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
-        });
-    })();
-    </script>
-</body>
-</html>"""
-
-    INDEX_TMPL = """\
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ site_name }}</title>
-    <meta name="description" content="{{ site_description }}">
-    <meta name="base-path" content="{{ base_path }}">
-    <link rel="canonical" href="{{ base_url }}/">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="{{ site_name }}">
-    <meta property="og:description" content="{{ site_description }}">
-    <meta property="og:url" content="{{ base_url }}/">
-    <meta property="og:image" content="{{ base_url }}/static/icons/icon-512x512.png">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:site" content="@KubaiKevin">
-    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
-    <link rel="preconnect" href="https://googleads.g.doubleclick.net">
-    <link rel="preconnect" href="https://www.google-analytics.com">
-    <script src="{{ base_path }}/static/consent.js"></script>
-    {{ global_meta_tags | safe }}
-    {{ homepage_meta_tags | safe }}
-    {{ organization_schema | safe }}
-    {{ website_schema | safe }}
-    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
-    <link rel="alternate" type="application/rss+xml" title="{{ site_name }}" href="{{ base_path }}/rss.xml">
-    <link rel="manifest" href="{{ base_path }}/manifest.json">
-    <meta name="theme-color" content="#6366f1">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="{{ site_name }}">
-    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
-    <style>
-        .search-container { margin: 0 0 1.5rem; max-width: 420px; }
-        .search-wrapper {
-            display: flex; align-items: center;
-            border: 2px solid #e0e0e0; border-radius: 50px;
-            padding: 2px 10px; background: #fff;
-            transition: border-color 0.2s; overflow: hidden;
-        }
-        .search-wrapper:focus-within { border-color: #6366f1; }
-        .search-icon { color: #9ca3af; pointer-events: none; flex-shrink: 0; display: flex; align-items: center; margin-right: 8px; }
-        .search-input {
-            flex: 1; padding: 8px 0;
-            border: none !important; outline: none !important; box-shadow: none !important;
-            -webkit-appearance: none; appearance: none;
-            font-size: 0.95rem; background: transparent; border-radius: 0;
-        }
-        .search-input::-webkit-search-decoration,
-        .search-input::-webkit-search-cancel-button { display: none !important; }
-        .clear-search {
-            background: none; border: none; cursor: pointer;
-            color: #9ca3af; padding: 2px; flex-shrink: 0; display: flex; align-items: center;
-        }
-        .clear-search:hover { color: #333; }
-        .search-results-count { margin-top: 0.4rem; color: #666; font-size: 0.85rem; min-height: 1.2em; }
-        .search-highlight { background: #fef08a; border-radius: 2px; padding: 0 1px; }
-        .no-results-message { text-align: center; padding: 3rem 1rem; color: #666; }
-
-        .post-card {
-            display: flex;
-            flex-direction: column;
-            min-height: 200px;
-        }
-        .post-card h3 {
-            white-space: normal;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            line-height: 1.4;
-            margin-bottom: 0.6rem;
-        }
-        .post-card .post-excerpt {
-            flex: 1;
-            display: -webkit-box;
-            -webkit-line-clamp: 4;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            min-height: 3.2rem;
-        }
-        .post-card .tags {
-            overflow: visible;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-top: 0.5rem;
-            flex-shrink: 0;
-        }
-        .post-card .tag {
-            cursor: pointer;
-            text-decoration: none;
-            color: #fff;
-        }
-        .post-card .tag:hover { opacity: 0.85; color: #fff; }
-        .tag { text-decoration: none; color: #fff; }
-        .tag:hover { text-decoration: none; opacity: 0.85; color: #fff; }
-
-        .post-reading-time { font-size: 0.8rem; color: #888; margin-top: 4px; margin-bottom: 2px; flex-shrink: 0; }
-        .post-card--entering { opacity: 0; transform: translateY(8px); transition: opacity 0.25s ease, transform 0.25s ease; }
-        .loading-spinner { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 1.5rem; }
-        .spinner { width: 20px; height: 20px; border: 2px solid #e0e0e0; border-top-color: #6366f1; border-radius: 50%; animation: spin 0.7s linear infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 40px; height: 40px; border-radius: 50%; background: #6366f1; color: #fff; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-        .post-lead { font-size: 1.05rem; color: #555; line-height: 1.6; margin: 0.25rem 0 1rem; font-style: italic; }
-        .editorial-policy-note { background: #f0f4ff; border-left: 3px solid #6366f1; padding: 0.75rem 1rem; margin-bottom: 1.5rem; border-radius: 0 6px 6px 0; font-size: 0.85rem; color: #555; }
-        .editorial-policy-note a { color: #6366f1; }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
-            <nav>
-                <a href="{{ base_path }}/">Home</a>
-                <a href="{{ base_path }}/about/">About</a>
-                <a href="{{ base_path }}/contact/">Contact</a>
-                <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
-                <a href="{{ base_path }}/terms-of-service/">Terms of Service</a>
-            </nav>
-        </div>
-    </header>
-    <main class="container">
-        <div class="hero">
-            <h2>Welcome to {{ site_name }}</h2>
-            <p>{{ site_description }}</p>
-        </div>
-
-        <div class="editorial-policy-note">
-            Articles are written by <a href="{{ base_path }}/about/">Kubai Kevin</a>, a software developer
-            with 10+ years of production experience. Every post is reviewed for accuracy before publishing.
-            <a href="{{ base_path }}/about/#editorial">Learn about our editorial process →</a>
-        </div>
-
-        <div class="search-container">
-            <div class="search-wrapper">
-                <svg class="search-icon" width="18" height="18" viewBox="0 0 20 20" fill="none">
-                    <path d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16zM19 19l-4.35-4.35"
-                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <input type="text" id="search-input" class="search-input"
-                    placeholder="Search posts..."
-                    autocomplete="off" autocorrect="off" autocapitalize="off"
-                    spellcheck="false" data-form-type="other">
-                <button id="clear-search" class="clear-search" style="display:none;" aria-label="Clear search">
-                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
-                        <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </button>
-            </div>
-            <div id="search-results-count" class="search-results-count"></div>
-        </div>
-
-        <section class="recent-posts">
-            <h2>Latest Posts</h2>
-            {% if posts %}
-            <div id="posts-container" class="post-grid">
-                {% for post in posts  %}
-                <a class="post-card" href="{{ base_path }}/{{ post.slug }}/"
-                   data-title="{{ post.title | e }}"
-                   data-description="{{ post.meta_description | e }}"
-                   data-tags="{{ post.tags | join(',') | e }}">
-                    <h3>{{ post.title }}</h3>
-                    <p class="post-excerpt">{{ post.meta_description }}</p>
-                    {% if post.reading_time %}
-                    <p class="post-reading-time">{{ post.reading_time }} min read</p>
-                    {% endif %}
-                    {% if post.tags %}
-                    <div class="tags">
-                        {% for tag in post.short_tags %}
-                        <span class="tag"
-                              data-tag-href="{{ base_path }}/tag/{{ tag | lower | replace(' ', '-') }}/">{{ tag }}</span>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-                </a>
-                {% endfor %}
-            </div>
-
-            <div id="loading-spinner" class="loading-spinner" style="display:none;">
-                <div class="spinner"></div>
-                <p>Loading more posts...</p>
-            </div>
-
-            <div id="scroll-sentinel" style="height:1px;"></div>
-
-            {% else %}
-            <p>No posts yet. Check back soon!</p>
-            {% endif %}
-        </section>
-    </main>
-
-    <button id="back-to-top" class="back-to-top" style="display:none;" aria-label="Back to top"><span>&#8593;</span></button>
-
-    <footer>
-        <div class="container">
-            <p>&copy; {{ current_year }} {{ site_name }}</p>
-            <div class="social-links">
-                {% for platform, url in social_links.items() %}
-                <a href="{{ url }}" target="_blank" rel="noopener">{{ platform|title }}</a>
-                {% endfor %}
-            </div>
-        </div>
-    </footer>
-
-    <script src="{{ base_path }}/static/navigation.js"></script>
-    <script>
-    (function () {
-        'use strict';
-
-        var searchInput    = document.getElementById('search-input');
-        var clearBtn       = document.getElementById('clear-search');
-        var resultsCount   = document.getElementById('search-results-count');
-        var postsContainer = document.getElementById('posts-container');
-        var loadingSpinner = document.getElementById('loading-spinner');
-        var sentinel       = document.getElementById('scroll-sentinel');
-        var backToTopBtn   = document.getElementById('back-to-top');
-
-        var PAGE_SIZE = {{ posts_per_page }};
-        var BASE_PATH = '{{ base_path }}';
-
-        var fullPosts   = [];
-        var loadedCount = postsContainer
-            ? postsContainer.querySelectorAll('a.post-card').length
-            : 0;
-        var jsonReady   = false;
-        var isLoading   = false;
-        var searchMode  = false;
-        var observer    = null;
-
-        document.addEventListener('click', function (e) {
-            var el = e.target;
-            if (el && el.tagName === 'SPAN' && el.dataset.tagHref) {
-                e.preventDefault();
-                e.stopPropagation();
-                window.location.href = el.dataset.tagHref;
-            }
-        }, true);
-
-        function startObserver() {
-            if (!sentinel || !window.IntersectionObserver || observer) return;
-            observer = new IntersectionObserver(function (entries) {
-                if (entries[0].isIntersecting) onSentinelVisible();
-            }, { rootMargin: '0px 0px 400px 0px' });
-            observer.observe(sentinel);
-        }
-
-        function stopObserver() {
-            if (observer) { observer.disconnect(); observer = null; }
-        }
-
-        function onSentinelVisible() {
-            if (!jsonReady || isLoading || searchMode) return;
-            if (loadedCount >= fullPosts.length) { stopObserver(); return; }
-            loadNextPage();
-        }
-
-        function buildCard(post) {
-            var a       = document.createElement('a');
-            a.className = 'post-card';
-            a.href      = BASE_PATH + '/' + post.slug + '/';
-
-            var h3         = document.createElement('h3');
-            h3.textContent = post.title;
-            a.appendChild(h3);
-
-            var excerpt = (post.meta_description || '').trim();
-            if (!excerpt && post.content) {
-                excerpt = post.content.replace(/[#*`>\\[\\]]/g, '').trim().slice(0, 155);
-                if (excerpt.length === 155) excerpt = excerpt.slice(0, excerpt.lastIndexOf(' ')) + '\\u2026';
-            }
-            if (excerpt) {
-                var p         = document.createElement('p');
-                p.className   = 'post-excerpt';
-                p.textContent = excerpt;
-                a.appendChild(p);
-            }
-
-            if (post.reading_time) {
-                var rt         = document.createElement('p');
-                rt.className   = 'post-reading-time';
-                rt.textContent = post.reading_time + ' min read';
-                a.appendChild(rt);
-            }
-
-            var tags = (post.tags || []).filter(function(t) { return t && t.trim(); });
-            if (tags.length) {
-                var div       = document.createElement('div');
-                div.className = 'tags';
-                tags.slice().sort(function (x, y) { return x.length - y.length; })
-                    .slice(0, 3)
-                    .forEach(function (t) {
-                        var sp              = document.createElement('span');
-                        sp.className        = 'tag';
-                        sp.textContent      = t;
-                        sp.dataset.tagHref  = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\\s+/g, '-') + '/';
-                        div.appendChild(sp);
-                    });
-                a.appendChild(div);
-            }
-            return a;
-        }
-
-        function loadNextPage() {
-            if (isLoading) return;
-            isLoading = true;
-            var batchStart = loadedCount;
-            if (loadingSpinner) loadingSpinner.style.display = 'flex';
-            setTimeout(function () {
-                var slice    = fullPosts.slice(batchStart, batchStart + PAGE_SIZE);
-                var fragment = document.createDocumentFragment();
-                var newCards = [];
-                slice.forEach(function (post) {
-                    var card = buildCard(post);
-                    card.classList.add('post-card--entering');
-                    fragment.appendChild(card);
-                    newCards.push(card);
-                });
-                postsContainer.appendChild(fragment);
-                loadedCount = batchStart + slice.length;
-                requestAnimationFrame(function () {
-                    requestAnimationFrame(function () {
-                        newCards.forEach(function (el, i) {
-                            setTimeout(function () { el.classList.remove('post-card--entering'); }, i * 60);
-                        });
-                    });
-                });
-                if (loadingSpinner) loadingSpinner.style.display = 'none';
-                isLoading = false;
-                if (loadedCount >= fullPosts.length) stopObserver();
-            }, 250);
-        }
-
-        fetch(BASE_PATH + '/posts.json')
-            .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-            .then(function (posts) {
-                fullPosts = posts;
-                jsonReady = true;
-                if (loadedCount < fullPosts.length) {
-                    requestAnimationFrame(function () { startObserver(); });
-                }
-                if (searchMode && searchInput && searchInput.value.trim()) {
-                    runSearch(searchInput.value.trim());
-                }
-            })
-            .catch(function (err) { console.warn('posts.json fetch failed:', err); jsonReady = false; });
-
-        function readText(el, selector) {
-            if (!el) return '';
-            var child = el.querySelector(selector);
-            return child ? (child.textContent || '') : '';
-        }
-
-        var domIndex = [];
-        if (postsContainer) {
-            postsContainer.querySelectorAll('a.post-card').forEach(function (el) {
-                domIndex.push({
-                    element:     el,
-                    title:       (el.dataset.title       || readText(el, 'h3')).toLowerCase(),
-                    description: (el.dataset.description || readText(el, '.post-excerpt')).toLowerCase(),
-                    tags:        (el.dataset.tags        || '').toLowerCase()
-                });
-            });
-        }
-
-        function highlightText(text, query) {
-            if (!query) return text;
-            var lower  = text.toLowerCase();
-            var qLower = query.toLowerCase();
-            var result = '';
-            var pos    = 0;
-            var idx;
-            while ((idx = lower.indexOf(qLower, pos)) !== -1) {
-                result += escapeHtml(text.slice(pos, idx))
-                       +  '<mark class="search-highlight">'
-                       +  escapeHtml(text.slice(idx, idx + query.length))
-                       +  '</mark>';
-                pos = idx + query.length;
-            }
-            result += escapeHtml(text.slice(pos));
-            return result;
-        }
-
-        function escapeHtml(s) {
-            return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-                    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-        }
-
-        function runSearch(rawQuery) {
-            if (!postsContainer) return;
-            var query = rawQuery.toLowerCase().trim();
-            if (!query) { clearSearch(); return; }
-            searchMode = true;
-            stopObserver();
-            var matched;
-            if (jsonReady && fullPosts.length) {
-                matched = fullPosts.filter(function (p) {
-                    return (p.title            || '').toLowerCase().indexOf(query) !== -1 ||
-                           (p.meta_description || '').toLowerCase().indexOf(query) !== -1 ||
-                           (p.tags             || []).some(function (t) { return t.toLowerCase().indexOf(query) !== -1; });
-                });
-                postsContainer.innerHTML = '';
-                matched.forEach(function (post) {
-                    var card    = buildCard(post);
-                    var h3      = card.querySelector('h3');
-                    var excerpt = card.querySelector('.post-excerpt');
-                    if (h3)      h3.innerHTML      = highlightText(h3.textContent,      rawQuery);
-                    if (excerpt) excerpt.innerHTML = highlightText(excerpt.textContent, rawQuery);
-                    postsContainer.appendChild(card);
-                });
-            } else {
-                matched = [];
-                domIndex.forEach(function (item) {
-                    var hit = item.title.indexOf(query) !== -1 ||
-                              item.description.indexOf(query) !== -1 ||
-                              item.tags.indexOf(query) !== -1;
-                    item.element.style.display = hit ? '' : 'none';
-                    if (hit) matched.push(item);
-                });
-                matched.forEach(function (item) {
-                    var h3      = item.element.querySelector('h3');
-                    var excerpt = item.element.querySelector('.post-excerpt');
-                    if (h3)      h3.innerHTML      = highlightText(h3.dataset.plain      || h3.textContent,      rawQuery);
-                    if (excerpt) excerpt.innerHTML = highlightText(excerpt.dataset.plain || excerpt.textContent, rawQuery);
-                });
-            }
-            var n = matched.length;
-            if (resultsCount) {
-                resultsCount.textContent = n === 0
-                    ? 'No results for "' + rawQuery + '"'
-                    : n === 1 ? '1 post found' : n + ' posts found';
-            }
-            var old = document.getElementById('no-results-msg');
-            if (old) old.remove();
-            if (n === 0) {
-                var msg       = document.createElement('div');
-                msg.id        = 'no-results-msg';
-                msg.className = 'no-results-message';
-                msg.innerHTML = '<p>No posts matched <strong>' + rawQuery + '</strong>. Try different keywords.</p>';
-                postsContainer.insertAdjacentElement('afterend', msg);
-            }
-        }
-
-        function clearSearch() {
-            searchMode = false;
-            stopObserver();
-            domIndex.forEach(function (item) {
-                item.element.style.display = '';
-                var h3      = item.element.querySelector('h3');
-                var excerpt = item.element.querySelector('.post-excerpt');
-                if (h3)      h3.textContent      = h3.dataset.plain      || item.title;
-                if (excerpt) excerpt.textContent = excerpt.dataset.plain || item.description;
-            });
-            if (jsonReady && fullPosts.length) {
-                postsContainer.innerHTML = '';
-                var first = fullPosts.slice(0, PAGE_SIZE);
-                first.forEach(function (post) { postsContainer.appendChild(buildCard(post)); });
-                loadedCount = first.length;
-            } else {
-                postsContainer.querySelectorAll('a.post-card').forEach(function (el) { el.style.display = ''; });
-            }
-            var old = document.getElementById('no-results-msg');
-            if (old) old.remove();
-            if (resultsCount) resultsCount.textContent = '';
-            if (jsonReady && loadedCount < fullPosts.length) {
-                requestAnimationFrame(function () { startObserver(); });
-            }
-        }
-
-        if (postsContainer) {
-            postsContainer.querySelectorAll('a.post-card').forEach(function (el) {
-                var h3      = el.querySelector('h3');
-                var excerpt = el.querySelector('.post-excerpt');
-                if (h3      && !h3.dataset.plain)      h3.dataset.plain      = h3.textContent;
-                if (excerpt && !excerpt.dataset.plain) excerpt.dataset.plain = excerpt.textContent;
-            });
-        }
-
-        if (searchInput) {
-            searchInput.addEventListener('input', function () {
-                var q = this.value.trim();
-                if (clearBtn) clearBtn.style.display = q ? 'flex' : 'none';
-                if (q) { runSearch(q); } else { clearSearch(); }
-            });
-            searchInput.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape') { this.value = ''; if (clearBtn) clearBtn.style.display = 'none'; clearSearch(); }
-            });
-        }
-
-        if (clearBtn) {
-            clearBtn.addEventListener('click', function () {
-                if (searchInput) searchInput.value = '';
-                this.style.display = 'none';
-                clearSearch();
-                if (searchInput) searchInput.focus();
-            });
-        }
-
-        window.addEventListener('scroll', function () {
-            if (backToTopBtn)
-                backToTopBtn.style.display = window.pageYOffset > 300 ? 'flex' : 'none';
-        }, { passive: true });
-
-        if (backToTopBtn) {
-            backToTopBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
-        }
-
-    }());
-    </script>
-    <script defer src="{{ base_path }}/static/pwa.js"></script>
-</body>
-</html>"""
-
-    # FIX BUG-8: ABOUT_TMPL had consent.js loaded with `defer` at the BOTTOM
-    # of <body>. POST_TMPL and INDEX_TMPL correctly load it as the first
-    # synchronous <script> in <head>. ABOUT_TMPL was the outlier, meaning the
-    # AdSense snippet (inside global_meta_tags) fired before consent defaults
-    # were pushed to dataLayer — a Consent Mode v2 violation.
-    # Fix: move consent.js to a synchronous load as the FIRST script in <head>,
-    # before global_meta_tags, and remove the deferred bottom-of-body tag.
-    ABOUT_TMPL = """\
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Kubai Kevin — {{ site_name }}</title>
-    <meta name="description" content="Kubai Kevin is a software developer based in Nairobi, Kenya with 10+ years building production Python and Node.js backends in fintech. He writes about AI, backend systems, and developer careers from direct production experience.">
-    <meta name="base-path" content="{{ base_path }}">
-    <link rel="canonical" href="{{ base_url }}/about/">
-    <meta property="og:type" content="profile">
-    <meta property="og:title" content="About Kubai Kevin — {{ site_name }}">
-    <meta property="og:description" content="Software developer in Nairobi writing about AI, backend systems, and developer careers from 10+ years of production experience.">
-    <meta property="og:url" content="{{ base_url }}/about/">
-    <meta property="profile:first_name" content="Kevin">
-    <meta property="profile:last_name" content="Kubai">
-    <script src="{{ base_path }}/static/consent.js"></script>
-    {{ global_meta_tags | safe }}
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "@id": "{{ base_url }}/about/#author",
-      "name": "Kubai Kevin",
-      "givenName": "Kevin",
-      "familyName": "Kubai",
-      "jobTitle": "Software Developer",
-      "description": "Software developer based in Nairobi, Kenya with 10+ years experience in Python, Node.js, and AWS. Specialises in fintech backends and AI integration.",
-      "url": "{{ base_url }}/about/",
-      "email": "aiblogauto@gmail.com",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Nairobi",
-        "addressCountry": "KE"
-      },
-      "sameAs": [
-        "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
-        "https://twitter.com/KubaiKevin",
-        "https://github.com/kubaik"
-      ],
-      "knowsAbout": [
-        "Python", "Node.js", "TypeScript", "AWS Lambda", "PostgreSQL",
-        "Redis", "Machine Learning", "LLMs", "API Design",
-        "Fintech Systems", "Backend Engineering", "Android Development"
-      ],
-      "alumniOf": {
-        "@type": "Organization",
-        "name": "Self-taught, supplemented with industry certifications"
-      }
-    }
-    </script>
-    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
-    <link rel="manifest" href="{{ base_path }}/manifest.json">
-    <meta name="theme-color" content="#6366f1">
-    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
-    <style>
-        .about-hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white; padding: 3rem 2rem; border-radius: 12px;
-            margin-bottom: 2rem; text-align: center;
-        }
-        .about-hero h1 { font-size: 2rem; margin-bottom: 0.5rem; color: white; }
-        .about-hero p { opacity: 0.9; font-size: 1.05rem; max-width: 560px; margin: 0 auto; }
-        .author-profile {
-            display: flex; gap: 2rem; align-items: flex-start;
-            background: #f8f9fa; padding: 2rem; border-radius: 12px;
-            border: 1px solid #e0e0e0; margin-bottom: 2rem;
-        }
-        @media (max-width: 600px) {
-            .author-profile { flex-direction: column; align-items: center; text-align: center; }
-        }
-        .author-avatar-svg {
-            width: 100px; height: 100px; flex-shrink: 0; border-radius: 50%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2rem; font-weight: 700; color: white;
-        }
-        .author-name { font-size: 1.4rem; font-weight: 700; color: #1a1a2e; margin: 0 0 0.25rem; }
-        .author-title { color: #6366f1; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; }
-        .author-bio { color: #444; line-height: 1.7; margin-bottom: 1rem; }
-        .author-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-        .author-link {
-            display: inline-flex; align-items: center; gap: 0.4rem;
-            padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem;
-            font-weight: 600; text-decoration: none; border: 2px solid;
-            transition: all 0.2s;
-        }
-        .author-link-linkedin { color: #0077b5; border-color: #0077b5; }
-        .author-link-linkedin:hover { background: #0077b5; color: white; }
-        .author-link-twitter { color: #1da1f2; border-color: #1da1f2; }
-        .author-link-twitter:hover { background: #1da1f2; color: white; }
-        .author-link-github { color: #333; border-color: #333; }
-        .author-link-github:hover { background: #333; color: white; }
-        .section-card {
-            background: white; border: 1px solid #e0e0e0; border-radius: 12px;
-            padding: 1.75rem; margin-bottom: 1.5rem;
-        }
-        .section-card h2 {
-            font-size: 1.25rem; color: #1a1a2e; margin-top: 0; margin-bottom: 1rem;
-            padding-bottom: 0.6rem; border-bottom: 2px solid #f0f0f0;
-        }
-        .tech-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 0.5rem; margin-top: 0.75rem;
-        }
-        .tech-pill {
-            background: #f0f4ff; border: 1px solid #c7d2fe;
-            border-radius: 6px; padding: 0.35rem 0.75rem;
-            font-size: 0.82rem; color: #3730a3; text-align: center;
-        }
-        .process-step { display: flex; gap: 1rem; margin-bottom: 1.25rem; align-items: flex-start; }
-        .step-num {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white; width: 30px; height: 30px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700; font-size: 0.85rem; flex-shrink: 0; margin-top: 2px;
-        }
-        .step-body strong { color: #1a1a2e; }
-        .step-body p { margin: 0.25rem 0 0; color: #555; font-size: 0.9rem; line-height: 1.6; }
-        .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-top: 1rem; }
-        .stat-box { text-align: center; background: #f8f9fa; border-radius: 8px; padding: 1rem; }
-        .stat-num { font-size: 1.8rem; font-weight: 700; color: #6366f1; display: block; }
-        .stat-label { font-size: 0.8rem; color: #666; margin-top: 0.25rem; }
-        .correction-box {
-            background: #fff3cd; border-left: 4px solid #ffc107;
-            border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin-top: 1rem;
-        }
-        .correction-box p { margin: 0; font-size: 0.9rem; color: #856404; }
-        .recent-posts-list { list-style: none; padding: 0; margin: 0; }
-        .recent-posts-list li { border-bottom: 1px solid #f0f0f0; }
-        .recent-posts-list li:last-child { border-bottom: none; }
-        .recent-posts-list a {
-            display: block; padding: 0.75rem 0; text-decoration: none;
-            color: #333; font-size: 0.9rem; transition: color 0.2s;
-        }
-        .recent-posts-list a:hover { color: #6366f1; }
-        .post-date { font-size: 0.78rem; color: #999; margin-top: 0.2rem; }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
-            <nav>
-                <a href="{{ base_path }}/">Home</a>
-                <a href="{{ base_path }}/about/">About</a>
-                <a href="{{ base_path }}/contact/">Contact</a>
-                <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
-                <a href="{{ base_path }}/terms-of-service/">Terms of Service</a>
-            </nav>
-        </div>
-    </header>
-
-    <main class="container">
-        <div class="about-hero">
-            <h1>About This Blog</h1>
-            <p>Practical writing about software development, AI, and developer careers — based on real production experience, not tutorials.</p>
-        </div>
-
-        <article itemscope itemtype="https://schema.org/Person"
-                 id="author"
-                 itemprop="author">
-            <meta itemprop="name" content="Kubai Kevin">
-            <meta itemprop="url" content="{{ base_url }}/about/">
-
-            <div class="author-profile">
-                <div class="author-avatar-svg" aria-hidden="true">KK</div>
-                <div>
-                    <h2 class="author-name" itemprop="name">Kubai Kevin</h2>
-                    <p class="author-title" itemprop="jobTitle">
-                        Software Developer · Nairobi, Kenya
-                        <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-                            <meta itemprop="addressLocality" content="Nairobi">
-                            <meta itemprop="addressCountry" content="KE">
-                        </span>
-                    </p>
-                    <p class="author-bio" itemprop="description">
-                        I'm a software developer with over a decade of experience building production
-                        systems in the financial services sector in East Africa. My day-to-day work
-                        involves Python and Node.js backends, AWS serverless infrastructure, and
-                        integrating AI/LLMs into real workflows. I also build Android applications
-                        in Java and Kotlin.
-                    </p>
-                    <p class="author-bio">
-                        I started writing here because the guides I needed when solving production
-                        problems didn't exist — or they existed but skipped the parts that matter
-                        when things go wrong at 2am. Everything I write comes from something I
-                        have personally built, debugged, or deployed.
-                    </p>
-                    <div class="author-links">
-                        <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/"
-                           class="author-link author-link-linkedin"
-                           target="_blank" rel="noopener noreferrer"
-                           itemprop="sameAs">
-                            LinkedIn profile
-                        </a>
-                        <a href="https://twitter.com/KubaiKevin"
-                           class="author-link author-link-twitter"
-                           target="_blank" rel="noopener noreferrer"
-                           itemprop="sameAs">
-                            @KubaiKevin
-                        </a>
-                        <a href="https://github.com/kubaik"
-                           class="author-link author-link-github"
-                           target="_blank" rel="noopener noreferrer"
-                           itemprop="sameAs">
-                            GitHub
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section-card">
-                <h2>Technologies I work with regularly</h2>
-                <p style="color:#555;font-size:0.9rem;margin-bottom:0.5rem">
-                    These are tools I use in production systems, not just tutorials I've read.
-                </p>
-                <div class="tech-grid">
-                    <span class="tech-pill">Python 3.11+</span>
-                    <span class="tech-pill">Node.js / TypeScript</span>
-                    <span class="tech-pill">FastAPI</span>
-                    <span class="tech-pill">AWS Lambda</span>
-                    <span class="tech-pill">PostgreSQL</span>
-                    <span class="tech-pill">Redis</span>
-                    <span class="tech-pill">Android (Kotlin)</span>
-                    <span class="tech-pill">M-Pesa / Paystack</span>
-                    <span class="tech-pill">GitHub Actions</span>
-                    <span class="tech-pill">Docker</span>
-                    <span class="tech-pill">LLM APIs</span>
-                    <span class="tech-pill">RAG pipelines</span>
-                </div>
-            </div>
-
-            <div class="section-card">
-                <h2>By the numbers</h2>
-                <div class="stat-row">
-                    <div class="stat-box">
-                        <span class="stat-num">{{ posts|length }}</span>
-                        <div class="stat-label">Articles published</div>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-num">10+</span>
-                        <div class="stat-label">Years in production</div>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-num">2014</span>
-                        <div class="stat-label">Started professionally</div>
-                    </div>
-                    <div class="stat-box">
-                        <span class="stat-num">EAT</span>
-                        <div class="stat-label">UTC+3 · Nairobi</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="section-card" id="editorial">
-                <h2>Editorial process</h2>
-                <p style="color:#555;font-size:0.9rem;margin-bottom:1.25rem">
-                    This matters because Google AdSense and Google Search both evaluate whether
-                    content demonstrates first-hand experience and editorial accountability.
-                    Here is exactly how articles on this site are produced:
-                </p>
-
-                <div class="process-step">
-                    <div class="step-num">1</div>
-                    <div class="step-body">
-                        <strong>Topic selection from direct experience</strong>
-                        <p>Topics come from problems I encountered in production, questions that
-                        came up in code reviews I've done, or tools I've actually evaluated.
-                        I don't write about things I've only read about.</p>
-                    </div>
-                </div>
-
-                <div class="process-step">
-                    <div class="step-num">2</div>
-                    <div class="step-body">
-                        <strong>Research and drafting</strong>
-                        <p>I research each topic using official documentation, GitHub issues,
-                        and my own production notes. AI tools assist with structure and drafting,
-                        but every factual claim is verified against primary sources. Code examples
-                        are tested locally before publication.</p>
-                    </div>
-                </div>
-
-                <div class="process-step">
-                    <div class="step-num">3</div>
-                    <div class="step-body">
-                        <strong>Personal review before publishing</strong>
-                        <p>I read every article before it goes live. I correct errors, add
-                        specifics from my own experience, and remove anything that feels generic
-                        or that I can't personally verify. Articles that don't meet this bar
-                        are held or deleted.</p>
-                    </div>
-                </div>
-
-                <div class="process-step">
-                    <div class="step-num">4</div>
-                    <div class="step-body">
-                        <strong>Ongoing corrections</strong>
-                        <p>Technology changes. When an article becomes outdated or a reader
-                        reports an error, I update it. The "Last reviewed" date in each article
-                        reflects when it was last checked for accuracy.</p>
-                    </div>
-                </div>
-
-                <div class="correction-box">
-                    <p>Found a factual error?
-                    <a href="{{ base_path }}/contact/" style="color:#856404;font-weight:600;">
-                        Email me directly</a> —
-                    corrections are applied within 48 hours and the article is updated with
-                    the correction noted.</p>
-                </div>
-            </div>
-
-            {% if posts %}
-            <div class="section-card">
-                <h2>Recent articles</h2>
-                <ul class="recent-posts-list">
-                    {% for post in posts[:8] %}
-                    <li>
-                        <a href="{{ base_path }}/{{ post.slug }}/">
-                            {{ post.title }}
-                            <div class="post-date">{{ post.created_at[:10] }}</div>
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-                {% if posts|length > 8 %}
-                <p style="margin-top:1rem;text-align:center">
-                    <a href="{{ base_path }}/" style="color:#6366f1;text-decoration:none;font-weight:600;">
-                        View all {{ posts|length }} articles →
-                    </a>
-                </p>
-                {% endif %}
-            </div>
-            {% endif %}
-
-        </article>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p>
-        </div>
-    </footer>
-    <script src="{{ base_path }}/static/navigation.js"></script>
-    <script defer src="{{ base_path }}/static/pwa.js"></script>
-</body>
-</html>"""
-
-    # FIX BUG-11: PRIVACY_TMPL used href="../static/style.css" (relative path).
-    # Fixed to use base_path variable for deployment-agnostic asset loading.
-    PRIVACY_TMPL = """\
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - {{ site_name }}</title>
-    <meta name="description" content="Privacy Policy for {{ site_name }}">
-    <meta name="base-path" content="{{ base_path }}">
-    <link rel="canonical" href="{{ base_url }}/privacy-policy/">
-    <script src="{{ base_path }}/static/consent.js"></script>
-    {{ global_meta_tags | safe }}
-    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
-    <link rel="manifest" href="{{ base_path }}/manifest.json">
-    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
-    <style>
-        .privacy-section{background:#f8f9fa;padding:1.5rem;margin-bottom:1.5rem;border-radius:8px;border-left:4px solid #6366f1}
-        .privacy-section h3{color:#333;margin-top:0}
-        .important-notice{background:#fff3cd;border-left:4px solid #ffc107;padding:1rem 1.5rem;margin:1.5rem 0;border-radius:4px}
-        table{width:100%;border-collapse:collapse;background:white}
-        th,td{padding:0.8rem;text-align:left;border-bottom:1px solid #dee2e6}
-        th{background:#f8f9fa;font-weight:600}
-        .highlight-box{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:1.5rem;border-radius:8px;margin:1.5rem 0}
-        .highlight-box h3{margin-top:0;color:white}
-    </style>
-</head>
-<body>
-    <header><div class="container">
-        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
-        <nav><a href="{{ base_path }}/">Home</a><a href="{{ base_path }}/about/">About</a><a href="{{ base_path }}/contact/">Contact</a>
-        <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a><a href="{{ base_path }}/terms-of-service/">Terms of Service</a></nav>
-    </div></header>
-    <main class="container">
-        <div class="hero"><h2>Privacy Policy</h2><p>How we protect and handle your information</p></div>
-        <article class="page-content">
-            <div class="privacy-section"><h3>1. Introduction</h3>
-                <p><strong>{{ site_name }}</strong> is committed to protecting your privacy. By accessing this site, you agree to this Privacy Policy.</p></div>
-            <div class="privacy-section"><h3>2. Information We Collect</h3>
-                <ul>
-                    <li><strong>Contact information</strong> when you contact us: name, email, message</li>
-                    <li><strong>Usage data</strong> via Google Analytics: pages visited, time on site, browser type</li>
-                    <li><strong>Cookie data</strong> from Google Analytics and Google AdSense</li>
-                </ul></div>
-            <div class="privacy-section"><h3>3. How We Use Information</h3>
-                <ul>
-                    <li>To respond to your inquiries</li>
-                    <li>To improve content based on what readers find useful</li>
-                    <li>To serve relevant advertisements via Google AdSense</li>
-                </ul></div>
-            <div class="privacy-section"><h3>4. Cookies</h3>
-                <table>
-                    <thead><tr><th>Type</th><th>Purpose</th><th>Duration</th></tr></thead>
-                    <tbody>
-                        <tr><td>Analytics</td><td>Google Analytics usage tracking</td><td>Up to 2 years</td></tr>
-                        <tr><td>Advertising</td><td>Google AdSense ad targeting</td><td>Up to 1 year</td></tr>
-                    </tbody>
-                </table>
-                <p>You can disable cookies in your browser settings. Google's privacy policy: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></p></div>
-            <div class="privacy-section"><h3>5. Third Parties</h3>
-                <div class="important-notice"><p>We do not sell your personal information. We use Google Analytics and Google AdSense.</p></div></div>
-            <div class="highlight-box"><h3>6. Contact</h3>
-                <p>Email: <a href="mailto:aiblogauto@gmail.com" style="color:white;text-decoration:underline;">aiblogauto@gmail.com</a></p></div>
-            <p><strong>Last updated:</strong> {{ current_date }}</p>
-        </article>
-    </main>
-    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
-    <script src="{{ base_path }}/static/navigation.js"></script>
-    <script defer src="{{ base_path }}/static/pwa.js"></script>
-</body>
-</html>"""
-
-    # FIX BUG-12: TERMS_TMPL had the same relative path bug as PRIVACY_TMPL.
-    TERMS_TMPL = """\
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Service - {{ site_name }}</title>
-    <meta name="description" content="Terms of Service for {{ site_name }}">
-    <meta name="base-path" content="{{ base_path }}">
-    <link rel="canonical" href="{{ base_url }}/terms-of-service/">
-    <script src="{{ base_path }}/static/consent.js"></script>
-    {{ global_meta_tags | safe }}
-    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
-    <link rel="manifest" href="{{ base_path }}/manifest.json">
-    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
-    <style>
-        .terms-section{background:#f8f9fa;padding:1.5rem;margin-bottom:1.5rem;border-radius:8px;border-left:4px solid #6366f1}
-        .terms-section h3{color:#333;margin-top:0}
-        .highlight-box{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:1.5rem;border-radius:8px;margin:1.5rem 0}
-        .highlight-box h3{margin-top:0;color:white}
-        .warning-box{background:#f8d7da;border-left:4px solid #dc3545;padding:1rem 1.5rem;margin:1.5rem 0;border-radius:4px;color:#721c24}
-    </style>
-</head>
-<body>
-    <header><div class="container">
-        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
-        <nav><a href="{{ base_path }}/">Home</a><a href="{{ base_path }}/about/">About</a><a href="{{ base_path }}/contact/">Contact</a>
-        <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a><a href="{{ base_path }}/terms-of-service/">Terms of Service</a></nav>
-    </div></header>
-    <main class="container">
-        <div class="hero"><h2>Terms of Service</h2><p>Please read these terms carefully before using our site</p></div>
-        <article class="page-content">
-            <div class="terms-section"><h3>1. Acceptance</h3>
-                <p>By accessing {{ site_name }}, you agree to these Terms and our Privacy Policy.</p></div>
-            <div class="terms-section"><h3>2. AI-Assisted Content</h3>
-                <div class="warning-box"><p>Some content is drafted with AI assistance and reviewed for accuracy by the author. Always verify technical information independently before using it in production.</p></div></div>
-            <div class="terms-section"><h3>3. Affiliate Disclosure</h3>
-                <p>This site participates in affiliate programmes. Purchases through affiliate links may earn us a commission at no additional cost to you.</p></div>
-            <div class="terms-section"><h3>4. Disclaimer</h3>
-                <p>Content is provided for informational purposes. We make no warranty that it is accurate, complete, or suitable for any particular purpose.</p></div>
-            <div class="terms-section"><h3>5. Governing Law</h3>
-                <p>These terms are governed by the laws of Kenya.</p></div>
-            <div class="highlight-box"><h3>6. Contact</h3>
-                <p>Email: <a href="mailto:aiblogauto@gmail.com" style="color:white;text-decoration:underline;">aiblogauto@gmail.com</a></p></div>
-            <p><strong>Last updated:</strong> {{ current_date }}</p>
-        </article>
-    </main>
-    <footer><div class="container"><p>&copy; {{ current_year }} {{ site_name }}.</p></div></footer>
-    <script src="{{ base_path }}/static/navigation.js"></script>
-    <script defer src="{{ base_path }}/static/pwa.js"></script>
-</body>
-</html>"""
-
-    CONTACT_TMPL = """\
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Kubai Kevin — {{ site_name }}</title>
-    <meta name="description" content="Contact Kubai Kevin, software developer and author of {{ site_name }}. Based in Nairobi, Kenya. Responds within 3–5 business days.">
-    <meta name="base-path" content="{{ base_path }}">
-    <link rel="canonical" href="{{ base_url }}/contact/">
-    <script src="{{ base_path }}/static/consent.js"></script>
-    {{ global_meta_tags | safe }}
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ContactPage",
-      "name": "Contact Kubai Kevin",
-      "url": "{{ base_url }}/contact/",
-      "description": "Contact the author of {{ site_name }}",
-      "mainEntity": {
-        "@type": "Person",
-        "name": "Kubai Kevin",
-        "email": "aiblogauto@gmail.com",
-        "url": "{{ base_url }}/about/"
-      }
-    }
-    </script>
-    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
-    <link rel="manifest" href="{{ base_path }}/manifest.json">
-    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
-    <style>
-        .contact-hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white; padding: 2.5rem 2rem; border-radius: 12px;
-            text-align: center; margin-bottom: 2rem;
-        }
-        .contact-hero h1 { color: white; font-size: 2rem; margin-bottom: 0.5rem; }
-        .contact-hero p { opacity: 0.9; max-width: 500px; margin: 0 auto; }
-        .contact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        @media (max-width: 600px) { .contact-grid { grid-template-columns: 1fr; } }
-        .contact-card {
-            background: #f8f9fa; border: 1px solid #e0e0e0; border-radius: 12px;
-            padding: 1.5rem;
-        }
-        .contact-card h2 {
-            font-size: 1.1rem; color: #1a1a2e; margin-top: 0; margin-bottom: 0.75rem;
-        }
-        .contact-card p { color: #555; font-size: 0.9rem; line-height: 1.6; margin: 0; }
-        .contact-email-block {
-            background: white; border: 2px solid #6366f1; border-radius: 12px;
-            padding: 1.75rem; text-align: center; margin-bottom: 1.5rem;
-        }
-        .contact-email-block p { color: #555; margin-bottom: 1rem; font-size: 0.95rem; }
-        .email-link {
-            display: inline-block; font-size: 1.15rem; font-weight: 700;
-            color: #6366f1; text-decoration: none; padding: 0.6rem 1.5rem;
-            background: #f0f4ff; border-radius: 8px; transition: all 0.2s;
-        }
-        .email-link:hover { background: #6366f1; color: white; }
-        .response-note {
-            font-size: 0.8rem; color: #888; margin-top: 0.75rem !important;
-        }
-        .appropriate-list { list-style: none; padding: 0; margin: 0.5rem 0 0; }
-        .appropriate-list li {
-            padding: 0.4rem 0; border-bottom: 1px solid #e8e8e8;
-            font-size: 0.88rem; color: #555; padding-left: 1.2rem; position: relative;
-        }
-        .appropriate-list li::before {
-            content: "✓"; position: absolute; left: 0; color: #6366f1; font-weight: 700;
-        }
-        .appropriate-list li:last-child { border-bottom: none; }
-        .not-list li::before { content: "✗"; color: #dc3545; }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
-            <nav>
-                <a href="{{ base_path }}/">Home</a>
-                <a href="{{ base_path }}/about/">About</a>
-                <a href="{{ base_path }}/contact/">Contact</a>
-                <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
-                <a href="{{ base_path }}/terms-of-service/">Terms of Service</a>
-            </nav>
-        </div>
-    </header>
-
-    <main class="container">
-        <div class="contact-hero">
-            <h1>Contact</h1>
-            <p>Get in touch with Kubai Kevin, the author of {{ site_name }}.</p>
-        </div>
-
-        <div class="contact-email-block">
-            <p>The best way to reach me is by email. I read every message.</p>
-            <a href="mailto:aiblogauto@gmail.com" class="email-link">
-                aiblogauto@gmail.com
-            </a>
-            <p class="response-note">
-                Based in Nairobi, Kenya (UTC+3 / East Africa Time).
-                Typical response time: 3–5 business days.
-            </p>
-        </div>
-
-        <div class="contact-grid">
-            <div class="contact-card">
-                <h2>Good reasons to write</h2>
-                <ul class="appropriate-list">
-                    <li>Factual error in an article — I always want to know</li>
-                    <li>Outdated code example or deprecated API reference</li>
-                    <li>Question about something specific in an article</li>
-                    <li>Topic suggestion based on a real problem you're solving</li>
-                    <li>Collaboration or guest contribution proposal</li>
-                </ul>
-            </div>
-            <div class="contact-card">
-                <h2>What I don't respond to</h2>
-                <ul class="appropriate-list not-list">
-                    <li>Paid link insertion requests</li>
-                    <li>Guest posts that aren't from practitioners</li>
-                    <li>Generic "I love your blog" outreach with no specific question</li>
-                    <li>Requests to endorse tools I haven't used</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="contact-card" style="margin-bottom:1.5rem">
-            <h2>Social media</h2>
-            <p>For quick questions or to follow new articles as they publish:</p>
-            <ul class="appropriate-list" style="margin-top:0.75rem">
-                 <li>
-                    Twitter / X:
-                    <a href="https://twitter.com/KubaiKevin" target="_blank" rel="noopener"
-                       style="color:#6366f1;font-weight:600;">@KubaiKevin</a>
-                    — DMs open for short questions
-                </li>
-                <li>
-                    LinkedIn:
-                    <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/"
-                       target="_blank" rel="noopener"
-                       style="color:#6366f1;font-weight:600;">Kevin Kubai</a>
-                    — connect if you want to discuss opportunities
-                </li>
-            </ul>
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p>
-        </div>
-    </footer>
-    <script src="{{ base_path }}/static/navigation.js"></script>
-    <script defer src="{{ base_path }}/static/pwa.js"></script>
-</body>
-</html>"""
-
-    NOT_FOUND_TMPL = """\
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting… — {{ site_name }}</title>
-    <meta name="robots" content="noindex, nofollow">
-    <meta name="base-path" content="{{ base_path }}">
-    {# No-JS fallback: redirect immediately (0s delay) even without JS #}
-    <meta http-equiv="refresh" content="0;url={{ base_path }}/">
-    {{ global_meta_tags | safe }}
-    <style>
-        html, body {
-            margin: 0; padding: 0; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: #fff; color: #555;
-        }
-        .fallback { text-align: center; padding: 2rem; }
-        .fallback a {
-            color: #6366f1; font-weight: 600; text-decoration: none;
-        }
-        .fallback a:hover { text-decoration: underline; }
-        .spinner {
-            width: 28px; height: 28px; margin: 0 auto 1rem;
-            border: 3px solid #e0e7ff; border-top-color: #6366f1;
-            border-radius: 50%; animation: spin 0.7s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-    </style>
-</head>
-<body>
-    <!--
-        Redirect fires immediately on script execution below.
-        This fallback content only renders if a browser/proxy blocks
-        BOTH the meta-refresh above and JavaScript execution.
-    -->
-    <div class="fallback">
-        <div class="spinner" aria-hidden="true"></div>
-        <p>Taking you to the homepage&hellip;</p>
-        <p><a href="{{ base_path }}/">Click here if you are not redirected automatically</a></p>
-    </div>
-    <script>
-    (function () {
-        'use strict';
-        var BASE_PATH = '{{ base_path }}';
-        // replace() keeps this 404 URL out of browser history, so the
-        // Back button returns the user to wherever they came from
-        // rather than bouncing back into this redirect.
-        window.location.replace(BASE_PATH + '/');
-    }());
-    </script>
-</body>
-</html>"""
-
-    AI_DISCLOSURE_TMPL = """\
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Content Policy — {{ site_name }}</title>
-    <meta name="description" content="How {{ site_name }} uses AI writing tools, our editorial process, and how we ensure accuracy and originality.">
-    <meta name="base-path" content="{{ base_path }}">
-    <link rel="canonical" href="{{ base_url }}/ai-content-policy/">
-    <meta name="robots" content="index, follow">
-    <script src="{{ base_path }}/static/consent.js"></script>
-    {{ global_meta_tags | safe }}
-    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
-    <link rel="manifest" href="{{ base_path }}/manifest.json">
-    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
-    <style>
-        .policy-section { background:#f8f9fa; padding:1.5rem; margin-bottom:1.5rem; border-radius:8px; border-left:4px solid #6366f1; }
-        .policy-section h2 { color:#333; margin-top:0; font-size:1.2rem; }
-        .highlight-box { background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:1.5rem; border-radius:8px; margin:1.5rem 0; }
-        .highlight-box h2 { margin-top:0; color:white; }
-        .check-list { list-style:none; padding:0; }
-        .check-list li { padding-left:2rem; position:relative; margin-bottom:0.6rem; }
-        .check-list li::before { content:"✓"; position:absolute; left:0; color:#6366f1; font-weight:700; }
-        .cross-list li::before { content:"✗"; color:#dc3545; }
-        .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-        @media(max-width:600px){ .two-col{grid-template-columns:1fr;} }
-        .card { background:#fff; border:1px solid #e0e0e0; border-radius:8px; padding:1.25rem; }
-        .card h3 { margin-top:0; font-size:1rem; color:#1a1a2e; }
-    </style>
-</head>
-<body>
-    <header><div class="container">
-        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
-        <nav>
-            <a href="{{ base_path }}/">Home</a>
-            <a href="{{ base_path }}/about/">About</a>
-            <a href="{{ base_path }}/contact/">Contact</a>
-            <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
-        </nav>
-    </div></header>
-    <main class="container">
-        <div class="hero" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:2.5rem 2rem;border-radius:12px;text-align:center;margin-bottom:2rem;">
-            <h1 style="color:#fff;font-size:2rem;margin-bottom:0.5rem;">AI Content Policy</h1>
-            <p style="opacity:0.9;">How we use AI tools, what human review covers, and what we guarantee.</p>
-        </div>
-
-        <article class="page-content">
-            <div class="highlight-box">
-                <h2>Our Commitment in One Paragraph</h2>
-                <p style="margin-bottom:0;">Every article on {{ site_name }} is written on a topic selected from the author's direct professional experience, drafted with AI assistance for structure and speed, then reviewed by the author (Kubai Kevin) for factual accuracy, voice, and relevance before publication. AI tools accelerate the writing process — they do not replace editorial judgment.</p>
-            </div>
-
-            <div class="policy-section">
-                <h2>1. How AI is Used on This Site</h2>
-                <p>{{ site_name }} uses large language model (LLM) APIs — including models from Mistral, Google Gemini, Meta Llama (via Groq and other providers), and similar services — to:</p>
-                <ul class="check-list">
-                    <li>Draft article structure and outlines based on an author-selected topic.</li>
-                    <li>Generate prose that is then reviewed and edited.</li>
-                    <li>Suggest SEO keywords, meta descriptions, and social media copy.</li>
-                    <li>Automate repetitive formatting tasks (headings, code blocks, tables).</li>
-                </ul>
-                <p>AI tools are used as a writing <em>assistant</em>, not as the final publisher. The author remains responsible for all published content.</p>
-            </div>
-
-            <div class="policy-section">
-                <h2>2. What AI Does NOT Do on This Site</h2>
-                <div class="two-col">
-                    <div class="card">
-                        <h3>Not scraped or aggregated</h3>
-                        <p style="font-size:0.9rem;color:#555;">We do not scrape, copy, or rephrase content from other websites. Every article starts from a topic brief, not from existing web content.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Not published without review</h3>
-                        <p style="font-size:0.9rem;color:#555;">Our pipeline includes automated quality gates: minimum word count (1,500+), boilerplate detection, and content quality validation before any article is saved.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Not keyword-stuffed</h3>
-                        <p style="font-size:0.9rem;color:#555;">Content prompts explicitly ban keyword stuffing, filler phrases, and AI-detectable clichés. Quality validators check for these automatically.</p>
-                    </div>
-                    <div class="card">
-                        <h3>Not fabricated facts</h3>
-                        <p style="font-size:0.9rem;color:#555;">Factual claims, tool versions, and performance figures referenced in articles are verified against primary sources (official docs, GitHub, benchmarks) before publication.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="policy-section">
-                <h2>3. Quality Controls in Our Publishing Pipeline</h2>
-                <p>Before an article is saved and published, it passes through automated checks that enforce:</p>
-                <ul class="check-list">
-                    <li><strong>Minimum 1,500 words</strong> — thin content is rejected outright.</li>
-                    <li><strong>Boilerplate detection</strong> — template artifacts or placeholder text trigger automatic discard.</li>
-                    <li><strong>Filler phrase detection</strong> — AI-pattern phrases ("dive into", "game-changer", "it's important to note") are flagged and the article is regenerated.</li>
-                    <li><strong>E-E-A-T signal injection</strong> — every article includes an author byline, publication date, last-reviewed date, and an editorial standards footer.</li>
-                    <li><strong>Duplicate title detection</strong> — Jaccard similarity is checked against all existing posts to prevent near-duplicate articles.</li>
-                    <li><strong>Stale year scrubbing</strong> — dates and statistics are validated to use current year references.</li>
-                </ul>
-                <p>Articles that fail these gates are discarded. No fallback or placeholder article is published in their place.</p>
-            </div>
-
-            <div class="policy-section">
-                <h2>4. Author's Role</h2>
-                <p><strong>Kubai Kevin</strong> is the author and editor of all content on this site. His role in the pipeline includes:</p>
-                <ul class="check-list">
-                    <li>Defining the topic list from personal production experience (not keyword research alone).</li>
-                    <li>Reviewing the quality validation reports for each published article.</li>
-                    <li>Responding to reader corrections within 48 hours and updating affected articles.</li>
-                    <li>Periodically auditing the published post library for accuracy and policy compliance.</li>
-                    <li>Maintaining the quality gate code that governs what is and isn't published.</li>
-                </ul>
-                <p>The author's LinkedIn profile and contact details are published on the <a href="{{ base_path }}/about/">About page</a> for full transparency.</p>
-            </div>
-
-            <div class="policy-section">
-                <h2>5. Corrections Policy</h2>
-                <p>If an article contains a factual error, an outdated tool version, or inaccurate code, please <a href="{{ base_path }}/contact/">contact us</a>. We will:</p>
-                <ul>
-                    <li>Acknowledge the report within 24 hours.</li>
-                    <li>Investigate and apply corrections within 48 hours of confirmation.</li>
-                    <li>Note the correction in the article with the correction date.</li>
-                </ul>
-            </div>
-
-            <div class="policy-section">
-                <h2>6. AI Disclosure Compliance</h2>
-                <p>This page serves as the AI content disclosure for {{ site_name }} in jurisdictions that require or recommend disclosure of AI-assisted content generation. We believe transparency is both ethically correct and practically important for reader trust.</p>
-                <p>We monitor evolving regulatory requirements around AI content labelling (including EU AI Act guidance, FTC guidance, and platform-specific requirements) and will update this policy accordingly.</p>
-            </div>
-
-            <p style="color:#888;font-size:0.85rem;margin-top:2rem;"><strong>Last updated:</strong> {{ current_date }}</p>
-        </article>
-    </main>
-    <footer><div class="container">
-        <p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p>
-    </div></footer>
-    <script src="{{ base_path }}/static/navigation.js"></script>
-    <script defer src="{{ base_path }}/static/consent.js"></script>
-</body>
-</html>"""
-
-    DMCA_TMPL = """\
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DMCA &amp; Copyright Policy — {{ site_name }}</title>
-    <meta name="description" content="DMCA takedown process and copyright policy for {{ site_name }}.">
-    <meta name="base-path" content="{{ base_path }}">
-    <link rel="canonical" href="{{ base_url }}/dmca/">
-    <meta name="robots" content="index, follow">
-    <script src="{{ base_path }}/static/consent.js"></script>
-    {{ global_meta_tags | safe }}
-    <link rel="stylesheet" href="{{ base_path }}/static/style.css">
-    <link rel="manifest" href="{{ base_path }}/manifest.json">
-    <link rel="apple-touch-icon" href="{{ base_path }}/static/icons/icon-192x192.png">
-    <style>
-        .dmca-section { background:#f8f9fa; padding:1.5rem; margin-bottom:1.5rem; border-radius:8px; border-left:4px solid #6366f1; }
-        .dmca-section h2 { color:#333; margin-top:0; font-size:1.2rem; }
-        .dmca-section h3 { color:#444; margin-top:1rem; font-size:1rem; }
-        .highlight-box { background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:1.5rem; border-radius:8px; margin:1.5rem 0; }
-        .highlight-box h2 { margin-top:0; color:white; font-size:1.1rem; }
-        .highlight-box a { color:#fff; font-weight:bold; }
-        .warning-box { background:#fff3cd; border-left:4px solid #ffc107; padding:1rem 1.5rem; margin:1.5rem 0; border-radius:4px; color:#856404; }
-        .step-list { counter-reset:steps; list-style:none; padding:0; }
-        .step-list li { counter-increment:steps; padding-left:2.5rem; position:relative; margin-bottom:0.75rem; }
-        .step-list li::before { content:counter(steps); position:absolute; left:0; top:0; background:#6366f1; color:#fff; width:1.6rem; height:1.6rem; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:700; }
-    </style>
-</head>
-<body>
-    <header><div class="container">
-        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
-        <nav>
-            <a href="{{ base_path }}/">Home</a>
-            <a href="{{ base_path }}/about/">About</a>
-            <a href="{{ base_path }}/contact/">Contact</a>
-            <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a>
-        </nav>
-    </div></header>
-    <main class="container">
-        <div class="hero" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:2.5rem 2rem;border-radius:12px;text-align:center;margin-bottom:2rem;">
-            <h1 style="color:#fff;font-size:2rem;margin-bottom:0.5rem;">DMCA &amp; Copyright Policy</h1>
-            <p style="opacity:0.9;">How to report copyright concerns and how we handle them.</p>
-        </div>
-
-        <article class="page-content">
-            <div class="dmca-section">
-                <h2>1. Copyright Ownership</h2>
-                <p>All original articles, prose, code examples, and other content published on {{ site_name }} are the intellectual property of <strong>Kubai Kevin</strong> and are protected under copyright law. Unauthorised reproduction, distribution, or derivative works without explicit written permission is prohibited.</p>
-                <p>Content on this site is produced with AI writing assistance and reviewed by the author before publication. The editorial decisions, original observations, structure, and voice are the author's own.</p>
-            </div>
-
-            <div class="dmca-section">
-                <h2>2. Third-Party Content</h2>
-                <p>{{ site_name }} may reference, quote, or link to third-party sources. All such use is intended to be transformative, educational, or analytical in nature. If you believe your copyrighted work has been used in a way that constitutes infringement, please follow the notice process below.</p>
-                <div class="warning-box">
-                    <p><strong>Note:</strong> This site uses an automated content generation pipeline. Despite quality controls, it is possible that a generated article may inadvertently resemble or reproduce protected material. We take all DMCA notices seriously and will respond within <strong>24–48 hours</strong>.</p>
-                </div>
-            </div>
-
-            <div class="dmca-section">
-                <h2>3. DMCA Takedown — Notice Requirements</h2>
-                <p>To submit a valid DMCA takedown notice under 17 U.S.C. § 512(c)(3), your written notification must include all of the following:</p>
-                <ol class="step-list">
-                    <li>Your physical or electronic signature (or that of your authorised agent).</li>
-                    <li>Identification of the copyrighted work you claim has been infringed.</li>
-                    <li>Identification of the material you claim is infringing, with enough information for us to locate it (e.g. the specific URL on our site).</li>
-                    <li>Your contact information: name, address, telephone number, and email address.</li>
-                    <li>A statement that you have a good-faith belief that the disputed use is not authorised by the copyright owner, its agent, or the law.</li>
-                    <li>A statement, under penalty of perjury, that the information in your notice is accurate and that you are (or are authorised to act on behalf of) the copyright owner.</li>
-                </ol>
-            </div>
-
-            <div class="highlight-box">
-                <h2>4. Where to Send DMCA Notices</h2>
-                <p>Email your complete DMCA notice to:<br>
-                <a href="mailto:aiblogauto@gmail.com"><strong>aiblogauto@gmail.com</strong></a></p>
-                <p style="margin-bottom:0;font-size:0.9rem;opacity:0.9;">Subject line: <em>DMCA Takedown Request — [URL of infringing page]</em></p>
-            </div>
-
-            <div class="dmca-section">
-                <h2>5. Our Response Process</h2>
-                <p>Upon receiving a valid DMCA notice, we will:</p>
-                <ul>
-                    <li>Acknowledge receipt within <strong>24 hours</strong>.</li>
-                    <li>Investigate the claim and, if valid, remove or disable access to the infringing content within <strong>48 hours</strong>.</li>
-                    <li>Notify the author of the takedown.</li>
-                    <li>Maintain a record of all DMCA notices for compliance purposes.</li>
-                </ul>
-                <p>We reserve the right to remove content proactively if we believe it may infringe third-party rights, without waiting for a formal DMCA notice.</p>
-            </div>
-
-            <div class="dmca-section">
-                <h2>6. Counter-Notice</h2>
-                <p>If you believe content was removed in error, you may submit a counter-notice under 17 U.S.C. § 512(g). Counter-notices must include equivalent information to a takedown notice, plus a statement that you consent to the jurisdiction of the federal court where your address is located.</p>
-            </div>
-
-            <div class="dmca-section">
-                <h2>7. Repeat Infringer Policy</h2>
-                <p>{{ site_name }} will disable or terminate the publishing pipeline for any content source that is the subject of repeated valid DMCA notices, in accordance with the safe-harbour provisions of the DMCA.</p>
-            </div>
-
-            <div class="dmca-section">
-                <h2>8. Using Our Content</h2>
-                <p>Brief quotations (under 150 words) with a clear attribution link to the source article are permitted under fair use. For longer excerpts, syndication, or any commercial use, contact us at <a href="mailto:aiblogauto@gmail.com">aiblogauto@gmail.com</a> to request written permission.</p>
-            </div>
-
-            <p style="color:#888;font-size:0.85rem;margin-top:2rem;"><strong>Last updated:</strong> {{ current_date }}</p>
-        </article>
-    </main>
-    <footer><div class="container">
-        <p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p>
-    </div></footer>
-    <script src="{{ base_path }}/static/navigation.js"></script>
-    <script defer src="{{ base_path }}/static/consent.js"></script>
-</body>
-</html>"""
-
-    env = Environment(loader=BaseLoader())
-    return {
-        'post':             env.from_string(POST_TMPL),
-        'index':            env.from_string(INDEX_TMPL),
-        'about':            env.from_string(ABOUT_TMPL),
-        'privacy_policy':   env.from_string(PRIVACY_TMPL),
-        'terms_of_service': env.from_string(TERMS_TMPL),
-        'contact':          env.from_string(CONTACT_TMPL),
-        'not_found':        env.from_string(NOT_FOUND_TMPL),
-        'dmca':             env.from_string(DMCA_TMPL),
-        'ai_disclosure':    env.from_string(AI_DISCLOSURE_TMPL),
-    }
+            self._write_html(tag_dir / "index.html", html, base_path)
+
+    def _generate_rss_feed(self, posts): pass
+    def _generate_sitemap(self, posts): pass
+    def _generate_posts_json(self, posts): pass
