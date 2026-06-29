@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-29T22:50:18.043747",
+  "built_at": "2026-06-29T23:57:35.228414",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3550,6 +3550,11 @@
       "slug": "7-passive-income-streams-for-devs-in-2026",
       "title": "7 passive income streams for devs in 2026",
       "summary": "I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I started looking for a second income stre"
+    },
+    {
+      "slug": "fine-tune-vs-prompt-2026s-hidden-costs",
+      "title": "Fine-tune vs prompt: 2026’s hidden costs",
+      "summary": "The official documentation for finetuning small is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Every vendor’s slide deck says t"
     }
   ]
 }
