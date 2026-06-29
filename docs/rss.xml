@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2026 04:10:16 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 04:15:09 +0000</lastBuildDate>
+    <item>
+      <title>Lies your AI assistant tells itself</title>
+      <link>https://kubaik.github.io/lies-your-ai-assistant-tells-itself/</link>
+      <description>98% drop in AI injection attacks with 8% latency cost — the regex, code, and metrics teams use to harden chatbots in 2026</description>
+      <pubDate>Mon, 29 Jun 2026 04:14:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/lies-your-ai-assistant-tells-itself/</guid>
+    </item>
     <item>
       <title>Upgrade apps for 4G-as-baseline in 2026</title>
       <link>https://kubaik.github.io/upgrade-apps-for-4g-as-baseline-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut state management boilerplate 60% with Signals — React, Vue, Svelte, and Node picks ranked with benchmarks and migration tips.</description>
       <pubDate>Sun, 28 Jun 2026 15:26:30 +0000</pubDate>
       <guid>https://kubaik.github.io/signals-vs-stores-7-state-tools-ranked/</guid>
-    </item>
-    <item>
-      <title>AI memory leaks: context lost after sessions</title>
-      <link>https://kubaik.github.io/ai-memory-leaks-context-lost-after-sessions/</link>
-      <description>Cut AI agent memory loss 100% with Redis 7.2 persistence — connection pooling, AOF config, and the Kubernetes volume mount mistake teams miss in 2026.</description>
-      <pubDate>Sun, 28 Jun 2026 15:15:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-memory-leaks-context-lost-after-sessions/</guid>
     </item>
   </channel>
 </rss>
