@@ -1,14 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>5 things HTMX replaced in my stack — Kubai Kevin</title>
-    <meta name="description" content="Cut frontend build time 95% and TTFB 71% with HTMX — the real latency numbers, Docker image sizes, and the one mistake I made when migrating off React">
-    <link rel="stylesheet" href="/static/style.css">
-        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>5 things HTMX replaced in my stack - Kubai Kevin</title>
+        <meta name="description" content="Cut frontend build time 95% and TTFB 71% with HTMX — the real latency numbers, Docker image sizes, and the one mistake I made when migrating off React">
+        <meta name="keywords" content="HtmxVsReact, ServerRenderedHtml, FlaskHtmx, FrontendBuildTime, TtfbImprovement, DockerImageSize, ReactReplacement, JavascriptFatigue, Javascript, Js, Docker, Containers">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-10T04:51:34.128563">
+        <meta property="article:modified_time" content="2026-06-10T04:51:34.128570">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="5 things HTMX replaced in my stack">
+        <meta property="og:description" content="Cut frontend build time 95% and TTFB 71% with HTMX — the real latency numbers, Docker image sizes, and the one mistake I made when migrating off React">
+        <meta property="og:url" content="https://kubaik.github.io/5-things-htmx-replaced-in-my-stack/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="5 things HTMX replaced in my stack">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="5 things HTMX replaced in my stack">
+        <meta name="twitter:description" content="Cut frontend build time 95% and TTFB 71% with HTMX — the real latency numbers, Docker image sizes, and the one mistake I made when migrating off React">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
 
-    <script type="application/ld+json">
+        <link rel="canonical" href="https://kubaik.github.io/5-things-htmx-replaced-in-my-stack/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://kubaik.github.io/5-things-htmx-replaced-in-my-stack/#blogposting",
+  "headline": "5 things HTMX replaced in my stack",
+  "description": "Cut frontend build time 95% and TTFB 71% with HTMX — the real latency numbers, Docker image sizes, and the one mistake I made when migrating off React",
+  "author": {
+    "@type": "Person",
+    "@id": "https://kubaik.github.io/about/#author",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/about/",
+    "sameAs": [
+      "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+      "https://twitter.com/KubaiKevin"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/"
+  },
+  "datePublished": "2026-06-10T04:51:34+00:00",
+  "dateModified": "2026-06-10T04:51:34+00:00",
+  "url": "https://kubaik.github.io/5-things-htmx-replaced-in-my-stack/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/5-things-htmx-replaced-in-my-stack/"
+  },
+  "keywords": "HtmxVsReact, ServerRenderedHtml, FlaskHtmx, FrontendBuildTime, TtfbImprovement, DockerImageSize, ReactReplacement, JavascriptFatigue, Javascript, Js, Docker, Containers"
+}
+</script>
+        <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
@@ -16,40 +91,180 @@
       "@type": "Article",
       "@id": "https://kubaik.github.io/5-things-htmx-replaced-in-my-stack/#article",
       "headline": "5 things HTMX replaced in my stack",
-      "description": "Cut frontend build time 95% and TTFB 71% with HTMX \u2014 the real latency numbers, Docker image sizes, and the one mistake I made when migrating off React",
+      "description": "Cut frontend build time 95% and TTFB 71% with HTMX — the real latency numbers, Docker image sizes, and the one mistake I made when migrating off React",
       "datePublished": "2026-06-10T04:51:34+00:00",
       "dateModified": "2026-06-10T04:51:34+00:00",
       "wordCount": 2678,
       "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
       "author": {
         "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
         "name": "Kubai Kevin",
-        "url": "https://kubaik.github.io/about/"
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
       },
       "publisher": {
         "@type": "Organization",
         "name": "Tech Blog",
         "url": "https://kubaik.github.io"
-      }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/5-things-htmx-replaced-in-my-stack/"
+      },
+      "keywords": "HtmxVsReact, ServerRenderedHtml, FlaskHtmx, FrontendBuildTime, TtfbImprovement, DockerImageSize, ReactReplacement, JavascriptFatigue"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "5 things HTMX replaced in my stack",
+          "item": "https://kubaik.github.io/5-things-htmx-replaced-in-my-stack/"
+        }
+      ]
     }
   ]
 }
 </script>
-</head>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
 <body>
-    <header><div class="container">
-        <h1><a href="/">Kubai Kevin</a></h1>
-        <nav><a href="/">Home</a><a href="/about/">About</a></nav>
-    </div></header>
-    <main class="container" itemscope itemtype="https://schema.org/TechArticle">
-        
-        <article>
-            <h1 itemprop="headline">5 things HTMX replaced in my stack</h1>
-            <div class="author-box">
-                <p class="author-meta">
-                    13 min read &nbsp;·&nbsp; 2678 words
-                     &nbsp;·&nbsp; Updated 2026-06-10 
-                </p>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>5 things HTMX replaced in my stack</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">5 things HTMX replaced in my stack</h1>
+                
+                <p class="post-lead">Cut frontend build time 95% and TTFB 71% with HTMX — the real latency numbers, Docker image sizes, and the one mistake I made when migrating off React</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/htmxvsreact/"
+                       style="text-decoration:none;">HtmxVsReact</a>
+                    
+                    <a class="tag" href="/tag/serverrenderedhtml/"
+                       style="text-decoration:none;">ServerRenderedHtml</a>
+                    
+                    <a class="tag" href="/tag/flaskhtmx/"
+                       style="text-decoration:none;">FlaskHtmx</a>
+                    
+                    <a class="tag" href="/tag/frontendbuildtime/"
+                       style="text-decoration:none;">FrontendBuildTime</a>
+                    
+                    <a class="tag" href="/tag/ttfbimprovement/"
+                       style="text-decoration:none;">TtfbImprovement</a>
+                    
+                    <a class="tag" href="/tag/javascript/"
+                       style="text-decoration:none;">Javascript</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2678 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-10
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
             </div>
             <div class="post-content" itemprop="articleBody">
                 <p>I ran into this htmx changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
@@ -320,12 +535,101 @@ every article before it goes live.</p>
 please contact me — corrections are applied within 48 hours.</p>
 <p><strong>Last reviewed:</strong> June 10, 2026</p>
                 
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
             </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/stop-sbom-surprises-syft-110-in-cicd/">
+                        <h3>Stop SBOM surprises: Syft 1.10 in CI/CD</h3>
+                        <p>Cut compliance risk 100% with Syft 1.10 SBOMs in CI/CD — fail builds on new CVEs, attach SPDX files to releases, and run for $0.04 per build.</p>
+                        <span class="related-meta">12 min read · 27 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/signals-vs-state-does-it-matter/">
+                        <h3>Signals vs state: does it matter?</h3>
+                        <p>Cut UI re-renders 70% with Preact Signals — bundle size 1.8KB, 0.4ms updates, and works outside frameworks in 2026</p>
+                        <span class="related-meta">16 min read · 26 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/when-astro-islands-shine-in-2026/">
+                        <h3>When Astro islands shine in 2026</h3>
+                        <p>Cut page load time 75% with Astro islands in 2026 — how we replaced React hydration with static shells and lazy-loaded islands to hit 1.0s TTI on 2G.</p>
+                        <span class="related-meta">17 min read · 25 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
         </article>
-        
     </main>
-    <footer><div class="container"><p>&copy; 2026 Kubai Kevin</p></div></footer>
-<script defer src="/static/consent.js"></script>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
 </body>
 </html>

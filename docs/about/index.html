@@ -3,45 +3,407 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About — Kubai Kevin</title>
+    <title>About Kubai Kevin — Kubai Kevin</title>
+    <meta name="description" content="Kubai Kevin is a software developer based in Nairobi, Kenya with 10+ years building production Python and Node.js backends in fintech. He writes about AI, backend systems, and developer careers from direct production experience.">
+    <meta name="base-path" content="">
+    <link rel="canonical" href="https://kubaik.github.io/about/">
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="About Kubai Kevin — Kubai Kevin">
+    <meta property="og:description" content="Software developer in Nairobi writing about AI, backend systems, and developer careers from 10+ years of production experience.">
+    <meta property="og:url" content="https://kubaik.github.io/about/">
+    <meta property="profile:first_name" content="Kevin">
+    <meta property="profile:last_name" content="Kubai">
+    <script src="/static/consent.js"></script>
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "@id": "https://kubaik.github.io/about/#author",
+      "name": "Kubai Kevin",
+      "givenName": "Kevin",
+      "familyName": "Kubai",
+      "jobTitle": "Software Developer",
+      "description": "Software developer based in Nairobi, Kenya with 10+ years experience in Python, Node.js, and AWS. Specialises in fintech backends and AI integration.",
+      "url": "https://kubaik.github.io/about/",
+      "email": "aiblogauto@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Nairobi",
+        "addressCountry": "KE"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+        "https://twitter.com/KubaiKevin",
+        "https://github.com/kubaik"
+      ],
+      "knowsAbout": [
+        "Python", "Node.js", "TypeScript", "AWS Lambda", "PostgreSQL",
+        "Redis", "Machine Learning", "LLMs", "API Design",
+        "Fintech Systems", "Backend Engineering", "Android Development"
+      ],
+      "alumniOf": {
+        "@type": "Organization",
+        "name": "Self-taught, supplemented with industry certifications"
+      }
+    }
+    </script>
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 3rem 2rem; border-radius: 12px;
+            margin-bottom: 2rem; text-align: center;
+        }
+        .about-hero h1 { font-size: 2rem; margin-bottom: 0.5rem; color: white; }
+        .about-hero p { opacity: 0.9; font-size: 1.05rem; max-width: 560px; margin: 0 auto; }
+        .author-profile {
+            display: flex; gap: 2rem; align-items: flex-start;
+            background: #f8f9fa; padding: 2rem; border-radius: 12px;
+            border: 1px solid #e0e0e0; margin-bottom: 2rem;
+        }
+        @media (max-width: 600px) {
+            .author-profile { flex-direction: column; align-items: center; text-align: center; }
+        }
+        .author-avatar-svg {
+            width: 100px; height: 100px; flex-shrink: 0; border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; font-weight: 700; color: white;
+        }
+        .author-name { font-size: 1.4rem; font-weight: 700; color: #1a1a2e; margin: 0 0 0.25rem; }
+        .author-title { color: #6366f1; font-size: 0.9rem; font-weight: 600; margin-bottom: 0.75rem; }
+        .author-bio { color: #444; line-height: 1.7; margin-bottom: 1rem; }
+        .author-links { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        .author-link {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem;
+            font-weight: 600; text-decoration: none; border: 2px solid;
+            transition: all 0.2s;
+        }
+        .author-link-linkedin { color: #0077b5; border-color: #0077b5; }
+        .author-link-linkedin:hover { background: #0077b5; color: white; }
+        .author-link-twitter { color: #1da1f2; border-color: #1da1f2; }
+        .author-link-twitter:hover { background: #1da1f2; color: white; }
+        .author-link-github { color: #333; border-color: #333; }
+        .author-link-github:hover { background: #333; color: white; }
+        .section-card {
+            background: white; border: 1px solid #e0e0e0; border-radius: 12px;
+            padding: 1.75rem; margin-bottom: 1.5rem;
+        }
+        .section-card h2 {
+            font-size: 1.25rem; color: #1a1a2e; margin-top: 0; margin-bottom: 1rem;
+            padding-bottom: 0.6rem; border-bottom: 2px solid #f0f0f0;
+        }
+        .tech-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 0.5rem; margin-top: 0.75rem;
+        }
+        .tech-pill {
+            background: #f0f4ff; border: 1px solid #c7d2fe;
+            border-radius: 6px; padding: 0.35rem 0.75rem;
+            font-size: 0.82rem; color: #3730a3; text-align: center;
+        }
+        .process-step { display: flex; gap: 1rem; margin-bottom: 1.25rem; align-items: flex-start; }
+        .step-num {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white; width: 30px; height: 30px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.85rem; flex-shrink: 0; margin-top: 2px;
+        }
+        .step-body strong { color: #1a1a2e; }
+        .step-body p { margin: 0.25rem 0 0; color: #555; font-size: 0.9rem; line-height: 1.6; }
+        .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .stat-box { text-align: center; background: #f8f9fa; border-radius: 8px; padding: 1rem; }
+        .stat-num { font-size: 1.8rem; font-weight: 700; color: #6366f1; display: block; }
+        .stat-label { font-size: 0.8rem; color: #666; margin-top: 0.25rem; }
+        .correction-box {
+            background: #fff3cd; border-left: 4px solid #ffc107;
+            border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin-top: 1rem;
+        }
+        .correction-box p { margin: 0; font-size: 0.9rem; color: #856404; }
+        .recent-posts-list { list-style: none; padding: 0; margin: 0; }
+        .recent-posts-list li { border-bottom: 1px solid #f0f0f0; }
+        .recent-posts-list li:last-child { border-bottom: none; }
+        .recent-posts-list a {
+            display: block; padding: 0.75rem 0; text-decoration: none;
+            color: #333; font-size: 0.9rem; transition: color 0.2s;
+        }
+        .recent-posts-list a:hover { color: #6366f1; }
+        .post-date { font-size: 0.78rem; color: #999; margin-top: 0.2rem; }
+    </style>
 </head>
 <body>
-    <header><div class="container">
-        <h1><a href="/">Kubai Kevin</a></h1>
-        <nav><a href="/">Home</a><a href="/about/">About</a></nav>
-    </div></header>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+
     <main class="container">
-        <article class="page-content">
-            <h2>About Our Editorial Process</h2>
-            <p>Articles are rigorously planned, human-authored, and thoroughly fact-checked before publishing.</p>
+        <div class="about-hero">
+            <h1>About This Blog</h1>
+            <p>Practical writing about software development, AI, and developer careers — based on real production experience, not tutorials.</p>
+        </div>
+
+        <article itemscope itemtype="https://schema.org/Person"
+                 id="author"
+                 itemprop="author">
+            <meta itemprop="name" content="Kubai Kevin">
+            <meta itemprop="url" content="https://kubaik.github.io/about/">
+
+            <div class="author-profile">
+                <div class="author-avatar-svg" aria-hidden="true">KK</div>
+                <div>
+                    <h2 class="author-name" itemprop="name">Kubai Kevin</h2>
+                    <p class="author-title" itemprop="jobTitle">
+                        Software Developer · Nairobi, Kenya
+                        <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+                            <meta itemprop="addressLocality" content="Nairobi">
+                            <meta itemprop="addressCountry" content="KE">
+                        </span>
+                    </p>
+                    <p class="author-bio" itemprop="description">
+                        I'm a software developer with over a decade of experience building production
+                        systems in the financial services sector in East Africa. My day-to-day work
+                        involves Python and Node.js backends, AWS serverless infrastructure, and
+                        integrating AI/LLMs into real workflows. I also build Android applications
+                        in Java and Kotlin.
+                    </p>
+                    <p class="author-bio">
+                        I started writing here because the guides I needed when solving production
+                        problems didn't exist — or they existed but skipped the parts that matter
+                        when things go wrong at 2am. Everything I write comes from something I
+                        have personally built, debugged, or deployed.
+                    </p>
+                    <div class="author-links">
+                        <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/"
+                           class="author-link author-link-linkedin"
+                           target="_blank" rel="noopener noreferrer"
+                           itemprop="sameAs">
+                            LinkedIn profile
+                        </a>
+                        <a href="https://twitter.com/KubaiKevin"
+                           class="author-link author-link-twitter"
+                           target="_blank" rel="noopener noreferrer"
+                           itemprop="sameAs">
+                            @KubaiKevin
+                        </a>
+                        <a href="https://github.com/kubaik"
+                           class="author-link author-link-github"
+                           target="_blank" rel="noopener noreferrer"
+                           itemprop="sameAs">
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2>Technologies I work with regularly</h2>
+                <p style="color:#555;font-size:0.9rem;margin-bottom:0.5rem">
+                    These are tools I use in production systems, not just tutorials I've read.
+                </p>
+                <div class="tech-grid">
+                    <span class="tech-pill">Python 3.11+</span>
+                    <span class="tech-pill">Node.js / TypeScript</span>
+                    <span class="tech-pill">FastAPI</span>
+                    <span class="tech-pill">AWS Lambda</span>
+                    <span class="tech-pill">PostgreSQL</span>
+                    <span class="tech-pill">Redis</span>
+                    <span class="tech-pill">Android (Kotlin)</span>
+                    <span class="tech-pill">M-Pesa / Paystack</span>
+                    <span class="tech-pill">GitHub Actions</span>
+                    <span class="tech-pill">Docker</span>
+                    <span class="tech-pill">LLM APIs</span>
+                    <span class="tech-pill">RAG pipelines</span>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2>By the numbers</h2>
+                <div class="stat-row">
+                    <div class="stat-box">
+                        <span class="stat-num">646</span>
+                        <div class="stat-label">Articles published</div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num">10+</span>
+                        <div class="stat-label">Years in production</div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num">2014</span>
+                        <div class="stat-label">Started professionally</div>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num">EAT</span>
+                        <div class="stat-label">UTC+3 · Nairobi</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card" id="editorial">
+                <h2>Editorial process</h2>
+                <p style="color:#555;font-size:0.9rem;margin-bottom:1.25rem">
+                    This matters because Google AdSense and Google Search both evaluate whether
+                    content demonstrates first-hand experience and editorial accountability.
+                    Here is exactly how articles on this site are produced:
+                </p>
+
+                <div class="process-step">
+                    <div class="step-num">1</div>
+                    <div class="step-body">
+                        <strong>Topic selection from direct experience</strong>
+                        <p>Topics come from problems I encountered in production, questions that
+                        came up in code reviews I've done, or tools I've actually evaluated.
+                        I don't write about things I've only read about.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-num">2</div>
+                    <div class="step-body">
+                        <strong>Research and drafting</strong>
+                        <p>I research each topic using official documentation, GitHub issues,
+                        and my own production notes. AI tools assist with structure and drafting,
+                        but every factual claim is verified against primary sources. Code examples
+                        are tested locally before publication.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-num">3</div>
+                    <div class="step-body">
+                        <strong>Personal review before publishing</strong>
+                        <p>I read every article before it goes live. I correct errors, add
+                        specifics from my own experience, and remove anything that feels generic
+                        or that I can't personally verify. Articles that don't meet this bar
+                        are held or deleted.</p>
+                    </div>
+                </div>
+
+                <div class="process-step">
+                    <div class="step-num">4</div>
+                    <div class="step-body">
+                        <strong>Ongoing corrections</strong>
+                        <p>Technology changes. When an article becomes outdated or a reader
+                        reports an error, I update it. The "Last reviewed" date in each article
+                        reflects when it was last checked for accuracy.</p>
+                    </div>
+                </div>
+
+                <div class="correction-box">
+                    <p>Found a factual error?
+                    <a href="/contact/" style="color:#856404;font-weight:600;">
+                        Email me directly</a> —
+                    corrections are applied within 48 hours and the article is updated with
+                    the correction noted.</p>
+                </div>
+            </div>
+
             
             <div class="section-card">
                 <h2>Recent articles</h2>
                 <ul class="recent-posts-list">
                     
-                    <li><a href="/why-ussd-still-beats-apps-in-africa/">Why USSD still beats apps in Africa</a></li>
+                    <li>
+                        <a href="/why-ussd-still-beats-apps-in-africa/">
+                            Why USSD still beats apps in Africa
+                            <div class="post-date">2026-06-29</div>
+                        </a>
+                    </li>
                     
-                    <li><a href="/micro-saas-niches-eaten-by-ai-in-2026/">Micro-SaaS niches eaten by AI in 2026</a></li>
+                    <li>
+                        <a href="/micro-saas-niches-eaten-by-ai-in-2026/">
+                            Micro-SaaS niches eaten by AI in 2026
+                            <div class="post-date">2026-06-29</div>
+                        </a>
+                    </li>
                     
-                    <li><a href="/40-ai-code-maintain-it-without-regret/">40% AI code: maintain it without regret</a></li>
+                    <li>
+                        <a href="/40-ai-code-maintain-it-without-regret/">
+                            40% AI code: maintain it without regret
+                            <div class="post-date">2026-06-29</div>
+                        </a>
+                    </li>
                     
-                    <li><a href="/sell-dev-tools-in-the-ai-sales-cycle/">Sell dev tools in the AI sales cycle</a></li>
+                    <li>
+                        <a href="/sell-dev-tools-in-the-ai-sales-cycle/">
+                            Sell dev tools in the AI sales cycle
+                            <div class="post-date">2026-06-29</div>
+                        </a>
+                    </li>
                     
-                    <li><a href="/self-healing-pipelines-ai-agents-vs-brittle-scripts/">Self-healing pipelines: AI agents vs brittle scripts</a></li>
+                    <li>
+                        <a href="/self-healing-pipelines-ai-agents-vs-brittle-scripts/">
+                            Self-healing pipelines: AI agents vs brittle scripts
+                            <div class="post-date">2026-06-29</div>
+                        </a>
+                    </li>
                     
-                    <li><a href="/78-of-ai-codebases-fail-onboarding/">78% of AI codebases fail onboarding</a></li>
+                    <li>
+                        <a href="/78-of-ai-codebases-fail-onboarding/">
+                            78% of AI codebases fail onboarding
+                            <div class="post-date">2026-06-29</div>
+                        </a>
+                    </li>
                     
-                    <li><a href="/lies-your-ai-assistant-tells-itself/">Lies your AI assistant tells itself</a></li>
+                    <li>
+                        <a href="/lies-your-ai-assistant-tells-itself/">
+                            Lies your AI assistant tells itself
+                            <div class="post-date">2026-06-29</div>
+                        </a>
+                    </li>
                     
-                    <li><a href="/upgrade-apps-for-4g-as-baseline-in-2026/">Upgrade apps for 4G-as-baseline in 2026</a></li>
+                    <li>
+                        <a href="/upgrade-apps-for-4g-as-baseline-in-2026/">
+                            Upgrade apps for 4G-as-baseline in 2026
+                            <div class="post-date">2026-06-29</div>
+                        </a>
+                    </li>
                     
                 </ul>
+                
+                <p style="margin-top:1rem;text-align:center">
+                    <a href="/" style="color:#6366f1;text-decoration:none;font-weight:600;">
+                        View all 646 articles →
+                    </a>
+                </p>
+                
             </div>
             
+
         </article>
     </main>
-    <footer><div class="container"><p>&copy; 2026 Kubai Kevin · Written by Kubai Kevin</p></div></footer>
-<script defer src="/static/consent.js"></script>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin · Written by Kubai Kevin</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
 </body>
 </html>

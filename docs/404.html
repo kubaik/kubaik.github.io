@@ -1,16 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page Not Found — Kubai Kevin</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting… — Kubai Kevin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="base-path" content="">
+    
+    <meta http-equiv="refresh" content="0;url=/">
+        <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+    <style>
+        html, body {
+            margin: 0; padding: 0; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #fff; color: #555;
+        }
+        .fallback { text-align: center; padding: 2rem; }
+        .fallback a {
+            color: #6366f1; font-weight: 600; text-decoration: none;
+        }
+        .fallback a:hover { text-decoration: underline; }
+        .spinner {
+            width: 28px; height: 28px; margin: 0 auto 1rem;
+            border: 3px solid #e0e7ff; border-top-color: #6366f1;
+            border-radius: 50%; animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
 </head>
 <body>
+    <!--
+        Redirect fires immediately on script execution below.
+        This fallback content only renders if a browser/proxy blocks
+        BOTH the meta-refresh above and JavaScript execution.
+    -->
     <div class="fallback">
+        <div class="spinner" aria-hidden="true"></div>
         <p>Taking you to the homepage&hellip;</p>
         <p><a href="/">Click here if you are not redirected automatically</a></p>
     </div>
-    <script>window.location.replace('/');</script>
-<script defer src="/static/consent.js"></script>
+    <script>
+    (function () {
+        'use strict';
+        var BASE_PATH = '';
+        // replace() keeps this 404 URL out of browser history, so the
+        // Back button returns the user to wherever they came from
+        // rather than bouncing back into this redirect.
+        window.location.replace(BASE_PATH + '/');
+    }());
+    </script>
 </body>
 </html>
