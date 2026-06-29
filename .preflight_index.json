@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-29T19:28:17.505974",
+  "built_at": "2026-06-29T19:46:53.085855",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3515,6 +3515,11 @@
       "slug": "show-real-work-not-ai-clones",
       "title": "Show real work, not AI clones",
       "summary": "Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, our Lagos team hired 12 engineers for our fintech product used by 3 mil"
+    },
+    {
+      "slug": "ai-revives-unloved-legacy-codebases",
+      "title": "AI revives unloved legacy codebases",
+      "summary": "The official documentation for use maintain is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Legacy codebases don’t rot because t"
     }
   ]
 }

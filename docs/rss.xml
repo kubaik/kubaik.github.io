@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2026 19:28:29 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 19:47:03 +0000</lastBuildDate>
+    <item>
+      <title>AI revives unloved legacy codebases</title>
+      <link>https://kubaik.github.io/ai-revives-unloved-legacy-codebases/</link>
+      <description>Cut legacy maintenance time 70% with Psalm, CodeQL, and Ollama — connection pool mistakes, test generation surprises, and the $18/month stack that caught 8 out of 9 incidents before they hit production.</description>
+      <pubDate>Mon, 29 Jun 2026 19:46:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-revives-unloved-legacy-codebases/</guid>
+    </item>
     <item>
       <title>Show real work, not AI clones</title>
       <link>https://kubaik.github.io/show-real-work-not-ai-clones/</link>
@@ -138,13 +145,6 @@
       <description>Cut API p95 latency 66% under 5% packet loss — Vite 5.3, React Query 5.10, Redis 7.2 and Lambda@Edge optimizations for East-African 4G users.</description>
       <pubDate>Mon, 29 Jun 2026 00:04:55 +0000</pubDate>
       <guid>https://kubaik.github.io/upgrade-apps-for-4g-as-baseline-in-2026/</guid>
-    </item>
-    <item>
-      <title>6 AI stacks that level the dev playing field in 2026</title>
-      <link>https://kubaik.github.io/6-ai-stacks-that-level-the-dev-playing-field-in-2026/</link>
-      <description>Cut dev time 42% with AI: GitHub Copilot Enterprise, Cursor IDE and the exact ROI numbers Nairobi teams reported in 2026</description>
-      <pubDate>Sun, 28 Jun 2026 23:38:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/6-ai-stacks-that-level-the-dev-playing-field-in-2026/</guid>
     </item>
   </channel>
 </rss>
