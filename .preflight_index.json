@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-29T12:08:22.938750",
+  "built_at": "2026-06-29T12:52:46.542505",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3480,6 +3480,11 @@
       "slug": "why-most-teams-wasted-2025-on-cypress",
       "title": "Why most teams wasted 2025 on Cypress",
       "summary": "I ran into this test frontend problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks trying to make Cypress 1"
+    },
+    {
+      "slug": "pgvectors-ram-trick-outshone-pinecone",
+      "title": "pgvector’s RAM trick outshone Pinecone",
+      "summary": "A colleague asked me about pgvector changed during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) "
     }
   ]
 }
