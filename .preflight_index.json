@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-29T17:31:22.780651",
+  "built_at": "2026-06-29T17:45:59.305490",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3505,6 +3505,11 @@
       "slug": "ai-pair-prompts-9-setups-we-tried-in-2026",
       "title": "AI pair prompts: 9 setups we tried in 2026",
       "summary": "I ran into this pair programming problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026, my team at Opsgenie (now pa"
+    },
+    {
+      "slug": "tame-python-asyncs-hidden-traps",
+      "title": "Tame Python async’s hidden traps",
+      "summary": "I've seen the same async python mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Async Python in 2026 is everywhere — FastAPI 0.111, Django 5.1 async view"
     }
   ]
 }

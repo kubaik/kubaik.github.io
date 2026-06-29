@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2026 17:41:19 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 17:46:10 +0000</lastBuildDate>
+    <item>
+      <title>Tame Python async’s hidden traps</title>
+      <link>https://kubaik.github.io/tame-python-asyncs-hidden-traps/</link>
+      <description>Cut async Python latency 40%: threaded vs task-based async benchmarks on Python 3.11, FastAPI 0.111, and asyncpg 0.30 — the mistakes most teams repeat and how to avoid them.</description>
+      <pubDate>Mon, 29 Jun 2026 17:45:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/tame-python-asyncs-hidden-traps/</guid>
+    </item>
     <item>
       <title>AI pair prompts: 9 setups we tried in 2026</title>
       <link>https://kubaik.github.io/ai-pair-prompts-9-setups-we-tried-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM latency 57% and costs 24% with LlamaStack v1.3 — the only AI wrapper that survived 2026 without getting dropped</description>
       <pubDate>Sun, 28 Jun 2026 23:11:07 +0000</pubDate>
       <guid>https://kubaik.github.io/10-ai-wrappers-that-shipped-in-2026-8-died-fast/</guid>
-    </item>
-    <item>
-      <title>Consolidate Redis, Kafka, pgBouncer into Postgres 17</title>
-      <link>https://kubaik.github.io/consolidate-redis-kafka-pgbouncer-into-postgres-17/</link>
-      <description>Replace Redis, Kafka, and pgBouncer with one Postgres 17 instance—benchmarks, cost savings, and the exact metrics to check tonight for a 64 % bill cut.</description>
-      <pubDate>Sun, 28 Jun 2026 22:58:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/consolidate-redis-kafka-pgbouncer-into-postgres-17/</guid>
     </item>
   </channel>
 </rss>
