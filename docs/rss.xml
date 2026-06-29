@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2026 22:11:34 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 22:16:39 +0000</lastBuildDate>
+    <item>
+      <title>PagerDuty + AI alerts: 3 fixes that cut wake-ups 83%</title>
+      <link>https://kubaik.github.io/pagerduty-ai-alerts-3-fixes-that-cut-wake-ups-83/</link>
+      <description>Cut nightly pages 83% using PagerDuty + AI triage — Lambda transformer, CloudWatch rules, and Grafana dashboard built in 60 minutes</description>
+      <pubDate>Mon, 29 Jun 2026 22:16:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/pagerduty-ai-alerts-3-fixes-that-cut-wake-ups-83/</guid>
+    </item>
     <item>
       <title>Fix AI agent failures: postmortem guide</title>
       <link>https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/</link>
@@ -138,13 +145,6 @@
       <description>Cut incident response time 70% with self-healing pipelines — Argo Workflows vs CrewAI agents, with 3 concrete numbers and the mistake that cost $14,200.</description>
       <pubDate>Mon, 29 Jun 2026 05:24:20 +0000</pubDate>
       <guid>https://kubaik.github.io/self-healing-pipelines-ai-agents-vs-brittle-scripts/</guid>
-    </item>
-    <item>
-      <title>78% of AI codebases fail onboarding</title>
-      <link>https://kubaik.github.io/78-of-ai-codebases-fail-onboarding/</link>
-      <description>Cut onboarding time 52% with AI code: the 3 metrics that decide whether Option A or B actually works in 2026</description>
-      <pubDate>Mon, 29 Jun 2026 05:08:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/78-of-ai-codebases-fail-onboarding/</guid>
     </item>
   </channel>
 </rss>
