@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2026 05:04:16 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 05:09:09 +0000</lastBuildDate>
+    <item>
+      <title>78% of AI codebases fail onboarding</title>
+      <link>https://kubaik.github.io/78-of-ai-codebases-fail-onboarding/</link>
+      <description>Cut onboarding time 52% with AI code: the 3 metrics that decide whether Option A or B actually works in 2026</description>
+      <pubDate>Mon, 29 Jun 2026 05:08:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/78-of-ai-codebases-fail-onboarding/</guid>
+    </item>
     <item>
       <title>Lies your AI assistant tells itself</title>
       <link>https://kubaik.github.io/lies-your-ai-assistant-tells-itself/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 60% by capping prompt size at 1.5k tokens — tokenizer overhead, Redis cache misses, and the injection vectors most teams miss</description>
       <pubDate>Sun, 28 Jun 2026 16:01:41 +0000</pubDate>
       <guid>https://kubaik.github.io/side-channel-prompt-attacks-the-60ms-latency-you/</guid>
-    </item>
-    <item>
-      <title>Signals vs Stores: 7 state tools ranked</title>
-      <link>https://kubaik.github.io/signals-vs-stores-7-state-tools-ranked/</link>
-      <description>Cut state management boilerplate 60% with Signals — React, Vue, Svelte, and Node picks ranked with benchmarks and migration tips.</description>
-      <pubDate>Sun, 28 Jun 2026 15:26:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/signals-vs-stores-7-state-tools-ranked/</guid>
     </item>
   </channel>
 </rss>

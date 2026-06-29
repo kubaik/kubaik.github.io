@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-29T04:14:58.338220",
+  "built_at": "2026-06-29T05:08:58.122161",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3430,6 +3430,11 @@
       "slug": "lies-your-ai-assistant-tells-itself",
       "title": "Lies your AI assistant tells itself",
       "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Prompts are treated like code in"
+    },
+    {
+      "slug": "78-of-ai-codebases-fail-onboarding",
+      "title": "78% of AI codebases fail onboarding",
+      "summary": "I've seen the same onboard developer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 78% of newly hired engineers at mid-size SaaS companies wil"
     }
   ]
 }
