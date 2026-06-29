@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-29T16:52:07.467077",
+  "built_at": "2026-06-29T17:31:22.780651",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3500,6 +3500,11 @@
       "slug": "price-ai-proof-skills-in-2026",
       "title": "Price AI-proof skills in 2026",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I spent two weeks in Q3 2026 building a half-baked LLM wrapper for our internal document"
+    },
+    {
+      "slug": "ai-pair-prompts-9-setups-we-tried-in-2026",
+      "title": "AI pair prompts: 9 setups we tried in 2026",
+      "summary": "I ran into this pair programming problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026, my team at Opsgenie (now pa"
     }
   ]
 }
