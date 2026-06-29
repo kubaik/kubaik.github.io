@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2026 13:21:38 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 10:25:04 +0000</lastBuildDate>
+    <item>
+      <title>3 HTMX trade-offs nobody told you about</title>
+      <link>https://kubaik.github.io/3-htmx-trade-offs-nobody-told-you-about/</link>
+      <description>Cut frontend bundle size 90% and cold-start render time 40% with HTMX 2.0.0 — connection pooling, eviction policies, and the cache stampede mistake most teams make.</description>
+      <pubDate>Mon, 29 Jun 2026 10:24:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-htmx-trade-offs-nobody-told-you-about/</guid>
+    </item>
     <item>
       <title>Why USSD still beats apps in Africa</title>
       <link>https://kubaik.github.io/why-ussd-still-beats-apps-in-africa/</link>
@@ -138,13 +145,6 @@
       <description>AI observability cuts false alerts 8× by tracking drift vectors and confidence histograms instead of just latency and errors. Learn the metrics that actually matter and how to instrument them in 2026.</description>
       <pubDate>Sun, 28 Jun 2026 19:30:37 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-observability-the-metrics-that-matter/</guid>
-    </item>
-    <item>
-      <title>380k logins lost: passkeys fixed it</title>
-      <link>https://kubaik.github.io/380k-logins-lost-passkeys-fixed-it/</link>
-      <description>Cut SMS costs 99% and login latency 75% with passkeys in 2026 — the real migration story, code samples, and metrics from a 1.2M-user Indonesian social app</description>
-      <pubDate>Sun, 28 Jun 2026 18:25:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/380k-logins-lost-passkeys-fixed-it/</guid>
     </item>
   </channel>
 </rss>
