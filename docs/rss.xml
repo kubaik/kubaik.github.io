@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2026 16:47:32 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 16:52:19 +0000</lastBuildDate>
+    <item>
+      <title>Price AI-proof skills in 2026</title>
+      <link>https://kubaik.github.io/price-ai-proof-skills-in-2026/</link>
+      <description>Negotiate 15 % higher pay in 2026 using AI-proof evidence. Build a compensation evidence pack in 90 minutes with Python 3.12, pandas 2.2, and Levels.fyi API.</description>
+      <pubDate>Mon, 29 Jun 2026 16:52:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/price-ai-proof-skills-in-2026/</guid>
+    </item>
     <item>
       <title>Ship fast, debug forever: why vibe coding fails at scale</title>
       <link>https://kubaik.github.io/ship-fast-debug-forever-why-vibe-coding-fails-at-scale/</link>
@@ -138,13 +145,6 @@
       <description>Hit $5k MRR on Shopify app — no ads, no team, just reliability and pricing that matters. Integration, churn, and referral tactics that paid off in 2026.</description>
       <pubDate>Sun, 28 Jun 2026 21:57:50 +0000</pubDate>
       <guid>https://kubaik.github.io/hit-5k-mrr-without-a-marketing-team/</guid>
-    </item>
-    <item>
-      <title>Tool-calling patterns: stable vs breakable under load</title>
-      <link>https://kubaik.github.io/tool-calling-patterns-stable-vs-breakable-under-load/</link>
-      <description>Cut Redis p99 latency 60% and 0% write failures at 2500 RPS — connection pooling, batching, and the socket leak mistake most teams make.</description>
-      <pubDate>Sun, 28 Jun 2026 21:50:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/tool-calling-patterns-stable-vs-breakable-under-load/</guid>
     </item>
   </channel>
 </rss>
