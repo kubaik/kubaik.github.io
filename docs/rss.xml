@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2026 05:24:34 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 05:28:09 +0000</lastBuildDate>
+    <item>
+      <title>Sell dev tools in the AI sales cycle</title>
+      <link>https://kubaik.github.io/sell-dev-tools-in-the-ai-sales-cycle/</link>
+      <description>Cut dev tool sales cycle 92% with a 7-day Slack bot that posts vulnerability reports — no ROI spreadsheets, no pilots, no committees. How we went from 14-week cycles to 8 days in 2026.</description>
+      <pubDate>Mon, 29 Jun 2026 05:27:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/sell-dev-tools-in-the-ai-sales-cycle/</guid>
+    </item>
     <item>
       <title>Self-healing pipelines: AI agents vs brittle scripts</title>
       <link>https://kubaik.github.io/self-healing-pipelines-ai-agents-vs-brittle-scripts/</link>
@@ -138,13 +145,6 @@
       <description>Cut fintech disputes 75% with shorter cache TTLs and event-driven invalidation — the real rules African APIs need in 2026</description>
       <pubDate>Sun, 28 Jun 2026 17:22:02 +0000</pubDate>
       <guid>https://kubaik.github.io/bank-apis-broke-under-african-2g/</guid>
-    </item>
-    <item>
-      <title>CI scanning: kill false positives or die slow</title>
-      <link>https://kubaik.github.io/ci-scanning-kill-false-positives-or-die-slow/</link>
-      <description>False positives crushed CI alerts 87% with a lightweight filter—learn the exact GitHub Actions setup, Trivy 0.50.4, CodeQL 2.16.3, and OWASP ZAP 2.14.0 pipeline that saved $1,180/month and caught 5 more real vulns.</description>
-      <pubDate>Sun, 28 Jun 2026 16:45:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/ci-scanning-kill-false-positives-or-die-slow/</guid>
     </item>
   </channel>
 </rss>
