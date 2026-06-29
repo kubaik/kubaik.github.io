@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-29T07:39:09.259079",
+  "built_at": "2026-06-29T09:34:42.935523",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3450,6 +3450,11 @@
       "slug": "40-ai-code-maintain-it-without-regret",
       "title": "40% AI code: maintain it without regret",
       "summary": "I've seen the same maintain codebase mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, teams working on government and NGO projects across sub-Sah"
+    },
+    {
+      "slug": "micro-saas-niches-eaten-by-ai-in-2026",
+      "title": "Micro-SaaS niches eaten by AI in 2026",
+      "summary": "A colleague asked me about microsaas 2026 during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Th"
     }
   ]
 }
