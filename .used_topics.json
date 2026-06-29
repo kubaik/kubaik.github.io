@@ -35,5 +35,6 @@
   "USSD is not dead: why feature phone interfaces still matter for African fintech in 2026",
   "How HTMX changed my stack and what I gave up to get there",
   "Zero-trust in practice for small teams: what you can implement without an enterprise budget",
-  "How I built and launched a SaaS in 6 weeks using AI tools for 80% of the code"
+  "How I built and launched a SaaS in 6 weeks using AI tools for 80% of the code",
+  "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress"
 ]

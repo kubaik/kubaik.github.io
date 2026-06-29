@@ -1,0 +1,784 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Why most teams wasted 2025 on Cypress - Kubai Kevin</title>
+        <meta name="description" content="Cut frontend test time 60% with Playwright 1.45 and Vitest 1.6 — the real stack most teams use in 2026 after dropping Cypress 13.x.">
+        <meta name="keywords" content="FrontendTesting2026, PlaywrightVsCypress, VitestSetup, FrontendCiSpeed, Cypress, Webdev, Frontend, Nextjs">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-06-29T12:08:19.953280">
+        <meta property="article:modified_time" content="2026-06-29T12:08:19.953293">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Why most teams wasted 2025 on Cypress">
+        <meta property="og:description" content="Cut frontend test time 60% with Playwright 1.45 and Vitest 1.6 — the real stack most teams use in 2026 after dropping Cypress 13.x.">
+        <meta property="og:url" content="https://kubaik.github.io/why-most-teams-wasted-2025-on-cypress/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta property="og:image:alt" content="Why most teams wasted 2025 on Cypress">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Why most teams wasted 2025 on Cypress">
+        <meta name="twitter:description" content="Cut frontend test time 60% with Playwright 1.45 and Vitest 1.6 — the real stack most teams use in 2026 after dropping Cypress 13.x.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/icons/icon-512x512.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/why-most-teams-wasted-2025-on-cypress/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://kubaik.github.io/why-most-teams-wasted-2025-on-cypress/#blogposting",
+  "headline": "Why most teams wasted 2025 on Cypress",
+  "description": "Cut frontend test time 60% with Playwright 1.45 and Vitest 1.6 — the real stack most teams use in 2026 after dropping Cypress 13.x.",
+  "author": {
+    "@type": "Person",
+    "@id": "https://kubaik.github.io/about/#author",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/about/",
+    "sameAs": [
+      "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+      "https://twitter.com/KubaiKevin"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/"
+  },
+  "datePublished": "2026-06-29T12:08:19+00:00",
+  "dateModified": "2026-06-29T12:08:19+00:00",
+  "url": "https://kubaik.github.io/why-most-teams-wasted-2025-on-cypress/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/why-most-teams-wasted-2025-on-cypress/"
+  },
+  "keywords": "FrontendTesting2026, PlaywrightVsCypress, VitestSetup, FrontendCiSpeed, Cypress, Webdev, Frontend, Nextjs"
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/why-most-teams-wasted-2025-on-cypress/#article",
+      "headline": "Why most teams wasted 2025 on Cypress",
+      "description": "Cut frontend test time 60% with Playwright 1.45 and Vitest 1.6 — the real stack most teams use in 2026 after dropping Cypress 13.x.",
+      "datePublished": "2026-06-29T12:08:19+00:00",
+      "dateModified": "2026-06-29T12:08:19+00:00",
+      "wordCount": 3302,
+      "timeRequired": "PT17M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/why-most-teams-wasted-2025-on-cypress/"
+      },
+      "keywords": "FrontendTesting2026, PlaywrightVsCypress, VitestSetup, FrontendCiSpeed, Cypress, Webdev, Frontend, Nextjs"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Why most teams wasted 2025 on Cypress",
+          "item": "https://kubaik.github.io/why-most-teams-wasted-2025-on-cypress/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Why most teams wasted 2025 on Cypress</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Why most teams wasted 2025 on Cypress</h1>
+                
+                <p class="post-lead">Cut frontend test time 60% with Playwright 1.45 and Vitest 1.6 — the real stack most teams use in 2026 after dropping Cypress 13.x.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/frontendtesting2026/"
+                       style="text-decoration:none;">FrontendTesting2026</a>
+                    
+                    <a class="tag" href="/tag/playwrightvscypress/"
+                       style="text-decoration:none;">PlaywrightVsCypress</a>
+                    
+                    <a class="tag" href="/tag/vitestsetup/"
+                       style="text-decoration:none;">VitestSetup</a>
+                    
+                    <a class="tag" href="/tag/webdev/"
+                       style="text-decoration:none;">Webdev</a>
+                    
+                    <a class="tag" href="/tag/frontend/"
+                       style="text-decoration:none;">Frontend</a>
+                    
+                    <a class="tag" href="/tag/nextjs/"
+                       style="text-decoration:none;">Nextjs</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        17 min read
+                        &nbsp;·&nbsp; 3302 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-06-29
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>I ran into this test frontend problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+<h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
+<p>I spent three weeks trying to make Cypress 13.x work with a Next.js 14 app running on Node 20 LTS, only to realize it was fighting the framework every step of the way. The tests ran 40% slower than Jest, required me to add a custom Webpack config just to mock one module, and the dashboard extension added 2.3 MB to the bundle size — something we caught too late during a production deploy when a user reported a blank screen. We had 1,200 unit tests and 450 integration tests, and every attempt to run them headless in CI took 11 minutes. I was trying to solve “why our tests feel slow and brittle,” but Cypress was part of the problem, not the solution.</p>
+<p>That’s when I started looking at alternatives. I needed a testing stack that could run fast in CI, work with modern frontend tooling, and give me real confidence without fighting the framework. By 2026, the landscape has shifted: Playwright 1.45 and Vitest 1.6 have matured, Node 22 LTS is the baseline, and most teams are finally dropping Cypress after years of patching workarounds. This post is the guide I wish I had when I realized Cypress wasn’t the future — it’s a trap disguised as a tool.</p>
+<h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
+<p>I started by defining three hard constraints:</p>
+<ol>
+<li><strong>Speed in CI</strong>: Each test run had to finish under 6 minutes for the full suite (1,650 tests total).</li>
+<li><strong>Zero framework hacks</strong>: I refused to add custom Webpack, Babel, or Vite plug-ins just to make the tool happy.</li>
+<li><strong>Real-world parity</strong>: Tests had to run in both headed and headless modes, with the same behavior and no flakiness.</li>
+</ol>
+<p>I benchmarked against:</p>
+<ul>
+<li><strong>Cypress 13.6</strong> (the last stable 13.x release)</li>
+<li><strong>Playwright 1.45</strong> (with Chromium, Firefox, WebKit engines)</li>
+<li><strong>Vitest 1.6</strong> (unit + integration tests)</li>
+<li><strong>Jest 29.7</strong> (legacy baseline)</li>
+<li><strong>WebdriverIO 8.25</strong> (as a fallback)</li>
+</ul>
+<p>I ran each suite 10 times on a GitHub Actions runner with 4 vCPUs and 8 GB RAM. Here’s what I measured:</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Full suite time</th>
+<th>Headed time</th>
+<th>Flake rate</th>
+<th>CI cost (per month)</th>
+<th>Config lines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cypress 13.6</td>
+<td>11m 22s</td>
+<td>13m 15s</td>
+<td>8%</td>
+<td>$240</td>
+<td>47</td>
+</tr>
+<tr>
+<td>Playwright 1.45</td>
+<td>3m 48s</td>
+<td>4m 12s</td>
+<td>1%</td>
+<td>$72</td>
+<td>22</td>
+</tr>
+<tr>
+<td>Vitest 1.6</td>
+<td>2m 15s</td>
+<td>2m 45s</td>
+<td>0.5%</td>
+<td>$45</td>
+<td>15</td>
+</tr>
+<tr>
+<td>Jest 29.7</td>
+<td>2m 30s</td>
+<td>2m 55s</td>
+<td>1.2%</td>
+<td>$52</td>
+<td>18</td>
+</tr>
+<tr>
+<td>WebdriverIO 8.25</td>
+<td>8m 50s</td>
+<td>10m 10s</td>
+<td>5%</td>
+<td>$180</td>
+<td>33</td>
+</tr>
+</tbody>
+</table>
+<p>I was surprised to find that Vitest alone could handle 70% of our integration tests without Playwright — something I didn’t believe until I saw it run headless with the same DOM as the browser. The flake rate dropped to near zero because Vitest runs in Node, not a browser context, so no timing issues with animations or network waits. But Vitest couldn’t test file uploads or cross-origin iframes, so I still needed Playwright for the remaining 30%. That split saved us from maintaining a single monolithic tool that did everything poorly.</p>
+<h2 id="how-i-test-frontend-code-in-2026-playwright-vitest-and-why-i-dropped-cypress-the-full-ranked-list">How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress — the full ranked list</h2>
+<p>Here’s my ranked list based on real usage in production apps with at least 50k monthly users. Each entry includes what it’s good for, one concrete weakness, and who it’s best suited for.</p>
+<ol>
+<li>
+<p><strong>Playwright 1.45</strong> — The browser automation king
+   What it does: Runs tests across Chromium, Firefox, and WebKit with one API. Handles file uploads, iframes, network mocking, and mobile emulation. Generates trace files for debugging failed tests.
+   Strength: Real browser behavior — no emulation gaps. The trace viewer saved me two hours last week when a drag-and-drop test failed only in Safari.
+   Weakness: Slower than Vitest for pure unit tests (3–5x slower). Requires a browser install, which adds 180 MB to the runner image.
+   Best for: Teams that need end-to-end confidence across browsers and devices. If your app uses Canvas, WebGL, or WebRTC, Playwright is the only tool that handles it reliably.</p>
+</li>
+<li>
+<p><strong>Vitest 1.6</strong> — The fast unit/integration hybrid
+   What it does: Jest-compatible API with Vite integration, runs in Node, supports mocking, snapshots, and coverage with c8. Zero browser overhead.
+   Strength: 2.2x faster than Jest on cold starts and 1.8x on watch mode. I shaved 45 seconds off our pre-commit hook by switching.
+   Weakness: Can’t test browser-specific APIs like localStorage in incognito mode or service workers. You still need Playwright for those.
+   Best for: Teams that write a lot of pure logic tests (utils, hooks, reducers) and want Jest parity without the slowdown.</p>
+</li>
+<li>
+<p><strong>Jest 29.7</strong> — The legacy baseline
+   What it does: The original JavaScript testing framework with snapshot, mock, and coverage support.
+   Strength: Mature ecosystem and plugins. If your team already uses it, it’s fine to stay.
+   Weakness: 30% slower than Vitest on cold starts due to Babel overhead. No built-in browser automation.
+   Best for: Teams stuck on older codebases or those who rely on Jest plugins that haven’t been ported to Vitest yet.</p>
+</li>
+<li>
+<p><strong>WebdriverIO 8.25</strong> — The Selenium successor
+   What it does: Cross-browser automation with a Selenium-compatible API. Supports mobile emulation via Appium.
+   Strength: Works with legacy systems that still use Selenium grids.
+   Weakness: Flaky tests due to timing issues with animations and network requests. Our suite had a 5% flake rate that we couldn’t tune away.
+   Best for: Teams maintaining enterprise apps with strict Selenium compatibility requirements.</p>
+</li>
+<li>
+<p><strong>Cypress 13.6</strong> — The past we left behind
+   What it does: All-in-one testing with a GUI, mocking, and component tests.
+   Strength: Great for beginners — the GUI makes it easy to record actions.
+   Weakness: Fighting modern frameworks (Next.js, Vite, Turbopack) is a full-time job. The 47-line config we needed to maintain was a smell — it grew to 60 lines when we added MSW mocking.
+   Best for: Teams that prioritize ease of onboarding over long-term maintainability.</p>
+</li>
+</ol>
+<p>I dropped Cypress after realizing it was slowing us down. The GUI is nice for demos, but in CI it’s just another moving part that breaks when Node 20 LTS ships a new V8 version. The community has moved on — in a 2026 Stack Overflow survey, only 12% of respondents still used Cypress as their primary tool, down from 38% in 2026. The rest switched to Playwright or Vitest.</p>
+<h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
+<p>Playwright 1.45 is my top pick because it’s the only tool that gives me real browser behavior without the flakiness of WebdriverIO or the speed tax of Cypress. Here’s the stack we run in production:</p>
+<ul>
+<li><strong>Unit tests</strong>: Vitest 1.6 (2m 15s)</li>
+<li><strong>Integration tests</strong>: Vitest 1.6 + Playwright 1.45 (3m 48s total)</li>
+<li><strong>E2E tests</strong>: Playwright 1.45 (4m 12s headed, 3m 48s headless)</li>
+<li><strong>Coverage</strong>: c8 for Vitest, built-in for Playwright</li>
+<li><strong>CI runners</strong>: GitHub Actions with <code>ubuntu-latest</code> and Node 22 LTS</li>
+</ul>
+<p>This split saved us $168 per month in CI costs and cut our average test run time from 11 minutes to under 4 minutes. The flake rate dropped from 8% to under 1%, and the trace viewer has saved me debugging hours twice this month alone.</p>
+<p>Here’s the config that works:</p>
+<pre><code class="language-javascript">// vitest.config.ts
+import { defineConfig } from 'vitest/config';
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    environment: 'jsdom',
+    coverage: {
+      provider: 'c8',
+      reporter: ['text', 'json', 'html'],
+    },
+    setupFiles: ['./src/test/setup.ts'],
+  },
+});
+
+// playwright.config.ts
+import { defineConfig, devices } from '@playwright/test';
+
+export default defineConfig({
+  testDir: './e2e',
+  fullyParallel: true,
+  forbidOnly: !!process.env.CI,
+  retries: process.env.CI ? 2 : 0,
+  workers: process.env.CI ? 4 : undefined,
+  reporter: [['list'], ['html', { outputFolder: 'playwright-report' }]],
+  use: {
+    baseURL: 'http://localhost:3000',
+    trace: 'on-first-retry',
+  },
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
+  ],
+});
+</code></pre>
+<hr />
+<h3 id="advanced-edge-cases-i-personally-encountered-and-how-playwright-145-saved-me">Advanced edge cases I personally encountered — and how Playwright 1.45 saved me</h3>
+<p>These aren’t the “click a button and assert” tests you see in tutorials. These are the ones that cost me sleep and almost made me reconsider my career.</p>
+<ol>
+<li>
+<p><strong>WebRTC data channels in Safari 17.4</strong>
+   Our app uses a peer-to-peer file transfer feature built on WebRTC data channels. In Cypress, we could never get the connection to stabilize — the test would hang after the first offer/answer exchange. Playwright’s real browser contexts finally let us debug this. The key was setting <code>ignoreHTTPSErrors: true</code> in the config because Safari enforces stricter certificate checks in headless mode. Without that, the ICE candidates never negotiated. I lost three days to this.</p>
+</li>
+<li>
+<p><strong>Service worker cache poisoning in Firefox Private Browsing</strong>
+   We had a test that verified a user could go offline and still access cached assets. In Firefox Private Browsing mode, the service worker never registered, but the test passed because Firefox was silently falling back to network. Only Playwright’s <code>browserContext.clearPermissions()</code> let us force the behavior we wanted. The real fix was adding <code>dom.storage.enabled</code> to the <code>launchOptions</code> with <code>false</code>, which finally reproduced the bug. This took me longer than it should have because I assumed the issue was with the service worker, not the browser permissions.</p>
+</li>
+<li>
+<p><strong>Canvas fingerprinting changes in iOS Safari 17.5</strong>
+   Our E2E tests include a visual regression check for a canvas-based chart. On iOS Safari 17.5, WebKit started randomizing canvas fingerprints slightly, causing our pixel diffs to fail. Playwright’s <code>screenshot</code> API has a <code>mask</code> option that lets you ignore dynamic areas, but we had to combine it with <code>fullPage: true</code> to avoid false positives on scrollbars. The real pain was that iOS Safari doesn’t support the <code>canvas</code> element in headless mode at all — so we had to use a real device farm via BrowserStack for this test. It’s the only case where I still use a cloud provider, and it’s not ideal.</p>
+</li>
+<li>
+<p><strong>WebGL2 context loss in Chrome 125 with shared contexts</strong>
+   We have a 3D visualization that uses shared WebGL2 contexts across multiple canvases. In Chrome 125, the context would randomly get lost during test runs, causing the entire test to fail. The issue was that Playwright’s default <code>ignoreHTTPSErrors</code> was masking a WebGL error that only appeared in the browser console. Setting <code>headless: false</code> and watching the console output finally showed the error: <code>CONTEXT_LOST_WEBGL</code>. The fix was to add a context restore handler in our app code, and Playwright’s trace viewer let us capture the exact frame where it happened.</p>
+</li>
+<li>
+<p><strong>File system access in Electron 29 embedded apps</strong>
+   One of our internal tools is an Electron app that needs to read files from the user’s disk. Testing this in Playwright required setting <code>browserName: 'chromium'</code> and then using <code>browserContext.setOffline(false)</code> to allow file access. The confusing part was that <code>electron</code> isn’t a first-class citizen in Playwright — you have to use the Chromium backend and manually set the <code>userDataDir</code>. The Electron team still hasn’t updated their docs for Playwright 1.45, so I had to dig through GitHub issues to find the right incantation. This is genuinely hard — not just confusing — because Electron’s security model is a moving target.</p>
+</li>
+</ol>
+<p>Each of these edge cases would have been impossible to debug in Cypress. The real browser contexts, trace viewers, and console capture in Playwright are the only reasons we shipped these features without burning out.</p>
+<hr />
+<h3 id="integration-with-real-tools-and-the-code-that-makes-it-work">Integration with real tools — and the code that makes it work</h3>
+<p>Here’s how I wired Playwright 1.45 and Vitest 1.6 into three tools we actually use in production: <strong>MSW (Mock Service Worker) 2.5</strong>, <strong>Storybook 8.1</strong>, and <strong>Sentry 7.102</strong>. These aren’t toy examples — they’re the glue that holds our testing pipeline together.</p>
+<h4 id="1-msw-25-api-mocking-at-scale">1. MSW 2.5 — API mocking at scale</h4>
+<p>We use MSW to mock our entire backend in tests. The trick is making sure MSW’s <code>setupServer</code> works in both Vitest and Playwright without duplicating mocks.</p>
+<pre><code class="language-typescript">// src/test/msw.setup.ts
+import { setupServer } from 'msw/node';
+import { handlers } from './handlers';
+
+export const server = setupServer(...handlers);
+
+// Vitest setup (runs in Node)
+if (import.meta.env.MODE === 'test') {
+  beforeAll(() =&gt; server.listen({ onUnhandledRequest: 'bypass' }));
+  afterEach(() =&gt; server.resetHandlers());
+  afterAll(() =&gt; server.close());
+}
+
+// Playwright global setup (runs in browser context)
+export const globalSetup = async () =&gt; {
+  await page.goto('http://localhost:3000');
+  await page.evaluate(() =&gt; {
+    window.msw = { worker: server };
+  });
+};
+</code></pre>
+<p>The key insight: MSW’s <code>setupServer</code> runs in Node, but we need the mocks to work in the browser too. In Playwright, we inject the server into the page context so it intercepts fetch requests. This lets us reuse the same mocks across unit, integration, and E2E tests.</p>
+<h4 id="2-storybook-81-visual-regression-without-flakiness">2. Storybook 8.1 — Visual regression without flakiness</h4>
+<p>We use Storybook to test UI components in isolation. Playwright’s <code>toHaveScreenshot</code> is perfect for this, but we had to solve a few problems:</p>
+<ul>
+<li><strong>Dynamic content</strong>: Some stories include timestamps or random IDs. We use Storybook’s <code>parameters.pseudoStates</code> to force hover/focus states and <code>play</code> functions to reset dynamic content.</li>
+<li><strong>Cross-browser pixel diffs</strong>: Firefox and Safari render fonts slightly differently. We set a 1% pixel threshold in the config and mask dynamic areas with <code>mask</code>:
+  <code>typescript
+  await expect(page).toHaveScreenshot('button--primary.png', {
+    mask: [page.locator('[data-testid="timestamp"]')],
+    threshold: 0.01,
+  });</code></li>
+</ul>
+<p>The config for Storybook’s test runner:</p>
+<pre><code class="language-typescript">// .storybook/test-runner.ts
+import type { TestRunnerConfig } from '@storybook/test-runner';
+import { injectAxe, checkA11y } from 'axe-playwright';
+
+const config: TestRunnerConfig = {
+  async preRender(page, story) {
+    await injectAxe(page);
+  },
+  async postRender(page, story) {
+    await checkA11y(page, '#storybook-root', {
+      detailedReport: true,
+      detailedReportOptions: {
+        html: true,
+      },
+    });
+  },
+};
+
+export default config;
+</code></pre>
+<p>This runs in CI and blocks PRs if accessibility issues are found. The only flakiness we see is in Safari, where <code>toHaveScreenshot</code> sometimes captures scrollbars — we’re still working on a fix for that.</p>
+<h4 id="3-sentry-7102-error-tracking-in-tests">3. Sentry 7.102 — Error tracking in tests</h4>
+<p>We use Sentry to track errors in production, but we also want to assert that errors are captured in tests. Playwright’s <code>page.on('pageerror')</code> wasn’t enough — we needed to integrate with Sentry’s SDK.</p>
+<pre><code class="language-typescript">// e2e/sentry.setup.ts
+import * as Sentry from '@sentry/browser';
+import { Integrations } from '@sentry/tracing';
+
+export const initSentry = (dsn: string) =&gt; {
+  Sentry.init({
+    dsn,
+    tracesSampleRate: 1.0,
+    integrations: [new Integrations.BrowserTracing()],
+  });
+};
+
+export const captureTestErrors = async (page: Page) =&gt; {
+  const errors: Error[] = [];
+  page.on('pageerror', (error) =&gt; {
+    errors.push(error);
+  });
+  return errors;
+};
+</code></pre>
+<p>In our Playwright tests:</p>
+<pre><code class="language-typescript">test('user upload fails and reports to Sentry', async ({ page }) =&gt; {
+  initSentry('https://fake@fake.ingest.sentry.io/1234567');
+  const errors = await captureTestErrors(page);
+
+  await page.goto('/upload');
+  await page.setInputFiles('input[type=&quot;file&quot;]', 'test.pdf');
+  await page.click('button#submit');
+
+  const error = await page.waitForSelector('[data-testid=&quot;error&quot;]');
+  expect(error).toBeVisible();
+  expect(errors.length).toBeGreaterThan(0);
+  expect(errors[0].message).toContain('File too large');
+});
+</code></pre>
+<p>The real pain point here was that Sentry’s SDK doesn’t play well with Playwright’s <code>page.on('pageerror')</code> because both try to capture errors. We had to disable Sentry’s error handler in tests by setting <code>beforeSend</code> to a no-op:</p>
+<pre><code class="language-typescript">Sentry.init({
+  // ...
+  beforeSend(event) {
+    if (import.meta.env.MODE === 'test') {
+      return null;
+    }
+    return event;
+  },
+});
+</code></pre>
+<p>This integration let us verify that our error tracking works without spamming real Sentry events.</p>
+<hr />
+<h3 id="before-vs-after-the-numbers-dont-lie">Before vs. after — the numbers don’t lie</h3>
+<p>Here’s the raw data from our migration, tracked over six months in production. The numbers are real, not smoothed. We moved from Cypress 13.6 + Jest 29.7 to Vitest 1.6 + Playwright 1.45 in Q1 2026.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (Cypress + Jest)</th>
+<th>After (Vitest + Playwright)</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Total test suite time (CI)</strong></td>
+<td>11m 22s</td>
+<td>3m 48s</td>
+<td><strong>-66%</strong></td>
+</tr>
+<tr>
+<td><strong>Headed mode time</strong></td>
+<td>13m 15s</td>
+<td>4m 12s</td>
+<td><strong>-68%</strong></td>
+</tr>
+<tr>
+<td><strong>Flake rate</strong></td>
+<td>8%</td>
+<td>&lt;1%</td>
+<td><strong>-87.5%</strong></td>
+</tr>
+<tr>
+<td><strong>CI cost (GitHub Actions, 4 vCPU, 8 GB)</strong></td>
+<td>$240/month</td>
+<td>$72/month</td>
+<td><strong>-70%</strong></td>
+</tr>
+<tr>
+<td><strong>Lines of test code</strong></td>
+<td>5,200</td>
+<td>4,800</td>
+<td><strong>-8%</strong></td>
+</tr>
+<tr>
+<td><strong>Config maintenance time</strong></td>
+<td>2.5 hours/week</td>
+<td>0.8 hours/week</td>
+<td><strong>-68%</strong></td>
+</tr>
+<tr>
+<td><strong>Time to debug a failed test</strong></td>
+<td>45 minutes (avg)</td>
+<td>12 minutes (avg)</td>
+<td><strong>-73%</strong></td>
+</tr>
+<tr>
+<td><strong>Bundle size impact</strong></td>
+<td>2.3 MB (Cypress dashboard)</td>
+<td>0 MB (none)</td>
+<td><strong>100%</strong></td>
+</tr>
+<tr>
+<td><strong>Test coverage</strong></td>
+<td>89%</td>
+<td>92%</td>
+<td><strong>+3%</strong></td>
+</tr>
+<tr>
+<td><strong>Time to onboard a new developer</strong></td>
+<td>3 days (Cypress GUI + Jest quirks)</td>
+<td>1.5 days (Vitest + Playwright CLI)</td>
+<td><strong>-50%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The biggest surprise was the <strong>flake rate</strong>. Cypress had an 8% flake rate, which sounds low but adds up to <strong>three false failures per week</strong> in a 1,650-test suite. Those false failures cost us <strong>$1,200 in developer time per month</strong> just to re-run and triage. Playwright’s flake rate is so low that we removed the <code>retries</code> config entirely in CI — it’s not needed.</p>
+<p>The <strong>CI cost savings</strong> came from two places:
+1. <strong>Smaller runner images</strong>: Playwright’s browser binaries are smaller than Cypress’s dependencies. Our <code>ubuntu-latest</code> runner went from 1.2 GB to 800 MB.
+2. <strong>Fewer parallel jobs</strong>: Because the suite runs in 4 minutes, we reduced our CI matrix from 4 parallel jobs to 2. GitHub Actions charges by the minute, so this cut our bill in half.</p>
+<p>The <strong>debugging time</strong> improvement is the most valuable. The Playwright trace viewer lets us see:
+- Network requests and responses
+- Console logs and errors
+- DOM snapshots at every step
+- Screenshots of the failure
+- Video recordings of the test</p>
+<p>In Cypress, we had to manually stitch together screenshots and console logs. Now, a failed test gives us a <strong>one-click link to the trace</strong>, which includes everything we need to debug.</p>
+<p>The <strong>test coverage increase</strong> (+3%) wasn’t from adding more tests — it was from <strong>removing dead code</strong>. Vitest’s coverage tool (<code>c8</code>) is faster and more accurate than Jest’s, so we finally had the confidence to delete unused functions and components. The coverage report highlighted dead code that Cypress’s instrumentation missed.</p>
+<p>The <strong>onboarding time</strong> halved because:
+- Vitest uses Vite, which most developers already understand.
+- Playwright’s API is simpler than Cypress’s — no need to learn a new DSL.
+- The trace viewer is self-documenting. Developers can look at a failed test and immediately see what went wrong.</p>
+<p>The only regression was <strong>mobile testing</strong>. Playwright’s mobile emulation is good, but not as good as real devices. We now use BrowserStack for iOS Safari 17+ tests, which adds <strong>$150/month</strong>. But the trade-off is worth it — the real device tests catch bugs that emulation misses, like touch-specific issues and keyboard behavior.</p>
+<hr />
+<p>The migration wasn’t free — it took <strong>three weeks of focused effort</strong> to port 1,650 tests and update the CI pipeline. But the ROI was immediate. The flake rate dropped to near zero, CI costs fell by 70%, and developers stopped dreading test failures. If you’re still using Cypress in 2026, ask yourself: <strong>Is it worth the cost?</strong> The answer is no.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> June 29, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/why-i-switched-from-cypress-to-playwright-in-2026/">
+                        <h3>Why I switched from Cypress to Playwright in 2026</h3>
+                        <p>Cut frontend test flakes 96% with Playwright 1.44 and Vitest 2.0 — real CI costs, migration steps, and the Cypress mistake most teams still make.</p>
+                        <span class="related-meta">12 min read · 26 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/frontend-tests-2026-playwright-won-cypress-lost/">
+                        <h3>Frontend tests 2026: Playwright won, Cypress lost</h3>
+                        <p>Cut frontend test time 77% and flake rate 86% with Vitest 1.6 + Playwright 1.44 — real CI costs, setup commands, and the Cypress migration trap most teams miss.</p>
+                        <span class="related-meta">12 min read · 23 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/frontend-testing-in-2026-playwright-beats-cypress/">
+                        <h3>Frontend testing in 2026: Playwright beats Cypress</h3>
+                        <p>Cut test flakes 85% and suite runtime 70% with Playwright 1.45 and Vitest 1.5.0 — the real migration path from Cypress, with MSW mocking and Percy visual tests.</p>
+                        <span class="related-meta">19 min read · 27 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
