@@ -5,13 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2026 21:14:02 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jun 2026 21:20:27 +0000</lastBuildDate>
     <item>
-      <title>Design AI apps: stream tokens, not JSON</title>
-      <link>https://kubaik.github.io/design-ai-apps-stream-tokens-not-json/</link>
-      <description>Cut AI response time 60% by budgeting tokens instead of endpoints — prompt drift, cache stampedes, and the 4k-token trap most teams miss in 2026.</description>
-      <pubDate>Mon, 29 Jun 2026 21:13:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/design-ai-apps-stream-tokens-not-json/</guid>
+      <title>Fix AI agent failures: postmortem guide</title>
+      <link>https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/</link>
+      <description>Catch AI agent failures 90% faster — human playbook vs agent-aware tools with concrete costs, drift thresholds, and regional gotchas for 2026.</description>
+      <pubDate>Mon, 29 Jun 2026 21:20:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/</guid>
     </item>
     <item>
       <title>AI ops: PagerDuty vs Opsgenie — which burns your team</title>
