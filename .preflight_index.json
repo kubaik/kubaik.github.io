@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-29T05:08:58.122161",
+  "built_at": "2026-06-29T05:24:23.459606",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3435,6 +3435,11 @@
       "slug": "78-of-ai-codebases-fail-onboarding",
       "title": "78% of AI codebases fail onboarding",
       "summary": "I've seen the same onboard developer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 78% of newly hired engineers at mid-size SaaS companies wil"
+    },
+    {
+      "slug": "self-healing-pipelines-ai-agents-vs-brittle-scripts",
+      "title": "Self-healing pipelines: AI agents vs brittle scripts",
+      "summary": "I've seen the same built selfhealing mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, every deployment pipeline either heals itself or gets repla"
     }
   ]
 }
