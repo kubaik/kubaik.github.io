@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-29T22:42:07.235848",
+  "built_at": "2026-06-29T22:50:18.043747",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3545,6 +3545,11 @@
       "slug": "ai-code-review-the-20-trap-in-production",
       "title": "AI code review: the 20% trap in production",
       "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 47% of pull requests reviewed in GitHub Enterprise Cloud still"
+    },
+    {
+      "slug": "7-passive-income-streams-for-devs-in-2026",
+      "title": "7 passive income streams for devs in 2026",
+      "summary": "I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I started looking for a second income stre"
     }
   ]
 }
