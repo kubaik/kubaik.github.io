@@ -45,5 +45,6 @@
   "Why async Python still surprises people and how to stop getting burned by it",
   "How to build a portfolio that gets you hired in a market where everyone has AI-assisted projects",
   "How I use AI to maintain legacy codebases nobody wants to touch",
-  "AI-assisted incident response: what works and what makes oncall worse"
+  "AI-assisted incident response: what works and what makes oncall worse",
+  "How to design AI-native applications: architecture patterns that didn't exist three years ago"
 ]
