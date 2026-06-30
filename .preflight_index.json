@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-30T06:51:48.525063",
+  "built_at": "2026-06-30T07:17:42.774117",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3585,6 +3585,11 @@
       "slug": "least-privilege-aws-iam-in-a-day",
       "title": "Least-privilege AWS IAM in a day",
       "summary": "The short version: the conventional advice on implement leastprivilege is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. Advanced edge cases you personally encountered 1. The case of the hidden condition that broke cross-account access Ea"
+    },
+    {
+      "slug": "killed-a-3kmonth-k8s-cluster-for-200month",
+      "title": "Killed a $3k/month K8s cluster for $200/month",
+      "summary": "Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026 my solo SaaS had grown to 12k MAU and the backend was running on a 3-node"
     }
   ]
 }

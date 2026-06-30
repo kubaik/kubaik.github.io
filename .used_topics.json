@@ -57,5 +57,6 @@
   "How I write tests for AI-assisted code without testing the AI",
   "How AI is being used to find vulnerabilities and what that means for defenders",
   "SBOM requirements in 2026: what software bill of materials means for your release process",
-  "How to implement least-privilege IAM in AWS without spending a week on policies"
+  "How to implement least-privilege IAM in AWS without spending a week on policies",
+  "How I replaced a $3k/month Kubernetes cluster with a $200/month alternative"
 ]
