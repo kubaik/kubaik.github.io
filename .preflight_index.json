@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-30T16:23:29.877043",
+  "built_at": "2026-06-30T19:23:08.196410",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3625,6 +3625,11 @@
       "slug": "ai-pair-coding-killed-pull-request-reviews",
       "title": "AI pair coding killed pull request reviews",
       "summary": "Most pair programming guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In Q1 2026, our team at CloudNgage—a 28-person company building a multi-tenant SaaS f"
+    },
+    {
+      "slug": "redefining-engineering-principles-in-the-ai-era",
+      "title": "Redefining engineering principles in the AI era",
+      "summary": "A colleague asked me about engineering principles during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomp"
     }
   ]
 }

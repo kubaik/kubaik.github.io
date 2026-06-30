@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Jun 2026 19:18:27 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2026 19:23:20 +0000</lastBuildDate>
+    <item>
+      <title>Redefining engineering principles in the AI era</title>
+      <link>https://kubaik.github.io/redefining-engineering-principles-in-the-ai-era/</link>
+      <description>Cut bug escape rate 12% by auditing AI-generated code — prompt contracts, runtime guards, and decision logs that actually work in 2026.</description>
+      <pubDate>Tue, 30 Jun 2026 19:23:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/redefining-engineering-principles-in-the-ai-era/</guid>
+    </item>
     <item>
       <title>AI pair coding killed pull request reviews</title>
       <link>https://kubaik.github.io/ai-pair-coding-killed-pull-request-reviews/</link>
@@ -138,13 +145,6 @@
       <description>Catch AI agent failures 90% faster — human playbook vs agent-aware tools with concrete costs, drift thresholds, and regional gotchas for 2026.</description>
       <pubDate>Mon, 29 Jun 2026 21:20:13 +0000</pubDate>
       <guid>https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/</guid>
-    </item>
-    <item>
-      <title>AI ops: PagerDuty vs Opsgenie — which burns your team</title>
-      <link>https://kubaik.github.io/ai-ops-pagerduty-vs-opsgenie-which-burns-your-team/</link>
-      <description>Cut on-call noise 42% with PagerDuty AIOps or 21% with Opsgenie Incident AI — real 2026 benchmarks on MTTA, cost, and false positives for teams at every scale.</description>
-      <pubDate>Mon, 29 Jun 2026 20:08:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ops-pagerduty-vs-opsgenie-which-burns-your-team/</guid>
     </item>
   </channel>
 </rss>
