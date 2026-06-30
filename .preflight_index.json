@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-30T20:13:53.858490",
+  "built_at": "2026-06-30T21:24:59.919902",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3640,6 +3640,11 @@
       "slug": "go-mcp-servers-benchmarks-scaling-traps",
       "title": "Go MCP servers: benchmarks & scaling traps",
       "summary": "After reviewing a lot of code that touches mcp servers, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The one-paragraph version (read this first) Building high-performance MCP servers in Go isn’t about raw speed—it’s about avoi"
+    },
+    {
+      "slug": "build-a-serverless-backend-in-africa-with-pocketbase",
+      "title": "Build a serverless backend in Africa with PocketBase",
+      "summary": "After reviewing a lot of code that touches tools built, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. Why I wrote this (the problem I kept hitting) In 2026 I joined a Lagos fintech that needed a prototype backend in three weeks"
     }
   ]
 }
