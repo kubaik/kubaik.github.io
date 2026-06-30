@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-30T07:17:42.774117",
+  "built_at": "2026-06-30T09:47:50.137526",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3590,6 +3590,11 @@
       "slug": "killed-a-3kmonth-k8s-cluster-for-200month",
       "title": "Killed a $3k/month K8s cluster for $200/month",
       "summary": "Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026 my solo SaaS had grown to 12k MAU and the backend was running on a 3-node"
+    },
+    {
+      "slug": "offline-apps-cache-first-sync-later",
+      "title": "Offline apps: cache first, sync later",
+      "summary": "Most build offlinefirst guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026 we launched a health-tech app for clinics across Kenya, Ghana, and Nigeria "
     }
   ]
 }
