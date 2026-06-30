@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Jun 2026 10:08:44 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2026 10:13:40 +0000</lastBuildDate>
+    <item>
+      <title>3 skills to outrun AI salary cuts</title>
+      <link>https://kubaik.github.io/3-skills-to-outrun-ai-salary-cuts/</link>
+      <description>Protect your 2026 salary against AI automation with 3 boring engineering skills — connection pooling, circuit breakers, and CDN cache control — proven to cut outages 90% and keep clients paying premium rates.</description>
+      <pubDate>Tue, 30 Jun 2026 10:13:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-skills-to-outrun-ai-salary-cuts/</guid>
+    </item>
     <item>
       <title>Offline apps: cache first, sync later</title>
       <link>https://kubaik.github.io/offline-apps-cache-first-sync-later/</link>
@@ -138,13 +145,6 @@
       <description>Negotiate 15 % higher pay in 2026 using AI-proof evidence. Build a compensation evidence pack in 90 minutes with Python 3.12, pandas 2.2, and Levels.fyi API.</description>
       <pubDate>Mon, 29 Jun 2026 16:52:04 +0000</pubDate>
       <guid>https://kubaik.github.io/price-ai-proof-skills-in-2026/</guid>
-    </item>
-    <item>
-      <title>Ship fast, debug forever: why vibe coding fails at scale</title>
-      <link>https://kubaik.github.io/ship-fast-debug-forever-why-vibe-coding-fails-at-scale/</link>
-      <description>Cut production outages 82% by replacing raw SQL with Django 5.0 ORM + connection pooling. Learn which tools scale and which burn your nights debugging.</description>
-      <pubDate>Mon, 29 Jun 2026 14:44:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-fast-debug-forever-why-vibe-coding-fails-at-scale/</guid>
     </item>
   </channel>
 </rss>
