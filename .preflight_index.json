@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-30T00:11:54.202033",
+  "built_at": "2026-06-30T01:37:04.505584",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3560,6 +3560,11 @@
       "slug": "2026-ai-stack-solo-saas-cost-showdown",
       "title": "2026 AI stack: solo SaaS cost showdown",
       "summary": "I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, launching a solo SaaS is cheaper than ever — but the real b"
+    },
+    {
+      "slug": "ai-ui-tools-promise-vs-production",
+      "title": "AI UI tools: promise vs. production",
+      "summary": "The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI UI tools like Cursor, Figma AI, and GitHub Copilot Workspace now build React c"
     }
   ]
 }
