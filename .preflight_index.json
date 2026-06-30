@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-30T19:45:20.542512",
+  "built_at": "2026-06-30T20:13:53.858490",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3635,6 +3635,11 @@
       "slug": "rag-on-legacy-systems-vector-db-vs-full-text-sql",
       "title": "RAG on legacy systems: vector DB vs. full-text SQL",
       "summary": "After reviewing a lot of code that touches claude gpt5, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. Why this comparison matters right now In 2026, every legacy enterprise system is getting a RAG layer slapped on top like it’s"
+    },
+    {
+      "slug": "go-mcp-servers-benchmarks-scaling-traps",
+      "title": "Go MCP servers: benchmarks & scaling traps",
+      "summary": "After reviewing a lot of code that touches mcp servers, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The one-paragraph version (read this first) Building high-performance MCP servers in Go isn’t about raw speed—it’s about avoi"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Jun 2026 20:09:11 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2026 20:14:05 +0000</lastBuildDate>
+    <item>
+      <title>Go MCP servers: benchmarks &amp; scaling traps</title>
+      <link>https://kubaik.github.io/go-mcp-servers-benchmarks-scaling-traps/</link>
+      <description>Cut MCP server latency 80% with Go: binary JSON, atomic tool registry, and fixed-size pools. Benchmarks, traps, and the 30-minute fix.</description>
+      <pubDate>Tue, 30 Jun 2026 20:13:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/go-mcp-servers-benchmarks-scaling-traps/</guid>
+    </item>
     <item>
       <title>RAG on legacy systems: vector DB vs. full-text SQL</title>
       <link>https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/</link>
@@ -138,13 +145,6 @@
       <description>Cut production outages 78% with guardrail-first AI review — Semgrep rules, GitHub Copilot 1.14, and a 4.2-minute sandbox cost breakdown.</description>
       <pubDate>Mon, 29 Jun 2026 22:42:04 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-code-review-the-20-trap-in-production/</guid>
-    </item>
-    <item>
-      <title>PagerDuty + AI alerts: 3 fixes that cut wake-ups 83%</title>
-      <link>https://kubaik.github.io/pagerduty-ai-alerts-3-fixes-that-cut-wake-ups-83/</link>
-      <description>Cut nightly pages 83% using PagerDuty + AI triage — Lambda transformer, CloudWatch rules, and Grafana dashboard built in 60 minutes</description>
-      <pubDate>Mon, 29 Jun 2026 22:16:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/pagerduty-ai-alerts-3-fixes-that-cut-wake-ups-83/</guid>
     </item>
   </channel>
 </rss>
