@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-30T15:19:53.883783",
+  "built_at": "2026-06-30T16:23:29.877043",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3620,6 +3620,11 @@
       "slug": "freelance-rates-2026-ai-killed-the-hourly-rate",
       "title": "Freelance rates 2026: AI killed the hourly rate",
       "summary": "The short version: the conventional advice on freelance developer is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In 2026, the average freelance developer rate in Europe fell 22% for junior ro"
+    },
+    {
+      "slug": "ai-pair-coding-killed-pull-request-reviews",
+      "title": "AI pair coding killed pull request reviews",
+      "summary": "Most pair programming guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In Q1 2026, our team at CloudNgage—a 28-person company building a multi-tenant SaaS f"
     }
   ]
 }
