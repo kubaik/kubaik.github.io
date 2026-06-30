@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-30T12:20:27.339275",
+  "built_at": "2026-06-30T13:58:12.146931",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3610,6 +3610,11 @@
       "slug": "block-2026s-worst-api-attacks",
       "title": "Block 2026’s worst API attacks",
       "summary": "Most api security guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) As a developer with over 10 years of experience, I've seen my fair share of API security "
+    },
+    {
+      "slug": "zero-downtime-migrations-dual-writes-are-dangerous",
+      "title": "Zero-downtime migrations: dual writes are dangerous",
+      "summary": "A colleague asked me about handle database during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) M"
     }
   ]
 }

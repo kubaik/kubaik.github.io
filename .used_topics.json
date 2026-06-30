@@ -62,5 +62,6 @@
   "How to build offline-first apps for markets where connectivity is still unreliable",
   "The skills that protect your salary when AI automates junior developer tasks",
   "Pricing a developer tool in 2026: what the market teaches you fast",
-  "API security in 2026: the attack patterns that are becoming more common and how to block them"
+  "API security in 2026: the attack patterns that are becoming more common and how to block them",
+  "How I handle database schema migrations in a zero-downtime deployment pipeline"
 ]

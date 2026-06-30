@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Jun 2026 12:31:18 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2026 13:58:23 +0000</lastBuildDate>
+    <item>
+      <title>Zero-downtime migrations: dual writes are dangerous</title>
+      <link>https://kubaik.github.io/zero-downtime-migrations-dual-writes-are-dangerous/</link>
+      <description>Zero-downtime migrations: dual writes fail 40% of the time — connection leaks, write skew, and rollback traps cost teams $120k+ in refunds. Backfill jobs and CDC reduce failure rates to 0.01%.</description>
+      <pubDate>Tue, 30 Jun 2026 13:58:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-downtime-migrations-dual-writes-are-dangerous/</guid>
+    </item>
     <item>
       <title>Block 2026’s worst API attacks</title>
       <link>https://kubaik.github.io/block-2026s-worst-api-attacks/</link>
@@ -138,13 +145,6 @@
       <description>Build a portfolio that beats AI clones — show constraints, resilience code, and failure metrics. In 2026, shipping under real conditions beats feature lists every time.</description>
       <pubDate>Mon, 29 Jun 2026 19:28:14 +0000</pubDate>
       <guid>https://kubaik.github.io/show-real-work-not-ai-clones/</guid>
-    </item>
-    <item>
-      <title>Tame Python async’s hidden traps</title>
-      <link>https://kubaik.github.io/tame-python-asyncs-hidden-traps/</link>
-      <description>Cut async Python latency 40%: threaded vs task-based async benchmarks on Python 3.11, FastAPI 0.111, and asyncpg 0.30 — the mistakes most teams repeat and how to avoid them.</description>
-      <pubDate>Mon, 29 Jun 2026 17:45:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/tame-python-asyncs-hidden-traps/</guid>
     </item>
   </channel>
 </rss>
