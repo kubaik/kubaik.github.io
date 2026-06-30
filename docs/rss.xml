@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Jun 2026 05:07:44 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2026 05:12:33 +0000</lastBuildDate>
+    <item>
+      <title>AI scans your code: real risks and defenses</title>
+      <link>https://kubaik.github.io/ai-scans-your-code-real-risks-and-defenses/</link>
+      <description>Cut false positives 60% with AI scan tuning — GitHub Advanced Security vs Snyk Code benchmarks, confidence thresholds, and the one SARIF trick that saves 34% fix time.</description>
+      <pubDate>Tue, 30 Jun 2026 05:12:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-scans-your-code-real-risks-and-defenses/</guid>
+    </item>
     <item>
       <title>Test AI code, not the AI</title>
       <link>https://kubaik.github.io/test-ai-code-not-the-ai/</link>
@@ -138,13 +145,6 @@
       <description>Built a SaaS in 6 weeks using AI for 80% of the code — here’s what actually worked, the mistakes I made, and the hard numbers from production in 2026.</description>
       <pubDate>Mon, 29 Jun 2026 11:44:22 +0000</pubDate>
       <guid>https://kubaik.github.io/debugging-ais-80-saas-shortcut-in-production/</guid>
-    </item>
-    <item>
-      <title>Defend your stack for $5/user</title>
-      <link>https://kubaik.github.io/defend-your-stack-for-5user/</link>
-      <description>Cut zero-trust costs 80%: Cloudflare vs Tailscale latency, setup time, and ISP egress fees in 2026. Real numbers from a 12-person Latin America team.</description>
-      <pubDate>Mon, 29 Jun 2026 10:28:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/defend-your-stack-for-5user/</guid>
     </item>
   </channel>
 </rss>
