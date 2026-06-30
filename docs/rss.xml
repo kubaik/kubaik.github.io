@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Jun 2026 19:23:20 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2026 19:45:32 +0000</lastBuildDate>
+    <item>
+      <title>RAG on legacy systems: vector DB vs. full-text SQL</title>
+      <link>https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/</link>
+      <description>Cut RAG hosting cost 78% with PostgreSQL 16 + pgvector 0.7 vs Weaviate 1.22. Real latency and cost data from a 12-month enterprise rollout.</description>
+      <pubDate>Tue, 30 Jun 2026 19:45:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/</guid>
+    </item>
     <item>
       <title>Redefining engineering principles in the AI era</title>
       <link>https://kubaik.github.io/redefining-engineering-principles-in-the-ai-era/</link>
@@ -138,13 +145,6 @@
       <description>Cut nightly pages 83% using PagerDuty + AI triage — Lambda transformer, CloudWatch rules, and Grafana dashboard built in 60 minutes</description>
       <pubDate>Mon, 29 Jun 2026 22:16:24 +0000</pubDate>
       <guid>https://kubaik.github.io/pagerduty-ai-alerts-3-fixes-that-cut-wake-ups-83/</guid>
-    </item>
-    <item>
-      <title>Fix AI agent failures: postmortem guide</title>
-      <link>https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/</link>
-      <description>Catch AI agent failures 90% faster — human playbook vs agent-aware tools with concrete costs, drift thresholds, and regional gotchas for 2026.</description>
-      <pubDate>Mon, 29 Jun 2026 21:20:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/fix-ai-agent-failures-postmortem-guide/</guid>
     </item>
   </channel>
 </rss>
