@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Jun 2026 22:51:31 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2026 23:06:01 +0000</lastBuildDate>
+    <item>
+      <title>Stop leaking secrets: Envoy + SPIFFE in 2026</title>
+      <link>https://kubaik.github.io/stop-leaking-secrets-envoy-spiffe-in-2026/</link>
+      <description>Cut audit time 97% with Envoy 1.29 + SPIFFE 1.1 — 14 ms latency, $0.18 per 1000 calls, no app changes</description>
+      <pubDate>Tue, 30 Jun 2026 23:05:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-leaking-secrets-envoy-spiffe-in-2026/</guid>
+    </item>
     <item>
       <title>5 ways to find hidden latency before production</title>
       <link>https://kubaik.github.io/5-ways-to-find-hidden-latency-before-production/</link>
@@ -138,13 +145,6 @@
       <description>Last quarter I shipped two identical micro-SaaSes: one where I outsourced 80% of the backend to an AI agent (using a custom prompt chain on AWS Bedrock)…</description>
       <pubDate>Tue, 30 Jun 2026 00:11:51 +0000</pubDate>
       <guid>https://kubaik.github.io/2026-ai-stack-solo-saas-cost-showdown/</guid>
-    </item>
-    <item>
-      <title>Fine-tune vs prompt: 2026’s hidden costs</title>
-      <link>https://kubaik.github.io/fine-tune-vs-prompt-2026s-hidden-costs/</link>
-      <description>Cut AI inference costs 62% by fine-tuning 7B models in 2026 — but only if you measure token drift, scheduler starvation, and retry rates first</description>
-      <pubDate>Mon, 29 Jun 2026 23:57:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/fine-tune-vs-prompt-2026s-hidden-costs/</guid>
     </item>
   </channel>
 </rss>
