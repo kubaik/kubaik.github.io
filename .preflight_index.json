@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-30T01:37:04.505584",
+  "built_at": "2026-06-30T02:34:54.157210",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3565,6 +3565,11 @@
       "slug": "ai-ui-tools-promise-vs-production",
       "title": "AI UI tools: promise vs. production",
       "summary": "The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI UI tools like Cursor, Figma AI, and GitHub Copilot Workspace now build React c"
+    },
+    {
+      "slug": "test-ai-code-not-the-ai",
+      "title": "Test AI code, not the AI",
+      "summary": "I ran into this write tests problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026 I joined a team building a customer su"
     }
   ]
 }
