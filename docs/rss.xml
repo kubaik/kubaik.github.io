@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Jun 2026 10:13:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2026 10:51:29 +0000</lastBuildDate>
+    <item>
+      <title>Double the price, double the revenue</title>
+      <link>https://kubaik.github.io/double-the-price-double-the-revenue/</link>
+      <description>Raise dev tool MRR 15% in 7 days with four pricing tiers, Redis usage counters, and a $5/month infra bill — real data from 8k users in 2026</description>
+      <pubDate>Tue, 30 Jun 2026 10:51:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/double-the-price-double-the-revenue/</guid>
+    </item>
     <item>
       <title>3 skills to outrun AI salary cuts</title>
       <link>https://kubaik.github.io/3-skills-to-outrun-ai-salary-cuts/</link>
@@ -138,13 +145,6 @@
       <description>Cut PR cycle time 50% with AI pair programming in 2026 — GitHub Copilot Chat vs Cursor vs Amazon Q ranked with benchmarks and setup files</description>
       <pubDate>Mon, 29 Jun 2026 17:31:19 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-pair-prompts-9-setups-we-tried-in-2026/</guid>
-    </item>
-    <item>
-      <title>Price AI-proof skills in 2026</title>
-      <link>https://kubaik.github.io/price-ai-proof-skills-in-2026/</link>
-      <description>Negotiate 15 % higher pay in 2026 using AI-proof evidence. Build a compensation evidence pack in 90 minutes with Python 3.12, pandas 2.2, and Levels.fyi API.</description>
-      <pubDate>Mon, 29 Jun 2026 16:52:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/price-ai-proof-skills-in-2026/</guid>
     </item>
   </channel>
 </rss>
