@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Jun 2026 15:15:16 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2026 15:20:05 +0000</lastBuildDate>
+    <item>
+      <title>Freelance rates 2026: AI killed the hourly rate</title>
+      <link>https://kubaik.github.io/freelance-rates-2026-ai-killed-the-hourly-rate/</link>
+      <description>Freelance rates fell 22% for juniors in 2026 while top contractors charge €120–€180/hour for AI-assisted architecture. See the real pricing shifts, tools, and prompts that changed everything.</description>
+      <pubDate>Tue, 30 Jun 2026 15:19:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-rates-2026-ai-killed-the-hourly-rate/</guid>
+    </item>
     <item>
       <title>Zero-downtime migrations: dual writes are dangerous</title>
       <link>https://kubaik.github.io/zero-downtime-migrations-dual-writes-are-dangerous/</link>
@@ -138,13 +145,6 @@
       <description>Cut legacy maintenance time 70% with Psalm, CodeQL, and Ollama — connection pool mistakes, test generation surprises, and the $18/month stack that caught 8 out of 9 incidents before they hit production.</description>
       <pubDate>Mon, 29 Jun 2026 19:46:50 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-revives-unloved-legacy-codebases/</guid>
-    </item>
-    <item>
-      <title>Show real work, not AI clones</title>
-      <link>https://kubaik.github.io/show-real-work-not-ai-clones/</link>
-      <description>Build a portfolio that beats AI clones — show constraints, resilience code, and failure metrics. In 2026, shipping under real conditions beats feature lists every time.</description>
-      <pubDate>Mon, 29 Jun 2026 19:28:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/show-real-work-not-ai-clones/</guid>
     </item>
   </channel>
 </rss>
