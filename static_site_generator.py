@@ -2761,7 +2761,6 @@ def _build_templates() -> dict:
         <p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p>
     </div></footer>
     <script src="{{ base_path }}/static/navigation.js"></script>
-    <script defer src="{{ base_path }}/static/consent.js"></script>
 </body>
 </html>"""
 
@@ -2879,7 +2878,6 @@ def _build_templates() -> dict:
         <p>&copy; {{ current_year }} {{ site_name }} · Written by Kubai Kevin</p>
     </div></footer>
     <script src="{{ base_path }}/static/navigation.js"></script>
-    <script defer src="{{ base_path }}/static/consent.js"></script>
 </body>
 </html>"""
 
