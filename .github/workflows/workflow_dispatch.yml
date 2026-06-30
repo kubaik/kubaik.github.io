@@ -36,14 +36,18 @@ jobs:
         run: |
           pip install --quiet pyyaml aiohttp requests
 
-      - name: Determine which cron slots have passed today
+      - name: Determine which 2-hour cron slots have passed today
         id: slots
         run: |
           CURRENT_HOUR=$(date -u +%-H)
           CURRENT_MINUTE=$(date -u +%-M)
           CURRENT_DATE=$(date -u +%Y-%m-%d)
 
-          ALL_SLOTS=(0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23)
+          # blog-automation.yml runs on "0 */2 * * *" — i.e. every 2 hours,
+          # at even UTC hours only (0,2,4,...,22). Slots must match that
+          # cadence, otherwise the watchdog flags every odd hour as
+          # "missing" and fires unnecessary catch-up triggers.
+          ALL_SLOTS=(0 2 4 6 8 10 12 14 16 18 20 22)
           PASSED_SLOTS=()
           for SLOT in "${ALL_SLOTS[@]}"; do
             if [ "$CURRENT_HOUR" -gt "$SLOT" ] || \
@@ -89,6 +93,10 @@ jobs:
 
           echo "Combined run count: $(echo "$ALL_RUNS" | python3 -c "import json,sys; print(len(json.load(sys.stdin)))")"
 
+          # Mark an hour as "covered" if a run exists in that hour AND the
+          # two preceding hours also have no other valid run blocking it.
+          # In practice this just buckets each run's createdAt to its hour,
+          # which is correct since slots are now spaced 2 hours apart.
           COVERED_HOURS=$(echo "$ALL_RUNS" | python3 -c "
           import json, sys
           from datetime import datetime, timezone
@@ -126,18 +134,22 @@ jobs:
           PASSED_SLOTS="${{ steps.slots.outputs.passed_slots }}"
           COVERED_HOURS="${{ steps.fetch_runs.outputs.covered_hours }}"
 
+          # A 2-hour slot (e.g. "14") counts as covered if there's a run
+          # logged in that hour OR the hour immediately after it, since a
+          # slot scheduled for 14:00 may not finish/register until 14:0x-15:xx.
           MISSING_SLOTS=()
           for SLOT in $PASSED_SLOTS; do
             FOUND=false
+            NEXT_HOUR=$(( (SLOT + 1) % 24 ))
             for COVERED in $COVERED_HOURS; do
-              if [ "$SLOT" -eq "$COVERED" ]; then
+              if [ "$SLOT" -eq "$COVERED" ] || [ "$NEXT_HOUR" -eq "$COVERED" ]; then
                 FOUND=true
                 break
               fi
             done
             if [ "$FOUND" = "false" ]; then
               MISSING_SLOTS+=("$SLOT")
-              echo "MISSING slot: ${SLOT}:00 UTC"
+              echo "MISSING slot: ${SLOT}:00 UTC (no run within the following 2-hour window)"
             else
               echo "OK       slot: ${SLOT}:00 UTC"
             fi
@@ -438,7 +450,8 @@ jobs:
               if r.get('status') in ACTIVE or r.get('conclusion') in ('success', 'failure', 'timed_out'):
                   covered.add(dt.hour)
 
-          still_missing = [s for s in missing_slots if s not in covered]
+          # 2-hour slot is covered if a run landed in that hour or the next.
+          still_missing = [s for s in missing_slots if s not in covered and ((s + 1) % 24) not in covered]
           print(' '.join(str(s) for s in still_missing))
           ")
 
@@ -475,7 +488,7 @@ jobs:
             echo ""
             echo "| Field | Value |"
             echo "|---|---|"
-            echo "| Passed slots today | \`${{ steps.slots.outputs.passed_slots }}\` |"
+            echo "| Passed 2-hour slots today | \`${{ steps.slots.outputs.passed_slots }}\` |"
             echo "| Covered hours (all events) | \`${{ steps.fetch_runs.outputs.covered_hours }}\` |"
             echo "| Initially missing | \`${{ steps.missing.outputs.missing_list || 'none' }}\` |"
             echo "| Still missing after re-verify | \`${{ steps.reverify.outputs.confirmed_list || 'none' }}\` |"
