@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-06-29T23:57:35.228414",
+  "built_at": "2026-06-30T00:11:54.202033",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3555,6 +3555,11 @@
       "slug": "fine-tune-vs-prompt-2026s-hidden-costs",
       "title": "Fine-tune vs prompt: 2026’s hidden costs",
       "summary": "The official documentation for finetuning small is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Every vendor’s slide deck says t"
+    },
+    {
+      "slug": "2026-ai-stack-solo-saas-cost-showdown",
+      "title": "2026 AI stack: solo SaaS cost showdown",
+      "summary": "I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, launching a solo SaaS is cheaper than ever — but the real b"
     }
   ]
 }
