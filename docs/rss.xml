@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 30 Jun 2026 05:50:28 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jun 2026 05:55:34 +0000</lastBuildDate>
+    <item>
+      <title>Meet 2026 SBOM reality: no more hand-rolled scripts</title>
+      <link>https://kubaik.github.io/meet-2026-sbom-reality-no-more-hand-rolled-scripts/</link>
+      <description>Cut SBOM generation time 95% with Syft 1.13 — multi-stage, SPDX 2.3, and Grype policies that actually block CVEs</description>
+      <pubDate>Tue, 30 Jun 2026 05:55:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/meet-2026-sbom-reality-no-more-hand-rolled-scripts/</guid>
+    </item>
     <item>
       <title>AI scans your code: real risks and defenses</title>
       <link>https://kubaik.github.io/ai-scans-your-code-real-risks-and-defenses/</link>
@@ -138,13 +145,6 @@
       <description>Cut frontend test time 60% with Playwright 1.45 and Vitest 1.6 — the real stack most teams use in 2026 after dropping Cypress 13.x.</description>
       <pubDate>Mon, 29 Jun 2026 12:08:19 +0000</pubDate>
       <guid>https://kubaik.github.io/why-most-teams-wasted-2025-on-cypress/</guid>
-    </item>
-    <item>
-      <title>Debugging AI&apos;s 80% SaaS shortcut in production</title>
-      <link>https://kubaik.github.io/debugging-ais-80-saas-shortcut-in-production/</link>
-      <description>Built a SaaS in 6 weeks using AI for 80% of the code — here’s what actually worked, the mistakes I made, and the hard numbers from production in 2026.</description>
-      <pubDate>Mon, 29 Jun 2026 11:44:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/debugging-ais-80-saas-shortcut-in-production/</guid>
     </item>
   </channel>
 </rss>
