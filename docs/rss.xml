@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 18:06:02 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 19:32:27 +0000</lastBuildDate>
+    <item>
+      <title>Killed $3k K8s bill: how Fly.io saved us 94%</title>
+      <link>https://kubaik.github.io/killed-3k-k8s-bill-how-flyio-saved-us-94/</link>
+      <description>Cut cloud bill 94% with Fly.io — real latency drop, exact volumes, and one-engineer deployment steps for solo founders</description>
+      <pubDate>Wed, 01 Jul 2026 19:32:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/killed-3k-k8s-bill-how-flyio-saved-us-94/</guid>
+    </item>
     <item>
       <title>Test AI code without testing the AI</title>
       <link>https://kubaik.github.io/test-ai-code-without-testing-the-ai/</link>
@@ -138,13 +145,6 @@
       <description>Deploy a serverless backend in Africa with PocketBase — 180 ms p95 latency, $1.87/month, and zero auth boilerplate. Real deployments in Lagos, Nairobi, and Cape Town.</description>
       <pubDate>Tue, 30 Jun 2026 21:24:56 +0000</pubDate>
       <guid>https://kubaik.github.io/build-a-serverless-backend-in-africa-with-pocketbase/</guid>
-    </item>
-    <item>
-      <title>Go MCP servers: benchmarks &amp; scaling traps</title>
-      <link>https://kubaik.github.io/go-mcp-servers-benchmarks-scaling-traps/</link>
-      <description>Cut MCP server latency 80% with Go: binary JSON, atomic tool registry, and fixed-size pools. Benchmarks, traps, and the 30-minute fix.</description>
-      <pubDate>Tue, 30 Jun 2026 20:13:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/go-mcp-servers-benchmarks-scaling-traps/</guid>
     </item>
   </channel>
 </rss>

@@ -17,5 +17,6 @@
   "Platform engineering in 2026: what internal developer platforms look like at different company sizes",
   "Building for eventual consistency: the real-world patterns behind systems that stay up",
   "How to implement least-privilege IAM in AWS without spending a week on policies",
-  "How I write tests for AI-assisted code without testing the AI"
+  "How I write tests for AI-assisted code without testing the AI",
+  "How I replaced a $3k/month Kubernetes cluster with a $200/month alternative"
 ]

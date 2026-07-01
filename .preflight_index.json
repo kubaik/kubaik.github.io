@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T18:05:50.932045",
+  "built_at": "2026-07-01T19:32:15.932833",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3745,6 +3745,11 @@
       "slug": "test-ai-code-without-testing-the-ai",
       "title": "Test AI code without testing the AI",
       "summary": "I ran into this write tests problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks debugging a pull request t"
+    },
+    {
+      "slug": "killed-3k-k8s-bill-how-flyio-saved-us-94",
+      "title": "Killed $3k K8s bill: how Fly.io saved us 94%",
+      "summary": "Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026 our SaaS product ran on a managed Kubernetes cluster that cost us $3,120 a mo"
     }
   ]
 }
