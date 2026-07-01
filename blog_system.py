@@ -7,9 +7,18 @@ import asyncio
 import aiohttp
 import requests
 import hashlib
+import subprocess
+import sys
+
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List
+
+try:
+    from PIL import Image, ImageDraw, ImageFont
+    PILLOW_AVAILABLE = True
+except ImportError:
+    PILLOW_AVAILABLE = False
 
 from blog_post import BlogPost
 from monetization_manager import MonetizationManager
@@ -1478,10 +1487,20 @@ class PreFlightIndex:
 
 
 class BlogSystem:
-    def __init__(self, config):
+    def __init__(self, config=None):
+        if config is None:
+            if os.path.exists("config.yaml"):
+                with open("config.yaml", "r", encoding="utf-8") as f:
+                    config = yaml.safe_load(f) or {}
+            else:
+                config = {}
         self.config = config
         self.output_dir = Path("./docs")
         self.output_dir.mkdir(exist_ok=True)
+
+        self.og_dir = self.output_dir / "static" / "og"
+        self.scripts_dir = Path("scripts")
+        self.og_dir.mkdir(parents=True, exist_ok=True)
 
         self.groq_key = os.getenv("GROQ_API_KEY")
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
@@ -1595,6 +1614,78 @@ class BlogSystem:
                 f"\nRun with dry_run=False to actually delete {len(to_remove)} posts.")
         else:
             print(f"\nPurged {len(to_remove)} low-quality posts.")
+
+    def generate_og_images(self) -> bool:
+        """
+        Generate per-article Open Graph images (1200×630 PNG).
+
+        Returns:
+            bool: True if successful, False otherwise
+        """
+
+        if not PILLOW_AVAILABLE:
+            print("⚠️  Pillow not installed. Skipping OG image generation.")
+            return False
+
+        script_path = self.scripts_dir / "generate_og_images.py"
+
+        if not script_path.exists():
+            print(f"⚠️  OG image script not found at {script_path}")
+            return False
+
+        base_url = self.config.get(
+            "base_url", "https://kubaik.github.io").rstrip("/")
+
+        print("\n" + "="*80)
+        print("📸 Generating per-article OG images (1200×630 PNG)")
+        print("="*80)
+
+        try:
+            cmd = [
+                sys.executable,
+                str(script_path),
+                "--posts-dir", str(self.output_dir),
+                "--output-dir", str(self.og_dir),
+                "--base-url", base_url,
+                "--patch-html",
+            ]
+
+            font_dir = Path("static/fonts")
+            if font_dir.exists():
+                cmd.extend(["--font-dir", str(font_dir)])
+
+            print(f"\nRunning OG generation...\n")
+
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                timeout=600
+            )
+
+            if result.stdout:
+                print(result.stdout)
+
+            if result.returncode != 0:
+                print(f"⚠️  OG image generation had issues:")
+                if result.stderr:
+                    print(result.stderr)
+                return False
+
+            og_files = list(self.og_dir.glob("*.png"))
+            og_count = len(og_files)
+
+            print(f"\n✅ OG image generation successful!")
+            print(f"   Generated: {og_count} images")
+
+            return True
+
+        except subprocess.TimeoutExpired:
+            print("❌ OG image generation timed out (>10 minutes)")
+            return False
+        except Exception as e:
+            print(f"❌ OG image generation failed: {e}")
+            return False
 
     # ─────────────────────────────────────────────────────────────
     # STALE CONTENT REFRESH
@@ -3341,7 +3432,8 @@ def create_sample_config(config_path: str = "config.yaml"):
         try:
             with open(CONFIG_FILE, "r", encoding="utf-8") as _f:
                 existing = yaml.safe_load(_f) or {}
-            print(f"  Found existing {CONFIG_FILE} — merging new defaults only.")
+            print(
+                f"  Found existing {CONFIG_FILE} — merging new defaults only.")
         except Exception as _e:
             print(f"  Warning: could not read {CONFIG_FILE} ({_e}). "
                   "Treating as new file.")
@@ -3413,165 +3505,165 @@ def create_sample_config(config_path: str = "config.yaml"):
     config = existing  # alias for clarity below
     # ── content_topics: append only topics not already present ───────────────
     NEW_TOPICS = [
-            # ── AI & LLM Engineering ──────────────────────────────────────────────────
-            "Why Claude 4 and GPT-5 changed how I structure prompts for production systems",
-            "MCP servers in 2026: the protocol that quietly became infrastructure",
-            "Agentic coding in 2026: what Claude Code actually gets right after a year of daily use",
-            "How I built a self-healing deployment pipeline using AI agents",
-            "RAG is not enough: why hybrid search + reranking is the 2026 baseline",
-            "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff",
-            "AI code review pipelines: how teams are replacing PR checklists with agents",
-            "The context window arms race: what 1M token models actually change in practice",
-            "Why most AI agents in production still need a human in the loop",
-            "How I use AI to maintain legacy codebases nobody wants to touch",
-            "Tool-calling patterns that work in production vs the ones that break under load",
-            "Structured outputs from LLMs: why JSON mode is not enough for real workflows",
-            "Evaluating LLM output quality at scale: the metrics that actually matter",
-            "How AI observability is different from traditional application monitoring",
-            "Building personal AI assistants for developer workflows without vendor lock-in",
-            "The hidden costs of running AI agents in production: tokens, retries, and timeouts",
-            "How prompt injection attacks work and why your AI product is probably vulnerable",
-            "AI-assisted incident response: what works and what makes oncall worse",
-            "Cursor vs Windsurf vs Claude Code in 2026: a real daily-use comparison",
-            "Why vibe coding works for MVPs and fails for anything you need to maintain",
-            "How AI pair programming changes code ownership and review responsibility",
-            "Model routing in 2026: how to pick the right LLM for each task automatically",
-            "Local LLMs in 2026: the models that finally run usably on a MacBook Pro",
-            "AI memory systems: giving your agent context that persists across sessions",
-            "How multi-agent orchestration frameworks compare in 2026: LangGraph vs CrewAI vs custom",
+        # ── AI & LLM Engineering ──────────────────────────────────────────────────
+        "Why Claude 4 and GPT-5 changed how I structure prompts for production systems",
+        "MCP servers in 2026: the protocol that quietly became infrastructure",
+        "Agentic coding in 2026: what Claude Code actually gets right after a year of daily use",
+        "How I built a self-healing deployment pipeline using AI agents",
+        "RAG is not enough: why hybrid search + reranking is the 2026 baseline",
+        "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff",
+        "AI code review pipelines: how teams are replacing PR checklists with agents",
+        "The context window arms race: what 1M token models actually change in practice",
+        "Why most AI agents in production still need a human in the loop",
+        "How I use AI to maintain legacy codebases nobody wants to touch",
+        "Tool-calling patterns that work in production vs the ones that break under load",
+        "Structured outputs from LLMs: why JSON mode is not enough for real workflows",
+        "Evaluating LLM output quality at scale: the metrics that actually matter",
+        "How AI observability is different from traditional application monitoring",
+        "Building personal AI assistants for developer workflows without vendor lock-in",
+        "The hidden costs of running AI agents in production: tokens, retries, and timeouts",
+        "How prompt injection attacks work and why your AI product is probably vulnerable",
+        "AI-assisted incident response: what works and what makes oncall worse",
+        "Cursor vs Windsurf vs Claude Code in 2026: a real daily-use comparison",
+        "Why vibe coding works for MVPs and fails for anything you need to maintain",
+        "How AI pair programming changes code ownership and review responsibility",
+        "Model routing in 2026: how to pick the right LLM for each task automatically",
+        "Local LLMs in 2026: the models that finally run usably on a MacBook Pro",
+        "AI memory systems: giving your agent context that persists across sessions",
+        "How multi-agent orchestration frameworks compare in 2026: LangGraph vs CrewAI vs custom",
 
-            # ── Backend & Databases ───────────────────────────────────────────────────
-            "Postgres in 2026: the features that replaced three separate tools in our stack",
-            "How pgvector changed our architecture: replacing Pinecone with what we already had",
-            "Serverless databases in 2026: Neon vs PlanetScale vs Turso after real production use",
-            "Why async Python still surprises people and how to stop getting burned by it",
-            "Edge-native backends in 2026: what changes when your API runs in 50 locations",
-            "gRPC vs REST vs tRPC in 2026: which one I reach for and why",
-            "How I migrated a monolith to services in 2026 without a big-bang rewrite",
-            "Database branching workflows: how Neon and PlanetScale changed how I develop locally",
-            "The ORM debate in 2026: Prisma vs Drizzle vs SQLAlchemy for new projects",
-            "Durable execution in 2026: why Temporal and Inngest are replacing custom job queues",
-            "API design in 2026: what GraphQL, REST, and tRPC each still do better than the others",
-            "How HTMX changed my stack and what I gave up to get there",
-            "Python 3.13 in production: the free-threaded GIL change and what it means for web apps",
-            "Building webhook systems in 2026: delivery guarantees, retries, and idempotency",
-            "How to design multi-region backends without triple the infrastructure cost",
-            "The background job queue landscape in 2026: what replaced Celery in my stack",
-            "OpenTelemetry in 2026: the standard that finally stuck and how to actually use it",
-            "How I handle database schema migrations in a zero-downtime deployment pipeline",
-            "Soft deletes at scale: why the simple pattern breaks and what to do instead",
-            "Building audit logs that satisfy compliance requirements without killing performance",
+        # ── Backend & Databases ───────────────────────────────────────────────────
+        "Postgres in 2026: the features that replaced three separate tools in our stack",
+        "How pgvector changed our architecture: replacing Pinecone with what we already had",
+        "Serverless databases in 2026: Neon vs PlanetScale vs Turso after real production use",
+        "Why async Python still surprises people and how to stop getting burned by it",
+        "Edge-native backends in 2026: what changes when your API runs in 50 locations",
+        "gRPC vs REST vs tRPC in 2026: which one I reach for and why",
+        "How I migrated a monolith to services in 2026 without a big-bang rewrite",
+        "Database branching workflows: how Neon and PlanetScale changed how I develop locally",
+        "The ORM debate in 2026: Prisma vs Drizzle vs SQLAlchemy for new projects",
+        "Durable execution in 2026: why Temporal and Inngest are replacing custom job queues",
+        "API design in 2026: what GraphQL, REST, and tRPC each still do better than the others",
+        "How HTMX changed my stack and what I gave up to get there",
+        "Python 3.13 in production: the free-threaded GIL change and what it means for web apps",
+        "Building webhook systems in 2026: delivery guarantees, retries, and idempotency",
+        "How to design multi-region backends without triple the infrastructure cost",
+        "The background job queue landscape in 2026: what replaced Celery in my stack",
+        "OpenTelemetry in 2026: the standard that finally stuck and how to actually use it",
+        "How I handle database schema migrations in a zero-downtime deployment pipeline",
+        "Soft deletes at scale: why the simple pattern breaks and what to do instead",
+        "Building audit logs that satisfy compliance requirements without killing performance",
 
-            # ── Infrastructure & Platform Engineering ─────────────────────────────────
-            "Platform engineering in 2026: what internal developer platforms look like at different company sizes",
-            "How AI is changing infrastructure: automated capacity planning, anomaly detection, and runbooks",
-            "FinOps in 2026: the AWS cost levers that actually move the needle for mid-size teams",
-            "Kubernetes in 2026: what teams are offloading to managed platforms and what they keep",
-            "How I replaced a $3k/month Kubernetes cluster with a $200/month alternative",
-            "GitOps in 2026: what ArgoCD and Flux look like in teams that have been using them for two years",
-            "Pulumi vs Terraform vs OpenTofu in 2026: the infrastructure-as-code landscape after the HashiCorp fork",
-            "How container builds changed in 2026: BuildKit, depot.dev, and why CI pipelines got faster",
-            "Observability in 2026: why the three pillars model is being replaced and what comes next",
-            "How I built a production deployment pipeline for a solo project that costs under $20/month",
-            "On-call in 2026: how AI alert triage is changing what wakes engineers up at night",
-            "Graviton4 and Ampere in 2026: the ARM migration decision for production workloads",
-            "How service mesh adoption actually went: what Istio and Cilium look like in real production",
-            "Cloud egress costs in 2026: the architecture decisions that save thousands per month",
-            "How I use Cloudflare Workers to handle 80% of traffic before it hits my origin server",
+        # ── Infrastructure & Platform Engineering ─────────────────────────────────
+        "Platform engineering in 2026: what internal developer platforms look like at different company sizes",
+        "How AI is changing infrastructure: automated capacity planning, anomaly detection, and runbooks",
+        "FinOps in 2026: the AWS cost levers that actually move the needle for mid-size teams",
+        "Kubernetes in 2026: what teams are offloading to managed platforms and what they keep",
+        "How I replaced a $3k/month Kubernetes cluster with a $200/month alternative",
+        "GitOps in 2026: what ArgoCD and Flux look like in teams that have been using them for two years",
+        "Pulumi vs Terraform vs OpenTofu in 2026: the infrastructure-as-code landscape after the HashiCorp fork",
+        "How container builds changed in 2026: BuildKit, depot.dev, and why CI pipelines got faster",
+        "Observability in 2026: why the three pillars model is being replaced and what comes next",
+        "How I built a production deployment pipeline for a solo project that costs under $20/month",
+        "On-call in 2026: how AI alert triage is changing what wakes engineers up at night",
+        "Graviton4 and Ampere in 2026: the ARM migration decision for production workloads",
+        "How service mesh adoption actually went: what Istio and Cilium look like in real production",
+        "Cloud egress costs in 2026: the architecture decisions that save thousands per month",
+        "How I use Cloudflare Workers to handle 80% of traffic before it hits my origin server",
 
-            # ── Security ──────────────────────────────────────────────────────────────
-            "Supply chain security in 2026: how SLSA and Sigstore became baseline requirements",
-            "How AI is being used to find vulnerabilities and what that means for defenders",
-            "Prompt injection in production AI systems: the attack surface most teams are ignoring",
-            "Zero-trust in practice for small teams: what you can implement without an enterprise budget",
-            "How passkeys changed authentication and what that means for the apps you're building",
-            "Secrets management in 2026: the approaches that replaced .env files in serious projects",
-            "How to implement least-privilege IAM in AWS without spending a week on policies",
-            "The OWASP Top 10 for LLM applications: the vulnerabilities specific to AI-powered apps",
-            "How post-quantum cryptography affects the TLS stack you're running today",
-            "SBOM requirements in 2026: what software bill of materials means for your release process",
-            "How I run automated security scanning in CI without drowning in false positives",
-            "API security in 2026: the attack patterns that are becoming more common and how to block them",
+        # ── Security ──────────────────────────────────────────────────────────────
+        "Supply chain security in 2026: how SLSA and Sigstore became baseline requirements",
+        "How AI is being used to find vulnerabilities and what that means for defenders",
+        "Prompt injection in production AI systems: the attack surface most teams are ignoring",
+        "Zero-trust in practice for small teams: what you can implement without an enterprise budget",
+        "How passkeys changed authentication and what that means for the apps you're building",
+        "Secrets management in 2026: the approaches that replaced .env files in serious projects",
+        "How to implement least-privilege IAM in AWS without spending a week on policies",
+        "The OWASP Top 10 for LLM applications: the vulnerabilities specific to AI-powered apps",
+        "How post-quantum cryptography affects the TLS stack you're running today",
+        "SBOM requirements in 2026: what software bill of materials means for your release process",
+        "How I run automated security scanning in CI without drowning in false positives",
+        "API security in 2026: the attack patterns that are becoming more common and how to block them",
 
-            # ── Frontend & Full-Stack ─────────────────────────────────────────────────
-            "React 19 in production: what the compiler actually changed about how I write components",
-            "Next.js 15 vs Remix vs SvelteKit in 2026: a framework comparison after shipping real projects",
-            "How AI UI generation tools changed my frontend workflow (and what they still cannot do)",
-            "Web performance in 2026: the Core Web Vitals update and what changed about INP",
-            "How I use server components to cut client bundle size without rewriting everything",
-            "CSS in 2026: container queries, @layer, and the features that finally retired my utility framework",
-            "Building accessible AI chat interfaces: the WCAG requirements most teams miss",
-            "How Signals changed state management and whether it matters outside of frameworks",
-            "The islands architecture in 2026: when Astro and partial hydration are the right choice",
-            "TypeScript 5.x features that changed how I model domain logic",
-            "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress",
-            "Progressive Web Apps in 2026: what the browser APIs finally made possible",
+        # ── Frontend & Full-Stack ─────────────────────────────────────────────────
+        "React 19 in production: what the compiler actually changed about how I write components",
+        "Next.js 15 vs Remix vs SvelteKit in 2026: a framework comparison after shipping real projects",
+        "How AI UI generation tools changed my frontend workflow (and what they still cannot do)",
+        "Web performance in 2026: the Core Web Vitals update and what changed about INP",
+        "How I use server components to cut client bundle size without rewriting everything",
+        "CSS in 2026: container queries, @layer, and the features that finally retired my utility framework",
+        "Building accessible AI chat interfaces: the WCAG requirements most teams miss",
+        "How Signals changed state management and whether it matters outside of frameworks",
+        "The islands architecture in 2026: when Astro and partial hydration are the right choice",
+        "TypeScript 5.x features that changed how I model domain logic",
+        "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress",
+        "Progressive Web Apps in 2026: what the browser APIs finally made possible",
 
-            # ── Career & Remote Work ──────────────────────────────────────────────────
-            "Tech salaries in 2026: what the market correction settled at and where it's growing",
-            "How AI changed what hiring managers are looking for in engineering interviews",
-            "The skills that protect your salary when AI automates junior developer tasks",
-            "Remote work in 2026: which companies pulled back and which doubled down",
-            "How to negotiate compensation in 2026 when AI can do parts of your job description",
-            "Staff engineer vs engineering manager in 2026: how the roles evolved with AI tooling",
-            "How to build a portfolio that gets you hired in a market where everyone has AI-assisted projects",
-            "The engineering interview has changed: what 2026 technical screens actually look like",
-            "How developers in Nairobi and Lagos are landing $5k/month remote roles in 2026",
-            "From bootcamp to $120k: the realistic 2026 timeline and what actually fills the gap",
-            "Freelance developer rates in 2026: what the AI productivity tools did to pricing",
-            "How to stay technically relevant when the tools change faster than you can learn them",
-            "Developer burnout in the AI era: why output pressure increased even as tools improved",
-            "Building a second income stream as a developer in 2026 without building a SaaS",
-            "How to pass AI-era technical interviews: the new formats replacing LeetCode",
-            "Andela, Toptal, Arc, and Contra in 2026: which platforms still work for African developers",
+        # ── Career & Remote Work ──────────────────────────────────────────────────
+        "Tech salaries in 2026: what the market correction settled at and where it's growing",
+        "How AI changed what hiring managers are looking for in engineering interviews",
+        "The skills that protect your salary when AI automates junior developer tasks",
+        "Remote work in 2026: which companies pulled back and which doubled down",
+        "How to negotiate compensation in 2026 when AI can do parts of your job description",
+        "Staff engineer vs engineering manager in 2026: how the roles evolved with AI tooling",
+        "How to build a portfolio that gets you hired in a market where everyone has AI-assisted projects",
+        "The engineering interview has changed: what 2026 technical screens actually look like",
+        "How developers in Nairobi and Lagos are landing $5k/month remote roles in 2026",
+        "From bootcamp to $120k: the realistic 2026 timeline and what actually fills the gap",
+        "Freelance developer rates in 2026: what the AI productivity tools did to pricing",
+        "How to stay technically relevant when the tools change faster than you can learn them",
+        "Developer burnout in the AI era: why output pressure increased even as tools improved",
+        "Building a second income stream as a developer in 2026 without building a SaaS",
+        "How to pass AI-era technical interviews: the new formats replacing LeetCode",
+        "Andela, Toptal, Arc, and Contra in 2026: which platforms still work for African developers",
 
-            # ── African Tech & Emerging Markets ──────────────────────────────────────
-            "M-Pesa Daraja 2.0 in 2026: what changed and how to migrate your integration",
-            "How to build payment systems that work across Kenya, Nigeria, and Ghana without three separate integrations",
-            "Building for 4G-as-baseline users in 2026: what changed when Starlink reached East Africa",
-            "AI tools built for African developers in 2026: what actually exists now",
-            "How African fintech regulations changed API design requirements in 2026",
-            "The infrastructure stack for a Nairobi-based SaaS in 2026: a real cost breakdown",
-            "How to build offline-first apps for markets where connectivity is still unreliable",
-            "USSD is not dead: why feature phone interfaces still matter for African fintech in 2026",
-            "How East African developers are using AI tools to compete with teams in higher-cost markets",
-            "Building for mobile money reconciliation: the edge cases that Paystack and Flutterwave don't document",
+        # ── African Tech & Emerging Markets ──────────────────────────────────────
+        "M-Pesa Daraja 2.0 in 2026: what changed and how to migrate your integration",
+        "How to build payment systems that work across Kenya, Nigeria, and Ghana without three separate integrations",
+        "Building for 4G-as-baseline users in 2026: what changed when Starlink reached East Africa",
+        "AI tools built for African developers in 2026: what actually exists now",
+        "How African fintech regulations changed API design requirements in 2026",
+        "The infrastructure stack for a Nairobi-based SaaS in 2026: a real cost breakdown",
+        "How to build offline-first apps for markets where connectivity is still unreliable",
+        "USSD is not dead: why feature phone interfaces still matter for African fintech in 2026",
+        "How East African developers are using AI tools to compete with teams in higher-cost markets",
+        "Building for mobile money reconciliation: the edge cases that Paystack and Flutterwave don't document",
 
-            # ── System Design & Architecture ─────────────────────────────────────────
-            "System design in 2026: how AI assistants changed the interview and the real job",
-            "How to design AI-native applications: architecture patterns that didn't exist three years ago",
-            "Event-driven architecture in 2026: what Kafka, Redpanda, and NATS each do best",
-            "How I design for LLM latency: the patterns that keep AI features feeling fast",
-            "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant",
-            "The data pipeline stack in 2026: what replaced Airflow for teams that couldn't afford the overhead",
-            "How to design a search system in 2026: semantic, keyword, and hybrid approaches compared",
-            "Building for eventual consistency: the real-world patterns behind systems that stay up",
-            "How feature flag systems evolved into full experimentation platforms",
-            "Designing notification systems that work across push, email, SMS, and WhatsApp",
+        # ── System Design & Architecture ─────────────────────────────────────────
+        "System design in 2026: how AI assistants changed the interview and the real job",
+        "How to design AI-native applications: architecture patterns that didn't exist three years ago",
+        "Event-driven architecture in 2026: what Kafka, Redpanda, and NATS each do best",
+        "How I design for LLM latency: the patterns that keep AI features feeling fast",
+        "Designing multi-tenant SaaS in 2026: row-level security vs schema-per-tenant vs database-per-tenant",
+        "The data pipeline stack in 2026: what replaced Airflow for teams that couldn't afford the overhead",
+        "How to design a search system in 2026: semantic, keyword, and hybrid approaches compared",
+        "Building for eventual consistency: the real-world patterns behind systems that stay up",
+        "How feature flag systems evolved into full experimentation platforms",
+        "Designing notification systems that work across push, email, SMS, and WhatsApp",
 
-            # ── Indie Hacking & SaaS ──────────────────────────────────────────────────
-            "How AI changed the economics of building a solo SaaS in 2026",
-            "Micro-SaaS in 2026: the niches that are working and the ones that got commoditised by AI",
-            "How I built and launched a SaaS in 6 weeks using AI tools for 80% of the code",
-            "Pricing a developer tool in 2026: what the market teaches you fast",
-            "How I got to $5k MRR without a marketing team or a growth budget",
-            "AI wrapper businesses in 2026: why most failed and the ones that survived",
-            "How to pick a SaaS niche in 2026 when AI is disrupting entire software categories",
-            "Stripe vs Lemon Squeezy vs Paddle in 2026: which one I use and why",
-            "Building developer tools as a business: what the AI era changed about the sales cycle",
-            "How to build in public in 2026 without the performance burning you out",
+        # ── Indie Hacking & SaaS ──────────────────────────────────────────────────
+        "How AI changed the economics of building a solo SaaS in 2026",
+        "Micro-SaaS in 2026: the niches that are working and the ones that got commoditised by AI",
+        "How I built and launched a SaaS in 6 weeks using AI tools for 80% of the code",
+        "Pricing a developer tool in 2026: what the market teaches you fast",
+        "How I got to $5k MRR without a marketing team or a growth budget",
+        "AI wrapper businesses in 2026: why most failed and the ones that survived",
+        "How to pick a SaaS niche in 2026 when AI is disrupting entire software categories",
+        "Stripe vs Lemon Squeezy vs Paddle in 2026: which one I use and why",
+        "Building developer tools as a business: what the AI era changed about the sales cycle",
+        "How to build in public in 2026 without the performance burning you out",
 
-            # ── Software Craft ────────────────────────────────────────────────────────
-            "Code review in the AI era: what the process looks like when half the code is generated",
-            "How to maintain a codebase where 40% of the code was written by an AI",
-            "Technical debt in 2026: the new category created by AI-generated code",
-            "How I write tests for AI-assisted code without testing the AI",
-            "Documentation in 2026: how AI changed what humans still need to write",
-            "The engineering principles I updated after AI tools changed my daily workflow",
-            "How to do a postmortem on an AI agent failure: it's different from a regular incident",
-            "Pair programming with AI: how it changed collaboration on my team",
-            "How to onboard a developer to a partially AI-generated codebase",
-            "Feature flags in 2026: how they became the backbone of AI rollout strategies",
+        # ── Software Craft ────────────────────────────────────────────────────────
+        "Code review in the AI era: what the process looks like when half the code is generated",
+        "How to maintain a codebase where 40% of the code was written by an AI",
+        "Technical debt in 2026: the new category created by AI-generated code",
+        "How I write tests for AI-assisted code without testing the AI",
+        "Documentation in 2026: how AI changed what humans still need to write",
+        "The engineering principles I updated after AI tools changed my daily workflow",
+        "How to do a postmortem on an AI agent failure: it's different from a regular incident",
+        "Pair programming with AI: how it changed collaboration on my team",
+        "How to onboard a developer to a partially AI-generated codebase",
+        "Feature flags in 2026: how they became the backbone of AI rollout strategies",
     ]
 
     existing_topics: list = config.get("content_topics") or []
@@ -3608,6 +3700,7 @@ def create_sample_config(config_path: str = "config.yaml"):
 # ─────────────────────────────────────────────────────────────────
 # CLI ENTRY POINT
 # ─────────────────────────────────────────────────────────────────
+
 
 if __name__ == "__main__":
     import sys
@@ -3811,6 +3904,13 @@ if __name__ == "__main__":
             generator.generate_site()
             print("Site rebuilt successfully!")
 
+            blog_system = BlogSystem(config)
+            success = blog_system.generate_og_images()
+
+            if not success:
+                print("⚠️  WARNING: OG image generation had issues (non-fatal)")
+                # Continue anyway - OG generation is optional but recommended
+
         elif mode == "cleanup":
             if not os.path.exists("config.yaml"):
                 print("config.yaml not found.")
@@ -3821,6 +3921,12 @@ if __name__ == "__main__":
             blog_system.cleanup_posts()
             StaticSiteGenerator(blog_system).generate_site()
             print("Cleanup and rebuild complete!")
+
+            success = blog_system.generate_og_images()
+
+            if not success:
+                print("⚠️  WARNING: OG image generation had issues (non-fatal)")
+                # Continue anyway - OG generation is optional but recommended
 
         elif mode == "audit":
             if not os.path.exists("config.yaml"):
