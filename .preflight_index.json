@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T16:19:46.577740",
+  "built_at": "2026-07-01T18:05:50.932045",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3740,6 +3740,11 @@
       "slug": "trim-aws-iam-policies-in-one-afternoon",
       "title": "Trim AWS IAM policies in one afternoon",
       "summary": "The short version: the conventional advice on implement leastprivilege is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) If you’re still hand-editing IAM policies with wildcards like or letting "
+    },
+    {
+      "slug": "test-ai-code-without-testing-the-ai",
+      "title": "Test AI code without testing the AI",
+      "summary": "I ran into this write tests problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks debugging a pull request t"
     }
   ]
 }

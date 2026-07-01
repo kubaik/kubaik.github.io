@@ -16,5 +16,6 @@
   "The context window arms race: what 1M token models actually change in practice",
   "Platform engineering in 2026: what internal developer platforms look like at different company sizes",
   "Building for eventual consistency: the real-world patterns behind systems that stay up",
-  "How to implement least-privilege IAM in AWS without spending a week on policies"
+  "How to implement least-privilege IAM in AWS without spending a week on policies",
+  "How I write tests for AI-assisted code without testing the AI"
 ]

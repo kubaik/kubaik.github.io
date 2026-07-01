@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 18:00:55 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 18:06:02 +0000</lastBuildDate>
+    <item>
+      <title>Test AI code without testing the AI</title>
+      <link>https://kubaik.github.io/test-ai-code-without-testing-the-ai/</link>
+      <description>Cut false positives 60% with 9 testing methods for AI code — no AI mocks, just real behavior. Property-based, contract, fuzz, and chaos testing explained with Python 3.11 and Node 20 LTS examples.</description>
+      <pubDate>Wed, 01 Jul 2026 18:05:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/test-ai-code-without-testing-the-ai/</guid>
+    </item>
     <item>
       <title>Trim AWS IAM policies in one afternoon</title>
       <link>https://kubaik.github.io/trim-aws-iam-policies-in-one-afternoon/</link>
@@ -138,13 +145,6 @@
       <description>Cut MCP server latency 80% with Go: binary JSON, atomic tool registry, and fixed-size pools. Benchmarks, traps, and the 30-minute fix.</description>
       <pubDate>Tue, 30 Jun 2026 20:13:50 +0000</pubDate>
       <guid>https://kubaik.github.io/go-mcp-servers-benchmarks-scaling-traps/</guid>
-    </item>
-    <item>
-      <title>RAG on legacy systems: vector DB vs. full-text SQL</title>
-      <link>https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/</link>
-      <description>Cut RAG hosting cost 78% with PostgreSQL 16 + pgvector 0.7 vs Weaviate 1.22. Real latency and cost data from a 12-month enterprise rollout.</description>
-      <pubDate>Tue, 30 Jun 2026 19:45:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/</guid>
     </item>
   </channel>
 </rss>
