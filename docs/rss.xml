@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 08:04:54 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 08:09:27 +0000</lastBuildDate>
+    <item>
+      <title>AI-proof your mid-level salary</title>
+      <link>https://kubaik.github.io/ai-proof-your-mid-level-salary/</link>
+      <description>Cut salary risk 50% with three AI-resistant skills — own the stack, measure outcomes, and automate incidents. Backed by 2026 salary data and concrete metrics.</description>
+      <pubDate>Wed, 01 Jul 2026 08:09:11 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-proof-your-mid-level-salary/</guid>
+    </item>
     <item>
       <title>9 Vibe coding traps that break production code</title>
       <link>https://kubaik.github.io/9-vibe-coding-traps-that-break-production-code/</link>
@@ -138,13 +145,6 @@
       <description>Cut infrastructure cost 93% by replacing a $3k/month Kubernetes cluster with Fly.io for $288/month — actual latency, egress, and deploy metrics from a 12k MAU SaaS.</description>
       <pubDate>Tue, 30 Jun 2026 07:17:39 +0000</pubDate>
       <guid>https://kubaik.github.io/killed-a-3kmonth-k8s-cluster-for-200month/</guid>
-    </item>
-    <item>
-      <title>Least-privilege AWS IAM in a day</title>
-      <link>https://kubaik.github.io/least-privilege-aws-iam-in-a-day/</link>
-      <description>Cut AWS IAM policy review time from hours to minutes with AWS Policy Generator, IAM Access Analyzer, and condition keys — 5-minute workflow with 12% attack surface reduction proven in 2026</description>
-      <pubDate>Tue, 30 Jun 2026 06:51:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/least-privilege-aws-iam-in-a-day/</guid>
     </item>
   </channel>
 </rss>
