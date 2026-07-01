@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 07:56:38 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 08:04:54 +0000</lastBuildDate>
+    <item>
+      <title>9 Vibe coding traps that break production code</title>
+      <link>https://kubaik.github.io/9-vibe-coding-traps-that-break-production-code/</link>
+      <description>Cut MVP build time 70% with vibe coding — but one wrong choice can cost $45k/year in hidden bills. Learn the 9 tools that break in production and how to replace them before the first alert fires.</description>
+      <pubDate>Wed, 01 Jul 2026 08:04:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/9-vibe-coding-traps-that-break-production-code/</guid>
+    </item>
     <item>
       <title>AI pair programming: how we lost ownership at 3AM</title>
       <link>https://kubaik.github.io/ai-pair-programming-how-we-lost-ownership-at-3am/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS IAM policy review time from hours to minutes with AWS Policy Generator, IAM Access Analyzer, and condition keys — 5-minute workflow with 12% attack surface reduction proven in 2026</description>
       <pubDate>Tue, 30 Jun 2026 06:51:45 +0000</pubDate>
       <guid>https://kubaik.github.io/least-privilege-aws-iam-in-a-day/</guid>
-    </item>
-    <item>
-      <title>Meet 2026 SBOM reality: no more hand-rolled scripts</title>
-      <link>https://kubaik.github.io/meet-2026-sbom-reality-no-more-hand-rolled-scripts/</link>
-      <description>Cut SBOM generation time 95% with Syft 1.13 — multi-stage, SPDX 2.3, and Grype policies that actually block CVEs</description>
-      <pubDate>Tue, 30 Jun 2026 05:55:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/meet-2026-sbom-reality-no-more-hand-rolled-scripts/</guid>
     </item>
   </channel>
 </rss>

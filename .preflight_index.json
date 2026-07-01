@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T07:56:27.173710",
+  "built_at": "2026-07-01T08:04:43.187125",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3680,6 +3680,11 @@
       "slug": "ai-pair-programming-how-we-lost-ownership-at-3am",
       "title": "AI pair programming: how we lost ownership at 3AM",
       "summary": "Most pair programming guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our team of 12 backend engineers at a mid-stage SaaS company felt the u"
+    },
+    {
+      "slug": "9-vibe-coding-traps-that-break-production-code",
+      "title": "9 Vibe coding traps that break production code",
+      "summary": "I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) Early in my career I shipped a product in two "
     }
   ]
 }
