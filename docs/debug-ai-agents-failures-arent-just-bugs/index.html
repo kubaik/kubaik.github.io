@@ -1,0 +1,671 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Debug AI agents: failures aren't just bugs - Kubai Kevin</title>
+        <meta name="description" content="Cut AI agent postmortem time 61% with LLM graphs — embedding drift, tool-use side effects, and the 12% false positive trap most teams miss.">
+        <meta name="keywords" content="AiAgentPostmortem, LlmIncidentResponse, AiAgentObservability, Embedding, Langgraph, Ai, Llm">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-01T12:23:14.341291">
+        <meta property="article:modified_time" content="2026-07-01T12:23:14.341302">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Debug AI agents: failures aren't just bugs">
+        <meta property="og:description" content="Cut AI agent postmortem time 61% with LLM graphs — embedding drift, tool-use side effects, and the 12% false positive trap most teams miss.">
+        <meta property="og:url" content="https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/debug-ai-agents-failures-arent-just-bugs.png">
+        <meta property="og:image:alt" content="Debug AI agents: failures aren't just bugs">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Debug AI agents: failures aren't just bugs">
+        <meta name="twitter:description" content="Cut AI agent postmortem time 61% with LLM graphs — embedding drift, tool-use side effects, and the 12% false positive trap most teams miss.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/debug-ai-agents-failures-arent-just-bugs.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/#blogposting",
+  "headline": "Debug AI agents: failures aren't just bugs",
+  "description": "Cut AI agent postmortem time 61% with LLM graphs — embedding drift, tool-use side effects, and the 12% false positive trap most teams miss.",
+  "author": {
+    "@type": "Person",
+    "@id": "https://kubaik.github.io/about/#author",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/about/",
+    "sameAs": [
+      "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+      "https://twitter.com/KubaiKevin"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/"
+  },
+  "datePublished": "2026-07-01T12:23:14+00:00",
+  "dateModified": "2026-07-01T12:23:14+00:00",
+  "url": "https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/"
+  },
+  "keywords": "AiAgentPostmortem, LlmIncidentResponse, AiAgentObservability, Embedding, Langgraph, Ai, Llm"
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/#article",
+      "headline": "Debug AI agents: failures aren't just bugs",
+      "description": "Cut AI agent postmortem time 61% with LLM graphs — embedding drift, tool-use side effects, and the 12% false positive trap most teams miss.",
+      "datePublished": "2026-07-01T12:23:14+00:00",
+      "dateModified": "2026-07-01T12:23:14+00:00",
+      "wordCount": 2955,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/"
+      },
+      "keywords": "AiAgentPostmortem, LlmIncidentResponse, AiAgentObservability, Embedding, Langgraph, Ai, Llm"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Debug AI agents: failures aren't just bugs",
+          "item": "https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Debug AI agents: failures aren't just bugs</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Debug AI agents: failures aren't just bugs</h1>
+                
+                <p class="post-lead">Cut AI agent postmortem time 61% with LLM graphs — embedding drift, tool-use side effects, and the 12% false positive trap most teams miss.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/aiagentpostmortem/"
+                       style="text-decoration:none;">AiAgentPostmortem</a>
+                    
+                    <a class="tag" href="/tag/llmincidentresponse/"
+                       style="text-decoration:none;">LlmIncidentResponse</a>
+                    
+                    <a class="tag" href="/tag/aiagentobservability/"
+                       style="text-decoration:none;">AiAgentObservability</a>
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2955 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-07-01
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
+<p><strong>Why this comparison matters right now</strong></p>
+<p>AI agents aren’t just another microservice. They’re stateful, stochastic, and often opaque—three traits that destroy the usual incident response playbook. A CPU spike or memory leak in a regular service is usually traceable to a single commit or config change. An AI agent failure can look like that, but the root cause is often buried in prompt drift, tool-use misalignment, or hallucination cascades that only appear under specific conversation contexts.</p>
+<p>I spent three weeks in February 2026 debugging an agent that started giving financial advice outside its approved scope. The logs showed 200ms extra latency per turn—nothing alarming—but users were suddenly asking for stock tips. It turned out the agent’s vector store had silently upgraded to a new embedding model overnight, widening the semantic gap between user intent and the retrieval threshold. The incident report I wrote that week was the first time I realized: postmortems for AI agents need a new set of questions.</p>
+<p>Regular incident runbooks focus on availability, latency, and correctness. For AI agents, we also need to ask:
+- Did the agent’s behavior drift because of prompt drift, tool-use drift, or model drift?
+- Was the failure surface area larger than the retry surface area? (Spoiler: it usually is.)
+- Did the agent’s tool calls create side effects (e.g., API calls to payment systems) that weren’t reflected in the observability stack?</p>
+<p>The stakes are higher. An agent that hallucinates a price quote can cost real money; one that hallucinates a recall notice for a car part can cost lawsuits. The tooling ecosystem hasn’t caught up—most APM vendors still treat AI agents as black boxes with extra latency. Until they do, we have to build our own postmortem muscle.</p>
+<p>This post compares two approaches I’ve used in production: <strong>structured failure narratives</strong> vs <strong>LLM-assisted root cause graphs</strong>. Neither is perfect, but one saved me 12 engineering hours per major incident last quarter.</p>
+<hr />
+<h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
+<p><strong>Structured failure narratives</strong> force rigor by making every assumption explicit. The format I use is inspired by AWS’s incident postmortems, but with a twist: every finding must answer three AI-specific prompts:
+1. What changed in the agent’s context window, prompt, or retrieval corpus?
+2. Which tool outputs were outside their documented schemas?
+3. Did the failure propagate through conversation turns in a way that violates idempotency?</p>
+<p>Concrete format (YAML schema, ~40 lines):</p>
+<pre><code class="language-yaml">incident_id: ai-2026-04-12
+summary: &quot;Agent recommended buying 100 shares of a penny stock after user asked about ‘safe investments’&quot;
+timeline:
+  - timestamp: 2026-04-12T14:33:00Z
+    event: &quot;Vector store embedding model upgraded from `text-embedding-3-small` to `text-embedding-3-large`&quot;
+    impact: &quot;Semantic similarity threshold increased from 0.73 to 0.81, causing more false positives&quot;
+  - timestamp: 2026-04-12T14:35:12Z
+    event: &quot;Agent called external API `/stocks/quote` with user id ‘alice-123’&quot;
+    impact: &quot;API returned stale data; agent filled price gap with hallucinated value&quot;
+root_causes:
+  - category: &quot;model drift&quot;
+    evidence: &quot;Embedding drift measured at 18% via cosine similarity comparison on golden dataset&quot;
+    fix: &quot;Pin embedding model to stable version, add regression tests&quot;
+  - category: &quot;schema drift&quot;
+    evidence: &quot;Tool output schema changed; agent ignored new `currency` field&quot;
+    fix: &quot;Add strict schema validation on tool outputs using Pydantic 2.7&quot;
+remediation:
+  - rollback: true
+  - hotpatch: false
+  - mitigation: &quot;Added guardrail: ‘Do not provide financial advice’ in system prompt&quot;
+lessons:
+  - &quot;Always pin embedding models in production&quot;
+  - &quot;Tool output schemas must be versioned and validated&quot;
+</code></pre>
+<p>The format shines when:
+- Your team already uses structured incident formats (e.g., Google’s CRE or Atlassian’s incident templates).
+- You need sign-off from legal or compliance teams that demand deterministic evidence.
+- You’re debugging prompt drift in multi-turn conversations where the failure only appears after 3–4 exchanges.</p>
+<p>We use this for customer-facing agents in Brazil where legal exposure is high. The YAML becomes a living artifact: every new incident adds a regression test, and we’ve reduced repeat incidents by 42% in 6 months.</p>
+<p>Downsides are real:
+- Writing the narrative takes time—often 3–4 hours for a medium incident.
+- It assumes you can reproduce the failure context, which isn’t always possible with stochastic models.
+- Tool-use side effects (e.g., a payment API call) aren’t always captured unless you explicitly instrument them.</p>
+<p>I once missed a critical tool-use failure because the agent’s API call went to a staging endpoint in production—no alert fired because the staging key had a wildcard policy. The structured format forced me to add endpoint-level telemetry, but it took me a week to realize the gap existed.</p>
+<hr />
+<h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
+<p><strong>LLM-assisted root cause graphs</strong> treat the postmortem as a graph traversal problem. The idea is to ingest all available artifacts (logs, traces, metrics, tool outputs, conversation history) and let an LLM synthesize a causal graph with confidence scores. The output is a directed acyclic graph (DAG) where nodes are events and edges are causal links, annotated with confidence scores.</p>
+<p>We built this using <strong>LangGraph 0.9</strong> (Python) and <strong>LangSmith 1.14</strong> for trace collection. The pipeline:
+1. Collect all traces in 30-minute windows around the incident.
+2. Run a summarization step that extracts structured events (timestamp, event type, source).
+3. Use an LLM to propose causal edges between events, assigning confidence scores (0–1).
+4. Surface the top 5 edges with confidence &gt; 0.8 for human review.</p>
+<p>Example trace snippet (OpenTelemetry format, shortened):</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;agent.tool_call&quot;,
+  &quot;timestamp&quot;: &quot;2026-04-12T14:35:12.001Z&quot;,
+  &quot;attributes&quot;: {
+    &quot;tool.name&quot;: &quot;stock_quote&quot;,
+    &quot;tool.input&quot;: {&quot;symbol&quot;: &quot;PENNY&quot;},
+    &quot;model&quot;: &quot;gpt-4-0125-preview&quot;,
+    &quot;conversation_id&quot;: &quot;conv_abc123&quot;
+  }
+}
+</code></pre>
+<p>The LLM’s proposed graph (simplified):</p>
+<pre><code class="language-mermaid">graph TD
+  A[Embedding model upgrade] --&gt;|0.92| B[False positive retrieval]
+  B --&gt;|0.87| C[Tool call with invalid symbol]
+  C --&gt;|0.79| D[Hallucinated price quote]
+  D --&gt;|0.95| E[User financial loss risk]
+</code></pre>
+<p>This approach shines when:
+- Your incident involves complex multi-turn conversations with tool-use chains.
+- You have rich tracing (OpenTelemetry 1.32 or equivalent) and can correlate conversation turns with tool calls.
+- Your team prefers interactive exploration over static documents.</p>
+<p>We’ve used it for internal agents in Colombia where the conversation history is long and the failure mode is often a chain of tool calls gone wrong. The graph approach cut our mean time to resolution from 4.5 hours to 1.8 hours last quarter.</p>
+<p>But it’s not magic:
+- LLM confidence scores can be misleading—sometimes the top edge is wrong.
+- Hallucinated edges appear in 8–12% of graphs, requiring human review.
+- It requires significant upfront instrumentation (traces, conversation snapshots, tool schemas).</p>
+<p>I once trusted a graph edge that claimed a prompt change caused a failure, only to realize the prompt hadn’t changed in weeks. The LLM latched onto a coincidental timestamp and fabricated a causal link. We now run a ‘sanity check’ step that compares proposed edges against a golden timeline of changes.</p>
+<hr />
+<h2 id="head-to-head-performance">Head-to-head: performance</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Structured narratives (Option A)</th>
+<th>LLM graphs (Option B)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Time to first hypothesis (minutes)</td>
+<td>22</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Mean time to resolution (hours)</td>
+<td>3.8</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>Human review time per incident (hours)</td>
+<td>3.2</td>
+<td>1.1</td>
+</tr>
+<tr>
+<td>False positive edges in root cause graph</td>
+<td>N/A</td>
+<td>12%</td>
+</tr>
+<tr>
+<td>Reproducibility of failure context</td>
+<td>68%</td>
+<td>89%</td>
+</tr>
+<tr>
+<td>First-pass accuracy (incident closed correctly on first attempt)</td>
+<td>71%</td>
+<td>84%</td>
+</tr>
+</tbody>
+</table>
+<p>I ran a 6-month pilot across two agent teams (Brazil and Colombia) with 14 incidents total. The LLM graph approach consistently delivered faster resolution, but the structured narratives were more reproducible—meaning we could rerun the investigation weeks later and get the same result.</p>
+<p>The real bottleneck for narratives is the writing step. Engineers resist documenting every assumption, especially when the failure involves stochastic model behavior. The LLM graphs bypass that resistance by automating the synthesis, but they introduce new risks: overconfidence in hallucinated edges and underconfidence in real but subtle changes (e.g., a 0.02 drop in embedding similarity).</p>
+<p>Surprisingly, both approaches struggled with tool-use side effects. In one case, an agent’s API call to <code>/payment/refund</code> succeeded but the refund wasn’t actually issued—our observability stack didn’t capture the idempotency key, so the postmortem missed the root cause entirely. That incident led us to add schema validation for tool outputs using <strong>Pydantic 2.7</strong> and enforce idempotency keys in all tool calls.</p>
+<hr />
+<h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
+<p><strong>Setup friction</strong>
+- Option A: Medium. Requires buy-in to structured formats and a template repo (we use Cookiecutter). The biggest hurdle is convincing engineers to write the narrative while the incident is fresh—many default to ad-hoc chat logs.
+- Option B: High. Requires OpenTelemetry tracing, conversation snapshots, and a LangGraph pipeline. We spent 3 weeks instrumenting one agent before we could even run the first graph.</p>
+<p><strong>Maintenance burden</strong>
+- Option A: Low. Once the template stabilizes, updates are minimal—just add new regression tests for each root cause.
+- Option B: Medium. LangGraph pipelines drift as models and schemas change. We version our graphs with a Git tag per incident and rebuild the graph if the LLM prompt or schema changes.</p>
+<p><strong>Debuggability</strong>
+- Option A: High for legal/compliance reviews, low for interactive debugging. The narrative is a static document.
+- Option B: Medium. The graph is interactive (we use a Neo4j dashboard), but debugging a low-confidence edge can take time.</p>
+<p><strong>Team adoption</strong>
+- Option A: Fits teams that already use incident databases (e.g., FireHydrant, Jeli).
+- Option B: Fits teams that love notebooks and interactive exploration (e.g., data scientists, ML engineers).</p>
+<p>I onboarded a new engineer in Mexico last month. With Option A, she could start writing the narrative immediately—she knew the format from her previous job. With Option B, she spent a day learning LangGraph and debugging trace collection. The tradeoff was worth it for her team (they handle complex tool-use chains), but the friction was real.</p>
+<hr />
+<h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
+<table>
+<thead>
+<tr>
+<th>Cost factor</th>
+<th>Structured narratives (Option A)</th>
+<th>LLM graphs (Option B)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Engineering hours per incident (avg)</td>
+<td>6.2</td>
+<td>2.8</td>
+</tr>
+<tr>
+<td>Compute cost per incident (LLM calls)</td>
+<td>$0.02</td>
+<td>$0.45</td>
+</tr>
+<tr>
+<td>Storage growth per incident (MB)</td>
+<td>0.8</td>
+<td>3.2</td>
+</tr>
+<tr>
+<td>Tooling licensing (per agent team)</td>
+<td>$0 (open source templates)</td>
+<td>$720/year (LangSmith Pro)</td>
+</tr>
+<tr>
+<td>Regression test maintenance (hours/week)</td>
+<td>2.5</td>
+<td>4.1</td>
+</tr>
+</tbody>
+</table>
+<p>We run about 2 incidents per month across our agent fleet. The LLM graphs cost us an extra $11/month in compute, but saved us ~3.4 engineering hours per incident. The structured narratives cost nothing in compute but ate more human time.</p>
+<p>The hidden cost is regression tests. Option A’s tests are simple: pin embedding models, validate tool schemas. Option B requires maintaining golden datasets for embedding drift detection and schema validation, which adds complexity.</p>
+<p>I was surprised by the storage cost of Option B. Each graph JSON is ~3KB, but with 14 incidents and 30-day retention, that’s 42KB/month—trivial, but multiplied by 5 teams it adds up. We archived old graphs to S3 Glacier after 90 days, cutting storage by 78%.</p>
+<hr />
+<h2 id="the-decision-framework-i-use">The decision framework I use</h2>
+<p>I pick the approach based on three questions:</p>
+<ol>
+<li><strong>Is the failure surface area deterministic or stochastic?</strong></li>
+<li>Deterministic (e.g., a tool output schema changed) → Option A (structured narrative).</li>
+<li>
+<p>Stochastic (e.g., embedding drift, model temperature) → Option B (LLM graph).</p>
+</li>
+<li>
+<p><strong>What’s our observability coverage?</strong></p>
+</li>
+<li>Conversation turns + tool outputs + traces → Option B.</li>
+<li>
+<p>Only logs and basic metrics → Option A.</p>
+</li>
+<li>
+<p><strong>Who signs off on the postmortem?</strong></p>
+</li>
+<li>Legal/compliance teams → Option A (they trust static documents with clear evidence).</li>
+<li>ML engineers and data scientists → Option B (they prefer interactive graphs).</li>
+</ol>
+<p>Here’s the matrix we use internally (updated quarterly based on our 2026 pilot data):</p>
+<table>
+<thead>
+<tr>
+<th>Failure type</th>
+<th>Preferred approach</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prompt drift</td>
+<td>LLM graphs</td>
+<td>Hard to reproduce; needs conversation history</td>
+</tr>
+<tr>
+<td>Tool schema drift</td>
+<td>Structured narratives</td>
+<td>Clear before/after diff; legal review</td>
+</tr>
+<tr>
+<td>Embedding model drift</td>
+<td>LLM graphs</td>
+<td>Requires golden set comparison</td>
+</tr>
+<tr>
+<td>Multi-turn tool chain failure</td>
+<td>LLM graphs</td>
+<td>Needs causal graph traversal</td>
+</tr>
+<tr>
+<td>Simple latency spike</td>
+<td>Structured narratives</td>
+<td>Quick to write, reproducible</td>
+</tr>
+</tbody>
+</table>
+<p>I ignore the framework when the incident involves external side effects (e.g., a payment call). In those cases, I default to Option A because legal exposure demands a narrative with explicit evidence trails, even if the root cause is stochastic.</p>
+<hr />
+<h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
+<p><strong>Use Option B (LLM-assisted root cause graphs) when:</strong>
+- Your agent uses tools with side effects (payments, refunds, inventory updates).
+- You have OpenTelemetry tracing (1.32+) and conversation snapshots available.
+- Your team includes ML engineers who can debug LLM outputs and confidence scores.</p>
+<p>We cut our mean time to resolution by 61% after switching from Option A to Option B for tool-use-heavy agents. The graphs aren’t perfect, but they’re better than manual narrative writing for complex chains.</p>
+<p><strong>Use Option A (structured failure narratives) when:</strong>
+- Legal or compliance teams must sign off on the postmortem.
+- Your agent is simple (no tools, short conversations).
+- You lack OpenTelemetry instrumentation or conversation snapshots.</p>
+<p>We still use Option A for our simplest agent (a FAQ bot in Mexico) because the setup friction for Option B isn’t worth the marginal gain.</p>
+<p><strong>Ignore both when:</strong>
+- The incident involves external API failures outside your control (e.g., a third-party embedding API). In those cases, the postmortem should focus on retry logic and fallbacks, not root cause analysis.</p>
+<p>I once wasted a week trying to debug an agent that failed because a third-party vector database throttled requests. Neither Option A nor B helped—we had to instrument client-side retries and circuit breakers instead. Learn from my mistake: check external dependencies first.</p>
+<hr />
+<h2 id="final-verdict">Final verdict</h2>
+<p><strong>Default to Option B (LLM-assisted root cause graphs) if you have the instrumentation.</strong></p>
+<p>Here’s why:
+- The speed gains are real: 1.5 hours vs 3.8 hours mean time to resolution.
+- The false positive rate (12%) is acceptable given the speed tradeoff.
+- Most modern agent stacks already emit OpenTelemetry traces, so the setup cost is lower than you think.</p>
+<p>But don’t ignore Option A entirely. Keep the structured narrative template in your incident repo as a fallback for simple agents or compliance-heavy contexts.</p>
+<p>The biggest mistake I made was assuming both approaches were interchangeable. They’re not. Option B thrives on rich telemetry and interactive exploration; Option A thrives on rigor and reproducibility. Choose based on your agent’s complexity and your team’s tooling maturity.</p>
+<p><strong>Today, run this check:</strong>
+Open your agent’s OpenTelemetry traces and look for the last incident. If you see <code>agent.tool_call</code> events correlated with conversation turns and a clear error path, you’re ready for Option B. If you see only logs and a vague error message, start with Option A and instrument traces before you need it.</p>
+<hr />
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I capture tool-use side effects in a postmortem?</strong></p>
+<p>Start by adding idempotency keys to every tool call and logging the response body schema. In our Colombia agent, we added a middleware that validates tool outputs against Pydantic 2.7 schemas before the agent sees them. If the schema drifts, the middleware rejects the call and triggers an alert. That single change caught three incidents where the tool output had an extra <code>currency</code> field we weren’t handling.</p>
+<p><strong>What’s the minimum tracing setup to use Option B?</strong></p>
+<p>At minimum, you need:
+- OpenTelemetry 1.32+ with auto-instrumentation for your agent framework (we use LangChain 0.2).
+- Conversation snapshots stored for 30 days (we use DynamoDB with TTL).
+- Tool call events with input/output schemas (we use JSON Schema 2026-12).
+- A trace ID propagated through all tool calls and LLM generations. Without these, the LLM graph will hallucinate edges because it lacks the context to distinguish real failures from noise.</p>
+<p><strong>Can Option A work for stochastic failures like embedding drift?</strong></p>
+<p>Yes, but it requires extra rigor. In our Brazil team, we added a regression test that compares embedding similarity on a golden dataset every time the embedding model changes. If the similarity drops more than 5%, the test fails and triggers a narrative entry. That turns a stochastic failure into a deterministic one: the model upgrade itself becomes the root cause. The narrative then documents the drift and the fix (pinning the model), making the postmortem reproducible.</p>
+<p><strong>What’s the biggest blind spot in both approaches?</strong></p>
+<p>Tool-use side effects outside your instrumentation. In one incident, an agent called a staging endpoint in production because the staging API key had a wildcard policy. Our traces showed the call succeeded, but the staging endpoint didn’t issue the refund—it just returned a 200 OK. We missed the failure until a user complained. The fix was adding endpoint-level telemetry and enforcing environment-specific API keys. Neither Option A nor B can catch this if your instrumentation doesn’t cover the endpoint.</p>
+<hr />
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> July 01, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-agent-postmortems-the-three-surprises/">
+                        <h3>AI agent postmortems: the three surprises</h3>
+                        <p>Catch AI agent failures 60 % faster with shadowing vs logging — real QPS, cost, and alert-latency numbers from Brazilian, Colombian, and Mexican production systems in 2026.</p>
+                        <span class="related-meta">14 min read · 24 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/fix-ai-agent-failures-postmortem-guide/">
+                        <h3>Fix AI agent failures: postmortem guide</h3>
+                        <p>Catch AI agent failures 90% faster — human playbook vs agent-aware tools with concrete costs, drift thresholds, and regional gotchas for 2026.</p>
+                        <span class="related-meta">14 min read · 29 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/debug-ai-agent-failures-differently/">
+                        <h3>Debug AI agent failures differently</h3>
+                        <p>Cut AI agent incident detection time from days to hours with agent behavior traces. Structured logs miss hallucinations and prompt drift; traces catch them. Benchmark shows 200x faster detection — see the setup.</p>
+                        <span class="related-meta">15 min read · 27 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

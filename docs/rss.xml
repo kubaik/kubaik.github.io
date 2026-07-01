@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 11:01:17 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 12:23:29 +0000</lastBuildDate>
+    <item>
+      <title>Debug AI agents: failures aren&apos;t just bugs</title>
+      <link>https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/</link>
+      <description>Cut AI agent postmortem time 61% with LLM graphs — embedding drift, tool-use side effects, and the 12% false positive trap most teams miss.</description>
+      <pubDate>Wed, 01 Jul 2026 12:23:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/</guid>
+    </item>
     <item>
       <title>7 ways to earn extra in 2026 without shipping SaaS</title>
       <link>https://kubaik.github.io/7-ways-to-earn-extra-in-2026-without-shipping-saas/</link>
@@ -138,13 +145,6 @@
       <description>Cut API security threats 90% with AWS WAF and JWT — common attacks, implementation details, and results</description>
       <pubDate>Tue, 30 Jun 2026 12:20:24 +0000</pubDate>
       <guid>https://kubaik.github.io/block-2026s-worst-api-attacks/</guid>
-    </item>
-    <item>
-      <title>Double the price, double the revenue</title>
-      <link>https://kubaik.github.io/double-the-price-double-the-revenue/</link>
-      <description>Raise dev tool MRR 15% in 7 days with four pricing tiers, Redis usage counters, and a $5/month infra bill — real data from 8k users in 2026</description>
-      <pubDate>Tue, 30 Jun 2026 10:51:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/double-the-price-double-the-revenue/</guid>
     </item>
   </channel>
 </rss>
