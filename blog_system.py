@@ -37,6 +37,23 @@ from adsense_fixes.image_optimizer import inject_alt_text, generate_og_card
 from adsense_fixes.canonical_guard import validate_canonical, audit_duplicate_slugs
 from adsense_fixes.schema_validator import extract_and_build_faq_schema
 from adsense_fixes.content_freshness import inject_freshness_footer, get_publishing_schedule_status
+
+try:
+    from title_validator import (
+        generate_display_title,
+        validate_title,
+        is_truncated as _title_is_truncated,
+        MAX_DISPLAY_TITLE as _VALIDATOR_MAX_DISPLAY_TITLE,
+    )
+except ImportError:
+    # Fall back to the conventional scripts/ location if it isn't importable
+    # from the project root.
+    from scripts.title_validator import (
+        generate_display_title,
+        validate_title,
+        is_truncated as _title_is_truncated,
+        MAX_DISPLAY_TITLE as _VALIDATOR_MAX_DISPLAY_TITLE,
+    )
 # ─────────────────────────────────────────────────────────────────────────────
 
 
@@ -2355,8 +2372,24 @@ class BlogSystem:
                 )
                 title = _TITLE_FILLER.sub('', title).strip()
 
-                if len(title) > 55:
-                    title = title[:55].rsplit(' ', 1)[0].rstrip(',:;-')
+                # PATCH: the old logic did a blind `title[:55]` slice-and-cut,
+                # which is exactly what produced mid-sentence truncations like
+                # "...the 60ms latency you" or "...AI microservices in".
+                # Keep the model's full title intact, and derive a SERP-safe
+                # display title using the same rules as title_validator.py
+                # (respects natural break points, never ends on a weak word).
+                full_title = title
+                title = generate_display_title(
+                    full_title, _VALIDATOR_MAX_DISPLAY_TITLE)
+
+                _title_check = validate_title(title, full_title)
+                if _title_check["errors"]:
+                    print(f"  Title validation errors for '{title}':")
+                    for _err in _title_check["errors"]:
+                        print(f"    ❌ {_err}")
+                if _title_check["warnings"]:
+                    for _warn in _title_check["warnings"]:
+                        print(f"    ⚠  {_warn}")
 
                 content = bundle["content"].strip()
                 meta_description = bundle["meta_description"].strip()
@@ -2457,12 +2490,21 @@ class BlogSystem:
                     f"  Similarity: {dup_score:.0%}\n"
                     f"  Requesting a new title from the LLM..."
                 )
-                title = await self._regenerate_title(
+                regenerated = await self._regenerate_title(
                     title=title,
                     content=content,
                     topic=current_topic,
                     existing_titles=existing_titles_now,
                 )
+                full_title = regenerated.strip().strip('"')
+                title = generate_display_title(
+                    full_title, _VALIDATOR_MAX_DISPLAY_TITLE)
+                _title_check = validate_title(title, full_title)
+                if _title_check["errors"] or _title_check["warnings"]:
+                    for _err in _title_check["errors"]:
+                        print(f"    ❌ {_err}")
+                    for _warn in _title_check["warnings"]:
+                        print(f"    ⚠  {_warn}")
                 print(f"  New title : '{title}'")
 
             slug = self._create_slug(title)
@@ -2484,6 +2526,10 @@ class BlogSystem:
             post.affiliate_links = []
             post.monetization_data = self.monetization.generate_ad_slots(
                 post.content)
+
+            # Preserve the complete, untruncated title alongside the
+            # SERP-safe display title (see title_validator.py).
+            post.full_title = full_title
 
             print("Deriving hashtags from title + keywords (tiered system)...")
             hashtags = _derive_hashtags_from_keywords(
@@ -3166,6 +3212,17 @@ Return ONLY the JSON object.""",
         post_data['reading_time_minutes'] = reading_time
         post_data['has_code'] = '```' in post.content
         post_data['has_table'] = '|' in post.content
+
+        # Store the untruncated title separately from the SERP-safe display
+        # title. Falls back to the display title for posts that predate this
+        # field or were constructed without going through generate_post().
+        post_data['full_title'] = getattr(post, 'full_title', post.title)
+
+        _final_check = validate_title(post.title, post_data['full_title'])
+        if not _final_check['valid']:
+            print(f"  ⚠️  Title failed validation at save time: {post.title}")
+            for _err in _final_check['errors']:
+                print(f"      ❌ {_err}")
 
         if hasattr(post, 'twitter_hashtags') and post.twitter_hashtags:
             post_data['twitter_hashtags'] = post.twitter_hashtags
@@ -4059,6 +4116,62 @@ if __name__ == "__main__":
             print(
                 f"\nFixed {fixed} posts. Run 'python blog_system.py build' to regenerate HTML.")
 
+        elif mode == "fix-titles":
+            if not os.path.exists("config.yaml"):
+                print("config.yaml not found.")
+                sys.exit(1)
+            with open("config.yaml", "r") as f:
+                config = yaml.safe_load(f)
+            blog_system = BlogSystem(config)
+            docs_dir = blog_system.output_dir
+            fixed = 0
+            checked = 0
+            for post_dir in docs_dir.iterdir():
+                if not post_dir.is_dir() or post_dir.name == "static":
+                    continue
+                post_json = post_dir / "post.json"
+                if not post_json.exists():
+                    continue
+                try:
+                    with open(post_json, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                    checked += 1
+                    current_title = data.get("title", "")
+                    # If full_title is missing (pre-dates this field), assume
+                    # the stored title IS the full title — we can't recover
+                    # what was truncated away, but we can still stop it from
+                    # being mangled further and flag it for manual review.
+                    stored_full_title = data.get("full_title", current_title)
+                    result = validate_title(current_title, stored_full_title)
+
+                    if not data.get("full_title") and _title_is_truncated(current_title):
+                        print(
+                            f"  ⚠️  {post_dir.name}: title looks truncated but has "
+                            f"no `full_title` on record — cannot recover the "
+                            f"missing words automatically. Flagging for manual fix."
+                        )
+
+                    needs_fix = (
+                        not result["valid"]
+                        or current_title != result["display_title"]
+                        or data.get("full_title") != result["full_title"]
+                    )
+                    if needs_fix:
+                        data["title"] = result["display_title"]
+                        data["full_title"] = result["full_title"]
+                        with open(post_json, "w", encoding="utf-8") as f:
+                            json.dump(data, f, indent=2, ensure_ascii=False)
+                        print(f"\n  [{post_dir.name}]")
+                        print(f"    Before: {current_title}")
+                        print(f"    After:  {result['display_title']}")
+                        for e in result["errors"]:
+                            print(f"    ❌ {e}")
+                        fixed += 1
+                except Exception as e:
+                    print(f"Error fixing {post_dir.name}: {e}")
+            print(f"\nChecked {checked} posts, fixed {fixed}.")
+            print("Run 'python blog_system.py build' to regenerate HTML.")
+
         elif mode == "refresh-stale":
             limit = 2
             args = sys.argv[2:]
@@ -4170,13 +4283,14 @@ if __name__ == "__main__":
         else:
             print(
                 "Usage: python blog_system.py [init|auto|build|cleanup|audit|purge|"
-                "debug|social|test-twitter|dedup|fix-descriptions|refresh-stale|"
-                "audit-links|audit-slugs|audit-freshness|velocity|"
+                "debug|social|test-twitter|dedup|fix-descriptions|fix-titles|"
+                "refresh-stale|audit-links|audit-slugs|audit-freshness|velocity|"
                 "preflight-rebuild|preflight-check]"
             )
 
     else:
         print("AI Blog System — Usage: python blog_system.py [command]")
         print("Commands: init | auto | build | cleanup | audit | purge | debug | social | "
-              "test-twitter | dedup | fix-descriptions | refresh-stale | audit-links | "
-              "audit-slugs | audit-freshness | velocity | preflight-rebuild | preflight-check")
+              "test-twitter | dedup | fix-descriptions | fix-titles | refresh-stale | "
+              "audit-links | audit-slugs | audit-freshness | velocity | preflight-rebuild | "
+              "preflight-check")
