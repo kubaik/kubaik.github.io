@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T09:33:25.618130",
+  "built_at": "2026-07-01T11:01:04.977872",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3700,6 +3700,11 @@
       "slug": "ai-ate-my-freelance-rate-2026",
       "title": "AI ate my freelance rate (2026)",
       "summary": "The short version: the conventional advice on freelance developer is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Freelance developer rates in 2026 are collapsing under the weight of AI produc"
+    },
+    {
+      "slug": "7-ways-to-earn-extra-in-2026-without-shipping-saas",
+      "title": "7 ways to earn extra in 2026 without shipping SaaS",
+      "summary": "I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three months last year chasing a s"
     }
   ]
 }

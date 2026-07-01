@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 09:53:56 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 11:01:17 +0000</lastBuildDate>
+    <item>
+      <title>7 ways to earn extra in 2026 without shipping SaaS</title>
+      <link>https://kubaik.github.io/7-ways-to-earn-extra-in-2026-without-shipping-saas/</link>
+      <description>Earn $500/month in 2026 without SaaS — 7</description>
+      <pubDate>Wed, 01 Jul 2026 11:01:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/7-ways-to-earn-extra-in-2026-without-shipping-saas/</guid>
+    </item>
     <item>
       <title>AI ate my freelance rate (2026)</title>
       <link>https://kubaik.github.io/ai-ate-my-freelance-rate-2026/</link>
@@ -138,13 +145,6 @@
       <description>Raise dev tool MRR 15% in 7 days with four pricing tiers, Redis usage counters, and a $5/month infra bill — real data from 8k users in 2026</description>
       <pubDate>Tue, 30 Jun 2026 10:51:15 +0000</pubDate>
       <guid>https://kubaik.github.io/double-the-price-double-the-revenue/</guid>
-    </item>
-    <item>
-      <title>3 skills to outrun AI salary cuts</title>
-      <link>https://kubaik.github.io/3-skills-to-outrun-ai-salary-cuts/</link>
-      <description>Protect your 2026 salary against AI automation with 3 boring engineering skills — connection pooling, circuit breakers, and CDN cache control — proven to cut outages 90% and keep clients paying premium rates.</description>
-      <pubDate>Tue, 30 Jun 2026 10:13:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/3-skills-to-outrun-ai-salary-cuts/</guid>
     </item>
   </channel>
 </rss>
