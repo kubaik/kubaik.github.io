@@ -2,6 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
+    <loc>https://kubaik.github.io/tag/howtouseobservabilityforaipipelines:whattoinstrumentwhenyoursystemincludesanllm/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/tag/howtousesustainablesoftwareengineering:cuttingcloudcarbonwithoutcuttingperformance/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -489,6 +495,12 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/llmstructuredoutput/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/tag/llmwrapper/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -3164,20 +3176,8 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://kubaik.github.io/test-ai-code-without-ai-tests/</loc>
-    <lastmod>2026-06-25</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/test-ai-code-without-testing-the-ai/</loc>
     <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/test-ai-code-without-testing-the-ai-9-hard-rules/</loc>
-    <lastmod>2026-06-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

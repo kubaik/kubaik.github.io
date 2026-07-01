@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 20:08:19 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 20:13:03 +0000</lastBuildDate>
+    <item>
+      <title>Failed AI wrappers vs. the 3 that worked in 2026</title>
+      <link>https://kubaik.github.io/failed-ai-wrappers-vs-the-3-that-worked-in-2026/</link>
+      <description>4 AI wrappers survived in 2026 — latency overhead, cost delta, and model swap time data included. Use this to pick the right wrapper before burning runway.</description>
+      <pubDate>Wed, 01 Jul 2026 20:12:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/failed-ai-wrappers-vs-the-3-that-worked-in-2026/</guid>
+    </item>
     <item>
       <title>Killed $3k K8s bill: how Fly.io saved us 94%</title>
       <link>https://kubaik.github.io/killed-3k-k8s-bill-how-flyio-saved-us-94/</link>
@@ -138,13 +145,6 @@
       <description>Cut hidden latency detection time 92%: 5 observability pipelines with concrete numbers, versioned tools, and real postmortems from 2026 production incidents.</description>
       <pubDate>Tue, 30 Jun 2026 22:23:14 +0000</pubDate>
       <guid>https://kubaik.github.io/5-ways-to-find-hidden-latency-before-production/</guid>
-    </item>
-    <item>
-      <title>Build a serverless backend in Africa with PocketBase</title>
-      <link>https://kubaik.github.io/build-a-serverless-backend-in-africa-with-pocketbase/</link>
-      <description>Deploy a serverless backend in Africa with PocketBase — 180 ms p95 latency, $1.87/month, and zero auth boilerplate. Real deployments in Lagos, Nairobi, and Cape Town.</description>
-      <pubDate>Tue, 30 Jun 2026 21:24:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-a-serverless-backend-in-africa-with-pocketbase/</guid>
     </item>
   </channel>
 </rss>
