@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T06:57:15.700716",
+  "built_at": "2026-07-01T07:56:27.173710",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3675,6 +3675,11 @@
       "slug": "legacy-codebases-let-ai-own-the-boring-parts",
       "title": "Legacy codebases? Let AI own the boring parts",
       "summary": "The official documentation for use maintain is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Legacy codebases aren’t just old—the"
+    },
+    {
+      "slug": "ai-pair-programming-how-we-lost-ownership-at-3am",
+      "title": "AI pair programming: how we lost ownership at 3AM",
+      "summary": "Most pair programming guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, our team of 12 backend engineers at a mid-stage SaaS company felt the u"
     }
   ]
 }

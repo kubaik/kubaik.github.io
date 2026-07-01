@@ -5,7 +5,119 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 10:49:26 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 07:56:38 +0000</lastBuildDate>
+    <item>
+      <title>AI pair programming: how we lost ownership at 3AM</title>
+      <link>https://kubaik.github.io/ai-pair-programming-how-we-lost-ownership-at-3am/</link>
+      <description>Cut production incidents from 8 to 0 by changing how we used AI pair programming — ownership rules, audit logs, and a pre-commit hook that worked in 2026</description>
+      <pubDate>Wed, 01 Jul 2026 07:56:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pair-programming-how-we-lost-ownership-at-3am/</guid>
+    </item>
+    <item>
+      <title>Legacy codebases? Let AI own the boring parts</title>
+      <link>https://kubaik.github.io/legacy-codebases-let-ai-own-the-boring-parts/</link>
+      <description>Cut legacy code review time 70% with AI — real code, real benchmarks, and the mistakes most teams repeat. Learn how to use LLMs without hallucinations or security risks.</description>
+      <pubDate>Wed, 01 Jul 2026 06:57:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/legacy-codebases-let-ai-own-the-boring-parts/</guid>
+    </item>
+    <item>
+      <title>Engineers fail AI screens: the real tests in 2026</title>
+      <link>https://kubaik.github.io/engineers-fail-ai-screens-the-real-tests-in-2026/</link>
+      <description>Cut engineering interview failure rates 47% with one change: test debugging, not coding. Real Node 20 LTS and Python 3.11 examples included.</description>
+      <pubDate>Wed, 01 Jul 2026 05:30:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/engineers-fail-ai-screens-the-real-tests-in-2026/</guid>
+    </item>
+    <item>
+      <title>AI alert triage in 2026: PagerDuty + LLMs</title>
+      <link>https://kubaik.github.io/ai-alert-triage-in-2026-pagerduty-llms/</link>
+      <description>Cut PagerDuty false positives 78% using AI alert triage with Claude 3.5 and Python 3.11 — the exact steps, code, and cost breakdown you need to sleep through Tuesday nights.</description>
+      <pubDate>Wed, 01 Jul 2026 02:37:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-alert-triage-in-2026-pagerduty-llms/</guid>
+    </item>
+    <item>
+      <title>AI wrote the docs — humans wrote the gaps</title>
+      <link>https://kubaik.github.io/ai-wrote-the-docs-humans-wrote-the-gaps/</link>
+      <description>Cut API edge-case incidents 67% with a 300-line human file — the one place AI can’t fill. Includes Node 20 LTS and Python 3.11 examples and CI checks.</description>
+      <pubDate>Wed, 01 Jul 2026 00:14:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-wrote-the-docs-humans-wrote-the-gaps/</guid>
+    </item>
+    <item>
+      <title>5 ways to find hidden latency before production</title>
+      <link>https://kubaik.github.io/5-ways-to-find-hidden-latency-before-production/</link>
+      <description>Cut hidden latency detection time 92%: 5 observability pipelines with concrete numbers, versioned tools, and real postmortems from 2026 production incidents.</description>
+      <pubDate>Tue, 30 Jun 2026 22:23:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/5-ways-to-find-hidden-latency-before-production/</guid>
+    </item>
+    <item>
+      <title>Build a serverless backend in Africa with PocketBase</title>
+      <link>https://kubaik.github.io/build-a-serverless-backend-in-africa-with-pocketbase/</link>
+      <description>Deploy a serverless backend in Africa with PocketBase — 180 ms p95 latency, $1.87/month, and zero auth boilerplate. Real deployments in Lagos, Nairobi, and Cape Town.</description>
+      <pubDate>Tue, 30 Jun 2026 21:24:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-a-serverless-backend-in-africa-with-pocketbase/</guid>
+    </item>
+    <item>
+      <title>Go MCP servers: benchmarks &amp; scaling traps</title>
+      <link>https://kubaik.github.io/go-mcp-servers-benchmarks-scaling-traps/</link>
+      <description>Cut MCP server latency 80% with Go: binary JSON, atomic tool registry, and fixed-size pools. Benchmarks, traps, and the 30-minute fix.</description>
+      <pubDate>Tue, 30 Jun 2026 20:13:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/go-mcp-servers-benchmarks-scaling-traps/</guid>
+    </item>
+    <item>
+      <title>RAG on legacy systems: vector DB vs. full-text SQL</title>
+      <link>https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/</link>
+      <description>Cut RAG hosting cost 78% with PostgreSQL 16 + pgvector 0.7 vs Weaviate 1.22. Real latency and cost data from a 12-month enterprise rollout.</description>
+      <pubDate>Tue, 30 Jun 2026 19:45:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/rag-on-legacy-systems-vector-db-vs-full-text-sql/</guid>
+    </item>
+    <item>
+      <title>Redefining engineering principles in the AI era</title>
+      <link>https://kubaik.github.io/redefining-engineering-principles-in-the-ai-era/</link>
+      <description>Cut bug escape rate 12% by auditing AI-generated code — prompt contracts, runtime guards, and decision logs that actually work in 2026.</description>
+      <pubDate>Tue, 30 Jun 2026 19:23:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/redefining-engineering-principles-in-the-ai-era/</guid>
+    </item>
+    <item>
+      <title>AI pair coding killed pull request reviews</title>
+      <link>https://kubaik.github.io/ai-pair-coding-killed-pull-request-reviews/</link>
+      <description>Cut PR merge time 61% by redefining AI’s role in reviews — the tooling, weights, and ownership rules that actually worked in 2026.</description>
+      <pubDate>Tue, 30 Jun 2026 16:23:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-pair-coding-killed-pull-request-reviews/</guid>
+    </item>
+    <item>
+      <title>Freelance rates 2026: AI killed the hourly rate</title>
+      <link>https://kubaik.github.io/freelance-rates-2026-ai-killed-the-hourly-rate/</link>
+      <description>Freelance rates fell 22% for juniors in 2026 while top contractors charge €120–€180/hour for AI-assisted architecture. See the real pricing shifts, tools, and prompts that changed everything.</description>
+      <pubDate>Tue, 30 Jun 2026 15:19:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/freelance-rates-2026-ai-killed-the-hourly-rate/</guid>
+    </item>
+    <item>
+      <title>Zero-downtime migrations: dual writes are dangerous</title>
+      <link>https://kubaik.github.io/zero-downtime-migrations-dual-writes-are-dangerous/</link>
+      <description>Zero-downtime migrations: dual writes fail 40% of the time — connection leaks, write skew, and rollback traps cost teams $120k+ in refunds. Backfill jobs and CDC reduce failure rates to 0.01%.</description>
+      <pubDate>Tue, 30 Jun 2026 13:58:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/zero-downtime-migrations-dual-writes-are-dangerous/</guid>
+    </item>
+    <item>
+      <title>Block 2026’s worst API attacks</title>
+      <link>https://kubaik.github.io/block-2026s-worst-api-attacks/</link>
+      <description>Cut API security threats 90% with AWS WAF and JWT — common attacks, implementation details, and results</description>
+      <pubDate>Tue, 30 Jun 2026 12:20:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/block-2026s-worst-api-attacks/</guid>
+    </item>
+    <item>
+      <title>Double the price, double the revenue</title>
+      <link>https://kubaik.github.io/double-the-price-double-the-revenue/</link>
+      <description>Raise dev tool MRR 15% in 7 days with four pricing tiers, Redis usage counters, and a $5/month infra bill — real data from 8k users in 2026</description>
+      <pubDate>Tue, 30 Jun 2026 10:51:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/double-the-price-double-the-revenue/</guid>
+    </item>
+    <item>
+      <title>3 skills to outrun AI salary cuts</title>
+      <link>https://kubaik.github.io/3-skills-to-outrun-ai-salary-cuts/</link>
+      <description>Protect your 2026 salary against AI automation with 3 boring engineering skills — connection pooling, circuit breakers, and CDN cache control — proven to cut outages 90% and keep clients paying premium rates.</description>
+      <pubDate>Tue, 30 Jun 2026 10:13:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-skills-to-outrun-ai-salary-cuts/</guid>
+    </item>
     <item>
       <title>Offline apps: cache first, sync later</title>
       <link>https://kubaik.github.io/offline-apps-cache-first-sync-later/</link>
@@ -33,13 +145,6 @@
       <description>Cut SBOM generation time 95% with Syft 1.13 — multi-stage, SPDX 2.3, and Grype policies that actually block CVEs</description>
       <pubDate>Tue, 30 Jun 2026 05:55:22 +0000</pubDate>
       <guid>https://kubaik.github.io/meet-2026-sbom-reality-no-more-hand-rolled-scripts/</guid>
-    </item>
-    <item>
-      <title>AI scans your code: real risks and defenses</title>
-      <link>https://kubaik.github.io/ai-scans-your-code-real-risks-and-defenses/</link>
-      <description>Cut false positives 60% with AI scan tuning — GitHub Advanced Security vs Snyk Code benchmarks, confidence thresholds, and the one SARIF trick that saves 34% fix time.</description>
-      <pubDate>Tue, 30 Jun 2026 05:12:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-scans-your-code-real-risks-and-defenses/</guid>
     </item>
   </channel>
 </rss>
