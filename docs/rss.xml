@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 01:40:26 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 02:37:21 +0000</lastBuildDate>
+    <item>
+      <title>AI alert triage in 2026: PagerDuty + LLMs</title>
+      <link>https://kubaik.github.io/ai-alert-triage-in-2026-pagerduty-llms/</link>
+      <description>Cut PagerDuty false positives 78% using AI alert triage with Claude 3.5 and Python 3.11 — the exact steps, code, and cost breakdown you need to sleep through Tuesday nights.</description>
+      <pubDate>Wed, 01 Jul 2026 02:37:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-alert-triage-in-2026-pagerduty-llms/</guid>
+    </item>
     <item>
       <title>AI wrote the docs — humans wrote the gaps</title>
       <link>https://kubaik.github.io/ai-wrote-the-docs-humans-wrote-the-gaps/</link>
@@ -138,13 +145,6 @@
       <description>Cut component build time 60% with AI UI tools — but watch bundle bloat, design drift, and missing a11y. Cursor 0.32, size-limit 5.0.1, axe-core 4.9 benchmarks inside.</description>
       <pubDate>Tue, 30 Jun 2026 01:37:01 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ui-tools-promise-vs-production/</guid>
-    </item>
-    <item>
-      <title>2026 AI stack: solo SaaS cost showdown</title>
-      <link>https://kubaik.github.io/2026-ai-stack-solo-saas-cost-showdown/</link>
-      <description>Last quarter I shipped two identical micro-SaaSes: one where I outsourced 80% of the backend to an AI agent (using a custom prompt chain on AWS Bedrock)…</description>
-      <pubDate>Tue, 30 Jun 2026 00:11:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/2026-ai-stack-solo-saas-cost-showdown/</guid>
     </item>
   </channel>
 </rss>
