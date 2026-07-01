@@ -19,5 +19,6 @@
   "How to implement least-privilege IAM in AWS without spending a week on policies",
   "How I write tests for AI-assisted code without testing the AI",
   "How I replaced a $3k/month Kubernetes cluster with a $200/month alternative",
-  "AI wrapper businesses in 2026: why most failed and the ones that survived"
+  "AI wrapper businesses in 2026: why most failed and the ones that survived",
+  "Zero-trust in practice for small teams: what you can implement without an enterprise budget"
 ]

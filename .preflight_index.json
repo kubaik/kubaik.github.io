@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T20:12:51.142563",
+  "built_at": "2026-07-01T21:20:37.253980",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3755,6 +3755,11 @@
       "slug": "failed-ai-wrappers-vs-the-3-that-worked-in-2026",
       "title": "Failed AI wrappers vs. the 3 that worked in 2026",
       "summary": "I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026 I joined a 14-person start"
+    },
+    {
+      "slug": "zero-trust-on-50month-3-tools-that-actually-work",
+      "title": "Zero-trust on $50/month: 3 tools that actually work",
+      "summary": "I've seen the same zerotrust practice mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now If you’re a small team running production systems in 2026, you’re p"
     }
   ]
 }
