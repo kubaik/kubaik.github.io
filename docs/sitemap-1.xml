@@ -20,12 +20,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://kubaik.github.io/1m-tokens-wont-fix-your-prompt/</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/2-ai-roles-ranked-staff-engineer-vs-manager-in-2026/</loc>
     <lastmod>2026-06-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -2248,6 +2242,12 @@
   <url>
     <loc>https://kubaik.github.io/hybrid-search-cuts-rags-irrelevance-5x/</loc>
     <lastmod>2026-06-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/idp-costs-3-tiers-3-playbooks/</loc>
+    <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -4616,6 +4616,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/tag/backstage1.22/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/tag/backup/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -5991,12 +5997,6 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/howtousevibecodingisfunforprototypes—here</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/howtousewhentouseamessagequeue(andwhenit</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>

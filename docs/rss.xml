@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 16:27:01 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 13:31:25 +0000</lastBuildDate>
+    <item>
+      <title>IDP costs: 3 tiers, 3 playbooks</title>
+      <link>https://kubaik.github.io/idp-costs-3-tiers-3-playbooks/</link>
+      <description>Cut platform waste 38% by limiting knobs to 7 — Micro, Growth, and Enterprise IDP playbooks with real code and cost data from 2026 systems.</description>
+      <pubDate>Wed, 01 Jul 2026 13:31:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/idp-costs-3-tiers-3-playbooks/</guid>
+    </item>
     <item>
       <title>Biometrics beat passwords: passkey 2026 shift</title>
       <link>https://kubaik.github.io/biometrics-beat-passwords-passkey-2026-shift/</link>
@@ -138,13 +145,6 @@
       <description>Cut bug escape rate 12% by auditing AI-generated code — prompt contracts, runtime guards, and decision logs that actually work in 2026.</description>
       <pubDate>Tue, 30 Jun 2026 19:23:04 +0000</pubDate>
       <guid>https://kubaik.github.io/redefining-engineering-principles-in-the-ai-era/</guid>
-    </item>
-    <item>
-      <title>AI pair coding killed pull request reviews</title>
-      <link>https://kubaik.github.io/ai-pair-coding-killed-pull-request-reviews/</link>
-      <description>Cut PR merge time 61% by redefining AI’s role in reviews — the tooling, weights, and ownership rules that actually worked in 2026.</description>
-      <pubDate>Tue, 30 Jun 2026 16:23:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-pair-coding-killed-pull-request-reviews/</guid>
     </item>
   </channel>
 </rss>
