@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T08:09:15.052475",
+  "built_at": "2026-07-01T08:43:28.479982",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3690,6 +3690,11 @@
       "slug": "ai-proof-your-mid-level-salary",
       "title": "AI-proof your mid-level salary",
       "summary": "After reviewing a lot of code that touches skills that, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing Junior developer tasks are disappearing fast. In 2026, the average job description for a \"Ju"
+    },
+    {
+      "slug": "survive-ai-swipes-with-niche-picks",
+      "title": "Survive AI swipes with niche picks",
+      "summary": "Most pick saas guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026 our fintech team in Nairobi was shipping a new savings-product API for gig wor"
     }
   ]
 }

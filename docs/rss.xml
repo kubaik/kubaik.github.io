@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 11:39:32 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 08:43:39 +0000</lastBuildDate>
+    <item>
+      <title>Survive AI swipes with niche picks</title>
+      <link>https://kubaik.github.io/survive-ai-swipes-with-niche-picks/</link>
+      <description>Cut SaaS pivot risk 75% by targeting niches where AI can’t displace the human final authority — Kenya payroll case study with latency, cost, and licence data.</description>
+      <pubDate>Wed, 01 Jul 2026 08:43:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/survive-ai-swipes-with-niche-picks/</guid>
+    </item>
     <item>
       <title>AI-proof your mid-level salary</title>
       <link>https://kubaik.github.io/ai-proof-your-mid-level-salary/</link>
@@ -138,13 +145,6 @@
       <description>Cut offline session failure 36% with SQLite cache and pull-then-push sync — conflict resolution, battery cost, and the clinic test that changed our approach.</description>
       <pubDate>Tue, 30 Jun 2026 09:47:47 +0000</pubDate>
       <guid>https://kubaik.github.io/offline-apps-cache-first-sync-later/</guid>
-    </item>
-    <item>
-      <title>Killed a $3k/month K8s cluster for $200/month</title>
-      <link>https://kubaik.github.io/killed-a-3kmonth-k8s-cluster-for-200month/</link>
-      <description>Cut infrastructure cost 93% by replacing a $3k/month Kubernetes cluster with Fly.io for $288/month — actual latency, egress, and deploy metrics from a 12k MAU SaaS.</description>
-      <pubDate>Tue, 30 Jun 2026 07:17:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/killed-a-3kmonth-k8s-cluster-for-200month/</guid>
     </item>
   </channel>
 </rss>
