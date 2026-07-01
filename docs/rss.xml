@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 22:21:26 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 22:26:33 +0000</lastBuildDate>
+    <item>
+      <title>Offline-first apps: when 2G is the fast lane</title>
+      <link>https://kubaik.github.io/offline-first-apps-when-2g-is-the-fast-lane/</link>
+      <description>Cut duplicate transactions 99% with offline-first payments in unreliable markets — WatermelonDB 1.5.0, idempotency keys, and OS-aware sync worker. Real numbers from 1,240 merchants in Lagos, Nairobi, and Dar es Salaam.</description>
+      <pubDate>Wed, 01 Jul 2026 22:26:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/offline-first-apps-when-2g-is-the-fast-lane/</guid>
+    </item>
     <item>
       <title>Zero-trust on $50/month: 3 tools that actually work</title>
       <link>https://kubaik.github.io/zero-trust-on-50month-3-tools-that-actually-work/</link>
@@ -138,13 +145,6 @@
       <description>Cut PagerDuty false positives 78% using AI alert triage with Claude 3.5 and Python 3.11 — the exact steps, code, and cost breakdown you need to sleep through Tuesday nights.</description>
       <pubDate>Wed, 01 Jul 2026 02:37:08 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-alert-triage-in-2026-pagerduty-llms/</guid>
-    </item>
-    <item>
-      <title>AI wrote the docs — humans wrote the gaps</title>
-      <link>https://kubaik.github.io/ai-wrote-the-docs-humans-wrote-the-gaps/</link>
-      <description>Cut API edge-case incidents 67% with a 300-line human file — the one place AI can’t fill. Includes Node 20 LTS and Python 3.11 examples and CI checks.</description>
-      <pubDate>Wed, 01 Jul 2026 00:14:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-wrote-the-docs-humans-wrote-the-gaps/</guid>
     </item>
   </channel>
 </rss>

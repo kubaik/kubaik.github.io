@@ -1292,12 +1292,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://kubaik.github.io/ai-wrappers-in-2026-94-failed-heres-the-rest/</loc>
-    <lastmod>2026-06-18</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/ai-wrote-80-of-my-saas-in-6-weeks-heres-what-broke/</loc>
     <lastmod>2026-06-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -2776,6 +2770,12 @@
   <url>
     <loc>https://kubaik.github.io/offline-first-apps-what-3g-markets-taught-us/</loc>
     <lastmod>2026-06-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/offline-first-apps-when-2g-is-the-fast-lane/</loc>
+    <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

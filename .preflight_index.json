@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T21:20:37.253980",
+  "built_at": "2026-07-01T22:26:21.759630",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3760,6 +3760,11 @@
       "slug": "zero-trust-on-50month-3-tools-that-actually-work",
       "title": "Zero-trust on $50/month: 3 tools that actually work",
       "summary": "I've seen the same zerotrust practice mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now If you’re a small team running production systems in 2026, you’re p"
+    },
+    {
+      "slug": "offline-first-apps-when-2g-is-the-fast-lane",
+      "title": "Offline-first apps: when 2G is the fast lane",
+      "summary": "Most build offlinefirst guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. We needed to ship a payments app for merchants in Lagos, Nairobi, and Dar es Salaam where the average connection drops every 90 "
     }
   ]
 }
