@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T13:31:13.033051",
+  "built_at": "2026-07-01T16:19:46.577740",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3735,6 +3735,11 @@
       "slug": "idp-costs-3-tiers-3-playbooks",
       "title": "IDP costs: 3 tiers, 3 playbooks",
       "summary": "The official documentation for platform engineering is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Internal developer platforms"
+    },
+    {
+      "slug": "trim-aws-iam-policies-in-one-afternoon",
+      "title": "Trim AWS IAM policies in one afternoon",
+      "summary": "The short version: the conventional advice on implement leastprivilege is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) If you’re still hand-editing IAM policies with wildcards like or letting "
     }
   ]
 }

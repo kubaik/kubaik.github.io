@@ -3242,6 +3242,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/trim-aws-iam-policies-in-one-afternoon/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/trimmed-3kmonth-kubernetes-to-200-with-flyio/</loc>
     <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
