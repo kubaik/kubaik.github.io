@@ -85,11 +85,11 @@ def discover_pages(site_dir: Path) -> list[dict]:
     """Walk site directory, collect all index.html files."""
     pages = []
     for html_file in sorted(site_dir.rglob("index.html")):
-        rel_path = "/" + html_file.parent.relative_to(site_dir).as_posix()
-        if rel_path != "/":
-            rel_path = rel_path.rstrip("/") + "/"
-        else:
+        rel_parent = html_file.parent.relative_to(site_dir).as_posix()
+        if rel_parent == ".":
             rel_path = "/"
+        else:
+            rel_path = "/" + rel_parent.rstrip("/") + "/"
 
         if is_excluded(rel_path, EXCLUDE_PATTERNS):
             continue
