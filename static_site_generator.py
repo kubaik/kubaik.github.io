@@ -274,7 +274,17 @@ Sitemap: {base_url}/rss.xml
             'global_meta_tags': self.seo.generate_global_meta_tags(),
             'homepage_meta_tags': self.seo.generate_homepage_meta_tags(),
             'organization_schema': self.seo.generate_organization_schema(),
-            'website_schema': self.seo.generate_website_schema()
+            'website_schema': self.seo.generate_website_schema(),
+            # FIX BUG-14: the homepage (the page AdSense reviews first) never
+            # rendered any actual <ins class="adsbygoogle"> ad units — only
+            # post pages did. The google-adsense-account meta tag and the
+            # adsbygoogle.js loader (both from generate_global_meta_tags())
+            # are present on every page, but a verification meta tag is not
+            # an ad placement. Wire up real ad units here so the homepage
+            # has actual inventory, matching what POST_TMPL already does.
+            'header_ad': self.seo.generate_adsense_ad('header'),
+            'middle_ad': self.seo.generate_adsense_ad('middle'),
+            'footer_ad': self.seo.generate_adsense_ad('footer'),
         }
         html = self.templates['index'].render(**context)
         output_file = Path("./docs/index.html")
@@ -1409,6 +1419,12 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
+    # FIX BUG-14: INDEX_TMPL previously had zero ad placements anywhere in
+    # the page - no header_ad/middle_ad/footer_ad blocks at all - so the
+    # homepage (the first page AdSense's reviewer crawls) shipped with the
+    # verification meta tag but no actual ins.adsbygoogle units. Added a
+    # header ad, an in-feed ad after the 3rd post card, and a footer ad,
+    # mirroring the pattern already used in POST_TMPL.
     INDEX_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -1520,6 +1536,7 @@ def _build_templates() -> dict:
     </style>
 </head>
 <body>
+    {% if header_ad %}<div class="ad-header">{{ header_ad | safe }}</div>{% endif %}
     <header>
         <div class="container">
             <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
@@ -1586,6 +1603,9 @@ def _build_templates() -> dict:
                     </div>
                     {% endif %}
                 </a>
+                {% if middle_ad and loop.index == 3 %}
+                <div class="ad-middle" style="grid-column:1/-1;">{{ middle_ad | safe }}</div>
+                {% endif %}
                 {% endfor %}
             </div>
 
@@ -1601,6 +1621,7 @@ def _build_templates() -> dict:
             {% endif %}
         </section>
     </main>
+    {% if footer_ad %}<div class="ad-footer">{{ footer_ad | safe }}</div>{% endif %}
 
     <button id="back-to-top" class="back-to-top" style="display:none;" aria-label="Back to top"><span>&#8593;</span></button>
 
