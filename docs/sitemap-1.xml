@@ -1406,6 +1406,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/automate-sboms-before-audits-hit/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/avoid-webhook-delivery-nightmares-in-2026/</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -5991,12 +5997,6 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/htmxvsreact/</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/hybrid/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
