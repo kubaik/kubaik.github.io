@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 05:25:33 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 05:31:03 +0000</lastBuildDate>
+    <item>
+      <title>Engineers fail AI screens: the real tests in 2026</title>
+      <link>https://kubaik.github.io/engineers-fail-ai-screens-the-real-tests-in-2026/</link>
+      <description>Cut engineering interview failure rates 47% with one change: test debugging, not coding. Real Node 20 LTS and Python 3.11 examples included.</description>
+      <pubDate>Wed, 01 Jul 2026 05:30:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/engineers-fail-ai-screens-the-real-tests-in-2026/</guid>
+    </item>
     <item>
       <title>AI alert triage in 2026: PagerDuty + LLMs</title>
       <link>https://kubaik.github.io/ai-alert-triage-in-2026-pagerduty-llms/</link>
@@ -138,13 +145,6 @@
       <description>7 ways to test AI-generated code without testing the AI itself — save 10+ hours/week on brittle tests and catch 68% more bugs with contract checks, golden snapshots, and shadow mode</description>
       <pubDate>Tue, 30 Jun 2026 02:34:51 +0000</pubDate>
       <guid>https://kubaik.github.io/test-ai-code-not-the-ai/</guid>
-    </item>
-    <item>
-      <title>AI UI tools: promise vs. production</title>
-      <link>https://kubaik.github.io/ai-ui-tools-promise-vs-production/</link>
-      <description>Cut component build time 60% with AI UI tools — but watch bundle bloat, design drift, and missing a11y. Cursor 0.32, size-limit 5.0.1, axe-core 4.9 benchmarks inside.</description>
-      <pubDate>Tue, 30 Jun 2026 01:37:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ui-tools-promise-vs-production/</guid>
     </item>
   </channel>
 </rss>

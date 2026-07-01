@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T02:37:11.492827",
+  "built_at": "2026-07-01T05:30:50.781095",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3665,6 +3665,11 @@
       "slug": "ai-alert-triage-in-2026-pagerduty-llms",
       "title": "AI alert triage in 2026: PagerDuty + LLMs",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. I spent three weeks debugging a flaky integration test that only failed on Tuesdays at 3 AM. It woke me up 17 times before I traced it"
+    },
+    {
+      "slug": "engineers-fail-ai-screens-the-real-tests-in-2026",
+      "title": "Engineers fail AI screens: the real tests in 2026",
+      "summary": "The official documentation for changed hiring is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Two years ago, we hired engineers "
     }
   ]
 }
