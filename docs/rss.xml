@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 16:06:16 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 13:10:03 +0000</lastBuildDate>
+    <item>
+      <title>1M tokens won’t fix your prompt</title>
+      <link>https://kubaik.github.io/1m-tokens-wont-fix-your-prompt/</link>
+      <description>1M-token models add noise, latency, and cost — real systems win with retrieval + streaming and 16K tokens. Learn how 3 fintech teams got burned and how to avoid it.</description>
+      <pubDate>Wed, 01 Jul 2026 13:09:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/1m-tokens-wont-fix-your-prompt/</guid>
+    </item>
     <item>
       <title>Biometrics beat passwords: passkey 2026 shift</title>
       <link>https://kubaik.github.io/biometrics-beat-passwords-passkey-2026-shift/</link>
@@ -138,13 +145,6 @@
       <description>Cut bug escape rate 12% by auditing AI-generated code — prompt contracts, runtime guards, and decision logs that actually work in 2026.</description>
       <pubDate>Tue, 30 Jun 2026 19:23:04 +0000</pubDate>
       <guid>https://kubaik.github.io/redefining-engineering-principles-in-the-ai-era/</guid>
-    </item>
-    <item>
-      <title>AI pair coding killed pull request reviews</title>
-      <link>https://kubaik.github.io/ai-pair-coding-killed-pull-request-reviews/</link>
-      <description>Cut PR merge time 61% by redefining AI’s role in reviews — the tooling, weights, and ownership rules that actually worked in 2026.</description>
-      <pubDate>Tue, 30 Jun 2026 16:23:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-pair-coding-killed-pull-request-reviews/</guid>
     </item>
   </channel>
 </rss>

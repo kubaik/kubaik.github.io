@@ -2,6 +2,12 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
+    <loc>https://kubaik.github.io/tag/htmx2.0/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/tag/htmx20/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>

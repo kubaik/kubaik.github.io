@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T12:46:43.384142",
+  "built_at": "2026-07-01T13:09:52.402733",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3725,6 +3725,11 @@
       "slug": "biometrics-beat-passwords-passkey-2026-shift",
       "title": "Biometrics beat passwords: passkey 2026 shift",
       "summary": "Most passkeys changed guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, our Jakarta-based social commerce app had 1.2 million monthly active u"
+    },
+    {
+      "slug": "1m-tokens-wont-fix-your-prompt",
+      "title": "1M tokens won’t fix your prompt",
+      "summary": "A colleague asked me about context window during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) If"
     }
   ]
 }
