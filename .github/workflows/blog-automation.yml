@@ -25,10 +25,6 @@ permissions:
   pages: write
   id-token: write
 
-# ── KEY FIX 1: cancel-in-progress prevents stacked runs from colliding ──
-# Previously, watchdog-triggered dispatches would queue up and then all
-# attempt git push at once, causing rebase conflicts and 19s failures.
-# cancel-in-progress: false keeps the FIRST run alive and drops duplicates.
 concurrency:
   group: "pages"
   cancel-in-progress: false
@@ -59,10 +55,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # ── KEY FIX 2: Robust pull with conflict recovery ──────────────────
-      # The old `git pull --rebase` would fail with exit code 1 when a
-      # concurrent run had just pushed, causing the 19-20s instant failures.
-      # We now: fetch → reset hard to origin/main (no rebase conflict possible).
       - name: Pull latest changes
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -100,10 +92,6 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           ENABLE_TWITTER_POSTING: ${{ secrets.ENABLE_TWITTER_POSTING }}
 
-      # ── Resolve the effective Twitter posting flag ──────────────────────
-      # schedule  → ALWAYS post
-      # push      → NEVER post (code changes must not burn a tweet)
-      # dispatch  → respect ENABLE_TWITTER_POSTING secret
       - name: Resolve Twitter posting flag
         id: twitter_flag
         run: |
@@ -143,7 +131,6 @@ jobs:
           git fetch origin main
           git checkout origin/main -- .trending_hashtag_cache.json 2>/dev/null || true
 
-      # ── NEW: Skip content generation if OG-only mode ─────────────────────
       - name: Generate new blog content
         if: github.event.inputs.regenerate_og_only != 'true'
         env:
@@ -168,7 +155,6 @@ jobs:
             python blog_system.py build
           }
 
-      # ── NEW: Build site if we skipped content generation ────────────────
       - name: Build site if OG-only mode
         if: github.event.inputs.regenerate_og_only == 'true'
         run: |
@@ -180,15 +166,28 @@ jobs:
           echo "Total posts: $post_count"
           [ -f "docs/index.html" ] || { echo "ERROR: no index.html"; exit 1; }
 
-      # ── NEW: Generate per-article OG images (1200×630 PNG) ───────────────
-      # This step:
-      # 1. Generates unique OG image for each article (1200×630 PNG)
-      # 2. Patches HTML files with correct og:image URLs
-      # 3. Fixes social share previews on Twitter/LinkedIn/Facebook
-      # 4. Improves social media click-through rate by 3-4x
-      #
-      # Non-blocking: If OG generation fails, build continues
-      # (site will still work, just without pretty OG images)
+      # ── NEW: Generate sitemap.xml so search engines can discover posts ──
+      # Runs after content generation/build (both the normal and OG-only
+      # paths funnel through "Verify generated content" above), so it always
+      # sees the final set of published HTML pages for this run before we
+      # touch OG images, commit, or deploy. Non-blocking on individual page
+      # parse issues; the script itself skips excluded/draft paths.
+      - name: 🗺️ Generate sitemap.xml
+        run: |
+          python scripts/generate_sitemap.py \
+            --output-dir ./docs \
+            --base-url "https://kubaik.github.io" \
+            --chunk-size 1000
+
+          if [ -f ./docs/sitemap.xml ]; then
+            url_count=$(grep -o "<loc>" ./docs/sitemap.xml | wc -l)
+            echo "sitemap_url_count=${url_count}" >> $GITHUB_ENV
+            echo "✅ sitemap.xml generated with ${url_count} entries"
+          else
+            echo "⚠️ WARNING: sitemap.xml was not created"
+            echo "sitemap_url_count=0" >> $GITHUB_ENV
+          fi
+
       - name: 📸 Generate per-article OG images
         continue-on-error: true
         run: |
@@ -199,14 +198,10 @@ jobs:
             --base-url "https://kubaik.github.io" \
             --patch-html
 
-          # Count generated images
           og_count=$(ls ./docs/static/og/*.png 2>/dev/null | wc -l)
           echo "og_image_count=${og_count}" >> $GITHUB_ENV
           echo "Generated $og_count OG images"
 
-      # ── KEY FIX 3: Push with retry on collision ─────────────────────────
-      # If two runs somehow reach the push step simultaneously (edge case),
-      # pull-rebase and retry once rather than failing hard.
       - name: Commit and push with retry
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -217,8 +212,7 @@ jobs:
           else
             post_count=$(find docs -name "post.json" | wc -l)
             og_count=$(ls ./docs/static/og/*.png 2>/dev/null | wc -l)
-            git commit -m "Auto-blog $(date '+%Y-%m-%d %H:%M') — ${post_count} posts + ${og_count} OG images"
-            # Retry once on push failure (remote moved ahead)
+            git commit -m "Auto-blog $(date '+%Y-%m-%d %H:%M') — ${post_count} posts + ${og_count} OG images + sitemap"
             git push origin main || {
               echo "Push failed — pulling and retrying once..."
               git fetch origin main
@@ -250,10 +244,18 @@ jobs:
             echo "|--------|-------|"
             echo "| **URL** | ${{ steps.deployment.outputs.page_url }} |"
             echo "| **Posts** | $post_count |"
+            echo "| **Sitemap URLs** | ${{ env.sitemap_url_count }} |"
             echo "| **OG Images** | $og_count |"
             echo "| **Trigger** | ${{ github.event_name }} |"
             echo "| **Twitter** | ${{ steps.twitter_flag.outputs.effective_flag }} |"
             echo "| **Run** | #${{ github.run_number }} — $(date -u '+%Y-%m-%d %H:%M UTC') |"
+            echo ""
+            echo "### 🗺️ Sitemap Status"
+            if [ "${{ env.sitemap_url_count }}" -gt 0 ]; then
+              echo "✅ sitemap.xml is live at ${{ steps.deployment.outputs.page_url }}sitemap.xml"
+            else
+              echo "⚠️ sitemap.xml was not generated — check the sitemap step logs"
+            fi
             echo ""
             echo "### 📸 OG Image Status"
             if [ "$og_count" -gt 0 ]; then
