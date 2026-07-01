@@ -2209,40 +2209,39 @@ def _build_templates() -> dict:
             <div class="section-card" id="editorial">
                 <h2>Editorial process</h2>
                 <p style="color:#555;font-size:0.9rem;margin-bottom:1.25rem">
-                    This matters because Google AdSense and Google Search both evaluate whether
-                    content demonstrates first-hand experience and editorial accountability.
-                    Here is exactly how articles on this site are produced:
+                    Here's how articles on this site actually get made, and where the human
+                    involvement is versus where it isn't:
                 </p>
 
                 <div class="process-step">
                     <div class="step-num">1</div>
                     <div class="step-body">
-                        <strong>Topic selection from direct experience</strong>
-                        <p>Topics come from problems I encountered in production, questions that
-                        came up in code reviews I've done, or tools I've actually evaluated.
-                        I don't write about things I've only read about.</p>
+                        <strong>Topic selection</strong>
+                        <p>Topics are chosen based on real problems from production fintech
+                        systems, patterns I've seen come up repeatedly, and tools I've
+                        personally used — not generated from keyword lists.</p>
                     </div>
                 </div>
 
                 <div class="process-step">
                     <div class="step-num">2</div>
                     <div class="step-body">
-                        <strong>Research and drafting</strong>
-                        <p>I research each topic using official documentation, GitHub issues,
-                        and my own production notes. AI tools assist with structure and drafting,
-                        but every factual claim is verified against primary sources. Code examples
-                        are tested locally before publication.</p>
+                        <strong>Drafting</strong>
+                        <p>Articles are drafted with AI assistance, grounded in official
+                        documentation and my own notes from working with these tools and
+                        systems. Given the volume published here, not every article gets
+                        individual line-by-line review before it goes live — I rely on the
+                        correction process below to catch and fix mistakes.</p>
                     </div>
                 </div>
 
                 <div class="process-step">
                     <div class="step-num">3</div>
                     <div class="step-body">
-                        <strong>Personal review before publishing</strong>
-                        <p>I read every article before it goes live. I correct errors, add
-                        specifics from my own experience, and remove anything that feels generic
-                        or that I can't personally verify. Articles that don't meet this bar
-                        are held or deleted.</p>
+                        <strong>Spot checks and quality review</strong>
+                        <p>I periodically review published articles, particularly ones getting
+                        traffic or reader feedback, and update or remove anything that's wrong,
+                        outdated, or doesn't hold up.</p>
                     </div>
                 </div>
 
@@ -2250,9 +2249,9 @@ def _build_templates() -> dict:
                     <div class="step-num">4</div>
                     <div class="step-body">
                         <strong>Ongoing corrections</strong>
-                        <p>Technology changes. When an article becomes outdated or a reader
-                        reports an error, I update it. The "Last reviewed" date in each article
-                        reflects when it was last checked for accuracy.</p>
+                        <p>If you spot an error, tell me and I'll fix it. Technology also
+                        changes fast enough that older articles get revisited and updated
+                        as tools and best practices move on.</p>
                     </div>
                 </div>
 
@@ -2260,8 +2259,7 @@ def _build_templates() -> dict:
                     <p>Found a factual error?
                     <a href="{{ base_path }}/contact/" style="color:#856404;font-weight:600;">
                         Email me directly</a> —
-                    corrections are applied within 48 hours and the article is updated with
-                    the correction noted.</p>
+                    I review and correct reported errors promptly.</p>
                 </div>
             </div>
 
