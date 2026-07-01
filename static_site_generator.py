@@ -2309,7 +2309,7 @@ def _build_templates() -> dict:
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - {{ site_name }}</title>
-    <meta name="description" content="Privacy Policy for {{ site_name }}">
+    <meta name="description" content="Privacy Policy for {{ site_name }}. Learn what data we collect, how we use it, your rights under GDPR and CCPA, and how to contact us.">
     <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/privacy-policy/">
     <script src="{{ base_path }}/static/consent.js"></script>
@@ -2320,8 +2320,9 @@ def _build_templates() -> dict:
     <style>
         .privacy-section{background:#f8f9fa;padding:1.5rem;margin-bottom:1.5rem;border-radius:8px;border-left:4px solid #6366f1}
         .privacy-section h3{color:#333;margin-top:0}
+        .privacy-section h4{color:#4f46e5;margin-top:1rem;margin-bottom:0.5rem}
         .important-notice{background:#fff3cd;border-left:4px solid #ffc107;padding:1rem 1.5rem;margin:1.5rem 0;border-radius:4px}
-        table{width:100%;border-collapse:collapse;background:white}
+        table{width:100%;border-collapse:collapse;background:white;margin:1rem 0}
         th,td{padding:0.8rem;text-align:left;border-bottom:1px solid #dee2e6}
         th{background:#f8f9fa;font-weight:600}
         .highlight-box{background:linear-gradient(135deg,#667eea,#764ba2);color:white;padding:1.5rem;border-radius:8px;margin:1.5rem 0}
@@ -2337,33 +2338,159 @@ def _build_templates() -> dict:
     <main class="container">
         <div class="hero"><h2>Privacy Policy</h2><p>How we protect and handle your information</p></div>
         <article class="page-content">
-            <div class="privacy-section"><h3>1. Introduction</h3>
-                <p><strong>{{ site_name }}</strong> is committed to protecting your privacy. By accessing this site, you agree to this Privacy Policy.</p></div>
-            <div class="privacy-section"><h3>2. Information We Collect</h3>
+            
+            <div class="important-notice">
+                <p><strong>Last updated:</strong> {{ current_date }}</p>
+                <p><strong>Controller:</strong> {{ site_name }} (individual), Nairobi, Kenya</p>
+                <p><strong>Contact:</strong> <a href="mailto:aiblogauto@gmail.com">aiblogauto@gmail.com</a></p>
+            </div>
+
+            <div class="privacy-section">
+                <h3>1. Introduction</h3>
+                <p>This Privacy Policy explains how <strong>{{ site_name }}</strong> ("the Site", "we", "us") collects, uses, and protects your personal data when you visit <a href="{{ base_url }}/">{{ site_name }}</a>.</p>
+                <p>We are committed to handling your data transparently and in accordance with applicable law, including the EU General Data Protection Regulation (GDPR) and the California Consumer Privacy Act (CCPA).</p>
+            </div>
+
+            <div class="privacy-section">
+                <h3>2. What Data We Collect</h3>
+                
+                <h4>2.1 Data you provide</h4>
                 <ul>
-                    <li><strong>Contact information</strong> when you contact us: name, email, message</li>
-                    <li><strong>Usage data</strong> via Google Analytics: pages visited, time on site, browser type</li>
-                    <li><strong>Cookie data</strong> from Google Analytics and Google AdSense</li>
-                </ul></div>
-            <div class="privacy-section"><h3>3. How We Use Information</h3>
-                <ul>
-                    <li>To respond to your inquiries</li>
-                    <li>To improve content based on what readers find useful</li>
-                    <li>To serve relevant advertisements via Google AdSense</li>
-                </ul></div>
-            <div class="privacy-section"><h3>4. Cookies</h3>
+                    <li><strong>Contact information:</strong> If you email us, we receive your name, email address, and message content.</li>
+                </ul>
+
+                <h4>2.2 Data collected automatically (with your consent)</h4>
+                <p>We collect this data <strong>only after you accept cookies</strong> via our cookie banner:</p>
                 <table>
-                    <thead><tr><th>Type</th><th>Purpose</th><th>Duration</th></tr></thead>
+                    <thead>
+                        <tr><th>Data type</th><th>Source</th><th>Purpose</th></tr>
+                    </thead>
                     <tbody>
-                        <tr><td>Analytics</td><td>Google Analytics usage tracking</td><td>Up to 2 years</td></tr>
-                        <tr><td>Advertising</td><td>Google AdSense ad targeting</td><td>Up to 1 year</td></tr>
+                        <tr><td>Page views, session duration, referrer</td><td>Google Analytics (GA4)</td><td>Understanding how readers use the site</td></tr>
+                        <tr><td>Browser type, device type, approximate location (country-level)</td><td>Google Analytics</td><td>Site performance and content improvement</td></tr>
+                        <tr><td>Ad interaction data</td><td>Google AdSense</td><td>Serving relevant advertisements</td></tr>
                     </tbody>
                 </table>
-                <p>You can disable cookies in your browser settings. Google's privacy policy: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></p></div>
-            <div class="privacy-section"><h3>5. Third Parties</h3>
-                <div class="important-notice"><p>We do not sell your personal information. We use Google Analytics and Google AdSense.</p></div></div>
-            <div class="highlight-box"><h3>6. Contact</h3>
-                <p>Email: <a href="mailto:aiblogauto@gmail.com" style="color:white;text-decoration:underline;">aiblogauto@gmail.com</a></p></div>
+
+                <h4>2.3 Data collected without your consent</h4>
+                <ul>
+                    <li><strong>Server logs</strong> generated by GitHub Pages (the hosting provider) may include IP addresses. These are retained by GitHub under <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">GitHub's Privacy Policy</a> and are not accessible to us.</li>
+                </ul>
+            </div>
+
+            <div class="privacy-section">
+                <h3>3. Legal Basis for Processing (GDPR)</h3>
+                <table>
+                    <thead>
+                        <tr><th>Processing activity</th><th>Legal basis (Article 6 GDPR)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Analytics cookies (GA4)</td><td>Consent (Art. 6(1)(a))</td></tr>
+                        <tr><td>Advertising cookies (AdSense)</td><td>Consent (Art. 6(1)(a))</td></tr>
+                        <tr><td>Responding to email enquiries</td><td>Legitimate interests (Art. 6(1)(f))</td></tr>
+                        <tr><td>Hosting (GitHub Pages server logs)</td><td>Legitimate interests — you browsing requires a server to log requests</td></tr>
+                    </tbody>
+                </table>
+                <p>You may withdraw your consent at any time by clicking "Reject non-essential" in the cookie banner or clearing your browser's cookies.</p>
+            </div>
+
+            <div class="privacy-section">
+                <h3>4. Cookies</h3>
+                <p>We use the following cookie categories:</p>
+                <table>
+                    <thead>
+                        <tr><th>Category</th><th>Examples</th><th>Duration</th><th>Consent required?</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Strictly necessary</td><td>Cookie consent preference (<code>kk_cookie_consent</code>)</td><td>1 year</td><td>No</td></tr>
+                        <tr><td>Analytics</td><td>Google Analytics (<code>_ga</code>, <code>_ga_*</code>)</td><td>Up to 2 years</td><td><strong>Yes</strong></td></tr>
+                        <tr><td>Advertising</td><td>Google AdSense (<code>IDE</code>, <code>test_cookie</code>, etc.)</td><td>Up to 1 year</td><td><strong>Yes</strong></td></tr>
+                    </tbody>
+                </table>
+                <p>You can manage or delete cookies at any time via your browser settings. Rejecting non-essential cookies will not affect your ability to read content on this site.</p>
+                <p>For more on how Google uses cookies: <a href="https://policies.google.com/technologies/cookies" target="_blank" rel="noopener">policies.google.com/technologies/cookies</a></p>
+            </div>
+
+            <div class="privacy-section">
+                <h3>5. Third-Party Services</h3>
+                <div class="important-notice"><p>We do not sell your personal data to any third party.</p></div>
+                <table>
+                    <thead>
+                        <tr><th>Service</th><th>Purpose</th><th>Privacy Policy</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Google Analytics (GA4)</strong></td><td>Usage analytics</td><td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></td></tr>
+                        <tr><td><strong>Google AdSense</strong></td><td>Display advertising</td><td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a></td></tr>
+                        <tr><td><strong>GitHub Pages</strong></td><td>Site hosting</td><td><a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener">docs.github.com/privacy</a></td></tr>
+                        <tr><td><strong>Twitter / X</strong></td><td>Social media link</td><td><a href="https://twitter.com/privacy" target="_blank" rel="noopener">twitter.com/privacy</a></td></tr>
+                        <tr><td><strong>LinkedIn</strong></td><td>Social media link</td><td><a href="https://www.linkedin.com/legal/privacy-policy" target="_blank" rel="noopener">linkedin.com/legal/privacy-policy</a></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="privacy-section">
+                <h3>6. Data Retention</h3>
+                <table>
+                    <thead>
+                        <tr><th>Data type</th><th>Retention period</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Email enquiries</td><td>Until the matter is resolved, then deleted</td></tr>
+                        <tr><td>Analytics data (GA4)</td><td>14 months (GA4 default)</td></tr>
+                        <tr><td>Cookie consent preference</td><td>1 year</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="privacy-section">
+                <h3>7. Your Rights</h3>
+                <p>Depending on your location, you may have the following rights:</p>
+                
+                <p><strong>Under GDPR (EU/EEA/UK residents):</strong></p>
+                <ul>
+                    <li><strong>Access:</strong> Request a copy of your personal data</li>
+                    <li><strong>Rectification:</strong> Correct inaccurate data</li>
+                    <li><strong>Erasure:</strong> Request deletion of your data ("right to be forgotten")</li>
+                    <li><strong>Restriction:</strong> Limit how we process your data</li>
+                    <li><strong>Portability:</strong> Receive your data in a machine-readable format</li>
+                    <li><strong>Object:</strong> Object to processing based on legitimate interests</li>
+                    <li><strong>Withdraw consent:</strong> At any time, for consent-based processing</li>
+                </ul>
+
+                <p><strong>Under CCPA (California residents):</strong></p>
+                <ul>
+                    <li><strong>Know:</strong> What personal data we collect and how we use it</li>
+                    <li><strong>Delete:</strong> Request deletion of personal information we have collected</li>
+                    <li><strong>Opt-out of sale:</strong> We do not sell personal information</li>
+                    <li><strong>Non-discrimination:</strong> We will not discriminate against you for exercising your rights</li>
+                </ul>
+                <p>To exercise any of these rights, email us at <a href="mailto:aiblogauto@gmail.com">aiblogauto@gmail.com</a>. We will respond within 30 days.</p>
+            </div>
+
+            <div class="privacy-section">
+                <h3>8. Advertising</h3>
+                <p>This site participates in the <strong>Google AdSense</strong> programme, which serves interest-based advertisements. To opt out of interest-based advertising by Google, visit <a href="https://adssettings.google.com/" target="_blank" rel="noopener">adssettings.google.com</a>. You can also opt out via the <a href="https://optout.networkadvertising.org/" target="_blank" rel="noopener">NAI opt-out tool</a> or <a href="https://optout.aboutads.info/" target="_blank" rel="noopener">DAA opt-out tool</a>.</p>
+            </div>
+
+            <div class="privacy-section">
+                <h3>9. Children's Privacy</h3>
+                <p>This site is not directed at children under 13 (or under 16 in the EU). We do not knowingly collect personal data from children.</p>
+            </div>
+
+            <div class="privacy-section">
+                <h3>10. Changes to This Policy</h3>
+                <p>We will post any changes to this page with an updated "Last updated" date. Significant changes will be noted at the top of this page.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h3>11. Contact</h3>
+                <p>For privacy-related enquiries or to exercise your rights:</p>
+                <p><strong>Email:</strong> <a href="mailto:aiblogauto@gmail.com" style="color:white;text-decoration:underline;">aiblogauto@gmail.com</a></p>
+                <p><strong>Location:</strong> Nairobi, Kenya (UTC+3)</p>
+                <p><strong>Response time:</strong> Within 5 business days</p>
+                <p style="margin-top:1rem;font-size:0.9rem;opacity:0.9;">If you are an EU resident and believe we have not addressed your concern, you have the right to lodge a complaint with your local data protection authority.</p>
+            </div>
+
             <p><strong>Last updated:</strong> {{ current_date }}</p>
         </article>
     </main>
