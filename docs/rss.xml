@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 08:43:39 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 09:33:37 +0000</lastBuildDate>
+    <item>
+      <title>AI ate my freelance rate (2026)</title>
+      <link>https://kubaik.github.io/ai-ate-my-freelance-rate-2026/</link>
+      <description>Freelance rates fell 28% since 2024 — here’s how AI tools turned hours into a discount lever and how to price outcomes instead</description>
+      <pubDate>Wed, 01 Jul 2026 09:33:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ate-my-freelance-rate-2026/</guid>
+    </item>
     <item>
       <title>Survive AI swipes with niche picks</title>
       <link>https://kubaik.github.io/survive-ai-swipes-with-niche-picks/</link>
@@ -138,13 +145,6 @@
       <description>Protect your 2026 salary against AI automation with 3 boring engineering skills — connection pooling, circuit breakers, and CDN cache control — proven to cut outages 90% and keep clients paying premium rates.</description>
       <pubDate>Tue, 30 Jun 2026 10:13:26 +0000</pubDate>
       <guid>https://kubaik.github.io/3-skills-to-outrun-ai-salary-cuts/</guid>
-    </item>
-    <item>
-      <title>Offline apps: cache first, sync later</title>
-      <link>https://kubaik.github.io/offline-apps-cache-first-sync-later/</link>
-      <description>Cut offline session failure 36% with SQLite cache and pull-then-push sync — conflict resolution, battery cost, and the clinic test that changed our approach.</description>
-      <pubDate>Tue, 30 Jun 2026 09:47:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/offline-apps-cache-first-sync-later/</guid>
     </item>
   </channel>
 </rss>
