@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T22:26:21.759630",
+  "built_at": "2026-07-01T23:05:35.625454",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3765,6 +3765,11 @@
       "slug": "offline-first-apps-when-2g-is-the-fast-lane",
       "title": "Offline-first apps: when 2G is the fast lane",
       "summary": "Most build offlinefirst guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. We needed to ship a payments app for merchants in Lagos, Nairobi, and Dar es Salaam where the average connection drops every 90 "
+    },
+    {
+      "slug": "portfolio-that-stands-out-when-everyone-uses-ai",
+      "title": "Portfolio that stands out when everyone uses AI",
+      "summary": "Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, I joined a hiring panel for a mid-level backend role at a Lagos-based fi"
     }
   ]
 }
