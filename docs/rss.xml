@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 15:40:35 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 12:42:20 +0000</lastBuildDate>
+    <item>
+      <title>3 things I swapped out to ship HTMX in 2026</title>
+      <link>https://kubaik.github.io/3-things-i-swapped-out-to-ship-htmx-in-2026/</link>
+      <description>Cut dashboard payload 96% with HTMX 2.0 — no new runtime, no build step, and real numbers from Lagos to Bangalore in 2026.</description>
+      <pubDate>Wed, 01 Jul 2026 12:42:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-things-i-swapped-out-to-ship-htmx-in-2026/</guid>
+    </item>
     <item>
       <title>Automate SBOMs before audits hit</title>
       <link>https://kubaik.github.io/automate-sboms-before-audits-hit/</link>
@@ -138,13 +145,6 @@
       <description>Freelance rates fell 22% for juniors in 2026 while top contractors charge €120–€180/hour for AI-assisted architecture. See the real pricing shifts, tools, and prompts that changed everything.</description>
       <pubDate>Tue, 30 Jun 2026 15:19:50 +0000</pubDate>
       <guid>https://kubaik.github.io/freelance-rates-2026-ai-killed-the-hourly-rate/</guid>
-    </item>
-    <item>
-      <title>Zero-downtime migrations: dual writes are dangerous</title>
-      <link>https://kubaik.github.io/zero-downtime-migrations-dual-writes-are-dangerous/</link>
-      <description>Zero-downtime migrations: dual writes fail 40% of the time — connection leaks, write skew, and rollback traps cost teams $120k+ in refunds. Backfill jobs and CDC reduce failure rates to 0.01%.</description>
-      <pubDate>Tue, 30 Jun 2026 13:58:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-downtime-migrations-dual-writes-are-dangerous/</guid>
     </item>
   </channel>
 </rss>

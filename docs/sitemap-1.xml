@@ -140,6 +140,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/3-things-i-swapped-out-to-ship-htmx-in-2026/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/3-vibe-coding-tools-i-regret-shipping-in-production/</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -5324,6 +5330,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/tag/django/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/tag/docker/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -5985,18 +5997,6 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/htmx20/</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/htmx2026/</loc>
-    <lastmod>2026-07-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/htmxvsreact/</loc>
     <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
