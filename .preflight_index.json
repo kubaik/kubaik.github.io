@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T05:30:50.781095",
+  "built_at": "2026-07-01T06:57:15.700716",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3670,6 +3670,11 @@
       "slug": "engineers-fail-ai-screens-the-real-tests-in-2026",
       "title": "Engineers fail AI screens: the real tests in 2026",
       "summary": "The official documentation for changed hiring is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Two years ago, we hired engineers "
+    },
+    {
+      "slug": "legacy-codebases-let-ai-own-the-boring-parts",
+      "title": "Legacy codebases? Let AI own the boring parts",
+      "summary": "The official documentation for use maintain is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Legacy codebases aren’t just old—the"
     }
   ]
 }
