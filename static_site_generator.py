@@ -262,7 +262,7 @@ Sitemap: {base_url}/rss.xml
             posts_data.append(post_dict)
 
         context = {
-            'site_name': config.get('site_name', 'Tech Blog'),
+            'site_name': config.get('site_name', 'Kubai Kevin'),
             'site_description': config.get('site_description', 'An AI-powered blog'),
             'base_path': config.get('base_path', ''),
             'base_url': config.get('base_url', ''),

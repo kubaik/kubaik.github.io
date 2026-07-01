@@ -3478,7 +3478,7 @@ def create_sample_config(config_path: str = "config.yaml"):
 
     # ── social_accounts: merge sub-keys, never overwrite existing values ─────
     social_defaults = {
-        "twitter":  "@KubaiKevin",
+        "twitter":  "https://twitter.com/KubaiKevin",
         "linkedin": "your-linkedin-page",
         "facebook": "your-facebook-page",
     }
