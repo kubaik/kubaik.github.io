@@ -180,9 +180,18 @@ jobs:
             --chunk-size 1000
 
           if [ -f ./docs/sitemap.xml ]; then
-            url_count=$(grep -o "<loc>" ./docs/sitemap.xml | wc -l)
-            echo "sitemap_url_count=${url_count}" >> $GITHUB_ENV
-            echo "✅ sitemap.xml generated with ${url_count} entries"
+            if grep -q "sitemapindex" ./docs/sitemap.xml; then
+              # sitemap.xml is an index (post count exceeded --chunk-size);
+              # count total URLs across the sub-sitemaps it points to.
+              url_count=$(cat ./docs/sitemap-*.xml 2>/dev/null | grep -o "<loc>" | wc -l)
+              sitemap_count=$(grep -o "<sitemap>" ./docs/sitemap.xml | wc -l)
+              echo "sitemap_url_count=${url_count}" >> $GITHUB_ENV
+              echo "✅ sitemap index generated: ${sitemap_count} sub-sitemaps, ${url_count} total URLs"
+            else
+              url_count=$(grep -o "<loc>" ./docs/sitemap.xml | wc -l)
+              echo "sitemap_url_count=${url_count}" >> $GITHUB_ENV
+              echo "✅ sitemap.xml generated with ${url_count} entries"
+            fi
           else
             echo "⚠️ WARNING: sitemap.xml was not created"
             echo "sitemap_url_count=0" >> $GITHUB_ENV
