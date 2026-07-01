@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T12:42:09.061735",
+  "built_at": "2026-07-01T12:46:43.384142",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3720,6 +3720,11 @@
       "slug": "3-things-i-swapped-out-to-ship-htmx-in-2026",
       "title": "3 things I swapped out to ship HTMX in 2026",
       "summary": "I ran into this htmx changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I joined a team shipping a B2B dashboard in e"
+    },
+    {
+      "slug": "biometrics-beat-passwords-passkey-2026-shift",
+      "title": "Biometrics beat passwords: passkey 2026 shift",
+      "summary": "Most passkeys changed guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026, our Jakarta-based social commerce app had 1.2 million monthly active u"
     }
   ]
 }

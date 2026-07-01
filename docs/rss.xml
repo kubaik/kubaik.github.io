@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Jul 2026 12:42:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 01 Jul 2026 12:46:54 +0000</lastBuildDate>
+    <item>
+      <title>Biometrics beat passwords: passkey 2026 shift</title>
+      <link>https://kubaik.github.io/biometrics-beat-passwords-passkey-2026-shift/</link>
+      <description>Cut failed logins 77% with passkeys — platform quirks, cost savings, and the exact code we used to roll out in 30 minutes.</description>
+      <pubDate>Wed, 01 Jul 2026 12:46:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/biometrics-beat-passwords-passkey-2026-shift/</guid>
+    </item>
     <item>
       <title>3 things I swapped out to ship HTMX in 2026</title>
       <link>https://kubaik.github.io/3-things-i-swapped-out-to-ship-htmx-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut PR merge time 61% by redefining AI’s role in reviews — the tooling, weights, and ownership rules that actually worked in 2026.</description>
       <pubDate>Tue, 30 Jun 2026 16:23:26 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-pair-coding-killed-pull-request-reviews/</guid>
-    </item>
-    <item>
-      <title>Freelance rates 2026: AI killed the hourly rate</title>
-      <link>https://kubaik.github.io/freelance-rates-2026-ai-killed-the-hourly-rate/</link>
-      <description>Freelance rates fell 22% for juniors in 2026 while top contractors charge €120–€180/hour for AI-assisted architecture. See the real pricing shifts, tools, and prompts that changed everything.</description>
-      <pubDate>Tue, 30 Jun 2026 15:19:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/freelance-rates-2026-ai-killed-the-hourly-rate/</guid>
     </item>
   </channel>
 </rss>
