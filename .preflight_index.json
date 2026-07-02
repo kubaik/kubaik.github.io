@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-02T07:02:53.744793",
+  "built_at": "2026-07-02T08:09:38.544864",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3790,6 +3790,11 @@
       "slug": "ai-agents-killed-dev-tool-sales-cycles",
       "title": "AI agents killed dev tool sales cycles",
       "summary": "Most building developer guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, we launched a static analysis tool for Python codebases called PyLint Pro."
+    },
+    {
+      "slug": "4-experiments-platforms-compared-why-flags-became-labs",
+      "title": "4 experiments platforms compared — why flags became labs",
+      "summary": "I ran into this feature flag problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026, I was hired by a Nairobi-based NGO t"
     }
   ]
 }
