@@ -191,30 +191,39 @@ class StaticSiteGenerator:
             print("Warning: no google_adsense_id in config — skipping ads.txt")
 
     def _generate_robots_txt(self):
+        """Generate a clean and effective robots.txt file."""
         config = self.blog_system.config
-        base_url = config.get('base_url', '')
-        content = f"""User-agent: *
-Allow: /
-Disallow: /static/admin/
+        base_url = config.get('base_url', '').rstrip('/')
 
-# Allow Google AdSense crawler explicitly
-User-agent: Mediapartners-Google
-Allow: /
+        content = f"""# robots.txt for {base_url}
+    # Generated automatically
 
-# Allow all Google bots
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 1
+    User-agent: *
+    Allow: /
 
-User-agent: Googlebot-Image
-Allow: /static/
+    # Explicitly allow Googlebot
+    User-agent: Googlebot
+    Allow: /
 
-Sitemap: {base_url}/sitemap.xml
-Sitemap: {base_url}/rss.xml
-"""
+    # Allow Google AdSense crawler
+    User-agent: Mediapartners-Google
+    Allow: /
+
+    # Block sensitive paths
+    User-agent: *
+    Disallow: /admin/
+    Disallow: /private/
+    Disallow: /.git/
+
+    # Sitemap
+    Sitemap: {base_url}/sitemap.xml
+    Sitemap: {base_url}/rss.xml
+    """
+
         with open("./docs/robots.txt", 'w', encoding='utf-8') as f:
             f.write(content)
-        print("Generated robots.txt")
+
+    print("Generated robots.txt")
 
     def _get_all_posts(self) -> List[BlogPost]:
         posts = []

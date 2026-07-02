@@ -1,18 +1,24 @@
-User-agent: *
-Allow: /
-Disallow: /static/admin/
+# robots.txt for https://kubaik.github.io
+    # Generated automatically
 
-# Allow Google AdSense crawler explicitly
-User-agent: Mediapartners-Google
-Allow: /
+    User-agent: *
+    Allow: /
 
-# Allow all Google bots
-User-agent: Googlebot
-Allow: /
-Crawl-delay: 1
+    # Explicitly allow Googlebot
+    User-agent: Googlebot
+    Allow: /
 
-User-agent: Googlebot-Image
-Allow: /static/
+    # Allow Google AdSense crawler
+    User-agent: Mediapartners-Google
+    Allow: /
 
-Sitemap: https://kubaik.github.io/sitemap.xml
-Sitemap: https://kubaik.github.io/rss.xml
+    # Block sensitive paths
+    User-agent: *
+    Disallow: /admin/
+    Disallow: /private/
+    Disallow: /.git/
+
+    # Sitemap
+    Sitemap: https://kubaik.github.io/sitemap.xml
+    Sitemap: https://kubaik.github.io/rss.xml
+    
