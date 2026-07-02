@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2026 16:55:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2026 17:01:22 +0000</lastBuildDate>
+    <item>
+      <title>Postgres 17 swallowed Redis, Kafka, Timescale</title>
+      <link>https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/</link>
+      <description>Cut AWS costs 56% by replacing Redis, Kafka, and TimescaleDB with Postgres 17 — connection pooling, pgmq benchmarks, and the schema mistake that cost us 3 days.</description>
+      <pubDate>Thu, 02 Jul 2026 17:01:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/</guid>
+    </item>
     <item>
       <title>M-Pesa Daraja 2.0: your 2026 migration checklist</title>
       <link>https://kubaik.github.io/m-pesa-daraja-20-your-2026-migration-checklist/</link>
@@ -138,13 +145,6 @@
       <description>Cut platform waste 38% by limiting knobs to 7 — Micro, Growth, and Enterprise IDP playbooks with real code and cost data from 2026 systems.</description>
       <pubDate>Wed, 01 Jul 2026 13:31:09 +0000</pubDate>
       <guid>https://kubaik.github.io/idp-costs-3-tiers-3-playbooks/</guid>
-    </item>
-    <item>
-      <title>Biometrics beat passwords: passkey 2026 shift</title>
-      <link>https://kubaik.github.io/biometrics-beat-passwords-passkey-2026-shift/</link>
-      <description>Cut failed logins 77% with passkeys — platform quirks, cost savings, and the exact code we used to roll out in 30 minutes.</description>
-      <pubDate>Wed, 01 Jul 2026 12:46:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/biometrics-beat-passwords-passkey-2026-shift/</guid>
     </item>
   </channel>
 </rss>

@@ -1880,12 +1880,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://kubaik.github.io/daraja-20-60-minute-migration-checklist/</loc>
-    <lastmod>2026-06-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/database-branches-neon-vs-planetscale-locally/</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -3076,6 +3070,12 @@
   <url>
     <loc>https://kubaik.github.io/postgres-17-replaces-redis-kafka-and-s3-in-our-stack/</loc>
     <lastmod>2026-06-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
