@@ -3368,6 +3368,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/replace-pinecone-with-postgres-for-vectors/</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/replace-pr-checklists-with-agents/</loc>
     <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -5991,12 +5997,6 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/greentech/</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/grpcvsrest/</loc>
     <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>

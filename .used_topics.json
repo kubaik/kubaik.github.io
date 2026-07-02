@@ -38,5 +38,6 @@
   "Postgres in 2026: the features that replaced three separate tools in our stack",
   "AI memory systems: giving your agent context that persists across sessions",
   "Pricing a developer tool in 2026: what the market teaches you fast",
-  "How I handle database schema migrations in a zero-downtime deployment pipeline"
+  "How I handle database schema migrations in a zero-downtime deployment pipeline",
+  "How pgvector changed our architecture: replacing Pinecone with what we already had"
 ]
