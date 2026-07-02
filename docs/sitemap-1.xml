@@ -218,6 +218,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/5-ai-stacks-that-level-the-payroll-gap-for-devs/</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/5-ai-tools-beating-higher-cost-teams-from-nairobi/</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -556,12 +562,6 @@
   <url>
     <loc>https://kubaik.github.io/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/</loc>
     <lastmod>2026-06-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/ai-agents-where-the-tokens-disappear/</loc>
-    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
