@@ -68,7 +68,7 @@ jobs:
 
           NOW_TS=$(date +%s)
           DIFF=$(( NOW_TS - LAST_TS ))
-          TWO_HOURS=$(( 2 * 60 * 60 ))
+          TWO_HOURS=$(( 5 * 60 ))
 
           echo "Last Auto-blog commit: $(date -u -d "@$LAST_TS" '+%Y-%m-%d %H:%M UTC')"
           echo "Now:                   $(date -u -d "@$NOW_TS" '+%Y-%m-%d %H:%M UTC')"
