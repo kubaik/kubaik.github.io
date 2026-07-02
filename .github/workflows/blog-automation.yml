@@ -15,6 +15,11 @@ on:
         required: false
         default: false
         type: boolean
+      skip_interval_check:
+        description: "Bypass the 2-hour minimum-interval check"
+        required: false
+        default: false
+        type: boolean
   push:
     branches: [main]
 env:
@@ -30,7 +35,57 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # ── Gate job — stops the whole workflow if the last successful
+  # run happened less than 2 hours ago, regardless of trigger type. ──
+  check-interval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    outputs:
+      proceed: ${{ steps.gate.outputs.proceed }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check time since last run
+        id: gate
+        run: |
+          # Bypass switch for manual runs that need to force it
+          if [ "${{ github.event.inputs.skip_interval_check }}" = "true" ]; then
+            echo "Manual override: skip_interval_check=true — proceeding"
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          LAST_TS=$(git log -1 --grep="^Auto-blog" --format=%ct main 2>/dev/null || true)
+
+          if [ -z "$LAST_TS" ]; then
+            echo "No prior Auto-blog commit found — proceeding"
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          NOW_TS=$(date +%s)
+          DIFF=$(( NOW_TS - LAST_TS ))
+          TWO_HOURS=$(( 2 * 60 * 60 ))
+
+          echo "Last Auto-blog commit: $(date -u -d "@$LAST_TS" '+%Y-%m-%d %H:%M UTC')"
+          echo "Now:                   $(date -u -d "@$NOW_TS" '+%Y-%m-%d %H:%M UTC')"
+          echo "Elapsed: ${DIFF}s (need >= ${TWO_HOURS}s)"
+
+          if [ "$DIFF" -ge "$TWO_HOURS" ]; then
+            echo "✅ 2+ hours have passed — proceeding"
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+          else
+            REMAINING=$(( TWO_HOURS - DIFF ))
+            echo "⏭️ Only ${DIFF}s since last run (${REMAINING}s remaining) — skipping this run"
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+          fi
+
   generate-and-deploy:
+    needs: check-interval
+    if: needs.check-interval.outputs.proceed == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment:
@@ -68,7 +123,7 @@ jobs:
                      CEREBRAS_API_KEY MISTRAL_API_KEY NVIDIA_API_KEY \
                      TWITTER_API_KEY TWITTER_API_SECRET \
                      TWITTER_ACCESS_TOKEN TWITTER_ACCESS_TOKEN_SECRET \
-                     TWITTER_BEARER_TOKEN BLOGGITHUB_TOKEN CLOUDFLARE_ACCOUNT_ID CLOUDFLARE_API_TOKEN ENABLE_TWITTER_POSTING; do
+                     TWITTER_BEARER_TOKEN BLOGGITHUB_TOKEN  ENABLE_TWITTER_POSTING; do
             if [ -z "${!VAR}" ]; then
               echo "WARNING: $VAR is not set"
             else
@@ -88,8 +143,6 @@ jobs:
           TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
           TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
           BLOGGITHUB_TOKEN: ${{ secrets.BLOGGITHUB_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           ENABLE_TWITTER_POSTING: ${{ secrets.ENABLE_TWITTER_POSTING }}
 
       - name: Resolve Twitter posting flag
@@ -146,8 +199,6 @@ jobs:
           TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
           TWITTER_BEARER_TOKEN: ${{ secrets.TWITTER_BEARER_TOKEN }}
           BLOGGITHUB_TOKEN: ${{ secrets.BLOGGITHUB_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           ENABLE_TWITTER_POSTING: ${{ steps.twitter_flag.outputs.effective_flag }}
         run: |
           python blog_system.py auto || {

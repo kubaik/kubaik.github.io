@@ -1526,15 +1526,13 @@ class BlogSystem:
         self.nvidia_key = os.getenv("NVIDIA_API_KEY")
         self.gemini_key = os.getenv("GEMINI_API_KEY")
         self.github_token = os.getenv("BLOGGITHUB_TOKEN")
-        self.cloudflare_token = os.getenv("CLOUDFLARE_API_TOKEN")
-        self.cloudflare_account_id = os.getenv("CLOUDFLARE_ACCOUNT_ID")
 
         self._log_key_status()
 
         self.api_key = (
             self.groq_key or self.openrouter_key or self.cerebras_key
             or self.mistral_key or self.nvidia_key or self.gemini_key
-            or self.github_token or self.cloudflare_token
+            or self.github_token
         )
 
         self.monetization = MonetizationManager(config)
@@ -1558,12 +1556,6 @@ class BlogSystem:
             f"  Gemini:         {'configured' if self.gemini_key           else 'NOT SET'}")
         print(
             f"  GitHub Models:  {'configured' if self.github_token         else 'NOT SET'}")
-        cf_status = (
-            "configured" if (self.cloudflare_token and self.cloudflare_account_id)
-            else "PARTIAL — need both CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID" if (self.cloudflare_token or self.cloudflare_account_id)
-            else "NOT SET"
-        )
-        print(f"  Cloudflare AI:  {cf_status}")
         print("======================")
 
     # ─────────────────────────────────────────────────────────────
@@ -1951,8 +1943,6 @@ class BlogSystem:
             providers.append(("OpenRouter",       self._call_openrouter))
         if self.groq_key:
             providers.append(("Groq",             self._call_groq))
-        if self.cloudflare_token and self.cloudflare_account_id:
-            providers.append(("Cloudflare AI",    self._call_cloudflare))
         if self.cerebras_key:
             providers.append(("Cerebras",         self._call_cerebras))
         if self.gemini_key:
@@ -2240,35 +2230,6 @@ class BlogSystem:
             except asyncio.TimeoutError:
                 raise Exception("GitHub Models timed out.")
         raise Exception("GitHub Models unavailable.")
-
-    async def _call_cloudflare(self, messages: List[Dict], max_tokens: int) -> str:
-        RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {"Authorization": f"Bearer {self.cloudflare_token}",
-                   "Content-Type": "application/json"}
-        data = {"model": _CF_MODEL, "messages": messages,
-                "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
-        url = f"https://api.cloudflare.com/client/v4/accounts/{self.cloudflare_account_id}/ai/v1/chat/completions"
-        waits = [2, 5, 10]
-        for attempt in range(1, 3):
-            try:
-                async with aiohttp.ClientSession() as s:
-                    async with s.post(url, headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=120)) as r:
-                        if r.status == 200:
-                            return (await r.json())["choices"][0]["message"]["content"]
-                        if r.status in RETRYABLE and attempt < 2:
-                            await asyncio.sleep(waits[attempt - 1])
-                            continue
-                        body = await r.text()
-                        raise Exception(
-                            f"Cloudflare AI {r.status}: {body[:250]}")
-            except aiohttp.ClientConnectionError as e:
-                if attempt < 2:
-                    await asyncio.sleep(waits[attempt - 1])
-                else:
-                    raise Exception(f"Cloudflare AI connection failed: {e}")
-            except asyncio.TimeoutError:
-                raise Exception("Cloudflare AI timed out.")
-        raise Exception("Cloudflare AI unavailable.")
 
     # ─────────────────────────────────────────────────────────────
     # CONTENT GENERATION
