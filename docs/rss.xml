@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2026 08:41:49 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2026 08:57:44 +0000</lastBuildDate>
+    <item>
+      <title>Breakdown: Nairobi SaaS infra costs 2026</title>
+      <link>https://kubaik.github.io/breakdown-nairobi-saas-infra-costs-2026/</link>
+      <description>SaaS in Nairobi costs $1.2k/month in 2026 — real cost breakdown with AWS services, 30-day metrics, and the storage IOPS surprise that cost us 30%.</description>
+      <pubDate>Thu, 02 Jul 2026 08:57:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/breakdown-nairobi-saas-infra-costs-2026/</guid>
+    </item>
     <item>
       <title>AI tools rewrote my engineering rules</title>
       <link>https://kubaik.github.io/ai-tools-rewrote-my-engineering-rules/</link>
@@ -138,13 +145,6 @@
       <description>Earn $500/month in 2026 without SaaS — 7</description>
       <pubDate>Wed, 01 Jul 2026 11:01:01 +0000</pubDate>
       <guid>https://kubaik.github.io/7-ways-to-earn-extra-in-2026-without-shipping-saas/</guid>
-    </item>
-    <item>
-      <title>AI ate my freelance rate (2026)</title>
-      <link>https://kubaik.github.io/ai-ate-my-freelance-rate-2026/</link>
-      <description>Freelance rates fell 28% since 2024 — here’s how AI tools turned hours into a discount lever and how to price outcomes instead</description>
-      <pubDate>Wed, 01 Jul 2026 09:33:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ate-my-freelance-rate-2026/</guid>
     </item>
   </channel>
 </rss>
