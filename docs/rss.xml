@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2026 17:15:20 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2026 17:53:37 +0000</lastBuildDate>
+    <item>
+      <title>Meter dev-tool pricing in 2026</title>
+      <link>https://kubaik.github.io/meter-dev-tool-pricing-in-2026/</link>
+      <description>Cut dev tool churn 3× with usage pricing — $0.043 per active user, $1,124 ARR from 187 users, and a free-to-paid jump of 2.3×</description>
+      <pubDate>Thu, 02 Jul 2026 17:53:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/meter-dev-tool-pricing-in-2026/</guid>
+    </item>
     <item>
       <title>AI memory systems: context that survives sessions</title>
       <link>https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/</link>
@@ -138,13 +145,6 @@
       <description>Cut false positives 60% with 9 testing methods for AI code — no AI mocks, just real behavior. Property-based, contract, fuzz, and chaos testing explained with Python 3.11 and Node 20 LTS examples.</description>
       <pubDate>Wed, 01 Jul 2026 18:05:47 +0000</pubDate>
       <guid>https://kubaik.github.io/test-ai-code-without-testing-the-ai/</guid>
-    </item>
-    <item>
-      <title>Trim AWS IAM policies in one afternoon</title>
-      <link>https://kubaik.github.io/trim-aws-iam-policies-in-one-afternoon/</link>
-      <description>Cut AWS permission errors 87% and save 11% on your bill with least privilege IAM done in 60 minutes — CloudTrail, Access Analyzer, and a 3-step process.</description>
-      <pubDate>Wed, 01 Jul 2026 16:19:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/trim-aws-iam-policies-in-one-afternoon/</guid>
     </item>
   </channel>
 </rss>
