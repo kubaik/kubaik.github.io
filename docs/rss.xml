@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2026 14:08:12 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2026 16:03:31 +0000</lastBuildDate>
+    <item>
+      <title>Build self-healing pipelines with AI</title>
+      <link>https://kubaik.github.io/build-self-healing-pipelines-with-ai/</link>
+      <description>AI agents cut false positives 5× in self-healing pipelines — when to use CrewAI 0.3 vs GitHub Actions 2026, with benchmarks, costs, and the 80/20 rule.</description>
+      <pubDate>Thu, 02 Jul 2026 16:03:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/build-self-healing-pipelines-with-ai/</guid>
+    </item>
     <item>
       <title>AI chat&apos;s hidden WCAG fails</title>
       <link>https://kubaik.github.io/ai-chats-hidden-wcag-fails/</link>
@@ -138,13 +145,6 @@
       <description>Cut dashboard payload 96% with HTMX 2.0 — no new runtime, no build step, and real numbers from Lagos to Bangalore in 2026.</description>
       <pubDate>Wed, 01 Jul 2026 12:42:05 +0000</pubDate>
       <guid>https://kubaik.github.io/3-things-i-swapped-out-to-ship-htmx-in-2026/</guid>
-    </item>
-    <item>
-      <title>Automate SBOMs before audits hit</title>
-      <link>https://kubaik.github.io/automate-sboms-before-audits-hit/</link>
-      <description>Cut audit time 80% with Syft 1.12 SBOMs — SPDX 2.3, CycloneDX 1.5, and Cosign attestations in your Docker pipeline</description>
-      <pubDate>Wed, 01 Jul 2026 12:30:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/automate-sboms-before-audits-hit/</guid>
     </item>
   </channel>
 </rss>

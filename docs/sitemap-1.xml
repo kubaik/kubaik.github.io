@@ -1652,6 +1652,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/build-self-healing-pipelines-with-ai/</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/build-the-30-minute-deployment-road/</loc>
     <lastmod>2026-06-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -5991,12 +5997,6 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/hikaricpconfiguration/</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/hikaricppoolsize/</loc>
     <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
