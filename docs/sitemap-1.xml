@@ -974,6 +974,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-ops-pagerduty-vs-firehydrant-for-oncall/</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ai-ops-pagerduty-vs-opsgenie-which-burns-your-team/</loc>
     <lastmod>2026-06-29</lastmod>
     <changefreq>weekly</changefreq>
@@ -2728,12 +2734,6 @@
   <url>
     <loc>https://kubaik.github.io/multi-agent-systems-break-first/</loc>
     <lastmod>2026-06-08</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/nairobi-saas-infra-costs-real-2026-stack/</loc>
-    <lastmod>2026-06-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

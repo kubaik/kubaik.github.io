@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-02T08:57:32.840111",
+  "built_at": "2026-07-02T12:04:59.037811",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3810,6 +3810,11 @@
       "slug": "breakdown-nairobi-saas-infra-costs-2026",
       "title": "Breakdown: Nairobi SaaS infra costs 2026",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) I spent three weeks in late 2026 trying to forecast our AWS bill for a Nairobi-based Saa"
+    },
+    {
+      "slug": "ai-ops-pagerduty-vs-firehydrant-for-oncall",
+      "title": "AI ops: PagerDuty vs FireHydrant for oncall",
+      "summary": "I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026 on-call engineers juggle 120+ alerts a day on average, up "
     }
   ]
 }

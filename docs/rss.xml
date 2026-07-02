@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2026 14:57:43 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2026 12:05:10 +0000</lastBuildDate>
+    <item>
+      <title>AI ops: PagerDuty vs FireHydrant for oncall</title>
+      <link>https://kubaik.github.io/ai-ops-pagerduty-vs-firehydrant-for-oncall/</link>
+      <description>Cut on-call false positives 40% with PagerDuty AI Incident Response vs FireHydrant AI Auto-Resolve in 2026 — real benchmarks, cost breakdowns, and the exact decision framework we use.</description>
+      <pubDate>Thu, 02 Jul 2026 12:04:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ops-pagerduty-vs-firehydrant-for-oncall/</guid>
+    </item>
     <item>
       <title>Breakdown: Nairobi SaaS infra costs 2026</title>
       <link>https://kubaik.github.io/breakdown-nairobi-saas-infra-costs-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI agent postmortem time 61% with LLM graphs — embedding drift, tool-use side effects, and the 12% false positive trap most teams miss.</description>
       <pubDate>Wed, 01 Jul 2026 12:23:14 +0000</pubDate>
       <guid>https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/</guid>
-    </item>
-    <item>
-      <title>7 ways to earn extra in 2026 without shipping SaaS</title>
-      <link>https://kubaik.github.io/7-ways-to-earn-extra-in-2026-without-shipping-saas/</link>
-      <description>Earn $500/month in 2026 without SaaS — 7</description>
-      <pubDate>Wed, 01 Jul 2026 11:01:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-ways-to-earn-extra-in-2026-without-shipping-saas/</guid>
     </item>
   </channel>
 </rss>
