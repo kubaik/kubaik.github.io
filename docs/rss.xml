@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2026 15:34:42 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2026 12:41:08 +0000</lastBuildDate>
+    <item>
+      <title>AI chat&apos;s hidden WCAG fails</title>
+      <link>https://kubaik.github.io/ai-chats-hidden-wcag-fails/</link>
+      <description>WCAG 1.4.3 requires 4.5:1 contrast for normal text, but AI models often output markdown with light gray code blocks or soft pastel colors that fail this…</description>
+      <pubDate>Thu, 02 Jul 2026 12:40:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-chats-hidden-wcag-fails/</guid>
+    </item>
     <item>
       <title>AI ops: PagerDuty vs FireHydrant for oncall</title>
       <link>https://kubaik.github.io/ai-ops-pagerduty-vs-firehydrant-for-oncall/</link>
@@ -138,13 +145,6 @@
       <description>Cut audit time 80% with Syft 1.12 SBOMs — SPDX 2.3, CycloneDX 1.5, and Cosign attestations in your Docker pipeline</description>
       <pubDate>Wed, 01 Jul 2026 12:30:25 +0000</pubDate>
       <guid>https://kubaik.github.io/automate-sboms-before-audits-hit/</guid>
-    </item>
-    <item>
-      <title>Debug AI agents: failures aren&apos;t just bugs</title>
-      <link>https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/</link>
-      <description>Cut AI agent postmortem time 61% with LLM graphs — embedding drift, tool-use side effects, and the 12% false positive trap most teams miss.</description>
-      <pubDate>Wed, 01 Jul 2026 12:23:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/</guid>
     </item>
   </channel>
 </rss>
