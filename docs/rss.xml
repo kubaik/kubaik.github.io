@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2026 05:01:22 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2026 05:06:19 +0000</lastBuildDate>
+    <item>
+      <title>Block API abuse in 2026 before it blocks…</title>
+      <link>https://kubaik.github.io/block-api-abuse-in-2026-before-it-blocks/</link>
+      <description>Cut API abuse 98% with proof-of-work and silent failures — response time down 73%, logging costs down 75%, and AWS bill down 65%. How we did it and what broke first.</description>
+      <pubDate>Thu, 02 Jul 2026 05:06:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/block-api-abuse-in-2026-before-it-blocks/</guid>
+    </item>
     <item>
       <title>5 AI stacks that level the payroll gap for devs</title>
       <link>https://kubaik.github.io/5-ai-stacks-that-level-the-payroll-gap-for-devs/</link>
@@ -138,13 +145,6 @@
       <description>Cut production incidents from 8 to 0 by changing how we used AI pair programming — ownership rules, audit logs, and a pre-commit hook that worked in 2026</description>
       <pubDate>Wed, 01 Jul 2026 07:56:24 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-pair-programming-how-we-lost-ownership-at-3am/</guid>
-    </item>
-    <item>
-      <title>Legacy codebases? Let AI own the boring parts</title>
-      <link>https://kubaik.github.io/legacy-codebases-let-ai-own-the-boring-parts/</link>
-      <description>Cut legacy code review time 70% with AI — real code, real benchmarks, and the mistakes most teams repeat. Learn how to use LLMs without hallucinations or security risks.</description>
-      <pubDate>Wed, 01 Jul 2026 06:57:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/legacy-codebases-let-ai-own-the-boring-parts/</guid>
     </item>
   </channel>
 </rss>

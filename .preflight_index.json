@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-02T02:15:44.217852",
+  "built_at": "2026-07-02T05:06:07.923824",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3780,6 +3780,11 @@
       "slug": "5-ai-stacks-that-level-the-payroll-gap-for-devs",
       "title": "5 AI stacks that level the payroll gap for devs",
       "summary": "I ran into this east african problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In 2026 I joined a Nairobi fintech that proce"
+    },
+    {
+      "slug": "block-api-abuse-in-2026-before-it-blocks",
+      "title": "Block API abuse in 2026 before it blocks…",
+      "summary": "Most api security guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026 we ran a small e-commerce API behind AWS API Gateway with Lambda (Node 20 L"
     }
   ]
 }
