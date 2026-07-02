@@ -914,12 +914,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://kubaik.github.io/ai-killed-our-dev-tool-sales-until-we-fixed-this/</loc>
-    <lastmod>2026-06-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/ai-killed-these-micro-saas-niches/</loc>
     <lastmod>2026-06-09</lastmod>
     <changefreq>weekly</changefreq>
@@ -2632,6 +2626,12 @@
   <url>
     <loc>https://kubaik.github.io/micro-saas-niches-eaten-by-ai-in-2026/</loc>
     <lastmod>2026-06-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/micro-saas-niches-surviving-ai-commoditisation/</loc>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -5048,6 +5048,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/tag/compliancemicrosaas/</loc>
+    <lastmod>2026-07-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/tag/computer-vision/</loc>
     <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -5991,12 +5997,6 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/hireremotedevelopers/</loc>
-    <lastmod>2026-07-02</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/how-to-get-promoted-in-tech/</loc>
     <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
