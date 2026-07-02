@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-02T08:27:54.714000",
+  "built_at": "2026-07-02T08:41:36.337038",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3800,6 +3800,11 @@
       "slug": "micro-saas-niches-surviving-ai-commoditisation",
       "title": "Micro-SaaS niches surviving AI commoditisation",
       "summary": "A colleague asked me about microsaas 2026 during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In"
+    },
+    {
+      "slug": "ai-tools-rewrote-my-engineering-rules",
+      "title": "AI tools rewrote my engineering rules",
+      "summary": "A colleague asked me about engineering principles during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomp"
     }
   ]
 }
