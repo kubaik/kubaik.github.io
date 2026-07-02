@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-01T23:05:35.625454",
+  "built_at": "2026-07-02T00:17:16.866503",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3770,6 +3770,11 @@
       "slug": "portfolio-that-stands-out-when-everyone-uses-ai",
       "title": "Portfolio that stands out when everyone uses AI",
       "summary": "Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In late 2026, I joined a hiring panel for a mid-level backend role at a Lagos-based fi"
+    },
+    {
+      "slug": "ai-agents-where-the-tokens-disappear",
+      "title": "AI agents: where the tokens disappear",
+      "summary": "The official documentation for hidden costs is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs The marketing pages for AI agents pr"
     }
   ]
 }
