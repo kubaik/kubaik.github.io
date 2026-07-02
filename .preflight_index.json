@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-02T19:12:10.459821",
+  "built_at": "2026-07-02T20:27:26.373132",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3855,6 +3855,11 @@
       "slug": "replace-pinecone-with-postgres-for-vectors",
       "title": "Replace Pinecone with Postgres for vectors",
       "summary": "A colleague asked me about pgvector changed during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) "
+    },
+    {
+      "slug": "ai-scanners-overlook-real-vulns",
+      "title": "AI scanners overlook real vulns",
+      "summary": "The short version: the conventional advice on being used is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI-powered vulnerability scanners are great at finding typos, missing braces, and libra"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2026 20:22:34 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2026 20:27:36 +0000</lastBuildDate>
+    <item>
+      <title>AI scanners overlook real vulns</title>
+      <link>https://kubaik.github.io/ai-scanners-overlook-real-vulns/</link>
+      <description>Cut false positives 60% using AI scanners the right way — combine LLM rules with CodeQL 2.14, AFL++ fuzzing, and runtime monitoring to catch real vulnerabilities instead of noise.</description>
+      <pubDate>Thu, 02 Jul 2026 20:27:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-scanners-overlook-real-vulns/</guid>
+    </item>
     <item>
       <title>Replace Pinecone with Postgres for vectors</title>
       <link>https://kubaik.github.io/replace-pinecone-with-postgres-for-vectors/</link>
@@ -138,13 +145,6 @@
       <description>Cut zero-trust setup time 70% with Tailscale + Cloudflare Tunnel — identity policies, 20ms latency, and $50/month pricing breakdown.</description>
       <pubDate>Wed, 01 Jul 2026 21:20:34 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-on-50month-3-tools-that-actually-work/</guid>
-    </item>
-    <item>
-      <title>Failed AI wrappers vs. the 3 that worked in 2026</title>
-      <link>https://kubaik.github.io/failed-ai-wrappers-vs-the-3-that-worked-in-2026/</link>
-      <description>4 AI wrappers survived in 2026 — latency overhead, cost delta, and model swap time data included. Use this to pick the right wrapper before burning runway.</description>
-      <pubDate>Wed, 01 Jul 2026 20:12:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/failed-ai-wrappers-vs-the-3-that-worked-in-2026/</guid>
     </item>
   </channel>
 </rss>
