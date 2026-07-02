@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2026 22:11:29 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2026 22:16:51 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate salary 2026 with AI resume tool</title>
+      <link>https://kubaik.github.io/negotiate-salary-2026-with-ai-resume-tool/</link>
+      <description>Cut AI clawback risk in 2026 offers — 7% higher total comp with redline and benchmark sheet</description>
+      <pubDate>Thu, 02 Jul 2026 22:16:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-salary-2026-with-ai-resume-tool/</guid>
+    </item>
     <item>
       <title>Prompt injection: the 0-day you overlooked</title>
       <link>https://kubaik.github.io/prompt-injection-the-0-day-you-overlooked/</link>
@@ -138,13 +145,6 @@
       <description>Portfolio that stands out when everyone uses AI in 2026 — constraint-first projects, 3 concrete numbers, and a hiring rubric that cut time-to-hire 39% and improved signal-to-noise 3.7x.</description>
       <pubDate>Wed, 01 Jul 2026 23:05:32 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-that-stands-out-when-everyone-uses-ai/</guid>
-    </item>
-    <item>
-      <title>Offline-first apps: when 2G is the fast lane</title>
-      <link>https://kubaik.github.io/offline-first-apps-when-2g-is-the-fast-lane/</link>
-      <description>Cut duplicate transactions 99% with offline-first payments in unreliable markets — WatermelonDB 1.5.0, idempotency keys, and OS-aware sync worker. Real numbers from 1,240 merchants in Lagos, Nairobi, and Dar es Salaam.</description>
-      <pubDate>Wed, 01 Jul 2026 22:26:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/offline-first-apps-when-2g-is-the-fast-lane/</guid>
     </item>
   </channel>
 </rss>
