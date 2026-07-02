@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-02T20:27:26.373132",
+  "built_at": "2026-07-02T20:57:11.372070",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3860,6 +3860,11 @@
       "slug": "ai-scanners-overlook-real-vulns",
       "title": "AI scanners overlook real vulns",
       "summary": "The short version: the conventional advice on being used is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI-powered vulnerability scanners are great at finding typos, missing braces, and libra"
+    },
+    {
+      "slug": "prompt-injection-the-0-day-you-overlooked",
+      "title": "Prompt injection: the 0-day you overlooked",
+      "summary": "The official documentation for prompt injection is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs I once shipped a chatbot that lo"
     }
   ]
 }

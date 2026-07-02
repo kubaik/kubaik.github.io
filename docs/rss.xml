@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 02 Jul 2026 20:27:36 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 02 Jul 2026 20:57:23 +0000</lastBuildDate>
+    <item>
+      <title>Prompt injection: the 0-day you overlooked</title>
+      <link>https://kubaik.github.io/prompt-injection-the-0-day-you-overlooked/</link>
+      <description>Prompt injection attacks cost €18k+ per breach in 2026 — here’s the exact pipeline teams use to stop them, with latency benchmarks and code you can deploy today.</description>
+      <pubDate>Thu, 02 Jul 2026 20:57:08 +0000</pubDate>
+      <guid>https://kubaik.github.io/prompt-injection-the-0-day-you-overlooked/</guid>
+    </item>
     <item>
       <title>AI scanners overlook real vulns</title>
       <link>https://kubaik.github.io/ai-scanners-overlook-real-vulns/</link>
@@ -138,13 +145,6 @@
       <description>Cut duplicate transactions 99% with offline-first payments in unreliable markets — WatermelonDB 1.5.0, idempotency keys, and OS-aware sync worker. Real numbers from 1,240 merchants in Lagos, Nairobi, and Dar es Salaam.</description>
       <pubDate>Wed, 01 Jul 2026 22:26:18 +0000</pubDate>
       <guid>https://kubaik.github.io/offline-first-apps-when-2g-is-the-fast-lane/</guid>
-    </item>
-    <item>
-      <title>Zero-trust on $50/month: 3 tools that actually work</title>
-      <link>https://kubaik.github.io/zero-trust-on-50month-3-tools-that-actually-work/</link>
-      <description>Cut zero-trust setup time 70% with Tailscale + Cloudflare Tunnel — identity policies, 20ms latency, and $50/month pricing breakdown.</description>
-      <pubDate>Wed, 01 Jul 2026 21:20:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-on-50month-3-tools-that-actually-work/</guid>
     </item>
   </channel>
 </rss>
