@@ -6,8 +6,11 @@ from jinja2 import Template, Environment, BaseLoader
 from datetime import datetime
 from typing import Dict, List
 from pathlib import Path
+from collections import Counter
 import markdown as md
 import json
+import math
+import re
 
 
 import html as _html_stdlib
@@ -56,6 +59,80 @@ def _safe_excerpt(meta_description: str, content: str, title: str = "",
 
     fallback = f"Practical guide to {title}." if title else text[:max_len]
     return _html_stdlib.escape(fallback, quote=True)
+
+
+_RELATED_STOP_WORDS = frozenset({
+    "the", "a", "an", "and", "or", "but", "in", "on", "at", "to",
+    "for", "of", "with", "by", "from", "is", "are", "was", "were",
+    "be", "been", "being", "have", "has", "had", "do", "does", "did",
+    "will", "would", "could", "should", "may", "might", "can", "that",
+    "this", "these", "those", "it", "its", "we", "you", "your", "our",
+    "they", "their", "what", "which", "who", "when", "where", "how",
+    "not", "no", "so", "if", "as", "than", "then", "about", "up",
+    "out", "into", "more", "also", "just", "after", "before", "over",
+    "some", "any", "all", "each", "both", "between", "through",
+})
+
+
+def _tokenize_for_similarity(text: str) -> List[str]:
+    return re.findall(r"\b[a-z][a-z']{1,}\b", (text or "").lower())
+
+
+def _build_tfidf_corpus(posts: List[BlogPost]) -> Dict[str, Dict[str, float]]:
+    """Build a TF-IDF vector per post for content-based related-article
+    selection.
+
+    Previously, "Related Articles" were chosen purely by shared-tag count,
+    which meant every post with the same primary tag surfaced the same
+    handful of related posts — shallow, repetitive internal linking across
+    645 articles. This builds real TF-IDF vectors (title terms weighted
+    3x over body terms, since titles are the strongest topical signal)
+    so related posts are ranked by actual content similarity instead.
+    """
+    doc_tokens: Dict[str, List[str]] = {}
+    for p in posts:
+        title_tokens = _tokenize_for_similarity(p.title) * 3
+        body_tokens = _tokenize_for_similarity(p.content)
+        tokens = [t for t in title_tokens + body_tokens
+                  if t not in _RELATED_STOP_WORDS]
+        doc_tokens[p.slug] = tokens
+
+    doc_freq: Counter = Counter()
+    for tokens in doc_tokens.values():
+        doc_freq.update(set(tokens))
+
+    n_docs = max(len(doc_tokens), 1)
+    idf = {
+        term: math.log((n_docs + 1) / (freq + 1)) + 1
+        for term, freq in doc_freq.items()
+    }
+
+    vectors: Dict[str, Dict[str, float]] = {}
+    for slug, tokens in doc_tokens.items():
+        if not tokens:
+            vectors[slug] = {}
+            continue
+        term_freq = Counter(tokens)
+        total = len(tokens)
+        vectors[slug] = {
+            term: (count / total) * idf.get(term, 0.0)
+            for term, count in term_freq.items()
+        }
+    return vectors
+
+
+def _cosine_similarity(v1: Dict[str, float], v2: Dict[str, float]) -> float:
+    if not v1 or not v2:
+        return 0.0
+    common = set(v1) & set(v2)
+    if not common:
+        return 0.0
+    dot = sum(v1[k] * v2[k] for k in common)
+    mag1 = math.sqrt(sum(x * x for x in v1.values()))
+    mag2 = math.sqrt(sum(x * x for x in v2.values()))
+    if mag1 == 0 or mag2 == 0:
+        return 0.0
+    return dot / (mag1 * mag2)
 
 
 def _tag_definition(tag: str) -> str:
