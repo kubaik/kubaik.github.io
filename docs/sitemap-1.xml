@@ -722,12 +722,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://kubaik.github.io/ai-code-debt-the-silent-killer-in-2026/</loc>
-    <lastmod>2026-06-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/ai-code-review-the-20-trap-in-production/</loc>
     <lastmod>2026-06-29</lastmod>
     <changefreq>weekly</changefreq>
@@ -1438,6 +1432,12 @@
   <url>
     <loc>https://kubaik.github.io/attack-vectors-hiding-in-ais-data-pipelines/</loc>
     <lastmod>2026-06-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/audit-ai-code-onboarding-without-the-burn/</loc>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

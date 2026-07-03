@@ -49,5 +49,6 @@
   "How Signals changed state management and whether it matters outside of frameworks",
   "Why async Python still surprises people and how to stop getting burned by it",
   "How AI UI generation tools changed my frontend workflow (and what they still cannot do)",
-  "Technical debt in 2026: the new category created by AI-generated code"
+  "Technical debt in 2026: the new category created by AI-generated code",
+  "How to onboard a developer to a partially AI-generated codebase"
 ]

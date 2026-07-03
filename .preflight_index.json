@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T08:06:16.554276",
+  "built_at": "2026-07-03T08:17:59.342404",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3905,6 +3905,11 @@
       "slug": "47-ai-code-debt-in-2026",
       "title": "47% AI code debt in 2026",
       "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 47% of new production code in mid-size tech companies is AI-ge"
+    },
+    {
+      "slug": "audit-ai-code-onboarding-without-the-burn",
+      "title": "Audit AI code: onboarding without the burn",
+      "summary": "I've seen the same onboard developer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 68% of new hires start on codebases where 40-70% of critica"
     }
   ]
 }
