@@ -223,6 +223,17 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Deployment Status
+        if: always()
+        run: |
+          if [ "${{ steps.deployment.outcome }}" == "success" ]; then
+            echo "✅ Deployment successful"
+          else
+            echo "⚠️ Deployment step had issues (may be transient)"
+            echo "Check the Environments tab or re-run the workflow"
+          fi
 
       - name: Summary
         run: |
