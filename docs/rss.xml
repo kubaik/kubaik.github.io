@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 17:16:50 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 14:24:03 +0000</lastBuildDate>
+    <item>
+      <title>WASM ML models: keep dev speed at the edge</title>
+      <link>https://kubaik.github.io/wasm-ml-models-keep-dev-speed-at-the-edge/</link>
+      <description>Cut edge deployment time 95% with WASM inference engines — keep Python tooling, ship 11MB artifacts, and slash cold starts from 47s to 1.8s on Jetson Orin Nano</description>
+      <pubDate>Fri, 03 Jul 2026 14:23:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/wasm-ml-models-keep-dev-speed-at-the-edge/</guid>
+    </item>
     <item>
       <title>CI/CD for Django in 20ms Africa networks</title>
       <link>https://kubaik.github.io/cicd-for-django-in-20ms-africa-networks/</link>
@@ -138,13 +145,6 @@
       <description>Cut state update latency 75% with Signals in 2026 — Preact Signals Core 1.7.0 runs in React, Node, and Workers with 0.8 ms median updates and 3.2 kB bundle.</description>
       <pubDate>Fri, 03 Jul 2026 04:50:42 +0000</pubDate>
       <guid>https://kubaik.github.io/signals-5-state-tricks-that-broke-my-app/</guid>
-    </item>
-    <item>
-      <title>Stop false positives in CI scanning now</title>
-      <link>https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/</link>
-      <description>Cut false positives 97% with one triage pipeline — Snyk CLI 1.1325, Trivy 0.51.5, and Renovate 37.424 used to build a dynamic filtering system that reduced alerts from 127 to 3.2 per PR</description>
-      <pubDate>Fri, 03 Jul 2026 01:59:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/</guid>
     </item>
   </channel>
 </rss>

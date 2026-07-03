@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T14:11:14.535897",
+  "built_at": "2026-07-03T14:23:51.007105",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3980,6 +3980,11 @@
       "slug": "cicd-for-django-in-20ms-africa-networks",
       "title": "CI/CD for Django in 20ms Africa networks",
       "summary": "After reviewing a lot of code that touches tools built, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. Why I wrote this (the problem I kept hitting) In 2026 I joined a team building a Django e-commerce platform for a retailer in"
+    },
+    {
+      "slug": "wasm-ml-models-keep-dev-speed-at-the-edge",
+      "title": "WASM ML models: keep dev speed at the edge",
+      "summary": "After reviewing a lot of code that touches claude gpt5, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. We lost two weeks trying to run a 120MB PyTorch model on a 512MB ARM device until we realized the real bottleneck wasn’t the "
     }
   ]
 }
