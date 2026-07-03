@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 13:12:33 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 10:17:53 +0000</lastBuildDate>
+    <item>
+      <title>Defend LLM apps: OWASP flaws decoded</title>
+      <link>https://kubaik.github.io/defend-llm-apps-owasp-flaws-decoded/</link>
+      <description>Secure LLM apps with OWASP Top 10 LLM flaws — 91% injection reduction, concrete Python code, and Azure Content Safety 2026 integration</description>
+      <pubDate>Fri, 03 Jul 2026 10:17:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/defend-llm-apps-owasp-flaws-decoded/</guid>
+    </item>
     <item>
       <title>Launch SaaS in 6 weeks: the AI shortcut I actually used</title>
       <link>https://kubaik.github.io/launch-saas-in-6-weeks-the-ai-shortcut-i-actually-used/</link>
@@ -138,13 +145,6 @@
       <description>Cut zero-downtime migration time 80% by draining the write queue first — DMS, Debezium, RabbitMQ metrics, and the 3-question decision matrix used in 2026 production systems.</description>
       <pubDate>Thu, 02 Jul 2026 18:33:14 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-the-writes-zero-downtime-db-migrations/</guid>
-    </item>
-    <item>
-      <title>Meter dev-tool pricing in 2026</title>
-      <link>https://kubaik.github.io/meter-dev-tool-pricing-in-2026/</link>
-      <description>Cut dev tool churn 3× with usage pricing — $0.043 per active user, $1,124 ARR from 187 users, and a free-to-paid jump of 2.3×</description>
-      <pubDate>Thu, 02 Jul 2026 17:53:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/meter-dev-tool-pricing-in-2026/</guid>
     </item>
   </channel>
 </rss>
