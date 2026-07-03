@@ -5,14 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 16:33:40 +0000</lastBuildDate>
-    <item>
-      <title>5 steps to zero-trust secrets in Kubernetes</title>
-      <link>https://kubaik.github.io/5-steps-to-zero-trust-secrets-in-kubernetes/</link>
-      <description>- Latency impact: What’s the P99 time added to pod startup when fetching a secret?</description>
-      <pubDate>Fri, 03 Jul 2026 16:33:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-steps-to-zero-trust-secrets-in-kubernetes/</guid>
-    </item>
+    <lastBuildDate>Fri, 03 Jul 2026 19:57:45 +0000</lastBuildDate>
     <item>
       <title>MCP servers: real-time pipelines without agents</title>
       <link>https://kubaik.github.io/mcp-servers-real-time-pipelines-without-agents/</link>
@@ -145,6 +138,13 @@
       <description>Cut frontend work 40–60% with AI UI generation tools — real wins, hidden Safari CORS bugs, and the exact prompts that paid off in 2026.</description>
       <pubDate>Fri, 03 Jul 2026 06:48:30 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ui-generation-what-it-fixed-and-what-still-breaks/</guid>
+    </item>
+    <item>
+      <title>Debug async Python before it deadlocks…</title>
+      <link>https://kubaik.github.io/debug-async-python-before-it-deadlocks/</link>
+      <description>Cut async Python bugs 60% by choosing trio over threads — concrete benchmarks, real outage stories, and version-pinned tools (Python 3.11, trio 0.24)</description>
+      <pubDate>Fri, 03 Jul 2026 05:52:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-async-python-before-it-deadlocks/</guid>
     </item>
   </channel>
 </rss>

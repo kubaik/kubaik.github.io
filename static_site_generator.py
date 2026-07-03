@@ -58,6 +58,70 @@ def _safe_excerpt(meta_description: str, content: str, title: str = "",
     return _html_stdlib.escape(fallback, quote=True)
 
 
+def _tag_definition(tag: str) -> str:
+    """Return a short, human-readable definition of a tag topic for use in
+    tag-page meta descriptions. Falls back to a generic phrase for tags that
+    aren't in the curated list, so every tag still gets a real definition
+    rather than a placeholder."""
+    definitions = {
+        'ai': 'artificial intelligence, machine learning, and applied AI engineering',
+        'machine learning': 'machine learning concepts, tools, and real-world model building',
+        'python': 'the Python programming language, its libraries, and best practices',
+        'javascript': 'JavaScript development, from core language features to modern frameworks',
+        'typescript': 'TypeScript typing patterns and their use in real-world codebases',
+        'backend': 'server-side architecture, APIs, and backend engineering practices',
+        'frontend': 'frontend development, UI engineering, and client-side architecture',
+        'devops': 'deployment pipelines, infrastructure automation, and DevOps practices',
+        'docker': 'containerization with Docker and container-based workflows',
+        'kubernetes': 'container orchestration and Kubernetes cluster management',
+        'api': 'API design, integration, and best practices for building web services',
+        'database': 'database design, optimization, and data management',
+        'sql': 'SQL query design, database performance, and data modeling',
+        'security': 'application security, secure coding, and vulnerability prevention',
+        'testing': 'software testing strategies, tools, and quality assurance',
+        'career': 'career growth, job hunting, and professional development for developers',
+        'productivity': 'developer productivity, tools, and workflow optimization',
+        'cloud': 'cloud computing platforms, architecture, and best practices',
+        'aws': 'building and running systems on Amazon Web Services',
+        'react': 'building applications with React and the modern JavaScript ecosystem',
+        'git': 'version control workflows and best practices with Git',
+        'linux': 'Linux systems administration, tooling, and command-line workflows',
+        'recovered': 'a range of practical software development topics',
+        'blog': 'general software development topics and practical guides',
+    }
+    key = tag.strip().lower()
+    if key in definitions:
+        return definitions[key]
+    return f"practical, hands-on approaches to {key} for software developers"
+
+
+def _generate_tag_meta_description(tag_title: str, top_titles: List[str],
+                                   definition: str, max_len: int = 300) -> str:
+    """Build a richer tag-page meta description from the tag's definition
+    plus its top article titles, instead of a generic boilerplate line."""
+    top_titles = [t for t in top_titles if t][:3]
+    if len(top_titles) >= 3:
+        titles_part = (
+            f'including "{top_titles[0]}," "{top_titles[1]}," '
+            f'and "{top_titles[2]}"'
+        )
+    elif len(top_titles) == 2:
+        titles_part = f'including "{top_titles[0]}" and "{top_titles[1]}"'
+    elif len(top_titles) == 1:
+        titles_part = f'including "{top_titles[0]}"'
+    else:
+        titles_part = ""
+
+    desc = f"Articles on {tag_title} covering {definition}"
+    if titles_part:
+        desc += f", {titles_part}"
+    desc += "."
+
+    if len(desc) > max_len:
+        desc = desc[:max_len].rsplit(" ", 1)[0].rstrip(",;: ") + "…"
+    return desc
+
+
 def _clean_url(url: str) -> str:
     """Remove Markdown link-formatting artifacts like [text](url) -> url."""
     import re
@@ -961,6 +1025,20 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             tag_title = tag.title()
             og_image = f"{base_url}/static/og-default.png"
 
+            # FIX: tag pages previously used a generic, boilerplate meta
+            # description ("All articles tagged X... Practical guides for
+            # developers.") that was identical across every tag and provided
+            # no SEO or user-orientation value. We now build a description
+            # from a real topic definition plus the tag's top 3 article
+            # titles, so each tag page has unique, descriptive content.
+            top_titles = [p['title'] for p in posts_data[:3]]
+            tag_definition = _tag_definition(tag)
+            tag_meta_description_plain = _generate_tag_meta_description(
+                tag_title, top_titles, tag_definition)
+            tag_meta_description = _html_stdlib.escape(
+                tag_meta_description_plain, quote=True)
+            tag_jsonld_description = json.dumps(tag_meta_description_plain)
+
             # FIX BUG-10: consent.js was loaded with `defer` at the bottom of
             # <body> on tag pages, causing it to fire AFTER the AdSense snippet
             # in <head>. Consent Mode v2 requires the default state to be pushed
@@ -972,7 +1050,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{tag_title} Articles — {site_name}</title>
-  <meta name="description" content="All articles tagged {tag_title} on {site_name}. Practical guides for developers.">
+  <meta name="description" content="{tag_meta_description}">
   <meta name="robots" content="{robots_directive}">
   <meta name="base-path" content="{base_path}">
   <link rel="canonical" href="{base_url}/tag/{tag_slug}/">
@@ -980,13 +1058,13 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
   <link rel="stylesheet" href="{base_path}/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="{tag_title} Articles — {site_name}">
-  <meta property="og:description" content="All articles tagged {tag_title} on {site_name}.">
+  <meta property="og:description" content="{tag_meta_description}">
   <meta property="og:url" content="{base_url}/tag/{tag_slug}/">
   <meta property="og:image" content="{og_image}">
   <script type="application/ld+json">
   {{"@context":"https://schema.org","@type":"CollectionPage",
     "name":"{tag_title} Articles","url":"{base_url}/tag/{tag_slug}/",
-    "description":"Articles tagged {tag_title}"}}
+    "description":{tag_jsonld_description}}}
   </script>
 </head>
 <body>
