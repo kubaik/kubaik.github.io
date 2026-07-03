@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 08:52:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 08:55:52 +0000</lastBuildDate>
+    <item>
+      <title>Nigeria’s 2026 API rules broke our microservices</title>
+      <link>https://kubaik.github.io/nigerias-2026-api-rules-broke-our-microservices/</link>
+      <description>Cut API compliance risk 8% with transaction boundaries — why Nigeria’s 2026 PSMR rules broke microservices and what to do instead</description>
+      <pubDate>Fri, 03 Jul 2026 08:55:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/nigerias-2026-api-rules-broke-our-microservices/</guid>
+    </item>
     <item>
       <title>AI code 40% — how to keep it from rotting your repo</title>
       <link>https://kubaik.github.io/ai-code-40-how-to-keep-it-from-rotting-your-repo/</link>
@@ -138,13 +145,6 @@
       <description>Migrate M-Pesa Daraja to 2.0 in 2026 and cut failed payments 82% — new headers, idempotency keys, and callback changes you must ship before March 31</description>
       <pubDate>Thu, 02 Jul 2026 16:41:45 +0000</pubDate>
       <guid>https://kubaik.github.io/m-pesa-daraja-20-your-2026-migration-checklist/</guid>
-    </item>
-    <item>
-      <title>Build self-healing pipelines with AI</title>
-      <link>https://kubaik.github.io/build-self-healing-pipelines-with-ai/</link>
-      <description>AI agents cut false positives 5× in self-healing pipelines — when to use CrewAI 0.3 vs GitHub Actions 2026, with benchmarks, costs, and the 80/20 rule.</description>
-      <pubDate>Thu, 02 Jul 2026 16:03:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/build-self-healing-pipelines-with-ai/</guid>
     </item>
   </channel>
 </rss>
