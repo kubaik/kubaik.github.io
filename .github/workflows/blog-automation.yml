@@ -162,35 +162,21 @@ jobs:
           echo "Total posts: $post_count"
           [ -f "docs/index.html" ] || { echo "ERROR: no index.html"; exit 1; }
 
-      # ── NEW: Generate sitemap.xml so search engines can discover posts ──
-      # Runs after content generation/build (both the normal and OG-only
-      # paths funnel through "Verify generated content" above), so it always
-      # sees the final set of published HTML pages for this run before we
-      # touch OG images, commit, or deploy. Non-blocking on individual page
-      # parse issues; the script itself skips excluded/draft paths.
-      - name: 🗺️ Generate sitemap.xml
+      - name: Generate sitemap.xml
         run: |
           python scripts/generate_sitemap.py \
             --output-dir ./docs \
-            --base-url "https://kubaik.github.io" \
-            --chunk-size 1000
+            --base-url "https://kubaik.github.io"
 
+      - name: Verify sitemap
+        run: |
           if [ -f ./docs/sitemap.xml ]; then
-            if grep -q "sitemapindex" ./docs/sitemap.xml; then
-              # sitemap.xml is an index (post count exceeded --chunk-size);
-              # count total URLs across the sub-sitemaps it points to.
-              url_count=$(cat ./docs/sitemap-*.xml 2>/dev/null | grep -o "<loc>" | wc -l)
-              sitemap_count=$(grep -o "<sitemap>" ./docs/sitemap.xml | wc -l)
-              echo "sitemap_url_count=${url_count}" >> $GITHUB_ENV
-              echo "✅ sitemap index generated: ${sitemap_count} sub-sitemaps, ${url_count} total URLs"
-            else
-              url_count=$(grep -o "<loc>" ./docs/sitemap.xml | wc -l)
-              echo "sitemap_url_count=${url_count}" >> $GITHUB_ENV
-              echo "✅ sitemap.xml generated with ${url_count} entries"
-            fi
+            echo "✓ Single sitemap generated successfully"
+            url_count=$(grep -c "<loc>" ./docs/sitemap.xml || echo 0)
+            echo "Total URLs in sitemap: $url_count"
           else
-            echo "⚠️ WARNING: sitemap.xml was not created"
-            echo "sitemap_url_count=0" >> $GITHUB_ENV
+            echo "ERROR: sitemap.xml was not generated"
+            exit 1
           fi
 
       - name: 📸 Generate per-article OG images

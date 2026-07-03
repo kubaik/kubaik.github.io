@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 08:13:15 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 11:42:53 +0000</lastBuildDate>
+    <item>
+      <title>Audit AI code: onboarding without the burn</title>
+      <link>https://kubaik.github.io/audit-ai-code-onboarding-without-the-burn/</link>
+      <description>Cut onboarding time 44% with AI-guided walkthroughs — but human guides still win for trust and MTTR. Real benchmarks, tools, and the mistake most teams make first.</description>
+      <pubDate>Fri, 03 Jul 2026 08:17:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/audit-ai-code-onboarding-without-the-burn/</guid>
+    </item>
     <item>
       <title>47% AI code debt in 2026</title>
       <link>https://kubaik.github.io/47-ai-code-debt-in-2026/</link>
