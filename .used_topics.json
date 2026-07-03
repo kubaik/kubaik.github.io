@@ -61,5 +61,6 @@
   "How I test frontend code in 2026: Playwright, Vitest, and why I dropped Cypress",
   "Pair programming with AI: how it changed collaboration on my team",
   "Structured outputs from LLMs: why JSON mode is not enough for real workflows",
-  "How AI changed the economics of building a solo SaaS in 2026"
+  "How AI changed the economics of building a solo SaaS in 2026",
+  "Fine-tuning small models vs prompting large ones: the 2026 cost-accuracy tradeoff"
 ]

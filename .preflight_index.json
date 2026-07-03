@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T12:11:47.286239",
+  "built_at": "2026-07-03T12:15:51.185141",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3965,6 +3965,11 @@
       "slug": "ai-solo-saas-2026-build-vs-buy",
       "title": "AI solo SaaS 2026: build vs buy",
       "summary": "I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the cost of launching a solo SaaS has dropped from tens of "
+    },
+    {
+      "slug": "big-model-api-vs-fine-tune-the-2026-math",
+      "title": "Big model API vs fine-tune: the 2026 math",
+      "summary": "The official documentation for finetuning small is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs In 2026, the marketing pages sti"
     }
   ]
 }

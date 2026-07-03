@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 12:11:59 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 12:16:03 +0000</lastBuildDate>
+    <item>
+      <title>Big model API vs fine-tune: the 2026 math</title>
+      <link>https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/</link>
+      <description>I’ve seen teams burn six weeks perfecting a prompt only to hit a 12% drop in accuracy when their top user started asking questions in German.</description>
+      <pubDate>Fri, 03 Jul 2026 12:15:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/</guid>
+    </item>
     <item>
       <title>AI solo SaaS 2026: build vs buy</title>
       <link>https://kubaik.github.io/ai-solo-saas-2026-build-vs-buy/</link>
@@ -138,13 +145,6 @@
       <description>Why I wrote this (the problem I kept hitting) I spent two weeks trying to replace a USSD flow that handled 120,000 daily sessions in Kenya.</description>
       <pubDate>Thu, 02 Jul 2026 22:59:32 +0000</pubDate>
       <guid>https://kubaik.github.io/ussd-in-2026-30-cheaper-than-sms-for-africa-fintech/</guid>
-    </item>
-    <item>
-      <title>Negotiate salary 2026 with AI resume tool</title>
-      <link>https://kubaik.github.io/negotiate-salary-2026-with-ai-resume-tool/</link>
-      <description>Cut AI clawback risk in 2026 offers — 7% higher total comp with redline and benchmark sheet</description>
-      <pubDate>Thu, 02 Jul 2026 22:16:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/negotiate-salary-2026-with-ai-resume-tool/</guid>
     </item>
   </channel>
 </rss>
