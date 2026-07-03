@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 22:08:55 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 22:13:46 +0000</lastBuildDate>
+    <item>
+      <title>Agent governance: OPA vs Kyverno after our incident</title>
+      <link>https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/</link>
+      <description>Cut agent governance costs 42%: Kyverno 1.11 vs OPA 1.12 latency, cost, and Rego pain uncovered in a real compliance incident</description>
+      <pubDate>Fri, 03 Jul 2026 22:13:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/</guid>
+    </item>
     <item>
       <title>Evaluate agents with Spark vs custom harness</title>
       <link>https://kubaik.github.io/evaluate-agents-with-spark-vs-custom-harness/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 21% and payload 63% for 4G-as-baseline users — Go server, Redis 7.4, and Vite 5.3 steps with real 2026 latency and cost data.</description>
       <pubDate>Fri, 03 Jul 2026 09:17:25 +0000</pubDate>
       <guid>https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/</guid>
-    </item>
-    <item>
-      <title>Nigeria’s 2026 API rules broke our microservices</title>
-      <link>https://kubaik.github.io/nigerias-2026-api-rules-broke-our-microservices/</link>
-      <description>Cut API compliance risk 8% with transaction boundaries — why Nigeria’s 2026 PSMR rules broke microservices and what to do instead</description>
-      <pubDate>Fri, 03 Jul 2026 08:55:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/nigerias-2026-api-rules-broke-our-microservices/</guid>
     </item>
   </channel>
 </rss>
