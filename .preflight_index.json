@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T08:46:55.546025",
+  "built_at": "2026-07-03T08:51:49.893923",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3915,6 +3915,11 @@
       "slug": "ai-apps-break-your-stack-heres-the-fix",
       "title": "AI apps break your stack — here’s the fix",
       "summary": "A colleague asked me about design ainative during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete Ev"
+    },
+    {
+      "slug": "ai-code-40-how-to-keep-it-from-rotting-your-repo",
+      "title": "AI code 40% — how to keep it from rotting your repo",
+      "summary": "I've seen the same maintain codebase mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, four out of ten lines in a typical codebase were written by"
     }
   ]
 }

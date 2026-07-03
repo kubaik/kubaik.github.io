@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 08:47:06 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 08:52:02 +0000</lastBuildDate>
+    <item>
+      <title>AI code 40% — how to keep it from rotting your repo</title>
+      <link>https://kubaik.github.io/ai-code-40-how-to-keep-it-from-rotting-your-repo/</link>
+      <description>Cut AI debt 40% with ruff 0.5.4 — the free linter that catches Cursor and Copilot mistakes in 5 minutes</description>
+      <pubDate>Fri, 03 Jul 2026 08:51:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-code-40-how-to-keep-it-from-rotting-your-repo/</guid>
+    </item>
     <item>
       <title>AI apps break your stack — here’s the fix</title>
       <link>https://kubaik.github.io/ai-apps-break-your-stack-heres-the-fix/</link>
@@ -138,13 +145,6 @@
       <description>AI agents cut false positives 5× in self-healing pipelines — when to use CrewAI 0.3 vs GitHub Actions 2026, with benchmarks, costs, and the 80/20 rule.</description>
       <pubDate>Thu, 02 Jul 2026 16:03:18 +0000</pubDate>
       <guid>https://kubaik.github.io/build-self-healing-pipelines-with-ai/</guid>
-    </item>
-    <item>
-      <title>AI chat&apos;s hidden WCAG fails</title>
-      <link>https://kubaik.github.io/ai-chats-hidden-wcag-fails/</link>
-      <description>WCAG 1.4.3 requires 4.5:1 contrast for normal text, but AI models often output markdown with light gray code blocks or soft pastel colors that fail this…</description>
-      <pubDate>Thu, 02 Jul 2026 12:40:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-chats-hidden-wcag-fails/</guid>
     </item>
   </channel>
 </rss>

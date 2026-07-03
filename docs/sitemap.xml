@@ -709,6 +709,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-code-40-how-to-keep-it-from-rotting-your-repo/</loc>
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ai-code-debt-llm-debt-vs-prompt-debt/</loc>
     <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
