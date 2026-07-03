@@ -196,7 +196,7 @@ class StaticSiteGenerator:
         base_url = config.get('base_url', '').rstrip('/')
 
         content = f"""# robots.txt for {base_url}
-    # Generated automatically
+    # Generated automatically - Do not edit manually
 
     User-agent: *
     Allow: /
@@ -209,7 +209,7 @@ class StaticSiteGenerator:
     User-agent: Mediapartners-Google
     Allow: /
 
-    # Block sensitive paths
+    # Block sensitive paths only
     User-agent: *
     Disallow: /admin/
     Disallow: /private/
@@ -223,7 +223,7 @@ class StaticSiteGenerator:
         with open("./docs/robots.txt", 'w', encoding='utf-8') as f:
             f.write(content)
 
-    print("Generated robots.txt")
+        print("Generated robots.txt")
 
     def _get_all_posts(self) -> List[BlogPost]:
         posts = []

@@ -2,31 +2,22 @@
 """
 scripts/generate_sitemap.py
 
-Generates sitemap.xml for kubaik.github.io from published posts.
+Generates a single sitemap.xml for kubaik.github.io.
 Run this as part of the build pipeline after all posts are generated.
 
-Usage:
-    python scripts/generate_sitemap.py --output-dir ./_site --base-url https://kubaik.github.io
-
-The script:
-  1. Discovers all HTML files in the output directory
-  2. Extracts canonical URLs and last-modified dates from meta tags
-  3. Applies priority weights (homepage > about > posts > tags)
-  4. Splits into a sitemap index + per-category sitemaps when count > 1000
-  5. Writes sitemap.xml (or sitemap-index.xml + sitemap-posts.xml) to output-dir
+This version always creates ONE sitemap.xml (no sitemap index/chunking).
 """
 
 import argparse
-import os
 import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from xml.sax.saxutils import escape
 
+
 # Priority and changefreq by URL pattern
 URL_RULES = [
-    # (pattern, priority, changefreq)
     (r"^/$", "1.0", "daily"),
     (r"^/about/$", "0.9", "monthly"),
     (r"^/contact/$", "0.8", "monthly"),
@@ -44,7 +35,6 @@ EXCLUDE_PATTERNS = [
 
 
 def get_url_meta(pattern_rules: list, path: str) -> tuple[str, str]:
-    """Return (priority, changefreq) for a given URL path."""
     for pattern, priority, changefreq in pattern_rules:
         if re.match(pattern, path):
             return priority, changefreq
@@ -56,7 +46,6 @@ def is_excluded(path: str, exclude_patterns: list) -> bool:
 
 
 def extract_meta_from_html(html_path: Path) -> dict:
-    """Extract canonical URL and article:modified_time from HTML file."""
     content = html_path.read_text(encoding="utf-8", errors="replace")
 
     canonical = None
@@ -68,7 +57,6 @@ def extract_meta_from_html(html_path: Path) -> dict:
     if canonical_match:
         canonical = canonical_match.group(1)
 
-    # Try article:modified_time first, fall back to article:published_time
     for meta_name in ("article:modified_time", "article:published_time"):
         m = re.search(
             rf'<meta[^>]+property=["\']{re.escape(meta_name)}["\'][^>]+content=["\']([^"\']+)["\']',
@@ -82,33 +70,25 @@ def extract_meta_from_html(html_path: Path) -> dict:
 
 
 def discover_pages(site_dir: Path) -> list[dict]:
-    """Walk site directory, collect all index.html files."""
     pages = []
     for html_file in sorted(site_dir.rglob("index.html")):
         rel_parent = html_file.parent.relative_to(site_dir).as_posix()
-        if rel_parent == ".":
-            rel_path = "/"
-        else:
-            rel_path = "/" + rel_parent.rstrip("/") + "/"
+        rel_path = "/" if rel_parent == "." else "/" + \
+            rel_parent.rstrip("/") + "/"
 
         if is_excluded(rel_path, EXCLUDE_PATTERNS):
             continue
 
         meta = extract_meta_from_html(html_file)
-        pages.append(
-            {
-                "path": rel_path,
-                "canonical": meta.get("canonical"),
-                "modified": meta.get("modified"),
-                "file": html_file,
-            }
-        )
-
+        pages.append({
+            "path": rel_path,
+            "canonical": meta.get("canonical"),
+            "modified": meta.get("modified"),
+        })
     return pages
 
 
 def format_lastmod(iso_str: str | None) -> str:
-    """Return W3C date (YYYY-MM-DD) from ISO 8601 string, or today."""
     if iso_str:
         try:
             dt = datetime.fromisoformat(iso_str.replace("Z", "+00:00"))
@@ -119,11 +99,9 @@ def format_lastmod(iso_str: str | None) -> str:
 
 
 def build_sitemap_xml(pages: list[dict], base_url: str) -> str:
-    """Build a single sitemap.xml string."""
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"',
-        '        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ]
 
     for page in pages:
@@ -143,41 +121,13 @@ def build_sitemap_xml(pages: list[dict], base_url: str) -> str:
     return "\n".join(lines)
 
 
-def build_sitemap_index(sitemaps: list[dict], base_url: str) -> str:
-    """Build a sitemap index XML string when there are >1000 URLs."""
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    lines = [
-        '<?xml version="1.0" encoding="UTF-8"?>',
-        '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-    ]
-    for sm in sitemaps:
-        lines.append("  <sitemap>")
-        lines.append(
-            f"    <loc>{escape(base_url.rstrip('/') + '/' + sm['filename'])}</loc>")
-        lines.append(f"    <lastmod>{today}</lastmod>")
-        lines.append("  </sitemap>")
-    lines.append("</sitemapindex>")
-    return "\n".join(lines)
-
-
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate sitemap.xml")
+    parser = argparse.ArgumentParser(
+        description="Generate a single sitemap.xml")
+    parser.add_argument("--output-dir", default="./_site",
+                        help="Path to the built site directory")
     parser.add_argument(
-        "--output-dir",
-        default="./_site",
-        help="Path to the built site directory",
-    )
-    parser.add_argument(
-        "--base-url",
-        default="https://kubaik.github.io",
-        help="Base URL of the site",
-    )
-    parser.add_argument(
-        "--chunk-size",
-        type=int,
-        default=1000,
-        help="Max URLs per sitemap file (default: 1000)",
-    )
+        "--base-url", default="https://kubaik.github.io", help="Base URL of the site")
     args = parser.parse_args()
 
     site_dir = Path(args.output_dir)
@@ -190,34 +140,11 @@ def main() -> int:
     pages = discover_pages(site_dir)
     print(f"Found {len(pages)} pages")
 
-    base_url = args.base_url.rstrip("/")
+    xml = build_sitemap_xml(pages, args.base_url)
+    out_path = site_dir / "sitemap.xml"
+    out_path.write_text(xml, encoding="utf-8")
 
-    if len(pages) <= args.chunk_size:
-        # Single sitemap
-        xml = build_sitemap_xml(pages, base_url)
-        out_path = site_dir / "sitemap.xml"
-        out_path.write_text(xml, encoding="utf-8")
-        print(f"Written: {out_path} ({len(pages)} URLs)")
-    else:
-        # Sitemap index with chunks
-        chunks = [
-            pages[i: i + args.chunk_size]
-            for i in range(0, len(pages), args.chunk_size)
-        ]
-        sitemaps = []
-        for idx, chunk in enumerate(chunks, start=1):
-            filename = f"sitemap-{idx}.xml"
-            xml = build_sitemap_xml(chunk, base_url)
-            out_path = site_dir / filename
-            out_path.write_text(xml, encoding="utf-8")
-            sitemaps.append({"filename": filename})
-            print(f"Written: {out_path} ({len(chunk)} URLs)")
-
-        index_xml = build_sitemap_index(sitemaps, base_url)
-        index_path = site_dir / "sitemap.xml"
-        index_path.write_text(index_xml, encoding="utf-8")
-        print(f"Written: {index_path} (index with {len(chunks)} sitemaps)")
-
+    print(f"Generated single sitemap: {out_path} ({len(pages)} URLs)")
     return 0
 
 

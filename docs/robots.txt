@@ -1,5 +1,5 @@
 # robots.txt for https://kubaik.github.io
-    # Generated automatically
+    # Generated automatically - Do not edit manually
 
     User-agent: *
     Allow: /
@@ -12,7 +12,7 @@
     User-agent: Mediapartners-Google
     Allow: /
 
-    # Block sensitive paths
+    # Block sensitive paths only
     User-agent: *
     Disallow: /admin/
     Disallow: /private/
