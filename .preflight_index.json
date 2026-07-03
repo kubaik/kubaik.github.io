@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T20:22:27.136745",
+  "built_at": "2026-07-03T21:12:04.167886",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4025,6 +4025,11 @@
       "slug": "ai-agents-circuit-breakers-are-not-optional",
       "title": "AI agents: circuit breakers are not optional",
       "summary": "The official documentation for production incident is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams treat AI agents li"
+    },
+    {
+      "slug": "evaluate-agents-with-spark-vs-custom-harness",
+      "title": "Evaluate agents with Spark vs custom harness",
+      "summary": "I've seen the same building evaluation mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, multi-agent systems aren’t just research projects anymore"
     }
   ]
 }

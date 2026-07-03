@@ -814,7 +814,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/ai-agents-circuit-breakers-are-not-optional.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -3152,6 +3152,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/engineers-fail-ai-screens-the-real-tests-in-2026.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/evaluate-agents-with-spark-vs-custom-harness/</loc>
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
     </image:image>
   </url>
   <url>
