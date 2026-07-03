@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 04:50:57 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 05:52:44 +0000</lastBuildDate>
+    <item>
+      <title>Debug async Python before it deadlocks…</title>
+      <link>https://kubaik.github.io/debug-async-python-before-it-deadlocks/</link>
+      <description>Cut async Python bugs 60% by choosing trio over threads — concrete benchmarks, real outage stories, and version-pinned tools (Python 3.11, trio 0.24)</description>
+      <pubDate>Fri, 03 Jul 2026 05:52:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/debug-async-python-before-it-deadlocks/</guid>
+    </item>
     <item>
       <title>Signals: 5 state tricks that broke my app</title>
       <link>https://kubaik.github.io/signals-5-state-tricks-that-broke-my-app/</link>
@@ -138,13 +145,6 @@
       <description>AI ate $18k MRR niches that relied on automation alone. The survivors are 4 niches that still pay in 2026: compliance wrappers, embedded workflows, private data layers, and audit surfaces.</description>
       <pubDate>Thu, 02 Jul 2026 08:27:51 +0000</pubDate>
       <guid>https://kubaik.github.io/micro-saas-niches-surviving-ai-commoditisation/</guid>
-    </item>
-    <item>
-      <title>4 experiments platforms compared — why flags became labs</title>
-      <link>https://kubaik.github.io/4-experiments-platforms-compared-why-flags-became-labs/</link>
-      <description>Cut experiment platform costs 80% with Statsig — SDK size, latency, and offline-first features that actually work in sub-Saharan Africa in 2026.</description>
-      <pubDate>Thu, 02 Jul 2026 08:09:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/4-experiments-platforms-compared-why-flags-became-labs/</guid>
     </item>
   </channel>
 </rss>
