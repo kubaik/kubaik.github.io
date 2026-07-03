@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 16:26:46 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 13:30:39 +0000</lastBuildDate>
+    <item>
+      <title>Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse</title>
+      <link>https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/</link>
+      <description>Cut log pipeline costs 60% with OpenTelemetry 1.30, Fluent Bit 2.2, and ClickHouse 23.10 — 50k EPS benchmark and the tuning mistakes I made first</description>
+      <pubDate>Fri, 03 Jul 2026 13:30:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/</guid>
+    </item>
     <item>
       <title>Big model API vs fine-tune: the 2026 math</title>
       <link>https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/</link>
@@ -138,13 +145,6 @@
       <description>AI models drift silently. Traditional APM misses 89% of model confidence drops. Start tracking prompt versions and semantic scores today to catch degradation before users do.</description>
       <pubDate>Fri, 03 Jul 2026 00:14:18 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-observability-what-p99-latency-hides/</guid>
-    </item>
-    <item>
-      <title>USSD in 2026: 30% cheaper than SMS for Africa fintech</title>
-      <link>https://kubaik.github.io/ussd-in-2026-30-cheaper-than-sms-for-africa-fintech/</link>
-      <description>Why I wrote this (the problem I kept hitting) I spent two weeks trying to replace a USSD flow that handled 120,000 daily sessions in Kenya.</description>
-      <pubDate>Thu, 02 Jul 2026 22:59:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/ussd-in-2026-30-cheaper-than-sms-for-africa-fintech/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T12:15:51.185141",
+  "built_at": "2026-07-03T13:30:26.482845",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3970,6 +3970,11 @@
       "slug": "big-model-api-vs-fine-tune-the-2026-math",
       "title": "Big model API vs fine-tune: the 2026 math",
       "summary": "The official documentation for finetuning small is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs In 2026, the marketing pages sti"
+    },
+    {
+      "slug": "ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse",
+      "title": "Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse",
+      "summary": "I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, a single high-traffic SaaS app can push 50,000 events"
     }
   ]
 }
