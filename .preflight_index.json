@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T10:25:04.226914",
+  "built_at": "2026-07-03T10:31:07.046618",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3950,6 +3950,11 @@
       "slug": "why-i-picked-playwright-and-vitest-in-2026",
       "title": "Why I picked Playwright and Vitest in 2026",
       "summary": "I ran into this test frontend problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) The project was a Next.js 14 dashboard with "
+    },
+    {
+      "slug": "pair-programming-with-ai-5-hard-lessons-in-2026",
+      "title": "Pair programming with AI: 5 hard lessons in 2026",
+      "summary": "I ran into this pair programming problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026 I inherited a team that had "
     }
   ]
 }
