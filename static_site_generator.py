@@ -241,6 +241,7 @@ AUTHOR_PAGE_TEMPLATE = """\
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kubai Kevin — Software Developer and Writer</title>
     <meta name="description" content="Kubai Kevin is a software developer based in Nairobi, Kenya. He writes about AI, backend engineering, and developer careers at {site_name}.">
+    <meta name="author" content="Kubai Kevin">
     <link rel="canonical" href="{base_url}/author/kubai-kevin/">
     <link rel="stylesheet" href="{base_path}/static/style.css">
     <script type="application/ld+json">
@@ -587,7 +588,8 @@ class StaticSiteGenerator:
                     "url": f"{base_url}/about/",
                     "sameAs": [
                         "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
-                        "https://twitter.com/KubaiKevin"
+                        "https://twitter.com/KubaiKevin",
+                        "https://github.com/kubaik"
                     ],
                     "knowsAbout": [
                         "Python", "Node.js", "TypeScript", "AWS",
@@ -2131,38 +2133,55 @@ def _build_templates() -> dict:
     <meta property="og:url" content="{{ base_url }}/about/">
     <meta property="profile:first_name" content="Kevin">
     <meta property="profile:last_name" content="Kubai">
+    <meta name="author" content="Kubai Kevin">
     <script src="{{ base_path }}/static/consent.js"></script>
     {{ global_meta_tags | safe }}
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "@id": "{{ base_url }}/about/#author",
-      "name": "Kubai Kevin",
-      "givenName": "Kevin",
-      "familyName": "Kubai",
-      "jobTitle": "Software Developer",
-      "description": "Software developer based in Nairobi, Kenya with 10+ years experience in Python, Node.js, and AWS. Specialises in fintech backends and AI integration.",
+      "@type": "ProfilePage",
+      "@id": "{{ base_url }}/about/#profilepage",
       "url": "{{ base_url }}/about/",
-      "email": "aiblogauto@gmail.com",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Nairobi",
-        "addressCountry": "KE"
+      "name": "About Kubai Kevin",
+      "inLanguage": "en-US",
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "{{ base_url }}/static/icons/icon-192x192.png"
       },
-      "sameAs": [
-        "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
-        "https://twitter.com/KubaiKevin",
-        "https://github.com/kubaik"
-      ],
-      "knowsAbout": [
-        "Python", "Node.js", "TypeScript", "AWS Lambda", "PostgreSQL",
-        "Redis", "Machine Learning", "LLMs", "API Design",
-        "Fintech Systems", "Backend Engineering", "Android Development"
-      ],
-      "alumniOf": {
-        "@type": "Organization",
-        "name": "Self-taught, supplemented with industry certifications"
+      "mainEntity": {
+        "@type": "Person",
+        "@id": "{{ base_url }}/about/#author",
+        "name": "Kubai Kevin",
+        "givenName": "Kevin",
+        "familyName": "Kubai",
+        "jobTitle": "Software Developer",
+        "description": "Software developer based in Nairobi, Kenya with 10+ years experience in Python, Node.js, and AWS. Specialises in fintech backends and AI integration.",
+        "url": "{{ base_url }}/about/",
+        "email": "aiblogauto@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nairobi",
+          "addressCountry": "KE"
+        },
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python", "Node.js", "TypeScript", "AWS Lambda", "PostgreSQL",
+          "Redis", "Machine Learning", "LLMs", "API Design",
+          "Fintech Systems", "Backend Engineering", "Android Development"
+        ],
+        "alumniOf": {
+          "@type": "Organization",
+          "name": "Self-taught, supplemented with industry certifications"
+        },
+        "worksFor": {
+          "@type": "Organization",
+          "name": "{{ site_name }}",
+          "url": "{{ base_url }}/"
+        }
       }
     }
     </script>
