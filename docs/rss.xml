@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 17:01:43 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 17:17:42 +0000</lastBuildDate>
+    <item>
+      <title>AI reshaped my engineering principles</title>
+      <link>https://kubaik.github.io/ai-reshaped-my-engineering-principles/</link>
+      <description>Cut AI regression rates 90% with 3 constraints — connection pools, timeouts, tests. Real failure cases from Brazil, Colombia, Mexico with Redis 7.2, Python 3.11, Node 20 LTS.</description>
+      <pubDate>Fri, 03 Jul 2026 17:17:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-reshaped-my-engineering-principles/</guid>
+    </item>
     <item>
       <title>Built self-healing pipelines: AI vs scripts</title>
       <link>https://kubaik.github.io/built-self-healing-pipelines-ai-vs-scripts/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI code debt 80% with automated guardrails — performance, cost, and DX comparison with Semgrep 1.51, Rego, and real 2026 benchmarks.</description>
       <pubDate>Fri, 03 Jul 2026 08:06:13 +0000</pubDate>
       <guid>https://kubaik.github.io/47-ai-code-debt-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI UI generation: what it fixed and what still breaks</title>
-      <link>https://kubaik.github.io/ai-ui-generation-what-it-fixed-and-what-still-breaks/</link>
-      <description>Cut frontend work 40–60% with AI UI generation tools — real wins, hidden Safari CORS bugs, and the exact prompts that paid off in 2026.</description>
-      <pubDate>Fri, 03 Jul 2026 06:48:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ui-generation-what-it-fixed-and-what-still-breaks/</guid>
     </item>
   </channel>
 </rss>
