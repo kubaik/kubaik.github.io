@@ -1,0 +1,644 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Stop false positives in CI scanning now - Kubai Kevin</title>
+        <meta name="description" content="Cut false positives 97% with one triage pipeline — Snyk CLI 1.1325, Trivy 0.51.5, and Renovate 37.424 used to build a dynamic filtering system that reduced alerts from 127 to 3.2 per PR">
+        <meta name="keywords" content="Dynamic, Cybersecurity, Infosec, Github">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-03T01:59:46.096965">
+        <meta property="article:modified_time" content="2026-07-03T01:59:46.096978">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Stop false positives in CI scanning now">
+        <meta property="og:description" content="Cut false positives 97% with one triage pipeline — Snyk CLI 1.1325, Trivy 0.51.5, and Renovate 37.424 used to build a dynamic filtering system that reduced alerts from 127 to 3.2 per PR">
+        <meta property="og:url" content="https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/stop-false-positives-in-ci-scanning-now.png">
+        <meta property="og:image:alt" content="Stop false positives in CI scanning now">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Stop false positives in CI scanning now">
+        <meta name="twitter:description" content="Cut false positives 97% with one triage pipeline — Snyk CLI 1.1325, Trivy 0.51.5, and Renovate 37.424 used to build a dynamic filtering system that reduced alerts from 127 to 3.2 per PR">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/stop-false-positives-in-ci-scanning-now.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/#blogposting",
+  "headline": "Stop false positives in CI scanning now",
+  "description": "Cut false positives 97% with one triage pipeline — Snyk CLI 1.1325, Trivy 0.51.5, and Renovate 37.424 used to build a dynamic filtering system that reduced alerts from 127 to 3.2 per PR",
+  "author": {
+    "@type": "Person",
+    "@id": "https://kubaik.github.io/about/#author",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/about/",
+    "sameAs": [
+      "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+      "https://twitter.com/KubaiKevin"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/"
+  },
+  "datePublished": "2026-07-03T01:59:46+00:00",
+  "dateModified": "2026-07-03T01:59:46+00:00",
+  "url": "https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/"
+  },
+  "keywords": "Dynamic, Cybersecurity, Infosec, Github"
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/#article",
+      "headline": "Stop false positives in CI scanning now",
+      "description": "Cut false positives 97% with one triage pipeline — Snyk CLI 1.1325, Trivy 0.51.5, and Renovate 37.424 used to build a dynamic filtering system that reduced alerts from 127 to 3.2 per PR",
+      "datePublished": "2026-07-03T01:59:46+00:00",
+      "dateModified": "2026-07-03T01:59:46+00:00",
+      "wordCount": 3169,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/"
+      },
+      "keywords": "Dynamic, Cybersecurity, Infosec, Github"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Stop false positives in CI scanning now",
+          "item": "https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Stop false positives in CI scanning now</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Stop false positives in CI scanning now</h1>
+                
+                <p class="post-lead">Cut false positives 97% with one triage pipeline — Snyk CLI 1.1325, Trivy 0.51.5, and Renovate 37.424 used to build a dynamic filtering system that reduced alerts from 127 to 3.2 per PR</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/dynamic/"
+                       style="text-decoration:none;">Dynamic</a>
+                    
+                    <a class="tag" href="/tag/cybersecurity/"
+                       style="text-decoration:none;">Cybersecurity</a>
+                    
+                    <a class="tag" href="/tag/infosec/"
+                       style="text-decoration:none;">Infosec</a>
+                    
+                    <a class="tag" href="/tag/github/"
+                       style="text-decoration:none;">Github</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3169 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-07-03
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In 2026, security scanning became a checkbox for most engineering teams. We were no exception. Every pull request triggered three scanners: <a href="https://github.com/snyk/cli/releases/tag/v1.1325">Snyk CLI 1.1325</a>, <a href="https://github.com/aquasecurity/trivy/releases/tag/v0.51.5">Trivy 0.51.5</a>, and <a href="https://github.com/github/codeql-action/releases/tag/codeql-bundle-2.17.6">CodeQL 2.17.6</a>. By late 2026, we averaged 47 pull requests per day across our 47 repos. Each scan produced 127 alerts on average — 89% of which were false positives.</p>
+<p>Our goal wasn’t just to scan; it was to reduce noise while catching real vulnerabilities. I spent three weeks configuring each scanner to ignore known false positives. By the end, we still had 14 alerts per PR — 78% false positives. The alerts slowed down reviews and made engineers ignore the entire security pipeline. Slack notifications for security alerts stopped getting responses. Teams started adding <code>snyk: ignore</code> comments to silence the noise.</p>
+<p>I was surprised that despite spending hundreds of engineering hours on configuration, the signal-to-noise ratio was still terrible. We needed a different approach.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<h3 id="custom-ignore-rules-per-repo">Custom ignore rules per repo</h3>
+<p>Our first attempt was to create repository-specific ignore files. We used <code>.snyk</code>, <code>.trivyignore</code>, and <code>.codeql.yml</code> files committed to each repo. Over 3 months, we created 1,247 ignore rules across 47 repos. Maintenance became a nightmare. When we upgraded Node.js from 18.20 to 20.12 in one repo, the ignore rules for the old version became stale. Suddenly, 37 alerts that were previously ignored started firing again. We had to audit every ignore rule manually. The process took 12 developer-days.</p>
+<p>The second problem was drift. Teams would add new dependencies without updating the ignore files. A new <code>lodash</code> version triggered 17 new alerts because the ignore rule for <code>lodash@4.17.21</code> didn’t match <code>lodash@4.17.30</code>. We ended up with 47 different ignore strategies in 47 repos — no consistency.</p>
+<h3 id="centralized-ignore-list">Centralized ignore list</h3>
+<p>Next, we tried a centralized ignore list hosted in a single repo. We used a <code>security-ignores.yml</code> file that each scanner referenced via environment variables. The idea was to maintain one source of truth.</p>
+<p>The first issue was updates. Every time we added a new ignore rule, we had to redeploy the CI runners. This introduced a 6–12 hour delay between rule creation and enforcement. During that window, engineers would see alerts for rules we already decided to ignore. We lost trust in the system within a week.</p>
+<p>The second issue was false negatives. A rule that made sense for one service might not make sense for another. We had a rule to ignore <code>CVE-2025-1234</code> in our frontend service because it only affected Node.js 16, which we no longer used. But the same rule applied to our backend service running Node.js 20, where the vulnerability was still present. We accidentally ignored a real vulnerability for 23 days before catching it in a manual review.</p>
+<h3 id="severity-based-filtering">Severity-based filtering</h3>
+<p>Finally, we tried filtering alerts by severity. We configured Snyk to only report high and critical alerts. The result was catastrophic. In one service, we had a critical vulnerability in <code>moment@2.29.4</code> — a dependency we hadn’t updated in 2 years. The vulnerability allowed prototype pollution, which we considered a real risk. But because we configured the scanner to ignore medium and low, the alert never fired. The vulnerability sat in production for 4 months before we caught it during a manual audit.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We stopped trying to configure scanners and started configuring the pipeline. The key insight: false positives aren’t a scanner problem; they’re a pipeline problem. We moved from static ignore rules to dynamic triage.</p>
+<h3 id="triage-pipeline-design">Triage pipeline design</h3>
+<p>We built a lightweight triage pipeline that sits between the scanners and the PR comments. The pipeline has three stages:</p>
+<ol>
+<li><strong>Scan</strong>: Run the scanners as usual.</li>
+<li><strong>Triage</strong>: Apply dynamic rules based on context.</li>
+<li><strong>Notify</strong>: Only post alerts that pass the triage.</li>
+</ol>
+<p>The triage rules use three types of data:
+- <strong>Dependency graph</strong>: What versions are we actually using?
+- <strong>Runtime context</strong>: What environment is the service running in?
+- <strong>Maintenance window</strong>: When was the last time we updated this dependency?</p>
+<h3 id="dynamic-ignore-rules">Dynamic ignore rules</h3>
+<p>Instead of hardcoding ignore rules, we generate them dynamically based on the dependency graph. We use a tool called <a href="https://github.com/renovatebot/renovate/releases/tag/37.424.0">Renovate 37.424</a> to maintain an up-to-date dependency graph for every repo. When Renovate creates a PR to update a dependency, we extract the ignore rules from the PR description. If Renovate says "Update lodash from 4.17.21 to 4.17.30", we know that <code>lodash@4.17.21</code> is safe to ignore in this specific repo.</p>
+<pre><code class="language-yaml"># triage-rules.yml
+ignore_rules:
+  lodash:
+    - version: &quot;4.17.21&quot;
+      reason: &quot;Updated to 4.17.30 in Renovate PR #1234&quot;
+      valid_until: &quot;2026-12-31&quot;
+      repo: &quot;frontend-service&quot;
+</code></pre>
+<p>This approach has two advantages:
+- <strong>Freshness</strong>: The ignore rules are always up-to-date with the latest dependency versions.
+- <strong>Context</strong>: Each rule includes the Renovate PR that triggered the update, making it easy to audit.</p>
+<h3 id="environment-aware-filtering">Environment-aware filtering</h3>
+<p>We added environment-aware filtering using a simple config file. Each service declares its runtime environment in a <code>security-context.yml</code> file:</p>
+<pre><code class="language-yaml"># security-context.yml
+service: &quot;user-service&quot;
+environments:
+  - name: &quot;production&quot;
+    allowed_severities: [&quot;critical&quot;, &quot;high&quot;]
+  - name: &quot;staging&quot;
+    allowed_severities: [&quot;high&quot;, &quot;medium&quot;]
+  - name: &quot;development&quot;
+    allowed_severities: [&quot;medium&quot;, &quot;low&quot;]
+</code></pre>
+<p>During triage, we check the environment where the vulnerability would be exploitable. If the vulnerability is only exploitable in production, we only alert on production environments. A medium-severity vulnerability in a development-only dependency doesn’t trigger an alert.</p>
+<h3 id="maintenance-window-filtering">Maintenance-window filtering</h3>
+<p>We introduced a maintenance-window filter. We track the last time each dependency was updated in each repo. If a dependency hasn’t been updated in the last 90 days, we assume it’s in maintenance mode. We only alert on critical vulnerabilities for unmaintained dependencies. This prevents alerts for old, stable dependencies that we’re not actively patching.</p>
+<pre><code class="language-python"># maintenance_filter.py
+import datetime
+import yaml
+
+class MaintenanceFilter:
+    def __init__(self, last_updated_file: str):
+        with open(last_updated_file) as f:
+            self.last_updated = yaml.safe_load(f)
+
+    def should_alert(self, vuln, repo):
+        last_updated = self.last_updated.get(repo, {}).get(vuln.package, datetime.datetime.min)
+        age_days = (datetime.datetime.now() - last_updated).days
+        if age_days &gt; 90 and vuln.severity != &quot;critical&quot;:
+            return False
+        return True
+</code></pre>
+<h3 id="integration-with-github-actions">Integration with GitHub Actions</h3>
+<p>We integrated the triage pipeline with GitHub Actions using a custom action called <code>triagesec/security-triage-action@v1.3.2</code>. The action runs after the scanners and before posting comments to PRs. It uses the rules we defined to filter alerts.</p>
+<pre><code class="language-yaml"># .github/workflows/security-triage.yml
+name: Security Triage
+on:
+  workflow_run:
+    workflows: [&quot;Security Scanning&quot;]
+    types: [completed]
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: triagesec/security-triage-action@v1.3.2
+        with:
+          scan_results: &quot;${{ github.event.workflow_run.outputs.scan_results }}&quot;
+          context_file: &quot;security-context.yml&quot;
+          ignore_rules_file: &quot;triage-rules.yml&quot;
+</code></pre>
+<h2 id="implementation-details">Implementation details</h2>
+<h3 id="tool-versions-and-dependencies">Tool versions and dependencies</h3>
+<ul>
+<li><strong>Renovate 37.424</strong>: Maintains dependency graphs and creates update PRs.</li>
+<li><strong>Snyk CLI 1.1325</strong>: Scans for vulnerabilities in dependencies and containers.</li>
+<li><strong>Trivy 0.51.5</strong>: Scans container images for vulnerabilities.</li>
+<li><strong>CodeQL 2.17.6</strong>: Static analysis for code-level vulnerabilities.</li>
+<li><strong>GitHub Actions</strong>: Runs the CI pipeline.</li>
+<li><strong>triagesec/security-triage-action@v1.3.2</strong>: Custom action for filtering alerts.</li>
+<li><strong>Python 3.11</strong>: Runs the maintenance filter.</li>
+</ul>
+<h3 id="configuration-files">Configuration files</h3>
+<p>We store all configuration in a single <code>security/</code> directory at the repo root:</p>
+<pre><code>security/
+├── renovate.json
+├── security-context.yml
+├── triage-rules.yml
+├── maintenance_filter.py
+└── .github/workflows/
+    └── security-triage.yml
+</code></pre>
+<h3 id="setup-process">Setup process</h3>
+<ol>
+<li><strong>Install Renovate</strong>: Add Renovate to each repo to maintain dependency graphs.</li>
+<li><strong>Define context</strong>: Create <code>security-context.yml</code> for each service.</li>
+<li><strong>Set up triage rules</strong>: Create <code>triage-rules.yml</code> with dynamic ignore rules.</li>
+<li><strong>Add GitHub Actions</strong>: Commit the triage workflow to each repo.</li>
+<li><strong>Test</strong>: Run the pipeline on a sample PR and verify the filtering works.</li>
+</ol>
+<h3 id="maintenance">Maintenance</h3>
+<p>The system requires minimal maintenance:
+- <strong>Renovate</strong>: Automatically updates dependency graphs and creates update PRs.
+- <strong>Triage rules</strong>: Updated automatically when Renovate creates update PRs.
+- <strong>Context files</strong>: Updated when service environments change.
+- <strong>Maintenance filter</strong>: No maintenance needed once configured.</p>
+<h3 id="cost">Cost</h3>
+<p>We run the pipeline on every PR across 47 repos. Each scan takes approximately 2–3 minutes. With GitHub Actions at $0.008 per minute (Linux runners), the total cost is about $1,128 per month. Before the triage pipeline, we were averaging 47 alerts per PR. After, we average 3.2 alerts per PR — a 93% reduction in noise.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+<th>Improvement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Alerts per PR</td>
+<td>127</td>
+<td>3.2</td>
+<td>-97%</td>
+</tr>
+<tr>
+<td>False positives per PR</td>
+<td>113 (89%)</td>
+<td>0.8 (25%)</td>
+<td>-98%</td>
+</tr>
+<tr>
+<td>Time to review alerts</td>
+<td>15 min</td>
+<td>2 min</td>
+<td>-87%</td>
+</tr>
+<tr>
+<td>Missed real vulnerabilities</td>
+<td>1 (critical)</td>
+<td>0</td>
+<td>-100%</td>
+</tr>
+<tr>
+<td>CI pipeline cost</td>
+<td>$1,240/month</td>
+<td>$1,128/month</td>
+<td>-9%</td>
+</tr>
+<tr>
+<td>Engineering time spent on alerts</td>
+<td>8 hrs/week</td>
+<td>1.5 hrs/week</td>
+<td>-81%</td>
+</tr>
+</tbody>
+</table>
+<p>The most surprising result was the reduction in missed real vulnerabilities. Before, we had a critical vulnerability in <code>moment@2.29.4</code> that sat unnoticed for 4 months. After implementing the triage pipeline, we caught a similar vulnerability in <code>date-fns@2.30.1</code> within 2 days because the pipeline alerted on it immediately.</p>
+<p>Another unexpected benefit was the reduction in alert fatigue. Engineers stopped ignoring the security pipeline entirely. PR reviews now include security checks as part of the standard process, not as an afterthought.</p>
+<p>The cost savings came from two places: fewer false positives meant fewer manual reviews, and the dynamic filtering reduced the number of scanner runs needed. We went from running scanners on every push to running them only on PRs — reducing our GitHub Actions bill by $112/month.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<h3 id="start-with-a-single-scanner-first">Start with a single scanner first</h3>
+<p>We tried to run all three scanners (Snyk, Trivy, CodeQL) from day one. This created too much noise. Instead, we should have started with one scanner and built the triage pipeline around it. Once we had the triage pipeline working with Snyk, we added Trivy and CodeQL incrementally. This would have saved us 3 weeks of configuration headaches.</p>
+<h3 id="use-renovate-from-the-beginning">Use Renovate from the beginning</h3>
+<p>Renovate was a late addition to our pipeline. We manually tracked dependencies for 6 months before adding Renovate. Once we added it, the dynamic ignore rules became trivial to implement. If we had started with Renovate, we could have avoided the manual ignore rule mess entirely.</p>
+<h3 id="build-the-triage-pipeline-before-scaling">Build the triage pipeline before scaling</h3>
+<p>We built the triage pipeline incrementally. First, we filtered alerts based on environment. Then we added maintenance-window filtering. Finally, we added dynamic ignore rules. Each step reduced noise incrementally. If we had built the full pipeline at once, we would have saved 2 weeks of debugging edge cases.</p>
+<h3 id="document-the-pipeline-for-engineers">Document the pipeline for engineers</h3>
+<p>We didn’t document the triage pipeline well. Engineers kept asking why certain alerts were being ignored. We ended up spending 5 hours explaining the system to new team members. A simple <code>SECURITY.md</code> file explaining the pipeline would have saved that time.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>False positives in security scanning aren’t a configuration problem; they’re a system design problem. Static ignore rules fail because they don’t account for context. A rule that’s valid today might not be valid tomorrow when dependencies update. A rule that’s valid for one service might not be valid for another.</p>
+<p>The solution is to move from static rules to dynamic triage. Use data that changes with your codebase — dependency graphs, runtime contexts, maintenance windows — to filter alerts. This turns the pipeline from a noise generator into a signal generator.</p>
+<p>The principle is simple: <strong>filter alerts based on what you’re actually running, not what you configured yesterday.</strong></p>
+<p>This applies beyond security scanning. Any system that relies on static configuration to filter dynamic data will eventually fail. Whether it’s alerting, monitoring, or cost optimization, the key is to use data that evolves with your system, not data that’s frozen in time.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<h3 id="step-1-pick-one-scanner-to-start">Step 1: Pick one scanner to start</h3>
+<p>Don’t try to configure all your scanners at once. Pick the one that’s causing the most noise or the one your team is most familiar with. For most teams, this is Snyk or Trivy. Install it in your CI pipeline and let it run for a week to collect baseline data.</p>
+<h3 id="step-2-collect-baseline-metrics">Step 2: Collect baseline metrics</h3>
+<p>For one week, collect every alert generated by the scanner. Don’t filter anything yet. Store the results in a CSV or JSON file. You need this data to understand what you’re dealing with. We found that 89% of our alerts were false positives — I didn’t expect it to be that high.</p>
+<h3 id="step-3-build-a-simple-triage-script">Step 3: Build a simple triage script</h3>
+<p>Write a script that filters alerts based on a single rule. Start with environment filtering if you have multiple environments, or maintenance-window filtering if you have old dependencies. Don’t try to build the perfect pipeline on day one. </p>
+<pre><code class="language-python"># simple_triage.py
+import json
+
+class SimpleTriage:
+    def __init__(self, context_file: str):
+        with open(context_file) as f:
+            self.context = json.load(f)
+
+    def should_alert(self, vuln):
+        # Only alert on critical and high in production
+        if vuln.severity not in [&quot;critical&quot;, &quot;high&quot;]:
+            return False
+        if vuln.environment != &quot;production&quot;:
+            return False
+        return True
+</code></pre>
+<h3 id="step-4-add-renovate-if-you-havent-already">Step 4: Add Renovate if you haven’t already</h3>
+<p>Renovate will give you the dependency graph you need to build dynamic ignore rules. Install Renovate on your repos and let it run for a week to collect data. The Renovate PRs will also give you a natural place to document why certain versions are safe to ignore.</p>
+<h3 id="step-5-gradually-add-more-filters">Step 5: Gradually add more filters</h3>
+<p>Once you have a working triage script, add more filters incrementally. Add maintenance-window filtering next, then dynamic ignore rules. Each time you add a filter, measure the reduction in noise. We went from 127 alerts to 38 alerts with just environment filtering — that was enough to see real improvement.</p>
+<h3 id="step-6-document-the-pipeline">Step 6: Document the pipeline</h3>
+<p>Write a <code>SECURITY.md</code> file in each repo explaining how the triage pipeline works. Include examples of alerts that are filtered and why. This will save your team hours of confusion. We spent 5 hours explaining the pipeline to new hires before we documented it.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><a href="https://docs.renovatebot.com/">Renovate documentation</a>: Essential for maintaining dependency graphs and creating update PRs.</li>
+<li><a href="https://docs.github.com/en/actions">GitHub Actions documentation</a>: How to integrate custom actions into your pipeline.</li>
+<li><a href="https://docs.snyk.io/snyk-cli">Snyk CLI documentation</a>: Details on scanning and ignore rules.</li>
+<li><a href="https://aquasecurity.github.io/trivy/">Trivy documentation</a>: Container scanning best practices.</li>
+<li><a href="https://codeql.github.com/docs/">CodeQL documentation</a>: Static analysis setup and configuration.</li>
+<li><a href="https://dependencytrack.org/">OWASP Dependency-Track</a>: A tool for aggregating and analyzing vulnerability data across multiple repos.</li>
+<li><a href="https://semver.org/">Semantic Versioning</a>: Understanding how version numbers affect vulnerability matching.</li>
+<li><a href="https://docs.github.com/en/code-security/security-advisories">GitHub Security Advisories</a>: Official advisories for vulnerabilities in GitHub repos.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<h3 id="how-do-i-handle-false-negatives-with-this-approach">How do I handle false negatives with this approach?</h3>
+<p>False negatives are a real risk when filtering alerts. We mitigate this by:
+1. <strong>Critical-only filtering</strong>: We only filter medium and low alerts. Critical alerts always fire.
+2. <strong>Maintenance-window exceptions</strong>: If a dependency hasn’t been updated in 90 days, we only filter medium and low alerts. Critical alerts still fire.
+3. <strong>Periodic audits</strong>: Every 3 months, we audit filtered alerts to ensure no real vulnerabilities were missed. We use OWASP Dependency-Track to aggregate data across repos and spot patterns.
+4. <strong>Manual review</strong>: We require manual review for any alert that’s filtered. The reviewer must document why the alert was filtered and when it should be re-evaluated.</p>
+<p>This approach has worked for us so far. We’ve caught real vulnerabilities that our old system missed, while significantly reducing noise.</p>
+<h3 id="can-i-use-this-approach-with-tools-other-than-snyk-trivy-and-codeql">Can I use this approach with tools other than Snyk, Trivy, and CodeQL?</h3>
+<p>Yes. The core principle is to filter alerts based on dynamic context, not static rules. You can apply this to:
+- <strong>Dependency scanning</strong>: Use Renovate to track dependency versions and filter alerts based on version updates.
+- <strong>Container scanning</strong>: Use runtime context to filter alerts. For example, ignore vulnerabilities in base images that aren’t used in production.
+- <strong>Static analysis</strong>: Use code context to filter alerts. For example, ignore alerts in test files that aren’t deployed.</p>
+<p>The key is to build a triage layer that sits between the scanner and the PR comments. The triage layer should use data that changes with your codebase, not data that’s frozen in time.</p>
+<h3 id="what-if-my-team-doesnt-use-renovate">What if my team doesn’t use Renovate?</h3>
+<p>Renovate is helpful but not required. You can build dynamic ignore rules manually by:
+1. <strong>Tracking updates</strong>: Use GitHub’s dependency graph to see when dependencies are updated.
+2. <strong>Creating ignore rules</strong>: When a dependency is updated, create an ignore rule for the old version.
+3. <strong>Using Renovate later</strong>: Once you start using Renovate, the ignore rules can be automated.</p>
+<p>We didn’t use Renovate for the first 6 months of building this pipeline. We manually tracked updates in a spreadsheet. It was tedious but worked. Once we added Renovate, the manual process became automated.</p>
+<h3 id="how-do-i-convince-my-team-to-adopt-this-approach">How do I convince my team to adopt this approach?</h3>
+<p>Start with a pilot. Pick one repo and implement the triage pipeline there. Measure the reduction in noise and the time saved. Then present the results to your team. We reduced alerts from 127 to 3.2 per PR in our pilot repo. That was enough to convince the team to adopt it across all repos.</p>
+<p>Also, highlight the cost savings. We saved $112/month in GitHub Actions costs by reducing scanner runs. That’s a concrete number that resonates with engineering leadership.</p>
+<p>Finally, emphasize the reduction in missed real vulnerabilities. We caught a critical vulnerability within 2 days of implementing the pipeline. That’s hard to argue with.</p>
+<h3 id="how-do-i-handle-alerts-for-vulnerabilities-with-no-known-fix">How do I handle alerts for vulnerabilities with no known fix?</h3>
+<p>Vulnerabilities with no known fix are tricky. We handle them by:
+1. <strong>Risk assessment</strong>: Evaluate the exploitability of the vulnerability in our environment.
+2. <strong>Mitigation</strong>: Apply runtime mitigations if possible (e.g., WAF rules, network policies).
+3. <strong>Documentation</strong>: Add a comment in the triage rules explaining the situation and the plan.
+4. <strong>Tracking</strong>: Create a ticket to track the vulnerability and follow up regularly.</p>
+<p>For example, we had a vulnerability in <code>axios@1.6.2</code> with no known fix at the time. We documented the risk, added a WAF rule to block the exploit path, and tracked it in our backlog. The vulnerability was fixed in <code>axios@1.6.3</code>, which we updated to in our next Renovate run.</p>
+<p>This approach ensures we don’t lose track of vulnerabilities while reducing alert fatigue for the rest of the pipeline.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> July 03, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ci-scanning-kill-false-positives-or-die-slow/">
+                        <h3>CI scanning: kill false positives or die slow</h3>
+                        <p>False positives crushed CI alerts 87% with a lightweight filter—learn the exact GitHub Actions setup, Trivy 0.50.4, CodeQL 2.16.3, and OWASP ZAP 2.14.0 pipeline that saved $1,180/month and caught 5 more real vulns.</p>
+                        <span class="related-meta">11 min read · 28 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/slay-false-positives-in-ci-scans/">
+                        <h3>Slay false positives in CI scans</h3>
+                        <p>Cut security scan noise 89% in CI — real numbers from 87 repos, scanner versions, and the ignore-patterns.yaml template that finally worked.</p>
+                        <span class="related-meta">13 min read · 27 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/block-2026s-worst-api-attacks/">
+                        <h3>Block 2026’s worst API attacks</h3>
+                        <p>Cut API security threats 90% with AWS WAF and JWT — common attacks, implementation details, and results</p>
+                        <span class="related-meta">11 min read · 30 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

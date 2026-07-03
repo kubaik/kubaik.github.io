@@ -44,5 +44,6 @@
   "How prompt injection attacks work and why your AI product is probably vulnerable",
   "How to negotiate compensation in 2026 when AI can do parts of your job description",
   "USSD is not dead: why feature phone interfaces still matter for African fintech in 2026",
-  "How AI observability is different from traditional application monitoring"
+  "How AI observability is different from traditional application monitoring",
+  "How I run automated security scanning in CI without drowning in false positives"
 ]
