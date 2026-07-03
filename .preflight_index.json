@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T05:52:31.875081",
+  "built_at": "2026-07-03T06:48:33.423672",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3895,6 +3895,11 @@
       "slug": "debug-async-python-before-it-deadlocks",
       "title": "Debug async Python before it deadlocks…",
       "summary": "I've seen the same async python mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Async Python hit mainstream with Python 3.7’s asyncio in 2018, but six ye"
+    },
+    {
+      "slug": "ai-ui-generation-what-it-fixed-and-what-still-breaks",
+      "title": "AI UI generation: what it fixed and what still breaks",
+      "summary": "The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI UI generation tools like v0 by Vercel, Figma AI, and Locofy can cut frontend w"
     }
   ]
 }

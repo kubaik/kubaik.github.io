@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 05:52:44 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 06:48:44 +0000</lastBuildDate>
+    <item>
+      <title>AI UI generation: what it fixed and what still breaks</title>
+      <link>https://kubaik.github.io/ai-ui-generation-what-it-fixed-and-what-still-breaks/</link>
+      <description>Cut frontend work 40–60% with AI UI generation tools — real wins, hidden Safari CORS bugs, and the exact prompts that paid off in 2026.</description>
+      <pubDate>Fri, 03 Jul 2026 06:48:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-ui-generation-what-it-fixed-and-what-still-breaks/</guid>
+    </item>
     <item>
       <title>Debug async Python before it deadlocks…</title>
       <link>https://kubaik.github.io/debug-async-python-before-it-deadlocks/</link>
@@ -138,13 +145,6 @@
       <description>Cut error rates 80% after AI tools broke my workflow — the principles I updated and why resilience beats velocity in 2026.</description>
       <pubDate>Thu, 02 Jul 2026 08:41:32 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-tools-rewrote-my-engineering-rules/</guid>
-    </item>
-    <item>
-      <title>Micro-SaaS niches surviving AI commoditisation</title>
-      <link>https://kubaik.github.io/micro-saas-niches-surviving-ai-commoditisation/</link>
-      <description>AI ate $18k MRR niches that relied on automation alone. The survivors are 4 niches that still pay in 2026: compliance wrappers, embedded workflows, private data layers, and audit surfaces.</description>
-      <pubDate>Thu, 02 Jul 2026 08:27:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/micro-saas-niches-surviving-ai-commoditisation/</guid>
     </item>
   </channel>
 </rss>
