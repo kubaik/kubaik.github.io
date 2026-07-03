@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 12:29:21 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 09:33:51 +0000</lastBuildDate>
+    <item>
+      <title>Prompt injection’s hidden AWS tax</title>
+      <link>https://kubaik.github.io/prompt-injections-hidden-aws-tax/</link>
+      <description>Cut LLM costs 40% by blocking prompt injection — sandboxing, schema validation, and the retry storm mistake most teams miss.</description>
+      <pubDate>Fri, 03 Jul 2026 09:33:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/prompt-injections-hidden-aws-tax/</guid>
+    </item>
     <item>
       <title>Serve 4G-as-baseline apps in 2026</title>
       <link>https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Fix AI agent memory loss across sessions in 2026 — 60% of teams hit this after moving from demo to prod. Learn where your context really vanishes and how to make it persist reliably.</description>
       <pubDate>Thu, 02 Jul 2026 17:15:04 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/</guid>
-    </item>
-    <item>
-      <title>Postgres 17 swallowed Redis, Kafka, Timescale</title>
-      <link>https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/</link>
-      <description>Cut AWS costs 56% by replacing Redis, Kafka, and TimescaleDB with Postgres 17 — connection pooling, pgmq benchmarks, and the schema mistake that cost us 3 days.</description>
-      <pubDate>Thu, 02 Jul 2026 17:01:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/</guid>
     </item>
   </channel>
 </rss>
