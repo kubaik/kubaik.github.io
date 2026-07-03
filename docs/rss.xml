@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 12:13:43 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 09:17:41 +0000</lastBuildDate>
+    <item>
+      <title>Serve 4G-as-baseline apps in 2026</title>
+      <link>https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/</link>
+      <description>Cut API response time 21% and payload 63% for 4G-as-baseline users — Go server, Redis 7.4, and Vite 5.3 steps with real 2026 latency and cost data.</description>
+      <pubDate>Fri, 03 Jul 2026 09:17:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/</guid>
+    </item>
     <item>
       <title>Nigeria’s 2026 API rules broke our microservices</title>
       <link>https://kubaik.github.io/nigerias-2026-api-rules-broke-our-microservices/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS costs 56% by replacing Redis, Kafka, and TimescaleDB with Postgres 17 — connection pooling, pgmq benchmarks, and the schema mistake that cost us 3 days.</description>
       <pubDate>Thu, 02 Jul 2026 17:01:10 +0000</pubDate>
       <guid>https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/</guid>
-    </item>
-    <item>
-      <title>M-Pesa Daraja 2.0: your 2026 migration checklist</title>
-      <link>https://kubaik.github.io/m-pesa-daraja-20-your-2026-migration-checklist/</link>
-      <description>Migrate M-Pesa Daraja to 2.0 in 2026 and cut failed payments 82% — new headers, idempotency keys, and callback changes you must ship before March 31</description>
-      <pubDate>Thu, 02 Jul 2026 16:41:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/m-pesa-daraja-20-your-2026-migration-checklist/</guid>
     </item>
   </channel>
 </rss>
