@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 19:57:45 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 17:01:43 +0000</lastBuildDate>
+    <item>
+      <title>Built self-healing pipelines: AI vs scripts</title>
+      <link>https://kubaik.github.io/built-self-healing-pipelines-ai-vs-scripts/</link>
+      <description>Cut incident response time 60% with AI agents or keep it simple with scripts — the 2026 decision guide with real benchmarks, cost data, and rollback scripts.</description>
+      <pubDate>Fri, 03 Jul 2026 17:01:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/built-self-healing-pipelines-ai-vs-scripts/</guid>
+    </item>
     <item>
       <title>MCP servers: real-time pipelines without agents</title>
       <link>https://kubaik.github.io/mcp-servers-real-time-pipelines-without-agents/</link>
@@ -138,13 +145,6 @@
       <description>Cut frontend work 40–60% with AI UI generation tools — real wins, hidden Safari CORS bugs, and the exact prompts that paid off in 2026.</description>
       <pubDate>Fri, 03 Jul 2026 06:48:30 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-ui-generation-what-it-fixed-and-what-still-breaks/</guid>
-    </item>
-    <item>
-      <title>Debug async Python before it deadlocks…</title>
-      <link>https://kubaik.github.io/debug-async-python-before-it-deadlocks/</link>
-      <description>Cut async Python bugs 60% by choosing trio over threads — concrete benchmarks, real outage stories, and version-pinned tools (Python 3.11, trio 0.24)</description>
-      <pubDate>Fri, 03 Jul 2026 05:52:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/debug-async-python-before-it-deadlocks/</guid>
     </item>
   </channel>
 </rss>

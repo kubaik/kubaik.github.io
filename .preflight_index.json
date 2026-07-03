@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T16:33:27.404979",
+  "built_at": "2026-07-03T17:01:30.686476",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3995,6 +3995,11 @@
       "slug": "5-steps-to-zero-trust-secrets-in-kubernetes",
       "title": "5 steps to zero-trust secrets in Kubernetes",
       "summary": "The official documentation for secrets management is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. Why this list exists (what I was actually trying to solve) In 2026, my team moved from Has"
+    },
+    {
+      "slug": "built-self-healing-pipelines-ai-vs-scripts",
+      "title": "Built self-healing pipelines: AI vs scripts",
+      "summary": "I've seen the same built selfhealing mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the average Kubernetes cluster in staging runs 147 pods tha"
     }
   ]
 }
