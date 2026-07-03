@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 18:16:58 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 18:21:49 +0000</lastBuildDate>
+    <item>
+      <title>Backstage plugins for AI: 3 hidden costs fixed in 2026</title>
+      <link>https://kubaik.github.io/backstage-plugins-for-ai-3-hidden-costs-fixed-in-2026/</link>
+      <description>Reduce AI feature on-call pages 88% and cut token costs 87% with Backstage 1.27, Argo CD 2.10, and Python 3.11 — real numbers from 2026</description>
+      <pubDate>Fri, 03 Jul 2026 18:21:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/backstage-plugins-for-ai-3-hidden-costs-fixed-in-2026/</guid>
+    </item>
     <item>
       <title>AI reshaped my engineering principles</title>
       <link>https://kubaik.github.io/ai-reshaped-my-engineering-principles/</link>
@@ -138,13 +145,6 @@
       <description>Cut onboarding time 44% with AI-guided walkthroughs — but human guides still win for trust and MTTR. Real benchmarks, tools, and the mistake most teams make first.</description>
       <pubDate>Fri, 03 Jul 2026 08:17:56 +0000</pubDate>
       <guid>https://kubaik.github.io/audit-ai-code-onboarding-without-the-burn/</guid>
-    </item>
-    <item>
-      <title>47% AI code debt in 2026</title>
-      <link>https://kubaik.github.io/47-ai-code-debt-in-2026/</link>
-      <description>Cut AI code debt 80% with automated guardrails — performance, cost, and DX comparison with Semgrep 1.51, Rego, and real 2026 benchmarks.</description>
-      <pubDate>Fri, 03 Jul 2026 08:06:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/47-ai-code-debt-in-2026/</guid>
     </item>
   </channel>
 </rss>
