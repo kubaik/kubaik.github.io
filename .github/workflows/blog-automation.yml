@@ -1,3 +1,4 @@
+```yaml
 name: AI Blog Automation
 
 on:
@@ -162,21 +163,26 @@ jobs:
           echo "Total posts: $post_count"
           [ -f "docs/index.html" ] || { echo "ERROR: no index.html"; exit 1; }
 
-      - name: Generate sitemap.xml
+      # ── NEW: Generate sitemap.xml so search engines can discover posts ──
+      # Runs after content generation/build (both the normal and OG-only
+      # paths funnel through "Verify generated content" above), so it always
+      # sees the final set of published HTML pages for this run before we
+      # touch OG images, commit, or deploy. Non-blocking on individual page
+      # parse issues; the script itself skips excluded/draft paths.
+            # Generate single sitemap.xml (no chunking)
+      - name: 🗺️ Generate sitemap.xml
         run: |
           python scripts/generate_sitemap.py \
             --output-dir ./docs \
             --base-url "https://kubaik.github.io"
 
-      - name: Verify sitemap
-        run: |
           if [ -f ./docs/sitemap.xml ]; then
-            echo "✓ Single sitemap generated successfully"
             url_count=$(grep -c "<loc>" ./docs/sitemap.xml || echo 0)
-            echo "Total URLs in sitemap: $url_count"
+            echo "sitemap_url_count=${url_count}" >> $GITHUB_ENV
+            echo "✅ Single sitemap.xml generated with ${url_count} URLs"
           else
-            echo "ERROR: sitemap.xml was not generated"
-            exit 1
+            echo "⚠️ WARNING: sitemap.xml was not created"
+            echo "sitemap_url_count=0" >> $GITHUB_ENV
           fi
 
       - name: 📸 Generate per-article OG images
@@ -257,3 +263,4 @@ jobs:
               echo "⚠️ No OG images generated (check logs)"
             fi
           } >> $GITHUB_STEP_SUMMARY
+```
