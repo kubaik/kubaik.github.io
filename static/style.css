@@ -172,13 +172,13 @@ header .container {
 }
 
 /* Logo/Site Title */
-.site-title {
+header h1 {
     margin: 0;
     font-size: 1.5rem;
     font-weight: 700;
 }
 
-.site-title a {
+header h1 a {
     text-decoration: none;
     color: #2c3e50;
     font-size: 1.5rem;
@@ -187,7 +187,7 @@ header .container {
     display: inline-block;
 }
 
-.site-title a:hover {
+header h1 a:hover {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -1604,11 +1604,11 @@ footer {
     }
 
     /* Smaller logo text on mobile */
-    .site-title {
+    header h1 {
         font-size: 1.2rem;
     }
 
-    .site-title a {
+    header h1 a {
         font-size: 1.2rem;
     }
 

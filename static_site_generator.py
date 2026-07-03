@@ -122,7 +122,7 @@ AUTHOR_PAGE_TEMPLATE = """\
 </head>
 <body>
     <header><div class="container">
-        <p class="site-title"><a href="{base_path}/">{site_name}</a></p>
+        <h1><a href="{base_path}/">{site_name}</a></h1>
         <nav><a href="{base_path}/">Home</a><a href="{base_path}/about/">About</a></nav>
     </div></header>
     <main class="container">
@@ -991,7 +991,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
 </head>
 <body>
   <header><div class="container">
-    <p class="site-title"><a href="{base_path}/">{site_name}</a></p>
+    <h1><a href="{base_path}/">{site_name}</a></h1>
     <nav>
       <a href="{base_path}/">Home</a>
       <a href="{base_path}/about/">About</a>
@@ -1039,7 +1039,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
 </head>
 <body>
   <header><div class="container">
-    <p class="site-title"><a href="{base_path}/">{site_name}</a></p>
+    <h1><a href="{base_path}/">{site_name}</a></h1>
     <nav>
       <a href="{base_path}/">Home</a>
       <a href="{base_path}/about/">About</a>
@@ -1291,7 +1291,7 @@ def _build_templates() -> dict:
     {% if header_ad %}<div class="ad-header">{{ header_ad | safe }}</div>{% endif %}
     <header>
         <div class="container">
-            <p class="site-title"><a href="{{ base_path }}/">{{ site_name }}</a></p>
+            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
             <nav>
                 <a href="{{ base_path }}/">Home</a>
                 <a href="{{ base_path }}/about/">About</a>
@@ -1548,7 +1548,7 @@ def _build_templates() -> dict:
     {% if header_ad %}<div class="ad-header">{{ header_ad | safe }}</div>{% endif %}
     <header>
         <div class="container">
-            <p class="site-title"><a href="{{ base_path }}/">{{ site_name }}</a></p>
+            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
             <nav>
                 <a href="{{ base_path }}/">Home</a>
                 <a href="{{ base_path }}/about/">About</a>
@@ -2102,7 +2102,7 @@ def _build_templates() -> dict:
 <body>
     <header>
         <div class="container">
-            <p class="site-title"><a href="{{ base_path }}/">{{ site_name }}</a></p>
+            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
             <nav>
                 <a href="{{ base_path }}/">Home</a>
                 <a href="{{ base_path }}/about/">About</a>
@@ -2338,7 +2338,7 @@ def _build_templates() -> dict:
 </head>
 <body>
     <header><div class="container">
-        <p class="site-title"><a href="{{ base_path }}/">{{ site_name }}</a></p>
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
         <nav><a href="{{ base_path }}/">Home</a><a href="{{ base_path }}/about/">About</a><a href="{{ base_path }}/contact/">Contact</a>
         <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a><a href="{{ base_path }}/terms-of-service/">Terms of Service</a></nav>
     </div></header>
@@ -2532,7 +2532,7 @@ def _build_templates() -> dict:
 </head>
 <body>
     <header><div class="container">
-        <p class="site-title"><a href="{{ base_path }}/">{{ site_name }}</a></p>
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
         <nav><a href="{{ base_path }}/">Home</a><a href="{{ base_path }}/about/">About</a><a href="{{ base_path }}/contact/">Contact</a>
         <a href="{{ base_path }}/privacy-policy/">Privacy Policy</a><a href="{{ base_path }}/terms-of-service/">Terms of Service</a></nav>
     </div></header>
@@ -2642,7 +2642,7 @@ def _build_templates() -> dict:
 <body>
     <header>
         <div class="container">
-            <p class="site-title"><a href="{{ base_path }}/">{{ site_name }}</a></p>
+            <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
             <nav>
                 <a href="{{ base_path }}/">Home</a>
                 <a href="{{ base_path }}/about/">About</a>
@@ -2812,7 +2812,7 @@ def _build_templates() -> dict:
 </head>
 <body>
     <header><div class="container">
-        <p class="site-title"><a href="{{ base_path }}/">{{ site_name }}</a></p>
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
         <nav>
             <a href="{{ base_path }}/">Home</a>
             <a href="{{ base_path }}/about/">About</a>
@@ -2950,7 +2950,7 @@ def _build_templates() -> dict:
 </head>
 <body>
     <header><div class="container">
-        <p class="site-title"><a href="{{ base_path }}/">{{ site_name }}</a></p>
+        <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
         <nav>
             <a href="{{ base_path }}/">Home</a>
             <a href="{{ base_path }}/about/">About</a>
