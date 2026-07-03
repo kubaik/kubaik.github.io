@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 13:06:09 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 10:10:05 +0000</lastBuildDate>
+    <item>
+      <title>Launch SaaS in 6 weeks: the AI shortcut I actually used</title>
+      <link>https://kubaik.github.io/launch-saas-in-6-weeks-the-ai-shortcut-i-actually-used/</link>
+      <description>Ship in 6 weeks: how AI tools built 80% of a SaaS for under $500 — real metrics, failures, and the exact stack that worked for Lagos users on 2G</description>
+      <pubDate>Fri, 03 Jul 2026 10:09:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/launch-saas-in-6-weeks-the-ai-shortcut-i-actually-used/</guid>
+    </item>
     <item>
       <title>Prompt injection’s hidden AWS tax</title>
       <link>https://kubaik.github.io/prompt-injections-hidden-aws-tax/</link>
@@ -138,13 +145,6 @@
       <description>Cut dev tool churn 3× with usage pricing — $0.043 per active user, $1,124 ARR from 187 users, and a free-to-paid jump of 2.3×</description>
       <pubDate>Thu, 02 Jul 2026 17:53:21 +0000</pubDate>
       <guid>https://kubaik.github.io/meter-dev-tool-pricing-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI memory systems: context that survives sessions</title>
-      <link>https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/</link>
-      <description>Fix AI agent memory loss across sessions in 2026 — 60% of teams hit this after moving from demo to prod. Learn where your context really vanishes and how to make it persist reliably.</description>
-      <pubDate>Thu, 02 Jul 2026 17:15:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-memory-systems-context-that-survives-sessions/</guid>
     </item>
   </channel>
 </rss>
