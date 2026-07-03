@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T22:13:33.950479",
+  "built_at": "2026-07-03T23:09:00.170514",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4035,6 +4035,11 @@
       "slug": "agent-governance-opa-vs-kyverno-after-our-incident",
       "title": "Agent governance: OPA vs Kyverno after our incident",
       "summary": "I've seen the same governance layer mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Six months ago, our first multi-agent system in production caused a c"
+    },
+    {
+      "slug": "ai-made-self-service-platforms-trivial-in-2026",
+      "title": "AI made self-service platforms trivial in 2026",
+      "summary": "The short version: the conventional advice on changed selfservice is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. Advanced edge cases you personally encountered In 2026, we hit three edge cases that weren’t in any LLM’s training data an"
     }
   ]
 }

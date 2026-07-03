@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 22:13:46 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 23:09:12 +0000</lastBuildDate>
+    <item>
+      <title>AI made self-service platforms trivial in 2026</title>
+      <link>https://kubaik.github.io/ai-made-self-service-platforms-trivial-in-2026/</link>
+      <description>AI self-service platforms cut deployment time from 45 minutes to 2 minutes in 2026 — but the guardrail bar is higher. Learn the guardrails, prompts, and tools that make it work, including the S3 bucket mistake that cost $4.2k and how the AI caught it.</description>
+      <pubDate>Fri, 03 Jul 2026 23:08:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-made-self-service-platforms-trivial-in-2026/</guid>
+    </item>
     <item>
       <title>Agent governance: OPA vs Kyverno after our incident</title>
       <link>https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM costs 40% by blocking prompt injection — sandboxing, schema validation, and the retry storm mistake most teams miss.</description>
       <pubDate>Fri, 03 Jul 2026 09:33:36 +0000</pubDate>
       <guid>https://kubaik.github.io/prompt-injections-hidden-aws-tax/</guid>
-    </item>
-    <item>
-      <title>Serve 4G-as-baseline apps in 2026</title>
-      <link>https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/</link>
-      <description>Cut API response time 21% and payload 63% for 4G-as-baseline users — Go server, Redis 7.4, and Vite 5.3 steps with real 2026 latency and cost data.</description>
-      <pubDate>Fri, 03 Jul 2026 09:17:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/serve-4g-as-baseline-apps-in-2026/</guid>
     </item>
   </channel>
 </rss>

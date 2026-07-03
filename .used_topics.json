@@ -7,5 +7,6 @@
   "How we added circuit breakers and bulkheads to agent systems after the first cascade failure",
   "The production incident that taught us our AI agents needed their own circuit breakers",
   "Building evaluation harnesses for multi-agent systems that developers actually trust",
-  "The governance layer we added after our first agent caused a compliance incident"
+  "The governance layer we added after our first agent caused a compliance incident",
+  "How AI changed what 'self-service' means for platform teams in 2026"
 ]
