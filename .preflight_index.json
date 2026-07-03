@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T19:28:02.426754",
+  "built_at": "2026-07-03T20:22:27.136745",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4020,6 +4020,11 @@
       "slug": "added-circuit-breakers-3-days-after-cascade-failure",
       "title": "Added circuit breakers 3 days after cascade failure",
       "summary": "I ran into this added circuit problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In early 2026, our multi-tenant agent system"
+    },
+    {
+      "slug": "ai-agents-circuit-breakers-are-not-optional",
+      "title": "AI agents: circuit breakers are not optional",
+      "summary": "The official documentation for production incident is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams treat AI agents li"
     }
   ]
 }
