@@ -11,3 +11,4 @@ scikit-learn
 huggingface_hub
 cairosvg
 Pillow>=10.0.0
+beautifulsoup4>=4.12.0
