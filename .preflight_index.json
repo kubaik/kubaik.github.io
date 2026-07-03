@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T06:48:33.423672",
+  "built_at": "2026-07-03T08:06:16.554276",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3900,6 +3900,11 @@
       "slug": "ai-ui-generation-what-it-fixed-and-what-still-breaks",
       "title": "AI UI generation: what it fixed and what still breaks",
       "summary": "The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI UI generation tools like v0 by Vercel, Figma AI, and Locofy can cut frontend w"
+    },
+    {
+      "slug": "47-ai-code-debt-in-2026",
+      "title": "47% AI code debt in 2026",
+      "summary": "I've seen the same technical debt mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, 47% of new production code in mid-size tech companies is AI-ge"
     }
   ]
 }
