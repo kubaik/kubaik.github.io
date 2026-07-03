@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 17:07:08 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 14:11:27 +0000</lastBuildDate>
+    <item>
+      <title>CI/CD for Django in 20ms Africa networks</title>
+      <link>https://kubaik.github.io/cicd-for-django-in-20ms-africa-networks/</link>
+      <description>Cut Django CI/CD build time 88% in African clouds — 90s builds, 78% egress savings, and the registry mirror trick most tutorials miss.</description>
+      <pubDate>Fri, 03 Jul 2026 14:11:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/cicd-for-django-in-20ms-africa-networks/</guid>
+    </item>
     <item>
       <title>Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse</title>
       <link>https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/</link>
@@ -138,13 +145,6 @@
       <description>Cut false positives 97% with one triage pipeline — Snyk CLI 1.1325, Trivy 0.51.5, and Renovate 37.424 used to build a dynamic filtering system that reduced alerts from 127 to 3.2 per PR</description>
       <pubDate>Fri, 03 Jul 2026 01:59:46 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/</guid>
-    </item>
-    <item>
-      <title>AI observability: what P99 latency hides</title>
-      <link>https://kubaik.github.io/ai-observability-what-p99-latency-hides/</link>
-      <description>AI models drift silently. Traditional APM misses 89% of model confidence drops. Start tracking prompt versions and semantic scores today to catch degradation before users do.</description>
-      <pubDate>Fri, 03 Jul 2026 00:14:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-observability-what-p99-latency-hides/</guid>
     </item>
   </channel>
 </rss>

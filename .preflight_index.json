@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T13:30:26.482845",
+  "built_at": "2026-07-03T14:11:14.535897",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3975,6 +3975,11 @@
       "slug": "ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse",
       "title": "Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse",
       "summary": "I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, a single high-traffic SaaS app can push 50,000 events"
+    },
+    {
+      "slug": "cicd-for-django-in-20ms-africa-networks",
+      "title": "CI/CD for Django in 20ms Africa networks",
+      "summary": "After reviewing a lot of code that touches tools built, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. Why I wrote this (the problem I kept hitting) In 2026 I joined a team building a Django e-commerce platform for a retailer in"
     }
   ]
 }
