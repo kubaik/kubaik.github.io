@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T11:41:10.023763",
+  "built_at": "2026-07-03T12:11:47.286239",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3960,6 +3960,11 @@
       "slug": "json-modes-hidden-costs-revealed",
       "title": "JSON mode's hidden costs revealed",
       "summary": "Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, our team at NairaPay built a real-time expense categorization microservice"
+    },
+    {
+      "slug": "ai-solo-saas-2026-build-vs-buy",
+      "title": "AI solo SaaS 2026: build vs buy",
+      "summary": "I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, the cost of launching a solo SaaS has dropped from tens of "
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 15:07:43 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 12:11:59 +0000</lastBuildDate>
+    <item>
+      <title>AI solo SaaS 2026: build vs buy</title>
+      <link>https://kubaik.github.io/ai-solo-saas-2026-build-vs-buy/</link>
+      <description>Cut solo SaaS costs 90% with AI in 2026 — build vs buy stacks compared with real numbers, 3 concrete bench</description>
+      <pubDate>Fri, 03 Jul 2026 12:11:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-solo-saas-2026-build-vs-buy/</guid>
+    </item>
     <item>
       <title>JSON mode&apos;s hidden costs revealed</title>
       <link>https://kubaik.github.io/json-modes-hidden-costs-revealed/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI clawback risk in 2026 offers — 7% higher total comp with redline and benchmark sheet</description>
       <pubDate>Thu, 02 Jul 2026 22:16:35 +0000</pubDate>
       <guid>https://kubaik.github.io/negotiate-salary-2026-with-ai-resume-tool/</guid>
-    </item>
-    <item>
-      <title>Prompt injection: the 0-day you overlooked</title>
-      <link>https://kubaik.github.io/prompt-injection-the-0-day-you-overlooked/</link>
-      <description>Prompt injection attacks cost €18k+ per breach in 2026 — here’s the exact pipeline teams use to stop them, with latency benchmarks and code you can deploy today.</description>
-      <pubDate>Thu, 02 Jul 2026 20:57:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/prompt-injection-the-0-day-you-overlooked/</guid>
     </item>
   </channel>
 </rss>
