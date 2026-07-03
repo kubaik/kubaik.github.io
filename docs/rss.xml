@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 11:35:55 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 11:41:23 +0000</lastBuildDate>
+    <item>
+      <title>JSON mode&apos;s hidden costs revealed</title>
+      <link>https://kubaik.github.io/json-modes-hidden-costs-revealed/</link>
+      <description>Cut LLM API costs 49% and errors 91% with extraction + correction pipeline — how we stopped fighting JSON mode and started using LLMs correctly</description>
+      <pubDate>Fri, 03 Jul 2026 11:41:06 +0000</pubDate>
+      <guid>https://kubaik.github.io/json-modes-hidden-costs-revealed/</guid>
+    </item>
     <item>
       <title>Pair programming with AI: 5 hard lessons in 2026</title>
       <link>https://kubaik.github.io/pair-programming-with-ai-5-hard-lessons-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Prompt injection attacks cost €18k+ per breach in 2026 — here’s the exact pipeline teams use to stop them, with latency benchmarks and code you can deploy today.</description>
       <pubDate>Thu, 02 Jul 2026 20:57:08 +0000</pubDate>
       <guid>https://kubaik.github.io/prompt-injection-the-0-day-you-overlooked/</guid>
-    </item>
-    <item>
-      <title>AI scanners overlook real vulns</title>
-      <link>https://kubaik.github.io/ai-scanners-overlook-real-vulns/</link>
-      <description>Cut false positives 60% using AI scanners the right way — combine LLM rules with CodeQL 2.14, AFL++ fuzzing, and runtime monitoring to catch real vulnerabilities instead of noise.</description>
-      <pubDate>Thu, 02 Jul 2026 20:27:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-scanners-overlook-real-vulns/</guid>
     </item>
   </channel>
 </rss>
