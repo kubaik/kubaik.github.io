@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T17:17:32.696415",
+  "built_at": "2026-07-03T17:29:49.758630",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4005,6 +4005,11 @@
       "slug": "ai-reshaped-my-engineering-principles",
       "title": "AI reshaped my engineering principles",
       "summary": "A colleague asked me about engineering principles during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomp"
+    },
+    {
+      "slug": "1m-token-models-wont-fix-your-pipeline",
+      "title": "1M token models won’t fix your pipeline",
+      "summary": "A colleague asked me about context window during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Te"
     }
   ]
 }
