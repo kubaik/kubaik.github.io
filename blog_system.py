@@ -1,5 +1,6 @@
 import os
 import json
+import math
 import random
 import re
 import yaml
@@ -10,6 +11,7 @@ import hashlib
 import subprocess
 import sys
 
+from collections import Counter
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List
@@ -1327,6 +1329,116 @@ _PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD = 0.55
 _PREFLIGHT_MAX_RETRIES = 3
 
 
+# ─────────────────────────────────────────────────────────────────
+# Post-generation content quality gate (full-body near-duplicate check)
+# ─────────────────────────────────────────────────────────────────
+# PreFlightIndex (below) screens *topics/titles* before generation even
+# starts. It cannot catch the case where two differently-worded topics
+# still converge on a near-identical article body — e.g. "prompt
+# injection basics" and "how to defend against prompt injection" can
+# clear the title/topic check yet produce 80%+ overlapping content.
+#
+# This gate re-checks the *actual generated article body* against every
+# already-published post immediately before publish, using the same
+# TF-IDF cosine-similarity approach and 0.72 threshold as
+# scripts/content_quality_gate.py, so the standalone CI gate and the
+# live generation pipeline agree on what counts as a duplicate.
+
+CONTENT_DUPLICATE_THRESHOLD = 0.72  # matches scripts/content_quality_gate.py
+
+_CONTENT_DUP_STOP_WORDS = {
+    "the", "a", "an", "and", "or", "but", "in", "on", "at", "to",
+    "for", "of", "with", "by", "from", "is", "are", "was", "were",
+    "be", "been", "being", "have", "has", "had", "do", "does", "did",
+    "will", "would", "could", "should", "may", "might", "can", "that",
+    "this", "these", "those", "it", "its", "we", "you", "your", "our",
+    "they", "their", "what", "which", "who", "when", "where", "how",
+    "not", "no", "so", "if", "as", "than", "then", "about", "up",
+    "out", "into", "more", "also", "just", "after", "before", "over",
+    "some", "any", "all", "each", "both", "between", "through",
+}
+
+
+def _content_word_tokenize(text: str) -> List[str]:
+    return re.findall(r"\b[a-z][a-z']{1,}\b", text.lower())
+
+
+def _content_tfidf_vector(text: str) -> Dict[str, float]:
+    tokens = [t for t in _content_word_tokenize(text)
+              if t not in _CONTENT_DUP_STOP_WORDS]
+    if not tokens:
+        return {}
+    counts = Counter(tokens)
+    total = len(tokens)
+    return {word: count / total for word, count in counts.items()}
+
+
+def _content_cosine_similarity(v1: Dict[str, float], v2: Dict[str, float]) -> float:
+    common = set(v1) & set(v2)
+    if not common:
+        return 0.0
+    dot = sum(v1[k] * v2[k] for k in common)
+    mag1 = math.sqrt(sum(x ** 2 for x in v1.values()))
+    mag2 = math.sqrt(sum(x ** 2 for x in v2.values()))
+    if mag1 == 0 or mag2 == 0:
+        return 0.0
+    return dot / (mag1 * mag2)
+
+
+class ContentDuplicateGate:
+    """
+    Full-body near-duplicate detector. Unlike PreFlightIndex (which only
+    ever sees a short candidate topic string), this compares the complete
+    generated article text against the complete body of every already
+    published post, so it catches overlap that only shows up once the
+    article is actually written.
+    """
+
+    def __init__(self, docs_dir: Path, threshold: float = CONTENT_DUPLICATE_THRESHOLD):
+        self.docs_dir = docs_dir
+        self.threshold = threshold
+
+    def check(self, title: str, content: str, exclude_slug: str = "") -> tuple:
+        """
+        Returns (is_duplicate, matched_slug, matched_title, score).
+        `exclude_slug` lets a post being refreshed/regenerated skip
+        comparing against its own prior version.
+        """
+        new_vec = _content_tfidf_vector(content)
+        if not new_vec or not self.docs_dir.exists():
+            return False, "", "", 0.0
+
+        best_score = 0.0
+        best_slug = ""
+        best_title = ""
+
+        for post_dir in self.docs_dir.iterdir():
+            if not post_dir.is_dir() or post_dir.name == "static":
+                continue
+            if exclude_slug and post_dir.name == exclude_slug:
+                continue
+            post_json = post_dir / "post.json"
+            if not post_json.exists():
+                continue
+            try:
+                with open(post_json, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+            except (json.JSONDecodeError, OSError):
+                continue
+
+            existing_content = data.get("content", "")
+            if not existing_content:
+                continue
+            existing_vec = _content_tfidf_vector(existing_content)
+            score = _content_cosine_similarity(new_vec, existing_vec)
+            if score > best_score:
+                best_score = score
+                best_slug = post_dir.name
+                best_title = data.get("title", "")
+
+        return best_score >= self.threshold, best_slug, best_title, best_score
+
+
 class PreFlightIndex:
     """
     Lightweight TF-IDF pre-flight similarity check.
@@ -1539,6 +1651,8 @@ class BlogSystem:
         self.hashtag_manager = HashtagManager(config)
 
         self.preflight_index = PreFlightIndex(docs_dir=self.output_dir)
+        self.content_duplicate_gate = ContentDuplicateGate(
+            docs_dir=self.output_dir)
 
     def _log_key_status(self):
         print("=== API Key Status ===")
@@ -3144,6 +3258,31 @@ Return ONLY the JSON object.""",
                 "Minimum is 1500. This post would harm AdSense approval."
             )
 
+        # ── Full-body near-duplicate gate ───────────────────────────────
+        # Runs against every already-published post's actual content, not
+        # just the topic/title that was checked before generation. This is
+        # the last line of defense against the "8+ articles on prompt
+        # injection" problem: two posts can have unrelated-sounding titles
+        # and still land here with near-identical bodies.
+        try:
+            is_dup, dup_slug, dup_title, dup_score = self.content_duplicate_gate.check(
+                title=post.title,
+                content=post.content,
+                exclude_slug=post.slug,
+            )
+        except Exception as exc:
+            is_dup, dup_slug, dup_title, dup_score = False, "", "", 0.0
+            print(f"  ⚠️  ContentDuplicateGate failed (non-fatal): {exc}")
+
+        if is_dup:
+            raise DuplicateContentError(
+                f"Refusing to save '{post.title}': body is {dup_score:.0%} similar "
+                f"to already-published post '{dup_title}' ({dup_slug}), which exceeds "
+                f"the {self.content_duplicate_gate.threshold:.0%} duplicate-content "
+                "threshold. Merge these articles or substantially differentiate the "
+                "angle before publishing."
+            )
+
         existing_json = self.output_dir / post.slug / "post.json"
         if existing_json.exists():
             try:
@@ -3223,6 +3362,11 @@ Return ONLY the JSON object.""",
 
 class InsufficientContentError(Exception):
     """Raised when generate_blog_post exhausts all retry attempts."""
+
+
+class DuplicateContentError(Exception):
+    """Raised by save_post() when the generated article body is a
+    near-duplicate of an already-published post (see ContentDuplicateGate)."""
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -3842,7 +3986,20 @@ if __name__ == "__main__":
             except Exception as e:
                 print(f"  ⚠️  Canonical validation failed (non-fatal): {e}")
 
-            blog_system.save_post(blog_post)
+            try:
+                blog_system.save_post(blog_post)
+            except DuplicateContentError as e:
+                print("\n" + "═" * 68)
+                print("🛑  DUPLICATE CONTENT — NO POST SAVED")
+                print("═" * 68)
+                print(f"  Reason : {e}")
+                print(
+                    "  Action : Pick a more differentiated topic/angle, or merge\n"
+                    "           this content into the existing article instead of\n"
+                    "           publishing a near-duplicate."
+                )
+                print("═" * 68 + "\n")
+                sys.exit(1)
 
             try:
                 generate_og_card(
