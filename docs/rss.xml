@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 00:09:45 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 00:14:34 +0000</lastBuildDate>
+    <item>
+      <title>AI observability: what P99 latency hides</title>
+      <link>https://kubaik.github.io/ai-observability-what-p99-latency-hides/</link>
+      <description>AI models drift silently. Traditional APM misses 89% of model confidence drops. Start tracking prompt versions and semantic scores today to catch degradation before users do.</description>
+      <pubDate>Fri, 03 Jul 2026 00:14:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-observability-what-p99-latency-hides/</guid>
+    </item>
     <item>
       <title>USSD in 2026: 30% cheaper than SMS for Africa fintech</title>
       <link>https://kubaik.github.io/ussd-in-2026-30-cheaper-than-sms-for-africa-fintech/</link>
@@ -138,13 +145,6 @@
       <description>Cut API abuse 98% with proof-of-work and silent failures — response time down 73%, logging costs down 75%, and AWS bill down 65%. How we did it and what broke first.</description>
       <pubDate>Thu, 02 Jul 2026 05:06:04 +0000</pubDate>
       <guid>https://kubaik.github.io/block-api-abuse-in-2026-before-it-blocks/</guid>
-    </item>
-    <item>
-      <title>5 AI stacks that level the payroll gap for devs</title>
-      <link>https://kubaik.github.io/5-ai-stacks-that-level-the-payroll-gap-for-devs/</link>
-      <description>Cut review time 24% with a fine-tuned AI stack — exact EC2 costs, Graviton3 savings, and the Cursor setup I wish I had on day one</description>
-      <pubDate>Thu, 02 Jul 2026 02:15:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/5-ai-stacks-that-level-the-payroll-gap-for-devs/</guid>
     </item>
   </channel>
 </rss>
