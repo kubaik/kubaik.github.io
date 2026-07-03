@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 11:42:53 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 08:47:06 +0000</lastBuildDate>
+    <item>
+      <title>AI apps break your stack — here’s the fix</title>
+      <link>https://kubaik.github.io/ai-apps-break-your-stack-heres-the-fix/</link>
+      <description>Cut 800ms API latency to 180ms in production systems — the stateful architecture patterns 2026 teams actually use (Python 3.11, Redis 7.2, SQLite 3.45, vLLM 0.4.2).</description>
+      <pubDate>Fri, 03 Jul 2026 08:46:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-apps-break-your-stack-heres-the-fix/</guid>
+    </item>
     <item>
       <title>Audit AI code: onboarding without the burn</title>
       <link>https://kubaik.github.io/audit-ai-code-onboarding-without-the-burn/</link>
@@ -138,13 +145,6 @@
       <description>WCAG 1.4.3 requires 4.5:1 contrast for normal text, but AI models often output markdown with light gray code blocks or soft pastel colors that fail this…</description>
       <pubDate>Thu, 02 Jul 2026 12:40:53 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-chats-hidden-wcag-fails/</guid>
-    </item>
-    <item>
-      <title>AI ops: PagerDuty vs FireHydrant for oncall</title>
-      <link>https://kubaik.github.io/ai-ops-pagerduty-vs-firehydrant-for-oncall/</link>
-      <description>Cut on-call false positives 40% with PagerDuty AI Incident Response vs FireHydrant AI Auto-Resolve in 2026 — real benchmarks, cost breakdowns, and the exact decision framework we use.</description>
-      <pubDate>Thu, 02 Jul 2026 12:04:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-ops-pagerduty-vs-firehydrant-for-oncall/</guid>
     </item>
   </channel>
 </rss>
