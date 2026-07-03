@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T18:21:35.569461",
+  "built_at": "2026-07-03T19:28:02.426754",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4015,6 +4015,11 @@
       "slug": "backstage-plugins-for-ai-3-hidden-costs-fixed-in-2026",
       "title": "Backstage plugins for AI: 3 hidden costs fixed in 2026",
       "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In late 2026, our AI feature started returning inconsistent results. One day a customer "
+    },
+    {
+      "slug": "added-circuit-breakers-3-days-after-cascade-failure",
+      "title": "Added circuit breakers 3 days after cascade failure",
+      "summary": "I ran into this added circuit problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In early 2026, our multi-tenant agent system"
     }
   ]
 }

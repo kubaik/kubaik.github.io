@@ -3,5 +3,6 @@
   "The engineering principles I updated after AI tools changed my daily workflow",
   "The context window arms race: what 1M token models actually change in practice",
   "How to implement least-privilege IAM in AWS without spending a week on policies",
-  "How our Internal Developer Platform evolved to support AI feature development in 2026"
+  "How our Internal Developer Platform evolved to support AI feature development in 2026",
+  "How we added circuit breakers and bulkheads to agent systems after the first cascade failure"
 ]
