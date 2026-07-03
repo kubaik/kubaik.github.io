@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 10:17:53 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 10:25:17 +0000</lastBuildDate>
+    <item>
+      <title>Why I picked Playwright and Vitest in 2026</title>
+      <link>https://kubaik.github.io/why-i-picked-playwright-and-vitest-in-2026/</link>
+      <description>Cut frontend test time 37% and CI cost 38% with Playwright 1.46 and Vitest 1.6 — the real migration guide teams need in 2026</description>
+      <pubDate>Fri, 03 Jul 2026 10:25:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-i-picked-playwright-and-vitest-in-2026/</guid>
+    </item>
     <item>
       <title>Defend LLM apps: OWASP flaws decoded</title>
       <link>https://kubaik.github.io/defend-llm-apps-owasp-flaws-decoded/</link>
@@ -138,13 +145,6 @@
       <description>Cut vector DB costs 85% by replacing Pinecone with pgvector 0.7 — real benchmarks, $9k savings, and a 30-day migration guide for PostgreSQL teams.</description>
       <pubDate>Thu, 02 Jul 2026 19:12:07 +0000</pubDate>
       <guid>https://kubaik.github.io/replace-pinecone-with-postgres-for-vectors/</guid>
-    </item>
-    <item>
-      <title>Stop the writes — zero-downtime DB migrations</title>
-      <link>https://kubaik.github.io/stop-the-writes-zero-downtime-db-migrations/</link>
-      <description>Cut zero-downtime migration time 80% by draining the write queue first — DMS, Debezium, RabbitMQ metrics, and the 3-question decision matrix used in 2026 production systems.</description>
-      <pubDate>Thu, 02 Jul 2026 18:33:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-the-writes-zero-downtime-db-migrations/</guid>
     </item>
   </channel>
 </rss>

@@ -9769,6 +9769,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/why-i-picked-playwright-and-vitest-in-2026/</loc>
+    <lastmod>2026-07-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/why-i-switched-from-cypress-to-playwright-in-2026/</loc>
     <lastmod>2026-06-26</lastmod>
     <changefreq>weekly</changefreq>
