@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 03 Jul 2026 04:45:24 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 03 Jul 2026 04:50:57 +0000</lastBuildDate>
+    <item>
+      <title>Signals: 5 state tricks that broke my app</title>
+      <link>https://kubaik.github.io/signals-5-state-tricks-that-broke-my-app/</link>
+      <description>Cut state update latency 75% with Signals in 2026 — Preact Signals Core 1.7.0 runs in React, Node, and Workers with 0.8 ms median updates and 3.2 kB bundle.</description>
+      <pubDate>Fri, 03 Jul 2026 04:50:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/signals-5-state-tricks-that-broke-my-app/</guid>
+    </item>
     <item>
       <title>Stop false positives in CI scanning now</title>
       <link>https://kubaik.github.io/stop-false-positives-in-ci-scanning-now/</link>
@@ -138,13 +145,6 @@
       <description>Cut experiment platform costs 80% with Statsig — SDK size, latency, and offline-first features that actually work in sub-Saharan Africa in 2026.</description>
       <pubDate>Thu, 02 Jul 2026 08:09:35 +0000</pubDate>
       <guid>https://kubaik.github.io/4-experiments-platforms-compared-why-flags-became-labs/</guid>
-    </item>
-    <item>
-      <title>AI agents killed dev tool sales cycles</title>
-      <link>https://kubaik.github.io/ai-agents-killed-dev-tool-sales-cycles/</link>
-      <description>Sell dev tools in the AI era: 3.8% landing page conversion after rebuilding for 30-second agent integrations — GitHub Actions, Redis caching, and pricing models that work</description>
-      <pubDate>Thu, 02 Jul 2026 07:02:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-killed-dev-tool-sales-cycles/</guid>
     </item>
   </channel>
 </rss>

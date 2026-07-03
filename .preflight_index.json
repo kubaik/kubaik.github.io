@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T01:59:49.391977",
+  "built_at": "2026-07-03T04:50:45.542286",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -3885,6 +3885,11 @@
       "slug": "stop-false-positives-in-ci-scanning-now",
       "title": "Stop false positives in CI scanning now",
       "summary": "Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In 2026, security scanning became a checkbox for most engineering teams. We were no exce"
+    },
+    {
+      "slug": "signals-5-state-tricks-that-broke-my-app",
+      "title": "Signals: 5 state tricks that broke my app",
+      "summary": "I ran into this signals changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks rewriting a React dash"
     }
   ]
 }
