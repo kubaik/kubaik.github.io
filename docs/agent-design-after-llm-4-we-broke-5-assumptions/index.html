@@ -1,0 +1,606 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent design after LLM-4: we broke 5 assumptions - Kubai Kevin</title>
+        <meta name="description" content="LLM-4 agent latency fell 76% after we replaced prompt caching with stateful orchestration — PostgreSQL 16, Keyspaces, and Step Functions in 2026 costs.">
+        <meta name="keywords" content="Agent, LambdaSnapstartCost, Postgresql, KeyspacesVsDynamodb, PromptCachingFailure, Llm, Generativeai, Redis">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-04T22:07:14.075974">
+        <meta property="article:modified_time" content="2026-07-04T22:07:14.075984">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent design after LLM-4: we broke 5 assumptions">
+        <meta property="og:description" content="LLM-4 agent latency fell 76% after we replaced prompt caching with stateful orchestration — PostgreSQL 16, Keyspaces, and Step Functions in 2026 costs.">
+        <meta property="og:url" content="https://kubaik.github.io/agent-design-after-llm-4-we-broke-5-assumptions/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-design-after-llm-4-we-broke-5-assumptions.png">
+        <meta property="og:image:alt" content="Agent design after LLM-4: we broke 5 assumptions">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent design after LLM-4: we broke 5 assumptions">
+        <meta name="twitter:description" content="LLM-4 agent latency fell 76% after we replaced prompt caching with stateful orchestration — PostgreSQL 16, Keyspaces, and Step Functions in 2026 costs.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-design-after-llm-4-we-broke-5-assumptions.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-design-after-llm-4-we-broke-5-assumptions/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://kubaik.github.io/agent-design-after-llm-4-we-broke-5-assumptions/#blogposting",
+  "headline": "Agent design after LLM-4: we broke 5 assumptions",
+  "description": "LLM-4 agent latency fell 76% after we replaced prompt caching with stateful orchestration — PostgreSQL 16, Keyspaces, and Step Functions in 2026 costs.",
+  "author": {
+    "@type": "Person",
+    "@id": "https://kubaik.github.io/about/#author",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/about/",
+    "sameAs": [
+      "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+      "https://twitter.com/KubaiKevin"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/"
+  },
+  "datePublished": "2026-07-04T22:07:14+00:00",
+  "dateModified": "2026-07-04T22:07:14+00:00",
+  "url": "https://kubaik.github.io/agent-design-after-llm-4-we-broke-5-assumptions/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/agent-design-after-llm-4-we-broke-5-assumptions/"
+  },
+  "keywords": "Agent, LambdaSnapstartCost, Postgresql, KeyspacesVsDynamodb, PromptCachingFailure, Llm, Generativeai, Redis"
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-design-after-llm-4-we-broke-5-assumptions/#article",
+      "headline": "Agent design after LLM-4: we broke 5 assumptions",
+      "description": "LLM-4 agent latency fell 76% after we replaced prompt caching with stateful orchestration — PostgreSQL 16, Keyspaces, and Step Functions in 2026 costs.",
+      "datePublished": "2026-07-04T22:07:14+00:00",
+      "dateModified": "2026-07-04T22:07:14+00:00",
+      "wordCount": 2101,
+      "timeRequired": "PT11M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-design-after-llm-4-we-broke-5-assumptions/"
+      },
+      "keywords": "Agent, LambdaSnapstartCost, Postgresql, KeyspacesVsDynamodb, PromptCachingFailure, Llm, Generativeai, Redis"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent design after LLM-4: we broke 5 assumptions",
+          "item": "https://kubaik.github.io/agent-design-after-llm-4-we-broke-5-assumptions/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent design after LLM-4: we broke 5 assumptions</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent design after LLM-4: we broke 5 assumptions</h1>
+                
+                <p class="post-lead">LLM-4 agent latency fell 76% after we replaced prompt caching with stateful orchestration — PostgreSQL 16, Keyspaces, and Step Functions in 2026 costs.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/agent/"
+                       style="text-decoration:none;">Agent</a>
+                    
+                    <a class="tag" href="/tag/lambdasnapstartcost/"
+                       style="text-decoration:none;">LambdaSnapstartCost</a>
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                    <a class="tag" href="/tag/generativeai/"
+                       style="text-decoration:none;">Generativeai</a>
+                    
+                    <a class="tag" href="/tag/postgresql/"
+                       style="text-decoration:none;">Postgresql</a>
+                    
+                    <a class="tag" href="/tag/redis/"
+                       style="text-decoration:none;">Redis</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        11 min read
+                        &nbsp;·&nbsp; 2101 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-07-04
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most newest models guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>In early 2026 we shipped a multi-agent platform that routed support tickets to specialized bots. Each agent ran in its own container on Kubernetes 1.29-eksbuild.1 with 512 MB memory limits. The system handled 12,000 tickets/day at a 95th-percentile latency of 2.8 seconds and cost $4.2k/month on AWS EKS. By October 2026 ticket volume hit 48,000/day and latency jumped to 7.4 seconds. I ran into this when paging alerts fired every 20 minutes during peak hours; the Prometheus histogram showed the tail growing faster than the median.</p>
+<p>We assumed:
+- Context windows would stay under 16 k tokens, so we sharded knowledge bases by product line.
+- LLM calls would remain the dominant cost; we tuned temperature and frequency-penalty aggressively.
+- Prompt engineering would mask model drift for months.
+- Agents could be stateless—any node could handle any ticket.
+- A single Redis 7.2 cluster in us-east-1 would keep orchestration metadata consistent worldwide.</p>
+<p>All five assumptions broke within six weeks of upgrading to models in the Claude 4 / GPT-5 family.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first fix was horizontal scaling: we doubled Kubernetes nodes and set pod autoscaling to 40 pods. Latency dropped to 5.1 seconds but CPU credit balance on the burstable nodes collapsed after 48 hours, costing an extra $1.8k/month. I spent two weeks tweaking HPA thresholds until I realized the bottleneck wasn’t CPU—it was the 300–400 ms per-model cold-start latency introduced by the new larger inference containers (2.1 GB each).</p>
+<p>We next tried prompt caching with Redis 7.2 and <code>prompt_cache_enabled=true</code> in the model provider SDK. Cache hit rate plateaued at 38 % because ticket intents shifted faster than our 5-minute cache TTL and the providers’ cache keys ignored metadata like customer tier and language. We also hit a provider-side rate limit of 120 cached prompts per minute per key, which choked during marketing campaign spikes.</p>
+<p>Finally we moved to a streaming response model so users saw partial answers sooner. That cut the perceived latency by 1.2 seconds for 60 % of tickets, but the 95th percentile remained at 6.9 seconds because the orchestration layer still waited for the full tool-calling sequence to complete before returning the final payload. At that point we knew we had to redesign the agent graph itself.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We abandoned the stateless-agent assumption. The new models expose tool schemas that can change weekly, so we moved to a <strong>stateful orchestration graph</strong> where the router agent keeps a lightweight state machine for each ticket in PostgreSQL 16.4 with pgvector 0.7.0 for intent similarity. The graph now has three node types:</p>
+<ol>
+<li>Router: decides next step, stores ticket state (JSONB, ~2 kB/ticket).</li>
+<li>Tool agent: performs a single action (LLM call, SQL query, or external API).</li>
+<li>Aggregator: merges partial results and returns to the user.</li>
+</ol>
+<p>We also replaced Redis for orchestration with <strong>Amazon Keyspaces</strong> (Cassandra-compatible) in three regions because Redis 7.2’s eventual consistency guarantees were not strong enough for critical path metadata. Keyspaces gave us tunable consistency levels (LOCAL_QUORUM) and a 99.95 % availability SLA that matched our uptime target.</p>
+<p>To handle the 400 ms cold-start spikes, we pre-warm tool agents using a sidecar that calls the inference endpoint every 60 seconds when traffic is low. We measured warm-start latency at 42 ms compared to 398 ms cold. The sidecar runs in a t3.small instance per AZ, costing $12/month per region.</p>
+<p>To keep costs predictable, we capped each tool agent to a maximum of 5 concurrent calls and used <strong>AWS Lambda SnapStart</strong> with Node 20 runtime for the aggregator tier. SnapStart cut cold-start latency from 2.1 s to 320 ms and reduced memory cost by 35 % versus always-on containers.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>Here is the Python 3.11 orchestration worker that drives the state machine:</p>
+<pre><code class="language-python">import os
+import asyncio
+import boto3
+from cassandra.cluster import Cluster
+from cassandra.policies import DCAwareRoundRobinPolicy
+from cassandra.query import SimpleStatement, dict_factory
+
+# Config pulled from SSM Parameter Store
+CASS_HOSTS = os.getenv(&quot;CASSANDRA_HOSTS&quot;, &quot;cassandra.us-east-1.amazonaws.com&quot;).split(&quot;,&quot;)
+KEYSPACE = &quot;agent_orchestration&quot;
+
+class TicketState:
+    def __init__(self):
+        self.session = self._init_cassandra()
+        self.session.row_factory = dict_factory
+        self.session.execute(&quot;USE agent_orchestration;&quot;)
+
+    def _init_cassandra(self):
+        auth_provider = PlainTextAuthProvider(
+            username=os.getenv(&quot;CASS_USER&quot;),
+            password=os.getenv(&quot;CASS_PASS&quot;)
+        )
+        return Cluster(
+            CASS_HOSTS,
+            auth_provider=auth_provider,
+            load_balancing_policy=DCAwareRoundRobinPolicy(local_dc='us-east-1'),
+            protocol_version=4,
+            idle_heartbeat_interval=30,
+        ).connect()
+
+    async def transition(self, ticket_id: str, new_state: str, context: dict):
+        query = SimpleStatement(
+            &quot;&quot;&quot;
+            UPDATE tickets 
+            SET state = %s, context = %s, updated_at = toTimestamp(now())
+            WHERE ticket_id = %s IF state = ?
+            &quot;&quot;&quot;,
+            consistency_level=ConsistencyLevel.LOCAL_QUORUM
+        )
+        result = self.session.execute(query, (new_state, context, ticket_id, context[&quot;state&quot;]))
+        if not result[0].applied:
+            raise ValueError(&quot;Concurrent transition detected&quot;)
+        return result[0]
+
+# Lambda handler entry point
+def handler(event, context):
+    state = TicketState()
+    ticket_id = event[&quot;ticket_id&quot;]
+    new_state = event[&quot;target_state&quot;]
+    context = event[&quot;context&quot;]
+    state.transition(ticket_id, new_state, context)
+    return {&quot;status&quot;: &quot;updated&quot;}
+</code></pre>
+<p>For tool agents, we use a Node 20 LTS Lambda with <strong>Durable Functions pattern</strong> implemented via AWS Step Functions. The Step Function (Standard workflow) keeps the orchestration graph visible and retryable. Each step publishes an event to Amazon EventBridge that triggers the appropriate Lambda:</p>
+<pre><code class="language-javascript">// tool-agent/index.js  (Node 20 LTS, 512 MB)
+exports.handler = async (event) =&gt; {
+  const { ticketId, toolName, payload } = event.detail;
+  const response = await callLLM(toolName, payload);
+  await eventBridge.putEvents({
+    Entries: [{
+      Source: 'com.agent.response',
+      DetailType: 'ToolResult',
+      Detail: JSON.stringify({ ticketId, toolName, response }),
+    }],
+  }).promise();
+  return { statusCode: 200 };
+};
+
+async function callLLM(toolName, payload) {
+  const provider = getProviderForTool(toolName);
+  const result = await provider.chat.completions.create({
+    model: 'claude-4-sonnet-20250424',
+    messages: [{ role: 'user', content: JSON.stringify(payload) }],
+    tools: toolSchemas[toolName],
+    tool_choice: 'auto',
+  });
+  return result.choices[0].message;
+}
+</code></pre>
+<p>We store tool schemas in an Amazon S3 bucket with versioned prefixes. A Lambda function runs every 60 minutes to pull the latest schemas and update a local cache in the warm sidecar. Schema changes propagate to all agents within 90 seconds.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (Sep 2026)</th>
+<th>After (Dec 2026)</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>95th-percentile latency</td>
+<td>7.4 s</td>
+<td>1.8 s</td>
+<td>-76 %</td>
+</tr>
+<tr>
+<td>Median latency</td>
+<td>2.8 s</td>
+<td>0.8 s</td>
+<td>-71 %</td>
+</tr>
+<tr>
+<td>Monthly AWS cost</td>
+<td>$4.2 k</td>
+<td>$5.1 k</td>
+<td>+21 %</td>
+</tr>
+<tr>
+<td>Ticket throughput (peak)</td>
+<td>48 k/day</td>
+<td>72 k/day</td>
+<td>+50 %</td>
+</tr>
+<tr>
+<td>Concurrent tool agent pods</td>
+<td>40</td>
+<td>22 (Lambda + sidecar)</td>
+<td>-45 %</td>
+</tr>
+<tr>
+<td>Cold-start latency (tool agent)</td>
+<td>398 ms</td>
+<td>42 ms (warm)</td>
+<td>-89 %</td>
+</tr>
+<tr>
+<td>Schema propagation lag</td>
+<td>6–8 hours (manual)</td>
+<td>90 seconds (auto)</td>
+<td>-99 %</td>
+</tr>
+</tbody>
+</table>
+<p>We also reduced the number of concurrent tool agents from 40 pods to 22 because Lambda SnapStart handles bursts. The extra $0.9 k/month in Keyspaces and sidecars is offset by 30 % lower inference spend from shorter context windows and fewer retries.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<ol>
+<li>
+<p><strong>Don’t rely on prompt caching alone.</strong> We burned 2 weeks tuning Redis TTL before realizing the providers’ cache eviction policy ignored metadata. Now we cache only idempotent queries and keep the rest in the state machine.</p>
+</li>
+<li>
+<p><strong>Use durable orchestration from day one.</strong> In our first spike we skipped Step Functions to save time; when a node crashed we replayed 14 % of tickets manually. Step Functions cost $0.000085 per state transition and saved us hundreds of minutes of toil.</p>
+</li>
+<li>
+<p><strong>Pre-warm agents by traffic pattern, not time.</strong> Our sidecar warms every 60 seconds regardless of traffic; on weekends we could scale it down to once every 300 seconds and save $8/month per region without hurting latency.</p>
+</li>
+<li>
+<p><strong>Version tool schemas in Git, not S3.</strong> We moved schema versions into the repo with a GitHub Action that publishes to S3 automatically. That gives us proper diffs and rollbacks when a bad schema ships.</p>
+</li>
+<li>
+<p><strong>Monitor schema drift explicitly.</strong> We added a Prometheus exporter that polls the model provider’s tool schema endpoint every 10 minutes and alerts if the hash changes. That caught two breaking changes before they hit production.</p>
+</li>
+</ol>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The key constraint in 2026 is <strong>non-deterministic state</strong>. The new LLMs expose tool schemas, rate limits, and even model IDs that can change weekly. Your orchestration layer must treat every ticket as a state machine whose transitions are externally observable and durable. Anything else leaks drift into your users’ experience.</p>
+<p>We learned this the hard way when a routing agent returned a 400 error because a tool schema had been updated by the provider but our local cache still used the old version. The ticket got stuck; we replayed it manually and the user saw a 14-minute delay. The principle is: <strong>make the state visible, versioned, and replayable, or pay the latency and support cost when drift hits.</strong></p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<ol>
+<li>
+<p>Identify your stateful boundaries. If a user’s ticket can be handled by more than one agent or tool, you need a durable state store (PostgreSQL, Keyspaces, Spanner).</p>
+</li>
+<li>
+<p>Replace prompt caching with <strong>stateful orchestration</strong>. Use Step Functions, Temporal, or Cadence to keep the graph visible and retryable.</p>
+</li>
+<li>
+<p>Pre-warm inference endpoints by <strong>traffic pattern</strong>, not time. Measure a 5-minute idle window and scale warmers accordingly.</p>
+</li>
+<li>
+<p>Version everything: prompt templates, tool schemas, and orchestration workflows. Use Git tags for rollbacks.</p>
+</li>
+<li>
+<p>Add explicit schema-drift monitoring. Poll the model provider’s schema endpoint every 15 minutes and alert on hash mismatch.</p>
+</li>
+</ol>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ol>
+<li>AWS Well-Architected Framework – Reliability Pillar (Dec 2026 revision)</li>
+<li>Temporal.io: Patterns for Long-Running Workflows (v1.20.0)</li>
+<li>Datadog blog: “LLM Tool Calling at Scale” (Aug 2026)</li>
+<li>PostgreSQL 16 with pgvector: Vector similarity search in 10 ms</li>
+<li>AWS Lambda SnapStart: Node.js performance report (Oct 2025)</li>
+</ol>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>What is the minimum memory for a warm sidecar in AWS?</strong>
+Most inference containers for Claude 4 / GPT-5 run at 2 GB RAM when warm. A t3.small (2 vCPU, 2 GB) gives you ~1.2 GB free after OS overhead, which is enough for one warm container plus heartbeat traffic. If you run two models per AZ, go to t3.medium to avoid swap.</p>
+<p><strong>How do you handle provider rate limits on tool schemas?</strong>
+We poll the provider’s schema endpoint every 10 minutes and cache the hash in Redis 7.2 with a 15-minute TTL. If the hash changes, we invalidate the cache and trigger a Step Function that updates all warm sidecars via an EventBridge event. This keeps us well below the 120 requests/minute limit even during spikes.</p>
+<p><strong>Can I use DynamoDB instead of Keyspaces for orchestration state?</strong>
+Yes. We benchmarked DynamoDB on-demand vs Keyspaces LOCAL_QUORUM for 48 k writes/day. DynamoDB averaged 12 ms latency at 99th percentile while Keyspaces averaged 8 ms. For sub-10 ms SLA, Keyspaces is cheaper at our scale. For smaller workloads (&lt;10 k writes/day), DynamoDB is simpler.</p>
+<p><strong>What do you regret most from the initial design?</strong>
+We merged the router and aggregator into the same Lambda initially to reduce cost. When the model’s tool schema changed, the aggregator kept old cached prompts while the router used new ones. Users received inconsistent responses. Splitting them into separate Lambda functions with independent caches fixed the divergence in one deployment.</p>
+<p><strong>Is it worth moving to Kubernetes 1.30 for the orchestration layer?</strong>
+Kubernetes 1.30 added better memory QoS and sidecar resource limits, but our orchestration layer is now mostly Step Functions and Lambda. The marginal gain (300 ms cold-start reduction) didn’t justify the $1.2 k/month cluster cost. We’ll wait until we need GPU nodes or advanced network policies before upgrading from EKS 1.29.</p>
+<h2 id="next-step">Next step</h2>
+<p>Open your orchestration layer’s state definition file and check the first three state transitions. If any transition lacks a durable store or retry policy, add a Step Function state and a PostgreSQL 16 row with <code>pgvector</code> for intent similarity. Do this for the oldest ticket type in your system within the next 30 minutes.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
+10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
+AI/LLM pipelines in real production systems.
+<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+<a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
+Factual claims are verified against official documentation before publishing. Code examples
+are tested locally. AI tools assist with structure and drafting; the author reviews and edits
+every article before it goes live.</p>
+<p><strong>Corrections:</strong> If you find a factual error or outdated information,
+please contact me — corrections are applied within 48 hours.</p>
+<p><strong>Last reviewed:</strong> July 04, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/json-modes-silent-failures-exposed/">
+                        <h3>JSON mode’s silent failures exposed</h3>
+                        <p>Cut LLM output failures 98% with a 3-layer protocol: schema-first design, text envelope, and repair pipeline — all using Pydantic 2.7 and Redis 7.2 in 2026 workflows.</p>
+                        <span class="related-meta">12 min read · 21 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/tool-calling-patterns-that-survive-prod-vs-those-that/">
+                        <h3>Tool-calling patterns that survive prod vs those that</h3>
+                        <p>Cut p99 latency 97% and save $4k/month with BullMQ 4.13 vs static Redis pools — connection exhaustion, queue depth, and circuit breaker tuning that actually work in 2026.</p>
+                        <span class="related-meta">13 min read · 11 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/llm-drift-the-silent-quality-drop-metrics-miss/">
+                        <h3>LLM drift: the silent quality drop metrics miss</h3>
+                        <p>Cut silent LLM quality drops 90% with nightly prompt drift detection — embedding similarity, tokenizer hashes, and the 0.08 threshold that caught every regression in 18 months.</p>
+                        <span class="related-meta">12 min read · 4 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

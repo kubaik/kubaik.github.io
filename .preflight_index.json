@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-04T20:16:26.446929",
+  "built_at": "2026-07-04T22:07:18.437449",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4130,6 +4130,11 @@
       "slug": "llm-drift-the-silent-quality-drop-metrics-miss",
       "title": "LLM drift: the silent quality drop metrics miss",
       "summary": "The short version: the conventional advice on debugged silent is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Silent LLM quality degradation is when model outputs become subtly worse over week"
+    },
+    {
+      "slug": "agent-design-after-llm-4-we-broke-5-assumptions",
+      "title": "Agent design after LLM-4: we broke 5 assumptions",
+      "summary": "Most newest models guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026 we shipped a multi-agent platform that routed support tickets to specializ"
     }
   ]
 }
