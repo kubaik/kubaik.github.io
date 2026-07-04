@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Jul 2026 08:17:17 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jul 2026 10:14:30 +0000</lastBuildDate>
+    <item>
+      <title>15 agents blew up our logs: why we pinned models + logs</title>
+      <link>https://kubaik.github.io/15-agents-blew-up-our-logs-why-we-pinned-models-logs/</link>
+      <description>Cut log debugging 78% with structured logs + model pinning — exact schema IDs, pinned Docker tags, and the rollback mistake most teams skip.</description>
+      <pubDate>Sat, 04 Jul 2026 10:14:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/15-agents-blew-up-our-logs-why-we-pinned-models-logs/</guid>
+    </item>
     <item>
       <title>Payments fail? How we fixed Flutterwave, Paystack, M-Pesa…</title>
       <link>https://kubaik.github.io/payments-fail-how-we-fixed-flutterwave-paystack-m-pesa/</link>
@@ -138,13 +145,6 @@
       <description>Cut solo SaaS costs 90% with AI in 2026 — build vs buy stacks compared with real numbers, 3 concrete bench</description>
       <pubDate>Fri, 03 Jul 2026 12:11:43 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-solo-saas-2026-build-vs-buy/</guid>
-    </item>
-    <item>
-      <title>JSON mode&apos;s hidden costs revealed</title>
-      <link>https://kubaik.github.io/json-modes-hidden-costs-revealed/</link>
-      <description>Cut LLM API costs 49% and errors 91% with extraction + correction pipeline — how we stopped fighting JSON mode and started using LLMs correctly</description>
-      <pubDate>Fri, 03 Jul 2026 11:41:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/json-modes-hidden-costs-revealed/</guid>
     </item>
   </channel>
 </rss>
