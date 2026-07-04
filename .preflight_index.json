@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-04T15:09:20.053175",
+  "built_at": "2026-07-04T16:10:45.432946",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4100,6 +4100,11 @@
       "slug": "dumped-3-tools-kept-postgres-17",
       "title": "Dumped 3 tools, kept Postgres 17",
       "summary": "A colleague asked me about replaced three during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete Mos"
+    },
+    {
+      "slug": "audit-trails-immutabledb-vs-dynamodb-streams",
+      "title": "Audit trails: ImmutableDB vs DynamoDB Streams",
+      "summary": "I've seen the same building audit mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, every production-grade agent system must prove two things: tha"
     }
   ]
 }

@@ -20,5 +20,6 @@
   "Agentic workflows that survive network partitions: the patterns that actually work in Africa",
   "The pricing experiments that worked (and the ones that quietly killed conversion)",
   "How we detect when an agent is 'working' but producing low-quality or harmful output",
-  "How we replaced three managed services with one Postgres 17 extension (and what we gave up)"
+  "How we replaced three managed services with one Postgres 17 extension (and what we gave up)",
+  "Building audit trails for agent decisions that satisfy both compliance and debugging needs"
 ]
