@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Jul 2026 16:10:57 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jul 2026 17:11:07 +0000</lastBuildDate>
+    <item>
+      <title>Agent teams burn tokens faster than you budget</title>
+      <link>https://kubaik.github.io/agent-teams-burn-tokens-faster-than-you-budget/</link>
+      <description>Cut agent token burn 59% with a Redis budget tracker and prompt pruner — real production numbers, code, and the failure modes most docs skip.</description>
+      <pubDate>Sat, 04 Jul 2026 17:10:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-teams-burn-tokens-faster-than-you-budget/</guid>
+    </item>
     <item>
       <title>Audit trails: ImmutableDB vs DynamoDB Streams</title>
       <link>https://kubaik.github.io/audit-trails-immutabledb-vs-dynamodb-streams/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI regression rates 90% with 3 constraints — connection pools, timeouts, tests. Real failure cases from Brazil, Colombia, Mexico with Redis 7.2, Python 3.11, Node 20 LTS.</description>
       <pubDate>Fri, 03 Jul 2026 17:17:29 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-reshaped-my-engineering-principles/</guid>
-    </item>
-    <item>
-      <title>Built self-healing pipelines: AI vs scripts</title>
-      <link>https://kubaik.github.io/built-self-healing-pipelines-ai-vs-scripts/</link>
-      <description>Cut incident response time 60% with AI agents or keep it simple with scripts — the 2026 decision guide with real benchmarks, cost data, and rollback scripts.</description>
-      <pubDate>Fri, 03 Jul 2026 17:01:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/built-self-healing-pipelines-ai-vs-scripts/</guid>
     </item>
   </channel>
 </rss>

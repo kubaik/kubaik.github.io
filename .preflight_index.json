@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-04T16:10:45.432946",
+  "built_at": "2026-07-04T17:10:54.810249",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4105,6 +4105,11 @@
       "slug": "audit-trails-immutabledb-vs-dynamodb-streams",
       "title": "Audit trails: ImmutableDB vs DynamoDB Streams",
       "summary": "I've seen the same building audit mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, every production-grade agent system must prove two things: tha"
+    },
+    {
+      "slug": "agent-teams-burn-tokens-faster-than-you-budget",
+      "title": "Agent teams burn tokens faster than you budget",
+      "summary": "The official documentation for token economics is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most teams start agent teams with"
     }
   ]
 }
