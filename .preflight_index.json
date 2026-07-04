@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-04T12:14:32.323238",
+  "built_at": "2026-07-04T13:39:18.790970",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4085,6 +4085,11 @@
       "slug": "survive-network-drops-agentic-workflows-that-keep-running",
       "title": "Survive network drops: agentic workflows that keep running",
       "summary": "The short version: the conventional advice on agentic workflows is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In Africa, network partitions aren’t edge cases—they’re daily reality. Teams los"
+    },
+    {
+      "slug": "ab-pricing-tests-that-lifted-arr-18",
+      "title": "A/B pricing tests that lifted ARR 18%",
+      "summary": "I've seen the same pricing experiments mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now In 2026, pricing experiments are no longer optional for SaaS produ"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Jul 2026 12:14:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jul 2026 13:39:31 +0000</lastBuildDate>
+    <item>
+      <title>A/B pricing tests that lifted ARR 18%</title>
+      <link>https://kubaik.github.io/ab-pricing-tests-that-lifted-arr-18/</link>
+      <description>Lift ARR 18% with anchor pricing and tiered friction experiments — the exact code, metrics, and pitfalls most teams miss when optimizing pricing pages in 2026.</description>
+      <pubDate>Sat, 04 Jul 2026 13:39:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/ab-pricing-tests-that-lifted-arr-18/</guid>
+    </item>
     <item>
       <title>Survive network drops: agentic workflows that keep running</title>
       <link>https://kubaik.github.io/survive-network-drops-agentic-workflows-that-keep-running/</link>
@@ -138,13 +145,6 @@
       <description>Cut Django CI/CD build time 88% in African clouds — 90s builds, 78% egress savings, and the registry mirror trick most tutorials miss.</description>
       <pubDate>Fri, 03 Jul 2026 14:11:10 +0000</pubDate>
       <guid>https://kubaik.github.io/cicd-for-django-in-20ms-africa-networks/</guid>
-    </item>
-    <item>
-      <title>Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse</title>
-      <link>https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/</link>
-      <description>Cut log pipeline costs 60% with OpenTelemetry 1.30, Fluent Bit 2.2, and ClickHouse 23.10 — 50k EPS benchmark and the tuning mistakes I made first</description>
-      <pubDate>Fri, 03 Jul 2026 13:30:22 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/</guid>
     </item>
   </channel>
 </rss>
