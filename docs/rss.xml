@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Jul 2026 18:09:55 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jul 2026 20:16:40 +0000</lastBuildDate>
+    <item>
+      <title>LLM drift: the silent quality drop metrics miss</title>
+      <link>https://kubaik.github.io/llm-drift-the-silent-quality-drop-metrics-miss/</link>
+      <description>Cut silent LLM quality drops 90% with nightly prompt drift detection — embedding similarity, tokenizer hashes, and the 0.08 threshold that caught every regression in 18 months.</description>
+      <pubDate>Sat, 04 Jul 2026 20:16:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-drift-the-silent-quality-drop-metrics-miss/</guid>
+    </item>
     <item>
       <title>8 ways we measure agent reliability in 2026</title>
       <link>https://kubaik.github.io/8-ways-we-measure-agent-reliability-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI agent hallucinations 93% with circuit breakers — production metrics, code, and the 3 ms overhead we measured in FastAPI 0.109 with Redis 7.2.</description>
       <pubDate>Fri, 03 Jul 2026 20:22:23 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/</guid>
-    </item>
-    <item>
-      <title>Added circuit breakers 3 days after cascade failure</title>
-      <link>https://kubaik.github.io/added-circuit-breakers-3-days-after-cascade-failure/</link>
-      <description>Cut cascade failures 72% with circuit breakers — Go sidecar, Resilience4j for Java, and when to skip the mesh. Real numbers, real failures, real fixes for 2026.</description>
-      <pubDate>Fri, 03 Jul 2026 19:27:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/added-circuit-breakers-3-days-after-cascade-failure/</guid>
     </item>
   </channel>
 </rss>

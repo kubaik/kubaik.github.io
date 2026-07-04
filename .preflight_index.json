@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-04T18:09:42.846094",
+  "built_at": "2026-07-04T20:16:26.446929",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4125,6 +4125,11 @@
       "slug": "8-ways-we-measure-agent-reliability-in-2026",
       "title": "8 ways we measure agent reliability in 2026",
       "summary": "I ran into this measure agent problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three months tweaking a customer-sup"
+    },
+    {
+      "slug": "llm-drift-the-silent-quality-drop-metrics-miss",
+      "title": "LLM drift: the silent quality drop metrics miss",
+      "summary": "The short version: the conventional advice on debugged silent is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Silent LLM quality degradation is when model outputs become subtly worse over week"
     }
   ]
 }

@@ -25,5 +25,6 @@
   "The token economics problem nobody solved yet for always-on agent teams",
   "Why most platform teams are still building for 2024 developer workflows in an agentic world",
   "When to fine-tune, when to route, and when to just use a bigger model \u2014 2026 decision framework",
-  "How we measure 'agent reliability' in a way that correlates with user trust"
+  "How we measure 'agent reliability' in a way that correlates with user trust",
+  "How we debugged silent LLM quality degradation that metrics didn't catch"
 ]
