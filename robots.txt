@@ -1,31 +1,24 @@
-# Allow all crawlers access to all content
-User-agent: *
-Allow: /
+# robots.txt for https://kubaik.github.io
+    # Generated automatically - Do not edit manually
 
-# Specifically allow Google AdSense crawler (required for AdSense)
-User-agent: Mediapartners-Google
-Allow: /
+    User-agent: *
+    Allow: /
 
-# Allow Google's main crawler
-User-agent: Googlebot
-Allow: /
+    # Explicitly allow Googlebot
+    User-agent: Googlebot
+    Allow: /
 
-# Block crawlers from sensitive directories (if you have any)
-User-agent: *
-Disallow: /admin/
-Disallow: /private/
-Disallow: /.git/
-Disallow: /node_modules/
+    # Allow Google AdSense crawler
+    User-agent: Mediapartners-Google
+    Allow: /
 
-# Common files to block from crawling
-Disallow: /*.json$
-Disallow: /*.yml$
-Disallow: /*.yaml$
-Disallow: /README.md
-Disallow: /LICENSE
+    # Block sensitive paths only
+    User-agent: *
+    Disallow: /admin/
+    Disallow: /private/
+    Disallow: /.git/
 
-# Sitemap location (replace with your actual sitemap URL)
-Sitemap: https://kubaik.github.io/ai-blog-system/sitemap.xml
-
-# Crawl delay (optional - seconds between requests)
-Crawl-delay: 1
+    # Sitemap
+    Sitemap: https://kubaik.github.io/sitemap.xml
+    Sitemap: https://kubaik.github.io/rss.xml
+    
