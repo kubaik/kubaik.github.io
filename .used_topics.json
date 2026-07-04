@@ -10,5 +10,6 @@
   "The governance layer we added after our first agent caused a compliance incident",
   "How AI changed what 'self-service' means for platform teams in 2026",
   "World models and physical AI: what they mean for backend engineers in 2026",
-  "The supply chain attacks on AI models and datasets that actually happened to teams we know"
+  "The supply chain attacks on AI models and datasets that actually happened to teams we know",
+  "Why event sourcing became viable again once we had good LLM-assisted projection code"
 ]

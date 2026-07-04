@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-04T03:21:15.438645",
+  "built_at": "2026-07-04T04:43:28.398368",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4050,6 +4050,11 @@
       "slug": "ai-model-poisoning-3-real-attacks-on-datasets",
       "title": "AI model poisoning: 3 real attacks on datasets",
       "summary": "The official documentation for supply chain is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most guides to AI supply chain secur"
+    },
+    {
+      "slug": "event-sourcing-works-when-llms-write-projections",
+      "title": "Event sourcing works when LLMs write projections",
+      "summary": "A colleague asked me about event sourcing during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Fo"
     }
   ]
 }
