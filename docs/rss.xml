@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Jul 2026 10:14:30 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jul 2026 10:22:10 +0000</lastBuildDate>
+    <item>
+      <title>Stick to boring stacks with AI services</title>
+      <link>https://kubaik.github.io/stick-to-boring-stacks-with-ai-services/</link>
+      <description>Cut AI service costs 70% with boring stacks — PostgreSQL pgvector, Redis caching, and dedicated GPUs saved us $1.8k/month on a single feature</description>
+      <pubDate>Sat, 04 Jul 2026 10:21:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/stick-to-boring-stacks-with-ai-services/</guid>
+    </item>
     <item>
       <title>15 agents blew up our logs: why we pinned models + logs</title>
       <link>https://kubaik.github.io/15-agents-blew-up-our-logs-why-we-pinned-models-logs/</link>
@@ -138,13 +145,6 @@
       <description>I’ve seen teams burn six weeks perfecting a prompt only to hit a 12% drop in accuracy when their top user started asking questions in German.</description>
       <pubDate>Fri, 03 Jul 2026 12:15:47 +0000</pubDate>
       <guid>https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/</guid>
-    </item>
-    <item>
-      <title>AI solo SaaS 2026: build vs buy</title>
-      <link>https://kubaik.github.io/ai-solo-saas-2026-build-vs-buy/</link>
-      <description>Cut solo SaaS costs 90% with AI in 2026 — build vs buy stacks compared with real numbers, 3 concrete bench</description>
-      <pubDate>Fri, 03 Jul 2026 12:11:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-solo-saas-2026-build-vs-buy/</guid>
     </item>
   </channel>
 </rss>

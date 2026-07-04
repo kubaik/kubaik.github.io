@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-04T10:14:18.396530",
+  "built_at": "2026-07-04T10:21:57.743640",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4075,6 +4075,11 @@
       "slug": "15-agents-blew-up-our-logs-why-we-pinned-models-logs",
       "title": "15 agents blew up our logs: why we pinned models + logs",
       "summary": "The short version: the conventional advice on structured logging is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Once you run more than a dozen agents in production, the logs stop making sense"
+    },
+    {
+      "slug": "stick-to-boring-stacks-with-ai-services",
+      "title": "Stick to boring stacks with AI services",
+      "summary": "A colleague asked me about platform abstractions during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incompl"
     }
   ]
 }
