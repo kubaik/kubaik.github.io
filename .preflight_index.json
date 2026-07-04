@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-03T23:09:00.170514",
+  "built_at": "2026-07-04T00:13:19.991300",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4040,6 +4040,11 @@
       "slug": "ai-made-self-service-platforms-trivial-in-2026",
       "title": "AI made self-service platforms trivial in 2026",
       "summary": "The short version: the conventional advice on changed selfservice is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. Advanced edge cases you personally encountered In 2026, we hit three edge cases that weren’t in any LLM’s training data an"
+    },
+    {
+      "slug": "world-models-wont-save-your-backend",
+      "title": "World models won’t save your backend",
+      "summary": "A colleague asked me about world models during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) In 2"
     }
   ]
 }
