@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Jul 2026 10:22:10 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jul 2026 12:14:43 +0000</lastBuildDate>
+    <item>
+      <title>Survive network drops: agentic workflows that keep running</title>
+      <link>https://kubaik.github.io/survive-network-drops-agentic-workflows-that-keep-running/</link>
+      <description>Cut approval workflow downtime 90% with durable command logs — works on $6 DigitalOcean droplets, survives 90-minute 3G drops, no Kafka or Step Functions needed.</description>
+      <pubDate>Sat, 04 Jul 2026 12:14:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/survive-network-drops-agentic-workflows-that-keep-running/</guid>
+    </item>
     <item>
       <title>Stick to boring stacks with AI services</title>
       <link>https://kubaik.github.io/stick-to-boring-stacks-with-ai-services/</link>
@@ -138,13 +145,6 @@
       <description>Cut log pipeline costs 60% with OpenTelemetry 1.30, Fluent Bit 2.2, and ClickHouse 23.10 — 50k EPS benchmark and the tuning mistakes I made first</description>
       <pubDate>Fri, 03 Jul 2026 13:30:22 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/</guid>
-    </item>
-    <item>
-      <title>Big model API vs fine-tune: the 2026 math</title>
-      <link>https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/</link>
-      <description>I’ve seen teams burn six weeks perfecting a prompt only to hit a 12% drop in accuracy when their top user started asking questions in German.</description>
-      <pubDate>Fri, 03 Jul 2026 12:15:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/big-model-api-vs-fine-tune-the-2026-math/</guid>
     </item>
   </channel>
 </rss>

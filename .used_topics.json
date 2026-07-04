@@ -16,5 +16,6 @@
   "How we made egress costs visible to every engineer (and what changed as a result)",
   "How we built payment reconciliation that survives M-Pesa, Paystack, and Flutterwave failures",
   "Why structured logging + model pinning became non-negotiable once we had 15+ agents in production",
-  "The platform abstractions that survived our first 10 AI-powered services"
+  "The platform abstractions that survived our first 10 AI-powered services",
+  "Agentic workflows that survive network partitions: the patterns that actually work in Africa"
 ]

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-04T10:21:57.743640",
+  "built_at": "2026-07-04T12:14:32.323238",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4080,6 +4080,11 @@
       "slug": "stick-to-boring-stacks-with-ai-services",
       "title": "Stick to boring stacks with AI services",
       "summary": "A colleague asked me about platform abstractions during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incompl"
+    },
+    {
+      "slug": "survive-network-drops-agentic-workflows-that-keep-running",
+      "title": "Survive network drops: agentic workflows that keep running",
+      "summary": "The short version: the conventional advice on agentic workflows is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) In Africa, network partitions aren’t edge cases—they’re daily reality. Teams los"
     }
   ]
 }
