@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Jul 2026 04:43:41 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jul 2026 06:51:17 +0000</lastBuildDate>
+    <item>
+      <title>LLM secrets: don&apos;t spin up a vault yet</title>
+      <link>https://kubaik.github.io/llm-secrets-dont-spin-up-a-vault-yet/</link>
+      <description>Cut LLM secrets cost 82% and latency 83% by ditching Vault for provider-native tokens — the real playbook teams ignore in 2026.</description>
+      <pubDate>Sat, 04 Jul 2026 06:51:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-secrets-dont-spin-up-a-vault-yet/</guid>
+    </item>
     <item>
       <title>Event sourcing works when LLMs write projections</title>
       <link>https://kubaik.github.io/event-sourcing-works-when-llms-write-projections/</link>
@@ -138,13 +145,6 @@
       <description>Cut PR review time 46% with Cursor 0.34 and team rules — acceptance rate, latency, and cost per engineer in 2026’s real-world experiment.</description>
       <pubDate>Fri, 03 Jul 2026 10:31:03 +0000</pubDate>
       <guid>https://kubaik.github.io/pair-programming-with-ai-5-hard-lessons-in-2026/</guid>
-    </item>
-    <item>
-      <title>Why I picked Playwright and Vitest in 2026</title>
-      <link>https://kubaik.github.io/why-i-picked-playwright-and-vitest-in-2026/</link>
-      <description>Cut frontend test time 37% and CI cost 38% with Playwright 1.46 and Vitest 1.6 — the real migration guide teams need in 2026</description>
-      <pubDate>Fri, 03 Jul 2026 10:25:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-i-picked-playwright-and-vitest-in-2026/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-04T04:43:28.398368",
+  "built_at": "2026-07-04T06:51:05.170856",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4055,6 +4055,11 @@
       "slug": "event-sourcing-works-when-llms-write-projections",
       "title": "Event sourcing works when LLMs write projections",
       "summary": "A colleague asked me about event sourcing during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Fo"
+    },
+    {
+      "slug": "llm-secrets-dont-spin-up-a-vault-yet",
+      "title": "LLM secrets: don't spin up a vault yet",
+      "summary": "A colleague asked me about secrets management during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete"
     }
   ]
 }
