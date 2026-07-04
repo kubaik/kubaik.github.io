@@ -193,30 +193,31 @@ jobs:
         run: |
           pip install --quiet scikit-learn numpy tweepy markdown aiohttp jinja2 pyyaml pygments
 
-      - name: Refresh stale posts
-        id: refresh_stale
-        run: |
-          echo "Running stale content refresh..."
-          if python blog_system.py refresh-stale --limit 2 2>&1 | tee refresh_output.txt; then
-            OUTPUT=$(cat refresh_output.txt)
-          else
-            EXIT_CODE=$?
-            echo "::error::blog_system.py refresh-stale failed with exit code $EXIT_CODE"
-            cat refresh_output.txt
-            exit $EXIT_CODE
-          fi
-
-          echo "$OUTPUT"
-
-          if echo "$OUTPUT" | grep -q "has_refreshed=true"; then
-            echo "has_refreshed=true"  >> $GITHUB_OUTPUT
-            REFRESHED=$(echo "$OUTPUT" | grep "refreshed_list=" | head -1 | cut -d= -f2)
-            echo "refreshed_list=$REFRESHED" >> $GITHUB_OUTPUT
-            echo "✅ Refresh: posts updated"
-          else
-            echo "has_refreshed=false" >> $GITHUB_OUTPUT
-            echo "ℹ️  Refresh: no posts updated"
-          fi
+      # ── DISABLED: blog_system.py refresh-stale ───────────────────────────────
+      # - name: Refresh stale posts
+      #   id: refresh_stale
+      #   run: |
+      #     echo "Running stale content refresh..."
+      #     if python blog_system.py refresh-stale --limit 2 2>&1 | tee refresh_output.txt; then
+      #       OUTPUT=$(cat refresh_output.txt)
+      #     else
+      #       EXIT_CODE=$?
+      #       echo "::error::blog_system.py refresh-stale failed with exit code $EXIT_CODE"
+      #       cat refresh_output.txt
+      #       exit $EXIT_CODE
+      #     fi
+      #
+      #     echo "$OUTPUT"
+      #
+      #     if echo "$OUTPUT" | grep -q "has_refreshed=true"; then
+      #       echo "has_refreshed=true"  >> $GITHUB_OUTPUT
+      #       REFRESHED=$(echo "$OUTPUT" | grep "refreshed_list=" | head -1 | cut -d= -f2)
+      #       echo "refreshed_list=$REFRESHED" >> $GITHUB_OUTPUT
+      #       echo "✅ Refresh: posts updated"
+      #     else
+      #       echo "has_refreshed=false" >> $GITHUB_OUTPUT
+      #       echo "ℹ️  Refresh: no posts updated"
+      #     fi
 
       - name: Run delete_fallback_posts (dry-run detect)
         id: fallback_check
@@ -284,36 +285,39 @@ jobs:
         run: |
           python utils/deduplicate_posts.py --delete --no-rebuild
 
-      - name: Run blog audit
-        id: audit
-        run: |
-          echo "Running blog audit..."
-          OUTPUT=$(python blog_system.py audit 2>&1)
-          echo "$OUTPUT"
+      # ── DISABLED: blog_system.py audit ───────────────────────────────────────
+      # - name: Run blog audit
+      #   id: audit
+      #   run: |
+      #     echo "Running blog audit..."
+      #     OUTPUT=$(python blog_system.py audit 2>&1)
+      #     echo "$OUTPUT"
+      #
+      #     if echo "$OUTPUT" | grep -qiE "fallback|short post|low.quality|would (be )?purge|flagged"; then
+      #       echo "has_audit_issues=true" >> $GITHUB_OUTPUT
+      #     else
+      #       echo "has_audit_issues=false" >> $GITHUB_OUTPUT
+      #     fi
 
-          if echo "$OUTPUT" | grep -qiE "fallback|short post|low.quality|would (be )?purge|flagged"; then
-            echo "has_audit_issues=true" >> $GITHUB_OUTPUT
-          else
-            echo "has_audit_issues=false" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Run blog purge
-        if: steps.audit.outputs.has_audit_issues == 'true'
-        run: |
-          python blog_system.py purge
+      # ── DISABLED: blog_system.py purge ───────────────────────────────────────
+      # - name: Run blog purge
+      #   if: steps.audit.outputs.has_audit_issues == 'true'
+      #   run: |
+      #     python blog_system.py purge
 
       # ── CONSOLIDATED REBUILD & SELF-HEALING PUSH ─────────────────────────────
 
-      - name: Rebuild site after modifications
-        id: rebuild
-        if: >
-          steps.fallback_check.outputs.has_fallback == 'true' ||
-          steps.similar_check.outputs.has_similar == 'true' ||
-          steps.dedup_check.outputs.has_duplicates == 'true' ||
-          steps.audit.outputs.has_audit_issues == 'true'
-        run: |
-          echo "Modifications occurred — rebuilding site..."
-          python blog_system.py build
+      # ── DISABLED: blog_system.py build ───────────────────────────────────────
+      # - name: Rebuild site after modifications
+      #   id: rebuild
+      #   if: >
+      #     steps.fallback_check.outputs.has_fallback == 'true' ||
+      #     steps.similar_check.outputs.has_similar == 'true' ||
+      #     steps.dedup_check.outputs.has_duplicates == 'true' ||
+      #     steps.audit.outputs.has_audit_issues == 'true'
+      #   run: |
+      #     echo "Modifications occurred — rebuilding site..."
+      #     python blog_system.py build
 
       - name: Master Commit and Push with Safe Engine Retry Loop
         if: >
@@ -371,12 +375,14 @@ jobs:
                 if [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then
                   python utils/deduplicate_posts.py --delete --no-rebuild
                 fi
-                if [ "${{ steps.audit.outputs.has_audit_issues }}" = "true" ]; then
-                  python blog_system.py purge
-                fi
+                # ── DISABLED: blog_system.py purge (audit-related re-run) ──────
+                # if [ "${{ steps.audit.outputs.has_audit_issues }}" = "true" ]; then
+                #   python blog_system.py purge
+                # fi
 
+                # ── DISABLED: blog_system.py build (recompile re-run) ───────────
                 # Recompile fresh assets on top of updated branch head
-                python blog_system.py build
+                # python blog_system.py build
 
                 git add docs/
                 git commit -m "chore: watchdog cleanup + rebuild [${TIMESTAMP}] (${SUMMARY% })" || true
