@@ -1454,6 +1454,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-model-poisoning-3-real-attacks-on-datasets/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ai-native-apps-break-when-you-copy-old-rules/</loc>
     <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
@@ -13106,6 +13115,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/tag/sigstore2026/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/tag/simplearchitecture/</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -14872,7 +14890,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/world-models-wont-save-your-backend.png</image:loc>
     </image:image>
   </url>
   <url>
