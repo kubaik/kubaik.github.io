@@ -13,5 +13,6 @@
   "The supply chain attacks on AI models and datasets that actually happened to teams we know",
   "Why event sourcing became viable again once we had good LLM-assisted projection code",
   "Secrets management for teams that now have 40+ LLM integrations",
-  "How we made egress costs visible to every engineer (and what changed as a result)"
+  "How we made egress costs visible to every engineer (and what changed as a result)",
+  "How we built payment reconciliation that survives M-Pesa, Paystack, and Flutterwave failures"
 ]

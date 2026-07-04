@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-04T07:29:54.019723",
+  "built_at": "2026-07-04T08:17:04.193815",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4065,6 +4065,11 @@
       "slug": "expose-aws-egress-costs-what-we-tracked-next",
       "title": "Expose AWS egress costs: what we tracked next",
       "summary": "The short version: the conventional advice on made egress is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) We built a lightweight dashboard that turned every engineer’s curiosity about AWS data"
+    },
+    {
+      "slug": "payments-fail-how-we-fixed-flutterwave-paystack-m-pesa",
+      "title": "Payments fail? How we fixed Flutterwave, Paystack, M-Pesa…",
+      "summary": "After reviewing a lot of code that touches built payment, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You get an email at 2 AM: \"127 payments missing in Flutterwave webhook batch from 03:42 AM"
     }
   ]
 }
