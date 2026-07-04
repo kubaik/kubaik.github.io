@@ -650,6 +650,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/8-ways-we-measure-agent-reliability-in-2026/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/80-ai-code-heres-the-catch/</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -4771,7 +4780,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/pick-the-right-ai-model-fine-tune-router-or-bigger.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -6363,6 +6372,15 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/africatech/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/tag/agent/</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -9461,6 +9479,15 @@
     <priority>0.6</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/tag-hacking.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/tag/hallucination/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
     </image:image>
   </url>
   <url>
