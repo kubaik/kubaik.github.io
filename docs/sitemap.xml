@@ -4766,6 +4766,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/pick-the-right-ai-model-fine-tune-router-or-bigger/</loc>
+    <lastmod>2026-07-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/pick-the-right-broker-kafka-vs-redpanda-vs-nats-in/</loc>
     <lastmod>2026-06-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -4816,7 +4825,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/platform-teams-still-build-for-2024-in-2026-its-failing.png</image:loc>
     </image:image>
   </url>
   <url>
