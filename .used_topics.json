@@ -18,5 +18,6 @@
   "Why structured logging + model pinning became non-negotiable once we had 15+ agents in production",
   "The platform abstractions that survived our first 10 AI-powered services",
   "Agentic workflows that survive network partitions: the patterns that actually work in Africa",
-  "The pricing experiments that worked (and the ones that quietly killed conversion)"
+  "The pricing experiments that worked (and the ones that quietly killed conversion)",
+  "How we detect when an agent is 'working' but producing low-quality or harmful output"
 ]
