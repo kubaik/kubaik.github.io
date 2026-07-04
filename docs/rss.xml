@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Jul 2026 14:45:45 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jul 2026 15:09:33 +0000</lastBuildDate>
+    <item>
+      <title>Dumped 3 tools, kept Postgres 17</title>
+      <link>https://kubaik.github.io/dumped-3-tools-kept-postgres-17/</link>
+      <description>Cut API costs 60% by replacing Redis and TimescaleDB with PostgreSQL 17 extensions — real numbers, benchmarks, and the mistakes we made along the way.</description>
+      <pubDate>Sat, 04 Jul 2026 15:09:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/dumped-3-tools-kept-postgres-17/</guid>
+    </item>
     <item>
       <title>Detect lazy agents without false alarms</title>
       <link>https://kubaik.github.io/detect-lazy-agents-without-false-alarms/</link>
@@ -138,13 +145,6 @@
       <description>Cut real-time pipeline latency 60% with Redis 7.2 — COBOL copybook ingestion, EBCDIC-to-JSON conversion, and 130 ms median latency without Kafka or Flink.</description>
       <pubDate>Fri, 03 Jul 2026 15:56:03 +0000</pubDate>
       <guid>https://kubaik.github.io/mcp-servers-real-time-pipelines-without-agents/</guid>
-    </item>
-    <item>
-      <title>WASM ML models: keep dev speed at the edge</title>
-      <link>https://kubaik.github.io/wasm-ml-models-keep-dev-speed-at-the-edge/</link>
-      <description>Cut edge deployment time 95% with WASM inference engines — keep Python tooling, ship 11MB artifacts, and slash cold starts from 47s to 1.8s on Jetson Orin Nano</description>
-      <pubDate>Fri, 03 Jul 2026 14:23:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/wasm-ml-models-keep-dev-speed-at-the-edge/</guid>
     </item>
   </channel>
 </rss>

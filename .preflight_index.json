@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-04T14:45:32.738271",
+  "built_at": "2026-07-04T15:09:20.053175",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4095,6 +4095,11 @@
       "slug": "detect-lazy-agents-without-false-alarms",
       "title": "Detect lazy agents without false alarms",
       "summary": "A colleague asked me about detect agent during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Team"
+    },
+    {
+      "slug": "dumped-3-tools-kept-postgres-17",
+      "title": "Dumped 3 tools, kept Postgres 17",
+      "summary": "A colleague asked me about replaced three during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete Mos"
     }
   ]
 }
