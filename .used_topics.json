@@ -22,5 +22,6 @@
   "How we detect when an agent is 'working' but producing low-quality or harmful output",
   "How we replaced three managed services with one Postgres 17 extension (and what we gave up)",
   "Building audit trails for agent decisions that satisfy both compliance and debugging needs",
-  "The token economics problem nobody solved yet for always-on agent teams"
+  "The token economics problem nobody solved yet for always-on agent teams",
+  "Why most platform teams are still building for 2024 developer workflows in an agentic world"
 ]

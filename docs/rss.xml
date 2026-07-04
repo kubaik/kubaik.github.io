@@ -5,13 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Jul 2026 17:11:07 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 04 Jul 2026 17:20:43 +0000</lastBuildDate>
     <item>
-      <title>Agent teams burn tokens faster than you budget</title>
-      <link>https://kubaik.github.io/agent-teams-burn-tokens-faster-than-you-budget/</link>
-      <description>Cut agent token burn 59% with a Redis budget tracker and prompt pruner — real production numbers, code, and the failure modes most docs skip.</description>
-      <pubDate>Sat, 04 Jul 2026 17:10:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-teams-burn-tokens-faster-than-you-budget/</guid>
+      <title>Platform teams still build for 2024 in 2026 it&apos;s failing</title>
+      <link>https://kubaik.github.io/platform-teams-still-build-for-2024-in-2026-its-failing/</link>
+      <description>Cut deployment latency 85% by dropping GitHub Actions for agent-first platforms. How most platform teams still enforce 2024 workflows in 2026 and why it’s failing their developers.</description>
+      <pubDate>Sat, 04 Jul 2026 17:20:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/platform-teams-still-build-for-2024-in-2026-its-failing/</guid>
     </item>
     <item>
       <title>Audit trails: ImmutableDB vs DynamoDB Streams</title>
