@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-05T12:37:19.396338",
+  "built_at": "2026-07-05T13:49:00.755806",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4175,6 +4175,11 @@
       "slug": "llmops-2026-evaluation-stack-that-replaced-rag-dashboards",
       "title": "LLMOps 2026: evaluation stack that replaced RAG dashboards",
       "summary": "After reviewing a lot of code that touches llmops 2026, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing In 2026, teams building LLM applications stopped asking \"Is our RAG working?\" and started as"
+    },
+    {
+      "slug": "ai-permissions-dont-let-agents-burn-your-cloud-budget",
+      "title": "AI permissions: Don’t let agents burn your cloud budget",
+      "summary": "The short version: the conventional advice on leastprivilege agents is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI agents need permissions to do their jobs — but giving them the same acces"
     }
   ]
 }

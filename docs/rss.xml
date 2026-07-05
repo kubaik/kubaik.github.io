@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Jul 2026 12:37:32 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Jul 2026 13:49:13 +0000</lastBuildDate>
+    <item>
+      <title>AI permissions: Don’t let agents burn your cloud budget</title>
+      <link>https://kubaik.github.io/ai-permissions-dont-let-agents-burn-your-cloud-budget/</link>
+      <description>Cut cloud waste 20-50% with AI agent least-privilege — runtime guards, IAM Roles for Service Accounts, and Policy Sentry in 2026.</description>
+      <pubDate>Sun, 05 Jul 2026 13:48:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-permissions-dont-let-agents-burn-your-cloud-budget/</guid>
+    </item>
     <item>
       <title>LLMOps 2026: evaluation stack that replaced RAG dashboards</title>
       <link>https://kubaik.github.io/llmops-2026-evaluation-stack-that-replaced-rag-dashboards/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI service costs 70% with boring stacks — PostgreSQL pgvector, Redis caching, and dedicated GPUs saved us $1.8k/month on a single feature</description>
       <pubDate>Sat, 04 Jul 2026 10:21:53 +0000</pubDate>
       <guid>https://kubaik.github.io/stick-to-boring-stacks-with-ai-services/</guid>
-    </item>
-    <item>
-      <title>15 agents blew up our logs: why we pinned models + logs</title>
-      <link>https://kubaik.github.io/15-agents-blew-up-our-logs-why-we-pinned-models-logs/</link>
-      <description>Cut log debugging 78% with structured logs + model pinning — exact schema IDs, pinned Docker tags, and the rollback mistake most teams skip.</description>
-      <pubDate>Sat, 04 Jul 2026 10:14:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/15-agents-blew-up-our-logs-why-we-pinned-models-logs/</guid>
     </item>
   </channel>
 </rss>
