@@ -36,5 +36,6 @@
   "Why most production AI agents still need circuit breakers and human escalation paths in 2026",
   "The skills that became table stakes for senior engineers once agents were in production",
   "LLMOps in 2026: the evaluation and monitoring stack that replaced our old RAG dashboards",
-  "Least-privilege for AI agents: the permission model that doesn't make developers revolt"
+  "Least-privilege for AI agents: the permission model that doesn't make developers revolt",
+  "How we built an IDP that developers actually use (instead of another Backstage nobody opens)"
 ]

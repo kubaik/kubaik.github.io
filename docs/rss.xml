@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Jul 2026 20:13:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Jul 2026 17:54:35 +0000</lastBuildDate>
+    <item>
+      <title>Internal Dev Portal that developers open daily</title>
+      <link>https://kubaik.github.io/internal-dev-portal-that-developers-open-daily/</link>
+      <description>Cut developer onboarding from 3 days to 2 hours with an Internal Dev Portal that developers actually use. Learn how to build an IDP that sticks, not just another Backstage nobody opens.</description>
+      <pubDate>Sun, 05 Jul 2026 17:54:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/internal-dev-portal-that-developers-open-daily/</guid>
+    </item>
     <item>
       <title>AI permissions: Don’t let agents burn your cloud budget</title>
       <link>https://kubaik.github.io/ai-permissions-dont-let-agents-burn-your-cloud-budget/</link>
@@ -138,13 +145,6 @@
       <description>Cut approval workflow downtime 90% with durable command logs — works on $6 DigitalOcean droplets, survives 90-minute 3G drops, no Kafka or Step Functions needed.</description>
       <pubDate>Sat, 04 Jul 2026 12:14:28 +0000</pubDate>
       <guid>https://kubaik.github.io/survive-network-drops-agentic-workflows-that-keep-running/</guid>
-    </item>
-    <item>
-      <title>Stick to boring stacks with AI services</title>
-      <link>https://kubaik.github.io/stick-to-boring-stacks-with-ai-services/</link>
-      <description>Cut AI service costs 70% with boring stacks — PostgreSQL pgvector, Redis caching, and dedicated GPUs saved us $1.8k/month on a single feature</description>
-      <pubDate>Sat, 04 Jul 2026 10:21:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/stick-to-boring-stacks-with-ai-services/</guid>
     </item>
   </channel>
 </rss>

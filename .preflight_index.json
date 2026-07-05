@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-05T13:49:00.755806",
+  "built_at": "2026-07-05T17:54:22.370044",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4180,6 +4180,11 @@
       "slug": "ai-permissions-dont-let-agents-burn-your-cloud-budget",
       "title": "AI permissions: Don’t let agents burn your cloud budget",
       "summary": "The short version: the conventional advice on leastprivilege agents is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI agents need permissions to do their jobs — but giving them the same acces"
+    },
+    {
+      "slug": "internal-dev-portal-that-developers-open-daily",
+      "title": "Internal Dev Portal that developers open daily",
+      "summary": "The short version: the conventional advice on built idp is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) An Internal Developer Platform (IDP) is a centralized place for developers to find and u"
     }
   ]
 }
