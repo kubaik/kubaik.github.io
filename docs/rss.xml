@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Jul 2026 11:12:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Jul 2026 11:34:37 +0000</lastBuildDate>
+    <item>
+      <title>AI in slow networks: why models flop where data costs rise</title>
+      <link>https://kubaik.github.io/ai-in-slow-networks-why-models-flop-where-data-costs-rise/</link>
+      <description>Cut API data cost 88% and latency 76% for AI features in high-cost, high-latency markets. Learn why global best practices fail and how to adapt them with Redis 7.2, ONNX Runtime 1.16, and Lambda@Edge.</description>
+      <pubDate>Sun, 05 Jul 2026 11:34:19 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-in-slow-networks-why-models-flop-where-data-costs-rise/</guid>
+    </item>
     <item>
       <title>Agents 24/7 cost $12k/month. Here’s the bill</title>
       <link>https://kubaik.github.io/agents-247-cost-12kmonth-heres-the-bill/</link>
@@ -138,13 +145,6 @@
       <description>Cut projection rebuild time from hours to minutes with LLM-generated event sourcing code — concrete benchmarks, cost savings, and the one metric to check today.</description>
       <pubDate>Sat, 04 Jul 2026 04:43:24 +0000</pubDate>
       <guid>https://kubaik.github.io/event-sourcing-works-when-llms-write-projections/</guid>
-    </item>
-    <item>
-      <title>AI model poisoning: 3 real attacks on datasets</title>
-      <link>https://kubaik.github.io/ai-model-poisoning-3-real-attacks-on-datasets/</link>
-      <description>Cut AI poisoning incidents 100% with dataset hashes, SLSA 1.1, and Sigstore 0.10.0 — the real tools and metrics teams used in 2026.</description>
-      <pubDate>Sat, 04 Jul 2026 03:21:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-model-poisoning-3-real-attacks-on-datasets/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-05T11:11:57.902687",
+  "built_at": "2026-07-05T11:34:24.276949",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4155,6 +4155,11 @@
       "slug": "agents-247-cost-12kmonth-heres-the-bill",
       "title": "Agents 24/7 cost $12k/month. Here’s the bill",
       "summary": "The official documentation for real cost is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most tutorials show you how to spin up "
+    },
+    {
+      "slug": "ai-in-slow-networks-why-models-flop-where-data-costs-rise",
+      "title": "AI in slow networks: why models flop where data costs rise",
+      "summary": "The short version: the conventional advice on global best is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) Global AI best practices assume cheap, fast internet and abundant compute, but in mark"
     }
   ]
 }

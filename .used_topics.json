@@ -31,5 +31,6 @@
   "How we built low-latency agent features for users on intermittent 3G/4G connections in East Africa",
   "The real cost of running agents 24/7 vs on-demand \u2014 numbers from our production setup",
   "The hidden latency tax of multi-agent handoffs and how we reduced it by 60%",
-  "The real cost of always-on vs on-demand agents in a Nairobi-based SaaS"
+  "The real cost of always-on vs on-demand agents in a Nairobi-based SaaS",
+  "Why global AI best practices often fail in markets with high mobile data costs and latency"
 ]
