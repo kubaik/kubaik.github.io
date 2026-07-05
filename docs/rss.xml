@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Jul 2026 08:14:45 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Jul 2026 11:12:10 +0000</lastBuildDate>
+    <item>
+      <title>Agents 24/7 cost $12k/month. Here’s the bill</title>
+      <link>https://kubaik.github.io/agents-247-cost-12kmonth-heres-the-bill/</link>
+      <description>Cut AWS bills 64% for Nairobi SaaS agents — real latency, cost, and retry data from a live system. Learn what always-on vs on-demand really costs in 2026.</description>
+      <pubDate>Sun, 05 Jul 2026 11:11:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/agents-247-cost-12kmonth-heres-the-bill/</guid>
+    </item>
     <item>
       <title>Handoff latency kills systems — 60% fix is free</title>
       <link>https://kubaik.github.io/handoff-latency-kills-systems-60-fix-is-free/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI poisoning incidents 100% with dataset hashes, SLSA 1.1, and Sigstore 0.10.0 — the real tools and metrics teams used in 2026.</description>
       <pubDate>Sat, 04 Jul 2026 03:21:11 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-model-poisoning-3-real-attacks-on-datasets/</guid>
-    </item>
-    <item>
-      <title>World models won’t save your backend</title>
-      <link>https://kubaik.github.io/world-models-wont-save-your-backend/</link>
-      <description>World models add 600ms latency but 68% of teams see no reliability gain. Backend engineering still beats AI simulations in 2026.</description>
-      <pubDate>Sat, 04 Jul 2026 00:13:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/world-models-wont-save-your-backend/</guid>
     </item>
   </channel>
 </rss>

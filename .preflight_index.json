@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-05T08:14:32.751442",
+  "built_at": "2026-07-05T11:11:57.902687",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4150,6 +4150,11 @@
       "slug": "handoff-latency-kills-systems-60-fix-is-free",
       "title": "Handoff latency kills systems — 60% fix is free",
       "summary": "A colleague asked me about hidden latency during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Te"
+    },
+    {
+      "slug": "agents-247-cost-12kmonth-heres-the-bill",
+      "title": "Agents 24/7 cost $12k/month. Here’s the bill",
+      "summary": "The official documentation for real cost is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most tutorials show you how to spin up "
     }
   ]
 }

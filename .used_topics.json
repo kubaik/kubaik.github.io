@@ -30,5 +30,6 @@
   "How newest models (Claude 4 / GPT-5 era) changed our agent architecture decisions",
   "How we built low-latency agent features for users on intermittent 3G/4G connections in East Africa",
   "The real cost of running agents 24/7 vs on-demand \u2014 numbers from our production setup",
-  "The hidden latency tax of multi-agent handoffs and how we reduced it by 60%"
+  "The hidden latency tax of multi-agent handoffs and how we reduced it by 60%",
+  "The real cost of always-on vs on-demand agents in a Nairobi-based SaaS"
 ]
