@@ -800,6 +800,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/</loc>
+    <lastmod>2026-07-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/agents-cost-more-than-you-think/</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -4600,7 +4609,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache.png</image:loc>
     </image:image>
   </url>
   <url>

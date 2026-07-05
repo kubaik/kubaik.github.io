@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Jul 2026 03:45:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Jul 2026 05:04:58 +0000</lastBuildDate>
+    <item>
+      <title>Agents 24/7 vs on-demand: $42k bill shock</title>
+      <link>https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/</link>
+      <description>Multiply that by four agents, and you’ve already burned $1,174 monthly before you’ve even processed a single request.</description>
+      <pubDate>Sun, 05 Jul 2026 05:04:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/</guid>
+    </item>
     <item>
       <title>Optimise agent sync on 3G: gzip + CDN vs local cache</title>
       <link>https://kubaik.github.io/optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache/</link>
@@ -138,13 +145,6 @@
       <description>AI self-service platforms cut deployment time from 45 minutes to 2 minutes in 2026 — but the guardrail bar is higher. Learn the guardrails, prompts, and tools that make it work, including the S3 bucket mistake that cost $4.2k and how the AI caught it.</description>
       <pubDate>Fri, 03 Jul 2026 23:08:55 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-made-self-service-platforms-trivial-in-2026/</guid>
-    </item>
-    <item>
-      <title>Agent governance: OPA vs Kyverno after our incident</title>
-      <link>https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/</link>
-      <description>Cut agent governance costs 42%: Kyverno 1.11 vs OPA 1.12 latency, cost, and Rego pain uncovered in a real compliance incident</description>
-      <pubDate>Fri, 03 Jul 2026 22:13:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/</guid>
     </item>
   </channel>
 </rss>

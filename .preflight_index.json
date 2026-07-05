@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-05T03:44:56.534692",
+  "built_at": "2026-07-05T05:04:45.575322",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4140,6 +4140,11 @@
       "slug": "optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache",
       "title": "Optimise agent sync on 3G: gzip + CDN vs local cache",
       "summary": "I've seen the same built lowlatency mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now You’ve seen the numbers: Africa’s internet traffic is still 62% mobil"
+    },
+    {
+      "slug": "agents-247-vs-on-demand-42k-bill-shock",
+      "title": "Agents 24/7 vs on-demand: $42k bill shock",
+      "summary": "The official documentation for real cost is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most docs sell you on the idea that run"
     }
   ]
 }
