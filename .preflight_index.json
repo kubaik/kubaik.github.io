@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-05T12:23:30.506992",
+  "built_at": "2026-07-05T12:37:19.396338",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4170,6 +4170,11 @@
       "slug": "7-skills-senior-engineers-need-now-agents-are-live",
       "title": "7 skills senior engineers need now agents are live",
       "summary": "I ran into this skills that problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) In late 2026, our team rolled out a fleet of l"
+    },
+    {
+      "slug": "llmops-2026-evaluation-stack-that-replaced-rag-dashboards",
+      "title": "LLMOps 2026: evaluation stack that replaced RAG dashboards",
+      "summary": "After reviewing a lot of code that touches llmops 2026, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing In 2026, teams building LLM applications stopped asking \"Is our RAG working?\" and started as"
     }
   ]
 }
