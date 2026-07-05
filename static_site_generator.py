@@ -1717,7 +1717,7 @@ def _build_templates() -> dict:
     </header>
     <main class="container">
         <div class="hero">
-            <h2>Production Lessons from 10+ Years in Fintech &amp; AI</h2>
+            <h2>Real Systems. Real Failures. Real Fixes.</h2>
             <p>Practical backend engineering, AI tooling, and developer career advice — no theory, just what's worked in real production systems.</p>
         </div>
 
