@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Jul 2026 05:04:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Jul 2026 08:14:45 +0000</lastBuildDate>
+    <item>
+      <title>Handoff latency kills systems — 60% fix is free</title>
+      <link>https://kubaik.github.io/handoff-latency-kills-systems-60-fix-is-free/</link>
+      <description>Cut p95 latency 60% by merging agents and caching — real Node.js and Python case studies with Redis 7.2 and BullMQ 4.14</description>
+      <pubDate>Sun, 05 Jul 2026 08:14:28 +0000</pubDate>
+      <guid>https://kubaik.github.io/handoff-latency-kills-systems-60-fix-is-free/</guid>
+    </item>
     <item>
       <title>Agents 24/7 vs on-demand: $42k bill shock</title>
       <link>https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/</link>
@@ -138,13 +145,6 @@
       <description>World models add 600ms latency but 68% of teams see no reliability gain. Backend engineering still beats AI simulations in 2026.</description>
       <pubDate>Sat, 04 Jul 2026 00:13:15 +0000</pubDate>
       <guid>https://kubaik.github.io/world-models-wont-save-your-backend/</guid>
-    </item>
-    <item>
-      <title>AI made self-service platforms trivial in 2026</title>
-      <link>https://kubaik.github.io/ai-made-self-service-platforms-trivial-in-2026/</link>
-      <description>AI self-service platforms cut deployment time from 45 minutes to 2 minutes in 2026 — but the guardrail bar is higher. Learn the guardrails, prompts, and tools that make it work, including the S3 bucket mistake that cost $4.2k and how the AI caught it.</description>
-      <pubDate>Fri, 03 Jul 2026 23:08:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-made-self-service-platforms-trivial-in-2026/</guid>
     </item>
   </channel>
 </rss>

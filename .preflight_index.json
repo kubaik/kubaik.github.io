@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-05T05:04:45.575322",
+  "built_at": "2026-07-05T08:14:32.751442",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4145,6 +4145,11 @@
       "slug": "agents-247-vs-on-demand-42k-bill-shock",
       "title": "Agents 24/7 vs on-demand: $42k bill shock",
       "summary": "The official documentation for real cost is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap. The gap between what the docs say and what production needs Most docs sell you on the idea that run"
+    },
+    {
+      "slug": "handoff-latency-kills-systems-60-fix-is-free",
+      "title": "Handoff latency kills systems — 60% fix is free",
+      "summary": "A colleague asked me about hidden latency during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Te"
     }
   ]
 }
