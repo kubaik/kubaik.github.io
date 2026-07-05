@@ -540,6 +540,9 @@ def _pick_reply_bait(slug: str) -> str:
 # Tweet trimming helper  (FIX: Bug C)
 # ─────────────────────────────────────────────────────────────────
 
+_URL_PATTERN = re.compile(r'https?://\S+')
+
+
 def _trim_to_budget(text: str, budget: int) -> str:
     """
     Trim *text* to at most *budget* characters while preserving clean grammar.
@@ -554,9 +557,29 @@ def _trim_to_budget(text: str, budget: int) -> str:
 
     In all truncation cases a trailing "…" is appended ONLY when the cut is
     not already at a natural sentence end.
+
+    FIX (URL truncation bug): domains like "github.io" contain a period,
+    which the sentence-boundary check above was mistaking for the end of a
+    sentence — chopping links such as "https://kubaik.github.io/some-post"
+    down to "https://kubaik.github." before posting. Every candidate cut
+    point is now checked against the URL(s) in the text; if a cut would
+    land partway through one, the cut is pulled back to just *before* that
+    URL instead, so a link is always kept fully intact or dropped
+    entirely — never mangled.
     """
     if len(text) <= budget:
         return text
+
+    url_spans = [m.span() for m in _URL_PATTERN.finditer(text)]
+
+    def _fix_url_cut(prefix: str):
+        """If *prefix* (== text[:len(prefix)]) ends partway through a URL,
+        pull the cut back to just before that URL. Returns (text, fixed)."""
+        end = len(prefix)
+        for start, url_end in url_spans:
+            if start < end < url_end:
+                return prefix[:start].rstrip(), True
+        return prefix, False
 
     # Helper: does the string end at a natural sentence boundary?
     def _is_sentence_end(s: str) -> bool:
@@ -568,33 +591,40 @@ def _trim_to_budget(text: str, budget: int) -> str:
     for punct in ('.', '!', '?'):
         pos = window.rfind(punct)
         if pos >= budget // 2:
-            candidate = text[:pos + 1].rstrip()
-            if len(candidate) <= budget:
-                return candidate
+            candidate, fixed = _fix_url_cut(text[:pos + 1])
+            candidate = candidate.rstrip()
+            if candidate and len(candidate) <= budget:
+                return candidate + ('…' if fixed else '')
 
     # 2. Clause boundary (— or ;)
     for sep in ('—', ';'):
         pos = window.rfind(sep)
         if pos >= budget // 2:
-            candidate = text[:pos].rstrip().rstrip(',;')
+            candidate, _ = _fix_url_cut(text[:pos])
+            candidate = candidate.rstrip().rstrip(',;')
             if candidate:
                 return candidate + '…'
 
     # 3. Comma
     pos = window.rfind(',')
     if pos >= budget // 2:
-        candidate = text[:pos].rstrip()
+        candidate, _ = _fix_url_cut(text[:pos])
+        candidate = candidate.rstrip()
         if candidate:
             return candidate + '…'
 
     # 4. Word boundary
     pos = window.rfind(' ')
     if pos > 0:
-        candidate = text[:pos].rstrip('.,;: ')
-        return candidate + '…'
+        candidate, _ = _fix_url_cut(text[:pos])
+        candidate = candidate.rstrip('.,;: ')
+        if candidate:
+            return candidate + '…'
 
     # 5. Hard cut
-    return window.rstrip() + '…'
+    candidate, _ = _fix_url_cut(window)
+    candidate = candidate.rstrip()
+    return (candidate + '…') if candidate else '…'
 
 
 # ─────────────────────────────────────────────────────────────────
