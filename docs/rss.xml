@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 05 Jul 2026 15:00:13 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Jul 2026 12:03:41 +0000</lastBuildDate>
+    <item>
+      <title>AI agents fail without circuit breakers in 2026</title>
+      <link>https://kubaik.github.io/ai-agents-fail-without-circuit-breakers-in-2026/</link>
+      <description>Why I wrote this (the problem I kept hitting) In 2026, every NGO and government dashboard I worked on promised AI agents doing real work: approving…</description>
+      <pubDate>Sun, 05 Jul 2026 12:03:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-fail-without-circuit-breakers-in-2026/</guid>
+    </item>
     <item>
       <title>AI in slow networks: why models flop where data costs rise</title>
       <link>https://kubaik.github.io/ai-in-slow-networks-why-models-flop-where-data-costs-rise/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS surprise egress bills 31% with per-service cost visibility — CloudWatch, CUR, and Flow Logs mapped to real prices in 2026.</description>
       <pubDate>Sat, 04 Jul 2026 07:29:49 +0000</pubDate>
       <guid>https://kubaik.github.io/expose-aws-egress-costs-what-we-tracked-next/</guid>
-    </item>
-    <item>
-      <title>Event sourcing works when LLMs write projections</title>
-      <link>https://kubaik.github.io/event-sourcing-works-when-llms-write-projections/</link>
-      <description>Cut projection rebuild time from hours to minutes with LLM-generated event sourcing code — concrete benchmarks, cost savings, and the one metric to check today.</description>
-      <pubDate>Sat, 04 Jul 2026 04:43:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/event-sourcing-works-when-llms-write-projections/</guid>
     </item>
   </channel>
 </rss>
