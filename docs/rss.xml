@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 04 Jul 2026 22:07:31 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 05 Jul 2026 03:45:09 +0000</lastBuildDate>
+    <item>
+      <title>Optimise agent sync on 3G: gzip + CDN vs local cache</title>
+      <link>https://kubaik.github.io/optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache/</link>
+      <description>Cut p99 agent sync latency 37% with a local Go cache vs CDN — concrete benchmarks, cost numbers, and the exact TTL that worked in East Africa 2026.</description>
+      <pubDate>Sun, 05 Jul 2026 03:44:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache/</guid>
+    </item>
     <item>
       <title>Agent design after LLM-4: we broke 5 assumptions</title>
       <link>https://kubaik.github.io/agent-design-after-llm-4-we-broke-5-assumptions/</link>
@@ -138,13 +145,6 @@
       <description>Cut agent governance costs 42%: Kyverno 1.11 vs OPA 1.12 latency, cost, and Rego pain uncovered in a real compliance incident</description>
       <pubDate>Fri, 03 Jul 2026 22:13:29 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/</guid>
-    </item>
-    <item>
-      <title>Evaluate agents with Spark vs custom harness</title>
-      <link>https://kubaik.github.io/evaluate-agents-with-spark-vs-custom-harness/</link>
-      <description>Cut agent harness debug time 70% with this choice—custom Python harness vs Spark 3.5 tested on 50k conversations with concrete latency, cost, and maintenance numbers.</description>
-      <pubDate>Fri, 03 Jul 2026 21:12:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/evaluate-agents-with-spark-vs-custom-harness/</guid>
     </item>
   </channel>
 </rss>

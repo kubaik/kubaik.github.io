@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-04T22:07:18.437449",
+  "built_at": "2026-07-05T03:44:56.534692",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4135,6 +4135,11 @@
       "slug": "agent-design-after-llm-4-we-broke-5-assumptions",
       "title": "Agent design after LLM-4: we broke 5 assumptions",
       "summary": "Most newest models guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In early 2026 we shipped a multi-agent platform that routed support tickets to specializ"
+    },
+    {
+      "slug": "optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache",
+      "title": "Optimise agent sync on 3G: gzip + CDN vs local cache",
+      "summary": "I've seen the same built lowlatency mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now You’ve seen the numbers: Africa’s internet traffic is still 62% mobil"
     }
   ]
 }
