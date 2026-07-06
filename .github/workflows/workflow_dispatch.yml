@@ -8,6 +8,8 @@ on:
 permissions:
   contents: write
   actions: write
+  pages: write
+  id-token: write
 
 # ── KEY FIX 1: Join the same concurrency group to serialize execution ──
 concurrency:
@@ -18,6 +20,9 @@ jobs:
   check-and-retrigger:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout repository
@@ -320,6 +325,7 @@ jobs:
       #     python blog_system.py build
 
       - name: Master Commit and Push with Safe Engine Retry Loop
+        id: commit_push
         if: >
           steps.fallback_check.outputs.has_fallback == 'true' ||
           steps.similar_check.outputs.has_similar == 'true' ||
@@ -333,6 +339,7 @@ jobs:
 
           if git diff --cached --quiet; then
             echo "No real changes to commit."
+            echo "changes_committed=false" >> $GITHUB_OUTPUT
           else
             TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
             SUMMARY=""
@@ -396,6 +403,40 @@ jobs:
               # is not left blocked by a failed run.
               echo "::warning::Failed to push cleanly after $MAX_ATTEMPTS attempts — manual check needed."
             fi
+
+            echo "changes_committed=true" >> $GITHUB_OUTPUT
+          fi
+
+      # ── NEW: REDEPLOY PAGES SO CLEANUPS GO LIVE IMMEDIATELY ──────────────────
+      # Without this, deletions from the steps above sit in the docs/ folder
+      # on `main` but the live site / sitemap.xml keep serving whatever was
+      # deployed by the last blog-automation.yml run — for up to 12h. These
+      # steps mirror the deploy tail of blog-automation.yml so a cleanup
+      # commit here also triggers an immediate Pages deployment.
+      - name: Setup GitHub Pages
+        if: steps.commit_push.outputs.changes_committed == 'true'
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        if: steps.commit_push.outputs.changes_committed == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./docs
+
+      - name: Deploy to GitHub Pages
+        if: steps.commit_push.outputs.changes_committed == 'true'
+        id: deployment
+        uses: actions/deploy-pages@v4
+        continue-on-error: true
+
+      - name: Deployment Status
+        if: steps.commit_push.outputs.changes_committed == 'true'
+        run: |
+          if [ "${{ steps.deployment.outcome }}" == "success" ]; then
+            echo "✅ Watchdog redeploy successful — cleanup changes are now live"
+          else
+            echo "⚠️ Watchdog redeploy step had issues (may be transient)"
+            echo "Check the Environments tab or re-run the workflow"
           fi
 
       # ── MISSING-SLOT RECOVERY ─────────────────────────────────────────────────
@@ -504,6 +545,7 @@ jobs:
             echo "| Similar posts found  | \`${{ steps.similar_check.outputs.has_similar == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
             echo "| Duplicate posts found | \`${{ steps.dedup_check.outputs.has_duplicates == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
             echo "| Audit issues found    | \`${{ steps.audit.outputs.has_audit_issues == 'true' && 'yes — purged ⚠️' || 'none ✅' }}\` |"
+            echo "| Pages redeployed      | \`${{ steps.commit_push.outputs.changes_committed == 'true' && (steps.deployment.outcome == 'success' && 'yes ✅' || 'attempted ⚠️') || 'not needed' }}\` |"
             echo ""
             if [ -n "${{ steps.missing.outputs.missing_list }}" ]; then
               echo "ℹ️ **Missing slots detected but no catch-up run was triggered (auto-trigger disabled):** \`${{ steps.missing.outputs.missing_list }}\`"
