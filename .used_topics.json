@@ -39,5 +39,6 @@
   "Least-privilege for AI agents: the permission model that doesn't make developers revolt",
   "How we built an IDP that developers actually use (instead of another Backstage nobody opens)",
   "What changed in our on-call process once AI started writing 40% of the code",
-  "Building durable agent workflows that survive restarts, model changes, and network blips"
+  "Building durable agent workflows that survive restarts, model changes, and network blips",
+  "The audit logging architecture that satisfies both compliance and performance teams"
 ]
