@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-06T08:45:35.789683",
+  "built_at": "2026-07-06T15:42:08.433152",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4200,6 +4200,11 @@
       "slug": "audit-logs-ship-them-fast-keep-them-forever",
       "title": "Audit logs: ship them fast, keep them forever",
       "summary": "A colleague asked me about audit logging during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) Mos"
+    },
+    {
+      "slug": "negotiate-after-ai-boosts-your-output",
+      "title": "Negotiate after AI boosts your output",
+      "summary": "The short version: the conventional advice on compensation negotiation is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture. The one-paragraph version (read this first) AI didn’t just change what you ship; it changed how cheap you look. A 30–"
     }
   ]
 }

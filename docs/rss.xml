@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 06 Jul 2026 08:45:48 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 06 Jul 2026 15:42:21 +0000</lastBuildDate>
+    <item>
+      <title>Negotiate after AI boosts your output</title>
+      <link>https://kubaik.github.io/negotiate-after-ai-boosts-your-output/</link>
+      <description>Cut negotiation friction in 2026: tie AI output to $480k savings, use a portfolio model, and ask for 15% above band. 3 concrete numbers, 2 code samples, Levels.fyi 2026 data.</description>
+      <pubDate>Mon, 06 Jul 2026 15:42:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/negotiate-after-ai-boosts-your-output/</guid>
+    </item>
     <item>
       <title>Audit logs: ship them fast, keep them forever</title>
       <link>https://kubaik.github.io/audit-logs-ship-them-fast-keep-them-forever/</link>
@@ -138,13 +145,6 @@
       <description>Cut audit trail costs 35% with DynamoDB Streams — benchmark, code snippets, and the compliance mistake that cost $18k</description>
       <pubDate>Sat, 04 Jul 2026 16:10:41 +0000</pubDate>
       <guid>https://kubaik.github.io/audit-trails-immutabledb-vs-dynamodb-streams/</guid>
-    </item>
-    <item>
-      <title>Dumped 3 tools, kept Postgres 17</title>
-      <link>https://kubaik.github.io/dumped-3-tools-kept-postgres-17/</link>
-      <description>Cut API costs 60% by replacing Redis and TimescaleDB with PostgreSQL 17 extensions — real numbers, benchmarks, and the mistakes we made along the way.</description>
-      <pubDate>Sat, 04 Jul 2026 15:09:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/dumped-3-tools-kept-postgres-17/</guid>
     </item>
   </channel>
 </rss>
