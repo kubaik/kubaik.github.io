@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Jul 2026 03:44:15 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Jul 2026 14:45:36 +0000</lastBuildDate>
+    <item>
+      <title>AI in local currency: costs that surprise…</title>
+      <link>https://kubaik.github.io/ai-in-local-currency-costs-that-surprise/</link>
+      <description>Six weeks in, their AWS bill jumped 300% because the model was running on on-demand p3.8xlarge instances 24/7, and their finance team had no way to…</description>
+      <pubDate>Tue, 07 Jul 2026 14:45:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-in-local-currency-costs-that-surprise/</guid>
+    </item>
     <item>
       <title>AI feature drift: why your model died at midnight</title>
       <link>https://kubaik.github.io/ai-feature-drift-why-your-model-died-at-midnight/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI costs 76% with a prompt router — fine-tune vs route vs bigger model decision matrix with code, numbers, and benchmarks for 2026.</description>
       <pubDate>Sat, 04 Jul 2026 17:34:58 +0000</pubDate>
       <guid>https://kubaik.github.io/pick-the-right-ai-model-fine-tune-router-or-bigger/</guid>
-    </item>
-    <item>
-      <title>Platform teams still build for 2024 in 2026 it&apos;s failing</title>
-      <link>https://kubaik.github.io/platform-teams-still-build-for-2024-in-2026-its-failing/</link>
-      <description>Cut deployment latency 85% by dropping GitHub Actions for agent-first platforms. How most platform teams still enforce 2024 workflows in 2026 and why it’s failing their developers.</description>
-      <pubDate>Sat, 04 Jul 2026 17:20:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/platform-teams-still-build-for-2024-in-2026-its-failing/</guid>
     </item>
   </channel>
 </rss>

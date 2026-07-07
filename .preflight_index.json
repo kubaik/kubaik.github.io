@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-07T03:44:03.064151",
+  "built_at": "2026-07-07T14:45:22.174643",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4210,6 +4210,11 @@
       "slug": "ai-feature-drift-why-your-model-died-at-midnight",
       "title": "AI feature drift: why your model died at midnight",
       "summary": "After reviewing a lot of code that touches data modeling, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. The error and why it's confusing You push a new AI feature at 18:00, traffic looks fine, but at midnight the model’s AUC dr"
+    },
+    {
+      "slug": "ai-in-local-currency-costs-that-surprise",
+      "title": "AI in local currency: costs that surprise…",
+      "summary": "A colleague asked me about cost reliability during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) "
     }
   ]
 }
