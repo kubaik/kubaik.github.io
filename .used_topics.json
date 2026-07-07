@@ -41,5 +41,6 @@
   "What changed in our on-call process once AI started writing 40% of the code",
   "Building durable agent workflows that survive restarts, model changes, and network blips",
   "The audit logging architecture that satisfies both compliance and performance teams",
-  "The compensation negotiation playbook that works when the market knows AI increased your output"
+  "The compensation negotiation playbook that works when the market knows AI increased your output",
+  "The data modeling decisions that survived our move to heavy AI feature usage"
 ]
