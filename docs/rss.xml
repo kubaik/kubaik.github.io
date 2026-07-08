@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Jul 2026 13:06:10 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jul 2026 10:10:05 +0000</lastBuildDate>
+    <item>
+      <title>Agent orches break prod: 3 review traps</title>
+      <link>https://kubaik.github.io/agent-orches-break-prod-3-review-traps/</link>
+      <description>Cut agent timeout errors 98% with 3 fixes — timeout alignment, context propagation, and pool sizing. LangChain 0.1.12, Python 3.11, Node 20 LTS, PgBouncer 1.21 included.</description>
+      <pubDate>Wed, 08 Jul 2026 10:09:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-orches-break-prod-3-review-traps/</guid>
+    </item>
     <item>
       <title>Agent-to-Agent vs MCP: which broke first in 2026</title>
       <link>https://kubaik.github.io/agent-to-agent-vs-mcp-which-broke-first-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>LLM-4 agent latency fell 76% after we replaced prompt caching with stateful orchestration — PostgreSQL 16, Keyspaces, and Step Functions in 2026 costs.</description>
       <pubDate>Sat, 04 Jul 2026 22:07:14 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-design-after-llm-4-we-broke-5-assumptions/</guid>
-    </item>
-    <item>
-      <title>LLM drift: the silent quality drop metrics miss</title>
-      <link>https://kubaik.github.io/llm-drift-the-silent-quality-drop-metrics-miss/</link>
-      <description>Cut silent LLM quality drops 90% with nightly prompt drift detection — embedding similarity, tokenizer hashes, and the 0.08 threshold that caught every regression in 18 months.</description>
-      <pubDate>Sat, 04 Jul 2026 20:16:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-drift-the-silent-quality-drop-metrics-miss/</guid>
     </item>
   </channel>
 </rss>
