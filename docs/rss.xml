@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Jul 2026 11:53:44 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jul 2026 14:24:04 +0000</lastBuildDate>
+    <item>
+      <title>Observe LLM features 90% faster…</title>
+      <link>https://kubaik.github.io/observe-llm-features-90-faster/</link>
+      <description>Cut LLM observability noise 93% with this wrapper — Prometheus metrics, Redis flags, and a 140-line FastAPI service that works on t3.medium.</description>
+      <pubDate>Wed, 08 Jul 2026 14:23:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/observe-llm-features-90-faster/</guid>
+    </item>
     <item>
       <title>7 ways to measure prompt platform ROI in 2026</title>
       <link>https://kubaik.github.io/7-ways-to-measure-prompt-platform-roi-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Multiply that by four agents, and you’ve already burned $1,174 monthly before you’ve even processed a single request.</description>
       <pubDate>Sun, 05 Jul 2026 05:04:40 +0000</pubDate>
       <guid>https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/</guid>
-    </item>
-    <item>
-      <title>Optimise agent sync on 3G: gzip + CDN vs local cache</title>
-      <link>https://kubaik.github.io/optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache/</link>
-      <description>Cut p99 agent sync latency 37% with a local Go cache vs CDN — concrete benchmarks, cost numbers, and the exact TTL that worked in East Africa 2026.</description>
-      <pubDate>Sun, 05 Jul 2026 03:44:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache/</guid>
     </item>
   </channel>
 </rss>

@@ -47,5 +47,6 @@
   "How we detect prompt injection attempts that look like normal user behavior",
   "Agent-to-Agent (A2A) vs MCP: when to use each in 2026 production systems",
   "How we run code reviews and architecture decisions when significant portions of the system are agent-orchestrated",
-  "How we measure platform value when half the 'code' is now prompts and agent graphs"
+  "How we measure platform value when half the 'code' is now prompts and agent graphs",
+  "How we observe LLM features without drowning in token-level noise"
 ]

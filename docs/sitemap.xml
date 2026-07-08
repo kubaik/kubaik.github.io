@@ -598,7 +598,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/7-ways-to-measure-prompt-platform-roi-in-2026.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -4334,6 +4334,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/observability-2026-ditch-the-three-pillars.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/observe-llm-features-90-faster/</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -10066,7 +10075,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-llmobservability.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
     </image:image>
   </url>
   <url>
