@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-07T14:45:22.174643",
+  "built_at": "2026-07-08T02:58:08.643024",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4215,6 +4215,11 @@
       "slug": "ai-in-local-currency-costs-that-surprise",
       "title": "AI in local currency: costs that surprise…",
       "summary": "A colleague asked me about cost reliability during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) "
+    },
+    {
+      "slug": "treat-every-user-input-as-hostile-in-2026",
+      "title": "Treat every user input as hostile in 2026",
+      "summary": "A colleague asked me about detect prompt during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) The"
     }
   ]
 }

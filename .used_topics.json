@@ -43,5 +43,6 @@
   "The audit logging architecture that satisfies both compliance and performance teams",
   "The compensation negotiation playbook that works when the market knows AI increased your output",
   "The data modeling decisions that survived our move to heavy AI feature usage",
-  "The cost and reliability tradeoffs of running AI features for users paying in local currency"
+  "The cost and reliability tradeoffs of running AI features for users paying in local currency",
+  "How we detect prompt injection attempts that look like normal user behavior"
 ]

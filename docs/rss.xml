@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 07 Jul 2026 14:45:36 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jul 2026 02:58:21 +0000</lastBuildDate>
+    <item>
+      <title>Treat every user input as hostile in 2026</title>
+      <link>https://kubaik.github.io/treat-every-user-input-as-hostile-in-2026/</link>
+      <description>Block 96 % of prompt-injection attempts in 2026 with deny-by-default policies instead of brittle regex filters — real benchmarks, code samples, and the $1.2k latency mistake most teams repeat.</description>
+      <pubDate>Wed, 08 Jul 2026 02:58:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/treat-every-user-input-as-hostile-in-2026/</guid>
+    </item>
     <item>
       <title>AI in local currency: costs that surprise…</title>
       <link>https://kubaik.github.io/ai-in-local-currency-costs-that-surprise/</link>
@@ -138,13 +145,6 @@
       <description>Measure agent reliability with 8 metrics that actually predict user trust — hallucination rates, consistency, recovery speed, and more. Benchmarks, code, and the one metric we ship first.</description>
       <pubDate>Sat, 04 Jul 2026 18:09:38 +0000</pubDate>
       <guid>https://kubaik.github.io/8-ways-we-measure-agent-reliability-in-2026/</guid>
-    </item>
-    <item>
-      <title>Pick the right AI model: fine-tune, router, or bigger</title>
-      <link>https://kubaik.github.io/pick-the-right-ai-model-fine-tune-router-or-bigger/</link>
-      <description>Cut AI costs 76% with a prompt router — fine-tune vs route vs bigger model decision matrix with code, numbers, and benchmarks for 2026.</description>
-      <pubDate>Sat, 04 Jul 2026 17:34:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/pick-the-right-ai-model-fine-tune-router-or-bigger/</guid>
     </item>
   </channel>
 </rss>
