@@ -310,6 +310,24 @@ jobs:
       #   run: |
       #     python blog_system.py purge
 
+      # ── NEW: REGENERATE SITEMAP FROM WHAT'S ACTUALLY LEFT IN docs/ ───────────
+      # blog_system.py build (which used to regenerate sitemap.xml along with
+      # the homepage/posts.json/RSS) is disabled above, so nothing was
+      # refreshing sitemap.xml after the delete/similar/dedup steps removed
+      # post directories. That let sitemap.xml go stale — still listing URLs
+      # for posts that no longer exist on disk, then getting deployed live
+      # as-is. This step rebuilds ONLY sitemap.xml (not the rest of the site)
+      # by scanning docs/ for whatever index.html files are actually present
+      # right now, i.e. after any deletions above have already happened.
+      - name: Regenerate sitemap.xml from current docs/
+        if: >
+          steps.fallback_check.outputs.has_fallback == 'true' ||
+          steps.similar_check.outputs.has_similar == 'true' ||
+          steps.dedup_check.outputs.has_duplicates == 'true'
+        run: |
+          pip install --quiet beautifulsoup4
+          python scripts/generate_sitemap.py --output-dir docs --base-url https://kubaik.github.io
+
       # ── CONSOLIDATED REBUILD & SELF-HEALING PUSH ─────────────────────────────
 
       # ── DISABLED: blog_system.py build ───────────────────────────────────────
@@ -387,6 +405,14 @@ jobs:
                 #   python blog_system.py purge
                 # fi
 
+                # Re-regenerate sitemap.xml too, since the deletions above were
+                # just re-run on top of the freshly rebased state.
+                if [ "${{ steps.fallback_check.outputs.has_fallback }}" = "true" ] || \
+                   [ "${{ steps.similar_check.outputs.has_similar }}" = "true" ] || \
+                   [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then
+                  python scripts/generate_sitemap.py --output-dir docs --base-url https://kubaik.github.io
+                fi
+
                 # ── DISABLED: blog_system.py build (recompile re-run) ───────────
                 # Recompile fresh assets on top of updated branch head
                 # python blog_system.py build
@@ -407,12 +433,6 @@ jobs:
             echo "changes_committed=true" >> $GITHUB_OUTPUT
           fi
 
-      # ── NEW: REDEPLOY PAGES SO CLEANUPS GO LIVE IMMEDIATELY ──────────────────
-      # Without this, deletions from the steps above sit in the docs/ folder
-      # on `main` but the live site / sitemap.xml keep serving whatever was
-      # deployed by the last blog-automation.yml run — for up to 12h. These
-      # steps mirror the deploy tail of blog-automation.yml so a cleanup
-      # commit here also triggers an immediate Pages deployment.
       - name: Setup GitHub Pages
         if: steps.commit_push.outputs.changes_committed == 'true'
         uses: actions/configure-pages@v5
@@ -545,6 +565,7 @@ jobs:
             echo "| Similar posts found  | \`${{ steps.similar_check.outputs.has_similar == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
             echo "| Duplicate posts found | \`${{ steps.dedup_check.outputs.has_duplicates == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
             echo "| Audit issues found    | \`${{ steps.audit.outputs.has_audit_issues == 'true' && 'yes — purged ⚠️' || 'none ✅' }}\` |"
+            echo "| Sitemap regenerated   | \`${{ (steps.fallback_check.outputs.has_fallback == 'true' || steps.similar_check.outputs.has_similar == 'true' || steps.dedup_check.outputs.has_duplicates == 'true') && 'yes ✅' || 'not needed' }}\` |"
             echo "| Pages redeployed      | \`${{ steps.commit_push.outputs.changes_committed == 'true' && (steps.deployment.outcome == 'success' && 'yes ✅' || 'attempted ⚠️') || 'not needed' }}\` |"
             echo ""
             if [ -n "${{ steps.missing.outputs.missing_list }}" ]; then
