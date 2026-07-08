@@ -593,6 +593,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/7-ways-to-measure-prompt-platform-roi-in-2026/</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/40-ai-code-maintain-it-without-regret/</loc>
     <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>
@@ -748,7 +757,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/agent-orches-break-prod-3-review-traps.png</image:loc>
     </image:image>
   </url>
   <url>
