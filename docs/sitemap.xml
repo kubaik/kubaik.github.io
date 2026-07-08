@@ -743,6 +743,15 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/agent-to-agent-vs-mcp-which-broke-first-in-2026/</loc>
+    <lastmod>2026-07-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/agentic-codings-year-in-prod-claude-codes-wins/</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>weekly</changefreq>

@@ -44,5 +44,6 @@
   "The compensation negotiation playbook that works when the market knows AI increased your output",
   "The data modeling decisions that survived our move to heavy AI feature usage",
   "The cost and reliability tradeoffs of running AI features for users paying in local currency",
-  "How we detect prompt injection attempts that look like normal user behavior"
+  "How we detect prompt injection attempts that look like normal user behavior",
+  "Agent-to-Agent (A2A) vs MCP: when to use each in 2026 production systems"
 ]

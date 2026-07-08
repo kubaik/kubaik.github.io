@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-08T02:58:08.643024",
+  "built_at": "2026-07-08T09:58:48.283534",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4220,6 +4220,11 @@
       "slug": "treat-every-user-input-as-hostile-in-2026",
       "title": "Treat every user input as hostile in 2026",
       "summary": "A colleague asked me about detect prompt during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it. The conventional wisdom (and why it's incomplete) The"
+    },
+    {
+      "slug": "agent-to-agent-vs-mcp-which-broke-first-in-2026",
+      "title": "Agent-to-Agent vs MCP: which broke first in 2026",
+      "summary": "Most agenttoagent a2a guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints. The situation (what we were trying to solve) In mid-2026 we rolled out an internal agent orchestration layer that let our Python 3"
     }
   ]
 }

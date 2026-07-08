@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Jul 2026 02:58:21 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jul 2026 09:58:57 +0000</lastBuildDate>
+    <item>
+      <title>Agent-to-Agent vs MCP: which broke first in 2026</title>
+      <link>https://kubaik.github.io/agent-to-agent-vs-mcp-which-broke-first-in-2026/</link>
+      <description>Cut gateway latency 72% by choosing MCP for tools and A2A for conversations — exact versions, benchmarks, and the DNS mistake that cost us a week in 2026.</description>
+      <pubDate>Wed, 08 Jul 2026 09:58:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-to-agent-vs-mcp-which-broke-first-in-2026/</guid>
+    </item>
     <item>
       <title>Treat every user input as hostile in 2026</title>
       <link>https://kubaik.github.io/treat-every-user-input-as-hostile-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut silent LLM quality drops 90% with nightly prompt drift detection — embedding similarity, tokenizer hashes, and the 0.08 threshold that caught every regression in 18 months.</description>
       <pubDate>Sat, 04 Jul 2026 20:16:21 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-drift-the-silent-quality-drop-metrics-miss/</guid>
-    </item>
-    <item>
-      <title>8 ways we measure agent reliability in 2026</title>
-      <link>https://kubaik.github.io/8-ways-we-measure-agent-reliability-in-2026/</link>
-      <description>Measure agent reliability with 8 metrics that actually predict user trust — hallucination rates, consistency, recovery speed, and more. Benchmarks, code, and the one metric we ship first.</description>
-      <pubDate>Sat, 04 Jul 2026 18:09:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/8-ways-we-measure-agent-reliability-in-2026/</guid>
     </item>
   </channel>
 </rss>
