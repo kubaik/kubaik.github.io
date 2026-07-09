@@ -2,7 +2,7 @@ name: Watchdog - Blog Automation Monitor
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "0 */4 * * *"
   workflow_dispatch:
 
 permissions:
