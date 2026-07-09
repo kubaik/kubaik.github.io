@@ -742,7 +742,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/agent-context-short-term-vs-long-term-memory.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -5696,6 +5696,15 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/slash-llm-costs-60-with-a-cache/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/slay-false-positives-in-ci-scans/</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -9985,7 +9994,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-llmcaching.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
     </image:image>
   </url>
   <url>

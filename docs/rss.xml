@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Jul 2026 07:11:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jul 2026 15:19:17 +0000</lastBuildDate>
+    <item>
+      <title>Slash LLM costs 60% with a cache</title>
+      <link>https://kubaik.github.io/slash-llm-costs-60-with-a-cache/</link>
+      <description>Cut LLM token spend 60% with Redis caching, deterministic keys, and two TTL buckets — plus cost guardrails and Prometheus metrics to prove it</description>
+      <pubDate>Thu, 09 Jul 2026 15:19:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/slash-llm-costs-60-with-a-cache/</guid>
+    </item>
     <item>
       <title>Agent context: short-term vs long-term memory</title>
       <link>https://kubaik.github.io/agent-context-short-term-vs-long-term-memory/</link>
@@ -138,13 +145,6 @@
       <description>Cut API data cost 88% and latency 76% for AI features in high-cost, high-latency markets. Learn why global best practices fail and how to adapt them with Redis 7.2, ONNX Runtime 1.16, and Lambda@Edge.</description>
       <pubDate>Sun, 05 Jul 2026 11:34:19 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-in-slow-networks-why-models-flop-where-data-costs-rise/</guid>
-    </item>
-    <item>
-      <title>Agents 24/7 cost $12k/month. Here’s the bill</title>
-      <link>https://kubaik.github.io/agents-247-cost-12kmonth-heres-the-bill/</link>
-      <description>Cut AWS bills 64% for Nairobi SaaS agents — real latency, cost, and retry data from a live system. Learn what always-on vs on-demand really costs in 2026.</description>
-      <pubDate>Sun, 05 Jul 2026 11:11:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/agents-247-cost-12kmonth-heres-the-bill/</guid>
     </item>
   </channel>
 </rss>

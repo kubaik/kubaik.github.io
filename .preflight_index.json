@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-09T07:11:27.875417",
+  "built_at": "2026-07-09T15:19:07.312724",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4250,6 +4250,11 @@
       "slug": "agent-context-short-term-vs-long-term-memory",
       "title": "Agent context: short-term vs long-term memory",
       "summary": "I've seen the same context engineering mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Most agent systems today are built like chatbots that forget the c"
+    },
+    {
+      "slug": "slash-llm-costs-60-with-a-cache",
+      "title": "Slash LLM costs 60% with a cache",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) Late in 2026 we shipped an internal Copilot that answers internal questions over Slack a"
     }
   ]
 }
