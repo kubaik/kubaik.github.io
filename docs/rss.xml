@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Jul 2026 03:37:24 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jul 2026 07:11:37 +0000</lastBuildDate>
+    <item>
+      <title>Agent context: short-term vs long-term memory</title>
+      <link>https://kubaik.github.io/agent-context-short-term-vs-long-term-memory/</link>
+      <description>Cut hallucination rates 18x with PostgreSQL vs Redis for long-running agents — durability, latency, and cost breakdown with RedisJSON and pgvector in 2026.</description>
+      <pubDate>Thu, 09 Jul 2026 07:11:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-context-short-term-vs-long-term-memory/</guid>
+    </item>
     <item>
       <title>7 graceful degradation traps I’ve hit in production</title>
       <link>https://kubaik.github.io/7-graceful-degradation-traps-ive-hit-in-production/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS bills 64% for Nairobi SaaS agents — real latency, cost, and retry data from a live system. Learn what always-on vs on-demand really costs in 2026.</description>
       <pubDate>Sun, 05 Jul 2026 11:11:53 +0000</pubDate>
       <guid>https://kubaik.github.io/agents-247-cost-12kmonth-heres-the-bill/</guid>
-    </item>
-    <item>
-      <title>Handoff latency kills systems — 60% fix is free</title>
-      <link>https://kubaik.github.io/handoff-latency-kills-systems-60-fix-is-free/</link>
-      <description>Cut p95 latency 60% by merging agents and caching — real Node.js and Python case studies with Redis 7.2 and BullMQ 4.14</description>
-      <pubDate>Sun, 05 Jul 2026 08:14:28 +0000</pubDate>
-      <guid>https://kubaik.github.io/handoff-latency-kills-systems-60-fix-is-free/</guid>
     </item>
   </channel>
 </rss>

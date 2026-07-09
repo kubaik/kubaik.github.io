@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-09T03:37:14.386946",
+  "built_at": "2026-07-09T07:11:27.875417",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4245,6 +4245,11 @@
       "slug": "7-graceful-degradation-traps-ive-hit-in-production",
       "title": "7 graceful degradation traps I’ve hit in production",
       "summary": "I ran into this designing systems problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I spent three weeks debugging a payment "
+    },
+    {
+      "slug": "agent-context-short-term-vs-long-term-memory",
+      "title": "Agent context: short-term vs long-term memory",
+      "summary": "I've seen the same context engineering mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it. Why this comparison matters right now Most agent systems today are built like chatbots that forget the c"
     }
   ]
 }
