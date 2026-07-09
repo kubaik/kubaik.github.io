@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 08 Jul 2026 14:24:04 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 09 Jul 2026 03:37:24 +0000</lastBuildDate>
+    <item>
+      <title>7 graceful degradation traps I’ve hit in production</title>
+      <link>https://kubaik.github.io/7-graceful-degradation-traps-ive-hit-in-production/</link>
+      <description>Ship 150 ms timeouts and hardcoded fallbacks today — measure p99 latency, error rates, and cost with Prometheus 2.47 and Python 3.11 before you pick any other pattern.</description>
+      <pubDate>Thu, 09 Jul 2026 03:37:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/7-graceful-degradation-traps-ive-hit-in-production/</guid>
+    </item>
     <item>
       <title>Observe LLM features 90% faster…</title>
       <link>https://kubaik.github.io/observe-llm-features-90-faster/</link>
@@ -138,13 +145,6 @@
       <description>Cut p95 latency 60% by merging agents and caching — real Node.js and Python case studies with Redis 7.2 and BullMQ 4.14</description>
       <pubDate>Sun, 05 Jul 2026 08:14:28 +0000</pubDate>
       <guid>https://kubaik.github.io/handoff-latency-kills-systems-60-fix-is-free/</guid>
-    </item>
-    <item>
-      <title>Agents 24/7 vs on-demand: $42k bill shock</title>
-      <link>https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/</link>
-      <description>Multiply that by four agents, and you’ve already burned $1,174 monthly before you’ve even processed a single request.</description>
-      <pubDate>Sun, 05 Jul 2026 05:04:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/</guid>
     </item>
   </channel>
 </rss>
