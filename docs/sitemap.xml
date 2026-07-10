@@ -2756,6 +2756,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/cloud-agents-burned-18k-8-tools-that-didnt-work/</loc>
+    <lastmod>2026-07-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/code-ai-wont-rewrite/</loc>
     <lastmod>2026-06-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -4042,7 +4051,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/mcp-server-exposed-internal-tools-in-2026.png</image:loc>
     </image:image>
   </url>
   <url>

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 10 Jul 2026 03:38:59 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Jul 2026 14:36:26 +0000</lastBuildDate>
+    <item>
+      <title>Cloud agents burned $18k: 8 tools that didn&apos;t work</title>
+      <link>https://kubaik.github.io/cloud-agents-burned-18k-8-tools-that-didnt-work/</link>
+      <description>Cut AI agent cloud costs 85% with real-time policy enforcement — 8 tools tested, $18k saved, and the one that actually works in 2026</description>
+      <pubDate>Fri, 10 Jul 2026 14:36:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/cloud-agents-burned-18k-8-tools-that-didnt-work/</guid>
+    </item>
     <item>
       <title>MCP server exposed internal tools in 2026</title>
       <link>https://kubaik.github.io/mcp-server-exposed-internal-tools-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% with async I/O patterns — the 7 skills senior engineers now need once agents run 24/7 and the exact tuning steps that saved teams $3k/month and 47 minutes per incident in 2026.</description>
       <pubDate>Sun, 05 Jul 2026 12:23:25 +0000</pubDate>
       <guid>https://kubaik.github.io/7-skills-senior-engineers-need-now-agents-are-live/</guid>
-    </item>
-    <item>
-      <title>AI agents fail without circuit breakers in 2026</title>
-      <link>https://kubaik.github.io/ai-agents-fail-without-circuit-breakers-in-2026/</link>
-      <description>Why I wrote this (the problem I kept hitting) In 2026, every NGO and government dashboard I worked on promised AI agents doing real work: approving…</description>
-      <pubDate>Sun, 05 Jul 2026 12:03:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-fail-without-circuit-breakers-in-2026/</guid>
     </item>
   </channel>
 </rss>

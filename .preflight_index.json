@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-10T03:38:50.152798",
+  "built_at": "2026-07-10T14:36:16.739979",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4260,6 +4260,11 @@
       "slug": "mcp-server-exposed-internal-tools-in-2026",
       "title": "MCP server exposed internal tools in 2026",
       "summary": "After reviewing a lot of code that touches mcp server, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom. MCP server exposed internal tools in 2026 Every solo founder who ships internal tools hits this one at least once: the MCP ser"
+    },
+    {
+      "slug": "cloud-agents-burned-18k-8-tools-that-didnt-work",
+      "title": "Cloud agents burned $18k: 8 tools that didn't work",
+      "summary": "I ran into this traditional cloud problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I was trying to fix a bill that jumped f"
     }
   ]
 }
