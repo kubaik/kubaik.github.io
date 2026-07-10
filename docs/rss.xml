@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Jul 2026 15:19:17 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 10 Jul 2026 03:38:59 +0000</lastBuildDate>
+    <item>
+      <title>MCP server exposed internal tools in 2026</title>
+      <link>https://kubaik.github.io/mcp-server-exposed-internal-tools-in-2026/</link>
+      <description>Cut MCP server exposure 100% with localhost binding, security group rules, and SSH tunnels — 2026 incident breakdown with exact commands and $3,100 cleanup cost.</description>
+      <pubDate>Fri, 10 Jul 2026 03:38:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-server-exposed-internal-tools-in-2026/</guid>
+    </item>
     <item>
       <title>Slash LLM costs 60% with a cache</title>
       <link>https://kubaik.github.io/slash-llm-costs-60-with-a-cache/</link>
@@ -138,13 +145,6 @@
       <description>Why I wrote this (the problem I kept hitting) In 2026, every NGO and government dashboard I worked on promised AI agents doing real work: approving…</description>
       <pubDate>Sun, 05 Jul 2026 12:03:26 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-fail-without-circuit-breakers-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI in slow networks: why models flop where data costs rise</title>
-      <link>https://kubaik.github.io/ai-in-slow-networks-why-models-flop-where-data-costs-rise/</link>
-      <description>Cut API data cost 88% and latency 76% for AI features in high-cost, high-latency markets. Learn why global best practices fail and how to adapt them with Redis 7.2, ONNX Runtime 1.16, and Lambda@Edge.</description>
-      <pubDate>Sun, 05 Jul 2026 11:34:19 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-in-slow-networks-why-models-flop-where-data-costs-rise/</guid>
     </item>
   </channel>
 </rss>

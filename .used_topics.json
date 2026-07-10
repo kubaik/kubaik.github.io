@@ -51,5 +51,6 @@
   "How we observe LLM features without drowning in token-level noise",
   "Designing systems that can gracefully degrade when an upstream agent or model is slow or wrong",
   "Context engineering for long-running agents: the patterns that actually reduce hallucinations",
-  "FinOps patterns that work when your biggest variable cost is now LLM tokens, not EC2"
+  "FinOps patterns that work when your biggest variable cost is now LLM tokens, not EC2",
+  "The MCP server security mistake that could have exposed internal tools"
 ]
