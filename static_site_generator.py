@@ -338,29 +338,29 @@ class StaticSiteGenerator:
         base_url = config.get('base_url', '').rstrip('/')
 
         content = f"""# robots.txt for {base_url}
-    # Generated automatically - Do not edit manually
+# Generated automatically - Do not edit manually
 
-    User-agent: *
-    Allow: /
+User-agent: *
+Allow: /
 
-    # Explicitly allow Googlebot
-    User-agent: Googlebot
-    Allow: /
+# Explicitly allow Googlebot
+User-agent: Googlebot
+Allow: /
 
-    # Allow Google AdSense crawler
-    User-agent: Mediapartners-Google
-    Allow: /
+# Allow Google AdSense crawler
+User-agent: Mediapartners-Google
+Allow: /
 
-    # Block sensitive paths only
-    User-agent: *
-    Disallow: /admin/
-    Disallow: /private/
-    Disallow: /.git/
+# Block sensitive paths only
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.git/
 
-    # Sitemap
-    Sitemap: {base_url}/sitemap.xml
-    Sitemap: {base_url}/rss.xml
-    """
+# Sitemap
+Sitemap: {base_url}/sitemap.xml
+Sitemap: {base_url}/rss.xml
+"""
 
         with open("./docs/robots.txt", 'w', encoding='utf-8') as f:
             f.write(content)
@@ -1445,7 +1445,6 @@ def _build_templates() -> dict:
     </head>
 <body>
     <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
-    {% if header_ad %}<div class="ad-header">{{ header_ad | safe }}</div>{% endif %}
     <header>
         <div class="container">
             <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
@@ -1458,6 +1457,7 @@ def _build_templates() -> dict:
             </nav>
         </div>
     </header>
+    {% if header_ad %}<div class="ad-header" style="min-height:100px">{{ header_ad | safe }}</div>{% endif %}
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="{{ base_path }}/">Home</a>
@@ -1702,7 +1702,6 @@ def _build_templates() -> dict:
     </style>
 </head>
 <body>
-    {% if header_ad %}<div class="ad-header">{{ header_ad | safe }}</div>{% endif %}
     <header>
         <div class="container">
             <h1><a href="{{ base_path }}/">{{ site_name }}</a></h1>
@@ -1715,6 +1714,7 @@ def _build_templates() -> dict:
             </nav>
         </div>
     </header>
+    {% if header_ad %}<div class="ad-header" style="min-height:100px">{{ header_ad | safe }}</div>{% endif %}
     <main class="container">
         <div class="hero">
             <h2>Real Systems. Real Failures. Real Fixes.</h2>

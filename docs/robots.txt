@@ -1,24 +1,23 @@
 # robots.txt for https://kubaik.github.io
-    # Generated automatically - Do not edit manually
+# Generated automatically - Do not edit manually
 
-    User-agent: *
-    Allow: /
+User-agent: *
+Allow: /
 
-    # Explicitly allow Googlebot
-    User-agent: Googlebot
-    Allow: /
+# Explicitly allow Googlebot
+User-agent: Googlebot
+Allow: /
 
-    # Allow Google AdSense crawler
-    User-agent: Mediapartners-Google
-    Allow: /
+# Allow Google AdSense crawler
+User-agent: Mediapartners-Google
+Allow: /
 
-    # Block sensitive paths only
-    User-agent: *
-    Disallow: /admin/
-    Disallow: /private/
-    Disallow: /.git/
+# Block sensitive paths only
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.git/
 
-    # Sitemap
-    Sitemap: https://kubaik.github.io/sitemap.xml
-    Sitemap: https://kubaik.github.io/rss.xml
-    
+# Sitemap
+Sitemap: https://kubaik.github.io/sitemap.xml
+Sitemap: https://kubaik.github.io/rss.xml

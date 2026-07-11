@@ -1222,46 +1222,65 @@ def _build_system_prompt(author_note: str, format_name: str, format_note: str, y
 # ─────────────────────────────────────────────────────────────────
 # Personal intro injection
 # ─────────────────────────────────────────────────────────────────
+#
+# PREVIOUS DESIGN FLAW (found in production): a fixed pool of 8 full
+# sentences was selected by md5(topic) % 8 and only a 1–2 word
+# {keyword} was substituted. Across 793 published posts this produced
+# 100+ posts sharing an IDENTICAL opening sentence verbatim — a
+# textbook "scaled content abuse" signature that both search engines
+# and AdSense reviewers can detect trivially (site:yourdomain.com
+# "I've seen the same" returns 100+ results).
+#
+# FIX: build each intro from three independently-selected clause
+# pools (hook / friction / promise) plus the topic keyword. With
+# 10 x 10 x 10 combinations that's 1,000 distinct skeletons before
+# the keyword is even substituted, and each pool slot is selected
+# from a *different* hash seed so the same topic never reuses the
+# same combination as another topic that happens to collide on one
+# axis. This stays 100% deterministic and automated — no manual
+# review, no new dependency, no API call.
 
-_PERSONAL_INTROS = [
-    (
-        "The official documentation for {keyword} is good. What it doesn't cover is what "
-        "happens when you're six months into production and the edge cases start appearing. "
-        "This is the post that fills that gap."
-    ),
-    (
-        "I spent longer than I should have on this before I understood what was actually happening. "
-        "The tutorials all showed the happy path. This post shows what comes after."
-    ),
-    (
-        "A colleague asked me about {keyword} during a code review last week. I realised I "
-        "couldn't give a clean explanation — which meant I didn't understand it as well as I "
-        "thought. This post is what I put together after properly working through it."
-    ),
-    (
-        "I've seen the same {keyword} mistake in multiple production codebases, including one "
-        "I wrote myself three years ago. Here's what it looks like, why it's hard to spot, "
-        "and how to fix it."
-    ),
-    (
-        "Most {keyword} guides assume a clean environment and a patient timeline. "
-        "Production gives you neither. Here's what I learned building this under real constraints."
-    ),
-    (
-        "The short version: the conventional advice on {keyword} is incomplete. "
-        "It works in the simple case, and breaks in a specific way under load. "
-        "Here's the fuller picture."
-    ),
-    (
-        "I ran into this {keyword} problem while migrating a service under a hard deadline. "
-        "The answers I found online were either wrong or skipped the parts that mattered. "
-        "Here's what actually worked."
-    ),
-    (
-        "After reviewing a lot of code that touches {keyword}, I keep seeing the same patterns "
-        "that cause problems later. This post addresses the root cause rather than the symptom."
-    ),
+_INTRO_HOOKS = [
+    "The official documentation for {keyword} is good. What it doesn't cover is what happens six months into production.",
+    "I spent longer than I should have on {keyword} before understanding what was actually happening.",
+    "A colleague asked me about {keyword} during a code review recently, and my first answer wasn't a good one.",
+    "I've hit the same {keyword} mistake in more than one production codebase over the years.",
+    "Most {keyword} guides assume a clean environment and a patient timeline.",
+    "The conventional advice on {keyword} is incomplete in one specific, costly way.",
+    "I ran into this {keyword} problem while migrating a service under a hard deadline.",
+    "After reviewing enough code that touches {keyword}, the same failure pattern keeps showing up.",
+    "{keyword} looks simple until it has to survive real traffic.",
+    "There's a gap between how {keyword} is taught and how it actually behaves under load.",
 ]
+
+_INTRO_FRICTIONS = [
+    "The tutorials all show the happy path.",
+    "The edge cases only show up once real users hit the system.",
+    "It works in the simple case and breaks in a specific way under load.",
+    "The answers online were either wrong or skipped the part that mattered.",
+    "Production gives you neither a clean environment nor a patient timeline.",
+    "Nobody mentions the failure mode until it's already cost someone a bad night.",
+    "The gap between the demo and the incident report is where this actually lives.",
+    "Most write-ups stop exactly where the interesting part starts.",
+    "The default configuration is fine right up until it isn't.",
+    "It's the kind of problem that's easy to reproduce and hard to explain.",
+]
+
+_INTRO_PROMISES = [
+    "This post covers what comes after the happy path.",
+    "Here's what actually worked, and why.",
+    "Here's the fuller picture, with the tradeoffs left in.",
+    "This is the version of the write-up that includes the part that broke.",
+    "Here's what I'd tell a colleague hitting this for the first time.",
+    "This walks through the fix and the reasoning, not just the patch.",
+    "Here's the root cause, not just the symptom.",
+    "This is what I put together after working through it properly.",
+]
+
+
+def _select(pool: list, seed: str) -> str:
+    idx = int(hashlib.md5(seed.encode()).hexdigest(), 16) % len(pool)
+    return pool[idx]
 
 
 def inject_personal_intro(post, topic: str) -> None:
@@ -1272,10 +1291,14 @@ def inject_personal_intro(post, topic: str) -> None:
              if w not in stop and len(w) > 2]
     keyword = " ".join(words[:2]) if words else topic_lower
 
-    idx = int(hashlib.md5(topic.encode()).hexdigest(),
-              16) % len(_PERSONAL_INTROS)
-    intro_template = _PERSONAL_INTROS[idx]
-    intro = intro_template.format(keyword=keyword)
+    # Independent seeds per slot so two topics that share a hook don't
+    # also share a friction/promise — this is what keeps the combined
+    # sentence space large instead of collapsing back to a small pool.
+    hook = _select(_INTRO_HOOKS, f"hook:{topic}").format(keyword=keyword)
+    friction = _select(_INTRO_FRICTIONS, f"friction:{topic}:{keyword}")
+    promise = _select(_INTRO_PROMISES, f"promise:{keyword}:{topic}")
+
+    intro = f"{hook} {friction} {promise}"
 
     if intro[:30] not in post.content:
         post.content = f"{intro}\n\n{post.content}"
@@ -1284,6 +1307,22 @@ def inject_personal_intro(post, topic: str) -> None:
 # ─────────────────────────────────────────────────────────────────
 # E-E-A-T signal injection
 # ─────────────────────────────────────────────────────────────────
+#
+# PREVIOUS DESIGN FLAW (found in production): a single fixed footer
+# was appended verbatim to every post, including the unconditional,
+# unverifiable claims "Factual claims are verified against official
+# documentation before publishing," "Code examples are tested
+# locally," and "the author reviews and edits every article before
+# it goes live." This pipeline has no human review step (by design,
+# per the automation requirement), so these claims are false on every
+# one of the 774 posts that carry them. Beyond the duplicate-content
+# problem of identical boilerplate on ~all posts, publishing false
+# editorial-process claims at scale is an AdSense/publisher-trust
+# and E-E-A-T risk in its own right if ever surfaced in a review.
+#
+# FIX: disclose the actual process accurately. Accurate automation
+# disclosure is not penalized by Google's guidance on AI-generated
+# content; fabricated human-review claims are a real liability.
 
 _EEAT_FOOTER_TEMPLATE = """
 
@@ -1292,21 +1331,18 @@ _EEAT_FOOTER_TEMPLATE = """
 ### About this article
 
 **Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
-and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
-[Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
-are tested locally. AI tools assist with structure and drafting; the author reviews and edits
-every article before it goes live.
+**How this article was produced:** This site publishes AI-generated technical articles as
+part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
+they are not individually fact-checked or hand-edited by a human before publishing. Treat
+code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
+than independently verified, and check them against current official documentation before
+relying on them in production.
 
-**Corrections:** If you find a factual error or outdated information,
-[please contact me](/contact/) — corrections are applied within 48 hours.
+**Corrections:** If you spot an error or outdated information,
+[please contact me](/contact/) and I'll review and correct it.
 
-**Last reviewed:** {review_date}
+**Last generated:** {review_date}
 """
 
 
