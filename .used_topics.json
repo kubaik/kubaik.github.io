@@ -53,5 +53,6 @@
   "Context engineering for long-running agents: the patterns that actually reduce hallucinations",
   "FinOps patterns that work when your biggest variable cost is now LLM tokens, not EC2",
   "The MCP server security mistake that could have exposed internal tools",
-  "Why traditional cloud cost tools failed us once agents started making autonomous decisions"
+  "Why traditional cloud cost tools failed us once agents started making autonomous decisions",
+  "How we do zero-downtime schema changes on 2TB+ Postgres databases in 2026"
 ]

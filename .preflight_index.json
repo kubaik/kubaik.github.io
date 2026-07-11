@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-10T14:36:16.739979",
+  "built_at": "2026-07-11T02:54:08.544774",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4265,6 +4265,11 @@
       "slug": "cloud-agents-burned-18k-8-tools-that-didnt-work",
       "title": "Cloud agents burned $18k: 8 tools that didn't work",
       "summary": "I ran into this traditional cloud problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked. Why this list exists (what I was actually trying to solve) I was trying to fix a bill that jumped f"
+    },
+    {
+      "slug": "zero-downtime-postgres-schema-changes-in-2026",
+      "title": "Zero-downtime Postgres schema changes in 2026",
+      "summary": "I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after. Why I wrote this (the problem I kept hitting) In 2026, I joined a team running a 2.3 TB PostgreSQL 15 cluster on AWS RDS for PostgreSQ"
     }
   ]
 }
