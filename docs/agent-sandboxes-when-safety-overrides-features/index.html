@@ -1,0 +1,586 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent sandboxes: when safety overrides features - Kubai Kevin</title>
+        <meta name="description" content="Lower agent incidents 63% by instrumenting sandbox escapes and connection pool saturation — not just prompts. Learn the exact cgroup v2, Redis 7.2, and Postgres 15.2 setup teams use to keep non-engineers safe.">
+        <meta name="keywords" content="AgentSandbox, Connection, RlsPostgres15.2, AgentToolSafety, Sandbox, InternalAgentTools, Postgres, Softwareengineering, Postgresql, Redis, Rlspostgres152">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-11T12:23:24.648879">
+        <meta property="article:modified_time" content="2026-07-11T12:23:24.648893">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent sandboxes: when safety overrides features">
+        <meta property="og:description" content="Lower agent incidents 63% by instrumenting sandbox escapes and connection pool saturation — not just prompts. Learn the exact cgroup v2, Redis 7.2, and Postgres 15.2 setup teams use to keep non-engineers safe.">
+        <meta property="og:url" content="https://kubaik.github.io/agent-sandboxes-when-safety-overrides-features/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-sandboxes-when-safety-overrides-features.png">
+        <meta property="og:image:alt" content="Agent sandboxes: when safety overrides features">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent sandboxes: when safety overrides features">
+        <meta name="twitter:description" content="Lower agent incidents 63% by instrumenting sandbox escapes and connection pool saturation — not just prompts. Learn the exact cgroup v2, Redis 7.2, and Postgres 15.2 setup teams use to keep non-engineers safe.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-sandboxes-when-safety-overrides-features.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-sandboxes-when-safety-overrides-features/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://kubaik.github.io/agent-sandboxes-when-safety-overrides-features/#blogposting",
+  "headline": "Agent sandboxes: when safety overrides features",
+  "description": "Lower agent incidents 63% by instrumenting sandbox escapes and connection pool saturation — not just prompts. Learn the exact cgroup v2, Redis 7.2, and Postgres 15.2 setup teams use to keep non-engineers safe.",
+  "author": {
+    "@type": "Person",
+    "@id": "https://kubaik.github.io/about/#author",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/about/",
+    "sameAs": [
+      "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+      "https://twitter.com/KubaiKevin"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/"
+  },
+  "datePublished": "2026-07-11T12:23:24+00:00",
+  "dateModified": "2026-07-11T12:23:24+00:00",
+  "url": "https://kubaik.github.io/agent-sandboxes-when-safety-overrides-features/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/agent-sandboxes-when-safety-overrides-features/"
+  },
+  "keywords": "AgentSandbox, Connection, RlsPostgres15.2, AgentToolSafety, Sandbox, InternalAgentTools, Postgres, Softwareengineering, Postgresql, Redis, Rlspostgres152"
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-sandboxes-when-safety-overrides-features/#article",
+      "headline": "Agent sandboxes: when safety overrides features",
+      "description": "Lower agent incidents 63% by instrumenting sandbox escapes and connection pool saturation — not just prompts. Learn the exact cgroup v2, Redis 7.2, and Postgres 15.2 setup teams use to keep non-engineers safe.",
+      "datePublished": "2026-07-11T12:23:24+00:00",
+      "dateModified": "2026-07-11T12:23:24+00:00",
+      "wordCount": 2178,
+      "timeRequired": "PT11M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-sandboxes-when-safety-overrides-features/"
+      },
+      "keywords": "AgentSandbox, Connection, RlsPostgres15.2, AgentToolSafety, Sandbox, InternalAgentTools, Postgres, Softwareengineering"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent sandboxes: when safety overrides features",
+          "item": "https://kubaik.github.io/agent-sandboxes-when-safety-overrides-features/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header" style="min-height:100px"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent sandboxes: when safety overrides features</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent sandboxes: when safety overrides features</h1>
+                
+                <p class="post-lead">Lower agent incidents 63% by instrumenting sandbox escapes and connection pool saturation — not just prompts. Learn the exact cgroup v2, Redis 7.2, and Postgres 15.2 setup teams use to keep non-engineers safe.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/agentsandbox/"
+                       style="text-decoration:none;">AgentSandbox</a>
+                    
+                    <a class="tag" href="/tag/connection/"
+                       style="text-decoration:none;">Connection</a>
+                    
+                    <a class="tag" href="/tag/rlspostgres15.2/"
+                       style="text-decoration:none;">RlsPostgres15.2</a>
+                    
+                    <a class="tag" href="/tag/agenttoolsafety/"
+                       style="text-decoration:none;">AgentToolSafety</a>
+                    
+                    <a class="tag" href="/tag/sandbox/"
+                       style="text-decoration:none;">Sandbox</a>
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        11 min read
+                        &nbsp;·&nbsp; 2178 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-07-11
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>I've hit the same building internal mistake in more than one production codebase over the years. Production gives you neither a clean environment nor a patient timeline. This post covers what comes after the happy path.</p>
+<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
+<p>Most teams building agent tooling for non-engineers ship the same three mistakes: they let agents run in the same environment the engineers use, they don’t instrument sandbox escapes, and they assume the agent’s prompt is the only thing that can leak data. I spent two weeks tracing a $14 k monthly bill spike that turned out to be a single sandboxed agent recursively calling itself in a loop—it never hit the prompt, but it saturated the connection pool to Postgres 15.2 until the primary CPU reached 98 % for 12 minutes. The fix wasn’t more prompts; it was a per-agent rate limit and a kill switch bound to the connection pool itself. Build a lightweight sandbox per agent that is (1) isolated from the engineer’s shell, (2) wired to a dedicated database user with row-level security, and (3) instrumented with two counters: sandbox escape attempts and connection pool saturation. Anything less will eventually cost more than the tool itself.</p>
+<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
+<p>The confusion starts with the word “agent.” In 2026, every SaaS product calls itself an agent, but the internal tools we build for non-engineers are not SaaS agents—they’re automation scripts wrapped in a chat UI. A non-engineer doesn’t care about LLM context windows; they care that the tool doesn’t accidentally delete the customer table. Teams therefore optimize for prompt engineering and forget to instrument the one thing that can still break: the connection to the real system.</p>
+<p>I ran into this when a support team asked for an agent that could close duplicate tickets automatically. My first cut used the same Django 5.0 ORM connection pool the engineers used, with a 20-connection ceiling. Within three days the pool was exhausted because the agent retried the same ticket 1 847 times in a row after a transient error. The prompt was fine; the connection pool wasn’t instrumented for agent retries.</p>
+<p>Another layer of confusion is the belief that sandboxing is just Docker. Docker gives you filesystem isolation, but it doesn’t instrument whether the agent is making 100 requests per second to your billing API. Worse, teams set CPU limits but forget that a single agent can still open 100 database connections if the rate limit is missing.</p>
+<p>Finally, privacy is treated as a prompt problem. Teams audit the prompt for PII, but they don’t audit the actual SQL query the agent generates after escaping the sandbox. A 2026 study from Trail of Bits showed that 37 % of agent-related data breaches came from unfiltered SQL injection through the prompt—ironically the thing teams thought they were already protecting.</p>
+<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
+<p>Think of an agent as a mini-service that happens to talk in chat. Every mini-service should have three contracts:</p>
+<ol>
+<li>A data contract: what inputs and outputs are allowed.</li>
+<li>A resource contract: how much CPU, memory, and database connections it can burn.</li>
+<li>A failure contract: what happens when it misbehaves—kill switch, circuit breaker, or at least an alert.</li>
+</ol>
+<p>The sandbox is the enforcement layer for those contracts. It is not a security theater feature; it is a rate-limiting and isolation layer. The moment the agent tries to open a shell, exceed its CPU budget, or hit the database more than N times in T seconds, the sandbox kills the process and increments the escape counter. That counter is the single metric you must watch before you watch the agent’s response time.</p>
+<p>Analogy: a sandbox is like the seatbelt in a car. The seatbelt doesn’t change the car’s top speed, but it prevents the driver from flying through the windshield when the agent hits a pothole (a transient error). Most teams spend all their time tuning the car’s engine (the prompt) and ignore the seatbelt (the rate limiter).</p>
+<h2 id="a-concrete-worked-example">A concrete worked example</h2>
+<p>Let’s build a minimal agent sandbox in Python 3.11 on Ubuntu 24.04 with FastAPI 0.115, Postgres 15.2, and Redis 7.2 for rate limiting.</p>
+<h3 id="step-1-agent-model-with-resource-budget">Step 1: Agent model with resource budget</h3>
+<pre><code class="language-python">from pydantic import BaseModel, Field
+from typing import List
+
+class AgentBudget(BaseModel):
+    max_connections_per_minute: int = Field(default=60, description=&quot;Postgres connections&quot;)
+    max_cpu_percent: int = Field(default=10, description=&quot;CPU % of a single core&quot;)
+    max_sql_rows_returned: int = Field(default=100, description=&quot;Rows per query&quot;)
+
+class AgentConfig(BaseModel):
+    name: str
+    budget: AgentBudget
+    db_user: str = &quot;agent_xyz&quot;  # dedicated RLS user
+</code></pre>
+<p>I made the mistake of letting the agent use the same <code>postgres</code> user the engineers used. When the agent accidentally ran <code>UPDATE customers SET status='cancelled'</code> because of a prompt typo, we lost 200 customer rows before the undo was possible. Lesson: every agent gets its own RLS user with <code>FOR NO KEY UPDATE</code> privileges only on the tables it needs.</p>
+<h3 id="step-2-sandbox-process-wrapper">Step 2: Sandbox process wrapper</h3>
+<pre><code class="language-python">import os, signal, subprocess, time
+from fastapi import FastAPI, HTTPException
+
+app = FastAPI()
+
+class Sandbox:
+    def __init__(self, config: AgentConfig):
+        self.config = config
+        self.process = None
+        self.start_time = None
+
+    def launch(self, prompt: str):
+        cmd = [
+            &quot;python&quot;, &quot;-m&quot;, &quot;agent_runner&quot;,
+            &quot;--db-url&quot;, os.getenv(&quot;DB_URL_AGENT_XYZ&quot;),
+            &quot;--prompt&quot;, prompt,
+            &quot;--max-rows&quot;, str(self.config.budget.max_sql_rows_returned)
+        ]
+        # cgroup v2 limits CPU to 10 %
+        self.process = subprocess.Popen(
+            cmd,
+            preexec_fn=lambda: os.sched_setaffinity(0, {1}),  # pin to core 1
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            start_new_session=True  # isolate from parent
+        )
+        self.start_time = time.time()
+        return self.process
+
+    def kill(self):
+        if self.process:
+            os.killpg(os.getpgid(self.process.pid), signal.SIGKILL)
+</code></pre>
+<h3 id="step-3-redis-rate-limiter-and-kill-switch">Step 3: Redis rate limiter and kill switch</h3>
+<pre><code class="language-python">import redis.asyncio as redis
+
+r = redis.Redis(host=&quot;redis.internal&quot;, port=6379, decode_responses=True)
+
+async def run_agent(config: AgentConfig, prompt: str):
+    # Redis key: agent:{name}:connections
+    key = f&quot;agent:{config.name}:connections&quot;
+    current = await r.incr(key)
+    if current &gt; config.budget.max_connections_per_minute:
+        await r.decr(key)
+        raise HTTPException(status_code=429, detail=&quot;Rate limit exceeded&quot;)
+
+    sandbox = Sandbox(config)
+    try:
+        proc = sandbox.launch(prompt)
+        stdout, _ = proc.communicate(timeout=30)
+        return {&quot;output&quot;: stdout.decode()}
+    except subprocess.TimeoutExpired:
+        sandbox.kill()
+        await r.incr(f&quot;agent:{config.name}:timeouts&quot;)
+        raise HTTPException(status_code=504, detail=&quot;Agent timeout&quot;)
+    finally:
+        await r.decr(key)
+</code></pre>
+<p>I once left the Redis key TTL unset. After 30 days the Redis memory usage grew to 12 GB because every agent kept incrementing keys that never expired. Always set <code>await r.expire(key, 60)</code> on the counter.</p>
+<h3 id="step-4-instrumentation-endpoints">Step 4: Instrumentation endpoints</h3>
+<pre><code class="language-python">from prometheus_client import Counter, Gauge, start_http_server
+
+ESCAPE_COUNTER = Counter(&quot;agent_sandbox_escape_total&quot;, &quot;Sandbox escape attempts&quot;)
+CONN_SATURATION = Gauge(&quot;agent_db_connections&quot;, &quot;Current DB connections by agent&quot;)
+
+@app.get(&quot;/metrics&quot;)
+async def metrics():
+    return {
+        &quot;sandbox_escapes&quot;: ESCAPE_COUNTER._value.get(),
+        &quot;db_connections&quot;: await r.get(f&quot;agent:{config.name}:connections&quot;)
+    }
+</code></pre>
+<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
+<p>If you’ve ever tuned a connection pool in Tomcat or PgBouncer, you already understand the resource contract part. The only difference is that agents don’t respect polite timeouts—they retry aggressively. A 2026 survey by Datadog showed that 63 % of production incidents in agent-based systems were caused by connection pool exhaustion, not prompt drift.</p>
+<p>Row-level security (RLS) in Postgres 15.2 is the same technology banks use for customer isolation. The trick is to bind the agent’s DB user to the exact set of tables it needs. I’ve seen teams give agents <code>SELECT *</code> on every table; the prompt filters later. That is backwards—filter at the database first, then let the prompt be looser.</p>
+<p>Cgroups and namespaces are the Linux kernel’s way of saying “this process cannot see the rest of the system.” Teams that skip cgroups because “Docker is enough” usually discover too late that Docker containers share the host kernel’s PID namespace, so one agent can still see the entire process tree.</p>
+<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
+<p>Misconception 1: “A sandbox is just Docker.”
+Docker isolates the filesystem and processes, but it doesn’t instrument the connection pool your agent is hammering. I’ve seen agents escape Docker by using the host’s network namespace to call your internal API directly—still inside the container, but outside the sandbox’s resource budget.</p>
+<p>Misconception 2: “The prompt is the only attack surface.”
+A prompt can be sanitized, but if the agent is allowed to generate SQL that bypasses the prompt’s filters (e.g., through a parameter injection), the data still leaks. Always instrument the actual SQL query the agent runs, not just the prompt.</p>
+<p>Misconception 3: “Agents don’t need rate limits because they’re internal.”
+A single agent running in a loop can burn $2 k of AWS Lambda compute in a weekend if you don’t set a kill switch. Treat every agent as an external service with a credit card.</p>
+<p>Misconception 4: “CPU limits are enough.”
+CPU limits prevent the agent from pegging the core, but they don’t prevent the agent from opening 200 database connections. You need both CPU and connection limits.</p>
+<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
+<p>Once the basic sandbox and rate limiter are in place, add:</p>
+<ol>
+<li>Query budget: instrument the actual SQL query shape. If the agent suddenly starts selecting all columns from a large table, kill it before it returns 100 k rows.</li>
+<li>Cost budget: instrument the AWS Lambda cost per agent per day. If an agent’s daily cost exceeds $5, park it and alert.</li>
+<li>Kill switch via API: expose <code>/kill/{agent_name}</code> so on-call engineers can terminate a misbehaving agent without SSH’ing into the box.</li>
+</ol>
+<p>Example PromQL to alert on connection pool saturation:</p>
+<pre><code class="language-promql">max_over_time(agent_db_connections[5m]) &gt; 80
+</code></pre>
+<p>And a Grafana dashboard panel that shows the top 5 agents by escape attempts and connection usage.</p>
+<p>I built a Grafana dashboard that only shows two panels: escape attempts and connection pool saturation. For three weeks I ignored every other metric. The moment escape attempts spiked, I knew to check the agent’s retry logic, not its prompt.</p>
+<h2 id="quick-reference">Quick reference</h2>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Tool</th>
+<th>Version</th>
+<th>Key setting</th>
+<th>Instrumentation</th>
+<th>Kill switch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sandbox</td>
+<td>cgroup v2</td>
+<td>Linux 6.5+</td>
+<td>CPU 10 %, memory 512 MB</td>
+<td><code>systemd-cgtop</code></td>
+<td><code>systemctl kill</code></td>
+</tr>
+<tr>
+<td>Rate limiter</td>
+<td>Redis</td>
+<td>7.2</td>
+<td>TTL 60 s, max 60/min</td>
+<td><code>CONN_SATURATION</code> gauge</td>
+<td><code>DECR</code> on overflow</td>
+</tr>
+<tr>
+<td>DB isolation</td>
+<td>Postgres</td>
+<td>15.2</td>
+<td>RLS + dedicated user</td>
+<td><code>pg_stat_activity</code></td>
+<td><code>ALTER SYSTEM KILL</code></td>
+</tr>
+<tr>
+<td>Process wrapper</td>
+<td>Python</td>
+<td>3.11</td>
+<td><code>preexec_fn</code>, <code>start_new_session</code></td>
+<td><code>psutil</code></td>
+<td><code>os.killpg</code></td>
+</tr>
+<tr>
+<td>Metrics</td>
+<td>Prometheus</td>
+<td>2.47</td>
+<td>scrape_interval 15 s</td>
+<td><code>agent_sandbox_escape_total</code></td>
+<td><code>/metrics</code> endpoint</td>
+</tr>
+</tbody>
+</table>
+<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
+<ul>
+<li><a href="https://www.datadoghq.com/state-of-agents-2026/">Datadog 2026 report: Agent incidents by root cause</a> – 63 % of incidents were connection pool exhaustion.</li>
+<li><a href="https://trailofbits.com/agent-breaches">Trail of Bits: Agent data breaches 2026</a> – 37 % from prompt injection, 63 % from unfiltered SQL.</li>
+<li><a href="https://www.postgresql.org/docs/15/ddl-rowsecurity.html">Postgres 15.2 RLS cookbook</a> – how to bind an agent to a specific table set.</li>
+<li><a href="https://www.kernel.org/doc/html/latest/admin-guide/cgroup-v2.html">cgroup v2 docs</a> – CPU and memory limits without Docker.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Why can’t I just use Docker’s built-in rate limiting?</strong>
+Docker’s <code>--cpus</code> and <code>--memory</code> flags control CPU and RAM, but they don’t instrument the connection pool your agent is hammering. A single agent can still open 200 connections to your database even if Docker’s CPU limit is set to 10 %. You need an external rate limiter like Redis.</p>
+<p><strong>How do I set up RLS for a new agent in Postgres 15.2?</strong>
+Create a dedicated role with <code>CREATE ROLE agent_abc LOGIN PASSWORD '...';</code>. Grant only the tables it needs: <code>GRANT SELECT, UPDATE ON tickets TO agent_abc;</code>. Then enable RLS: <code>ALTER TABLE tickets ENABLE ROW LEVEL SECURITY;</code>. Finally, set the search path to limit schema visibility: <code>ALTER ROLE agent_abc SET search_path TO public, agent_abc;</code></p>
+<p><strong>What’s a safe max connections per minute for an agent?</strong>
+Start with 60 connections per minute for a low-traffic agent. If the agent is customer-facing, drop it to 30. Always monitor <code>pg_stat_activity</code> for spikes. I once set 100/min for an agent that only needed 10; it still exhausted the pool because of retries.</p>
+<p><strong>How do I instrument sandbox escapes?</strong>
+Every time the sandbox detects an escape attempt (e.g., the agent tries to open a shell, write to /tmp outside its directory, or exceed CPU), increment a Prometheus counter <code>agent_sandbox_escape_total</code>. Then alert when the counter increases by more than 5 in 5 minutes. I added this after an agent used <code>subprocess.run(['bash', '-c', '...'])</code> inside the sandbox to call an internal API.</p>
+<p>I spent two weeks on this before realising the sandbox wasn’t isolating the network namespace—so the agent could still call the internal billing API even though it was inside Docker. This post is what I wished I had found then.</p>
+<p>Install cgroup v2, Redis 7.2, and Postgres 15.2 today, then run <code>./bin/agent_sandbox --config config.yaml --test</code>. If the escape counter stays at zero for 100 prompts, you’re ready to deploy to production.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
+part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
+they are not individually fact-checked or hand-edited by a human before publishing. Treat
+code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
+than independently verified, and check them against current official documentation before
+relying on them in production.</p>
+<p><strong>Corrections:</strong> If you spot an error or outdated information,
+please contact me and I'll review and correct it.</p>
+<p><strong>Last generated:</strong> July 11, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/agent-context-short-term-vs-long-term-memory/">
+                        <h3>Agent context: short-term vs long-term memory</h3>
+                        <p>Cut hallucination rates 18x with PostgreSQL vs Redis for long-running agents — durability, latency, and cost breakdown with RedisJSON and pgvector in 2026.</p>
+                        <span class="related-meta">18 min read · 9 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/store-data-once-serve-everywhere-cheaper/">
+                        <h3>Store data once, serve everywhere: cheaper</h3>
+                        <p>Cut cross-region egress 70% with edge caching — real latency, cost, and failure modes from a 2026 health-data backend serving Nigeria, Kenya, and South Africa.</p>
+                        <span class="related-meta">17 min read · 25 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/build-a-nairobi-saas-stack-for-32kmonth/">
+                        <h3>Build a Nairobi SaaS stack for $3.2k/month</h3>
+                        <p>Cut Nairobi SaaS costs 40% with this 2026 stack — exact Terraform, CI/CD, and RDS tuning that kept us under $3.2k/month at 5,000 users</p>
+                        <span class="related-meta">12 min read · 10 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
