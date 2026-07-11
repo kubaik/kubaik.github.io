@@ -10,7 +10,18 @@ Google AdSense's Site Readiness Guide (§7) requires:
    checker, or similar tool before publishing to confirm < 10%
    similarity with existing web content."
 
-This module provides THREE layers of similarity protection:
+This module provides FOUR layers of similarity protection:
+
+  Layer 0 — Topic-key collision detection  (NEW)
+    Catches the most common LLM content-farm failure mode: two posts
+    that cover the *same underlying topic* but were prompted with a
+    different headline number, vendor name, or percentage
+    (e.g. "...200% latency spike" vs "...300% latency hit"), which
+    defeats plain word-shingle Jaccard because the specific tokens
+    differ throughout the piece even though the topic is identical.
+    This layer normalises numbers/units before extracting a topic
+    fingerprint from the title + first paragraph, so these collisions
+    are caught even when body-level Jaccard looks low.
 
   Layer 1 — Cross-post fingerprinting (MinHash + Jaccard)
     Detects near-duplicate posts within your own site.
@@ -39,6 +50,13 @@ In blog_system.py, after _validate_content_quality():
     if result.warnings:
         for w in result.warnings:
             print(f"  ⚠️  Similarity warning: {w}")
+
+IMPORTANT — CALLER MUST FAIL CLOSED
+------------------------------------
+If guard.check() raises, the caller MUST treat that as a hard failure
+(sys.exit(1)), not swallow it as non-fatal. A duplicate-content gate
+that silently no-ops on error provides no protection at all. See the
+CLI integration patch shipped alongside this file.
 """
 
 import hashlib
@@ -63,11 +81,28 @@ _CROSS_SITE_WARN_THRESHOLD = 0.20
 # Fraction of shared n-grams (structural repetition) above this → WARN
 _STRUCTURAL_WARN_THRESHOLD = 0.40
 
+# Topic-key Jaccard above this → BLOCK (same underlying topic, different numbers)
+_TOPIC_KEY_BLOCK_THRESHOLD = 0.55
+
+# Topic-key Jaccard above this → WARN
+_TOPIC_KEY_WARN_THRESHOLD = 0.40
+
 # Minimum content length to bother checking (very short posts skip similarity)
 _MIN_CHARS_TO_CHECK = 2000
 
 # Copyscape API endpoint
 _COPYSCAPE_URL = "https://www.copyscape.com/api/"
+
+# Common stopwords stripped before building a topic key. Small and
+# deliberately conservative — we want technical nouns/verbs to survive.
+_STOPWORDS = {
+    "a", "an", "the", "and", "or", "but", "of", "to", "in", "on", "for",
+    "with", "without", "at", "by", "from", "that", "this", "these", "those",
+    "is", "are", "was", "were", "be", "been", "being", "it", "its", "we",
+    "our", "you", "your", "i", "how", "why", "what", "when", "actually",
+    "here", "s", "vs", "after", "before", "than", "into", "about", "did",
+    "does", "do", "just", "still", "really", "very", "so", "as", "if",
+}
 
 
 # ─────────────────────────────────────────────────────────────────
@@ -80,6 +115,7 @@ class SimilarityResult:
     reason: str = ""
     warnings: List[str] = field(default_factory=list)
     jaccard_scores: Dict[str, float] = field(default_factory=dict)
+    topic_key_scores: Dict[str, float] = field(default_factory=dict)
     structural_score: float = 0.0
     copyscape_similarity: Optional[float] = None
 
@@ -93,6 +129,7 @@ _HEADING_RE = re.compile(r"^#{1,6}\s+", re.MULTILINE)
 _LINK_RE = re.compile(r"\[([^\]]+)\]\([^\)]+\)")
 _MARKUP_RE = re.compile(r"[*_`>|#\[\]()~]")
 _WHITESPACE_RE = re.compile(r"\s+")
+_TOKEN_RE = re.compile(r"[a-z]+|\d+(?:\.\d+)?")
 
 
 def _normalize_text(text: str) -> str:
@@ -103,6 +140,40 @@ def _normalize_text(text: str) -> str:
     text = _MARKUP_RE.sub(" ", text)
     text = _WHITESPACE_RE.sub(" ", text)
     return text.lower().strip()
+
+
+def _topic_tokens(text: str) -> List[str]:
+    """
+    Tokenize into pure alphabetic words and numbers, discarding all
+    punctuation (colons, hyphens, percent signs, etc.) so that
+    "post-quantum" / "post quantum", or "300%" / "300 percent",
+    tokenize identically instead of being treated as distinct terms.
+    Every numeric token is then collapsed to a single '<num>'
+    placeholder — this is the key fix for the "same topic, different
+    headline number" content-farm pattern: "200% latency spike" and
+    "300% latency hit" should collide on topic even though their
+    literal digits differ. Body-level Jaccard (Layer 1) still uses the
+    untouched numbers, so genuinely distinct benchmark posts aren't
+    over-merged there — only this topic-key layer normalises numbers.
+    """
+    tokens = _TOKEN_RE.findall(text.lower())
+    return ["<num>" if t[0].isdigit() else t for t in tokens]
+
+
+def _topic_key_terms(title: str, content: str) -> Set[str]:
+    """
+    Extract a compact set of topic-defining terms from the title and
+    the first ~40 words of body content (the part that carries the
+    "what is this post actually about" signal, before specifics vary).
+    """
+    lead = " ".join(content.split()[:40])
+    combined = f"{title} {lead}"
+    words = [w for w in _topic_tokens(combined)
+             if w == "<num>" or (w not in _STOPWORDS and len(w) > 2)]
+    # Keep both unigrams and bigrams — bigrams capture compound technical
+    # terms ("zero trust", "post quantum") that unigrams alone would blur.
+    bigrams = {f"{words[i]}_{words[i+1]}" for i in range(len(words) - 1)}
+    return set(words) | bigrams
 
 
 def _shingles(text: str, k: int = 5) -> Set[str]:
@@ -203,17 +274,20 @@ class FingerprintIndex:
                 with open(post_json, "r", encoding="utf-8") as f:
                     data = json.load(f)
                 content = data.get("content", "")
+                title = data.get("title", "")
                 if len(content) < _MIN_CHARS_TO_CHECK:
                     continue
                 normalized = _normalize_text(content)
                 fp = hashlib.sha256(normalized.encode()).hexdigest()
                 shingle_list = sorted(_shingles(normalized, k=5))[
                     :2000]  # cap for disk size
+                topic_terms = sorted(_topic_key_terms(title, content))
                 self._index[slug] = {
                     "mtime": mtime,
                     "fingerprint": fp,
                     "shingles": shingle_list,
-                    "title": data.get("title", ""),
+                    "topic_terms": topic_terms,
+                    "title": title,
                 }
                 updated = True
             except Exception:
@@ -232,10 +306,12 @@ class FingerprintIndex:
         normalized = _normalize_text(content)
         fp = hashlib.sha256(normalized.encode()).hexdigest()
         shingle_list = sorted(_shingles(normalized, k=5))[:2000]
+        topic_terms = sorted(_topic_key_terms(title, content))
         self._index[slug] = {
             "mtime": 0,  # will be updated on next build()
             "fingerprint": fp,
             "shingles": shingle_list,
+            "topic_terms": topic_terms,
             "title": title,
         }
         self._save()
@@ -269,9 +345,12 @@ class SimilarityGuard:
         """
         Run all similarity checks on the post.
         Returns a SimilarityResult; caller decides how to act on it.
+        Caller MUST treat an exception from this method as a hard
+        failure (fail closed), not a soft/non-fatal warning.
         """
         result = SimilarityResult()
         content = getattr(post, "content", "")
+        title = getattr(post, "title", "")
 
         if len(content) < _MIN_CHARS_TO_CHECK:
             result.warnings.append(
@@ -281,10 +360,44 @@ class SimilarityGuard:
 
         slug = getattr(post, "slug", "")
         normalized = _normalize_text(content)
+        existing = self._fp_index.get_all()
+
+        # ── Layer 0: Topic-key collision detection ─────────────────────────
+        # Runs FIRST and can block on its own, independent of body Jaccard,
+        # because it's specifically designed to catch cases where body
+        # Jaccard is deflated by swapped numbers/vendor names.
+        candidate_topic_terms = _topic_key_terms(title, content)
+        for existing_slug, entry in existing.items():
+            if existing_slug == slug:
+                continue
+            existing_topic_terms = set(entry.get("topic_terms", []))
+            if not existing_topic_terms:
+                continue
+            topic_score = _jaccard(candidate_topic_terms, existing_topic_terms)
+            if topic_score > 0.05:
+                result.topic_key_scores[existing_slug] = round(topic_score, 3)
+
+            if topic_score >= _TOPIC_KEY_BLOCK_THRESHOLD:
+                result.is_blocked = True
+                result.reason = (
+                    f"Post covers the same underlying topic as existing post "
+                    f"'{entry.get('title', existing_slug)}' (/{existing_slug}/) "
+                    f"(topic-key similarity {topic_score:.0%}, threshold "
+                    f"{_TOPIC_KEY_BLOCK_THRESHOLD:.0%}). This is the 'same topic, "
+                    f"different headline number' pattern — pick a genuinely "
+                    f"distinct angle or topic."
+                )
+                return result
+
+            if topic_score >= _TOPIC_KEY_WARN_THRESHOLD:
+                result.warnings.append(
+                    f"Topic-key overlap ({topic_score:.0%}) with "
+                    f"'{entry.get('title', existing_slug)}' (/{existing_slug}/). "
+                    f"Verify this post isn't just a reworded restatement."
+                )
 
         # ── Layer 1: Cross-post fingerprint comparison ────────────────────────
         candidate_shingles = _shingles(normalized, k=5)
-        existing = self._fp_index.get_all()
 
         for existing_slug, entry in existing.items():
             if existing_slug == slug:
