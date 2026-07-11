@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-11T13:09:08.451626",
+  "built_at": "2026-07-11T13:28:38.974122",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4280,6 +4280,11 @@
       "slug": "ai-engineer-role-vanished-in-6-months",
       "title": "AI Engineer role vanished in 6 months",
       "summary": "Most role engineer guides assume a clean environment and a patient timeline. It works in the simple case and breaks in a specific way under load. This post covers what comes after the happy path. The situation In January 2026, our 30-person startup had three full-time AI Engineers. Their job titles "
+    },
+    {
+      "slug": "kill-noisy-alerts-the-triage-system-that-restored-sleep",
+      "title": "Kill noisy alerts: the triage system that restored sleep",
+      "summary": "I've hit the same alert triage mistake in more than one production codebase over the years. The default configuration is fine right up until it isn't. This is what I put together after working through it properly. The alert triage system that reduced false positives enough for engineers to actually "
     }
   ]
 }

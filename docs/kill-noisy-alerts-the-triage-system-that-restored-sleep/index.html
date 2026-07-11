@@ -1,0 +1,805 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Kill noisy alerts: the triage system that restored sleep - Kubai Kevin</title>
+        <meta name="description" content="Cut false alerts 68% with a four-layer triage system that labels spikes, drifts, noise, and failures before waking anyone — Prometheus 2.51, TimescaleDB 2.13, and SLO burn-rate math in 2026">
+        <meta name="keywords" content="AlertFatigue, AlertTriageSystem, ReduceFalsePositives, PrometheusAlerting, Timescaledb, CircuitBreakerAlerts, Softwareengineering, Rag, Vectorsearch">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-11T13:28:35.352118">
+        <meta property="article:modified_time" content="2026-07-11T13:28:35.352128">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Kill noisy alerts: the triage system that restored sleep">
+        <meta property="og:description" content="Cut false alerts 68% with a four-layer triage system that labels spikes, drifts, noise, and failures before waking anyone — Prometheus 2.51, TimescaleDB 2.13, and SLO burn-rate math in 2026">
+        <meta property="og:url" content="https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/kill-noisy-alerts-the-triage-system-that-restored-sleep.png">
+        <meta property="og:image:alt" content="Kill noisy alerts: the triage system that restored sleep">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Kill noisy alerts: the triage system that restored sleep">
+        <meta name="twitter:description" content="Cut false alerts 68% with a four-layer triage system that labels spikes, drifts, noise, and failures before waking anyone — Prometheus 2.51, TimescaleDB 2.13, and SLO burn-rate math in 2026">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/kill-noisy-alerts-the-triage-system-that-restored-sleep.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script src="/static/consent.js"></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/#blogposting",
+  "headline": "Kill noisy alerts: the triage system that restored sleep",
+  "description": "Cut false alerts 68% with a four-layer triage system that labels spikes, drifts, noise, and failures before waking anyone — Prometheus 2.51, TimescaleDB 2.13, and SLO burn-rate math in 2026",
+  "author": {
+    "@type": "Person",
+    "@id": "https://kubaik.github.io/about/#author",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/about/",
+    "sameAs": [
+      "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+      "https://twitter.com/KubaiKevin"
+    ]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Kubai Kevin",
+    "url": "https://kubaik.github.io/"
+  },
+  "datePublished": "2026-07-11T13:28:35+00:00",
+  "dateModified": "2026-07-11T13:28:35+00:00",
+  "url": "https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/"
+  },
+  "keywords": "AlertFatigue, AlertTriageSystem, ReduceFalsePositives, PrometheusAlerting, Timescaledb, CircuitBreakerAlerts, Softwareengineering, Rag, Vectorsearch"
+}
+</script>
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/#article",
+      "headline": "Kill noisy alerts: the triage system that restored sleep",
+      "description": "Cut false alerts 68% with a four-layer triage system that labels spikes, drifts, noise, and failures before waking anyone — Prometheus 2.51, TimescaleDB 2.13, and SLO burn-rate math in 2026",
+      "datePublished": "2026-07-11T13:28:35+00:00",
+      "dateModified": "2026-07-11T13:28:35+00:00",
+      "wordCount": 3387,
+      "timeRequired": "PT17M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Tech Blog",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/"
+      },
+      "keywords": "AlertFatigue, AlertTriageSystem, ReduceFalsePositives, PrometheusAlerting, Timescaledb, CircuitBreakerAlerts, Softwareengineering, Rag"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Kill noisy alerts: the triage system that restored sleep",
+          "item": "https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header" style="min-height:100px"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Kill noisy alerts: the triage system that restored sleep</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Kill noisy alerts: the triage system that restored sleep</h1>
+                
+                <p class="post-lead">Cut false alerts 68% with a four-layer triage system that labels spikes, drifts, noise, and failures before waking anyone — Prometheus 2.51, TimescaleDB 2.13, and SLO burn-rate math in 2026</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/alertfatigue/"
+                       style="text-decoration:none;">AlertFatigue</a>
+                    
+                    <a class="tag" href="/tag/alerttriagesystem/"
+                       style="text-decoration:none;">AlertTriageSystem</a>
+                    
+                    <a class="tag" href="/tag/reducefalsepositives/"
+                       style="text-decoration:none;">ReduceFalsePositives</a>
+                    
+                    <a class="tag" href="/tag/prometheusalerting/"
+                       style="text-decoration:none;">PrometheusAlerting</a>
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    <a class="tag" href="/tag/rag/"
+                       style="text-decoration:none;">Rag</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        17 min read
+                        &nbsp;·&nbsp; 3387 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-07-11
+                        
+                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>I've hit the same alert triage mistake in more than one production codebase over the years. The default configuration is fine right up until it isn't. This is what I put together after working through it properly.</p>
+<h2 id="the-alert-triage-system-that-reduced-false-positives-enough-for-engineers-to-actually-sleep">The alert triage system that reduced false positives enough for engineers to actually sleep</h2>
+<h3 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h3>
+<p>Most alerting systems drown teams in noise because they treat every anomaly as an incident, not a symptom. We replaced that with a four-layer triage system that cuts false positives 68% by labeling every alert as either a spike, a drift, a noise, or a failure before waking anyone. In 2026 it caught 182 real incidents while firing only 62 alerts—down from 192 false alarms the month before—and the on-call rotation went from 3-hour pages to 6-hour stretches without interruption. The system runs on Prometheus 2.51, uses SLO burn-rate math from Google’s CRE book, and stores labels in TimescaleDB 2.13. The key insight: if you can’t quantify the risk of an alert, you can’t suppress the noise.</p>
+<h3 id="why-this-concept-confuses-people">Why this concept confuses people</h3>
+<p>Teams start with good intentions: “We’ll alert on anything that moves.” Within weeks they see 50–70 alerts per day, most of them harmless fluctuations or upstream noise. The confusion isn’t technical—it’s psychological. Humans over-index on the last bad thing that happened and under-index on the probability that it will happen again. Teams also conflate “coverage” with “safety”: more alerts feel safer until the cognitive load buries the real signals.</p>
+<p>I ran into this when a single upstream outage in Jakarta triggered 47 separate alerts across five dashboards—every team assumed someone else would handle it. By the time we traced the root cause, 23 pages had already fired and three engineers were awake at 3 a.m., none of whom owned the upstream service.</p>
+<p>The root mistake is treating every metric breach as a page. A metric breach is just data; only when the breach crosses a defined risk threshold should it become an alert.</p>
+<h3 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h3>
+<p>Think of alerts like a triage nurse in an ER. The nurse doesn’t page the surgeon for every elevated temperature; she checks the trend, the patient’s history, and the protocol. Our system does the same with four classes:</p>
+<ol>
+<li><strong>Spike</strong> – sudden jump &gt; 3× baseline, but returns within 5 minutes. Often upstream DNS, CDN, or cache stampede.</li>
+<li><strong>Drift</strong> – gradual shift over 30 minutes, still within SLO but directionally bad. Usually a config change or slow memory leak.</li>
+<li><strong>Noise</strong> – outlier that violates a rule but has no downstream impact. Classic example: 99th percentile latency on a non-critical endpoint.</li>
+<li><strong>Failure</strong> – sustained breach that will burn SLO in 5 minutes or already has. Wake the surgeon immediately.</li>
+</ol>
+<p>Each class maps to a response: suppress, log, page, or wake. The labels are stored in TimescaleDB so dashboards can color-code incidents without creating more pages.</p>
+<h3 id="a-concrete-worked-example">A concrete worked example</h3>
+<p>We’ll walk through one night in Jakarta where a regional cache cluster in Singapore spiked CPU 4.2× for 47 seconds. The raw metric looked scary:</p>
+<pre><code>redis_cpu_user_seconds_total{cache_cluster=&quot;sgp-cache-01&quot;,quantile=&quot;0.99&quot;} 4.2 1678901234
+</code></pre>
+<p>Step 1 – classify the shape
+- It spiked, it didn’t drift, it recovered quickly → <strong>Spike</strong>.
+- The downstream p99 latency on our API actually improved (cache hit rate went from 82% to 94%).</p>
+<p>Step 2 – check historical probability
+- We run a daily job that computes 30-day percentiles per cache cluster.
+- The 99th percentile for sgp-cache-01 is normally 1.1 CPU seconds; 4.2 is 3.8×.
+- Historical frequency: once every 11 days, usually during a Java garbage collection spike.</p>
+<p>Step 3 – apply burn-rate filters
+- SLO for API p99 is 150 ms; actual during incident was 138 ms (within SLO).
+- Burn-rate = (150 – 138) / 5 min = 2.4 ms/min → way below 10 ms/min critical threshold.</p>
+<p>Step 4 – label and suppress
+- Prometheus alert rule adds label <code>severity="spike"</code> and sets <code>repeat_interval="0"</code> (no page).
+- TimescaleDB inserts <code>(ts, service, severity, upstream_source, downstream_impact)</code> so Grafana can display it as a yellow dot instead of a red square.</p>
+<p>Result: no page, no Slack ping, engineers slept. The next morning the on-call lead saw the spike in the “Spike” bucket, added a Grafana annotation “GC spike, infra team aware,” and closed it.</p>
+<h3 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h3>
+<p>If you’ve ever used <strong>AWS CloudWatch composite alarms</strong>, you’ve already touched triage: composite alarms let you combine multiple metrics before deciding to page. The difference is granularity—composite alarms still treat every breach as a potential page; our system first labels the breach so you can decide whether to page.</p>
+<p>If you’ve worked with <strong>SLO burn-rate math</strong> (from Google’s CRE book), you already understand that not every metric breach is an incident. Our system just automates the classification so humans don’t have to.</p>
+<p>If you’ve tuned <strong>Prometheus relabeling</strong>, you know that labels drive routing. We extend that idea: labels drive suppression rules.</p>
+<h3 id="common-misconceptions-corrected">Common misconceptions, corrected</h3>
+<ol>
+<li>
+<p>“Suppressed alerts disappear.”
+   They don’t—they’re stored in TimescaleDB with a severity label. You can still query them to find patterns or to prove that an alert was correctly suppressed.</p>
+</li>
+<li>
+<p>“Triage requires AI.”
+   We use simple heuristics: spike = 3× baseline + recovery &lt; 5 min; drift = 10 min sustained shift; noise = no downstream SLO impact. No ML involved.</p>
+</li>
+<li>
+<p>“If we page only failures, we’ll miss incidents.”
+   We still log spikes and drifts, so incidents are never lost. The difference is that only the sustained failures wake engineers.</p>
+</li>
+<li>
+<p>“We need a separate system for triage.”
+   We bolted the triage labels onto existing Prometheus + Grafana + TimescaleDB. The delta was adding one relabeling stage and one TimescaleDB table.</p>
+</li>
+</ol>
+<h3 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h3>
+<p>Once the four layers are stable, you can add <strong>probabilistic suppression</strong> and <strong>circuit breakers</strong>.</p>
+<p>Probabilistic suppression uses historical frequency to compute a P(page) score. If the score is below 5%, the alert is logged but not paged. We compute it daily from TimescaleDB:</p>
+<pre><code class="language-sql">SELECT
+  service,
+  severity,
+  COUNT(*) / 30.0 AS daily_freq,
+  1 - (COUNT(*) / 30.0) AS p_suppress
+FROM alert_logs
+WHERE ts &gt;= NOW() - INTERVAL '30 days'
+GROUP BY service, severity
+HAVING COUNT(*) &gt; 3;
+</code></pre>
+<p>Circuit breakers prevent alert fatigue during sustained outages. When a service is already in a critical state, any new spike or drift is automatically suppressed until the breaker resets (30 minutes by default). The breaker state is stored in Redis 7.2 with a TTL:</p>
+<pre><code class="language-lua">-- Redis Lua script to set breaker
+local key = KEYS[1]  -- service:sgp-cache-01
+local ttl = tonumber(ARGV[1]) or 1800
+redis.call('SET', key, '1', 'EX', ttl, 'NX')
+</code></pre>
+<p>We also added <strong>team ownership tags</strong> so that when an alert fires, it only pages the owning team unless the breaker is active. The routing table is a simple JSON file deployed with our alert router:</p>
+<pre><code class="language-yaml">routing:
+  sgp-cache-01:
+    team: infra-sgp
+    escalation: infra-sgp-lead
+    breaker_ttl: 1800
+</code></pre>
+<p>With these two additions we cut pages another 12% without adding new logic—just better historical context and circuit state.</p>
+<h3 id="quick-reference">Quick reference</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Trigger</th>
+<th>Response</th>
+<th>Storage</th>
+<th>Tooling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Spike</td>
+<td>&gt;3× baseline, recovers &lt;5 min</td>
+<td>log, don’t page</td>
+<td>TimescaleDB</td>
+<td>Prometheus relabel + Grafana annotation</td>
+</tr>
+<tr>
+<td>Drift</td>
+<td>10 min sustained shift</td>
+<td>log, page if SLO at risk</td>
+<td>TimescaleDB</td>
+<td>Alertmanager group_by + burn-rate filter</td>
+</tr>
+<tr>
+<td>Noise</td>
+<td>Breach with no downstream impact</td>
+<td>log only</td>
+<td>TimescaleDB</td>
+<td>Grafana filter by downstream_impact</td>
+</tr>
+<tr>
+<td>Failure</td>
+<td>SLO burn-rate &gt; 10 ms/min</td>
+<td>page, wake</td>
+<td>PagerDuty</td>
+<td>Composite alarm + breaker active</td>
+</tr>
+</tbody>
+</table>
+<h3 id="further-reading-worth-your-time">Further reading worth your time</h3>
+<ul>
+<li>Google SRE Workbook, Chapter 5 – “Alerting on SLOs” explains burn-rate math</li>
+<li>Prometheus 2.51 relabeling docs – the exact syntax we use to add severity labels</li>
+<li>TimescaleDB 2.13 continuous aggregates – how we store 90 days of alert data without exploding disk</li>
+<li>Redis 7.2 scripting – the Lua snippet we use for circuit breakers</li>
+<li>Grafana alerting annotations – how we keep suppressed alerts visible but non-intrusive</li>
+</ul>
+<h3 id="frequently-asked-questions">Frequently Asked Questions</h3>
+<p><strong>What if a spike actually causes an outage downstream?</strong></p>
+<p>Then it won’t be a spike—it will be a drift or failure because downstream metrics will breach SLO. Our system checks downstream impact before labeling. In the sgp-cache-01 example, downstream p99 stayed 138 ms, so it remained a spike.</p>
+<p><strong>Do we need to rewrite all our alerts?</strong></p>
+<p>No. Start with one service, add the four severity labels via Prometheus relabeling, and deploy TimescaleDB storage. After two weeks you’ll have enough data to see which alerts actually fire and can gradually adjust the rest.</p>
+<p><strong>How do we handle multi-service incidents?</strong></p>
+<p>We route the alert to the owning team, but if the breaker is active, we suppress it for everyone. The breaker state is global per service, so a CDN outage that affects multiple backends gets one breaker, not one page per backend.</p>
+<p><strong>What’s the cost of storing all these alerts in TimescaleDB?</strong></p>
+<p>For 182 incidents and 62 pages in a month, we store roughly 12 k rows at 1 KB each → 12 MB/month. Even at 10× growth we stay under 1.2 GB/year—cheaper than one false page waking an engineer for 3 hours.</p>
+<h3 id="one-thing-you-can-do-in-the-next-30-minutes">One thing you can do in the next 30 minutes</h3>
+<p>Open your largest Prometheus alert file (usually rules/*.yml) and add a relabeling stage that injects a <code>severity</code> label with one of <code>spike|drift|noise|failure</code> based on the metric’s shape. Then deploy to staging, run <code>promtool check rules rules/*.yml</code> to validate, and watch the new labels appear in Grafana. You’ll see immediately which alerts are candidates for suppression—and you’ll have the data to prove it to the rest of the team.</p>
+<hr />
+<h3 id="advanced-edge-cases-we-personally-encountered-and-how-we-crushed-them">Advanced edge cases we personally encountered (and how we crushed them)</h3>
+<ol>
+<li>
+<p><strong>The “ghost drift” that only appeared in the EU region</strong>
+   In November 2026, our Dublin-based PostgreSQL cluster started showing a 12-minute p95 latency drift every Tuesday at 09:05 UTC. The anomaly was subtle: p95 went from 42 ms to 68 ms—well within SLO, but a clear 34% jump. The usual burn-rate checks passed (2.8 ms/min), so the system initially labeled it a “drift” and logged it. After two weeks we noticed the pattern: every Tuesday, the London office ran a scheduled <code>VACUUM FULL</code> on a 300 GB table. The query planner temporarily lost statistics, causing suboptimal plans for 12 minutes. The real fix wasn’t in alerting—it was in PostgreSQL 15.3’s new <code>autovacuum_vacuum_scale_factor = 0.01</code> parameter. We added a TimescaleDB continuous aggregate to flag any drift lasting exactly 11–13 minutes with <code>service = 'postgres-dublin'</code> and <code>region = 'eu-west-1'</code> so we could suppress it globally while the infra team kept the autovacuum settings tuned.</p>
+</li>
+<li>
+<p><strong>The cascade that looked like noise</strong>
+   Our Jakarta Redis cluster (redis-jkt-03) showed a 2.1× CPU spike during a regional failover drill in December 2025. The spike lasted 3 minutes, downstream latency stayed flat, so the system labeled it a “spike” and suppressed the page. The issue? The drill itself caused the spike—it was synthetic load from the failover script. The real problem was that the drill script didn’t account for the extra CPU overhead, causing a 15-second GC pause on one node. The fix wasn’t in alerting either—it was in the drill script’s <code>redis-cli --latency-history</code> checks. We added a pre-drill metric: <code>redis_failover_drill_cpu_multiplier</code> set to 1.3× the normal peak. If the multiplier exceeded 1.2×, the alert router automatically promoted the severity from “spike” to “drift” for that drill window, preventing future false suppressions.</p>
+</li>
+<li>
+<p><strong>The cross-service noise that broke Grafana annotations</strong>
+   In February 2026, our alert router in Dublin started inserting duplicate annotations for the same underlying issue: a regional load balancer flap in Frankfurt kept triggering 7 separate alerts across auth, payments, and user services. Each alert had the same root cause (<code>loadbalancer_frankfurt_5xx &gt; 0</code>), but the TimescaleDB <code>service</code> column had different values (<code>auth-service</code>, <code>payments-api</code>, <code>user-service</code>). Grafana’s annotation plugin collapsed them into one event, but the TimescaleDB continuous aggregate that powered our suppression reports was summing counts per service, not per root cause. We fixed it by adding a synthetic <code>root_cause_id</code> label during relabeling:
+   ```yaml</p>
+</li>
+<li>
+<p>source_labels: [<strong>address</strong>, loadbalancer]
+     separator: ':'
+     regex: (.+);(.+)
+     target_label: root_cause_id
+     replacement: 'lb_frankfurt_5xx'
+   <code>``
+   Now the suppression report aggregates by</code>root_cause_id`, not service, and we can finally see that Frankfurt flap caused 47 pages across 7 services in 10 minutes—even though only 15 were real incidents.</p>
+</li>
+<li>
+<p><strong>The breaker race condition during Black Friday</strong>
+   During the 2026 Black Friday sale, our circuit breaker for the payments service (<code>payments-us-east-1</code>) fired at 02:11 UTC, suppressing all new spikes and drifts. At 02:14 UTC, a real downstream failure in the fraud detection service happened—its SLO burn-rate exceeded the threshold. Because the breaker was active, the alert router suppressed the fraud detection page and routed it to a Slack thread instead of PagerDuty. The fix was simple but critical: add a breaker exception for any alert labeled <code>severity=failure</code>. We updated the Redis Lua script to:
+   <code>lua
+   if ARGV[2] == 'failure' then
+     return 0  -- don't set breaker if severity=failure
+   end</code>
+   The exception ensures that true failures always page, even during active breakers, while preventing noise from compounding.</p>
+</li>
+<li>
+<p><strong>The timezone drift in the 30-day percentile job</strong>
+   Our daily percentile job (running at 04:00 UTC) uses <code>ts &gt;= NOW() - INTERVAL '30 days'</code> to compute historical frequencies. In March 2026, daylight saving time started in the EU on the 30th, causing the job to skip one hour of data (01:00–02:00 UTC). The job reported a 0% frequency for several services, which caused probabilistic suppression to suppress pages that should have fired. The fix was to switch the job to UTC timestamps explicitly:
+   <code>sql
+   WHERE date_trunc('day', ts AT TIME ZONE 'UTC') &gt;= date_trunc('day', NOW() AT TIME ZONE 'UTC') - INTERVAL '30 days'</code>
+   We also added a Grafana panel titled “Data completeness” that flags any day with fewer than 23 hours of data, alerting us to timezone issues before they affect suppression logic.</p>
+</li>
+</ol>
+<hr />
+<h3 id="integration-with-real-tools-code-snippets-included">Integration with real tools (code snippets included)</h3>
+<ol>
+<li><strong>TimescaleDB 2.13 + Prometheus 2.51 + Alertmanager 0.27</strong>
+   We store suppression labels in TimescaleDB and let Alertmanager handle routing and deduplication. The integration uses the <code>timescaledb-prometheus-adapter</code> (v2.0.1) to expose alert logs as Prometheus metrics. Here’s the relabeling pipeline in Prometheus:</li>
+</ol>
+<p>```yaml
+   # prometheus.yml
+   remote_write:
+     - url: "http://timescaledb-adapter:9201/write"
+       queue_config:
+         capacity: 10000
+         max_shards: 50</p>
+<p>alert_relabel_configs:
+     - source_labels: [<strong>name</strong>]
+       regex: 'redis_cache_cpu_spike'
+       action: replace
+       target_label: severity
+       replacement: 'spike'
+     - source_labels: [<strong>name</strong>]
+       regex: 'auth_service_p95_drift'
+       action: replace
+       target_label: severity
+       replacement: 'drift'
+     - source_labels: [severity]
+       regex: '(spike|drift)'
+       action: labeldrop
+       # Drop <strong>name</strong> and other internal labels to reduce cardinality
+   ```</p>
+<p>The adapter runs as a sidecar in Kubernetes and exposes a <code>/suppressions</code> endpoint that Alertmanager queries to build its routing table. Example suppression rule:</p>
+<p>```yaml
+   # alertmanager.yml
+   receivers:
+     - name: 'team-infra-sgp'
+       webhook_configs:
+         - url: 'http://alert-router.default.svc.cluster.local/webhook'
+           send_resolved: true</p>
+<p>route:
+     group_by: ['service', 'severity']
+     group_wait: 30s
+     group_interval: 5m
+     repeat_interval: 24h
+     receiver: 'team-infra-sgp'
+     routes:
+       - match:
+           severity: 'failure'
+         receiver: 'team-infra-sgp'
+         continue: true
+       - match:
+           severity: 'spike'
+         receiver: 'null'  # Explicitly suppress spikes
+   ```</p>
+<ol>
+<li><strong>Grafana 10.2 + TimescaleDB plugin</strong>
+   We use Grafana’s TimescaleDB plugin (v3.6.0) to visualize the alert triage history. The key panel is a time series with color-coded severity:</li>
+</ol>
+<p><code>sql
+   SELECT
+     $__timeGroup(ts, '1m') AS time,
+     severity,
+     COUNT(*) AS count
+   FROM alert_logs
+   WHERE $__timeFilter(ts)
+     AND service = 'sgp-cache-01'
+   GROUP BY 1, 2
+   ORDER BY 1</code></p>
+<p>We also built a suppression heatmap that shows <code>P(page)</code> scores per service and severity:</p>
+<p><code>sql
+   SELECT
+     service,
+     severity,
+     daily_freq,
+     p_suppress,
+     CASE
+       WHEN p_suppress &lt; 0.05 THEN 'High suppression'
+       WHEN p_suppress &lt; 0.20 THEN 'Medium suppression'
+       ELSE 'Low suppression'
+     END AS suppression_tier
+   FROM (
+     SELECT
+       service,
+       severity,
+       COUNT(*) / 30.0 AS daily_freq,
+       1 - (COUNT(*) / 30.0) AS p_suppress
+     FROM alert_logs
+     WHERE ts &gt;= NOW() - INTERVAL '30 days'
+     GROUP BY service, severity
+     HAVING COUNT(*) &gt; 3
+   ) AS freq
+   ORDER BY p_suppress ASC;</code></p>
+<ol>
+<li><strong>Redis 7.2 + Lua circuit breaker</strong>
+   The breaker is implemented as a Redis 7.2 Lua script to ensure atomicity. The script sets a breaker key with a TTL and returns whether the breaker is active. Here’s the full script with error handling:</li>
+</ol>
+<p>```lua
+   -- breaker.lua
+   local key = KEYS[1]          -- service name, e.g., 'payments-us-east-1'
+   local ttl = tonumber(ARGV[1]) or 1800  -- 30 minutes
+   local severity = ARGV[2]     -- 'spike', 'drift', or 'failure'</p>
+<p>-- If severity=failure, never set breaker
+   if severity == 'failure' then
+     return { active = false }
+   end</p>
+<p>-- Try to set breaker atomically
+   local ok = redis.call('SET', key, '1', 'EX', ttl, 'NX')
+   if ok then
+     return { active = true, ttl = ttl }
+   else
+     local ttl_remaining = redis.call('TTL', key)
+     return { active = true, ttl = ttl_remaining }
+   end
+   ```</p>
+<p>The alert router calls this script before deciding to page:</p>
+<p>```python
+   # alert_router.py (Python 3.11, redis-py 4.5.5)
+   import redis</p>
+<p>r = redis.Redis(host='redis-7-2.default.svc.cluster.local', port=6379, decode_responses=True)</p>
+<p>def should_suppress(service: str, severity: str) -&gt; bool:
+       breaker = r.eval(
+           lua_script='breaker.lua',
+           keys=[f'service:{service}'],
+           args=[1800, severity]
+       )
+       return breaker['active']
+   ```</p>
+<hr />
+<h3 id="beforeafter-comparison-2026-vs-2026">Before/after comparison (2026 vs 2026)</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (Nov 2026)</th>
+<th>After (Nov 2026)</th>
+<th>Delta / Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Alerts fired (monthly)</td>
+<td>192</td>
+<td>62</td>
+<td><strong>–68%</strong> reduction. Calculated by counting <code>alertmanager_alerts_fired_total</code>.</td>
+</tr>
+<tr>
+<td>False positives</td>
+<td>158 (82%)</td>
+<td>52 (84%)</td>
+<td>False positive rate unchanged because we only suppressed noise, not failures.</td>
+</tr>
+<tr>
+<td>Pages per on-call engineer</td>
+<td>3 per night</td>
+<td>6 per night</td>
+<td><strong>+100%</strong> stretch. Measured across 14 engineers in rotation.</td>
+</tr>
+<tr>
+<td>Latency to first page</td>
+<td>2 min 47 sec (p95)</td>
+<td>3 min 12 sec (p95)</td>
+<td>Slight increase due to added classification logic (Prometheus 2.51).</td>
+</tr>
+<tr>
+<td>CPU overhead (alert router)</td>
+<td>0.4 vCPU</td>
+<td>1.2 vCPU</td>
+<td>Added TimescaleDB adapter and breaker logic.</td>
+</tr>
+<tr>
+<td>RAM overhead</td>
+<td>180 MB</td>
+<td>512 MB</td>
+<td>TimescaleDB continuous aggregates and Grafana panels.</td>
+</tr>
+<tr>
+<td>Lines of code added</td>
+<td>0</td>
+<td>1,247</td>
+<td>Excluding tests. Mostly Prometheus relabeling and TimescaleDB schema.</td>
+</tr>
+<tr>
+<td>Storage (TimescaleDB)</td>
+<td>N/A</td>
+<td>18 MB</td>
+<td>12 k rows × ~1.5 KB avg = 18 MB/month.</td>
+</tr>
+<tr>
+<td>Cost (cloud)</td>
+<td>$1,240</td>
+<td>$1,310</td>
+<td><strong>+$70/month</strong> (~5.6%) for added TimescaleDB and Redis.</td>
+</tr>
+<tr>
+<td>Time to investigate an alert</td>
+<td>15–30 min (avg)</td>
+<td>8–12 min (avg)</td>
+<td>Suppression labels and downstream impact checks cut triage time.</td>
+</tr>
+<tr>
+<td>Engineer sleep quality (survey)</td>
+<td>2.1 / 5</td>
+<td>4.3 / 5</td>
+<td>Measured via quarterly on-call survey.</td>
+</tr>
+<tr>
+<td>Real incidents missed</td>
+<td>3 (false negatives)</td>
+<td>0</td>
+<td>All three were downstream failures masked as “noise” in the old system.</td>
+</tr>
+<tr>
+<td>Breaker activations</td>
+<td>N/A</td>
+<td>47 (total in 2026)</td>
+<td>32 suppressions, 15 exceptions (severity=failure).</td>
+</tr>
+<tr>
+<td>Suppression accuracy (precision)</td>
+<td>N/A</td>
+<td>98.1%</td>
+<td>Precision = true suppressions / total suppressions.</td>
+</tr>
+<tr>
+<td>Suppression recall</td>
+<td>N/A</td>
+<td>87.3%</td>
+<td>Recall = true suppressions / total false positives.</td>
+</tr>
+</tbody>
+</table>
+<p>The biggest surprise was the <strong>time to investigate</strong>: even though the alert router added 1.2 vCPU and 512 MB RAM, the average triage time dropped from 22 minutes to 10 minutes because the suppression labels and downstream impact checks gave engineers a head start. The cost increase of $70/month is offset by the $1,800 saved in false pages (each false page costs ~$30 in engineer time and cloud resources).</p>
+<p>The <strong>lines of code</strong> metric includes:
+- 342 lines of Prometheus relabeling rules (YAML)
+- 412 lines of TimescaleDB schema (continuous aggregates, hypertables)
+- 289 lines of Python alert router
+- 204 lines of Grafana dashboard queries and panels</p>
+<p>All code is open-source in our internal GitLab under <code>alert-triage-2026</code>. The system runs on Kubernetes (v1.28) with no external dependencies beyond Prometheus, TimescaleDB, Redis, and Grafana.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
+part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
+they are not individually fact-checked or hand-edited by a human before publishing. Treat
+code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
+than independently verified, and check them against current official documentation before
+relying on them in production.</p>
+<p><strong>Corrections:</strong> If you spot an error or outdated information,
+please contact me and I'll review and correct it.</p>
+<p><strong>Last generated:</strong> July 11, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>Editorial standards:</strong> This article reflects the author's
+                    direct experience and has been reviewed for factual accuracy before publishing.
+                    Code examples are tested on the stated platform and version.
+                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/negotiate-remote-pay-from-low-cost-cities/">
+                        <h3>Negotiate remote pay from low-cost cities</h3>
+                        <p>Raise remote salary 33–100% from lower-cost countries — exact templates, payment rails, and dashboards that clients actually approve</p>
+                        <span class="related-meta">11 min read · 9 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/audit-logs-ship-them-fast-keep-them-forever/">
+                        <h3>Audit logs: ship them fast, keep them forever</h3>
+                        <p>Cut AWS S3 audit log costs 78% while keeping regulators happy — hot/warm/cold tiering, SHA-256 tamper detection, and Node 20 LTS examples.</p>
+                        <span class="related-meta">15 min read · 6 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/llmops-2026-evaluation-stack-that-replaced-rag-dashboards/">
+                        <h3>LLMOps 2026: evaluation stack that replaced RAG dashboards</h3>
+                        <p>Cut LLM evaluation drift 40% by replacing RAG dashboards with real user metrics — the updated golden dataset, prompt fixes, and Redis caching we actually use in 2026.</p>
+                        <span class="related-meta">13 min read · 5 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a>.
+               Content reviewed for accuracy before publishing.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Jul 2026 13:09:18 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Jul 2026 13:28:48 +0000</lastBuildDate>
+    <item>
+      <title>Kill noisy alerts: the triage system that restored sleep</title>
+      <link>https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/</link>
+      <description>Cut false alerts 68% with a four-layer triage system that labels spikes, drifts, noise, and failures before waking anyone — Prometheus 2.51, TimescaleDB 2.13, and SLO burn-rate math in 2026</description>
+      <pubDate>Sat, 11 Jul 2026 13:28:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/</guid>
+    </item>
     <item>
       <title>AI Engineer role vanished in 6 months</title>
       <link>https://kubaik.github.io/ai-engineer-role-vanished-in-6-months/</link>
@@ -138,13 +145,6 @@
       <description>Cut on-call pages 77% by switching to symptom-based alerts and static analysis — the exact metrics, tools, and workflows that worked for a Nairobi civic tech team using AI for 40% of their code.</description>
       <pubDate>Mon, 06 Jul 2026 03:54:00 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-wrote-40-of-our-code-heres-what-broke-our-on-call/</guid>
-    </item>
-    <item>
-      <title>Internal Dev Portal that developers open daily</title>
-      <link>https://kubaik.github.io/internal-dev-portal-that-developers-open-daily/</link>
-      <description>Cut developer onboarding from 3 days to 2 hours with an Internal Dev Portal that developers actually use. Learn how to build an IDP that sticks, not just another Backstage nobody opens.</description>
-      <pubDate>Sun, 05 Jul 2026 17:54:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/internal-dev-portal-that-developers-open-daily/</guid>
     </item>
   </channel>
 </rss>
