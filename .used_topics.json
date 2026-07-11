@@ -55,5 +55,6 @@
   "The MCP server security mistake that could have exposed internal tools",
   "Why traditional cloud cost tools failed us once agents started making autonomous decisions",
   "How we do zero-downtime schema changes on 2TB+ Postgres databases in 2026",
-  "Building internal tools that help non-AI engineers work safely with agents"
+  "Building internal tools that help non-AI engineers work safely with agents",
+  "How the role of 'AI Engineer' evolved in our team throughout 2026"
 ]

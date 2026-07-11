@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Jul 2026 12:23:38 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Jul 2026 13:09:18 +0000</lastBuildDate>
+    <item>
+      <title>AI Engineer role vanished in 6 months</title>
+      <link>https://kubaik.github.io/ai-engineer-role-vanished-in-6-months/</link>
+      <description>Cut AI infra costs 76% and eliminated AI Engineer roles in 6 months — here’s how we did it with AWS Bedrock, Redis 7.2, and prompt validation</description>
+      <pubDate>Sat, 11 Jul 2026 13:09:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-engineer-role-vanished-in-6-months/</guid>
+    </item>
     <item>
       <title>Agent sandboxes: when safety overrides features</title>
       <link>https://kubaik.github.io/agent-sandboxes-when-safety-overrides-features/</link>
@@ -138,13 +145,6 @@
       <description>Cut developer onboarding from 3 days to 2 hours with an Internal Dev Portal that developers actually use. Learn how to build an IDP that sticks, not just another Backstage nobody opens.</description>
       <pubDate>Sun, 05 Jul 2026 17:54:17 +0000</pubDate>
       <guid>https://kubaik.github.io/internal-dev-portal-that-developers-open-daily/</guid>
-    </item>
-    <item>
-      <title>AI permissions: Don’t let agents burn your cloud budget</title>
-      <link>https://kubaik.github.io/ai-permissions-dont-let-agents-burn-your-cloud-budget/</link>
-      <description>Cut cloud waste 20-50% with AI agent least-privilege — runtime guards, IAM Roles for Service Accounts, and Policy Sentry in 2026.</description>
-      <pubDate>Sun, 05 Jul 2026 13:48:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-permissions-dont-let-agents-burn-your-cloud-budget/</guid>
     </item>
   </channel>
 </rss>

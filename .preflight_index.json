@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-11T12:23:28.232253",
+  "built_at": "2026-07-11T13:09:08.451626",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4275,6 +4275,11 @@
       "slug": "agent-sandboxes-when-safety-overrides-features",
       "title": "Agent sandboxes: when safety overrides features",
       "summary": "I've hit the same building internal mistake in more than one production codebase over the years. Production gives you neither a clean environment nor a patient timeline. This post covers what comes after the happy path. The one-paragraph version (read this first) Most teams building agent tooling fo"
+    },
+    {
+      "slug": "ai-engineer-role-vanished-in-6-months",
+      "title": "AI Engineer role vanished in 6 months",
+      "summary": "Most role engineer guides assume a clean environment and a patient timeline. It works in the simple case and breaks in a specific way under load. This post covers what comes after the happy path. The situation In January 2026, our 30-person startup had three full-time AI Engineers. Their job titles "
     }
   ]
 }
