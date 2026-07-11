@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-11T13:28:38.974122",
+  "built_at": "2026-07-11T14:26:57.561464",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4285,6 +4285,11 @@
       "slug": "kill-noisy-alerts-the-triage-system-that-restored-sleep",
       "title": "Kill noisy alerts: the triage system that restored sleep",
       "summary": "I've hit the same alert triage mistake in more than one production codebase over the years. The default configuration is fine right up until it isn't. This is what I put together after working through it properly. The alert triage system that reduced false positives enough for engineers to actually "
+    },
+    {
+      "slug": "replace-vibe-testing-with-agent-evals-now",
+      "title": "Replace vibe testing with agent evals now",
+      "summary": "I've hit the same evaluationdriven development mistake in more than one production codebase over the years. The default configuration is fine right up until it isn't. Here's what I'd tell a colleague hitting this for the first time. The gap between what the docs say and what production needs Most te"
     }
   ]
 }

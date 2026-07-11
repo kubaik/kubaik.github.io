@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 11 Jul 2026 17:23:14 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 11 Jul 2026 14:27:07 +0000</lastBuildDate>
+    <item>
+      <title>Replace vibe testing with agent evals now</title>
+      <link>https://kubaik.github.io/replace-vibe-testing-with-agent-evals-now/</link>
+      <description>Cut agent bugs 79% with automated evaluation loops — synthetic scenarios, rule checks, and LLM judges you can run in CI today. 2026 real numbers included.</description>
+      <pubDate>Sat, 11 Jul 2026 14:26:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/replace-vibe-testing-with-agent-evals-now/</guid>
+    </item>
     <item>
       <title>Kill noisy alerts: the triage system that restored sleep</title>
       <link>https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/</link>
@@ -138,13 +145,6 @@
       <description>Survive agent restarts, model changes, and network blips — durable workflows with Redis 7.2, FastAPI 0.109, and Python 3.11. Learn the one schema trick that saved 45 minutes of downtime.</description>
       <pubDate>Mon, 06 Jul 2026 07:57:25 +0000</pubDate>
       <guid>https://kubaik.github.io/build-agent-workflows-that-survive-restarts/</guid>
-    </item>
-    <item>
-      <title>AI wrote 40% of our code — here’s what broke our on-call</title>
-      <link>https://kubaik.github.io/ai-wrote-40-of-our-code-heres-what-broke-our-on-call/</link>
-      <description>Cut on-call pages 77% by switching to symptom-based alerts and static analysis — the exact metrics, tools, and workflows that worked for a Nairobi civic tech team using AI for 40% of their code.</description>
-      <pubDate>Mon, 06 Jul 2026 03:54:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-wrote-40-of-our-code-heres-what-broke-our-on-call/</guid>
     </item>
   </channel>
 </rss>

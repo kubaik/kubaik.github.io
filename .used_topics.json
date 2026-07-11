@@ -57,5 +57,6 @@
   "How we do zero-downtime schema changes on 2TB+ Postgres databases in 2026",
   "Building internal tools that help non-AI engineers work safely with agents",
   "How the role of 'AI Engineer' evolved in our team throughout 2026",
-  "The alert triage system that reduced false positives enough for engineers to actually sleep"
+  "The alert triage system that reduced false positives enough for engineers to actually sleep",
+  "Evaluation-driven development for agents: the loop that replaced vibe testing"
 ]
