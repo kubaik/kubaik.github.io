@@ -1,274 +1,274 @@
 adsense_slots: {}
 amazon_affiliate_tag: aiblogcontent-20
-base_path: ''
+base_path: ""
 base_url: https://kubaik.github.io
 content_topics:
-- Why most production AI agents still need circuit breakers and human escalation paths
-  in 2026
-- How I measure and control token spend at 50k+ daily LLM calls without killing UX
-- 'Agentic workflows that survive network partitions: the patterns that actually work
-  in Africa'
-- LLM evaluation pipelines that catch drift before users notice — real metrics from
-  production
-- The hidden failure modes of tool-calling agents at scale (and how we guard against
-  them)
-- Why structured output + validation layers beat JSON mode for anything that touches
-  money
-- Building reliable multi-agent systems without the orchestration tax most frameworks
-  impose
-- How we cut AI feature latency from 2.8s to 380ms while keeping model quality
-- The evaluation stack I actually trust for production LLM features in 2026
-- When to fine-tune, when to route, and when to just use a bigger model — 2026 decision
-  framework
-- 'Production RAG that doesn''t rot: chunking, indexing, and refresh strategies that
-  survive real data change'
-- 'AI observability beyond token counts: what actually predicts user-visible degradation'
-- How I run local + cloud model routing without the complexity exploding
-- The MCP server patterns that moved from experiment to critical infrastructure in
-  our stack
-- Why most 'self-healing' AI pipelines still page humans at 3am — and what we changed
-- How we built an IDP that developers actually use (instead of another Backstage nobody
-  opens)
-- 'Platform engineering ROI: the metrics that convinced our leadership to keep funding
-  it'
-- Golden paths that don't become golden handcuffs — keeping the paved road evolvable
-- How AI changed what 'self-service' means for platform teams in 2026
-- The platform abstractions that survived our first 10 AI-powered services
-- Why most internal developer platforms fail at the adoption layer, not the technical
-  one
-- Building a deployment platform that works for both senior engineers and new hires
-- How we measure platform team impact without vanity metrics
-- The tradeoffs we made when turning every team into platform consumers
-- How we cut our AI inference bill 68% without changing a single model
-- The real cost of running agents 24/7 vs on-demand — numbers from our production
-  setup
-- Why GPU spot instances + smart retry logic beat reserved capacity for most AI workloads
-- 'FinOps for LLM-heavy teams: the levers that actually move the needle in 2026'
-- How we made egress costs visible to every engineer (and what changed as a result)
-- The infrastructure patterns that let us run 3x more AI experiments for the same
-  budget
-- When serverless stops being cheap for AI workloads — the inflection points we hit
-- How we replaced three managed services with one Postgres 17 extension (and what
-  we gave up)
-- Cost attribution for AI features that product managers actually understand
-- 'pgvector at 100k+ QPS: what broke and what we had to change'
-- Why we moved some vector workloads back to dedicated ANN after trying everything
-  in Postgres
-- The audit logging architecture that satisfies both compliance and performance teams
-- How we do zero-downtime schema changes on 2TB+ Postgres databases in 2026
-- Connection poolers in the age of serverless and AI agents — what still makes sense
-- Building change data capture that doesn't fall over when your LLM pipeline goes
-  wild
-- The data modeling decisions that survived our move to heavy AI feature usage
-- Why event sourcing became viable again once we had good LLM-assisted projection
-  code
-- How we detect prompt injection attempts that look like normal user behavior
-- The supply chain attacks on AI models and datasets that actually happened to teams
-  we know
-- 'Least-privilege for AI agents: the permission model that doesn''t make developers
-  revolt'
-- SBOM + attestation that actually gets used instead of sitting in a bucket
-- How we scan AI-generated code without drowning in false positives that everyone
-  ignores
-- Secrets management for teams that now have 40+ LLM integrations
-- The OWASP LLM risks that turned out to be bigger than prompt injection in our environment
-- Zero-trust networking for AI services without the latency tax
-- What changed in our on-call process once AI started writing 40% of the code
-- The alert triage system that reduced false positives enough for engineers to actually
-  sleep
-- How we observe LLM features without drowning in token-level noise
-- Building postmortems that actually improve things when half the code is AI-generated
-- The observability stack that survived our move to heavy agentic workflows
-- Why traditional APM missed 80%+ of our AI-related incidents
-- 'React 19 + Server Components in production: what we actually shipped and what we
-  rolled back'
-- How we test AI-generated frontend code without testing the AI
-- The frontend performance budget that still matters when most traffic is from Africa
-- Why we chose HTMX + Islands over full client frameworks for our new internal tools
-- Building accessible AI chat interfaces that don't fail WCAG audits
-- The state management approach that survived our heaviest AI feature yet
-- How we built payment reconciliation that survives M-Pesa, Paystack, and Flutterwave
-  failures
-- The architecture decisions that let us serve users on 2G/3G as a first-class experience
-  in 2026
-- What changed in our stack when Starlink became reliable enough for production workloads
-  in East Africa
-- Building fintech features that work across Kenya, Nigeria, Ghana, and Senegal without
-  country-specific forks
-- The regulatory tech patterns we're now forced to implement because of 2026 African
-  fintech rules
-- How Nairobi-based teams are competing on AI features despite higher inference latency
-  to major providers
-- Offline-first + eventual consistency patterns that actually work for mobile money
-  apps
-- The cost and reliability tradeoffs of running AI features for users paying in local
-  currency
-- How AI changed what 'senior engineer' actually means in 2026 hiring rubrics
-- The skills that still command premium remote rates when AI can do the obvious parts
-- How we run AI-augmented teams without destroying code ownership and accountability
-- Building a personal brand as an engineer in a world where everyone has AI-assisted
-  portfolios
-- The compensation negotiation playbook that works when the market knows AI increased
-  your output
-- Why some engineers are getting promoted faster in the AI era while others are being
-  managed out
-- How to lead technical decisions when half your team is using tools you don't fully
-  understand yet
-- The portfolio projects that actually get African engineers hired into senior remote
-  roles in 2026
-- How we launched and iterated an AI-powered micro-SaaS while keeping infra under
-  $150/month
-- The pricing experiments that worked (and the ones that quietly killed conversion)
-- Why most AI wrapper businesses died in 2026 and what the survivors have in common
-- Building in public as a solo developer without burning out on content performance
-- The exact stack and cost breakdown for a Nairobi-based SaaS serving 8k+ MAU
-- How AI changed the sales cycle for developer tools — and what still works
-- When to build vs when to buy the AI components of your SaaS in 2026
-- 'eBPF in 2026: the observability and security use cases that finally justified the
-  complexity'
-- 'WebAssembly on the server: where it actually beats containers in our production
-  workloads'
-- The durable execution patterns that replaced most of our custom workflow code
-- How feature flags evolved into full AI rollout and experimentation platforms
-- Building systems that can absorb new AI capabilities without major rewrites every
-  6 months
-- The architecture principles that survived the shift to agentic and multi-model systems
-- The production incident that taught us our AI agents needed their own circuit breakers
-- Why our beautiful RAG pipeline fell over at 3am on a public holiday (and how we
-  fixed it)
-- The database connection pool mistake that cost us $4k/month before we noticed
-- How we debugged silent LLM quality degradation that metrics didn't catch
-- The migration that went wrong because we trusted the AI-generated migration script
-  too much
-- 'MCP in production: the hidden operational costs and security gotchas nobody talks
-  about'
-- Why MCP won the agent-tool protocol war — and what it actually changed in how we
-  build agents
-- Multi-agent orchestration patterns that survive production (supervisor, swarm, debate,
-  pipeline)
-- The failure modes we only saw after running multi-agent systems at scale for 6 months
-- How we built a reliable multi-agent research system without LangGraph (and why we
-  might switch back)
-- 'Agent-to-Agent (A2A) vs MCP: when to use each in 2026 production systems'
-- 'Context engineering for long-running agents: the patterns that actually reduce
-  hallucinations'
-- Why most production agents still need strong human-in-the-loop boundaries in 2026
-- 'LLMOps in 2026: the evaluation and monitoring stack that replaced our old RAG dashboards'
-- How newest models (Claude 4 / GPT-5 era) changed our agent architecture decisions
-- 'Agentic FinOps: tracking and optimizing the real cost of autonomous AI workflows'
-- The token economics problem nobody solved yet for always-on agent teams
-- Building evaluation harnesses for multi-agent systems that developers actually trust
-- 'Memory systems for production agents: what worked and what leaked context over
-  time'
-- How we detect and contain agent drift before it creates bad user experiences
-- Security model for MCP servers in regulated environments (fintech case study)
-- The governance layer we added after our first agent caused a compliance incident
-- 'On-device and edge agents in 2026: when they finally beat cloud round-trips for
-  African users'
-- How we run local LLM agents for sensitive fintech workflows without sending data
-  abroad
-- 'World models and physical AI: what they mean for backend engineers in 2026'
-- 'Purpose-built AI platforms vs general platforms: the decision we had to make in
-  2026'
-- 'Agentic cost management: using AI to optimize our own AI spend (and where it backfired)'
-- How we version and rollback production agents without breaking downstream systems
-- The hidden latency tax of multi-agent handoffs and how we reduced it by 60%
-- Building durable agent workflows that survive restarts, model changes, and network
-  blips
-- Why structured logging + model pinning became non-negotiable once we had 15+ agents
-  in production
-- 'Evaluation-driven development for agents: the loop that replaced vibe testing'
-- How we measure 'agent reliability' in a way that correlates with user trust
-- The tool-use patterns that scaled and the ones that created thundering herd problems
-- Context window management strategies for agents that run for hours or days
-- How we added circuit breakers and bulkheads to agent systems after the first cascade
-  failure
-- Productionizing 'computer use' style agents without giving them dangerous permissions
-- How our Internal Developer Platform evolved to support AI feature development in
-  2026
-- The platform abstractions that made agent development 3x faster for our teams
-- Why most platform teams are still building for 2024 developer workflows in an agentic
-  world
-- Building golden paths for AI features that don't become maintenance nightmares
-- How we measure platform value when half the 'code' is now prompts and agent graphs
-- The self-service AI tooling layer we built so product teams could experiment safely
-- How we cut our monthly AI spend by 55% after implementing real token attribution
-- 'Agentic FinOps: the dashboards and alerts that finally made AI costs visible to
-  leadership'
-- The real cost of always-on vs on-demand agents in a Nairobi-based SaaS
-- How we use spot instances + smart retry logic for non-critical agent workloads
-- FinOps patterns that work when your biggest variable cost is now LLM tokens, not
-  EC2
-- Why traditional cloud cost tools failed us once agents started making autonomous
-  decisions
-- Building unit economics for AI features that product and finance teams can both
-  understand
-- What traditional observability missed when we introduced our first production agents
-- How we built agent-specific tracing that actually helped during incidents
-- The postmortems we now write differently because an agent made the wrong decision
-- Building SLOs for agentic features that don't just measure latency and error rate
-- How we detect when an agent is 'working' but producing low-quality or harmful output
-- The on-call changes we made after agents started creating incidents at 2am
-- How we implemented least-privilege access for agents that need to call 30+ tools
-- The prompt and tool injection attacks we actually saw in production (and how we
-  blocked them)
-- Building audit trails for agent decisions that satisfy both compliance and debugging
-  needs
-- Why agent identity and authentication became harder than we expected in 2026
-- How we do red-teaming for internal agents without slowing down development velocity
-- Data residency and sovereign AI constraints for African fintech using global models
-- How we built low-latency agent features for users on intermittent 3G/4G connections
-  in East Africa
-- The cost and reliability tradeoffs of running agents for users who pay in local
-  mobile money
-- Building AI features that work across M-Pesa, Paystack, and Flutterwave failure
-  modes
-- Why global AI best practices often fail in markets with high mobile data costs and
-  latency
-- How Nairobi teams are using local + cloud model routing to stay competitive on cost
-  and speed
-- Offline-capable agent workflows for field agents and last-mile operations in Africa
-- The regulatory and compliance realities of deploying autonomous agents in African
-  fintech in 2026
-- How Cursor, Claude Code, and Windsurf actually changed our daily engineering workflow
-  in 2026
-- The developer experience gaps that still exist when building and debugging multi-agent
-  systems
-- How we test and review agent-generated code and workflows at team scale
-- Building internal tools that help non-AI engineers work safely with agents
-- How the role of 'AI Engineer' evolved in our team throughout 2026
-- The skills that became table stakes for senior engineers once agents were in production
-- How we run code reviews and architecture decisions when significant portions of
-  the system are agent-orchestrated
-- Building healthy team norms around AI tool usage without creating two classes of
-  engineers
-- The leadership challenges of managing teams where output velocity increased dramatically
-  but ownership became blurrier
-- How African engineering teams are adapting hiring and onboarding for the agentic
-  era
-- 'Event-driven vs agent-driven architectures: when each wins in 2026'
-- How durable execution platforms (Temporal, Inngest, etc.) changed our agent workflow
-  thinking
-- The database and state management patterns that survived heavy agent usage
-- Designing systems that can gracefully degrade when an upstream agent or model is
-  slow or wrong
-- How we version and evolve agent capabilities without breaking existing users and
-  integrations
-- The production incident caused by an agent that followed instructions too literally
-- Why our beautiful multi-agent research system quietly degraded over three months
-- The MCP server security mistake that could have exposed internal tools
-- How we recovered after an agent made thousands of low-value API calls overnight
-- The evaluation gap that let a subtle model behavior change slip into production
+  - Why most production AI agents still need circuit breakers and human escalation paths
+    in 2026
+  - How I measure and control token spend at 50k+ daily LLM calls without killing UX
+  - "Agentic workflows that survive network partitions: the patterns that actually work
+    in Africa"
+  - LLM evaluation pipelines that catch drift before users notice — real metrics from
+    production
+  - The hidden failure modes of tool-calling agents at scale (and how we guard against
+    them)
+  - Why structured output + validation layers beat JSON mode for anything that touches
+    money
+  - Building reliable multi-agent systems without the orchestration tax most frameworks
+    impose
+  - How we cut AI feature latency from 2.8s to 380ms while keeping model quality
+  - The evaluation stack I actually trust for production LLM features in 2026
+  - When to fine-tune, when to route, and when to just use a bigger model — 2026 decision
+    framework
+  - "Production RAG that doesn't rot: chunking, indexing, and refresh strategies that
+    survive real data change"
+  - "AI observability beyond token counts: what actually predicts user-visible degradation"
+  - How I run local + cloud model routing without the complexity exploding
+  - The MCP server patterns that moved from experiment to critical infrastructure in
+    our stack
+  - Why most 'self-healing' AI pipelines still page humans at 3am — and what we changed
+  - How we built an IDP that developers actually use (instead of another Backstage nobody
+    opens)
+  - "Platform engineering ROI: the metrics that convinced our leadership to keep funding
+    it"
+  - Golden paths that don't become golden handcuffs — keeping the paved road evolvable
+  - How AI changed what 'self-service' means for platform teams in 2026
+  - The platform abstractions that survived our first 10 AI-powered services
+  - Why most internal developer platforms fail at the adoption layer, not the technical
+    one
+  - Building a deployment platform that works for both senior engineers and new hires
+  - How we measure platform team impact without vanity metrics
+  - The tradeoffs we made when turning every team into platform consumers
+  - How we cut our AI inference bill 68% without changing a single model
+  - The real cost of running agents 24/7 vs on-demand — numbers from our production
+    setup
+  - Why GPU spot instances + smart retry logic beat reserved capacity for most AI workloads
+  - "FinOps for LLM-heavy teams: the levers that actually move the needle in 2026"
+  - How we made egress costs visible to every engineer (and what changed as a result)
+  - The infrastructure patterns that let us run 3x more AI experiments for the same
+    budget
+  - When serverless stops being cheap for AI workloads — the inflection points we hit
+  - How we replaced three managed services with one Postgres 17 extension (and what
+    we gave up)
+  - Cost attribution for AI features that product managers actually understand
+  - "pgvector at 100k+ QPS: what broke and what we had to change"
+  - Why we moved some vector workloads back to dedicated ANN after trying everything
+    in Postgres
+  - The audit logging architecture that satisfies both compliance and performance teams
+  - How we do zero-downtime schema changes on 2TB+ Postgres databases in 2026
+  - Connection poolers in the age of serverless and AI agents — what still makes sense
+  - Building change data capture that doesn't fall over when your LLM pipeline goes
+    wild
+  - The data modeling decisions that survived our move to heavy AI feature usage
+  - Why event sourcing became viable again once we had good LLM-assisted projection
+    code
+  - How we detect prompt injection attempts that look like normal user behavior
+  - The supply chain attacks on AI models and datasets that actually happened to teams
+    we know
+  - "Least-privilege for AI agents: the permission model that doesn't make developers
+    revolt"
+  - SBOM + attestation that actually gets used instead of sitting in a bucket
+  - How we scan AI-generated code without drowning in false positives that everyone
+    ignores
+  - Secrets management for teams that now have 40+ LLM integrations
+  - The OWASP LLM risks that turned out to be bigger than prompt injection in our environment
+  - Zero-trust networking for AI services without the latency tax
+  - What changed in our on-call process once AI started writing 40% of the code
+  - The alert triage system that reduced false positives enough for engineers to actually
+    sleep
+  - How we observe LLM features without drowning in token-level noise
+  - Building postmortems that actually improve things when half the code is AI-generated
+  - The observability stack that survived our move to heavy agentic workflows
+  - Why traditional APM missed 80%+ of our AI-related incidents
+  - "React 19 + Server Components in production: what we actually shipped and what we
+    rolled back"
+  - How we test AI-generated frontend code without testing the AI
+  - The frontend performance budget that still matters when most traffic is from Africa
+  - Why we chose HTMX + Islands over full client frameworks for our new internal tools
+  - Building accessible AI chat interfaces that don't fail WCAG audits
+  - The state management approach that survived our heaviest AI feature yet
+  - How we built payment reconciliation that survives M-Pesa, Paystack, and Flutterwave
+    failures
+  - The architecture decisions that let us serve users on 2G/3G as a first-class experience
+    in 2026
+  - What changed in our stack when Starlink became reliable enough for production workloads
+    in East Africa
+  - Building fintech features that work across Kenya, Nigeria, Ghana, and Senegal without
+    country-specific forks
+  - The regulatory tech patterns we're now forced to implement because of 2026 African
+    fintech rules
+  - How Nairobi-based teams are competing on AI features despite higher inference latency
+    to major providers
+  - Offline-first + eventual consistency patterns that actually work for mobile money
+    apps
+  - The cost and reliability tradeoffs of running AI features for users paying in local
+    currency
+  - How AI changed what 'senior engineer' actually means in 2026 hiring rubrics
+  - The skills that still command premium remote rates when AI can do the obvious parts
+  - How we run AI-augmented teams without destroying code ownership and accountability
+  - Building a personal brand as an engineer in a world where everyone has AI-assisted
+    portfolios
+  - The compensation negotiation playbook that works when the market knows AI increased
+    your output
+  - Why some engineers are getting promoted faster in the AI era while others are being
+    managed out
+  - How to lead technical decisions when half your team is using tools you don't fully
+    understand yet
+  - The portfolio projects that actually get African engineers hired into senior remote
+    roles in 2026
+  - How we launched and iterated an AI-powered micro-SaaS while keeping infra under
+    $150/month
+  - The pricing experiments that worked (and the ones that quietly killed conversion)
+  - Why most AI wrapper businesses died in 2026 and what the survivors have in common
+  - Building in public as a solo developer without burning out on content performance
+  - The exact stack and cost breakdown for a Nairobi-based SaaS serving 8k+ MAU
+  - How AI changed the sales cycle for developer tools — and what still works
+  - When to build vs when to buy the AI components of your SaaS in 2026
+  - "eBPF in 2026: the observability and security use cases that finally justified the
+    complexity"
+  - "WebAssembly on the server: where it actually beats containers in our production
+    workloads"
+  - The durable execution patterns that replaced most of our custom workflow code
+  - How feature flags evolved into full AI rollout and experimentation platforms
+  - Building systems that can absorb new AI capabilities without major rewrites every
+    6 months
+  - The architecture principles that survived the shift to agentic and multi-model systems
+  - The production incident that taught us our AI agents needed their own circuit breakers
+  - Why our beautiful RAG pipeline fell over at 3am on a public holiday (and how we
+    fixed it)
+  - The database connection pool mistake that cost us $4k/month before we noticed
+  - How we debugged silent LLM quality degradation that metrics didn't catch
+  - The migration that went wrong because we trusted the AI-generated migration script
+    too much
+  - "MCP in production: the hidden operational costs and security gotchas nobody talks
+    about"
+  - Why MCP won the agent-tool protocol war — and what it actually changed in how we
+    build agents
+  - Multi-agent orchestration patterns that survive production (supervisor, swarm, debate,
+    pipeline)
+  - The failure modes we only saw after running multi-agent systems at scale for 6 months
+  - How we built a reliable multi-agent research system without LangGraph (and why we
+    might switch back)
+  - "Agent-to-Agent (A2A) vs MCP: when to use each in 2026 production systems"
+  - "Context engineering for long-running agents: the patterns that actually reduce
+    hallucinations"
+  - Why most production agents still need strong human-in-the-loop boundaries in 2026
+  - "LLMOps in 2026: the evaluation and monitoring stack that replaced our old RAG dashboards"
+  - How newest models (Claude 4 / GPT-5 era) changed our agent architecture decisions
+  - "Agentic FinOps: tracking and optimizing the real cost of autonomous AI workflows"
+  - The token economics problem nobody solved yet for always-on agent teams
+  - Building evaluation harnesses for multi-agent systems that developers actually trust
+  - "Memory systems for production agents: what worked and what leaked context over
+    time"
+  - How we detect and contain agent drift before it creates bad user experiences
+  - Security model for MCP servers in regulated environments (fintech case study)
+  - The governance layer we added after our first agent caused a compliance incident
+  - "On-device and edge agents in 2026: when they finally beat cloud round-trips for
+    African users"
+  - How we run local LLM agents for sensitive fintech workflows without sending data
+    abroad
+  - "World models and physical AI: what they mean for backend engineers in 2026"
+  - "Purpose-built AI platforms vs general platforms: the decision we had to make in
+    2026"
+  - "Agentic cost management: using AI to optimize our own AI spend (and where it backfired)"
+  - How we version and rollback production agents without breaking downstream systems
+  - The hidden latency tax of multi-agent handoffs and how we reduced it by 60%
+  - Building durable agent workflows that survive restarts, model changes, and network
+    blips
+  - Why structured logging + model pinning became non-negotiable once we had 15+ agents
+    in production
+  - "Evaluation-driven development for agents: the loop that replaced vibe testing"
+  - How we measure 'agent reliability' in a way that correlates with user trust
+  - The tool-use patterns that scaled and the ones that created thundering herd problems
+  - Context window management strategies for agents that run for hours or days
+  - How we added circuit breakers and bulkheads to agent systems after the first cascade
+    failure
+  - Productionizing 'computer use' style agents without giving them dangerous permissions
+  - How our Internal Developer Platform evolved to support AI feature development in
+    2026
+  - The platform abstractions that made agent development 3x faster for our teams
+  - Why most platform teams are still building for 2024 developer workflows in an agentic
+    world
+  - Building golden paths for AI features that don't become maintenance nightmares
+  - How we measure platform value when half the 'code' is now prompts and agent graphs
+  - The self-service AI tooling layer we built so product teams could experiment safely
+  - How we cut our monthly AI spend by 55% after implementing real token attribution
+  - "Agentic FinOps: the dashboards and alerts that finally made AI costs visible to
+    leadership"
+  - The real cost of always-on vs on-demand agents in a Nairobi-based SaaS
+  - How we use spot instances + smart retry logic for non-critical agent workloads
+  - FinOps patterns that work when your biggest variable cost is now LLM tokens, not
+    EC2
+  - Why traditional cloud cost tools failed us once agents started making autonomous
+    decisions
+  - Building unit economics for AI features that product and finance teams can both
+    understand
+  - What traditional observability missed when we introduced our first production agents
+  - How we built agent-specific tracing that actually helped during incidents
+  - The postmortems we now write differently because an agent made the wrong decision
+  - Building SLOs for agentic features that don't just measure latency and error rate
+  - How we detect when an agent is 'working' but producing low-quality or harmful output
+  - The on-call changes we made after agents started creating incidents at 2am
+  - How we implemented least-privilege access for agents that need to call 30+ tools
+  - The prompt and tool injection attacks we actually saw in production (and how we
+    blocked them)
+  - Building audit trails for agent decisions that satisfy both compliance and debugging
+    needs
+  - Why agent identity and authentication became harder than we expected in 2026
+  - How we do red-teaming for internal agents without slowing down development velocity
+  - Data residency and sovereign AI constraints for African fintech using global models
+  - How we built low-latency agent features for users on intermittent 3G/4G connections
+    in East Africa
+  - The cost and reliability tradeoffs of running agents for users who pay in local
+    mobile money
+  - Building AI features that work across M-Pesa, Paystack, and Flutterwave failure
+    modes
+  - Why global AI best practices often fail in markets with high mobile data costs and
+    latency
+  - How Nairobi teams are using local + cloud model routing to stay competitive on cost
+    and speed
+  - Offline-capable agent workflows for field agents and last-mile operations in Africa
+  - The regulatory and compliance realities of deploying autonomous agents in African
+    fintech in 2026
+  - How Cursor, Claude Code, and Windsurf actually changed our daily engineering workflow
+    in 2026
+  - The developer experience gaps that still exist when building and debugging multi-agent
+    systems
+  - How we test and review agent-generated code and workflows at team scale
+  - Building internal tools that help non-AI engineers work safely with agents
+  - How the role of 'AI Engineer' evolved in our team throughout 2026
+  - The skills that became table stakes for senior engineers once agents were in production
+  - How we run code reviews and architecture decisions when significant portions of
+    the system are agent-orchestrated
+  - Building healthy team norms around AI tool usage without creating two classes of
+    engineers
+  - The leadership challenges of managing teams where output velocity increased dramatically
+    but ownership became blurrier
+  - How African engineering teams are adapting hiring and onboarding for the agentic
+    era
+  - "Event-driven vs agent-driven architectures: when each wins in 2026"
+  - How durable execution platforms (Temporal, Inngest, etc.) changed our agent workflow
+    thinking
+  - The database and state management patterns that survived heavy agent usage
+  - Designing systems that can gracefully degrade when an upstream agent or model is
+    slow or wrong
+  - How we version and evolve agent capabilities without breaking existing users and
+    integrations
+  - The production incident caused by an agent that followed instructions too literally
+  - Why our beautiful multi-agent research system quietly degraded over three months
+  - The MCP server security mistake that could have exposed internal tools
+  - How we recovered after an agent made thousands of low-value API calls overnight
+  - The evaluation gap that let a subtle model behavior change slip into production
 google_adsense_id: ca-pub-4477679588953789
 google_adsense_verification: ca-pub-4477679588953789
 google_analytics_id: G-DST4PJYK6V
 google_search_console_key: GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI
 hook_style: auto
-site_description: Practical backend engineering, AI tooling, and developer career
+site_description:
+  Practical backend engineering, AI tooling, and developer career
   advice by Kubai Kevin — a software developer with 10+ years building production
   systems in fintech and AI.
 site_name: Kubai Kevin
 social_accounts:
-  facebook: your-facebook-page
-  linkedin: your-linkedin-page
   twitter: https://twitter.com/KubaiKevin
+  linkedin: https://www.linkedin.com/in/kevin-kubai-22b61b37/

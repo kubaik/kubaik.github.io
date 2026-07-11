@@ -390,6 +390,28 @@ Sitemap: {base_url}/rss.xml
         word_count = len(content.split())
         return max(1, round(word_count / 200))
 
+    def _valid_social_links(self, config: Dict) -> Dict[str, str]:
+        """
+        Return only social_accounts entries that are real, absolute URLs.
+
+        BUG FIX: config.yaml ships with placeholder values for unconfigured
+        platforms (e.g. social_accounts.facebook = "your-facebook-page").
+        The footer template previously rendered these placeholders directly
+        as href="{{ url }}", producing broken same-site links like
+        https://kubaik.github.io/your-facebook-page (404) instead of either
+        a real external profile or no link at all. Broken outbound links on
+        every page are a crawl-budget and trust-signal problem for SEO and
+        an unprofessional signal during AdSense review. This filters to
+        http(s) URLs only, so unconfigured platforms are silently omitted
+        until the user provides a real link.
+        """
+        raw = config.get('social_accounts', {}) or {}
+        return {
+            platform: url
+            for platform, url in raw.items()
+            if isinstance(url, str) and url.strip().lower().startswith(('http://', 'https://'))
+        }
+
     def _generate_homepage(self, posts: List[BlogPost]):
         config = self.blog_system.config
 
@@ -421,7 +443,7 @@ Sitemap: {base_url}/rss.xml
             'posts_per_page': HOMEPAGE_SSR_LIMIT,
             'total_posts': len(posts_data),
             'current_year': datetime.now().year,
-            'social_links': config.get('social_accounts', {}),
+            'social_links': self._valid_social_links(config),
             'global_meta_tags': self.seo.generate_global_meta_tags(),
             'homepage_meta_tags': self.seo.generate_homepage_meta_tags(),
             'organization_schema': self.seo.generate_organization_schema(),
@@ -1554,8 +1576,8 @@ def _build_templates() -> dict:
     <footer>
         <div class="container">
             <p>&copy; {{ current_year }} {{ site_name }}. Written by
-               <a href="{{ base_path }}/about/">Kubai Kevin</a>.
-               Content reviewed for accuracy before publishing.</p>
+               <a href="{{ base_path }}/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="{{ base_path }}/ai-content-policy/">AI content policy</a>.</p>
         </div>
     </footer>
     <script src="{{ base_path }}/static/navigation.js"></script>
@@ -1723,8 +1745,9 @@ def _build_templates() -> dict:
 
         <div class="editorial-policy-note">
             Articles are written by <a href="{{ base_path }}/about/">Kubai Kevin</a>, a software developer
-            with 10+ years of production experience. Every post is reviewed for accuracy before publishing.
-            <a href="{{ base_path }}/about/#editorial">Learn about our editorial process →</a>
+            with 10+ years of production experience, drafted with AI assistance as part of an automated
+            publishing pipeline. Not every post gets individual line-by-line review before it goes live.
+            <a href="{{ base_path }}/about/#editorial">See how articles are actually produced →</a>
         </div>
 
         <div class="search-container">
@@ -3003,7 +3026,7 @@ def _build_templates() -> dict:
         <article class="page-content">
             <div class="highlight-box">
                 <h2>Our Commitment in One Paragraph</h2>
-                <p style="margin-bottom:0;">Every article on {{ site_name }} is written on a topic selected from the author's direct professional experience, drafted with AI assistance for structure and speed, then reviewed by the author (Kubai Kevin) for factual accuracy, voice, and relevance before publication. AI tools accelerate the writing process — they do not replace editorial judgment.</p>
+                <p style="margin-bottom:0;">Every article on {{ site_name }} is written on a topic selected by the author (Kubai Kevin) from his own production experience, then drafted end-to-end by LLMs through an automated pipeline. Given the publishing volume, articles are <strong>not individually fact-checked or hand-edited by a human before going live</strong>. Automated quality gates (below) catch thin, duplicate, and boilerplate content before publication, and the author reviews and corrects specific articles when readers flag issues.</p>
             </div>
 
             <div class="policy-section">
@@ -3034,8 +3057,8 @@ def _build_templates() -> dict:
                         <p style="font-size:0.9rem;color:#555;">Content prompts explicitly ban keyword stuffing, filler phrases, and AI-detectable clichés. Quality validators check for these automatically.</p>
                     </div>
                     <div class="card">
-                        <h3>Not fabricated facts</h3>
-                        <p style="font-size:0.9rem;color:#555;">Factual claims, tool versions, and performance figures referenced in articles are verified against primary sources (official docs, GitHub, benchmarks) before publication.</p>
+                        <h3>Illustrative, not audited, figures</h3>
+                        <p style="font-size:0.9rem;color:#555;">Specific numbers, benchmarks, and cost figures in articles are generated as realistic illustrations of the pattern being discussed, not pulled from a verified source per article. Every post says so explicitly in its "About this article" footer — treat figures as directional and confirm them against current official documentation before relying on them in production.</p>
                     </div>
                 </div>
             </div>
@@ -3059,22 +3082,16 @@ def _build_templates() -> dict:
                 <p><strong>Kubai Kevin</strong> is the author and editor of all content on this site. His role in the pipeline includes:</p>
                 <ul class="check-list">
                     <li>Defining the topic list from personal production experience (not keyword research alone).</li>
-                    <li>Reviewing the quality validation reports for each published article.</li>
-                    <li>Responding to reader corrections within 48 hours and updating affected articles.</li>
-                    <li>Periodically auditing the published post library for accuracy and policy compliance.</li>
-                    <li>Maintaining the quality gate code that governs what is and isn't published.</li>
+                    <li>Maintaining the automated quality gate code that decides what is and isn't published (minimum length, duplicate detection, boilerplate and filler-phrase rejection).</li>
+                    <li>Reviewing and correcting individual articles when readers report an error via the <a href="{{ base_path }}/contact/">contact page</a>.</li>
+                    <li>Periodically spot-checking the published post library for accuracy and policy compliance.</li>
                 </ul>
                 <p>The author's LinkedIn profile and contact details are published on the <a href="{{ base_path }}/about/">About page</a> for full transparency.</p>
             </div>
 
             <div class="policy-section">
                 <h2>5. Corrections Policy</h2>
-                <p>If an article contains a factual error, an outdated tool version, or inaccurate code, please <a href="{{ base_path }}/contact/">contact us</a>. We will:</p>
-                <ul>
-                    <li>Acknowledge the report within 24 hours.</li>
-                    <li>Investigate and apply corrections within 48 hours of confirmation.</li>
-                    <li>Note the correction in the article with the correction date.</li>
-                </ul>
+                <p>If an article contains a factual error, an outdated tool version, or inaccurate code, please <a href="{{ base_path }}/contact/">contact us</a>. We will investigate, correct the article on a best-effort basis, and note the correction date on the affected post.</p>
             </div>
 
             <div class="policy-section">
@@ -3142,7 +3159,7 @@ def _build_templates() -> dict:
             <div class="dmca-section">
                 <h2>1. Copyright Ownership</h2>
                 <p>All original articles, prose, code examples, and other content published on {{ site_name }} are the intellectual property of <strong>Kubai Kevin</strong> and are protected under copyright law. Unauthorised reproduction, distribution, or derivative works without explicit written permission is prohibited.</p>
-                <p>Content on this site is produced with AI writing assistance and reviewed by the author before publication. The editorial decisions, original observations, structure, and voice are the author's own.</p>
+                <p>Content on this site is produced with AI writing assistance as part of an automated pipeline; not every article receives individual human review before publication (see our <a href="{{ base_path }}/ai-content-policy/">AI content policy</a>). The topic selection, editorial decisions, and voice are the author's own.</p>
             </div>
 
             <div class="dmca-section">
