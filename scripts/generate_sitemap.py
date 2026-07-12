@@ -6,6 +6,18 @@ Generates a single, Google-friendly sitemap.xml for kubaik.github.io.
 Includes support for image sitemaps (OG images).
 
 Run after the site is built.
+
+FIXES applied (2026-07):
+  - Pages whose <meta name="robots"> contains "noindex" are now EXCLUDED
+    from the sitemap. Previously all 912 /tag/* archive pages (which are
+    noindex,follow) were submitted, causing persistent "Submitted URL
+    marked noindex" warnings in Search Console.
+  - Output is deduplicated by final <loc>. Previously, noindex "this post
+    was merged" redirect stubs resolved their canonical to the live post's
+    URL, so a single URL could appear in the sitemap dozens of times
+    (one <url> entry was found duplicated 23x).
+  - Pages missing a canonical tag are now skipped with a warning instead
+    of silently falling back to a possibly-wrong path-derived URL.
 """
 
 import argparse
@@ -46,14 +58,30 @@ def is_excluded(path: str) -> bool:
 
 
 def extract_page_data(html_path: Path, base_url: str) -> dict | None:
-    """Extract canonical URL, lastmod, and OG image from HTML."""
+    """Extract canonical URL, lastmod, robots directive, and OG image from HTML."""
     try:
         content = html_path.read_text(encoding="utf-8", errors="replace")
         soup = BeautifulSoup(content, "html.parser")
 
-        # Canonical URL
+        # Robots directive — skip noindex pages entirely
+        robots_tag = soup.find("meta", attrs={"name": "robots"})
+        robots_content = (robots_tag.get("content", "")
+                          if robots_tag else "").lower()
+        if "noindex" in robots_content:
+            return None
+
+        # Canonical URL — required. A page without one shouldn't be in the
+        # sitemap since we can't be sure what URL Google should index it as.
         canonical_tag = soup.find("link", rel="canonical")
-        canonical = canonical_tag["href"] if canonical_tag else None
+        canonical = canonical_tag["href"] if canonical_tag and canonical_tag.get(
+            "href") else None
+        if not canonical:
+            print(f"  Warning: skipping {html_path} — no canonical tag found")
+            return None
+
+        # Skip meta-refresh redirect stubs even if somehow not marked noindex
+        if soup.find("meta", attrs={"http-equiv": lambda v: v and v.lower() == "refresh"}):
+            return None
 
         # Last modified / published time
         lastmod = None
@@ -80,8 +108,9 @@ def extract_page_data(html_path: Path, base_url: str) -> dict | None:
 
 
 def discover_pages(site_dir: Path, base_url: str) -> list[dict]:
-    """Find all pages and extract relevant metadata."""
-    pages = []
+    """Find all indexable pages and extract relevant metadata, deduplicated by canonical URL."""
+    pages_by_url: dict[str, dict] = {}
+
     for html_file in sorted(site_dir.rglob("index.html")):
         rel_path = html_file.parent.relative_to(site_dir).as_posix()
         url_path = "/" if rel_path == "." else f"/{rel_path}/"
@@ -90,14 +119,29 @@ def discover_pages(site_dir: Path, base_url: str) -> list[dict]:
             continue
 
         data = extract_page_data(html_file, base_url)
-        if data:
-            pages.append({
+        if not data:
+            continue
+
+        loc = data["canonical"]
+
+        # Dedup: if we've already seen this canonical URL, keep the entry
+        # with the most complete metadata (prefer one that has an OG image
+        # and a real lastmod) rather than just the first one encountered.
+        existing = pages_by_url.get(loc)
+        if existing is None:
+            pages_by_url[loc] = {
                 "path": url_path,
-                "canonical": data["canonical"],
+                "canonical": loc,
                 "lastmod": data["lastmod"],
                 "og_image": data["og_image"],
-            })
-    return pages
+            }
+        else:
+            if not existing.get("og_image") and data.get("og_image"):
+                existing["og_image"] = data["og_image"]
+            if not existing.get("lastmod") and data.get("lastmod"):
+                existing["lastmod"] = data["lastmod"]
+
+    return list(pages_by_url.values())
 
 
 def format_lastmod(iso_str: str | None) -> str:
@@ -119,8 +163,9 @@ def build_sitemap_xml(pages: list[dict], base_url: str) -> str:
         '        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">',
     ]
 
-    for page in pages:
-        loc = page.get("canonical") or (base_url.rstrip("/") + page["path"])
+    # Sort for deterministic, diff-friendly output
+    for page in sorted(pages, key=lambda p: p["canonical"]):
+        loc = page["canonical"]
         lastmod = format_lastmod(page.get("lastmod"))
         priority, changefreq = get_priority_and_changefreq(page["path"])
 
@@ -130,7 +175,6 @@ def build_sitemap_xml(pages: list[dict], base_url: str) -> str:
         lines.append(f"    <changefreq>{changefreq}</changefreq>")
         lines.append(f"    <priority>{priority}</priority>")
 
-        # Add image if OG image exists
         if page.get("og_image"):
             lines.append("    <image:image>")
             lines.append(
@@ -157,9 +201,9 @@ def main() -> int:
         print(f"ERROR: Directory not found: {site_dir}", file=sys.stderr)
         return 1
 
-    print(f"Scanning {site_dir} for pages...")
+    print(f"Scanning {site_dir} for indexable pages...")
     pages = discover_pages(site_dir, args.base_url)
-    print(f"Found {len(pages)} pages")
+    print(f"Found {len(pages)} indexable, deduplicated pages")
 
     xml_content = build_sitemap_xml(pages, args.base_url)
     output_file = site_dir / "sitemap.xml"

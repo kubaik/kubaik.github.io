@@ -1,4 +1,16 @@
-/* consent.js — GDPR Cookie Consent v2 with Consent Mode v2 support */
+/* consent.js — GDPR Cookie Consent v2 with Consent Mode v2 support
+ *
+ * NOTE: the *default* consent signal (granted/denied) is now pushed
+ * synchronously via a tiny inline <script> in <head> (emitted directly
+ * in each page template) BEFORE this file is even requested. That
+ * inline snippet has zero network cost and guarantees Consent Mode
+ * defaults are set before the async GA/AdSense tags execute.
+ *
+ * This file is now loaded with `defer` — it only needs to run before
+ * the user can interact with the page, not before any tag fires. It
+ * still re-asserts the consent state on load (harmless, idempotent)
+ * and owns all banner UI / accept-decline logic.
+ */
 (function () {
   'use strict';
 

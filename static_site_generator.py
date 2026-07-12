@@ -356,6 +356,11 @@ User-agent: *
 Disallow: /admin/
 Disallow: /private/
 Disallow: /.git/
+Disallow: /tag/
+
+# Explicitly allow Google's ad crawler regardless of the rule above
+User-agent: Mediapartners-Google
+Allow: /
 
 # Sitemap
 Sitemap: {base_url}/sitemap.xml
@@ -700,7 +705,19 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         print("Generated docs/_headers (Netlify/Cloudflare) and docs/.htaccess (Apache)")
 
     def _generate_privacy_consent_banner(self):
-        consent_js = r"""/* consent.js — GDPR Cookie Consent v2 with Consent Mode v2 support */
+        consent_js = r"""/* consent.js — GDPR Cookie Consent v2 with Consent Mode v2 support
+ *
+ * NOTE: the *default* consent signal (granted/denied) is now pushed
+ * synchronously via a tiny inline <script> in <head> (emitted directly
+ * in each page template) BEFORE this file is even requested. That
+ * inline snippet has zero network cost and guarantees Consent Mode
+ * defaults are set before the async GA/AdSense tags execute.
+ *
+ * This file is now loaded with `defer` — it only needs to run before
+ * the user can interact with the page, not before any tag fires. It
+ * still re-asserts the consent state on load (harmless, idempotent)
+ * and owns all banner UI / accept-decline logic.
+ */
 (function () {
   'use strict';
 
@@ -1155,7 +1172,8 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
   <meta name="robots" content="{robots_directive}">
   <meta name="base-path" content="{base_path}">
   <link rel="canonical" href="{base_url}/tag/{tag_slug}/">
-  <script src="{base_path}/static/consent.js"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){{window.dataLayer.push(arguments);}}window.gtag=window.gtag||gtag;(function(){{var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500}});}})();</script>
+  <script src="{base_path}/static/consent.js" defer></script>
   <link rel="stylesheet" href="{base_path}/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="{tag_title} Articles — {site_name}">
@@ -1213,7 +1231,8 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
   <meta name="robots" content="noindex, follow">
   <meta name="base-path" content="{base_path}">
   <link rel="canonical" href="{base_url}/tag/">
-  <script src="{base_path}/static/consent.js"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){{window.dataLayer.push(arguments);}}window.gtag=window.gtag||gtag;(function(){{var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500}});}})();</script>
+  <script src="{base_path}/static/consent.js" defer></script>
   <link rel="stylesheet" href="{base_path}/static/style.css">
 </head>
 <body>
@@ -1419,7 +1438,8 @@ def _build_templates() -> dict:
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
         <link rel="preconnect" href="https://www.google-analytics.com">
 
-        <script src="{{ base_path }}/static/consent.js"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="{{ base_path }}/static/consent.js" defer></script>
 
         {{ global_meta_tags | safe }}
         {{ meta_tags | safe }}
@@ -1542,10 +1562,13 @@ def _build_templates() -> dict:
                 color: #888; line-height: 1.6;
             ">
                 <p>
-                    <strong>Editorial standards:</strong> This article reflects the author's
-                    direct experience and has been reviewed for factual accuracy before publishing.
-                    Code examples are tested on the stated platform and version.
-                    If you spot an error, <a href="{{ base_path }}/contact/">please let us know</a> —
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="{{ base_path }}/contact/">please let us know</a> —
                     corrections are applied within 48 hours.
                 </p>
                 {% if post.affiliate_links %}
@@ -1633,7 +1656,8 @@ def _build_templates() -> dict:
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
     <link rel="preconnect" href="https://www.google-analytics.com">
-    <script src="{{ base_path }}/static/consent.js"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+    <script src="{{ base_path }}/static/consent.js" defer></script>
     {{ global_meta_tags | safe }}
     {{ homepage_meta_tags | safe }}
     {{ organization_schema | safe }}
@@ -2157,7 +2181,8 @@ def _build_templates() -> dict:
     <meta property="profile:first_name" content="Kevin">
     <meta property="profile:last_name" content="Kubai">
     <meta name="author" content="Kubai Kevin">
-    <script src="{{ base_path }}/static/consent.js"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+    <script src="{{ base_path }}/static/consent.js" defer></script>
     {{ global_meta_tags | safe }}
     <script type="application/ld+json">
     {
@@ -2516,7 +2541,8 @@ def _build_templates() -> dict:
     <meta name="description" content="Privacy Policy for {{ site_name }}. Learn what data we collect, how we use it, your rights under GDPR and CCPA, and how to contact us.">
     <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/privacy-policy/">
-    <script src="{{ base_path }}/static/consent.js"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+    <script src="{{ base_path }}/static/consent.js" defer></script>
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="manifest" href="{{ base_path }}/manifest.json">
@@ -2714,7 +2740,8 @@ def _build_templates() -> dict:
     <meta name="description" content="Terms of Service for {{ site_name }}">
     <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/terms-of-service/">
-    <script src="{{ base_path }}/static/consent.js"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+    <script src="{{ base_path }}/static/consent.js" defer></script>
     {{ global_meta_tags | safe }}
     <link rel="stylesheet" href="{{ base_path }}/static/style.css">
     <link rel="manifest" href="{{ base_path }}/manifest.json">
@@ -2767,7 +2794,8 @@ def _build_templates() -> dict:
     <meta name="description" content="Contact Kubai Kevin, software developer and author of {{ site_name }}. Based in Nairobi, Kenya. Responds within 3–5 business days.">
     <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/contact/">
-    <script src="{{ base_path }}/static/consent.js"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+    <script src="{{ base_path }}/static/consent.js" defer></script>
     {{ global_meta_tags | safe }}
     <script type="application/ld+json">
     {
@@ -2980,7 +3008,8 @@ def _build_templates() -> dict:
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="{{ base_path }}/static/consent.js"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+    <script src="{{ base_path }}/static/consent.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Content Policy — {{ site_name }}</title>
@@ -3114,7 +3143,8 @@ def _build_templates() -> dict:
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="{{ base_path }}/static/consent.js"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+    <script src="{{ base_path }}/static/consent.js" defer></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DMCA &amp; Copyright Policy — {{ site_name }}</title>

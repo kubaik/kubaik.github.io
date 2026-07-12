@@ -34,7 +34,8 @@
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
         <link rel="preconnect" href="https://www.google-analytics.com">
 
-        <script src="/static/consent.js"></script>
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
 
             <meta name="google-adsense-account" content="ca-pub-4477679588953789">
     <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
@@ -823,10 +824,13 @@ please contact me — corrections are applied within 48 hours.</p>
                 color: #888; line-height: 1.6;
             ">
                 <p>
-                    <strong>Editorial standards:</strong> This article reflects the author's
-                    direct experience and has been reviewed for factual accuracy before publishing.
-                    Code examples are tested on the stated platform and version.
-                    If you spot an error, <a href="/contact/">please let us know</a> —
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
                     corrections are applied within 48 hours.
                 </p>
                 

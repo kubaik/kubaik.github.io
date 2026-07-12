@@ -17,6 +17,11 @@ User-agent: *
 Disallow: /admin/
 Disallow: /private/
 Disallow: /.git/
+Disallow: /tag/
+
+# Explicitly allow Google's ad crawler regardless of the rule above
+User-agent: Mediapartners-Google
+Allow: /
 
 # Sitemap
 Sitemap: https://kubaik.github.io/sitemap.xml
