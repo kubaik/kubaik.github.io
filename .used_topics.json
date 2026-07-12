@@ -58,5 +58,6 @@
   "Building internal tools that help non-AI engineers work safely with agents",
   "How the role of 'AI Engineer' evolved in our team throughout 2026",
   "The alert triage system that reduced false positives enough for engineers to actually sleep",
-  "Evaluation-driven development for agents: the loop that replaced vibe testing"
+  "Evaluation-driven development for agents: the loop that replaced vibe testing",
+  "How we test and review agent-generated code and workflows at team scale"
 ]
