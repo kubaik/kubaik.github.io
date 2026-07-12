@@ -60,5 +60,6 @@
   "The alert triage system that reduced false positives enough for engineers to actually sleep",
   "Evaluation-driven development for agents: the loop that replaced vibe testing",
   "How we test and review agent-generated code and workflows at team scale",
-  "FinOps for LLM-heavy teams: the levers that actually move the needle in 2026"
+  "FinOps for LLM-heavy teams: the levers that actually move the needle in 2026",
+  "How to lead technical decisions when half your team is using tools you don't fully understand yet"
 ]

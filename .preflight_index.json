@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-12T09:48:06.300762",
+  "built_at": "2026-07-12T13:28:30.186896",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4300,6 +4300,11 @@
       "slug": "trim-llm-bills-3-finops-moves-that-work",
       "title": "Trim LLM bills: 3 FinOps moves that work",
       "summary": "Most finops llmheavy guides assume a clean environment and a patient timeline. Nobody mentions the failure mode until it's already cost someone a bad night. This is the version of the write-up that includes the part that broke. The gap between what the docs say and what production needs Most FinOps "
+    },
+    {
+      "slug": "stop-guessing-tech-stacks-validate-tools-in-2-hours",
+      "title": "Stop guessing tech stacks: validate tools in 2 hours",
+      "summary": "The official documentation for lead technical is good. What it doesn't cover is what happens six months into production. Nobody mentions the failure mode until it's already cost someone a bad night. Here's what actually worked, and why. The error and why it's confusing You’re the only engineer on a "
     }
   ]
 }
