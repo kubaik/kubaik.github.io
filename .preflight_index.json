@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-12T03:19:27.061725",
+  "built_at": "2026-07-12T09:48:06.300762",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4295,6 +4295,11 @@
       "slug": "agent-code-reviews-1200-tests-per-pr",
       "title": "Agent code reviews: 1,200 tests per PR",
       "summary": "I've hit the same test review mistake in more than one production codebase over the years. The default configuration is fine right up until it isn't. This post covers what comes after the happy path. The situation (what we were trying to solve) In 2026, our team at Aura built a platform that generat"
+    },
+    {
+      "slug": "trim-llm-bills-3-finops-moves-that-work",
+      "title": "Trim LLM bills: 3 FinOps moves that work",
+      "summary": "Most finops llmheavy guides assume a clean environment and a patient timeline. Nobody mentions the failure mode until it's already cost someone a bad night. This is the version of the write-up that includes the part that broke. The gap between what the docs say and what production needs Most FinOps "
     }
   ]
 }
