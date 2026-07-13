@@ -62,5 +62,6 @@
   "How we test and review agent-generated code and workflows at team scale",
   "FinOps for LLM-heavy teams: the levers that actually move the needle in 2026",
   "How to lead technical decisions when half your team is using tools you don't fully understand yet",
-  "Why we chose HTMX + Islands over full client frameworks for our new internal tools"
+  "Why we chose HTMX + Islands over full client frameworks for our new internal tools",
+  "Why GPU spot instances + smart retry logic beat reserved capacity for most AI workloads"
 ]

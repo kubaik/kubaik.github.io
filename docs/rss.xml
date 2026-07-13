@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 13 Jul 2026 03:21:30 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Jul 2026 14:42:44 +0000</lastBuildDate>
+    <item>
+      <title>GPU spot instances &gt; reserved for AI costs</title>
+      <link>https://kubaik.github.io/gpu-spot-instances-reserved-for-ai-costs/</link>
+      <description>Cut GPU costs 42% with spot instances + retry logic — real AWS numbers, Python retry manager, and when to switch from reserved capacity in 2026.</description>
+      <pubDate>Mon, 13 Jul 2026 14:42:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/gpu-spot-instances-reserved-for-ai-costs/</guid>
+    </item>
     <item>
       <title>HTMX + Islands beat React: our internal tools saved 40%…</title>
       <link>https://kubaik.github.io/htmx-islands-beat-react-our-internal-tools-saved-40/</link>
@@ -138,13 +145,6 @@
       <description>Block 96 % of prompt-injection attempts in 2026 with deny-by-default policies instead of brittle regex filters — real benchmarks, code samples, and the $1.2k latency mistake most teams repeat.</description>
       <pubDate>Wed, 08 Jul 2026 02:58:04 +0000</pubDate>
       <guid>https://kubaik.github.io/treat-every-user-input-as-hostile-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI in local currency: costs that surprise…</title>
-      <link>https://kubaik.github.io/ai-in-local-currency-costs-that-surprise/</link>
-      <description>Six weeks in, their AWS bill jumped 300% because the model was running on on-demand p3.8xlarge instances 24/7, and their finance team had no way to…</description>
-      <pubDate>Tue, 07 Jul 2026 14:45:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-in-local-currency-costs-that-surprise/</guid>
     </item>
   </channel>
 </rss>

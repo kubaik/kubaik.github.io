@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-13T03:21:19.394743",
+  "built_at": "2026-07-13T14:42:35.327330",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4310,6 +4310,11 @@
       "slug": "htmx-islands-beat-react-our-internal-tools-saved-40",
       "title": "HTMX + Islands beat React: our internal tools saved 40%…",
       "summary": "The official documentation for chose htmx is good. What it doesn't cover is what happens six months into production. The answers online were either wrong or skipped the part that mattered. Here's what I'd tell a colleague hitting this for the first time. The one-paragraph version (read this first) T"
+    },
+    {
+      "slug": "gpu-spot-instances-reserved-for-ai-costs",
+      "title": "GPU spot instances > reserved for AI costs",
+      "summary": "A colleague asked me about gpu spot during a code review recently, and my first answer wasn't a good one. It's the kind of problem that's easy to reproduce and hard to explain. Here's the fuller picture, with the tradeoffs left in. The one-paragraph version (read this first) If you’re spending >$5k/"
     }
   ]
 }
