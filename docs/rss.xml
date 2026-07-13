@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 12 Jul 2026 13:28:38 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Jul 2026 03:21:30 +0000</lastBuildDate>
+    <item>
+      <title>HTMX + Islands beat React: our internal tools saved 40%…</title>
+      <link>https://kubaik.github.io/htmx-islands-beat-react-our-internal-tools-saved-40/</link>
+      <description>Cut build time 40% with HTMX + Islands — measured latency, bundle sizes, and deployment wins for internal tools in 2026.</description>
+      <pubDate>Mon, 13 Jul 2026 03:21:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/htmx-islands-beat-react-our-internal-tools-saved-40/</guid>
+    </item>
     <item>
       <title>Stop guessing tech stacks: validate tools in 2 hours</title>
       <link>https://kubaik.github.io/stop-guessing-tech-stacks-validate-tools-in-2-hours/</link>
@@ -138,13 +145,6 @@
       <description>Six weeks in, their AWS bill jumped 300% because the model was running on on-demand p3.8xlarge instances 24/7, and their finance team had no way to…</description>
       <pubDate>Tue, 07 Jul 2026 14:45:17 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-in-local-currency-costs-that-surprise/</guid>
-    </item>
-    <item>
-      <title>AI feature drift: why your model died at midnight</title>
-      <link>https://kubaik.github.io/ai-feature-drift-why-your-model-died-at-midnight/</link>
-      <description>Cut midnight model drift from 12% to 0.05% — vocabulary drift, memory fragmentation, and ENI cold starts that broke our AI loan predictor in production.</description>
-      <pubDate>Tue, 07 Jul 2026 03:43:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-feature-drift-why-your-model-died-at-midnight/</guid>
     </item>
   </channel>
 </rss>
