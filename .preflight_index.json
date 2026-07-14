@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-13T14:42:35.327330",
+  "built_at": "2026-07-14T02:45:03.873836",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4315,6 +4315,11 @@
       "slug": "gpu-spot-instances-reserved-for-ai-costs",
       "title": "GPU spot instances > reserved for AI costs",
       "summary": "A colleague asked me about gpu spot during a code review recently, and my first answer wasn't a good one. It's the kind of problem that's easy to reproduce and hard to explain. Here's the fuller picture, with the tradeoffs left in. The one-paragraph version (read this first) If you’re spending >$5k/"
+    },
+    {
+      "slug": "ai-latency-cut-28s-to-380ms-without-retraining",
+      "title": "AI latency cut: 2.8s to 380ms without retraining",
+      "summary": "Most cut feature guides assume a clean environment and a patient timeline. Most write-ups stop exactly where the interesting part starts. Here's what actually worked, and why. The error and why it's confusing The error pattern every team hits is simple: your AI feature takes 2.8 seconds to respond, "
     }
   ]
 }
