@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-14T02:45:03.873836",
+  "built_at": "2026-07-14T13:52:55.678832",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4320,6 +4320,11 @@
       "slug": "ai-latency-cut-28s-to-380ms-without-retraining",
       "title": "AI latency cut: 2.8s to 380ms without retraining",
       "summary": "Most cut feature guides assume a clean environment and a patient timeline. Most write-ups stop exactly where the interesting part starts. Here's what actually worked, and why. The error and why it's confusing The error pattern every team hits is simple: your AI feature takes 2.8 seconds to respond, "
+    },
+    {
+      "slug": "ai-sales-cycles-3x-faster-40-less-talk",
+      "title": "AI sales cycles: 3x faster, 40% less talk",
+      "summary": "I ran into this changed sales problem while migrating a service under a hard deadline. The tutorials all show the happy path. Here's the root cause, not just the symptom. The gap between what the docs say and what production needs The first time I tried using AI to sell a developer tool, I assumed t"
     }
   ]
 }

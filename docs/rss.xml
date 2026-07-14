@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Jul 2026 02:45:10 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 14 Jul 2026 13:53:06 +0000</lastBuildDate>
+    <item>
+      <title>AI sales cycles: 3x faster, 40% less talk</title>
+      <link>https://kubaik.github.io/ai-sales-cycles-3x-faster-40-less-talk/</link>
+      <description>Cut sales cycle time 66% with AI for dev tools — real code, failure modes, and the $8/lead cost that beats human reps. Includes Hugging Face 4.38, GitHub Copilot 1.84, and n8n 1.30 breakdown.</description>
+      <pubDate>Tue, 14 Jul 2026 13:52:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-sales-cycles-3x-faster-40-less-talk/</guid>
+    </item>
     <item>
       <title>AI latency cut: 2.8s to 380ms without retraining</title>
       <link>https://kubaik.github.io/ai-latency-cut-28s-to-380ms-without-retraining/</link>
@@ -138,13 +145,6 @@
       <description>Cut agent timeout errors 98% with 3 fixes — timeout alignment, context propagation, and pool sizing. LangChain 0.1.12, Python 3.11, Node 20 LTS, PgBouncer 1.21 included.</description>
       <pubDate>Wed, 08 Jul 2026 10:09:52 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-orches-break-prod-3-review-traps/</guid>
-    </item>
-    <item>
-      <title>Agent-to-Agent vs MCP: which broke first in 2026</title>
-      <link>https://kubaik.github.io/agent-to-agent-vs-mcp-which-broke-first-in-2026/</link>
-      <description>Cut gateway latency 72% by choosing MCP for tools and A2A for conversations — exact versions, benchmarks, and the DNS mistake that cost us a week in 2026.</description>
-      <pubDate>Wed, 08 Jul 2026 09:58:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-to-agent-vs-mcp-which-broke-first-in-2026/</guid>
     </item>
   </channel>
 </rss>
