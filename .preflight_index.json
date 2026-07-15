@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-14T13:52:55.678832",
+  "built_at": "2026-07-15T02:44:11.001640",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4325,6 +4325,11 @@
       "slug": "ai-sales-cycles-3x-faster-40-less-talk",
       "title": "AI sales cycles: 3x faster, 40% less talk",
       "summary": "I ran into this changed sales problem while migrating a service under a hard deadline. The tutorials all show the happy path. Here's the root cause, not just the symptom. The gap between what the docs say and what production needs The first time I tried using AI to sell a developer tool, I assumed t"
+    },
+    {
+      "slug": "keep-multi-model-systems-stable-6-rules-that-worked",
+      "title": "Keep multi-model systems stable: 6 rules that worked",
+      "summary": "The conventional advice on architecture principles is incomplete in one specific, costly way. Production gives you neither a clean environment nor a patient timeline. This is what I put together after working through it properly. Why I wrote this (the problem I kept hitting) In 2026, I watched two t"
     }
   ]
 }

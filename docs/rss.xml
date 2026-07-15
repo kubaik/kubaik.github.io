@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 14 Jul 2026 13:53:06 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Jul 2026 02:44:21 +0000</lastBuildDate>
+    <item>
+      <title>Keep multi-model systems stable: 6 rules that worked</title>
+      <link>https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/</link>
+      <description>Cut multi-model agent costs 75% with idempotency keys and concurrency limits — Redis 7.2 eviction rates, Lambda arm64 cost, and the 503 error mistake most teams repeat</description>
+      <pubDate>Wed, 15 Jul 2026 02:44:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/</guid>
+    </item>
     <item>
       <title>AI sales cycles: 3x faster, 40% less talk</title>
       <link>https://kubaik.github.io/ai-sales-cycles-3x-faster-40-less-talk/</link>
@@ -138,13 +145,6 @@
       <description>Cut prompt spend 30% with 7 real ways to measure agent platform ROI in 2026 — token logging, Redis caching, and the one metric that actually matters.</description>
       <pubDate>Wed, 08 Jul 2026 11:53:30 +0000</pubDate>
       <guid>https://kubaik.github.io/7-ways-to-measure-prompt-platform-roi-in-2026/</guid>
-    </item>
-    <item>
-      <title>Agent orches break prod: 3 review traps</title>
-      <link>https://kubaik.github.io/agent-orches-break-prod-3-review-traps/</link>
-      <description>Cut agent timeout errors 98% with 3 fixes — timeout alignment, context propagation, and pool sizing. LangChain 0.1.12, Python 3.11, Node 20 LTS, PgBouncer 1.21 included.</description>
-      <pubDate>Wed, 08 Jul 2026 10:09:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-orches-break-prod-3-review-traps/</guid>
     </item>
   </channel>
 </rss>

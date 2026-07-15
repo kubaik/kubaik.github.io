@@ -65,5 +65,6 @@
   "Why we chose HTMX + Islands over full client frameworks for our new internal tools",
   "Why GPU spot instances + smart retry logic beat reserved capacity for most AI workloads",
   "How we cut AI feature latency from 2.8s to 380ms while keeping model quality",
-  "How AI changed the sales cycle for developer tools \u2014 and what still works"
+  "How AI changed the sales cycle for developer tools \u2014 and what still works",
+  "The architecture principles that survived the shift to agentic and multi-model systems"
 ]
