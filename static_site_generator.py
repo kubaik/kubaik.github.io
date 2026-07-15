@@ -582,7 +582,7 @@ Sitemap: {base_url}/rss.xml
         else:
             print("Warning: pwa.js not found — skipping")
 
-    def _generate_article_schema(self, post, base_url: str) -> str:
+    def _generate_article_schema(self, post, base_url: str, site_name: str = None) -> str:
         import json as _json
 
         word_count = len(post.content.split())
@@ -625,7 +625,8 @@ Sitemap: {base_url}/rss.xml
                 },
                 "publisher": {
                     "@type": "Organization",
-                    "name": "Tech Blog",
+                    "@id": f"{base_url}/#organization",
+                    "name": site_name or "Tech Blog",
                     "url": base_url
                 },
                 "mainEntityOfPage": {
@@ -1003,9 +1004,18 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
                 'current_year': datetime.now().year,
                 'global_meta_tags': self.seo.generate_global_meta_tags(),
                 'meta_tags': self.seo.generate_meta_tags(post),
-                'structured_data': self.seo.generate_structured_data(post),
+                # NOTE: seo.generate_structured_data() (BlogPosting) used to be
+                # emitted here alongside _generate_article_schema() (Article +
+                # BreadcrumbList). Both described the same URL with different
+                # @type and different publisher names ("Tech Blog" vs the real
+                # site_name), which is exactly the kind of duplicate/conflicting
+                # structured data Google's Rich Results Test flags and which can
+                # cause a page's markup to be ignored entirely. Keeping only the
+                # richer Article graph; site_name is now passed through so the
+                # publisher name is correct instead of a hardcoded placeholder.
+                'structured_data': '',
                 'article_schema': self._generate_article_schema(
-                    post, config.get('base_url', '')),
+                    post, config.get('base_url', ''), config.get('site_name', 'Tech Blog')),
                 'header_ad': self.seo.generate_adsense_ad('header'),
                 'middle_ad': self.seo.generate_adsense_ad('middle'),
                 'footer_ad': self.seo.generate_adsense_ad('footer'),
@@ -1443,7 +1453,6 @@ def _build_templates() -> dict:
 
         {{ global_meta_tags | safe }}
         {{ meta_tags | safe }}
-        {{ structured_data | safe }}
         {{ article_schema | safe }}
 
         <link rel="stylesheet" href="{{ base_path }}/static/style.css">
@@ -1538,7 +1547,7 @@ def _build_templates() -> dict:
                         {% if post.last_updated_iso %}
                         &nbsp;·&nbsp; Updated {{ post.last_updated_iso }}
                         {% endif %}
-                        &nbsp;·&nbsp; <span title="Content reviewed by the author before publishing">Fact-checked</span>
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>

@@ -104,12 +104,31 @@ def _to_single_word_tags(tags: List[str]) -> List[str]:
     result = []
     seen: set = set()
 
+    _VERSION_TOKEN_RE = re.compile(r'^v?\d+(\.\d+)*$', re.IGNORECASE)
+
     for tag in tags:
         tag = tag.lstrip('#').strip()
         if not tag:
             continue
 
-        words = [w for w in re.split(r'[\s\-_/]+', tag) if w]
+        # PATCH-3 FIX: split on '.' too, not just whitespace/hyphen/underscore/
+        # slash. Without this, a keyword like "Checkov 3.2.117" produced the
+        # single fused word "3.2.117", which CamelCased into the literal tag
+        # "Checkov3.2.117" — a dotted, non-slug-safe string that still becomes
+        # a real crawlable /tag/checkov3.2.117/ archive page with exactly one
+        # post in it. Splitting on '.' surfaces the version number as its own
+        # token so it can be dropped below instead of silently baked in.
+        words = [w for w in re.split(r'[\s\-_/.]+', tag) if w]
+
+        # PATCH-3 FIX: drop pure version/numeric tokens ("3.2.117", "20",
+        # "v1") entirely. A specific tool version is useful inline in the
+        # article body, but as a standalone tag it only ever matches one
+        # post — a thin, single-item archive page that dilutes crawl budget
+        # and has zero chance of ranking. Keep the tool name, lose the
+        # version suffix: "Checkov 3.2.117" -> "Checkov", not "Checkov32117".
+        words = [w for w in words if not _VERSION_TOKEN_RE.match(w)]
+        if not words:
+            continue
 
         # PATCH-2 FIX: skip question-phrase tags entirely — they make terrible
         # hashtags and signal low-quality content to automated reviewers.
@@ -2868,11 +2887,29 @@ GOOGLE ADSENSE CONTENT POLICY — YOUR POST MUST SATISFY ALL OF THESE:
 7. The final section must end with ONE specific, actionable next step the reader
    can do today — not "start exploring" or "begin your journey".
 
+TITLE FORMAT — do NOT default to a "Cut/Reduce/Improve X% with Y" pattern. That
+is one of at least five acceptable shapes below; if the last few posts on this
+site already leaned on percentage-cut titles, deliberately pick a DIFFERENT
+shape this time. A homepage full of identically-shaped titles reads as
+mass-produced to both readers and search-quality systems — treat titles like
+you would headlines in a real publication, where two adjacent pieces almost
+never share the same construction.
+
+Acceptable title shapes (pick whichever fits the content, not whichever is
+easiest):
+  - Direct claim, no number:      "Redis caching: what breaks first"
+  - Named trap/mistake:            "TypeScript strict mode traps"
+  - Question the reader is asking: "Why does my p99 spike after deploy?"
+  - Blunt verdict/recommendation:  "Stop using cron for retries"
+  - Quantified outcome (use sparingly, and vary the metric — not always a
+    percentage): "Redis caching: what breaks first", "3 days lost to one
+    missing depends_on", "Cut AWS costs 40%: the real levers"
+
 Respond with ONLY a JSON object in this exact shape:
 {{{{
-  "title": "<punchy title: MAX 50 chars. No filler words (Complete/Ultimate/Guide to/Introduction to). Start with a verb, number, or sharp noun. Good: 'Redis caching: what breaks first', 'Cut AWS costs 40%: the real levers', 'TypeScript strict mode traps'. Bad: 'A Complete Guide to Redis Caching'>",
+  "title": "<punchy title: MAX 50 chars. No filler words (Complete/Ultimate/Guide to/Introduction to). Pick ONE of the title shapes above — do not default to the percentage-cut shape. Bad: 'A Complete Guide to Redis Caching'>",
   "content": "<full markdown article — no title heading at top>",
-  "meta_description": "<under 155 chars. Must include: (1) a specific number or outcome, (2) the primary keyword, (3) an implied reader benefit. Never start with 'This post', 'In this article', 'A guide to', 'Learn about', 'We will', or 'You will learn'. Good: 'Cut API response time 60% with Redis caching — connection pooling, eviction policies, and the cache stampede mistake most teams make.' Bad: 'A guide to Redis caching for developers.'>",
+  "meta_description": "<under 155 chars. Must include: (1) the primary keyword, (2) an implied reader benefit, and (3) EITHER a specific number/outcome OR a specific named risk/mistake — do not make every post's meta description lead with a percentage; vary it the same way the title shape varies. Never start with 'This post', 'In this article', 'A guide to', 'Learn about', 'We will', or 'You will learn'. Good: 'Cut API response time 60% with Redis caching — connection pooling, eviction policies, and the cache stampede mistake most teams make.' Bad: 'A guide to Redis caching for developers.'>",
   "tweet_text": "<X/Twitter hook body — STRICT MAX 180 chars. NO url, NO hashtags (added automatically). Third-person voice only (they/teams/most developers). Complete sentences, no trailing ellipsis. End with an action cue like 'Full breakdown 👇' or 'Here is why 👇'. Good: 'Most teams burn $8k+ on AI tools before measuring ROI.\\n\\nMost of it goes to autocomplete nobody audits.\\n\\nHere is what actually paid off 👇'. Bad: 'I burned $8k...' (first person) or 'Teams overspend on AI... realize...' (truncated).>",
   "seo_keywords": ["kw1","kw2","kw3","kw4","kw5","kw6","kw7","kw8"]
 }}}}
