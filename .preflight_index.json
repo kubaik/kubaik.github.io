@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-15T02:44:11.001640",
+  "built_at": "2026-07-15T12:58:44.618656",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4330,6 +4330,11 @@
       "slug": "keep-multi-model-systems-stable-6-rules-that-worked",
       "title": "Keep multi-model systems stable: 6 rules that worked",
       "summary": "The conventional advice on architecture principles is incomplete in one specific, costly way. Production gives you neither a clean environment nor a patient timeline. This is what I put together after working through it properly. Why I wrote this (the problem I kept hitting) In 2026, I watched two t"
+    },
+    {
+      "slug": "ownership-drift-after-velocity-spikes",
+      "title": "Ownership drift after velocity spikes",
+      "summary": "leadership challenges looks simple until it has to survive real traffic. Production gives you neither a clean environment nor a patient timeline. Here's what I'd tell a colleague hitting this for the first time. Why I wrote this (the problem I kept hitting) I ran a 12-person engineering team at a Se"
     }
   ]
 }

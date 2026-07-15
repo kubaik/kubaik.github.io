@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Jul 2026 15:55:15 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 15 Jul 2026 12:58:54 +0000</lastBuildDate>
+    <item>
+      <title>Ownership drift after velocity spikes</title>
+      <link>https://kubaik.github.io/ownership-drift-after-velocity-spikes/</link>
+      <description>Ownership drift after velocity spikes explained — how Redis 7.2 cache policy gates cut Sev-1s 3x and saved 120 engineer hours per quarter</description>
+      <pubDate>Wed, 15 Jul 2026 12:58:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/ownership-drift-after-velocity-spikes/</guid>
+    </item>
     <item>
       <title>Keep multi-model systems stable: 6 rules that worked</title>
       <link>https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM observability noise 93% with this wrapper — Prometheus metrics, Redis flags, and a 140-line FastAPI service that works on t3.medium.</description>
       <pubDate>Wed, 08 Jul 2026 14:23:50 +0000</pubDate>
       <guid>https://kubaik.github.io/observe-llm-features-90-faster/</guid>
-    </item>
-    <item>
-      <title>7 ways to measure prompt platform ROI in 2026</title>
-      <link>https://kubaik.github.io/7-ways-to-measure-prompt-platform-roi-in-2026/</link>
-      <description>Cut prompt spend 30% with 7 real ways to measure agent platform ROI in 2026 — token logging, Redis caching, and the one metric that actually matters.</description>
-      <pubDate>Wed, 08 Jul 2026 11:53:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-ways-to-measure-prompt-platform-roi-in-2026/</guid>
     </item>
   </channel>
 </rss>
