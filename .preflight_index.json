@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-16T02:51:22.799418",
+  "built_at": "2026-07-16T11:51:30.759522",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4340,6 +4340,11 @@
       "slug": "offline-first-agents-for-field-teams",
       "title": "Offline-first agents for field teams",
       "summary": "Most offlinecapable agent guides assume a clean environment and a patient timeline. It's the kind of problem that's easy to reproduce and hard to explain. Here's the fuller picture, with the tradeoffs left in. Why I wrote this (the problem I kept hitting) Last-mile logistics in Africa die by 4G. I w"
+    },
+    {
+      "slug": "survived-12000-agents-with-redis",
+      "title": "Survived 12,000 agents with Redis",
+      "summary": "database state looks simple until it has to survive real traffic. The gap between the demo and the incident report is where this actually lives. This is the version of the write-up that includes the part that broke. Why I wrote this (the problem I kept hitting) I built a multi-agent system in 2026 t"
     }
   ]
 }

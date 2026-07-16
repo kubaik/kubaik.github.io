@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Jul 2026 14:48:17 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Jul 2026 11:51:39 +0000</lastBuildDate>
+    <item>
+      <title>Survived 12,000 agents with Redis</title>
+      <link>https://kubaik.github.io/survived-12000-agents-with-redis/</link>
+      <description>Cut API response time 60% with Redis caching — connection pooling, eviction policies, and the cache stampede mistake most teams make.</description>
+      <pubDate>Thu, 16 Jul 2026 11:51:27 +0000</pubDate>
+      <guid>https://kubaik.github.io/survived-12000-agents-with-redis/</guid>
+    </item>
     <item>
       <title>Offline-first agents for field teams</title>
       <link>https://kubaik.github.io/offline-first-agents-for-field-teams/</link>
@@ -138,13 +145,6 @@
       <description>Cut hallucination rates 18x with PostgreSQL vs Redis for long-running agents — durability, latency, and cost breakdown with RedisJSON and pgvector in 2026.</description>
       <pubDate>Thu, 09 Jul 2026 07:11:24 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-context-short-term-vs-long-term-memory/</guid>
-    </item>
-    <item>
-      <title>7 graceful degradation traps I’ve hit in production</title>
-      <link>https://kubaik.github.io/7-graceful-degradation-traps-ive-hit-in-production/</link>
-      <description>Ship 150 ms timeouts and hardcoded fallbacks today — measure p99 latency, error rates, and cost with Prometheus 2.47 and Python 3.11 before you pick any other pattern.</description>
-      <pubDate>Thu, 09 Jul 2026 03:37:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/7-graceful-degradation-traps-ive-hit-in-production/</guid>
     </item>
   </channel>
 </rss>
