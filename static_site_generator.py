@@ -301,7 +301,9 @@ class StaticSiteGenerator:
         posts = self._get_all_posts()
         if not posts:
             print("No posts found. Creating placeholder homepage...")
+        self._generate_default_og_image()
         self._generate_homepage(posts)
+        self._generate_pagination_pages(posts)
         self._generate_post_pages(posts)
         self._generate_static_pages(posts)
         self._generate_author_page(posts)
@@ -317,8 +319,26 @@ class StaticSiteGenerator:
         self._generate_ads_txt()
         self._generate_pwa_files()
         self._generate_tag_pages(posts)
-
         print(f"Site generated successfully with {len(posts)} posts!")
+
+    def _generate_default_og_image(self):
+        """
+        Generate docs/static/og-default.png — a branded 1200x630 fallback
+        social card. _generate_tag_pages() below references this exact
+        path as the og:image/twitter:image for every tag archive page, but
+        nothing previously generated the file, so every tag page shipped
+        a broken image reference on social shares. Regenerated on every
+        build so it always exists before _generate_tag_pages() runs.
+        """
+        try:
+            from generate_default_og import generate_default_og
+            config = self.blog_system.config
+            generate_default_og(
+                site_name=config.get('site_name', 'Tech Blog'),
+                tagline=config.get('site_description', '')[:60],
+            )
+        except Exception as e:
+            print(f"Warning: could not generate default OG image: {e}")
 
     def _generate_ads_txt(self):
         config = self.blog_system.config
@@ -472,6 +492,102 @@ Sitemap: {base_url}/rss.xml
             f"Generated homepage: {HOMEPAGE_SSR_LIMIT} SSR posts "
             f"+ {max(0, len(posts) - HOMEPAGE_SSR_LIMIT)} deferred via posts.json"
         )
+
+    def _generate_pagination_pages(self, posts: List[BlogPost], per_page: int = 24):
+        """
+        Generate /page/2/, /page/3/, ... as real static HTML with plain
+        <a href> links to every post.
+
+        Why this exists: the homepage only server-renders the newest
+        `per_page` posts (see _generate_homepage / HOMEPAGE_SSR_LIMIT);
+        everything older is injected client-side via IntersectionObserver
+        + fetch('/posts.json'). sitemap.xml already lists every post URL
+        directly, so indexing isn't blocked — but non-JS-executing
+        crawlers and link-preview bots never see a *link* from the
+        homepage to post #25 onward, and there was no bookmarkable archive
+        URL for "older posts." These pages close that gap and give the
+        JS-based infinite scroll a plain-HTML floor to fall back on.
+
+        Deliberately `noindex, follow`: we don't want these thin,
+        chronological listing pages competing in search results against
+        the real posts and tag pages they link to — we just want the
+        links on them crawled.
+        """
+        config = self.blog_system.config
+        base_url = config.get('base_url', '')
+        base_path = config.get('base_path', '')
+        site_name = config.get('site_name', 'Tech Blog')
+        current_year = datetime.now().year
+
+        if len(posts) <= per_page:
+            return  # everything already fits on the homepage
+
+        total_pages = -(-len(posts) // per_page)  # ceil division
+
+        for page_num in range(2, total_pages + 1):
+            start = (page_num - 1) * per_page
+            page_posts = posts[start:start + per_page]
+            page_dir = Path("./docs/page") / str(page_num)
+            page_dir.mkdir(parents=True, exist_ok=True)
+
+            cards = "".join(
+                f'<a class="post-card" href="{base_path}/{p.slug}/">'
+                f'<h3>{p.title}</h3>'
+                f'<p class="post-excerpt">'
+                f'{_safe_excerpt(p.meta_description, p.content, p.title)}</p>'
+                f'<p class="post-reading-time">'
+                f'{self._reading_time_minutes(p.content)} min read · '
+                f'{self._format_display_date(p.created_at)}</p></a>'
+                for p in page_posts
+            )
+
+            prev_link = (
+                f'<a href="{base_path}/">← Newest</a>' if page_num == 2
+                else f'<a href="{base_path}/page/{page_num - 1}/">← Newer</a>'
+            )
+            next_link = (
+                f'<a href="{base_path}/page/{page_num + 1}/">Older →</a>'
+                if page_num < total_pages else ''
+            )
+
+            html = f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Older Posts — Page {page_num} — {site_name}</title>
+<meta name="description" content="Archive page {page_num} of {site_name} — practical backend engineering, AI tooling, and developer career posts.">
+<meta name="robots" content="noindex, follow">
+<meta name="base-path" content="{base_path}">
+<link rel="canonical" href="{base_url}/page/{page_num}/">
+<link rel="stylesheet" href="{base_path}/static/style.css">
+</head>
+<body>
+<header><div class="container">
+<h1><a href="{base_path}/">{site_name}</a></h1>
+<nav><a href="{base_path}/">Home</a><a href="{base_path}/about/">About</a></nav>
+</div></header>
+<main class="container">
+<nav class="breadcrumb" aria-label="Breadcrumb">
+<a href="{base_path}/">Home</a> <span aria-hidden="true">›</span>
+<span aria-current="page">Page {page_num}</span>
+</nav>
+<h2>Older Posts — Page {page_num} of {total_pages}</h2>
+<div class="post-grid">{cards}</div>
+<nav class="pagination" style="display:flex;justify-content:space-between;margin-top:2rem;">
+{prev_link}{next_link}
+</nav>
+</main>
+<footer><div class="container">
+<p>&copy; {current_year} {site_name}</p>
+</div></footer>
+</body>
+</html>'''
+            with open(page_dir / "index.html", 'w', encoding='utf-8') as f:
+                f.write(html)
+
+        print(
+            f"Generated {total_pages - 1} paginated archive pages (/page/2/ .. /page/{total_pages}/)")
 
     def _format_display_date(self, iso_date: str) -> str:
         try:
@@ -1190,6 +1306,13 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
   <meta property="og:description" content="{tag_meta_description}">
   <meta property="og:url" content="{base_url}/tag/{tag_slug}/">
   <meta property="og:image" content="{og_image}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{tag_title} Articles — {site_name}">
+  <meta name="twitter:description" content="{tag_meta_description}">
+  <meta name="twitter:image" content="{og_image}">
+  <meta name="twitter:site" content="@KubaiKevin">
   <script type="application/ld+json">
   {{"@context":"https://schema.org","@type":"CollectionPage",
     "name":"{tag_title} Articles","url":"{base_url}/tag/{tag_slug}/",
@@ -1651,16 +1774,21 @@ def _build_templates() -> dict:
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ site_name }}</title>
+    <title>{{ site_name }} — {{ site_description }}</title>
     <meta name="description" content="{{ site_description }}">
     <meta name="base-path" content="{{ base_path }}">
     <link rel="canonical" href="{{ base_url }}/">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="{{ site_name }}">
+    <meta property="og:title" content="{{ site_name }} — {{ site_description }}">
     <meta property="og:description" content="{{ site_description }}">
     <meta property="og:url" content="{{ base_url }}/">
-    <meta property="og:image" content="{{ base_url }}/static/icons/icon-512x512.png">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="{{ base_url }}/static/og-default.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ site_name }} — {{ site_description }}">
+    <meta name="twitter:description" content="{{ site_description }}">
+    <meta name="twitter:image" content="{{ base_url }}/static/og-default.png">
     <meta name="twitter:site" content="@KubaiKevin">
     <link rel="preconnect" href="https://pagead2.googlesyndication.com">
     <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -1837,6 +1965,16 @@ def _build_templates() -> dict:
             </div>
 
             <div id="scroll-sentinel" style="height:1px;"></div>
+
+            {% if total_posts > posts_per_page %}
+            <!-- Real, crawlable fallback for non-JS crawlers and users who
+                 land here before the infinite-scroll JS has fired. The JS
+                 loader above still handles progressive enhancement for
+                 everyone else. -->
+            <p class="pagination-fallback" style="text-align:center;margin-top:1.5rem;">
+                <a href="{{ base_path }}/page/2/">Browse older posts →</a>
+            </p>
+            {% endif %}
 
             {% else %}
             <p>No posts yet. Check back soon!</p>
