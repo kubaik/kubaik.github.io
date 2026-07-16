@@ -70,5 +70,6 @@
   "The leadership challenges of managing teams where output velocity increased dramatically but ownership became blurrier",
   "How we run AI-augmented teams without destroying code ownership and accountability",
   "Offline-capable agent workflows for field agents and last-mile operations in Africa",
-  "The database and state management patterns that survived heavy agent usage"
+  "The database and state management patterns that survived heavy agent usage",
+  "How we version and rollback production agents without breaking downstream systems"
 ]

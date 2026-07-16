@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Jul 2026 11:51:39 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Jul 2026 14:02:19 +0000</lastBuildDate>
+    <item>
+      <title>Agents roll back without breaking anything</title>
+      <link>https://kubaik.github.io/agents-roll-back-without-breaking-anything/</link>
+      <description>Rollbacks break downstream systems when agents leak state into caches, pools, and rate tables. Version everything — headers, queries, pool sizes — and treat rollbacks as blue-green activations, not reverts. Measure downstream metrics after every deploy.</description>
+      <pubDate>Thu, 16 Jul 2026 14:02:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/agents-roll-back-without-breaking-anything/</guid>
+    </item>
     <item>
       <title>Survived 12,000 agents with Redis</title>
       <link>https://kubaik.github.io/survived-12000-agents-with-redis/</link>
@@ -138,13 +145,6 @@
       <description>Cut LLM token spend 60% with Redis caching, deterministic keys, and two TTL buckets — plus cost guardrails and Prometheus metrics to prove it</description>
       <pubDate>Thu, 09 Jul 2026 15:19:03 +0000</pubDate>
       <guid>https://kubaik.github.io/slash-llm-costs-60-with-a-cache/</guid>
-    </item>
-    <item>
-      <title>Agent context: short-term vs long-term memory</title>
-      <link>https://kubaik.github.io/agent-context-short-term-vs-long-term-memory/</link>
-      <description>Cut hallucination rates 18x with PostgreSQL vs Redis for long-running agents — durability, latency, and cost breakdown with RedisJSON and pgvector in 2026.</description>
-      <pubDate>Thu, 09 Jul 2026 07:11:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-context-short-term-vs-long-term-memory/</guid>
     </item>
   </channel>
 </rss>
