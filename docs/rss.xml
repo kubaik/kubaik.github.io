@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 15 Jul 2026 13:51:57 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 16 Jul 2026 02:51:33 +0000</lastBuildDate>
+    <item>
+      <title>Offline-first agents for field teams</title>
+      <link>https://kubaik.github.io/offline-first-agents-for-field-teams/</link>
+      <description>Offline-first agents cut last-mile failures 12% in Lagos pilots — SQLite encryption, conflict UI, and AWS AppSync for riders on 2G</description>
+      <pubDate>Thu, 16 Jul 2026 02:51:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/offline-first-agents-for-field-teams/</guid>
+    </item>
     <item>
       <title>Ownership drift after velocity spikes</title>
       <link>https://kubaik.github.io/ownership-drift-after-velocity-spikes/</link>
@@ -138,13 +145,6 @@
       <description>Ship 150 ms timeouts and hardcoded fallbacks today — measure p99 latency, error rates, and cost with Prometheus 2.47 and Python 3.11 before you pick any other pattern.</description>
       <pubDate>Thu, 09 Jul 2026 03:37:10 +0000</pubDate>
       <guid>https://kubaik.github.io/7-graceful-degradation-traps-ive-hit-in-production/</guid>
-    </item>
-    <item>
-      <title>Observe LLM features 90% faster…</title>
-      <link>https://kubaik.github.io/observe-llm-features-90-faster/</link>
-      <description>Cut LLM observability noise 93% with this wrapper — Prometheus metrics, Redis flags, and a 140-line FastAPI service that works on t3.medium.</description>
-      <pubDate>Wed, 08 Jul 2026 14:23:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/observe-llm-features-90-faster/</guid>
     </item>
   </channel>
 </rss>

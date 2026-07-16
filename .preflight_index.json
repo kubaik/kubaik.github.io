@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-15T12:58:44.618656",
+  "built_at": "2026-07-16T02:51:22.799418",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4335,6 +4335,11 @@
       "slug": "ownership-drift-after-velocity-spikes",
       "title": "Ownership drift after velocity spikes",
       "summary": "leadership challenges looks simple until it has to survive real traffic. Production gives you neither a clean environment nor a patient timeline. Here's what I'd tell a colleague hitting this for the first time. Why I wrote this (the problem I kept hitting) I ran a 12-person engineering team at a Se"
+    },
+    {
+      "slug": "offline-first-agents-for-field-teams",
+      "title": "Offline-first agents for field teams",
+      "summary": "Most offlinecapable agent guides assume a clean environment and a patient timeline. It's the kind of problem that's easy to reproduce and hard to explain. Here's the fuller picture, with the tradeoffs left in. Why I wrote this (the problem I kept hitting) Last-mile logistics in Africa die by 4G. I w"
     }
   ]
 }
