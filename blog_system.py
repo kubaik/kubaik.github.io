@@ -1302,6 +1302,96 @@ def _select(pool: list, seed: str) -> str:
     return pool[idx]
 
 
+# ─────────────────────────────────────────────────────────────────
+# X/Twitter hook examples for the bundle prompt  (FIX: hook repetition)
+# ─────────────────────────────────────────────────────────────────
+#
+# PREVIOUS DESIGN FLAW (found in production): the "tweet_text" field in
+# the bundle prompt carried exactly ONE hard-coded "Good:" example —
+# "Most teams burn $8k+ on AI tools before measuring ROI...". Because
+# few-shot examples are the strongest signal a model follows, the LLM
+# converged on that exact cost/waste framing (and the "Most teams..."
+# opener specifically) across a large share of posts, which is what
+# produced the repeated hook the user noticed on kubaik.github.io.
+#
+# FIX: rotate through a pool of hook styles the same way title shapes
+# and intro sentences already rotate elsewhere in this file. One style
+# is deterministically selected per topic via `_select`, so two
+# different topics get two different example shapes, and the prompt
+# explicitly tells the model the example is inspiration for STYLE only
+# — not text to reuse or imitate line-for-line.
+_TWEET_HOOK_EXAMPLES = [
+    {
+        "style": "cost / waste framing",
+        "example": (
+            "Most teams burn $8k+ on AI tools before measuring ROI.\\n\\n"
+            "Most of it goes to autocomplete nobody audits.\\n\\n"
+            "Here is what actually paid off 👇"
+        ),
+    },
+    {
+        "style": "before / after contrast",
+        "example": (
+            "Before: two engineers, two days, one timeout nobody could explain.\\n\\n"
+            "After: a single config line.\\n\\n"
+            "Here's what changed 👇"
+        ),
+    },
+    {
+        "style": "docs gap",
+        "example": (
+            "The docs for this are good. They just skip the part that pages "
+            "you at 2am.\\n\\n"
+            "Here's the gap nobody mentions 👇"
+        ),
+    },
+    {
+        "style": "specific number lead",
+        "example": (
+            "One misconfigured connection pool added 400ms to every request.\\n\\n"
+            "It took a day to find and one line to fix.\\n\\n"
+            "Here's how 👇"
+        ),
+    },
+    {
+        "style": "confession / mistake",
+        "example": (
+            "It took three failed deploys to find the real cause of this.\\n\\n"
+            "The fix was smaller than the debugging session.\\n\\n"
+            "Here's what finally worked 👇"
+        ),
+    },
+    {
+        "style": "unpopular opinion",
+        "example": (
+            "Unpopular take: most teams optimize the wrong layer first.\\n\\n"
+            "Here's the one that actually moves the needle 👇"
+        ),
+    },
+    {
+        "style": "pattern across many examples",
+        "example": (
+            "Reviewed a dozen implementations of this pattern.\\n\\n"
+            "Almost all of them hit the same wall.\\n\\n"
+            "Here's the fix that held up in production 👇"
+        ),
+    },
+    {
+        "style": "open question",
+        "example": (
+            "How long should this actually take a team to get right?\\n\\n"
+            "Longer than the docs suggest — and here's why 👇"
+        ),
+    },
+]
+
+
+def _pick_tweet_hook_example(topic: str) -> dict:
+    """Deterministically pick one hook style per topic so consecutive
+    posts don't converge on the same 'Most teams burn $X' framing."""
+    return _select(_TWEET_HOOK_EXAMPLES, f"tweethook:{topic}")
+
+
 def inject_personal_intro(post, topic: str) -> None:
     topic_lower = topic.lower()
     stop = {"how", "to", "the", "a", "an", "for", "and", "or", "vs",
@@ -2816,6 +2906,7 @@ class BlogSystem:
     ) -> dict:
         format_name, headings, format_note = _pick_structure(topic)
         author_note = _build_humanization_note(topic)
+        hook_example = _pick_tweet_hook_example(topic)
 
         resolved_headings = [h.replace("{topic}", topic) for h in headings]
         heading_block = "\n".join(resolved_headings)
@@ -2859,6 +2950,9 @@ class BlogSystem:
             format_note=format_note,
             year_guidance=year_guidance,
         )
+
+        hook_style = hook_example["style"]
+        hook_example_text = hook_example["example"]
 
         messages = [
             {
@@ -2905,12 +2999,20 @@ easiest):
     percentage): "Redis caching: what breaks first", "3 days lost to one
     missing depends_on", "Cut AWS costs 40%: the real levers"
 
+TWEET HOOK FORMAT — do NOT default to a "Most teams burn $X on Y" cost/waste
+opener every time. That is one of at least eight acceptable hook shapes;
+this post should use the "{hook_style}" shape. If the last few posts on
+this site already used a cost/waste or "Most teams..." opener, that pattern
+is now over-used — pick a genuinely different sentence structure and a
+different first word than recent posts. A homepage where every tweet opens
+"Most teams..." reads as templated to readers, same as repeated titles.
+
 Respond with ONLY a JSON object in this exact shape:
 {{{{
   "title": "<punchy title: MAX 50 chars. No filler words (Complete/Ultimate/Guide to/Introduction to). Pick ONE of the title shapes above — do not default to the percentage-cut shape. Bad: 'A Complete Guide to Redis Caching'>",
   "content": "<full markdown article — no title heading at top>",
   "meta_description": "<under 155 chars. Must include: (1) the primary keyword, (2) an implied reader benefit, and (3) EITHER a specific number/outcome OR a specific named risk/mistake — do not make every post's meta description lead with a percentage; vary it the same way the title shape varies. Never start with 'This post', 'In this article', 'A guide to', 'Learn about', 'We will', or 'You will learn'. Good: 'Cut API response time 60% with Redis caching — connection pooling, eviction policies, and the cache stampede mistake most teams make.' Bad: 'A guide to Redis caching for developers.'>",
-  "tweet_text": "<X/Twitter hook body — STRICT MAX 180 chars. NO url, NO hashtags (added automatically). Third-person voice only (they/teams/most developers). Complete sentences, no trailing ellipsis. End with an action cue like 'Full breakdown 👇' or 'Here is why 👇'. Good: 'Most teams burn $8k+ on AI tools before measuring ROI.\\n\\nMost of it goes to autocomplete nobody audits.\\n\\nHere is what actually paid off 👇'. Bad: 'I burned $8k...' (first person) or 'Teams overspend on AI... realize...' (truncated).>",
+  "tweet_text": "<X/Twitter hook body — STRICT MAX 180 chars. NO url, NO hashtags (added automatically). Third-person voice only (they/teams/most developers). Complete sentences, no trailing ellipsis. End with an action cue like 'Full breakdown 👇' or 'Here is why 👇'. Use the '{hook_style}' shape shown below for STYLE and STRUCTURE ONLY — write your own sentences about THIS post's actual content, do not reuse or lightly reword the example's wording, numbers, or topic. Example of the '{hook_style}' shape: '{hook_example_text}'. Bad: 'I burned $8k...' (first person), 'Teams overspend on AI... realize...' (truncated), or copying the example's specific numbers/claims into an unrelated post.>",
   "seo_keywords": ["kw1","kw2","kw3","kw4","kw5","kw6","kw7","kw8"]
 }}}}
 
