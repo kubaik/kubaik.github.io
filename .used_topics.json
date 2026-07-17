@@ -72,5 +72,6 @@
   "Offline-capable agent workflows for field agents and last-mile operations in Africa",
   "The database and state management patterns that survived heavy agent usage",
   "How we version and rollback production agents without breaking downstream systems",
-  "Building golden paths for AI features that don't become maintenance nightmares"
+  "Building golden paths for AI features that don't become maintenance nightmares",
+  "How we do red-teaming for internal agents without slowing down development velocity"
 ]

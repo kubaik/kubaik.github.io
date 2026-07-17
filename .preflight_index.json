@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-17T02:53:28.908964",
+  "built_at": "2026-07-17T06:39:18.029203",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4355,6 +4355,11 @@
       "slug": "ai-features-as-tech-debt-or-golden-paths",
       "title": "AI features as tech debt or golden paths",
       "summary": "I've hit the same building golden mistake in more than one production codebase over the years. Production gives you neither a clean environment nor a patient timeline. Here's what I'd tell a colleague hitting this for the first time. The conventional wisdom (and why it's incomplete) The standard pla"
+    },
+    {
+      "slug": "red-teaming-agents-without-killing-velocity",
+      "title": "Red-teaming agents without killing velocity",
+      "summary": "I ran into this redteaming internal problem while migrating a service under a hard deadline. The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why. The one-paragraph version (read this first) Most teams treat red-teaming as a separate security e"
     }
   ]
 }

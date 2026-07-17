@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Jul 2026 09:35:44 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jul 2026 06:39:28 +0000</lastBuildDate>
+    <item>
+      <title>Red-teaming agents without killing velocity</title>
+      <link>https://kubaik.github.io/red-teaming-agents-without-killing-velocity/</link>
+      <description>Cut security backlog 62% by embedding red-teaming in every PR — the lightweight setup that caught 12 incidents in one quarter without slowing releases.</description>
+      <pubDate>Fri, 17 Jul 2026 06:39:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/red-teaming-agents-without-killing-velocity/</guid>
+    </item>
     <item>
       <title>AI features as tech debt or golden paths</title>
       <link>https://kubaik.github.io/ai-features-as-tech-debt-or-golden-paths/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI agent cloud costs 85% with real-time policy enforcement — 8 tools tested, $18k saved, and the one that actually works in 2026</description>
       <pubDate>Fri, 10 Jul 2026 14:36:13 +0000</pubDate>
       <guid>https://kubaik.github.io/cloud-agents-burned-18k-8-tools-that-didnt-work/</guid>
-    </item>
-    <item>
-      <title>MCP server exposed internal tools in 2026</title>
-      <link>https://kubaik.github.io/mcp-server-exposed-internal-tools-in-2026/</link>
-      <description>Cut MCP server exposure 100% with localhost binding, security group rules, and SSH tunnels — 2026 incident breakdown with exact commands and $3,100 cleanup cost.</description>
-      <pubDate>Fri, 10 Jul 2026 03:38:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-server-exposed-internal-tools-in-2026/</guid>
     </item>
   </channel>
 </rss>
