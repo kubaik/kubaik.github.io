@@ -710,6 +710,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/agentic-workflows-how-we-kept-the-lights/</loc>
+    <lastmod>2026-07-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/agents-247-cost-12kmonth-heres-the-bill/</loc>
     <lastmod>2026-07-05</lastmod>
     <changefreq>weekly</changefreq>
@@ -6892,7 +6901,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/why-progressive-web-apps-fail-on-2g-and-how-to-fix.png</image:loc>
     </image:image>
   </url>
   <url>

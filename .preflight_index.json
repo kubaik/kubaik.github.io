@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-17T13:26:24.585551",
+  "built_at": "2026-07-17T13:40:13.863410",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4365,6 +4365,11 @@
       "slug": "why-progressive-web-apps-fail-on-2g-and-how-to-fix",
       "title": "Why progressive web apps fail on 2G and how to fix…",
       "summary": "After reviewing enough code that touches architecture decisions, the same failure pattern keeps showing up. The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why. Why this list exists (what I was actually trying to solve) I joined a team in 2026"
+    },
+    {
+      "slug": "agentic-workflows-how-we-kept-the-lights",
+      "title": "Agentic workflows: how we kept the lights…",
+      "summary": "observability stack looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke. Why I wrote this (the problem I kept hitting) In late 2026 our agentic workflow servic"
     }
   ]
 }

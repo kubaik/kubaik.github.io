@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Jul 2026 13:26:34 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jul 2026 13:40:24 +0000</lastBuildDate>
+    <item>
+      <title>Agentic workflows: how we kept the lights…</title>
+      <link>https://kubaik.github.io/agentic-workflows-how-we-kept-the-lights/</link>
+      <description>Agentic workflow observability with millisecond timestamps, queue depth alerts, and OpenSearch Serverless — the stack that cut our MTTR 93% and p99 latency 74%</description>
+      <pubDate>Fri, 17 Jul 2026 13:40:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/agentic-workflows-how-we-kept-the-lights/</guid>
+    </item>
     <item>
       <title>Why progressive web apps fail on 2G and how to fix…</title>
       <link>https://kubaik.github.io/why-progressive-web-apps-fail-on-2g-and-how-to-fix/</link>
@@ -138,13 +145,6 @@
       <description>Lower agent incidents 63% by instrumenting sandbox escapes and connection pool saturation — not just prompts. Learn the exact cgroup v2, Redis 7.2, and Postgres 15.2 setup teams use to keep non-engineers safe.</description>
       <pubDate>Sat, 11 Jul 2026 12:23:24 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-sandboxes-when-safety-overrides-features/</guid>
-    </item>
-    <item>
-      <title>Zero-downtime Postgres schema changes in 2026</title>
-      <link>https://kubaik.github.io/zero-downtime-postgres-schema-changes-in-2026/</link>
-      <description>Zero-downtime Postgres schema changes on 2TB+ databases in 2026 — pg_repack 1.5.0, AWS DMS 3.5, and observability patterns to avoid 15-minute write pauses and 2% error spikes.</description>
-      <pubDate>Sat, 11 Jul 2026 02:54:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-downtime-postgres-schema-changes-in-2026/</guid>
     </item>
   </channel>
 </rss>
