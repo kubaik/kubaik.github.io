@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Jul 2026 06:39:28 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jul 2026 13:26:34 +0000</lastBuildDate>
+    <item>
+      <title>Why progressive web apps fail on 2G and how to fix…</title>
+      <link>https://kubaik.github.io/why-progressive-web-apps-fail-on-2g-and-how-to-fix/</link>
+      <description>Cut 2G page load times from 12 seconds to 2 seconds — the real architecture moves that work in 2026 for React, PWA and mobile-first sites</description>
+      <pubDate>Fri, 17 Jul 2026 13:26:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-progressive-web-apps-fail-on-2g-and-how-to-fix/</guid>
+    </item>
     <item>
       <title>Red-teaming agents without killing velocity</title>
       <link>https://kubaik.github.io/red-teaming-agents-without-killing-velocity/</link>
@@ -138,13 +145,6 @@
       <description>Zero-downtime Postgres schema changes on 2TB+ databases in 2026 — pg_repack 1.5.0, AWS DMS 3.5, and observability patterns to avoid 15-minute write pauses and 2% error spikes.</description>
       <pubDate>Sat, 11 Jul 2026 02:54:05 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-downtime-postgres-schema-changes-in-2026/</guid>
-    </item>
-    <item>
-      <title>Cloud agents burned $18k: 8 tools that didn&apos;t work</title>
-      <link>https://kubaik.github.io/cloud-agents-burned-18k-8-tools-that-didnt-work/</link>
-      <description>Cut AI agent cloud costs 85% with real-time policy enforcement — 8 tools tested, $18k saved, and the one that actually works in 2026</description>
-      <pubDate>Fri, 10 Jul 2026 14:36:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/cloud-agents-burned-18k-8-tools-that-didnt-work/</guid>
     </item>
   </channel>
 </rss>

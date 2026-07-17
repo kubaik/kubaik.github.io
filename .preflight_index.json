@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-17T06:39:18.029203",
+  "built_at": "2026-07-17T13:26:24.585551",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4360,6 +4360,11 @@
       "slug": "red-teaming-agents-without-killing-velocity",
       "title": "Red-teaming agents without killing velocity",
       "summary": "I ran into this redteaming internal problem while migrating a service under a hard deadline. The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why. The one-paragraph version (read this first) Most teams treat red-teaming as a separate security e"
+    },
+    {
+      "slug": "why-progressive-web-apps-fail-on-2g-and-how-to-fix",
+      "title": "Why progressive web apps fail on 2G and how to fix…",
+      "summary": "After reviewing enough code that touches architecture decisions, the same failure pattern keeps showing up. The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why. Why this list exists (what I was actually trying to solve) I joined a team in 2026"
     }
   ]
 }
