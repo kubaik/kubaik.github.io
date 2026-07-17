@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-16T14:02:09.567023",
+  "built_at": "2026-07-17T02:53:28.908964",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4350,6 +4350,11 @@
       "slug": "agents-roll-back-without-breaking-anything",
       "title": "Agents roll back without breaking anything",
       "summary": "Most version rollback guides assume a clean environment and a patient timeline. Most write-ups stop exactly where the interesting part starts. Here's what I'd tell a colleague hitting this for the first time. The conventional wisdom (and why it's incomplete) The standard playbook says: pin every age"
+    },
+    {
+      "slug": "ai-features-as-tech-debt-or-golden-paths",
+      "title": "AI features as tech debt or golden paths",
+      "summary": "I've hit the same building golden mistake in more than one production codebase over the years. Production gives you neither a clean environment nor a patient timeline. Here's what I'd tell a colleague hitting this for the first time. The conventional wisdom (and why it's incomplete) The standard pla"
     }
   ]
 }

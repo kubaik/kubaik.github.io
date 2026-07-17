@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 16 Jul 2026 14:02:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jul 2026 02:53:40 +0000</lastBuildDate>
+    <item>
+      <title>AI features as tech debt or golden paths</title>
+      <link>https://kubaik.github.io/ai-features-as-tech-debt-or-golden-paths/</link>
+      <description>AI features built with standard wrappers often become maintenance nightmares in Africa. Learn why caching, flags, and routing assumptions fail — and how to build resilient AI features that survive 3G drops and model drift.</description>
+      <pubDate>Fri, 17 Jul 2026 02:53:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-features-as-tech-debt-or-golden-paths/</guid>
+    </item>
     <item>
       <title>Agents roll back without breaking anything</title>
       <link>https://kubaik.github.io/agents-roll-back-without-breaking-anything/</link>
@@ -138,13 +145,6 @@
       <description>Cut MCP server exposure 100% with localhost binding, security group rules, and SSH tunnels — 2026 incident breakdown with exact commands and $3,100 cleanup cost.</description>
       <pubDate>Fri, 10 Jul 2026 03:38:46 +0000</pubDate>
       <guid>https://kubaik.github.io/mcp-server-exposed-internal-tools-in-2026/</guid>
-    </item>
-    <item>
-      <title>Slash LLM costs 60% with a cache</title>
-      <link>https://kubaik.github.io/slash-llm-costs-60-with-a-cache/</link>
-      <description>Cut LLM token spend 60% with Redis caching, deterministic keys, and two TTL buckets — plus cost guardrails and Prometheus metrics to prove it</description>
-      <pubDate>Thu, 09 Jul 2026 15:19:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/slash-llm-costs-60-with-a-cache/</guid>
     </item>
   </channel>
 </rss>
