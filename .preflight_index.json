@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-17T13:40:13.863410",
+  "built_at": "2026-07-17T13:47:20.847374",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4370,6 +4370,11 @@
       "slug": "agentic-workflows-how-we-kept-the-lights",
       "title": "Agentic workflows: how we kept the lights…",
       "summary": "observability stack looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke. Why I wrote this (the problem I kept hitting) In late 2026 our agentic workflow servic"
+    },
+    {
+      "slug": "agents-keep-breaking-prod-3-boundary-rules-you-still-need",
+      "title": "Agents keep breaking prod: 3 boundary rules you still need",
+      "summary": "There's a gap between how most production is taught and how it actually behaves under load. The edge cases only show up once real users hit the system. Here's what I'd tell a colleague hitting this for the first time. The error and why it's confusing You deploy an agent that’s supposed to auto-reply"
     }
   ]
 }
