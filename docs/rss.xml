@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Jul 2026 02:46:10 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Jul 2026 13:24:37 +0000</lastBuildDate>
+    <item>
+      <title>Fintech features break in Ghana: the real fix</title>
+      <link>https://kubaik.github.io/fintech-features-break-in-ghana-the-real-fix/</link>
+      <description>Fintech features break in Ghana: hidden timeouts, ID formats, and rate limits that work in Lagos but fail in Accra — how to fix them without country forks and verify the fix in staging.</description>
+      <pubDate>Sat, 18 Jul 2026 13:24:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/fintech-features-break-in-ghana-the-real-fix/</guid>
+    </item>
     <item>
       <title>LangGraph vs LangChain: which LLM stack I ship…</title>
       <link>https://kubaik.github.io/langgraph-vs-langchain-which-llm-stack-i-ship/</link>
@@ -138,13 +145,6 @@
       <description>Cut agent bugs 79% with automated evaluation loops — synthetic scenarios, rule checks, and LLM judges you can run in CI today. 2026 real numbers included.</description>
       <pubDate>Sat, 11 Jul 2026 14:26:53 +0000</pubDate>
       <guid>https://kubaik.github.io/replace-vibe-testing-with-agent-evals-now/</guid>
-    </item>
-    <item>
-      <title>Kill noisy alerts: the triage system that restored sleep</title>
-      <link>https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/</link>
-      <description>Cut false alerts 68% with a four-layer triage system that labels spikes, drifts, noise, and failures before waking anyone — Prometheus 2.51, TimescaleDB 2.13, and SLO burn-rate math in 2026</description>
-      <pubDate>Sat, 11 Jul 2026 13:28:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/</guid>
     </item>
   </channel>
 </rss>

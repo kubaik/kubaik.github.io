@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-18T02:46:00.011644",
+  "built_at": "2026-07-18T13:24:26.809778",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4380,6 +4380,11 @@
       "slug": "langgraph-vs-langchain-which-llm-stack-i-ship",
       "title": "LangGraph vs LangChain: which LLM stack I ship…",
       "summary": "There's a gap between how evaluation stack is taught and how it actually behaves under load. The tutorials all show the happy path. Here's the fuller picture, with the tradeoffs left in. Why this comparison matters right now In 2026, shipping a production LLM feature is no longer about slapping an O"
+    },
+    {
+      "slug": "fintech-features-break-in-ghana-the-real-fix",
+      "title": "Fintech features break in Ghana: the real fix",
+      "summary": "I've hit the same building fintech mistake in more than one production codebase over the years. It works in the simple case and breaks in a specific way under load. This is the version of the write-up that includes the part that broke. The error and why it's confusing You’ve built a feature that wor"
     }
   ]
 }

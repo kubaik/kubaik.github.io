@@ -77,5 +77,6 @@
   "The architecture decisions that let us serve users on 2G/3G as a first-class experience in 2026",
   "The observability stack that survived our move to heavy agentic workflows",
   "Why most production agents still need strong human-in-the-loop boundaries in 2026",
-  "The evaluation stack I actually trust for production LLM features in 2026"
+  "The evaluation stack I actually trust for production LLM features in 2026",
+  "Building fintech features that work across Kenya, Nigeria, Ghana, and Senegal without country-specific forks"
 ]
