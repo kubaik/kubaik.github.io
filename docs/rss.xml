@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 17 Jul 2026 13:47:33 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 18 Jul 2026 02:46:10 +0000</lastBuildDate>
+    <item>
+      <title>LangGraph vs LangChain: which LLM stack I ship…</title>
+      <link>https://kubaik.github.io/langgraph-vs-langchain-which-llm-stack-i-ship/</link>
+      <description>LangGraph vs LangChain in 2026: which evaluation stack survives production traffic, keeps costs under control, and makes on-call sane? Cold-start numbers, memory footprints, and the one mistake that cost me three days.</description>
+      <pubDate>Sat, 18 Jul 2026 02:45:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/langgraph-vs-langchain-which-llm-stack-i-ship/</guid>
+    </item>
     <item>
       <title>Agents keep breaking prod: 3 boundary rules you still need</title>
       <link>https://kubaik.github.io/agents-keep-breaking-prod-3-boundary-rules-you-still-need/</link>
@@ -138,13 +145,6 @@
       <description>Cut false alerts 68% with a four-layer triage system that labels spikes, drifts, noise, and failures before waking anyone — Prometheus 2.51, TimescaleDB 2.13, and SLO burn-rate math in 2026</description>
       <pubDate>Sat, 11 Jul 2026 13:28:35 +0000</pubDate>
       <guid>https://kubaik.github.io/kill-noisy-alerts-the-triage-system-that-restored-sleep/</guid>
-    </item>
-    <item>
-      <title>AI Engineer role vanished in 6 months</title>
-      <link>https://kubaik.github.io/ai-engineer-role-vanished-in-6-months/</link>
-      <description>Cut AI infra costs 76% and eliminated AI Engineer roles in 6 months — here’s how we did it with AWS Bedrock, Redis 7.2, and prompt validation</description>
-      <pubDate>Sat, 11 Jul 2026 13:09:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-engineer-role-vanished-in-6-months/</guid>
     </item>
   </channel>
 </rss>
