@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-19T03:00:02.044999",
+  "built_at": "2026-07-19T13:25:48.875175",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4390,6 +4390,11 @@
       "slug": "poolers-wont-save-your-serverless-db",
       "title": "Poolers won’t save your serverless DB",
       "summary": "Most connection poolers guides assume a clean environment and a patient timeline. Most write-ups stop exactly where the interesting part starts. This is what I put together after working through it properly. The gap between what the docs say and what production needs The first time I sat through a v"
+    },
+    {
+      "slug": "purpose-built-beats-general-ai-tools",
+      "title": "Purpose-built beats general AI tools",
+      "summary": "I've hit the same purposebuilt platforms mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. This walks through the fix and the reasoning, not just the patch. The conventional wisdom (and why it's incomplete) In 2026, the market"
     }
   ]
 }
