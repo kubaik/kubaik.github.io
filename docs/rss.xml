@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 18 Jul 2026 13:24:37 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 19 Jul 2026 03:00:11 +0000</lastBuildDate>
+    <item>
+      <title>Poolers won’t save your serverless DB</title>
+      <link>https://kubaik.github.io/poolers-wont-save-your-serverless-db/</link>
+      <description>Cut API latency 35% and slash data-transfer bills 62% by swapping a pooler for a connection multiplexer — the pattern AWS docs don’t mention.</description>
+      <pubDate>Sun, 19 Jul 2026 02:59:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/poolers-wont-save-your-serverless-db/</guid>
+    </item>
     <item>
       <title>Fintech features break in Ghana: the real fix</title>
       <link>https://kubaik.github.io/fintech-features-break-in-ghana-the-real-fix/</link>
@@ -138,13 +145,6 @@
       <description>Cut agent review time from 2h 12m to 1m 52s with automated gates — static analysis, ephemeral tests, and risk-based escalation using checkov 3.2.117, Node 20 LTS, and AWS Lambda.</description>
       <pubDate>Sun, 12 Jul 2026 03:19:23 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-code-reviews-1200-tests-per-pr/</guid>
-    </item>
-    <item>
-      <title>Replace vibe testing with agent evals now</title>
-      <link>https://kubaik.github.io/replace-vibe-testing-with-agent-evals-now/</link>
-      <description>Cut agent bugs 79% with automated evaluation loops — synthetic scenarios, rule checks, and LLM judges you can run in CI today. 2026 real numbers included.</description>
-      <pubDate>Sat, 11 Jul 2026 14:26:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/replace-vibe-testing-with-agent-evals-now/</guid>
     </item>
   </channel>
 </rss>
