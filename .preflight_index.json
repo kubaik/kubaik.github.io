@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-19T13:25:48.875175",
+  "built_at": "2026-07-20T03:29:34.808276",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4395,6 +4395,11 @@
       "slug": "purpose-built-beats-general-ai-tools",
       "title": "Purpose-built beats general AI tools",
       "summary": "I've hit the same purposebuilt platforms mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. This walks through the fix and the reasoning, not just the patch. The conventional wisdom (and why it's incomplete) In 2026, the market"
+    },
+    {
+      "slug": "cut-ai-inference-bill-68-without-model-changes",
+      "title": "Cut AI inference bill 68% without model changes",
+      "summary": "A colleague asked me about cut our during a code review recently, and my first answer wasn't a good one. The gap between the demo and the incident report is where this actually lives. This is the version of the write-up that includes the part that broke. The gap between what the docs say and what pr"
     }
   ]
 }

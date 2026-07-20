@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 19 Jul 2026 13:25:59 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Jul 2026 03:29:46 +0000</lastBuildDate>
+    <item>
+      <title>Cut AI inference bill 68% without model changes</title>
+      <link>https://kubaik.github.io/cut-ai-inference-bill-68-without-model-changes/</link>
+      <description>Redis caching: cut API latency 75% and AI inference bill 68% — connection pooling, jemalloc, and the memory overhead nobody talks about.</description>
+      <pubDate>Mon, 20 Jul 2026 03:29:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/cut-ai-inference-bill-68-without-model-changes/</guid>
+    </item>
     <item>
       <title>Purpose-built beats general AI tools</title>
       <link>https://kubaik.github.io/purpose-built-beats-general-ai-tools/</link>
@@ -138,13 +145,6 @@
       <description>Cut tool validation time 70% with load tests, tracing, and ADRs — avoid connection leaks, cache stampedes, and cold starts in staging before they hit production.</description>
       <pubDate>Sun, 12 Jul 2026 13:28:27 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-guessing-tech-stacks-validate-tools-in-2-hours/</guid>
-    </item>
-    <item>
-      <title>Trim LLM bills: 3 FinOps moves that work</title>
-      <link>https://kubaik.github.io/trim-llm-bills-3-finops-moves-that-work/</link>
-      <description>Cut LLM bill 34% with 3 levers most teams ignore: semantic shaping, two-layer caching, and priority queues. Real numbers from a 12K-request/day system on AWS Bedrock and Claude 3.5.</description>
-      <pubDate>Sun, 12 Jul 2026 09:48:02 +0000</pubDate>
-      <guid>https://kubaik.github.io/trim-llm-bills-3-finops-moves-that-work/</guid>
     </item>
   </channel>
 </rss>
