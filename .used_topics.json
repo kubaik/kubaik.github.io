@@ -81,5 +81,6 @@
   "Building fintech features that work across Kenya, Nigeria, Ghana, and Senegal without country-specific forks",
   "Connection poolers in the age of serverless and AI agents \u2014 what still makes sense",
   "Purpose-built AI platforms vs general platforms: the decision we had to make in 2026",
-  "How we cut our AI inference bill 68% without changing a single model"
+  "How we cut our AI inference bill 68% without changing a single model",
+  "Building systems that can absorb new AI capabilities without major rewrites every 6 months"
 ]

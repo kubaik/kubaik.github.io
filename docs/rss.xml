@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Jul 2026 03:29:46 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 20 Jul 2026 14:14:12 +0000</lastBuildDate>
+    <item>
+      <title>AI features break your stack every 6 months</title>
+      <link>https://kubaik.github.io/ai-features-break-your-stack-every-6-months/</link>
+      <description>AI features break your stack every 6 months unless you design a pluggable layer — learn how we replaced microservices with sidecars, stable interfaces, and feature flags to absorb new AI capabilities without rewrites</description>
+      <pubDate>Mon, 20 Jul 2026 14:13:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-features-break-your-stack-every-6-months/</guid>
+    </item>
     <item>
       <title>Cut AI inference bill 68% without model changes</title>
       <link>https://kubaik.github.io/cut-ai-inference-bill-68-without-model-changes/</link>
@@ -138,13 +145,6 @@
       <description>Cut build time 40% with HTMX + Islands — measured latency, bundle sizes, and deployment wins for internal tools in 2026.</description>
       <pubDate>Mon, 13 Jul 2026 03:21:15 +0000</pubDate>
       <guid>https://kubaik.github.io/htmx-islands-beat-react-our-internal-tools-saved-40/</guid>
-    </item>
-    <item>
-      <title>Stop guessing tech stacks: validate tools in 2 hours</title>
-      <link>https://kubaik.github.io/stop-guessing-tech-stacks-validate-tools-in-2-hours/</link>
-      <description>Cut tool validation time 70% with load tests, tracing, and ADRs — avoid connection leaks, cache stampedes, and cold starts in staging before they hit production.</description>
-      <pubDate>Sun, 12 Jul 2026 13:28:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-guessing-tech-stacks-validate-tools-in-2-hours/</guid>
     </item>
   </channel>
 </rss>

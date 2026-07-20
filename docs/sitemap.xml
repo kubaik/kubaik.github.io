@@ -1148,6 +1148,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-features-break-your-stack-every-6-months/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ai-finds-bugs-faster-what-defenders-must-do-now/</loc>
     <lastmod>2026-06-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -2542,7 +2551,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/cut-ai-inference-bill-68-without-model-changes.png</image:loc>
     </image:image>
   </url>
   <url>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-20T03:29:34.808276",
+  "built_at": "2026-07-20T14:14:01.815377",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4400,6 +4400,11 @@
       "slug": "cut-ai-inference-bill-68-without-model-changes",
       "title": "Cut AI inference bill 68% without model changes",
       "summary": "A colleague asked me about cut our during a code review recently, and my first answer wasn't a good one. The gap between the demo and the incident report is where this actually lives. This is the version of the write-up that includes the part that broke. The gap between what the docs say and what pr"
+    },
+    {
+      "slug": "ai-features-break-your-stack-every-6-months",
+      "title": "AI features break your stack every 6 months",
+      "summary": "A colleague asked me about building systems during a code review recently, and my first answer wasn't a good one. The answers online were either wrong or skipped the part that mattered. Here's what I'd tell a colleague hitting this for the first time. The situation (what we were trying to solve) In "
     }
   ]
 }
