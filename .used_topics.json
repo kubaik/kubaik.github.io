@@ -82,5 +82,6 @@
   "Connection poolers in the age of serverless and AI agents \u2014 what still makes sense",
   "Purpose-built AI platforms vs general platforms: the decision we had to make in 2026",
   "How we cut our AI inference bill 68% without changing a single model",
-  "Building systems that can absorb new AI capabilities without major rewrites every 6 months"
+  "Building systems that can absorb new AI capabilities without major rewrites every 6 months",
+  "The tool-use patterns that scaled and the ones that created thundering herd problems"
 ]

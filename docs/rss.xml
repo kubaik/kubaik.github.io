@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 20 Jul 2026 14:14:12 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jul 2026 02:56:45 +0000</lastBuildDate>
+    <item>
+      <title>Cache stampedes: the patterns that scale and the ones…</title>
+      <link>https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/</link>
+      <description>The API handles 400–600 requests per second during peak hours, and our first deployment looked fine in staging with 10% of that load.</description>
+      <pubDate>Tue, 21 Jul 2026 02:56:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/</guid>
+    </item>
     <item>
       <title>AI features break your stack every 6 months</title>
       <link>https://kubaik.github.io/ai-features-break-your-stack-every-6-months/</link>
@@ -138,13 +145,6 @@
       <description>Cut GPU costs 42% with spot instances + retry logic — real AWS numbers, Python retry manager, and when to switch from reserved capacity in 2026.</description>
       <pubDate>Mon, 13 Jul 2026 14:42:32 +0000</pubDate>
       <guid>https://kubaik.github.io/gpu-spot-instances-reserved-for-ai-costs/</guid>
-    </item>
-    <item>
-      <title>HTMX + Islands beat React: our internal tools saved 40%…</title>
-      <link>https://kubaik.github.io/htmx-islands-beat-react-our-internal-tools-saved-40/</link>
-      <description>Cut build time 40% with HTMX + Islands — measured latency, bundle sizes, and deployment wins for internal tools in 2026.</description>
-      <pubDate>Mon, 13 Jul 2026 03:21:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/htmx-islands-beat-react-our-internal-tools-saved-40/</guid>
     </item>
   </channel>
 </rss>
