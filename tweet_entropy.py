@@ -416,9 +416,26 @@ class VariantTemplate:
                           opener, body, closer] if part.strip())
         try:
             return raw.format(**kwargs)
-        except KeyError:
-            # Gracefully fall back if a slot is missing from kwargs
-            return raw
+        except KeyError as e:
+            # A required slot (e.g. {fin}, {time}) was missing from kwargs.
+            # IMPORTANT: do NOT fall back to the raw, unformatted string —
+            # that silently drops every substitution, including {url}, and
+            # can result in a tweet being posted with no working link.
+            # Instead, fill only the missing slot(s) with "" and keep every
+            # other substitution (crucially {url}) intact, while surfacing
+            # the problem via a warning so it doesn't go unnoticed again.
+            print(
+                f"⚠️  VariantTemplate.render: missing format key {e} for "
+                f"family '{self.family}' — filling with empty string. "
+                f"Check that all required kwargs (fin/time/metric/pain) are "
+                f"passed through every render call, including trim cascades."
+            )
+
+            class _SafeDict(dict):
+                def __missing__(self, key):
+                    return ""
+
+            return raw.format_map(_SafeDict(**kwargs))
 
 
 # ── The 16 variant templates (indexed to match TEMPLATE_FAMILIES) ─────────────
@@ -792,6 +809,14 @@ def build_single_tweet_v2(post, base_url: str, hook_style: str = "auto") -> str:
     )
 
     # ── Trim to 280 (same cascade as original) ───────────────────────────────
+    # NOTE: fin/time MUST be passed on every render call below. Some templates
+    # (the "cost_framing" and "result_timeline" families) reference {fin} and
+    # {time} in their openers. Dropping those kwargs here previously caused
+    # template.render() to hit a KeyError on .format(), which its except
+    # branch silently swallowed by returning the *unformatted* raw template
+    # string — leaving {url} (and everything else) unsubstituted. The final
+    # hard-trim to 277 chars would then chop that garbled string mid-way,
+    # producing a tweet with no working link. Always pass the full kwarg set.
     if len(tweet) > 280:
         # Measure skeleton cost without teaser
         skeleton = render_variant_template(
@@ -804,6 +829,8 @@ def build_single_tweet_v2(post, base_url: str, hook_style: str = "auto") -> str:
             bait=bait,
             metric=metric,
             pain=pain,
+            fin=fin,
+            time=time_val,
         )
         teaser_budget = max(20, 280 - len(skeleton))
         teaser = _trim_to_budget(teaser, teaser_budget)
@@ -817,6 +844,8 @@ def build_single_tweet_v2(post, base_url: str, hook_style: str = "auto") -> str:
             bait=bait,
             metric=metric,
             pain=pain,
+            fin=fin,
+            time=time_val,
         )
 
     if len(tweet) > 280:
@@ -830,6 +859,8 @@ def build_single_tweet_v2(post, base_url: str, hook_style: str = "auto") -> str:
             bait="",
             metric=metric,
             pain=pain,
+            fin=fin,
+            time=time_val,
         )
         teaser_budget = max(20, 280 - len(skeleton))
         teaser = _trim_to_budget(teaser, teaser_budget)
@@ -843,6 +874,8 @@ def build_single_tweet_v2(post, base_url: str, hook_style: str = "auto") -> str:
             bait="",
             metric=metric,
             pain=pain,
+            fin=fin,
+            time=time_val,
         )
 
     if len(tweet) > 280:
