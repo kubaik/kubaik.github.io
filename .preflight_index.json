@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-21T02:56:34.154573",
+  "built_at": "2026-07-21T07:54:29.162032",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4410,6 +4410,11 @@
       "slug": "cache-stampedes-the-patterns-that-scale-and-the-ones",
       "title": "Cache stampedes: the patterns that scale and the ones…",
       "summary": "I ran into this tooluse patterns problem while migrating a service under a hard deadline. Most write-ups stop exactly where the interesting part starts. Here's the root cause, not just the symptom. The gap between what the docs say and what production needs Most tutorials tell you to add a cache and"
+    },
+    {
+      "slug": "internal-platform-adoption-one-metric-kills-velocity",
+      "title": "Internal platform adoption: one metric kills velocity",
+      "summary": "I've hit the same scan aigenerated mistake in more than one production codebase over the years. It works in the simple case and breaks in a specific way under load. Here's the fuller picture, with the tradeoffs left in. Why I wrote this (the problem I kept hitting) In 2026 I ran a platform team insi"
     }
   ]
 }

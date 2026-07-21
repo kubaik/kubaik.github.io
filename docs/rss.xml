@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Jul 2026 10:49:41 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jul 2026 07:54:40 +0000</lastBuildDate>
+    <item>
+      <title>Internal platform adoption: one metric kills velocity</title>
+      <link>https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/</link>
+      <description>Internal platform adoption fails when feedback latency exceeds 10 seconds — measure rollout time in Backstage with Redis 7.2 and cut developer time 47%</description>
+      <pubDate>Tue, 21 Jul 2026 07:54:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/</guid>
+    </item>
     <item>
       <title>Cache stampedes: the patterns that scale and the ones…</title>
       <link>https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI feature latency from 2.8s to 420ms in production — the real reasons it spiked and how to verify the fix using Jaeger, Redis 7.2, and FastAPI 0.109.</description>
       <pubDate>Tue, 14 Jul 2026 02:45:01 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-latency-cut-28s-to-380ms-without-retraining/</guid>
-    </item>
-    <item>
-      <title>GPU spot instances &gt; reserved for AI costs</title>
-      <link>https://kubaik.github.io/gpu-spot-instances-reserved-for-ai-costs/</link>
-      <description>Cut GPU costs 42% with spot instances + retry logic — real AWS numbers, Python retry manager, and when to switch from reserved capacity in 2026.</description>
-      <pubDate>Mon, 13 Jul 2026 14:42:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/gpu-spot-instances-reserved-for-ai-costs/</guid>
     </item>
   </channel>
 </rss>
