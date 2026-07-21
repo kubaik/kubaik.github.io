@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Jul 2026 07:54:40 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jul 2026 14:01:20 +0000</lastBuildDate>
+    <item>
+      <title>AI code in prod? Postmortems still work</title>
+      <link>https://kubaik.github.io/ai-code-in-prod-postmortems-still-work/</link>
+      <description>AI code in prod is a dependency that changes under you — capture its prompt, snapshot, and runtime assumptions to cut incident time 78% and false positives 83%.</description>
+      <pubDate>Tue, 21 Jul 2026 14:01:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-code-in-prod-postmortems-still-work/</guid>
+    </item>
     <item>
       <title>Internal platform adoption: one metric kills velocity</title>
       <link>https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/</link>
@@ -138,13 +145,6 @@
       <description>Cut sales cycle time 66% with AI for dev tools — real code, failure modes, and the $8/lead cost that beats human reps. Includes Hugging Face 4.38, GitHub Copilot 1.84, and n8n 1.30 breakdown.</description>
       <pubDate>Tue, 14 Jul 2026 13:52:51 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-sales-cycles-3x-faster-40-less-talk/</guid>
-    </item>
-    <item>
-      <title>AI latency cut: 2.8s to 380ms without retraining</title>
-      <link>https://kubaik.github.io/ai-latency-cut-28s-to-380ms-without-retraining/</link>
-      <description>Cut AI feature latency from 2.8s to 420ms in production — the real reasons it spiked and how to verify the fix using Jaeger, Redis 7.2, and FastAPI 0.109.</description>
-      <pubDate>Tue, 14 Jul 2026 02:45:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-latency-cut-28s-to-380ms-without-retraining/</guid>
     </item>
   </channel>
 </rss>

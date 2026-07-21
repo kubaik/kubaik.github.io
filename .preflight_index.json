@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-21T07:54:29.162032",
+  "built_at": "2026-07-21T14:01:09.923287",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4415,6 +4415,11 @@
       "slug": "internal-platform-adoption-one-metric-kills-velocity",
       "title": "Internal platform adoption: one metric kills velocity",
       "summary": "I've hit the same scan aigenerated mistake in more than one production codebase over the years. It works in the simple case and breaks in a specific way under load. Here's the fuller picture, with the tradeoffs left in. Why I wrote this (the problem I kept hitting) In 2026 I ran a platform team insi"
+    },
+    {
+      "slug": "ai-code-in-prod-postmortems-still-work",
+      "title": "AI code in prod? Postmortems still work",
+      "summary": "The official documentation for building postmortems is good. What it doesn't cover is what happens six months into production. Most write-ups stop exactly where the interesting part starts. This is the version of the write-up that includes the part that broke. The gap between what the docs say and w"
     }
   ]
 }
