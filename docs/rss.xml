@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 21 Jul 2026 14:01:20 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jul 2026 02:54:28 +0000</lastBuildDate>
+    <item>
+      <title>6 months running multi-agent systems: what broke</title>
+      <link>https://kubaik.github.io/6-months-running-multi-agent-systems-what-broke/</link>
+      <description>Cut API latency 96% and costs 57% with multi-agent systems — the real failure modes at 1,800 messages/sec including Redis cache stampede, message reordering, and JVM GC pauses.</description>
+      <pubDate>Wed, 22 Jul 2026 02:54:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/6-months-running-multi-agent-systems-what-broke/</guid>
+    </item>
     <item>
       <title>AI code in prod? Postmortems still work</title>
       <link>https://kubaik.github.io/ai-code-in-prod-postmortems-still-work/</link>
@@ -138,13 +145,6 @@
       <description>Cut multi-model agent costs 75% with idempotency keys and concurrency limits — Redis 7.2 eviction rates, Lambda arm64 cost, and the 503 error mistake most teams repeat</description>
       <pubDate>Wed, 15 Jul 2026 02:44:07 +0000</pubDate>
       <guid>https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/</guid>
-    </item>
-    <item>
-      <title>AI sales cycles: 3x faster, 40% less talk</title>
-      <link>https://kubaik.github.io/ai-sales-cycles-3x-faster-40-less-talk/</link>
-      <description>Cut sales cycle time 66% with AI for dev tools — real code, failure modes, and the $8/lead cost that beats human reps. Includes Hugging Face 4.38, GitHub Copilot 1.84, and n8n 1.30 breakdown.</description>
-      <pubDate>Tue, 14 Jul 2026 13:52:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-sales-cycles-3x-faster-40-less-talk/</guid>
     </item>
   </channel>
 </rss>

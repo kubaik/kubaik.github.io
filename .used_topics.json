@@ -86,5 +86,6 @@
   "The tool-use patterns that scaled and the ones that created thundering herd problems",
   "How we scan AI-generated code without drowning in false positives that everyone ignores",
   "Why most internal developer platforms fail at the adoption layer, not the technical one",
-  "Building postmortems that actually improve things when half the code is AI-generated"
+  "Building postmortems that actually improve things when half the code is AI-generated",
+  "The failure modes we only saw after running multi-agent systems at scale for 6 months"
 ]
