@@ -448,7 +448,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/6-months-running-multi-agent-systems-what-broke.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -3605,6 +3605,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/mcp-killed-the-agent-tool-protocol-mess/</loc>
+    <lastmod>2026-07-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/mcp-server-exposed-internal-tools-in-2026/</loc>
     <lastmod>2026-07-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -5987,15 +5996,6 @@
     <priority>0.6</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/tag-machine-learning.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/mcpserver/</loc>
-    <lastmod>2026-07-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-mcpserver.png</image:loc>
     </image:image>
   </url>
   <url>

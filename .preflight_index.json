@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-22T02:54:16.820387",
+  "built_at": "2026-07-22T14:04:42.362725",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4425,6 +4425,11 @@
       "slug": "6-months-running-multi-agent-systems-what-broke",
       "title": "6 months running multi-agent systems: what broke",
       "summary": "failure modes looks simple until it has to survive real traffic. It's the kind of problem that's easy to reproduce and hard to explain. This is what I put together after working through it properly. The gap between what the docs say and what production needs Most tutorials frame multi-agent systems "
+    },
+    {
+      "slug": "mcp-killed-the-agent-tool-protocol-mess",
+      "title": "MCP killed the agent-tool protocol mess",
+      "summary": "Most mcp won guides assume a clean environment and a patient timeline. It works in the simple case and breaks in a specific way under load. Here's what I'd tell a colleague hitting this for the first time. Why I wrote this (the problem I kept hitting) In late 2026, my team rolled out a fleet of LLM "
     }
   ]
 }

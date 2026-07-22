@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Jul 2026 02:54:28 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jul 2026 14:04:53 +0000</lastBuildDate>
+    <item>
+      <title>MCP killed the agent-tool protocol mess</title>
+      <link>https://kubaik.github.io/mcp-killed-the-agent-tool-protocol-mess/</link>
+      <description>MCP agent protocol wins over custom stacks — 65% lower p99 latency, 81% less networking code, and 75% faster onboarding. Real 2026 numbers and playbook.</description>
+      <pubDate>Wed, 22 Jul 2026 14:04:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-killed-the-agent-tool-protocol-mess/</guid>
+    </item>
     <item>
       <title>6 months running multi-agent systems: what broke</title>
       <link>https://kubaik.github.io/6-months-running-multi-agent-systems-what-broke/</link>
@@ -138,13 +145,6 @@
       <description>Ownership drift after velocity spikes explained — how Redis 7.2 cache policy gates cut Sev-1s 3x and saved 120 engineer hours per quarter</description>
       <pubDate>Wed, 15 Jul 2026 12:58:40 +0000</pubDate>
       <guid>https://kubaik.github.io/ownership-drift-after-velocity-spikes/</guid>
-    </item>
-    <item>
-      <title>Keep multi-model systems stable: 6 rules that worked</title>
-      <link>https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/</link>
-      <description>Cut multi-model agent costs 75% with idempotency keys and concurrency limits — Redis 7.2 eviction rates, Lambda arm64 cost, and the 503 error mistake most teams repeat</description>
-      <pubDate>Wed, 15 Jul 2026 02:44:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/keep-multi-model-systems-stable-6-rules-that-worked/</guid>
     </item>
   </channel>
 </rss>

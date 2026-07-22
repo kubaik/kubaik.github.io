@@ -87,5 +87,6 @@
   "How we scan AI-generated code without drowning in false positives that everyone ignores",
   "Why most internal developer platforms fail at the adoption layer, not the technical one",
   "Building postmortems that actually improve things when half the code is AI-generated",
-  "The failure modes we only saw after running multi-agent systems at scale for 6 months"
+  "The failure modes we only saw after running multi-agent systems at scale for 6 months",
+  "Why MCP won the agent-tool protocol war \u2014 and what it actually changed in how we build agents"
 ]
