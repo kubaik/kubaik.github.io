@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-22T14:04:42.362725",
+  "built_at": "2026-07-23T03:00:30.010669",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4430,6 +4430,11 @@
       "slug": "mcp-killed-the-agent-tool-protocol-mess",
       "title": "MCP killed the agent-tool protocol mess",
       "summary": "Most mcp won guides assume a clean environment and a patient timeline. It works in the simple case and breaks in a specific way under load. Here's what I'd tell a colleague hitting this for the first time. Why I wrote this (the problem I kept hitting) In late 2026, my team rolled out a fleet of LLM "
+    },
+    {
+      "slug": "four-silent-failures-of-tool-calling-agents",
+      "title": "Four silent failures of tool-calling agents",
+      "summary": "I've hit the same hidden failure mistake in more than one production codebase over the years. Production gives you neither a clean environment nor a patient timeline. Here's what actually worked, and why. The one-paragraph version (read this first) Tool-calling agents—where an LLM decides which func"
     }
   ]
 }
