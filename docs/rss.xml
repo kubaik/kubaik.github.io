@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Jul 2026 03:00:40 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 23 Jul 2026 14:10:10 +0000</lastBuildDate>
+    <item>
+      <title>Edge agents vs cloud round-trips in 2026</title>
+      <link>https://kubaik.github.io/edge-agents-vs-cloud-round-trips-in-2026/</link>
+      <description>Edge agents cut API latency 88% for African users in 2026 — TinyLlama ONNX Runtime 1.16 implementation, Android/iOS deployment guide, and the memory trap most teams miss</description>
+      <pubDate>Thu, 23 Jul 2026 14:09:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/edge-agents-vs-cloud-round-trips-in-2026/</guid>
+    </item>
     <item>
       <title>Four silent failures of tool-calling agents</title>
       <link>https://kubaik.github.io/four-silent-failures-of-tool-calling-agents/</link>
@@ -138,13 +145,6 @@
       <description>Cut API response time 60% with Redis caching — connection pooling, eviction policies, and the cache stampede mistake most teams make.</description>
       <pubDate>Thu, 16 Jul 2026 11:51:27 +0000</pubDate>
       <guid>https://kubaik.github.io/survived-12000-agents-with-redis/</guid>
-    </item>
-    <item>
-      <title>Offline-first agents for field teams</title>
-      <link>https://kubaik.github.io/offline-first-agents-for-field-teams/</link>
-      <description>Offline-first agents cut last-mile failures 12% in Lagos pilots — SQLite encryption, conflict UI, and AWS AppSync for riders on 2G</description>
-      <pubDate>Thu, 16 Jul 2026 02:51:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/offline-first-agents-for-field-teams/</guid>
     </item>
   </channel>
 </rss>

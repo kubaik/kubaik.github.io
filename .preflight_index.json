@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-23T03:00:30.010669",
+  "built_at": "2026-07-23T14:09:59.798678",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4435,6 +4435,11 @@
       "slug": "four-silent-failures-of-tool-calling-agents",
       "title": "Four silent failures of tool-calling agents",
       "summary": "I've hit the same hidden failure mistake in more than one production codebase over the years. Production gives you neither a clean environment nor a patient timeline. Here's what actually worked, and why. The one-paragraph version (read this first) Tool-calling agents—where an LLM decides which func"
+    },
+    {
+      "slug": "edge-agents-vs-cloud-round-trips-in-2026",
+      "title": "Edge agents vs cloud round-trips in 2026",
+      "summary": "The conventional advice on ondevice edge is incomplete in one specific, costly way. The answers online were either wrong or skipped the part that mattered. This is what I put together after working through it properly. Why I wrote this (the problem I kept hitting) I spent three weeks debugging why m"
     }
   ]
 }

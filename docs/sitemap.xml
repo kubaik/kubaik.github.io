@@ -2795,6 +2795,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/edge-agents-vs-cloud-round-trips-in-2026/</loc>
+    <lastmod>2026-07-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/edge-backends-when-50-locations-break-your-api/</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -2980,7 +2989,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/four-silent-failures-of-tool-calling-agents.png</image:loc>
     </image:image>
   </url>
   <url>
