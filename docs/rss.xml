@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 23 Jul 2026 14:10:10 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Jul 2026 02:54:51 +0000</lastBuildDate>
+    <item>
+      <title>Postgres vector search: what breaks first</title>
+      <link>https://kubaik.github.io/postgres-vector-search-what-breaks-first/</link>
+      <description>Cut vector search latency 85% by moving out of Postgres — pgvector connection limits, Qdrant 1.8 latency, and the pool mistake that cost 180ms</description>
+      <pubDate>Fri, 24 Jul 2026 02:54:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/postgres-vector-search-what-breaks-first/</guid>
+    </item>
     <item>
       <title>Edge agents vs cloud round-trips in 2026</title>
       <link>https://kubaik.github.io/edge-agents-vs-cloud-round-trips-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Rollbacks break downstream systems when agents leak state into caches, pools, and rate tables. Version everything — headers, queries, pool sizes — and treat rollbacks as blue-green activations, not reverts. Measure downstream metrics after every deploy.</description>
       <pubDate>Thu, 16 Jul 2026 14:02:05 +0000</pubDate>
       <guid>https://kubaik.github.io/agents-roll-back-without-breaking-anything/</guid>
-    </item>
-    <item>
-      <title>Survived 12,000 agents with Redis</title>
-      <link>https://kubaik.github.io/survived-12000-agents-with-redis/</link>
-      <description>Cut API response time 60% with Redis caching — connection pooling, eviction policies, and the cache stampede mistake most teams make.</description>
-      <pubDate>Thu, 16 Jul 2026 11:51:27 +0000</pubDate>
-      <guid>https://kubaik.github.io/survived-12000-agents-with-redis/</guid>
     </item>
   </channel>
 </rss>

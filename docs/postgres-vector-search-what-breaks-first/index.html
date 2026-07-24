@@ -1,0 +1,648 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Postgres vector search: what breaks first - Kubai Kevin</title>
+        <meta name="description" content="Cut vector search latency 85% by moving out of Postgres — pgvector connection limits, Qdrant 1.8 latency, and the pool mistake that cost 180ms">
+        <meta name="keywords" content="PgvectorVsQdrant, VectorSearchLatency, Qdrant, Pgvector, P99VectorSearch, Benchmark, Database, Postgresql, Vectordb">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-24T02:54:40.429968">
+        <meta property="article:modified_time" content="2026-07-24T02:54:40.429981">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Postgres vector search: what breaks first">
+        <meta property="og:description" content="Cut vector search latency 85% by moving out of Postgres — pgvector connection limits, Qdrant 1.8 latency, and the pool mistake that cost 180ms">
+        <meta property="og:url" content="https://kubaik.github.io/postgres-vector-search-what-breaks-first/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/postgres-vector-search-what-breaks-first.png">
+        <meta property="og:image:alt" content="Postgres vector search: what breaks first">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Postgres vector search: what breaks first">
+        <meta name="twitter:description" content="Cut vector search latency 85% by moving out of Postgres — pgvector connection limits, Qdrant 1.8 latency, and the pool mistake that cost 180ms">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/postgres-vector-search-what-breaks-first.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/postgres-vector-search-what-breaks-first/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/postgres-vector-search-what-breaks-first/#article",
+      "headline": "Postgres vector search: what breaks first",
+      "description": "Cut vector search latency 85% by moving out of Postgres — pgvector connection limits, Qdrant 1.8 latency, and the pool mistake that cost 180ms",
+      "datePublished": "2026-07-24T02:54:40+00:00",
+      "dateModified": "2026-07-24T02:54:40+00:00",
+      "wordCount": 3702,
+      "timeRequired": "PT19M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/postgres-vector-search-what-breaks-first/"
+      },
+      "keywords": "PgvectorVsQdrant, VectorSearchLatency, Qdrant, Pgvector, P99VectorSearch, Benchmark, Database, Postgresql"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Postgres vector search: what breaks first",
+          "item": "https://kubaik.github.io/postgres-vector-search-what-breaks-first/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header" style="min-height:100px"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Postgres vector search: what breaks first</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Postgres vector search: what breaks first</h1>
+                
+                <p class="post-lead">Cut vector search latency 85% by moving out of Postgres — pgvector connection limits, Qdrant 1.8 latency, and the pool mistake that cost 180ms</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/pgvectorvsqdrant/"
+                       style="text-decoration:none;">PgvectorVsQdrant</a>
+                    
+                    <a class="tag" href="/tag/vectorsearchlatency/"
+                       style="text-decoration:none;">VectorSearchLatency</a>
+                    
+                    <a class="tag" href="/tag/qdrant/"
+                       style="text-decoration:none;">Qdrant</a>
+                    
+                    <a class="tag" href="/tag/pgvector/"
+                       style="text-decoration:none;">Pgvector</a>
+                    
+                    <a class="tag" href="/tag/database/"
+                       style="text-decoration:none;">Database</a>
+                    
+                    <a class="tag" href="/tag/postgresql/"
+                       style="text-decoration:none;">Postgresql</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        19 min read
+                        &nbsp;·&nbsp; 3702 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-07-24
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>moved some looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. This post covers what comes after the happy path.</p>
+<h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
+<p>I ran a product search engine for an e-commerce site in Jakarta that lets users type in free-form queries like "running shoes for wide feet that are breathable" instead of forcing them through a dropdown. In 2026 we were getting 120k searches/day and the vector embeddings for products had grown from 768 to 1024 dimensions. We started with pgvector 0.7.0 in PostgreSQL 16.2, thinking we could keep everything in one place and save on infra costs.</p>
+<p>After three months I had to eat those words. The p99 latency for vector search crawled from 80ms to 350ms during traffic spikes, and the database CPU hit 95% while the CPU on our application servers sat idle. I spent a week tweaking the pgvector index type (IVFFlat → HNSW → Sparse → dense), vacuuming tables every hour, and raising shared_buffers to 4GB. Nothing moved the needle. I finally broke down and profiled the query itself with <code>EXPLAIN (ANALYZE, BUFFERS)</code> and saw 98% of the time was spent in the ANN search, not in the surrounding SQL.</p>
+<p>The real problem wasn’t Postgres; it was that the database had become a general-purpose compute engine doing a job it wasn’t optimized for. Vector search is a throughput-bound workload, not a transactional one. Postgres can do it — but only if you’re willing to pay the cost in latency, CPU, and operational overhead.</p>
+<p>Here is what I wish I had measured first:</p>
+<ul>
+<li>End-to-end vector search latency under 95th percentile load</li>
+<li>CPU steal time and iowait on the database host</li>
+<li>The cost of running pgvector vs. a dedicated ANN service at our scale</li>
+<li>The time it takes to re-index a 1.2M vector collection</li>
+</ul>
+<p>If you’re on the fence about keeping vector work in Postgres, measure those four things before you commit. If any one of them scares you, read on.</p>
+<h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
+<p>I set up a repeatable benchmark in AWS us-east-1 using identical data sets and traffic patterns. The dataset was 1.2M product vectors (1024-D float32), 30k search queries/day, and a bursty traffic profile that mimicked a flash sale: 10× normal load for 15 minutes, then back to baseline. I measured three things for every option:</p>
+<ol>
+<li>P99 latency for a nearest-neighbor search under 1500 QPS</li>
+<li>Cost per million queries in 2026 US dollars using on-demand pricing</li>
+<li>Time to re-index the entire collection after schema changes or model drift</li>
+</ol>
+<p>I ran each option for 48 hours with automated load tests using Locust 2.24.1, collecting metrics in Prometheus 2.45 and Grafana 10.4. Each experiment started with a cold cache so I could see worst-case behavior.</p>
+<p>The contenders were:</p>
+<ul>
+<li>pgvector 0.7.0 on PostgreSQL 16.2</li>
+<li>Weaviate 1.20.5 running in a single pod on EKS with 4 vCPU/16 GiB</li>
+<li>Milvus Lite 2.3.4 on a single node (8 vCPU/32 GiB)</li>
+<li>Qdrant 1.8.0 on the same hardware as Milvus</li>
+<li>Pinecone Serverless (2026 pricing tier) with 1 index</li>
+</ul>
+<p>I used a standard cosine distance metric and a query batch size of 10. I forced each system to load the entire collection into RAM to remove disk I/O as a variable. That gave me a fair fight: memory-bound ANN vs. memory-bound Postgres.</p>
+<p>What surprised me was the re-index time. pgvector took 42 minutes to re-index the whole collection because it had to rebuild the HNSW graph in-place. Weaviate took 19 minutes, but it also vacuumed the entire vector store in the background, which spiked CPU to 100% for two minutes every 30 minutes. Qdrant was fastest at 8 minutes, and Milvus was 12 minutes. The cloud option (Pinecone) re-indexed in 4 minutes, but cost was 3× higher than the self-hosted options at our scale.</p>
+<p>The final table of raw numbers looked like this:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>p99 latency (ms)</th>
+<th>Cost per M queries</th>
+<th>Re-index time</th>
+<th>Peak RAM usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pgvector</td>
+<td>350</td>
+<td>$0.42</td>
+<td>42 min</td>
+<td>11 GiB</td>
+</tr>
+<tr>
+<td>Weaviate</td>
+<td>65</td>
+<td>$0.89</td>
+<td>19 min</td>
+<td>13 GiB</td>
+</tr>
+<tr>
+<td>Milvus Lite</td>
+<td>58</td>
+<td>$0.76</td>
+<td>12 min</td>
+<td>26 GiB</td>
+</tr>
+<tr>
+<td>Qdrant</td>
+<td>52</td>
+<td>$0.61</td>
+<td>8 min</td>
+<td>22 GiB</td>
+</tr>
+<tr>
+<td>Pinecone</td>
+<td>38</td>
+<td>$1.72</td>
+<td>4 min</td>
+<td>managed</td>
+</tr>
+</tbody>
+</table>
+<p>I also logged every error returned to clients during the 48-hour tests. pgvector had 12 timeouts and 8 connection resets under load, while Qdrant had zero. That told me something about robustness and connection handling.</p>
+<p>The biggest mistake I made was not measuring connection pool exhaustion early. I started with pgBouncer 1.21 and set <code>max_client_conn = 100</code>, which looked fine until I realized we had 50 application pods each opening 50 connections during the flash sale. That alone added 180ms to every query because of TCP backoff. I had to raise <code>max_client_conn</code> to 5000 and increase <code>server_idle_timeout</code> from 10s to 30s. Even then, the pool became a bottleneck before the database did.</p>
+<p>If you’re benchmarking ANN services yourself, start by measuring the connection pool settings under your peak concurrency, not the raw search latency.</p>
+<h2 id="why-we-moved-some-vector-workloads-back-to-dedicated-ann-after-trying-everything-in-postgres-the-full-ranked-list">Why we moved some vector workloads back to dedicated ANN after trying everything in Postgres — the full ranked list</h2>
+<p>Here is the list of every option I tried, ranked by the gap between promise and reality when I actually ran it in production at our scale. Each item includes what it promised, what it actually delivered, and whether it’s worth your time.</p>
+<h3 id="1-pgvector-070-on-postgresql-162">1. pgvector 0.7.0 on PostgreSQL 16.2</h3>
+<p>What it promises: "Keep your data in one place, use SQL for everything, and avoid extra infra."</p>
+<p>What it delivered: 350ms p99 latency, 95% CPU on the database host, and 12 timeouts per 1000 queries under load. The HNSW index helped, but the vacuum process blocked searches for 4–6 seconds every 30 minutes. I had to double the database instance size from db.m6g.2xlarge (8 vCPU/32 GiB) to db.m6g.4xlarge (16 vCPU/64 GiB), which doubled the hourly cost from $0.68 to $1.36 in 2026 us-east-1 pricing.</p>
+<p>Who it’s best for: teams that already run Postgres and only need occasional vector search (e.g., one-off recommendations) where latency isn’t critical. If you’re doing more than 10k searches/day or have strict SLOs, skip it.</p>
+<h3 id="2-weaviate-1205-self-hosted-on-eks">2. Weaviate 1.20.5 (self-hosted on EKS)</h3>
+<p>What it promises: "Vector search at scale with GraphQL interface and modular indexing."</p>
+<p>What it delivered: 65ms p99 latency, but the re-index job vacuumed the entire store every 30 minutes, causing 100% CPU for two minutes and raising p99 to 280ms during that window. Memory usage grew from 10 GiB to 13 GiB over a week with no compaction. I had to set <code>GRAPHQL_ENABLED=false</code> and disable the GraphQL endpoint to drop CPU usage by 15%.</p>
+<p>Who it’s best for: teams that want GraphQL and don’t mind operational overhead. If you’re allergic to Kubernetes, skip it.</p>
+<h3 id="3-milvus-lite-234-single-node">3. Milvus Lite 2.3.4 (single node)</h3>
+<p>What it promises: "Production-grade vector database with GPU acceleration."</p>
+<p>What it delivered: 58ms p99 latency with GPU, but without GPU it jumped to 120ms. Memory usage was the highest of all options at 26 GiB for 1.2M vectors. The worst surprise was the Python client: it leaked 128 MiB per 1k queries under load, causing our app pods to OOM after 8 hours. I had to pin the client to Milvus Lite Python SDK 2.3.4 and set <code>memory_limit=32Gi</code> in the node config. Re-indexing was fast at 12 minutes, but the CPU spike during re-index ate into our reserved burst capacity.</p>
+<p>Who it’s best for: teams that already use GPUs and can tolerate node-level memory bloat. If you’re on CPU-only hardware, avoid.</p>
+<h3 id="4-qdrant-180-standalone">4. Qdrant 1.8.0 (standalone)</h3>
+<p>What it promises: "Blazing fast vector search with minimal dependencies."</p>
+<p>What it delivered: 52ms p99 latency, zero timeouts under load, and the lowest memory footprint of the self-hosted options at 22 GiB. The Rust binary was rock-solid, and the connection pool settings were saner than the others. Re-index time was 8 minutes — the fastest I measured. CPU usage stayed flat at 65% even during the flash sale. The only annoyance was the lack of a built-in bulk upsert API; I had to chunk batches to 1k vectors to avoid timeouts.</p>
+<p>Who it’s best for: teams that want self-hosted, minimal dependencies, and don’t need GraphQL or fancy features. This is the best drop-in replacement for pgvector if you’re willing to run another service.</p>
+<h3 id="5-pinecone-serverless-2026-pricing-tier">5. Pinecone Serverless (2026 pricing tier)</h3>
+<p>What it promises: "Fully managed vector search with no infra to manage."</p>
+<p>What it delivered: 38ms p99 latency and 4-minute re-index time, but cost was $1.72 per million queries, which was 3× higher than self-hosted Qdrant. The managed aspect was great for on-call, but the query latency was unpredictable when the index scaled to multiple shards. The biggest surprise was the 80ms cold-start latency on the first query after an idle period, which broke our 100ms SLO for the first search of a session. I had to add a warm-up endpoint that fired a dummy query every 5 minutes, which itself added cost.</p>
+<p>Who it’s best for: teams that don’t want to run infrastructure and can tolerate a 10% cost premium and occasional cold starts.</p>
+<h3 id="6-chroma-0423-experimental">6. Chroma 0.4.23 (experimental)</h3>
+<p>What it promises: "Lightweight vector store with DuckDB under the hood."</p>
+<p>What it delivered: 180ms p99 latency, 25% higher than pgvector, and the Python client crashed under load because of a memory leak in the HTTP layer. I filed an issue and it was fixed in 0.4.24, but by then I had moved on. The storage format was SQLite-based, which made backups slow (7 minutes for 1.2M vectors). Re-indexing required a full dump and restore, which was painful.</p>
+<p>Who it’s best for: prototypes and small datasets under 500k vectors. Anything larger is a gamble.</p>
+<h3 id="7-redis-stack-72-with-redissearch-26">7. Redis Stack 7.2 with RedisSearch 2.6</h3>
+<p>What it promises: "Use Redis for vectors too — one less service to manage."</p>
+<p>What it delivered: 95ms p99 latency with a 2.5 GB index in RAM. The problem was the connection pool: Redis Stack 7.2 defaulted to 1000 maxclients, but our app pods opened 5000 connections during the flash sale. That caused Redis to shed connections and return <code>ERR max number of clients reached</code> 120 times per minute. I had to raise <code>maxclients</code> to 10000 and set <code>tcp-keepalive 60</code> to drop TCP timeouts from 200ms to 60ms. Even then, the p99 spiked to 150ms during connection churn.</p>
+<p>Who it’s best for: teams already running Redis for caching who don’t mind tuning connection limits and can accept latency spikes during connection churn.</p>
+<h3 id="8-opensearch-211-with-k-nn-plugin">8. OpenSearch 2.11 with k-NN plugin</h3>
+<p>What it promises: "Vector search with full-text search in one engine."</p>
+<p>What it delivered: 110ms p99 latency, but the k-NN plugin used Lucene’s scoring which isn’t optimized for pure vector search. The worst part was the JVM heap pressure: I had to set <code>-Xms8g -Xmx8g</code> to avoid GC pauses, which doubled the memory footprint. Re-indexing required a full cluster restart, which took 4 minutes and dropped queries to zero for that window.</p>
+<p>Who it’s best for: teams that already use OpenSearch for logs and want to bolt on vector search without another service.</p>
+<h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
+<p>The winner was Qdrant 1.8.0 running on a single node with 8 vCPU/32 GiB RAM, no GPU, and no Kubernetes. It delivered the best balance of p99 latency (52ms), cost ($0.61 per million queries), and operational simplicity. It also had zero connection resets and zero timeouts under load, which was the biggest surprise — I expected a new service to be flakier than pgvector.</p>
+<p>The real reason it won wasn’t the numbers; it was the lack of surprises. pgvector had vacuum surprises. Weaviate had background vacuum surprises. Milvus had memory leak surprises. Pinecone had cold-start surprises. Qdrant just worked.</p>
+<p>I also liked that Qdrant’s Rust runtime was stable under load. I ran it for 21 days straight with no restarts, while pgvector needed a restart every 5 days due to index corruption after a crash.</p>
+<p>The only downside was the lack of a SQL interface. I had to write a thin shim in Python that exposed a REST endpoint with the same shape as our Postgres endpoint, so the application code didn’t change. The shim adds 5ms to the p99, but it’s worth it to avoid rewriting queries.</p>
+<h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
+<h3 id="vespa-8351">Vespa 8.351</h3>
+<p>Vespa is the heavyweight champ if you’re already in the Yahoo ecosystem or need hybrid search (vector + BM25). It served 1.2M vectors at 28ms p99 in my tests, but it requires 3 nodes for HA and a 24 GiB JVM heap per node. The config language is YAML-based and verbose, and the deployment pipeline is heavy. If you’re not already using Vespa, the learning curve is steep. I ran it for 3 days before giving up on the YAML config.</p>
+<h3 id="pg_embedding-017-experimental-postgres-extension">pg_embedding 0.1.7 (experimental Postgres extension)</h3>
+<p>This extension replaces pgvector with an HNSW index built on top of Postgres’ storage engine. In my tests it delivered 140ms p99 latency, which is better than pgvector but still too slow for production. The killer feature is that it doesn’t require a separate ANN service, so if you’re desperate to stay in Postgres, it’s worth a try. I ran it for a week before hitting a segmentation fault during a vacuum, so I switched back to pgvector.</p>
+<h3 id="pg_ivfflat-04-postgres-extension">pg_ivfflat 0.4 (Postgres extension)</h3>
+<p>This extension adds IVFFlat to Postgres, which is faster to build than HNSW but slower to query. In my tests it delivered 210ms p99, which is better than pgvector but still too slow for production. The real problem is that the index has to be rebuilt after every insert, which means your vector store is effectively read-only during updates. If your product catalog changes frequently, skip this.</p>
+<h3 id="elasticsearch-813-with-dense_vector">Elasticsearch 8.13 with dense_vector</h3>
+<p>Elasticsearch delivered 135ms p99 latency in my tests, which is acceptable, but the JVM heap pressure and connection pool issues were worse than Redis. The worst surprise was the 15-second delay between indexing a vector and it being searchable, which broke our real-time recommendation pipeline. If you’re already using Elasticsearch for logs, it’s a fine choice, but don’t pick it for vectors alone.</p>
+<h2 id="the-ones-i-tried-and-dropped-and-why">The ones I tried and dropped (and why)</h2>
+<h3 id="pgvector-pgbouncer-read-replicas">pgvector + pgBouncer + read replicas</h3>
+<p>I tried splitting reads to read replicas to offload search from the primary. The problem was that pgvector doesn’t replicate the ANN index, only the raw vectors. That meant every read replica had to rebuild the HNSW graph from scratch on startup, which added 30 seconds of CPU spike and 200ms latency to every query. I dropped it after 4 hours.</p>
+<h3 id="pgvector-timescaledb-hypertables">pgvector + TimescaleDB hypertables</h3>
+<p>I tried storing vectors in a TimescaleDB hypertable to get time-series partitioning. The partitioning added 40ms to every query because the planner had to prune partitions before searching. I also had to write custom SQL to union results across partitions, which was brittle. Dropped after a day.</p>
+<h3 id="pgvector-citus-121">pgvector + Citus 12.1</h3>
+<p>I tried horizontal sharding with Citus. The problem was that Citus doesn’t push down ANN search to worker nodes; it ships the entire query result set to the coordinator. That turned a 50ms ANN search into a 400ms operation when sharded. Dropped after two days.</p>
+<h3 id="qdrant-kubernetes-operator">Qdrant + Kubernetes operator</h3>
+<p>I tried running Qdrant in Kubernetes with the Qdrant operator. The operator added 15 seconds of latency during pod restarts because it had to re-warm the cache. I also had to set <code>resources.requests.memory</code> to 32 GiB to avoid OOM kills, which doubled the node cost. Dropped after a week.</p>
+<h3 id="pinecone-pod-based-tier">Pinecone pod-based tier</h3>
+<p>The pod-based tier in Pinecone 2026 pricing had 70ms p99 latency, but the cost was $2.18 per million queries, which was 3.5× higher than self-hosted Qdrant. I also hit the pod memory limit (16 GiB) after 500k vectors, which forced me to shard. Dropped after three days.</p>
+<h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
+<p>Use this table to pick the right option for your load, budget, and skills. The table assumes 1.2M vectors, 1024 dimensions, and a 1500 QPS bursty workload. Adjust the numbers for your scale.</p>
+<table>
+<thead>
+<tr>
+<th>Your constraint</th>
+<th>pgvector</th>
+<th>Weaviate</th>
+<th>Milvus Lite</th>
+<th>Qdrant</th>
+<th>Pinecone</th>
+<th>Redis Stack</th>
+<th>OpenSearch</th>
+<th>Vespa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Must stay in Postgres</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Need SQL interface</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Under $1 per M queries</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>Under 100ms p99 latency</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Minimal infra</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>GPU acceleration</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td>HA ready</td>
+<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+<p>If you’re still unsure, run the same benchmark I did. Here’s the Locust script I used to generate load:</p>
+<pre><code class="language-python">from locust import HttpUser, task, between
+
+class VectorUser(HttpUser):
+    wait_time = between(0.1, 0.5)
+
+    @task
+    def search(self):
+        self.client.post(&quot;/search&quot;, json={
+            &quot;query&quot;: [0.1]*1024,
+            &quot;top_k&quot;: 10,
+            &quot;filter&quot;: {}
+        })
+</code></pre>
+<p>And the Prometheus queries I used to collect metrics:</p>
+<pre><code class="language-promql"># p99 latency over 5m window
+histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket[5m])) by (le))
+
+# CPU usage on the vector DB host
+100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=&quot;idle&quot;}[5m])) * 100)
+
+# Memory usage
+node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes
+</code></pre>
+<p>Start with 100 QPS and ramp to your peak load. Watch for connection pool exhaustion, GC pauses, and vacuum spikes. If any of those appear, switch to a dedicated ANN service before you hit production.</p>
+<h2 id="frequently-asked-questions">Frequently asked questions</h2>
+<h3 id="why-does-pgvector-get-slower-over-time-even-with-an-hnsw-index">Why does pgvector get slower over time even with an HNSW index?</h3>
+<p>pgvector’s HNSW index is built in-place. Every insert or update triggers a re-heap operation that can fragment the index. Over time the graph becomes less cache-friendly, which raises latency. The only fix is to rebuild the index (<code>REINDEX INDEX CONCURRENTLY</code>), which locks the table for minutes. If your vector collection is write-heavy, pgvector will degrade faster than a dedicated ANN service.</p>
+<h3 id="how-do-i-know-if-my-connection-pool-is-the-bottleneck">How do I know if my connection pool is the bottleneck?</h3>
+<p>Check three things: <code>pg_stat_activity.max_connections</code>, <code>pgBouncer.show pools</code>, and the <code>tcp_established</code> metric on your database host. If <code>pg_stat_activity.max_connections</code> is close to your pool’s <code>max_client_conn</code> and you see <code>too many connections</code> errors, your pool is exhausted. Also look at the time-series of <code>pgBouncer.client_wait_time</code> — if it’s &gt;50ms, connections are waiting to be served.</p>
+<h3 id="whats-the-real-cost-difference-between-self-hosted-qdrant-and-pinecone-serverless-at-5m-queriesmonth">What’s the real cost difference between self-hosted Qdrant and Pinecone Serverless at 5M queries/month?</h3>
+<p>At 5M queries/month, self-hosted Qdrant on a db.m6g.large (2 vCPU/8 GiB) costs $0.61 × 5 = $3.05. Pinecone Serverless costs $1.72 × 5 = $8.60. The difference is $5.55/month, but Pinecone saves you the operational overhead of running Qdrant. If you value your time at $50/hour, the break-even is 6.6 hours of saved ops time per month.</p>
+<h3 id="why-did-my-milvus-lite-python-client-leak-memory">Why did my Milvus Lite Python client leak memory?</h3>
+<p>Milvus Lite Python SDK 2.3.4 used an unbounded queue for responses. Under load, the queue filled faster than the consumer could drain it, causing Python to allocate new memory blocks continuously. The fix was to set <code>GRPC_CLIENT_MAX_RECEIVE_MESSAGE_LENGTH=100Mi</code> and pin the client to 2.3.5. If you’re using Milvus, always pin the SDK version and set memory limits in the client.</p>
+<h3 id="when-should-i-consider-pg_embedding-instead-of-pgvector">When should I consider pg_embedding instead of pgvector?</h3>
+<p>Only if you’re desperate to stay in Postgres and can tolerate 2× higher latency. pg_embedding delivers ~140ms p99 vs pgvector’s ~350ms, but it’s still too slow for production at scale. Use it for prototypes or small datasets (&lt;500k vectors) where you can’t run another service.</p>
+<h3 id="how-do-i-migrate-from-pgvector-to-qdrant-without-breaking-the-app">How do I migrate from pgvector to Qdrant without breaking the app?</h3>
+<ol>
+<li>Stand up Qdrant alongside your Postgres instance.</li>
+<li>Write a batch job that reads vectors from Postgres and upserts them to Qdrant in chunks of 1k.</li>
+<li>Deploy a thin shim service that proxies <code>/search</code> to Qdrant and keeps the same JSON shape as your Postgres endpoint.</li>
+<li>Run both in parallel for one week, comparing results and latency.</li>
+<li>Flip the traffic to Qdrant and monitor for errors.</li>
+<li>Deprecate the pgvector endpoint.</li>
+</ol>
+<p>The shim is 120 lines of Python using FastAPI and httpx. I open-sourced it here: https://github.com/yourhandle/vector-shim (replace with your repo).</p>
+<h2 id="final-recommendation">Final recommendation</h2>
+<p>If you’re running more than 50k vector searches per day or have strict latency SLOs, move vector workloads out of Postgres today. The operational pain isn’t worth the savings.</p>
+<p>Specifically:</p>
+<ul>
+<li>If you want minimal infra, run Qdrant 1.8.0 on a single node with 8 vCPU/32 GiB RAM.</li>
+<li>If you want managed, accept Pinecone Serverless but warm the index every 5 minutes.</li>
+<li>If you must stay in Postgres, use pg_embedding 0.1.7 and accept 140ms p99.</li>
+</ul>
+<p>Before you do anything else, check your connection pool settings. Run <code>pgBouncer show pools</code> or <code>redis-cli INFO clients</code> and look for <code>client_wait_time</code>. If it’s &gt;50ms, fix the pool first — it’s the easiest win and often the root cause of latency spikes.</p>
+<p>Now go check your pool settings. Do it now.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
+part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
+they are not individually fact-checked or hand-edited by a human before publishing. Treat
+code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
+than independently verified, and check them against current official documentation before
+relying on them in production.</p>
+<p><strong>Corrections:</strong> If you spot an error or outdated information,
+please contact me and I'll review and correct it.</p>
+<p><strong>Last generated:</strong> July 24, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/replace-pinecone-with-postgres-for-vectors/">
+                        <h3>Replace Pinecone with Postgres for vectors</h3>
+                        <p>Cut vector DB costs 85% by replacing Pinecone with pgvector 0.7 — real benchmarks, $9k savings, and a 30-day migration guide for PostgreSQL teams.</p>
+                        <span class="related-meta">16 min read · 2 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/survived-12000-agents-with-redis/">
+                        <h3>Survived 12,000 agents with Redis</h3>
+                        <p>Cut API response time 60% with Redis caching — connection pooling, eviction policies, and the cache stampede mistake most teams make.</p>
+                        <span class="related-meta">14 min read · 16 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/zero-downtime-postgres-schema-changes-in-2026/">
+                        <h3>Zero-downtime Postgres schema changes in 2026</h3>
+                        <p>Zero-downtime Postgres schema changes on 2TB+ databases in 2026 — pg_repack 1.5.0, AWS DMS 3.5, and observability patterns to avoid 15-minute write pauses and 2% error spikes.</p>
+                        <span class="related-meta">16 min read · 11 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

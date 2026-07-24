@@ -90,5 +90,6 @@
   "The failure modes we only saw after running multi-agent systems at scale for 6 months",
   "Why MCP won the agent-tool protocol war \u2014 and what it actually changed in how we build agents",
   "The hidden failure modes of tool-calling agents at scale (and how we guard against them)",
-  "On-device and edge agents in 2026: when they finally beat cloud round-trips for African users"
+  "On-device and edge agents in 2026: when they finally beat cloud round-trips for African users",
+  "Why we moved some vector workloads back to dedicated ANN after trying everything in Postgres"
 ]
