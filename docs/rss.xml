@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Jul 2026 02:54:51 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 24 Jul 2026 13:53:06 +0000</lastBuildDate>
+    <item>
+      <title>Model router: keep it simple, keep it local</title>
+      <link>https://kubaik.github.io/model-router-keep-it-simple-keep-it-local/</link>
+      <description>Within two days, our p95 latency jumped from 80ms to 420ms because the initial implementation didn’t account for cold starts on SageMaker or connection…</description>
+      <pubDate>Fri, 24 Jul 2026 13:52:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/model-router-keep-it-simple-keep-it-local/</guid>
+    </item>
     <item>
       <title>Postgres vector search: what breaks first</title>
       <link>https://kubaik.github.io/postgres-vector-search-what-breaks-first/</link>
@@ -138,13 +145,6 @@
       <description>AI features built with standard wrappers often become maintenance nightmares in Africa. Learn why caching, flags, and routing assumptions fail — and how to build resilient AI features that survive 3G drops and model drift.</description>
       <pubDate>Fri, 17 Jul 2026 02:53:25 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-features-as-tech-debt-or-golden-paths/</guid>
-    </item>
-    <item>
-      <title>Agents roll back without breaking anything</title>
-      <link>https://kubaik.github.io/agents-roll-back-without-breaking-anything/</link>
-      <description>Rollbacks break downstream systems when agents leak state into caches, pools, and rate tables. Version everything — headers, queries, pool sizes — and treat rollbacks as blue-green activations, not reverts. Measure downstream metrics after every deploy.</description>
-      <pubDate>Thu, 16 Jul 2026 14:02:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/agents-roll-back-without-breaking-anything/</guid>
     </item>
   </channel>
 </rss>

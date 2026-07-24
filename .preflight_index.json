@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-24T02:54:43.540858",
+  "built_at": "2026-07-24T13:52:55.042630",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4445,6 +4445,11 @@
       "slug": "postgres-vector-search-what-breaks-first",
       "title": "Postgres vector search: what breaks first",
       "summary": "moved some looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. This post covers what comes after the happy path. Why this list exists (what I was actually trying to solve) I ran a product search engine for an e-commerce site in J"
+    },
+    {
+      "slug": "model-router-keep-it-simple-keep-it-local",
+      "title": "Model router: keep it simple, keep it local",
+      "summary": "After reviewing enough code that touches run local, the same failure pattern keeps showing up. It's the kind of problem that's easy to reproduce and hard to explain. Here's the root cause, not just the symptom. The gap between what the docs say and what production needs Most tutorials tell you to ro"
     }
   ]
 }

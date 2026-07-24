@@ -3767,6 +3767,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/model-router-keep-it-simple-keep-it-local/</loc>
+    <lastmod>2026-07-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/monitor-ai-like-a-model-not-a-machine/</loc>
     <lastmod>2026-06-26</lastmod>
     <changefreq>weekly</changefreq>
@@ -4312,7 +4321,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/postgres-vector-search-what-breaks-first.png</image:loc>
     </image:image>
   </url>
   <url>
