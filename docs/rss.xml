@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 24 Jul 2026 13:53:06 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Jul 2026 02:54:40 +0000</lastBuildDate>
+    <item>
+      <title>React 19 Server Components: 3 days lost to one flag</title>
+      <link>https://kubaik.github.io/react-19-server-components-3-days-lost-to-one-flag/</link>
+      <description>React 19 Server Components promise 0-bundle JavaScript but often break serialization and add 400 ms latency. Learn the three silent failure modes and why we rolled back after a week.</description>
+      <pubDate>Sat, 25 Jul 2026 02:54:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-19-server-components-3-days-lost-to-one-flag/</guid>
+    </item>
     <item>
       <title>Model router: keep it simple, keep it local</title>
       <link>https://kubaik.github.io/model-router-keep-it-simple-keep-it-local/</link>
@@ -138,13 +145,6 @@
       <description>Cut security backlog 62% by embedding red-teaming in every PR — the lightweight setup that caught 12 incidents in one quarter without slowing releases.</description>
       <pubDate>Fri, 17 Jul 2026 06:39:14 +0000</pubDate>
       <guid>https://kubaik.github.io/red-teaming-agents-without-killing-velocity/</guid>
-    </item>
-    <item>
-      <title>AI features as tech debt or golden paths</title>
-      <link>https://kubaik.github.io/ai-features-as-tech-debt-or-golden-paths/</link>
-      <description>AI features built with standard wrappers often become maintenance nightmares in Africa. Learn why caching, flags, and routing assumptions fail — and how to build resilient AI features that survive 3G drops and model drift.</description>
-      <pubDate>Fri, 17 Jul 2026 02:53:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-features-as-tech-debt-or-golden-paths/</guid>
     </item>
   </channel>
 </rss>

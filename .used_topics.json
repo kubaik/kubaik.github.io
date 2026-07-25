@@ -92,5 +92,6 @@
   "The hidden failure modes of tool-calling agents at scale (and how we guard against them)",
   "On-device and edge agents in 2026: when they finally beat cloud round-trips for African users",
   "Why we moved some vector workloads back to dedicated ANN after trying everything in Postgres",
-  "How I run local + cloud model routing without the complexity exploding"
+  "How I run local + cloud model routing without the complexity exploding",
+  "React 19 + Server Components in production: what we actually shipped and what we rolled back"
 ]
