@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Jul 2026 02:54:40 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Jul 2026 13:43:52 +0000</lastBuildDate>
+    <item>
+      <title>Context windows live longer than you think</title>
+      <link>https://kubaik.github.io/context-windows-live-longer-than-you-think/</link>
+      <description>Context window management for agents that run hours or days — stop hallucinating names and blowing budgets with these concrete strategies and code you can run today.</description>
+      <pubDate>Sat, 25 Jul 2026 13:43:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/context-windows-live-longer-than-you-think/</guid>
+    </item>
     <item>
       <title>React 19 Server Components: 3 days lost to one flag</title>
       <link>https://kubaik.github.io/react-19-server-components-3-days-lost-to-one-flag/</link>
@@ -138,13 +145,6 @@
       <description>Cut 2G page load times from 12 seconds to 2 seconds — the real architecture moves that work in 2026 for React, PWA and mobile-first sites</description>
       <pubDate>Fri, 17 Jul 2026 13:26:20 +0000</pubDate>
       <guid>https://kubaik.github.io/why-progressive-web-apps-fail-on-2g-and-how-to-fix/</guid>
-    </item>
-    <item>
-      <title>Red-teaming agents without killing velocity</title>
-      <link>https://kubaik.github.io/red-teaming-agents-without-killing-velocity/</link>
-      <description>Cut security backlog 62% by embedding red-teaming in every PR — the lightweight setup that caught 12 incidents in one quarter without slowing releases.</description>
-      <pubDate>Fri, 17 Jul 2026 06:39:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/red-teaming-agents-without-killing-velocity/</guid>
     </item>
   </channel>
 </rss>
