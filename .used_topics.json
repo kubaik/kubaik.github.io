@@ -95,5 +95,6 @@
   "How I run local + cloud model routing without the complexity exploding",
   "React 19 + Server Components in production: what we actually shipped and what we rolled back",
   "The prompt and tool injection attacks we actually saw in production (and how we blocked them)",
-  "Context window management strategies for agents that run for hours or days"
+  "Context window management strategies for agents that run for hours or days",
+  "How Nairobi-based teams are competing on AI features despite higher inference latency to major providers"
 ]

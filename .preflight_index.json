@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-25T13:43:41.820882",
+  "built_at": "2026-07-26T03:19:11.284541",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4460,6 +4460,11 @@
       "slug": "context-windows-live-longer-than-you-think",
       "title": "Context windows live longer than you think",
       "summary": "I spent longer than I should have on prompt tool before understanding what was actually happening. The default configuration is fine right up until it isn't. Here's what actually worked, and why. The one-paragraph version (read this first) If your agent runs for hours or days, its context window isn"
+    },
+    {
+      "slug": "latency-trade-offs-nairobi-teams-beat-global-ai-providers",
+      "title": "Latency trade-offs: Nairobi teams beat global AI providers",
+      "summary": "I ran into this nairobibased teams problem while migrating a service under a hard deadline. The edge cases only show up once real users hit the system. This walks through the fix and the reasoning, not just the patch. The one-paragraph version (read this first) Nairobi-based teams are shipping AI fe"
     }
   ]
 }

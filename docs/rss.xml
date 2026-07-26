@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 25 Jul 2026 13:43:52 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Jul 2026 03:19:22 +0000</lastBuildDate>
+    <item>
+      <title>Latency trade-offs: Nairobi teams beat global AI providers</title>
+      <link>https://kubaik.github.io/latency-trade-offs-nairobi-teams-beat-global-ai-providers/</link>
+      <description>Nairobi teams ship AI features faster than global providers by treating latency as a feature. Learn how 3B models, local Kubernetes, and Swahili fine-tuning cut costs 75% while beating AWS Bedrock on user experience.</description>
+      <pubDate>Sun, 26 Jul 2026 03:19:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/latency-trade-offs-nairobi-teams-beat-global-ai-providers/</guid>
+    </item>
     <item>
       <title>Context windows live longer than you think</title>
       <link>https://kubaik.github.io/context-windows-live-longer-than-you-think/</link>
@@ -138,13 +145,6 @@
       <description>Agentic workflow observability with millisecond timestamps, queue depth alerts, and OpenSearch Serverless — the stack that cut our MTTR 93% and p99 latency 74%</description>
       <pubDate>Fri, 17 Jul 2026 13:40:10 +0000</pubDate>
       <guid>https://kubaik.github.io/agentic-workflows-how-we-kept-the-lights/</guid>
-    </item>
-    <item>
-      <title>Why progressive web apps fail on 2G and how to fix…</title>
-      <link>https://kubaik.github.io/why-progressive-web-apps-fail-on-2g-and-how-to-fix/</link>
-      <description>Cut 2G page load times from 12 seconds to 2 seconds — the real architecture moves that work in 2026 for React, PWA and mobile-first sites</description>
-      <pubDate>Fri, 17 Jul 2026 13:26:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-progressive-web-apps-fail-on-2g-and-how-to-fix/</guid>
     </item>
   </channel>
 </rss>
