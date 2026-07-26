@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Jul 2026 03:19:22 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 26 Jul 2026 13:38:21 +0000</lastBuildDate>
+    <item>
+      <title>Temporal changed how we think about agent workflows</title>
+      <link>https://kubaik.github.io/temporal-changed-how-we-think-about-agent-workflows/</link>
+      <description>Temporal 1.23 and Inngest 0.18 cut retry storms 97% and p99 latency 40% — here’s how durable execution platforms changed our agent workflow thinking</description>
+      <pubDate>Sun, 26 Jul 2026 13:38:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/temporal-changed-how-we-think-about-agent-workflows/</guid>
+    </item>
     <item>
       <title>Latency trade-offs: Nairobi teams beat global AI providers</title>
       <link>https://kubaik.github.io/latency-trade-offs-nairobi-teams-beat-global-ai-providers/</link>
@@ -138,13 +145,6 @@
       <description>Agent breaking prod silently: 3 boundary rules to add now — outcome polling, schema drift checks, and concurrency guards — with concrete fixes and failure costs</description>
       <pubDate>Fri, 17 Jul 2026 13:47:16 +0000</pubDate>
       <guid>https://kubaik.github.io/agents-keep-breaking-prod-3-boundary-rules-you-still-need/</guid>
-    </item>
-    <item>
-      <title>Agentic workflows: how we kept the lights…</title>
-      <link>https://kubaik.github.io/agentic-workflows-how-we-kept-the-lights/</link>
-      <description>Agentic workflow observability with millisecond timestamps, queue depth alerts, and OpenSearch Serverless — the stack that cut our MTTR 93% and p99 latency 74%</description>
-      <pubDate>Fri, 17 Jul 2026 13:40:10 +0000</pubDate>
-      <guid>https://kubaik.github.io/agentic-workflows-how-we-kept-the-lights/</guid>
     </item>
   </channel>
 </rss>
