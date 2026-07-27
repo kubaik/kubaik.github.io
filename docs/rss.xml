@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Jul 2026 03:29:11 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Jul 2026 14:44:29 +0000</lastBuildDate>
+    <item>
+      <title>Built a multi-agent system without LangGraph</title>
+      <link>https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/</link>
+      <description>Build a reliable multi-agent research system without LangGraph — latency, cost, and the poison-queue mistake most founders miss. FastAPI 0.111, Redis 7.2, Step Functions.</description>
+      <pubDate>Mon, 27 Jul 2026 14:44:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/</guid>
+    </item>
     <item>
       <title>Track AI agent costs in fractal workflows</title>
       <link>https://kubaik.github.io/track-ai-agent-costs-in-fractal-workflows/</link>
@@ -138,13 +145,6 @@
       <description>Fintech features break in Ghana: hidden timeouts, ID formats, and rate limits that work in Lagos but fail in Accra — how to fix them without country forks and verify the fix in staging.</description>
       <pubDate>Sat, 18 Jul 2026 13:24:23 +0000</pubDate>
       <guid>https://kubaik.github.io/fintech-features-break-in-ghana-the-real-fix/</guid>
-    </item>
-    <item>
-      <title>LangGraph vs LangChain: which LLM stack I ship…</title>
-      <link>https://kubaik.github.io/langgraph-vs-langchain-which-llm-stack-i-ship/</link>
-      <description>LangGraph vs LangChain in 2026: which evaluation stack survives production traffic, keeps costs under control, and makes on-call sane? Cold-start numbers, memory footprints, and the one mistake that cost me three days.</description>
-      <pubDate>Sat, 18 Jul 2026 02:45:56 +0000</pubDate>
-      <guid>https://kubaik.github.io/langgraph-vs-langchain-which-llm-stack-i-ship/</guid>
     </item>
   </channel>
 </rss>

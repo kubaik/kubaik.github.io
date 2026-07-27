@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-27T03:29:01.221229",
+  "built_at": "2026-07-27T14:44:17.545915",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4475,6 +4475,11 @@
       "slug": "track-ai-agent-costs-in-fractal-workflows",
       "title": "Track AI agent costs in fractal workflows",
       "summary": "The conventional advice on agentic finops is incomplete in one specific, costly way. Most write-ups stop exactly where the interesting part starts. Here's what actually worked, and why. The conventional wisdom (and why it's incomplete) Most teams treating agentic FinOps like regular cloud-cost track"
+    },
+    {
+      "slug": "built-a-multi-agent-system-without-langgraph",
+      "title": "Built a multi-agent system without LangGraph",
+      "summary": "After reviewing enough code that touches built reliable, the same failure pattern keeps showing up. Production gives you neither a clean environment nor a patient timeline. Here's what actually worked, and why. Why I wrote this (the problem I kept hitting) In late 2026 I shipped a multi-agent resear"
     }
   ]
 }
