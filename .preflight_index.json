@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-26T13:38:11.206224",
+  "built_at": "2026-07-27T03:29:01.221229",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4470,6 +4470,11 @@
       "slug": "temporal-changed-how-we-think-about-agent-workflows",
       "title": "Temporal changed how we think about agent workflows",
       "summary": "The conventional advice on durable execution is incomplete in one specific, costly way. The tutorials all show the happy path. Here's what I'd tell a colleague hitting this for the first time. Why I wrote this (the problem I kept hitting) In late 2026 we rebuilt our multi-agent orchestration system—"
+    },
+    {
+      "slug": "track-ai-agent-costs-in-fractal-workflows",
+      "title": "Track AI agent costs in fractal workflows",
+      "summary": "The conventional advice on agentic finops is incomplete in one specific, costly way. Most write-ups stop exactly where the interesting part starts. Here's what actually worked, and why. The conventional wisdom (and why it's incomplete) Most teams treating agentic FinOps like regular cloud-cost track"
     }
   ]
 }

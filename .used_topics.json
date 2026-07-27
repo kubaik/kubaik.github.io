@@ -97,5 +97,6 @@
   "The prompt and tool injection attacks we actually saw in production (and how we blocked them)",
   "Context window management strategies for agents that run for hours or days",
   "How Nairobi-based teams are competing on AI features despite higher inference latency to major providers",
-  "How durable execution platforms (Temporal, Inngest, etc.) changed our agent workflow thinking"
+  "How durable execution platforms (Temporal, Inngest, etc.) changed our agent workflow thinking",
+  "Agentic FinOps: tracking and optimizing the real cost of autonomous AI workflows"
 ]

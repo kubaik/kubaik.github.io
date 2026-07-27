@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 26 Jul 2026 13:38:21 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 27 Jul 2026 03:29:11 +0000</lastBuildDate>
+    <item>
+      <title>Track AI agent costs in fractal workflows</title>
+      <link>https://kubaik.github.io/track-ai-agent-costs-in-fractal-workflows/</link>
+      <description>Agentic FinOps: measuring the real cost of autonomous AI workflows — why standard dashboards underreport by 44-93% and how to trace the fractal burn of sub-agents, idle loops, and cross-region transfers</description>
+      <pubDate>Mon, 27 Jul 2026 03:28:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/track-ai-agent-costs-in-fractal-workflows/</guid>
+    </item>
     <item>
       <title>Temporal changed how we think about agent workflows</title>
       <link>https://kubaik.github.io/temporal-changed-how-we-think-about-agent-workflows/</link>
@@ -138,13 +145,6 @@
       <description>LangGraph vs LangChain in 2026: which evaluation stack survives production traffic, keeps costs under control, and makes on-call sane? Cold-start numbers, memory footprints, and the one mistake that cost me three days.</description>
       <pubDate>Sat, 18 Jul 2026 02:45:56 +0000</pubDate>
       <guid>https://kubaik.github.io/langgraph-vs-langchain-which-llm-stack-i-ship/</guid>
-    </item>
-    <item>
-      <title>Agents keep breaking prod: 3 boundary rules you still need</title>
-      <link>https://kubaik.github.io/agents-keep-breaking-prod-3-boundary-rules-you-still-need/</link>
-      <description>Agent breaking prod silently: 3 boundary rules to add now — outcome polling, schema drift checks, and concurrency guards — with concrete fixes and failure costs</description>
-      <pubDate>Fri, 17 Jul 2026 13:47:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/agents-keep-breaking-prod-3-boundary-rules-you-still-need/</guid>
     </item>
   </channel>
 </rss>
