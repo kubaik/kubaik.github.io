@@ -100,5 +100,6 @@
   "How durable execution platforms (Temporal, Inngest, etc.) changed our agent workflow thinking",
   "Agentic FinOps: tracking and optimizing the real cost of autonomous AI workflows",
   "How we built a reliable multi-agent research system without LangGraph (and why we might switch back)",
-  "The state management approach that survived our heaviest AI feature yet"
+  "The state management approach that survived our heaviest AI feature yet",
+  "The MCP server patterns that moved from experiment to critical infrastructure in our stack"
 ]

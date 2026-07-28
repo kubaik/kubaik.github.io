@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Jul 2026 02:46:33 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jul 2026 14:16:15 +0000</lastBuildDate>
+    <item>
+      <title>MCP servers: from toy to backbone</title>
+      <link>https://kubaik.github.io/mcp-servers-from-toy-to-backbone/</link>
+      <description>MCP servers as critical infrastructure — patterns, traps, and 2026 cost numbers. Learn how we moved from prototype to 99.98 % uptime on services that depend on seven external APIs with wildly different rate limits.</description>
+      <pubDate>Tue, 28 Jul 2026 14:16:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-servers-from-toy-to-backbone/</guid>
+    </item>
     <item>
       <title>Global state is the wrong tool for AI features</title>
       <link>https://kubaik.github.io/global-state-is-the-wrong-tool-for-ai-features/</link>
@@ -138,13 +145,6 @@
       <description>Purpose-built AI platforms cut latency 53%, errors 89%, and costs 94% compared to general platforms — and give solo founders control over their product. Learn the three questions that decide your stack in 2026.</description>
       <pubDate>Sun, 19 Jul 2026 13:25:45 +0000</pubDate>
       <guid>https://kubaik.github.io/purpose-built-beats-general-ai-tools/</guid>
-    </item>
-    <item>
-      <title>Poolers won’t save your serverless DB</title>
-      <link>https://kubaik.github.io/poolers-wont-save-your-serverless-db/</link>
-      <description>Cut API latency 35% and slash data-transfer bills 62% by swapping a pooler for a connection multiplexer — the pattern AWS docs don’t mention.</description>
-      <pubDate>Sun, 19 Jul 2026 02:59:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/poolers-wont-save-your-serverless-db/</guid>
     </item>
   </channel>
 </rss>
