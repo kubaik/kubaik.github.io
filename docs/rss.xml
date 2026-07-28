@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Jul 2026 14:44:29 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jul 2026 02:46:33 +0000</lastBuildDate>
+    <item>
+      <title>Global state is the wrong tool for AI features</title>
+      <link>https://kubaik.github.io/global-state-is-the-wrong-tool-for-ai-features/</link>
+      <description>Cut AI chat latency 54% and memory 59% by dropping Redux for local state machines and events — the real numbers from 5k concurrent users and the mistakes that led to it.</description>
+      <pubDate>Tue, 28 Jul 2026 02:46:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/global-state-is-the-wrong-tool-for-ai-features/</guid>
+    </item>
     <item>
       <title>Built a multi-agent system without LangGraph</title>
       <link>https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 35% and slash data-transfer bills 62% by swapping a pooler for a connection multiplexer — the pattern AWS docs don’t mention.</description>
       <pubDate>Sun, 19 Jul 2026 02:59:58 +0000</pubDate>
       <guid>https://kubaik.github.io/poolers-wont-save-your-serverless-db/</guid>
-    </item>
-    <item>
-      <title>Fintech features break in Ghana: the real fix</title>
-      <link>https://kubaik.github.io/fintech-features-break-in-ghana-the-real-fix/</link>
-      <description>Fintech features break in Ghana: hidden timeouts, ID formats, and rate limits that work in Lagos but fail in Accra — how to fix them without country forks and verify the fix in staging.</description>
-      <pubDate>Sat, 18 Jul 2026 13:24:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/fintech-features-break-in-ghana-the-real-fix/</guid>
     </item>
   </channel>
 </rss>

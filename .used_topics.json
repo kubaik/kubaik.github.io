@@ -99,5 +99,6 @@
   "How Nairobi-based teams are competing on AI features despite higher inference latency to major providers",
   "How durable execution platforms (Temporal, Inngest, etc.) changed our agent workflow thinking",
   "Agentic FinOps: tracking and optimizing the real cost of autonomous AI workflows",
-  "How we built a reliable multi-agent research system without LangGraph (and why we might switch back)"
+  "How we built a reliable multi-agent research system without LangGraph (and why we might switch back)",
+  "The state management approach that survived our heaviest AI feature yet"
 ]

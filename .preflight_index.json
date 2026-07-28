@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-27T14:44:17.545915",
+  "built_at": "2026-07-28T02:46:22.168863",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4480,6 +4480,11 @@
       "slug": "built-a-multi-agent-system-without-langgraph",
       "title": "Built a multi-agent system without LangGraph",
       "summary": "After reviewing enough code that touches built reliable, the same failure pattern keeps showing up. Production gives you neither a clean environment nor a patient timeline. Here's what actually worked, and why. Why I wrote this (the problem I kept hitting) In late 2026 I shipped a multi-agent resear"
+    },
+    {
+      "slug": "global-state-is-the-wrong-tool-for-ai-features",
+      "title": "Global state is the wrong tool for AI features",
+      "summary": "A colleague asked me about state management during a code review recently, and my first answer wasn't a good one. The gap between the demo and the incident report is where this actually lives. Here's what actually worked, and why. The conventional wisdom (and why it's incomplete) Most teams reach fo"
     }
   ]
 }
