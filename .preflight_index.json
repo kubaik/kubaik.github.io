@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-29T02:53:16.169186",
+  "built_at": "2026-07-29T14:18:20.951899",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4495,6 +4495,11 @@
       "slug": "ai-tools-wont-help-if-everyone-writes-the-same-code",
       "title": "AI tools won’t help if everyone writes the same code",
       "summary": "There's a gap between how building healthy is taught and how it actually behaves under load. Most write-ups stop exactly where the interesting part starts. Here's the fuller picture, with the tradeoffs left in. The situation (what we were trying to solve) In late 2026, our distributed team at a Lago"
+    },
+    {
+      "slug": "one-misconfigured-vector-db-killed-our-rag-pipeline",
+      "title": "One misconfigured vector DB killed our RAG pipeline",
+      "summary": "I've hit the same our beautiful mistake in more than one production codebase over the years. It's the kind of problem that's easy to reproduce and hard to explain. Here's the fuller picture, with the tradeoffs left in. Why I wrote this (the problem I kept hitting) I was on call over a public holiday"
     }
   ]
 }
