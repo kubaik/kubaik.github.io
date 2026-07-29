@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-28T14:16:05.980485",
+  "built_at": "2026-07-29T02:53:16.169186",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4490,6 +4490,11 @@
       "slug": "mcp-servers-from-toy-to-backbone",
       "title": "MCP servers: from toy to backbone",
       "summary": "I spent longer than I should have on mcp server before understanding what was actually happening. The answers online were either wrong or skipped the part that mattered. Here's what I'd tell a colleague hitting this for the first time. The one-paragraph version (read this first) We started using MCP"
+    },
+    {
+      "slug": "ai-tools-wont-help-if-everyone-writes-the-same-code",
+      "title": "AI tools won’t help if everyone writes the same code",
+      "summary": "There's a gap between how building healthy is taught and how it actually behaves under load. Most write-ups stop exactly where the interesting part starts. Here's the fuller picture, with the tradeoffs left in. The situation (what we were trying to solve) In late 2026, our distributed team at a Lago"
     }
   ]
 }

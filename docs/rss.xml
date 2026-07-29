@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 28 Jul 2026 14:16:15 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 29 Jul 2026 02:53:27 +0000</lastBuildDate>
+    <item>
+      <title>AI tools won’t help if everyone writes the same code</title>
+      <link>https://kubaik.github.io/ai-tools-wont-help-if-everyone-writes-the-same-code/</link>
+      <description>AI tools create two classes of engineers unless you measure outcomes, not output. Incident rate per author is the metric that actually matters — here’s how we built a $48/month dashboard to close the gap.</description>
+      <pubDate>Wed, 29 Jul 2026 02:53:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-tools-wont-help-if-everyone-writes-the-same-code/</guid>
+    </item>
     <item>
       <title>MCP servers: from toy to backbone</title>
       <link>https://kubaik.github.io/mcp-servers-from-toy-to-backbone/</link>
@@ -138,13 +145,6 @@
       <description>Redis caching: cut API latency 75% and AI inference bill 68% — connection pooling, jemalloc, and the memory overhead nobody talks about.</description>
       <pubDate>Mon, 20 Jul 2026 03:29:31 +0000</pubDate>
       <guid>https://kubaik.github.io/cut-ai-inference-bill-68-without-model-changes/</guid>
-    </item>
-    <item>
-      <title>Purpose-built beats general AI tools</title>
-      <link>https://kubaik.github.io/purpose-built-beats-general-ai-tools/</link>
-      <description>Purpose-built AI platforms cut latency 53%, errors 89%, and costs 94% compared to general platforms — and give solo founders control over their product. Learn the three questions that decide your stack in 2026.</description>
-      <pubDate>Sun, 19 Jul 2026 13:25:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/purpose-built-beats-general-ai-tools/</guid>
     </item>
   </channel>
 </rss>
