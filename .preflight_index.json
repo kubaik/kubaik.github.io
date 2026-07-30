@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-29T14:18:20.951899",
+  "built_at": "2026-07-30T02:38:13.571747",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4500,6 +4500,11 @@
       "slug": "one-misconfigured-vector-db-killed-our-rag-pipeline",
       "title": "One misconfigured vector DB killed our RAG pipeline",
       "summary": "I've hit the same our beautiful mistake in more than one production codebase over the years. It's the kind of problem that's easy to reproduce and hard to explain. Here's the fuller picture, with the tradeoffs left in. Why I wrote this (the problem I kept hitting) I was on call over a public holiday"
+    },
+    {
+      "slug": "event-driven-beats-agent-driven-910-times",
+      "title": "Event-driven beats agent-driven 9/10 times",
+      "summary": "The conventional advice on eventdriven agentdriven is incomplete in one specific, costly way. The default configuration is fine right up until it isn't. Here's what actually worked, and why. We’ve all seen it: a system that starts simple, then slowly becomes a tangle of cron jobs, background workers"
     }
   ]
 }

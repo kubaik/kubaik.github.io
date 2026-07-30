@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 29 Jul 2026 14:18:31 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Jul 2026 02:38:24 +0000</lastBuildDate>
+    <item>
+      <title>Event-driven beats agent-driven 9/10 times</title>
+      <link>https://kubaik.github.io/event-driven-beats-agent-driven-910-times/</link>
+      <description>Choose event-driven over agent-driven 9/10 times — latency spikes, locking, and retry storms explained with concrete fixes and 2026 tools like EventBridge Scheduler and Redis Streams</description>
+      <pubDate>Thu, 30 Jul 2026 02:38:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/event-driven-beats-agent-driven-910-times/</guid>
+    </item>
     <item>
       <title>One misconfigured vector DB killed our RAG pipeline</title>
       <link>https://kubaik.github.io/one-misconfigured-vector-db-killed-our-rag-pipeline/</link>
@@ -138,13 +145,6 @@
       <description>The API handles 400–600 requests per second during peak hours, and our first deployment looked fine in staging with 10% of that load.</description>
       <pubDate>Tue, 21 Jul 2026 02:56:30 +0000</pubDate>
       <guid>https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/</guid>
-    </item>
-    <item>
-      <title>AI features break your stack every 6 months</title>
-      <link>https://kubaik.github.io/ai-features-break-your-stack-every-6-months/</link>
-      <description>AI features break your stack every 6 months unless you design a pluggable layer — learn how we replaced microservices with sidecars, stable interfaces, and feature flags to absorb new AI capabilities without rewrites</description>
-      <pubDate>Mon, 20 Jul 2026 14:13:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-features-break-your-stack-every-6-months/</guid>
     </item>
   </channel>
 </rss>
