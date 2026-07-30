@@ -104,5 +104,6 @@
   "The MCP server patterns that moved from experiment to critical infrastructure in our stack",
   "Building healthy team norms around AI tool usage without creating two classes of engineers",
   "Why our beautiful RAG pipeline fell over at 3am on a public holiday (and how we fixed it)",
-  "Event-driven vs agent-driven architectures: when each wins in 2026"
+  "Event-driven vs agent-driven architectures: when each wins in 2026",
+  "Why agent identity and authentication became harder than we expected in 2026"
 ]

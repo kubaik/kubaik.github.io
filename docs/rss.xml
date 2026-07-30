@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Jul 2026 11:36:33 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Jul 2026 08:41:54 +0000</lastBuildDate>
+    <item>
+      <title>Agent auth: the silent deployment killer</title>
+      <link>https://kubaik.github.io/agent-auth-the-silent-deployment-killer/</link>
+      <description>Agent identity in 2026: why SPIFFE, JWTs, and Redis caches break under real African power and network conditions. 98% drop in 403 errors and 80% latency cut with regional CAs, fallback providers, and battery-aware policies.</description>
+      <pubDate>Thu, 30 Jul 2026 08:41:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-auth-the-silent-deployment-killer/</guid>
+    </item>
     <item>
       <title>Event-driven beats agent-driven 9/10 times</title>
       <link>https://kubaik.github.io/event-driven-beats-agent-driven-910-times/</link>
@@ -138,13 +145,6 @@
       <description>Internal platform adoption fails when feedback latency exceeds 10 seconds — measure rollout time in Backstage with Redis 7.2 and cut developer time 47%</description>
       <pubDate>Tue, 21 Jul 2026 07:54:25 +0000</pubDate>
       <guid>https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/</guid>
-    </item>
-    <item>
-      <title>Cache stampedes: the patterns that scale and the ones…</title>
-      <link>https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/</link>
-      <description>The API handles 400–600 requests per second during peak hours, and our first deployment looked fine in staging with 10% of that load.</description>
-      <pubDate>Tue, 21 Jul 2026 02:56:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/</guid>
     </item>
   </channel>
 </rss>

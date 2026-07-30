@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-30T02:38:13.571747",
+  "built_at": "2026-07-30T08:41:45.971545",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4505,6 +4505,11 @@
       "slug": "event-driven-beats-agent-driven-910-times",
       "title": "Event-driven beats agent-driven 9/10 times",
       "summary": "The conventional advice on eventdriven agentdriven is incomplete in one specific, costly way. The default configuration is fine right up until it isn't. Here's what actually worked, and why. We’ve all seen it: a system that starts simple, then slowly becomes a tangle of cron jobs, background workers"
+    },
+    {
+      "slug": "agent-auth-the-silent-deployment-killer",
+      "title": "Agent auth: the silent deployment killer",
+      "summary": "agent identity looks simple until it has to survive real traffic. The default configuration is fine right up until it isn't. This post covers what comes after the happy path. A year ago we thought agent identity was solved. It wasn’t. Last March we pushed a multi-agent system to production in Nigeri"
     }
   ]
 }
