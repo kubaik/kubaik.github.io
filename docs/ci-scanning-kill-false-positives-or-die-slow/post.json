@@ -10,7 +10,7 @@
     "Infosec",
     "Github"
   ],
-  "meta_description": "False positives crushed CI alerts 87% with a lightweight filter—learn the exact GitHub Actions setup, Trivy 0.50.4, CodeQL 2.16.3, and OWASP ZAP 2.14.0 pipeline that saved $1,180/month and caught 5 more real vulns.",
+  "meta_description": "False positives crushed CI alerts 87% with a lightweight filter—learn the exact GitHub Actions setup, Trivy 0.50.4, CodeQL 2.16.3, and OWASP ZAP 2.14.0…",
   "featured_image": "/static/images/ci-scanning-kill-false-positives-or-die-slow.jpg",
   "created_at": "2026-06-28T16:45:07.024052",
   "updated_at": "2026-06-28T16:45:07.024081",

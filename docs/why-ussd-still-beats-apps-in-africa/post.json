@@ -12,7 +12,7 @@
     "Golang",
     "Redis"
   ],
-  "meta_description": "Build a USSD fintech stack that survives 2026 traffic with Go 1.22, Redis 7.2, and 124 ms p99 latency — connection pooling, TTL eviction, and the operator timeout mistakes most teams make.",
+  "meta_description": "Build a USSD fintech stack that survives 2026 traffic with Go 1.22, Redis 7.2, and 124 ms p99 latency — connection pooling, TTL eviction, and the operator…",
   "featured_image": "/static/images/why-ussd-still-beats-apps-in-africa.jpg",
   "created_at": "2026-06-29T10:19:16.435392",
   "updated_at": "2026-06-29T10:19:16.435400",

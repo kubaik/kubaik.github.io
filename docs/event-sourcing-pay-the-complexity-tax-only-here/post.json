@@ -9,7 +9,7 @@
     "Eventsourcingschema",
     "Eventsourcingexamples"
   ],
-  "meta_description": "Cut audit time from hours to minutes with event sourcing in 2026 — when it pays off and when to avoid it. Benchmarks, schema traps, and the real cost of 10 k events/sec.",
+  "meta_description": "Cut audit time from hours to minutes with event sourcing in 2026 — when it pays off and when to avoid it.",
   "featured_image": "/static/images/event-sourcing-pay-the-complexity-tax-only-here.jpg",
   "created_at": "2026-06-09T09:48:26.237900",
   "updated_at": "2026-06-09T09:48:26.237909",

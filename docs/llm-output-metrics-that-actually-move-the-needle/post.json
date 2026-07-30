@@ -10,7 +10,7 @@
     "Llmlatencyp95",
     "Llmretentiondelta"
   ],
-  "meta_description": "Cut LLM costs 40% and improve fact accuracy 9% with four production metrics — p95 latency, cost per 1000, structured correctness, and user retention delta. Real 90-day numbers from a Nairobi fintech app.",
+  "meta_description": "Cut LLM costs 40% and improve fact accuracy 9% with four production metrics — p95 latency, cost per 1000, structured correctness, and user retention delta.",
   "featured_image": "/static/images/llm-output-metrics-that-actually-move-the-needle.jpg",
   "created_at": "2026-06-26T19:13:43.403773",
   "updated_at": "2026-06-26T19:13:43.403785",

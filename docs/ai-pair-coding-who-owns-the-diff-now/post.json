@@ -10,7 +10,7 @@
     "Coding",
     "Github"
   ],
-  "meta_description": "Cut PR review time 77% using AI pair coding — but only after we encoded invariants as human-owned tests. Token costs, pitfalls, and the guardrails that worked in 2026.",
+  "meta_description": "Cut PR review time 77% using AI pair coding — but only after we encoded invariants as human-owned tests.",
   "featured_image": "/static/images/ai-pair-coding-who-owns-the-diff-now.jpg",
   "created_at": "2026-06-20T13:17:04.462520",
   "updated_at": "2026-06-20T13:17:04.462528",

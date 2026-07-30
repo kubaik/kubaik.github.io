@@ -10,7 +10,7 @@
     "Ai",
     "Artificialintelligence"
   ],
-  "meta_description": "Reduce AI incident minutes 40% with feature flags in 2026 — 15 ms p95 latency, GDPR-ready audit trails, and $3/month DynamoDB costs using Node 20 LTS and AWS Lambda arm64.",
+  "meta_description": "Reduce AI incident minutes 40% with feature flags in 2026 — 15 ms p95 latency, GDPR-ready audit trails, and $3/month DynamoDB costs using Node 20 LTS and AWS…",
   "featured_image": "/static/images/ai-rollouts-live-or-die-by-flags.jpg",
   "created_at": "2026-06-12T14:40:14.568805",
   "updated_at": "2026-06-12T14:40:14.568812",

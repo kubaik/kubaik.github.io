@@ -8,7 +8,7 @@
     "Sql",
     "Postgresql"
   ],
-  "meta_description": "Cut ORM cold-start latency 71% and save $1,200/month by dropping Prisma for Drizzle + raw SQL on Postgres 16 and Node 22. Migration safety over 2G, RAM under 512 MB, and type safety without runtime overhead.",
+  "meta_description": "Cut ORM cold-start latency 71% and save $1,200/month by dropping Prisma for Drizzle + raw SQL on Postgres 16 and Node 22.",
   "featured_image": "/static/images/orm-2026-prisma-vs-drizzle-vs-sqlalchemy.jpg",
   "created_at": "2026-06-10T16:18:49.318783",
   "updated_at": "2026-06-10T16:18:49.318791",

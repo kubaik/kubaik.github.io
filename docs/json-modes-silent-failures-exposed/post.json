@@ -10,7 +10,7 @@
     "Generativeai",
     "Redis"
   ],
-  "meta_description": "Cut LLM output failures 98% with a 3-layer protocol: schema-first design, text envelope, and repair pipeline — all using Pydantic 2.7 and Redis 7.2 in 2026 workflows.",
+  "meta_description": "Cut LLM output failures 98% with a 3-layer protocol: schema-first design, text envelope, and repair pipeline — all using Pydantic 2.7 and Redis 7.2 in 2026…",
   "featured_image": "/static/images/json-modes-silent-failures-exposed.jpg",
   "created_at": "2026-06-21T21:03:17.962263",
   "updated_at": "2026-06-21T21:03:17.962270",

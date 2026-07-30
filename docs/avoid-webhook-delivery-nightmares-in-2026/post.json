@@ -8,7 +8,7 @@
     "Awswebhookarchitecture",
     "Idempotentwebhooks"
   ],
-  "meta_description": "Cut webhook latency 95% and AWS costs 58% with Step Functions Express, DynamoDB idempotency, and circuit breakers — the delivery guarantees we actually trust in 2026",
+  "meta_description": "Cut webhook latency 95% and AWS costs 58% with Step Functions Express, DynamoDB idempotency, and circuit breakers — the delivery guarantees we actually trust…",
   "featured_image": "/static/images/avoid-webhook-delivery-nightmares-in-2026.jpg",
   "created_at": "2026-06-14T12:37:14.170600",
   "updated_at": "2026-06-14T12:37:14.170610",

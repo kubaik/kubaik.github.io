@@ -10,7 +10,7 @@
     "Llm",
     "Redis"
   ],
-  "meta_description": "Cut 800ms API latency to 180ms in production systems — the stateful architecture patterns 2026 teams actually use (Python 3.11, Redis 7.2, SQLite 3.45, vLLM 0.4.2).",
+  "meta_description": "Cut 800ms API latency to 180ms in production systems — the stateful architecture patterns 2026 teams actually use (Python 3.11, Redis 7.2, SQLite 3.45, vLLM…",
   "featured_image": "/static/images/ai-apps-break-your-stack-heres-the-fix.jpg",
   "created_at": "2026-07-03T08:46:52.544767",
   "updated_at": "2026-07-03T08:46:52.544778",

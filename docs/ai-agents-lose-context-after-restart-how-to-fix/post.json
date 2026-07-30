@@ -10,7 +10,7 @@
     "Kubernetes",
     "K8s"
   ],
-  "meta_description": "AI agents forget context after restart — 3 concrete fixes for session persistence in 2026. Includes LangChain 0.2, Redis 7.2, and Kubernetes race fixes with exact latency and cost numbers.",
+  "meta_description": "AI agents forget context after restart — 3 concrete fixes for session persistence in 2026.",
   "featured_image": "/static/images/ai-agents-lose-context-after-restart-how-to-fix.jpg",
   "created_at": "2026-06-13T06:53:54.925383",
   "updated_at": "2026-06-13T06:53:54.925393",

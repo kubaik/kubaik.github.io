@@ -12,7 +12,7 @@
     "Webdev",
     "Nextjs"
   ],
-  "meta_description": "HTMX 2.0 cut our frontend bundle from 245 KiB to 8 KiB and dropped AWS fees 48% — here’s the real trade-off we made and what we gained by swapping React for HTML-over-the-wire",
+  "meta_description": "HTMX 2.0 cut our frontend bundle from 245 KiB to 8 KiB and dropped AWS fees 48% — here’s the real trade-off we made and what we gained by swapping React for…",
   "featured_image": "/static/images/htmx-stack-swap-5-things-i-gained-3-i-lost.jpg",
   "created_at": "2026-06-26T11:39:00.782771",
   "updated_at": "2026-06-26T11:39:00.782784",

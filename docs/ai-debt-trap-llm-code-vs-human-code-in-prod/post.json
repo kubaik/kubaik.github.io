@@ -11,7 +11,7 @@
     "Llm",
     "Redis"
   ],
-  "meta_description": "Cut production incidents 50% by choosing between LLM code and human code in 2026. Learn the exact metrics, tool versions, and guardrails that separate safe AI adoption from hidden technical debt.",
+  "meta_description": "Cut production incidents 50% by choosing between LLM code and human code in 2026.",
   "featured_image": "/static/images/ai-debt-trap-llm-code-vs-human-code-in-prod.jpg",
   "created_at": "2026-06-27T13:15:02.276411",
   "updated_at": "2026-06-27T13:15:02.276423",

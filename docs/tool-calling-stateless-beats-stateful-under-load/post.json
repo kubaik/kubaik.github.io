@@ -10,7 +10,7 @@
     "ToolCallingPatterns",
     "Redis"
   ],
-  "meta_description": "Cut p99 latency 60% and save $41 per 1000 RPS by switching from stateful to stateless tool calls — the one metric to watch first and the three-line config that prevents the next outage.",
+  "meta_description": "Cut p99 latency 60% and save $41 per 1000 RPS by switching from stateful to stateless tool calls — the one metric to watch first and the three-line config…",
   "featured_image": "/static/images/tool-calling-stateless-beats-stateful-under-load.jpg",
   "created_at": "2026-06-19T09:01:43.310641",
   "updated_at": "2026-06-19T09:01:43.310651",

@@ -8,7 +8,7 @@
     "Ai",
     "Cybersecurity"
   ],
-  "meta_description": "AI scanners catch 42% more vulnerabilities than static analysis alone — but only when paired with a 200-line policy file and threat context. Learn which tools work, which numbers matter, and the exact commands to ship in 2026.",
+  "meta_description": "AI scanners catch 42% more vulnerabilities than static analysis alone — but only when paired with a 200-line policy file and threat context.",
   "featured_image": "/static/images/ai-scanners-find-vulns-what-actually-works.jpg",
   "created_at": "2026-06-28T00:11:52.227525",
   "updated_at": "2026-06-28T00:11:52.227535",

@@ -9,7 +9,7 @@
     "Tursowalcontention",
     "Planetscalevitesstimeout"
   ],
-  "meta_description": "Cut API 500 errors 90% by fixing Neon, PlanetScale and Turso timeouts under real load — connection pools, replica lag and proxy limits exposed after 12 months in production.",
+  "meta_description": "Cut API 500 errors 90% by fixing Neon, PlanetScale and Turso timeouts under real load — connection pools, replica lag and proxy limits exposed after 12 months…",
   "featured_image": "/static/images/neon-vs-planetscale-vs-turso-which-broke-first.jpg",
   "created_at": "2026-06-10T18:51:10.449001",
   "updated_at": "2026-06-10T18:51:10.449010",

@@ -10,7 +10,7 @@
     "Artificialintelligence",
     "Vectordb"
   ],
-  "meta_description": "Cut 98% of AI assistant costs without vendor lock-in — Redis 7.2 caching, OpenSearch 2.11 search, and vLLM 0.4.0 self-hosted models deliver P95 latency under 1.2s and $0.12 per 1k calls.",
+  "meta_description": "Cut 98% of AI assistant costs without vendor lock-in — Redis 7.2 caching, OpenSearch 2.11 search, and vLLM 0.4.0 self-hosted models deliver P95 latency under…",
   "featured_image": "/static/images/personal-ai-assistants-avoid-vendor-lock-in-traps.jpg",
   "created_at": "2026-06-11T09:44:01.921304",
   "updated_at": "2026-06-11T09:44:01.921312",

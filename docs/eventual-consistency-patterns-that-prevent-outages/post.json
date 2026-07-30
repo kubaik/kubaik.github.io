@@ -11,7 +11,7 @@
     "Postgresql",
     "Apachekafka"
   ],
-  "meta_description": "Cut API errors 28% with eventual consistency — the 10 battle-tested patterns ranked by latency, cost, and operational overhead in 2026. Includes code and config you can deploy today.",
+  "meta_description": "Cut API errors 28% with eventual consistency — the 10 battle-tested patterns ranked by latency, cost, and operational overhead in 2026.",
   "featured_image": "/static/images/eventual-consistency-patterns-that-prevent-outages.jpg",
   "created_at": "2026-06-28T13:21:19.496001",
   "updated_at": "2026-06-28T13:21:19.496011",

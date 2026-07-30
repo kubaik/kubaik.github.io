@@ -11,7 +11,7 @@
     "Iac",
     "Argocdairollback"
   ],
-  "meta_description": "AI self-service platforms cut deployment time from 45 minutes to 2 minutes in 2026 — but the guardrail bar is higher. Learn the guardrails, prompts, and tools that make it work, including the S3 bucket mistake that cost $4.2k and how the AI caught it.",
+  "meta_description": "AI self-service platforms cut deployment time from 45 minutes to 2 minutes in 2026 — but the guardrail bar is higher.",
   "featured_image": "/static/images/ai-made-self-service-platforms-trivial-in-2026.jpg",
   "created_at": "2026-07-03T23:08:55.907087",
   "updated_at": "2026-07-03T23:08:55.907095",

@@ -10,7 +10,7 @@
     "Redis",
     "Multiagent"
   ],
-  "meta_description": "Build a reliable multi-agent research system without LangGraph — latency, cost, and the poison-queue mistake most founders miss. FastAPI 0.111, Redis 7.2, Step Functions.",
+  "meta_description": "Build a reliable multi-agent research system without LangGraph — latency, cost, and the poison-queue mistake most founders miss.",
   "featured_image": "/static/images/built-a-multi-agent-system-without-langgraph.jpg",
   "created_at": "2026-07-27T14:44:13.456532",
   "updated_at": "2026-07-27T14:44:13.456545",

@@ -7,7 +7,7 @@
     "Infosec",
     "Llmsecuritychecklist"
   ],
-  "meta_description": "Block 96 % of prompt-injection attempts in 2026 with deny-by-default policies instead of brittle regex filters — real benchmarks, code samples, and the $1.2k latency mistake most teams repeat.",
+  "meta_description": "Block 96 % of prompt-injection attempts in 2026 with deny-by-default policies instead of brittle regex filters — real benchmarks, code samples, and the $1.2k…",
   "featured_image": "/static/images/treat-every-user-input-as-hostile-in-2026.jpg",
   "created_at": "2026-07-08T02:58:04.150710",
   "updated_at": "2026-07-08T02:58:04.150720",

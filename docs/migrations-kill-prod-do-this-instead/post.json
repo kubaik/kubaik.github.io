@@ -8,7 +8,7 @@
     "Sql",
     "Postgresql"
   ],
-  "meta_description": "Zero-downtime migrations: why most playbooks fail and one proven split-step method that cut our outage time from 12 minutes to under 30 seconds — with PostgreSQL 15, Aurora metrics, and rollback scripts tested in staging.",
+  "meta_description": "Zero-downtime migrations: why most playbooks fail and one proven split-step method that cut our outage time from 12 minutes to under 30 seconds — with…",
   "featured_image": "/static/images/migrations-kill-prod-do-this-instead.jpg",
   "created_at": "2026-06-23T02:29:36.364849",
   "updated_at": "2026-06-23T02:29:36.364862",

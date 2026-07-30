@@ -7,7 +7,7 @@
     "Ai",
     "Artificialintelligence"
   ],
-  "meta_description": "AI scanners now catch 40-60% of escaped vulnerabilities in 2026 — but they miss logic flaws and hallucinate issues. Learn which tools to pair with them, how to tune confidence, and why manual review still matters.",
+  "meta_description": "AI scanners now catch 40-60% of escaped vulnerabilities in 2026 — but they miss logic flaws and hallucinate issues.",
   "featured_image": "/static/images/ai-scans-code-what-it-finds-and-what-it-misses.jpg",
   "created_at": "2026-06-10T02:01:23.560348",
   "updated_at": "2026-06-10T02:01:23.560356",

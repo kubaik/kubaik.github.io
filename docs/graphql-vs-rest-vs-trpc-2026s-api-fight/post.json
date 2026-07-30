@@ -9,7 +9,7 @@
     "Apis",
     "Graphql"
   ],
-  "meta_description": "Cut API design debates with data — REST vs GraphQL vs tRPC in 2026 with concrete benchmarks, cost figures, and the exact mistake I made shipping GraphQL for CRUD.",
+  "meta_description": "Cut API design debates with data — REST vs GraphQL vs tRPC in 2026 with concrete benchmarks, cost figures, and the exact mistake I made shipping GraphQL for…",
   "featured_image": "/static/images/graphql-vs-rest-vs-trpc-2026s-api-fight.jpg",
   "created_at": "2026-06-09T19:36:20.025671",
   "updated_at": "2026-06-09T19:36:20.025677",

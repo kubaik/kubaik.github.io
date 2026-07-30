@@ -10,7 +10,7 @@
     "Istio1.21",
     "Istio121"
   ],
-  "meta_description": "Cut mesh-induced latency 60% with Istio 1.21 and Cilium 1.16 — the control-plane backlog, certificate storms, and telemetry sampling mistakes most teams miss in 2026.",
+  "meta_description": "Cut mesh-induced latency 60% with Istio 1.21 and Cilium 1.16 — the control-plane backlog, certificate storms, and telemetry sampling mistakes most teams miss…",
   "featured_image": "/static/images/istio-and-cilium-what-really-breaks-in-production.jpg",
   "created_at": "2026-06-24T09:26:52.873534",
   "updated_at": "2026-06-24T09:26:52.873546",

@@ -11,7 +11,7 @@
     "Softwareengineering",
     "Redis"
   ],
-  "meta_description": "Self-taught devs pass remote interviews by debugging real systems, not just LeetCode. Learn the trade-offs interviewers actually test — latency budgets, memory leaks, cache stampedes — with specific tools, benchmarks, and fixes.",
+  "meta_description": "Self-taught devs pass remote interviews by debugging real systems, not just LeetCode.",
   "featured_image": "/static/images/pass-interviews-without-a-cs-degree.jpg",
   "created_at": "2026-06-09T10:55:19.993756",
   "updated_at": "2026-06-09T10:55:19.993763",

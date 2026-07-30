@@ -8,7 +8,7 @@
     "Reactjs",
     "Nextjs"
   ],
-  "meta_description": "React 19 Server Components promise 0-bundle JavaScript but often break serialization and add 400 ms latency. Learn the three silent failure modes and why we rolled back after a week.",
+  "meta_description": "React 19 Server Components promise 0-bundle JavaScript but often break serialization and add 400 ms latency.",
   "featured_image": "/static/images/react-19-server-components-3-days-lost-to-one-flag.jpg",
   "created_at": "2026-07-25T02:54:25.138742",
   "updated_at": "2026-07-25T02:54:25.138753",

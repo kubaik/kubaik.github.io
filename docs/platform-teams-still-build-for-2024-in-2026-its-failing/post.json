@@ -12,7 +12,7 @@
     "Github",
     "Platformengineering"
   ],
-  "meta_description": "Cut deployment latency 85% by dropping GitHub Actions for agent-first platforms. How most platform teams still enforce 2024 workflows in 2026 and why it’s failing their developers.",
+  "meta_description": "Cut deployment latency 85% by dropping GitHub Actions for agent-first platforms.",
   "featured_image": "/static/images/platform-teams-still-build-for-2024-in-2026-its-failing.jpg",
   "created_at": "2026-07-04T17:20:26.765267",
   "updated_at": "2026-07-04T17:20:26.765276",

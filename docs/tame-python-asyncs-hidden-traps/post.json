@@ -11,7 +11,7 @@
     "Python3",
     "Python311async"
   ],
-  "meta_description": "Cut async Python latency 40%: threaded vs task-based async benchmarks on Python 3.11, FastAPI 0.111, and asyncpg 0.30 — the mistakes most teams repeat and how to avoid them.",
+  "meta_description": "Cut async Python latency 40%: threaded vs task-based async benchmarks on Python 3.11, FastAPI 0.111, and asyncpg 0.30 — the mistakes most teams repeat and how…",
   "featured_image": "/static/images/tame-python-asyncs-hidden-traps.jpg",
   "created_at": "2026-06-29T17:45:56.376188",
   "updated_at": "2026-06-29T17:45:56.376195",

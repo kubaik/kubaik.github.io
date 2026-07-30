@@ -11,7 +11,7 @@
     "Finetuning",
     "Africatech"
   ],
-  "meta_description": "Nairobi teams ship AI features faster than global providers by treating latency as a feature. Learn how 3B models, local Kubernetes, and Swahili fine-tuning cut costs 75% while beating AWS Bedrock on user experience.",
+  "meta_description": "Nairobi teams ship AI features faster than global providers by treating latency as a feature.",
   "featured_image": "/static/images/latency-trade-offs-nairobi-teams-beat-global-ai-providers.jpg",
   "created_at": "2026-07-26T03:19:07.385553",
   "updated_at": "2026-07-26T03:19:07.385564",

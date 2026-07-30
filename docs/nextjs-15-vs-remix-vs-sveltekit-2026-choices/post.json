@@ -9,7 +9,7 @@
     "Performance",
     "Nextjs"
   ],
-  "meta_description": "Cut 40 % latency on 3G: Next.js 15 vs Remix vs SvelteKit benchmarks with real deployments in Senegal, Kenya, and Nigeria — bundle sizes, Turbopack pitfalls, and the state-leak bug we chased for two days.",
+  "meta_description": "Cut 40 % latency on 3G: Next.js 15 vs Remix vs SvelteKit benchmarks with real deployments in Senegal, Kenya, and Nigeria — bundle sizes, Turbopack pitfalls…",
   "featured_image": "/static/images/nextjs-15-vs-remix-vs-sveltekit-2026-choices.jpg",
   "created_at": "2026-06-16T06:24:02.992809",
   "updated_at": "2026-06-16T06:24:02.992820",

@@ -11,7 +11,7 @@
     "Reactjs",
     "Performance"
   ],
-  "meta_description": "Cut React 19 render time 57% with the new compiler — but only if you silence its edge-case bugs first. Real benchmarks, real bugs, and a decision table to pick the right path.",
+  "meta_description": "Cut React 19 render time 57% with the new compiler — but only if you silence its edge-case bugs first.",
   "featured_image": "/static/images/react-19-compiler-my-components-changed-how.jpg",
   "created_at": "2026-06-15T07:49:45.982179",
   "updated_at": "2026-06-15T07:49:45.982191",

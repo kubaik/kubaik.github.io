@@ -9,7 +9,7 @@
     "Infosec",
     "Redis"
   ],
-  "meta_description": "Cut API abuse 85% in 2026 with token behavior tracking — the attacks most teams miss and why Redis Streams blocks them while rate limiting fails. Real numbers from a fintech in Lagos.",
+  "meta_description": "Cut API abuse 85% in 2026 with token behavior tracking — the attacks most teams miss and why Redis Streams blocks them while rate limiting fails.",
   "featured_image": "/static/images/block-api-replay-attacks-in-2026.jpg",
   "created_at": "2026-06-27T01:31:04.936569",
   "updated_at": "2026-06-27T01:31:04.936577",

@@ -6,7 +6,7 @@
     "Ai",
     "Generativeai"
   ],
-  "meta_description": "Cut false positives 60% with 9 testing methods for AI code — no AI mocks, just real behavior. Property-based, contract, fuzz, and chaos testing explained with Python 3.11 and Node 20 LTS examples.",
+  "meta_description": "Cut false positives 60% with 9 testing methods for AI code — no AI mocks, just real behavior.",
   "featured_image": "/static/images/test-ai-code-without-testing-the-ai.jpg",
   "created_at": "2026-07-01T18:05:47.823221",
   "updated_at": "2026-07-01T18:05:47.823228",

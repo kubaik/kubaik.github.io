@@ -9,7 +9,7 @@
     "SagaPattern",
     "Redis"
   ],
-  "meta_description": "Cut API failure 99.9% with 5 outage-proof patterns — outbox, saga, CRDTs, event sourcing, and versioned cache. Benchmarked at 120k orders/minute with DynamoDB Global Tables and Redis 7.2.",
+  "meta_description": "Cut API failure 99.9% with 5 outage-proof patterns — outbox, saga, CRDTs, event sourcing, and versioned cache.",
   "featured_image": "/static/images/5-patterns-to-keep-systems-up-when-consistency-breaks.jpg",
   "created_at": "2026-06-12T14:24:14.444831",
   "updated_at": "2026-06-12T14:24:14.444846",

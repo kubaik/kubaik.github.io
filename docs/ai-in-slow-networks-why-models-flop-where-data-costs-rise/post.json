@@ -12,7 +12,7 @@
     "Webdev",
     "Redis"
   ],
-  "meta_description": "Cut API data cost 88% and latency 76% for AI features in high-cost, high-latency markets. Learn why global best practices fail and how to adapt them with Redis 7.2, ONNX Runtime 1.16, and Lambda@Edge.",
+  "meta_description": "Cut API data cost 88% and latency 76% for AI features in high-cost, high-latency markets.",
   "featured_image": "/static/images/ai-in-slow-networks-why-models-flop-where-data-costs-rise.jpg",
   "created_at": "2026-07-05T11:34:19.789035",
   "updated_at": "2026-07-05T11:34:19.789047",

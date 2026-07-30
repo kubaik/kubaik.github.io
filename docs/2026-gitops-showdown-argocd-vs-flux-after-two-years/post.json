@@ -11,7 +11,7 @@
     "K8s",
     "Fluxv23"
   ],
-  "meta_description": "Cut Kubernetes drift 90% with GitOps — Flux v2.3 syncs in 390 ms, costs 0.9 vCPU, and runs for two years without a UI meltdown. Real production numbers from 2026.",
+  "meta_description": "Cut Kubernetes drift 90% with GitOps — Flux v2.3 syncs in 390 ms, costs 0.9 vCPU, and runs for two years without a UI meltdown.",
   "featured_image": "/static/images/2026-gitops-showdown-argocd-vs-flux-after-two-years.jpg",
   "created_at": "2026-06-09T15:58:21.151116",
   "updated_at": "2026-06-09T15:58:21.151124",

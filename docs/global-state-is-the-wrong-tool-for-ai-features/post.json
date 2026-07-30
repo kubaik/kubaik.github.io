@@ -11,7 +11,7 @@
     "Ai",
     "Typescript"
   ],
-  "meta_description": "Cut AI chat latency 54% and memory 59% by dropping Redux for local state machines and events — the real numbers from 5k concurrent users and the mistakes that led to it.",
+  "meta_description": "Cut AI chat latency 54% and memory 59% by dropping Redux for local state machines and events — the real numbers from 5k concurrent users and the mistakes that…",
   "featured_image": "/static/images/global-state-is-the-wrong-tool-for-ai-features.jpg",
   "created_at": "2026-07-28T02:46:18.174343",
   "updated_at": "2026-07-28T02:46:18.174356",

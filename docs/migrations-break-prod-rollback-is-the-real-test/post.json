@@ -10,7 +10,7 @@
     "Backward",
     "Asyncpg029"
   ],
-  "meta_description": "Zero-downtime migrations fail when rollback scripts hit 45-minute locks on 200 GB tables. Measure impact, not uptime. Use backward-compatible changes, batch backfills, and rollforward.",
+  "meta_description": "Zero-downtime migrations fail when rollback scripts hit 45-minute locks on 200 GB tables. Measure impact, not uptime.",
   "featured_image": "/static/images/migrations-break-prod-rollback-is-the-real-test.jpg",
   "created_at": "2026-06-20T11:07:15.830437",
   "updated_at": "2026-06-20T11:07:15.830448",

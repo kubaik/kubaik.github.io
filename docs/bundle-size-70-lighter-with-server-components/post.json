@@ -12,7 +12,7 @@
     "Nextjs",
     "Nextjsbundlesize"
   ],
-  "meta_description": "Cut client bundle size 62% with Server Components — real numbers, code samples, and the hydration errors that broke production. See how 1.6 MB replaced 4.2 MB without rewriting everything.",
+  "meta_description": "Cut client bundle size 62% with Server Components — real numbers, code samples, and the hydration errors that broke production.",
   "featured_image": "/static/images/bundle-size-70-lighter-with-server-components.jpg",
   "created_at": "2026-06-13T19:12:48.025770",
   "updated_at": "2026-06-13T19:12:48.025778",

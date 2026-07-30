@@ -11,7 +11,7 @@
     "Ai",
     "Llm"
   ],
-  "meta_description": "AI agent postmortems: human-loop vs blind replay — 432 injected failures show which catches mistakes faster, cuts false positives 75%, and saves $38 per 1k incidents at scale",
+  "meta_description": "AI agent postmortems: human-loop vs blind replay — 432 injected failures show which catches mistakes faster, cuts false positives 75%, and saves $38 per 1k…",
   "featured_image": "/static/images/ai-agent-postmortem-human-loop-vs-blind-replay.jpg",
   "created_at": "2026-06-20T22:43:19.173545",
   "updated_at": "2026-06-20T22:43:19.173556",

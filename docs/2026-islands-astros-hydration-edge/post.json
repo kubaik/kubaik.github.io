@@ -11,7 +11,7 @@
     "Js",
     "Nextjs"
   ],
-  "meta_description": "Cut API response time 44% with Astro islands: bundle shrinks 79%, LCP drops to 1.9 s on 3G, and infra costs fall 45% — here’s the exact strategy we used in 2026.",
+  "meta_description": "Cut API response time 44% with Astro islands: bundle shrinks 79%, LCP drops to 1.9 s on 3G, and infra costs fall 45% — here’s the exact strategy we used in…",
   "featured_image": "/static/images/2026-islands-astros-hydration-edge.jpg",
   "created_at": "2026-06-13T22:58:33.175354",
   "updated_at": "2026-06-13T22:58:33.175362",

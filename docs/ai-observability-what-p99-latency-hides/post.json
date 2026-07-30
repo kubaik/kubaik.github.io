@@ -11,7 +11,7 @@
     "Ai",
     "Llm"
   ],
-  "meta_description": "AI models drift silently. Traditional APM misses 89% of model confidence drops. Start tracking prompt versions and semantic scores today to catch degradation before users do.",
+  "meta_description": "AI models drift silently. Traditional APM misses 89% of model confidence drops.",
   "featured_image": "/static/images/ai-observability-what-p99-latency-hides.jpg",
   "created_at": "2026-07-03T00:14:18.553636",
   "updated_at": "2026-07-03T00:14:18.553650",

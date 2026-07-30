@@ -10,7 +10,7 @@
     "Dataengineering",
     "Datapipelinecost"
   ],
-  "meta_description": "Cut pipeline orchestration costs 74% and latency 92% by swapping Airflow for Dagster 1.7.0 — the asset-based model, RDS metadata, and IAM secrets that actually scaled to 60 engineers in 2026.",
+  "meta_description": "Cut pipeline orchestration costs 74% and latency 92% by swapping Airflow for Dagster 1.7.0 — the asset-based model, RDS metadata, and IAM secrets that…",
   "featured_image": "/static/images/dagster-replaced-airflow-in-2026-heres-the-stack-we.jpg",
   "created_at": "2026-06-19T16:13:37.476018",
   "updated_at": "2026-06-19T16:13:37.476028",

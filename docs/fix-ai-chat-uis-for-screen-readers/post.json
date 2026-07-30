@@ -10,7 +10,7 @@
     "ScreenReaderAi",
     "Ai"
   ],
-  "meta_description": "Fix WCAG violations in AI chat UIs with 3 silent failures: live region announcements, focus traps, and Safari containment bugs. Reduce support tickets by 12% with these fixes.",
+  "meta_description": "Fix WCAG violations in AI chat UIs with 3 silent failures: live region announcements, focus traps, and Safari containment bugs.",
   "featured_image": "/static/images/fix-ai-chat-uis-for-screen-readers.jpg",
   "created_at": "2026-06-28T15:04:43.844850",
   "updated_at": "2026-06-28T15:04:43.844858",

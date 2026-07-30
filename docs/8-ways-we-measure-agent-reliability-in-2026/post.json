@@ -12,7 +12,7 @@
     "Llm",
     "Usertrustmetrics"
   ],
-  "meta_description": "Measure agent reliability with 8 metrics that actually predict user trust — hallucination rates, consistency, recovery speed, and more. Benchmarks, code, and the one metric we ship first.",
+  "meta_description": "Measure agent reliability with 8 metrics that actually predict user trust — hallucination rates, consistency, recovery speed, and more.",
   "featured_image": "/static/images/8-ways-we-measure-agent-reliability-in-2026.jpg",
   "created_at": "2026-07-04T18:09:38.422091",
   "updated_at": "2026-07-04T18:09:38.422100",

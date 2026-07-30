@@ -10,7 +10,7 @@
     "Softwareengineering",
     "Pocketbase022"
   ],
-  "meta_description": "Deploy a serverless backend in Africa with PocketBase — 180 ms p95 latency, $1.87/month, and zero auth boilerplate. Real deployments in Lagos, Nairobi, and Cape Town.",
+  "meta_description": "Deploy a serverless backend in Africa with PocketBase — 180 ms p95 latency, $1.87/month, and zero auth boilerplate.",
   "featured_image": "/static/images/build-a-serverless-backend-in-africa-with-pocketbase.jpg",
   "created_at": "2026-06-30T21:24:56.868861",
   "updated_at": "2026-06-30T21:24:56.868877",

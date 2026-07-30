@@ -10,7 +10,7 @@
     "Ai",
     "Tech"
   ],
-  "meta_description": "AI features built with standard wrappers often become maintenance nightmares in Africa. Learn why caching, flags, and routing assumptions fail — and how to build resilient AI features that survive 3G drops and model drift.",
+  "meta_description": "AI features built with standard wrappers often become maintenance nightmares in Africa.",
   "featured_image": "/static/images/ai-features-as-tech-debt-or-golden-paths.jpg",
   "created_at": "2026-07-17T02:53:25.164323",
   "updated_at": "2026-07-17T02:53:25.164335",

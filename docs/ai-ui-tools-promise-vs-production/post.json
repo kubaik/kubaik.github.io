@@ -11,7 +11,7 @@
     "Reactjs",
     "Cursorai"
   ],
-  "meta_description": "Cut component build time 60% with AI UI tools — but watch bundle bloat, design drift, and missing a11y. Cursor 0.32, size-limit 5.0.1, axe-core 4.9 benchmarks inside.",
+  "meta_description": "Cut component build time 60% with AI UI tools — but watch bundle bloat, design drift, and missing a11y.",
   "featured_image": "/static/images/ai-ui-tools-promise-vs-production.jpg",
   "created_at": "2026-06-30T01:37:01.441639",
   "updated_at": "2026-06-30T01:37:01.441649",

@@ -10,7 +10,7 @@
     "Idempotent",
     "Agenticai"
   ],
-  "meta_description": "Cut approval workflow downtime 90% with durable command logs — works on $6 DigitalOcean droplets, survives 90-minute 3G drops, no Kafka or Step Functions needed.",
+  "meta_description": "Cut approval workflow downtime 90% with durable command logs — works on $6 DigitalOcean droplets, survives 90-minute 3G drops, no Kafka or Step Functions…",
   "featured_image": "/static/images/survive-network-drops-agentic-workflows-that-keep-running.jpg",
   "created_at": "2026-07-04T12:14:28.758125",
   "updated_at": "2026-07-04T12:14:28.758137",

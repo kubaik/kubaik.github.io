@@ -10,7 +10,7 @@
     "Infosec",
     "Github"
   ],
-  "meta_description": "Cut MCP server exposure 100% with localhost binding, security group rules, and SSH tunnels — 2026 incident breakdown with exact commands and $3,100 cleanup cost.",
+  "meta_description": "Cut MCP server exposure 100% with localhost binding, security group rules, and SSH tunnels — 2026 incident breakdown with exact commands and $3,100 cleanup…",
   "featured_image": "/static/images/mcp-server-exposed-internal-tools-in-2026.jpg",
   "created_at": "2026-07-10T03:38:46.681005",
   "updated_at": "2026-07-10T03:38:46.681015",

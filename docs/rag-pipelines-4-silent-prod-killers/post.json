@@ -13,7 +13,7 @@
     "Rag",
     "Vectorsearch"
   ],
-  "meta_description": "Cut RAG pipeline latency from 280ms to 35ms and monthly costs from $980 to $620 by moving vector search out of PostgreSQL 16 into Milvus 2.4.3 with Caffeine cache.",
+  "meta_description": "Cut RAG pipeline latency from 280ms to 35ms and monthly costs from $980 to $620 by moving vector search out of PostgreSQL 16 into Milvus 2.4.3 with Caffeine…",
   "featured_image": "/static/images/rag-pipelines-4-silent-prod-killers.jpg",
   "created_at": "2026-06-08T23:47:39.972246",
   "updated_at": "2026-06-08T23:47:39.972256",

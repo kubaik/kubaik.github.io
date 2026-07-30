@@ -12,7 +12,7 @@
     "Redisidempotency72",
     "Sqsvisibilitytimeout"
   ],
-  "meta_description": "Cut 62 % on webhook costs and eliminated 8 % duplicates with Step Functions + Redis 7.2 retries and atomic idempotency in 2026 — the real patterns that replace 2020-era Lambda-only designs.",
+  "meta_description": "Cut 62 % on webhook costs and eliminated 8 % duplicates with Step Functions + Redis 7.2 retries and atomic idempotency in 2026 — the real patterns that…",
   "featured_image": "/static/images/webhooks-done-right-retries-that-dont-explode-in-2026.jpg",
   "created_at": "2026-06-25T22:56:03.752249",
   "updated_at": "2026-06-25T22:56:03.752260",

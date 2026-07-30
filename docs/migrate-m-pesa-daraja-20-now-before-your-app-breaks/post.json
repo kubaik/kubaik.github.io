@@ -6,7 +6,7 @@
     "DarajaMigration2026",
     "ErrTokenExpired"
   ],
-  "meta_description": "Fix M-Pesa Daraja 2.0 ERR_CALLBACK_URL_MISMATCH and ERR_TOKEN_EXPIRED before your checkout breaks — 4 concrete steps, token refresh code, callback path rules, and 2026 sandbox setup.",
+  "meta_description": "Fix M-Pesa Daraja 2.0 ERR_CALLBACK_URL_MISMATCH and ERR_TOKEN_EXPIRED before your checkout breaks — 4 concrete steps, token refresh code, callback path rules…",
   "featured_image": "/static/images/migrate-m-pesa-daraja-20-now-before-your-app-breaks.jpg",
   "created_at": "2026-06-15T08:48:57.479110",
   "updated_at": "2026-06-15T08:48:57.479178",

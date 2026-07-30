@@ -9,7 +9,7 @@
     "Ai",
     "Generativeai"
   ],
-  "meta_description": "7 ways to test AI-generated code without testing the AI itself — save 10+ hours/week on brittle tests and catch 68% more bugs with contract checks, golden snapshots, and shadow mode",
+  "meta_description": "7 ways to test AI-generated code without testing the AI itself — save 10+ hours/week on brittle tests and catch 68% more bugs with contract checks, golden…",
   "featured_image": "/static/images/test-ai-code-not-the-ai.jpg",
   "created_at": "2026-06-30T02:34:51.213553",
   "updated_at": "2026-06-30T02:34:51.213560",

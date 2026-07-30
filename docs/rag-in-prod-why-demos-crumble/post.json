@@ -12,7 +12,7 @@
     "Rag",
     "Vectorsearch"
   ],
-  "meta_description": "Cut RAG pipeline latency 88% and cloud bill 83% by splitting retrieval and generation. Real numbers, Go + pgvector 0.7.0, Redis 7.2, vLLM 0.5.0-alpha — what the tutorials skip.",
+  "meta_description": "Cut RAG pipeline latency 88% and cloud bill 83% by splitting retrieval and generation.",
   "featured_image": "/static/images/rag-in-prod-why-demos-crumble.jpg",
   "created_at": "2026-06-09T06:06:28.981799",
   "updated_at": "2026-06-09T06:06:28.981807",

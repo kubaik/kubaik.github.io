@@ -11,7 +11,7 @@
     "Ai",
     "Redis"
   ],
-  "meta_description": "Persist AI agent context across restarts with Redis 7.2 and langgraph 0.2.14 — flush writes, raise liveness probes, and stop losing sessions after a crash or rollout.",
+  "meta_description": "Persist AI agent context across restarts with Redis 7.2 and langgraph 0.2.14 — flush writes, raise liveness probes, and stop losing sessions after a crash or…",
   "featured_image": "/static/images/ai-agent-memory-context-that-survives-restarts.jpg",
   "created_at": "2026-06-27T23:25:26.302040",
   "updated_at": "2026-06-27T23:25:26.302050",

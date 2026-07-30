@@ -12,7 +12,7 @@
     "Kubernetes",
     "K8s"
   ],
-  "meta_description": "Cut deployment time 69% by moving from GitHub Actions to Argo CD — the concrete thresholds, costs, and code for platforms at 20, 100, 500, and 2000 engineers in 2026.",
+  "meta_description": "Cut deployment time 69% by moving from GitHub Actions to Argo CD — the concrete thresholds, costs, and code for platforms at 20, 100, 500, and 2000 engineers…",
   "featured_image": "/static/images/internal-platforms-the-size-gap-you-missed.jpg",
   "created_at": "2026-06-13T01:58:19.278067",
   "updated_at": "2026-06-13T01:58:19.278074",

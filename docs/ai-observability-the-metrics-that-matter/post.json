@@ -11,7 +11,7 @@
     "Ai",
     "Llm"
   ],
-  "meta_description": "AI observability cuts false alerts 8× by tracking drift vectors and confidence histograms instead of just latency and errors. Learn the metrics that actually matter and how to instrument them in 2026.",
+  "meta_description": "AI observability cuts false alerts 8× by tracking drift vectors and confidence histograms instead of just latency and errors.",
   "featured_image": "/static/images/ai-observability-the-metrics-that-matter.jpg",
   "created_at": "2026-06-28T19:30:37.295776",
   "updated_at": "2026-06-28T19:30:37.295785",

@@ -12,7 +12,7 @@
     "Postgresql",
     "Redis"
   ],
-  "meta_description": "Cut infra cost 42% by replacing Redis, TimescaleDB, and pg_partman with Postgres 17’s native features in 2026 — benchmarks, p99 traps, and the exact flags to set.",
+  "meta_description": "Cut infra cost 42% by replacing Redis, TimescaleDB, and pg_partman with Postgres 17’s native features in 2026 — benchmarks, p99 traps, and the exact flags to…",
   "featured_image": "/static/images/postgres-killed-three-tools-the-2026-stack-audit.jpg",
   "created_at": "2026-06-11T04:16:52.548604",
   "updated_at": "2026-06-11T04:16:52.548611",

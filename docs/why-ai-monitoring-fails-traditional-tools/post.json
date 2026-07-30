@@ -12,7 +12,7 @@
     "Rag",
     "Vectorsearch"
   ],
-  "meta_description": "Cut AI hallucinations 74% with observability — prompt drift, context changes, and agent decisions you can’t see with traditional logs. 2026 metrics from a live system.",
+  "meta_description": "Cut AI hallucinations 74% with observability — prompt drift, context changes, and agent decisions you can’t see with traditional logs.",
   "featured_image": "/static/images/why-ai-monitoring-fails-traditional-tools.jpg",
   "created_at": "2026-06-14T15:46:48.873898",
   "updated_at": "2026-06-14T15:46:48.873905",

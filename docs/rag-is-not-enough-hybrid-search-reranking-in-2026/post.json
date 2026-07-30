@@ -11,7 +11,7 @@
     "Vectorsearch",
     "Elasticsearch812bm25"
   ],
-  "meta_description": "Cut RAG hallucinations 40% with hybrid search + reranking in 2026 — BM25 first, CrossEncoder second, Mistral last — latency under 100 ms, cost under $0.004/query.",
+  "meta_description": "Cut RAG hallucinations 40% with hybrid search + reranking in 2026 — BM25 first, CrossEncoder second, Mistral last — latency under 100 ms, cost under…",
   "featured_image": "/static/images/rag-is-not-enough-hybrid-search-reranking-in-2026.jpg",
   "created_at": "2026-06-27T09:26:41.755095",
   "updated_at": "2026-06-27T09:26:41.755103",

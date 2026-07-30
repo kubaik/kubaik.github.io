@@ -13,7 +13,7 @@
     "Fastapi0115",
     "Redis72caching"
   ],
-  "meta_description": "Cut 504 errors 68% with FastAPI 0.115 retries and Redis 7.2 caching under 400 ms Starlink latency — connection pool, stampede guard, and cache stampede mistake most teams make.",
+  "meta_description": "Cut 504 errors 68% with FastAPI 0.115 retries and Redis 7.2 caching under 400 ms Starlink latency — connection pool, stampede guard, and cache stampede…",
   "featured_image": "/static/images/handle-starlink-4g-fallbacks-in-fastapi-0115.jpg",
   "created_at": "2026-06-23T19:37:40.026014",
   "updated_at": "2026-06-23T19:37:40.026026",

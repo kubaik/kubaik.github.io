@@ -10,7 +10,7 @@
     "Golang",
     "Debezium2026"
   ],
-  "meta_description": "Cut zero-downtime migration time 80% by draining the write queue first — DMS, Debezium, RabbitMQ metrics, and the 3-question decision matrix used in 2026 production systems.",
+  "meta_description": "Cut zero-downtime migration time 80% by draining the write queue first — DMS, Debezium, RabbitMQ metrics, and the 3-question decision matrix used in 2026…",
   "featured_image": "/static/images/stop-the-writes-zero-downtime-db-migrations.jpg",
   "created_at": "2026-07-02T18:33:14.783703",
   "updated_at": "2026-07-02T18:33:14.783710",

@@ -7,7 +7,7 @@
     "Experimentation",
     "FeatureToggleTools"
   ],
-  "meta_description": "9 flag platforms compared: latency, cost, offline resilience — pick the one that won’t break on 2G. Save $400/month and keep experiments running when the carrier drops packets.",
+  "meta_description": "9 flag platforms compared: latency, cost, offline resilience — pick the one that won’t break on 2G.",
   "featured_image": "/static/images/feature-flags-to-experimentation-9-platforms-compared.jpg",
   "created_at": "2026-06-28T06:59:11.190700",
   "updated_at": "2026-06-28T06:59:11.190711",

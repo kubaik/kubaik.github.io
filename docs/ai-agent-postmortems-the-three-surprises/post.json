@@ -10,7 +10,7 @@
     "Llm",
     "Semanticmatchrate"
   ],
-  "meta_description": "Catch AI agent failures 60 % faster with shadowing vs logging — real QPS, cost, and alert-latency numbers from Brazilian, Colombian, and Mexican production systems in 2026.",
+  "meta_description": "Catch AI agent failures 60 % faster with shadowing vs logging — real QPS, cost, and alert-latency numbers from Brazilian, Colombian, and Mexican production…",
   "featured_image": "/static/images/ai-agent-postmortems-the-three-surprises.jpg",
   "created_at": "2026-06-24T11:53:53.748750",
   "updated_at": "2026-06-24T11:53:53.748759",

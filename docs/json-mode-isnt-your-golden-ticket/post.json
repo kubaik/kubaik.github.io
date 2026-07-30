@@ -11,7 +11,7 @@
     "Dataengineering",
     "Llm"
   ],
-  "meta_description": "Cut LLM validation failures 95% with JSON Schema — why JSON mode alone fails in production workflows and how to fix it with validation, transformation, and fallback logic in 2026.",
+  "meta_description": "Cut LLM validation failures 95% with JSON Schema — why JSON mode alone fails in production workflows and how to fix it with validation, transformation, and…",
   "featured_image": "/static/images/json-mode-isnt-your-golden-ticket.jpg",
   "created_at": "2026-06-26T08:03:09.014756",
   "updated_at": "2026-06-26T08:03:09.014767",

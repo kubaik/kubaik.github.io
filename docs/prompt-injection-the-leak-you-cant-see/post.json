@@ -13,7 +13,7 @@
     "Rag",
     "Vectorsearch"
   ],
-  "meta_description": "Block 1,284 injection attempts in production with 3ms overhead using Guardrails AI 0.2.7 and Pydantic 2.7. Learn the data pipeline risks most teams miss and the exact code to fix them.",
+  "meta_description": "Block 1,284 injection attempts in production with 3ms overhead using Guardrails AI 0.2.7 and Pydantic 2.7.",
   "featured_image": "/static/images/prompt-injection-the-leak-you-cant-see.jpg",
   "created_at": "2026-06-13T04:06:16.251307",
   "updated_at": "2026-06-13T04:06:16.251313",

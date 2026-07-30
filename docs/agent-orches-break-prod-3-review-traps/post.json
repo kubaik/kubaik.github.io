@@ -11,7 +11,7 @@
     "Serverless",
     "Asyncagentdebugging"
   ],
-  "meta_description": "Cut agent timeout errors 98% with 3 fixes — timeout alignment, context propagation, and pool sizing. LangChain 0.1.12, Python 3.11, Node 20 LTS, PgBouncer 1.21 included.",
+  "meta_description": "Cut agent timeout errors 98% with 3 fixes — timeout alignment, context propagation, and pool sizing.",
   "featured_image": "/static/images/agent-orches-break-prod-3-review-traps.jpg",
   "created_at": "2026-07-08T10:09:52.264112",
   "updated_at": "2026-07-08T10:09:52.264123",

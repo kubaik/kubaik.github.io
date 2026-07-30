@@ -9,7 +9,7 @@
     "Cssperformance2026",
     "Tailwindalternatives2026"
   ],
-  "meta_description": "Cut CSS bundle 86% with container queries and @layer — main-thread time fell 67%, merge conflicts dropped 80%. Real numbers from a Vietnamese fintech app handling 2.3 million users.",
+  "meta_description": "Cut CSS bundle 86% with container queries and @layer — main-thread time fell 67%, merge conflicts dropped 80%.",
   "featured_image": "/static/images/css-2026-container-queries-retired-our-utility-class.jpg",
   "created_at": "2026-06-13T22:39:56.076513",
   "updated_at": "2026-06-13T22:39:56.076523",

@@ -11,7 +11,7 @@
     "Rag",
     "Vectorsearch"
   ],
-  "meta_description": "Cut false alerts 68% with a four-layer triage system that labels spikes, drifts, noise, and failures before waking anyone — Prometheus 2.51, TimescaleDB 2.13, and SLO burn-rate math in 2026",
+  "meta_description": "Cut false alerts 68% with a four-layer triage system that labels spikes, drifts, noise, and failures before waking anyone — Prometheus 2.51, TimescaleDB 2.13…",
   "featured_image": "/static/images/kill-noisy-alerts-the-triage-system-that-restored-sleep.jpg",
   "created_at": "2026-07-11T13:28:35.352118",
   "updated_at": "2026-07-11T13:28:35.352128",

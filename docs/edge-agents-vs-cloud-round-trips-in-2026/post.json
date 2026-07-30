@@ -12,7 +12,7 @@
     "Redis",
     "Onnxruntime116"
   ],
-  "meta_description": "Edge agents cut API latency 88% for African users in 2026 — TinyLlama ONNX Runtime 1.16 implementation, Android/iOS deployment guide, and the memory trap most teams miss",
+  "meta_description": "Edge agents cut API latency 88% for African users in 2026 — TinyLlama ONNX Runtime 1.16 implementation, Android/iOS deployment guide, and the memory trap most…",
   "featured_image": "/static/images/edge-agents-vs-cloud-round-trips-in-2026.jpg",
   "created_at": "2026-07-23T14:09:55.983289",
   "updated_at": "2026-07-23T14:09:55.983299",

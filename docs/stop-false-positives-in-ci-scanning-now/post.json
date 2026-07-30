@@ -8,7 +8,7 @@
     "Infosec",
     "Github"
   ],
-  "meta_description": "Cut false positives 97% with one triage pipeline — Snyk CLI 1.1325, Trivy 0.51.5, and Renovate 37.424 used to build a dynamic filtering system that reduced alerts from 127 to 3.2 per PR",
+  "meta_description": "Cut false positives 97% with one triage pipeline — Snyk CLI 1.1325, Trivy 0.51.5, and Renovate 37.424 used to build a dynamic filtering system that reduced…",
   "featured_image": "/static/images/stop-false-positives-in-ci-scanning-now.jpg",
   "created_at": "2026-07-03T01:59:46.096965",
   "updated_at": "2026-07-03T01:59:46.096978",

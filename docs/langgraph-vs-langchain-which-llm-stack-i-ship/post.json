@@ -10,7 +10,7 @@
     "LanggraphPerformance",
     "Generativeai"
   ],
-  "meta_description": "LangGraph vs LangChain in 2026: which evaluation stack survives production traffic, keeps costs under control, and makes on-call sane? Cold-start numbers, memory footprints, and the one mistake that cost me three days.",
+  "meta_description": "LangGraph vs LangChain in 2026: which evaluation stack survives production traffic, keeps costs under control, and makes on-call sane?",
   "featured_image": "/static/images/langgraph-vs-langchain-which-llm-stack-i-ship.jpg",
   "created_at": "2026-07-18T02:45:56.253250",
   "updated_at": "2026-07-18T02:45:56.253258",

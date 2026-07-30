@@ -12,7 +12,7 @@
     "Llm",
     "Vectordb"
   ],
-  "meta_description": "AI observability cuts support tickets 80% by tracking prompt drift, semantic fidelity, and data lineage — not just latency and errors. Learn the 3 missing signals and how to instrument them with concrete code and real production numbers from a 2026 system.",
+  "meta_description": "AI observability cuts support tickets 80% by tracking prompt drift, semantic fidelity, and data lineage — not just latency and errors.",
   "featured_image": "/static/images/ai-observability-the-3-things-logs-miss.jpg",
   "created_at": "2026-06-20T12:18:33.816546",
   "updated_at": "2026-06-20T12:18:33.816555",

@@ -1,0 +1,11 @@
+month,slug,score,word_count,duplication_score,depth_score,meta_score,structure_score,affiliate_density_score,most_similar_slug,max_similarity,created_at
+2026-06,row-level-security-for-saas-in-2026-the-surprise-cost,58.5,2464,16.0,87.7,40.0,100.0,100.0,schema-per-tenant-cost-us-170-more-than-rls,0.84,2026-06-26T00:03:12.747859
+2026-06,hybrid-search-cuts-rags-irrelevance-5x,60.5,2154,36.8,76.7,40.0,75.0,100.0,rag-needs-reranking-2026s-default-search-stack,0.632,2026-06-15T19:39:38.831442
+2026-06,stripe-lost-my-trust-heres-my-2026-stack,60.5,2495,20.8,88.8,40.0,100.0,100.0,pick-one-stripe-lemon-squeezy-paddle-in-2026,0.792,2026-06-13T22:51:48.275542
+2026-06,freelance-platforms-african-devs-tried-in-2026,61.2,2370,26.0,84.3,40.0,100.0,100.0,african-devs-arc-vs-andela-vs-toptal-in-2026,0.74,2026-06-16T16:05:39.391712
+2026-06,pwas-hit-parity-in-2026,62.0,1995,38.0,71.0,40.0,100.0,100.0,pwas-in-2026-what-browsers-finally-fixed,0.62,2026-06-17T08:30:36.752106
+2026-07,mcp-servers-from-toy-to-backbone,64.5,3209,24.2,100.0,40.0,100.0,100.0,mcp-errors-why-servers-go-quiet-in-2026,0.758,2026-07-28T14:16:02.343286
+2026-07,mcp-killed-the-agent-tool-protocol-mess,67.6,2329,19.7,82.9,100.0,100.0,100.0,mcp-servers-crash-tool-call-timeout-after-5s,0.803,2026-07-22T14:04:38.440705
+2026-07,four-silent-failures-of-tool-calling-agents,68.4,2360,46.8,84.0,40.0,100.0,100.0,agents-cost-more-than-you-think,0.532,2026-07-23T03:00:26.278367
+2026-07,agent-sandboxes-when-safety-overrides-features,68.5,2178,51.8,77.5,40.0,100.0,100.0,debug-ai-agent-failures-differently,0.482,2026-07-11T12:23:24.648879
+2026-07,react-19-server-components-3-days-lost-to-one-flag,68.6,2160,52.6,76.9,40.0,100.0,100.0,bundle-size-70-lighter-with-server-components,0.474,2026-07-25T02:54:25.138742

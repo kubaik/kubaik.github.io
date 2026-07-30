@@ -12,7 +12,7 @@
     "Codeql214",
     "Afl408"
   ],
-  "meta_description": "Cut false positives 60% using AI scanners the right way — combine LLM rules with CodeQL 2.14, AFL++ fuzzing, and runtime monitoring to catch real vulnerabilities instead of noise.",
+  "meta_description": "Cut false positives 60% using AI scanners the right way — combine LLM rules with CodeQL 2.14, AFL++ fuzzing, and runtime monitoring to catch real…",
   "featured_image": "/static/images/ai-scanners-overlook-real-vulns.jpg",
   "created_at": "2026-07-02T20:27:23.423767",
   "updated_at": "2026-07-02T20:27:23.423774",

@@ -9,7 +9,7 @@
     "Redis",
     "Vectordb"
   ],
-  "meta_description": "Fix AI agent memory loss across sessions in 2026 — 60% of teams hit this after moving from demo to prod. Learn where your context really vanishes and how to make it persist reliably.",
+  "meta_description": "Fix AI agent memory loss across sessions in 2026 — 60% of teams hit this after moving from demo to prod.",
   "featured_image": "/static/images/ai-memory-systems-context-that-survives-sessions.jpg",
   "created_at": "2026-07-02T17:15:04.501281",
   "updated_at": "2026-07-02T17:15:04.501293",

@@ -11,7 +11,7 @@
     "Generativeai",
     "Opensource"
   ],
-  "meta_description": "Cut API response cost 63% by measuring only 3 LLM metrics — latency P95, cost per resolved conversation, and trust drift. Real Nairobi fintech numbers, code, and the mistakes that cost money.",
+  "meta_description": "Cut API response cost 63% by measuring only 3 LLM metrics — latency P95, cost per resolved conversation, and trust drift.",
   "featured_image": "/static/images/llm-evals-the-3-metrics-that-pay-off.jpg",
   "created_at": "2026-06-18T16:43:52.543338",
   "updated_at": "2026-06-18T16:43:52.543347",

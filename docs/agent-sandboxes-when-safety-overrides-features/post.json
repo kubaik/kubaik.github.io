@@ -13,7 +13,7 @@
     "Redis",
     "Rlspostgres152"
   ],
-  "meta_description": "Lower agent incidents 63% by instrumenting sandbox escapes and connection pool saturation — not just prompts. Learn the exact cgroup v2, Redis 7.2, and Postgres 15.2 setup teams use to keep non-engineers safe.",
+  "meta_description": "Lower agent incidents 63% by instrumenting sandbox escapes and connection pool saturation — not just prompts.",
   "featured_image": "/static/images/agent-sandboxes-when-safety-overrides-features.jpg",
   "created_at": "2026-07-11T12:23:24.648879",
   "updated_at": "2026-07-11T12:23:24.648893",

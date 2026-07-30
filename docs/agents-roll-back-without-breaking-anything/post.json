@@ -9,7 +9,7 @@
     "DownstreamSystems",
     "CacheStampede"
   ],
-  "meta_description": "Rollbacks break downstream systems when agents leak state into caches, pools, and rate tables. Version everything — headers, queries, pool sizes — and treat rollbacks as blue-green activations, not reverts. Measure downstream metrics after every deploy.",
+  "meta_description": "Rollbacks break downstream systems when agents leak state into caches, pools, and rate tables.",
   "featured_image": "/static/images/agents-roll-back-without-breaking-anything.jpg",
   "created_at": "2026-07-16T14:02:05.942474",
   "updated_at": "2026-07-16T14:02:05.942481",

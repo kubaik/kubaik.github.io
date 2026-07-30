@@ -12,7 +12,7 @@
     "Softwareengineering",
     "Vectordb"
   ],
-  "meta_description": "Cut API latency 60% by running in 50 edge locations — the TTL mistake that wastes 3 days, connection pool sizing at 512 MB, and why Redis 7.2 central cache costs more than edge-native.",
+  "meta_description": "Cut API latency 60% by running in 50 edge locations — the TTL mistake that wastes 3 days, connection pool sizing at 512 MB, and why Redis 7.2 central cache…",
   "featured_image": "/static/images/50-edge-locations-what-breaks-in-your-backend.jpg",
   "created_at": "2026-06-11T14:09:10.477406",
   "updated_at": "2026-06-11T14:09:10.477418",

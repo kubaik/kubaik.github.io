@@ -11,7 +11,7 @@
     "Github",
     "Cicd"
   ],
-  "meta_description": "Cut CI pipeline latency 63% with lightweight AI code testing and rollback in 2026. Learn GitHub Actions, Semgrep, Prometheus, and blue-green deployments that work under $30/month.",
+  "meta_description": "Cut CI pipeline latency 63% with lightweight AI code testing and rollback in 2026.",
   "featured_image": "/static/images/cicd-for-ai-code-test-secure-rollback-fast.jpg",
   "created_at": "2026-06-23T22:57:31.055816",
   "updated_at": "2026-06-23T22:57:31.055828",

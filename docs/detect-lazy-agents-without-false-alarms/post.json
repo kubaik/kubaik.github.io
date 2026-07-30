@@ -10,7 +10,7 @@
     "Ai",
     "Llm"
   ],
-  "meta_description": "Cut false alarms 60% by replacing similarity evaluators with outcome predictors — a 2026 field guide with benchmarks, YAML config, and the exact metric to track first.",
+  "meta_description": "Cut false alarms 60% by replacing similarity evaluators with outcome predictors — a 2026 field guide with benchmarks, YAML config, and the exact metric to…",
   "featured_image": "/static/images/detect-lazy-agents-without-false-alarms.jpg",
   "created_at": "2026-07-04T14:45:28.353414",
   "updated_at": "2026-07-04T14:45:28.353422",

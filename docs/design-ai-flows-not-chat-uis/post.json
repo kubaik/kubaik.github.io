@@ -10,7 +10,7 @@
     "Postgresql",
     "Redis"
   ],
-  "meta_description": "Cut AI app latency 60% with structured state machines instead of chat UIs. Learn the event-driven patterns that work in production today — schemas, validation, and cache strategies most tutorials skip.",
+  "meta_description": "Cut AI app latency 60% with structured state machines instead of chat UIs.",
   "featured_image": "/static/images/design-ai-flows-not-chat-uis.jpg",
   "created_at": "2026-06-25T03:51:52.053448",
   "updated_at": "2026-06-25T03:51:52.053455",

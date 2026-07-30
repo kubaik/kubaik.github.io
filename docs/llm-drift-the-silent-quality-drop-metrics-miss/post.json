@@ -11,7 +11,7 @@
     "Llm",
     "Generativeai"
   ],
-  "meta_description": "Cut silent LLM quality drops 90% with nightly prompt drift detection — embedding similarity, tokenizer hashes, and the 0.08 threshold that caught every regression in 18 months.",
+  "meta_description": "Cut silent LLM quality drops 90% with nightly prompt drift detection — embedding similarity, tokenizer hashes, and the 0.08 threshold that caught every…",
   "featured_image": "/static/images/llm-drift-the-silent-quality-drop-metrics-miss.jpg",
   "created_at": "2026-07-04T20:16:21.808811",
   "updated_at": "2026-07-04T20:16:21.808826",

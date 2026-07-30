@@ -10,7 +10,7 @@
     "Ai",
     "Llm"
   ],
-  "meta_description": "Cut LLM bill 34% with 3 levers most teams ignore: semantic shaping, two-layer caching, and priority queues. Real numbers from a 12K-request/day system on AWS Bedrock and Claude 3.5.",
+  "meta_description": "Cut LLM bill 34% with 3 levers most teams ignore: semantic shaping, two-layer caching, and priority queues.",
   "featured_image": "/static/images/trim-llm-bills-3-finops-moves-that-work.jpg",
   "created_at": "2026-07-12T09:48:02.503208",
   "updated_at": "2026-07-12T09:48:02.503219",

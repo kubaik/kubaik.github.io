@@ -11,7 +11,7 @@
     "Redis",
     "Rag"
   ],
-  "meta_description": "Cut RAG pipeline latency 76% and save $1,380/month — the hidden costs tutorials ignore: connection churn, cache semantics, and prompt overhead. Real numbers from a 2,000 QPS Jakarta startup.",
+  "meta_description": "Cut RAG pipeline latency 76% and save $1,380/month — the hidden costs tutorials ignore: connection churn, cache semantics, and prompt overhead.",
   "featured_image": "/static/images/rag-pipelines-3-untold-prod-traps.jpg",
   "created_at": "2026-06-08T22:22:12.940655",
   "updated_at": "2026-06-08T22:22:12.940662",

@@ -11,7 +11,7 @@
     "Containers",
     "Layercss"
   ],
-  "meta_description": "Cut CSS bundle size 89%, build time 95%, and CloudFront costs 50% with container queries, @layer, and CSS variables — the tools that finally retired utility frameworks in 2026.",
+  "meta_description": "Cut CSS bundle size 89%, build time 95%, and CloudFront costs 50% with container queries, @layer, and CSS variables — the tools that finally retired utility…",
   "featured_image": "/static/images/css-finally-fixed-my-css-problems.jpg",
   "created_at": "2026-06-11T10:11:06.314888",
   "updated_at": "2026-06-11T10:11:06.314898",

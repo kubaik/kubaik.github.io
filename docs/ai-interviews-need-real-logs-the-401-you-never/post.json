@@ -11,7 +11,7 @@
     "Redis",
     "Opentelemetrysdk126"
   ],
-  "meta_description": "Cut interview callbacks 40% by adding OpenTelemetry SDK 1.26 and Redis 7.2 — the logging, tracing, and rate-limiting setup AI screeners now demand before they review your code.",
+  "meta_description": "Cut interview callbacks 40% by adding OpenTelemetry SDK 1.26 and Redis 7.2 — the logging, tracing, and rate-limiting setup AI screeners now demand before they…",
   "featured_image": "/static/images/ai-interviews-need-real-logs-the-401-you-never.jpg",
   "created_at": "2026-06-20T14:28:42.432056",
   "updated_at": "2026-06-20T14:28:42.432064",

@@ -9,7 +9,7 @@
     "Kubernetes",
     "K8s"
   ],
-  "meta_description": "Cut Kubernetes costs 30% by fixing resource limits, admission timeouts, and kubelet timeouts in 2026 — GPU and Wasm workloads need new defaults or your cluster will break",
+  "meta_description": "Cut Kubernetes costs 30% by fixing resource limits, admission timeouts, and kubelet timeouts in 2026 — GPU and Wasm workloads need new defaults or your…",
   "featured_image": "/static/images/kubernetes-in-2026-what-teams-offload.jpg",
   "created_at": "2026-06-13T05:01:40.649143",
   "updated_at": "2026-06-13T05:01:40.649154",

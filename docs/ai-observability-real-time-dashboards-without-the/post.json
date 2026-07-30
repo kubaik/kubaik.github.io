@@ -10,7 +10,7 @@
     "LokiCostReduction",
     "Ai"
   ],
-  "meta_description": "Cut AI observability ingest cost 70% while slashing dashboard latency from 8.2s to 220ms using NATS JetStream, OTel Collector Lua transforms, and Loki boltdb-shipper in 2026.",
+  "meta_description": "Cut AI observability ingest cost 70% while slashing dashboard latency from 8.2s to 220ms using NATS JetStream, OTel Collector Lua transforms, and Loki…",
   "featured_image": "/static/images/ai-observability-real-time-dashboards-without-the.jpg",
   "created_at": "2026-06-28T12:18:09.690589",
   "updated_at": "2026-06-28T12:18:09.690601",

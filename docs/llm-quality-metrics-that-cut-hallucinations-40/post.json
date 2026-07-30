@@ -9,7 +9,7 @@
     "Llm",
     "Generativeai"
   ],
-  "meta_description": "Cut hallucination rate 75% with a rule-based + confidence evaluator — real AWS numbers, Python 3.11, and the prompt-drift mistake that cost us 1.8k bad responses.",
+  "meta_description": "Cut hallucination rate 75% with a rule-based + confidence evaluator — real AWS numbers, Python 3.11, and the prompt-drift mistake that cost us 1.8k bad…",
   "featured_image": "/static/images/llm-quality-metrics-that-cut-hallucinations-40.jpg",
   "created_at": "2026-06-09T21:37:00.941648",
   "updated_at": "2026-06-09T21:37:00.941656",

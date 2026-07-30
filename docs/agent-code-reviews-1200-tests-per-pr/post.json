@@ -10,7 +10,7 @@
     "Github",
     "Checkov32117"
   ],
-  "meta_description": "Cut agent review time from 2h 12m to 1m 52s with automated gates — static analysis, ephemeral tests, and risk-based escalation using checkov 3.2.117, Node 20 LTS, and AWS Lambda.",
+  "meta_description": "Cut agent review time from 2h 12m to 1m 52s with automated gates — static analysis, ephemeral tests, and risk-based escalation using checkov 3.2.117, Node 20…",
   "featured_image": "/static/images/agent-code-reviews-1200-tests-per-pr.jpg",
   "created_at": "2026-07-12T03:19:23.629282",
   "updated_at": "2026-07-12T03:19:23.629294",

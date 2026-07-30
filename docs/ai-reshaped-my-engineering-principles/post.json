@@ -7,7 +7,7 @@
     "Python",
     "Github"
   ],
-  "meta_description": "Cut AI regression rates 90% with 3 constraints — connection pools, timeouts, tests. Real failure cases from Brazil, Colombia, Mexico with Redis 7.2, Python 3.11, Node 20 LTS.",
+  "meta_description": "Cut AI regression rates 90% with 3 constraints — connection pools, timeouts, tests.",
   "featured_image": "/static/images/ai-reshaped-my-engineering-principles.jpg",
   "created_at": "2026-07-03T17:17:29.304889",
   "updated_at": "2026-07-03T17:17:29.304897",

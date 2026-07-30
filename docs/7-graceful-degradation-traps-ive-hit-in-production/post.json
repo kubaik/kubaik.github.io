@@ -7,7 +7,7 @@
     "Python",
     "Python3"
   ],
-  "meta_description": "Ship 150 ms timeouts and hardcoded fallbacks today — measure p99 latency, error rates, and cost with Prometheus 2.47 and Python 3.11 before you pick any other pattern.",
+  "meta_description": "Ship 150 ms timeouts and hardcoded fallbacks today — measure p99 latency, error rates, and cost with Prometheus 2.47 and Python 3.11 before you pick any other…",
   "featured_image": "/static/images/7-graceful-degradation-traps-ive-hit-in-production.jpg",
   "created_at": "2026-07-09T03:37:10.879272",
   "updated_at": "2026-07-09T03:37:10.879280",

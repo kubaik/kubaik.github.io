@@ -13,7 +13,7 @@
     "Vectorsearch",
     "Weaviate124error"
   ],
-  "meta_description": "RAG pipeline failures at 3am: index misconfiguration, vector DB timeouts, and the observability patterns that prevent them — with concrete numbers and fixes for Weaviate 1.24 and FastAPI.",
+  "meta_description": "RAG pipeline failures at 3am: index misconfiguration, vector DB timeouts, and the observability patterns that prevent them — with concrete numbers and fixes…",
   "featured_image": "/static/images/one-misconfigured-vector-db-killed-our-rag-pipeline.jpg",
   "created_at": "2026-07-29T14:18:17.130040",
   "updated_at": "2026-07-29T14:18:17.130049",

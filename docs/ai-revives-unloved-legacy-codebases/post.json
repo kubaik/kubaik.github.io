@@ -10,7 +10,7 @@
     "Llm",
     "Github"
   ],
-  "meta_description": "Cut legacy maintenance time 70% with Psalm, CodeQL, and Ollama — connection pool mistakes, test generation surprises, and the $18/month stack that caught 8 out of 9 incidents before they hit production.",
+  "meta_description": "Cut legacy maintenance time 70% with Psalm, CodeQL, and Ollama — connection pool mistakes, test generation surprises, and the $18/month stack that caught 8…",
   "featured_image": "/static/images/ai-revives-unloved-legacy-codebases.jpg",
   "created_at": "2026-06-29T19:46:50.080007",
   "updated_at": "2026-06-29T19:46:50.080014",

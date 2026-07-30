@@ -6,7 +6,7 @@
     "AwsCostOptimization",
     "Graviton5CostSavings"
   ],
-  "meta_description": "Cut AWS costs 48% with Savings Plans and right-sizing in 2026 — the levers mid-size teams actually need, with benchmarks, Terraform snippets, and the checkpointing mistake most teams still make.",
+  "meta_description": "Cut AWS costs 48% with Savings Plans and right-sizing in 2026 — the levers mid-size teams actually need, with benchmarks, Terraform snippets, and the…",
   "featured_image": "/static/images/trim-18k-aws-bills-2026-levers-mid-size-teams-miss.jpg",
   "created_at": "2026-06-23T06:43:16.124310",
   "updated_at": "2026-06-23T06:43:16.124323",

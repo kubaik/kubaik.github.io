@@ -9,7 +9,7 @@
     "Postgresql",
     "Saas"
   ],
-  "meta_description": "Cut database costs 60% by swapping schema-per-tenant for row-level security — benchmark data, RLS policies, and the one mistake that cost us 170% more than RLS in 2026",
+  "meta_description": "Cut database costs 60% by swapping schema-per-tenant for row-level security — benchmark data, RLS policies, and the one mistake that cost us 170% more than…",
   "featured_image": "/static/images/schema-per-tenant-cost-us-170-more-than-rls.jpg",
   "created_at": "2026-06-20T11:11:41.536860",
   "updated_at": "2026-06-20T11:11:41.536874",

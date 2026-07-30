@@ -10,7 +10,7 @@
     "Cybersecurity",
     "Aisecurity"
   ],
-  "meta_description": "Cut prompt injection 94% with a 3-layer firewall — token sanitizer, context filter, and model guardrail. Latency +25%, cost +17%, real production data from 50k daily prompts in 2026.",
+  "meta_description": "Cut prompt injection 94% with a 3-layer firewall — token sanitizer, context filter, and model guardrail.",
   "featured_image": "/static/images/ai-agents-break-when-users-cheat.jpg",
   "created_at": "2026-06-19T19:08:32.796698",
   "updated_at": "2026-06-19T19:08:32.796706",

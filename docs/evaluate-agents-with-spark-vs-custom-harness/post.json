@@ -9,7 +9,7 @@
     "Pytestagentharness",
     "Sparkudfagent"
   ],
-  "meta_description": "Cut agent harness debug time 70% with this choice—custom Python harness vs Spark 3.5 tested on 50k conversations with concrete latency, cost, and maintenance numbers.",
+  "meta_description": "Cut agent harness debug time 70% with this choice—custom Python harness vs Spark 3.5 tested on 50k conversations with concrete latency, cost, and maintenance…",
   "featured_image": "/static/images/evaluate-agents-with-spark-vs-custom-harness.jpg",
   "created_at": "2026-07-03T21:12:00.143657",
   "updated_at": "2026-07-03T21:12:00.143668",

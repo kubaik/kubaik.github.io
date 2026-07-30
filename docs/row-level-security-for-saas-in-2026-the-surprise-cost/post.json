@@ -10,7 +10,7 @@
     "Postgresql",
     "Saas"
   ],
-  "meta_description": "Cut SaaS infra cost 75% by tiering tenants: RLS for small, schema-per-tenant for medium, dedicated DB for large. PostgreSQL 16.2, PgBouncer 1.21, Redis 7.2 benchmarks included.",
+  "meta_description": "Cut SaaS infra cost 75% by tiering tenants: RLS for small, schema-per-tenant for medium, dedicated DB for large.",
   "featured_image": "/static/images/row-level-security-for-saas-in-2026-the-surprise-cost.jpg",
   "created_at": "2026-06-26T00:03:12.747859",
   "updated_at": "2026-06-26T00:03:12.747871",
