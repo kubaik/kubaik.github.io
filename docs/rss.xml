@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Jul 2026 08:41:54 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Jul 2026 14:11:45 +0000</lastBuildDate>
+    <item>
+      <title>Agent permissions: the mistake that breaks production</title>
+      <link>https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/</link>
+      <description>Agent permissions: the mistake that breaks production — how we built a desktop agent without admin rights on Windows 7, using COM automation and per-user installers</description>
+      <pubDate>Thu, 30 Jul 2026 14:11:31 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/</guid>
+    </item>
     <item>
       <title>Agent auth: the silent deployment killer</title>
       <link>https://kubaik.github.io/agent-auth-the-silent-deployment-killer/</link>
@@ -138,13 +145,6 @@
       <description>AI code in prod is a dependency that changes under you — capture its prompt, snapshot, and runtime assumptions to cut incident time 78% and false positives 83%.</description>
       <pubDate>Tue, 21 Jul 2026 14:01:05 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-code-in-prod-postmortems-still-work/</guid>
-    </item>
-    <item>
-      <title>Internal platform adoption: one metric kills velocity</title>
-      <link>https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/</link>
-      <description>Internal platform adoption fails when feedback latency exceeds 10 seconds — measure rollout time in Backstage with Redis 7.2 and cut developer time 47%</description>
-      <pubDate>Tue, 21 Jul 2026 07:54:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity/</guid>
     </item>
   </channel>
 </rss>

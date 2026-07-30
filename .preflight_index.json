@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-30T08:41:45.971545",
+  "built_at": "2026-07-30T14:11:35.066006",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4510,6 +4510,11 @@
       "slug": "agent-auth-the-silent-deployment-killer",
       "title": "Agent auth: the silent deployment killer",
       "summary": "agent identity looks simple until it has to survive real traffic. The default configuration is fine right up until it isn't. This post covers what comes after the happy path. A year ago we thought agent identity was solved. It wasn’t. Last March we pushed a multi-agent system to production in Nigeri"
+    },
+    {
+      "slug": "agent-permissions-the-mistake-that-breaks-production",
+      "title": "Agent permissions: the mistake that breaks production",
+      "summary": "After reviewing enough code that touches productionizing computer, the same failure pattern keeps showing up. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the root cause, not just the symptom. The situation (what we were trying to solve) We needed to productio"
     }
   ]
 }

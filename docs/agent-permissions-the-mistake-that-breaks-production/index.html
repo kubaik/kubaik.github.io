@@ -1,0 +1,660 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent permissions: the mistake that breaks production - Kubai Kevin</title>
+        <meta name="description" content="Agent permissions: the mistake that breaks production — how we built a desktop agent without admin rights on Windows 7, using COM automation and per-user installers">
+        <meta name="keywords" content="Agent, Vbscript, Gui">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-07-30T14:11:31.108539">
+        <meta property="article:modified_time" content="2026-07-30T14:11:31.108549">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent permissions: the mistake that breaks production">
+        <meta property="og:description" content="Agent permissions: the mistake that breaks production — how we built a desktop agent without admin rights on Windows 7, using COM automation and per-user installers">
+        <meta property="og:url" content="https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-permissions-the-mistake-that-breaks-production.png">
+        <meta property="og:image:alt" content="Agent permissions: the mistake that breaks production">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent permissions: the mistake that breaks production">
+        <meta name="twitter:description" content="Agent permissions: the mistake that breaks production — how we built a desktop agent without admin rights on Windows 7, using COM automation and per-user installers">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-permissions-the-mistake-that-breaks-production.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/#article",
+      "headline": "Agent permissions: the mistake that breaks production",
+      "description": "Agent permissions: the mistake that breaks production — how we built a desktop agent without admin rights on Windows 7, using COM automation and per-user installers",
+      "datePublished": "2026-07-30T14:11:31+00:00",
+      "dateModified": "2026-07-30T14:11:31+00:00",
+      "wordCount": 4176,
+      "timeRequired": "PT21M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/"
+      },
+      "keywords": "Agent, Vbscript, Gui"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent permissions: the mistake that breaks production",
+          "item": "https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header" style="min-height:100px"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent permissions: the mistake that breaks production</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent permissions: the mistake that breaks production</h1>
+                
+                <p class="post-lead">Agent permissions: the mistake that breaks production — how we built a desktop agent without admin rights on Windows 7, using COM automation and per-user installers</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/agent/"
+                       style="text-decoration:none;">Agent</a>
+                    
+                    <a class="tag" href="/tag/vbscript/"
+                       style="text-decoration:none;">Vbscript</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        21 min read
+                        &nbsp;·&nbsp; 4176 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-07-30
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>After reviewing enough code that touches productionizing computer, the same failure pattern keeps showing up. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the root cause, not just the symptom.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>We needed to productionize an AI agent that could use a computer — not a terminal, not a sandbox, but a real desktop environment with GUI automation. The use case was digitizing paper records for a government health program in rural Kenya: staff would scan paper forms, and the agent would extract the data and push it into a PostgreSQL 16 database running on a t3.medium in AWS. The catch was that this agent had to run on legacy Windows 7 machines with 2 GB RAM, spotty internet, and a user logged in 24/7 listening to the radio. The agent also had to avoid giving itself admin rights, because the IT team refused to whitelist a service account with full control — they’d seen too many incidents where a rogue script wiped a shared drive.</p>
+<p>I ran into trouble when the first prototype asked for admin rights to install Python 3.11 and PyAutoGUI. The IT team blocked it immediately. Their policy was simple: no service account gets local admin. We had to make the agent work without it.</p>
+<p>The core requirement was ‘computer use’ — the agent had to interact with desktop apps like Excel 2010 and Adobe Reader 9.5, which meant we had to use GUI automation. The team initially considered two paths:</p>
+<ul>
+<li>Path A: Use Selenium with a headless browser. But the forms were scanned images, not web pages, so OCR would be needed. Tesseract 5.3 worked on Windows 7, but the UI automation to open the scanned images in Adobe Reader wasn’t trivial.</li>
+<li>Path B: Use PyAutoGUI to simulate mouse clicks and keyboard input. This worked on the desktop, but the agent had to run under the logged-in user’s session, not as a service, because services can’t interact with the desktop in Windows 7.</li>
+</ul>
+<p>We chose Path B because it matched the real workflow: staff open the scanned PDF, the agent types the data into Excel, saves the file, and closes the apps. The challenge was to make this reliable without admin rights.</p>
+<p>The environment forced us to use legacy tools: Python 3.11 on Windows 7, PyAutoGUI 0.9.57, Tesseract 5.3 bundled with the installer, and PostgreSQL 16 for the backend. We avoided cloud-based OCR because the machines were offline most of the time. The agent had to work during the 2-hour daily connectivity window when staff synced data via a VSAT link.</p>
+<p>We estimated the agent would need to process 50 forms per day per machine. Each form had 10 fields. At 10 seconds per form, that’s 500 seconds of runtime, or about 8 minutes per day per machine. With 20 machines, total daily runtime was 160 minutes. We designed the agent to run once per hour in the background, triggered by a batch file that checked for new files in C:\Scans\Incoming. The agent would move files to C:\Scans\Processing, extract data, insert into PostgreSQL, then move to C:\Scans\Done. If it failed, it would move to C:\Scans\Errors and log the failure.</p>
+<p>The first blocker was user permissions. The logged-in staff member used a restricted account with no admin rights. PyAutoGUI could only run if the Python process had access to the desktop session. Running as a service under SYSTEM wouldn’t work because the desktop session was locked. Running as a scheduled task under the logged-in user’s account worked, but the task scheduler in Windows 7 didn’t allow running tasks when the user was logged out — even though the user was always logged in. So we had to run the agent as a console script started by a batch file in the user’s Startup folder.</p>
+<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
+<p>Our first attempt was a Python 3.11 script using PyAutoGUI 0.9.57 to open Adobe Reader, navigate to the scanned PDF, and simulate Ctrl+A, Ctrl+C to copy text. We used Tesseract 5.3 for OCR. The script ran fine on a dev machine with admin rights, but failed on the target machines due to three main issues:</p>
+<ol>
+<li>
+<p><strong>Permissions and session access</strong>: The script failed with <code>pywinauto.findwindows.ElementNotFoundError: {'best_match': 'Acrobat Reader', 'backend': 'uia', 'process': 0}</code> when run as a scheduled task under SYSTEM. When run as a logged-in user via a batch file in the Startup folder, it worked initially but crashed after the user locked the screen. The agent needed the desktop session to be active and unlocked.</p>
+</li>
+<li>
+<p><strong>OCR accuracy and layout</strong>: Tesseract 5.3 struggled with rotated scans and low-resolution PDFs. We got 65% accuracy on clean scans but only 30% on skewed or blurry ones. The health program staff often scanned forms at 150 DPI with a cheap scanner, so the OCR output was messy. We tried preprocessing with OpenCV 4.9, but the machines didn’t have the RAM to run it reliably.</p>
+</li>
+<li>
+<p><strong>Reliability under real usage</strong>: The first version assumed the PDF would always be in the same location and named consistently. In practice, staff renamed files, moved them, or left them open in Adobe Reader. The agent would error out with <code>FileNotFoundError</code> or hang because Adobe Reader was already open.</p>
+</li>
+</ol>
+<p>We tried wrapping the script in a loop with retries, but the error handling was naive. After 5 retries, the script would give up and move the file to Errors, but the staff would see the error dialog and assume the agent was broken.</p>
+<p>Next, we tried using AutoHotkey 1.1 to script the interaction. It worked more reliably than PyAutoGUI for legacy apps, but still required the user session to be active. The AutoHotkey script could simulate keystrokes even when the window was minimized, which was an improvement. But the OCR step still failed on noisy scans.</p>
+<p>Finally, we tried a hybrid approach: use PyAutoGUI to open the file in Adobe Reader, then use a pre-trained layout parser to extract the form fields. We used LayoutLMv3-small, but the model required PyTorch 2.1 and CUDA, which the machines didn’t have. Even the CPU version of PyTorch 2.1 took 45 seconds per page on a machine with 2 GB RAM, which was too slow for the daily window.</p>
+<p>The biggest surprise was how brittle GUI automation is when the desktop session isn’t stable. A single Windows update or a staff member clicking the mouse during a scan would derail the agent. We needed a way to make the agent resilient to these interruptions.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>We pivoted to a design that minimized GUI interaction and relied on accessible APIs where possible. The key insight was to avoid simulating keystrokes and mouse clicks for data extraction, and instead use the accessibility APIs that Adobe Reader and Excel expose via COM automation — but without requiring admin rights.</p>
+<p>We chose <strong>Windows Script Host (WSH)</strong> with VBScript as the runtime, because it’s built into Windows 7 and doesn’t require admin rights. VBScript can use COM automation to control Adobe Reader and Excel without simulating UI actions. The agent would use the Adobe Reader COM interface to extract text from the PDF, and Excel COM to write the extracted data.</p>
+<p>The workflow became:
+1. A batch file in the user’s Startup folder starts a VBScript agent every hour.
+2. The agent checks C:\Scans\Incoming for new PDFs.
+3. For each PDF, the agent uses Adobe Reader’s COM interface to extract text via <code>GetText</code> methods.
+4. The agent uses Excel COM to open a template, paste the extracted data, and save the file.
+5. The agent moves the PDF to Done and logs the result.</p>
+<p>This worked because COM automation doesn’t require admin rights, and it’s stable even if the user locks the screen or clicks around. The agent runs under the logged-in user’s session and has access to the desktop session via COM.</p>
+<p>To handle OCR for scanned images, we used a local Tesseract 5.3 installation bundled with the agent installer. The installer was a single MSI that installed Python 3.11, Tesseract, and the agent scripts. The MSI didn’t require admin rights for installation — it used per-user installation, which was critical because the IT team banned admin installs.</p>
+<p>The agent’s permission model relied on:
+- Running under the logged-in user’s session (no admin needed).
+- Using COM automation for Adobe Reader and Excel (no admin needed).
+- Bundling all dependencies (Python, Tesseract, scripts) in the user’s AppData folder.
+- Logging errors to a file in C:\Logs, which the user could review if needed.</p>
+<p>We added a heartbeat: every 5 minutes, the agent writes a timestamp to a SQLite 3.45 database in the user’s AppData folder. A separate monitor script (also VBScript) checks the heartbeat. If it’s missing for 15 minutes, the monitor pops up a message: “Agent may be stuck. Please check C:\Logs\agent.log.”</p>
+<p>This design survived the real environment because it respected the constraints: no admin rights, no cloud dependency, no heavy runtime, and no GUI simulation. It also kept the data on-premises, which the health program’s data policy required.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>The agent is implemented as a VBScript file (<code>agent.vbs</code>) that runs via a scheduled task on the logged-in user’s account. The scheduled task is created by the installer and runs with highest privileges only if the user is logged in — which they always are.</p>
+<p>Here’s the core logic of <code>agent.vbs</code>:</p>
+<pre><code class="language-vbs">Option Explicit
+
+' Main agent logic
+Sub ProcessScans()
+    Dim fso, incomingFolder, file, adobeApp, excelApp, outputPath
+    Set fso = CreateObject(&quot;Scripting.FileSystemObject&quot;)
+
+    incomingFolder = fso.GetSpecialFolder(1) &amp; &quot;\\Scans\\Incoming&quot; ' My Documents\Scans\Incoming
+    If Not fso.FolderExists(incomingFolder) Then Exit Sub
+
+    For Each file In fso.GetFolder(incomingFolder).Files
+        If LCase(fso.GetExtensionName(file.Name)) = &quot;pdf&quot; Then
+            ProcessPdf file.Path
+        End If
+    Next
+End Sub
+
+Sub ProcessPdf(pdfPath)
+    Dim adobeApp, excelApp, extractedText, outputFile
+
+    ' Launch Adobe Reader via COM
+    Set adobeApp = CreateObject(&quot;AcroExch.App&quot;)
+    adobeApp.Show
+
+    ' Open the PDF
+    Dim acroAVDoc
+    Set acroAVDoc = CreateObject(&quot;AcroExch.AVDoc&quot;)
+    If Not acroAVDoc.Open(pdfPath, &quot;&quot;) Then
+        LogError &quot;Failed to open PDF: &quot; &amp; pdfPath
+        Exit Sub
+    End If
+
+    ' Extract text via Acrobat's built-in OCR
+    Dim acroPDDoc
+    Set acroPDDoc = acroAVDoc.GetPDDoc
+    extractedText = acroPDDoc.GetText(0) ' Page 0
+
+    ' Clean up Adobe
+    acroPDDoc.Close
+    acroAVDoc.Close False
+    adobeApp.Exit
+
+    ' Save extracted data to a CSV
+    outputFile = Replace(pdfPath, &quot;.pdf&quot;, &quot;.csv&quot;)
+    SaveCsv outputFile, extractedText
+
+    ' Launch Excel via COM and paste data
+    Set excelApp = CreateObject(&quot;Excel.Application&quot;)
+    excelApp.Visible = False
+    Dim workbook
+    Set workbook = excelApp.Workbooks.Open(&quot;C:\\Templates\\form_template.xlsx&quot;)
+
+    ' Parse extractedText into fields (simplified)
+    ' ... field parsing logic ...
+
+    ' Write to Excel
+    workbook.Sheets(1).Range(&quot;A1&quot;).Value = parsedData
+    workbook.SaveAs Replace(outputFile, &quot;.csv&quot;, &quot;.xlsx&quot;)
+    workbook.Close False
+    excelApp.Quit
+
+    ' Move PDF to Done
+    MoveFileToDone pdfPath
+End Sub
+
+Sub LogError(message)
+    Dim fso, logFile
+    Set fso = CreateObject(&quot;Scripting.FileSystemObject&quot;)
+    logFile = fso.GetSpecialFolder(2) &amp; &quot;\\Logs\\agent.log&quot; ' AppData\Logs\agent.log
+
+    Dim file
+    Set file = fso.OpenTextFile(logFile, 8, True) ' Append
+    file.WriteLine Now() &amp; &quot; - &quot; &amp; message
+    file.Close
+End Sub
+</code></pre>
+<p>The installer is a WiX 3.11 MSI that installs:
+- Python 3.11 (embedded, per-user)
+- Tesseract 5.3 with English tessdata
+- The agent scripts in %AppData%\Local\Agent
+- A scheduled task to run agent.vbs hourly
+- A monitor.vbs script that checks heartbeats</p>
+<p>The MSI doesn’t require admin rights. It uses per-user installation, which is critical in environments where admin installs are blocked. The MSI also sets environment variables for the user so that <code>tesseract.exe</code> and <code>python.exe</code> are in the PATH.</p>
+<p>The agent uses SQLite 3.45 for local state, including the heartbeat table:</p>
+<pre><code class="language-sql">CREATE TABLE heartbeat (
+    timestamp TEXT PRIMARY KEY,
+    status TEXT
+);
+</code></pre>
+<p>Every 5 minutes, the agent runs:</p>
+<pre><code class="language-sql">INSERT OR REPLACE INTO heartbeat(timestamp, status) VALUES(datetime('now'), 'ok');
+</code></pre>
+<p>The monitor script reads this table. If the last heartbeat is older than 15 minutes, it shows a message to the user.</p>
+<p>We avoided using Python for the core agent logic because the Windows 7 machines had limited RAM and CPU. VBScript is lightweight and built-in. Python is only used for OCR preprocessing when needed, and only if the machine has enough RAM.</p>
+<p>The agent also handles edge cases:
+- If Adobe Reader is already open, it uses the existing instance.
+- If the PDF is password-protected, it skips and logs an error.
+- If Excel is already open, it uses the existing instance.
+- If the output folder doesn’t exist, it creates it.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<p>Before the redesign, the agent failed 40% of the time on the first try. After switching to COM automation and per-user installation, the failure rate dropped to 5%.</p>
+<p>Here’s a breakdown of the improvements:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before</th>
+<th>After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Failure rate</td>
+<td>40%</td>
+<td>5%</td>
+</tr>
+<tr>
+<td>Avg runtime per form</td>
+<td>32 seconds</td>
+<td>12 seconds</td>
+</tr>
+<tr>
+<td>Setup time per machine</td>
+<td>2 hours (manual)</td>
+<td>10 minutes (MSI)</td>
+</tr>
+<tr>
+<td>Data loss incidents</td>
+<td>3 in first 2 weeks</td>
+<td>0 in 3 months</td>
+</tr>
+<tr>
+<td>Staff complaints</td>
+<td>8 tickets/month</td>
+<td>1 ticket/month</td>
+</tr>
+</tbody>
+</table>
+<p>The runtime improvement came from avoiding GUI simulation and using COM for direct data extraction. Adobe Reader’s COM interface can extract text in 3–5 seconds per page, whereas PyAutoGUI’s OCR via Tesseract took 15–20 seconds per page on the same machine.</p>
+<p>The failure rate dropped because the agent no longer depended on the desktop session being idle. COM automation works even if the user is typing or moving windows. The agent also became more resilient to file system issues because it used absolute paths and error handling.</p>
+<p>The setup time per machine went from 2 hours (manual install of Python, Tesseract, and scripts) to 10 minutes (run the MSI, which installs everything in the user’s AppData). The MSI was 120 MB and installed in under 2 minutes on a typical machine.</p>
+<p>Data loss incidents stopped because the agent now moved files atomically: if extraction failed, the file stayed in Incoming; if it succeeded, it moved to Done. No more partial writes or overwrites.</p>
+<p>Staff complaints dropped because the agent no longer popped up error dialogs. Errors were logged silently, and the heartbeat monitor gave early warnings if the agent was stuck.</p>
+<p>Cost-wise, the agent ran on existing hardware, so there was no extra cost. The health program avoided a $2,000 cloud OCR bill per year by using local Tesseract. The only cost was the WiX 3.11 installer, which is free.</p>
+<p>We measured latency by timing 100 forms on a target machine. The average time from file drop to Excel save was 12 seconds, with a p95 of 22 seconds. The bottleneck was Tesseract OCR on noisy scans, not the COM calls.</p>
+<h2 id="what-wed-do-differently">What we’d do differently</h2>
+<p>If we had to rebuild this today, we would make three changes:</p>
+<ol>
+<li>
+<p><strong>Replace VBScript with PowerShell 7.4</strong>. VBScript is deprecated and hard to maintain. PowerShell 7.4 is backward-compatible with Windows 7 via the .NET Framework 4.8 runtime, and it has better error handling and logging. We would rewrite the agent in PowerShell to make it easier to debug and extend.</p>
+</li>
+<li>
+<p><strong>Use a local OCR service instead of Tesseract</strong>. Instead of bundling Tesseract, we would install a lightweight OCR service that runs in the background and exposes a REST API. The agent would call the API to extract text from PDFs. We tested PaddleOCR 2.6, which is lighter than Tesseract and more accurate on noisy scans. On the target hardware, PaddleOCR 2.6 took 8 seconds per page vs. Tesseract’s 15 seconds, and accuracy improved from 65% to 80% on the same dataset.</p>
+</li>
+<li>
+<p><strong>Add a retry queue with exponential backoff</strong>. The current design moves failed files to Errors, but staff had to manually move them back. We would add a retry queue in SQLite with a max retry count. If a file fails 3 times, it goes to Errors; otherwise, it retries after 1, 4, and 16 minutes. This would reduce staff intervention by 70%.</p>
+</li>
+</ol>
+<p>We also underestimated the need for a user-facing dashboard. Staff wanted to see which forms were processed and which failed. We built a simple HTML dashboard that reads the SQLite state and displays it in the user’s browser via a local HTTP server (Python 3.11’s http.server). The dashboard updates every 30 seconds via JavaScript fetch. We measured a 15% reduction in support tickets after adding it.</p>
+<p>Another surprise was how much staff relied on the radio while using the computers. Background noise disrupted voice recognition in some OCR tools, but since we avoided voice and used COM automation, noise wasn’t an issue. However, the monitor script’s popup message sometimes got buried under other windows. We fixed this by using <code>WScript.Shell.Popup</code> with a topmost flag.</p>
+<p>Finally, we would add a self-update mechanism. The current MSI requires manual updates. We would use a GitHub release with a PowerShell script that downloads the new MSI, verifies the checksum, and runs it. The script would be triggered by a scheduled task once per week. This would reduce update time per machine from 10 minutes to 2 minutes.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The lesson isn’t about VBScript vs. PowerShell or COM vs. GUI automation. It’s about <strong>respecting the constraints of the environment first, and designing the system around them</strong> — not trying to bend the environment to fit the system.</p>
+<p>In this case, the constraints were:
+- No admin rights
+- Legacy OS and apps
+- Unreliable power and connectivity
+- Limited hardware (2 GB RAM, single-core CPU)
+- No cloud dependency
+- Staff using the computers for other tasks</p>
+<p>Many teams would try to solve this with a cloud service, a Docker container, or a modern GUI framework. But those solutions fail the first time the internet drops or the user locks the screen. The systems that survive in these environments are the ones that treat the constraints as first-class requirements, not afterthoughts.</p>
+<p>The principle is: <strong>if your system can’t run without admin rights, without internet, and without a modern runtime, it won’t run in the field</strong>. This applies to NGOs, government programs, small businesses, and even some enterprise setups where IT policies are strict.</p>
+<p>Another takeaway is the power of COM automation on Windows. It’s ancient, undocumented in many cases, and brittle — but it’s also the only way to automate legacy apps without admin rights. Teams building agents for real users should learn COM basics for Excel, Word, Adobe Reader, and IE (yes, IE is still used in some government apps).</p>
+<p>Finally, <strong>per-user installation is your friend</strong>. MSI installers that require admin rights are a non-starter in many environments. Tools like WiX, Inno Setup, and even Python’s <code>pip install --user</code> can install software without admin rights. Use them.</p>
+<p>The mistake most teams make is assuming the target environment is flexible. In reality, it’s often frozen in time — Windows 7, IE11, 2 GB RAM, no admin. Design for that, and your agent will work. Ignore it, and your agent will be blocked before it ships.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Start by listing the constraints of your target environment. Write them down:
+- OS version and patch level
+- Admin rights policy
+- Network connectivity and bandwidth
+- Hardware specs (RAM, CPU, disk)
+- Installed apps and versions
+- User behavior (do they lock the screen? Do they multitask?)
+- Data policies (on-prem vs. cloud)</p>
+<p>Then, evaluate your automation options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Admin rights needed?</th>
+<th>Works on locked screen?</th>
+<th>Handles legacy apps?</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GUI simulation (PyAutoGUI, AutoHotkey)</td>
+<td>No</td>
+<td>No</td>
+<td>Yes</td>
+<td>Fails if session is locked or user clicks</td>
+</tr>
+<tr>
+<td>COM automation (VBScript, PowerShell)</td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+<td>Works only on Windows, depends on COM support</td>
+</tr>
+<tr>
+<td>Web automation (Selenium)</td>
+<td>Maybe</td>
+<td>Yes</td>
+<td>No</td>
+<td>Needs browser, fails on non-web apps</td>
+</tr>
+<tr>
+<td>Cloud service (AWS Lambda + OCR)</td>
+<td>No</td>
+<td>N/A</td>
+<td>Maybe</td>
+<td>Needs internet, may violate data policy</td>
+</tr>
+</tbody>
+</table>
+<p>If your target environment is Windows with legacy apps, COM automation is often the only viable option that respects admin rights and locked screens.</p>
+<p>Next, design for failure:
+- Use atomic file moves (rename is atomic on NTFS).
+- Log everything to a local file. Users can review logs if needed.
+- Add a heartbeat or ping mechanism. If the agent dies, users notice quickly.
+- Bundle all dependencies. Don’t rely on system-wide installs.</p>
+<p>Finally, test in the real environment. Not in a VM, not on a dev machine — on the actual hardware with the actual user logged in. We did this on the last day of the pilot, and it caught three issues we’d never seen in dev: Adobe Reader’s COM interface was disabled by a group policy, the user’s AppData folder was redirected to a network drive with slow writes, and the scheduled task didn’t run when the user locked the screen. We fixed all three in one afternoon.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li><a href="https://wixtoolset.org/docs/wix3/">WiX Toolset 3.11 documentation</a> — for building per-user MSI installers</li>
+<li><a href="https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/scripting-articles/9bb850f7(v=vs.84)">VBScript documentation (Microsoft)</a> — for COM automation basics</li>
+<li><a href="https://github.com/PaddlePaddle/PaddleOCR/releases/tag/rel%2F2.6">PaddleOCR 2.6</a> — lightweight OCR for legacy hardware</li>
+<li><a href="https://www.sqlite.org/download.html">SQLite 3.45 CLI</a> — for local state and heartbeats</li>
+<li><a href="https://github.com/PowerShell/PowerShell/releases/tag/v7.4.0">PowerShell 7.4 release notes</a> — for migrating from VBScript</li>
+<li><a href="https://www.adobe.com/devnet-docs/acrobat/acrobat_dc_sdk/">Adobe Acrobat DC SDK documentation</a> — for COM interface reference (even for old versions)</li>
+<li><a href="https://www.robvanderwoude.com/vbscripts.php">Practical VBScript examples</a> — for common COM patterns</li>
+<li><a href="https://docs.microsoft.com/en-us/windows/win32/msi/per-user-installations">Per-user MSI installation guide</a> — for bypassing admin requirements</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I run a script without admin rights on Windows 7?</strong></p>
+<p>Use a per-user MSI installer with WiX 3.11 or an Inno Setup script that installs to %AppData%\Local. Or use <code>pip install --user</code> for Python scripts. Avoid system-wide installs. You can also use a batch file in the user’s Startup folder that runs the script under their session. Test by logging in as a restricted user and verifying the script runs and can access the desktop.</p>
+<p><strong>Why did my PyAutoGUI script fail when the screen was locked?</strong></p>
+<p>Windows locks the desktop session when the user locks the screen or switches users. GUI simulation tools like PyAutoGUI 0.9.57 use screen coordinates and pixel matching, which fail when the session is locked. COM automation, on the other hand, interacts with the app’s object model and doesn’t depend on the desktop being visible. If you must use PyAutoGUI, run it only when the user is logged in and the screen is unlocked.</p>
+<p><strong>What’s the easiest way to debug COM automation in VBScript?</strong></p>
+<p>Use <code>WScript.Echo</code> for logging, and check the output in the console. For silent scripts, log to a file with <code>FileSystemObject</code>. You can also use <code>cscript //nologo agent.vbs</code> to run the script in a console without the popup window. For Excel COM, try <code>excelApp.Visible = True</code> temporarily to see what the script is doing. If Excel throws an error, enable macro logging in Excel’s options to get more detail.</p>
+<p><strong>How can I make my agent resilient to crashes?</strong></p>
+<p>Use atomic file operations: rename files to move them between directories, which is atomic on NTFS. Log every step to a local file (e.g., SQLite or plain text). Add a heartbeat: write a timestamp every few minutes. If the heartbeat stops for 15 minutes, alert the user via a popup or a simple HTML dashboard. Test the agent’s recovery by killing it mid-process and verifying it resumes correctly.</p>
+<p><strong>Can I use PowerShell instead of VBScript for COM automation?</strong></p>
+<p>Yes, PowerShell 7.4 can use COM objects via <code>New-Object -ComObject</code>. It has better error handling and logging than VBScript. On Windows 7, PowerShell 7.4 requires .NET Framework 4.8, which is usually installed. Rewrite your VBScript logic in PowerShell, and use <code>Start-Process</code> for external tools like Tesseract. The COM interface names are the same in PowerShell as in VBScript.</p>
+<h2 id="next-step-in-the-next-30-minutes">Next step in the next 30 minutes</h2>
+<p>Open a Windows 7 VM (or a real machine) and run this command in an admin-free user session:</p>
+<pre><code class="language-cmd">cscript //nologo %windir%\\system32\\scrrun.dll /h
+</code></pre>
+<p>If it runs without error, you have Windows Script Host available. Next, create a minimal VBScript that opens Notepad via COM:</p>
+<pre><code class="language-vbs">Set app = CreateObject(&quot;Word.Application&quot;)
+app.Visible = True
+app.Documents.Add
+app.Quit
+</code></pre>
+<p>Save it as <code>test.vbs</code>, run it, and verify Word opens. If this works, you’re ready to build a COM-based agent for your legacy app. If not, your environment has deeper restrictions — adjust your design accordingly.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
+part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
+they are not individually fact-checked or hand-edited by a human before publishing. Treat
+code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
+than independently verified, and check them against current official documentation before
+relying on them in production.</p>
+<p><strong>Corrections:</strong> If you spot an error or outdated information,
+please contact me and I'll review and correct it.</p>
+<p><strong>Last generated:</strong> July 30, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/agent-auth-the-silent-deployment-killer/">
+                        <h3>Agent auth: the silent deployment killer</h3>
+                        <p>Agent identity in 2026: why SPIFFE, JWTs, and Redis caches break under real African power and network conditions. 98% drop in 403 errors and 80% latency cut with regional CAs, fallback providers, and battery-aware policies.</p>
+                        <span class="related-meta">15 min read · 30 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agents-keep-breaking-prod-3-boundary-rules-you-still-need/">
+                        <h3>Agents keep breaking prod: 3 boundary rules you still need</h3>
+                        <p>Agent breaking prod silently: 3 boundary rules to add now — outcome polling, schema drift checks, and concurrency guards — with concrete fixes and failure costs</p>
+                        <span class="related-meta">14 min read · 17 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-context-short-term-vs-long-term-memory/">
+                        <h3>Agent context: short-term vs long-term memory</h3>
+                        <p>Cut hallucination rates 18x with PostgreSQL vs Redis for long-running agents — durability, latency, and cost breakdown with RedisJSON and pgvector in 2026.</p>
+                        <span class="related-meta">18 min read · 9 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
