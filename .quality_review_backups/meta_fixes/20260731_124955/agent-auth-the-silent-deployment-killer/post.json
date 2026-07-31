@@ -10,7 +10,7 @@
     "EdgeIdentitySystems",
     "Spiffespire2026"
   ],
-  "meta_description": "Agent identity in 2026: why SPIFFE, JWTs, and Redis caches break under real African power and network conditions.",
+  "meta_description": "Agent identity in 2026: why SPIFFE, JWTs, and Redis caches break under real African power and network conditions. 98% drop in 403 errors and 80% latency cut with regional CAs, fallback providers, and battery-aware policies.",
   "featured_image": "/static/images/agent-auth-the-silent-deployment-killer.jpg",
   "created_at": "2026-07-30T08:41:42.797134",
   "updated_at": "2026-07-30T08:41:42.797145",

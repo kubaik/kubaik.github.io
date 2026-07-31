@@ -6,7 +6,7 @@
     "Agent",
     "Vbscript"
   ],
-  "meta_description": "Agent permissions: the mistake that breaks production — how we built a desktop agent without admin rights on Windows 7, using COM automation and per-user…",
+  "meta_description": "Agent permissions: the mistake that breaks production — how we built a desktop agent without admin rights on Windows 7, using COM automation and per-user installers",
   "featured_image": "/static/images/agent-permissions-the-mistake-that-breaks-production.jpg",
   "created_at": "2026-07-30T14:11:31.108539",
   "updated_at": "2026-07-30T14:11:31.108549",

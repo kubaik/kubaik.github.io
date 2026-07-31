@@ -11,7 +11,7 @@
     "Reactjs",
     "Wcag22compliance"
   ],
-  "meta_description": "How we rebuilt an AI chat widget to pass WCAG 2.2 audits — skipping ARIA traps and using HTML semantics instead.",
+  "meta_description": "How we rebuilt an AI chat widget to pass WCAG 2.2 audits — skipping ARIA traps and using HTML semantics instead. 100% reduction in violations, 75% faster fixes, and 31% higher screen reader success.",
   "featured_image": "/static/images/wcag-audits-the-chat-widget-mistakes-we-missed.jpg",
   "created_at": "2026-07-31T03:19:14.313619",
   "updated_at": "2026-07-31T03:19:14.313631",
