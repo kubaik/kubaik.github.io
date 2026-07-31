@@ -429,14 +429,6 @@ def print_report(groups: Dict[str, List[Post]], per_month: int, csv_path: Option
                 "created_at": p.created_at.isoformat() if p.created_at else "",
             })
 
-    if csv_path:
-        with csv_path.open("w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(f, fieldnames=list(csv_rows[0].keys()) if csv_rows else
-                                    ["month", "slug", "score"])
-            writer.writeheader()
-            writer.writerows(csv_rows)
-        print(f"\nWrote CSV report to {csv_path}")
-
     return flagged
 
 
