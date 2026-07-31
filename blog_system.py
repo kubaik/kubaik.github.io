@@ -345,6 +345,37 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
     return fallback[:max_len]
 
 
+def _truncate_description(desc: str, max_len: int = 155) -> str:
+    """Shorten an existing, already-good meta_description to max_len chars
+    without cutting mid-word. Unlike _derive_description, this never
+    regenerates from the post body -- it's for the common case where the
+    model's own description is fine, just longer than the SERP snippet
+    length Google typically renders (~155-160 chars), so trimming beats
+    throwing it away and deriving something generic instead."""
+    desc = desc.strip()
+    if len(desc) <= max_len:
+        return desc
+
+    sentences = re.split(r'(?<=[.!?])\s+', desc)
+    built = ""
+    for sentence in sentences:
+        candidate = (built + " " + sentence).strip() if built else sentence
+        if len(candidate) <= max_len:
+            built = candidate
+        else:
+            break
+    if len(built) >= 40:
+        return built
+
+    # No single sentence fit cleanly -- hard word-boundary cut + ellipsis.
+    budget = max_len - 1
+    truncated = desc[:budget]
+    last_space = truncated.rfind(" ")
+    if last_space > 40:
+        truncated = truncated[:last_space]
+    return truncated.rstrip(" ,;:-") + "…"
+
+
 def audit_posts(docs_dir: Path) -> Dict:
     results = {"fallback": [], "short": [], "ok": []}
     if not docs_dir.exists():
@@ -2630,6 +2661,13 @@ class BlogSystem:
                     print("Warning: meta_description has weak opener — re-deriving.")
                     meta_description = _derive_description(content, title)
 
+                _META_MAX_LEN = 155
+                if len(meta_description) > _META_MAX_LEN:
+                    print(f"Warning: meta_description is {len(meta_description)} chars "
+                          f"(> {_META_MAX_LEN}) — trimming to fit the SERP snippet length.")
+                    meta_description = _truncate_description(
+                        meta_description, _META_MAX_LEN)
+
                 if not current_keywords:
                     current_keywords = seo_keywords
 
@@ -3064,6 +3102,11 @@ Return ONLY the JSON object.""",
             data["meta_description"] = _derive_description(
                 data.get("content", ""), data.get("title", topic)
             )
+        elif len(data["meta_description"].strip()) > 155:
+            print("Note: meta_description too long from API response — trimming.")
+            data["meta_description"] = _truncate_description(
+                data["meta_description"].strip(), 155
+            )
 
         if not data.get("seo_keywords"):
             print("Note: seo_keywords missing — extracting from title/topic.")
@@ -3478,6 +3521,11 @@ Return ONLY the JSON object.""",
             post.meta_description = _derive_description(
                 post.content, post.title)
             print("  meta_description was empty — derived from content.")
+        elif len(post.meta_description.strip()) > 155:
+            print(f"  meta_description was {len(post.meta_description.strip())} chars "
+                  f"(> 155) — trimming before save.")
+            post.meta_description = _truncate_description(
+                post.meta_description.strip(), 155)
 
         post_dir = self.output_dir / post.slug
         post_dir.mkdir(exist_ok=True)
@@ -4339,16 +4387,24 @@ if __name__ == "__main__":
                     needs_fix = (
                         not desc
                         or any(desc.lower().startswith(w) for w in _weak_openers)
+                        or len(desc) > 155
                     )
                     if needs_fix:
-                        derived = _derive_description(
-                            data.get("content", ""), data.get("title", ""))
-                        data["meta_description"] = derived
+                        if desc and len(desc) > 155 and not any(
+                                desc.lower().startswith(w) for w in _weak_openers):
+                            # Good description, just too long -- trim it,
+                            # don't discard it and derive something generic.
+                            fixed_desc = _truncate_description(desc, 155)
+                            reason = "too long"
+                        else:
+                            fixed_desc = _derive_description(
+                                data.get("content", ""), data.get("title", ""))
+                            reason = "empty" if not desc else "weak opener"
+                        data["meta_description"] = fixed_desc
                         with open(post_json, "w", encoding="utf-8") as f:
                             json.dump(data, f, indent=2, ensure_ascii=False)
-                        reason = "empty" if not desc else "weak opener"
                         print(
-                            f"Fixed ({reason}): {post_dir.name} → {derived[:80]}…")
+                            f"Fixed ({reason}): {post_dir.name} → {fixed_desc[:80]}…")
                         fixed += 1
                 except Exception as e:
                     print(f"Error fixing {post_dir.name}: {e}")
