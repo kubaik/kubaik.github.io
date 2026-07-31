@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-30T14:11:35.066006",
+  "built_at": "2026-07-31T03:19:18.337560",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4515,6 +4515,11 @@
       "slug": "agent-permissions-the-mistake-that-breaks-production",
       "title": "Agent permissions: the mistake that breaks production",
       "summary": "After reviewing enough code that touches productionizing computer, the same failure pattern keeps showing up. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the root cause, not just the symptom. The situation (what we were trying to solve) We needed to productio"
+    },
+    {
+      "slug": "wcag-audits-the-chat-widget-mistakes-we-missed",
+      "title": "WCAG audits: the chat widget mistakes we missed",
+      "summary": "There's a gap between how building accessible is taught and how it actually behaves under load. It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly. The situation (what we were trying to solve) In 2026, my team added an A"
     }
   ]
 }

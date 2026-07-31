@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 30 Jul 2026 14:11:45 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 31 Jul 2026 03:19:29 +0000</lastBuildDate>
+    <item>
+      <title>WCAG audits: the chat widget mistakes we missed</title>
+      <link>https://kubaik.github.io/wcag-audits-the-chat-widget-mistakes-we-missed/</link>
+      <description>How we rebuilt an AI chat widget to pass WCAG 2.2 audits — skipping ARIA traps and using HTML semantics instead. 100% reduction in violations, 75% faster fixes, and 31% higher screen reader success.</description>
+      <pubDate>Fri, 31 Jul 2026 03:19:14 +0000</pubDate>
+      <guid>https://kubaik.github.io/wcag-audits-the-chat-widget-mistakes-we-missed/</guid>
+    </item>
     <item>
       <title>Agent permissions: the mistake that breaks production</title>
       <link>https://kubaik.github.io/agent-permissions-the-mistake-that-breaks-production/</link>
@@ -138,13 +145,6 @@
       <description>Cut API latency 96% and costs 57% with multi-agent systems — the real failure modes at 1,800 messages/sec including Redis cache stampede, message reordering…</description>
       <pubDate>Wed, 22 Jul 2026 02:54:12 +0000</pubDate>
       <guid>https://kubaik.github.io/6-months-running-multi-agent-systems-what-broke/</guid>
-    </item>
-    <item>
-      <title>AI code in prod? Postmortems still work</title>
-      <link>https://kubaik.github.io/ai-code-in-prod-postmortems-still-work/</link>
-      <description>AI code in prod is a dependency that changes under you — capture its prompt, snapshot, and runtime assumptions to cut incident time 78% and false positives 83%.</description>
-      <pubDate>Tue, 21 Jul 2026 14:01:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-code-in-prod-postmortems-still-work/</guid>
     </item>
   </channel>
 </rss>
