@@ -107,5 +107,6 @@
   "Event-driven vs agent-driven architectures: when each wins in 2026",
   "Why agent identity and authentication became harder than we expected in 2026",
   "Productionizing 'computer use' style agents without giving them dangerous permissions",
-  "Building accessible AI chat interfaces that don't fail WCAG audits"
+  "Building accessible AI chat interfaces that don't fail WCAG audits",
+  "Zero-trust networking for AI services without the latency tax"
 ]

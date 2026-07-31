@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-31T03:19:18.337560",
+  "built_at": "2026-07-31T08:31:12.006545",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4520,6 +4520,11 @@
       "slug": "wcag-audits-the-chat-widget-mistakes-we-missed",
       "title": "WCAG audits: the chat widget mistakes we missed",
       "summary": "There's a gap between how building accessible is taught and how it actually behaves under load. It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly. The situation (what we were trying to solve) In 2026, my team added an A"
+    },
+    {
+      "slug": "ai-services-slow-fix-the-network-first",
+      "title": "AI services slow? Fix the network first",
+      "summary": "I spent longer than I should have on zerotrust networking before understanding what was actually happening. Most write-ups stop exactly where the interesting part starts. This post covers what comes after the happy path. The gap between what the docs say and what production needs Most zero-trust gui"
     }
   ]
 }

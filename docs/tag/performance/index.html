@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Performance Articles — Kubai Kevin</title>
-  <meta name="description" content="Articles on Performance covering practical, hands-on approaches to performance for software developers, including &quot;Audit logs: ship them fast, keep them forever,&quot; &quot;Audit trails: ImmutableDB vs DynamoDB Streams,&quot; and &quot;Signals: 5 state tricks that broke my app&quot;.">
+  <meta name="description" content="Articles on Performance covering practical, hands-on approaches to performance for software developers, including &quot;AI services slow? Fix the network first,&quot; &quot;Audit logs: ship them fast, keep them forever,&quot; and &quot;Audit trails: ImmutableDB vs DynamoDB Streams&quot;.">
   <meta name="robots" content="index, follow">
   <meta name="base-path" content="">
   <link rel="canonical" href="https://kubaik.github.io/tag/performance/">
@@ -13,20 +13,20 @@
   <link rel="stylesheet" href="/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Performance Articles — Kubai Kevin">
-  <meta property="og:description" content="Articles on Performance covering practical, hands-on approaches to performance for software developers, including &quot;Audit logs: ship them fast, keep them forever,&quot; &quot;Audit trails: ImmutableDB vs DynamoDB Streams,&quot; and &quot;Signals: 5 state tricks that broke my app&quot;.">
+  <meta property="og:description" content="Articles on Performance covering practical, hands-on approaches to performance for software developers, including &quot;AI services slow? Fix the network first,&quot; &quot;Audit logs: ship them fast, keep them forever,&quot; and &quot;Audit trails: ImmutableDB vs DynamoDB Streams&quot;.">
   <meta property="og:url" content="https://kubaik.github.io/tag/performance/">
   <meta property="og:image" content="https://kubaik.github.io/static/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Performance Articles — Kubai Kevin">
-  <meta name="twitter:description" content="Articles on Performance covering practical, hands-on approaches to performance for software developers, including &quot;Audit logs: ship them fast, keep them forever,&quot; &quot;Audit trails: ImmutableDB vs DynamoDB Streams,&quot; and &quot;Signals: 5 state tricks that broke my app&quot;.">
+  <meta name="twitter:description" content="Articles on Performance covering practical, hands-on approaches to performance for software developers, including &quot;AI services slow? Fix the network first,&quot; &quot;Audit logs: ship them fast, keep them forever,&quot; and &quot;Audit trails: ImmutableDB vs DynamoDB Streams&quot;.">
   <meta name="twitter:image" content="https://kubaik.github.io/static/og-default.png">
   <meta name="twitter:site" content="@KubaiKevin">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage",
     "name":"Performance Articles","url":"https://kubaik.github.io/tag/performance/",
-    "description":"Articles on Performance covering practical, hands-on approaches to performance for software developers, including \"Audit logs: ship them fast, keep them forever,\" \"Audit trails: ImmutableDB vs DynamoDB Streams,\" and \"Signals: 5 state tricks that broke my app\"."}
+    "description":"Articles on Performance covering practical, hands-on approaches to performance for software developers, including \"AI services slow? Fix the network first,\" \"Audit logs: ship them fast, keep them forever,\" and \"Audit trails: ImmutableDB vs DynamoDB Streams\"."}
   </script>
 </head>
 <body>
@@ -44,9 +44,14 @@
       <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
       <span aria-current="page">Performance</span>
     </nav>
-    <h2>42 articles tagged <em>Performance</em></h2>
+    <h2>40 articles tagged <em>Performance</em></h2>
     <div class="post-grid">
 
+      <a class="post-card" href="/ai-services-slow-fix-the-network-first/">
+        <h3>AI services slow? Fix the network first</h3>
+        <p class="post-excerpt">Cut AI service latency 62% with zero-trust mTLS — sidecar CPU tuning, local DNS resolver, and the certificate SAN exhaustion trap most teams hit first.</p>
+        <p class="post-reading-time">17 min read · 31 July 2026</p>
+      </a>
       <a class="post-card" href="/audit-logs-ship-them-fast-keep-them-forever/">
         <h3>Audit logs: ship them fast, keep them forever</h3>
         <p class="post-excerpt">Cut AWS S3 audit log costs 78% while keeping regulators happy — hot/warm/cold tiering, SHA-256 tamper detection, and Node 20 LTS examples.</p>
@@ -127,11 +132,6 @@
         <p class="post-excerpt">Portfolio projects with AI wrappers get ignored in 2026 — here’s how we built a boring expense tracker that hiring leads actually reviewed, with 4% error rate…</p>
         <p class="post-reading-time">15 min read · 21 June 2026</p>
       </a>
-      <a class="post-card" href="/tls-13-breaks-with-post-quantum-crypto-fix-now/">
-        <h3>TLS 1.3 breaks with post-quantum crypto — fix now</h3>
-        <p class="post-excerpt">TLS handshake latency jumped 10× with post-quantum crypto — here’s how we fixed it, the real numbers, and the one sysctl change that mattered in 2026.</p>
-        <p class="post-reading-time">12 min read · 20 June 2026</p>
-      </a>
       <a class="post-card" href="/move-images-50-faster-in-2026-with-starlink-cdn/">
         <h3>Move images 50% faster in 2026 with Starlink CDN</h3>
         <p class="post-excerpt">Cut image upload time 60% with Starlink CDN — Lambda@Edge, sharp 0.33.2, and the resize mistakes most teams make.</p>
@@ -161,11 +161,6 @@
         <h3>Build in public without burning out</h3>
         <p class="post-excerpt">Cut burnout 65% with controlled transparency — the real way to build in public in 2026 without the performance tax</p>
         <p class="post-reading-time">16 min read · 16 June 2026</p>
-      </a>
-      <a class="post-card" href="/soft-deletes-break-at-scale-3-mistakes-to-stop-now/">
-        <h3>Soft deletes break at scale: 3 mistakes to stop now</h3>
-        <p class="post-excerpt">Cut API response time 60% with PostgreSQL 16 soft-delete patterns — when global scopes fail and 3 fixes that work at 10M rows</p>
-        <p class="post-reading-time">11 min read · 15 June 2026</p>
       </a>
       <a class="post-card" href="/tls-13-after-pqc-latency-hit-you-didnt-see-coming/">
         <h3>TLS 1.3 after PQC: latency hit you didn’t see coming</h3>
@@ -216,11 +211,6 @@
         <h3>Stop shipping daily: the burn rate math</h3>
         <p class="post-excerpt">Cut daily posting burn 70% with deliberate artifacts — READMEs, GIFs, and issue templates that actually convert. Real metrics and tools for 2026 builders.</p>
         <p class="post-reading-time">13 min read · 12 June 2026</p>
-      </a>
-      <a class="post-card" href="/css-finally-fixed-my-css-problems/">
-        <h3>CSS finally fixed my CSS problems</h3>
-        <p class="post-excerpt">Cut CSS bundle size 89%, build time 95%, and CloudFront costs 50% with container queries, @layer, and CSS variables — the tools that finally retired utility…</p>
-        <p class="post-reading-time">12 min read · 11 June 2026</p>
       </a>
       <a class="post-card" href="/build-a-search-system-in-2026-semantic-keyword/">
         <h3>Build a search system in 2026: semantic, keyword</h3>

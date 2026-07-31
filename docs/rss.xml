@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 31 Jul 2026 03:19:29 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 31 Jul 2026 08:31:19 +0000</lastBuildDate>
+    <item>
+      <title>AI services slow? Fix the network first</title>
+      <link>https://kubaik.github.io/ai-services-slow-fix-the-network-first/</link>
+      <description>Cut AI service latency 62% with zero-trust mTLS — sidecar CPU tuning, local DNS resolver, and the certificate SAN exhaustion trap most teams hit first.</description>
+      <pubDate>Fri, 31 Jul 2026 08:31:09 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-services-slow-fix-the-network-first/</guid>
+    </item>
     <item>
       <title>WCAG audits: the chat widget mistakes we missed</title>
       <link>https://kubaik.github.io/wcag-audits-the-chat-widget-mistakes-we-missed/</link>
@@ -138,13 +145,6 @@
       <description>MCP agent protocol wins over custom stacks — 65% lower p99 latency, 81% less networking code, and 75% faster onboarding. Real 2026 numbers and playbook.</description>
       <pubDate>Wed, 22 Jul 2026 14:04:38 +0000</pubDate>
       <guid>https://kubaik.github.io/mcp-killed-the-agent-tool-protocol-mess/</guid>
-    </item>
-    <item>
-      <title>6 months running multi-agent systems: what broke</title>
-      <link>https://kubaik.github.io/6-months-running-multi-agent-systems-what-broke/</link>
-      <description>Cut API latency 96% and costs 57% with multi-agent systems — the real failure modes at 1,800 messages/sec including Redis cache stampede, message reordering…</description>
-      <pubDate>Wed, 22 Jul 2026 02:54:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/6-months-running-multi-agent-systems-what-broke/</guid>
     </item>
   </channel>
 </rss>
