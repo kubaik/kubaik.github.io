@@ -1,0 +1,11 @@
+month,slug,score,word_count,duplication_score,depth_score,meta_score,structure_score,affiliate_density_score,most_similar_slug,max_similarity,created_at
+2026-06,mcp-servers-2026-why-your-agent-keeps-crashing,63.7,1758,23.1,62.6,100.0,100.0,100.0,mcp-servers-crash-tool-call-timeout-after-5s,0.769,2026-06-21T10:51:15.275446
+2026-06,2026-islands-astros-hydration-edge,65.8,1798,27.9,64.0,100.0,100.0,100.0,islands-beat-monoliths-in-2026,0.721,2026-06-13T22:58:33.175354
+2026-06,3-iac-tools-in-2026-which-one-bites-you-first,67.5,1872,30.9,66.6,100.0,100.0,100.0,pulumi-vs-terraform-vs-opentofu-in-2026,0.691,2026-06-17T08:17:58.635334
+2026-06,row-level-security-for-saas-in-2026-the-surprise-cost,67.5,2464,16.0,87.7,100.0,100.0,100.0,schema-per-tenant-cost-us-170-more-than-rls,0.84,2026-06-26T00:03:12.747859
+2026-06,htmx-5-things-i-dropped-to-make-it-work,68.3,2453,25.5,87.3,100.0,75.0,100.0,3-things-i-swapped-out-to-ship-htmx-in-2026,0.745,2026-06-27T14:50:35.883270
+2026-07,wcag-audits-the-chat-widget-mistakes-we-missed,64.5,2443,33.8,86.9,40.0,100.0,100.0,wcag-chat-bots-miss-4-invisible-traps,0.662,2026-07-31T03:19:14.313619
+2026-07,mcp-killed-the-agent-tool-protocol-mess,67.6,2329,19.7,82.9,100.0,100.0,100.0,mcp-servers-crash-tool-call-timeout-after-5s,0.803,2026-07-22T14:04:38.440705
+2026-07,m-pesa-daraja-20-your-2026-migration-checklist,70.0,2321,26.6,82.6,100.0,100.0,100.0,m-pesa-daraja-20-latency-tls-and-what-broke,0.734,2026-07-02T16:41:45.048601
+2026-07,htmx-islands-beat-react-our-internal-tools-saved-40,72.3,2378,31.9,84.6,100.0,100.0,100.0,htmx-5-things-i-dropped-to-make-it-work,0.681,2026-07-13T03:21:15.654123
+2026-07,agent-to-agent-vs-mcp-which-broke-first-in-2026,72.7,2138,39.2,76.1,100.0,100.0,100.0,mcp-killed-the-agent-tool-protocol-mess,0.608,2026-07-08T09:58:44.839849
