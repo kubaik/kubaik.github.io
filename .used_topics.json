@@ -108,5 +108,6 @@
   "Why agent identity and authentication became harder than we expected in 2026",
   "Productionizing 'computer use' style agents without giving them dangerous permissions",
   "Building accessible AI chat interfaces that don't fail WCAG audits",
-  "Zero-trust networking for AI services without the latency tax"
+  "Zero-trust networking for AI services without the latency tax",
+  "The database connection pool mistake that cost us $4k/month before we noticed"
 ]

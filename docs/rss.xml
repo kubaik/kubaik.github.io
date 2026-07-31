@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 31 Jul 2026 08:31:19 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 31 Jul 2026 09:07:44 +0000</lastBuildDate>
+    <item>
+      <title>One misconfigured pool drained $4k/month</title>
+      <link>https://kubaik.github.io/one-misconfigured-pool-drained-4kmonth/</link>
+      <description>One misconfigured pool drained $4k/month — how PgBouncer 1.22, Postgres 15 max_connections, and per-pod connection counts collided on Black Friday 2025</description>
+      <pubDate>Fri, 31 Jul 2026 09:07:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/one-misconfigured-pool-drained-4kmonth/</guid>
+    </item>
     <item>
       <title>AI services slow? Fix the network first</title>
       <link>https://kubaik.github.io/ai-services-slow-fix-the-network-first/</link>
@@ -138,13 +145,6 @@
       <description>Tool-calling agents: what breaks first — guard against unbounded retries, state drift, and connection leaks with Redis Streams, circuit breakers, and schema…</description>
       <pubDate>Thu, 23 Jul 2026 03:00:26 +0000</pubDate>
       <guid>https://kubaik.github.io/four-silent-failures-of-tool-calling-agents/</guid>
-    </item>
-    <item>
-      <title>MCP killed the agent-tool protocol mess</title>
-      <link>https://kubaik.github.io/mcp-killed-the-agent-tool-protocol-mess/</link>
-      <description>MCP agent protocol wins over custom stacks — 65% lower p99 latency, 81% less networking code, and 75% faster onboarding. Real 2026 numbers and playbook.</description>
-      <pubDate>Wed, 22 Jul 2026 14:04:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-killed-the-agent-tool-protocol-mess/</guid>
     </item>
   </channel>
 </rss>

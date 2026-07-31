@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-31T08:31:12.006545",
+  "built_at": "2026-07-31T09:07:33.595861",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4525,6 +4525,11 @@
       "slug": "ai-services-slow-fix-the-network-first",
       "title": "AI services slow? Fix the network first",
       "summary": "I spent longer than I should have on zerotrust networking before understanding what was actually happening. Most write-ups stop exactly where the interesting part starts. This post covers what comes after the happy path. The gap between what the docs say and what production needs Most zero-trust gui"
+    },
+    {
+      "slug": "one-misconfigured-pool-drained-4kmonth",
+      "title": "One misconfigured pool drained $4k/month",
+      "summary": "There's a gap between how database connection is taught and how it actually behaves under load. The edge cases only show up once real users hit the system. Here's the root cause, not just the symptom. The situation (what we were trying to solve) In late 2026 our small payments team moved from a sing"
     }
   ]
 }
