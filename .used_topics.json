@@ -109,5 +109,6 @@
   "Productionizing 'computer use' style agents without giving them dangerous permissions",
   "Building accessible AI chat interfaces that don't fail WCAG audits",
   "Zero-trust networking for AI services without the latency tax",
-  "The database connection pool mistake that cost us $4k/month before we noticed"
+  "The database connection pool mistake that cost us $4k/month before we noticed",
+  "How feature flags evolved into full AI rollout and experimentation platforms"
 ]

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-07-31T09:07:33.595861",
+  "built_at": "2026-07-31T10:06:05.144014",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4530,6 +4530,11 @@
       "slug": "one-misconfigured-pool-drained-4kmonth",
       "title": "One misconfigured pool drained $4k/month",
       "summary": "There's a gap between how database connection is taught and how it actually behaves under load. The edge cases only show up once real users hit the system. Here's the root cause, not just the symptom. The situation (what we were trying to solve) In late 2026 our small payments team moved from a sing"
+    },
+    {
+      "slug": "ai-rollouts-4-platforms-to-replace-basic-flags",
+      "title": "AI rollouts: 4 platforms to replace basic flags",
+      "summary": "The conventional advice on feature flags is incomplete in one specific, costly way. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in. Why this list exists (what I was actually trying to solve) In 2026, our team in Nai"
     }
   ]
 }
