@@ -39,18 +39,18 @@ jobs:
         run: |
           pip install --quiet pyyaml aiohttp requests
 
-      - name: Determine which 2-hour cron slots have passed today
+      - name: Determine which 12-hour cron slots have passed today
         id: slots
         run: |
           CURRENT_HOUR=$(date -u +%-H)
           CURRENT_MINUTE=$(date -u +%-M)
           CURRENT_DATE=$(date -u +%Y-%m-%d)
 
-          # blog-automation.yml runs on "0 */2 * * *" — i.e. every 2 hours,
-          # at even UTC hours only (0,2,4,...,22). Slots must match that
-          # cadence, otherwise the watchdog flags every odd hour as
+          # blog-automation.yml runs on "0 */12 * * *" — i.e. every 12 hours,
+          # at UTC hours 0 and 12 only. Slots must match that cadence,
+          # otherwise the watchdog flags every other even hour as
           # "missing" and fires unnecessary catch-up triggers.
-          ALL_SLOTS=(0 2 4 6 8 10 12 14 16 18 20 22)
+          ALL_SLOTS=(0 12)
           PASSED_SLOTS=()
           for SLOT in "${ALL_SLOTS[@]}"; do
             if [ "$CURRENT_HOUR" -gt "$SLOT" ] || \
