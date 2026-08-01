@@ -115,5 +115,6 @@
   "The postmortems we now write differently because an agent made the wrong decision",
   "Why traditional APM missed 80%+ of our AI-related incidents",
   "How we run local LLM agents for sensitive fintech workflows without sending data abroad",
-  "Building AI features that work across M-Pesa, Paystack, and Flutterwave failure modes"
+  "Building AI features that work across M-Pesa, Paystack, and Flutterwave failure modes",
+  "Building unit economics for AI features that product and finance teams can both understand"
 ]

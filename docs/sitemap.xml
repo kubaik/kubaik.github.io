@@ -1031,6 +1031,15 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-cost-per-user-what-product-misses/</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ai-debt-trap-llm-code-vs-human-code-in-prod/</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -3358,7 +3367,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/m-pesa-failures-cost-us-40-hours.png</image:loc>
     </image:image>
   </url>
   <url>

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Aug 2026 14:05:35 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Aug 2026 17:25:29 +0000</lastBuildDate>
+    <item>
+      <title>AI cost per user: what product misses</title>
+      <link>https://kubaik.github.io/ai-cost-per-user-what-product-misses/</link>
+      <description>Track AI feature cost per user with Redis caching, retries, latency, and regional differences — the hidden costs most product teams miss</description>
+      <pubDate>Sat, 01 Aug 2026 17:25:15 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-cost-per-user-what-product-misses/</guid>
+    </item>
     <item>
       <title>M-Pesa failures cost us 40 hours</title>
       <link>https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/</link>
@@ -138,13 +145,6 @@
       <description>Temporal 1.23 and Inngest 0.18 cut retry storms 97% and p99 latency 40% — here’s how durable execution platforms changed our agent workflow thinking</description>
       <pubDate>Sun, 26 Jul 2026 13:38:07 +0000</pubDate>
       <guid>https://kubaik.github.io/temporal-changed-how-we-think-about-agent-workflows/</guid>
-    </item>
-    <item>
-      <title>Latency trade-offs: Nairobi teams beat global AI providers</title>
-      <link>https://kubaik.github.io/latency-trade-offs-nairobi-teams-beat-global-ai-providers/</link>
-      <description>Nairobi teams ship AI features faster than global providers by treating latency as a feature.</description>
-      <pubDate>Sun, 26 Jul 2026 03:19:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/latency-trade-offs-nairobi-teams-beat-global-ai-providers/</guid>
     </item>
   </channel>
 </rss>
