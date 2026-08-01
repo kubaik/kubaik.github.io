@@ -245,49 +245,57 @@ jobs:
         run: |
           echo "yes" | python utils/delete_fallback_posts.py --delete
 
-      - name: Run delete_similar_posts (dry-run detect)
+      - name: Run delete_similar_posts (report-only — never auto-deletes)
         id: similar_check
         run: |
-          echo "Running similar post detection..."
+          echo "Running similar post detection (report-only, threshold 0.75)..."
+          echo "This step intentionally omits --delete. Its own confirmation"
+          echo "prompt was previously being piped past with echo \"yes\" |,"
+          echo "which defeated the point of having a human-confirm gate."
           OUTPUT=$(python utils/delete_similar_posts.py --threshold 0.75 2>&1)
           echo "$OUTPUT"
 
           if echo "$OUTPUT" | grep -q "No similar post groups found"; then
             echo "has_similar=false" >> $GITHUB_OUTPUT
           else
-            if echo "$OUTPUT" | grep -q "would be deleted"; then
-              echo "has_similar=true" >> $GITHUB_OUTPUT
-            else
-              echo "has_similar=false" >> $GITHUB_OUTPUT
-            fi
+            echo "has_similar=true" >> $GITHUB_OUTPUT
           fi
 
-      - name: Run delete_similar_posts (delete)
-        if: steps.similar_check.outputs.has_similar == 'true'
-        run: |
-          echo "yes" | python utils/delete_similar_posts.py --delete --threshold 0.75
-
-      - name: Run deduplicate_posts (dry-run detect)
+      - name: Run corpus duplicate audit (report-only — never auto-deletes)
         id: dedup_check
         run: |
-          echo "Running deduplication detection..."
-          OUTPUT=$(python utils/deduplicate_posts.py --threshold 0.5 2>&1)
-          echo "$OUTPUT"
+          echo "Running corpus-wide near-duplicate audit (report-only, threshold 0.65)..."
+          echo "Replaces the old deduplicate_posts.py --threshold 0.5 step, which"
+          echo "was pairwise title-only Jaccard overlap with no clustering, no"
+          echo "confirmation gate, and hard-delete only. This uses the same"
+          echo "TF-IDF clustering logic as the live ContentDuplicateGate instead,"
+          echo "and never passes --delete, so nothing is removed automatically."
+          python scripts/audit_corpus_duplicates.py --docs docs --threshold 0.65 \
+            --json duplicate_audit_report.json
 
-          if echo "$OUTPUT" | grep -q "No duplicate posts found"; then
-            echo "has_duplicates=false" >> $GITHUB_OUTPUT
+          REMOVE_COUNT=$(python3 -c "
+          import json
+          try:
+              clusters = json.load(open('duplicate_audit_report.json'))
+              print(sum(1 for c in clusters for m in c.get('members', []) if m.get('action') == 'remove'))
+          except FileNotFoundError:
+              print(0)
+          ")
+          echo "dedup_remove_count=$REMOVE_COUNT" >> $GITHUB_OUTPUT
+          if [ "$REMOVE_COUNT" -gt 0 ]; then
+            echo "has_duplicates=true" >> $GITHUB_OUTPUT
           else
-            if echo "$OUTPUT" | grep -q "DELETE"; then
-              echo "has_duplicates=true" >> $GITHUB_OUTPUT
-            else
-              echo "has_duplicates=false" >> $GITHUB_OUTPUT
-            fi
+            echo "has_duplicates=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Run deduplicate_posts (delete)
-        if: steps.dedup_check.outputs.has_duplicates == 'true'
-        run: |
-          python utils/deduplicate_posts.py --delete --no-rebuild
+      - name: Upload duplicate audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: duplicate-audit-report
+          path: duplicate_audit_report.json
+          if-no-files-found: ignore
+          retention-days: 30
 
       # ── DISABLED: blog_system.py audit ───────────────────────────────────────
       # - name: Run blog audit
@@ -319,10 +327,7 @@ jobs:
       # by scanning docs/ for whatever index.html files are actually present
       # right now, i.e. after any deletions above have already happened.
       - name: Regenerate sitemap.xml from current docs/
-        if: >
-          steps.fallback_check.outputs.has_fallback == 'true' ||
-          steps.similar_check.outputs.has_similar == 'true' ||
-          steps.dedup_check.outputs.has_duplicates == 'true'
+        if: steps.fallback_check.outputs.has_fallback == 'true'
         run: |
           pip install --quiet beautifulsoup4
           python scripts/generate_sitemap.py --output-dir docs --base-url https://kubaik.github.io
@@ -343,11 +348,7 @@ jobs:
 
       - name: Master Commit and Push with Safe Engine Retry Loop
         id: commit_push
-        if: >
-          steps.fallback_check.outputs.has_fallback == 'true' ||
-          steps.similar_check.outputs.has_similar == 'true' ||
-          steps.dedup_check.outputs.has_duplicates == 'true' ||
-          steps.audit.outputs.has_audit_issues == 'true'
+        if: steps.fallback_check.outputs.has_fallback == 'true'
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -361,9 +362,6 @@ jobs:
             TIMESTAMP=$(date -u '+%Y-%m-%d %H:%M UTC')
             SUMMARY=""
             if [ "${{ steps.fallback_check.outputs.has_fallback }}" = "true" ]; then SUMMARY="${SUMMARY}fallback-posts "; fi
-            if [ "${{ steps.similar_check.outputs.has_similar }}" = "true" ]; then SUMMARY="${SUMMARY}similar-posts "; fi
-            if [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then SUMMARY="${SUMMARY}duplicate-posts "; fi
-            if [ "${{ steps.audit.outputs.has_audit_issues }}" = "true" ]; then SUMMARY="${SUMMARY}purged-posts "; fi
 
             git commit -m "chore: watchdog cleanup + rebuild [${TIMESTAMP}] (${SUMMARY% })"
 
@@ -389,26 +387,20 @@ jobs:
                   git rebase --continue || git rebase --skip
                 fi
 
-                # Re-execute targeted scripts on top of pristine upstream state
+                # Re-execute the fallback deletion on top of pristine upstream state.
+                # similar_check and dedup_check are report-only now (see above) and
+                # never delete anything, so there's nothing of theirs to re-run here.
                 if [ "${{ steps.fallback_check.outputs.has_fallback }}" = "true" ]; then
                   echo "yes" | python utils/delete_fallback_posts.py --delete
-                fi
-                if [ "${{ steps.similar_check.outputs.has_similar }}" = "true" ]; then
-                  echo "yes" | python utils/delete_similar_posts.py --delete --threshold 0.75
-                fi
-                if [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then
-                  python utils/deduplicate_posts.py --delete --no-rebuild
                 fi
                 # ── DISABLED: blog_system.py purge (audit-related re-run) ──────
                 # if [ "${{ steps.audit.outputs.has_audit_issues }}" = "true" ]; then
                 #   python blog_system.py purge
                 # fi
 
-                # Re-regenerate sitemap.xml too, since the deletions above were
+                # Re-regenerate sitemap.xml too, since the deletion above was
                 # just re-run on top of the freshly rebased state.
-                if [ "${{ steps.fallback_check.outputs.has_fallback }}" = "true" ] || \
-                   [ "${{ steps.similar_check.outputs.has_similar }}" = "true" ] || \
-                   [ "${{ steps.dedup_check.outputs.has_duplicates }}" = "true" ]; then
+                if [ "${{ steps.fallback_check.outputs.has_fallback }}" = "true" ]; then
                   python scripts/generate_sitemap.py --output-dir docs --base-url https://kubaik.github.io
                 fi
 
@@ -557,14 +549,14 @@ jobs:
             echo ""
             echo "| Field | Value |"
             echo "|---|---|"
-            echo "| Passed 2-hour slots today | \`${{ steps.slots.outputs.passed_slots }}\` |"
+            echo "| Passed 12-hour slots today | \`${{ steps.slots.outputs.passed_slots }}\` |"
             echo "| Covered hours (all events) | \`${{ steps.fetch_runs.outputs.covered_hours }}\` |"
             echo "| Missing slots (auto-trigger disabled) | \`${{ steps.missing.outputs.missing_list || 'none' }}\` |"
             echo "| Fallback posts found | \`${{ steps.fallback_check.outputs.has_fallback == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
-            echo "| Similar posts found  | \`${{ steps.similar_check.outputs.has_similar == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
-            echo "| Duplicate posts found | \`${{ steps.dedup_check.outputs.has_duplicates == 'true' && 'yes — deleted ⚠️' || 'none ✅' }}\` |"
+            echo "| Similar posts found (report-only, not deleted) | \`${{ steps.similar_check.outputs.has_similar == 'true' && 'yes — see job log ℹ️' || 'none ✅' }}\` |"
+            echo "| Duplicate clusters found (report-only, not deleted) | \`${{ steps.dedup_check.outputs.has_duplicates == 'true' && format('yes — {0} post(s) flagged, see artifact ℹ️', steps.dedup_check.outputs.dedup_remove_count) || 'none ✅' }}\` |"
             echo "| Audit issues found    | \`${{ steps.audit.outputs.has_audit_issues == 'true' && 'yes — purged ⚠️' || 'none ✅' }}\` |"
-            echo "| Sitemap regenerated   | \`${{ (steps.fallback_check.outputs.has_fallback == 'true' || steps.similar_check.outputs.has_similar == 'true' || steps.dedup_check.outputs.has_duplicates == 'true') && 'yes ✅' || 'not needed' }}\` |"
+            echo "| Sitemap regenerated   | \`${{ steps.fallback_check.outputs.has_fallback == 'true' && 'yes ✅' || 'not needed' }}\` |"
             echo "| Pages redeployed      | \`${{ steps.commit_push.outputs.changes_committed == 'true' && (steps.deployment.outcome == 'success' && 'yes ✅' || 'attempted ⚠️') || 'not needed' }}\` |"
             echo ""
             if [ -n "${{ steps.missing.outputs.missing_list }}" ]; then
