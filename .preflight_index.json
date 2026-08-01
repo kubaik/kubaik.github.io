@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-01T03:17:36.445877",
+  "built_at": "2026-08-01T10:34:32.827418",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4545,6 +4545,11 @@
       "slug": "agent-decisions-cost-us-three-days-of-logs",
       "title": "Agent decisions cost us three days of logs",
       "summary": "I spent longer than I should have on postmortems now before understanding what was actually happening. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the root cause, not just the symptom. The situation (what we were trying to solve) In late 2026, our team at Tra"
+    },
+    {
+      "slug": "apm-lied-about-our-ai-incidents",
+      "title": "APM lied about our AI incidents",
+      "summary": "I ran into this traditional apm problem while migrating a service under a hard deadline. The answers online were either wrong or skipped the part that mattered. Here's the fuller picture, with the tradeoffs left in. The conventional wisdom (and why it's incomplete) Most teams still treat Application"
     }
   ]
 }

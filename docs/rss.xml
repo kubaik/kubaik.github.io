@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Aug 2026 13:30:45 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Aug 2026 10:34:43 +0000</lastBuildDate>
+    <item>
+      <title>APM lied about our AI incidents</title>
+      <link>https://kubaik.github.io/apm-lied-about-our-ai-incidents/</link>
+      <description>AI incident detection in 2026: why Datadog APM 1.47 misses 80%+ of GPU-related failures — and the three metrics you need to catch them before users…</description>
+      <pubDate>Sat, 01 Aug 2026 10:34:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/apm-lied-about-our-ai-incidents/</guid>
+    </item>
     <item>
       <title>Agent decisions cost us three days of logs</title>
       <link>https://kubaik.github.io/agent-decisions-cost-us-three-days-of-logs/</link>
@@ -138,13 +145,6 @@
       <description>React 19 Server Components promise 0-bundle JavaScript but often break serialization and add 400 ms latency.</description>
       <pubDate>Sat, 25 Jul 2026 02:54:25 +0000</pubDate>
       <guid>https://kubaik.github.io/react-19-server-components-3-days-lost-to-one-flag/</guid>
-    </item>
-    <item>
-      <title>Model router: keep it simple, keep it local</title>
-      <link>https://kubaik.github.io/model-router-keep-it-simple-keep-it-local/</link>
-      <description>Within two days, our p95 latency jumped from 80ms to 420ms because the initial implementation didn’t account for cold starts on SageMaker or connection…</description>
-      <pubDate>Fri, 24 Jul 2026 13:52:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/model-router-keep-it-simple-keep-it-local/</guid>
     </item>
   </channel>
 </rss>
