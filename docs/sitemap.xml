@@ -3353,6 +3353,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/</loc>
+    <lastmod>2026-08-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/make-offline-apps-work-when-the-network-dies/</loc>
     <lastmod>2026-06-14</lastmod>
     <changefreq>weekly</changefreq>
@@ -3691,7 +3700,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/ollama-local-vs-ollama-cloud-fintech-data-stays-in-kenya.png</image:loc>
     </image:image>
   </url>
   <url>

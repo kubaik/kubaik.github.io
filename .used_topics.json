@@ -114,5 +114,6 @@
   "Golden paths that don't become golden handcuffs \u2014 keeping the paved road evolvable",
   "The postmortems we now write differently because an agent made the wrong decision",
   "Why traditional APM missed 80%+ of our AI-related incidents",
-  "How we run local LLM agents for sensitive fintech workflows without sending data abroad"
+  "How we run local LLM agents for sensitive fintech workflows without sending data abroad",
+  "Building AI features that work across M-Pesa, Paystack, and Flutterwave failure modes"
 ]

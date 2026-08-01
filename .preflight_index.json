@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-01T13:30:14.260856",
+  "built_at": "2026-08-01T14:05:25.715563",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4555,6 +4555,11 @@
       "slug": "ollama-local-vs-ollama-cloud-fintech-data-stays-in-kenya",
       "title": "Ollama Local vs Ollama Cloud: fintech data stays in Kenya",
       "summary": "Most run local guides assume a clean environment and a patient timeline. The edge cases only show up once real users hit the system. Here's the root cause, not just the symptom. Why this comparison matters right now Two years ago, every fintech team in Nairobi was told to ‘put your LLM in the cloud’"
+    },
+    {
+      "slug": "m-pesa-failures-cost-us-40-hours",
+      "title": "M-Pesa failures cost us 40 hours",
+      "summary": "After reviewing enough code that touches building features, the same failure pattern keeps showing up. The edge cases only show up once real users hit the system. This post covers what comes after the happy path. The gap between what the docs say and what production needs Every time I see a fintech "
     }
   ]
 }

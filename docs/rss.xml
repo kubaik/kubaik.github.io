@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Aug 2026 13:30:25 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Aug 2026 14:05:35 +0000</lastBuildDate>
+    <item>
+      <title>M-Pesa failures cost us 40 hours</title>
+      <link>https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/</link>
+      <description>Reality: 90% of the time they arrived in 1.2 seconds, but 10% of the time they took 12 seconds or more.</description>
+      <pubDate>Sat, 01 Aug 2026 14:05:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/m-pesa-failures-cost-us-40-hours/</guid>
+    </item>
     <item>
       <title>Ollama Local vs Ollama Cloud: fintech data stays in Kenya</title>
       <link>https://kubaik.github.io/ollama-local-vs-ollama-cloud-fintech-data-stays-in-kenya/</link>
@@ -138,13 +145,6 @@
       <description>Nairobi teams ship AI features faster than global providers by treating latency as a feature.</description>
       <pubDate>Sun, 26 Jul 2026 03:19:07 +0000</pubDate>
       <guid>https://kubaik.github.io/latency-trade-offs-nairobi-teams-beat-global-ai-providers/</guid>
-    </item>
-    <item>
-      <title>Context windows live longer than you think</title>
-      <link>https://kubaik.github.io/context-windows-live-longer-than-you-think/</link>
-      <description>Context window management for agents that run hours or days — stop hallucinating names and blowing budgets with these concrete strategies and code you can run…</description>
-      <pubDate>Sat, 25 Jul 2026 13:43:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/context-windows-live-longer-than-you-think/</guid>
     </item>
   </channel>
 </rss>
