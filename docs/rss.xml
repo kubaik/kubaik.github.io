@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 31 Jul 2026 14:15:52 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Aug 2026 03:17:47 +0000</lastBuildDate>
+    <item>
+      <title>Agent decisions cost us three days of logs</title>
+      <link>https://kubaik.github.io/agent-decisions-cost-us-three-days-of-logs/</link>
+      <description>Automating postmortems with AI agents? Avoid hallucinations by making the agent a decision engine, not a text generator — with 49% faster MTTR and 61%…</description>
+      <pubDate>Sat, 01 Aug 2026 03:17:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-decisions-cost-us-three-days-of-logs/</guid>
+    </item>
     <item>
       <title>Boring AWS Lambda layers that don’t lock…</title>
       <link>https://kubaik.github.io/boring-aws-lambda-layers-that-dont-lock/</link>
@@ -138,13 +145,6 @@
       <description>Within two days, our p95 latency jumped from 80ms to 420ms because the initial implementation didn’t account for cold starts on SageMaker or connection…</description>
       <pubDate>Fri, 24 Jul 2026 13:52:51 +0000</pubDate>
       <guid>https://kubaik.github.io/model-router-keep-it-simple-keep-it-local/</guid>
-    </item>
-    <item>
-      <title>Postgres vector search: what breaks first</title>
-      <link>https://kubaik.github.io/postgres-vector-search-what-breaks-first/</link>
-      <description>Cut vector search latency 85% by moving out of Postgres — pgvector connection limits, Qdrant 1.8 latency, and the pool mistake that cost 180ms</description>
-      <pubDate>Fri, 24 Jul 2026 02:54:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/postgres-vector-search-what-breaks-first/</guid>
     </item>
   </channel>
 </rss>
