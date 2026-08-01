@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 01 Aug 2026 10:34:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Aug 2026 13:30:25 +0000</lastBuildDate>
+    <item>
+      <title>Ollama Local vs Ollama Cloud: fintech data stays in Kenya</title>
+      <link>https://kubaik.github.io/ollama-local-vs-ollama-cloud-fintech-data-stays-in-kenya/</link>
+      <description>Run Ollama Local vs Cloud for fintech agents in Kenya without sending data abroad.</description>
+      <pubDate>Sat, 01 Aug 2026 13:30:10 +0000</pubDate>
+      <guid>https://kubaik.github.io/ollama-local-vs-ollama-cloud-fintech-data-stays-in-kenya/</guid>
+    </item>
     <item>
       <title>APM lied about our AI incidents</title>
       <link>https://kubaik.github.io/apm-lied-about-our-ai-incidents/</link>
@@ -138,13 +145,6 @@
       <description>Context window management for agents that run hours or days — stop hallucinating names and blowing budgets with these concrete strategies and code you can run…</description>
       <pubDate>Sat, 25 Jul 2026 13:43:38 +0000</pubDate>
       <guid>https://kubaik.github.io/context-windows-live-longer-than-you-think/</guid>
-    </item>
-    <item>
-      <title>React 19 Server Components: 3 days lost to one flag</title>
-      <link>https://kubaik.github.io/react-19-server-components-3-days-lost-to-one-flag/</link>
-      <description>React 19 Server Components promise 0-bundle JavaScript but often break serialization and add 400 ms latency.</description>
-      <pubDate>Sat, 25 Jul 2026 02:54:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/react-19-server-components-3-days-lost-to-one-flag/</guid>
     </item>
   </channel>
 </rss>
