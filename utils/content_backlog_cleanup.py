@@ -313,6 +313,25 @@ def inject_head_tags(html: str, tags: list[str]) -> str:
     return insertion + html  # no <head>, just prepend (shouldn't happen)
 
 
+def apply_plan_hard_delete(plan: dict, docs_dir: Path) -> list[str]:
+    """Permanently remove every flagged post's directory. No stubs, no
+    redirects, no noindex tags - the URL simply stops resolving (404).
+    Use this when you want the duplicate/thin posts gone outright rather
+    than preserved-but-hidden."""
+    log = []
+    for action in plan["actions"]:
+        slug = action["slug"]
+        post_dir = docs_dir / slug
+        if not post_dir.exists():
+            log.append(f"SKIP {slug}: directory not found (already removed?)")
+            continue
+        shutil.rmtree(post_dir)
+        log.append(f"DELETED {slug} (was {action['action']}, "
+                   f"similarity={action.get('similarity')}, "
+                   f"cluster_size={action.get('cluster_size', 1)})")
+    return log
+
+
 def apply_plan(plan: dict, docs_dir: Path, base_url: str, archive_dir: Path):
     archive_dir.mkdir(parents=True, exist_ok=True)
     log = []
@@ -430,6 +449,10 @@ def main():
     p_apply.add_argument("--docs-dir", default="docs", type=Path)
     p_apply.add_argument("--base-url", default="https://kubaik.github.io")
     p_apply.add_argument("--archive-dir", default="_archive", type=Path)
+    p_apply.add_argument("--hard-delete", action="store_true",
+                         help="Permanently rm -rf every flagged post's directory "
+                         "instead of noindex/redirect/archive-with-stub. "
+                         "URLs will 404. Cannot be undone except via git.")
 
     p_sitemap = sub.add_parser(
         "sitemap", help="Regenerate sitemap.xml excluding noindexed pages.")
@@ -450,7 +473,20 @@ def main():
 
     elif args.cmd == "apply":
         plan = json.loads(args.plan.read_text(encoding="utf-8"))
-        log = apply_plan(plan, args.docs_dir, args.base_url, args.archive_dir)
+        n = len(plan["actions"])
+
+        if args.hard_delete:
+            print(f"About to PERMANENTLY DELETE {n} post directories from "
+                  f"{args.docs_dir} (no stubs, no redirects - URLs will 404).")
+            confirm = input('Type "delete" to confirm: ')
+            if confirm.strip().lower() != "delete":
+                print("Aborted, nothing deleted.")
+                return
+            log = apply_plan_hard_delete(plan, args.docs_dir)
+        else:
+            log = apply_plan(plan, args.docs_dir,
+                             args.base_url, args.archive_dir)
+
         for line in log:
             print(line)
         print(f"\n{len(log)} posts modified. Now run:")
