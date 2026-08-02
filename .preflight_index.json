@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-01T17:25:19.270529",
+  "built_at": "2026-08-02T03:17:46.167044",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4565,6 +4565,11 @@
       "slug": "ai-cost-per-user-what-product-misses",
       "title": "AI cost per user: what product misses",
       "summary": "A colleague asked me about building unit during a code review recently, and my first answer wasn't a good one. It's the kind of problem that's easy to reproduce and hard to explain. This post covers what comes after the happy path. The gap between what the docs say and what production needs Most tea"
+    },
+    {
+      "slug": "pgvector-at-100k-qps-what-broke-first",
+      "title": "pgvector at 100k+ QPS: what broke first",
+      "summary": "A colleague asked me about pgvector 100k during a code review recently, and my first answer wasn't a good one. It works in the simple case and breaks in a specific way under load. This walks through the fix and the reasoning, not just the patch. The gap between what the docs say and what production "
     }
   ]
 }
