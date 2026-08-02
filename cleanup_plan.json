@@ -1,0 +1,283 @@
+{
+  "summary": {
+    "total_posts": 593,
+    "archive": 0,
+    "merge_redirect": 1,
+    "noindex_only": 33,
+    "unaffected": 559
+  },
+  "actions": [
+    {
+      "slug": "stripe-lost-my-trust-heres-my-2026-stack",
+      "action": "MERGE_REDIRECT",
+      "similarity": 0.783,
+      "survivor_slug": "pick-one-stripe-lemon-squeezy-paddle-in-2026",
+      "survivor_title": "Pick one: Stripe, Lemon Squeezy, Paddle in 2026",
+      "loser_title": "Stripe lost my trust \u2014 here's my 2026 stack"
+    },
+    {
+      "slug": "mcp-errors-why-servers-go-quiet-in-2026",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.718,
+      "survivor_slug": "mcp-servers-from-toy-to-backbone",
+      "survivor_title": "MCP servers: from toy to backbone",
+      "loser_title": "MCP errors: why servers go quiet in 2026"
+    },
+    {
+      "slug": "htmx-5-things-i-dropped-to-make-it-work",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.717,
+      "survivor_slug": "5-things-htmx-replaced-in-my-stack",
+      "survivor_title": "5 things HTMX replaced in my stack",
+      "loser_title": "HTMX: 5 things I dropped to make it work"
+    },
+    {
+      "slug": "freelance-platforms-african-devs-tried-in-2026",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.714,
+      "survivor_slug": "african-devs-arc-vs-andela-vs-toptal-in-2026",
+      "survivor_title": "African devs: Arc vs Andela vs Toptal in 2026",
+      "loser_title": "Freelance platforms African devs tried in 2026"
+    },
+    {
+      "slug": "passkeys-killed-our-password-reset-queue",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.695,
+      "survivor_slug": "biometrics-beat-passwords-passkey-2026-shift",
+      "survivor_title": "Biometrics beat passwords: passkey 2026 shift",
+      "loser_title": "Passkeys killed our password reset queue"
+    },
+    {
+      "slug": "htmx-islands-beat-react-our-internal-tools-saved-40",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.67,
+      "survivor_slug": "3-things-i-swapped-out-to-ship-htmx-in-2026",
+      "survivor_title": "3 things I swapped out to ship HTMX in 2026",
+      "loser_title": "HTMX + Islands beat React: our internal tools saved 40%\u2026"
+    },
+    {
+      "slug": "3-iac-tools-in-2026-which-one-bites-you-first",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.669,
+      "survivor_slug": "pulumi-vs-terraform-vs-opentofu-in-2026",
+      "survivor_title": "Pulumi vs Terraform vs OpenTofu in 2026",
+      "loser_title": "3 IaC tools in 2026: which one bites you first"
+    },
+    {
+      "slug": "rerankers-beat-raw-rag-every-time",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.661,
+      "survivor_slug": "rag-is-not-enough-hybrid-search-reranking-in-2026",
+      "survivor_title": "RAG is not enough: hybrid search + reranking in 2026",
+      "loser_title": "Rerankers beat raw RAG every time"
+    },
+    {
+      "slug": "mcp-killed-the-agent-tool-protocol-mess",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.647,
+      "survivor_slug": "mcp-servers-from-toy-to-backbone",
+      "survivor_title": "MCP servers: from toy to backbone",
+      "loser_title": "MCP killed the agent-tool protocol mess"
+    },
+    {
+      "slug": "ship-real-work-not-polished-readmes",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.643,
+      "survivor_slug": "ship-github-not-a-portfolio",
+      "survivor_title": "Ship GitHub, not a portfolio",
+      "loser_title": "Ship real work, not polished READMEs"
+    },
+    {
+      "slug": "5-things-htmx-replaced-in-my-stack",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.642,
+      "survivor_slug": "3-things-i-swapped-out-to-ship-htmx-in-2026",
+      "survivor_title": "3 things I swapped out to ship HTMX in 2026",
+      "loser_title": "5 things HTMX replaced in my stack"
+    },
+    {
+      "slug": "tls-stack-2026-post-quantum-is-here",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.636,
+      "survivor_slug": "tls-13-post-quantum-what-breaks-at-scale",
+      "survivor_title": "TLS 1.3 + post-quantum: what breaks at scale",
+      "loser_title": "TLS stack 2026: post-quantum is here"
+    },
+    {
+      "slug": "5-experimentation-platforms-i-wish-id-tested-sooner",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.633,
+      "survivor_slug": "7-experiment-platforms-that-replaced-our-flag-system",
+      "survivor_title": "7 experiment platforms that replaced our flag system",
+      "loser_title": "5 experimentation platforms I wish I\u2019d tested sooner"
+    },
+    {
+      "slug": "which-react-meta-framework-won-in-2026",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.629,
+      "survivor_slug": "nextjs-15-vs-remix-vs-sveltekit-2026-choices",
+      "survivor_title": "Next.js 15 vs Remix vs SvelteKit: 2026 choices",
+      "loser_title": "Which React meta-framework won in 2026?"
+    },
+    {
+      "slug": "build-idps-that-dont-crumble-in-2026",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.628,
+      "survivor_slug": "idp-costs-3-tiers-3-playbooks",
+      "survivor_title": "IDP costs: 3 tiers, 3 playbooks",
+      "loser_title": "Build IDPs that don\u2019t crumble in 2026"
+    },
+    {
+      "slug": "tls-13-and-post-quantum-crypto-200-latency-spike",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.614,
+      "survivor_slug": "tls-13-post-quantum-what-breaks-at-scale",
+      "survivor_title": "TLS 1.3 + post-quantum: what breaks at scale",
+      "loser_title": "TLS 1.3 and post-quantum crypto: 200% latency spike"
+    },
+    {
+      "slug": "3-things-i-swapped-out-to-ship-htmx-in-2026",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.598,
+      "survivor_slug": "htmx-stack-swap-5-things-i-gained-3-i-lost",
+      "survivor_title": "HTMX stack swap: 5 things I gained, 3 I lost",
+      "loser_title": "3 things I swapped out to ship HTMX in 2026"
+    },
+    {
+      "slug": "5-feature-flag-tools-that-became-ab-platforms",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.596,
+      "survivor_slug": "4-experiments-platforms-compared-why-flags-became-labs",
+      "survivor_title": "4 experiments platforms compared \u2014 why flags became labs",
+      "loser_title": "5 feature flag tools that became A/B platforms"
+    },
+    {
+      "slug": "pwas-hit-parity-in-2026",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.591,
+      "survivor_slug": "progressive-web-apps-what-browser-apis-finally-fixed",
+      "survivor_title": "Progressive Web Apps: what browser APIs finally fixed",
+      "loser_title": "PWAs hit parity in 2026"
+    },
+    {
+      "slug": "audit-ai-code-onboarding-without-the-burn",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.589,
+      "survivor_slug": "ai-codebase-onboarding-2-paths-tested",
+      "survivor_title": "AI codebase onboarding: 2 paths tested",
+      "loser_title": "Audit AI code: onboarding without the burn"
+    },
+    {
+      "slug": "wcag-audits-the-chat-widget-mistakes-we-missed",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.586,
+      "survivor_slug": "ai-chats-hidden-wcag-fails",
+      "survivor_title": "AI chat's hidden WCAG fails",
+      "loser_title": "WCAG audits: the chat widget mistakes we missed"
+    },
+    {
+      "slug": "dumped-3-tools-kept-postgres-17",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.578,
+      "survivor_slug": "postgres-killed-three-tools-the-2026-stack-audit",
+      "survivor_title": "Postgres killed three tools: the 2026 stack audit",
+      "loser_title": "Dumped 3 tools, kept Postgres 17"
+    },
+    {
+      "slug": "tech-pay-in-2026-where-the-dust-settled",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.578,
+      "survivor_slug": "tech-salaries-2026-what-corrected-what-grew",
+      "survivor_title": "Tech salaries 2026: what corrected, what grew",
+      "loser_title": "Tech pay in 2026: where the dust settled"
+    },
+    {
+      "slug": "zero-trust-on-50month-3-tools-that-actually-work",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.577,
+      "survivor_slug": "wireguard-vs-tailscale-for-5month-zero-trust",
+      "survivor_title": "WireGuard vs Tailscale for $5/month zero trust",
+      "loser_title": "Zero-trust on $50/month: 3 tools that actually work"
+    },
+    {
+      "slug": "ussd-still-rules-build-a-2026-fintech-bridge",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.573,
+      "survivor_slug": "ussd-in-2026-30-cheaper-than-sms-for-africa-fintech",
+      "survivor_title": "USSD in 2026: 30% cheaper than SMS for Africa fintech",
+      "loser_title": "USSD still rules: build a 2026 fintech bridge"
+    },
+    {
+      "slug": "serverless-db-cold-starts-neon-planetscale-turso",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.571,
+      "survivor_slug": "neon-vs-planetscale-vs-turso-which-broke-first",
+      "survivor_title": "Neon vs PlanetScale vs Turso: which broke first?",
+      "loser_title": "Serverless DB cold starts: Neon, PlanetScale, Turso"
+    },
+    {
+      "slug": "inp-2026-one-tweak-cut-67-of-slow-clicks",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.57,
+      "survivor_slug": "core-web-vitals-2026-inp-is-now-stable",
+      "survivor_title": "Core Web Vitals 2026: INP is now stable",
+      "loser_title": "INP 2026: one tweak cut 67% of slow clicks"
+    },
+    {
+      "slug": "ai-permissions-dont-let-agents-burn-your-cloud-budget",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.568,
+      "survivor_slug": "trim-aws-iam-policies-in-one-afternoon",
+      "survivor_title": "Trim AWS IAM policies in one afternoon",
+      "loser_title": "AI permissions: Don\u2019t let agents burn your cloud budget"
+    },
+    {
+      "slug": "ship-github-not-a-portfolio",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.568,
+      "survivor_slug": "africa-devs-ship-production-code-not-crud",
+      "survivor_title": "Africa devs: Ship production code, not CRUD",
+      "loser_title": "Ship GitHub, not a portfolio"
+    },
+    {
+      "slug": "3-second-incomes-for-devs-in-2026-no-saas-needed",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.566,
+      "survivor_slug": "compound-nairobi-6-dev-income-streams-2026",
+      "survivor_title": "Compound Nairobi: 6 dev income streams 2026",
+      "loser_title": "3 second incomes for devs in 2026 \u2014 no SaaS needed"
+    },
+    {
+      "slug": "hybrid-search-cuts-rags-irrelevance-5x",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.564,
+      "survivor_slug": "rag-is-not-enough-hybrid-search-reranking-in-2026",
+      "survivor_title": "RAG is not enough: hybrid search + reranking in 2026",
+      "loser_title": "Hybrid search cuts RAG\u2019s irrelevance 5x"
+    },
+    {
+      "slug": "internal-platforms-the-size-gap-you-missed",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.563,
+      "survivor_slug": "platform-teams-in-2026-docs-vs-production-reality",
+      "survivor_title": "Platform teams in 2026: Docs vs. production reality",
+      "loser_title": "Internal platforms: the size gap you missed"
+    },
+    {
+      "slug": "build-the-30-minute-deployment-road",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.562,
+      "survivor_slug": "ship-faster-with-a-paved-road-4-weeks-to-80-less-toil",
+      "survivor_title": "Ship faster with a paved road: 4 weeks to 80% less toil",
+      "loser_title": "Build the 30-minute deployment road"
+    },
+    {
+      "slug": "7-experiment-platforms-that-replaced-our-flag-system",
+      "action": "NOINDEX_ONLY",
+      "similarity": 0.552,
+      "survivor_slug": "4-experiments-platforms-compared-why-flags-became-labs",
+      "survivor_title": "4 experiments platforms compared \u2014 why flags became labs",
+      "loser_title": "7 experiment platforms that replaced our flag system"
+    }
+  ]
+}
