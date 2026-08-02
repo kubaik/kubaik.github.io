@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-02T13:36:35.122336",
+  "built_at": "2026-08-02T16:53:19.021554",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4595,6 +4595,11 @@
       "slug": "platform-teams-pay-for-themselves-by-week-16",
       "title": "Platform teams pay for themselves by week 16",
       "summary": "After reviewing enough code that touches platform engineering, the same failure pattern keeps showing up. It works in the simple case and breaks in a specific way under load. This post covers what comes after the happy path. The situation (what we were trying to solve) We launched our internal platf"
+    },
+    {
+      "slug": "token-attribution-where-your-bill-really-comes",
+      "title": "Token attribution: where your bill really comes…",
+      "summary": "cut our looks simple until it has to survive real traffic. Most write-ups stop exactly where the interesting part starts. Here's what actually worked, and why. The gap between what the docs say and what production needs If you’ve ever looked at an LLM invoice and felt the numbers didn’t quite match "
     }
   ]
 }

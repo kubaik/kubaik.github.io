@@ -122,5 +122,6 @@
   "The regulatory tech patterns we're now forced to implement because of 2026 African fintech rules",
   "Building change data capture that doesn't fall over when your LLM pipeline goes wild",
   "When serverless stops being cheap for AI workloads \u2014 the inflection points we hit",
-  "Platform engineering ROI: the metrics that convinced our leadership to keep funding it"
+  "Platform engineering ROI: the metrics that convinced our leadership to keep funding it",
+  "How we cut our monthly AI spend by 55% after implementing real token attribution"
 ]

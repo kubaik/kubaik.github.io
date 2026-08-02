@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Aug 2026 13:36:43 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 02 Aug 2026 16:53:26 +0000</lastBuildDate>
+    <item>
+      <title>Token attribution: where your bill really comes…</title>
+      <link>https://kubaik.github.io/token-attribution-where-your-bill-really-comes/</link>
+      <description>Cut API spend by matching your token accounting to the provider’s bill — system prompt inflation, retries, and refusals break the math unless you track…</description>
+      <pubDate>Sun, 02 Aug 2026 16:53:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/token-attribution-where-your-bill-really-comes/</guid>
+    </item>
     <item>
       <title>Platform teams pay for themselves by week 16</title>
       <link>https://kubaik.github.io/platform-teams-pay-for-themselves-by-week-16/</link>
@@ -110,13 +117,6 @@
       <description>Cut AI service latency 62% with zero-trust mTLS — sidecar CPU tuning, local DNS resolver, and the certificate SAN exhaustion trap most teams hit first.</description>
       <pubDate>Fri, 31 Jul 2026 08:31:09 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-services-slow-fix-the-network-first/</guid>
-    </item>
-    <item>
-      <title>WCAG audits: the chat widget mistakes we missed</title>
-      <link>https://kubaik.github.io/wcag-audits-the-chat-widget-mistakes-we-missed/</link>
-      <description>How we rebuilt an AI chat widget to pass WCAG 2.2 audits — skipping ARIA traps and using HTML semantics instead.</description>
-      <pubDate>Fri, 31 Jul 2026 03:19:14 +0000</pubDate>
-      <guid>https://kubaik.github.io/wcag-audits-the-chat-widget-mistakes-we-missed/</guid>
     </item>
     <item>
       <title>Agent permissions: the mistake that breaks production</title>
