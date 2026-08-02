@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Aug 2026 14:01:58 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 02 Aug 2026 11:06:34 +0000</lastBuildDate>
+    <item>
+      <title>Hire for agents, not autocomplete</title>
+      <link>https://kubaik.github.io/hire-for-agents-not-autocomplete/</link>
+      <description>Hire engineers who can ship under 3G, not autocomplete — constraint-aware hiring and onboarding with real code, latency figures, and failure modes from a…</description>
+      <pubDate>Sun, 02 Aug 2026 11:06:20 +0000</pubDate>
+      <guid>https://kubaik.github.io/hire-for-agents-not-autocomplete/</guid>
+    </item>
     <item>
       <title>pgvector at 100k+ QPS: what broke first</title>
       <link>https://kubaik.github.io/pgvector-at-100k-qps-what-broke-first/</link>
@@ -138,13 +145,6 @@
       <description>Build a reliable multi-agent research system without LangGraph — latency, cost, and the poison-queue mistake most founders miss.</description>
       <pubDate>Mon, 27 Jul 2026 14:44:13 +0000</pubDate>
       <guid>https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/</guid>
-    </item>
-    <item>
-      <title>Track AI agent costs in fractal workflows</title>
-      <link>https://kubaik.github.io/track-ai-agent-costs-in-fractal-workflows/</link>
-      <description>Agentic FinOps: measuring the real cost of autonomous AI workflows — why standard dashboards underreport by 44-93% and how to trace the fractal burn of…</description>
-      <pubDate>Mon, 27 Jul 2026 03:28:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/track-ai-agent-costs-in-fractal-workflows/</guid>
     </item>
   </channel>
 </rss>

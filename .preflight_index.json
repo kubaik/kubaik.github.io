@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-02T03:17:46.167044",
+  "built_at": "2026-08-02T11:06:24.272046",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4570,6 +4570,11 @@
       "slug": "pgvector-at-100k-qps-what-broke-first",
       "title": "pgvector at 100k+ QPS: what broke first",
       "summary": "A colleague asked me about pgvector 100k during a code review recently, and my first answer wasn't a good one. It works in the simple case and breaks in a specific way under load. This walks through the fix and the reasoning, not just the patch. The gap between what the docs say and what production "
+    },
+    {
+      "slug": "hire-for-agents-not-autocomplete",
+      "title": "Hire for agents, not autocomplete",
+      "summary": "I've hit the same african engineering mistake in more than one production codebase over the years. Production gives you neither a clean environment nor a patient timeline. This is what I put together after working through it properly. The gap between what the docs say and what production needs I joi"
     }
   ]
 }

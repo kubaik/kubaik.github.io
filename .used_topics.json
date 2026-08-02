@@ -117,5 +117,6 @@
   "How we run local LLM agents for sensitive fintech workflows without sending data abroad",
   "Building AI features that work across M-Pesa, Paystack, and Flutterwave failure modes",
   "Building unit economics for AI features that product and finance teams can both understand",
-  "pgvector at 100k+ QPS: what broke and what we had to change"
+  "pgvector at 100k+ QPS: what broke and what we had to change",
+  "How African engineering teams are adapting hiring and onboarding for the agentic era"
 ]
