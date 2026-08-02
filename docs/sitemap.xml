@@ -1346,6 +1346,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-on-lambda-when-the-bill-explodes/</loc>
+    <lastmod>2026-08-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ai-ops-datadog-vs-granfa-for-infra-automation/</loc>
     <lastmod>2026-06-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -2266,7 +2275,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash.png</image:loc>
     </image:image>
   </url>
   <url>

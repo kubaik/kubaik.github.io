@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-02T13:29:45.621755",
+  "built_at": "2026-08-02T13:32:50.767481",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4585,6 +4585,11 @@
       "slug": "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash",
       "title": "CDC pipeline death spiral: one bad LLM call can crash…",
       "summary": "I spent longer than I should have on building change before understanding what was actually happening. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in. Advanced edge cases you personally encountered Let’s talk about "
+    },
+    {
+      "slug": "ai-on-lambda-when-the-bill-explodes",
+      "title": "AI on Lambda: when the bill explodes",
+      "summary": "After reviewing enough code that touches serverless stops, the same failure pattern keeps showing up. Production gives you neither a clean environment nor a patient timeline. Here's what actually worked, and why. The situation (what we were trying to solve) In mid-2026 we moved a production AI featu"
     }
   ]
 }
