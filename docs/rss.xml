@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Aug 2026 11:06:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 02 Aug 2026 13:12:37 +0000</lastBuildDate>
+    <item>
+      <title>African fintech rules broke our stack</title>
+      <link>https://kubaik.github.io/african-fintech-rules-broke-our-stack/</link>
+      <description>But the honest answer is that that checklist is only the first 5% of the work.</description>
+      <pubDate>Sun, 02 Aug 2026 13:12:23 +0000</pubDate>
+      <guid>https://kubaik.github.io/african-fintech-rules-broke-our-stack/</guid>
+    </item>
     <item>
       <title>Hire for agents, not autocomplete</title>
       <link>https://kubaik.github.io/hire-for-agents-not-autocomplete/</link>
@@ -138,13 +145,6 @@
       <description>Cut AI chat latency 54% and memory 59% by dropping Redux for local state machines and events — the real numbers from 5k concurrent users and the mistakes that…</description>
       <pubDate>Tue, 28 Jul 2026 02:46:18 +0000</pubDate>
       <guid>https://kubaik.github.io/global-state-is-the-wrong-tool-for-ai-features/</guid>
-    </item>
-    <item>
-      <title>Built a multi-agent system without LangGraph</title>
-      <link>https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/</link>
-      <description>Build a reliable multi-agent research system without LangGraph — latency, cost, and the poison-queue mistake most founders miss.</description>
-      <pubDate>Mon, 27 Jul 2026 14:44:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/</guid>
     </item>
   </channel>
 </rss>

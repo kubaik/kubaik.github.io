@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-02T11:06:24.272046",
+  "built_at": "2026-08-02T13:12:26.961697",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4575,6 +4575,11 @@
       "slug": "hire-for-agents-not-autocomplete",
       "title": "Hire for agents, not autocomplete",
       "summary": "I've hit the same african engineering mistake in more than one production codebase over the years. Production gives you neither a clean environment nor a patient timeline. This is what I put together after working through it properly. The gap between what the docs say and what production needs I joi"
+    },
+    {
+      "slug": "african-fintech-rules-broke-our-stack",
+      "title": "African fintech rules broke our stack",
+      "summary": "I ran into this regulatory tech problem while migrating a service under a hard deadline. The edge cases only show up once real users hit the system. This post covers what comes after the happy path. The conventional wisdom (and why it's incomplete) Most teams treat 2026 African fintech regulations a"
     }
   ]
 }

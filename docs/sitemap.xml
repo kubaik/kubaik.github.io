@@ -557,6 +557,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/african-fintech-rules-broke-our-stack/</loc>
+    <lastmod>2026-08-02</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/agent-auth-the-silent-deployment-killer/</loc>
     <lastmod>2026-07-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -2944,7 +2953,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/hire-for-agents-not-autocomplete.png</image:loc>
     </image:image>
   </url>
   <url>
