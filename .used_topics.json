@@ -119,5 +119,6 @@
   "Building unit economics for AI features that product and finance teams can both understand",
   "pgvector at 100k+ QPS: what broke and what we had to change",
   "How African engineering teams are adapting hiring and onboarding for the agentic era",
-  "The regulatory tech patterns we're now forced to implement because of 2026 African fintech rules"
+  "The regulatory tech patterns we're now forced to implement because of 2026 African fintech rules",
+  "Building change data capture that doesn't fall over when your LLM pipeline goes wild"
 ]

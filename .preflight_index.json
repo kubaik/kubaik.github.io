@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-02T13:12:26.961697",
+  "built_at": "2026-08-02T13:29:45.621755",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4580,6 +4580,11 @@
       "slug": "african-fintech-rules-broke-our-stack",
       "title": "African fintech rules broke our stack",
       "summary": "I ran into this regulatory tech problem while migrating a service under a hard deadline. The edge cases only show up once real users hit the system. This post covers what comes after the happy path. The conventional wisdom (and why it's incomplete) Most teams treat 2026 African fintech regulations a"
+    },
+    {
+      "slug": "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash",
+      "title": "CDC pipeline death spiral: one bad LLM call can crash…",
+      "summary": "I spent longer than I should have on building change before understanding what was actually happening. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in. Advanced edge cases you personally encountered Let’s talk about "
     }
   ]
 }
