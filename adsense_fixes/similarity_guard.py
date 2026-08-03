@@ -82,10 +82,19 @@ _CROSS_SITE_WARN_THRESHOLD = 0.20
 _STRUCTURAL_WARN_THRESHOLD = 0.40
 
 # Topic-key Jaccard above this → BLOCK (same underlying topic, different numbers)
-_TOPIC_KEY_BLOCK_THRESHOLD = 0.55
+# NOTE: lowered from 0.55 → 0.45 alongside widening the topic-key window from
+# the first ~40 words to ~150 words (see _topic_key_terms below). The wider
+# window pulls in more shared vocabulary by default, which pushes raw scores
+# up across the board — so the old 0.55 cut-off would now trigger on posts
+# that are merely on the same beat, not truly duplicate. 0.45 is a starting
+# estimate, not a measured value: run the audit CLI at the bottom of this
+# file (`python similarity_guard.py audit ./docs`) against your live corpus
+# and look at the score distribution before trusting this in production —
+# nudge it up or down based on what you see there.
+_TOPIC_KEY_BLOCK_THRESHOLD = 0.45
 
 # Topic-key Jaccard above this → WARN
-_TOPIC_KEY_WARN_THRESHOLD = 0.40
+_TOPIC_KEY_WARN_THRESHOLD = 0.35
 
 # Minimum content length to bother checking (very short posts skip similarity)
 _MIN_CHARS_TO_CHECK = 2000
@@ -163,10 +172,17 @@ def _topic_tokens(text: str) -> List[str]:
 def _topic_key_terms(title: str, content: str) -> Set[str]:
     """
     Extract a compact set of topic-defining terms from the title and
-    the first ~40 words of body content (the part that carries the
+    the first ~150 words of body content (the part that carries the
     "what is this post actually about" signal, before specifics vary).
+
+    WIDENED from ~40 → ~150 words: with this blog's post structure, the
+    first 40 words are frequently a hook/anecdote opener that doesn't
+    name the actual topic yet — the real topic vocabulary only shows up
+    once the intro paragraph gets going. 150 words reliably captures the
+    intro without pulling in enough of the body to start matching on
+    generic supporting vocabulary shared by unrelated posts.
     """
-    lead = " ".join(content.split()[:40])
+    lead = " ".join(content.split()[:150])
     combined = f"{title} {lead}"
     words = [w for w in _topic_tokens(combined)
              if w == "<num>" or (w not in _STOPWORDS and len(w) > 2)]
@@ -565,4 +581,109 @@ class SimilarityGuard:
             slug=getattr(post, "slug", ""),
             content=getattr(post, "content", ""),
             title=getattr(post, "title", ""),
+        )
+
+
+# ─────────────────────────────────────────────────────────────────
+# Audit CLI — measure the topic-key threshold against a live corpus
+# ─────────────────────────────────────────────────────────────────
+#
+# The 150-word window and 0.45/0.35 thresholds above are an informed
+# guess, not a measured result. Before relying on them in production,
+# run this against your actual docs/ folder:
+#
+#   python similarity_guard.py audit ./docs
+#
+# It recomputes topic_terms for every published post using the CURRENT
+# window/threshold constants, scores every pair, and prints:
+#   - the score distribution (so you can see where a natural cut-off falls)
+#   - every pair that would BLOCK or WARN under the current thresholds
+#
+# Read through the printed pairs: if genuinely distinct posts show up in
+# the BLOCK list, raise _TOPIC_KEY_BLOCK_THRESHOLD; if known-duplicate
+# topics you expected to catch aren't there, lower it. Nothing here
+# writes to .similarity_index.json or touches your posts — it's read-only.
+def _audit_topic_key_threshold(docs_dir: str) -> None:
+    import itertools
+    import statistics
+
+    docs_path = Path(docs_dir)
+    index = FingerprintIndex(docs_path)
+    index.build(force=True)
+    entries = index.get_all()
+
+    if len(entries) < 2:
+        print(
+            f"Only {len(entries)} post(s) indexed under {docs_dir} — need at least 2 to compare.")
+        return
+
+    slugs = list(entries.keys())
+    scores: List[Tuple[str, str, float]] = []
+    for slug_a, slug_b in itertools.combinations(slugs, 2):
+        terms_a = set(entries[slug_a].get("topic_terms", []))
+        terms_b = set(entries[slug_b].get("topic_terms", []))
+        score = _jaccard(terms_a, terms_b)
+        if score > 0.0:
+            scores.append((slug_a, slug_b, score))
+
+    scores.sort(key=lambda t: t[2], reverse=True)
+    raw_scores = [s for _, _, s in scores]
+
+    print(f"Indexed posts : {len(entries)}")
+    print(f"Pairs compared: {len(list(itertools.combinations(slugs, 2)))}")
+    print(f"Non-zero pairs: {len(scores)}")
+    if raw_scores:
+        print(
+            f"Score stats   : min={min(raw_scores):.2f} "
+            f"median={statistics.median(raw_scores):.2f} "
+            f"mean={statistics.mean(raw_scores):.2f} "
+            f"max={max(raw_scores):.2f}"
+        )
+
+    blocked = [t for t in scores if t[2] >= _TOPIC_KEY_BLOCK_THRESHOLD]
+    warned = [t for t in scores if _TOPIC_KEY_WARN_THRESHOLD <=
+              t[2] < _TOPIC_KEY_BLOCK_THRESHOLD]
+
+    print(
+        f"\nWould BLOCK ({len(blocked)} pair(s), score >= "
+        f"{_TOPIC_KEY_BLOCK_THRESHOLD:.2f}):"
+    )
+    for slug_a, slug_b, score in blocked[:50]:
+        title_a = entries[slug_a].get("title", slug_a)
+        title_b = entries[slug_b].get("title", slug_b)
+        print(f"  {score:.0%}  '{title_a}'  ≈  '{title_b}'")
+    if len(blocked) > 50:
+        print(f"  ... and {len(blocked) - 50} more")
+
+    print(
+        f"\nWould WARN ({len(warned)} pair(s), "
+        f"{_TOPIC_KEY_WARN_THRESHOLD:.2f} <= score < {_TOPIC_KEY_BLOCK_THRESHOLD:.2f}):"
+    )
+    for slug_a, slug_b, score in warned[:50]:
+        title_a = entries[slug_a].get("title", slug_a)
+        title_b = entries[slug_b].get("title", slug_b)
+        print(f"  {score:.0%}  '{title_a}'  ≈  '{title_b}'")
+    if len(warned) > 50:
+        print(f"  ... and {len(warned) - 50} more")
+
+    print(
+        "\nRead through the BLOCK list above: any pair there that is NOT "
+        "actually a rehash of the same angle means the threshold is too "
+        "low for your corpus and should go up."
+    )
+
+
+if __name__ == "__main__":
+    import sys as _sys
+
+    if len(_sys.argv) >= 3 and _sys.argv[1] == "audit":
+        _audit_topic_key_threshold(_sys.argv[2])
+    else:
+        print(
+            "Usage: python similarity_guard.py audit <docs_dir>\n"
+            "  e.g. python similarity_guard.py audit ./docs\n"
+            "Scores every pair of published posts using the CURRENT "
+            "topic-key window/thresholds and reports where the current "
+            "cut-offs would fall — run this before trusting the tuned "
+            "thresholds in production."
         )

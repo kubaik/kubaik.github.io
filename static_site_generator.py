@@ -393,22 +393,87 @@ Sitemap: {base_url}/rss.xml
         print("Generated robots.txt")
 
     def _get_all_posts(self) -> List[BlogPost]:
-        posts = []
+        """
+        Load every published post from docs/, and clean up the set before
+        it feeds posts.json, the sitemap, RSS, and every other generated
+        page. Since posts.json is fully rewritten from this list on every
+        build, cleanup only needs to happen here — not as a separate pass
+        over the old file.
+
+        Cleanup performed:
+          - Skip post.json files that are missing/unloadable, or missing a
+            title/content (a hollow entry would otherwise ship an empty
+            card on the homepage, sitemap, and RSS feed).
+          - Trust the directory name as the canonical slug over whatever
+            post.json's own 'slug' field says — that field can drift from
+            the directory after a manual rename or an interrupted save,
+            and the directory is what actually serves the page.
+          - Drop duplicate slugs (two directories that resolve to the same
+            slug, e.g. a stale folder left behind by a title/slug change),
+            keeping only the most recently updated version.
+        """
+        posts_by_slug: Dict[str, BlogPost] = {}
+        duplicates_dropped = 0
+        mismatched_slugs = 0
+        invalid_skipped = 0
+
         docs_dir = Path("./docs")
         if not docs_dir.exists():
-            return posts
+            return []
+
         for post_dir in docs_dir.iterdir():
-            if not post_dir.is_dir() or post_dir.name == 'static':
+            if not post_dir.is_dir() or post_dir.name in ("static", "tag", "author"):
                 continue
             post_json = post_dir / "post.json"
-            if post_json.exists():
-                try:
-                    with open(post_json, 'r', encoding='utf-8') as f:
-                        data = json.load(f)
-                    posts.append(BlogPost.from_dict(data))
-                except Exception as e:
-                    print(f"Error loading post from {post_dir.name}: {e}")
+            if not post_json.exists():
+                continue
+
+            try:
+                with open(post_json, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+            except Exception as e:
+                print(f"Error loading post from {post_dir.name}: {e}")
+                invalid_skipped += 1
+                continue
+
+            if not data.get("title", "").strip() or not data.get("content", "").strip():
+                print(
+                    f"  ⚠️  Skipping {post_dir.name}: post.json missing title/content.")
+                invalid_skipped += 1
+                continue
+
+            canonical_slug = post_dir.name
+            if data.get("slug") != canonical_slug:
+                mismatched_slugs += 1
+                data["slug"] = canonical_slug
+
+            try:
+                post = BlogPost.from_dict(data)
+            except Exception as e:
+                print(f"Error building post from {post_dir.name}: {e}")
+                invalid_skipped += 1
+                continue
+
+            existing = posts_by_slug.get(canonical_slug)
+            if existing is not None:
+                duplicates_dropped += 1
+                existing_stamp = existing.updated_at or existing.created_at
+                new_stamp = post.updated_at or post.created_at
+                if new_stamp <= existing_stamp:
+                    continue  # keep the existing (newer) version
+
+            posts_by_slug[canonical_slug] = post
+
+        posts = list(posts_by_slug.values())
         posts.sort(key=lambda p: p.created_at, reverse=True)
+
+        if duplicates_dropped or mismatched_slugs or invalid_skipped:
+            print(
+                f"  🧹 Post cleanup: {duplicates_dropped} duplicate slug(s) dropped, "
+                f"{mismatched_slugs} slug mismatch(es) corrected, "
+                f"{invalid_skipped} invalid post(s) skipped."
+            )
+
         return posts
 
     def _reading_time_minutes(self, content: str) -> int:

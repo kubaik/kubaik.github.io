@@ -85,6 +85,15 @@ MIN_WORD_PURGE = 1500
 MAX_GENERATION_ATTEMPTS = 5
 MIN_ACCEPTABLE_WORDS = 1500
 
+# How many times the CLI "auto" flow will pick a fresh topic and regenerate
+# a whole post from scratch after a post-generation duplicate-content block
+# (SimilarityGuard or the save_post()-time ContentDuplicateGate). This is
+# separate from MAX_GENERATION_ATTEMPTS, which only covers retries *within*
+# a single generate_blog_post() call (bundle failures / short content for
+# one topic) — this constant covers "the finished article for topic A was
+# blocked as a duplicate, so throw it away and generate topic B instead."
+MAX_DUPLICATE_REGENERATION_ATTEMPTS = 3
+
 # PATCH-2: tightened from 24 → 20
 _HASHTAG_MAX_SOURCE_WORDS = 3
 _HASHTAG_MAX_CHARS = 20
@@ -4096,127 +4105,182 @@ if __name__ == "__main__":
                 topic = pick_next_topic(
                     preflight_index=blog_system.preflight_index
                 )
-                blog_post = asyncio.run(blog_system.generate_blog_post(topic))
-
-            except TopicExhaustedError as e:
-                # Not a pipeline failure - this is the dedup gate working as
-                # intended. Exit 0 so the scheduled Action doesn't show red
-                # every time the topic pool is temporarily saturated, but
-                # print loudly so it's visible in the run log.
-                print("\n" + "═" * 68)
-                print("⏭️   NO POST PUBLISHED TODAY — every candidate topic was a duplicate")
-                print("═" * 68)
-                print(f"  Reason : {e}")
-                print(
-                    "  Action : This is expected occasionally. If it happens on most\n"
-                    "           runs, add fresh entries to content_topics in config.yaml -\n"
-                    "           the existing pool has been substantially covered already."
-                )
-                print("═" * 68 + "\n")
-                sys.exit(0)
-
-            except InsufficientContentError as e:
-                print("\n" + "═" * 68)
-                print("🛑  GENERATION ABORTED — NO POST SAVED")
-                print("═" * 68)
-                print(f"  Reason : {e}")
-                print(
-                    f"  Action : Increase content_topics diversity in config.yaml,\n"
-                    f"           check API provider quotas, or raise MAX_GENERATION_ATTEMPTS\n"
-                    f"           (currently {MAX_GENERATION_ATTEMPTS}) in blog_system.py."
-                )
-                print("═" * 68 + "\n")
-                sys.exit(1)
-
             except Exception as e:
-                print(f"Unexpected error: {e}")
+                print(f"Unexpected error picking a topic: {e}")
                 import traceback
                 traceback.print_exc()
                 sys.exit(1)
 
-            try:
-                guard = SimilarityGuard(docs_dir=blog_system.output_dir)
-                sim_result = guard.check(blog_post)
-                if sim_result.is_blocked:
-                    print(f"\n🛑 SIMILARITY BLOCK: {sim_result.reason}\n")
+            # ── Outer duplicate-regeneration loop ───────────────────────────
+            # generate_blog_post() already retries internally (across up to
+            # MAX_GENERATION_ATTEMPTS topics) for bundle failures and short
+            # content. But a post can also fail AFTER it's fully written and
+            # post-processed — SimilarityGuard's topic-key/body check, or the
+            # save_post()-time ContentDuplicateGate — because both of those
+            # only have something to compare once the article exists. This
+            # loop catches exactly that case: throw the blocked draft away,
+            # pick a fresh topic, and generate a whole new post, up to
+            # MAX_DUPLICATE_REGENERATION_ATTEMPTS times, before giving up.
+            attempted_topics: List[str] = []
+            guard = None
+            blog_post = None
+
+            for dup_attempt in range(1, MAX_DUPLICATE_REGENERATION_ATTEMPTS + 1):
+                attempted_topics.append(topic)
+
+                try:
+                    blog_post = asyncio.run(
+                        blog_system.generate_blog_post(topic))
+
+                except TopicExhaustedError as e:
+                    # Not a pipeline failure - this is the dedup gate working as
+                    # intended. Exit 0 so the scheduled Action doesn't show red
+                    # every time the topic pool is temporarily saturated, but
+                    # print loudly so it's visible in the run log.
+                    print("\n" + "═" * 68)
+                    print("⏭️   NO POST PUBLISHED TODAY — every candidate topic was a duplicate")
+                    print("═" * 68)
+                    print(f"  Reason : {e}")
+                    print(
+                        "  Action : This is expected occasionally. If it happens on most\n"
+                        "           runs, add fresh entries to content_topics in config.yaml -\n"
+                        "           the existing pool has been substantially covered already."
+                    )
+                    print("═" * 68 + "\n")
+                    sys.exit(0)
+
+                except InsufficientContentError as e:
+                    print("\n" + "═" * 68)
+                    print("🛑  GENERATION ABORTED — NO POST SAVED")
+                    print("═" * 68)
+                    print(f"  Reason : {e}")
+                    print(
+                        f"  Action : Increase content_topics diversity in config.yaml,\n"
+                        f"           check API provider quotas, or raise MAX_GENERATION_ATTEMPTS\n"
+                        f"           (currently {MAX_GENERATION_ATTEMPTS}) in blog_system.py."
+                    )
+                    print("═" * 68 + "\n")
                     sys.exit(1)
-                for warning in sim_result.warnings:
-                    print(f"  ⚠️  Similarity: {warning}")
-            except Exception as sim_err:
-                print(f"  ⚠️  SimilarityGuard failed (non-fatal): {sim_err}")
 
-            quality_warnings, hard_failures = _validate_content_quality(
-                blog_post.content, blog_post.title
-            )
+                except Exception as e:
+                    print(f"Unexpected error: {e}")
+                    import traceback
+                    traceback.print_exc()
+                    sys.exit(1)
 
-            if hard_failures:
-                print(f"\n🛑  HARD QUALITY FAILURES — post will NOT be saved:")
-                for failure in hard_failures:
-                    print(f"   ✗ {failure}")
-                print()
-                print("   This post has been aborted. No file was written.")
-                print("   Fix the issues above or regenerate with a new topic.")
-                sys.exit(1)
+                dup_detected = False
+                dup_reason = ""
 
-            if quality_warnings:
-                print(
-                    f"\n⚠️  Content quality warnings ({len(quality_warnings)}):")
-                for w in quality_warnings:
-                    print(f"   • {w}")
-                print()
-            else:
-                print("✅  Content quality check passed (0 warnings).")
+                try:
+                    guard = SimilarityGuard(docs_dir=blog_system.output_dir)
+                    sim_result = guard.check(blog_post)
+                    if sim_result.is_blocked:
+                        dup_detected = True
+                        dup_reason = f"SIMILARITY BLOCK: {sim_result.reason}"
+                    else:
+                        for warning in sim_result.warnings:
+                            print(f"  ⚠️  Similarity: {warning}")
+                except Exception as sim_err:
+                    print(f"  ⚠️  SimilarityGuard failed (non-fatal): {sim_err}")
 
-            inject_personal_intro(blog_post, topic)
-            inject_eeat_signals(blog_post, topic)
-            inject_freshness_footer(blog_post)
+                if not dup_detected:
+                    quality_warnings, hard_failures = _validate_content_quality(
+                        blog_post.content, blog_post.title
+                    )
 
-            try:
-                injected_imgs = inject_alt_text(blog_post)
-                if injected_imgs:
-                    print(f"  🖼  {injected_imgs} image alt text(s) injected.")
-            except Exception as e:
-                print(f"  ⚠️  Alt text injection failed (non-fatal): {e}")
+                    if hard_failures:
+                        print(f"\n🛑  HARD QUALITY FAILURES — post will NOT be saved:")
+                        for failure in hard_failures:
+                            print(f"   ✗ {failure}")
+                        print()
+                        print("   This post has been aborted. No file was written.")
+                        print("   Fix the issues above or regenerate with a new topic.")
+                        sys.exit(1)
 
-            try:
-                posts_index = build_posts_index(blog_system.output_dir)
-                base_path = config.get("base_path", "")
-                inject_internal_links(
-                    blog_post, posts_index, base_path=base_path)
-            except Exception as e:
-                print(f"  ⚠️  Internal link injection failed (non-fatal): {e}")
+                    if quality_warnings:
+                        print(
+                            f"\n⚠️  Content quality warnings ({len(quality_warnings)}):")
+                        for w in quality_warnings:
+                            print(f"   • {w}")
+                        print()
+                    else:
+                        print("✅  Content quality check passed (0 warnings).")
 
-            try:
-                removed_links = validate_post_links(
-                    blog_post, blog_system.output_dir)
-                if removed_links:
-                    print(f"  🔗 Link validator removed {len(removed_links)} unresolvable link(s): "
-                          f"{', '.join(removed_links)}")
-            except Exception as e:
-                print(f"  ⚠️  Link validator failed (non-fatal): {e}")
+                    inject_personal_intro(blog_post, topic)
+                    inject_eeat_signals(blog_post, topic)
+                    inject_freshness_footer(blog_post)
 
-            try:
-                canon_issues = validate_canonical(
-                    blog_post, config.get('base_url', ''))
-                for issue in canon_issues:
-                    print(f"  ⚠️  Canonical: {issue}")
-            except Exception as e:
-                print(f"  ⚠️  Canonical validation failed (non-fatal): {e}")
+                    try:
+                        injected_imgs = inject_alt_text(blog_post)
+                        if injected_imgs:
+                            print(
+                                f"  🖼  {injected_imgs} image alt text(s) injected.")
+                    except Exception as e:
+                        print(f"  ⚠️  Alt text injection failed (non-fatal): {e}")
 
-            try:
-                blog_system.save_post(blog_post)
-            except DuplicateContentError as e:
+                    try:
+                        posts_index = build_posts_index(blog_system.output_dir)
+                        base_path = config.get("base_path", "")
+                        inject_internal_links(
+                            blog_post, posts_index, base_path=base_path)
+                    except Exception as e:
+                        print(
+                            f"  ⚠️  Internal link injection failed (non-fatal): {e}")
+
+                    try:
+                        removed_links = validate_post_links(
+                            blog_post, blog_system.output_dir)
+                        if removed_links:
+                            print(f"  🔗 Link validator removed {len(removed_links)} unresolvable link(s): "
+                                  f"{', '.join(removed_links)}")
+                    except Exception as e:
+                        print(f"  ⚠️  Link validator failed (non-fatal): {e}")
+
+                    try:
+                        canon_issues = validate_canonical(
+                            blog_post, config.get('base_url', ''))
+                        for issue in canon_issues:
+                            print(f"  ⚠️  Canonical: {issue}")
+                    except Exception as e:
+                        print(
+                            f"  ⚠️  Canonical validation failed (non-fatal): {e}")
+
+                    try:
+                        blog_system.save_post(blog_post)
+                    except DuplicateContentError as e:
+                        dup_detected = True
+                        dup_reason = f"DUPLICATE CONTENT: {e}"
+
+                if not dup_detected:
+                    break  # success — fall through to publishing steps below
+
                 print("\n" + "═" * 68)
-                print("🛑  DUPLICATE CONTENT — NO POST SAVED")
+                print("🔁  DUPLICATE DETECTED — DISCARDING DRAFT AND REGENERATING")
                 print("═" * 68)
-                print(f"  Reason : {e}")
+                print(f"  Reason : {dup_reason}")
+
+                if dup_attempt >= MAX_DUPLICATE_REGENERATION_ATTEMPTS:
+                    print(
+                        f"  Action : Exhausted {MAX_DUPLICATE_REGENERATION_ATTEMPTS} "
+                        "regeneration attempt(s) across different topics. Add fresh\n"
+                        "           entries to content_topics in config.yaml, or review\n"
+                        "           whether SimilarityGuard's thresholds need retuning\n"
+                        "           (see similarity_guard.py's audit CLI)."
+                    )
+                    print("═" * 68 + "\n")
+                    sys.exit(1)
+
+                existing_titles_for_retry = _load_existing_titles(
+                    blog_system.output_dir)
+                topic = blog_system._pick_retry_topic(
+                    topic, existing_titles_for_retry, exclude=attempted_topics
+                )
                 print(
-                    "  Action : Pick a more differentiated topic/angle, or merge\n"
-                    "           this content into the existing article instead of\n"
-                    "           publishing a near-duplicate."
+                    f"  Action : Trying attempt {dup_attempt + 1}/"
+                    f"{MAX_DUPLICATE_REGENERATION_ATTEMPTS} with new topic: '{topic}'"
                 )
                 print("═" * 68 + "\n")
-                sys.exit(1)
+                # loop continues with the new topic
 
             try:
                 generate_og_card(
