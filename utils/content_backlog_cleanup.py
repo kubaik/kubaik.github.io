@@ -204,13 +204,49 @@ def build_clusters(posts: list[Post], pairs: list[tuple[int, int, float]]) -> li
     return [g for g in groups.values() if len(g) > 1]
 
 
-def build_plan(docs_dir: Path) -> dict:
+def build_plan(docs_dir: Path, debug: bool = False,
+               noindex_threshold: float = None,
+               merge_threshold: float = None,
+               archive_threshold: float = None) -> dict:
+    global NOINDEX_THRESHOLD, MERGE_THRESHOLD, ARCHIVE_THRESHOLD
+    if noindex_threshold is not None:
+        NOINDEX_THRESHOLD = noindex_threshold
+    if merge_threshold is not None:
+        MERGE_THRESHOLD = merge_threshold
+    if archive_threshold is not None:
+        ARCHIVE_THRESHOLD = archive_threshold
+    print(
+        f"[thresholds] noindex={NOINDEX_THRESHOLD} merge={MERGE_THRESHOLD} archive={ARCHIVE_THRESHOLD}")
+
     print(f"Loading posts from {docs_dir} ...")
     posts = load_posts(docs_dir)
     print(f"Loaded {len(posts)} posts.")
 
+    if debug:
+        empty = sum(1 for p in posts if p.word_count == 0)
+        zero_score = sum(1 for p in posts if p.overall_score is None)
+        print(f"[debug] sklearn available: {HAVE_SKLEARN}")
+        print(f"[debug] posts with 0 extracted words: {empty} / {len(posts)}")
+        print(
+            f"[debug] posts missing quality_score in post.json: {zero_score} / {len(posts)}")
+        if posts:
+            wc = sorted(p.word_count for p in posts)
+            print(
+                f"[debug] word_count min/median/max: {wc[0]}/{wc[len(wc)//2]}/{wc[-1]}")
+
     print("Computing pairwise similarity ...")
     pairs = pairwise_similarity(posts)
+
+    if debug:
+        print("[debug] top 15 similarity pairs (any threshold):")
+        for i, j, sim in pairs[:15]:
+            print(f"    {sim:.3f}  {posts[i].slug}  <->  {posts[j].slug}")
+        if pairs and pairs[0][2] == 0.0:
+            print("[debug] WARNING: top similarity is 0.0 - text extraction "
+                  "is likely broken (empty 'body'/'content' fields and "
+                  "index.html stripping produced nothing). Check post.json "
+                  "field names against load_posts().")
+
     pair_sim = {}
     for i, j, sim in pairs:
         pair_sim[(i, j)] = sim
@@ -442,6 +478,16 @@ def main():
         "plan", help="Compute the cleanup plan (no changes made).")
     p_plan.add_argument("--docs-dir", default="docs", type=Path)
     p_plan.add_argument("--out", default="cleanup_plan.json", type=Path)
+    p_plan.add_argument("--debug", action="store_true",
+                        help="Print the top 15 pairwise similarities found, "
+                        "regardless of threshold, plus text-extraction "
+                        "stats. Use this to sanity-check a 0-cluster result.")
+    p_plan.add_argument("--noindex-threshold", type=float, default=None,
+                        help=f"Override NOINDEX_THRESHOLD (default {NOINDEX_THRESHOLD})")
+    p_plan.add_argument("--merge-threshold", type=float, default=None,
+                        help=f"Override MERGE_THRESHOLD (default {MERGE_THRESHOLD})")
+    p_plan.add_argument("--archive-threshold", type=float, default=None,
+                        help=f"Override ARCHIVE_THRESHOLD (default {ARCHIVE_THRESHOLD})")
 
     p_apply = sub.add_parser(
         "apply", help="Apply a previously generated plan.")
@@ -462,7 +508,10 @@ def main():
     args = ap.parse_args()
 
     if args.cmd == "plan":
-        plan = build_plan(args.docs_dir)
+        plan = build_plan(args.docs_dir, debug=args.debug,
+                          noindex_threshold=args.noindex_threshold,
+                          merge_threshold=args.merge_threshold,
+                          archive_threshold=args.archive_threshold)
         args.out.write_text(json.dumps(plan, indent=2), encoding="utf-8")
         print("\n=== SUMMARY ===")
         for k, v in plan["summary"].items():
