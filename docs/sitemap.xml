@@ -1211,15 +1211,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/ai-observability-why-token-counts-lie/</loc>
-    <lastmod>2026-08-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/ai-on-lambda-when-the-bill-explodes/</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>weekly</changefreq>
