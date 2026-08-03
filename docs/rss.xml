@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Aug 2026 08:41:57 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 03 Aug 2026 09:07:58 +0000</lastBuildDate>
+    <item>
+      <title>AI coding in 2026: Cursor, Windsurf, Claude on trial</title>
+      <link>https://kubaik.github.io/ai-coding-in-2026-cursor-windsurf-claude-on-trial/</link>
+      <description>Cursor vs Windsurf vs Claude Code in 2026: raw latency, RAM footprint, and the one setting that breaks the build every week — tested on 300 ms ping links.</description>
+      <pubDate>Mon, 03 Aug 2026 09:07:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-coding-in-2026-cursor-windsurf-claude-on-trial/</guid>
+    </item>
     <item>
       <title>Prompt injection got the hype — poison data ruined us</title>
       <link>https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/</link>
@@ -138,13 +145,6 @@
       <description>RAG pipeline failures at 3am: index misconfiguration, vector DB timeouts, and the observability patterns that prevent them — with concrete numbers and fixes…</description>
       <pubDate>Wed, 29 Jul 2026 14:18:17 +0000</pubDate>
       <guid>https://kubaik.github.io/one-misconfigured-vector-db-killed-our-rag-pipeline/</guid>
-    </item>
-    <item>
-      <title>AI tools won’t help if everyone writes the same code</title>
-      <link>https://kubaik.github.io/ai-tools-wont-help-if-everyone-writes-the-same-code/</link>
-      <description>AI tools create two classes of engineers unless you measure outcomes, not output.</description>
-      <pubDate>Wed, 29 Jul 2026 02:53:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-tools-wont-help-if-everyone-writes-the-same-code/</guid>
     </item>
   </channel>
 </rss>

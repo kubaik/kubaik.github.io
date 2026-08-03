@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-03T08:08:25.565308",
+  "built_at": "2026-08-03T09:07:51.423331",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4610,6 +4610,11 @@
       "slug": "ai-observability-why-token-counts-lie",
       "title": "AI observability: why token counts lie",
       "summary": "I spent longer than I should have on observability beyond before understanding what was actually happening. It's the kind of problem that's easy to reproduce and hard to explain. Here's the root cause, not just the symptom. The one-paragraph version (read this first) Most teams still treat AI servic"
+    },
+    {
+      "slug": "ai-coding-in-2026-cursor-windsurf-claude-on-trial",
+      "title": "AI coding in 2026: Cursor, Windsurf, Claude on trial",
+      "summary": "The official documentation for cursor claude is good. What it doesn't cover is what happens six months into production. The answers online were either wrong or skipped the part that mattered. This post covers what comes after the happy path. Why this comparison matters right now Late last year we re"
     }
   ]
 }
