@@ -1501,7 +1501,11 @@ def inject_eeat_signals(post, topic: str) -> None:
 
 _PREFLIGHT_CACHE_FILE = Path(".preflight_index.json")
 _PREFLIGHT_CACHE_TTL_SECONDS = 3600
-_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD = 0.55
+_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD = 0.60  # was 0.55 - now matches
+                                               # CONTENT_DUPLICATE_THRESHOLD's
+                                               # calibration below so the two
+                                               # gates can't disagree about
+                                               # what counts as a duplicate
 _PREFLIGHT_MAX_RETRIES = 3
 
 
@@ -1520,7 +1524,12 @@ _PREFLIGHT_MAX_RETRIES = 3
 # scripts/content_quality_gate.py, so the standalone CI gate and the
 # live generation pipeline agree on what counts as a duplicate.
 
-CONTENT_DUPLICATE_THRESHOLD = 0.72  # matches scripts/content_quality_gate.py
+# PATCH (dedup hardening): 0.72 was letting through everything in the
+# 0.55-0.72 band, which is exactly where audits of the published corpus
+# found confirmed near-duplicate pairs (same topic, reworded title/body).
+# Lowered to 0.60 and now MUST stay equal to or below
+# _PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD - see _validate_dedup_thresholds().
+CONTENT_DUPLICATE_THRESHOLD = 0.60
 
 _CONTENT_DUP_STOP_WORDS = {
     "the", "a", "an", "and", "or", "but", "in", "on", "at", "to",
@@ -2560,12 +2569,21 @@ class BlogSystem:
             )
 
             if preflight_attempts >= _PREFLIGHT_MAX_RETRIES:
-                print(
-                    f"  🛑 Pre-flight max retries ({_PREFLIGHT_MAX_RETRIES}) reached. "
-                    "Proceeding with last candidate — post-generation duplicate "
-                    "checks will still apply."
+                # PATCH (dedup hardening): this used to "proceed with last
+                # candidate" here, which meant a topic that had just been
+                # confirmed too-similar 3 times in a row got generated and
+                # published anyway, on the theory that the post-generation
+                # gate would catch it. It didn't always agree (different
+                # threshold), so duplicates reached publish. Fail closed
+                # instead: skip this topic entirely for today's run rather
+                # than force through content we already know is a near-copy.
+                raise TopicExhaustedError(
+                    f"Pre-flight max retries ({_PREFLIGHT_MAX_RETRIES}) reached for "
+                    f"'{current_topic}' (last score {pf_score:.2f} vs '{match_title}'). "
+                    "Refusing to generate a post we've already flagged as a duplicate. "
+                    "Caller should select a different topic from the pool, or skip "
+                    "this generation slot for today."
                 )
-                break
 
             try:
                 current_topic = await self._ask_llm_for_distinct_topic(
@@ -2576,9 +2594,14 @@ class BlogSystem:
                 current_keywords = None
                 print(f"  LLM suggested: '{current_topic}'")
             except Exception as exc:
-                print(
-                    f"  LLM topic suggestion failed ({exc}). Continuing with current topic.")
-                break
+                # PATCH (dedup hardening): if the LLM can't even suggest a
+                # distinct topic, that's a signal the well is basically dry
+                # for this angle - don't silently fall through to generating
+                # the still-blocked topic.
+                raise TopicExhaustedError(
+                    f"Pre-flight blocked '{current_topic}' and the LLM topic-rescue "
+                    f"call failed ({exc}). Refusing to generate the blocked topic."
+                ) from exc
 
         print(SEP)
 
@@ -3592,6 +3615,14 @@ class DuplicateContentError(Exception):
     near-duplicate of an already-published post (see ContentDuplicateGate)."""
 
 
+class TopicExhaustedError(Exception):
+    """Raised by generate_blog_post() when a topic is blocked as a
+    duplicate by PreFlightIndex and retries are exhausted (or the LLM
+    can't suggest a distinct alternative). Callers should catch this and
+    either try a different topic from the pool or skip today's generation
+    slot - never treat it as "proceed anyway"."""
+
+
 # ─────────────────────────────────────────────────────────────────
 # Stale year scrubber
 # ─────────────────────────────────────────────────────────────────
@@ -4066,6 +4097,23 @@ if __name__ == "__main__":
                     preflight_index=blog_system.preflight_index
                 )
                 blog_post = asyncio.run(blog_system.generate_blog_post(topic))
+
+            except TopicExhaustedError as e:
+                # Not a pipeline failure - this is the dedup gate working as
+                # intended. Exit 0 so the scheduled Action doesn't show red
+                # every time the topic pool is temporarily saturated, but
+                # print loudly so it's visible in the run log.
+                print("\n" + "═" * 68)
+                print("⏭️   NO POST PUBLISHED TODAY — every candidate topic was a duplicate")
+                print("═" * 68)
+                print(f"  Reason : {e}")
+                print(
+                    "  Action : This is expected occasionally. If it happens on most\n"
+                    "           runs, add fresh entries to content_topics in config.yaml -\n"
+                    "           the existing pool has been substantially covered already."
+                )
+                print("═" * 68 + "\n")
+                sys.exit(0)
 
             except InsufficientContentError as e:
                 print("\n" + "═" * 68)
