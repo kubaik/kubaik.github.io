@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-03T03:19:55.300610",
+  "built_at": "2026-08-03T08:08:25.565308",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4605,6 +4605,11 @@
       "slug": "prompt-injection-got-the-hype-poison-data-ruined-us",
       "title": "Prompt injection got the hype — poison data ruined us",
       "summary": "I've hit the same owasp llm mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. Here's the fuller picture, with the tradeoffs left in. The conventional wisdom (and why it's incomplete) If you read the OWASP LLM Top 10 from 2026-"
+    },
+    {
+      "slug": "ai-observability-why-token-counts-lie",
+      "title": "AI observability: why token counts lie",
+      "summary": "I spent longer than I should have on observability beyond before understanding what was actually happening. It's the kind of problem that's easy to reproduce and hard to explain. Here's the root cause, not just the symptom. The one-paragraph version (read this first) Most teams still treat AI servic"
     }
   ]
 }

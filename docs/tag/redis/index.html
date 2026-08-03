@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Redis Articles — Kubai Kevin</title>
-  <meta name="description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;Platform teams pay for themselves by week 16,&quot; &quot;AI on Lambda: when the bill explodes,&quot; and &quot;AI cost per user: what product misses&quot;.">
+  <meta name="description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;AI observability: why token counts lie,&quot; &quot;Platform teams pay for themselves by week 16,&quot; and &quot;AI on Lambda: when the bill explodes&quot;.">
   <meta name="robots" content="index, follow">
   <meta name="base-path" content="">
   <link rel="canonical" href="https://kubaik.github.io/tag/redis/">
@@ -13,20 +13,20 @@
   <link rel="stylesheet" href="/static/style.css">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Redis Articles — Kubai Kevin">
-  <meta property="og:description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;Platform teams pay for themselves by week 16,&quot; &quot;AI on Lambda: when the bill explodes,&quot; and &quot;AI cost per user: what product misses&quot;.">
+  <meta property="og:description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;AI observability: why token counts lie,&quot; &quot;Platform teams pay for themselves by week 16,&quot; and &quot;AI on Lambda: when the bill explodes&quot;.">
   <meta property="og:url" content="https://kubaik.github.io/tag/redis/">
   <meta property="og:image" content="https://kubaik.github.io/static/og-default.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Redis Articles — Kubai Kevin">
-  <meta name="twitter:description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;Platform teams pay for themselves by week 16,&quot; &quot;AI on Lambda: when the bill explodes,&quot; and &quot;AI cost per user: what product misses&quot;.">
+  <meta name="twitter:description" content="Articles on Redis covering practical, hands-on approaches to redis for software developers, including &quot;AI observability: why token counts lie,&quot; &quot;Platform teams pay for themselves by week 16,&quot; and &quot;AI on Lambda: when the bill explodes&quot;.">
   <meta name="twitter:image" content="https://kubaik.github.io/static/og-default.png">
   <meta name="twitter:site" content="@KubaiKevin">
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CollectionPage",
     "name":"Redis Articles","url":"https://kubaik.github.io/tag/redis/",
-    "description":"Articles on Redis covering practical, hands-on approaches to redis for software developers, including \"Platform teams pay for themselves by week 16,\" \"AI on Lambda: when the bill explodes,\" and \"AI cost per user: what product misses\"."}
+    "description":"Articles on Redis covering practical, hands-on approaches to redis for software developers, including \"AI observability: why token counts lie,\" \"Platform teams pay for themselves by week 16,\" and \"AI on Lambda: when the bill explodes\"."}
   </script>
 </head>
 <body>
@@ -44,9 +44,14 @@
       <a href="/tag/">Topics</a> <span aria-hidden="true">›</span>
       <span aria-current="page">Redis</span>
     </nav>
-    <h2>91 articles tagged <em>Redis</em></h2>
+    <h2>87 articles tagged <em>Redis</em></h2>
     <div class="post-grid">
 
+      <a class="post-card" href="/ai-observability-why-token-counts-lie/">
+        <h3>AI observability: why token counts lie</h3>
+        <p class="post-excerpt">AI observability beyond token counts: cache hit ratios, prompt length drift, upstream 429s, and the three metrics that actually predict user-visible…</p>
+        <p class="post-reading-time">16 min read · 3 August 2026</p>
+      </a>
       <a class="post-card" href="/platform-teams-pay-for-themselves-by-week-16/">
         <h3>Platform teams pay for themselves by week 16</h3>
         <p class="post-excerpt">Platform teams pay for themselves by week 16 — how we cut deployment pages 59%, reduced ramp time 64%, and saved $25k/month with a minimal golden path…</p>
@@ -172,11 +177,6 @@
         <p class="post-excerpt">LLM-4 agent latency fell 76% after we replaced prompt caching with stateful orchestration — PostgreSQL 16, Keyspaces, and Step Functions in 2026 costs.</p>
         <p class="post-reading-time">11 min read · 4 July 2026</p>
       </a>
-      <a class="post-card" href="/stick-to-boring-stacks-with-ai-services/">
-        <h3>Stick to boring stacks with AI services</h3>
-        <p class="post-excerpt">Cut AI service costs 70% with boring stacks — PostgreSQL pgvector, Redis caching, and dedicated GPUs saved us $1.8k/month on a single feature</p>
-        <p class="post-reading-time">15 min read · 4 July 2026</p>
-      </a>
       <a class="post-card" href="/ai-agents-circuit-breakers-are-not-optional/">
         <h3>AI agents: circuit breakers are not optional</h3>
         <p class="post-excerpt">Cut AI agent hallucinations 93% with circuit breakers — production metrics, code, and the 3 ms overhead we measured in FastAPI 0.109 with Redis 7.2.</p>
@@ -217,11 +217,6 @@
         <p class="post-excerpt">Cut MVP build time 70% with vibe coding — but one wrong choice can cost $45k/year in hidden bills.</p>
         <p class="post-reading-time">14 min read · 1 July 2026</p>
       </a>
-      <a class="post-card" href="/why-ussd-still-beats-apps-in-africa/">
-        <h3>Why USSD still beats apps in Africa</h3>
-        <p class="post-excerpt">Build a USSD fintech stack that survives 2026 traffic with Go 1.22, Redis 7.2, and 124 ms p99 latency — connection pooling, TTL eviction, and the operator…</p>
-        <p class="post-reading-time">13 min read · 29 June 2026</p>
-      </a>
       <a class="post-card" href="/hit-5k-mrr-without-a-marketing-team/">
         <h3>Hit $5k MRR without a marketing team</h3>
         <p class="post-excerpt">Hit $5k MRR on Shopify app — no ads, no team, just reliability and pricing that matters. Integration, churn, and referral tactics that paid off in 2026.</p>
@@ -237,25 +232,10 @@
         <p class="post-excerpt">Cut fintech disputes 75% with shorter cache TTLs and event-driven invalidation — the real rules African APIs need in 2026</p>
         <p class="post-reading-time">18 min read · 28 June 2026</p>
       </a>
-      <a class="post-card" href="/webhook-delivery-retries-idempotency-2026-guide/">
-        <h3>Webhook delivery: retries, idempotency, 2026 guide</h3>
-        <p class="post-excerpt">Cut webhook latency from 40s to 1.2s with idempotency and retries — AWS EventBridge Pipes, DynamoDB, and Lambda 2026 patterns</p>
-        <p class="post-reading-time">13 min read · 28 June 2026</p>
-      </a>
-      <a class="post-card" href="/ai-agent-memory-context-that-survives-restarts/">
-        <h3>AI agent memory: context that survives restarts</h3>
-        <p class="post-excerpt">Persist AI agent context across restarts with Redis 7.2 and langgraph 0.2.14 — flush writes, raise liveness probes, and stop losing sessions after a crash or…</p>
-        <p class="post-reading-time">13 min read · 27 June 2026</p>
-      </a>
       <a class="post-card" href="/monolith-to-services-without-a-rewrite/">
         <h3>Monolith to services without a rewrite</h3>
         <p class="post-excerpt">Cut API response time 20% by decoupling first—database-first refactor beats service extraction for most teams in 2026.</p>
         <p class="post-reading-time">17 min read · 27 June 2026</p>
-      </a>
-      <a class="post-card" href="/design-multi-region-systems-without-3-the-cost/">
-        <h3>Design multi-region systems without 3× the cost</h3>
-        <p class="post-excerpt">Cut global infra bill 40% using regional Redis + Cloudflare Workers — cache hit ratios, secret rotation, and the surprise write latency win nobody mentions.</p>
-        <p class="post-reading-time">15 min read · 27 June 2026</p>
       </a>
       <a class="post-card" href="/ai-debt-trap-llm-code-vs-human-code-in-prod/">
         <h3>AI debt trap: LLM code vs human code in prod</h3>

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Aug 2026 03:20:04 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 03 Aug 2026 08:08:34 +0000</lastBuildDate>
+    <item>
+      <title>AI observability: why token counts lie</title>
+      <link>https://kubaik.github.io/ai-observability-why-token-counts-lie/</link>
+      <description>AI observability beyond token counts: cache hit ratios, prompt length drift, upstream 429s, and the three metrics that actually predict user-visible…</description>
+      <pubDate>Mon, 03 Aug 2026 08:08:22 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-observability-why-token-counts-lie/</guid>
+    </item>
     <item>
       <title>Prompt injection got the hype — poison data ruined us</title>
       <link>https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/</link>
@@ -96,13 +103,6 @@
       <description>Publish evolvable AWS Lambda layers without breaking deployments when upgrading runtimes or regions — versioning, CloudFormation patterns, and the…</description>
       <pubDate>Fri, 31 Jul 2026 14:15:41 +0000</pubDate>
       <guid>https://kubaik.github.io/boring-aws-lambda-layers-that-dont-lock/</guid>
-    </item>
-    <item>
-      <title>AI rollouts: 4 platforms to replace basic flags</title>
-      <link>https://kubaik.github.io/ai-rollouts-4-platforms-to-replace-basic-flags/</link>
-      <description>Why this list exists (what I was actually trying to solve) In 2025, our team in Nairobi had to ship a new AI pricing model to 12,000 smallholder farmers…</description>
-      <pubDate>Fri, 31 Jul 2026 10:06:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-rollouts-4-platforms-to-replace-basic-flags/</guid>
     </item>
     <item>
       <title>One misconfigured pool drained $4k/month</title>
