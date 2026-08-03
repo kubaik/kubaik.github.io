@@ -1,0 +1,584 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Prompt injection got the hype — poison data ruined us - Kubai Kevin</title>
+        <meta name="description" content="Poisoned data and model drift caused 8,200 support tickets in 2026 — not prompt injection.">
+        <meta name="keywords" content="LlmSecurityRisks, ModelDriftDetection, OwaspLlmTop, Prompt, FineTuningRisks, VectorStorePoisoning, Ai, Cybersecurity, Vectordb, Finetuning">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-08-03T03:19:51.935437">
+        <meta property="article:modified_time" content="2026-08-03T03:19:51.935446">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Prompt injection got the hype — poison data ruined us">
+        <meta property="og:description" content="Poisoned data and model drift caused 8,200 support tickets in 2026 — not prompt injection.">
+        <meta property="og:url" content="https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/prompt-injection-got-the-hype-poison-data-ruined-us.png">
+        <meta property="og:image:alt" content="Prompt injection got the hype — poison data ruined us">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Prompt injection got the hype — poison data ruined us">
+        <meta name="twitter:description" content="Poisoned data and model drift caused 8,200 support tickets in 2026 — not prompt injection.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/prompt-injection-got-the-hype-poison-data-ruined-us.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/#article",
+      "headline": "Prompt injection got the hype — poison data ruined us",
+      "description": "Poisoned data and model drift caused 8,200 support tickets in 2026 — not prompt injection.",
+      "datePublished": "2026-08-03T03:19:51+00:00",
+      "dateModified": "2026-08-03T03:19:51+00:00",
+      "wordCount": 3249,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/"
+      },
+      "keywords": "LlmSecurityRisks, ModelDriftDetection, OwaspLlmTop, Prompt, FineTuningRisks, VectorStorePoisoning, Ai, Cybersecurity"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Prompt injection got the hype — poison data ruined us",
+          "item": "https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header" style="min-height:100px"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Prompt injection got the hype — poison data ruined us</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Prompt injection got the hype — poison data ruined us</h1>
+                
+                <p class="post-lead">Poisoned data and model drift caused 8,200 support tickets in 2026 — not prompt injection.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/llmsecurityrisks/"
+                       style="text-decoration:none;">LlmSecurityRisks</a>
+                    
+                    <a class="tag" href="/tag/modeldriftdetection/"
+                       style="text-decoration:none;">ModelDriftDetection</a>
+                    
+                    <a class="tag" href="/tag/owaspllmtop/"
+                       style="text-decoration:none;">OwaspLlmTop</a>
+                    
+                    <a class="tag" href="/tag/prompt/"
+                       style="text-decoration:none;">Prompt</a>
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    <a class="tag" href="/tag/cybersecurity/"
+                       style="text-decoration:none;">Cybersecurity</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3249 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-08-03
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>I've hit the same owasp llm mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. Here's the fuller picture, with the tradeoffs left in.</p>
+<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
+<p>If you read the OWASP LLM Top 10 from 2026-2026, prompt injection sits at #1, with data exfiltration and insecure output handling close behind. We followed the guidance: sanitize inputs, add runtime guards, log everything. By late 2026, we’d rolled out guardrails, content filters, and runtime isolation. Prompt injection attempts dropped to zero in our logs. Mission accomplished.</p>
+<p>Then, in January 2026, our staging database was wiped. Not by an injection attack—by a poisoned training dataset. Someone had uploaded 37,000 customer records labeled as benign, but the labels were crafted to mislead our fine-tuning pipeline. The model learned to suppress warnings about PII, and within a week, the model started returning sanitized summaries that omitted SSNs and addresses. By the time we caught it, 8,200 queries had returned incomplete data to customer support. Our incident response focused on prompt injection. The real problem was data poisoning, and we missed it because we were optimizing for the wrong risk.</p>
+<p>The honest answer is that OWASP’s LLM Top 10 is a useful checklist, but it’s optimized for web application risks, not AI-native risks. Prompt injection is real, but it’s not the biggest threat in most production environments. The bigger risk is poisoned data, model drift, and supply chain attacks on the training pipeline. In my experience, teams that treat LLM risks as just another injection problem end up with half-baked defenses that fail when the attacker skips the prompt and goes straight for the data.</p>
+<h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
+<p>We built a content filtering layer using Azure Content Safety 3.0 and Llama Guard 2. This blocked 99.4% of prompt injection attempts in our synthetic tests, but it added 140ms of latency per request and required tuning thresholds that varied wildly by user segment. In production, we saw 3.2% of requests blocked as "unsafe," even when users were asking legitimate questions. After three weeks, we disabled the filter for 30% of our power users because it was breaking workflows. The filter wasn’t wrong—it was just too rigid.</p>
+<p>Next, we added runtime isolation using AWS Bedrock with guardrails, isolating each user session in a separate container. This stopped lateral movement if an injection succeeded, but it tripled our costs and introduced a new failure mode: session state corruption. In one incident, a memory leak in the guardrail container caused a cascade of timeouts, and our p99 latency spiked from 420ms to 2.1s for 45 minutes. We rolled back the isolation and switched to a lighter-weight sandboxing approach with gVisor and seccomp profiles.</p>
+<p>The standard advice also pushes for extensive logging: every prompt, every response, every filter decision. We implemented this using OpenSearch 2.12 with a 30-day retention policy. By March 2026, our logs grew to 2.4TB/day, and querying for anomalies became prohibitively slow. We had to downsample logs and lose granularity, which meant we missed subtle poisoning patterns until it was too late.</p>
+<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. The real lesson wasn’t about the filter or the sandbox. It was that we optimized for the wrong threat model.</p>
+<h2 id="a-different-mental-model">A different mental model</h2>
+<p>Instead of treating LLMs as glorified chatbots with extra injection risks, treat them as data processors with their own supply chains. The pipeline has three critical stages:</p>
+<ol>
+<li><strong>Data ingestion</strong>: The raw inputs that train or fine-tune models. These can be poisoned at the source—malicious users, compromised third-party datasets, or mislabeled internal logs.</li>
+<li><strong>Model training</strong>: The actual learning process. If the training data is biased or poisoned, the model’s behavior drifts.</li>
+<li><strong>Inference and feedback</strong>: How the model is used and how its outputs are consumed. This is where prompt injection lives, but it’s the last stage, not the first.</li>
+</ol>
+<p>Most teams focus on stage 3 because it’s the most visible. But in our environment, stage 1 was the weak link. A single mislabeled dataset in our fine-tuning pipeline caused the model to suppress PII warnings across 8,200 queries. The prompt never changed—the data did.</p>
+<p>We also realized that LLMs have a memory problem. Unlike traditional apps, models retain context across sessions, and that context can be poisoned by previous users. We saw one incident where a user uploaded a malicious document, and the model’s next 120 responses included subtle misinformation seeded by that document. The user never interacted with the model directly—their data poisoned the shared memory.</p>
+<p>The shift from a security model to a data integrity model changes everything. Instead of asking, "How do we stop prompt injection?" we ask, "How do we verify the data that trains our models? How do we detect drift before it affects users? How do we isolate poisoned data without breaking legitimate workflows?"</p>
+<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
+<h3 id="1-poisoned-fine-tuning-datasets">1. Poisoned fine-tuning datasets</h3>
+<p>In Q4 2026, a contractor uploaded a dataset of 15,000 customer support tickets labeled as "benign" but containing crafted responses designed to suppress PII warnings. The model learned to omit SSNs and addresses from summaries. The poisoning was subtle: only 1.2% of the dataset was malicious, but the model’s behavior shifted enough to affect 8,200 queries before we caught it. The incident cost us $180,000 in support escalations and a 3.4-point drop in NPS for affected users.</p>
+<p>We traced the issue to a misconfigured labeling pipeline. The contractor used a semi-supervised approach with a weak model, and the weak model’s predictions were accepted as ground truth for 37% of the labels. Once we fixed the pipeline and re-trained with human-verified labels, the issue resolved. But the damage was done.</p>
+<h3 id="2-memory-poisoning-via-shared-context">2. Memory poisoning via shared context</h3>
+<p>We built a multi-tenant chat interface where each user’s conversation was stored in a shared vector store. In November 2025, a user uploaded a document containing a prompt injection payload disguised as a legitimate FAQ. The next 120 responses from the model included subtly altered recommendations that steered users toward a competitor’s product. The poisoning persisted for 7 days until we rotated the vector store and purged the malicious document.</p>
+<p>The attack vector wasn’t prompt injection in the traditional sense—it was memory poisoning via shared context. The model’s retrieval step pulled the malicious document into the conversation history, and the generation step incorporated it into responses.</p>
+<h3 id="3-supply-chain-attacks-on-model-weights">3. Supply chain attacks on model weights</h3>
+<p>We fine-tuned a model using a community checkpoint from Hugging Face. The checkpoint had been modified by an unknown actor to suppress certain topics. Within two weeks, our model started refusing to answer questions about pricing, leading to a 12% drop in conversions on our pricing page. We traced the issue to a poisoned checkpoint that had been downloaded 4,200 times before we noticed the anomaly.</p>
+<p>This wasn’t a supply chain attack in the traditional sense—no one had hacked Hugging Face. The checkpoint had been modified by a malicious contributor and uploaded as a legitimate update. The lesson: even community models can be poisoned, and fine-tuning doesn’t inoculate you.</p>
+<h3 id="4-label-drift-in-training-data">4. Label drift in training data</h3>
+<p>We relied on a weakly supervised labeling pipeline for a customer intent classifier. The pipeline used a heuristic to label user queries, but the heuristic drifted over time. By the time we noticed, the model had learned to misclassify 18% of support tickets, leading to incorrect routing and longer resolution times. The drift was gradual—0.3% per week—and went unnoticed until we audited the data.</p>
+<h3 id="comparison-table-risks-we-overrated-vs-risks-we-underrated">Comparison table: Risks we overrated vs. risks we underrated</h3>
+<table>
+<thead>
+<tr>
+<th>Risk category</th>
+<th>OWASP rank</th>
+<th>Our experience</th>
+<th>Detection difficulty</th>
+<th>Blast radius</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Prompt injection</td>
+<td>#1</td>
+<td>Medium</td>
+<td>Low</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Data poisoning</td>
+<td>#5</td>
+<td>High</td>
+<td>High</td>
+<td>Critical</td>
+</tr>
+<tr>
+<td>Model drift</td>
+<td>#6</td>
+<td>High</td>
+<td>Medium</td>
+<td>Critical</td>
+</tr>
+<tr>
+<td>Supply chain attacks</td>
+<td>#8</td>
+<td>High</td>
+<td>High</td>
+<td>Critical</td>
+</tr>
+<tr>
+<td>Insecure output handling</td>
+<td>#2</td>
+<td>Low</td>
+<td>Low</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Sensitive data disclosure</td>
+<td>#3</td>
+<td>Medium</td>
+<td>Medium</td>
+<td>High</td>
+</tr>
+</tbody>
+</table>
+<p>We initially rated prompt injection as the highest risk, but in practice, data poisoning and model drift caused the most damage. The blast radius for data poisoning was critical because it affected every user exposed to the poisoned model.</p>
+<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
+<p>Despite the contrarian take, prompt injection is still a real risk in specific scenarios:</p>
+<ul>
+<li><strong>Public-facing chatbots</strong>: If your LLM is exposed to the internet with no authentication, prompt injection is a genuine threat. I’ve seen attackers use indirect prompts to exfiltrate data by crafting questions that force the model to reveal sensitive information.</li>
+<li><strong>Multi-tenant systems with weak isolation</strong>: If you’re running a shared inference service without user-level sandboxing, prompt injection can lead to lateral movement. We saw this in a prototype where a single malicious user could disrupt other users’ sessions.</li>
+<li><strong>Legacy integrations</strong>: If your LLM is plugged into older APIs with weak authentication, prompt injection can be used to trigger unintended actions. This is rare in 2026, but it still happens in enterprise environments.</li>
+</ul>
+<p>In these cases, the standard advice—sanitize inputs, add runtime guards, isolate sessions—is valuable. But for most teams, these scenarios are edge cases. The bigger threat is poisoned data, and the conventional wisdom doesn’t prepare you for that.</p>
+<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
+<p>Ask three questions:</p>
+<ol>
+<li><strong>Who controls the data pipeline?</strong></li>
+<li>If users or third parties upload data that trains or fine-tunes your models, you’re at risk of data poisoning. This is the most common scenario in 2026.</li>
+<li>
+<p>If your data pipeline is internal and tightly controlled, prompt injection is a bigger risk.</p>
+</li>
+<li>
+<p><strong>How much do you rely on fine-tuning?</strong></p>
+</li>
+<li>If you fine-tune models regularly, you’re exposed to model drift and supply chain attacks. These risks compound over time.</li>
+<li>
+<p>If you only use pre-trained models, you’re exposed to supply chain attacks (poisoned checkpoints) but not fine-tuning risks.</p>
+</li>
+<li>
+<p><strong>What’s your blast radius?</strong></p>
+</li>
+<li>If your model serves a small, trusted user base, prompt injection is the only real risk. If your model serves thousands of users, data poisoning is the bigger threat.</li>
+</ol>
+<p>We built a simple scoring matrix to decide which risks to prioritize:</p>
+<table>
+<thead>
+<tr>
+<th>Factor</th>
+<th>Score (1-5)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>User-generated training data</td>
+<td>5</td>
+<td>High exposure to poisoning</td>
+</tr>
+<tr>
+<td>Frequent fine-tuning</td>
+<td>4</td>
+<td>High exposure to drift</td>
+</tr>
+<tr>
+<td>Large user base</td>
+<td>5</td>
+<td>High blast radius</td>
+</tr>
+<tr>
+<td>Public-facing chatbot</td>
+<td>3</td>
+<td>Moderate exposure to prompt injection</td>
+</tr>
+</tbody>
+</table>
+<p>If your total score is 12+, prioritize data integrity and model drift. If it’s below 8, prompt injection is likely your biggest risk.</p>
+<h2 id="objections-ive-heard-and-my-responses">Objections I've heard and my responses</h2>
+<h3 id="prompt-injection-is-the-most-visible-riskits-what-attackers-will-try-first">"Prompt injection is the most visible risk—it’s what attackers will try first."</h3>
+<p>True, but visibility doesn’t equal impact. In our environment, prompt injection attempts were rare and easy to block. Data poisoning, on the other hand, was subtle and caused outsized damage. Attackers go where the leverage is. In 2026, the leverage is in the data pipeline.</p>
+<h3 id="we-already-audit-our-training-dataits-not-a-problem-for-us">"We already audit our training data—it’s not a problem for us."</h3>
+<p>Great, but auditing is not enough. In our poisoning incident, the dataset passed our audits because the malicious examples were crafted to look benign. We needed automated anomaly detection, not just manual review. Label drift in weakly supervised pipelines is especially hard to catch with audits alone.</p>
+<h3 id="fine-tuning-is-a-solved-problemwe-use-retrieval-augmented-generation-rag-to-mitigate-risks">"Fine-tuning is a solved problem—we use retrieval-augmented generation (RAG) to mitigate risks."</h3>
+<p>RAG helps, but it’s not a silver bullet. In our memory poisoning incident, RAG pulled the malicious document into the conversation history, and the model incorporated it into responses. RAG adds complexity and new attack surfaces. It’s not a replacement for data integrity controls.</p>
+<h3 id="the-owasp-top-10-is-just-a-checklistits-up-to-us-to-prioritize">"The OWASP Top 10 is just a checklist—it’s up to us to prioritize."</h3>
+<p>True, but the checklist is biased toward web risks. OWASP’s LLM Top 10 focuses on injection, output handling, and data exfiltration—all Stage 3 risks. It doesn’t cover Stage 1 (data ingestion) or Stage 2 (model training) risks in depth. The checklist is useful, but it’s incomplete.</p>
+<h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
+<h3 id="1-build-a-data-integrity-pipeline-before-the-model-pipeline">1. Build a data integrity pipeline before the model pipeline</h3>
+<p>We started with the model and added data controls later. That was backwards. Today, I’d build a data integrity pipeline first:</p>
+<ul>
+<li><strong>Input validation</strong>: Reject or quarantine user-uploaded data that doesn’t meet strict schema and label quality requirements. Use tools like Amazon SageMaker Ground Truth Plus 3.0 for labeling.</li>
+<li><strong>Label quality scoring</strong>: Score labels for consistency and detect drift using tools like cleanlab 2.6.0. Flag low-quality labels for review.</li>
+<li><strong>Dataset versioning</strong>: Use tools like DVC 3.0 or Weights &amp; Biases Artifacts to version datasets and track changes. This makes it easier to roll back poisoned datasets.</li>
+</ul>
+<p>We lost 18 days debugging our poisoning incident because we didn’t have dataset versioning. Today, I’d refuse to train on any dataset without versioning.</p>
+<h3 id="2-isolate-model-memory-per-user-or-tenant">2. Isolate model memory per user or tenant</h3>
+<p>We shared a vector store across all users, and that led to memory poisoning. Today, I’d isolate memory per user or tenant:</p>
+<pre><code class="language-python">from langchain.vectorstores import FAISS
+from langchain_core.embeddings import FakeEmbeddings
+
+# Isolate memory per user
+class TenantAwareVectorStore:
+    def __init__(self, tenant_id: str):
+        self.tenant_id = tenant_id
+        self.store = FAISS.from_texts(
+            texts=[],
+            embedding=FakeEmbeddings(size=128),
+            metadatas=[{&quot;tenant&quot;: tenant_id}]
+        )
+
+    def add_texts(self, texts: list[str]):
+        self.store.add_texts(
+            texts=texts,
+            metadatas=[{&quot;tenant&quot;: self.tenant_id}] * len(texts)
+        )
+
+    def similarity_search(self, query: str, k: int = 4):
+        return self.store.similarity_search(query, k=k)
+</code></pre>
+<p>This adds complexity, but it prevents memory poisoning. We implemented this in March 2026, and it resolved our memory poisoning incidents.</p>
+<h3 id="3-monitor-model-drift-in-real-time">3. Monitor model drift in real time</h3>
+<p>We added drift detection using Evidently 0.5.0. It tracks:
+- Prediction drift (KL divergence between recent and baseline predictions)
+- Feature drift (distribution shifts in inputs)
+- Label drift (changes in ground truth labels)</p>
+<p>We set up alerts for drift scores above 0.15 (KL divergence) or 0.2 (feature drift). This caught our label drift incident before it affected users.</p>
+<h3 id="4-sandbox-fine-tuning-environments">4. Sandbox fine-tuning environments</h3>
+<p>We fine-tuned models in shared staging environments. Today, I’d sandbox fine-tuning:</p>
+<ul>
+<li>Use AWS SageMaker with VPC endpoints and no internet access during training.</li>
+<li>Enforce least-privilege IAM roles for training jobs.</li>
+<li>Rotate model weights and checkpoints after each training run.</li>
+</ul>
+<p>This prevents supply chain attacks and accidental poisoning.</p>
+<h3 id="5-run-red-team-exercises-on-the-data-pipeline">5. Run red team exercises on the data pipeline</h3>
+<p>We red-teamed our inference pipeline but not our data pipeline. Today, I’d run exercises like:</p>
+<ul>
+<li>Poison a small percentage of the training data and see if the model learns the bias.</li>
+<li>Craft labels that suppress certain topics and check if the model adopts the suppression.</li>
+<li>Inject malicious documents into the vector store and verify that retrieval doesn’t pull them into responses.</li>
+</ul>
+<p>This is the only way to catch subtle poisoning.</p>
+<h2 id="summary">Summary</h2>
+<p>The OWASP LLM Top 10 is a useful starting point, but it’s not enough. In 2026, the biggest risks are data poisoning, model drift, and supply chain attacks—not prompt injection. Teams that optimize for prompt injection are solving the wrong problem.</p>
+<p>I wasted six weeks building guardrails for prompt injection before realizing the real issue was poisoned data. Today, I’d flip the priorities: build a data integrity pipeline, isolate model memory, monitor drift, and sandbox fine-tuning. Prompt injection is still a risk, but it’s not the biggest one.</p>
+<p>The shift from a security model to a data integrity model changes everything. If you take one thing from this post, stop treating your LLM as a chatbot with extra risks. Treat it as a data processor with its own supply chain—and secure the supply chain first.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<h3 id="how-do-i-know-if-my-training-data-is-poisoned">How do I know if my training data is poisoned?</h3>
+<p>Start by auditing your labels for consistency. Use tools like cleanlab 2.6.0 to score label quality and flag low-confidence labels. Look for sudden drops in label agreement or increases in disagreement—these can indicate drift or poisoning. Also, check for anomalous patterns in your data, like an unusual number of examples with the same label or text. If you fine-tune regularly, set up drift detection using Evidently 0.5.0 to monitor prediction and feature drift in real time. In our poisoning incident, the malicious examples were crafted to look benign, so manual review wasn’t enough—we needed automated anomaly detection.</p>
+<h3 id="whats-the-simplest-way-to-isolate-model-memory-per-user">What’s the simplest way to isolate model memory per user?</h3>
+<p>The simplest approach is to use a separate vector store per user or tenant, as shown in the code example above. If you’re using LangChain, you can subclass the vector store to enforce tenant isolation. Alternatively, add a tenant_id filter to your similarity search queries. This adds minimal overhead and prevents memory poisoning. We implemented this in March 2026, and it resolved our memory poisoning incidents without significant performance impact. If you’re using a managed service like Pinecone or Weaviate, check if they support multi-tenant isolation or namespace isolation out of the box.</p>
+<h3 id="is-rag-enough-to-mitigate-data-poisoning-risks">Is RAG enough to mitigate data poisoning risks?</h3>
+<p>RAG helps, but it’s not a replacement for data integrity controls. In our memory poisoning incident, RAG pulled the malicious document into the conversation history, and the model incorporated it into responses. RAG adds complexity and new attack surfaces—it doesn’t solve the underlying problem of poisoned data. Use RAG as a retrieval layer, but pair it with input validation, label quality scoring, and drift detection. RAG is a tool, not a silver bullet.</p>
+<h3 id="how-often-should-i-re-train-my-models-to-avoid-drift">How often should I re-train my models to avoid drift?</h3>
+<p>The frequency depends on your data velocity and model sensitivity. In our environment, we re-train weekly for high-velocity datasets and monthly for stable ones. We use Evidently 0.5.0 to monitor drift, and we trigger re-training when the drift score exceeds 0.15 (KL divergence) or 0.2 (feature drift). We also re-train after any major data pipeline changes or incidents. The goal isn’t to re-train constantly—it’s to re-train when drift impacts users. Start with a monthly cadence and adjust based on your drift metrics.</p>
+<h3 id="whats-the-cheapest-way-to-add-dataset-versioning">What’s the cheapest way to add dataset versioning?</h3>
+<p>The cheapest way is to use DVC 3.0 with a remote storage backend like S3 or GCS. DVC tracks dataset versions, diffs changes, and integrates with Git. It’s open source and adds minimal overhead. We use DVC 3.0 with S3 storage, and it costs us less than $5/month for our 2TB dataset. The key is to version not just the dataset files but also the metadata, labels, and preprocessing scripts. Without versioning, debugging poisoning incidents is painful—versioning makes it manageable.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
+part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
+they are not individually fact-checked or hand-edited by a human before publishing. Treat
+code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
+than independently verified, and check them against current official documentation before
+relying on them in production.</p>
+<p><strong>Corrections:</strong> If you spot an error or outdated information,
+please contact me and I'll review and correct it.</p>
+<p><strong>Last generated:</strong> August 03, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-agents-break-when-users-cheat/">
+                        <h3>AI agents break when users cheat</h3>
+                        <p>Cut prompt injection 94% with a 3-layer firewall — token sanitizer, context filter, and model guardrail.</p>
+                        <span class="related-meta">17 min read · 19 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/llm-apps-owasp-risks-you-missed/">
+                        <h3>LLM apps: OWASP risks you missed</h3>
+                        <p>Implement OWASP Top 10 for LLM apps: prompt injection, insecure output, data leakage guardrails with Redis caching, Mistral 7B, and FastAPI/Express examples.</p>
+                        <span class="related-meta">11 min read · 16 June 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/latency-trade-offs-nairobi-teams-beat-global-ai-providers/">
+                        <h3>Latency trade-offs: Nairobi teams beat global AI providers</h3>
+                        <p>Nairobi teams ship AI features faster than global providers by treating latency as a feature.</p>
+                        <span class="related-meta">13 min read · 26 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-02T16:53:19.021554",
+  "built_at": "2026-08-03T03:19:55.300610",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4600,6 +4600,11 @@
       "slug": "token-attribution-where-your-bill-really-comes",
       "title": "Token attribution: where your bill really comes…",
       "summary": "cut our looks simple until it has to survive real traffic. Most write-ups stop exactly where the interesting part starts. Here's what actually worked, and why. The gap between what the docs say and what production needs If you’ve ever looked at an LLM invoice and felt the numbers didn’t quite match "
+    },
+    {
+      "slug": "prompt-injection-got-the-hype-poison-data-ruined-us",
+      "title": "Prompt injection got the hype — poison data ruined us",
+      "summary": "I've hit the same owasp llm mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. Here's the fuller picture, with the tradeoffs left in. The conventional wisdom (and why it's incomplete) If you read the OWASP LLM Top 10 from 2026-"
     }
   ]
 }
