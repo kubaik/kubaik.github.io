@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Aug 2026 10:05:46 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 03 Aug 2026 14:47:37 +0000</lastBuildDate>
+    <item>
+      <title>Kubernetes or Nomad: the real experiment cost split</title>
+      <link>https://kubaik.github.io/kubernetes-or-nomad-the-real-experiment-cost-split/</link>
+      <description>Nomad 1.7 vs Kubernetes 1.30 for AI experiments — GPU idle cost, pod startup latency, and the 70 % experiment budget split most teams miss</description>
+      <pubDate>Mon, 03 Aug 2026 14:47:24 +0000</pubDate>
+      <guid>https://kubaik.github.io/kubernetes-or-nomad-the-real-experiment-cost-split/</guid>
+    </item>
     <item>
       <title>Supervisor vs swarm vs debate vs pipeline</title>
       <link>https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/</link>
@@ -138,13 +145,6 @@
       <description>Agent identity in 2026: why SPIFFE, JWTs, and Redis caches break under real African power and network conditions.</description>
       <pubDate>Thu, 30 Jul 2026 08:41:42 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-auth-the-silent-deployment-killer/</guid>
-    </item>
-    <item>
-      <title>Event-driven beats agent-driven 9/10 times</title>
-      <link>https://kubaik.github.io/event-driven-beats-agent-driven-910-times/</link>
-      <description>Choose event-driven over agent-driven 9/10 times — latency spikes, locking, and retry storms explained with concrete fixes and 2026 tools like EventBridge…</description>
-      <pubDate>Thu, 30 Jul 2026 02:38:09 +0000</pubDate>
-      <guid>https://kubaik.github.io/event-driven-beats-agent-driven-910-times/</guid>
     </item>
   </channel>
 </rss>

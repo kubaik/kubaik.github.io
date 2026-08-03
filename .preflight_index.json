@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-03T10:05:38.426486",
+  "built_at": "2026-08-03T14:47:28.242111",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4620,6 +4620,11 @@
       "slug": "supervisor-vs-swarm-vs-debate-vs-pipeline",
       "title": "Supervisor vs swarm vs debate vs pipeline",
       "summary": "Most multiagent orchestration guides assume a clean environment and a patient timeline. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in. The gap between what the docs say and what production needs I spent three weeks"
+    },
+    {
+      "slug": "kubernetes-or-nomad-the-real-experiment-cost-split",
+      "title": "Kubernetes or Nomad: the real experiment cost split",
+      "summary": "A colleague asked me about infrastructure patterns during a code review recently, and my first answer wasn't a good one. Most write-ups stop exactly where the interesting part starts. Here's the root cause, not just the symptom. Why this comparison matters right now Two years ago we moved our AI exp"
     }
   ]
 }

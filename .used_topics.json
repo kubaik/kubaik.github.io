@@ -128,5 +128,6 @@
   "AI observability beyond token counts: what actually predicts user-visible degradation",
   "How I measure and control token spend at 50k+ daily LLM calls without killing UX",
   "How Cursor, Claude Code, and Windsurf actually changed our daily engineering workflow in 2026",
-  "Multi-agent orchestration patterns that survive production (supervisor, swarm, debate, pipeline)"
+  "Multi-agent orchestration patterns that survive production (supervisor, swarm, debate, pipeline)",
+  "The infrastructure patterns that let us run 3x more AI experiments for the same budget"
 ]
