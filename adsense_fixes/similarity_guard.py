@@ -169,11 +169,15 @@ def _topic_tokens(text: str) -> List[str]:
     return ["<num>" if t[0].isdigit() else t for t in tokens]
 
 
-def _topic_key_terms(title: str, content: str) -> Set[str]:
+_YEAR_RE = re.compile(r"\b(?:19|20)\d{2}\b")
+
+
+def _topic_key_terms(title: str, content: str) -> Tuple[Set[str], Set[str]]:
     """
-    Extract a compact set of topic-defining terms from the title and
-    the first ~150 words of body content (the part that carries the
-    "what is this post actually about" signal, before specifics vary).
+    Extract topic-defining terms from the title and the first ~150 words
+    of body content, split into UNIGRAMS and BIGRAMS (returned separately,
+    not merged) so callers can weight them differently — see
+    _topic_key_combined_score for why that separation matters.
 
     WIDENED from ~40 → ~150 words: with this blog's post structure, the
     first 40 words are frequently a hook/anecdote opener that doesn't
@@ -181,15 +185,53 @@ def _topic_key_terms(title: str, content: str) -> Set[str]:
     once the intro paragraph gets going. 150 words reliably captures the
     intro without pulling in enough of the body to start matching on
     generic supporting vocabulary shared by unrelated posts.
+
+    Year mentions (e.g. "in 2026") are stripped before tokenizing rather
+    than collapsed to '<num>' like other numbers, since on a blog where
+    nearly every post opens with "...in 2026" the year is calendar
+    boilerplate, not topic content. Other numbers (counts, percentages,
+    dollar amounts) still collapse to '<num>' as before.
     """
     lead = " ".join(content.split()[:150])
-    combined = f"{title} {lead}"
+    combined = _YEAR_RE.sub(" ", f"{title} {lead}")
     words = [w for w in _topic_tokens(combined)
              if w == "<num>" or (w not in _STOPWORDS and len(w) > 2)]
-    # Keep both unigrams and bigrams — bigrams capture compound technical
-    # terms ("zero trust", "post quantum") that unigrams alone would blur.
     bigrams = {f"{words[i]}_{words[i+1]}" for i in range(len(words) - 1)}
-    return set(words) | bigrams
+    return set(words), bigrams
+
+
+# Bigrams ("offline_first", "starlink_4g", "feature_flags") only match when
+# two posts share a specific multi-word concept — they're a much stronger
+# duplicate signal than a shared single word. Unrelated-but-adjacent posts
+# in the same technical space (e.g. two different infra-reliability posts)
+# routinely share several generic unigrams ("systems", "cloud", "api",
+# "patterns") without covering the same actual angle; a flat Jaccard over
+# a merged unigram+bigram set let that generic overlap carry as much
+# weight as a genuine phrase match, which is what made real duplicates
+# (Starlink/4G, offline-first, feature-flags) score in the same 29-33%
+# band as clearly-unrelated pairs (Pulumi/Terraform vs. unrelated infra
+# posts) on the live corpus. Weighting bigrams much more heavily is meant
+# to pull those two clusters apart — re-run the audit CLI after this
+# change to confirm it actually does, on your real data.
+_BIGRAM_WEIGHT = 0.75
+_UNIGRAM_WEIGHT = 0.25
+
+
+def _topic_key_combined_score(entry_a: dict, entry_b: dict) -> float:
+    """Combine bigram + unigram topic-key overlap into one weighted score.
+    Both entries are dicts with 'topic_unigrams' and 'topic_bigrams' lists
+    (the shape stored in FingerprintIndex / built ad hoc for a candidate).
+    Used by both SimilarityGuard.check() and the audit CLI so they can
+    never silently disagree on how a score is computed."""
+    bigram_score = _jaccard(
+        set(entry_a.get("topic_bigrams", [])),
+        set(entry_b.get("topic_bigrams", [])),
+    )
+    unigram_score = _jaccard(
+        set(entry_a.get("topic_unigrams", [])),
+        set(entry_b.get("topic_unigrams", [])),
+    )
+    return _BIGRAM_WEIGHT * bigram_score + _UNIGRAM_WEIGHT * unigram_score
 
 
 def _shingles(text: str, k: int = 5) -> Set[str]:
@@ -297,12 +339,14 @@ class FingerprintIndex:
                 fp = hashlib.sha256(normalized.encode()).hexdigest()
                 shingle_list = sorted(_shingles(normalized, k=5))[
                     :2000]  # cap for disk size
-                topic_terms = sorted(_topic_key_terms(title, content))
+                topic_unigrams, topic_bigrams = _topic_key_terms(
+                    title, content)
                 self._index[slug] = {
                     "mtime": mtime,
                     "fingerprint": fp,
                     "shingles": shingle_list,
-                    "topic_terms": topic_terms,
+                    "topic_unigrams": sorted(topic_unigrams),
+                    "topic_bigrams": sorted(topic_bigrams),
                     "title": title,
                 }
                 updated = True
@@ -322,12 +366,13 @@ class FingerprintIndex:
         normalized = _normalize_text(content)
         fp = hashlib.sha256(normalized.encode()).hexdigest()
         shingle_list = sorted(_shingles(normalized, k=5))[:2000]
-        topic_terms = sorted(_topic_key_terms(title, content))
+        topic_unigrams, topic_bigrams = _topic_key_terms(title, content)
         self._index[slug] = {
             "mtime": 0,  # will be updated on next build()
             "fingerprint": fp,
             "shingles": shingle_list,
-            "topic_terms": topic_terms,
+            "topic_unigrams": sorted(topic_unigrams),
+            "topic_bigrams": sorted(topic_bigrams),
             "title": title,
         }
         self._save()
@@ -382,14 +427,18 @@ class SimilarityGuard:
         # Runs FIRST and can block on its own, independent of body Jaccard,
         # because it's specifically designed to catch cases where body
         # Jaccard is deflated by swapped numbers/vendor names.
-        candidate_topic_terms = _topic_key_terms(title, content)
+        candidate_unigrams, candidate_bigrams = _topic_key_terms(
+            title, content)
+        candidate_entry = {
+            "topic_unigrams": sorted(candidate_unigrams),
+            "topic_bigrams": sorted(candidate_bigrams),
+        }
         for existing_slug, entry in existing.items():
             if existing_slug == slug:
                 continue
-            existing_topic_terms = set(entry.get("topic_terms", []))
-            if not existing_topic_terms:
+            if not entry.get("topic_unigrams") and not entry.get("topic_bigrams"):
                 continue
-            topic_score = _jaccard(candidate_topic_terms, existing_topic_terms)
+            topic_score = _topic_key_combined_score(candidate_entry, entry)
             if topic_score > 0.05:
                 result.topic_key_scores[existing_slug] = round(topic_score, 3)
 
@@ -594,8 +643,9 @@ class SimilarityGuard:
 #
 #   python similarity_guard.py audit ./docs
 #
-# It recomputes topic_terms for every published post using the CURRENT
-# window/threshold constants, scores every pair, and prints:
+# It recomputes topic_unigrams/topic_bigrams for every published post using
+# the CURRENT window/threshold constants, scores every pair with the same
+# bigram-weighted formula production uses, and prints:
 #   - the score distribution (so you can see where a natural cut-off falls)
 #   - every pair that would BLOCK or WARN under the current thresholds
 #
@@ -603,7 +653,7 @@ class SimilarityGuard:
 # the BLOCK list, raise _TOPIC_KEY_BLOCK_THRESHOLD; if known-duplicate
 # topics you expected to catch aren't there, lower it. Nothing here
 # writes to .similarity_index.json or touches your posts — it's read-only.
-def _audit_topic_key_threshold(docs_dir: str) -> None:
+def _audit_topic_key_threshold(docs_dir: str, top_n: int = 20) -> None:
     import itertools
     import statistics
 
@@ -620,9 +670,7 @@ def _audit_topic_key_threshold(docs_dir: str) -> None:
     slugs = list(entries.keys())
     scores: List[Tuple[str, str, float]] = []
     for slug_a, slug_b in itertools.combinations(slugs, 2):
-        terms_a = set(entries[slug_a].get("topic_terms", []))
-        terms_b = set(entries[slug_b].get("topic_terms", []))
-        score = _jaccard(terms_a, terms_b)
+        score = _topic_key_combined_score(entries[slug_a], entries[slug_b])
         if score > 0.0:
             scores.append((slug_a, slug_b, score))
 
@@ -640,36 +688,57 @@ def _audit_topic_key_threshold(docs_dir: str) -> None:
             f"max={max(raw_scores):.2f}"
         )
 
+    # ALWAYS show the highest-scoring pairs, regardless of whether they
+    # cross WARN/BLOCK. This matters most when nothing crosses the
+    # current thresholds — that could mean your corpus is genuinely
+    # diverse, or it could mean the thresholds are miscalibrated and
+    # blind to real near-duplicates sitting just below the cut-off.
+    # You can't tell the difference from summary stats alone; you have
+    # to look at the actual title pairs.
+    print(
+        f"\nTop {min(top_n, len(scores))} highest-scoring pairs (regardless of threshold):")
+    for slug_a, slug_b, score in scores[:top_n]:
+        title_a = entries[slug_a].get("title", slug_a)
+        title_b = entries[slug_b].get("title", slug_b)
+        flag = (
+            "BLOCK" if score >= _TOPIC_KEY_BLOCK_THRESHOLD else
+            "WARN " if score >= _TOPIC_KEY_WARN_THRESHOLD else
+            "     "
+        )
+        print(f"  [{flag}] {score:.0%}  '{title_a}'  ≈  '{title_b}'")
+    if not scores:
+        print("  (no overlapping pairs at all — corpus shares zero topic terms pairwise)")
+
     blocked = [t for t in scores if t[2] >= _TOPIC_KEY_BLOCK_THRESHOLD]
     warned = [t for t in scores if _TOPIC_KEY_WARN_THRESHOLD <=
               t[2] < _TOPIC_KEY_BLOCK_THRESHOLD]
 
     print(
         f"\nWould BLOCK ({len(blocked)} pair(s), score >= "
-        f"{_TOPIC_KEY_BLOCK_THRESHOLD:.2f}):"
+        f"{_TOPIC_KEY_BLOCK_THRESHOLD:.2f}) beyond what's shown above, if any:"
     )
-    for slug_a, slug_b, score in blocked[:50]:
+    for slug_a, slug_b, score in blocked[top_n:top_n + 30]:
         title_a = entries[slug_a].get("title", slug_a)
         title_b = entries[slug_b].get("title", slug_b)
         print(f"  {score:.0%}  '{title_a}'  ≈  '{title_b}'")
-    if len(blocked) > 50:
-        print(f"  ... and {len(blocked) - 50} more")
 
     print(
         f"\nWould WARN ({len(warned)} pair(s), "
-        f"{_TOPIC_KEY_WARN_THRESHOLD:.2f} <= score < {_TOPIC_KEY_BLOCK_THRESHOLD:.2f}):"
+        f"{_TOPIC_KEY_WARN_THRESHOLD:.2f} <= score < {_TOPIC_KEY_BLOCK_THRESHOLD:.2f}) "
+        "beyond what's shown above, if any:"
     )
-    for slug_a, slug_b, score in warned[:50]:
+    for slug_a, slug_b, score in warned[top_n:top_n + 30]:
         title_a = entries[slug_a].get("title", slug_a)
         title_b = entries[slug_b].get("title", slug_b)
         print(f"  {score:.0%}  '{title_a}'  ≈  '{title_b}'")
-    if len(warned) > 50:
-        print(f"  ... and {len(warned) - 50} more")
 
     print(
-        "\nRead through the BLOCK list above: any pair there that is NOT "
-        "actually a rehash of the same angle means the threshold is too "
-        "low for your corpus and should go up."
+        "\nLook at the top-N list above:\n"
+        "  - If the highest pair(s) genuinely cover the same angle, pick a\n"
+        "    threshold just below their score and set BLOCK there.\n"
+        "  - If even the top pair is clearly a different topic, this corpus\n"
+        "    may just be diverse — leaving the thresholds high (or this layer\n"
+        "    rarely firing) is correct, not broken."
     )
 
 
@@ -677,13 +746,15 @@ if __name__ == "__main__":
     import sys as _sys
 
     if len(_sys.argv) >= 3 and _sys.argv[1] == "audit":
-        _audit_topic_key_threshold(_sys.argv[2])
+        _top_n = int(_sys.argv[3]) if len(_sys.argv) >= 4 else 20
+        _audit_topic_key_threshold(_sys.argv[2], top_n=_top_n)
     else:
         print(
-            "Usage: python similarity_guard.py audit <docs_dir>\n"
+            "Usage: python similarity_guard.py audit <docs_dir> [top_n]\n"
             "  e.g. python similarity_guard.py audit ./docs\n"
+            "       python similarity_guard.py audit ./docs 30\n"
             "Scores every pair of published posts using the CURRENT "
-            "topic-key window/thresholds and reports where the current "
-            "cut-offs would fall — run this before trusting the tuned "
-            "thresholds in production."
+            "topic-key window/thresholds, always prints the top-N highest-\n"
+            "scoring pairs (regardless of threshold) so you can calibrate "
+            "even when nothing currently crosses WARN/BLOCK."
         )

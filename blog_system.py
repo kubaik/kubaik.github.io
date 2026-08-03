@@ -1511,10 +1511,10 @@ def inject_eeat_signals(post, topic: str) -> None:
 _PREFLIGHT_CACHE_FILE = Path(".preflight_index.json")
 _PREFLIGHT_CACHE_TTL_SECONDS = 3600
 _PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD = 0.60  # was 0.55 - now matches
-                                               # CONTENT_DUPLICATE_THRESHOLD's
-                                               # calibration below so the two
-                                               # gates can't disagree about
-                                               # what counts as a duplicate
+# CONTENT_DUPLICATE_THRESHOLD's
+# calibration below so the two
+# gates can't disagree about
+# what counts as a duplicate
 _PREFLIGHT_MAX_RETRIES = 3
 
 
@@ -4138,7 +4138,8 @@ if __name__ == "__main__":
                     # every time the topic pool is temporarily saturated, but
                     # print loudly so it's visible in the run log.
                     print("\n" + "═" * 68)
-                    print("⏭️   NO POST PUBLISHED TODAY — every candidate topic was a duplicate")
+                    print(
+                        "⏭️   NO POST PUBLISHED TODAY — every candidate topic was a duplicate")
                     print("═" * 68)
                     print(f"  Reason : {e}")
                     print(
@@ -4171,6 +4172,33 @@ if __name__ == "__main__":
                 dup_detected = False
                 dup_reason = ""
 
+                # Quality validation runs FIRST, per similarity_guard.py's own
+                # "HOW TO INTEGRATE" docstring (call SimilarityGuard *after*
+                # _validate_content_quality()) — hard failures are a cheap,
+                # local check and should reject obviously broken content
+                # before we spend time building/querying the similarity index.
+                quality_warnings, hard_failures = _validate_content_quality(
+                    blog_post.content, blog_post.title
+                )
+
+                if hard_failures:
+                    print(f"\n🛑  HARD QUALITY FAILURES — post will NOT be saved:")
+                    for failure in hard_failures:
+                        print(f"   ✗ {failure}")
+                    print()
+                    print("   This post has been aborted. No file was written.")
+                    print("   Fix the issues above or regenerate with a new topic.")
+                    sys.exit(1)
+
+                if quality_warnings:
+                    print(
+                        f"\n⚠️  Content quality warnings ({len(quality_warnings)}):")
+                    for w in quality_warnings:
+                        print(f"   • {w}")
+                    print()
+                else:
+                    print("✅  Content quality check passed (0 warnings).")
+
                 try:
                     guard = SimilarityGuard(docs_dir=blog_system.output_dir)
                     sim_result = guard.check(blog_post)
@@ -4181,31 +4209,10 @@ if __name__ == "__main__":
                         for warning in sim_result.warnings:
                             print(f"  ⚠️  Similarity: {warning}")
                 except Exception as sim_err:
-                    print(f"  ⚠️  SimilarityGuard failed (non-fatal): {sim_err}")
+                    print(
+                        f"  ⚠️  SimilarityGuard failed (non-fatal): {sim_err}")
 
                 if not dup_detected:
-                    quality_warnings, hard_failures = _validate_content_quality(
-                        blog_post.content, blog_post.title
-                    )
-
-                    if hard_failures:
-                        print(f"\n🛑  HARD QUALITY FAILURES — post will NOT be saved:")
-                        for failure in hard_failures:
-                            print(f"   ✗ {failure}")
-                        print()
-                        print("   This post has been aborted. No file was written.")
-                        print("   Fix the issues above or regenerate with a new topic.")
-                        sys.exit(1)
-
-                    if quality_warnings:
-                        print(
-                            f"\n⚠️  Content quality warnings ({len(quality_warnings)}):")
-                        for w in quality_warnings:
-                            print(f"   • {w}")
-                        print()
-                    else:
-                        print("✅  Content quality check passed (0 warnings).")
-
                     inject_personal_intro(blog_post, topic)
                     inject_eeat_signals(blog_post, topic)
                     inject_freshness_footer(blog_post)
@@ -4216,7 +4223,8 @@ if __name__ == "__main__":
                             print(
                                 f"  🖼  {injected_imgs} image alt text(s) injected.")
                     except Exception as e:
-                        print(f"  ⚠️  Alt text injection failed (non-fatal): {e}")
+                        print(
+                            f"  ⚠️  Alt text injection failed (non-fatal): {e}")
 
                     try:
                         posts_index = build_posts_index(blog_system.output_dir)
