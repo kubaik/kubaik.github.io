@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-03T09:07:51.423331",
+  "built_at": "2026-08-03T10:05:38.426486",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4615,6 +4615,11 @@
       "slug": "ai-coding-in-2026-cursor-windsurf-claude-on-trial",
       "title": "AI coding in 2026: Cursor, Windsurf, Claude on trial",
       "summary": "The official documentation for cursor claude is good. What it doesn't cover is what happens six months into production. The answers online were either wrong or skipped the part that mattered. This post covers what comes after the happy path. Why this comparison matters right now Late last year we re"
+    },
+    {
+      "slug": "supervisor-vs-swarm-vs-debate-vs-pipeline",
+      "title": "Supervisor vs swarm vs debate vs pipeline",
+      "summary": "Most multiagent orchestration guides assume a clean environment and a patient timeline. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in. The gap between what the docs say and what production needs I spent three weeks"
     }
   ]
 }

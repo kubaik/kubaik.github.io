@@ -904,7 +904,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/ai-coding-in-2026-cursor-windsurf-claude-on-trial.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -4382,6 +4382,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/store-data-once-serve-everywhere-cheaper.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/</loc>
+    <lastmod>2026-08-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
     </image:image>
   </url>
   <url>

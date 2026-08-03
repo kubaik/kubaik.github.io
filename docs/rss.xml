@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Aug 2026 09:07:58 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 03 Aug 2026 10:05:46 +0000</lastBuildDate>
+    <item>
+      <title>Supervisor vs swarm vs debate vs pipeline</title>
+      <link>https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/</link>
+      <description>Then the same code hits production and suddenly you’re debugging: - Why did AgentB hang after AgentA sent 4,231 messages?</description>
+      <pubDate>Mon, 03 Aug 2026 10:05:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/</guid>
+    </item>
     <item>
       <title>AI coding in 2026: Cursor, Windsurf, Claude on trial</title>
       <link>https://kubaik.github.io/ai-coding-in-2026-cursor-windsurf-claude-on-trial/</link>
@@ -138,13 +145,6 @@
       <description>Choose event-driven over agent-driven 9/10 times — latency spikes, locking, and retry storms explained with concrete fixes and 2026 tools like EventBridge…</description>
       <pubDate>Thu, 30 Jul 2026 02:38:09 +0000</pubDate>
       <guid>https://kubaik.github.io/event-driven-beats-agent-driven-910-times/</guid>
-    </item>
-    <item>
-      <title>One misconfigured vector DB killed our RAG pipeline</title>
-      <link>https://kubaik.github.io/one-misconfigured-vector-db-killed-our-rag-pipeline/</link>
-      <description>RAG pipeline failures at 3am: index misconfiguration, vector DB timeouts, and the observability patterns that prevent them — with concrete numbers and fixes…</description>
-      <pubDate>Wed, 29 Jul 2026 14:18:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/one-misconfigured-vector-db-killed-our-rag-pipeline/</guid>
     </item>
   </channel>
 </rss>

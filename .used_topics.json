@@ -127,5 +127,6 @@
   "The OWASP LLM risks that turned out to be bigger than prompt injection in our environment",
   "AI observability beyond token counts: what actually predicts user-visible degradation",
   "How I measure and control token spend at 50k+ daily LLM calls without killing UX",
-  "How Cursor, Claude Code, and Windsurf actually changed our daily engineering workflow in 2026"
+  "How Cursor, Claude Code, and Windsurf actually changed our daily engineering workflow in 2026",
+  "Multi-agent orchestration patterns that survive production (supervisor, swarm, debate, pipeline)"
 ]
