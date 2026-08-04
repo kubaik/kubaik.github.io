@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-04T02:48:43.385044",
+  "built_at": "2026-08-04T14:24:07.041227",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4630,6 +4630,11 @@
       "slug": "platform-teams-in-2026-why-your-devs-hate-your-golden-path",
       "title": "Platform teams in 2026: why your devs hate your golden path",
       "summary": "The official documentation for tradeoffs made is good. What it doesn't cover is what happens six months into production. Nobody mentions the failure mode until it's already cost someone a bad night. This is what I put together after working through it properly. The situation (what we were trying to "
+    },
+    {
+      "slug": "rag-rots-if-you-dont-refresh-indexes",
+      "title": "RAG rots if you don’t refresh indexes",
+      "summary": "production rag looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why. The conventional wisdom (and why it's incomplete) The standard playbook for production RAG goes like this: chunk your docume"
     }
   ]
 }
