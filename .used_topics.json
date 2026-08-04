@@ -129,5 +129,6 @@
   "How I measure and control token spend at 50k+ daily LLM calls without killing UX",
   "How Cursor, Claude Code, and Windsurf actually changed our daily engineering workflow in 2026",
   "Multi-agent orchestration patterns that survive production (supervisor, swarm, debate, pipeline)",
-  "The infrastructure patterns that let us run 3x more AI experiments for the same budget"
+  "The infrastructure patterns that let us run 3x more AI experiments for the same budget",
+  "The tradeoffs we made when turning every team into platform consumers"
 ]
