@@ -44,7 +44,8 @@ USAGE
     # Safe default: scan everything, write cleanup_plan_v2.json, change nothing
     python corpus_audit_and_remediate.py
 
-    # Same, but more/less aggressive duplicate threshold
+    # More/less aggressive duplicate threshold (default is now 0.70)
+    python corpus_audit_and_remediate.py --threshold 0.65
     python corpus_audit_and_remediate.py --threshold 0.80
 
     # Actually write redirect stubs / inject noindex for approved actions
@@ -74,8 +75,10 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DOCS_DIR = REPO_ROOT / "docs"
 BASE_URL = "https://kubaik.github.io"  # override with --base-url if needed
 
-DEFAULT_THRESHOLD = 0.75
-WORD_COUNT_FLOOR = 300  # below this AND not a known stub/policy page => flag
+# stricter than 0.75 — catches more near-duplicates for AdSense quality
+DEFAULT_THRESHOLD = 0.70
+# stricter thin-content floor (was 300) — forces more substantial posts
+WORD_COUNT_FLOOR = 600
 
 # Directories that are pages, not blog posts -- never touched by this script.
 NON_POST_DIRS = {
@@ -257,6 +260,50 @@ def merge_with_existing_plan(new_plan: dict, existing_path: Path) -> dict:
     return new_plan
 
 
+def prune_missing_actions(plan: dict, docs_dir: Path) -> dict:
+    """Drop any action whose target directory no longer exists.
+
+    This is required because cleanup_plan.json (and therefore the
+    carried-over set) can contain entries for posts that have already
+    been removed by earlier manual or automated clean-ups. Keeping them
+    would produce a plan full of actions that can never be applied and
+    would flood the dry-run output with 'directory not found' SKIPs.
+    """
+    if not plan.get("actions"):
+        return plan
+
+    kept = []
+    dropped = 0
+    for a in plan["actions"]:
+        slug = a.get("slug")
+        if not slug:
+            dropped += 1
+            continue
+        if (docs_dir / slug).is_dir():
+            kept.append(a)
+        else:
+            dropped += 1
+
+    if dropped:
+        print(f"Pruned {dropped} action(s) whose directories no longer exist.")
+        plan["summary"]["pruned_missing_directories"] = dropped
+
+    plan["actions"] = kept
+
+    # Recompute the actionable counts so the summary stays accurate.
+    plan["summary"]["merge_redirect"] = sum(
+        1 for a in kept if a.get("action") == "MERGE_REDIRECT")
+    plan["summary"]["noindex_only"] = sum(
+        1 for a in kept if a.get("action") == "NOINDEX_ONLY")
+    # "unaffected" only makes sense relative to a full scan; leave the
+    # original value if present, otherwise omit.
+    if "total_posts" in plan["summary"]:
+        plan["summary"]["unaffected"] = (
+            plan["summary"]["total_posts"] - len({a["slug"] for a in kept}))
+
+    return plan
+
+
 # ── Thin-content safety net (report only) ───────────────────────────────────
 
 def flag_thin_pages(docs_dir: Path, word_floor: int) -> list:
@@ -336,7 +383,7 @@ def main():
     ap.add_argument("--docs-dir", default=str(DOCS_DIR),
                     help="Path to docs/ directory")
     ap.add_argument("--threshold", type=float, default=DEFAULT_THRESHOLD,
-                    help="Cosine similarity threshold for near-duplicate grouping (default 0.75)")
+                    help="Cosine similarity threshold for near-duplicate grouping (default 0.70)")
     ap.add_argument("--base-url", default=BASE_URL,
                     help="Site base URL for redirect targets")
     ap.add_argument("--word-floor", type=int, default=WORD_COUNT_FLOOR,
@@ -363,6 +410,11 @@ def main():
             f"Scanning for near-duplicates at threshold {args.threshold} ...")
         plan = build_action_plan(posts, args.threshold)
         plan = merge_with_existing_plan(plan, existing_plan_path)
+
+    # Always drop actions whose target directories have already disappeared.
+    # This keeps both a full rescan and a --no-rescan run from emitting a
+    # plan full of un-actionable entries.
+    plan = prune_missing_actions(plan, docs_dir)
 
     thin = flag_thin_pages(docs_dir, args.word_floor)
     plan["thin_content_flagged_for_manual_review"] = thin
