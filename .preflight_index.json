@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-05T09:46:06.259352",
+  "built_at": "2026-08-05T10:10:40.778049",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4645,6 +4645,11 @@
       "slug": "senior-role-projects-3-real-paths",
       "title": "Senior role projects: 3 real paths",
       "summary": "A colleague asked me about portfolio projects during a code review recently, and my first answer wasn't a good one. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in. Why I wrote this (the problem I kept hitting) In 20"
+    },
+    {
+      "slug": "finops-agents-dashboards-vs-alerts-on-ai-bills",
+      "title": "FinOps agents: dashboards vs alerts on AI bills",
+      "summary": "The official documentation for agentic finops is good. What it doesn't cover is what happens six months into production. The edge cases only show up once real users hit the system. Here's the fuller picture, with the tradeoffs left in. Why this comparison matters right now In 2026, engineering teams"
     }
   ]
 }

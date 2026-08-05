@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 05 Aug 2026 09:46:14 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 05 Aug 2026 10:10:47 +0000</lastBuildDate>
+    <item>
+      <title>FinOps agents: dashboards vs alerts on AI bills</title>
+      <link>https://kubaik.github.io/finops-agents-dashboards-vs-alerts-on-ai-bills/</link>
+      <description>FinOps agents: dashboards vs alerts on AI bills — real cost visibility without a full FinOps team.</description>
+      <pubDate>Wed, 05 Aug 2026 10:10:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/finops-agents-dashboards-vs-alerts-on-ai-bills/</guid>
+    </item>
     <item>
       <title>Senior role projects: 3 real paths</title>
       <link>https://kubaik.github.io/senior-role-projects-3-real-paths/</link>
@@ -138,13 +145,6 @@
       <description>Automating postmortems with AI agents? Avoid hallucinations by making the agent a decision engine, not a text generator — with 49% faster MTTR and 61%…</description>
       <pubDate>Sat, 01 Aug 2026 03:17:32 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-decisions-cost-us-three-days-of-logs/</guid>
-    </item>
-    <item>
-      <title>Boring AWS Lambda layers that don’t lock…</title>
-      <link>https://kubaik.github.io/boring-aws-lambda-layers-that-dont-lock/</link>
-      <description>Publish evolvable AWS Lambda layers without breaking deployments when upgrading runtimes or regions — versioning, CloudFormation patterns, and the…</description>
-      <pubDate>Fri, 31 Jul 2026 14:15:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/boring-aws-lambda-layers-that-dont-lock/</guid>
     </item>
   </channel>
 </rss>
