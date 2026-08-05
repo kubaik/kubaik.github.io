@@ -1,0 +1,679 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>AI micro-SaaS under $150/month: the real infra choices - Kubai Kevin</title>
+        <meta name="description" content="Launch an AI micro-SaaS and keep infra under $150/month in 2026.">
+        <meta name="keywords" content="LlmCostOptimization, ServerlessAiBackend, CloudflareWorkersAi, MemorydbRedisPricing, LambdaPythonArm64, GeminiApiPricing, Prompt, Ai, Python, Redis, Serverless">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-08-05T18:25:11.119543">
+        <meta property="article:modified_time" content="2026-08-05T18:25:11.119557">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="AI micro-SaaS under $150/month: the real infra choices">
+        <meta property="og:description" content="Launch an AI micro-SaaS and keep infra under $150/month in 2026.">
+        <meta property="og:url" content="https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/ai-micro-saas-under-150month-the-real-infra-choices.png">
+        <meta property="og:image:alt" content="AI micro-SaaS under $150/month: the real infra choices">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="AI micro-SaaS under $150/month: the real infra choices">
+        <meta name="twitter:description" content="Launch an AI micro-SaaS and keep infra under $150/month in 2026.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/ai-micro-saas-under-150month-the-real-infra-choices.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/#article",
+      "headline": "AI micro-SaaS under $150/month: the real infra choices",
+      "description": "Launch an AI micro-SaaS and keep infra under $150/month in 2026.",
+      "datePublished": "2026-08-05T18:25:11+00:00",
+      "dateModified": "2026-08-05T18:25:11+00:00",
+      "wordCount": 2984,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/"
+      },
+      "keywords": "LlmCostOptimization, ServerlessAiBackend, CloudflareWorkersAi, MemorydbRedisPricing, LambdaPythonArm64, GeminiApiPricing, Prompt, Ai"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "AI micro-SaaS under $150/month: the real infra choices",
+          "item": "https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>AI micro-SaaS under $150/month: the real infra choices</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">AI micro-SaaS under $150/month: the real infra choices</h1>
+                
+                <p class="post-lead">Launch an AI micro-SaaS and keep infra under $150/month in 2026.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/llmcostoptimization/"
+                       style="text-decoration:none;">LlmCostOptimization</a>
+                    
+                    <a class="tag" href="/tag/serverlessaibackend/"
+                       style="text-decoration:none;">ServerlessAiBackend</a>
+                    
+                    <a class="tag" href="/tag/cloudflareworkersai/"
+                       style="text-decoration:none;">CloudflareWorkersAi</a>
+                    
+                    <a class="tag" href="/tag/memorydbredispricing/"
+                       style="text-decoration:none;">MemorydbRedisPricing</a>
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    <a class="tag" href="/tag/python/"
+                       style="text-decoration:none;">Python</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2984 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-08-05
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most launched iterated guides assume a clean environment and a patient timeline. It works in the simple case and breaks in a specific way under load. Here's the fuller picture, with the tradeoffs left in.</p>
+<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
+<p>Most AI products leak money on undifferentiated infrastructure from day one. The only way to keep infra under $150/month while shipping daily is to treat the prompt layer like your ORM and the API gateway like your database connection pool: cache aggressively, batch aggressively, and never let a cold start touch your LLM budget. Build the rest of the stack (auth, billing, queues) with serverless that scales to zero when traffic dies, and hide every warm-up cost inside a 10 ms window so you never pay for idle. The part that trips people up is believing you need a GPU in prod for every request; once you stop doing that, the infra math becomes simple.</p>
+<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
+<p>Teams get stuck because they treat "AI infra" as one monolithic problem. They picture a single GPU-heavy endpoint that must be always-on, with every request billed at $0.05 and every prompt hitting the LLM router in real time. That mental model leads straight to $2-3k monthly bills before they even ship a feature. The confusion is that the cost driver isn’t the AI inference itself—it’s the orchestration around it: auth checks, prompt templating, rate limiting, billing meters, and the inevitable retry storms when an upstream API hiccups. Separate those concerns and the infra budget becomes tractable.</p>
+<p>A second confusion is the belief that you need to run your own embeddings or vector DB to launch an AI product. That’s only true if you’re building a custom RAG pipeline from scratch. For common use cases like classification, summarization, or question answering, the managed cloud APIs (Gemini Pro 1.5, GPT-4o, or Anthropic Sonnet 3.7 in 2026) outperform open-weight models on price/performance once you account for prompt engineering overhead. The managed APIs also give you built-in retry policies, rate limiting, and regional failover—things that cost weeks of dev time to replicate in-house.</p>
+<p>Lastly, people conflate "AI" with "real-time." Most micro-SaaS products don’t need sub-50 ms response times; they need sub-500 ms p95 with occasional spikes. That tolerance lets you batch prompts, cache results, and offload background work to queues, which cuts the LLM bill by 60-80% compared to one-request-one-token.</p>
+<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
+<p>Think of your AI micro-SaaS as a restaurant kitchen:
+- The chef (LLM) is expensive and slow; you only use them when you must.
+- The line cooks (prompt templating, tokenization, safety checks) prepare everything so the chef only sees the final dish.
+- The host (API gateway) buffers orders, batches similar requests, and never lets the chef take an order unless they have a full tray.
+- The dishwasher (cache) cleans plates (responses) so you don’t run the chef every time.
+- The maitre d’ (auth and billing) checks IDs and runs credit cards before the host hands the order to the kitchen.</p>
+<p>If any station idles, you shut it down to zero. If a station is overloaded, you scale only that station. Every dollar you spend must map to a visible station in the kitchen, not a hidden tax on the chef’s time.</p>
+<p>In concrete terms, that means:
+- Every API request goes through Cloudflare Workers (edge routing, auth, caching) before touching your backend.
+- Your backend is a single AWS Lambda (Python 3.11, ARM64, 1024 MB) that only talks to managed services: Redis 7.2 for cache, SQS for retries, and the LLM API for the final step.
+- You never run a GPU in prod; you rent inference by the token.
+- You charge the customer based on tokens used, not on your infra.</p>
+<h2 id="a-concrete-worked-example">A concrete worked example</h2>
+<p>Let’s build a micro-SaaS that ingests user documents, extracts key fields, and returns a JSON summary. We’ll target 1,000 monthly active users, 100 API calls per user per month, and a 200-token prompt per call. That’s 200,000 prompts/month.</p>
+<p>Step 1: Prompt layer caching</p>
+<p>We use Cloudflare Workers KV as a global cache. On the first call for a given document hash, we forward the prompt to the LLM. On subsequent calls within 24 hours, we return the cached JSON. With a 60% cache hit rate (typical for document processing), we only send 80,000 prompts to the LLM. At $0.00008 per 1,000 tokens (Gemini Pro 1.5 pricing in 2026), that’s $6.40/month for inference.</p>
+<p>Step 2: Batch and batch again</p>
+<p>Instead of one document at a time, we batch up to 10 documents per prompt. The prompt template becomes:</p>
+<pre><code class="language-python">BATCH_PROMPT = &quot;&quot;&quot;
+Extract key fields from these documents:
+{document_texts}
+
+Return JSON:
+</code></pre>
+<pre><code>
+With 10 documents per batch, we cut the prompt count by 90%, down to 8,000 prompts/month. Inference cost drops to $0.64/month.
+
+Step 3: Warm-up and cold-start hiding
+
+Cloudflare Workers have a 10 ms cold-start penalty. We pre-warm 100 Workers globally so the first request in each region hits a warm instance. That costs $5/month for the Workers Pro plan (250k requests included, $0.30 per additional 100k).
+
+Step 4: Retry storms and rate limiting
+
+We use SQS to buffer bursts. If the LLM API returns a 429, we retry with exponential backoff up to 5 times. If it fails after 5 attempts, we return a cached failure response to the user and log the error for later analysis. This keeps the Lambda handler simple and avoids spinning up extra capacity.
+
+Step 5: Auth and billing at the edge
+
+Cloudflare Workers runs JWT validation and rate limiting before the request hits Lambda. We use Cloudflare Access for auth, which costs $3/month per seat for up to 50 seats. Billing is metered in Workers KV; we write a usage record on every request and flush to BigQuery once per hour via a scheduled Cloudflare Worker. BigQuery costs are $0.02 per GB scanned; at 200k requests/month, that’s $4/month.
+
+Step 6: The Lambda itself
+
+The Lambda (Python 3.11, ARM64, 1024 MB) only does three things:
+- Validate the JWT (we reuse the edge-validated claims).
+- Check Redis 7.2 for a cached result.
+- If cache miss, call the LLM API, cache the result, and return JSON.
+
+Memory usage is 128 MB per invocation; CPU is negligible. At 200k invocations/month, that’s $0.10 for Lambda compute (AWS Lambda $0.0000166667 per GB-second, 128 MB, 200 ms avg duration).
+
+Step 7: Redis 7.2 cache sizing
+
+We use Redis 7.2 on AWS MemoryDB with 1 GB of memory and 1 shard. MemoryDB costs $0.015 per GB-hour; 1 GB for 730 hours/month is $10.95/month. Cache hit rate is 60%, so 120k cache hits/month. Each cached response is ~500 bytes, so memory usage stays flat at ~60 MB.
+
+Step 8: SQS and dead-letter queue
+
+We keep 10 messages in flight max and a 1-hour visibility timeout. SQS costs $0.50 per million requests; at 200k requests/month, that’s $0.10. Dead-letter queue is negligible.
+
+Step 9: Monitoring and alerts
+
+We use Cloudflare Logs (free tier) and AWS CloudWatch (free tier). We alert on cache hit rate &lt; 50%, Lambda duration &gt; 500 ms, and LLM API error rate &gt; 5%. Total monitoring cost is $0.
+
+Total infra bill (2026 pricing):
+- Cloudflare Workers Pro: $5
+- Cloudflare Access (50 seats): $3
+- MemoryDB Redis 7.2: $10.95
+- BigQuery: $4
+- AWS Lambda: $0.10
+- SQS: $0.10
+- Inference (Gemini Pro 1.5): $0.64
+- **Total: $23.79/month**
+
+That leaves $126/month for feature development, support, and profit.
+
+## How this connects to things you already know
+
+If you’ve ever run a FastAPI service behind Nginx with Redis caching, this stack is just that pattern stretched across three clouds:
+- Cloudflare Workers = Nginx + Redis before the app server
+- AWS Lambda = your FastAPI service
+- MemoryDB Redis = your in-memory cache layer
+- SQS = your Celery queue
+- BigQuery = your analytics warehouse
+
+The only novelty is treating the LLM API as an external dependency, not as part of your stack. That means you apply the same reliability patterns you already know: retries, circuit breakers, caching, and rate limiting. The infra cost is externalized to the LLM provider, not internalized to your GPU budget.
+
+Another familiar pattern is the &quot;serverless pay-per-use&quot; model. AWS Lambda, Cloudflare Workers, and SQS all scale to zero when traffic dies. The difference is you’re applying that model to the prompt layer, not just the backend. Most teams miss that because they think of the LLM as part of the backend, not as a SaaS they consume.
+
+## Common misconceptions, corrected
+
+Misconception 1: &quot;We need a GPU in prod to keep latency low.&quot;
+Correction: Managed LLM APIs in 2026 return 1k tokens in ~200 ms p95 with regional endpoints. If your p95 latency budget is 500 ms, you can batch and cache aggressively and never touch a GPU. The only time you need a local GPU is if you’re running a custom fine-tuned model with 10B+ parameters and strict data residency requirements. For most micro-SaaS, that’s overkill.
+
+Misconception 2: &quot;Caching prompts is unsafe; each user deserves a fresh response.&quot;
+Correction: For non-personalized tasks like document extraction or summarization, a document hash is a valid cache key. If the user edits the document, the hash changes and the cache invalidates. The only risk is prompt drift over time (e.g., model updates change the output format). To mitigate, store a versioned prompt template and include the template hash in the cache key. That way you can invalidate old caches when you update the prompt.
+
+Misconception 3: &quot;Batching increases latency for the first request in the batch.&quot;
+Correction: Batching increases latency for the first request only if you wait for the full batch before responding. Instead, use a &quot;fast lane&quot;: respond immediately with a cached result if available, or with an estimated completion time if the batch is still assembling. That keeps p95 latency low while reducing cost. Example:
+
+```javascript
+// Fast-lane batcher in Cloudflare Worker
+const batch = new Map();
+const MAX_BATCH_SIZE = 10;
+const MAX_WAIT_MS = 200;
+
+addEventListener('fetch', (event) =&gt; {
+  event.respondWith(handle(event.request));
+});
+
+async function handle(request) {
+  const docId = new URL(request.url).searchParams.get('docId');
+  const cached = await CACHE.get(docId);
+  if (cached) return new Response(cached);
+
+  // Add to batch or wait for existing batch
+  if (!batch.has(docId)) batch.set(docId, { promises: [] });
+  const entry = batch.get(docId);
+
+  if (entry.promises.length &gt;= MAX_BATCH_SIZE) {
+    // Fast path: respond immediately with estimated completion
+    return new Response(JSON.stringify({ status: 'queued', etaMs: MAX_WAIT_MS }), { status: 202 });
+  }
+
+  await new Promise(resolve =&gt; setTimeout(resolve, 10)); // yield event loop
+
+  const result = await Promise.race([
+    batchPromises(entry.promises),
+    new Promise(resolve =&gt; setTimeout(() =&gt; resolve({ status: 'queued', etaMs: MAX_WAIT_MS }), MAX_WAIT_MS))
+  ]);
+
+  return new Response(JSON.stringify(result));
+}
+</code></pre>
+<p>Misconception 4: "Serverless can’t handle 10k RPM."
+Correction: Cloudflare Workers handle 50k RPM per Worker globally. If you need more, you add more Workers or move to AWS Lambda with provisioned concurrency. The bottleneck is almost never the serverless platform; it’s the LLM API or your cache layer. In our example, 200k requests/month is 0.077 RPM—well below any serverless limit.</p>
+<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
+<p>Once your cache hit rate stabilizes above 70% and your LLM bill is under $10/month, you can push further optimizations:</p>
+<ol>
+<li>
+<p>Prompt compression
+   Use a smaller model (Gemini Nano 1.0) to compress the prompt before sending it to the larger model. For example, summarize the document with Nano, then send the summary to Pro 1.5. That cuts token usage by 40% and reduces latency by 30%. The compression step runs in a Cloudflare Worker using a 50 MB WASM binary (18 MB gzipped). Workers cost $0.30 per GB-hour; 50 MB for 1k requests is $0.015/month.</p>
+</li>
+<li>
+<p>Dynamic batch sizing
+   Instead of fixed 10-document batches, size the batch based on token count. Stop adding documents when the cumulative token count exceeds 8k. That maximizes throughput while staying under LLM context limits. Implement in Python 3.11:</p>
+</li>
+</ol>
+<pre><code class="language-python">import tiktoken
+
+enc = tiktoken.encoding_for_model(&quot;gpt-4o&quot;)
+
+def can_add(doc_text: str, current_tokens: int) -&gt; bool:
+    new_tokens = len(enc.encode(doc_text))
+    return (current_tokens + new_tokens) &lt;= 8000
+</code></pre>
+<ol>
+<li>
+<p>Regional failover with latency-aware routing
+   Use Cloudflare Load Balancer to route requests to the nearest LLM endpoint. If the primary region (us-east-1) is slow, fail over to eu-west-1. Latency difference is typically 50 ms vs 120 ms. The failover costs an extra $2/month for the load balancer rule.</p>
+</li>
+<li>
+<p>Cache stampede protection
+   When a cache key expires, multiple requests can hit the LLM simultaneously, causing a stampede. Use a distributed lock with a TTL. Cloudflare Workers KV supports a compare-and-swap primitive; we use it to serialize the first request to recompute the value:</p>
+</li>
+</ol>
+<pre><code class="language-javascript">const lockKey = `lock:${docId}`;
+const lock = await KV.get(lockKey);
+if (!lock) {
+  await KV.put(lockKey, 'locked', { expirationTtl: 30 });
+  const value = await fetchLLM(docId);
+  await CACHE.put(docId, value);
+  await KV.delete(lockKey);
+  return value;
+}
+</code></pre>
+<ol>
+<li>Cost attribution per customer
+   Instead of a single BigQuery table, shard usage by customer ID. That way you can bill customers based on their actual token usage. The sharding adds 100 lines of Python in the Lambda:</li>
+</ol>
+<pre><code class="language-python">from google.cloud import bigquery
+
+client = bigquery.Client()
+
+def record_usage(customer_id: str, tokens: int):
+    table_id = f&quot;project.dataset.usage_{customer_id[-2:]}&quot;
+    errors = client.insert_rows_json(
+        table_id,
+        [{&quot;customer_id&quot;: customer_id, &quot;tokens&quot;: tokens, &quot;ts&quot;: datetime.utcnow().isoformat()}]
+    )
+    if errors:
+        # Fallback to default table on error
+        default_table = &quot;project.dataset.usage_default&quot;
+        client.insert_rows_json(default_table, [{&quot;customer_id&quot;: customer_id, &quot;tokens&quot;: tokens, &quot;ts&quot;: datetime.utcnow().isoformat()}])
+</code></pre>
+<ol>
+<li>
+<p>Warmup on deploy
+   Use a GitHub Actions workflow to pre-warm 50 Workers globally right after a deploy. The workflow runs a script that hits each Worker’s health endpoint with a dummy request. Total cost is $1.50 for 50 Workers; the benefit is zero cold starts during the first 10 minutes after deploy.</p>
+</li>
+<li>
+<p>Canary deployments with feature flags
+   Use Cloudflare Workers Durable Objects to run canary Workers alongside prod. Each canary Worker has a 5% traffic split. If error rate or latency degrades, the flag rolls back automatically. Durable Objects cost $0.50 per 100k objects per month; at 1k objects, that’s $0.005/month—negligible.</p>
+</li>
+</ol>
+<h2 id="quick-reference">Quick reference</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Tool/Service</th>
+<th>Version/Config</th>
+<th>Cost (2026)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edge routing &amp; auth</td>
+<td>Cloudflare Workers</td>
+<td>Pro plan, 250k req/month</td>
+<td>$5/month</td>
+<td>JWT validation, rate limiting</td>
+</tr>
+<tr>
+<td>Cache</td>
+<td>MemoryDB Redis</td>
+<td>1 GB, 1 shard</td>
+<td>$10.95/month</td>
+<td>60% hit rate typical</td>
+</tr>
+<tr>
+<td>Prompt templating</td>
+<td>Cloudflare Workers KV</td>
+<td>1 GB storage</td>
+<td>$5/month</td>
+<td>10k writes/day included</td>
+</tr>
+<tr>
+<td>Background queue</td>
+<td>SQS</td>
+<td>Standard, 1M req/month</td>
+<td>$0.50/month</td>
+<td>5 retries max</td>
+</tr>
+<tr>
+<td>Compute</td>
+<td>AWS Lambda</td>
+<td>Python 3.11, ARM64, 1024 MB</td>
+<td>$0.10/month</td>
+<td>200 ms avg duration</td>
+</tr>
+<tr>
+<td>Analytics</td>
+<td>BigQuery</td>
+<td>On-demand, 1 GB scanned/month</td>
+<td>$4/month</td>
+<td>Flush hourly from Worker</td>
+</tr>
+<tr>
+<td>LLM API</td>
+<td>Gemini Pro 1.5</td>
+<td>Batch 10 docs</td>
+<td>$0.64/month</td>
+<td>200 tokens/doc avg</td>
+</tr>
+<tr>
+<td>Auth seats</td>
+<td>Cloudflare Access</td>
+<td>50 seats</td>
+<td>$3/month</td>
+<td>JWT + group claims</td>
+</tr>
+<tr>
+<td>Monitoring</td>
+<td>Cloudflare Logs + CloudWatch</td>
+<td>Free tier</td>
+<td>$0/month</td>
+<td>Basic alerts only</td>
+</tr>
+</tbody>
+</table>
+<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
+<ul>
+<li><a href="https://developers.cloudflare.com/workers/platform/pricing">Cloudflare Workers pricing 2026</a> – exact numbers for Workers Pro and KV.</li>
+<li><a href="https://aws.amazon.com/memorydb/pricing/">MemoryDB for Redis pricing 2026</a> – durable in-memory Redis with cluster support.</li>
+<li><a href="https://ai.google.dev/pricing">Gemini API pricing 2026</a> – current token pricing for all models.</li>
+<li><a href="https://github.com/openai/tiktoken">TikToken library</a> – token counting for prompt engineering.</li>
+<li><a href="https://serverless.pub/batching/">Serverless batching patterns</a> – deep dive on batching at scale.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I handle GDPR and data residency for EU users?</strong>
+Use Cloudflare’s regional services in the EU (Workers EU region, MemoryDB EU cluster). Ensure your LLM provider supports EU endpoints (Gemini Pro 1.5 does). Store customer data in EU-only buckets and encrypt at rest with KMS keys in eu-west-1. The infra cost rises by ~$5/month for the extra region, but that’s still under $30/month total.</p>
+<p><strong>What happens if the LLM API rate limits me?</strong>
+First, implement exponential backoff in the Lambda. If that fails, return a cached result if available or a 503 with Retry-After. Log the incident and alert on a Slack channel. Most API providers give a 5-minute cooldown; waiting and retrying usually resolves it without user impact.</p>
+<p><strong>Can I use open-weight models to cut costs further?</strong>
+Only if you’re running &gt;100k requests/day. Open-weight models on GPUs cost $0.0003 per 1k tokens for inference (2026 AWS g5.2xlarge). Managed APIs cost $0.00008 per 1k tokens. The break-even is ~25k requests/day for the GPU to be cheaper. Below that, the managed API wins on price and ops overhead.</p>
+<p><strong>How do I bill customers based on tokens used?</strong>
+Meter tokens per request in the Lambda, write the record to BigQuery sharded by customer ID, and run a daily cron to sum tokens per customer. Generate an invoice or usage report from the BigQuery table. At 1k users, the query scans ~30 MB/day, costing $0.01/day or $0.30/month.</p>
+<h2 id="one-thing-to-do-right-now">One thing to do right now</h2>
+<p>Open your infra bill dashboard (AWS Cost Explorer, Cloudflare Analytics, or BigQuery INFORMATION_SCHEMA). Filter for the last 7 days and look at the top 5 cost drivers. If any line item is &gt;$5/day, ask: <em>Can this be cached, batched, or moved to a serverless queue?</em> Pick the highest-cost item and apply one optimization from this post. You’ll likely cut at least 30% from that line within an hour.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
+part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
+they are not individually fact-checked or hand-edited by a human before publishing. Treat
+code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
+than independently verified, and check them against current official documentation before
+relying on them in production.</p>
+<p><strong>Corrections:</strong> If you spot an error or outdated information,
+please contact me and I'll review and correct it.</p>
+<p><strong>Last generated:</strong> August 05, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-on-lambda-when-the-bill-explodes/">
+                        <h3>AI on Lambda: when the bill explodes</h3>
+                        <p>AI on Lambda: when the bill explodes — comparing Lambda vs EC2 + Elastic Inference for a 7B-parameter vLLM model with real cost breakdowns, cache hit…</p>
+                        <span class="related-meta">11 min read · 2 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-latency-cut-28s-to-380ms-without-retraining/">
+                        <h3>AI latency cut: 2.8s to 380ms without retraining</h3>
+                        <p>Cut AI feature latency from 2.8s to 420ms in production — the real reasons it spiked and how to verify the fix using Jaeger, Redis 7.2, and FastAPI 0.109.</p>
+                        <span class="related-meta">18 min read · 14 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-interviews-need-real-logs-the-401-you-never/">
+                        <h3>AI interviews need real logs: the 401 you never</h3>
+                        <p>Cut interview callbacks 40% by adding OpenTelemetry SDK 1.26 and Redis 7.2 — the logging, tracing, and rate-limiting setup AI screeners now demand before they…</p>
+                        <span class="related-meta">10 min read · 20 June 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

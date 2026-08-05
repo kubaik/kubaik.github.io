@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-05T14:17:03.170820",
+  "built_at": "2026-08-05T18:25:14.571429",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4665,6 +4665,11 @@
       "slug": "mobile-money-agent-fees-why-your-bot-keeps-failing",
       "title": "Mobile money agent fees: why your bot keeps failing",
       "summary": "I ran into this cost reliability problem while migrating a service under a hard deadline. It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly. The error and why it's confusing You built a lightweight agent that submits US"
+    },
+    {
+      "slug": "ai-micro-saas-under-150month-the-real-infra-choices",
+      "title": "AI micro-SaaS under $150/month: the real infra choices",
+      "summary": "Most launched iterated guides assume a clean environment and a patient timeline. It works in the simple case and breaks in a specific way under load. Here's the fuller picture, with the tradeoffs left in. The one-paragraph version (read this first) Most AI products leak money on undifferentiated inf"
     }
   ]
 }
