@@ -508,7 +508,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/agent-flooded-our-api-with-bad-calls-overnight.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -3188,6 +3188,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/migrations-stop-running-them-live.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/</loc>
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
     </image:image>
   </url>
   <url>

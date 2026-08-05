@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-05T13:52:53.089419",
+  "built_at": "2026-08-05T14:17:03.170820",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4660,6 +4660,11 @@
       "slug": "agent-flooded-our-api-with-bad-calls-overnight",
       "title": "Agent flooded our API with bad calls overnight",
       "summary": "Most recovered after guides assume a clean environment and a patient timeline. The gap between the demo and the incident report is where this actually lives. Here's what actually worked, and why. The error and why it's confusing When a background agent started making thousands of low-value API calls"
+    },
+    {
+      "slug": "mobile-money-agent-fees-why-your-bot-keeps-failing",
+      "title": "Mobile money agent fees: why your bot keeps failing",
+      "summary": "I ran into this cost reliability problem while migrating a service under a hard deadline. It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly. The error and why it's confusing You built a lightweight agent that submits US"
     }
   ]
 }
