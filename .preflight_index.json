@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-04T14:24:07.041227",
+  "built_at": "2026-08-05T02:46:26.106526",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4635,6 +4635,11 @@
       "slug": "rag-rots-if-you-dont-refresh-indexes",
       "title": "RAG rots if you don’t refresh indexes",
       "summary": "production rag looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why. The conventional wisdom (and why it's incomplete) The standard playbook for production RAG goes like this: chunk your docume"
+    },
+    {
+      "slug": "mcp-servers-the-3-hidden-costs-nobody-quotes",
+      "title": "MCP servers: the 3 hidden costs nobody quotes",
+      "summary": "The conventional advice on mcp production is incomplete in one specific, costly way. The edge cases only show up once real users hit the system. This is the version of the write-up that includes the part that broke. The gap between what the docs say and what production needs I once watched a team sh"
     }
   ]
 }
