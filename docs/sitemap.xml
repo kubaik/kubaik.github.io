@@ -503,6 +503,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/</loc>
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/agent-governance-opa-vs-kyverno-after-our-incident/</loc>
     <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -5848,7 +5857,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/wasm-servers-beat-containers-here.png</image:loc>
     </image:image>
   </url>
   <url>

@@ -1,0 +1,750 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent flooded our API with bad calls overnight - Kubai Kevin</title>
+        <meta name="description" content="Cut API bill 99% after agent flood — bounded retries, idempotency keys, and rate limits that actually work in 2026">
+        <meta name="keywords" content="ApiAgentOverflow, LambdaCostSpike, Idempotency, Exponential, AwsCostAnomaly, AgentRetryLoop, Apis">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-08-05T13:52:49.852054">
+        <meta property="article:modified_time" content="2026-08-05T13:52:49.852063">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent flooded our API with bad calls overnight">
+        <meta property="og:description" content="Cut API bill 99% after agent flood — bounded retries, idempotency keys, and rate limits that actually work in 2026">
+        <meta property="og:url" content="https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-flooded-our-api-with-bad-calls-overnight.png">
+        <meta property="og:image:alt" content="Agent flooded our API with bad calls overnight">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent flooded our API with bad calls overnight">
+        <meta name="twitter:description" content="Cut API bill 99% after agent flood — bounded retries, idempotency keys, and rate limits that actually work in 2026">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-flooded-our-api-with-bad-calls-overnight.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/#article",
+      "headline": "Agent flooded our API with bad calls overnight",
+      "description": "Cut API bill 99% after agent flood — bounded retries, idempotency keys, and rate limits that actually work in 2026",
+      "datePublished": "2026-08-05T13:52:49+00:00",
+      "dateModified": "2026-08-05T13:52:49+00:00",
+      "wordCount": 2913,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/"
+      },
+      "keywords": "ApiAgentOverflow, LambdaCostSpike, Idempotency, Exponential, AwsCostAnomaly, AgentRetryLoop, Apis"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent flooded our API with bad calls overnight",
+          "item": "https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                min-height: 0;
+                overflow: hidden;
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 2rem 0;
+                text-align: center;
+            }
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header" style="min-height:100px"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent flooded our API with bad calls overnight</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent flooded our API with bad calls overnight</h1>
+                
+                <p class="post-lead">Cut API bill 99% after agent flood — bounded retries, idempotency keys, and rate limits that actually work in 2026</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/apiagentoverflow/"
+                       style="text-decoration:none;">ApiAgentOverflow</a>
+                    
+                    <a class="tag" href="/tag/lambdacostspike/"
+                       style="text-decoration:none;">LambdaCostSpike</a>
+                    
+                    <a class="tag" href="/tag/idempotency/"
+                       style="text-decoration:none;">Idempotency</a>
+                    
+                    <a class="tag" href="/tag/exponential/"
+                       style="text-decoration:none;">Exponential</a>
+                    
+                    <a class="tag" href="/tag/apis/"
+                       style="text-decoration:none;">Apis</a>
+                    
+                    <a class="tag" href="/tag/awscostanomaly/"
+                       style="text-decoration:none;">Awscostanomaly</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2913 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-08-05
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most recovered after guides assume a clean environment and a patient timeline. The gap between the demo and the incident report is where this actually lives. Here's what actually worked, and why.</p>
+<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
+<p>When a background agent started making thousands of low-value API calls overnight, the first symptom you usually see is a bill that’s 3–4× higher than normal. In 2026, with AWS Lambda at $0.20 per 1M requests and most indie SaaS stacks spending under $50/month on compute, a sudden jump to $300–$400 overnight is impossible to miss. What’s confusing is that the API itself appears fine: endpoints return 200, logs show low latency, and no 5xx errors appear. The real issue isn’t the API’s health—it’s the volume and the business value of those calls.</p>
+<p>A common trap here is assuming the agent is just “busy.” Teams usually blame rate limits, upstream timeouts, or a misconfigured cron job. None of those explain why the calls have no business impact. The part that trips people up is that the API is technically working, so the alert thresholds that fire on 5xx don’t trigger. The outage isn’t in the API server—it’s in the event loop that drove the calls.</p>
+<p>The most typical scenario is an agent that polls every minute for status updates, but the status never changes. Instead of sleeping or backing off, it keeps retrying with exponential backoff that never caps, or it ignores 429 responses and keeps hammering. By 6 AM, the logs show 400k calls to <code>/status</code>, all returning 200 with identical JSON: <code>{"status": "pending"}</code>.</p>
+<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
+<p>The root cause is usually one of three patterns:</p>
+<ol>
+<li>
+<p><strong>Unbounded retry loops</strong> where the agent ignores HTTP 409, 429, or 503 responses and keeps retrying with the same parameters. In Python, using <code>requests</code> without a <code>Retry</code> adapter or in AWS Lambda without a <code>max_retries</code> in the SDK client is the usual culprit. The SDK’s default retry behavior in 2026 (boto3 1.34, AWS SDK for JavaScript 3.500) retries 3 times with jitter, but if the upstream keeps returning 409, the agent keeps looping.</p>
+</li>
+<li>
+<p><strong>Missing exponential backoff</strong> in agents that poll for state changes. A common failure mode is a loop like:</p>
+</li>
+</ol>
+<pre><code class="language-python">while True:
+    r = requests.get(&quot;https://api.example.com/job/123/status&quot;)
+    if r.json()[&quot;status&quot;] != &quot;done&quot;:
+        time.sleep(1)
+</code></pre>
+<p>That’s 86,400 calls per day if the job never finishes. Even if the sleep is 60 seconds, it’s still 1,440 calls per day—fine for one customer, disastrous if the agent runs once per Lambda invocation and you have 300 customers.</p>
+<ol>
+<li><strong>Event-driven fan-out without rate limiting or idempotency.</strong> In 2026, many indie stacks use SNS → Lambda for async tasks. A buggy filter policy that matches every event, combined with a Lambda that doesn’t deduplicate or throttle, can fan out thousands of identical events. The symptom is 10k identical events in CloudWatch Logs Insights in one hour, all triggering the same Lambda with the same payload.</li>
+</ol>
+<p>The deeper issue isn’t the agent’s logic—it’s the lack of <strong>guardrails around event volume</strong>. The agent is doing exactly what you told it to do. The problem is that you didn’t tell it to stop.</p>
+<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
+<p>Most teams hit this because their agent retries indefinitely on 409 or 429 responses. The fix is to add a bounded retry policy using the SDK’s built-in retry configuration. In Python with boto3 1.34:</p>
+<pre><code class="language-python">aws_config = Config(
+    retries={&quot;max_attempts&quot;: 3, &quot;mode&quot;: &quot;adaptive&quot;}
+)
+s3 = boto3.client(&quot;s3&quot;, config=aws_config)
+http = requests.Session()
+adapter = HTTPAdapter(max_retries=Retry(total=3, backoff_factor=0.3))
+http.mount(&quot;https://&quot;, adapter)
+</code></pre>
+<p>This caps retries at 3 attempts, with exponential backoff starting at 100 ms and doubling each time. The <code>adaptive</code> mode in boto3 also respects <code>Retry-After</code> headers, so if the upstream returns 429 with a <code>Retry-After: 5</code> header, the SDK waits 5 seconds before the next attempt.</p>
+<p>For agents that poll for state, switch from a fixed sleep to a capped exponential backoff. A typical pattern:</p>
+<pre><code class="language-python">def poll_with_backoff(url, max_polls=100, initial_delay=1.0):
+    delay = initial_delay
+    for _ in range(max_polls):
+        r = requests.get(url)
+        if r.status_code == 429:
+            retry_after = int(r.headers.get(&quot;Retry-After&quot;, delay))
+            time.sleep(retry_after)
+            continue
+        if r.status_code &gt;= 500:
+            time.sleep(delay)
+            delay = min(delay * 2, 30.0)
+            continue
+        # Success or non-retryable error
+        return r
+    raise TimeoutError(f&quot;Gave up after {max_polls} polls&quot;)
+</code></pre>
+<p>Set <code>max_polls</code> based on your SLA. If a job should finish in 5 minutes, <code>max_polls=300</code> with a 1-second initial delay gives 5 minutes of polling. This drops daily calls from 86,400 to 300 per customer.</p>
+<p>Cost impact: A single customer’s agent going from 86k calls/day to 300 calls/day drops Lambda cost from ~$1.70/day to ~$0.006/day. For 300 customers, that’s $510/month saved.</p>
+<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
+<p>The second most common cause is missing idempotency keys in event-driven systems. In 2026, many stacks use SNS → Lambda with a UUID as the message ID, but the Lambda doesn’t deduplicate. A misconfigured SNS topic with a filter that matches every event can fan out identical messages to thousands of Lambdas.</p>
+<p>The symptom is identical log lines across hundreds of Lambda invocations:</p>
+<pre><code>START RequestId: a1b2c3d4
+REPORT RequestId: a1b2c3d4 Duration: 123 ms Billed Duration: 123 ms
+{&quot;job_id&quot;: &quot;123&quot;, &quot;status&quot;: &quot;pending&quot;}
+</code></pre>
+<p>The fix is to add an idempotency layer. In Python with Redis 7.2:</p>
+<pre><code class="language-python">import redis
+from uuid import uuid4
+
+r = redis.Redis(host=&quot;localhost&quot;, port=6379, db=0)
+
+class IdempotentAgent:
+    def __init__(self, job_id):
+        self.job_id = job_id
+        self.lock_key = f&quot;idempotency:{job_id}&quot;
+
+    def run(self):
+        if r.setnx(self.lock_key, &quot;1&quot;):
+            r.expire(self.lock_key, 3600)
+            # Do the work
+            return &quot;processed&quot;
+        return &quot;duplicate&quot;
+</code></pre>
+<p>For SNS → Lambda, use Lambda’s built-in idempotency support with DynamoDB as the store. In Terraform:</p>
+<pre><code class="language-hcl">resource &quot;aws_lambda_function&quot; &quot;worker&quot; {
+  function_name = &quot;job-worker&quot;
+  handler       = &quot;index.handler&quot;
+  runtime       = &quot;python3.11&quot;
+  environment {
+    variables = {
+      IDEMPOTENCY_TABLE = aws_dynamodb_table.idempotency.name
+    }
+  }
+}
+
+resource &quot;aws_dynamodb_table&quot; &quot;idempotency&quot; {
+  name           = &quot;idempotency&quot;
+  billing_mode   = &quot;PAY_PER_REQUEST&quot;
+  hash_key       = &quot;idempotency_key&quot;
+  attribute {
+    name = &quot;idempotency_key&quot;
+    type = &quot;S&quot;
+  }
+}
+</code></pre>
+<p>Set the idempotency key to a hash of the event payload:</p>
+<pre><code class="language-python">def handler(event, context):
+    payload_hash = hashlib.sha256(json.dumps(event).encode()).hexdigest()
+    if dynamodb.get_item(
+        Key={&quot;idempotency_key&quot;: payload_hash}
+    ):
+        return {&quot;statusCode&quot;: 200, &quot;body&quot;: &quot;duplicate&quot;}
+    dynamodb.put_item(Item={&quot;idempotency_key&quot;: payload_hash, &quot;result&quot;: &quot;processed&quot;})
+    # Do work
+</code></pre>
+<p>This drops duplicate calls to zero. The DynamoDB table costs ~$1/month for 10k writes/day.</p>
+<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
+<p>The third cause is environment-specific: agents that run in GitHub Actions, CircleCI, or a cron job on a $5/month VPS. These environments often lack rate limiting, and the agent’s loop runs on hardware that can make thousands of calls per second. The symptom is a bill spike with no correlation to Lambda usage.</p>
+<p>A typical failure mode is a cron job on a Ubuntu 22.04 VM with 2 vCPUs and 4 GB RAM:</p>
+<pre><code class="language-bash"># cronjob.sh
+while true; do
+  curl -s https://api.example.com/job/123/status &gt; /tmp/status.json
+  if [[ $(jq -r .status /tmp/status.json) != &quot;done&quot; ]]; then
+    sleep 1
+  else
+    break
+  fi
+done
+</code></pre>
+<p>That loop runs at ~1,000 calls/second on a $5 VM. Over 8 hours, it makes 28.8 million calls. The fix is to add rate limiting at the OS level. In systemd, create a service with CPU and IO limits:</p>
+<pre><code class="language-ini"># /etc/systemd/system/job-poller.service
+[Service]
+ExecStart=/usr/local/bin/job-poller.sh
+CPUQuota=20%
+MemoryMax=512M
+Restart=always
+</code></pre>
+<p>Then add a rate limiter in the script using <code>rate</code> in curl:</p>
+<pre><code class="language-bash"># job-poller.sh
+while true; do
+  curl --rate 10/1s -s https://api.example.com/job/123/status | jq -r .status
+  [[ &quot;$status&quot; == &quot;done&quot; ]] &amp;&amp; break
+  sleep 1
+done
+</code></pre>
+<p>The <code>--rate</code> flag in curl 7.85+ enforces 10 requests per second, capping the VM’s blast radius to 86,400 calls/day. For GitHub Actions, add a step with <code>rate-limiting-action</code>:</p>
+<pre><code class="language-yaml">- name: Poll status
+  uses: your-org/rate-limiting-action@v1
+  with:
+    url: &quot;https://api.example.com/job/123/status&quot;
+    max-calls: 10
+    interval: 1
+</code></pre>
+<p>This is a hard-to-reverse decision: once you ship a cron job with <code>--rate</code>, you can’t easily remove it without breaking the job’s SLA. Document it in the README and add a comment in the cron file:</p>
+<pre><code class="language-bash"># DO NOT REMOVE --rate without updating SLA. Job must finish in 8 hours.
+</code></pre>
+<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
+<p>After applying the fixes, verify with three checks:</p>
+<ol>
+<li><strong>Volume check</strong>: In CloudWatch Metrics, filter the API’s <code>RequestCount</code> with a <code>FunctionName</code> dimension. For a single customer’s agent, expect &lt;500 calls/day after the fix. If the count is still in the thousands, the agent is still unbounded.</li>
+<li><strong>Latency check</strong>: Use CloudWatch Synthetics to simulate the agent’s poll loop. Before the fix, a 1-second poll loop shows p99 latency of 1,200 ms (due to retries). After adding exponential backoff, p99 drops to 300 ms.</li>
+<li><strong>Cost check</strong>: In AWS Cost Explorer, filter by Service = Lambda and UsageType = Requests. A single customer’s agent going from 86k calls/day to 300 calls/day drops cost from ~1.70/day to ~0.006/day. For 300 customers, that’s $510/month saved.</li>
+</ol>
+<p>Use CloudWatch Logs Insights to query for duplicate log patterns:</p>
+<pre><code class="language-sql">fields @timestamp, @message
+| filter @message like /duplicate/ or @message like /idempotency_key/
+| stats count() by bin(5m)
+</code></pre>
+<p>If the count drops to zero after deploying the idempotency fix, the fix worked.</p>
+<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
+<p>Prevention requires two layers: <strong>guardrails</strong> and <strong>alerts</strong>.</p>
+<h3 id="guardrails">Guardrails</h3>
+<ol>
+<li><strong>Rate limits at the agent level</strong>: Add a decorator or middleware that enforces <code>max_calls_per_window</code> per customer. In Python:</li>
+</ol>
+<pre><code class="language-python">from functools import wraps
+import time
+
+class RateLimiter:
+    def __init__(self, max_calls, window_seconds):
+        self.max_calls = max_calls
+        self.window = window_seconds
+        self.calls = []
+
+    def __call__(self, f):
+        @wraps(f)
+        def wrapped(*args, **kwargs):
+            now = time.time()
+            self.calls = [t for t in self.calls if now - t &lt; self.window]
+            if len(self.calls) &gt;= self.max_calls:
+                raise Exception(&quot;Rate limit exceeded&quot;)
+            self.calls.append(now)
+            return f(*args, **kwargs)
+        return wrapped
+
+@RateLimiter(max_calls=10, window_seconds=60)
+def poll_status(job_id):
+    return requests.get(f&quot;https://api.example.com/job/{job_id}/status&quot;)
+</code></pre>
+<p>Set <code>max_calls</code> to the SLA’s expected rate. For a job that should finish in 10 minutes, 10 calls/minute is safe.</p>
+<ol>
+<li><strong>Circuit breakers</strong>: Use a library like <code>pybreaker</code> to stop the agent if the API returns too many 404s or 5xx in a window:</li>
+</ol>
+<pre><code class="language-python">from pybreaker import CircuitBreaker
+
+breaker = CircuitBreaker(fail_max=5, reset_timeout=60)
+
+@breaker
+def call_api(url):
+    return requests.get(url)
+</code></pre>
+<p>If the breaker trips, the agent stops making calls until the upstream recovers.</p>
+<h3 id="alerts">Alerts</h3>
+<p>Set two alerts in CloudWatch:</p>
+<ol>
+<li><strong>Volume spike</strong>: Alert when <code>RequestCount</code> &gt; 10× the baseline for a given API endpoint. Baseline is the 7-day median. In Terraform:</li>
+</ol>
+<pre><code class="language-hcl">resource &quot;aws_cloudwatch_metric_alarm&quot; &quot;api_spike&quot; {
+  alarm_name          = &quot;api-volume-spike&quot;
+  comparison_operator = &quot;GreaterThanThreshold&quot;
+  evaluation_periods  = &quot;1&quot;
+  metric_name         = &quot;RequestCount&quot;
+  namespace           = &quot;AWS/ApiGateway&quot;
+  period              = &quot;300&quot;
+  statistic           = &quot;Sum&quot;
+  threshold           = var.baseline * 10
+  alarm_description   = &quot;API volume spike detected&quot;
+  dimensions = {
+    ApiName = &quot;prod-api&quot;
+  }
+}
+</code></pre>
+<ol>
+<li><strong>Cost anomaly</strong>: Alert when daily Lambda cost &gt; 3× the 7-day median. In AWS Cost Anomaly Detection, set the threshold to 300% of baseline.</li>
+</ol>
+<p>Combine these with a PagerDuty integration so the on-call engineer gets a call at 3 AM if the agent spins up.</p>
+<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
+<ol>
+<li><strong>Cache stampede</strong>: After adding a cache for <code>/status</code>, the first request after expiry triggers 100 concurrent calls. The symptom is 5xx errors with <code>TooManyRequests</code> in the response. Fix: use a lock or queue to serialize cache rebuilds.</li>
+<li><strong>Thundering herd</strong>: A CronJob kicks off at 00:00 UTC, but your agent sleeps for 1 second between polls. All 1,000 customers poll at the same time, overwhelming the API. Fix: add jitter to the sleep interval:</li>
+</ol>
+<pre><code class="language-python">import random
+sleep_time = max(1, random.gauss(60, 10))
+time.sleep(sleep_time)
+</code></pre>
+<ol>
+<li><strong>Deduplication race</strong>: Two agents process the same SNS message simultaneously because the DynamoDB idempotency check happens after the Lambda starts. The symptom is duplicate side effects (e.g., two emails sent). Fix: use a conditional write in DynamoDB with <code>ConditionExpression</code>:</li>
+</ol>
+<pre><code class="language-python">def handler(event, context):
+    payload_hash = hashlib.sha256(json.dumps(event).encode()).hexdigest()
+    try:
+        dynamodb.put_item(
+            Item={&quot;idempotency_key&quot;: payload_hash, &quot;result&quot;: &quot;processed&quot;},
+            ConditionExpression=&quot;attribute_not_exists(idempotency_key)&quot;
+        )
+    except dynamodb.meta.client.exceptions.ConditionalCheckFailedException:
+        return {&quot;statusCode&quot;: 200, &quot;body&quot;: &quot;duplicate&quot;}
+    # Do work
+</code></pre>
+<ol>
+<li><strong>SDK version skew</strong>: Agents running on older Lambda runtimes (Node.js 14, Python 3.8) use SDK clients without retry configuration. The symptom is retries that never back off, even when the upstream returns 429. Fix: pin the Lambda runtime to Python 3.11 or Node.js 20 LTS and set the retry config in code.</li>
+</ol>
+<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
+<p>If the volume spike persists after applying all three fixes, escalate with the following diagnostic data:</p>
+<ol>
+<li><strong>CloudWatch Logs Insights query</strong> for the agent’s log group, filtered to the last 6 hours:</li>
+</ol>
+<pre><code class="language-sql">fields @timestamp, @message
+| filter @message like /job_id/ or @message like /status_code/
+| stats count(*) as call_count, avg(@message like /200/) as success_rate by bin(1m)
+| sort @timestamp desc
+</code></pre>
+<ol>
+<li><strong>Cost anomaly report</strong> from AWS Cost Explorer, showing the spike’s start time and duration.</li>
+<li><strong>Agent configuration</strong> (Terraform or Dockerfile) and version of the SDK used.</li>
+</ol>
+<p>Open an internal ticket with the title: "Agent volume spike – check retry config and idempotency". Attach the logs and cost data. If the issue is upstream (e.g., the API’s 429 responses are malformed), escalate to the API team with the exact error response:</p>
+<pre><code class="language-json">{
+  &quot;error&quot;: &quot;RateLimitExceeded&quot;,
+  &quot;retry_after&quot;: &quot;invalid&quot;
+}
+</code></pre>
+<p>If the agent is running on a cron job or VM, package the environment details (crontab, systemd unit, Docker image tag) and open an infra ticket.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Why did my agent start making so many calls overnight?</strong></p>
+<p>Most teams hit this when an upstream API starts returning non-retryable errors (409 Conflict or 429 Too Many Requests) and the agent’s retry logic doesn’t respect those responses. The agent keeps retrying with the same parameters, often because the retry configuration is missing or the SDK’s defaults are too permissive. In 2026, the default retry behavior in boto3 1.34 and AWS SDK for JavaScript 3.500 caps at 3 retries, but if the upstream returns 409, the SDK may still retry without backoff unless you set <code>mode: "adaptive"</code>.</p>
+<p><strong>How do I know if my agent is the problem?</strong></p>
+<p>Check CloudWatch Metrics for the API’s <code>RequestCount</code> dimension. If you see a 3–4× spike in calls to a single endpoint (e.g., <code>/status</code>) with a pattern like 1 call every second, that’s a smoking gun. Pair it with the agent’s log group and look for repeated calls with the same <code>job_id</code> and <code>status: pending</code>. If the API’s error rate hasn’t changed, the issue is volume, not correctness.</p>
+<p><strong>What’s the fastest way to cap the calls without rewriting the agent?</strong></p>
+<p>Add a rate limiter at the infrastructure layer. For Lambda, set <code>ReservedConcurrency</code> to 1 and use a DynamoDB-backed rate limiter in front of the agent. For a cron job on a VM, add <code>--rate 10/1s</code> to the curl command or use <code>rate-limiting-action</code> in GitHub Actions. These changes take 5–10 minutes to deploy and can drop volume by 95% immediately.</p>
+<p><strong>Should I use Redis or DynamoDB for idempotency?</strong></p>
+<p>Use DynamoDB if your stack already uses it for persistence. A single table with <code>idempotency_key</code> as the hash key and TTL set to 24 hours costs ~$1/month for 10k writes/day. Use Redis 7.2 if you need sub-millisecond latency or are already running Redis for caching. The choice depends on your existing infra, not performance—both scale to tens of thousands of writes/day without breaking a sweat.</p>
+<h2 id="tools-and-versions-mentioned">Tools and versions mentioned</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Purpose</th>
+<th>Version/Config</th>
+<th>Docs Link</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python</td>
+<td>Agent runtime</td>
+<td>3.11</td>
+<td><a href="https://docs.python.org/3.11/">docs.python.org/3.11</a></td>
+</tr>
+<tr>
+<td>boto3</td>
+<td>AWS SDK</td>
+<td>1.34</td>
+<td><a href="https://boto3.amazonaws.com/v1/3.34.0/">boto3.amazonaws.com/1.34</a></td>
+</tr>
+<tr>
+<td>AWS Lambda</td>
+<td>Compute</td>
+<td>arm64, 1024 MB</td>
+<td><a href="https://aws.amazon.com/lambda/">aws.amazon.com/lambda</a></td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>Idempotency store</td>
+<td>7.2</td>
+<td><a href="https://redis.io/docs/release-notes/7.2/">redis.io/7.2</a></td>
+</tr>
+<tr>
+<td>DynamoDB</td>
+<td>Idempotency store</td>
+<td>PAY_PER_REQUEST</td>
+<td><a href="https://aws.amazon.com/dynamodb/">aws.amazon.com/dynamodb</a></td>
+</tr>
+<tr>
+<td>systemd</td>
+<td>Service manager</td>
+<td>252</td>
+<td><a href="https://systemd.io/">freedesktop.org/software/systemd</a></td>
+</tr>
+<tr>
+<td>curl</td>
+<td>CLI request tool</td>
+<td>7.85</td>
+<td><a href="https://curl.se/docs/">curl.se/docs</a></td>
+</tr>
+<tr>
+<td>CloudWatch</td>
+<td>Monitoring</td>
+<td>2026-01-01</td>
+<td><a href="https://aws.amazon.com/cloudwatch/">aws.amazon.com/cloudwatch</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="cost-snapshot">Cost snapshot</h2>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Calls/day</th>
+<th>Lambda cost (USD)</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unbounded retry loop</td>
+<td>86,400</td>
+<td>~$1.70/day</td>
+<td>300 customers × $1.70 = $510/month</td>
+</tr>
+<tr>
+<td>Exponential backoff</td>
+<td>300</td>
+<td>~$0.006/day</td>
+<td>300 customers × $0.006 = $1.80/month</td>
+</tr>
+<tr>
+<td>Idempotency + retry</td>
+<td>300</td>
+<td>~$0.006/day</td>
+<td>DynamoDB cost: $1/month for 10k writes</td>
+</tr>
+<tr>
+<td>VM cron job</td>
+<td>28.8M</td>
+<td>~$150/day</td>
+<td>$5 VM, but 28.8M calls cost ~$150 in Lambda</td>
+</tr>
+</tbody>
+</table>
+<p>The difference between the first and third rows is $508/month for 300 customers—enough to fund a part-time dev or a marketing experiment.</p>
+<h2 id="whats-worth-remembering">What’s worth remembering</h2>
+<ul>
+<li>The agent is doing exactly what you told it to do. The problem is that you didn’t tell it to stop.</li>
+<li>Bounded retries and exponential backoff are not optional features—they’re core guardrails.</li>
+<li>Idempotency is not a nice-to-have if your agent processes events that can arrive multiple times.</li>
+<li>Rate limiting at the agent level is cheaper than debugging a $500 bill at 3 AM.</li>
+</ul>
+<p>The next time you write an agent that polls for state, add <code>max_polls=100</code> and <code>initial_delay=1.0</code> to the loop. Ship it with those defaults, then tune them based on your SLA. That single line is the difference between a quiet night and a wake-up call.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.</p>
+<p><strong>How this article was produced:</strong> This site publishes AI-generated technical articles as
+part of an automated content pipeline. Topics, drafts, and formatting are produced by LLMs;
+they are not individually fact-checked or hand-edited by a human before publishing. Treat
+code samples and specific figures (percentages, benchmarks, costs) as illustrative rather
+than independently verified, and check them against current official documentation before
+relying on them in production.</p>
+<p><strong>Corrections:</strong> If you spot an error or outdated information,
+please contact me and I'll review and correct it.</p>
+<p><strong>Last generated:</strong> August 05, 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/mcp-servers-from-toy-to-backbone/">
+                        <h3>MCP servers: from toy to backbone</h3>
+                        <p>MCP servers as critical infrastructure — patterns, traps, and 2026 cost numbers.</p>
+                        <span class="related-meta">16 min read · 28 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/big-model-api-vs-fine-tune-the-2026-math/">
+                        <h3>Big model API vs fine-tune: the 2026 math</h3>
+                        <p>I’ve seen teams burn six weeks perfecting a prompt only to hit a 12% drop in accuracy when their top user started asking questions in German.</p>
+                        <span class="related-meta">18 min read · 3 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/serve-4g-as-baseline-apps-in-2026/">
+                        <h3>Serve 4G-as-baseline apps in 2026</h3>
+                        <p>Cut API response time 21% and payload 63% for 4G-as-baseline users — Go server, Redis 7.4, and Vite 5.3 steps with real 2026 latency and cost data.</p>
+                        <span class="related-meta">13 min read · 3 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

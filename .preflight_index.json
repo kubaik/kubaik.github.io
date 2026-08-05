@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-05T13:49:04.475539",
+  "built_at": "2026-08-05T13:52:53.089419",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4655,6 +4655,11 @@
       "slug": "wasm-servers-beat-containers-here",
       "title": "WASM servers beat containers here",
       "summary": "I've hit the same webassembly server mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. Here's the root cause, not just the symptom. The one-paragraph version (read this first) WebAssembly on the server is not a replacement for"
+    },
+    {
+      "slug": "agent-flooded-our-api-with-bad-calls-overnight",
+      "title": "Agent flooded our API with bad calls overnight",
+      "summary": "Most recovered after guides assume a clean environment and a patient timeline. The gap between the demo and the incident report is where this actually lives. Here's what actually worked, and why. The error and why it's confusing When a background agent started making thousands of low-value API calls"
     }
   ]
 }
