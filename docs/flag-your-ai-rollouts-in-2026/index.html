@@ -139,24 +139,44 @@
             }
             .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
             .ad-inline,
             .ad-header,
             .ad-footer,
             .ad-middle {
-                min-height: 0;
                 overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
             }
             .ad-inline:not(:empty),
             .ad-header:not(:empty),
             .ad-footer:not(:empty),
             .ad-middle:not(:empty) {
-                margin: 2rem 0;
-                text-align: center;
+                margin: 1.5rem 0;
             }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
             .ad-inline ins[data-ad-status="unfilled"],
             .ad-middle ins[data-ad-status="unfilled"],
-            .ad-footer ins[data-ad-status="unfilled"] {
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
                 display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
             }
         </style>
     </head>
@@ -174,8 +194,8 @@
             </nav>
         </div>
     </header>
-    <div class="ad-header" style="min-height:100px"><ins class="adsbygoogle"
-     style="display:block"
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
      data-ad-client="ca-pub-4477679588953789"
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
@@ -792,7 +812,7 @@ please contact me — corrections are applied within 48 hours.</p>
 <p><strong>Last reviewed:</strong> June 21, 2026</p>
                 
                 <div class="ad-inline"><ins class="adsbygoogle"
-     style="display:block"
+     style="display:block;min-height:250px"
      data-ad-client="ca-pub-4477679588953789"
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
@@ -800,7 +820,7 @@ please contact me — corrections are applied within 48 hours.</p>
                 
                 
                 <div class="ad-middle"><ins class="adsbygoogle"
-     style="display:block"
+     style="display:block;min-height:250px"
      data-ad-client="ca-pub-4477679588953789"
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>
@@ -854,7 +874,7 @@ please contact me — corrections are applied within 48 hours.</p>
         </article>
     </main>
     <div class="ad-footer"><ins class="adsbygoogle"
-     style="display:block"
+     style="display:block;min-height:250px"
      data-ad-client="ca-pub-4477679588953789"
      data-ad-format="auto"
      data-full-width-responsive="true"></ins>

@@ -197,11 +197,21 @@ class SEOOptimizer:
         resolved_slot_id = slot_id or slot_map.get(slot_type, "")
         data_slot_attr = f'\n         data-ad-slot="{_esc(resolved_slot_id)}"' if resolved_slot_id else ""
 
-        # Use Auto Ads (responsive) when no slot ID — safest for approval phase
+        # Use Auto Ads (responsive) when no slot ID — safest for approval phase.
+        # CRITICAL for Core Web Vitals / CLS: always reserve vertical space
+        # on the <ins> itself so the layout does not shift when AdSense
+        # fills the unit.  Header slots get a fixed 90 px leaderboard
+        # reservation; other slots get a 250 px min-height (typical
+        # medium-rectangle / responsive floor).
         if not resolved_slot_id:
+            if slot_type == "header":
+                # Fixed-size leaderboard reservation prevents header CLS.
+                style = "display:block;width:100%;min-height:90px;max-height:90px"
+            else:
+                style = "display:block;min-height:250px"
             return (
                 f'<ins class="adsbygoogle"\n'
-                f'     style="display:block"\n'
+                f'     style="{style}"\n'
                 f'     data-ad-client="{adsense_id}"\n'
                 f'     data-ad-format="auto"\n'
                 f'     data-full-width-responsive="true"></ins>\n'
@@ -210,12 +220,12 @@ class SEOOptimizer:
 
         # Fixed-slot format once slot IDs are known
         style_map = {
-            "header": "display:inline-block;width:728px;height:90px",
-            "middle": "display:block",
-            "footer": "display:block",
-            "inline": "display:block",
+            "header": "display:block;width:100%;min-height:90px;max-height:90px",
+            "middle": "display:block;min-height:250px",
+            "footer": "display:block;min-height:250px",
+            "inline": "display:block;min-height:250px",
         }
-        style = style_map.get(slot_type, "display:block")
+        style = style_map.get(slot_type, "display:block;min-height:250px")
         return (
             f'<ins class="adsbygoogle"\n'
             f'     style="{style}"\n'
@@ -285,14 +295,58 @@ class SEOOptimizer:
         )
 
     def generate_organization_schema(self) -> str:
+        """Emit Organization JSON-LD with clean sameAs URLs.
+
+        config.yaml stores social_accounts as full absolute URLs
+        (e.g. "https://twitter.com/KubaiKevin"). Older code assumed bare
+        handles and prepended the platform base, producing doubled values
+        such as "https://twitter.com/https://twitter.com/KubaiKevin".
+        Google discards invalid sameAs entries, weakening E-E-A-T signals.
+        """
         base_url = self.config.get("base_url", "")
-        social = self.config.get("social_accounts", {})
-        same_as = []
-        if social.get("twitter"):
-            same_as.append(
-                f"https://twitter.com/{social['twitter'].lstrip('@')}")
-        if social.get("linkedin") and not social["linkedin"].startswith("your-"):
-            same_as.append(f"https://www.linkedin.com/in/{social['linkedin']}")
+        social = self.config.get("social_accounts", {}) or {}
+        same_as: list = []
+
+        def _normalize_social(value, platform_prefixes):
+            if not value or not isinstance(value, str):
+                return None
+            v = value.strip()
+            if v.startswith("your-") or not v:
+                return None
+            # Already a full absolute URL — use as-is.
+            if v.lower().startswith(("http://", "https://")):
+                return v.rstrip("/")
+            # Bare handle / path fragment — prepend the canonical platform URL.
+            handle = v.lstrip("@").split("/")[-1]
+            return f"https://{platform_prefixes[0].rstrip('/')}/{handle}"
+
+        tw = _normalize_social(
+            social.get("twitter", ""),
+            ("twitter.com", "x.com"),
+        )
+        if tw:
+            same_as.append(tw)
+
+        li = _normalize_social(
+            social.get("linkedin", ""),
+            ("www.linkedin.com/in", "linkedin.com/in"),
+        )
+        if li:
+            same_as.append(li)
+
+        gh = _normalize_social(
+            social.get("github", ""),
+            ("github.com",),
+        )
+        if gh:
+            same_as.append(gh)
+        else:
+            # Always include the author's known GitHub profile for E-E-A-T.
+            same_as.append("https://github.com/kubaik")
+
+        # Deduplicate while preserving order.
+        seen = set()
+        same_as = [u for u in same_as if not (u in seen or seen.add(u))]
 
         schema = {
             "@context": "https://schema.org",

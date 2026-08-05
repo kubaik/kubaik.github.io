@@ -1661,24 +1661,44 @@ def _build_templates() -> dict:
             }
             .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
             .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
             .ad-inline,
             .ad-header,
             .ad-footer,
             .ad-middle {
-                min-height: 0;
                 overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
             }
             .ad-inline:not(:empty),
             .ad-header:not(:empty),
             .ad-footer:not(:empty),
             .ad-middle:not(:empty) {
-                margin: 2rem 0;
-                text-align: center;
+                margin: 1.5rem 0;
             }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
             .ad-inline ins[data-ad-status="unfilled"],
             .ad-middle ins[data-ad-status="unfilled"],
-            .ad-footer ins[data-ad-status="unfilled"] {
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
                 display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
             }
         </style>
     </head>
@@ -1696,7 +1716,7 @@ def _build_templates() -> dict:
             </nav>
         </div>
     </header>
-    {% if header_ad %}<div class="ad-header" style="min-height:100px">{{ header_ad | safe }}</div>{% endif %}
+    {% if header_ad %}<div class="ad-header">{{ header_ad | safe }}</div>{% endif %}
     <main class="container">
         <nav class="breadcrumb" aria-label="Breadcrumb">
             <a href="{{ base_path }}/">Home</a>
@@ -1962,7 +1982,7 @@ def _build_templates() -> dict:
             </nav>
         </div>
     </header>
-    {% if header_ad %}<div class="ad-header" style="min-height:100px">{{ header_ad | safe }}</div>{% endif %}
+    {% if header_ad %}<div class="ad-header">{{ header_ad | safe }}</div>{% endif %}
     <main class="container">
         <div class="hero">
             <h2>Real Systems. Real Failures. Real Fixes.</h2>
@@ -1971,9 +1991,13 @@ def _build_templates() -> dict:
 
         <div class="editorial-policy-note">
             Articles are written by <a href="{{ base_path }}/about/">Kubai Kevin</a>, a software developer
-            with 10+ years of production experience, drafted with AI assistance as part of an automated
-            publishing pipeline. Not every post gets individual line-by-line review before it goes live.
-            <a href="{{ base_path }}/about/#editorial">See how articles are actually produced →</a>
+            with 10+ years of production experience in fintech and AI. Topics are selected from real
+            production work; drafts are produced by an automated LLM pipeline that is gated by
+            hard quality controls (minimum length, duplicate detection, boilerplate rejection).
+            Individual line-by-line human review is not performed on every post before publication —
+            the author maintains the quality gates and corrects articles when readers report issues.
+            <a href="{{ base_path }}/ai-content-policy/">Full AI content policy →</a>
+            · <a href="{{ base_path }}/about/#editorial">Editorial process →</a>
         </div>
 
         <div class="search-container">
@@ -3275,7 +3299,7 @@ def _build_templates() -> dict:
         <article class="page-content">
             <div class="highlight-box">
                 <h2>Our Commitment in One Paragraph</h2>
-                <p style="margin-bottom:0;">Every article on {{ site_name }} is written on a topic selected by the author (Kubai Kevin) from his own production experience, then drafted end-to-end by LLMs through an automated pipeline. Given the publishing volume, articles are <strong>not individually fact-checked or hand-edited by a human before going live</strong>. Automated quality gates (below) catch thin, duplicate, and boilerplate content before publication, and the author reviews and corrects specific articles when readers flag issues.</p>
+                <p style="margin-bottom:0;">Every article on {{ site_name }} starts from a topic chosen by the author (Kubai Kevin) from his own production experience in fintech and AI systems. Drafts are produced by an automated LLM pipeline that the author designed and maintains. <strong>Individual line-by-line human editing is not performed on every post before publication</strong> — instead, hard automated quality gates (minimum length, semantic duplicate detection, boilerplate and filler-phrase rejection) discard low-value output before it can be published. The author reviews and corrects specific articles when readers report errors, and periodically audits the corpus. Transparency about this process is intentional: readers should know exactly how content is produced.</p>
             </div>
 
             <div class="policy-section">
