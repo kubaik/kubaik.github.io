@@ -263,6 +263,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/5k-remote-roles-nairobi-lagos-playbook/</loc>
+    <lastmod>2026-06-13</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/5k-remote-roles-nairobi-lagos-playbook.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/6-months-running-multi-agent-systems-what-broke/</loc>
     <lastmod>2026-07-22</lastmod>
     <changefreq>weekly</changefreq>
@@ -2530,7 +2539,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/finops-agents-dashboards-vs-alerts-on-ai-bills.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -5831,6 +5840,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/wasm-ml-models-keep-dev-speed-at-the-edge.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/wasm-servers-beat-containers-here/</loc>
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
     </image:image>
   </url>
   <url>

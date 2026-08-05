@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-05T10:10:40.778049",
+  "built_at": "2026-08-05T13:49:04.475539",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4650,6 +4650,11 @@
       "slug": "finops-agents-dashboards-vs-alerts-on-ai-bills",
       "title": "FinOps agents: dashboards vs alerts on AI bills",
       "summary": "The official documentation for agentic finops is good. What it doesn't cover is what happens six months into production. The edge cases only show up once real users hit the system. Here's the fuller picture, with the tradeoffs left in. Why this comparison matters right now In 2026, engineering teams"
+    },
+    {
+      "slug": "wasm-servers-beat-containers-here",
+      "title": "WASM servers beat containers here",
+      "summary": "I've hit the same webassembly server mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. Here's the root cause, not just the symptom. The one-paragraph version (read this first) WebAssembly on the server is not a replacement for"
     }
   ]
 }

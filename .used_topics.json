@@ -134,5 +134,6 @@
   "Production RAG that doesn't rot: chunking, indexing, and refresh strategies that survive real data change",
   "MCP in production: the hidden operational costs and security gotchas nobody talks about",
   "The portfolio projects that actually get African engineers hired into senior remote roles in 2026",
-  "Agentic FinOps: the dashboards and alerts that finally made AI costs visible to leadership"
+  "Agentic FinOps: the dashboards and alerts that finally made AI costs visible to leadership",
+  "WebAssembly on the server: where it actually beats containers in our production workloads"
 ]
