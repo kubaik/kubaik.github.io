@@ -3124,7 +3124,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/mcp-servers-the-3-hidden-costs-nobody-quotes.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -4184,6 +4184,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/senior-devs-flee-when-systems-rot.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/senior-role-projects-3-real-paths/</loc>
+    <lastmod>2026-08-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
     </image:image>
   </url>
   <url>

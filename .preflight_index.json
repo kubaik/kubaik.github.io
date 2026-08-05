@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-05T02:46:26.106526",
+  "built_at": "2026-08-05T09:46:06.259352",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4640,6 +4640,11 @@
       "slug": "mcp-servers-the-3-hidden-costs-nobody-quotes",
       "title": "MCP servers: the 3 hidden costs nobody quotes",
       "summary": "The conventional advice on mcp production is incomplete in one specific, costly way. The edge cases only show up once real users hit the system. This is the version of the write-up that includes the part that broke. The gap between what the docs say and what production needs I once watched a team sh"
+    },
+    {
+      "slug": "senior-role-projects-3-real-paths",
+      "title": "Senior role projects: 3 real paths",
+      "summary": "A colleague asked me about portfolio projects during a code review recently, and my first answer wasn't a good one. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in. Why I wrote this (the problem I kept hitting) In 20"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 05 Aug 2026 02:46:32 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 05 Aug 2026 09:46:14 +0000</lastBuildDate>
+    <item>
+      <title>Senior role projects: 3 real paths</title>
+      <link>https://kubaik.github.io/senior-role-projects-3-real-paths/</link>
+      <description>Senior remote roles in 2026 demand production-grade portfolio projects.</description>
+      <pubDate>Wed, 05 Aug 2026 09:46:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/senior-role-projects-3-real-paths/</guid>
+    </item>
     <item>
       <title>MCP servers: the 3 hidden costs nobody quotes</title>
       <link>https://kubaik.github.io/mcp-servers-the-3-hidden-costs-nobody-quotes/</link>
@@ -138,13 +145,6 @@
       <description>Publish evolvable AWS Lambda layers without breaking deployments when upgrading runtimes or regions — versioning, CloudFormation patterns, and the…</description>
       <pubDate>Fri, 31 Jul 2026 14:15:41 +0000</pubDate>
       <guid>https://kubaik.github.io/boring-aws-lambda-layers-that-dont-lock/</guid>
-    </item>
-    <item>
-      <title>One misconfigured pool drained $4k/month</title>
-      <link>https://kubaik.github.io/one-misconfigured-pool-drained-4kmonth/</link>
-      <description>One misconfigured pool drained $4k/month — how PgBouncer 1.22, Postgres 15 max_connections, and per-pod connection counts collided on Black Friday 2025</description>
-      <pubDate>Fri, 31 Jul 2026 09:07:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/one-misconfigured-pool-drained-4kmonth/</guid>
     </item>
   </channel>
 </rss>
