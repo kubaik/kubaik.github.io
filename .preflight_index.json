@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-06T07:44:06.716074",
+  "built_at": "2026-08-06T08:07:54.033178",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4680,6 +4680,11 @@
       "slug": "ai-sandboxes-when-self-service-goes-wrong",
       "title": "AI sandboxes: when self-service goes wrong",
       "summary": "I ran into this selfservice tooling problem while migrating a service under a hard deadline. The answers online were either wrong or skipped the part that mattered. Here's what I'd tell a colleague hitting this for the first time. The situation (what we were trying to solve) In 2026, our product tea"
+    },
+    {
+      "slug": "agents-create-incidents-at-2am",
+      "title": "Agents create incidents at 2am",
+      "summary": "I ran into this oncall changes problem while migrating a service under a hard deadline. The tutorials all show the happy path. This is what I put together after working through it properly. The conventional wisdom (and why it's incomplete) The standard playbook says: automate everything; let agents "
     }
   ]
 }
