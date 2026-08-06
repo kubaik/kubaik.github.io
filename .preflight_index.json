@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-05T18:25:14.571429",
+  "built_at": "2026-08-06T02:49:29.713338",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4670,6 +4670,11 @@
       "slug": "ai-micro-saas-under-150month-the-real-infra-choices",
       "title": "AI micro-SaaS under $150/month: the real infra choices",
       "summary": "Most launched iterated guides assume a clean environment and a patient timeline. It works in the simple case and breaks in a specific way under load. Here's the fuller picture, with the tradeoffs left in. The one-paragraph version (read this first) Most AI products leak money on undifferentiated inf"
+    },
+    {
+      "slug": "agent-drift-is-eating-your-product",
+      "title": "Agent drift is eating your product",
+      "summary": "I've hit the same detect contain mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. This post covers what comes after the happy path. The gap between what the docs say and what production needs The documentation for most LLM ag"
     }
   ]
 }

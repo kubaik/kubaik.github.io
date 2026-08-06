@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 05 Aug 2026 18:25:24 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 06 Aug 2026 02:49:38 +0000</lastBuildDate>
+    <item>
+      <title>Agent drift is eating your product</title>
+      <link>https://kubaik.github.io/agent-drift-is-eating-your-product/</link>
+      <description>A 2026 Stack Overflow survey of 4,200 backend engineers found that 68% of teams running agents in production had no drift detection at all, and 22% relied…</description>
+      <pubDate>Thu, 06 Aug 2026 02:49:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-drift-is-eating-your-product/</guid>
+    </item>
     <item>
       <title>AI micro-SaaS under $150/month: the real infra choices</title>
       <link>https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/</link>
@@ -138,13 +145,6 @@
       <description>pgvector at 100k+ QPS: what broke first — connection limits, shared_buffers sizing, and the planner trap most teams hit when they scale vector search…</description>
       <pubDate>Sun, 02 Aug 2026 03:17:42 +0000</pubDate>
       <guid>https://kubaik.github.io/pgvector-at-100k-qps-what-broke-first/</guid>
-    </item>
-    <item>
-      <title>AI cost per user: what product misses</title>
-      <link>https://kubaik.github.io/ai-cost-per-user-what-product-misses/</link>
-      <description>Track AI feature cost per user with Redis caching, retries, latency, and regional differences — the hidden costs most product teams miss</description>
-      <pubDate>Sat, 01 Aug 2026 17:25:15 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-cost-per-user-what-product-misses/</guid>
     </item>
   </channel>
 </rss>
