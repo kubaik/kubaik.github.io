@@ -1318,8 +1318,11 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             tag_dir = tags_dir / tag_slug
             tag_dir.mkdir(exist_ok=True)
 
+            # Raised threshold from 5 → 8 for AdSense thin-content protection.
+            # Tags with fewer than 8 posts receive noindex, follow and should
+            # be excluded from the sitemap by the sitemap generator.
             robots_directive = "index, follow" if len(
-                tag_posts) >= 5 else "noindex, follow"
+                tag_posts) >= 8 else "noindex, follow"
 
             posts_data = []
             for p in sorted(tag_posts, key=lambda x: x.created_at, reverse=True):
@@ -1468,8 +1471,8 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         with open(tags_dir / "index.html", 'w', encoding='utf-8') as f:
             f.write(all_tags_html)
 
-        indexed_count = sum(1 for ps in qualifying.values() if len(ps) >= 5)
-        noindex_count = sum(1 for ps in qualifying.values() if len(ps) < 5)
+        indexed_count = sum(1 for ps in qualifying.values() if len(ps) >= 8)
+        noindex_count = sum(1 for ps in qualifying.values() if len(ps) < 8)
         print(
             f"Generated {len(qualifying)} tag pages + /tag/ index "
             f"({indexed_count} indexed, {noindex_count} noindexed as thin)"
