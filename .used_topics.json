@@ -141,5 +141,6 @@
   "How we launched and iterated an AI-powered micro-SaaS while keeping infra under $150/month",
   "How we detect and contain agent drift before it creates bad user experiences",
   "The self-service AI tooling layer we built so product teams could experiment safely",
-  "The on-call changes we made after agents started creating incidents at 2am"
+  "The on-call changes we made after agents started creating incidents at 2am",
+  "Building a personal brand as an engineer in a world where everyone has AI-assisted portfolios"
 ]

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-06T08:07:54.033178",
+  "built_at": "2026-08-06T11:07:46.486599",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4685,6 +4685,11 @@
       "slug": "agents-create-incidents-at-2am",
       "title": "Agents create incidents at 2am",
       "summary": "I ran into this oncall changes problem while migrating a service under a hard deadline. The tutorials all show the happy path. This is what I put together after working through it properly. The conventional wisdom (and why it's incomplete) The standard playbook says: automate everything; let agents "
+    },
+    {
+      "slug": "ai-portfolios-ruin-yours-fix-your-signal",
+      "title": "AI portfolios ruin yours? Fix your signal",
+      "summary": "After reviewing enough code that touches building personal, the same failure pattern keeps showing up. The answers online were either wrong or skipped the part that mattered. This post covers what comes after the happy path. The error and why it's confusing The signal-to-noise ratio of an engineer’s"
     }
   ]
 }

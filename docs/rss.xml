@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 06 Aug 2026 14:04:15 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 06 Aug 2026 11:07:55 +0000</lastBuildDate>
+    <item>
+      <title>AI portfolios ruin yours? Fix your signal</title>
+      <link>https://kubaik.github.io/ai-portfolios-ruin-yours-fix-your-signal/</link>
+      <description>AI portfolios ruin yours? Fix your signal — turn generic READMEs into human-graded constraint tables and ship artifacts that prove judgment, not code…</description>
+      <pubDate>Thu, 06 Aug 2026 11:07:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-portfolios-ruin-yours-fix-your-signal/</guid>
+    </item>
     <item>
       <title>Agents create incidents at 2am</title>
       <link>https://kubaik.github.io/agents-create-incidents-at-2am/</link>
@@ -138,13 +145,6 @@
       <description>CDC pipeline crashes when LLM bursts hit — Postgres replication slot errors, 3 concrete fixes, vLLM 0.4.2 and Python semaphore patterns, plus the one…</description>
       <pubDate>Sun, 02 Aug 2026 13:29:42 +0000</pubDate>
       <guid>https://kubaik.github.io/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/</guid>
-    </item>
-    <item>
-      <title>African fintech rules broke our stack</title>
-      <link>https://kubaik.github.io/african-fintech-rules-broke-our-stack/</link>
-      <description>But the honest answer is that that checklist is only the first 5% of the work.</description>
-      <pubDate>Sun, 02 Aug 2026 13:12:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/african-fintech-rules-broke-our-stack/</guid>
     </item>
   </channel>
 </rss>
