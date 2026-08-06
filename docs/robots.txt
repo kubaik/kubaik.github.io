@@ -17,7 +17,17 @@ User-agent: *
 Disallow: /admin/
 Disallow: /private/
 Disallow: /.git/
-Disallow: /tag/
+
+# FIX (found in review, 2026): this file previously disallowed /tag/
+# entirely, which blocked Googlebot from crawling EVERY tag page —
+# including the ones _generate_tag_pages() explicitly marks
+# <meta name="robots" content="index, follow"> because they clear the
+# thin-content threshold (>= 8 posts). A per-page meta robots directive
+# is irrelevant if the crawler is never allowed to fetch the page in the
+# first place, so the two mechanisms were contradicting each other and
+# the "indexed" tag pages were in practice unreachable. Thin tag pages
+# (< 8 posts) still self-declare noindex via their own meta tag and
+# don't need a robots.txt block on top of that.
 
 # Explicitly allow Google's ad crawler regardless of the rule above
 User-agent: Mediapartners-Google

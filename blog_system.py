@@ -1895,6 +1895,15 @@ class BlogSystem:
         )
 
         self.monetization = MonetizationManager(config)
+        # NOTE (found in review, 2026): this instantiation is currently
+        # inert — see the STATUS note at the top of hashtag_manager.py.
+        # Nothing calls self.hashtag_manager.get_daily_hashtags() or any
+        # other method; live hashtags come entirely from
+        # _derive_hashtags_from_keywords() further down in this file.
+        # Left in place rather than removed so this diff stays additive;
+        # decide (per that file's note) whether to delete this line and
+        # the HashtagManager/add_hashtags_to_post import, or actually wire
+        # this in.
         self.hashtag_manager = HashtagManager(config)
 
         self.preflight_index = PreFlightIndex(docs_dir=self.output_dir)
@@ -2873,6 +2882,26 @@ class BlogSystem:
             post.affiliate_links = []
             post.monetization_data = self.monetization.generate_ad_slots(
                 post.content)
+
+            # FIX (found in review, 2026): extract_and_build_faq_schema()
+            # was imported at module load time but never actually called
+            # anywhere. static_site_generator.py's _generate_article_schema()
+            # already has the wiring on the *reading* side — it looks for
+            # post.monetization_data.get('faq_schema', '') and appends it
+            # as a second JSON-LD block whenever present — but nothing on
+            # the *writing* side ever populated that key. Net effect: any
+            # post whose content included a "## FAQ" or "## Frequently
+            # Asked Questions" section never got FAQPage structured data,
+            # even though three separate pieces of the machinery for it
+            # (extraction, storage field, template rendering) all existed.
+            faq_schema = extract_and_build_faq_schema(
+                post.content,
+                self.config.get('base_url', 'https://kubaik.github.io'),
+                post.slug,
+            )
+            if faq_schema:
+                post.monetization_data['faq_schema'] = faq_schema
+                print("  ✅ FAQ schema extracted and attached to post.")
 
             # Preserve the complete, untruncated title alongside the
             # SERP-safe display title (see title_validator.py).
@@ -4165,6 +4194,33 @@ if __name__ == "__main__":
             with open("config.yaml", "r") as f:
                 config = yaml.safe_load(f)
 
+            # FIX (found in review, 2026): VelocityController exists, is
+            # fully documented ("HOW TO INTEGRATE... BEFORE calling
+            # generate_blog_post()"), and is wired into a *manual*
+            # `velocity status`/`velocity reset` CLI command — but was
+            # never actually called from the one place that matters: this
+            # `auto` entry point, which is what a scheduled GitHub Action
+            # runs unattended. Without this check, nothing stops `auto`
+            # from being triggered more times in a day than the age-based
+            # cap allows (e.g. a manual re-run, a workflow_dispatch storm,
+            # or a misconfigured cron), which is precisely the "10 posts
+            # in 10 minutes looks like a content farm" signal this module
+            # was built to prevent.
+            vc = VelocityController()
+            if not vc.can_publish():
+                print("\n" + "═" * 68)
+                print("🛑  VELOCITY LIMIT REACHED — NO POST PUBLISHED")
+                print("═" * 68)
+                print(f"  {vc.domain_age_summary()}")
+                print(
+                    "  Action : This is expected — the daily cap protects against\n"
+                    "           publishing-velocity spam signals. It will reset\n"
+                    "           tomorrow. Run 'python blog_system.py velocity status'\n"
+                    "           for details, or set PUBLISH_DAILY_LIMIT to override."
+                )
+                print("═" * 68 + "\n")
+                sys.exit(0)  # not a failure — clean exit, Action shows green
+
             blog_system = BlogSystem(config)
 
             try:
@@ -4321,6 +4377,12 @@ if __name__ == "__main__":
 
                     try:
                         blog_system.save_post(blog_post)
+                        # Record the publish AFTER save_post() succeeds, not
+                        # before — matches VelocityController's own
+                        # documented contract ("to avoid counting failed
+                        # attempts"). A duplicate-content rejection below
+                        # must not count against today's quota.
+                        vc.record_publish()
                     except DuplicateContentError as e:
                         dup_detected = True
                         dup_reason = f"DUPLICATE CONTENT: {e}"
