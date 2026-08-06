@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-06T02:49:29.713338",
+  "built_at": "2026-08-06T07:44:06.716074",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4675,6 +4675,11 @@
       "slug": "agent-drift-is-eating-your-product",
       "title": "Agent drift is eating your product",
       "summary": "I've hit the same detect contain mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. This post covers what comes after the happy path. The gap between what the docs say and what production needs The documentation for most LLM ag"
+    },
+    {
+      "slug": "ai-sandboxes-when-self-service-goes-wrong",
+      "title": "AI sandboxes: when self-service goes wrong",
+      "summary": "I ran into this selfservice tooling problem while migrating a service under a hard deadline. The answers online were either wrong or skipped the part that mattered. Here's what I'd tell a colleague hitting this for the first time. The situation (what we were trying to solve) In 2026, our product tea"
     }
   ]
 }

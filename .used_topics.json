@@ -139,5 +139,6 @@
   "How we recovered after an agent made thousands of low-value API calls overnight",
   "The cost and reliability tradeoffs of running agents for users who pay in local mobile money",
   "How we launched and iterated an AI-powered micro-SaaS while keeping infra under $150/month",
-  "How we detect and contain agent drift before it creates bad user experiences"
+  "How we detect and contain agent drift before it creates bad user experiences",
+  "The self-service AI tooling layer we built so product teams could experiment safely"
 ]
