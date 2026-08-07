@@ -941,6 +941,15 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-cost-attribution-without-the-spreadsheet-hell/</loc>
+    <lastmod>2026-08-07</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/ai-cost-attribution-without-the-spreadsheet-hell.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ai-cost-per-user-what-product-misses/</loc>
     <lastmod>2026-08-01</lastmod>
     <changefreq>weekly</changefreq>
@@ -3169,7 +3178,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/mcp-server-security-in-fintech-5-concrete-traps.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/mcp-server-security-in-fintech-5-concrete-traps.png</image:loc>
     </image:image>
   </url>
   <url>

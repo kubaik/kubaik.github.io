@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 07 Aug 2026 09:01:57 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 07 Aug 2026 13:12:08 +0000</lastBuildDate>
+    <item>
+      <title>AI cost attribution without the spreadsheet hell</title>
+      <link>https://kubaik.github.io/ai-cost-attribution-without-the-spreadsheet-hell/</link>
+      <description>AI cost attribution that product managers can actually read — per-user, per-feature numbers in real time without breaking the SLA.</description>
+      <pubDate>Fri, 07 Aug 2026 13:11:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-cost-attribution-without-the-spreadsheet-hell/</guid>
+    </item>
     <item>
       <title>MCP server security in fintech: 5 concrete traps</title>
       <link>https://kubaik.github.io/mcp-server-security-in-fintech-5-concrete-traps/</link>
@@ -138,13 +145,6 @@
       <description>Poisoned data and model drift caused 8,200 support tickets in 2026 — not prompt injection.</description>
       <pubDate>Mon, 03 Aug 2026 03:19:51 +0000</pubDate>
       <guid>https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/</guid>
-    </item>
-    <item>
-      <title>Platform teams pay for themselves by week 16</title>
-      <link>https://kubaik.github.io/platform-teams-pay-for-themselves-by-week-16/</link>
-      <description>Platform teams pay for themselves by week 16 — how we cut deployment pages 59%, reduced ramp time 64%, and saved $25k/month with a minimal golden path…</description>
-      <pubDate>Sun, 02 Aug 2026 13:36:31 +0000</pubDate>
-      <guid>https://kubaik.github.io/platform-teams-pay-for-themselves-by-week-16/</guid>
     </item>
   </channel>
 </rss>
