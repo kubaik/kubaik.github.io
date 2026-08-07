@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 07 Aug 2026 02:49:34 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 07 Aug 2026 09:01:57 +0000</lastBuildDate>
+    <item>
+      <title>MCP server security in fintech: 5 concrete traps</title>
+      <link>https://kubaik.github.io/mcp-server-security-in-fintech-5-concrete-traps/</link>
+      <description>Secure MCP servers in fintech with JWT, KMS encryption, and CloudTrail auditing — concrete code, benchmarks, and the one mistake every team repeats.</description>
+      <pubDate>Fri, 07 Aug 2026 09:01:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-server-security-in-fintech-5-concrete-traps/</guid>
+    </item>
     <item>
       <title>Stop writing retry loops: durable execution is the real work</title>
       <link>https://kubaik.github.io/stop-writing-retry-loops-durable-execution-is-the-real-work/</link>
@@ -138,13 +145,6 @@
       <description>Platform teams pay for themselves by week 16 — how we cut deployment pages 59%, reduced ramp time 64%, and saved $25k/month with a minimal golden path…</description>
       <pubDate>Sun, 02 Aug 2026 13:36:31 +0000</pubDate>
       <guid>https://kubaik.github.io/platform-teams-pay-for-themselves-by-week-16/</guid>
-    </item>
-    <item>
-      <title>AI on Lambda: when the bill explodes</title>
-      <link>https://kubaik.github.io/ai-on-lambda-when-the-bill-explodes/</link>
-      <description>AI on Lambda: when the bill explodes — comparing Lambda vs EC2 + Elastic Inference for a 7B-parameter vLLM model with real cost breakdowns, cache hit…</description>
-      <pubDate>Sun, 02 Aug 2026 13:32:47 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-on-lambda-when-the-bill-explodes/</guid>
     </item>
   </channel>
 </rss>

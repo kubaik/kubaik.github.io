@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-07T02:49:24.932263",
+  "built_at": "2026-08-07T09:01:48.884750",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4695,6 +4695,11 @@
       "slug": "stop-writing-retry-loops-durable-execution-is-the-real-work",
       "title": "Stop writing retry loops: durable execution is the real work",
       "summary": "I've hit the same durable execution mistake in more than one production codebase over the years. The gap between the demo and the incident report is where this actually lives. Here's what actually worked, and why. The gap between what the docs say and what production needs Most tutorials teach workf"
+    },
+    {
+      "slug": "mcp-server-security-in-fintech-5-concrete-traps",
+      "title": "MCP server security in fintech: 5 concrete traps",
+      "summary": "security model looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. Here's the root cause, not just the symptom. Why I wrote this (the problem I kept hitting) Two years ago, a fintech team I worked with rolled out a Model Context "
     }
   ]
 }

@@ -144,5 +144,6 @@
   "The on-call changes we made after agents started creating incidents at 2am",
   "Building a personal brand as an engineer in a world where everyone has AI-assisted portfolios",
   "The exact stack and cost breakdown for a Nairobi-based SaaS serving 8k+ MAU",
-  "The durable execution patterns that replaced most of our custom workflow code"
+  "The durable execution patterns that replaced most of our custom workflow code",
+  "Security model for MCP servers in regulated environments (fintech case study)"
 ]
