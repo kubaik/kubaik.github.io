@@ -3544,7 +3544,7 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
-    env = Environment(loader=BaseLoader())
+    env = Environment(loader=BaseLoader(), autoescape=True)
     return {
         'post':             env.from_string(POST_TMPL),
         'index':            env.from_string(INDEX_TMPL),
