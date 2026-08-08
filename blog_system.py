@@ -14,7 +14,7 @@ import sys
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 try:
     from PIL import Image, ImageDraw, ImageFont
@@ -28,7 +28,7 @@ from seo_optimizer import SEOOptimizer
 from visibility_automator import VisibilityAutomator
 from static_site_generator import StaticSiteGenerator
 from hashtag_manager import HashtagManager, add_hashtags_to_post
-
+from utils import dedup_similarity
 
 from adsense_fixes.internal_linker import build_posts_index, inject_internal_links
 
@@ -1563,11 +1563,26 @@ def inject_eeat_signals(post, topic: str = None) -> None:
 
 _PREFLIGHT_CACHE_FILE = Path(".preflight_index.json")
 _PREFLIGHT_CACHE_TTL_SECONDS = 3600
-_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD = 0.60  # was 0.55 - now matches
-# CONTENT_DUPLICATE_THRESHOLD's
-# calibration below so the two
-# gates can't disagree about
-# what counts as a duplicate
+
+# PATCH (dedup hardening round 2): PreFlightIndex (below) runs BEFORE an
+# article is even written, on just a candidate topic string, using its own
+# sklearn-based TF-IDF (word+bigram, sublinear TF, "english" stopwords) —
+# a genuinely different vector space from dedup_similarity.py's unigram
+# IDF model, because it's answering a different question (does this idea
+# sound like an existing title/summary?) than ContentDuplicateGate (does
+# this finished article's body substantially overlap an existing one?).
+# A previous comment here claimed this threshold was kept in exact sync
+# with CONTENT_DUPLICATE_THRESHOLD via a "_validate_dedup_thresholds()"
+# function — that function did not actually exist anywhere in this file,
+# and the two thresholds could not mean the same thing anyway since the
+# vector spaces differ. Lowered from 0.60 to 0.50 for defense-in-depth
+# (same "increase strictness" pass as the content gate below), but this
+# is a coarse pre-filter, not a guarantee that matches the content gate
+# 1:1. See _validate_dedup_thresholds() below, which now actually exists
+# and only asserts internal sanity (both values are valid similarity
+# thresholds in (0, 1) and the pre-flight filter isn't looser than the
+# content gate), not that the two algorithms agree pairwise.
+_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD = 0.50
 _PREFLIGHT_MAX_RETRIES = 3
 
 
@@ -1581,64 +1596,67 @@ _PREFLIGHT_MAX_RETRIES = 3
 # clear the title/topic check yet produce 80%+ overlapping content.
 #
 # This gate re-checks the *actual generated article body* against every
-# already-published post immediately before publish, using the same
-# TF-IDF cosine-similarity approach and 0.72 threshold as
-# scripts/content_quality_gate.py, so the standalone CI gate and the
-# live generation pipeline agree on what counts as a duplicate.
-
-# PATCH (dedup hardening): 0.72 was letting through everything in the
-# 0.55-0.72 band, which is exactly where audits of the published corpus
-# found confirmed near-duplicate pairs (same topic, reworded title/body).
-# Lowered to 0.60 and now MUST stay equal to or below
-# _PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD - see _validate_dedup_thresholds().
-CONTENT_DUPLICATE_THRESHOLD = 0.60
-
-_CONTENT_DUP_STOP_WORDS = {
-    "the", "a", "an", "and", "or", "but", "in", "on", "at", "to",
-    "for", "of", "with", "by", "from", "is", "are", "was", "were",
-    "be", "been", "being", "have", "has", "had", "do", "does", "did",
-    "will", "would", "could", "should", "may", "might", "can", "that",
-    "this", "these", "those", "it", "its", "we", "you", "your", "our",
-    "they", "their", "what", "which", "who", "when", "where", "how",
-    "not", "no", "so", "if", "as", "than", "then", "about", "up",
-    "out", "into", "more", "also", "just", "after", "before", "over",
-    "some", "any", "all", "each", "both", "between", "through",
-}
+# already-published post immediately before publish.
+#
+# PATCH (dedup hardening round 2): this gate used to compute its own
+# raw term-frequency vectors (NO IDF weighting, content only, no title,
+# its own stopword list) — a different vector space from the audit tool
+# in content_quality_scanner.py, despite a comment here previously
+# claiming the two "agree on what counts as a duplicate." They didn't:
+# the audit tool found published pairs at 0.52-0.73 similarity under its
+# IDF+title-weighted method that this gate's plain-TF method had scored
+# below its own 0.60 threshold at publish time, letting them through.
+#
+# Fix: this gate now imports the exact same tokenizer/IDF/cosine
+# functions from dedup_similarity.py that content_quality_scanner.py
+# uses, so "0.45 similarity" means the same thing in both places. The
+# threshold itself is also lowered (was 0.60) as part of the same
+# strictness pass, and is configurable via config.yaml's
+# duplicate_similarity_threshold so it can be retuned without a code
+# change if it proves too aggressive.
+CONTENT_DUPLICATE_THRESHOLD = dedup_similarity.DUPLICATE_SIMILARITY_THRESHOLD
 
 
-def _content_word_tokenize(text: str) -> List[str]:
-    return re.findall(r"\b[a-z][a-z']{1,}\b", text.lower())
+def _validate_dedup_thresholds() -> None:
+    """Sanity-check the two duplicate thresholds at import time. This
+    can't make the pre-flight (sklearn, bigram) and content-gate
+    (dedup_similarity, unigram) vector spaces produce identical numbers
+    for the same pair of posts — they're different algorithms answering
+    different questions — but it can catch the specific failure mode of
+    someone loosening one threshold without noticing the other, or
+    setting either to a nonsensical value."""
+    assert 0.0 < CONTENT_DUPLICATE_THRESHOLD < 1.0, (
+        f"CONTENT_DUPLICATE_THRESHOLD={CONTENT_DUPLICATE_THRESHOLD} must be in (0, 1)"
+    )
+    assert 0.0 < _PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD < 1.0, (
+        f"_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD={_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD} must be in (0, 1)"
+    )
+    # The pre-flight filter runs first and cheaper; it should never be
+    # LOOSER than the full-body gate, or a post that would've been
+    # blocked pre-generation could still slip through if pre-flight's
+    # threshold were the higher (more permissive) number in practice.
+    # (Not a proof the algorithms agree — just a guard against an
+    # obviously backwards configuration.)
+    assert _PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD <= CONTENT_DUPLICATE_THRESHOLD + 0.25, (
+        "_PREFLIGHT_TFIDF_SIMILARITY_THRESHOLD is far looser than "
+        "CONTENT_DUPLICATE_THRESHOLD — review both before shipping."
+    )
 
 
-def _content_tfidf_vector(text: str) -> Dict[str, float]:
-    tokens = [t for t in _content_word_tokenize(text)
-              if t not in _CONTENT_DUP_STOP_WORDS]
-    if not tokens:
-        return {}
-    counts = Counter(tokens)
-    total = len(tokens)
-    return {word: count / total for word, count in counts.items()}
-
-
-def _content_cosine_similarity(v1: Dict[str, float], v2: Dict[str, float]) -> float:
-    common = set(v1) & set(v2)
-    if not common:
-        return 0.0
-    dot = sum(v1[k] * v2[k] for k in common)
-    mag1 = math.sqrt(sum(x ** 2 for x in v1.values()))
-    mag2 = math.sqrt(sum(x ** 2 for x in v2.values()))
-    if mag1 == 0 or mag2 == 0:
-        return 0.0
-    return dot / (mag1 * mag2)
+_validate_dedup_thresholds()
 
 
 class ContentDuplicateGate:
     """
     Full-body near-duplicate detector. Unlike PreFlightIndex (which only
     ever sees a short candidate topic string), this compares the complete
-    generated article text against the complete body of every already
-    published post, so it catches overlap that only shows up once the
-    article is actually written.
+    generated article text (title + body) against the complete body of
+    every already published post, so it catches overlap that only shows
+    up once the article is actually written.
+
+    Uses dedup_similarity.py's shared tokenizer/IDF/cosine so this gate
+    and content_quality_scanner.py's offline audit always compute the
+    same number for the same pair of posts.
     """
 
     def __init__(self, docs_dir: Path, threshold: float = CONTENT_DUPLICATE_THRESHOLD):
@@ -1650,39 +1668,59 @@ class ContentDuplicateGate:
         Returns (is_duplicate, matched_slug, matched_title, score).
         `exclude_slug` lets a post being refreshed/regenerated skip
         comparing against its own prior version.
+
+        Raises on unexpected errors (e.g. a corrupt post.json) instead of
+        swallowing them — see the call site in save_post(), which now
+        treats a gate failure as "refuse to publish," not "publish
+        without protection." A duplicate gate that can be crashed into
+        silence isn't a duplicate gate.
         """
-        new_vec = _content_tfidf_vector(content)
-        if not new_vec or not self.docs_dir.exists():
+        CANDIDATE_KEY = "__candidate__"
+        documents: Dict[str, Tuple[str, str]] = {
+            CANDIDATE_KEY: (title, content)}
+
+        if self.docs_dir.exists():
+            for post_dir in self.docs_dir.iterdir():
+                if not post_dir.is_dir() or post_dir.name == "static":
+                    continue
+                if exclude_slug and post_dir.name == exclude_slug:
+                    continue
+                post_json = post_dir / "post.json"
+                if not post_json.exists():
+                    continue
+                try:
+                    with open(post_json, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                except (json.JSONDecodeError, OSError, UnicodeDecodeError) as exc:
+                    # A single unreadable post.json shouldn't take down
+                    # duplicate protection for the whole gate — skip just
+                    # this one file, loudly, and keep checking the rest.
+                    print(f"  ⚠️  ContentDuplicateGate: skipping unreadable "
+                          f"{post_json} ({exc})")
+                    continue
+                existing_content = data.get("content", "")
+                if not existing_content:
+                    continue
+                documents[post_dir.name] = (
+                    data.get("title", ""), existing_content)
+
+        if len(documents) < 2:
             return False, "", "", 0.0
+
+        vectors = dedup_similarity.build_corpus_vectors(documents)
+        candidate_vec = vectors[CANDIDATE_KEY]
 
         best_score = 0.0
         best_slug = ""
-        best_title = ""
-
-        for post_dir in self.docs_dir.iterdir():
-            if not post_dir.is_dir() or post_dir.name == "static":
+        for slug, vec in vectors.items():
+            if slug == CANDIDATE_KEY:
                 continue
-            if exclude_slug and post_dir.name == exclude_slug:
-                continue
-            post_json = post_dir / "post.json"
-            if not post_json.exists():
-                continue
-            try:
-                with open(post_json, "r", encoding="utf-8") as f:
-                    data = json.load(f)
-            except (json.JSONDecodeError, OSError):
-                continue
-
-            existing_content = data.get("content", "")
-            if not existing_content:
-                continue
-            existing_vec = _content_tfidf_vector(existing_content)
-            score = _content_cosine_similarity(new_vec, existing_vec)
+            score = dedup_similarity.cosine(candidate_vec, vec)
             if score > best_score:
                 best_score = score
-                best_slug = post_dir.name
-                best_title = data.get("title", "")
+                best_slug = slug
 
+        best_title = documents[best_slug][0] if best_slug else ""
         return best_score >= self.threshold, best_slug, best_title, best_score
 
 
@@ -1908,7 +1946,12 @@ class BlogSystem:
 
         self.preflight_index = PreFlightIndex(docs_dir=self.output_dir)
         self.content_duplicate_gate = ContentDuplicateGate(
-            docs_dir=self.output_dir)
+            docs_dir=self.output_dir,
+            threshold=config.get(
+                "duplicate_similarity_threshold",
+                dedup_similarity.DUPLICATE_SIMILARITY_THRESHOLD,
+            ),
+        )
 
     def _log_key_status(self):
         print("=== API Key Status ===")
@@ -3609,15 +3652,24 @@ Return ONLY the JSON object.""",
         # the last line of defense against the "8+ articles on prompt
         # injection" problem: two posts can have unrelated-sounding titles
         # and still land here with near-identical bodies.
-        try:
-            is_dup, dup_slug, dup_title, dup_score = self.content_duplicate_gate.check(
-                title=post.title,
-                content=post.content,
-                exclude_slug=post.slug,
-            )
-        except Exception as exc:
-            is_dup, dup_slug, dup_title, dup_score = False, "", "", 0.0
-            print(f"  ⚠️  ContentDuplicateGate failed (non-fatal): {exc}")
+        #
+        # PATCH (dedup hardening round 2): this used to catch ANY exception
+        # here, set is_dup=False, print a console warning, and let the post
+        # publish anyway ("non-fatal"). That meant a single bad post.json
+        # elsewhere in docs/ (bad encoding, truncated JSON, whatever) could
+        # silently disable duplicate protection for every post published
+        # until someone happened to notice the warning in a build log. The
+        # entire point of this gate is to block near-duplicates — a gate
+        # that fails open under error isn't a gate. It now fails CLOSED:
+        # if the check itself can't run, the post is refused rather than
+        # published unprotected. If this is causing false aborts in
+        # practice (e.g. one consistently unreadable legacy post.json),
+        # fix that file rather than loosening this back to fail-open.
+        is_dup, dup_slug, dup_title, dup_score = self.content_duplicate_gate.check(
+            title=post.title,
+            content=post.content,
+            exclude_slug=post.slug,
+        )
 
         if is_dup:
             raise DuplicateContentError(

@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 08 Aug 2026 12:56:23 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 08 Aug 2026 17:18:12 +0000</lastBuildDate>
     <item>
       <title>Offline-first money apps with DynamoDB Streams</title>
       <link>https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/</link>
@@ -26,20 +26,6 @@
       <description>AI cost attribution that product managers can actually read — per-user, per-feature numbers in real time without breaking the SLA.</description>
       <pubDate>Fri, 07 Aug 2026 13:11:54 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-cost-attribution-without-the-spreadsheet-hell/</guid>
-    </item>
-    <item>
-      <title>MCP server security in fintech: 5 concrete traps</title>
-      <link>https://kubaik.github.io/mcp-server-security-in-fintech-5-concrete-traps/</link>
-      <description>Secure MCP servers in fintech with JWT, KMS encryption, and CloudTrail auditing — concrete code, benchmarks, and the one mistake every team repeats.</description>
-      <pubDate>Fri, 07 Aug 2026 09:01:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-server-security-in-fintech-5-concrete-traps/</guid>
-    </item>
-    <item>
-      <title>Stop writing retry loops: durable execution is the real work</title>
-      <link>https://kubaik.github.io/stop-writing-retry-loops-durable-execution-is-the-real-work/</link>
-      <description>Cut workflow code 78% with durable execution — Temporal workflows, Python SDK, and the retry loop mistake most teams keep writing</description>
-      <pubDate>Fri, 07 Aug 2026 02:49:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/stop-writing-retry-loops-durable-execution-is-the-real-work/</guid>
     </item>
     <item>
       <title>AI portfolios ruin yours? Fix your signal</title>
@@ -98,13 +84,6 @@
       <guid>https://kubaik.github.io/wasm-servers-beat-containers-here/</guid>
     </item>
     <item>
-      <title>FinOps agents: dashboards vs alerts on AI bills</title>
-      <link>https://kubaik.github.io/finops-agents-dashboards-vs-alerts-on-ai-bills/</link>
-      <description>FinOps agents: dashboards vs alerts on AI bills — real cost visibility without a full FinOps team.</description>
-      <pubDate>Wed, 05 Aug 2026 10:10:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/finops-agents-dashboards-vs-alerts-on-ai-bills/</guid>
-    </item>
-    <item>
       <title>Senior role projects: 3 real paths</title>
       <link>https://kubaik.github.io/senior-role-projects-3-real-paths/</link>
       <description>Senior remote roles in 2026 demand production-grade portfolio projects.</description>
@@ -145,6 +124,27 @@
       <description>Then the same code hits production and suddenly you’re debugging: - Why did AgentB hang after AgentA sent 4,231 messages?</description>
       <pubDate>Mon, 03 Aug 2026 10:05:35 +0000</pubDate>
       <guid>https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/</guid>
+    </item>
+    <item>
+      <title>Prompt injection got the hype — poison data ruined us</title>
+      <link>https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/</link>
+      <description>Poisoned data and model drift caused 8,200 support tickets in 2026 — not prompt injection.</description>
+      <pubDate>Mon, 03 Aug 2026 03:19:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/</guid>
+    </item>
+    <item>
+      <title>AI on Lambda: when the bill explodes</title>
+      <link>https://kubaik.github.io/ai-on-lambda-when-the-bill-explodes/</link>
+      <description>AI on Lambda: when the bill explodes — comparing Lambda vs EC2 + Elastic Inference for a 7B-parameter vLLM model with real cost breakdowns, cache hit…</description>
+      <pubDate>Sun, 02 Aug 2026 13:32:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-on-lambda-when-the-bill-explodes/</guid>
+    </item>
+    <item>
+      <title>CDC pipeline death spiral: one bad LLM call can crash…</title>
+      <link>https://kubaik.github.io/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/</link>
+      <description>CDC pipeline crashes when LLM bursts hit — Postgres replication slot errors, 3 concrete fixes, vLLM 0.4.2 and Python semaphore patterns, plus the one…</description>
+      <pubDate>Sun, 02 Aug 2026 13:29:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/</guid>
     </item>
   </channel>
 </rss>

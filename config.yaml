@@ -2,6 +2,19 @@ adsense_slots: {}
 amazon_affiliate_tag: aiblogcontent-20
 base_path: ""
 base_url: https://kubaik.github.io
+
+# How similar (0-1 cosine similarity, TF-IDF over title+content, see
+# dedup_similarity.py) a new post's body can be to any already-published
+# post before ContentDuplicateGate refuses to save it. Lowered from the
+# previous 0.60 as part of the 2026 dedup-hardening pass -- the offline
+# audit (content_quality_scanner.py) found confirmed near-duplicate pairs
+# already live in the corpus at 0.52-0.73 similarity under this exact
+# vectorizer. If this starts blocking genuinely distinct posts that just
+# share a lot of domain vocabulary, raise it in small steps (e.g. 0.05 at
+# a time) and re-run `python content_quality_scanner.py report` to see
+# the effect on real duplicate pairs before committing to a new value.
+duplicate_similarity_threshold: 0.45
+
 content_topics:
   - Why most production AI agents still need circuit breakers and human escalation paths
     in 2026

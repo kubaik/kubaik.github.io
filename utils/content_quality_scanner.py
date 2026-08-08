@@ -16,17 +16,23 @@ WHAT IT DOES
 4. Prints the N lowest-scoring posts per month (a report), and, only when
    explicitly asked, moves the losing posts to a local backup folder and
    removes them from docs/ so they stop being published/indexed.
+5. `dedupe` mode: finds near-duplicate CLUSTERS across the whole corpus
+   (not just "worst N per month" -- a genuine duplicate pair can both
+   score fine on every other axis) using the exact same similarity
+   engine as blog_system.py's publish-time ContentDuplicateGate (see
+   dedup_similarity.py), keeps the best post in each cluster, and removes
+   the rest the same safe, backed-up way `prune` does.
 
 IT NEVER DELETES ANYTHING BY DEFAULT.
 --------------------------------------
 - Default mode is `report`: read-only, prints a ranked table, writes a CSV.
-- `prune` mode requires --confirm and always backs up the full post
-  directory (index.html, post.json, images, etc.) to
+- `prune` and `dedupe` modes require --confirm and always back up the full
+  post directory (index.html, post.json, images, etc.) to
   .quality_review_backups/<timestamp>/<slug>/ before removing it from docs/,
   so removal is reversible (git also still has history if committed).
-- After a prune, re-run the site build (`python blog_system.py build`) so
-  the sitemap, RSS feed, homepage, tag pages, and related-posts links are
-  regenerated without the removed posts.
+- After a prune or dedupe, re-run the site build (`python blog_system.py
+  build`) so the sitemap, RSS feed, homepage, tag pages, and related-posts
+  links are regenerated without the removed posts.
 
 SCORING (higher = better, 0-100)
 ---------------------------------
@@ -73,6 +79,24 @@ USAGE
     python content_quality_scanner.py prune --per-month 3 --confirm \\
         --exclude my-best-post-slug --exclude another-slug
 
+    # Dedupe: find near-duplicate clusters across the WHOLE corpus (not
+    # just worst-N-per-month) and preview which post in each cluster would
+    # be kept vs removed. Dry run -- deletes nothing.
+    python content_quality_scanner.py dedupe
+
+    # Same, but actually back up + remove the losing post in each cluster
+    python content_quality_scanner.py dedupe --confirm
+
+    # Use a custom similarity threshold for this run only (default comes
+    # from dedup_similarity.DUPLICATE_SIMILARITY_THRESHOLD, the same value
+    # blog_system.py's ContentDuplicateGate uses)
+    python content_quality_scanner.py dedupe --threshold 0.5 --confirm
+
+    # Dedupe but always keep specific slugs, even if flagged as the
+    # weaker post in their cluster
+    python content_quality_scanner.py dedupe --confirm \\
+        --exclude my-best-post-slug
+
     # Dry run: find and preview fixes for broken meta_description fields
     # (too long/short/missing/generic) instead of deleting those posts
     python content_quality_scanner.py fix-meta
@@ -96,6 +120,7 @@ Both work identically.
 """
 
 from __future__ import annotations
+import dedup_similarity
 
 import argparse
 import csv
@@ -108,7 +133,7 @@ from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 # Resolve paths relative to the repo root (parent of utils/), not the
 # current working directory, so this script works whether you run it as
@@ -120,14 +145,24 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 DOCS_DIR = REPO_ROOT / "docs"
 BACKUP_ROOT = REPO_ROOT / ".quality_review_backups"
 
-STOPWORDS = {
-    "the", "a", "an", "and", "or", "but", "of", "to", "in", "on", "for",
-    "with", "is", "are", "was", "were", "be", "been", "being", "this",
-    "that", "it", "its", "as", "at", "by", "from", "we", "you", "your",
-    "i", "our", "will", "what", "how", "why", "when", "which", "these",
-    "those", "not", "no", "do", "does", "did", "can", "could", "should",
-    "would", "into", "than", "then", "so", "if", "just", "more", "most",
-}
+# dedup_similarity.py lives at the repo root next to blog_system.py, not
+# in utils/ alongside this script, so it isn't on sys.path automatically
+# when this file is run as `python utils/content_quality_scanner.py` or
+# `cd utils && python content_quality_scanner.py` (both set sys.path[0]
+# to this script's own directory, not REPO_ROOT). Add it explicitly.
+#
+# PATCH (dedup hardening round 2): this file used to have its own
+# STOPWORDS/_tokenize/_build_tfidf/_cosine, separate from
+# blog_system.py's ContentDuplicateGate. The two disagreed on what
+# counted as a duplicate (no IDF + no title weighting in the gate vs.
+# full-corpus IDF + 3x title weighting here), which is how near-duplicate
+# posts at 0.52-0.73 similarity (by THIS file's math) got published in
+# the first place -- the gate's own math scored them lower. Both files
+# now import the identical implementation from dedup_similarity.py.
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+STOPWORDS = dedup_similarity.STOPWORDS
 
 WEAK_META_OPENERS = (
     "this post", "in this article", "a guide to", "learn about",
@@ -143,6 +178,12 @@ WEAK_META_OPENERS = (
 META_MIN_LEN = 50
 META_MAX_LEN = 160
 META_IDEAL_MIN = 70
+
+# Same threshold ContentDuplicateGate uses in blog_system.py (both read
+# from dedup_similarity.py so they can't drift apart again). Used by the
+# new `dedupe` mode below; `--threshold` on the CLI can override it for a
+# single run without touching the shared default.
+DEFAULT_DUPLICATE_THRESHOLD = dedup_similarity.DUPLICATE_SIMILARITY_THRESHOLD
 
 
 # --------------------------------------------------------------------------
@@ -242,74 +283,33 @@ def load_posts(docs_dir: Path) -> List[Post]:
 
 
 # --------------------------------------------------------------------------
-# Duplication detection (TF-IDF cosine similarity, no external deps)
+# Duplication detection (delegates to dedup_similarity.py, shared with
+# blog_system.py's ContentDuplicateGate -- see the sys.path/import note
+# above for why this matters)
 # --------------------------------------------------------------------------
-
-def _tokenize(text: str) -> List[str]:
-    words = re.findall(r"[a-z0-9]+", text.lower())
-    return [w for w in words if w not in STOPWORDS and len(w) > 2]
-
-
-def _build_tfidf(posts: List[Post]) -> Dict[str, Dict[str, float]]:
-    """Return {slug: {term: tfidf_weight}} using title + content."""
-    doc_tokens: Dict[str, List[str]] = {}
-    for p in posts:
-        # Title words count extra (x3) since duplicate framing is very
-        # visible in titles for this repo's clusters.
-        doc_tokens[p.slug] = _tokenize(p.title) * 3 + _tokenize(p.content)
-
-    df = Counter()
-    for tokens in doc_tokens.values():
-        for term in set(tokens):
-            df[term] += 1
-
-    n_docs = max(len(posts), 1)
-    tfidf: Dict[str, Dict[str, float]] = {}
-    for slug, tokens in doc_tokens.items():
-        tf = Counter(tokens)
-        total = max(sum(tf.values()), 1)
-        weights = {}
-        for term, count in tf.items():
-            idf = math.log(n_docs / (1 + df[term])) + 1
-            weights[term] = (count / total) * idf
-        tfidf[slug] = weights
-    return tfidf
-
-
-def _cosine(a: Dict[str, float], b: Dict[str, float]) -> float:
-    if not a or not b:
-        return 0.0
-    common = set(a) & set(b)
-    if not common:
-        return 0.0
-    dot = sum(a[t] * b[t] for t in common)
-    norm_a = math.sqrt(sum(v * v for v in a.values()))
-    norm_b = math.sqrt(sum(v * v for v in b.values()))
-    if norm_a == 0 or norm_b == 0:
-        return 0.0
-    return dot / (norm_a * norm_b)
-
 
 def compute_similarities(posts: List[Post]) -> None:
     """Fill in max_similarity / most_similar_slug for every post in place."""
     if len(posts) < 2:
         return
-    tfidf = _build_tfidf(posts)
-    slugs = [p.slug for p in posts]
-    n = len(slugs)
+    n = len(posts)
     print(f"Computing pairwise similarity across {n} posts "
           f"({n * (n - 1) // 2} pairs)... this may take a moment.")
 
+    documents: Dict[str, Tuple[str, str]] = {
+        p.slug: (p.title, p.content) for p in posts
+    }
+    vectors = dedup_similarity.build_corpus_vectors(documents)
+    slugs = list(vectors.keys())
+
     by_slug = {p.slug: p for p in posts}
-    for i in range(n):
-        si = slugs[i]
+    for i, si in enumerate(slugs):
         best_sim, best_slug = 0.0, ""
-        vi = tfidf[si]
-        for j in range(n):
-            if i == j:
+        vi = vectors[si]
+        for sj in slugs:
+            if sj == si:
                 continue
-            sj = slugs[j]
-            sim = _cosine(vi, tfidf[sj])
+            sim = dedup_similarity.cosine(vi, vectors[sj])
             if sim > best_sim:
                 best_sim, best_slug = sim, sj
         by_slug[si].max_similarity = best_sim
@@ -436,6 +436,23 @@ def print_report(groups: Dict[str, List[Post]], per_month: int, csv_path: Option
 # Prune (delete) mode
 # --------------------------------------------------------------------------
 
+def _backup_and_remove(posts: List["Post"], backup_dir: Path) -> List[str]:
+    """Shared by prune_posts and run_dedupe: copy each post's full
+    directory into backup_dir, then remove it from docs/. Returns the
+    list of slugs actually removed."""
+    removed = []
+    for p in posts:
+        if not p.path.exists():
+            print(f"  SKIP (already gone): {p.slug}")
+            continue
+        dest = backup_dir / p.slug
+        shutil.copytree(p.path, dest)
+        shutil.rmtree(p.path)
+        removed.append(p.slug)
+        print(f"  Removed: {p.slug}  (backed up to {dest})")
+    return removed
+
+
 def prune_posts(flagged: List[Post], confirm: bool, exclude: List[str]) -> None:
     exclude_set = set(exclude)
     to_remove = [p for p in flagged if p.slug not in exclude_set]
@@ -459,20 +476,161 @@ def prune_posts(flagged: List[Post], confirm: bool, exclude: List[str]) -> None:
     backup_dir = BACKUP_ROOT / timestamp
     backup_dir.mkdir(parents=True, exist_ok=True)
 
-    removed = []
-    for p in to_remove:
-        if not p.path.exists():
-            print(f"  SKIP (already gone): {p.slug}")
-            continue
-        dest = backup_dir / p.slug
-        shutil.copytree(p.path, dest)
-        shutil.rmtree(p.path)
-        removed.append(p.slug)
-        print(f"  Removed: {p.slug}  (backed up to {dest})")
+    removed = _backup_and_remove(to_remove, backup_dir)
 
     print(f"\nDone. {len(removed)} post(s) removed from {DOCS_DIR}/.")
     print(
         f"Backups saved under {backup_dir}/ — restore by copying a folder back into {DOCS_DIR}/.")
+    print("\nNEXT STEP: regenerate the site so sitemap.xml, rss.xml, the homepage,")
+    print("tag pages, and related-posts links no longer reference the removed posts:")
+    print("    python blog_system.py build")
+    print("Then commit the change (deleted docs/<slug>/ dirs + regenerated site files).")
+
+
+# --------------------------------------------------------------------------
+# Dedupe mode: remove EXISTING near-duplicate posts from the corpus
+# --------------------------------------------------------------------------
+#
+# `prune` flags the worst-scoring N posts per month across many signals
+# (duplication is just 35% of that composite). A genuine near-duplicate
+# pair can both score fine on meta/structure/ads and still not be each
+# other's problem in the same month's worst-N list, so prune can miss the
+# exact issue this was built to catch. `dedupe` instead finds every pair
+# of posts anywhere in the corpus at or above the similarity threshold,
+# groups them into clusters (so a 3+ way near-duplicate chain gets
+# resolved together, not just pairwise), and removes every member of each
+# cluster except the one it keeps.
+#
+# Keeper selection default: longer word count wins (a near-duplicate
+# pair's "better" version is usually the more thorough one), with a
+# newer created_at as the tiebreak. --keep lets you choose newest/oldest
+# instead if that fits your corpus better.
+
+def find_duplicate_clusters(
+    posts: List["Post"], threshold: float
+) -> Tuple[List[List["Post"]], Dict[Tuple[str, str], float]]:
+    """Union-find over every pair scoring >= threshold. Returns
+    (clusters, pair_similarities) where clusters is a list of >=2-post
+    groups (singletons are dropped -- nothing to dedupe) and
+    pair_similarities maps (slug_a, slug_b) -> cosine score for every
+    edge that triggered a union, for reporting."""
+    documents: Dict[str, Tuple[str, str]] = {
+        p.slug: (p.title, p.content) for p in posts}
+    vectors = dedup_similarity.build_corpus_vectors(documents)
+    slugs = list(vectors.keys())
+
+    parent = {s: s for s in slugs}
+
+    def find(x: str) -> str:
+        while parent[x] != x:
+            x = parent[x]
+        return x
+
+    def union(a: str, b: str) -> None:
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[rb] = ra
+
+    pair_sim: Dict[Tuple[str, str], float] = {}
+    n = len(slugs)
+    for i in range(n):
+        for j in range(i + 1, n):
+            si, sj = slugs[i], slugs[j]
+            sim = dedup_similarity.cosine(vectors[si], vectors[sj])
+            if sim >= threshold:
+                union(si, sj)
+                pair_sim[(si, sj)] = sim
+
+    groups: Dict[str, List[str]] = defaultdict(list)
+    for s in slugs:
+        groups[find(s)].append(s)
+
+    by_slug = {p.slug: p for p in posts}
+    clusters = [
+        [by_slug[slug] for slug in members]
+        for members in groups.values()
+        if len(members) > 1
+    ]
+    # Largest / highest-similarity clusters first, for a more useful report
+    clusters.sort(key=lambda members: len(members), reverse=True)
+    return clusters, pair_sim
+
+
+def _select_keeper(cluster: List["Post"], strategy: str) -> "Post":
+    epoch = datetime.min
+    if strategy == "newest":
+        return max(cluster, key=lambda p: p.created_at or epoch)
+    if strategy == "oldest":
+        return min(cluster, key=lambda p: p.created_at or datetime.max)
+    # default: "longest" -- word count first, newer as tiebreak
+    return max(cluster, key=lambda p: (p.word_count, p.created_at or epoch))
+
+
+def run_dedupe(
+    posts: List["Post"],
+    threshold: float,
+    confirm: bool,
+    exclude: List[str],
+    keep_strategy: str = "longest",
+) -> None:
+    exclude_set = set(exclude)
+    clusters, pair_sim = find_duplicate_clusters(posts, threshold)
+
+    if not clusters:
+        print(f"\nNo near-duplicate clusters found at threshold >= {threshold:.2f}. "
+              "Nothing to dedupe.")
+        return
+
+    print(
+        f"\n{'DEDUPE (LIVE)' if confirm else 'DEDUPE (DRY RUN — nothing will be deleted)'}")
+    print(f"Threshold: similarity >= {threshold:.2f}  "
+          f"(same engine as blog_system.py's ContentDuplicateGate)")
+    print(f"{len(clusters)} duplicate cluster(s) found "
+          f"({sum(len(c) for c in clusters)} posts total):\n")
+
+    to_remove: List["Post"] = []
+    for idx, cluster in enumerate(clusters, 1):
+        keeper = _select_keeper(cluster, keep_strategy)
+        print(
+            f"  Cluster {idx} ({len(cluster)} posts, keeping by '{keep_strategy}'):")
+        for p in cluster:
+            marker = "KEEP  " if p.slug == keeper.slug else "REMOVE"
+            excluded_note = " [excluded, forced keep]" if (
+                marker == "REMOVE" and p.slug in exclude_set) else ""
+            print(f"    [{marker}] {p.slug}  "
+                  f"(words={p.word_count}, month={p.month_key}){excluded_note}")
+            if p.slug != keeper.slug and p.slug not in exclude_set:
+                to_remove.append(p)
+        # Show the specific pairwise similarity that tied this cluster
+        # together, when available directly (adjacent slugs in the
+        # union-find graph); for 3+ way clusters not every pair is
+        # necessarily above threshold, so this is illustrative, not
+        # exhaustive.
+        shown = [f"{a}~{b}={s:.2f}" for (a, b), s in pair_sim.items()
+                 if a in {m.slug for m in cluster} and b in {m.slug for m in cluster}]
+        if shown:
+            print(f"      similarity: {', '.join(shown[:4])}"
+                  + (" ..." if len(shown) > 4 else ""))
+        print()
+
+    if not to_remove:
+        print("Nothing to remove (every duplicate in every cluster was excluded).")
+        return
+
+    if not confirm:
+        print(f"This was a dry run. {len(to_remove)} post(s) would be removed. "
+              "Re-run with --confirm to actually back up and delete them.")
+        return
+
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_dir = BACKUP_ROOT / "dedupe" / timestamp
+    backup_dir.mkdir(parents=True, exist_ok=True)
+
+    removed = _backup_and_remove(to_remove, backup_dir)
+
+    print(f"\nDone. {len(removed)} post(s) removed from {DOCS_DIR}/.")
+    print(f"Backups saved under {backup_dir}/ — restore by copying a folder "
+          f"back into {DOCS_DIR}/.")
     print("\nNEXT STEP: regenerate the site so sitemap.xml, rss.xml, the homepage,")
     print("tag pages, and related-posts links no longer reference the removed posts:")
     print("    python blog_system.py build")
@@ -703,9 +861,11 @@ def run_fix_meta(posts: List[Post], min_len: int, max_len: int, confirm: bool, e
 def main():
     parser = argparse.ArgumentParser(
         description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("mode", choices=["report", "prune", "fix-meta"],
+    parser.add_argument("mode", choices=["report", "prune", "fix-meta", "dedupe"],
                         help="report = read-only; prune = remove flagged posts; "
-                        "fix-meta = shorten/repair meta_description in place")
+                        "fix-meta = shorten/repair meta_description in place; "
+                        "dedupe = find + remove near-duplicate post CLUSTERS "
+                        "corpus-wide (see dedup_similarity.py)")
     parser.add_argument("--per-month", type=int, default=5,
                         help="How many lowest-scoring posts to flag per month (report/prune only, default: 5)")
     parser.add_argument("--month", type=str, default=None,
@@ -713,7 +873,7 @@ def main():
     parser.add_argument("--csv", type=str, default=str(REPO_ROOT / "quality_report.csv"),
                         help="Path to write the CSV report (report mode). Use '' to skip.")
     parser.add_argument("--confirm", action="store_true",
-                        help="Actually write changes (prune deletes / fix-meta rewrites); otherwise dry run")
+                        help="Actually write changes (prune/dedupe deletes, fix-meta rewrites); otherwise dry run")
     parser.add_argument("--exclude", action="append", default=[],
                         help="Slug to skip, even if flagged. Repeatable.")
     parser.add_argument("--docs-dir", type=str, default=str(DOCS_DIR),
@@ -722,6 +882,13 @@ def main():
                         help=f"fix-meta only: minimum acceptable meta_description length (default: {META_MIN_LEN})")
     parser.add_argument("--max-len", type=int, default=META_MAX_LEN,
                         help=f"fix-meta only: maximum acceptable meta_description length (default: {META_MAX_LEN})")
+    parser.add_argument("--threshold", type=float, default=DEFAULT_DUPLICATE_THRESHOLD,
+                        help=f"dedupe only: cosine similarity (0-1) at/above which two posts "
+                        f"are treated as duplicates (default: {DEFAULT_DUPLICATE_THRESHOLD}, "
+                        "the same value blog_system.py's ContentDuplicateGate uses)")
+    parser.add_argument("--keep", choices=["longest", "newest", "oldest"], default="longest",
+                        help="dedupe only: which post in a duplicate cluster to keep "
+                        "(default: longest, by word count)")
     args = parser.parse_args()
 
     docs_dir = Path(args.docs_dir)
@@ -740,6 +907,11 @@ def main():
     if args.mode == "fix-meta":
         run_fix_meta(posts, min_len=args.min_len, max_len=args.max_len,
                      confirm=args.confirm, exclude=args.exclude)
+        return
+
+    if args.mode == "dedupe":
+        run_dedupe(posts, threshold=args.threshold, confirm=args.confirm,
+                   exclude=args.exclude, keep_strategy=args.keep)
         return
 
     compute_similarities(posts)
