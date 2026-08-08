@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 08 Aug 2026 12:50:44 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 08 Aug 2026 09:55:03 +0000</lastBuildDate>
+    <item>
+      <title>Offline-first money apps with DynamoDB Streams</title>
+      <link>https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/</link>
+      <description>Offline-first mobile money patterns that cut duplicate debits 98 % — shard keys, conditional writes, and the cache stampede mistake most teams miss.</description>
+      <pubDate>Sat, 08 Aug 2026 09:54:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/</guid>
+    </item>
     <item>
       <title>Prove platform ROI by measuring what matters</title>
       <link>https://kubaik.github.io/prove-platform-roi-by-measuring-what-matters/</link>
@@ -138,13 +145,6 @@
       <description>Then the same code hits production and suddenly you’re debugging: - Why did AgentB hang after AgentA sent 4,231 messages?</description>
       <pubDate>Mon, 03 Aug 2026 10:05:35 +0000</pubDate>
       <guid>https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/</guid>
-    </item>
-    <item>
-      <title>AI coding in 2026: Cursor, Windsurf, Claude on trial</title>
-      <link>https://kubaik.github.io/ai-coding-in-2026-cursor-windsurf-claude-on-trial/</link>
-      <description>Cursor vs Windsurf vs Claude Code in 2026: raw latency, RAM footprint, and the one setting that breaks the build every week — tested on 300 ms ping links.</description>
-      <pubDate>Mon, 03 Aug 2026 09:07:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-coding-in-2026-cursor-windsurf-claude-on-trial/</guid>
     </item>
   </channel>
 </rss>

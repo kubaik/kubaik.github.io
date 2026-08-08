@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-08T01:52:40.917015",
+  "built_at": "2026-08-08T09:54:54.562695",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4710,6 +4710,11 @@
       "slug": "prove-platform-roi-by-measuring-what-matters",
       "title": "Prove platform ROI by measuring what matters",
       "summary": "measure platform looks simple until it has to survive real traffic. It's the kind of problem that's easy to reproduce and hard to explain. Here's what actually worked, and why. The situation (what we were trying to solve) In 2026, platform teams still spend more time defending budgets than shipping "
+    },
+    {
+      "slug": "offline-first-money-apps-with-dynamodb-streams",
+      "title": "Offline-first money apps with DynamoDB Streams",
+      "summary": "I ran into this offlinefirst eventual problem while migrating a service under a hard deadline. The tutorials all show the happy path. This post covers what comes after the happy path. Why I wrote this (the problem I kept hitting) Most e-money apps in East Africa treat offline-first as a nice-to-have"
     }
   ]
 }

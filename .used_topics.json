@@ -149,5 +149,6 @@
   "Cost attribution for AI features that product managers actually understand",
   "Why some engineers are getting promoted faster in the AI era while others are being managed out",
   "Why structured output + validation layers beat JSON mode for anything that touches money",
-  "How we measure platform team impact without vanity metrics"
+  "How we measure platform team impact without vanity metrics",
+  "Offline-first + eventual consistency patterns that actually work for mobile money apps"
 ]
