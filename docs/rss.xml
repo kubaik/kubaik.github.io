@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 07 Aug 2026 13:12:08 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 08 Aug 2026 01:52:49 +0000</lastBuildDate>
+    <item>
+      <title>Prove platform ROI by measuring what matters</title>
+      <link>https://kubaik.github.io/prove-platform-roi-by-measuring-what-matters/</link>
+      <description>Measure platform value with engineering time saved, not uptime dashboards — 126 hours reclaimed, $9k ROI, and the metrics that actually matter in 2026</description>
+      <pubDate>Sat, 08 Aug 2026 01:52:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/prove-platform-roi-by-measuring-what-matters/</guid>
+    </item>
     <item>
       <title>AI cost attribution without the spreadsheet hell</title>
       <link>https://kubaik.github.io/ai-cost-attribution-without-the-spreadsheet-hell/</link>
@@ -138,13 +145,6 @@
       <description>Cursor vs Windsurf vs Claude Code in 2026: raw latency, RAM footprint, and the one setting that breaks the build every week — tested on 300 ms ping links.</description>
       <pubDate>Mon, 03 Aug 2026 09:07:48 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-coding-in-2026-cursor-windsurf-claude-on-trial/</guid>
-    </item>
-    <item>
-      <title>Prompt injection got the hype — poison data ruined us</title>
-      <link>https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/</link>
-      <description>Poisoned data and model drift caused 8,200 support tickets in 2026 — not prompt injection.</description>
-      <pubDate>Mon, 03 Aug 2026 03:19:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-07T13:11:58.281844",
+  "built_at": "2026-08-08T01:52:40.917015",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4705,6 +4705,11 @@
       "slug": "ai-cost-attribution-without-the-spreadsheet-hell",
       "title": "AI cost attribution without the spreadsheet hell",
       "summary": "I ran into this cost attribution problem while migrating a service under a hard deadline. The gap between the demo and the incident report is where this actually lives. This walks through the fix and the reasoning, not just the patch. Why this list exists (what I was actually trying to solve) Produc"
+    },
+    {
+      "slug": "prove-platform-roi-by-measuring-what-matters",
+      "title": "Prove platform ROI by measuring what matters",
+      "summary": "measure platform looks simple until it has to survive real traffic. It's the kind of problem that's easy to reproduce and hard to explain. Here's what actually worked, and why. The situation (what we were trying to solve) In 2026, platform teams still spend more time defending budgets than shipping "
     }
   ]
 }

@@ -146,5 +146,8 @@
   "The exact stack and cost breakdown for a Nairobi-based SaaS serving 8k+ MAU",
   "The durable execution patterns that replaced most of our custom workflow code",
   "Security model for MCP servers in regulated environments (fintech case study)",
-  "Cost attribution for AI features that product managers actually understand"
+  "Cost attribution for AI features that product managers actually understand",
+  "Why some engineers are getting promoted faster in the AI era while others are being managed out",
+  "Why structured output + validation layers beat JSON mode for anything that touches money",
+  "How we measure platform team impact without vanity metrics"
 ]
