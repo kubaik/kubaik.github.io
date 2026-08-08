@@ -393,8 +393,11 @@ User-agent: Mediapartners-Google
 Allow: /
 
 # Sitemap
+# NOTE: only the XML sitemap belongs under the Sitemap: directive — it's
+# specified for XML sitemap files, not RSS feeds, so rss.xml was removed
+# from here. The RSS feed is still discoverable via the <link rel="alternate"
+# type="application/rss+xml"> tag in the page <head>.
 Sitemap: {base_url}/sitemap.xml
-Sitemap: {base_url}/rss.xml
 """
 
         with open("./docs/robots.txt", 'w', encoding='utf-8') as f:
@@ -3004,7 +3007,7 @@ def _build_templates() -> dict:
                 <p>For privacy-related enquiries or to exercise your rights:</p>
                 <p><strong>Email:</strong> <a href="mailto:aiblogauto@gmail.com" style="color:white;text-decoration:underline;">aiblogauto@gmail.com</a></p>
                 <p><strong>Location:</strong> Nairobi, Kenya (UTC+3)</p>
-                <p><strong>Response time:</strong> Within 5 business days</p>
+                <p><strong>Response time:</strong> Typical response time is 3–5 business days</p>
                 <p style="margin-top:1rem;font-size:0.9rem;opacity:0.9;">If you are an EU resident and believe we have not addressed your concern, you have the right to lodge a complaint with your local data protection authority.</p>
             </div>
 

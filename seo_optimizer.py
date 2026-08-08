@@ -412,12 +412,13 @@ class SEOOptimizer:
 
     def generate_robots_txt(self) -> str:
         base_url = self.config.get("base_url", "")
+        # NOTE: Sitemap: is for XML sitemaps only, not RSS feeds — rss.xml
+        # was removed. Kept in sync with static_site_generator._generate_robots_txt.
         return (
             "User-agent: *\nAllow: /\nDisallow: /static/admin/\n\n"
             "User-agent: Mediapartners-Google\nAllow: /\n\n"
             "User-agent: Googlebot\nAllow: /\nCrawl-delay: 1\n\n"
             f"Sitemap: {base_url}/sitemap.xml\n"
-            f"Sitemap: {base_url}/rss.xml\n"
         )
 
     # ------------------------------------------------------------------ #

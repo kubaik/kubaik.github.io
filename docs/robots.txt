@@ -34,5 +34,8 @@ User-agent: Mediapartners-Google
 Allow: /
 
 # Sitemap
+# NOTE: only the XML sitemap belongs under the Sitemap: directive — it's
+# specified for XML sitemap files, not RSS feeds, so rss.xml was removed
+# from here. The RSS feed is still discoverable via the <link rel="alternate"
+# type="application/rss+xml"> tag in the page <head>.
 Sitemap: https://kubaik.github.io/sitemap.xml
-Sitemap: https://kubaik.github.io/rss.xml
