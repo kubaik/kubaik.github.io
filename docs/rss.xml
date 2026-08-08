@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 08 Aug 2026 17:18:12 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 08 Aug 2026 14:22:24 +0000</lastBuildDate>
+    <item>
+      <title>3 mistakes that break deployments for everyone</title>
+      <link>https://kubaik.github.io/3-mistakes-that-break-deployments-for-everyone/</link>
+      <description>Build a deployment platform that keeps senior engineers happy and new hires safe — the proven stack, costs, and the three mistakes that break both groups.</description>
+      <pubDate>Sat, 08 Aug 2026 14:22:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/3-mistakes-that-break-deployments-for-everyone/</guid>
+    </item>
     <item>
       <title>Offline-first money apps with DynamoDB Streams</title>
       <link>https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/</link>
@@ -138,13 +145,6 @@
       <description>AI on Lambda: when the bill explodes — comparing Lambda vs EC2 + Elastic Inference for a 7B-parameter vLLM model with real cost breakdowns, cache hit…</description>
       <pubDate>Sun, 02 Aug 2026 13:32:47 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-on-lambda-when-the-bill-explodes/</guid>
-    </item>
-    <item>
-      <title>CDC pipeline death spiral: one bad LLM call can crash…</title>
-      <link>https://kubaik.github.io/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/</link>
-      <description>CDC pipeline crashes when LLM bursts hit — Postgres replication slot errors, 3 concrete fixes, vLLM 0.4.2 and Python semaphore patterns, plus the one…</description>
-      <pubDate>Sun, 02 Aug 2026 13:29:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/</guid>
     </item>
   </channel>
 </rss>

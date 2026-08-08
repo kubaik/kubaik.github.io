@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-08T09:54:54.562695",
+  "built_at": "2026-08-08T14:22:15.991158",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4715,6 +4715,11 @@
       "slug": "offline-first-money-apps-with-dynamodb-streams",
       "title": "Offline-first money apps with DynamoDB Streams",
       "summary": "I ran into this offlinefirst eventual problem while migrating a service under a hard deadline. The tutorials all show the happy path. This post covers what comes after the happy path. Why I wrote this (the problem I kept hitting) Most e-money apps in East Africa treat offline-first as a nice-to-have"
+    },
+    {
+      "slug": "3-mistakes-that-break-deployments-for-everyone",
+      "title": "3 mistakes that break deployments for everyone",
+      "summary": "I spent longer than I should have on building deployment before understanding what was actually happening. It's the kind of problem that's easy to reproduce and hard to explain. This is the version of the write-up that includes the part that broke. Why this list exists (what I was actually trying to"
     }
   ]
 }
