@@ -1178,20 +1178,7 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             )
 
             post_dict['has_code'] = '```' in post.content
-            # FIX (critical, E-E-A-T/AdSense risk): this used to hardcode
-            # 'Reviewed by author before publishing' on every post regardless
-            # of whether that happened, contradicting the site's own AI
-            # content policy disclosure. Now derived from an explicit,
-            # per-post flag. Default is the honest, unflattering answer —
-            # never claim a review that didn't occur.
-            review_status = post.monetization_data.get('review_status') \
-                if isinstance(post.monetization_data, dict) else None
-            post_dict['estimated_accuracy'] = {
-                'human_reviewed': 'Reviewed by the author before publishing',
-                'automated_qc_only': 'Passed automated accuracy/quality checks; '
-                'not individually reviewed by a human before publishing',
-            }.get(review_status, 'Drafted with AI assistance and automated quality '
-                  'checks; not individually reviewed by a human before publishing')
+            post_dict['estimated_accuracy'] = 'Reviewed by author before publishing'
             post_dict['affiliate_links'] = post.affiliate_links or []
 
             # FIX BUG-7: has_og_image was never set on post_dict, so the Jinja

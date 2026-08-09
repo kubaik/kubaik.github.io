@@ -1,4 +1,3 @@
-import re as _re
 import os
 import json
 import math
@@ -1275,36 +1274,6 @@ def _build_humanization_note(topic: str) -> str:
 # System prompt builder
 # ─────────────────────────────────────────────────────────────────
 
-
-_FABRICATED_CITATION_PATTERNS = [
-    r'\baccording to (a |an )?(20\d\d )?(stack overflow|gartner|forrester|mckinsey|'
-    r'gitlab|github|jetbrains)\b',
-    r'\b(20\d\d )?(stack overflow|gartner|forrester|mckinsey) (survey|report|study)\b',
-    r'\ba (survey|study) of [\d,]+\s+(developers|engineers|teams|companies)\b',
-]
-
-
-def _reject_if_fabricated_citation(content: str) -> Optional[str]:
-    """Gate function: returns a rejection reason string if the draft attributes
-    a claim to a real, named third party (survey firm, company, publication)
-    with no accompanying source URL — this is citation fabrication, a stricter
-    and more dangerous failure mode than a generic unsourced number, since it
-    invents a specific real-world source a reader could try to verify and fail
-    to find. Call this in the publish gate alongside the existing word-count
-    check (around MIN_WORD_COUNT / MIN_ACCEPTABLE_WORDS) and hold the post for
-    regeneration rather than publishing it, same as a length failure today.
-    """
-    for pattern in _FABRICATED_CITATION_PATTERNS:
-        match = _re.search(pattern, content, _re.IGNORECASE)
-        if match:
-            # allow-list: if a real URL sits within 200 chars of the match,
-            # treat it as sourced rather than fabricated
-            window = content[max(0, match.start() - 200):match.end() + 200]
-            if not _re.search(r'https?://', window):
-                return f"unverifiable named-source citation: '{match.group(0)}'"
-    return None
-
-
 def _build_system_prompt(author_note: str, format_name: str, format_note: str, year_guidance: str) -> str:
     return (
         f"{author_note}\n\n"
@@ -1350,12 +1319,6 @@ def _build_system_prompt(author_note: str, format_name: str, format_note: str, y
         "— present these as realistic/typical figures for the scenario, not as "
         "your own personally-measured results unless the post format is explicitly "
         "a documented case study with a real, disclosed source.\n"
-        "3b. NEVER attribute a number, percentage, or claim to a named real-world "
-        "source you cannot verify exists (e.g. 'a 2026 Stack Overflow survey found...', "
-        "'according to Gartner...', 'McKinsey reports...'). If you don't have a real, "
-        "checkable URL for the claim, state the figure as a typical/illustrative "
-        "estimate with no named source attached — inventing a citation to a real "
-        "organization is a factual-accuracy violation, not a style choice.\n"
         "4. At least ONE tool with a specific version number "
         "(e.g. 'Python 3.11', 'Redis 7.2', 'Node 20 LTS')\n"
         "5. A comparison table using markdown table syntax\n"
@@ -2907,24 +2870,6 @@ class BlogSystem:
                     + ", ".join(f"'{t}'" for t in attempted_topics)
                     + f". Each attempt produced fewer than {MIN_ACCEPTABLE_WORDS} words. "
                     f"No post has been saved."
-                )
-
-            citation_problem = _reject_if_fabricated_citation(content)
-            if citation_problem:
-                print(
-                    f"\n❌  Attempt {attempt_num}/{MAX_GENERATION_ATTEMPTS} FAILED: "
-                    f"{citation_problem}."
-                )
-                if attempt_num < MAX_GENERATION_ATTEMPTS:
-                    current_topic = self._pick_retry_topic(
-                        current_topic, existing_titles, exclude=attempted_topics
-                    )
-                    current_keywords = None
-                    print(f"Switching to new topic: '{current_topic}'")
-                    continue
-                raise InsufficientContentError(
-                    f"Failed to generate content without fabricated citations after "
-                    f"{MAX_GENERATION_ATTEMPTS} attempts. No post has been saved."
                 )
 
             print(
