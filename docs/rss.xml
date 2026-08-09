@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Aug 2026 20:44:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 09 Aug 2026 17:47:41 +0000</lastBuildDate>
+    <item>
+      <title>eBPF observability in 2026: what actually works</title>
+      <link>https://kubaik.github.io/ebpf-observability-in-2026-what-actually-works/</link>
+      <description>The map uses BPFFNOPREALLOC to avoid preallocating 65k entries at load time, reducing startup latency from 420ms to 12ms on a t3.medium.</description>
+      <pubDate>Sun, 09 Aug 2026 17:47:30 +0000</pubDate>
+      <guid>https://kubaik.github.io/ebpf-observability-in-2026-what-actually-works/</guid>
+    </item>
     <item>
       <title>Why your multi-agent system degraded slowly</title>
       <link>https://kubaik.github.io/why-your-multi-agent-system-degraded-slowly/</link>
@@ -138,13 +145,6 @@
       <description>Then the same code hits production and suddenly you’re debugging: - Why did AgentB hang after AgentA sent 4,231 messages?</description>
       <pubDate>Mon, 03 Aug 2026 10:05:35 +0000</pubDate>
       <guid>https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/</guid>
-    </item>
-    <item>
-      <title>Prompt injection got the hype — poison data ruined us</title>
-      <link>https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/</link>
-      <description>Poisoned data and model drift caused 8,200 support tickets in 2026 — not prompt injection.</description>
-      <pubDate>Mon, 03 Aug 2026 03:19:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/</guid>
     </item>
   </channel>
 </rss>

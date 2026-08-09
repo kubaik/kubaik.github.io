@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-09T12:58:52.987245",
+  "built_at": "2026-08-09T17:47:33.653341",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4725,6 +4725,11 @@
       "slug": "why-your-multi-agent-system-degraded-slowly",
       "title": "Why your multi-agent system degraded slowly",
       "summary": "There's a gap between how our beautiful is taught and how it actually behaves under load. The edge cases only show up once real users hit the system. This is what I put together after working through it properly. The one-paragraph version (read this first) Most teams assume a multi-agent system degr"
+    },
+    {
+      "slug": "ebpf-observability-in-2026-what-actually-works",
+      "title": "eBPF observability in 2026: what actually works",
+      "summary": "The conventional advice on ebpf 2026 is incomplete in one specific, costly way. Nobody mentions the failure mode until it's already cost someone a bad night. This walks through the fix and the reasoning, not just the patch. Why I wrote this (the problem I kept hitting) In 2026, every platform team h"
     }
   ]
 }
