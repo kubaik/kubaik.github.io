@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-08T14:22:15.991158",
+  "built_at": "2026-08-09T12:58:52.987245",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4720,6 +4720,11 @@
       "slug": "3-mistakes-that-break-deployments-for-everyone",
       "title": "3 mistakes that break deployments for everyone",
       "summary": "I spent longer than I should have on building deployment before understanding what was actually happening. It's the kind of problem that's easy to reproduce and hard to explain. This is the version of the write-up that includes the part that broke. Why this list exists (what I was actually trying to"
+    },
+    {
+      "slug": "why-your-multi-agent-system-degraded-slowly",
+      "title": "Why your multi-agent system degraded slowly",
+      "summary": "There's a gap between how our beautiful is taught and how it actually behaves under load. The edge cases only show up once real users hit the system. This is what I put together after working through it properly. The one-paragraph version (read this first) Most teams assume a multi-agent system degr"
     }
   ]
 }

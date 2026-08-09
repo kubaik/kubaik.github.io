@@ -5006,6 +5006,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/why-your-multi-agent-system-degraded-slowly/</loc>
+    <lastmod>2026-08-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/why-your-multi-agent-system-degraded-slowly.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/wireguard-vs-tailscale-for-5month-zero-trust/</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>weekly</changefreq>
