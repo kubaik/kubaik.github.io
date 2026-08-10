@@ -76,18 +76,34 @@ class BlogPost:
 
         current_time = datetime.now().isoformat()
 
+        # FIX: this used to hardcode meta_description=f"Blog post about {title}"
+        # on every recovered post. Identical templated text across many pages
+        # is a duplicate-metadata pattern AdSense/Search treat as a low-value
+        # signal — worse the more posts hit this fallback. Derive something
+        # extractive from the actual first paragraph instead.
+        first_paragraph = next(
+            (p.strip()
+             for p in content_without_title.split('\n\n') if p.strip()), ""
+        )
+        meta_description = (first_paragraph[:157].rsplit(' ', 1)[0] + '...') \
+            if len(first_paragraph) > 160 else first_paragraph
+        if not meta_description:
+            # last-resort only, not the default path
+            meta_description = f"Blog post about {title}"
+
         return cls(
             title=title,
             content=content_without_title,
             slug=slug,
             tags=['recovered', 'blog'],
-            meta_description=f"Blog post about {title}",
+            meta_description=meta_description,
             featured_image=f"/static/images/{slug}.jpg",
             created_at=current_time,
             updated_at=current_time,
             seo_keywords=[],
             affiliate_links=[],
-            monetization_data={"ad_slots": 3, "affiliate_count": 0},
+            monetization_data={"ad_slots": 3, "affiliate_count": 0,
+                               "review_status": "recovered_from_markdown"},
             twitter_hashtags="",
         )
 

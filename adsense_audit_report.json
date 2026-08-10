@@ -1,0 +1,6577 @@
+{
+  "delete": [
+    {
+      "slug": "cut-three-stacks-to-one-with-postgres-17",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:postgres-17-replaced-redis-kafka-and-prometheus sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "postgres-17-replaced-redis-kafka-and-prometheus"
+    },
+    {
+      "slug": "pgvector-replaced-pinecone-for-8kyear",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:replace-pinecone-with-pgvector sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "replace-pinecone-with-pgvector"
+    },
+    {
+      "slug": "ai-codebase-onboarding-ship-fast-or-ship-safe",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-codebase-keep-it-or-kill-it-40-dilemma sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-codebase-keep-it-or-kill-it-40-dilemma"
+    },
+    {
+      "slug": "fix-llm-top-10-risks-before-prod-2026",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:fix-llm-vulns-owasp-top-10-for-ai-apps sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "fix-llm-vulns-owasp-top-10-for-ai-apps"
+    },
+    {
+      "slug": "wrong-db-pool-size-wastes-cash",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:8-db-pool-size-mistakes-killing-your-cpu sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "8-db-pool-size-mistakes-killing-your-cpu"
+    },
+    {
+      "slug": "miss-wcag-live-region-pitfalls",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:3-wcag-traps-in-ai-chat-uis sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "3-wcag-traps-in-ai-chat-uis"
+    },
+    {
+      "slug": "react-19-compiler-3x-faster-re-renders-or-bust",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-agents-forget-overnight-how-to-keep-memory-alive",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-memory-leaks-context-lost-after-sessions sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-memory-leaks-context-lost-after-sessions"
+    },
+    {
+      "slug": "migrate-to-daraja-20-now-what-broke-and-how-to-fix",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:m-pesa-daraja-20-latency-tls-and-what-broke sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "m-pesa-daraja-20-latency-tls-and-what-broke"
+    },
+    {
+      "slug": "branching-databases-neon-and-planetscale-fixes-that",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:neon-planetscale-branch-your-db-like-git sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "neon-planetscale-branch-your-db-like-git"
+    },
+    {
+      "slug": "ai-built-my-saas-in-6-weeksfor-real",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:redefining-engineering-principles-in-the-ai-era sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "redefining-engineering-principles-in-the-ai-era"
+    },
+    {
+      "slug": "stop-async-python-from-freezing-your-stack",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:async-python-traps-sync-vs-trio-vs-asyncio-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "async-python-traps-sync-vs-trio-vs-asyncio-2026"
+    },
+    {
+      "slug": "redefining-engineering-principles-in-the-ai-era",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "fine-tune-vs-prompt-2026s-hidden-costs",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:small-model-fine-tuning-wins-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "small-model-fine-tuning-wins-in-2026"
+    },
+    {
+      "slug": "ai-incident-response-when-it-helps-and-when-it-burns",
+      "source": "post.json",
+      "word_count": 4035,
+      "reasons": [
+        "fabricated_citation: '2026 Gartner study'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "async-python-traps-sync-vs-trio-vs-asyncio-2026",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:stop-async-python-from-freezing-your-stack sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "stop-async-python-from-freezing-your-stack"
+    },
+    {
+      "slug": "k8s-to-flyio-from-3k-to-200month",
+      "source": "html_orphan",
+      "word_count": 19,
+      "reasons": [
+        "merge_stub: 19 words < 1200",
+        "near_duplicate_of:killed-a-3kmonth-k8s-cluster-for-200month sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "killed-a-3kmonth-k8s-cluster-for-200month"
+    },
+    {
+      "slug": "ussd-in-2026-africas-silent-infra-layer",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200",
+        "near_duplicate_of:ussd-apps-why-african-fintech-still-needs-them-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ussd-apps-why-african-fintech-still-needs-them-in-2026"
+    },
+    {
+      "slug": "ai-proof-your-salary-5-skills-that-still-pay-2026",
+      "source": "post.json",
+      "word_count": 2766,
+      "reasons": [
+        "fabricated_citation: '2026 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "free-threaded-python-313-cpu-bound-web-wins",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:python-313-free-threaded-30-faster-apis sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "python-313-free-threaded-30-faster-apis"
+    },
+    {
+      "slug": "your-portfolio-doesnt-need-a-website",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "african-devs-waste-time-on-github-stars-do-this",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:portfolio-projects-signal-over-noise sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "portfolio-projects-signal-over-noise"
+    },
+    {
+      "slug": "slsa-10-and-sigstore-why-every-repo-needs-them-in",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:sigstore-slsa-why-repos-will-break-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "sigstore-slsa-why-repos-will-break-in-2026"
+    },
+    {
+      "slug": "soft-deletes-break-at-scale-3-mistakes-to-stop-now",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-agents-need-human-loop-cost-trust-and-the-78",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:human-in-the-loop-vs-full-auto-ai-agents-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "human-in-the-loop-vs-full-auto-ai-agents-in-2026"
+    },
+    {
+      "slug": "rewrite-monolith-without-disaster-2026s-safe-path",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "container-builds-in-2026-7-speed-hacks-you-missed",
+      "source": "html_orphan",
+      "word_count": 19,
+      "reasons": [
+        "merge_stub: 19 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "test-ai-code-not-the-ai",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:9-tests-to-chase-ai-bugs-without-testing-ai sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "9-tests-to-chase-ai-bugs-without-testing-ai"
+    },
+    {
+      "slug": "ai-ate-my-freelance-rate-2026",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "ussd-fintech-stack-in-2026-build-it-right",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "skip-the-vpn-tax-zero-trust-on-200month",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:zero-trust-on-0-budget-cloudflare-vs-tailscale sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "zero-trust-on-0-budget-cloudflare-vs-tailscale"
+    },
+    {
+      "slug": "tool-calling-patterns-that-survive-prod-vs-those-that",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "audit-logs-postgres-vs-clickhouse-under-load",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "shrink-multi-region-bills-55-without-losing-users",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:shrink-multi-region-costs-40-the-real-levers sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "shrink-multi-region-costs-40-the-real-levers"
+    },
+    {
+      "slug": "passkeys-killed-passwords-in-2026",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:380k-logins-lost-passkeys-fixed-it sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "380k-logins-lost-passkeys-fixed-it"
+    },
+    {
+      "slug": "zero-trust-on-0-budget-cloudflare-vs-tailscale",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:skip-the-vpn-tax-zero-trust-on-200month sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "skip-the-vpn-tax-zero-trust-on-200month"
+    },
+    {
+      "slug": "aws-iam-write-policies-in-20-mins",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:least-privilege-aws-iam-in-a-day sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "least-privilege-aws-iam-in-a-day"
+    },
+    {
+      "slug": "llm-latency-what-kills-speed-first",
+      "source": "post.json",
+      "word_count": 2505,
+      "reasons": [
+        "fabricated_citation: '2026 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "least-privilege-aws-iam-in-a-day",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:aws-iam-write-policies-in-20-mins sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "aws-iam-write-policies-in-20-mins"
+    },
+    {
+      "slug": "ai-ui-tools-what-theyll-ship-what-theyll-break",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-codebase-keep-it-or-kill-it-40-dilemma",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-codebase-onboarding-ship-fast-or-ship-safe sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-codebase-onboarding-ship-fast-or-ship-safe"
+    },
+    {
+      "slug": "feature-flags-to-experimentation-9-platforms-compared",
+      "source": "html_orphan",
+      "word_count": 19,
+      "reasons": [
+        "merge_stub: 19 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "3-wcag-traps-in-ai-chat-uis",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:miss-wcag-live-region-pitfalls sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "miss-wcag-live-region-pitfalls"
+    },
+    {
+      "slug": "lose-the-env-files-what-replaced-them-in-2026",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-tools-crashed-freelance-rates-heres-the-math",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "schema-per-tenant-cost-us-weeks-heres-what-worked",
+      "source": "html_orphan",
+      "word_count": 19,
+      "reasons": [
+        "merge_stub: 19 words < 1200",
+        "near_duplicate_of:schema-per-tenant-the-3ms-trap-we-fell-into sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "schema-per-tenant-the-3ms-trap-we-fell-into"
+    },
+    {
+      "slug": "killed-a-3kmonth-k8s-cluster-for-200month",
+      "source": "html_orphan",
+      "word_count": 19,
+      "reasons": [
+        "merge_stub: 19 words < 1200",
+        "near_duplicate_of:k8s-to-flyio-from-3k-to-200month sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "k8s-to-flyio-from-3k-to-200month"
+    },
+    {
+      "slug": "small-model-fine-tuning-wins-in-2026",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:fine-tune-vs-prompt-2026s-hidden-costs sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "fine-tune-vs-prompt-2026s-hidden-costs"
+    },
+    {
+      "slug": "ai-codebase-onboarding-2-devs-in-2-hours-or-quit",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-codebase-onboarding-ship-fast-or-ship-safe sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-codebase-onboarding-ship-fast-or-ship-safe"
+    },
+    {
+      "slug": "debugging-ais-80-saas-shortcut-in-production",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "ai-pair-programming-how-we-lost-ownership-at-3am",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "mcp-servers-2026-connection-refused-in-production",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:mcp-servers-2026-why-your-agent-keeps-crashing sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "mcp-servers-2026-why-your-agent-keeps-crashing"
+    },
+    {
+      "slug": "block-80-of-traffic-with-workers",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:cut-origin-load-80-with-workers sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "cut-origin-load-80-with-workers"
+    },
+    {
+      "slug": "ai-prompt-injection-the-attack-youre-running-live",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:attack-vectors-hiding-in-ais-data-pipelines sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "attack-vectors-hiding-in-ais-data-pipelines"
+    },
+    {
+      "slug": "stop-blaming-passwords",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:passkeys-cut-logins-83-the-real-costs sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "passkeys-cut-logins-83-the-real-costs"
+    },
+    {
+      "slug": "json-mode-doesnt-validate-outputs",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "trimmed-3kmonth-kubernetes-to-200-with-flyio",
+      "source": "html_orphan",
+      "word_count": 19,
+      "reasons": [
+        "merge_stub: 19 words < 1200",
+        "near_duplicate_of:k8s-to-flyio-from-3k-to-200month sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "k8s-to-flyio-from-3k-to-200month"
+    },
+    {
+      "slug": "idps-in-2026-by-team-size-by-pain",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "sigstore-slsa-why-repos-will-break-in-2026",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:slsa-10-and-sigstore-why-every-repo-needs-them-in sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "slsa-10-and-sigstore-why-every-repo-needs-them-in"
+    },
+    {
+      "slug": "attack-vectors-hiding-in-ais-data-pipelines",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ai-prompt-injection-the-attack-youre-running-live sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-prompt-injection-the-attack-youre-running-live"
+    },
+    {
+      "slug": "istio-122-flopped-cilium-115-won",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:service-mesh-is-a-tax-you-can-skip sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "service-mesh-is-a-tax-you-can-skip"
+    },
+    {
+      "slug": "5-patterns-to-keep-systems-up-when-consistency-breaks",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:11-patterns-for-eventual-consistency-that-dont-wake sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "11-patterns-for-eventual-consistency-that-dont-wake"
+    },
+    {
+      "slug": "ai-proof-your-salary-the-3-skills-worth-40-more",
+      "source": "post.json",
+      "word_count": 2298,
+      "reasons": [
+        "fabricated_citation: '2026 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "skip-websockets-cheaper-real-time-hacks",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-scans-code-what-it-finds-and-what-it-misses",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-memory-leaks-context-lost-after-sessions",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-agents-forget-overnight-how-to-keep-memory-alive sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-agents-forget-overnight-how-to-keep-memory-alive"
+    },
+    {
+      "slug": "python-313-free-threaded-30-faster-apis",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:free-threaded-python-313-cpu-bound-web-wins sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "free-threaded-python-313-cpu-bound-web-wins"
+    },
+    {
+      "slug": "stop-async-python-surprises-before-they-burn-you",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:stop-async-python-from-freezing-your-stack sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "stop-async-python-from-freezing-your-stack"
+    },
+    {
+      "slug": "service-mesh-is-a-tax-you-can-skip",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:istio-122-flopped-cilium-115-won sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "istio-122-flopped-cilium-115-won"
+    },
+    {
+      "slug": "ai-agents-lose-context-3-fixes-for-persistent-memory",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-agents-forget-overnight-how-to-keep-memory-alive sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-agents-forget-overnight-how-to-keep-memory-alive"
+    },
+    {
+      "slug": "mcp-servers-2026-why-your-agent-keeps-crashing",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:mcp-servers-2026-connection-refused-in-production sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "mcp-servers-2026-connection-refused-in-production"
+    },
+    {
+      "slug": "neon-planetscale-branch-your-db-like-git",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:branching-databases-neon-and-planetscale-fixes-that sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "branching-databases-neon-and-planetscale-fixes-that"
+    },
+    {
+      "slug": "self-healing-pipelines-llms-vs-agents-in-2026",
+      "source": "post.json",
+      "word_count": 3100,
+      "reasons": [
+        "fabricated_citation: '2026 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-killed-these-micro-saas-niches",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:6-micro-saas-niches-ai-couldnt-commoditise sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "6-micro-saas-niches-ai-couldnt-commoditise"
+    },
+    {
+      "slug": "survive-ai-3-skills-that-beat-automation",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "signals-vs-stores-7-state-tools-ranked",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:signals-killed-react-context-4-real-wins-outside sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "signals-killed-react-context-4-real-wins-outside"
+    },
+    {
+      "slug": "mcp-servers-crash-tool-call-timeout-after-5s",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-ui-tools-speed-vs-the-rewrite",
+      "source": "html_orphan",
+      "word_count": 21,
+      "reasons": [
+        "merge_stub: 21 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-scans-your-code-find-flaws-faster",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:ai-finds-vulns-what-defenders-miss sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-finds-vulns-what-defenders-miss"
+    },
+    {
+      "slug": "tame-async-python-before-it-burns-you",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:stop-async-python-from-freezing-your-stack sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "stop-async-python-from-freezing-your-stack"
+    },
+    {
+      "slug": "ai-tools-broke-my-principles",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "replace-pinecone-with-pgvector",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:pgvector-replaced-pinecone-for-8kyear sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "pgvector-replaced-pinecone-for-8kyear"
+    },
+    {
+      "slug": "temporal-changed-how-we-think-about-agent-workflows",
+      "source": "post.json",
+      "word_count": 3795,
+      "reasons": [
+        "fabricated_citation: '2026 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "skip-stripe-in-2026-i-use-lemon-squeezy-now",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:paddle-over-stripe-2026s-real-winner sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "paddle-over-stripe-2026s-real-winner"
+    },
+    {
+      "slug": "ai-debt-trap-llm-code-vs-human-code-in-prod",
+      "source": "post.json",
+      "word_count": 2474,
+      "reasons": [
+        "fabricated_citation: 'according to a 2026 JetBrains'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-backend-costs-in-africa-3-hidden-taxes",
+      "source": "post.json",
+      "word_count": 2751,
+      "reasons": [
+        "fabricated_citation: '2026 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ship-sboms-in-30-mins-with-syft-18",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:stop-sbom-surprises-syft-110-in-cicd sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "stop-sbom-surprises-syft-110-in-cicd"
+    },
+    {
+      "slug": "json-mode-fails-3-real-workflows-that-broke-ours",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:json-mode-breaks-enforce-schemas-at-scale sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "json-mode-breaks-enforce-schemas-at-scale"
+    },
+    {
+      "slug": "htmx-5-things-i-gave-up-to-run-it-in-prod",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200",
+        "near_duplicate_of:3-htmx-trade-offs-nobody-told-you-about sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "3-htmx-trade-offs-nobody-told-you-about"
+    },
+    {
+      "slug": "shrink-multi-region-costs-40-the-real-levers",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:shrink-multi-region-bills-55-without-losing-users sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "shrink-multi-region-bills-55-without-losing-users"
+    },
+    {
+      "slug": "50k-builds-github-vs-circleci-cost-smackdown",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "signals-killed-react-context-4-real-wins-outside",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:signals-vs-stores-7-state-tools-ranked sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "signals-vs-stores-7-state-tools-ranked"
+    },
+    {
+      "slug": "wcag-chatbots-miss-aria-live-traps-in-ai-uis",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:miss-wcag-live-region-pitfalls sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "miss-wcag-live-region-pitfalls"
+    },
+    {
+      "slug": "wcag-chat-fails-the-4-silent-aria-traps",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:miss-wcag-live-region-pitfalls sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "miss-wcag-live-region-pitfalls"
+    },
+    {
+      "slug": "llms-hidden-owasp-pitfalls-in-2026",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:llm-apps-owasps-10-new-attack-paths sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "llm-apps-owasps-10-new-attack-paths"
+    },
+    {
+      "slug": "survive-africas-spotty-internet-with-offline-apps",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "pwas-in-2026-what-browsers-finally-fixed",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agent-memory-vanishes-why-your-ai-forgets-at-3-am",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-agents-forget-overnight-how-to-keep-memory-alive sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-agents-forget-overnight-how-to-keep-memory-alive"
+    },
+    {
+      "slug": "service-mesh-in-2026-what-we-got-wrong",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:istio-122-flopped-cilium-115-won sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "istio-122-flopped-cilium-115-won"
+    },
+    {
+      "slug": "stop-sbom-surprises-syft-110-in-cicd",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ship-sboms-in-30-mins-with-syft-18 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ship-sboms-in-30-mins-with-syft-18"
+    },
+    {
+      "slug": "agent-drift-is-eating-your-product",
+      "source": "post.json",
+      "word_count": 3845,
+      "reasons": [
+        "fabricated_citation: '2026 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "human-in-the-loop-vs-full-auto-ai-agents-in-2026",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:ai-agents-need-human-loop-cost-trust-and-the-78 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-agents-need-human-loop-cost-trust-and-the-78"
+    },
+    {
+      "slug": "3-notification-stacks-that-wont-drown-you-in",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:3-notification-stacks-that-actually-scale-to-whatsapp sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "3-notification-stacks-that-actually-scale-to-whatsapp"
+    },
+    {
+      "slug": "passkeys-cut-logins-83-the-real-costs",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:stop-blaming-passwords sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "stop-blaming-passwords"
+    },
+    {
+      "slug": "the-countries-winning-the-ai-race-a-practical-tech",
+      "source": "html_orphan",
+      "word_count": 1062,
+      "reasons": [
+        "thin_content: 1062 words < 1200"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "3-notification-stacks-that-actually-scale-to-whatsapp",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:3-notification-stacks-that-wont-drown-you-in sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "3-notification-stacks-that-wont-drown-you-in"
+    },
+    {
+      "slug": "ai-coded-my-saas-in-42-days",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "price-a-dev-tool-3-weeks-of-mistakes",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:use-based-pricing-for-dev-tools-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "use-based-pricing-for-dev-tools-in-2026"
+    },
+    {
+      "slug": "ai-interviews-the-new-tests-replacing-leetcode",
+      "source": "post.json",
+      "word_count": 2280,
+      "reasons": [
+        "fabricated_citation: 'according to a 2026 Stack Overflow'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "mcp-server-timeouts-why-your-tools-vanish-after-30s",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:mcp-servers-2026-connection-refused-in-production sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "mcp-servers-2026-connection-refused-in-production"
+    },
+    {
+      "slug": "prompt-injection-the-0-day-you-overlooked",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ai-prompt-injection-the-attack-youre-running-live sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-prompt-injection-the-attack-youre-running-live"
+    },
+    {
+      "slug": "2026-islands-astros-hydration-edge",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-prompt-injection-why-most-systems-fail",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ai-prompt-injection-the-attack-youre-running-live sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-prompt-injection-the-attack-youre-running-live"
+    },
+    {
+      "slug": "ai-changed-my-workflowheres-what-i-stopped-trusting",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "380k-logins-lost-passkeys-fixed-it",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:passkeys-killed-passwords-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "passkeys-killed-passwords-in-2026"
+    },
+    {
+      "slug": "aws-iam-in-10-minutes-least-privilege-without-the-pain",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:aws-iam-write-policies-in-20-mins sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "aws-iam-write-policies-in-20-mins"
+    },
+    {
+      "slug": "maintain-40-ai-code-test-first-lint-always",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-codebase-onboarding-ship-fast-or-ship-safe sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-codebase-onboarding-ship-fast-or-ship-safe"
+    },
+    {
+      "slug": "why-i-switched-from-cypress-to-playwright-in-2026",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:frontend-testing-2026-3-tools-i-trust sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "frontend-testing-2026-3-tools-i-trust"
+    },
+    {
+      "slug": "5-delivery-channels-that-actually-scale",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:3-notification-stacks-that-wont-drown-you-in sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "3-notification-stacks-that-wont-drown-you-in"
+    },
+    {
+      "slug": "ai-agents-lose-context-after-restart-how-to-fix",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "schema-per-tenant-the-3ms-trap-we-fell-into",
+      "source": "html_orphan",
+      "word_count": 19,
+      "reasons": [
+        "merge_stub: 19 words < 1200",
+        "near_duplicate_of:schema-per-tenant-cost-us-weeks-heres-what-worked sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "schema-per-tenant-cost-us-weeks-heres-what-worked"
+    },
+    {
+      "slug": "ai-code-debt-manual-vs-ai-generated",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-codebase-onboarding-ship-fast-or-ship-safe sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-codebase-onboarding-ship-fast-or-ship-safe"
+    },
+    {
+      "slug": "3-htmx-trade-offs-nobody-told-you-about",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200",
+        "near_duplicate_of:htmx-5-things-i-gave-up-to-run-it-in-prod sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "htmx-5-things-i-gave-up-to-run-it-in-prod"
+    },
+    {
+      "slug": "9-tests-to-chase-ai-bugs-without-testing-ai",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:test-ai-code-not-the-ai sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "test-ai-code-not-the-ai"
+    },
+    {
+      "slug": "aws-iam-in-10-minutes-stop-writing-policies-by-hand",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:aws-iam-write-policies-in-20-mins sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "aws-iam-write-policies-in-20-mins"
+    },
+    {
+      "slug": "zero-trust-for-small-teams-wireguard-vs-tailscale",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "edge-backends-when-50-locations-break-your-api",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:50-edge-locations-what-breaks-in-your-backend sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "50-edge-locations-what-breaks-in-your-backend"
+    },
+    {
+      "slug": "6-ways-to-ship-real-time-without-websockets",
+      "source": "post.json",
+      "word_count": 3361,
+      "reasons": [
+        "fabricated_citation: 'according to a 2025 JetBrains'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "8-db-pool-size-mistakes-killing-your-cpu",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:wrong-db-pool-size-wastes-cash sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "wrong-db-pool-size-wastes-cash"
+    },
+    {
+      "slug": "6-ai-tools-that-paid-off-for-nairobi-teams-in-2026",
+      "source": "html_orphan",
+      "word_count": 21,
+      "reasons": [
+        "merge_stub: 21 words < 1200",
+        "near_duplicate_of:7-ai-tools-nairobi-devs-use-to-beat-global-teams sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "7-ai-tools-nairobi-devs-use-to-beat-global-teams"
+    },
+    {
+      "slug": "avoid-webhook-delivery-nightmares-in-2026",
+      "source": "post.json",
+      "word_count": 2546,
+      "reasons": [
+        "fabricated_citation: '2026 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-keeps-legacy-code-alive-heres-how",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "frontend-testing-2026-3-tools-i-trust",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:why-i-switched-from-cypress-to-playwright-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "why-i-switched-from-cypress-to-playwright-in-2026"
+    },
+    {
+      "slug": "use-based-pricing-for-dev-tools-in-2026",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:price-a-dev-tool-3-weeks-of-mistakes sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "price-a-dev-tool-3-weeks-of-mistakes"
+    },
+    {
+      "slug": "pick-the-right-broker-kafka-vs-redpanda-vs-nats-in",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "database-branching-3-neon-mistakes-that-cost-me-weeks",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:branching-databases-neon-and-planetscale-fixes-that sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "branching-databases-neon-and-planetscale-fixes-that"
+    },
+    {
+      "slug": "schema-per-tenant-the-2026-trade-offs-nobody-talks",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "clean-code-essential-rules-that-actually-work",
+      "source": "html_orphan",
+      "word_count": 2075,
+      "reasons": [
+        "fabricated_citation: '2023 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-pair-cuts-code-review-time-75",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-pair-code-reviews-broke-our-repo sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-pair-code-reviews-broke-our-repo"
+    },
+    {
+      "slug": "paddle-over-stripe-2026s-real-winner",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:skip-stripe-in-2026-i-use-lemon-squeezy-now sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "skip-stripe-in-2026-i-use-lemon-squeezy-now"
+    },
+    {
+      "slug": "signals-vs-state-does-it-matter",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:signals-vs-stores-7-state-tools-ranked sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "signals-vs-stores-7-state-tools-ranked"
+    },
+    {
+      "slug": "6-micro-saas-niches-ai-couldnt-commoditise",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-killed-these-micro-saas-niches sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-killed-these-micro-saas-niches"
+    },
+    {
+      "slug": "migrations-kill-prod-do-this-instead",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "maintain-40-ai-code-two-battle-tested-paths",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-codebase-onboarding-ship-fast-or-ship-safe sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-codebase-onboarding-ship-fast-or-ship-safe"
+    },
+    {
+      "slug": "json-mode-breaks-enforce-schemas-at-scale",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:json-mode-fails-3-real-workflows-that-broke-ours sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "json-mode-fails-3-real-workflows-that-broke-ours"
+    },
+    {
+      "slug": "prove-platform-roi-by-measuring-what-matters",
+      "source": "post.json",
+      "word_count": 2712,
+      "reasons": [
+        "fabricated_citation: '2026 Gartner survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "tls-13-breaks-with-post-quantum-crypto-fix-now",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "7-ai-tools-nairobi-devs-use-to-beat-global-teams",
+      "source": "html_orphan",
+      "word_count": 21,
+      "reasons": [
+        "merge_stub: 21 words < 1200",
+        "near_duplicate_of:6-ai-tools-that-paid-off-for-nairobi-teams-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "6-ai-tools-that-paid-off-for-nairobi-teams-in-2026"
+    },
+    {
+      "slug": "automate-sboms-before-audits-hit",
+      "source": "post.json",
+      "word_count": 2390,
+      "reasons": [
+        "fabricated_citation: '2026 Gartner survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "branching-databases-locally-the-neon-gotcha-nobody",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:branching-databases-neon-and-planetscale-fixes-that sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "branching-databases-neon-and-planetscale-fixes-that"
+    },
+    {
+      "slug": "ai-sandboxes-when-self-service-goes-wrong",
+      "source": "post.json",
+      "word_count": 3553,
+      "reasons": [
+        "fabricated_citation: '2026 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "zero-downtime-migrations-let-the-db-do-the-work",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "slay-prompt-injection-before-it-bleeds-your-cloud",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ai-prompt-injection-the-attack-youre-running-live sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-prompt-injection-the-attack-youre-running-live"
+    },
+    {
+      "slug": "fine-tune-or-prompt-who-wins-in-2026",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:fine-tune-vs-prompt-2026s-hidden-costs sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "fine-tune-vs-prompt-2026s-hidden-costs"
+    },
+    {
+      "slug": "m-pesa-daraja-20-latency-tls-and-what-broke",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:migrate-to-daraja-20-now-what-broke-and-how-to-fix sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "migrate-to-daraja-20-now-what-broke-and-how-to-fix"
+    },
+    {
+      "slug": "defend-your-stack-for-5user",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:skip-the-vpn-tax-zero-trust-on-200month sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "skip-the-vpn-tax-zero-trust-on-200month"
+    },
+    {
+      "slug": "fine-tune-vs-prompt-40-cheaper-with-3-accuracy-loss",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:fine-tune-vs-prompt-2026s-hidden-costs sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "fine-tune-vs-prompt-2026s-hidden-costs"
+    },
+    {
+      "slug": "cost-hacking-multi-region-backends-in-2026",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "cut-react-bundle-62-without-rewriting",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "unlearn-these-ai-workflow-rules-in-2026",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "ai-pair-code-reviews-broke-our-repo",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-pair-cuts-code-review-time-75 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-pair-cuts-code-review-time-75"
+    },
+    {
+      "slug": "signals-5-state-hacks-that-actually-work",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:signals-vs-stores-7-state-tools-ranked sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "signals-vs-stores-7-state-tools-ranked"
+    },
+    {
+      "slug": "80-ai-code-heres-the-catch",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "ditch-pinecone-keep-pgvector",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:pgvector-replaced-pinecone-for-8kyear sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "pgvector-replaced-pinecone-for-8kyear"
+    },
+    {
+      "slug": "ai-tools-broke-my-stack-heres-what-i-changed",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "ai-ui-tools-what-they-fix-and-what-they-break",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "technical-debt-static-analysis-vs-runtime-profilin",
+      "source": "html_orphan",
+      "word_count": 2823,
+      "reasons": [
+        "fabricated_citation: '2022 McKinsey study'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "store-audit-logs-where-latency-cant-hide",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "tls-13-after-pqc-latency-hit-you-didnt-see-coming",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "harden-aws-iam-in-30-minutes",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:aws-iam-write-policies-in-20-mins sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "aws-iam-write-policies-in-20-mins"
+    },
+    {
+      "slug": "branching-databases-my-2026-workflow-fix",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:branching-databases-neon-and-planetscale-fixes-that sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "branching-databases-neon-and-planetscale-fixes-that"
+    },
+    {
+      "slug": "frontend-testing-in-2026-playwright-beats-cypress",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:why-i-switched-from-cypress-to-playwright-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "why-i-switched-from-cypress-to-playwright-in-2026"
+    },
+    {
+      "slug": "platform-engineering-what-our-idps-really-cost-in-2026",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "rag-isnt-enough-in-2026",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "2026-remote-pay-beat-the-ppp-trap",
+      "source": "post.json",
+      "word_count": 3654,
+      "reasons": [
+        "fabricated_citation: '2026 McKinsey report'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "cost-vs-accuracy-fine-tune-small-or-prompt-large",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:fine-tune-vs-prompt-2026s-hidden-costs sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "fine-tune-vs-prompt-2026s-hidden-costs"
+    },
+    {
+      "slug": "signals-the-state-trick-everyone-copied-without",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:signals-vs-stores-7-state-tools-ranked sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "signals-vs-stores-7-state-tools-ranked"
+    },
+    {
+      "slug": "ai-codebases-lock-it-down-with-strict-mode",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-codebase-onboarding-ship-fast-or-ship-safe sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-codebase-onboarding-ship-fast-or-ship-safe"
+    },
+    {
+      "slug": "6-weeks-to-saas-80-code-ai-built",
+      "source": "html_orphan",
+      "word_count": 21,
+      "reasons": [
+        "merge_stub: 21 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "aws-iam-in-2-hours-no-more-policy-hell",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:aws-iam-write-policies-in-20-mins sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "aws-iam-write-policies-in-20-mins"
+    },
+    {
+      "slug": "8-ai-tools-that-let-us-outrun-nairobis-rivals",
+      "source": "html_orphan",
+      "word_count": 21,
+      "reasons": [
+        "merge_stub: 21 words < 1200",
+        "near_duplicate_of:6-ai-tools-that-paid-off-for-nairobi-teams-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "6-ai-tools-that-paid-off-for-nairobi-teams-in-2026"
+    },
+    {
+      "slug": "json-mode-isnt-your-golden-ticket",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:json-mode-fails-3-real-workflows-that-broke-ours sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "json-mode-fails-3-real-workflows-that-broke-ours"
+    },
+    {
+      "slug": "ai-code-debt-the-blind-spot-teams-ignore",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "ai-finds-vulns-what-defenders-miss",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:ai-scans-your-code-find-flaws-faster sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-scans-your-code-find-flaws-faster"
+    },
+    {
+      "slug": "service-mesh-in-2026-why-most-teams-drop-it",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:istio-122-flopped-cilium-115-won sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "istio-122-flopped-cilium-115-won"
+    },
+    {
+      "slug": "ai-ops-tools-automated-capacity-vs-runbooks-in-2026",
+      "source": "post.json",
+      "word_count": 2911,
+      "reasons": [
+        "fabricated_citation: '2026 Gartner report'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "sboms-in-2026-automate-releases-with-syft-112",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ship-sboms-in-30-mins-with-syft-18 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ship-sboms-in-30-mins-with-syft-18"
+    },
+    {
+      "slug": "pgvectors-ram-trick-outshone-pinecone",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:pgvector-replaced-pinecone-for-8kyear sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "pgvector-replaced-pinecone-for-8kyear"
+    },
+    {
+      "slug": "postgres-17-replaced-redis-kafka-and-prometheus",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:cut-three-stacks-to-one-with-postgres-17 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "cut-three-stacks-to-one-with-postgres-17"
+    },
+    {
+      "slug": "own-the-ai-changed-pull-request",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-pair-cuts-code-review-time-75 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-pair-cuts-code-review-time-75"
+    },
+    {
+      "slug": "meet-2026-sbom-reality-no-more-hand-rolled-scripts",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ship-sboms-in-30-mins-with-syft-18 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ship-sboms-in-30-mins-with-syft-18"
+    },
+    {
+      "slug": "5-signs-youre-done-with-big-tech",
+      "source": "post.json",
+      "word_count": 3171,
+      "reasons": [
+        "fabricated_citation: '2026 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "50-edge-locations-what-breaks-in-your-backend",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:edge-backends-when-50-locations-break-your-api sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "edge-backends-when-50-locations-break-your-api"
+    },
+    {
+      "slug": "ai-rewrote-my-docs-the-docs-i-deleted",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "survive-ai-saas-disruption-in-2026",
+      "source": "post.json",
+      "word_count": 3144,
+      "reasons": [
+        "fabricated_citation: '2026 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "2026-why-i-switched-from-stripe-to-paddle",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:skip-stripe-in-2026-i-use-lemon-squeezy-now sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "skip-stripe-in-2026-i-use-lemon-squeezy-now"
+    },
+    {
+      "slug": "mis-size-db-pool-heres-why",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:wrong-db-pool-size-wastes-cash sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "wrong-db-pool-size-wastes-cash"
+    },
+    {
+      "slug": "freelance-rates-2026-ai-killed-the-hourly-rate",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "ai-ate-my-niche-5-micro-saas-types-still-worth",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-observability-why-logs-and-traces-lie",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:monitor-ai-like-a-model-not-a-machine sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "monitor-ai-like-a-model-not-a-machine"
+    },
+    {
+      "slug": "webhooks-done-right-3-mistakes-that-cost-us-12-hours",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:build-webhooks-that-never-fail-twice sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "build-webhooks-that-never-fail-twice"
+    },
+    {
+      "slug": "attack-ai-systems-before-users-do",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ai-prompt-injection-the-attack-youre-running-live sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-prompt-injection-the-attack-youre-running-live"
+    },
+    {
+      "slug": "ai-scanners-miss-real-flaws-heres-how-to-use-them",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:ai-scans-your-code-find-flaws-faster sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-scans-your-code-find-flaws-faster"
+    },
+    {
+      "slug": "ussd-apps-why-african-fintech-still-needs-them-in-2026",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200",
+        "near_duplicate_of:ussd-in-2026-africas-silent-infra-layer sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ussd-in-2026-africas-silent-infra-layer"
+    },
+    {
+      "slug": "ai-code-review-the-20-trap-in-production",
+      "source": "post.json",
+      "word_count": 2719,
+      "reasons": [
+        "fabricated_citation: '2026 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "side-channel-prompt-attacks-the-60ms-latency-you",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ai-prompt-injection-the-attack-youre-running-live sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-prompt-injection-the-attack-youre-running-live"
+    },
+    {
+      "slug": "ai-scanners-find-vulns-what-actually-works",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:ai-scans-your-code-find-flaws-faster sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-scans-your-code-find-flaws-faster"
+    },
+    {
+      "slug": "2-ai-roles-ranked-staff-engineer-vs-manager-in-2026",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "meet-2026-sbom-requirements-in-30-mins",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ship-sboms-in-30-mins-with-syft-18 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ship-sboms-in-30-mins-with-syft-18"
+    },
+    {
+      "slug": "3-ai-pair-programming-tools-we-dropped-after-60-days",
+      "source": "html_orphan",
+      "word_count": 21,
+      "reasons": [
+        "merge_stub: 21 words < 1200",
+        "near_duplicate_of:6-ai-tools-that-paid-off-for-nairobi-teams-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "6-ai-tools-that-paid-off-for-nairobi-teams-in-2026"
+    },
+    {
+      "slug": "htmx-swapped-5-dev-tools-for-me",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200",
+        "near_duplicate_of:htmx-5-things-i-gave-up-to-run-it-in-prod sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "htmx-5-things-i-gave-up-to-run-it-in-prod"
+    },
+    {
+      "slug": "ai-vs-solo-saas-costs-speed-rewrite-risks",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-prompts-poisoned-3-real-attacks-on-live-systems",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ai-prompt-injection-the-attack-youre-running-live sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-prompt-injection-the-attack-youre-running-live"
+    },
+    {
+      "slug": "78-of-ai-codebases-fail-onboarding",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-codebase-onboarding-ship-fast-or-ship-safe sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-codebase-onboarding-ship-fast-or-ship-safe"
+    },
+    {
+      "slug": "fix-llm-vulns-owasp-top-10-for-ai-apps",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:fix-llm-top-10-risks-before-prod-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "fix-llm-top-10-risks-before-prod-2026"
+    },
+    {
+      "slug": "enforce-sbom-in-30-mins-syft-trivy-2026",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ship-sboms-in-30-mins-with-syft-18 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ship-sboms-in-30-mins-with-syft-18"
+    },
+    {
+      "slug": "ai-velocity-audit-3-real-metrics-your-team-ignores",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "tune-small-or-prompt-big-2026-costs-revealed",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:fine-tune-vs-prompt-2026s-hidden-costs sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "fine-tune-vs-prompt-2026s-hidden-costs"
+    },
+    {
+      "slug": "ai-ate-my-niche-niches-that-survived-2026",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:ai-killed-these-micro-saas-niches sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-killed-these-micro-saas-niches"
+    },
+    {
+      "slug": "5-ai-tools-beating-higher-cost-teams-from-nairobi",
+      "source": "html_orphan",
+      "word_count": 21,
+      "reasons": [
+        "merge_stub: 21 words < 1200",
+        "near_duplicate_of:6-ai-tools-that-paid-off-for-nairobi-teams-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "6-ai-tools-that-paid-off-for-nairobi-teams-in-2026"
+    },
+    {
+      "slug": "why-most-teams-wasted-2025-on-cypress",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:why-i-switched-from-cypress-to-playwright-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "why-i-switched-from-cypress-to-playwright-in-2026"
+    },
+    {
+      "slug": "synchronous-vs-async-tool-calls-latency-traps-at-1000",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "skip-the-vpn-zero-trust-for-under-100",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:skip-the-vpn-tax-zero-trust-on-200month sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "skip-the-vpn-tax-zero-trust-on-200month"
+    },
+    {
+      "slug": "wcag-chat-bots-miss-4-invisible-traps",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:fix-ai-chat-uis-for-screen-readers sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "fix-ai-chat-uis-for-screen-readers"
+    },
+    {
+      "slug": "ask-for-20-more-in-2026",
+      "source": "post.json",
+      "word_count": 2500,
+      "reasons": [
+        "fabricated_citation: '2024 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-interviews-need-real-logs-the-401-you-never",
+      "source": "post.json",
+      "word_count": 2076,
+      "reasons": [
+        "fabricated_citation: '2026 Stack Overflow survey'"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ussd-menus-2026-fintech-survival-guide",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200",
+        "near_duplicate_of:ussd-in-2026-africas-silent-infra-layer sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ussd-in-2026-africas-silent-infra-layer"
+    },
+    {
+      "slug": "portfolio-projects-signal-over-noise",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:african-devs-waste-time-on-github-stars-do-this sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "african-devs-waste-time-on-github-stars-do-this"
+    },
+    {
+      "slug": "postgres-17-replaces-redis-kafka-and-s3-in-our-stack",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:cut-three-stacks-to-one-with-postgres-17 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "cut-three-stacks-to-one-with-postgres-17"
+    },
+    {
+      "slug": "onboard-devs-to-ai-code-guardrails-vs-chaos",
+      "source": "html_orphan",
+      "word_count": 14,
+      "reasons": [
+        "merge_stub: 14 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "40-ai-code-maintain-it-without-regret",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-prompt-injection-the-silent-aws-bill-killer",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ai-prompt-injection-the-attack-youre-running-live sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-prompt-injection-the-attack-youre-running-live"
+    },
+    {
+      "slug": "trim-18k-aws-bills-2026-levers-mid-size-teams-miss",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "monitor-ai-like-a-model-not-a-machine",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-observability-why-logs-and-traces-lie sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-observability-why-logs-and-traces-lie"
+    },
+    {
+      "slug": "rag-needs-reranking-2026s-default-search-stack",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "split-the-monolith-slowly-no-rewrite-needed",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-changed-my-workflow-3-old-rules-i-dropped",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "htmx-swapped-react-for-me-in-2026",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200",
+        "near_duplicate_of:htmx-5-things-i-gave-up-to-run-it-in-prod sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "htmx-5-things-i-gave-up-to-run-it-in-prod"
+    },
+    {
+      "slug": "why-rag-alone-fails-2026-search",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-incident-bots-pagerduty-vs-opsgenie-2026",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agents-cost-more-than-you-think",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "postgres-17-beat-redis-kafka-and-s3-what-we-dropped",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:cut-three-stacks-to-one-with-postgres-17 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "cut-three-stacks-to-one-with-postgres-17"
+    },
+    {
+      "slug": "llm-apps-owasps-10-new-attack-paths",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:llms-hidden-owasp-pitfalls-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "llms-hidden-owasp-pitfalls-in-2026"
+    },
+    {
+      "slug": "compare-3-iac-tools-post-hashicorp-fork",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:post-mortem-iac-tools-after-hashicorp-fork sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "post-mortem-iac-tools-after-hashicorp-fork"
+    },
+    {
+      "slug": "11-patterns-for-eventual-consistency-that-dont-wake",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:5-patterns-to-keep-systems-up-when-consistency-breaks sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "5-patterns-to-keep-systems-up-when-consistency-breaks"
+    },
+    {
+      "slug": "killed-my-3k-kubernetes-bill-with-200-flyio",
+      "source": "html_orphan",
+      "word_count": 19,
+      "reasons": [
+        "merge_stub: 19 words < 1200",
+        "near_duplicate_of:k8s-to-flyio-from-3k-to-200month sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "k8s-to-flyio-from-3k-to-200month"
+    },
+    {
+      "slug": "stop-burning-cash-on-multi-region-backends",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:shrink-multi-region-bills-55-without-losing-users sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "shrink-multi-region-bills-55-without-losing-users"
+    },
+    {
+      "slug": "automate-80-keep-20-why-ai-agents-still-need-humans",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:ai-agents-need-human-loop-cost-trust-and-the-78 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-agents-need-human-loop-cost-trust-and-the-78"
+    },
+    {
+      "slug": "cut-origin-load-80-with-workers",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:block-80-of-traffic-with-workers sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "block-80-of-traffic-with-workers"
+    },
+    {
+      "slug": "consolidate-redis-kafka-pgbouncer-into-postgres-17",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:cut-three-stacks-to-one-with-postgres-17 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "cut-three-stacks-to-one-with-postgres-17"
+    },
+    {
+      "slug": "fix-ai-chat-uis-for-screen-readers",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:wcag-chat-bots-miss-4-invisible-traps sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "wcag-chat-bots-miss-4-invisible-traps"
+    },
+    {
+      "slug": "schema-per-tenant-cost-us-170-more-than-rls",
+      "source": "html_orphan",
+      "word_count": 19,
+      "reasons": [
+        "merge_stub: 19 words < 1200",
+        "near_duplicate_of:schema-per-tenant-cost-us-weeks-heres-what-worked sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "schema-per-tenant-cost-us-weeks-heres-what-worked"
+    },
+    {
+      "slug": "7-ai-red-flags-your-senior-title-hides",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "pick-one-api-style-grpc-rest-or-trpc",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "migrate-m-pesa-daraja-20-now-before-your-app-breaks",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:migrate-to-daraja-20-now-what-broke-and-how-to-fix sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "migrate-to-daraja-20-now-what-broke-and-how-to-fix"
+    },
+    {
+      "slug": "migrate-daraja-20-to-production-in-2-hours",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:migrate-to-daraja-20-now-what-broke-and-how-to-fix sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "migrate-to-daraja-20-now-what-broke-and-how-to-fix"
+    },
+    {
+      "slug": "ai-rollout-with-launchdarkly-2026",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "lies-your-ai-assistant-tells-itself",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ai-prompt-injection-the-attack-youre-running-live sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-prompt-injection-the-attack-youre-running-live"
+    },
+    {
+      "slug": "islands-beat-monoliths-in-2026",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "meet-2026-sbom-demands-in-minutes",
+      "source": "html_orphan",
+      "word_count": 15,
+      "reasons": [
+        "merge_stub: 15 words < 1200",
+        "near_duplicate_of:ship-sboms-in-30-mins-with-syft-18 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ship-sboms-in-30-mins-with-syft-18"
+    },
+    {
+      "slug": "css-finally-fixed-my-css-problems",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-triage-vs-human-escalation-which-breaks-oncall",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "pgvector-cut-costs-80-ditching-pinecone",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:pgvector-replaced-pinecone-for-8kyear sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "pgvector-replaced-pinecone-for-8kyear"
+    },
+    {
+      "slug": "trust-ai-code-faster",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "5-side-hustles-that-pay-developers-in-2026",
+      "source": "html_orphan",
+      "word_count": 20,
+      "reasons": [
+        "merge_stub: 20 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "custom-agents-beat-frameworks-in-2026",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "post-mortem-iac-tools-after-hashicorp-fork",
+      "source": "html_orphan",
+      "word_count": 17,
+      "reasons": [
+        "merge_stub: 17 words < 1200",
+        "near_duplicate_of:compare-3-iac-tools-post-hashicorp-fork sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "compare-3-iac-tools-post-hashicorp-fork"
+    },
+    {
+      "slug": "signals-beat-hooks-5-state-tricks-that-stuck-in-2026",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:signals-vs-stores-7-state-tools-ranked sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "signals-vs-stores-7-state-tools-ranked"
+    },
+    {
+      "slug": "ai-observability-the-3-things-logs-miss",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-observability-why-logs-and-traces-lie sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-observability-why-logs-and-traces-lie"
+    },
+    {
+      "slug": "gil-free-python-313-double-web-server-speed",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": null
+    },
+    {
+      "slug": "freelance-rates-halved-by-ai-tools",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "build-webhooks-that-never-fail-twice",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:webhooks-done-right-3-mistakes-that-cost-us-12-hours sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "webhooks-done-right-3-mistakes-that-cost-us-12-hours"
+    },
+    {
+      "slug": "freelance-ai-pricing-drops-40-by-2026",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:ai-built-my-saas-in-6-weeksfor-real sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "ai-built-my-saas-in-6-weeksfor-real"
+    },
+    {
+      "slug": "pair-programming-with-ai-5-tools-we-tried",
+      "source": "html_orphan",
+      "word_count": 21,
+      "reasons": [
+        "merge_stub: 21 words < 1200",
+        "near_duplicate_of:6-ai-tools-that-paid-off-for-nairobi-teams-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "6-ai-tools-that-paid-off-for-nairobi-teams-in-2026"
+    },
+    {
+      "slug": "frontend-tests-2026-playwright-won-cypress-lost",
+      "source": "html_orphan",
+      "word_count": 18,
+      "reasons": [
+        "merge_stub: 18 words < 1200",
+        "near_duplicate_of:why-i-switched-from-cypress-to-playwright-in-2026 sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "why-i-switched-from-cypress-to-playwright-in-2026"
+    },
+    {
+      "slug": "pinecone-no-thanks-pgvector-handled-1m-vs",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:pgvector-replaced-pinecone-for-8kyear sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "pgvector-replaced-pinecone-for-8kyear"
+    },
+    {
+      "slug": "stop-async-python-from-burning-your-budget",
+      "source": "html_orphan",
+      "word_count": 16,
+      "reasons": [
+        "merge_stub: 16 words < 1200",
+        "near_duplicate_of:stop-async-python-from-freezing-your-stack sim=1.00"
+      ],
+      "is_merge_stub": true,
+      "duplicate_of": "stop-async-python-from-freezing-your-stack"
+    }
+  ],
+  "improve": [
+    {
+      "slug": "ai-tools-for-african-devs-what-actually-works-now",
+      "source": "post.json",
+      "word_count": 1734,
+      "reasons": [
+        "below_target_length: 1734 < 1800"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "3-side-gigs-developers-use-for-12kmo-in-2026",
+      "source": "post.json",
+      "word_count": 2711,
+      "reasons": [
+        "no_code_in_technical_post"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "handoff-latency-kills-systems-60-fix-is-free",
+      "source": "post.json",
+      "word_count": 2620,
+      "reasons": [
+        "no_code_in_technical_post"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "world-models-wont-save-your-backend",
+      "source": "post.json",
+      "word_count": 3449,
+      "reasons": [
+        "no_code_in_technical_post"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "compound-nairobi-6-dev-income-streams-2026",
+      "source": "post.json",
+      "word_count": 3355,
+      "reasons": [
+        "no_code_in_technical_post"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "api-attacks-rise-300-in-2026-whats-breaking-first",
+      "source": "post.json",
+      "word_count": 1705,
+      "reasons": [
+        "below_target_length: 1705 < 1800"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "tech-salaries-2026-what-corrected-what-grew",
+      "source": "post.json",
+      "word_count": 2565,
+      "reasons": [
+        "no_code_in_technical_post"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "vc-insights",
+      "source": "html_orphan",
+      "word_count": 2324,
+      "reasons": [
+        "generic_or_missing_meta_description"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "handle-starlink-4g-fallbacks-in-fastapi-0115",
+      "source": "post.json",
+      "word_count": 1713,
+      "reasons": [
+        "below_target_length: 1713 < 1800"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ship-production-grade-tools-in-90-minutes-with-the",
+      "source": "html_orphan",
+      "word_count": 1221,
+      "reasons": [
+        "below_target_length: 1221 < 1800"
+      ],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    }
+  ],
+  "keep": [
+    {
+      "slug": "backstage-plugins-for-ai-3-hidden-costs-fixed-in-2026",
+      "source": "post.json",
+      "word_count": 2536,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "survive-network-drops-agentic-workflows-that-keep-running",
+      "source": "post.json",
+      "word_count": 2620,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "least-privilege-for-agents-the-config-line-nobody-writes",
+      "source": "post.json",
+      "word_count": 2846,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "3-ai-coders-ranked-cursor-windsurf-claude-code-in",
+      "source": "post.json",
+      "word_count": 3233,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-ate-the-niches-first",
+      "source": "post.json",
+      "word_count": 2911,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "llm-security-mistakes-in-2026-owasp-top-10-fixes",
+      "source": "post.json",
+      "word_count": 2621,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "multi-agent-systems-break-first",
+      "source": "post.json",
+      "word_count": 3576,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "claude-4-prompts-broke-my-prod",
+      "source": "post.json",
+      "word_count": 3197,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-in-slow-networks-why-models-flop-where-data-costs-rise",
+      "source": "post.json",
+      "word_count": 2691,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "multi-agent-frameworks-in-2026-langgraph-wins",
+      "source": "post.json",
+      "word_count": 3216,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "zero-trust-mcp-servers-auth-trap-youll-hit-first",
+      "source": "post.json",
+      "word_count": 2764,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-portfolios-ruin-yours-fix-your-signal",
+      "source": "post.json",
+      "word_count": 2297,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "aws-finops-levers-what-mid-size-teams-ignore-in-2026",
+      "source": "post.json",
+      "word_count": 2716,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "observability-2026-ditch-the-three-pillars",
+      "source": "post.json",
+      "word_count": 3378,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "aws-costs-for-nairobi-saas-2026-bill-split",
+      "source": "post.json",
+      "word_count": 2538,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "red-teaming-agents-without-killing-velocity",
+      "source": "post.json",
+      "word_count": 2242,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-ops-pagerduty-vs-opsgenie-which-burns-your-team",
+      "source": "post.json",
+      "word_count": 2815,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-chats-hidden-wcag-fails",
+      "source": "post.json",
+      "word_count": 3731,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "cache-stampedes-the-patterns-that-scale-and-the-ones",
+      "source": "post.json",
+      "word_count": 4326,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "pick-saas-niches-ai-cant-erode",
+      "source": "post.json",
+      "word_count": 2550,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "claude-code-in-2026-one-year-of-lessons-learned",
+      "source": "post.json",
+      "word_count": 3431,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "istio-and-cilium-what-really-breaks-in-production",
+      "source": "post.json",
+      "word_count": 3348,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "stop-shipping-daily-the-burn-rate-math",
+      "source": "post.json",
+      "word_count": 2567,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "3-skills-to-outrun-ai-salary-cuts",
+      "source": "post.json",
+      "word_count": 3319,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "price-your-remote-job-like-a-new-york-dev",
+      "source": "post.json",
+      "word_count": 3130,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "7-graceful-degradation-traps-ive-hit-in-production",
+      "source": "post.json",
+      "word_count": 3020,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "build-apps-that-still-work-on-500-ms-latency",
+      "source": "post.json",
+      "word_count": 3412,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "cicd-pipelines-stall-with-gpu-pods-2026-benchmarks",
+      "source": "post.json",
+      "word_count": 2789,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "portfolio-that-hires-show-constraints-not-code",
+      "source": "post.json",
+      "word_count": 2296,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "hiring-engineers-the-3-things-ai-cares-about-now",
+      "source": "post.json",
+      "word_count": 3171,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-interviews-4-questions-that-caught-80-of-weak",
+      "source": "post.json",
+      "word_count": 2859,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "api-attacks-rising-40-the-3-patterns-to-block-now",
+      "source": "post.json",
+      "word_count": 2785,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "solid-in-action",
+      "source": "html_orphan",
+      "word_count": 2231,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "found-niche-in-2026-saas-that-ai-cant-copy",
+      "source": "post.json",
+      "word_count": 2613,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "negotiate-2026-pay-when-ai-steals-40-of-your-job",
+      "source": "post.json",
+      "word_count": 3201,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "portfolio-projects-that-beat-ai-clones-4-signals",
+      "source": "post.json",
+      "word_count": 3016,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "price-saas-dev-tools-in-2026-without-guessing",
+      "source": "post.json",
+      "word_count": 2232,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "5-ways-to-find-hidden-latency-before-production",
+      "source": "post.json",
+      "word_count": 2575,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "debug-ai-agent-failures-differently",
+      "source": "post.json",
+      "word_count": 3008,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "build-a-nairobi-saas-stack-for-32kmonth",
+      "source": "post.json",
+      "word_count": 2431,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-native-apps-break-when-you-copy-old-rules",
+      "source": "post.json",
+      "word_count": 3787,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "offline-first-money-apps-with-dynamodb-streams",
+      "source": "post.json",
+      "word_count": 2620,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "offline-first-apps-what-3g-markets-taught-us",
+      "source": "post.json",
+      "word_count": 3209,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "cut-false-positives-85-with-this-ci-security-trick",
+      "source": "post.json",
+      "word_count": 2705,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agent-code-reviews-1200-tests-per-pr",
+      "source": "post.json",
+      "word_count": 2949,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "compare-kafka-redpanda-nats-for-event-driven-systems",
+      "source": "post.json",
+      "word_count": 2523,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-interviews-break-systems-5-real-mistakes-in-2026",
+      "source": "post.json",
+      "word_count": 3653,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "event-driven-beats-agent-driven-910-times",
+      "source": "post.json",
+      "word_count": 3743,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "build-agent-workflows-that-survive-restarts",
+      "source": "post.json",
+      "word_count": 2099,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "one-payment-stack-for-kenya-nigeria-ghana",
+      "source": "post.json",
+      "word_count": 2730,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "tool-calls-at-scale-sync-vs-async-patterns-that-live",
+      "source": "post.json",
+      "word_count": 2731,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "8-ways-we-measure-agent-reliability-in-2026",
+      "source": "post.json",
+      "word_count": 2604,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "personal-ai-assistants-avoid-vendor-lock-in-traps",
+      "source": "post.json",
+      "word_count": 3350,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-pair-coding-who-owns-the-diff-now",
+      "source": "post.json",
+      "word_count": 2253,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agent-context-short-term-vs-long-term-memory",
+      "source": "post.json",
+      "word_count": 3652,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-on-lambda-when-the-bill-explodes",
+      "source": "post.json",
+      "word_count": 2284,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "tame-python-asyncs-hidden-traps",
+      "source": "post.json",
+      "word_count": 2587,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "progressive-web-apps-what-browser-apis-finally-fixed",
+      "source": "post.json",
+      "word_count": 2338,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-code-40-how-to-keep-it-from-rotting-your-repo",
+      "source": "post.json",
+      "word_count": 2715,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "wasm-servers-beat-containers-here",
+      "source": "post.json",
+      "word_count": 2485,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "kubernetes-or-nomad-the-real-experiment-cost-split",
+      "source": "post.json",
+      "word_count": 2691,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "signals-5-state-tricks-that-broke-my-app",
+      "source": "post.json",
+      "word_count": 2680,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "engineering-interviews-what-ai-wants-now",
+      "source": "post.json",
+      "word_count": 3799,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-hiring-what-actually-moves-the-bar",
+      "source": "post.json",
+      "word_count": 2865,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "payments-fail-how-we-fixed-flutterwave-paystack-m-pesa",
+      "source": "post.json",
+      "word_count": 2679,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "one-misconfigured-vector-db-killed-our-rag-pipeline",
+      "source": "post.json",
+      "word_count": 2537,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "batteries-included-offline-mode-for-unreliable-networks",
+      "source": "post.json",
+      "word_count": 2589,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "detect-lazy-agents-without-false-alarms",
+      "source": "post.json",
+      "word_count": 3250,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-tools-wont-help-if-everyone-writes-the-same-code",
+      "source": "post.json",
+      "word_count": 2855,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "rag-on-legacy-systems-vector-db-vs-full-text-sql",
+      "source": "post.json",
+      "word_count": 3017,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-ui-generation-what-it-fixed-and-what-still-breaks",
+      "source": "post.json",
+      "word_count": 3490,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "african-fintech-rules-broke-our-stack",
+      "source": "post.json",
+      "word_count": 4720,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "4-ai-tools-that-level-the-dev-salary-gap-in-2026",
+      "source": "post.json",
+      "word_count": 2599,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "lessons-from-3-saas-price-pivots-in-2026",
+      "source": "post.json",
+      "word_count": 2924,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "survived-12000-agents-with-redis",
+      "source": "post.json",
+      "word_count": 2791,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "roll-your-own-migrations-why-blue-green-fails-you",
+      "source": "post.json",
+      "word_count": 2947,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "observe-llm-features-90-faster",
+      "source": "post.json",
+      "word_count": 3348,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "zero-downtime-postgres-schema-changes-in-2026",
+      "source": "post.json",
+      "word_count": 3202,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "fintech-apis-broke-in-nigeria-heres-why",
+      "source": "post.json",
+      "word_count": 3264,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache",
+      "source": "post.json",
+      "word_count": 2456,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-micro-saas-under-150month-the-real-infra-choices",
+      "source": "post.json",
+      "word_count": 2984,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "reconcile-mobile-money-in-3-days-edge-cases-paystack",
+      "source": "post.json",
+      "word_count": 2702,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "regulations-forced-better-apis-the-2026-fintech",
+      "source": "post.json",
+      "word_count": 3293,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "meter-dev-tool-pricing-in-2026",
+      "source": "post.json",
+      "word_count": 2244,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "2026-alert-triage-when-opsgenie-slept-for-you",
+      "source": "post.json",
+      "word_count": 3288,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "on-call-engineer-survival",
+      "source": "html_orphan",
+      "word_count": 1992,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "nigerias-2026-api-rules-broke-our-microservices",
+      "source": "post.json",
+      "word_count": 2914,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "which-ai-wrappers-made-money-in-2026",
+      "source": "post.json",
+      "word_count": 2585,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "bootstrapped-5k-mrr-without-ads",
+      "source": "post.json",
+      "word_count": 2384,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "llmops-2026-evaluation-stack-that-replaced-rag-dashboards",
+      "source": "post.json",
+      "word_count": 2568,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "2026-ai-stack-solo-saas-cost-showdown",
+      "source": "post.json",
+      "word_count": 3914,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-code-in-prod-postmortems-still-work",
+      "source": "post.json",
+      "word_count": 3015,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "5-ai-tools-that-let-us-ship-faster-than-sf-teams",
+      "source": "post.json",
+      "word_count": 3058,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-reshaped-my-engineering-principles",
+      "source": "post.json",
+      "word_count": 2432,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "negotiate-after-ai-boosts-your-output",
+      "source": "post.json",
+      "word_count": 2249,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "prepare-tls-for-post-quantum-reality",
+      "source": "post.json",
+      "word_count": 2778,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-observability-isnt-monitoring-heres-why",
+      "source": "post.json",
+      "word_count": 3731,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "pulumi-vs-terraform-vs-opentofu-in-2026",
+      "source": "post.json",
+      "word_count": 2706,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-ui-tools-broke-my-react-flow-heres-why",
+      "source": "post.json",
+      "word_count": 3619,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "prompt-injections-hidden-aws-tax",
+      "source": "post.json",
+      "word_count": 3745,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "who-owns-ai-generated-code",
+      "source": "post.json",
+      "word_count": 2573,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-solo-saas-2026-build-vs-buy",
+      "source": "post.json",
+      "word_count": 4072,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "mcp-servers-real-time-pipelines-without-agents",
+      "source": "post.json",
+      "word_count": 2862,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "7-patterns-for-systems-that-stay-up-when-everything",
+      "source": "post.json",
+      "word_count": 2530,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-rollouts-live-or-die-by-flags",
+      "source": "post.json",
+      "word_count": 2672,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "track-ai-agent-costs-in-fractal-workflows",
+      "source": "post.json",
+      "word_count": 3243,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "african-devs-ai-tools-that-work-now-2026",
+      "source": "post.json",
+      "word_count": 2500,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "airflows-replacement-what-80-of-teams-moved-to-in",
+      "source": "post.json",
+      "word_count": 3177,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "audit-logs-ship-them-fast-keep-them-forever",
+      "source": "post.json",
+      "word_count": 2908,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "dumped-kubernetes-for-200-and-no-one-noticed",
+      "source": "post.json",
+      "word_count": 3377,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "killed-3k-kubernetes-kept-200-infra",
+      "source": "post.json",
+      "word_count": 3710,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-made-self-service-platforms-trivial-in-2026",
+      "source": "post.json",
+      "word_count": 2080,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "evaluate-agents-with-spark-vs-custom-harness",
+      "source": "post.json",
+      "word_count": 2473,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse",
+      "source": "post.json",
+      "word_count": 3148,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "llm-outputs-break-workflows-unless-you-do-this",
+      "source": "post.json",
+      "word_count": 3095,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "mcp-servers-the-3-hidden-costs-nobody-quotes",
+      "source": "post.json",
+      "word_count": 3725,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "big-model-api-vs-fine-tune-the-2026-math",
+      "source": "post.json",
+      "word_count": 3652,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "claude-code-after-a-year-daily-wins",
+      "source": "post.json",
+      "word_count": 2726,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "internal-platform-adoption-one-metric-kills-velocity",
+      "source": "post.json",
+      "word_count": 2634,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "bank-apis-broke-under-african-2g",
+      "source": "post.json",
+      "word_count": 3527,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "code-ai-wont-rewrite",
+      "source": "post.json",
+      "word_count": 2982,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "prompt-engineering",
+      "source": "html_orphan",
+      "word_count": 2847,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "survive-ai-swipes-with-niche-picks",
+      "source": "post.json",
+      "word_count": 2112,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "7-skills-senior-engineers-need-now-agents-are-live",
+      "source": "post.json",
+      "word_count": 2355,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "rag-rots-if-you-dont-refresh-indexes",
+      "source": "post.json",
+      "word_count": 2985,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ship-faster-with-a-paved-road-4-weeks-to-80-less-toil",
+      "source": "post.json",
+      "word_count": 3011,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "why-ai-interviewers-failed-68-of-us-in-2026",
+      "source": "post.json",
+      "word_count": 3093,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "survive-90s-db-failover-without-melting",
+      "source": "post.json",
+      "word_count": 3674,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-features-break-your-stack-every-6-months",
+      "source": "post.json",
+      "word_count": 2160,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "keep-multi-model-systems-stable-6-rules-that-worked",
+      "source": "post.json",
+      "word_count": 2746,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "vibe-code-works-great-fails-forever",
+      "source": "post.json",
+      "word_count": 2648,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "unlock-python-313s-free-threaded-gil-for-web-apps",
+      "source": "post.json",
+      "word_count": 2438,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "flip-your-dev-tool-sales-cycle-in-2026",
+      "source": "post.json",
+      "word_count": 2544,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "build-in-public-without-burning-out",
+      "source": "post.json",
+      "word_count": 3285,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "migrations-stop-running-them-live",
+      "source": "post.json",
+      "word_count": 2852,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "event-sourcing-pay-the-complexity-tax-only-here",
+      "source": "post.json",
+      "word_count": 2890,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "cut-ai-inference-bill-68-without-model-changes",
+      "source": "post.json",
+      "word_count": 2987,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ownership-drift-after-velocity-spikes",
+      "source": "post.json",
+      "word_count": 2839,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "9-ai-wrapper-apis-that-paid-off-in-2026",
+      "source": "post.json",
+      "word_count": 2400,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "why-progressive-web-apps-fail-on-2g-and-how-to-fix",
+      "source": "post.json",
+      "word_count": 2678,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-sales-cycle-what-changed-for-devtool-founders",
+      "source": "post.json",
+      "word_count": 1988,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "launch-saas-in-6-weeks-the-ai-shortcut-i-actually-used",
+      "source": "post.json",
+      "word_count": 3165,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "debug-ai-agents-failures-arent-just-bugs",
+      "source": "post.json",
+      "word_count": 2955,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "when-astro-islands-shine-in-2026",
+      "source": "post.json",
+      "word_count": 3459,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "7-patterns-for-systems-that-wont-die-when-networks",
+      "source": "post.json",
+      "word_count": 3882,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agent-flooded-our-api-with-bad-calls-overnight",
+      "source": "post.json",
+      "word_count": 2913,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-wrote-40-of-our-code-heres-what-broke-our-on-call",
+      "source": "post.json",
+      "word_count": 3593,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agents-roll-back-without-breaking-anything",
+      "source": "post.json",
+      "word_count": 2529,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-ui-tools-promise-vs-production",
+      "source": "post.json",
+      "word_count": 1921,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "negotiate-salary-2026-with-ai-resume-tool",
+      "source": "post.json",
+      "word_count": 2545,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "tls-13-post-quantum-what-breaks-at-scale",
+      "source": "post.json",
+      "word_count": 2437,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "50-locations-50-headaches-edge-native-backends-in",
+      "source": "post.json",
+      "word_count": 2480,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "drop-ec2-bills-70-without-code",
+      "source": "post.json",
+      "word_count": 3210,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "land-5k-remote-roles-what-nairobi-devs-got-right",
+      "source": "post.json",
+      "word_count": 2941,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "pick-niches-ai-wont-eat-in-2026",
+      "source": "post.json",
+      "word_count": 2770,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-agents-eat-your-budget-3-ways",
+      "source": "post.json",
+      "word_count": 3493,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "test-ai-code-without-testing-the-ai",
+      "source": "post.json",
+      "word_count": 3828,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agent-decisions-cost-us-three-days-of-logs",
+      "source": "post.json",
+      "word_count": 3098,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "llm-output-metrics-that-actually-move-the-needle",
+      "source": "post.json",
+      "word_count": 2739,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "dagster-replaced-airflow-in-2026-heres-the-stack-we",
+      "source": "post.json",
+      "word_count": 2803,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-interviews-broke-system-design-3-patterns-that",
+      "source": "post.json",
+      "word_count": 3833,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-observability-real-time-dashboards-without-the",
+      "source": "post.json",
+      "word_count": 3046,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "supervisor-vs-swarm-vs-debate-vs-pipeline",
+      "source": "post.json",
+      "word_count": 3485,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "scan-10k-repos-daily-without-false-positives",
+      "source": "post.json",
+      "word_count": 3134,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-tools-cut-rates-30-whats-real-in-2026",
+      "source": "post.json",
+      "word_count": 2465,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "aws-cost-levers-2026-the-3-that-cut-bills-30",
+      "source": "post.json",
+      "word_count": 2762,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "wasm-ml-models-keep-dev-speed-at-the-edge",
+      "source": "post.json",
+      "word_count": 2686,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "pass-interviews-without-a-cs-degree",
+      "source": "post.json",
+      "word_count": 3361,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "13-ways-developers-can-build-real-influence-at-wor",
+      "source": "html_orphan",
+      "word_count": 3241,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "rag-is-not-enough-hybrid-search-reranking-in-2026",
+      "source": "post.json",
+      "word_count": 3385,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "legacy-codebases-let-ai-own-the-boring-parts",
+      "source": "post.json",
+      "word_count": 4123,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "double-the-price-double-the-revenue",
+      "source": "post.json",
+      "word_count": 2372,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "pass-remote-tech-interviews-without-leetcode",
+      "source": "html_orphan",
+      "word_count": 3050,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "price-your-remote-salary-4-step-script",
+      "source": "post.json",
+      "word_count": 2776,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-cost-attribution-without-the-spreadsheet-hell",
+      "source": "post.json",
+      "word_count": 2835,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "trim-llm-bills-3-finops-moves-that-work",
+      "source": "post.json",
+      "word_count": 2442,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-codes-hidden-cves-exposed",
+      "source": "post.json",
+      "word_count": 2390,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agentic-workflows-how-we-kept-the-lights",
+      "source": "post.json",
+      "word_count": 2967,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "block-api-abuse-in-2026-before-it-blocks",
+      "source": "post.json",
+      "word_count": 2925,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "5k-remote-roles-nairobi-lagos-playbook",
+      "source": "post.json",
+      "word_count": 3109,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "stay-relevant-when-tools-change-faster-than-you-can",
+      "source": "post.json",
+      "word_count": 3279,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "run-apis-in-50-spots-what-breaks-first",
+      "source": "post.json",
+      "word_count": 3102,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "senior-role-projects-3-real-paths",
+      "source": "post.json",
+      "word_count": 2488,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "sell-dev-tools-in-the-ai-sales-cycle",
+      "source": "post.json",
+      "word_count": 3016,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "claude-code-after-365-days-what-actually-works",
+      "source": "post.json",
+      "word_count": 2289,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "cut-cold-starts-70-lambda-cost-hack",
+      "source": "post.json",
+      "word_count": 2391,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-wont-fix-your-legacy-code-but-my-script-did",
+      "source": "post.json",
+      "word_count": 2997,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-interviews-now-ask-for-this",
+      "source": "post.json",
+      "word_count": 3926,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-codebase-guardrails-over-guardrails",
+      "source": "post.json",
+      "word_count": 2902,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "cicd-for-django-in-20ms-africa-networks",
+      "source": "post.json",
+      "word_count": 2400,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "sre-fixing-what-breaks-silent",
+      "source": "html_orphan",
+      "word_count": 2364,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-fixes-legacy-code-nobody-owns",
+      "source": "post.json",
+      "word_count": 4232,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "portfolio-that-hires-6-projects-i-actually-used-to",
+      "source": "post.json",
+      "word_count": 2788,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "merge-three-payment-apis-into-one-system",
+      "source": "post.json",
+      "word_count": 3617,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "api-security-the-attacks-rising-in-2026",
+      "source": "post.json",
+      "word_count": 3444,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "kubernetes-in-2026-what-teams-offload",
+      "source": "post.json",
+      "word_count": 2742,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agent-design-after-llm-4-we-broke-5-assumptions",
+      "source": "post.json",
+      "word_count": 2101,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-stole-system-design",
+      "source": "post.json",
+      "word_count": 2073,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "solid-vs-anti-patterns-in-real-projects",
+      "source": "html_orphan",
+      "word_count": 2480,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "bundle-size-70-lighter-with-server-components",
+      "source": "post.json",
+      "word_count": 3635,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "arm-in-production-graviton4-vs-ampere-in-2026",
+      "source": "post.json",
+      "word_count": 3017,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "build-a-portfolio-that-beats-ai-clones-in-2026",
+      "source": "post.json",
+      "word_count": 2676,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "internal-dev-portal-that-developers-open-daily",
+      "source": "post.json",
+      "word_count": 3239,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "price-ai-proof-skills-in-2026",
+      "source": "post.json",
+      "word_count": 2538,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "tool-calling-patterns-patterns-that-survive-load-vs",
+      "source": "post.json",
+      "word_count": 3258,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "deploy-a-solo-stack-for-20month-in-2026",
+      "source": "post.json",
+      "word_count": 3314,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "build-a-search-system-in-2026-semantic-keyword",
+      "source": "post.json",
+      "word_count": 2582,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "serve-4g-as-baseline-apps-in-2026",
+      "source": "post.json",
+      "word_count": 2502,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "tool-calls-under-load-async-batch-vs-fire-and-forget",
+      "source": "post.json",
+      "word_count": 3820,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "3-mistakes-that-break-deployments-for-everyone",
+      "source": "post.json",
+      "word_count": 3542,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "pr-checklists-are-dead-ai-agents-do-reviews-now",
+      "source": "post.json",
+      "word_count": 2531,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ship-1mb-pages-on-4g-starlink-africa-case-study",
+      "source": "post.json",
+      "word_count": 3258,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "built-a-multi-agent-system-without-langgraph",
+      "source": "post.json",
+      "word_count": 2461,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "africa-devs-ship-production-code-not-crud",
+      "source": "post.json",
+      "word_count": 3709,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "llm-apps-owasp-risks-you-missed",
+      "source": "post.json",
+      "word_count": 2261,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-proof-your-mid-level-salary",
+      "source": "post.json",
+      "word_count": 3421,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "graphql-vs-rest-vs-trpc-2026s-api-fight",
+      "source": "post.json",
+      "word_count": 2356,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "purpose-built-beats-general-ai-tools",
+      "source": "post.json",
+      "word_count": 3955,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "15-agents-blew-up-our-logs-why-we-pinned-models-logs",
+      "source": "post.json",
+      "word_count": 2182,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "reconciling-mobile-money-edge-cases-banks-ignore",
+      "source": "post.json",
+      "word_count": 4044,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "model-router-keep-it-simple-keep-it-local",
+      "source": "post.json",
+      "word_count": 3773,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "negotiate-salaries-with-ai-skills-in-2026",
+      "source": "post.json",
+      "word_count": 2395,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "hit-5k-mrr-without-a-marketing-team",
+      "source": "post.json",
+      "word_count": 2288,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "debug-async-python-before-it-deadlocks",
+      "source": "post.json",
+      "word_count": 2202,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-in-local-currency-costs-that-surprise",
+      "source": "post.json",
+      "word_count": 3917,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-burnout-why-output-pressure-rose-even-as-tools-got",
+      "source": "post.json",
+      "word_count": 2759,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-rollouts-feature-flags-in-2026",
+      "source": "post.json",
+      "word_count": 1854,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "land-5k-roles-from-nairobi-lagos-in-2026",
+      "source": "post.json",
+      "word_count": 3319,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "monolith-to-services-without-a-rewrite",
+      "source": "post.json",
+      "word_count": 3343,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "replaced-celery-in-2026-what-actually-worked",
+      "source": "post.json",
+      "word_count": 2368,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "9-ai-wrapper-plays-that-worked-in-2026",
+      "source": "post.json",
+      "word_count": 2887,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-solo-saas-build-vs-buy-agents-in-2026",
+      "source": "html_orphan",
+      "word_count": 3174,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ebpf-observability-in-2026-what-actually-works",
+      "source": "post.json",
+      "word_count": 2955,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ussd-fintech-in-2026-the-300m-user-channel-nobody",
+      "source": "post.json",
+      "word_count": 2917,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "bootcamp-to-120k-2026-steps-that-pay",
+      "source": "post.json",
+      "word_count": 3140,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "map-legacy-code-with-ai-before-it-breaks",
+      "source": "post.json",
+      "word_count": 4090,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "rag-in-prod-why-demos-crumble",
+      "source": "post.json",
+      "word_count": 2699,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "stop-the-writes-zero-downtime-db-migrations",
+      "source": "post.json",
+      "word_count": 2647,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "boring-aws-lambda-layers-that-dont-lock",
+      "source": "post.json",
+      "word_count": 2172,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "llm-metrics-that-stop-wasting-time",
+      "source": "post.json",
+      "word_count": 3937,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "build-a-portfolio-that-beats-the-ai-clone-pile",
+      "source": "post.json",
+      "word_count": 2915,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-steals-junior-tasks-3-skills-that-protect-pay",
+      "source": "post.json",
+      "word_count": 2998,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "apis-must-die-in-2026",
+      "source": "post.json",
+      "word_count": 2859,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-code-debt-llm-debt-vs-prompt-debt",
+      "source": "post.json",
+      "word_count": 3084,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "micro-saas-niches-eaten-by-ai-in-2026",
+      "source": "post.json",
+      "word_count": 3765,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "cloud-agents-burned-18k-8-tools-that-didnt-work",
+      "source": "post.json",
+      "word_count": 4120,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "row-level-security-for-saas-in-2026-the-surprise-cost",
+      "source": "post.json",
+      "word_count": 2464,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "7-ways-to-measure-prompt-platform-roi-in-2026",
+      "source": "post.json",
+      "word_count": 3067,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "vibe-coding-mvp-gem-prod-albatross",
+      "source": "post.json",
+      "word_count": 3571,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "portfolio-that-stands-out-when-everyone-uses-ai",
+      "source": "post.json",
+      "word_count": 2390,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-agents-killed-dev-tool-sales-cycles",
+      "source": "post.json",
+      "word_count": 2583,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "platform-teams-in-2026-docs-vs-production-reality",
+      "source": "post.json",
+      "word_count": 3828,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "regulations-killed-our-elegant-apis",
+      "source": "post.json",
+      "word_count": 2762,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-alert-triage-cut-pages-80-in-production",
+      "source": "post.json",
+      "word_count": 2162,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "47-ai-code-debt-in-2026",
+      "source": "post.json",
+      "word_count": 4136,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "prompt-injection-got-the-hype-poison-data-ruined-us",
+      "source": "post.json",
+      "word_count": 3249,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "apm-lied-about-our-ai-incidents",
+      "source": "post.json",
+      "word_count": 2866,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "5-notification-systems-ranked-push-email-sms",
+      "source": "post.json",
+      "word_count": 2428,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-services-slow-fix-the-network-first",
+      "source": "post.json",
+      "word_count": 3463,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "added-circuit-breakers-3-days-after-cascade-failure",
+      "source": "post.json",
+      "word_count": 3705,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "replace-env-with-these-in-2026",
+      "source": "post.json",
+      "word_count": 3750,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ab-pricing-tests-that-lifted-arr-18",
+      "source": "post.json",
+      "word_count": 2446,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "2026-tech-salaries-where-cuts-stopped-where-raises",
+      "source": "post.json",
+      "word_count": 2967,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "breakdown-nairobi-saas-infra-costs-2026",
+      "source": "post.json",
+      "word_count": 3349,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "fix-ai-agent-failures-postmortem-guide",
+      "source": "post.json",
+      "word_count": 2814,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "7-ways-to-earn-extra-in-2026-without-shipping-saas",
+      "source": "post.json",
+      "word_count": 4269,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "grew-5k-mrr-on-a-29-vps",
+      "source": "post.json",
+      "word_count": 2168,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "mobile-money-agent-fees-why-your-bot-keeps-failing",
+      "source": "post.json",
+      "word_count": 2409,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "land-a-45k-remote-job-africas-2026-map",
+      "source": "post.json",
+      "word_count": 2771,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "why-monoliths-die-slowly-in-2026",
+      "source": "post.json",
+      "word_count": 2246,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "claude-code-review-wins-and-blind-spots",
+      "source": "post.json",
+      "word_count": 2307,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "store-data-once-serve-everywhere-cheaper",
+      "source": "post.json",
+      "word_count": 3378,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-model-poisoning-3-real-attacks-on-datasets",
+      "source": "post.json",
+      "word_count": 3880,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-glue-code-3-ways-to-avoid-duct-taping-models",
+      "source": "post.json",
+      "word_count": 3182,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "2026-technical-screens-what-actually-works",
+      "source": "post.json",
+      "word_count": 2138,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "build-a-serverless-backend-in-africa-with-pocketbase",
+      "source": "post.json",
+      "word_count": 2160,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-agent-postmortems-trace-vs-logs-vs-code",
+      "source": "post.json",
+      "word_count": 2797,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "core-web-vitals-2026-inp-is-now-stable",
+      "source": "post.json",
+      "word_count": 3416,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "neon-vs-planetscale-vs-turso-which-broke-first",
+      "source": "post.json",
+      "word_count": 3456,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "african-devs-arc-vs-andela-vs-toptal-in-2026",
+      "source": "post.json",
+      "word_count": 3604,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "3-ways-container-builds-got-3x-faster-in-2026",
+      "source": "post.json",
+      "word_count": 2969,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "skip-m-pesa-build-one-api-for-3-african-markets",
+      "source": "post.json",
+      "word_count": 3214,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-engineer-role-vanished-in-6-months",
+      "source": "post.json",
+      "word_count": 2214,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-ate-our-niche-heres-how-we-picked-a-new-one",
+      "source": "post.json",
+      "word_count": 2584,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-memory-systems-context-that-survives-sessions",
+      "source": "post.json",
+      "word_count": 3690,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "llm-drift-the-silent-quality-drop-metrics-miss",
+      "source": "post.json",
+      "word_count": 2346,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "why-i-picked-playwright-and-vitest-in-2026",
+      "source": "post.json",
+      "word_count": 2326,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-freelance-rates-2026-which-stacks-still-pay",
+      "source": "post.json",
+      "word_count": 1928,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "api-abuse-2026-5-attacks-we-missed-until-costs-spiked",
+      "source": "post.json",
+      "word_count": 2815,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "self-healing-ai-agents-vs-rule-based-ops-40-fewer",
+      "source": "post.json",
+      "word_count": 4082,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "hire-for-agents-not-autocomplete",
+      "source": "post.json",
+      "word_count": 3252,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-wrote-the-docs-humans-wrote-the-gaps",
+      "source": "post.json",
+      "word_count": 2722,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "fintech-features-break-in-ghana-the-real-fix",
+      "source": "post.json",
+      "word_count": 2643,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ship-a-solo-project-pipeline-under-20month",
+      "source": "post.json",
+      "word_count": 3029,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "kill-noisy-alerts-the-triage-system-that-restored-sleep",
+      "source": "post.json",
+      "word_count": 3387,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-agents-vs-argo-tekton-which-pipeline-heals-itself",
+      "source": "post.json",
+      "word_count": 3540,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "tool-calling-stateless-beats-stateful-under-load",
+      "source": "post.json",
+      "word_count": 3141,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "7-code-review-traps-when-ai-writes-half-your-code",
+      "source": "post.json",
+      "word_count": 2782,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "llm-quality-metrics-that-cut-hallucinations-40",
+      "source": "post.json",
+      "word_count": 3049,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "one-misconfigured-pool-drained-4kmonth",
+      "source": "post.json",
+      "word_count": 2391,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-latency-cut-28s-to-380ms-without-retraining",
+      "source": "post.json",
+      "word_count": 3620,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "soft-deletes-fail-what-breaks-first",
+      "source": "post.json",
+      "word_count": 2550,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "saved-3kmonth-by-ditching-kubernetes",
+      "source": "post.json",
+      "word_count": 3193,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "orm-2026-prisma-vs-drizzle-vs-sqlalchemy",
+      "source": "post.json",
+      "word_count": 3316,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-ui-tools-6-months-in-what-i-gained-and-lost",
+      "source": "post.json",
+      "word_count": 3122,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-agents-circuit-breakers-are-not-optional",
+      "source": "post.json",
+      "word_count": 3071,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "aws-local-zones-vs-localstack-ai-microservices-in",
+      "source": "post.json",
+      "word_count": 3434,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "negotiate-pay-in-2026-with-ai-proof-points",
+      "source": "post.json",
+      "word_count": 2038,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "regulators-broke-our-api-design",
+      "source": "post.json",
+      "word_count": 3228,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "circleci-still-beats-github-actions-at-50k-builds",
+      "source": "post.json",
+      "word_count": 3188,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "move-images-50-faster-in-2026-with-starlink-cdn",
+      "source": "post.json",
+      "word_count": 2192,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agent-governance-opa-vs-kyverno-after-our-incident",
+      "source": "post.json",
+      "word_count": 2778,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "7-passive-income-streams-for-devs-in-2026",
+      "source": "post.json",
+      "word_count": 3226,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "build-a-static-analyzer-in-14-days-with-tree-sitter",
+      "source": "post.json",
+      "word_count": 2298,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "your-data",
+      "source": "html_orphan",
+      "word_count": 2420,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "flag-your-ai-rollouts-in-2026",
+      "source": "post.json",
+      "word_count": 2797,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "3-vibe-coding-tools-i-regret-shipping-in-production",
+      "source": "post.json",
+      "word_count": 2795,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that",
+      "source": "post.json",
+      "word_count": 2588,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "save-12kmonth-cloud-egress-costs-in-2026",
+      "source": "post.json",
+      "word_count": 3792,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "postgres-vector-search-what-breaks-first",
+      "source": "post.json",
+      "word_count": 3702,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-tools-rewrote-my-engineering-rules",
+      "source": "post.json",
+      "word_count": 3122,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "senior-devs-flee-when-systems-rot",
+      "source": "post.json",
+      "word_count": 2136,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "react-19-compiler-my-components-changed-how",
+      "source": "post.json",
+      "word_count": 2867,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "remote-salary-negotiate-without-sounding-cheap",
+      "source": "post.json",
+      "word_count": 3448,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "offline-first-agents-for-field-teams",
+      "source": "post.json",
+      "word_count": 2103,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-apps-break-your-stack-heres-the-fix",
+      "source": "post.json",
+      "word_count": 1960,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-infra-capacity-planning-vs-runbooks-what-id",
+      "source": "post.json",
+      "word_count": 3457,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "llm-evals-the-3-metrics-that-pay-off",
+      "source": "post.json",
+      "word_count": 2810,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "postgres-17-swallowed-redis-kafka-timescale",
+      "source": "post.json",
+      "word_count": 3096,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "price-saas-tools-in-2026-what-we-learned-pricing-a",
+      "source": "post.json",
+      "word_count": 2539,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ollama-local-vs-ollama-cloud-fintech-data-stays-in-kenya",
+      "source": "post.json",
+      "word_count": 3515,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-features-as-tech-debt-or-golden-paths",
+      "source": "post.json",
+      "word_count": 2665,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-codebase-onboarding-2-paths-tested",
+      "source": "post.json",
+      "word_count": 2773,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-observability-the-metrics-that-matter",
+      "source": "post.json",
+      "word_count": 3927,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "10-ai-wrappers-that-shipped-in-2026-8-died-fast",
+      "source": "post.json",
+      "word_count": 2168,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "debugging-mindset-finally-explained-why-90-of-bugs",
+      "source": "html_orphan",
+      "word_count": 2914,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "when-flags-become-experiments",
+      "source": "post.json",
+      "word_count": 3744,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "spot-ais-hidden-cost-spike-in-your-stack",
+      "source": "post.json",
+      "word_count": 3108,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "why-your-ai-portfolio-bombs-in-nigeria",
+      "source": "post.json",
+      "word_count": 2623,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-code-traps-copilot-vs-cursor-smackdown",
+      "source": "post.json",
+      "word_count": 2713,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "slsa-and-sigstore-the-2026-supply-chain-baseline",
+      "source": "post.json",
+      "word_count": 3617,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "llm-structured-output-json-mode-fails-at-scale",
+      "source": "post.json",
+      "word_count": 3044,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "marketing-without-budget-5k-mrr-in-18-months",
+      "source": "post.json",
+      "word_count": 3035,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "cicd-for-ai-code-test-secure-rollback-fast",
+      "source": "post.json",
+      "word_count": 2808,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "2026-salary-hacks-prove-ai-didnt-steal-your-value",
+      "source": "post.json",
+      "word_count": 2734,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "json-modes-hidden-costs-revealed",
+      "source": "post.json",
+      "word_count": 2528,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-ops-datadog-vs-granfa-for-infra-automation",
+      "source": "post.json",
+      "word_count": 3212,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-pair-programming-stole-my-code-review-job",
+      "source": "post.json",
+      "word_count": 3235,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "trim-aws-iam-policies-in-one-afternoon",
+      "source": "post.json",
+      "word_count": 3405,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "biometrics-beat-passwords-passkey-2026-shift",
+      "source": "post.json",
+      "word_count": 3442,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "use-feature-flags-to-deploy-ai-models-safely",
+      "source": "post.json",
+      "word_count": 2742,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-skills-that-pay-data-vs-prompt-skills-in-2026",
+      "source": "post.json",
+      "word_count": 3254,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "block-api-replay-attacks-in-2026",
+      "source": "post.json",
+      "word_count": 2471,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "remote-work-in-2026-which-tools-survived",
+      "source": "post.json",
+      "word_count": 2628,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-native-apps-forget-the-old-stack",
+      "source": "post.json",
+      "word_count": 2416,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "json-modes-silent-failures-exposed",
+      "source": "post.json",
+      "word_count": 2410,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-api-docs-what-humans-still-write-in-2026",
+      "source": "post.json",
+      "word_count": 3017,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "global-state-is-the-wrong-tool-for-ai-features",
+      "source": "post.json",
+      "word_count": 2701,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agents-keep-breaking-prod-3-boundary-rules-you-still-need",
+      "source": "post.json",
+      "word_count": 2815,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash",
+      "source": "post.json",
+      "word_count": 2479,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "m-pesa-failures-cost-us-40-hours",
+      "source": "post.json",
+      "word_count": 3578,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agent-permissions-the-mistake-that-breaks-production",
+      "source": "post.json",
+      "word_count": 4176,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "poolers-wont-save-your-serverless-db",
+      "source": "post.json",
+      "word_count": 2987,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "3-side-gigs-that-paid-me-2k-usdmonth-in-2026",
+      "source": "post.json",
+      "word_count": 3860,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agents-247-vs-on-demand-42k-bill-shock",
+      "source": "post.json",
+      "word_count": 4167,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "saas-niche-in-2026-pick-a-sliver-no-llm-can-eat",
+      "source": "post.json",
+      "word_count": 2826,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "stop-guessing-tech-stacks-validate-tools-in-2-hours",
+      "source": "post.json",
+      "word_count": 2518,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "build-dev-platform-for-2kmonth",
+      "source": "post.json",
+      "word_count": 3180,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "context-windows-live-longer-than-you-think",
+      "source": "post.json",
+      "word_count": 2756,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "choose-no-code-only-when",
+      "source": "post.json",
+      "word_count": 2084,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "m-pesa-daraja-20-your-2026-migration-checklist",
+      "source": "post.json",
+      "word_count": 2321,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "self-healing-pipelines-argo-vs-crossplane-in-2026",
+      "source": "post.json",
+      "word_count": 3981,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "pick-niches-ai-cant-automate-by-2026",
+      "source": "post.json",
+      "word_count": 2198,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-pair-prompts-9-setups-we-tried-in-2026",
+      "source": "post.json",
+      "word_count": 3233,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "senior-devs-flee-big-tech-not-for-money",
+      "source": "post.json",
+      "word_count": 2920,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "audit-trails-immutabledb-vs-dynamodb-streams",
+      "source": "post.json",
+      "word_count": 2500,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "react-server-components-fail-when-hydration-skips-",
+      "source": "html_orphan",
+      "word_count": 2734,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "rag-in-prod-what-tutorials-wont-tell-you",
+      "source": "post.json",
+      "word_count": 2593,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-agent-postmortem-human-loop-vs-blind-replay",
+      "source": "post.json",
+      "word_count": 3312,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "llm-evals-skip-the-hype-track-these-4-metrics",
+      "source": "post.json",
+      "word_count": 2904,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "rebalance-pay-when-ai-fills-half-your-role",
+      "source": "post.json",
+      "word_count": 2447,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "platform-teams-in-2026-why-your-devs-hate-your-golden-path",
+      "source": "post.json",
+      "word_count": 2579,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "typescript-53-changed-how-we-model-domains",
+      "source": "post.json",
+      "word_count": 2614,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-pair-coding-killed-pull-request-reviews",
+      "source": "post.json",
+      "word_count": 2378,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "edge-agents-vs-cloud-round-trips-in-2026",
+      "source": "post.json",
+      "word_count": 2364,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-codebases-guardrails-vs-chaos-in-2026",
+      "source": "post.json",
+      "word_count": 2892,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "pick-one-stripe-lemon-squeezy-paddle-in-2026",
+      "source": "post.json",
+      "word_count": 4194,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "treat-every-user-input-as-hostile-in-2026",
+      "source": "post.json",
+      "word_count": 2405,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-ops-vs-dumb-alerts-the-incident-that-broke-us",
+      "source": "post.json",
+      "word_count": 2617,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "css-2026-container-queries-retired-our-utility-class",
+      "source": "post.json",
+      "word_count": 2751,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "api-abuse-patterns-rising-in-2026",
+      "source": "post.json",
+      "word_count": 2212,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-scans-your-code-real-risks-and-defenses",
+      "source": "post.json",
+      "word_count": 2424,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "latency-trade-offs-nairobi-teams-beat-global-ai-providers",
+      "source": "post.json",
+      "word_count": 2611,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "htmx-stack-swap-5-things-i-gained-3-i-lost",
+      "source": "post.json",
+      "word_count": 2876,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-static-analysis-vs-legacy-sast-5x-faster-scans",
+      "source": "post.json",
+      "word_count": 3786,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-feature-drift-why-your-model-died-at-midnight",
+      "source": "post.json",
+      "word_count": 3733,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agent-auth-the-silent-deployment-killer",
+      "source": "post.json",
+      "word_count": 2947,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "why-your-multi-agent-system-degraded-slowly",
+      "source": "post.json",
+      "word_count": 3064,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-ops-vs-human-ops-the-incidents-that-broke-them",
+      "source": "post.json",
+      "word_count": 2670,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "micro-saas-niches-surviving-ai-commoditisation",
+      "source": "post.json",
+      "word_count": 2717,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "stop-false-positives-in-ci-scanning-now",
+      "source": "post.json",
+      "word_count": 3169,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ship-to-nairobi-users-starlink-latency-guide-2026",
+      "source": "post.json",
+      "word_count": 2472,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "nextjs-15-vs-remix-vs-sveltekit-2026-choices",
+      "source": "post.json",
+      "word_count": 3367,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "replace-vibe-testing-with-agent-evals-now",
+      "source": "post.json",
+      "word_count": 2975,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "failed-ai-wrappers-2026-what-the-survivors-did-right",
+      "source": "post.json",
+      "word_count": 2869,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "alerts-2026-ai-turns-false-alarms-to-silence",
+      "source": "post.json",
+      "word_count": 2532,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-ops-pagerduty-vs-firehydrant-for-oncall",
+      "source": "post.json",
+      "word_count": 2304,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ndpr-2026-broke-fintech-apis",
+      "source": "post.json",
+      "word_count": 3703,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-agent-postmortems-the-three-surprises",
+      "source": "post.json",
+      "word_count": 2775,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "drop-checklists-ai-code-reviews-that-scale",
+      "source": "post.json",
+      "word_count": 3785,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "local-llms-on-macbook-pro-the-4-models-that-run",
+      "source": "post.json",
+      "word_count": 3610,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "llm-evals-the-two-metrics-that-bite-you",
+      "source": "post.json",
+      "word_count": 3741,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "webhooks-2026-retries-idempotency-and-the-9995",
+      "source": "post.json",
+      "word_count": 2782,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "webhooks-done-right-retries-that-dont-explode-in-2026",
+      "source": "post.json",
+      "word_count": 2011,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "rag-pipelines-4-silent-prod-killers",
+      "source": "post.json",
+      "word_count": 2431,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "failed-ai-wrappers-vs-the-3-that-worked-in-2026",
+      "source": "post.json",
+      "word_count": 2233,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "postgres-17-buried-redis-s3-cron",
+      "source": "post.json",
+      "word_count": 3029,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "9-vibe-coding-traps-that-break-production-code",
+      "source": "post.json",
+      "word_count": 2774,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "skip-the-zero-trust-hype-for-5-person-teams",
+      "source": "post.json",
+      "word_count": 2557,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-scanners-overlook-real-vulns",
+      "source": "post.json",
+      "word_count": 2530,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-apps-break-when-you-treat-them-like-regular-software",
+      "source": "post.json",
+      "word_count": 4271,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "show-real-work-not-ai-clones",
+      "source": "post.json",
+      "word_count": 3253,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "runbooks-vs-ai-which-cuts-outages-50",
+      "source": "post.json",
+      "word_count": 3428,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "log-audit-costs-without-breaking-compliance",
+      "source": "post.json",
+      "word_count": 2539,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "wireguard-vs-tailscale-for-5month-zero-trust",
+      "source": "post.json",
+      "word_count": 3142,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-sales-cycles-why-dev-tools-now-need-3-demos",
+      "source": "post.json",
+      "word_count": 2460,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "run-ai-saas-solo-in-2026",
+      "source": "html_orphan",
+      "word_count": 3085,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-benchmarking-3-mistakes-we-made-first",
+      "source": "post.json",
+      "word_count": 2718,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-revives-unloved-legacy-codebases",
+      "source": "post.json",
+      "word_count": 3967,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-codebases-two-onboarding-paths-that-actually-work",
+      "source": "post.json",
+      "word_count": 3176,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "year-one-claude-codes-slow-burn-wins",
+      "source": "post.json",
+      "word_count": 2171,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "2026-gitops-showdown-argocd-vs-flux-after-two-years",
+      "source": "post.json",
+      "word_count": 2100,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "agents-create-incidents-at-2am",
+      "source": "post.json",
+      "word_count": 2359,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-agents-why-devtools-now-sell-like-saas-in-2026",
+      "source": "post.json",
+      "word_count": 2728,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "ai-sales-cycles-3x-faster-40-less-talk",
+      "source": "post.json",
+      "word_count": 3544,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "starlink-4g-fallback-serve-pages-under-800ms",
+      "source": "post.json",
+      "word_count": 2482,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "freelance-rates-after-ai-took-the-boilerplate",
+      "source": "post.json",
+      "word_count": 2788,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    },
+    {
+      "slug": "gpu-spot-instances-reserved-for-ai-costs",
+      "source": "post.json",
+      "word_count": 3167,
+      "reasons": [],
+      "is_merge_stub": false,
+      "duplicate_of": null
+    }
+  ]
+}

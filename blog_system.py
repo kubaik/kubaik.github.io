@@ -1,3 +1,4 @@
+import re as _re
 import os
 import json
 import math
@@ -1274,6 +1275,101 @@ def _build_humanization_note(topic: str) -> str:
 # System prompt builder
 # ─────────────────────────────────────────────────────────────────
 
+
+_FABRICATED_CITATION_PATTERNS = [
+    r'\baccording to (a |an )?(20\d\d )?(stack overflow|gartner|forrester|mckinsey|'
+    r'gitlab|github|jetbrains)\b',
+    r'\b(20\d\d )?(stack overflow|gartner|forrester|mckinsey) (survey|report|study)\b',
+    r'\ba (survey|study) of [\d,]+\s+(developers|engineers|teams|companies)\b',
+]
+
+
+_DUP_JACCARD_THRESHOLD = 0.35
+_DUP_NGRAM_SIZE = 8
+_GENERIC_META_PATTERNS = [
+    r'^Blog post about .+$',
+    r'^Learn about .+ in this post\.?$',
+]
+
+
+def _shingles(text: str, n: int = _DUP_NGRAM_SIZE) -> set:
+    words = _re.findall(r'\w+', text.lower())
+    return {' '.join(words[i:i + n]) for i in range(len(words) - n + 1)}
+
+
+def _jaccard(a: set, b: set) -> float:
+    if not a or not b:
+        return 0.0
+    return len(a & b) / len(a | b)
+
+
+def _reject_if_near_duplicate_content(
+    content: str, output_dir: Path, exclude_slug: Optional[str] = None
+) -> Optional[str]:
+    """Gate function, same pattern as _reject_if_fabricated_citation: returns
+    a rejection reason if this draft is a near-duplicate of an ALREADY
+    PUBLISHED post's body text (not just title). Title-similarity checking
+    alone (see _is_duplicate_title) misses "same content, reworded title" —
+    the more common failure mode when a generator runs thousands of times
+    against a finite set of underlying topics. Compares against every post
+    with a post.json under output_dir; O(n) shingle sets held in memory,
+    fine to a few thousand posts, swap to a persisted MinHash index past that.
+    """
+    my_shingles = _shingles(content)
+    if not my_shingles:
+        return None
+    for post_dir in output_dir.iterdir():
+        if not post_dir.is_dir() or post_dir.name == exclude_slug:
+            continue
+        pj = post_dir / "post.json"
+        if not pj.exists():
+            continue
+        try:
+            existing = json.loads(pj.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+        other_shingles = _shingles(existing.get("content", ""))
+        sim = _jaccard(my_shingles, other_shingles)
+        if sim >= _DUP_JACCARD_THRESHOLD:
+            return f"near-duplicate of existing post '{post_dir.name}' (similarity={sim:.0%})"
+    return None
+
+
+def _reject_if_generic_meta_description(meta_description: str) -> Optional[str]:
+    """Gate function for the templated 'Blog post about {title}' pattern
+    that from_markdown_file() falls back to — that pattern is itself a
+    duplicate-metadata signal across every post that hits it. Call this
+    wherever meta_description is finalized before writing post.json.
+    """
+    if not meta_description or len(meta_description) < 50:
+        return "meta_description missing or under 50 chars"
+    for pattern in _GENERIC_META_PATTERNS:
+        if _re.match(pattern, meta_description.strip()):
+            return f"meta_description matches generic template: '{pattern}'"
+    return None
+
+
+def _reject_if_fabricated_citation(content: str) -> Optional[str]:
+    """Gate function: returns a rejection reason string if the draft attributes
+    a claim to a real, named third party (survey firm, company, publication)
+    with no accompanying source URL — this is citation fabrication, a stricter
+    and more dangerous failure mode than a generic unsourced number, since it
+    invents a specific real-world source a reader could try to verify and fail
+    to find. Call this in the publish gate alongside the existing word-count
+    check (around MIN_WORD_COUNT / MIN_ACCEPTABLE_WORDS) and hold the post for
+    regeneration rather than publishing it, same as a length failure today.
+    """
+    for pattern in _FABRICATED_CITATION_PATTERNS:
+        match = _re.search(pattern, content, _re.IGNORECASE)
+        if match:
+            # allow-list: if a real URL sits within 200 chars of the match,
+            # treat it as sourced rather than fabricated
+            window = content[max(0, match.start() - 200):match.end() + 200]
+            if not _re.search(r'https?://', window):
+                return f"unverifiable named-source citation: '{match.group(0)}'"
+    return None
+
+
 def _build_system_prompt(author_note: str, format_name: str, format_note: str, year_guidance: str) -> str:
     return (
         f"{author_note}\n\n"
@@ -1319,6 +1415,12 @@ def _build_system_prompt(author_note: str, format_name: str, format_note: str, y
         "— present these as realistic/typical figures for the scenario, not as "
         "your own personally-measured results unless the post format is explicitly "
         "a documented case study with a real, disclosed source.\n"
+        "3b. NEVER attribute a number, percentage, or claim to a named real-world "
+        "source you cannot verify exists (e.g. 'a 2026 Stack Overflow survey found...', "
+        "'according to Gartner...', 'McKinsey reports...'). If you don't have a real, "
+        "checkable URL for the claim, state the figure as a typical/illustrative "
+        "estimate with no named source attached — inventing a citation to a real "
+        "organization is a factual-accuracy violation, not a style choice.\n"
         "4. At least ONE tool with a specific version number "
         "(e.g. 'Python 3.11', 'Redis 7.2', 'Node 20 LTS')\n"
         "5. A comparison table using markdown table syntax\n"
@@ -2872,6 +2974,44 @@ class BlogSystem:
                     f"No post has been saved."
                 )
 
+            citation_problem = _reject_if_fabricated_citation(content)
+            if citation_problem:
+                print(
+                    f"\n❌  Attempt {attempt_num}/{MAX_GENERATION_ATTEMPTS} FAILED: "
+                    f"{citation_problem}."
+                )
+                if attempt_num < MAX_GENERATION_ATTEMPTS:
+                    current_topic = self._pick_retry_topic(
+                        current_topic, existing_titles, exclude=attempted_topics
+                    )
+                    current_keywords = None
+                    print(f"Switching to new topic: '{current_topic}'")
+                    continue
+                raise InsufficientContentError(
+                    f"Failed to generate content without fabricated citations after "
+                    f"{MAX_GENERATION_ATTEMPTS} attempts. No post has been saved."
+                )
+
+            content_dup_problem = _reject_if_near_duplicate_content(
+                content, self.output_dir, exclude_slug=None
+            )
+            if content_dup_problem:
+                print(
+                    f"\n❌  Attempt {attempt_num}/{MAX_GENERATION_ATTEMPTS} FAILED: "
+                    f"{content_dup_problem}."
+                )
+                if attempt_num < MAX_GENERATION_ATTEMPTS:
+                    current_topic = self._pick_retry_topic(
+                        current_topic, existing_titles, exclude=attempted_topics
+                    )
+                    current_keywords = None
+                    print(f"Switching to new topic: '{current_topic}'")
+                    continue
+                raise InsufficientContentError(
+                    f"Failed to generate sufficiently distinct content after "
+                    f"{MAX_GENERATION_ATTEMPTS} attempts. No post has been saved."
+                )
+
             print(
                 f"\n✅  Attempt {attempt_num}: content adequate "
                 f"({word_count} words ≥ {MIN_ACCEPTABLE_WORDS})."
@@ -2905,6 +3045,22 @@ class BlogSystem:
                     for _warn in _title_check["warnings"]:
                         print(f"    ⚠  {_warn}")
                 print(f"  New title : '{title}'")
+
+            meta_problem = _reject_if_generic_meta_description(
+                meta_description)
+            if meta_problem:
+                print(
+                    f"  ⚠  meta_description problem: {meta_problem} — regenerating it")
+                meta_description = _derive_description(content, title)
+                meta_description = _truncate_description(meta_description) \
+                    if '_truncate_description' in dir() else meta_description
+                meta_problem = _reject_if_generic_meta_description(
+                    meta_description)
+                if meta_problem:
+                    raise InsufficientContentError(
+                        f"meta_description still failing after regeneration: {meta_problem}. "
+                        f"No post has been saved."
+                    )
 
             slug = self._create_slug(title)
 

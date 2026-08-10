@@ -1,0 +1,45 @@
+name: source-integrity-check
+
+on:
+  push:
+    paths:
+      - "docs/**"
+  pull_request:
+    paths:
+      - "docs/**"
+
+jobs:
+  check-post-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fail if any published post has no post.json
+        run: |
+          python3 - << 'EOF'
+          import sys
+          from pathlib import Path
+
+          DOCS_DIR = Path("docs")
+          EXCLUDE_DIRS = {"static", "tag", "author", "page", "contact", "about"}
+
+          orphans = []
+          for post_dir in DOCS_DIR.iterdir():
+              if not post_dir.is_dir() or post_dir.name in EXCLUDE_DIRS:
+                  continue
+              index = post_dir / "index.html"
+              post_json = post_dir / "post.json"
+              has_md = any(post_dir.glob("*.md"))
+              if index.exists() and not post_json.exists() and not has_md:
+                  orphans.append(post_dir.name)
+
+          if orphans:
+              print(f"::error::{len(orphans)} published post(s) have no post.json/markdown "
+                    f"source. A post without a source of truth cannot be regenerated, "
+                    f"fact-checked, or corrected — this must not ship.")
+              for slug in orphans:
+                  print(f"::error file=docs/{slug}/index.html::missing post.json (no source of truth)")
+              sys.exit(1)
+
+          print(f"OK: all published posts have a recoverable source.")
+          EOF
