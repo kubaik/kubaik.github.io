@@ -156,5 +156,6 @@
   "The skills that still command premium remote rates when AI can do the obvious parts",
   "Why our beautiful multi-agent research system quietly degraded over three months",
   "eBPF in 2026: the observability and security use cases that finally justified the complexity",
-  "How we implemented least-privilege access for agents that need to call 30+ tools"
+  "How we implemented least-privilege access for agents that need to call 30+ tools",
+  "Building in public as a solo developer without burning out on content performance"
 ]

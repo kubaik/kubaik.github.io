@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 10 Aug 2026 02:02:53 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Aug 2026 09:21:23 +0000</lastBuildDate>
     <item>
       <title>Least privilege for agents: the config line nobody writes</title>
       <link>https://kubaik.github.io/least-privilege-for-agents-the-config-line-nobody-writes/</link>
@@ -42,13 +42,6 @@
       <guid>https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/</guid>
     </item>
     <item>
-      <title>Prove platform ROI by measuring what matters</title>
-      <link>https://kubaik.github.io/prove-platform-roi-by-measuring-what-matters/</link>
-      <description>Measure platform value with engineering time saved, not uptime dashboards — 126 hours reclaimed, $9k ROI, and the metrics that actually matter in 2026</description>
-      <pubDate>Sat, 08 Aug 2026 01:52:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/prove-platform-roi-by-measuring-what-matters/</guid>
-    </item>
-    <item>
       <title>AI cost attribution without the spreadsheet hell</title>
       <link>https://kubaik.github.io/ai-cost-attribution-without-the-spreadsheet-hell/</link>
       <description>AI cost attribution that product managers can actually read — per-user, per-feature numbers in real time without breaking the SLA.</description>
@@ -68,20 +61,6 @@
       <description>Agents create incidents at 2am — why automation turns into 2 a.m. pages and how to lock the mutator circle down.</description>
       <pubDate>Thu, 06 Aug 2026 08:07:50 +0000</pubDate>
       <guid>https://kubaik.github.io/agents-create-incidents-at-2am/</guid>
-    </item>
-    <item>
-      <title>AI sandboxes: when self-service goes wrong</title>
-      <link>https://kubaik.github.io/ai-sandboxes-when-self-service-goes-wrong/</link>
-      <description>Stop juggling AI experiments: how we built a shared sandbox that cut latency 57% and reduced incidents 91% — guardrails, quotas, and the safety scan that…</description>
-      <pubDate>Thu, 06 Aug 2026 07:44:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-sandboxes-when-self-service-goes-wrong/</guid>
-    </item>
-    <item>
-      <title>Agent drift is eating your product</title>
-      <link>https://kubaik.github.io/agent-drift-is-eating-your-product/</link>
-      <description>A 2026 Stack Overflow survey of 4,200 backend engineers found that 68% of teams running agents in production had no drift detection at all, and 22% relied…</description>
-      <pubDate>Thu, 06 Aug 2026 02:49:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-drift-is-eating-your-product/</guid>
     </item>
     <item>
       <title>AI micro-SaaS under $150/month: the real infra choices</title>
@@ -145,6 +124,27 @@
       <description>Nomad 1.7 vs Kubernetes 1.30 for AI experiments — GPU idle cost, pod startup latency, and the 70 % experiment budget split most teams miss</description>
       <pubDate>Mon, 03 Aug 2026 14:47:24 +0000</pubDate>
       <guid>https://kubaik.github.io/kubernetes-or-nomad-the-real-experiment-cost-split/</guid>
+    </item>
+    <item>
+      <title>Supervisor vs swarm vs debate vs pipeline</title>
+      <link>https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/</link>
+      <description>Then the same code hits production and suddenly you’re debugging: - Why did AgentB hang after AgentA sent 4,231 messages?</description>
+      <pubDate>Mon, 03 Aug 2026 10:05:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/</guid>
+    </item>
+    <item>
+      <title>Prompt injection got the hype — poison data ruined us</title>
+      <link>https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/</link>
+      <description>Poisoned data and model drift caused 8,200 support tickets in 2026 — not prompt injection.</description>
+      <pubDate>Mon, 03 Aug 2026 03:19:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/</guid>
+    </item>
+    <item>
+      <title>AI on Lambda: when the bill explodes</title>
+      <link>https://kubaik.github.io/ai-on-lambda-when-the-bill-explodes/</link>
+      <description>AI on Lambda: when the bill explodes — comparing Lambda vs EC2 + Elastic Inference for a 7B-parameter vLLM model with real cost breakdowns, cache hit…</description>
+      <pubDate>Sun, 02 Aug 2026 13:32:47 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-on-lambda-when-the-bill-explodes/</guid>
     </item>
   </channel>
 </rss>
