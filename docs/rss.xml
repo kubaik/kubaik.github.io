@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 10 Aug 2026 11:51:42 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Aug 2026 12:22:57 +0000</lastBuildDate>
     <item>
       <title>Kubai Kevin</title>
       <link>https://kubaik.github.io/run-ai-saas-solo-in-2026/</link>
@@ -91,6 +91,13 @@
       <guid>https://kubaik.github.io/solid-in-action/</guid>
     </item>
     <item>
+      <title>LLM drift before users complain: catch it early</title>
+      <link>https://kubaik.github.io/llm-drift-before-users-complain-catch-it-early/</link>
+      <description>Catch LLM drift before users notice: rolling baselines, Redis cache hit rate, and tokenizer pinning that teams use in 2026 to cut false negatives by 68%</description>
+      <pubDate>Mon, 10 Aug 2026 12:22:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-drift-before-users-complain-catch-it-early/</guid>
+    </item>
+    <item>
       <title>Agent frameworks: stop rewriting the same glue code</title>
       <link>https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/</link>
       <description>Agent frameworks: stop rewriting the same glue code – cut boilerplate 70% with a job queue, credentials service, and DAG compiler in 2026</description>
@@ -138,13 +145,6 @@
       <description>Offline-first mobile money patterns that cut duplicate debits 98 % — shard keys, conditional writes, and the cache stampede mistake most teams miss.</description>
       <pubDate>Sat, 08 Aug 2026 09:54:51 +0000</pubDate>
       <guid>https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/</guid>
-    </item>
-    <item>
-      <title>AI cost attribution without the spreadsheet hell</title>
-      <link>https://kubaik.github.io/ai-cost-attribution-without-the-spreadsheet-hell/</link>
-      <description>AI cost attribution that product managers can actually read — per-user, per-feature numbers in real time without breaking the SLA.</description>
-      <pubDate>Fri, 07 Aug 2026 13:11:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-cost-attribution-without-the-spreadsheet-hell/</guid>
     </item>
   </channel>
 </rss>

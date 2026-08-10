@@ -2354,6 +2354,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/llm-drift-before-users-complain-catch-it-early/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/llm-drift-before-users-complain-catch-it-early.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/llm-drift-the-silent-quality-drop-metrics-miss/</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -4276,7 +4285,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-reconstructed.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
     </image:image>
   </url>
   <url>

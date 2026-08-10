@@ -160,5 +160,6 @@
   "Building in public as a solo developer without burning out on content performance",
   "The migration that went wrong because we trusted the AI-generated migration script too much",
   "What changed in our stack when Starlink became reliable enough for production workloads in East Africa",
-  "The platform abstractions that made agent development 3x faster for our teams"
+  "The platform abstractions that made agent development 3x faster for our teams",
+  "LLM evaluation pipelines that catch drift before users notice \u2014 real metrics from production"
 ]
