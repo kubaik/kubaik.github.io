@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Aug 2026 17:47:41 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Aug 2026 02:02:53 +0000</lastBuildDate>
+    <item>
+      <title>Least privilege for agents: the config line nobody writes</title>
+      <link>https://kubaik.github.io/least-privilege-for-agents-the-config-line-nobody-writes/</link>
+      <description>Cut agent blast radius with least-privilege policies — OPA Rego, FastAPI 0.109, and the 2.6% denied calls that saved $1.4k in one incident</description>
+      <pubDate>Mon, 10 Aug 2026 02:02:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/least-privilege-for-agents-the-config-line-nobody-writes/</guid>
+    </item>
     <item>
       <title>eBPF observability in 2026: what actually works</title>
       <link>https://kubaik.github.io/ebpf-observability-in-2026-what-actually-works/</link>
@@ -138,13 +145,6 @@
       <description>Nomad 1.7 vs Kubernetes 1.30 for AI experiments — GPU idle cost, pod startup latency, and the 70 % experiment budget split most teams miss</description>
       <pubDate>Mon, 03 Aug 2026 14:47:24 +0000</pubDate>
       <guid>https://kubaik.github.io/kubernetes-or-nomad-the-real-experiment-cost-split/</guid>
-    </item>
-    <item>
-      <title>Supervisor vs swarm vs debate vs pipeline</title>
-      <link>https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/</link>
-      <description>Then the same code hits production and suddenly you’re debugging: - Why did AgentB hang after AgentA sent 4,231 messages?</description>
-      <pubDate>Mon, 03 Aug 2026 10:05:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/</guid>
     </item>
   </channel>
 </rss>
