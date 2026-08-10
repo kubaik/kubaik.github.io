@@ -29,6 +29,7 @@ This guide will help you set up a fully automated AI-powered blog that generates
 ### Step 4: Configure Your Blog
 
 1. **Update config.yaml**:
+
    ```yaml
    base_url: "https://YOUR-USERNAME.github.io/YOUR-REPO-NAME"
    site_name: "Your Blog Name"
@@ -144,6 +145,7 @@ Edit the CSS generation in `blog_system.py` (look for `_generate_css` method) or
 ### Templates
 
 Modify the Jinja2 templates in the `_load_templates` method:
+
 - `base`: Main HTML structure
 - `post`: Individual blog post layout
 - `index`: Homepage layout
@@ -152,6 +154,7 @@ Modify the Jinja2 templates in the `_load_templates` method:
 ### Content Generation
 
 Modify the OpenAI prompts in these methods:
+
 - `_generate_title`: Blog post titles
 - `_generate_content`: Main blog content
 - `_generate_meta_description`: SEO descriptions
@@ -217,6 +220,7 @@ python blog_system.py build
 ## 💰 Cost Estimation
 
 With GPT-3.5-turbo pricing:
+
 - ~$0.02-0.05 per blog post
 - Daily posts = ~$0.60-1.50 per month
 - Adjust generation frequency to control costs
@@ -246,3 +250,8 @@ Once your blog is running:
 7. **Optimize for specific niches** in your topics
 
 Happy blogging! 🚀
+
+python adsense_compliance_audit.py # dry-run, same as before, writes remove_flagged_posts.sh
+python adsense_compliance_audit.py --delete # actually runs git rm on DELETE entries
+python adsense_compliance_audit.py --improve # writes regeneration_queue.json for IMPROVE entries
+python adsense_compliance_audit.py --delete --improve # both
