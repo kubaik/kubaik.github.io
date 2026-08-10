@@ -5,7 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 10 Aug 2026 12:22:57 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Aug 2026 13:16:59 +0000</lastBuildDate>
     <item>
       <title>Kubai Kevin</title>
       <link>https://kubaik.github.io/run-ai-saas-solo-in-2026/</link>
@@ -91,6 +91,13 @@
       <guid>https://kubaik.github.io/solid-in-action/</guid>
     </item>
     <item>
+      <title>AWS CloudWatch Synthetics for AI pipelines</title>
+      <link>https://kubaik.github.io/aws-cloudwatch-synthetics-for-ai-pipelines/</link>
+      <description>AWS CloudWatch Synthetics journey tests slash 3am pager alerts 70% by testing the full user flow including M-Pesa and Flutterwave — with Terraform 1.5…</description>
+      <pubDate>Mon, 10 Aug 2026 13:16:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/aws-cloudwatch-synthetics-for-ai-pipelines/</guid>
+    </item>
+    <item>
       <title>LLM drift before users complain: catch it early</title>
       <link>https://kubaik.github.io/llm-drift-before-users-complain-catch-it-early/</link>
       <description>Catch LLM drift before users notice: rolling baselines, Redis cache hit rate, and tokenizer pinning that teams use in 2026 to cut false negatives by 68%</description>
@@ -138,13 +145,6 @@
       <description>Build a deployment platform that keeps senior engineers happy and new hires safe — the proven stack, costs, and the three mistakes that break both groups.</description>
       <pubDate>Sat, 08 Aug 2026 14:22:12 +0000</pubDate>
       <guid>https://kubaik.github.io/3-mistakes-that-break-deployments-for-everyone/</guid>
-    </item>
-    <item>
-      <title>Offline-first money apps with DynamoDB Streams</title>
-      <link>https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/</link>
-      <description>Offline-first mobile money patterns that cut duplicate debits 98 % — shard keys, conditional writes, and the cache stampede mistake most teams miss.</description>
-      <pubDate>Sat, 08 Aug 2026 09:54:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/</guid>
     </item>
   </channel>
 </rss>

@@ -1433,6 +1433,15 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/aws-cloudwatch-synthetics-for-ai-pipelines/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/aws-cloudwatch-synthetics-for-ai-pipelines.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/aws-cost-levers-2026-the-3-that-cut-bills-30/</loc>
     <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
@@ -2359,7 +2368,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/llm-drift-before-users-complain-catch-it-early.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/llm-drift-before-users-complain-catch-it-early.png</image:loc>
     </image:image>
   </url>
   <url>
