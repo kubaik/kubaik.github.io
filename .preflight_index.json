@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-10T11:35:54.865345",
+  "built_at": "2026-08-10T11:51:35.231770",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4740,6 +4740,11 @@
       "slug": "starlink-in-production-what-changed-in-our-stack",
       "title": "Starlink in production: what changed in our stack",
       "summary": "A colleague asked me about changed our during a code review recently, and my first answer wasn't a good one. It works in the simple case and breaks in a specific way under load. Here's the root cause, not just the symptom. Why I wrote this (the problem I kept hitting) East African teams have spent y"
+    },
+    {
+      "slug": "agent-frameworks-stop-rewriting-the-same-glue-code",
+      "title": "Agent frameworks: stop rewriting the same glue code",
+      "summary": "After reviewing enough code that touches platform abstractions, the same failure pattern keeps showing up. The gap between the demo and the incident report is where this actually lives. This post covers what comes after the happy path. The one-paragraph version (read this first) Most teams building "
     }
   ]
 }

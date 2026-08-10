@@ -5,7 +5,98 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 10 Aug 2026 11:36:02 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Aug 2026 11:51:42 +0000</lastBuildDate>
+    <item>
+      <title>Kubai Kevin</title>
+      <link>https://kubaik.github.io/run-ai-saas-solo-in-2026/</link>
+      <description>Build a solo AI SaaS 5x faster in 2026 — $328 vs $495 monthly cost breakdown, 14k vs 1.2k lines of code, and the SOC 2 compliance trick most miss.</description>
+      <pubDate>Mon, 10 Aug 2026 14:45:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/run-ai-saas-solo-in-2026/</guid>
+    </item>
+    <item>
+      <title>Tech Blog</title>
+      <link>https://kubaik.github.io/react-server-components-fail-when-hydration-skips-/</link>
+      <description>Cut hydration mismatch warnings by 94% in React Server Components — serialization patterns, environment traps, and CI checks that work in Next.js 13.4+ for apps in Lagos, London, Manila, and Montreal.</description>
+      <pubDate>Mon, 10 Aug 2026 14:45:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/react-server-components-fail-when-hydration-skips-/</guid>
+    </item>
+    <item>
+      <title>Tech Blog</title>
+      <link>https://kubaik.github.io/debugging-mindset-finally-explained-why-90-of-bugs/</link>
+      <description>Fixed a $1,200 silent failure in 20 minutes by asking &amp;#x27;what changed&amp;#x27; instead of reading logs — here’s the exact debugging mindset that turns chaotic bugs into repeatable investigations with real code examples and failure scenarios.</description>
+      <pubDate>Mon, 10 Aug 2026 14:45:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/debugging-mindset-finally-explained-why-90-of-bugs/</guid>
+    </item>
+    <item>
+      <title>Tech Blog</title>
+      <link>https://kubaik.github.io/your-data/</link>
+      <description>The Problem Most Developers Miss Most developers, focused on shipping features or optimizing backend services, often miss the fundamental economic engine…</description>
+      <pubDate>Mon, 10 Aug 2026 14:45:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/your-data/</guid>
+    </item>
+    <item>
+      <title>Kubai Kevin</title>
+      <link>https://kubaik.github.io/ai-solo-saas-build-vs-buy-agents-in-2026/</link>
+      <description>Cut solo SaaS launch time from 72 days to 18 days using CrewAI v0.25 — learn when to build your own agent loop and when to buy the runtime, with real latency, cost, and code samples from 2026.</description>
+      <pubDate>Mon, 10 Aug 2026 14:45:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-solo-saas-build-vs-buy-agents-in-2026/</guid>
+    </item>
+    <item>
+      <title>Tech Blog</title>
+      <link>https://kubaik.github.io/solid-vs-anti-patterns-in-real-projects/</link>
+      <description>Cut incident recovery time from 4 hours to 30 seconds with SOLID in real projects while keeping anti-patterns 30% faster to ship. Practical guide to when SOLID works and when to ship messy code.</description>
+      <pubDate>Mon, 10 Aug 2026 14:45:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/solid-vs-anti-patterns-in-real-projects/</guid>
+    </item>
+    <item>
+      <title>Tech Blog</title>
+      <link>https://kubaik.github.io/sre-fixing-what-breaks-silent/</link>
+      <description>SRE isn&amp;#x27;t about preventing outages—it&amp;#x27;s about controlling failure. Learn how error budgets, burn rates, and automation actually work in production.</description>
+      <pubDate>Mon, 10 Aug 2026 14:45:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/sre-fixing-what-breaks-silent/</guid>
+    </item>
+    <item>
+      <title>Tech Blog</title>
+      <link>https://kubaik.github.io/pass-remote-tech-interviews-without-leetcode/</link>
+      <description>Self-taught devs fail remote interviews by over-grinding LeetCode — real debugging and cost-aware design win roles in 2026. Build systems, not clones; measure latency, not just lines of code.</description>
+      <pubDate>Mon, 10 Aug 2026 14:45:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/pass-remote-tech-interviews-without-leetcode/</guid>
+    </item>
+    <item>
+      <title>Tech Blog</title>
+      <link>https://kubaik.github.io/13-ways-developers-can-build-real-influence-at-wor/</link>
+      <description>Build real dev influence in 30 days with 13 ranked tactics — measured outcomes, code templates, and the one-page post-mortem that cut interrupt-driven work by 30% in Nairobi fintech teams.</description>
+      <pubDate>Mon, 10 Aug 2026 14:45:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/13-ways-developers-can-build-real-influence-at-wor/</guid>
+    </item>
+    <item>
+      <title>Tech Blog</title>
+      <link>https://kubaik.github.io/prompt-engineering/</link>
+      <description>Improve language model accuracy with prompt engineering techniques</description>
+      <pubDate>Mon, 10 Aug 2026 14:45:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/prompt-engineering/</guid>
+    </item>
+    <item>
+      <title>Tech Blog</title>
+      <link>https://kubaik.github.io/on-call-engineer-survival/</link>
+      <description>The Problem Most Developers Miss Most developers, even seasoned ones, fundamentally misunderstand the true burden of on-call.</description>
+      <pubDate>Mon, 10 Aug 2026 14:45:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/on-call-engineer-survival/</guid>
+    </item>
+    <item>
+      <title>Tech Blog</title>
+      <link>https://kubaik.github.io/solid-in-action/</link>
+      <description>SOLID principles in action: real-world examples and trade-offs</description>
+      <pubDate>Mon, 10 Aug 2026 14:45:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/solid-in-action/</guid>
+    </item>
+    <item>
+      <title>Agent frameworks: stop rewriting the same glue code</title>
+      <link>https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/</link>
+      <description>Agent frameworks: stop rewriting the same glue code – cut boilerplate 70% with a job queue, credentials service, and DAG compiler in 2026</description>
+      <pubDate>Mon, 10 Aug 2026 11:51:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/</guid>
+    </item>
     <item>
       <title>Starlink in production: what changed in our stack</title>
       <link>https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/</link>
@@ -54,97 +145,6 @@
       <description>AI cost attribution that product managers can actually read — per-user, per-feature numbers in real time without breaking the SLA.</description>
       <pubDate>Fri, 07 Aug 2026 13:11:54 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-cost-attribution-without-the-spreadsheet-hell/</guid>
-    </item>
-    <item>
-      <title>AI portfolios ruin yours? Fix your signal</title>
-      <link>https://kubaik.github.io/ai-portfolios-ruin-yours-fix-your-signal/</link>
-      <description>AI portfolios ruin yours? Fix your signal — turn generic READMEs into human-graded constraint tables and ship artifacts that prove judgment, not code…</description>
-      <pubDate>Thu, 06 Aug 2026 11:07:43 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-portfolios-ruin-yours-fix-your-signal/</guid>
-    </item>
-    <item>
-      <title>Agents create incidents at 2am</title>
-      <link>https://kubaik.github.io/agents-create-incidents-at-2am/</link>
-      <description>Agents create incidents at 2am — why automation turns into 2 a.m. pages and how to lock the mutator circle down.</description>
-      <pubDate>Thu, 06 Aug 2026 08:07:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/agents-create-incidents-at-2am/</guid>
-    </item>
-    <item>
-      <title>AI micro-SaaS under $150/month: the real infra choices</title>
-      <link>https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/</link>
-      <description>Launch an AI micro-SaaS and keep infra under $150/month in 2026.</description>
-      <pubDate>Wed, 05 Aug 2026 18:25:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/</guid>
-    </item>
-    <item>
-      <title>Mobile money agent fees: why your bot keeps failing</title>
-      <link>https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/</link>
-      <description>Cut ERR_PAYMENT_FAILED 95% when your mobile money agent hits the 90s USSD session timeout in AWS Lambda.</description>
-      <pubDate>Wed, 05 Aug 2026 14:16:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/</guid>
-    </item>
-    <item>
-      <title>Agent flooded our API with bad calls overnight</title>
-      <link>https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/</link>
-      <description>Cut API bill 99% after agent flood — bounded retries, idempotency keys, and rate limits that actually work in 2026</description>
-      <pubDate>Wed, 05 Aug 2026 13:52:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-flooded-our-api-with-bad-calls-overnight/</guid>
-    </item>
-    <item>
-      <title>WASM servers beat containers here</title>
-      <link>https://kubaik.github.io/wasm-servers-beat-containers-here/</link>
-      <description>Cut API latency 60% with WebAssembly on the server — the concrete cases where WASM beats containers in 2026, with Rust 1.77, Node 20 LTS, and real…</description>
-      <pubDate>Wed, 05 Aug 2026 13:49:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/wasm-servers-beat-containers-here/</guid>
-    </item>
-    <item>
-      <title>Senior role projects: 3 real paths</title>
-      <link>https://kubaik.github.io/senior-role-projects-3-real-paths/</link>
-      <description>Senior remote roles in 2026 demand production-grade portfolio projects.</description>
-      <pubDate>Wed, 05 Aug 2026 09:46:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-role-projects-3-real-paths/</guid>
-    </item>
-    <item>
-      <title>MCP servers: the 3 hidden costs nobody quotes</title>
-      <link>https://kubaik.github.io/mcp-servers-the-3-hidden-costs-nobody-quotes/</link>
-      <description>MCP servers in 2026: real memory leaks, bandwidth inflation, proxy timeouts, and the TLS trap most teams miss before going live.</description>
-      <pubDate>Wed, 05 Aug 2026 02:46:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-servers-the-3-hidden-costs-nobody-quotes/</guid>
-    </item>
-    <item>
-      <title>RAG rots if you don’t refresh indexes</title>
-      <link>https://kubaik.github.io/rag-rots-if-you-dont-refresh-indexes/</link>
-      <description>Build production RAG that lasts: why static indexes fail, how to set up CDC, chunk versioning, and incremental refresh with concrete tools and costs</description>
-      <pubDate>Tue, 04 Aug 2026 14:24:04 +0000</pubDate>
-      <guid>https://kubaik.github.io/rag-rots-if-you-dont-refresh-indexes/</guid>
-    </item>
-    <item>
-      <title>Platform teams in 2026: why your devs hate your golden path</title>
-      <link>https://kubaik.github.io/platform-teams-in-2026-why-your-devs-hate-your-golden-path/</link>
-      <description>Platform teams in 2026: why your devs hate your golden path — how contracts beat rigid paths, with AWS EKS metrics, Linkerd 2.14, and infra cost savings</description>
-      <pubDate>Tue, 04 Aug 2026 02:48:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/platform-teams-in-2026-why-your-devs-hate-your-golden-path/</guid>
-    </item>
-    <item>
-      <title>Kubernetes or Nomad: the real experiment cost split</title>
-      <link>https://kubaik.github.io/kubernetes-or-nomad-the-real-experiment-cost-split/</link>
-      <description>Nomad 1.7 vs Kubernetes 1.30 for AI experiments — GPU idle cost, pod startup latency, and the 70 % experiment budget split most teams miss</description>
-      <pubDate>Mon, 03 Aug 2026 14:47:24 +0000</pubDate>
-      <guid>https://kubaik.github.io/kubernetes-or-nomad-the-real-experiment-cost-split/</guid>
-    </item>
-    <item>
-      <title>Supervisor vs swarm vs debate vs pipeline</title>
-      <link>https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/</link>
-      <description>Then the same code hits production and suddenly you’re debugging: - Why did AgentB hang after AgentA sent 4,231 messages?</description>
-      <pubDate>Mon, 03 Aug 2026 10:05:35 +0000</pubDate>
-      <guid>https://kubaik.github.io/supervisor-vs-swarm-vs-debate-vs-pipeline/</guid>
-    </item>
-    <item>
-      <title>Prompt injection got the hype — poison data ruined us</title>
-      <link>https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/</link>
-      <description>Poisoned data and model drift caused 8,200 support tickets in 2026 — not prompt injection.</description>
-      <pubDate>Mon, 03 Aug 2026 03:19:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/</guid>
     </item>
   </channel>
 </rss>

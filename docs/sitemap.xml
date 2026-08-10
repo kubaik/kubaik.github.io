@@ -21,7 +21,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/13-ways-developers-can-build-real-influence-at-wor/</loc>
-    <lastmod>2026-04-27</lastmod>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -437,6 +437,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/agent-flooded-our-api-with-bad-calls-overnight.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/agent-frameworks-stop-rewriting-the-same-glue-code.svg</image:loc>
     </image:image>
   </url>
   <url>
@@ -1194,7 +1203,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/ai-solo-saas-build-vs-buy-agents-in-2026/</loc>
-    <lastmod>2026-06-22</lastmod>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1899,7 +1908,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/debugging-mindset-finally-explained-why-90-of-bugs/</loc>
-    <lastmod>2026-04-27</lastmod>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -2751,7 +2760,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/on-call-engineer-survival/</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -2823,7 +2832,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/pass-remote-tech-interviews-without-leetcode/</loc>
-    <lastmod>2026-05-17</lastmod>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -3054,7 +3063,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/prompt-engineering/</loc>
-    <lastmod>2026-04-23</lastmod>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -3162,11 +3171,11 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/react-server-components-fail-when-hydration-skips-/</loc>
-    <lastmod>2026-04-27</lastmod>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/react-server-components-fail-when-hydration-skips.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -3297,7 +3306,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/run-ai-saas-solo-in-2026/</loc>
-    <lastmod>2026-06-24</lastmod>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -3522,7 +3531,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/solid-in-action/</loc>
-    <lastmod>2026-04-19</lastmod>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -3531,7 +3540,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/solid-vs-anti-patterns-in-real-projects/</loc>
-    <lastmod>2026-04-27</lastmod>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -3549,7 +3558,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/sre-fixing-what-breaks-silent/</loc>
-    <lastmod>2026-04-20</lastmod>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -3571,7 +3580,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/starlink-in-production-what-changed-in-our-stack.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/starlink-in-production-what-changed-in-our-stack.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -4262,6 +4271,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/tag/reconstructed/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/tag/redis/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -4728,7 +4746,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/your-data/</loc>
-    <lastmod>2026-04-18</lastmod>
+    <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
