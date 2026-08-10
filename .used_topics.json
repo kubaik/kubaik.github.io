@@ -157,5 +157,7 @@
   "Why our beautiful multi-agent research system quietly degraded over three months",
   "eBPF in 2026: the observability and security use cases that finally justified the complexity",
   "How we implemented least-privilege access for agents that need to call 30+ tools",
-  "Building in public as a solo developer without burning out on content performance"
+  "Building in public as a solo developer without burning out on content performance",
+  "The migration that went wrong because we trusted the AI-generated migration script too much",
+  "What changed in our stack when Starlink became reliable enough for production workloads in East Africa"
 ]

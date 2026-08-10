@@ -110,15 +110,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/3-side-gigs-developers-use-for-12kmo-in-2026/</loc>
-    <lastmod>2026-06-16</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/3-side-gigs-developers-use-for-12kmo-in-2026.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/3-side-gigs-that-paid-me-2k-usdmonth-in-2026/</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -1247,15 +1238,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/ai-tools-for-african-devs-what-actually-works-now/</loc>
-    <lastmod>2026-06-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/ai-tools-for-african-devs-what-actually-works-now.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/ai-tools-rewrote-my-engineering-rules/</loc>
     <lastmod>2026-07-02</lastmod>
     <changefreq>weekly</changefreq>
@@ -1370,15 +1352,6 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/api-abuse-patterns-rising-in-2026.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/api-attacks-rise-300-in-2026-whats-breaking-first/</loc>
-    <lastmod>2026-06-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/api-attacks-rise-300-in-2026-whats-breaking-first.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -1829,15 +1802,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/compound-nairobi-6-dev-income-streams-2026/</loc>
-    <lastmod>2026-06-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/compound-nairobi-6-dev-income-streams-2026.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/contact/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>monthly</changefreq>
@@ -2171,24 +2135,6 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/grew-5k-mrr-on-a-29-vps.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/handle-starlink-4g-fallbacks-in-fastapi-0115/</loc>
-    <lastmod>2026-06-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/handle-starlink-4g-fallbacks-in-fastapi-0115.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/handoff-latency-kills-systems-60-fix-is-free/</loc>
-    <lastmod>2026-07-05</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/handoff-latency-kills-systems-60-fix-is-free.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -3512,15 +3458,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/ship-production-grade-tools-in-90-minutes-with-the/</loc>
-    <lastmod>2026-04-23</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/ship-production-grade-tools-in-90-minutes-with-the.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/ship-to-nairobi-users-starlink-latency-guide-2026/</loc>
     <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
@@ -3626,6 +3563,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/starlink-4g-fallback-serve-pages-under-800ms.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/</loc>
+    <lastmod>2026-08-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/starlink-in-production-what-changed-in-our-stack.svg</image:loc>
     </image:image>
   </url>
   <url>
@@ -3822,15 +3768,6 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/artificialintelligence/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/backend/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -4496,15 +4433,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/tech-salaries-2026-what-corrected-what-grew/</loc>
-    <lastmod>2026-06-20</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tech-salaries-2026-what-corrected-what-grew.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/terms-of-service/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>yearly</changefreq>
@@ -4634,15 +4562,6 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/ussd-fintech-in-2026-the-300m-user-channel-nobody.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/vc-insights/</loc>
-    <lastmod>2026-04-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/vc-insights.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -4796,15 +4715,6 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/wireguard-vs-tailscale-for-5month-zero-trust.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/world-models-wont-save-your-backend/</loc>
-    <lastmod>2026-07-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/world-models-wont-save-your-backend.png</image:loc>
     </image:image>
   </url>
   <url>

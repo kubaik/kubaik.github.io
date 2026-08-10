@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-10T02:02:45.503287",
+  "built_at": "2026-08-10T11:35:54.865345",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4735,6 +4735,11 @@
       "slug": "least-privilege-for-agents-the-config-line-nobody-writes",
       "title": "Least privilege for agents: the config line nobody writes",
       "summary": "The conventional advice on implemented leastprivilege is incomplete in one specific, costly way. The gap between the demo and the incident report is where this actually lives. Here's the root cause, not just the symptom. The gap between what the docs say and what production needs Most agent framewor"
+    },
+    {
+      "slug": "starlink-in-production-what-changed-in-our-stack",
+      "title": "Starlink in production: what changed in our stack",
+      "summary": "A colleague asked me about changed our during a code review recently, and my first answer wasn't a good one. It works in the simple case and breaks in a specific way under load. Here's the root cause, not just the symptom. Why I wrote this (the problem I kept hitting) East African teams have spent y"
     }
   ]
 }
