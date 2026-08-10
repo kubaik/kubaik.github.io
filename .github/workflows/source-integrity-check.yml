@@ -21,7 +21,11 @@ jobs:
           from pathlib import Path
 
           DOCS_DIR = Path("docs")
-          EXCLUDE_DIRS = {"static", "tag", "author", "page", "contact", "about"}
+          EXCLUDE_DIRS = {
+              "static", "tag", "author", "page",
+              "contact", "about", "privacy-policy", "terms-of-service",
+              "dmca", "ai-content-policy",
+          }
 
           orphans = []
           for post_dir in DOCS_DIR.iterdir():
