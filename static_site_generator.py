@@ -1178,7 +1178,20 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             )
 
             post_dict['has_code'] = '```' in post.content
-            post_dict['estimated_accuracy'] = 'Reviewed by author before publishing'
+            # FIX (critical, E-E-A-T/AdSense risk): this used to hardcode
+            # 'Reviewed by author before publishing' on every post regardless
+            # of whether that happened, contradicting the site's own AI
+            # content policy disclosure. Now derived from an explicit,
+            # per-post flag. Default is the honest, unflattering answer —
+            # never claim a review that didn't occur.
+            review_status = post.monetization_data.get('review_status') \
+                if isinstance(post.monetization_data, dict) else None
+            post_dict['estimated_accuracy'] = {
+                'human_reviewed': 'Reviewed by the author before publishing',
+                'automated_qc_only': 'Passed automated accuracy/quality checks; '
+                'not individually reviewed by a human before publishing',
+            }.get(review_status, 'Drafted with AI assistance and automated quality '
+                  'checks; not individually reviewed by a human before publishing')
             post_dict['affiliate_links'] = post.affiliate_links or []
 
             # FIX BUG-7: has_og_image was never set on post_dict, so the Jinja
@@ -1346,7 +1359,20 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             return
 
         tags_dir = Path("./docs/tag")
-        tags_dir.mkdir(exist_ok=True)
+        # FIX: previously this only ever created directories for tags that
+        # currently qualify (>=2 posts) — it never removed a tag directory
+        # once its posts were deleted elsewhere (e.g. via the content-audit
+        # cleanup script). That left orphaned tag archive pages indexed
+        # with "index, follow" and zero real posts behind them, confirmed
+        # in production (5gbackendoptimization, africandeveloperplatforms
+        # — both indexed, both with 0 current posts). Wiping and rebuilding
+        # the whole tag directory on every run guarantees no orphan can
+        # survive a content deletion, since this function already
+        # recomputes every qualifying tag from the live post set each time.
+        if tags_dir.exists():
+            import shutil
+            shutil.rmtree(tags_dir)
+        tags_dir.mkdir(exist_ok=True, parents=True)
 
         for tag, tag_posts in qualifying.items():
             tag_slug = tag.replace(' ', '-')
