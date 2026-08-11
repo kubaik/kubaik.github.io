@@ -2804,6 +2804,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/orchestration-tax-kills-multi-agent-systems/</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/orchestration-tax-kills-multi-agent-systems.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/orm-2026-prisma-vs-drizzle-vs-sqlalchemy/</loc>
     <lastmod>2026-06-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -3620,21 +3629,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/tag/5gbackendoptimization/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-5gbackendoptimization.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/africandeveloperplatforms/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/tag/africatech/</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -3671,45 +3665,12 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/tag/aicodingtools2026/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/aipipelinemonitoring/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-aipipelinemonitoring.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/aisalary2026/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-aisalary2026.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/tag/apis/</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/artificial-intelligence/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-artificial-intelligence.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -3722,66 +3683,12 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/tag/blockchain/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-blockchain.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/caching/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-caching.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/chatgpt/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-chatgpt.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/cloud/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-cloud.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/cloudcarbonfootprint/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-cloudcarbonfootprint.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/tag/cloudcomputing/</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/codebasecontextai/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-codebasecontextai.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -3812,24 +3719,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/tag/databasebranching/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/databasepooltuning/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-databasepooltuning.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/tag/dataengineering/</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -3839,88 +3728,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/tag/datascience/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-datascience.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/deeplearning/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-deeplearning.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/edgecomputing/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-edgecomputing.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/edgefunctions/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-edgefunctions.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/fastapiportfolioproject/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-fastapiportfolioproject.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/tag/flutter/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/freelanceburnoutrecovery/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-freelanceburnoutrecovery.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/freelancedeveloperrates/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-freelancedeveloperrates.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/frontend/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/frontendtesting2026/</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -3947,39 +3755,12 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/tag/htmxvsreact/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/tag/infosec/</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/innovation/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-innovation.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/iot/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-iot.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -4010,42 +3791,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/tag/machine-learning/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-machine-learning.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/mcptools/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-mcptools.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/microservicescost/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-microservicescost.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/microservicesvsmonolith/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-microservicesvsmonolith.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/tag/mobiledev/</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -4055,39 +3800,12 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/tag/modelcontextprotocol/</loc>
+    <loc>https://kubaik.github.io/tag/multiagent/</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-modelcontextprotocol.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/multitenantdatabase/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-multitenantdatabase.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/mysql/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-mysql.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/natural-language-processing/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-natural-language-processing.png</image:loc>
+      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -4100,61 +3818,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/tag/openai/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-openai.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/overengineering/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-overengineering.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/overengineeringcost/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-overengineeringcost.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/tag/performance/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/pgvectorvsmilvus/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-pgvectorvsmilvus.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/pgvectorvspinecone/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/playwrightvscypress/</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -4208,15 +3872,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/tag/reconstructed/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/tag/redis/</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -4226,34 +3881,7 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/tag/remotedevelopersalary/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-remotedevelopersalary.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/repositoryintelligence/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-repositoryintelligence.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/tag/saas/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/sbomrequirements2026/</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
@@ -4268,24 +3896,6 @@
     <priority>0.6</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/simplicityvscomplexity/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-simplicityvscomplexity.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/software/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-software.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -4334,15 +3944,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/tag/techtrends/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-techtrends.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/tag/vectordb/</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>weekly</changefreq>
@@ -4358,15 +3959,6 @@
     <priority>0.6</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/tag/webassembly/</loc>
-    <lastmod>2026-08-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/tag-webassembly.png</image:loc>
     </image:image>
   </url>
   <url>

@@ -167,5 +167,6 @@
   "How Nairobi teams are using local + cloud model routing to stay competitive on cost and speed",
   "The evaluation gap that let a subtle model behavior change slip into production",
   "The production incident caused by an agent that followed instructions too literally",
-  "What traditional observability missed when we introduced our first production agents"
+  "What traditional observability missed when we introduced our first production agents",
+  "Building reliable multi-agent systems without the orchestration tax most frameworks impose"
 ]
