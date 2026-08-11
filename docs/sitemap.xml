@@ -4736,6 +4736,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/why-your-model-evaluation-missed-a-production-regression/</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/why-your-model-evaluation-missed-a-production-regression.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/why-your-multi-agent-system-degraded-slowly/</loc>
     <lastmod>2026-08-09</lastmod>
     <changefreq>weekly</changefreq>

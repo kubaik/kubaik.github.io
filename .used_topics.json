@@ -164,5 +164,6 @@
   "LLM evaluation pipelines that catch drift before users notice \u2014 real metrics from production",
   "Why most 'self-healing' AI pipelines still page humans at 3am \u2014 and what we changed",
   "How we built agent-specific tracing that actually helped during incidents",
-  "How Nairobi teams are using local + cloud model routing to stay competitive on cost and speed"
+  "How Nairobi teams are using local + cloud model routing to stay competitive on cost and speed",
+  "The evaluation gap that let a subtle model behavior change slip into production"
 ]

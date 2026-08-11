@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 11 Aug 2026 01:58:55 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 11 Aug 2026 08:39:06 +0000</lastBuildDate>
+    <item>
+      <title>Why your model evaluation missed a production regression</title>
+      <link>https://kubaik.github.io/why-your-model-evaluation-missed-a-production-regression/</link>
+      <description>Missed model regression in prod? How to catch latency drift before users complain — input buckets, load-aware eval, and the instance-type trap most teams…</description>
+      <pubDate>Tue, 11 Aug 2026 08:38:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-your-model-evaluation-missed-a-production-regression/</guid>
+    </item>
     <item>
       <title>Kubai Kevin</title>
       <link>https://kubaik.github.io/run-ai-saas-solo-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut multi-agent system p99 latency 80% by stopping silent orchestration overhead growth — payload size creep, NATS queueing pressure, and retry loops…</description>
       <pubDate>Sun, 09 Aug 2026 12:58:50 +0000</pubDate>
       <guid>https://kubaik.github.io/why-your-multi-agent-system-degraded-slowly/</guid>
-    </item>
-    <item>
-      <title>3 mistakes that break deployments for everyone</title>
-      <link>https://kubaik.github.io/3-mistakes-that-break-deployments-for-everyone/</link>
-      <description>Build a deployment platform that keeps senior engineers happy and new hires safe — the proven stack, costs, and the three mistakes that break both groups.</description>
-      <pubDate>Sat, 08 Aug 2026 14:22:12 +0000</pubDate>
-      <guid>https://kubaik.github.io/3-mistakes-that-break-deployments-for-everyone/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-10T13:16:52.176516",
+  "built_at": "2026-08-11T08:38:59.868439",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4755,6 +4755,11 @@
       "slug": "aws-cloudwatch-synthetics-for-ai-pipelines",
       "title": "AWS CloudWatch Synthetics for AI pipelines",
       "summary": "There's a gap between how most selfhealing is taught and how it actually behaves under load. The gap between the demo and the incident report is where this actually lives. Here's what I'd tell a colleague hitting this for the first time. Why I wrote this (the problem I kept hitting) Anyone shipping "
+    },
+    {
+      "slug": "why-your-model-evaluation-missed-a-production-regression",
+      "title": "Why your model evaluation missed a production regression",
+      "summary": "Most evaluation gap guides assume a clean environment and a patient timeline. It works in the simple case and breaks in a specific way under load. Here's the root cause, not just the symptom. The error and why it's confusing You push a new model to production and everything looks fine: unit tests pa"
     }
   ]
 }
