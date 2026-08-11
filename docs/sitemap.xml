@@ -2714,6 +2714,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/observability-agents-lied-to-us/</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/observability-agents-lied-to-us.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/observe-llm-features-90-faster/</loc>
     <lastmod>2026-07-08</lastmod>
     <changefreq>weekly</changefreq>

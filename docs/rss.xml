@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 11 Aug 2026 11:51:22 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 11 Aug 2026 08:55:08 +0000</lastBuildDate>
+    <item>
+      <title>Observability agents lied to us</title>
+      <link>https://kubaik.github.io/observability-agents-lied-to-us/</link>
+      <description>Observability agents in production: the memory leaks, configuration drift, and hidden costs most teams miss.</description>
+      <pubDate>Tue, 11 Aug 2026 08:54:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/observability-agents-lied-to-us/</guid>
+    </item>
     <item>
       <title>Agent followed instructions too literally: the cron job trap</title>
       <link>https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/</link>
@@ -138,13 +145,6 @@
       <description>Senior remote roles in 2026 demand production-grade portfolio projects.</description>
       <pubDate>Wed, 05 Aug 2026 09:46:03 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-role-projects-3-real-paths/</guid>
-    </item>
-    <item>
-      <title>MCP servers: the 3 hidden costs nobody quotes</title>
-      <link>https://kubaik.github.io/mcp-servers-the-3-hidden-costs-nobody-quotes/</link>
-      <description>MCP servers in 2026: real memory leaks, bandwidth inflation, proxy timeouts, and the TLS trap most teams miss before going live.</description>
-      <pubDate>Wed, 05 Aug 2026 02:46:23 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-servers-the-3-hidden-costs-nobody-quotes/</guid>
     </item>
   </channel>
 </rss>

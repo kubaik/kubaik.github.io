@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-11T08:43:35.851531",
+  "built_at": "2026-08-11T08:55:00.980545",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4765,6 +4765,11 @@
       "slug": "agent-followed-instructions-too-literally-the-cron-job-trap",
       "title": "Agent followed instructions too literally: the cron job trap",
       "summary": "I've hit the same production incident mistake in more than one production codebase over the years. The edge cases only show up once real users hit the system. This walks through the fix and the reasoning, not just the patch. The error and why it's confusing The symptom looks like a classic ‘task nev"
+    },
+    {
+      "slug": "observability-agents-lied-to-us",
+      "title": "Observability agents lied to us",
+      "summary": "I spent longer than I should have on traditional observability before understanding what was actually happening. Most write-ups stop exactly where the interesting part starts. This post covers what comes after the happy path. The conventional wisdom (and why it's incomplete) The standard playbook sa"
     }
   ]
 }
