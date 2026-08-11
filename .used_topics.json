@@ -168,5 +168,6 @@
   "The evaluation gap that let a subtle model behavior change slip into production",
   "The production incident caused by an agent that followed instructions too literally",
   "What traditional observability missed when we introduced our first production agents",
-  "Building reliable multi-agent systems without the orchestration tax most frameworks impose"
+  "Building reliable multi-agent systems without the orchestration tax most frameworks impose",
+  "Building SLOs for agentic features that don't just measure latency and error rate"
 ]
