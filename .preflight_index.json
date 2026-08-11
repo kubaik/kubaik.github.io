@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-11T11:04:35.688396",
+  "built_at": "2026-08-11T13:13:52.701683",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4780,6 +4780,11 @@
       "slug": "agent-slos-measure-what-agents-actually-do",
       "title": "Agent SLOs: measure what agents actually do",
       "summary": "Most building slos guides assume a clean environment and a patient timeline. It's the kind of problem that's easy to reproduce and hard to explain. Here's the fuller picture, with the tradeoffs left in. Why I wrote this (the problem I kept hitting) You built an agentic feature: a background job sche"
+    },
+    {
+      "slug": "buy-vs-build-ai-3-hard-rules-for-2026",
+      "title": "Buy vs build AI: 3 hard rules for 2026",
+      "summary": "I've hit the same build buy mistake in more than one production codebase over the years. The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why. Why this list exists (what I was actually trying to solve) In 2026, every SaaS team in Lagos, Nairobi"
     }
   ]
 }

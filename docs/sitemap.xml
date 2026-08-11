@@ -472,7 +472,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/agent-slos-measure-what-agents-actually-do.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/agent-slos-measure-what-agents-actually-do.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -1682,6 +1682,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/bundle-size-70-lighter-with-server-components.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/buy-vs-build-ai-3-hard-rules-for-2026/</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/buy-vs-build-ai-3-hard-rules-for-2026.svg</image:loc>
     </image:image>
   </url>
   <url>
