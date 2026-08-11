@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-11T08:38:59.868439",
+  "built_at": "2026-08-11T08:43:35.851531",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4760,6 +4760,11 @@
       "slug": "why-your-model-evaluation-missed-a-production-regression",
       "title": "Why your model evaluation missed a production regression",
       "summary": "Most evaluation gap guides assume a clean environment and a patient timeline. It works in the simple case and breaks in a specific way under load. Here's the root cause, not just the symptom. The error and why it's confusing You push a new model to production and everything looks fine: unit tests pa"
+    },
+    {
+      "slug": "agent-followed-instructions-too-literally-the-cron-job-trap",
+      "title": "Agent followed instructions too literally: the cron job trap",
+      "summary": "I've hit the same production incident mistake in more than one production codebase over the years. The edge cases only show up once real users hit the system. This walks through the fix and the reasoning, not just the patch. The error and why it's confusing The symptom looks like a classic ‘task nev"
     }
   ]
 }

@@ -20,15 +20,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/13-ways-developers-can-build-real-influence-at-wor/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/13-ways-developers-can-build-real-influence-at-wor.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/15-agents-blew-up-our-logs-why-we-pinned-models-logs/</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -437,6 +428,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/agent-flooded-our-api-with-bad-calls-overnight.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/</loc>
+    <lastmod>2026-08-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/agent-followed-instructions-too-literally-the-cron-job-trap.svg</image:loc>
     </image:image>
   </url>
   <url>
@@ -1202,15 +1202,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/ai-solo-saas-build-vs-buy-agents-in-2026/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/ai-solo-saas-build-vs-buy-agents-in-2026.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/ai-static-analysis-vs-legacy-sast-5x-faster-scans/</loc>
     <lastmod>2026-06-13</lastmod>
     <changefreq>weekly</changefreq>
@@ -1913,15 +1904,6 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/debug-async-python-before-it-deadlocks.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/debugging-mindset-finally-explained-why-90-of-bugs/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/debugging-mindset-finally-explained-why-90-of-bugs.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -2777,15 +2759,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/on-call-engineer-survival/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/on-call-engineer-survival.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/one-misconfigured-pool-drained-4kmonth/</loc>
     <lastmod>2026-07-31</lastmod>
     <changefreq>weekly</changefreq>
@@ -2846,15 +2819,6 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/pass-interviews-without-a-cs-degree.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/pass-remote-tech-interviews-without-leetcode/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/pass-remote-tech-interviews-without-leetcode.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -3080,15 +3044,6 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/prompt-engineering/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/prompt-engineering.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/prompt-injection-got-the-hype-poison-data-ruined-us/</loc>
     <lastmod>2026-08-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -3185,15 +3140,6 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/react-19-compiler-my-components-changed-how.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/react-server-components-fail-when-hydration-skips-/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/icons/icon-512x512.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -3320,15 +3266,6 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/row-level-security-for-saas-in-2026-the-surprise-cost.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/run-ai-saas-solo-in-2026/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/run-ai-saas-solo-in-2026.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -3548,39 +3485,12 @@
     </image:image>
   </url>
   <url>
-    <loc>https://kubaik.github.io/solid-in-action/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/solid-in-action.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/solid-vs-anti-patterns-in-real-projects/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/solid-vs-anti-patterns-in-real-projects.png</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://kubaik.github.io/spot-ais-hidden-cost-spike-in-your-stack/</loc>
     <lastmod>2026-06-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/spot-ais-hidden-cost-spike-in-your-stack.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/sre-fixing-what-breaks-silent/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/sre-fixing-what-breaks-silent.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -4741,7 +4651,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/why-your-model-evaluation-missed-a-production-regression.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/why-your-model-evaluation-missed-a-production-regression.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -4769,15 +4679,6 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/year-one-claude-codes-slow-burn-wins.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/your-data/</loc>
-    <lastmod>2026-08-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/your-data.png</image:loc>
     </image:image>
   </url>
   <url>
