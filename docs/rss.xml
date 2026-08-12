@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 11 Aug 2026 13:14:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Aug 2026 02:10:55 +0000</lastBuildDate>
+    <item>
+      <title>African fintech agents: the compliance cliff most miss</title>
+      <link>https://kubaik.github.io/african-fintech-agents-the-compliance-cliff-most-miss/</link>
+      <description>African fintech agents face residency, latency, and retention rules that break centralized logging — see how a Lagos team cut audit latency 98% by…</description>
+      <pubDate>Wed, 12 Aug 2026 02:10:48 +0000</pubDate>
+      <guid>https://kubaik.github.io/african-fintech-agents-the-compliance-cliff-most-miss/</guid>
+    </item>
     <item>
       <title>Buy vs build AI: 3 hard rules for 2026</title>
       <link>https://kubaik.github.io/buy-vs-build-ai-3-hard-rules-for-2026/</link>
@@ -138,13 +145,6 @@
       <description>Launch an AI micro-SaaS and keep infra under $150/month in 2026.</description>
       <pubDate>Wed, 05 Aug 2026 18:25:11 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/</guid>
-    </item>
-    <item>
-      <title>Mobile money agent fees: why your bot keeps failing</title>
-      <link>https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/</link>
-      <description>Cut ERR_PAYMENT_FAILED 95% when your mobile money agent hits the 90s USSD session timeout in AWS Lambda.</description>
-      <pubDate>Wed, 05 Aug 2026 14:16:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/</guid>
     </item>
   </channel>
 </rss>

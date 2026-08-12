@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-11T13:13:52.701683",
+  "built_at": "2026-08-12T02:10:49.727493",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4785,6 +4785,11 @@
       "slug": "buy-vs-build-ai-3-hard-rules-for-2026",
       "title": "Buy vs build AI: 3 hard rules for 2026",
       "summary": "I've hit the same build buy mistake in more than one production codebase over the years. The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why. Why this list exists (what I was actually trying to solve) In 2026, every SaaS team in Lagos, Nairobi"
+    },
+    {
+      "slug": "african-fintech-agents-the-compliance-cliff-most-miss",
+      "title": "African fintech agents: the compliance cliff most miss",
+      "summary": "I ran into this regulatory compliance problem while migrating a service under a hard deadline. It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly. The situation (what we were trying to solve) In 2026, a Lagos-based finte"
     }
   ]
 }
