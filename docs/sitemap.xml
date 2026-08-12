@@ -3539,6 +3539,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/spot-evictions-the-retry-logic-that-holds-up/</loc>
+    <lastmod>2026-08-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/spot-evictions-the-retry-logic-that-holds-up.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/starlink-4g-fallback-serve-pages-under-800ms/</loc>
     <lastmod>2026-06-26</lastmod>
     <changefreq>weekly</changefreq>

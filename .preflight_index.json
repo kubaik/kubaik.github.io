@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-12T02:10:49.727493",
+  "built_at": "2026-08-12T12:52:41.124912",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4790,6 +4790,11 @@
       "slug": "african-fintech-agents-the-compliance-cliff-most-miss",
       "title": "African fintech agents: the compliance cliff most miss",
       "summary": "I ran into this regulatory compliance problem while migrating a service under a hard deadline. It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly. The situation (what we were trying to solve) In 2026, a Lagos-based finte"
+    },
+    {
+      "slug": "spot-evictions-the-retry-logic-that-holds-up",
+      "title": "Spot evictions: the retry logic that holds up",
+      "summary": "I spent longer than I should have on use spot before understanding what was actually happening. The edge cases only show up once real users hit the system. Here's the fuller picture, with the tradeoffs left in. The gap between what the docs say and what production needs Most tutorials show you how t"
     }
   ]
 }

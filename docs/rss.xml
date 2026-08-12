@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 12 Aug 2026 02:10:55 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 12 Aug 2026 12:52:48 +0000</lastBuildDate>
+    <item>
+      <title>Spot evictions: the retry logic that holds up</title>
+      <link>https://kubaik.github.io/spot-evictions-the-retry-logic-that-holds-up/</link>
+      <description>Cut AWS costs 71% with Spot Instances + smart retry logic — retry storms, downstream melts, and the Redis Stream trick most teams miss.</description>
+      <pubDate>Wed, 12 Aug 2026 12:52:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/spot-evictions-the-retry-logic-that-holds-up/</guid>
+    </item>
     <item>
       <title>African fintech agents: the compliance cliff most miss</title>
       <link>https://kubaik.github.io/african-fintech-agents-the-compliance-cliff-most-miss/</link>
@@ -138,13 +145,6 @@
       <description>Agents create incidents at 2am — why automation turns into 2 a.m. pages and how to lock the mutator circle down.</description>
       <pubDate>Thu, 06 Aug 2026 08:07:50 +0000</pubDate>
       <guid>https://kubaik.github.io/agents-create-incidents-at-2am/</guid>
-    </item>
-    <item>
-      <title>AI micro-SaaS under $150/month: the real infra choices</title>
-      <link>https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/</link>
-      <description>Launch an AI micro-SaaS and keep infra under $150/month in 2026.</description>
-      <pubDate>Wed, 05 Aug 2026 18:25:11 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-micro-saas-under-150month-the-real-infra-choices/</guid>
     </item>
   </channel>
 </rss>

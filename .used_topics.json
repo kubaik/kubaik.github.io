@@ -172,5 +172,6 @@
   "Building SLOs for agentic features that don't just measure latency and error rate",
   "When to build vs when to buy the AI components of your SaaS in 2026",
   "The developer experience gaps that still exist when building and debugging multi-agent systems",
-  "The regulatory and compliance realities of deploying autonomous agents in African fintech in 2026"
+  "The regulatory and compliance realities of deploying autonomous agents in African fintech in 2026",
+  "How we use spot instances + smart retry logic for non-critical agent workloads"
 ]
