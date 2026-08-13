@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-13T08:44:47.446196",
+  "built_at": "2026-08-13T13:19:52.592183",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4810,6 +4810,11 @@
       "slug": "currency-switch-fails-in-ghana-one-config-file-to-rule",
       "title": "Currency switch fails in Ghana: one config file to rule…",
       "summary": "I've hit the same building fintech mistake in more than one production codebase over the years. It works in the simple case and breaks in a specific way under load. This is the version of the write-up that includes the part that broke. The error and why it's confusing The most common failure you’ll "
+    },
+    {
+      "slug": "price-tests-that-raised-revenue-vs-tests-that-killed",
+      "title": "Price tests that raised revenue vs tests that killed…",
+      "summary": "I ran into this pricing experiments problem while migrating a service under a hard deadline. It's the kind of problem that's easy to reproduce and hard to explain. This post covers what comes after the happy path. Why this comparison matters right now Teams running pricing experiments in 2026 still "
     }
   ]
 }
