@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 12 Aug 2026 13:18:37 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Aug 2026 02:12:50 +0000</lastBuildDate>
+    <item>
+      <title>Foreign AI models vs sovereign fintech stacks: 2026 reality</title>
+      <link>https://kubaik.github.io/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/</link>
+      <description>African fintech AI stacks compared: global models vs sovereign inference in 2026 — latency, cost, and the one mistake that breaks compliance</description>
+      <pubDate>Thu, 13 Aug 2026 02:12:39 +0000</pubDate>
+      <guid>https://kubaik.github.io/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/</guid>
+    </item>
     <item>
       <title>Spot evictions: the retry logic that holds up</title>
       <link>https://kubaik.github.io/spot-evictions-the-retry-logic-that-holds-up/</link>
@@ -138,13 +145,6 @@
       <description>AI portfolios ruin yours? Fix your signal — turn generic READMEs into human-graded constraint tables and ship artifacts that prove judgment, not code…</description>
       <pubDate>Thu, 06 Aug 2026 11:07:43 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-portfolios-ruin-yours-fix-your-signal/</guid>
-    </item>
-    <item>
-      <title>Agents create incidents at 2am</title>
-      <link>https://kubaik.github.io/agents-create-incidents-at-2am/</link>
-      <description>Agents create incidents at 2am — why automation turns into 2 a.m. pages and how to lock the mutator circle down.</description>
-      <pubDate>Thu, 06 Aug 2026 08:07:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/agents-create-incidents-at-2am/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-12T12:52:41.124912",
+  "built_at": "2026-08-13T02:12:42.411411",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4795,6 +4795,11 @@
       "slug": "spot-evictions-the-retry-logic-that-holds-up",
       "title": "Spot evictions: the retry logic that holds up",
       "summary": "I spent longer than I should have on use spot before understanding what was actually happening. The edge cases only show up once real users hit the system. Here's the fuller picture, with the tradeoffs left in. The gap between what the docs say and what production needs Most tutorials show you how t"
+    },
+    {
+      "slug": "foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality",
+      "title": "Foreign AI models vs sovereign fintech stacks: 2026 reality",
+      "summary": "The official documentation for data residency is good. What it doesn't cover is what happens six months into production. The edge cases only show up once real users hit the system. This post covers what comes after the happy path. Why this comparison matters right now In 2026, African fintech platfo"
     }
   ]
 }
