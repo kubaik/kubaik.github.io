@@ -290,6 +290,46 @@ def _extract_numbers(text: str) -> str:
     return ""
 
 
+# FIX (content-quality gap, found in review): this pattern was previously
+# defined *inside* _derive_description(), so it only ever filtered
+# meta_description candidates. The extensive prompt-level instructions
+# elsewhere in this file telling the LLM never to invent first-person
+# anecdotes ("I spent three days debugging...") had nothing enforcing them
+# on the actual article body — a real E-E-A-T/AdSense-review risk, since
+# fabricated-experience claims are exactly what Google's Helpful Content
+# system flags. Hoisted to module scope so both _derive_description() and
+# _flag_fabricated_anecdotes() (below) share one definition instead of
+# drifting apart.
+_SKIP_PATTERNS = re.compile(
+    r'^(I |A colleague|This took me|I\'ve|The short version|I ran into|'
+    r'I spent|I have |Here\'s what|Writing this|This is a topic|'
+    r'Most of the answers|Most tutorials|I noticed|I found|'
+    r'I was surprised|I built|I worked|I saw )',
+    re.IGNORECASE
+)
+
+
+def _flag_fabricated_anecdotes(content: str) -> List[str]:
+    """
+    Scan a full post body for unverifiable first-person anecdote openers
+    (the same pattern class _derive_description() already screens out of
+    meta descriptions). Returns the offending sentences (truncated) for
+    logging/gating — non-fatal by design, since this is a lexical heuristic
+    and can false-positive; call sites decide whether to reject, regenerate,
+    or just log for human review.
+    """
+    text = re.sub(r"```[\s\S]*?```", " ", content)
+    text = re.sub(r"`[^`]+`", " ", text)
+    hits = []
+    for sent in re.split(r'(?<=[.!?])\s+', text):
+        sent = sent.strip()
+        if len(sent) < 15:
+            continue
+        if _SKIP_PATTERNS.match(sent):
+            hits.append(sent[:80])
+    return hits
+
+
 def _derive_description(content: str, title: str, max_len: int = 155) -> str:
     text = re.sub(r"```[\s\S]*?```", " ", content)
     text = re.sub(r"`[^`]+`",        " ", text)
@@ -297,14 +337,6 @@ def _derive_description(content: str, title: str, max_len: int = 155) -> str:
     text = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", text)
     text = re.sub(r"[*_]{1,3}",      "",  text)
     text = re.sub(r"\s+",            " ", text).strip()
-
-    _SKIP_PATTERNS = re.compile(
-        r'^(I |A colleague|This took me|I\'ve|The short version|I ran into|'
-        r'I spent|I have |Here\'s what|Writing this|This is a topic|'
-        r'Most of the answers|Most tutorials|I noticed|I found|'
-        r'I was surprised|I built|I worked|I saw )',
-        re.IGNORECASE
-    )
 
     sentences = re.split(r'(?<=[.!?])\s+', text)
 
@@ -2123,21 +2155,53 @@ class BlogSystem:
             print("Nothing to remove — all posts meet quality bar.")
             return
 
+        # FIX: previously did shutil.rmtree(post_dir) unconditionally, which
+        # is correct for content that was never published — but several
+        # purged posts here had already been crawled, indexed, and tweeted
+        # before removal (see post_url fix above). A bare 404 for an
+        # already-indexed, already-linked URL wastes the link equity and
+        # dead-ends anyone following an old share, and showed up in Search
+        # Console as a wave of "Not found (404)" errors. Instead: overwrite
+        # the post with a noindex,follow tombstone page (real 200, so it
+        # isn't a broken link) and log the removal so it's auditable. Google
+        # drops noindex pages from the index on its own on the next crawl.
+        tombstone_tmpl = StaticSiteGenerator(self).templates['tombstone']
+        log_path = self.output_dir / "_removed_posts.json"
+        removed_log = json.loads(
+            log_path.read_text()) if log_path.exists() else {}
+
         for slug in to_remove:
             post_dir = self.output_dir / slug
             reason = "fallback" if slug in results["fallback"] else "too short"
             if dry_run:
-                print(f"  [DRY RUN] Would remove: {slug} ({reason})")
-            else:
-                import shutil
-                shutil.rmtree(post_dir, ignore_errors=True)
-                print(f"  Removed: {slug} ({reason})")
+                print(f"  [DRY RUN] Would tombstone: {slug} ({reason})")
+                continue
+
+            html = tombstone_tmpl.render(
+                site_name=self.config.get('site_name', 'Tech Blog'),
+                base_path=self.config.get('base_path', ''),
+            )
+            for stale in post_dir.glob('*'):
+                if stale.name != 'index.html':
+                    if stale.is_dir():
+                        import shutil
+                        shutil.rmtree(stale, ignore_errors=True)
+                    else:
+                        stale.unlink(missing_ok=True)
+            (post_dir / "index.html").write_text(html, encoding='utf-8')
+            removed_log[slug] = {
+                "removed_at": datetime.now().isoformat(),
+                "reason": reason,
+            }
+            print(f"  Tombstoned: {slug} ({reason})")
 
         if dry_run:
             print(
-                f"\nRun with dry_run=False to actually delete {len(to_remove)} posts.")
+                f"\nRun with dry_run=False to tombstone {len(to_remove)} posts.")
         else:
-            print(f"\nPurged {len(to_remove)} low-quality posts.")
+            log_path.write_text(json.dumps(removed_log, indent=2))
+            print(
+                f"\nPurged {len(to_remove)} low-quality posts (tombstoned, not deleted).")
 
     def generate_og_images(self) -> bool:
         """
@@ -2992,6 +3056,32 @@ class BlogSystem:
                     f"{MAX_GENERATION_ATTEMPTS} attempts. No post has been saved."
                 )
 
+            # FIX (content-quality gap): the prompt tells the LLM never to
+            # invent personal anecdotes ("I spent three days debugging..."),
+            # but nothing previously enforced that on the body — only on
+            # meta_description. This mirrors the citation/near-duplicate
+            # gates immediately above/below: same retry-on-new-topic pattern,
+            # so a hit doesn't silently ship the way it was doing before.
+            anecdote_hits = _flag_fabricated_anecdotes(content)
+            if anecdote_hits:
+                print(
+                    f"\n❌  Attempt {attempt_num}/{MAX_GENERATION_ATTEMPTS} FAILED: "
+                    f"{len(anecdote_hits)} unverifiable first-person anecdote(s) detected:"
+                )
+                for h in anecdote_hits[:3]:
+                    print(f"    - \"{h}...\"")
+                if attempt_num < MAX_GENERATION_ATTEMPTS:
+                    current_topic = self._pick_retry_topic(
+                        current_topic, existing_titles, exclude=attempted_topics
+                    )
+                    current_keywords = None
+                    print(f"Switching to new topic: '{current_topic}'")
+                    continue
+                raise InsufficientContentError(
+                    f"Failed to generate content without fabricated anecdotes after "
+                    f"{MAX_GENERATION_ATTEMPTS} attempts. No post has been saved."
+                )
+
             content_dup_problem = _reject_if_near_duplicate_content(
                 content, self.output_dir, exclude_slug=None
             )
@@ -3122,9 +3212,16 @@ class BlogSystem:
 
             bundle_tweet = bundle.get("tweet_text", "").strip()
             if bundle_tweet:
+                # FIX: was missing the trailing slash. Every other URL surface
+                # (sitemap, RSS, canonical tags, JSON-LD, internal <a href>)
+                # consistently uses /{slug}/ — this was the one place that
+                # didn't, so every tweet ever sent linked to the no-slash path.
+                # GitHub Pages 301-redirects /slug -> /slug/, and Google
+                # discovering the URL via that outbound link is exactly what
+                # Search Console was flagging as "Page with redirect".
                 post_url = (
                     f"{self.config.get('base_url', 'https://kubaik.github.io')}"
-                    f"/{post.slug}"
+                    f"/{post.slug}/"
                 )
 
                 TCO_LEN = 23

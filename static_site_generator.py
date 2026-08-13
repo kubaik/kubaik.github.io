@@ -3320,6 +3320,51 @@ def _build_templates() -> dict:
 </body>
 </html>"""
 
+    # FIX (content-quality purge, see blog_system.py purge_low_quality_posts):
+    # Posts removed for being thin/fallback content were previously hard-deleted
+    # with shutil.rmtree(), which is correct SEO-wise for content that was never
+    # published — but several purged posts had already been crawled, indexed,
+    # and shared on Twitter before removal. A bare 404 for an already-indexed,
+    # already-linked URL wastes the link equity and surprises anyone following
+    # an old share. This tombstone renders a real 200 page with noindex,follow
+    # (so Google drops it from the index without treating it as a broken link)
+    # and sends real visitors somewhere useful instead of a dead end.
+    TOMBSTONE_TMPL = """\
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post removed — {{ site_name }}</title>
+    <meta name="robots" content="noindex, follow">
+    <meta name="base-path" content="{{ base_path }}">
+    <style>
+        html, body {
+            margin: 0; padding: 0; min-height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: #fff; color: #333;
+        }
+        .tombstone { text-align: center; padding: 2rem; max-width: 480px; }
+        .tombstone h1 { font-size: 1.4rem; margin-bottom: 0.75rem; }
+        .tombstone p { color: #666; line-height: 1.5; }
+        .tombstone a {
+            display: inline-block; margin-top: 1.25rem;
+            color: #fff; background: #6366f1; padding: 0.6rem 1.25rem;
+            border-radius: 6px; text-decoration: none; font-weight: 600;
+        }
+        .tombstone a:hover { background: #4f46e5; }
+    </style>
+</head>
+<body>
+    <div class="tombstone">
+        <h1>This post has been removed</h1>
+        <p>It didn't meet our current content quality bar and has been taken down as part of a routine editorial review. Sorry for the dead link.</p>
+        <a href="{{ base_path }}/">Browse the blog</a>
+    </div>
+</body>
+</html>"""
+
     AI_DISCLOSURE_TMPL = """\
 <!DOCTYPE html>
 <html lang="en">
@@ -3582,6 +3627,7 @@ def _build_templates() -> dict:
         'terms_of_service': env.from_string(TERMS_TMPL),
         'contact':          env.from_string(CONTACT_TMPL),
         'not_found':        env.from_string(NOT_FOUND_TMPL),
+        'tombstone':        env.from_string(TOMBSTONE_TMPL),
         'dmca':             env.from_string(DMCA_TMPL),
         'ai_disclosure':    env.from_string(AI_DISCLOSURE_TMPL),
     }
