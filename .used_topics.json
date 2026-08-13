@@ -176,5 +176,9 @@
   "How we use spot instances + smart retry logic for non-critical agent workloads",
   "How we version and evolve agent capabilities without breaking existing users and integrations",
   "The frontend performance budget that still matters when most traffic is from Africa",
-  "Data residency and sovereign AI constraints for African fintech using global models"
+  "Data residency and sovereign AI constraints for African fintech using global models",
+  "Agentic cost management: using AI to optimize our own AI spend (and where it backfired)",
+  "Memory systems for production agents: what worked and what leaked context over time",
+  "SBOM + attestation that actually gets used instead of sitting in a bucket",
+  "How AI changed what 'senior engineer' actually means in 2026 hiring rubrics"
 ]

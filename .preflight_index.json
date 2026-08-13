@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-13T02:12:42.411411",
+  "built_at": "2026-08-13T07:35:27.691958",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4800,6 +4800,11 @@
       "slug": "foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality",
       "title": "Foreign AI models vs sovereign fintech stacks: 2026 reality",
       "summary": "The official documentation for data residency is good. What it doesn't cover is what happens six months into production. The edge cases only show up once real users hit the system. This post covers what comes after the happy path. Why this comparison matters right now In 2026, African fintech platfo"
+    },
+    {
+      "slug": "senior-engineer-title-inflation-in-2026",
+      "title": "Senior engineer title inflation in 2026",
+      "summary": "I've hit the same sbom attestation mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. This post covers what comes after the happy path. The gap between what the docs say and what production needs The 2026 hiring rubric for a \"s"
     }
   ]
 }
