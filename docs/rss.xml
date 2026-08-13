@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 13 Aug 2026 07:35:35 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Aug 2026 08:44:55 +0000</lastBuildDate>
+    <item>
+      <title>Currency switch fails in Ghana: one config file to rule…</title>
+      <link>https://kubaik.github.io/currency-switch-fails-in-ghana-one-config-file-to-rule/</link>
+      <description>Fix fintech currency switching across Kenya, Nigeria, Ghana, and Senegal without forks — silent KES fallback, MTN header quirks, and the adapter every…</description>
+      <pubDate>Thu, 13 Aug 2026 08:44:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/currency-switch-fails-in-ghana-one-config-file-to-rule/</guid>
+    </item>
     <item>
       <title>Senior engineer title inflation in 2026</title>
       <link>https://kubaik.github.io/senior-engineer-title-inflation-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Offline-first mobile money patterns that cut duplicate debits 98 % — shard keys, conditional writes, and the cache stampede mistake most teams miss.</description>
       <pubDate>Sat, 08 Aug 2026 09:54:51 +0000</pubDate>
       <guid>https://kubaik.github.io/offline-first-money-apps-with-dynamodb-streams/</guid>
-    </item>
-    <item>
-      <title>AI cost attribution without the spreadsheet hell</title>
-      <link>https://kubaik.github.io/ai-cost-attribution-without-the-spreadsheet-hell/</link>
-      <description>AI cost attribution that product managers can actually read — per-user, per-feature numbers in real time without breaking the SLA.</description>
-      <pubDate>Fri, 07 Aug 2026 13:11:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-cost-attribution-without-the-spreadsheet-hell/</guid>
     </item>
   </channel>
 </rss>
