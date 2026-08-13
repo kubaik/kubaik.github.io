@@ -1,11 +1,13 @@
 {
   "summary": {
-    "total_posts": 520,
-    "generated_at": "2026-08-05T13:44:00.463933+00:00",
+    "total_posts": 449,
+    "generated_at": "2026-08-13T08:41:04.690373+00:00",
+    "reconciled_from": "2026-08-05T13:44:00.463933+00:00",
     "threshold": 0.7,
     "merge_redirect": 0,
     "noindex_only": 1,
-    "unaffected": 519
+    "unaffected": 448,
+    "dropped_stale_actions": 0
   },
   "actions": [
     {

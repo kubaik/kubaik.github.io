@@ -15,6 +15,7 @@ on:
         required: false
         default: false
         type: boolean
+
   push:
     branches: [main]
 
@@ -55,6 +56,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          # quality_gate.py imports utils/content_quality_scanner.py, which
+          # imports dedup_similarity.py's TF-IDF/cosine implementation. These
+          # aren't guaranteed to be in requirements.txt (they were previously
+          # only pip-installed ad-hoc inside workflow_dispatch.yml), so make
+          # sure they're present here too rather than assuming.
+          pip install --quiet scikit-learn numpy
 
       - name: Pull latest changes
         run: |
@@ -162,6 +169,22 @@ jobs:
           post_count=$(find docs -name "post.json" 2>/dev/null | wc -l)
           echo "Total posts: $post_count"
           [ -f "docs/index.html" ] || { echo "ERROR: no index.html"; exit 1; }
+
+      # Full-corpus quality gate: scores every post in docs/ (not a sample)
+      # using utils/content_quality_scanner.py's real scoring functions,
+      # writes a complete CSV, and queues anything under threshold into
+      # regeneration_queue.json for the existing automated regen pipeline.
+      # Report-only — never fails the job, never blocks deploy, never
+      # deletes. Deletion stays with content_quality_scanner.py's own
+      # prune/dedupe modes (--confirm required) and the report-only
+      # watchdog steps in workflow_dispatch.yml.
+      - name: 📊 Full-corpus content quality gate
+        run: |
+          python scripts/quality_gate.py \
+            --docs-dir ./docs \
+            --min-score 50 \
+            --csv ./quality_report_full.csv \
+            --queue ./regeneration_queue.json
 
       # Generate single sitemap.xml (no chunking)
       - name: 🗺️ Generate sitemap.xml
