@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-13T13:19:52.592183",
+  "built_at": "2026-08-14T02:13:10.171525",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4815,6 +4815,11 @@
       "slug": "price-tests-that-raised-revenue-vs-tests-that-killed",
       "title": "Price tests that raised revenue vs tests that killed…",
       "summary": "I ran into this pricing experiments problem while migrating a service under a hard deadline. It's the kind of problem that's easy to reproduce and hard to explain. This post covers what comes after the happy path. Why this comparison matters right now Teams running pricing experiments in 2026 still "
+    },
+    {
+      "slug": "rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026",
+      "title": "Rust SDK vs FastAPI for LLM ops: trust in 2026",
+      "summary": "There's a gap between how evaluation stack is taught and how it actually behaves under load. The tutorials all show the happy path. Here's the fuller picture, with the tradeoffs left in. Why this comparison matters right now In 2026, shipping production-grade LLM features still hinges on two things:"
     }
   ]
 }

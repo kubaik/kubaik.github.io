@@ -1,4 +1,9 @@
 [
   "Building fintech features that work across Kenya, Nigeria, Ghana, and Senegal without country-specific forks",
-  "The pricing experiments that worked (and the ones that quietly killed conversion)"
+  "The pricing experiments that worked (and the ones that quietly killed conversion)",
+  "The database connection pool mistake that cost us $4k/month before we noticed",
+  "When to build vs when to buy the AI components of your SaaS in 2026",
+  "The tool-use patterns that scaled and the ones that created thundering herd problems",
+  "eBPF in 2026: the observability and security use cases that finally justified the complexity",
+  "The evaluation stack I actually trust for production LLM features in 2026"
 ]
