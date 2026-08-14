@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Aug 2026 02:13:17 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 14 Aug 2026 13:16:09 +0000</lastBuildDate>
+    <item>
+      <title>AI agents need circuit breakers in 2026</title>
+      <link>https://kubaik.github.io/ai-agents-need-circuit-breakers-in-2026/</link>
+      <description>In a 2026 incident report from a Lagos-based health tech team, an agent retrying on a 503 Service Unavailable response from a government gateway triggered…</description>
+      <pubDate>Fri, 14 Aug 2026 13:16:00 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-need-circuit-breakers-in-2026/</guid>
+    </item>
     <item>
       <title>Rust SDK vs FastAPI for LLM ops: trust in 2026</title>
       <link>https://kubaik.github.io/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>The map uses BPFFNOPREALLOC to avoid preallocating 65k entries at load time, reducing startup latency from 420ms to 12ms on a t3.medium.</description>
       <pubDate>Sun, 09 Aug 2026 17:47:30 +0000</pubDate>
       <guid>https://kubaik.github.io/ebpf-observability-in-2026-what-actually-works/</guid>
-    </item>
-    <item>
-      <title>Why your multi-agent system degraded slowly</title>
-      <link>https://kubaik.github.io/why-your-multi-agent-system-degraded-slowly/</link>
-      <description>Cut multi-agent system p99 latency 80% by stopping silent orchestration overhead growth — payload size creep, NATS queueing pressure, and retry loops…</description>
-      <pubDate>Sun, 09 Aug 2026 12:58:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-multi-agent-system-degraded-slowly/</guid>
     </item>
   </channel>
 </rss>

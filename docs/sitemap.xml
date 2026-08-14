@@ -584,6 +584,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-agents-need-circuit-breakers-in-2026/</loc>
+    <lastmod>2026-08-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/ai-agents-need-circuit-breakers-in-2026.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -3364,7 +3373,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026.png</image:loc>
     </image:image>
   </url>
   <url>

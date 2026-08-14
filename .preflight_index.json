@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-14T02:13:10.171525",
+  "built_at": "2026-08-14T13:16:01.803098",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4820,6 +4820,11 @@
       "slug": "rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026",
       "title": "Rust SDK vs FastAPI for LLM ops: trust in 2026",
       "summary": "There's a gap between how evaluation stack is taught and how it actually behaves under load. The tutorials all show the happy path. Here's the fuller picture, with the tradeoffs left in. Why this comparison matters right now In 2026, shipping production-grade LLM features still hinges on two things:"
+    },
+    {
+      "slug": "ai-agents-need-circuit-breakers-in-2026",
+      "title": "AI agents need circuit breakers in 2026",
+      "summary": "I've hit the same most production mistake in more than one production codebase over the years. The gap between the demo and the incident report is where this actually lives. This post covers what comes after the happy path. Why I wrote this (the problem I kept hitting) In 2026, teams across sub-Saha"
     }
   ]
 }

@@ -5,5 +5,8 @@
   "When to build vs when to buy the AI components of your SaaS in 2026",
   "The tool-use patterns that scaled and the ones that created thundering herd problems",
   "eBPF in 2026: the observability and security use cases that finally justified the complexity",
-  "The evaluation stack I actually trust for production LLM features in 2026"
+  "The evaluation stack I actually trust for production LLM features in 2026",
+  "Security model for MCP servers in regulated environments (fintech case study)",
+  "The architecture decisions that let us serve users on 2G/3G as a first-class experience in 2026",
+  "Why most production AI agents still need circuit breakers and human escalation paths in 2026"
 ]
