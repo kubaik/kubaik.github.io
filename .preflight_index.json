@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-14T13:16:01.803098",
+  "built_at": "2026-08-15T01:24:35.426038",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4825,6 +4825,11 @@
       "slug": "ai-agents-need-circuit-breakers-in-2026",
       "title": "AI agents need circuit breakers in 2026",
       "summary": "I've hit the same most production mistake in more than one production codebase over the years. The gap between the demo and the incident report is where this actually lives. This post covers what comes after the happy path. Why I wrote this (the problem I kept hitting) In 2026, teams across sub-Saha"
+    },
+    {
+      "slug": "money-moves-need-stricter-parsers",
+      "title": "Money moves need stricter parsers",
+      "summary": "There's a gap between how structured output is taught and how it actually behaves under load. Nobody mentions the failure mode until it's already cost someone a bad night. This is what I put together after working through it properly. The gap between what the docs say and what production needs Most "
     }
   ]
 }

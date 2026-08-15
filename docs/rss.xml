@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 14 Aug 2026 13:16:09 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Aug 2026 01:24:43 +0000</lastBuildDate>
+    <item>
+      <title>Money moves need stricter parsers</title>
+      <link>https://kubaik.github.io/money-moves-need-stricter-parsers/</link>
+      <description>Cut ledger reversals 95% with stricter parsers: why JSON mode alone fails on money endpoints and how structured output plus validation layers enforce…</description>
+      <pubDate>Sat, 15 Aug 2026 01:24:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/money-moves-need-stricter-parsers/</guid>
+    </item>
     <item>
       <title>AI agents need circuit breakers in 2026</title>
       <link>https://kubaik.github.io/ai-agents-need-circuit-breakers-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Cut agent blast radius with least-privilege policies — OPA Rego, FastAPI 0.109, and the 2.6% denied calls that saved $1.4k in one incident</description>
       <pubDate>Mon, 10 Aug 2026 02:02:42 +0000</pubDate>
       <guid>https://kubaik.github.io/least-privilege-for-agents-the-config-line-nobody-writes/</guid>
-    </item>
-    <item>
-      <title>eBPF observability in 2026: what actually works</title>
-      <link>https://kubaik.github.io/ebpf-observability-in-2026-what-actually-works/</link>
-      <description>The map uses BPFFNOPREALLOC to avoid preallocating 65k entries at load time, reducing startup latency from 420ms to 12ms on a t3.medium.</description>
-      <pubDate>Sun, 09 Aug 2026 17:47:30 +0000</pubDate>
-      <guid>https://kubaik.github.io/ebpf-observability-in-2026-what-actually-works/</guid>
     </item>
   </channel>
 </rss>

@@ -8,5 +8,6 @@
   "The evaluation stack I actually trust for production LLM features in 2026",
   "Security model for MCP servers in regulated environments (fintech case study)",
   "The architecture decisions that let us serve users on 2G/3G as a first-class experience in 2026",
-  "Why most production AI agents still need circuit breakers and human escalation paths in 2026"
+  "Why most production AI agents still need circuit breakers and human escalation paths in 2026",
+  "Why structured output + validation layers beat JSON mode for anything that touches money"
 ]
