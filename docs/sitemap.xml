@@ -797,6 +797,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-era-promotions-hinge-on-this-one-thing/</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/ai-era-promotions-hinge-on-this-one-thing.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ai-feature-drift-why-your-model-died-at-midnight/</loc>
     <lastmod>2026-07-07</lastmod>
     <changefreq>weekly</changefreq>
@@ -2647,7 +2656,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/money-moves-need-stricter-parsers.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/money-moves-need-stricter-parsers.png</image:loc>
     </image:image>
   </url>
   <url>

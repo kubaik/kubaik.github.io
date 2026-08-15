@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-15T01:24:35.426038",
+  "built_at": "2026-08-15T12:43:37.876514",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4830,6 +4830,11 @@
       "slug": "money-moves-need-stricter-parsers",
       "title": "Money moves need stricter parsers",
       "summary": "There's a gap between how structured output is taught and how it actually behaves under load. Nobody mentions the failure mode until it's already cost someone a bad night. This is what I put together after working through it properly. The gap between what the docs say and what production needs Most "
+    },
+    {
+      "slug": "ai-era-promotions-hinge-on-this-one-thing",
+      "title": "AI-era promotions hinge on this one thing",
+      "summary": "The official documentation for some engineers is good. What it doesn't cover is what happens six months into production. It works in the simple case and breaks in a specific way under load. This post covers what comes after the happy path. The situation (what we were trying to solve) In mid-2026, a "
     }
   ]
 }

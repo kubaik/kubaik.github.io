@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Aug 2026 01:24:43 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 15 Aug 2026 12:43:43 +0000</lastBuildDate>
+    <item>
+      <title>AI-era promotions hinge on this one thing</title>
+      <link>https://kubaik.github.io/ai-era-promotions-hinge-on-this-one-thing/</link>
+      <description>ClearFlow’s fintech case study: why AI-era promotions go to engineers who treat AI output as data, not magic—schema validation, rollback caches, and the…</description>
+      <pubDate>Sat, 15 Aug 2026 12:43:35 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-era-promotions-hinge-on-this-one-thing/</guid>
+    </item>
     <item>
       <title>Money moves need stricter parsers</title>
       <link>https://kubaik.github.io/money-moves-need-stricter-parsers/</link>
@@ -138,13 +145,6 @@
       <description>Cut API errors 90% during Starlink maintenance windows — breaker logic, DSCP marking, and the 300 ms burst detector most teams miss</description>
       <pubDate>Mon, 10 Aug 2026 11:35:53 +0000</pubDate>
       <guid>https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/</guid>
-    </item>
-    <item>
-      <title>Least privilege for agents: the config line nobody writes</title>
-      <link>https://kubaik.github.io/least-privilege-for-agents-the-config-line-nobody-writes/</link>
-      <description>Cut agent blast radius with least-privilege policies — OPA Rego, FastAPI 0.109, and the 2.6% denied calls that saved $1.4k in one incident</description>
-      <pubDate>Mon, 10 Aug 2026 02:02:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/least-privilege-for-agents-the-config-line-nobody-writes/</guid>
     </item>
   </channel>
 </rss>
