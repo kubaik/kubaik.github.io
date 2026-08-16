@@ -10,5 +10,7 @@
   "The architecture decisions that let us serve users on 2G/3G as a first-class experience in 2026",
   "Why most production AI agents still need circuit breakers and human escalation paths in 2026",
   "Why structured output + validation layers beat JSON mode for anything that touches money",
-  "Why some engineers are getting promoted faster in the AI era while others are being managed out"
+  "Why some engineers are getting promoted faster in the AI era while others are being managed out",
+  "The architecture principles that survived the shift to agentic and multi-model systems",
+  "Agentic FinOps: the dashboards and alerts that finally made AI costs visible to leadership"
 ]
