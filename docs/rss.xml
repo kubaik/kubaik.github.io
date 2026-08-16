@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 16 Aug 2026 01:30:34 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 16 Aug 2026 12:46:01 +0000</lastBuildDate>
+    <item>
+      <title>Replace managed services with Postgres 17</title>
+      <link>https://kubaik.github.io/replace-managed-services-with-postgres-17/</link>
+      <description>Postgres 17 replaces Redis, Elasticsearch, and cron for startups in Southeast Asia — here’s the real latency, cost, and failure-mode trade-offs most…</description>
+      <pubDate>Sun, 16 Aug 2026 12:45:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/replace-managed-services-with-postgres-17/</guid>
+    </item>
     <item>
       <title>AI-era promotions hinge on this one thing</title>
       <link>https://kubaik.github.io/ai-era-promotions-hinge-on-this-one-thing/</link>
@@ -138,13 +145,6 @@
       <description>Agent frameworks: stop rewriting the same glue code – cut boilerplate 70% with a job queue, credentials service, and DAG compiler in 2026</description>
       <pubDate>Mon, 10 Aug 2026 11:51:32 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/</guid>
-    </item>
-    <item>
-      <title>Starlink in production: what changed in our stack</title>
-      <link>https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/</link>
-      <description>Cut API errors 90% during Starlink maintenance windows — breaker logic, DSCP marking, and the 300 ms burst detector most teams miss</description>
-      <pubDate>Mon, 10 Aug 2026 11:35:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/starlink-in-production-what-changed-in-our-stack/</guid>
     </item>
   </channel>
 </rss>

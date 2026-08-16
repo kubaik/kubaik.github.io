@@ -3332,6 +3332,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/replace-managed-services-with-postgres-17/</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/replace-managed-services-with-postgres-17.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/replace-vibe-testing-with-agent-evals-now/</loc>
     <lastmod>2026-07-11</lastmod>
     <changefreq>weekly</changefreq>

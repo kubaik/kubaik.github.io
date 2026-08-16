@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-15T12:43:37.876514",
+  "built_at": "2026-08-16T12:45:53.685505",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4835,6 +4835,11 @@
       "slug": "ai-era-promotions-hinge-on-this-one-thing",
       "title": "AI-era promotions hinge on this one thing",
       "summary": "The official documentation for some engineers is good. What it doesn't cover is what happens six months into production. It works in the simple case and breaks in a specific way under load. This post covers what comes after the happy path. The situation (what we were trying to solve) In mid-2026, a "
+    },
+    {
+      "slug": "replace-managed-services-with-postgres-17",
+      "title": "Replace managed services with Postgres 17",
+      "summary": "A colleague asked me about replaced three during a code review recently, and my first answer wasn't a good one. It's the kind of problem that's easy to reproduce and hard to explain. This walks through the fix and the reasoning, not just the patch. The conventional wisdom (and why it's incomplete) E"
     }
   ]
 }
