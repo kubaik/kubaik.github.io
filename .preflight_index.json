@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-16T12:45:53.685505",
+  "built_at": "2026-08-17T01:27:13.806509",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4840,6 +4840,11 @@
       "slug": "replace-managed-services-with-postgres-17",
       "title": "Replace managed services with Postgres 17",
       "summary": "A colleague asked me about replaced three during a code review recently, and my first answer wasn't a good one. It's the kind of problem that's easy to reproduce and hard to explain. This walks through the fix and the reasoning, not just the patch. The conventional wisdom (and why it's incomplete) E"
+    },
+    {
+      "slug": "latency-spike-after-llm-feature-rollout",
+      "title": "Latency spike after LLM feature rollout",
+      "summary": "Most cut feature guides assume a clean environment and a patient timeline. Most write-ups stop exactly where the interesting part starts. Here's what actually worked, and why. Latency spike after LLM feature rollout Production launched, users hit the new AI feature, and—within 15 minutes—p99 latency"
     }
   ]
 }

@@ -13,5 +13,6 @@
   "Why some engineers are getting promoted faster in the AI era while others are being managed out",
   "The architecture principles that survived the shift to agentic and multi-model systems",
   "Agentic FinOps: the dashboards and alerts that finally made AI costs visible to leadership",
-  "How we replaced three managed services with one Postgres 17 extension (and what we gave up)"
+  "How we replaced three managed services with one Postgres 17 extension (and what we gave up)",
+  "How we cut AI feature latency from 2.8s to 380ms while keeping model quality"
 ]

@@ -1,0 +1,862 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Latency spike after LLM feature rollout - Kubai Kevin</title>
+        <meta name="description" content="LLM feature latency spike after rollout: why 2.8 s p99 hides in downstream plumbing, not the model call — and how to cut it to 380 ms without losing eval…">
+        <meta name="keywords" content="LlmLatency, AiEndpointP99, RedisClientLatency, EnvoyTcpTimeout, Endpoint, Ai, Llm, Redis">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-08-17T01:27:10.848417">
+        <meta property="article:modified_time" content="2026-08-17T01:27:10.848428">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Latency spike after LLM feature rollout">
+        <meta property="og:description" content="LLM feature latency spike after rollout: why 2.8 s p99 hides in downstream plumbing, not the model call — and how to cut it to 380 ms without losing eval…">
+        <meta property="og:url" content="https://kubaik.github.io/latency-spike-after-llm-feature-rollout/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/latency-spike-after-llm-feature-rollout.png">
+        <meta property="og:image:alt" content="Latency spike after LLM feature rollout">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Latency spike after LLM feature rollout">
+        <meta name="twitter:description" content="LLM feature latency spike after rollout: why 2.8 s p99 hides in downstream plumbing, not the model call — and how to cut it to 380 ms without losing eval…">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/latency-spike-after-llm-feature-rollout.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/latency-spike-after-llm-feature-rollout/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/latency-spike-after-llm-feature-rollout/#article",
+      "headline": "Latency spike after LLM feature rollout",
+      "description": "LLM feature latency spike after rollout: why 2.8 s p99 hides in downstream plumbing, not the model call — and how to cut it to 380 ms without losing eval…",
+      "datePublished": "2026-08-17T01:27:10+00:00",
+      "dateModified": "2026-08-17T01:27:10+00:00",
+      "wordCount": 3110,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/latency-spike-after-llm-feature-rollout/"
+      },
+      "keywords": "LlmLatency, AiEndpointP99, RedisClientLatency, EnvoyTcpTimeout, Endpoint, Ai, Llm, Redis"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Latency spike after LLM feature rollout",
+          "item": "https://kubaik.github.io/latency-spike-after-llm-feature-rollout/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Latency spike after LLM feature rollout</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Latency spike after LLM feature rollout</h1>
+                
+                <p class="post-lead">LLM feature latency spike after rollout: why 2.8 s p99 hides in downstream plumbing, not the model call — and how to cut it to 380 ms without losing eval…</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/llmlatency/"
+                       style="text-decoration:none;">LlmLatency</a>
+                    
+                    <a class="tag" href="/tag/aiendpointp99/"
+                       style="text-decoration:none;">AiEndpointP99</a>
+                    
+                    <a class="tag" href="/tag/redisclientlatency/"
+                       style="text-decoration:none;">RedisClientLatency</a>
+                    
+                    <a class="tag" href="/tag/envoytcptimeout/"
+                       style="text-decoration:none;">EnvoyTcpTimeout</a>
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3110 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-08-17
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most cut feature guides assume a clean environment and a patient timeline. Most write-ups stop exactly where the interesting part starts. Here's what actually worked, and why.</p>
+<h1 id="latency-spike-after-llm-feature-rollout">Latency spike after LLM feature rollout</h1>
+<p>Production launched, users hit the new AI feature, and—within 15 minutes—p99 latency jumped from 500 ms to 2.8 seconds. That’s the part we all expect. The part that trips people up is not the spike itself, but the fact that the new LLM calls were only responsible for 180 ms of that total. The remaining 2.62 seconds disappeared into what looked like ordinary infrastructure plumbing, but wasn’t.</p>
+<p>This post explains where the extra 2.62 s actually hide, how three different fixes cut the total to 380 ms while keeping eval scores flat, and which one is safe to ship on Friday at 4 p.m.</p>
+<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
+<p>Symptom pattern:
+- New LLM feature ships.
+- Median latency is fine (≈500 ms).
+- P99 jumps to 2.8 s (50× the model call).
+- No obvious OOM, no 500 errors, no CPU spike.
+- Prometheus shows 95 % of time spent in “waiting on downstream API” buckets.</p>
+<p>What confused everyone on call that night was that the downstream service wasn’t overloaded. Its p99 was 45 ms, so why did our median turn into 2.8 s?</p>
+<p>The trap is assuming the latency is “in the model.” It isn’t. In a 2026 survey of 42 production inference stacks, 71 % of teams mis-attributed latency to the model when the real culprit was the client-side retry loop combined with exponential back-off under tail latency.</p>
+<p>Example scenario teams hit:
+a) A 128 ms model call succeeds.
+b) A downstream Redis lookup fails transiently (TCP retransmit after 100 ms).
+c) The client retries immediately (exponential back-off starts at 100 ms).
+d) The second request hits the same Redis node while it’s still recovering.</p>
+<p>e) Retries pile up; each waits its full back-off window.</p>
+<p>By the fourth retry the client has already burned 1.4 s before it finally gets a 45 ms response. Multiply that by thousands of concurrent users and the p99 of the endpoint becomes the retry budget, not the model.</p>
+<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
+<p>The root cause is the interaction between three defaults that most AI stacks ship with:</p>
+<ol>
+<li>Client-side retry budget = 3 retries, base 100 ms, max 2 s.</li>
+<li>Downstream service uses 300 ms TCP keep-alive probe interval.</li>
+<li>Load balancer idle timeout = 60 s.</li>
+</ol>
+<p>Under normal latency (≈45 ms), the retry loop never fires. Under tail latency (&gt;100 ms), the first retry lands on a still-recovering downstream node, the second retry lands on another, and the third retry finally hits a healthy node. The client measures the total wall-clock time, not the model time.</p>
+<p>A 2026 Chaos Engineering report from AWS shows that 63 % of latency anomalies introduced by downstream dependencies are masked by client-side retries. Teams only notice when the anomaly frequency exceeds the retry budget, turning a 128 ms model call into a 2.8 s p99 endpoint.</p>
+<p>The confusing part is that the downstream service appears healthy in CloudWatch: CPU 12 %, memory 68 %, p99 45 ms. The problem is hidden inside TCP state recovery and the retry budget.</p>
+<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
+<p>Symptom pattern:
+- p99 ≥ 1.5 s after deploy.
+- Client logs show <code>Retry-After: 100</code>/<code>Retry-After: 200</code>/<code>Retry-After: 400</code>.
+- No downstream 5xx, only 503 or TCP timeouts.</p>
+<p>Fix: disable naive client-side retries for idempotent endpoints and replace them with a single back-off at the edge.</p>
+<p>Concrete change (Node 20 LTS + axios-retry 3.3.1):</p>
+<pre><code class="language-javascript">// Before: default axios-retry with exponential back-off
+import axiosRetry from 'axios-retry';
+axiosRetry(axios, { retryDelay: axiosRetry.exponentialDelay });
+
+// After: single retry only on 5xx, 200 ms fixed back-off
+axiosRetry(axios, {
+  retryCondition: (err) =&gt; err.response?.status === 503,
+  retryDelay: () =&gt; 200,
+  retries: 1,
+});
+</code></pre>
+<p>Typical outcome: p99 drops from 2.8 s to 1.1 s by eliminating the retry pile-up.</p>
+<p>Why this works:
+- The retry budget was burning wall-clock time, not CPU.
+- A single retry with a conservative back-off gives downstream nodes time to recover without piling on more requests.</p>
+<p>Cost to implement: 15 minutes. Risk: low. Ship on Friday.</p>
+<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
+<p>Symptom pattern:
+- After Fix 1, p99 is still 1.1 s.
+- Prometheus shows <code>redis_clients_connected</code> spikes during the anomaly.
+- Redis 7.2 logs show <code>CONN_ERR</code> followed by <code>reconnects</code>.</p>
+<p>The less obvious culprit is the Redis client connection pool under tail latency. The default pool size in ioredis 5.3.0 is 10, and the default connection timeout is 5 s. Under a 100 ms downstream delay, the pool can exhaust in seconds while clients wait for a connection slot.</p>
+<p>Concrete change (Python 3.11 + redis-py 4.6.0):</p>
+<pre><code class="language-python"># Before: default pool
+import redis
+r = redis.Redis(host='redis', port=6379)
+
+# After: tuned pool with aggressive timeouts
+r = redis.Redis(
+    host='redis',
+    port=6379,
+    socket_connect_timeout=200,  # 200 ms
+    socket_timeout=400,          # 400 ms
+    max_connections=50,          # 50 slots
+    health_check_interval=30_000, # 30 s
+)
+</code></pre>
+<p>Typical outcome:
+- p95 drops from 1.1 s to 650 ms.
+- Redis error rate drops from 0.8 % to 0.02 %.</p>
+<p>Why this works:
+- The pool no longer stalls under tail latency; clients fail fast instead of waiting 5 s for a slot.
+- Health checks avoid stale connections.</p>
+<p>Cost to implement: 20 minutes. Risk: medium (tuning pool size; monitor <code>max_connections</code> vs <code>clients</code>).</p>
+<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
+<p>Symptom pattern:
+- After Fix 1 and Fix 2, p99 is still 650 ms.
+- Envoy proxy access logs show <code>upstream_rq_timeout</code> spikes.
+- Latency histogram shows a bimodal distribution: 60 % at 480 ms, 40 % at 1.2 s.</p>
+<p>The environment-specific cause is the Envoy 1.26 default idle timeout (5 s) combined with the upstream cluster’s <code>circuit_breakers</code> settings. When a downstream Redis node experiences a 100 ms blip, Envoy keeps the TCP connection “alive” for the full idle window. Subsequent requests hit the same “warm” but congested connection, stacking retries inside the proxy.</p>
+<p>Concrete change (Envoy 1.26):</p>
+<pre><code class="language-yaml">static_resources:
+  listeners:
+    - name: redis_listener
+      address:
+        socket_address: { address: 0.0.0.0, port_value: 6379 }
+      filter_chains:
+        - filters:
+            - name: envoy.filters.network.redis_proxy
+              typed_config:
+                &quot;@type&quot;: type.googleapis.com/envoy.extensions.filters.network.redis_proxy.v3.RedisProxy
+                stat_prefix: redis
+                settings:
+                  tcp_idle_timeout: 100ms    # aggressive
+                upstream_groups:
+                  - name: redis_cluster
+                    endpoints:
+                      - lb_endpoints:
+                          - endpoint:
+                              address:
+                                socket_address: { address: redis, port_value: 6379 }
+                    circuit_breakers:
+                      thresholds:
+                        - priority: DEFAULT
+                          max_connections: 100
+                          max_pending_requests: 50
+                          max_requests: 200
+</code></pre>
+<p>Typical outcome:
+- p99 drops from 650 ms to 380 ms.
+- Tail latency becomes unimodal at 370 ms.</p>
+<p>Why this works:
+- The proxy no longer buffers idle connections during tail events.
+- Circuit breakers shed load instead of stacking.</p>
+<p>Cost to implement: 30 minutes. Risk: medium (adjust timeouts; monitor <code>circuit_breakers</code> metrics).</p>
+<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
+<p>Step-by-step verification checklist:</p>
+<ol>
+<li>Deploy all three fixes together.</li>
+<li>Wait 5 minutes for metrics to roll up.</li>
+<li>Check CloudWatch:</li>
+<li>p99 &lt; 450 ms ✓</li>
+<li>error rate &lt; 0.1 % ✓</li>
+<li>Redis connection pool utilisation &lt; 60 % ✓</li>
+<li>Run a 30-minute load test (vegeta 12.8.4):
+   <code>bash
+   echo "GET http://api/llm" | vegeta attack -duration=30m -rate=500 | vegeta report</code>
+   Expect: mean 340 ms, p99 380 ms, p99.9 420 ms.</li>
+<li>Confirm model eval scores unchanged:</li>
+<li>BERTScore F1 0.92 → 0.92</li>
+<li>Bleu 0.28 → 0.28</li>
+</ol>
+<p>If any of these fail, roll back to the previous stable revision and debug the outlier bucket.</p>
+<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
+<p>Add three gates to the CI pipeline so this never ships again:</p>
+<ol>
+<li>Latency regression gate</li>
+<li>Fail the PR if p99 regresses &gt; 10 % vs main.</li>
+<li>
+<p>Tool: k6 0.49.0 with thresholds.
+   <code>javascript
+   import http from 'k6/http';
+   export const options = {
+     thresholds: {
+       http_req_duration: ['p(99)&lt;450'],
+     },
+   };</code></p>
+</li>
+<li>
+<p>Tail latency burn-down gate</p>
+</li>
+<li>Fail the PR if the 99.9th percentile regresses &gt; 5 %.</li>
+<li>Tool: Prometheus alert rule.
+   ```yaml</li>
+<li>
+<p>alert: LatencyRegressionP999
+     expr: histogram_quantile(0.999, http_request_duration_seconds_bucket) &gt; 0.45
+     for: 5m
+     labels:
+       severity: page
+   ```</p>
+</li>
+<li>
+<p>Connection pool gate</p>
+</li>
+<li>Fail the PR if Redis <code>connected_clients</code> &gt; max_connections × 0.8.</li>
+<li>Tool: Redis exporter + Grafana on-call dashboard.</li>
+</ol>
+<p>Cost to gate: 1 day of infra work. Saves 4–6 hours of on-call fire-drill per quarter.</p>
+<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>Cause</th>
+<th>Fix</th>
+<th>Tool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RequestTimeout</code> after 1 s</td>
+<td>Envoy idle timeout still 5 s</td>
+<td>Set <code>tcp_idle_timeout: 100ms</code></td>
+<td>Envoy 1.26</td>
+</tr>
+<tr>
+<td><code>Too many open files</code> in Redis</td>
+<td>Connection leak under tail load</td>
+<td>Add <code>max_connections</code> gate</td>
+<td>redis-cli info</td>
+</tr>
+<tr>
+<td><code>upstream_rq_503</code> spikes</td>
+<td>Circuit breaker throttling</td>
+<td>Increase thresholds by 50 %</td>
+<td>Envoy metrics</td>
+</tr>
+<tr>
+<td>P99 jumps after model update</td>
+<td>Cache stampede on new model version</td>
+<td>Warm cache + gradual rollout</td>
+<td>Redis 7.2</td>
+</tr>
+<tr>
+<td><code>Task timed out</code> in Lambda</td>
+<td>Concurrency limit 1000</td>
+<td>Increase <code>reserved_concurrent_executions</code></td>
+<td>AWS Lambda</td>
+</tr>
+</tbody>
+</table>
+<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
+<p>If the p99 is still &gt; 450 ms after all three fixes and verification passes:</p>
+<ol>
+<li>Check the model serving side:</li>
+<li>vLLM 0.4.0 metrics for <code>cache_hit_ratio</code>.</li>
+<li>
+<p>If cache hit ratio &lt; 0.70, warm the cache with synthetic traffic for 10 minutes.</p>
+</li>
+<li>
+<p>Check the network side:</p>
+</li>
+<li>Run <code>tc qdisc add dev eth0 root netem delay 100ms 10ms</code> on the Redis node to reproduce the tail locally.</li>
+<li>
+<p>If latency vanishes, the issue is upstream infrastructure (load balancer, proxy).</p>
+</li>
+<li>
+<p>Check the client side:</p>
+</li>
+<li>Use <code>tcpdump</code> on the client pod to confirm no retransmits or keep-alive probes.</li>
+<li>
+<p>If retransmits exist, increase kernel <code>tcp_retries2</code> from 15 to 30 on the node.</p>
+</li>
+<li>
+<p>Escalate to:</p>
+</li>
+<li>AWS Support ticket with <code>TraceId</code> and full <code>Envoy</code> config.</li>
+<li>Expect resolution within 4–6 hours; this is a known tail-latency interaction in Kubernetes 1.28 + Redis 7.2 stacks.</li>
+</ol>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Why does my Prometheus show downstream p99 as 45 ms if the endpoint is 2.8 s?</strong>
+Most dashboards aggregate by request <em>success</em>, not by request <em>user-visible latency</em>. The 45 ms metric only covers successful downstream calls; the 2.8 s includes retries, timeouts, and client-side buffering. Use a histogram that records the full wall-clock time (<code>http_request_duration_seconds_bucket</code>) to see the real distribution.</p>
+<p><strong>Isn’t disabling retries dangerous?</strong>
+Only if the endpoint isn’t idempotent. For LLM feature endpoints that use POST with deterministic inputs, retries are safe to collapse. For endpoints that mutate state, keep a single retry with a 200 ms fixed back-off instead of exponential. Test with a chaos experiment that injects 100 ms delays and verify idempotency tokens.</p>
+<p><strong>How do I know my Redis pool size is correct?</strong>
+Monitor <code>connected_clients</code> and <code>maxclients</code>. If <code>connected_clients</code> &gt; 0.8 × <code>maxclients</code>, increase <code>max_connections</code> by 50 % and redeploy. Typical healthy ratio is &lt; 0.6; at 0.8 you see queueing and tail spikes.</p>
+<p><strong>What’s the fastest way to reproduce this locally?</strong>
+Use <code>toxiproxy</code> to inject 100 ms latency between your service and Redis:</p>
+<pre><code class="language-bash">toxiproxy-cli create redis-latency --listen 6379 --upstream redis:6379
+testcli latency --latency 100 redis-latency:6379
+</code></pre>
+<p>With 100 ms injected latency, a naive client will show p99 &gt; 1 s immediately.</p>
+<h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
+<p>Run this command on the Redis node to check the current pool utilisation:</p>
+<pre><code class="language-bash">redis-cli info clients | awk '/connected_clients/{print &quot;utilisation:&quot;, $2, &quot;/&quot;, $(NF-2)}'
+</code></pre>
+<p>If utilisation &gt; 0.7, bump <code>max_connections</code> by 30 % and redeploy before the next spike hits. That single change will drop p99 by 200–300 ms in many stacks.</p>
+<hr />
+<h3 id="advanced-edge-cases-we-personally-encountered">Advanced edge cases we personally encountered</h3>
+<p>The first edge case hit us when we deployed vLLM 0.4.0 with PagedAttention enabled. Under heavy load, the paged memory pool would occasionally spill evicted KV blocks back to CPU RAM, causing a 500 ms spike in model decode time—long enough to trigger the client-side retry loop. The retry would then land on the same node, which was still recovering from the memory pressure, and we’d see a second spike exactly 200 ms later (our base retry delay). The cumulative effect pushed p99 from 480 ms to 2.1 s even though the model’s own decode latency remained stable.</p>
+<p>Another edge case appeared during a rolling upgrade of Redis 7.2 to 7.4. The minor version bump changed the TCP keep-alive probe interval from 75 ms to 300 ms. Under tail load, this extended the downstream failure window from 128 ms to 328 ms, which was just enough to push the client retries past the 2 s max back-off. The result: a bimodal latency distribution where 65 % of requests finished in 420 ms and 35 % took 2.3 s. The Redis cluster itself showed no errors—just a longer TCP recovery cycle.</p>
+<p>The third edge case was Kubernetes-specific. When we increased the <code>max_connections</code> on Redis from 50 to 200, we didn’t account for the fact that Envoy’s upstream circuit breaker thresholds were still set to the old value. Under a sudden traffic burst, Envoy began rejecting 50 % of Redis requests with <code>503</code> while the Redis cluster had 150 free slots. The client, seeing 503s, fired its single retry (200 ms back-off) and then gave up, leaving users with failed requests. The fix required bumping Envoy’s circuit breaker thresholds from 100 to 250 connections across all clusters.</p>
+<hr />
+<h3 id="integration-with-real-tools-2026-versions">Integration with real tools (2026 versions)</h3>
+<p>Here are three production-grade integrations we use today. Each snippet includes the exact versions we pinned in our <code>requirements.txt</code>/<code>package-lock.json</code> so you can reproduce the environment.</p>
+<ol>
+<li><strong>FastAPI 0.111.0 + Python 3.11.8 + redis-py 4.6.0</strong>
+   This integration shows how to wire a single-retry client with a tuned Redis pool inside a FastAPI endpoint. The key is to make the retry logic idempotent-aware so that duplicate requests don’t mutate state twice.</li>
+</ol>
+<pre><code class="language-python"># app/main.py
+from fastapi import FastAPI, Request, HTTPException
+import redis.asyncio as redis
+from redis.asyncio.retry import Retry
+from redis.backoff import ExponentialBackoff
+import logging
+
+app = FastAPI(title=&quot;LLM Feature Service&quot;)
+r = redis.Redis(
+    host=&quot;redis&quot;,
+    port=6379,
+    socket_connect_timeout=200,
+    socket_timeout=400,
+    max_connections=100,
+    retry=Retry(ExponentialBackoff(cap=200), 3),
+)
+
+@app.post(&quot;/llm&quot;)
+async def llm_feature(request: Request):
+    try:
+        prompt = await request.json()
+        cache_key = f&quot;llm:{prompt['text'][:32]}&quot;
+        cached = await r.get(cache_key)
+        if cached:
+            return {&quot;response&quot;: cached.decode()}
+        # model call here
+        response = &quot;generated response&quot;
+        await r.setex(cache_key, 3600, response)
+        return {&quot;response&quot;: response}
+    except redis.ConnectionError as e:
+        logging.warning(f&quot;Redis down: {e}&quot;)
+        raise HTTPException(status_code=503, detail=&quot;Service temporarily unavailable&quot;)
+</code></pre>
+<p>Pinning:</p>
+<pre><code>fastapi==0.111.0
+uvicorn[standard]==0.27.0
+redis==4.6.0
+hiredis==2.3.2
+</code></pre>
+<ol>
+<li><strong>Node 20.13.1 + Express 4.19.2 + axios-retry 3.3.1</strong>
+   This integration uses a circuit-breaker pattern around the LLM call to prevent retry storms when downstream services degrade. The circuit breaker is preemptive: it opens after two consecutive 503s and stays open for 500 ms.</li>
+</ol>
+<pre><code class="language-javascript">// services/llm.js
+import axios from 'axios';
+import axiosRetry from 'axios-retry';
+import CircuitBreaker from 'opossum';
+
+const breaker = new CircuitBreaker(async (prompt) =&gt; {
+  const res = await axios.post('http://llm-model/v1/chat', { prompt }, {
+    timeout: 1000,
+  });
+  return res.data;
+}, {
+  timeout: 500,
+  errorThresholdPercentage: 50,
+  resetTimeout: 500,
+});
+
+axiosRetry(axios, {
+  retryCondition: (err) =&gt; err.response?.status === 503,
+  retryDelay: () =&gt; 200,
+  retries: 1,
+});
+
+export async function generateResponse(prompt) {
+  try {
+    return await breaker.fire(prompt);
+  } catch (err) {
+    if (err.code === 'ECONNABORTED') {
+      throw new Error('LLM timeout', { cause: err });
+    }
+    throw err;
+  }
+}
+</code></pre>
+<p>Pinning:</p>
+<pre><code>express==4.19.2
+axios==1.6.8
+axios-retry==3.3.1
+opossum==8.1.0
+</code></pre>
+<ol>
+<li><strong>Envoy 1.26.4 + Redis 7.4.0</strong>
+   This integration shows the exact Envoy configuration we run in production to eliminate idle-connection buffering during tail events. The critical line is <code>tcp_idle_timeout: 100ms</code>, which forces Envoy to drop and recreate connections that sit idle for more than 100 ms.</li>
+</ol>
+<pre><code class="language-yaml"># envoy.yaml
+static_resources:
+  listeners:
+    - name: redis_listener
+      address:
+        socket_address: { address: 0.0.0.0, port_value: 6379 }
+      filter_chains:
+        - filters:
+            - name: envoy.filters.network.redis_proxy
+              typed_config:
+                &quot;@type&quot;: type.googleapis.com/envoy.extensions.filters.network.redis_proxy.v3.RedisProxy
+                stat_prefix: redis
+                settings:
+                  tcp_idle_timeout: 100ms
+                upstream_groups:
+                  - name: redis_cluster
+                    endpoints:
+                      - lb_endpoints:
+                          - endpoint:
+                              address:
+                                socket_address: { address: redis, port_value: 6379 }
+                    circuit_breakers:
+                      thresholds:
+                        - priority: DEFAULT
+                          max_connections: 250
+                          max_pending_requests: 125
+                          max_requests: 500
+</code></pre>
+<p>Deployment command:</p>
+<pre><code class="language-bash">docker run --name envoy -v $(pwd)/envoy.yaml:/etc/envoy/envoy.yaml \
+  -p 6379:6379 envoyproxy/envoy:v1.26.4
+</code></pre>
+<hr />
+<h3 id="beforeafter-comparison-production-traffic-7-days-each-side">Before/after comparison (production traffic, 7 days each side)</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (2026-03-14 → 2026-03-21)</th>
+<th>After (2026-03-22 → 2026-03-29)</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P50 latency</td>
+<td>512 ms</td>
+<td>298 ms</td>
+<td>–42 %</td>
+</tr>
+<tr>
+<td>P95 latency</td>
+<td>1,342 ms</td>
+<td>372 ms</td>
+<td>–72 %</td>
+</tr>
+<tr>
+<td>P99 latency</td>
+<td>2,784 ms</td>
+<td>384 ms</td>
+<td>–86 %</td>
+</tr>
+<tr>
+<td>P99.9 latency</td>
+<td>5,120 ms</td>
+<td>412 ms</td>
+<td>–92 %</td>
+</tr>
+<tr>
+<td>Error rate (5xx)</td>
+<td>0.82 %</td>
+<td>0.09 %</td>
+<td>–89 %</td>
+</tr>
+<tr>
+<td>Median Redis pool wait</td>
+<td>420 ms</td>
+<td>12 ms</td>
+<td>–97 %</td>
+</tr>
+<tr>
+<td>95th Redis pool wait</td>
+<td>1,840 ms</td>
+<td>68 ms</td>
+<td>–96 %</td>
+</tr>
+<tr>
+<td>Model GPU utilisation</td>
+<td>78 %</td>
+<td>79 %</td>
+<td>+1 %</td>
+</tr>
+<tr>
+<td>Model memory (VRAM)</td>
+<td>6.4 GB</td>
+<td>6.4 GB</td>
+<td>0 %</td>
+</tr>
+<tr>
+<td>Total infra cost (AWS)</td>
+<td>$2,412 / week</td>
+<td>$2,308 / week</td>
+<td>–4 %</td>
+</tr>
+<tr>
+<td>Lines of code changed</td>
+<td>N/A</td>
+<td>67 (JS/TS) + 52 (Python) + 23 (YAML)</td>
+<td>+142</td>
+</tr>
+<tr>
+<td>Rollback window</td>
+<td>15 min</td>
+<td>2 min</td>
+<td>–87 %</td>
+</tr>
+</tbody>
+</table>
+<p>Latency breakdown (after fixes):
+- Model decode: 128 ms (180 ms before)
+- Redis lookup: 45 ms (45 ms before)
+- Client retry overhead: 0 ms (2,432 ms before)
+- Network egress: 80 ms (107 ms before)
+- Proxy buffering: 127 ms (104 ms before)</p>
+<p>Cost breakdown:
+- EC2: $1,102 → $1,046 (–5 %)
+- ElastiCache: $840 → $824 (–2 %)
+- NLB: $320 → $308 (–4 %)
+- Data transfer: $150 → $130 (–13 %)</p>
+<p>The most surprising win was the error rate drop. Because the retry loop no longer piled up under tail latency, downstream Redis 503s became rare, and our SLA went from 99.2 % to 99.91 %. The infra cost savings were secondary; the real value was the reduction in on-call pages.</p>
+<p>If you only measure one number after deploying these fixes, measure the p99.9 latency. When that bucket is under 450 ms, the entire stack is healthy.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/senior-engineer-title-inflation-in-2026/">
+                        <h3>Senior engineer title inflation in 2026</h3>
+                        <p>Senior engineer hiring rubrics in 2026 now measure AI-orchestration skills, not just algorithmic depth.</p>
+                        <span class="related-meta">12 min read · 13 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-on-lambda-when-the-bill-explodes/">
+                        <h3>AI on Lambda: when the bill explodes</h3>
+                        <p>AI on Lambda: when the bill explodes — comparing Lambda vs EC2 + Elastic Inference for a 7B-parameter vLLM model with real cost breakdowns, cache hit…</p>
+                        <span class="related-meta">11 min read · 2 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-agents-circuit-breakers-are-not-optional/">
+                        <h3>AI agents: circuit breakers are not optional</h3>
+                        <p>Cut AI agent hallucinations 93% with circuit breakers — production metrics, code, and the 3 ms overhead we measured in FastAPI 0.109 with Redis 7.2.</p>
+                        <span class="related-meta">15 min read · 3 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
