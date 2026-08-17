@@ -1445,6 +1445,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/audit-logs-that-scale-skip-the-3am-fire-drills/</loc>
+    <lastmod>2026-08-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/audit-logs-that-scale-skip-the-3am-fire-drills.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/audit-trails-immutabledb-vs-dynamodb-streams/</loc>
     <lastmod>2026-07-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -2359,7 +2368,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/latency-spike-after-llm-feature-rollout.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/latency-spike-after-llm-feature-rollout.png</image:loc>
     </image:image>
   </url>
   <url>
