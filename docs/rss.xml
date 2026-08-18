@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 17 Aug 2026 12:51:47 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Aug 2026 01:26:11 +0000</lastBuildDate>
+    <item>
+      <title>AI unit costs: the metric both teams fight over</title>
+      <link>https://kubaik.github.io/ai-unit-costs-the-metric-both-teams-fight-over/</link>
+      <description>The gap between what the docs say and what production needs Most AI docs talk about tokens, embeddings, and vector search, but they skip the part that…</description>
+      <pubDate>Tue, 18 Aug 2026 01:26:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-unit-costs-the-metric-both-teams-fight-over/</guid>
+    </item>
     <item>
       <title>Audit logs that scale: skip the 3AM fire drills</title>
       <link>https://kubaik.github.io/audit-logs-that-scale-skip-the-3am-fire-drills/</link>
@@ -138,13 +145,6 @@
       <description>Missed model regression in prod? How to catch latency drift before users complain — input buckets, load-aware eval, and the instance-type trap most teams…</description>
       <pubDate>Tue, 11 Aug 2026 08:38:57 +0000</pubDate>
       <guid>https://kubaik.github.io/why-your-model-evaluation-missed-a-production-regression/</guid>
-    </item>
-    <item>
-      <title>AWS CloudWatch Synthetics for AI pipelines</title>
-      <link>https://kubaik.github.io/aws-cloudwatch-synthetics-for-ai-pipelines/</link>
-      <description>AWS CloudWatch Synthetics journey tests slash 3am pager alerts 70% by testing the full user flow including M-Pesa and Flutterwave — with Terraform 1.5…</description>
-      <pubDate>Mon, 10 Aug 2026 13:16:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/aws-cloudwatch-synthetics-for-ai-pipelines/</guid>
     </item>
   </channel>
 </rss>

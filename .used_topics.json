@@ -15,5 +15,9 @@
   "Agentic FinOps: the dashboards and alerts that finally made AI costs visible to leadership",
   "How we replaced three managed services with one Postgres 17 extension (and what we gave up)",
   "How we cut AI feature latency from 2.8s to 380ms while keeping model quality",
-  "The audit logging architecture that satisfies both compliance and performance teams"
+  "The audit logging architecture that satisfies both compliance and performance teams",
+  "The production incident that taught us our AI agents needed their own circuit breakers",
+  "The database and state management patterns that survived heavy agent usage",
+  "Offline-first + eventual consistency patterns that actually work for mobile money apps",
+  "Building unit economics for AI features that product and finance teams can both understand"
 ]

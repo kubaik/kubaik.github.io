@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-17T12:51:39.981838",
+  "built_at": "2026-08-18T01:26:04.045439",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4850,6 +4850,11 @@
       "slug": "audit-logs-that-scale-skip-the-3am-fire-drills",
       "title": "Audit logs that scale: skip the 3AM fire drills",
       "summary": "The official documentation for audit logging is good. What it doesn't cover is what happens six months into production. The answers online were either wrong or skipped the part that mattered. Here's what I'd tell a colleague hitting this for the first time. The conventional wisdom (and why it's inco"
+    },
+    {
+      "slug": "ai-unit-costs-the-metric-both-teams-fight-over",
+      "title": "AI unit costs: the metric both teams fight over",
+      "summary": "Most production incident guides assume a clean environment and a patient timeline. It's the kind of problem that's easy to reproduce and hard to explain. Here's what actually worked, and why. The gap between what the docs say and what production needs Most AI docs talk about tokens, embeddings, and "
     }
   ]
 }
