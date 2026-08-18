@@ -19,5 +19,6 @@
   "The production incident that taught us our AI agents needed their own circuit breakers",
   "The database and state management patterns that survived heavy agent usage",
   "Offline-first + eventual consistency patterns that actually work for mobile money apps",
-  "Building unit economics for AI features that product and finance teams can both understand"
+  "Building unit economics for AI features that product and finance teams can both understand",
+  "World models and physical AI: what they mean for backend engineers in 2026"
 ]
