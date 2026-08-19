@@ -20,5 +20,9 @@
   "The database and state management patterns that survived heavy agent usage",
   "Offline-first + eventual consistency patterns that actually work for mobile money apps",
   "Building unit economics for AI features that product and finance teams can both understand",
-  "World models and physical AI: what they mean for backend engineers in 2026"
+  "World models and physical AI: what they mean for backend engineers in 2026",
+  "Connection poolers in the age of serverless and AI agents \u2014 what still makes sense",
+  "The failure modes we only saw after running multi-agent systems at scale for 6 months",
+  "MCP in production: the hidden operational costs and security gotchas nobody talks about",
+  "How we version and evolve agent capabilities without breaking existing users and integrations"
 ]
