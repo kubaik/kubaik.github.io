@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-18T01:26:04.045439",
+  "built_at": "2026-08-19T06:58:59.235455",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4855,6 +4855,11 @@
       "slug": "ai-unit-costs-the-metric-both-teams-fight-over",
       "title": "AI unit costs: the metric both teams fight over",
       "summary": "Most production incident guides assume a clean environment and a patient timeline. It's the kind of problem that's easy to reproduce and hard to explain. Here's what actually worked, and why. The gap between what the docs say and what production needs Most AI docs talk about tokens, embeddings, and "
+    },
+    {
+      "slug": "evolve-your-monolith-without-rewriting-in-2026",
+      "title": "Evolve your monolith without rewriting in 2026",
+      "summary": "I ran into this golden paths problem while migrating a service under a hard deadline. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke. Why I wrote this (the problem I kept hitting) Solo founders ship fast, "
     }
   ]
 }

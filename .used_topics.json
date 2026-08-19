@@ -24,5 +24,7 @@
   "Connection poolers in the age of serverless and AI agents \u2014 what still makes sense",
   "The failure modes we only saw after running multi-agent systems at scale for 6 months",
   "MCP in production: the hidden operational costs and security gotchas nobody talks about",
-  "How we version and evolve agent capabilities without breaking existing users and integrations"
+  "How we version and evolve agent capabilities without breaking existing users and integrations",
+  "Why GPU spot instances + smart retry logic beat reserved capacity for most AI workloads",
+  "Golden paths that don't become golden handcuffs \u2014 keeping the paved road evolvable"
 ]

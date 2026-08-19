@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Aug 2026 01:28:10 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 19 Aug 2026 06:59:07 +0000</lastBuildDate>
+    <item>
+      <title>Evolve your monolith without rewriting in 2026</title>
+      <link>https://kubaik.github.io/evolve-your-monolith-without-rewriting-in-2026/</link>
+      <description>Evolve a FastAPI monolith without rewriting — keep the paved road evolvable with Redis 7.2 and SQLAlchemy 2.0.</description>
+      <pubDate>Wed, 19 Aug 2026 06:58:57 +0000</pubDate>
+      <guid>https://kubaik.github.io/evolve-your-monolith-without-rewriting-in-2026/</guid>
+    </item>
     <item>
       <title>AI unit costs: the metric both teams fight over</title>
       <link>https://kubaik.github.io/ai-unit-costs-the-metric-both-teams-fight-over/</link>
@@ -138,13 +145,6 @@
       <description>Literal cron job retries: why Python 3.11 agents hang on blocked sockets — add per-request timeouts, DNS timeouts, and async retries to cut agent hangs…</description>
       <pubDate>Tue, 11 Aug 2026 08:43:33 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/</guid>
-    </item>
-    <item>
-      <title>Why your model evaluation missed a production regression</title>
-      <link>https://kubaik.github.io/why-your-model-evaluation-missed-a-production-regression/</link>
-      <description>Missed model regression in prod? How to catch latency drift before users complain — input buckets, load-aware eval, and the instance-type trap most teams…</description>
-      <pubDate>Tue, 11 Aug 2026 08:38:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-your-model-evaluation-missed-a-production-regression/</guid>
     </item>
   </channel>
 </rss>
