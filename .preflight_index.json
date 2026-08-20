@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-19T06:58:59.235455",
+  "built_at": "2026-08-20T01:24:20.890018",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4860,6 +4860,11 @@
       "slug": "evolve-your-monolith-without-rewriting-in-2026",
       "title": "Evolve your monolith without rewriting in 2026",
       "summary": "I ran into this golden paths problem while migrating a service under a hard deadline. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke. Why I wrote this (the problem I kept hitting) Solo founders ship fast, "
+    },
+    {
+      "slug": "launched-ai-saas-under-150month",
+      "title": "Launched AI SaaS under $150/month",
+      "summary": "Most launched iterated guides assume a clean environment and a patient timeline. It works in the simple case and breaks in a specific way under load. Here's the fuller picture, with the tradeoffs left in. The one-paragraph version (read this first) Building an AI-powered micro-SaaS on a tight budget"
     }
   ]
 }

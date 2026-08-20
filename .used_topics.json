@@ -28,5 +28,6 @@
   "Why GPU spot instances + smart retry logic beat reserved capacity for most AI workloads",
   "Golden paths that don't become golden handcuffs \u2014 keeping the paved road evolvable",
   "The durable execution patterns that replaced most of our custom workflow code",
-  "Building accessible AI chat interfaces that don't fail WCAG audits"
+  "Building accessible AI chat interfaces that don't fail WCAG audits",
+  "How we launched and iterated an AI-powered micro-SaaS while keeping infra under $150/month"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 19 Aug 2026 12:55:48 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 20 Aug 2026 01:24:28 +0000</lastBuildDate>
+    <item>
+      <title>Launched AI SaaS under $150/month</title>
+      <link>https://kubaik.github.io/launched-ai-saas-under-150month/</link>
+      <description>Launch an AI micro-SaaS under $150/month — spot instances, vLLM, and Qdrant on $11/month EC2 that handles 10k requests/day across five countries</description>
+      <pubDate>Thu, 20 Aug 2026 01:24:17 +0000</pubDate>
+      <guid>https://kubaik.github.io/launched-ai-saas-under-150month/</guid>
+    </item>
     <item>
       <title>Evolve your monolith without rewriting in 2026</title>
       <link>https://kubaik.github.io/evolve-your-monolith-without-rewriting-in-2026/</link>
@@ -138,13 +145,6 @@
       <description>Observability agents in production: the memory leaks, configuration drift, and hidden costs most teams miss.</description>
       <pubDate>Tue, 11 Aug 2026 08:54:57 +0000</pubDate>
       <guid>https://kubaik.github.io/observability-agents-lied-to-us/</guid>
-    </item>
-    <item>
-      <title>Agent followed instructions too literally: the cron job trap</title>
-      <link>https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/</link>
-      <description>Literal cron job retries: why Python 3.11 agents hang on blocked sockets — add per-request timeouts, DNS timeouts, and async retries to cut agent hangs…</description>
-      <pubDate>Tue, 11 Aug 2026 08:43:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-followed-instructions-too-literally-the-cron-job-trap/</guid>
     </item>
   </channel>
 </rss>
