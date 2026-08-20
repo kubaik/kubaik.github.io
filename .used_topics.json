@@ -29,5 +29,7 @@
   "Golden paths that don't become golden handcuffs \u2014 keeping the paved road evolvable",
   "The durable execution patterns that replaced most of our custom workflow code",
   "Building accessible AI chat interfaces that don't fail WCAG audits",
-  "How we launched and iterated an AI-powered micro-SaaS while keeping infra under $150/month"
+  "How we launched and iterated an AI-powered micro-SaaS while keeping infra under $150/month",
+  "How to lead technical decisions when half your team is using tools you don't fully understand yet",
+  "What changed in our on-call process once AI started writing 40% of the code"
 ]

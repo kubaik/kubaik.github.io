@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-20T01:24:20.890018",
+  "built_at": "2026-08-20T12:56:59.519370",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4865,6 +4865,11 @@
       "slug": "launched-ai-saas-under-150month",
       "title": "Launched AI SaaS under $150/month",
       "summary": "Most launched iterated guides assume a clean environment and a patient timeline. It works in the simple case and breaks in a specific way under load. Here's the fuller picture, with the tradeoffs left in. The one-paragraph version (read this first) Building an AI-powered micro-SaaS on a tight budget"
+    },
+    {
+      "slug": "40-ai-code-meant-60-more-alerts",
+      "title": "40% AI code meant 60% more alerts",
+      "summary": "The official documentation for lead technical is good. What it doesn't cover is what happens six months into production. Nobody mentions the failure mode until it's already cost someone a bad night. Here's what actually worked, and why. The situation (what we were trying to solve) We moved from buil"
     }
   ]
 }

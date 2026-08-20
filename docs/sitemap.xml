@@ -155,6 +155,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/40-ai-code-meant-60-more-alerts/</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/40-ai-code-meant-60-more-alerts.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/47-ai-code-debt-in-2026/</loc>
     <lastmod>2026-07-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -2413,7 +2422,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/launched-ai-saas-under-150month.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/launched-ai-saas-under-150month.png</image:loc>
     </image:image>
   </url>
   <url>
