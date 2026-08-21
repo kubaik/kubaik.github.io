@@ -4175,6 +4175,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/tokens-not-vms-finops-for-llm-apps/</loc>
+    <lastmod>2026-08-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/tokens-not-vms-finops-for-llm-apps.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -4342,7 +4351,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/websockets-vs-server-sent-events-latency-over-3g.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/websockets-vs-server-sent-events-latency-over-3g.png</image:loc>
     </image:image>
   </url>
   <url>

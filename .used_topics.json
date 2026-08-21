@@ -35,5 +35,6 @@
   "Why most platform teams are still building for 2024 developer workflows in an agentic world",
   "Why event sourcing became viable again once we had good LLM-assisted projection code",
   "Building a personal brand as an engineer in a world where everyone has AI-assisted portfolios",
-  "How we built low-latency agent features for users on intermittent 3G/4G connections in East Africa"
+  "How we built low-latency agent features for users on intermittent 3G/4G connections in East Africa",
+  "FinOps patterns that work when your biggest variable cost is now LLM tokens, not EC2"
 ]

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-21T07:12:20.129577",
+  "built_at": "2026-08-21T12:55:36.639214",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4875,6 +4875,11 @@
       "slug": "websockets-vs-server-sent-events-latency-over-3g",
       "title": "WebSockets vs Server-Sent Events: latency over 3G",
       "summary": "After reviewing enough code that touches building personal, the same failure pattern keeps showing up. The answers online were either wrong or skipped the part that mattered. This post covers what comes after the happy path. Why this comparison matters right now In 2026, mobile internet in East Afri"
+    },
+    {
+      "slug": "tokens-not-vms-finops-for-llm-apps",
+      "title": "Tokens, not VMs: FinOps for LLM apps",
+      "summary": "There's a gap between how finops patterns is taught and how it actually behaves under load. Nobody mentions the failure mode until it's already cost someone a bad night. This is what I put together after working through it properly. Why I wrote this (the problem I kept hitting) Three months ago our "
     }
   ]
 }
