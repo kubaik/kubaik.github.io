@@ -31,5 +31,6 @@
   "Building accessible AI chat interfaces that don't fail WCAG audits",
   "How we launched and iterated an AI-powered micro-SaaS while keeping infra under $150/month",
   "How to lead technical decisions when half your team is using tools you don't fully understand yet",
-  "What changed in our on-call process once AI started writing 40% of the code"
+  "What changed in our on-call process once AI started writing 40% of the code",
+  "Why most platform teams are still building for 2024 developer workflows in an agentic world"
 ]
