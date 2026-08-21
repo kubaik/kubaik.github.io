@@ -32,5 +32,8 @@
   "How we launched and iterated an AI-powered micro-SaaS while keeping infra under $150/month",
   "How to lead technical decisions when half your team is using tools you don't fully understand yet",
   "What changed in our on-call process once AI started writing 40% of the code",
-  "Why most platform teams are still building for 2024 developer workflows in an agentic world"
+  "Why most platform teams are still building for 2024 developer workflows in an agentic world",
+  "Why event sourcing became viable again once we had good LLM-assisted projection code",
+  "Building a personal brand as an engineer in a world where everyone has AI-assisted portfolios",
+  "How we built low-latency agent features for users on intermittent 3G/4G connections in East Africa"
 ]

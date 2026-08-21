@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Aug 2026 01:28:27 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 21 Aug 2026 07:12:27 +0000</lastBuildDate>
+    <item>
+      <title>WebSockets vs Server-Sent Events: latency over 3G</title>
+      <link>https://kubaik.github.io/websockets-vs-server-sent-events-latency-over-3g/</link>
+      <description>Cut agent status latency 30% with Server-Sent Events in East Africa — ALB timeout tuning, Safari gotchas, and when WebSocket actually wins</description>
+      <pubDate>Fri, 21 Aug 2026 07:12:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/websockets-vs-server-sent-events-latency-over-3g/</guid>
+    </item>
     <item>
       <title>40% AI code meant 60% more alerts</title>
       <link>https://kubaik.github.io/40-ai-code-meant-60-more-alerts/</link>
@@ -138,13 +145,6 @@
       <description>Build outcome-based SLOs for agentic systems that actually measure delivery, not just latency — includes FastAPI 0.111, WeasyPrint 64.1, Prometheus 2.53…</description>
       <pubDate>Tue, 11 Aug 2026 11:04:33 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-slos-measure-what-agents-actually-do/</guid>
-    </item>
-    <item>
-      <title>Orchestration tax kills multi-agent systems</title>
-      <link>https://kubaik.github.io/orchestration-tax-kills-multi-agent-systems/</link>
-      <description>Cut orchestration tax 60%: event-driven agents with idempotency keys, lightweight actors, and CRDTs vs. framework tax.</description>
-      <pubDate>Tue, 11 Aug 2026 10:02:06 +0000</pubDate>
-      <guid>https://kubaik.github.io/orchestration-tax-kills-multi-agent-systems/</guid>
     </item>
   </channel>
 </rss>
