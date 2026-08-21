@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Aug 2026 19:51:59 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 21 Aug 2026 16:58:38 +0000</lastBuildDate>
+    <item>
+      <title>AI errors hide in plain latency</title>
+      <link>https://kubaik.github.io/ai-errors-hide-in-plain-latency/</link>
+      <description>AI errors hide in plain latency: why token counts and perplexity miss user-visible slowdowns — plus a 2026 SLO checklist that cuts on-call pages 68 %</description>
+      <pubDate>Fri, 21 Aug 2026 16:58:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-errors-hide-in-plain-latency/</guid>
+    </item>
     <item>
       <title>WebSockets vs Server-Sent Events: latency over 3G</title>
       <link>https://kubaik.github.io/websockets-vs-server-sent-events-latency-over-3g/</link>
@@ -138,13 +145,6 @@
       <description>Embedding cache vs hosted LLMs: 70 % token savings and 2.3× latency cut in 2026.</description>
       <pubDate>Tue, 11 Aug 2026 13:13:49 +0000</pubDate>
       <guid>https://kubaik.github.io/buy-vs-build-ai-3-hard-rules-for-2026/</guid>
-    </item>
-    <item>
-      <title>Agent SLOs: measure what agents actually do</title>
-      <link>https://kubaik.github.io/agent-slos-measure-what-agents-actually-do/</link>
-      <description>Build outcome-based SLOs for agentic systems that actually measure delivery, not just latency — includes FastAPI 0.111, WeasyPrint 64.1, Prometheus 2.53…</description>
-      <pubDate>Tue, 11 Aug 2026 11:04:33 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-slos-measure-what-agents-actually-do/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-21T12:55:36.639214",
+  "built_at": "2026-08-21T16:58:30.969302",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4880,6 +4880,11 @@
       "slug": "tokens-not-vms-finops-for-llm-apps",
       "title": "Tokens, not VMs: FinOps for LLM apps",
       "summary": "There's a gap between how finops patterns is taught and how it actually behaves under load. Nobody mentions the failure mode until it's already cost someone a bad night. This is what I put together after working through it properly. Why I wrote this (the problem I kept hitting) Three months ago our "
+    },
+    {
+      "slug": "ai-errors-hide-in-plain-latency",
+      "title": "AI errors hide in plain latency",
+      "summary": "The official documentation for skills that is good. What it doesn't cover is what happens six months into production. The edge cases only show up once real users hit the system. Here's what I'd tell a colleague hitting this for the first time. The one-paragraph version (read this first) Token counts"
     }
   ]
 }
