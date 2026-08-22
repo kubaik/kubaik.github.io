@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 21 Aug 2026 16:58:38 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Aug 2026 01:24:03 +0000</lastBuildDate>
+    <item>
+      <title>LLM costs: fine-tune vs route vs bigger model</title>
+      <link>https://kubaik.github.io/llm-costs-fine-tune-vs-route-vs-bigger-model/</link>
+      <description>LLM costs: fine-tune vs route vs bigger model — concrete 2026 decision framework with latency and cost results from a 6-month side project on Mistral-7B…</description>
+      <pubDate>Sat, 22 Aug 2026 01:23:52 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-costs-fine-tune-vs-route-vs-bigger-model/</guid>
+    </item>
     <item>
       <title>AI errors hide in plain latency</title>
       <link>https://kubaik.github.io/ai-errors-hide-in-plain-latency/</link>
@@ -138,13 +145,6 @@
       <description>African fintech agents face residency, latency, and retention rules that break centralized logging — see how a Lagos team cut audit latency 98% by…</description>
       <pubDate>Wed, 12 Aug 2026 02:10:48 +0000</pubDate>
       <guid>https://kubaik.github.io/african-fintech-agents-the-compliance-cliff-most-miss/</guid>
-    </item>
-    <item>
-      <title>Buy vs build AI: 3 hard rules for 2026</title>
-      <link>https://kubaik.github.io/buy-vs-build-ai-3-hard-rules-for-2026/</link>
-      <description>Embedding cache vs hosted LLMs: 70 % token savings and 2.3× latency cut in 2026.</description>
-      <pubDate>Tue, 11 Aug 2026 13:13:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/buy-vs-build-ai-3-hard-rules-for-2026/</guid>
     </item>
   </channel>
 </rss>

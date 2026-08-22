@@ -40,5 +40,6 @@
   "SBOM + attestation that actually gets used instead of sitting in a bucket",
   "Event-driven vs agent-driven architectures: when each wins in 2026",
   "The skills that became table stakes for senior engineers once agents were in production",
-  "AI observability beyond token counts: what actually predicts user-visible degradation"
+  "AI observability beyond token counts: what actually predicts user-visible degradation",
+  "When to fine-tune, when to route, and when to just use a bigger model \u2014 2026 decision framework"
 ]
