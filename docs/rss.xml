@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Aug 2026 01:24:03 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 22 Aug 2026 12:46:56 +0000</lastBuildDate>
+    <item>
+      <title>Agentic FinOps is a trap</title>
+      <link>https://kubaik.github.io/agentic-finops-is-a-trap/</link>
+      <description>Agentic FinOps traps $3k+/month in hidden costs — state bloat, retry loops, and human hand-offs go unmeasured by LangSmith.</description>
+      <pubDate>Sat, 22 Aug 2026 12:46:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/agentic-finops-is-a-trap/</guid>
+    </item>
     <item>
       <title>LLM costs: fine-tune vs route vs bigger model</title>
       <link>https://kubaik.github.io/llm-costs-fine-tune-vs-route-vs-bigger-model/</link>
@@ -138,13 +145,6 @@
       <description>Cut AWS costs 71% with Spot Instances + smart retry logic — retry storms, downstream melts, and the Redis Stream trick most teams miss.</description>
       <pubDate>Wed, 12 Aug 2026 12:52:38 +0000</pubDate>
       <guid>https://kubaik.github.io/spot-evictions-the-retry-logic-that-holds-up/</guid>
-    </item>
-    <item>
-      <title>African fintech agents: the compliance cliff most miss</title>
-      <link>https://kubaik.github.io/african-fintech-agents-the-compliance-cliff-most-miss/</link>
-      <description>African fintech agents face residency, latency, and retention rules that break centralized logging — see how a Lagos team cut audit latency 98% by…</description>
-      <pubDate>Wed, 12 Aug 2026 02:10:48 +0000</pubDate>
-      <guid>https://kubaik.github.io/african-fintech-agents-the-compliance-cliff-most-miss/</guid>
     </item>
   </channel>
 </rss>

@@ -41,5 +41,7 @@
   "Event-driven vs agent-driven architectures: when each wins in 2026",
   "The skills that became table stakes for senior engineers once agents were in production",
   "AI observability beyond token counts: what actually predicts user-visible degradation",
-  "When to fine-tune, when to route, and when to just use a bigger model \u2014 2026 decision framework"
+  "When to fine-tune, when to route, and when to just use a bigger model \u2014 2026 decision framework",
+  "How we scan AI-generated code without drowning in false positives that everyone ignores",
+  "Agentic FinOps: tracking and optimizing the real cost of autonomous AI workflows"
 ]

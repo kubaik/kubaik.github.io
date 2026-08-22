@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-22T01:23:55.206399",
+  "built_at": "2026-08-22T12:46:48.643548",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4890,6 +4890,11 @@
       "slug": "llm-costs-fine-tune-vs-route-vs-bigger-model",
       "title": "LLM costs: fine-tune vs route vs bigger model",
       "summary": "finetune route looks simple until it has to survive real traffic. The gap between the demo and the incident report is where this actually lives. This post covers what comes after the happy path. Why I wrote this (the problem I kept hitting) You have three ways to squeeze more performance out of an L"
+    },
+    {
+      "slug": "agentic-finops-is-a-trap",
+      "title": "Agentic FinOps is a trap",
+      "summary": "I've hit the same scan aigenerated mistake in more than one production codebase over the years. It works in the simple case and breaks in a specific way under load. Here's the fuller picture, with the tradeoffs left in. The conventional wisdom (and why it's incomplete) The prevailing advice in 2026 "
     }
   ]
 }
