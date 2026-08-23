@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-22T12:46:48.643548",
+  "built_at": "2026-08-23T01:36:56.216726",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4895,6 +4895,11 @@
       "slug": "agentic-finops-is-a-trap",
       "title": "Agentic FinOps is a trap",
       "summary": "I've hit the same scan aigenerated mistake in more than one production codebase over the years. It works in the simple case and breaks in a specific way under load. Here's the fuller picture, with the tradeoffs left in. The conventional wisdom (and why it's incomplete) The prevailing advice in 2026 "
+    },
+    {
+      "slug": "ai-payments-break-in-m-pesa-first",
+      "title": "AI payments break in M-Pesa first",
+      "summary": "After reviewing enough code that touches building features, the same failure pattern keeps showing up. The edge cases only show up once real users hit the system. This post covers what comes after the happy path. The gap between what the docs say and what production needs If you’re shipping AI featu"
     }
   ]
 }

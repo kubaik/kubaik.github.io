@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 22 Aug 2026 12:46:56 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Aug 2026 01:37:02 +0000</lastBuildDate>
+    <item>
+      <title>AI payments break in M-Pesa first</title>
+      <link>https://kubaik.github.io/ai-payments-break-in-m-pesa-first/</link>
+      <description>AI payments in Brazil, Colombia, and Mexico break on duplicate webhooks, idempotency key collisions, and sandbox lies—here’s what actually fails in 2026…</description>
+      <pubDate>Sun, 23 Aug 2026 01:36:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-payments-break-in-m-pesa-first/</guid>
+    </item>
     <item>
       <title>Agentic FinOps is a trap</title>
       <link>https://kubaik.github.io/agentic-finops-is-a-trap/</link>
@@ -138,13 +145,6 @@
       <description>African fintech AI stacks compared: global models vs sovereign inference in 2026 — latency, cost, and the one mistake that breaks compliance</description>
       <pubDate>Thu, 13 Aug 2026 02:12:39 +0000</pubDate>
       <guid>https://kubaik.github.io/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/</guid>
-    </item>
-    <item>
-      <title>Spot evictions: the retry logic that holds up</title>
-      <link>https://kubaik.github.io/spot-evictions-the-retry-logic-that-holds-up/</link>
-      <description>Cut AWS costs 71% with Spot Instances + smart retry logic — retry storms, downstream melts, and the Redis Stream trick most teams miss.</description>
-      <pubDate>Wed, 12 Aug 2026 12:52:38 +0000</pubDate>
-      <guid>https://kubaik.github.io/spot-evictions-the-retry-logic-that-holds-up/</guid>
     </item>
   </channel>
 </rss>

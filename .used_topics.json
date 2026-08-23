@@ -43,5 +43,6 @@
   "AI observability beyond token counts: what actually predicts user-visible degradation",
   "When to fine-tune, when to route, and when to just use a bigger model \u2014 2026 decision framework",
   "How we scan AI-generated code without drowning in false positives that everyone ignores",
-  "Agentic FinOps: tracking and optimizing the real cost of autonomous AI workflows"
+  "Agentic FinOps: tracking and optimizing the real cost of autonomous AI workflows",
+  "Building AI features that work across M-Pesa, Paystack, and Flutterwave failure modes"
 ]
