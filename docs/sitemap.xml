@@ -611,6 +611,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-agents-pinching-our-own-ai-budget/</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/ai-agents-pinching-our-own-ai-budget.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>weekly</changefreq>
@@ -1144,7 +1153,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/ai-payments-break-in-m-pesa-first.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/ai-payments-break-in-m-pesa-first.png</image:loc>
     </image:image>
   </url>
   <url>

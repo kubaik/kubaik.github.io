@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Aug 2026 01:37:02 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 23 Aug 2026 12:47:06 +0000</lastBuildDate>
+    <item>
+      <title>AI agents pinching our own AI budget</title>
+      <link>https://kubaik.github.io/ai-agents-pinching-our-own-ai-budget/</link>
+      <description>Stop AI budget surprises with agentic spend control — per-request cost caps, Redis caching pitfalls, and the one proxy that adds 3 ms latency</description>
+      <pubDate>Sun, 23 Aug 2026 12:46:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-agents-pinching-our-own-ai-budget/</guid>
+    </item>
     <item>
       <title>AI payments break in M-Pesa first</title>
       <link>https://kubaik.github.io/ai-payments-break-in-m-pesa-first/</link>
@@ -138,13 +145,6 @@
       <description>Senior engineer hiring rubrics in 2026 now measure AI-orchestration skills, not just algorithmic depth.</description>
       <pubDate>Thu, 13 Aug 2026 07:35:26 +0000</pubDate>
       <guid>https://kubaik.github.io/senior-engineer-title-inflation-in-2026/</guid>
-    </item>
-    <item>
-      <title>Foreign AI models vs sovereign fintech stacks: 2026 reality</title>
-      <link>https://kubaik.github.io/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/</link>
-      <description>African fintech AI stacks compared: global models vs sovereign inference in 2026 — latency, cost, and the one mistake that breaks compliance</description>
-      <pubDate>Thu, 13 Aug 2026 02:12:39 +0000</pubDate>
-      <guid>https://kubaik.github.io/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/</guid>
     </item>
   </channel>
 </rss>
