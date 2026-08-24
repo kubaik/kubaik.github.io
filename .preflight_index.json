@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-24T01:29:35.841807",
+  "built_at": "2026-08-24T12:59:06.449802",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4910,6 +4910,11 @@
       "slug": "agent-auth-where-the-docs-ended-up-lying",
       "title": "Agent auth: where the docs ended up lying",
       "summary": "developer experience looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. Here's the fuller picture, with the tradeoffs left in. The gap between what the docs say and what production needs In 2026, the OpenID Connect standard stil"
+    },
+    {
+      "slug": "self-service-is-broken-without-ai-ops",
+      "title": "Self-service is broken without AI ops",
+      "summary": "I ran into this changed selfservice problem while migrating a service under a hard deadline. The default configuration is fine right up until it isn't. Here's what I'd tell a colleague hitting this for the first time. The one-paragraph version (read this first) In 2026, \"self-service\" for platform t"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Aug 2026 01:29:43 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Aug 2026 12:59:14 +0000</lastBuildDate>
+    <item>
+      <title>Self-service is broken without AI ops</title>
+      <link>https://kubaik.github.io/self-service-is-broken-without-ai-ops/</link>
+      <description>How AI turned &amp;#x27;self-service&amp;#x27; from a permissions problem into a guardrail system — with concrete AWS examples, Terraform snippets, and the metrics that…</description>
+      <pubDate>Mon, 24 Aug 2026 12:59:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/self-service-is-broken-without-ai-ops/</guid>
+    </item>
     <item>
       <title>Agent auth: where the docs ended up lying</title>
       <link>https://kubaik.github.io/agent-auth-where-the-docs-ended-up-lying/</link>
@@ -138,13 +145,6 @@
       <description>Pricing experiments that worked vs tests that quietly killed conversion — concrete guardrails, code, and guardrails most teams miss in 2026</description>
       <pubDate>Thu, 13 Aug 2026 13:19:49 +0000</pubDate>
       <guid>https://kubaik.github.io/price-tests-that-raised-revenue-vs-tests-that-killed/</guid>
-    </item>
-    <item>
-      <title>Currency switch fails in Ghana: one config file to rule…</title>
-      <link>https://kubaik.github.io/currency-switch-fails-in-ghana-one-config-file-to-rule/</link>
-      <description>Fix fintech currency switching across Kenya, Nigeria, Ghana, and Senegal without forks — silent KES fallback, MTN header quirks, and the adapter every…</description>
-      <pubDate>Thu, 13 Aug 2026 08:44:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/currency-switch-fails-in-ghana-one-config-file-to-rule/</guid>
     </item>
   </channel>
 </rss>

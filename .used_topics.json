@@ -47,5 +47,9 @@
   "Building AI features that work across M-Pesa, Paystack, and Flutterwave failure modes",
   "Agentic cost management: using AI to optimize our own AI spend (and where it backfired)",
   "The developer experience gaps that still exist when building and debugging multi-agent systems",
-  "Why agent identity and authentication became harder than we expected in 2026"
+  "Why agent identity and authentication became harder than we expected in 2026",
+  "The exact stack and cost breakdown for a Nairobi-based SaaS serving 8k+ MAU",
+  "Why MCP won the agent-tool protocol war \u2014 and what it actually changed in how we build agents",
+  "Context engineering for long-running agents: the patterns that actually reduce hallucinations",
+  "How AI changed what 'self-service' means for platform teams in 2026"
 ]
