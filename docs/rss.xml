@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Aug 2026 12:47:06 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 24 Aug 2026 01:29:43 +0000</lastBuildDate>
+    <item>
+      <title>Agent auth: where the docs ended up lying</title>
+      <link>https://kubaik.github.io/agent-auth-where-the-docs-ended-up-lying/</link>
+      <description>Result: 30% of USSD sessions failed after the change until they added SIM ICCID + IMEI hashing and a fallback SMS OTP for clock drift.</description>
+      <pubDate>Mon, 24 Aug 2026 01:29:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-auth-where-the-docs-ended-up-lying/</guid>
+    </item>
     <item>
       <title>AI agents pinching our own AI budget</title>
       <link>https://kubaik.github.io/ai-agents-pinching-our-own-ai-budget/</link>
@@ -138,13 +145,6 @@
       <description>Fix fintech currency switching across Kenya, Nigeria, Ghana, and Senegal without forks — silent KES fallback, MTN header quirks, and the adapter every…</description>
       <pubDate>Thu, 13 Aug 2026 08:44:44 +0000</pubDate>
       <guid>https://kubaik.github.io/currency-switch-fails-in-ghana-one-config-file-to-rule/</guid>
-    </item>
-    <item>
-      <title>Senior engineer title inflation in 2026</title>
-      <link>https://kubaik.github.io/senior-engineer-title-inflation-in-2026/</link>
-      <description>Senior engineer hiring rubrics in 2026 now measure AI-orchestration skills, not just algorithmic depth.</description>
-      <pubDate>Thu, 13 Aug 2026 07:35:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/senior-engineer-title-inflation-in-2026/</guid>
     </item>
   </channel>
 </rss>

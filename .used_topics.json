@@ -45,5 +45,7 @@
   "How we scan AI-generated code without drowning in false positives that everyone ignores",
   "Agentic FinOps: tracking and optimizing the real cost of autonomous AI workflows",
   "Building AI features that work across M-Pesa, Paystack, and Flutterwave failure modes",
-  "Agentic cost management: using AI to optimize our own AI spend (and where it backfired)"
+  "Agentic cost management: using AI to optimize our own AI spend (and where it backfired)",
+  "The developer experience gaps that still exist when building and debugging multi-agent systems",
+  "Why agent identity and authentication became harder than we expected in 2026"
 ]

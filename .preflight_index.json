@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-23T12:46:58.071035",
+  "built_at": "2026-08-24T01:29:35.841807",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4905,6 +4905,11 @@
       "slug": "ai-agents-pinching-our-own-ai-budget",
       "title": "AI agents pinching our own AI budget",
       "summary": "The conventional advice on agentic cost is incomplete in one specific, costly way. The answers online were either wrong or skipped the part that mattered. This post covers what comes after the happy path. Why this list exists (what I was actually trying to solve) Most founders running AI features hi"
+    },
+    {
+      "slug": "agent-auth-where-the-docs-ended-up-lying",
+      "title": "Agent auth: where the docs ended up lying",
+      "summary": "developer experience looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. Here's the fuller picture, with the tradeoffs left in. The gap between what the docs say and what production needs In 2026, the OpenID Connect standard stil"
     }
   ]
 }
