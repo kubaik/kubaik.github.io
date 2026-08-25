@@ -3287,12 +3287,21 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/pydantic-2-redis-stop-the-3am-ai-pages/</loc>
+    <lastmod>2026-08-25</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/pydantic-2-redis-stop-the-3am-ai-pages.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/pypi-poisoned-models-hit-prod-in-2025/</loc>
     <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/pypi-poisoned-models-hit-prod-in-2025.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/pypi-poisoned-models-hit-prod-in-2025.png</image:loc>
     </image:image>
   </url>
   <url>

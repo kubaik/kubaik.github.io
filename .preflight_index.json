@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-25T01:25:23.552995",
+  "built_at": "2026-08-25T12:54:49.815633",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4920,6 +4920,11 @@
       "slug": "pypi-poisoned-models-hit-prod-in-2025",
       "title": "PyPI poisoned models hit prod in 2025",
       "summary": "After reviewing enough code that touches supply chain, the same failure pattern keeps showing up. The default configuration is fine right up until it isn't. Here's what actually worked, and why. The gap between what the docs say and what production needs Most teams treat Python package indexes like "
+    },
+    {
+      "slug": "pydantic-2-redis-stop-the-3am-ai-pages",
+      "title": "Pydantic 2 + Redis: stop the 3am AI pages",
+      "summary": "There's a gap between how most selfhealing is taught and how it actually behaves under load. The gap between the demo and the incident report is where this actually lives. Here's what I'd tell a colleague hitting this for the first time. Why I wrote this (the problem I kept hitting) Most \"self-heali"
     }
   ]
 }

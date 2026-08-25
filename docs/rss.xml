@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Aug 2026 01:25:31 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 25 Aug 2026 12:54:58 +0000</lastBuildDate>
+    <item>
+      <title>Pydantic 2 + Redis: stop the 3am AI pages</title>
+      <link>https://kubaik.github.io/pydantic-2-redis-stop-the-3am-ai-pages/</link>
+      <description>Cut API on-call pages 78% with strict Pydantic validation and Redis circuit breakers — the 502 errors most teams retry forever are often permanent schema…</description>
+      <pubDate>Tue, 25 Aug 2026 12:54:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/pydantic-2-redis-stop-the-3am-ai-pages/</guid>
+    </item>
     <item>
       <title>PyPI poisoned models hit prod in 2025</title>
       <link>https://kubaik.github.io/pypi-poisoned-models-hit-prod-in-2025/</link>
@@ -138,13 +145,6 @@
       <description>In a 2026 incident report from a Lagos-based health tech team, an agent retrying on a 503 Service Unavailable response from a government gateway triggered…</description>
       <pubDate>Fri, 14 Aug 2026 13:16:00 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-need-circuit-breakers-in-2026/</guid>
-    </item>
-    <item>
-      <title>Rust SDK vs FastAPI for LLM ops: trust in 2026</title>
-      <link>https://kubaik.github.io/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/</link>
-      <description>Fast 2026 benchmark: Rust SDK vs FastAPI for LLM ops — cold-start latency, cache stampedes, and the $180 vs $220 bill split that trips teams after a…</description>
-      <pubDate>Fri, 14 Aug 2026 02:13:08 +0000</pubDate>
-      <guid>https://kubaik.github.io/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/</guid>
     </item>
   </channel>
 </rss>
