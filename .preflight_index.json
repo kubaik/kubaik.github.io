@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-24T12:59:06.449802",
+  "built_at": "2026-08-25T01:25:23.552995",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4915,6 +4915,11 @@
       "slug": "self-service-is-broken-without-ai-ops",
       "title": "Self-service is broken without AI ops",
       "summary": "I ran into this changed selfservice problem while migrating a service under a hard deadline. The default configuration is fine right up until it isn't. Here's what I'd tell a colleague hitting this for the first time. The one-paragraph version (read this first) In 2026, \"self-service\" for platform t"
+    },
+    {
+      "slug": "pypi-poisoned-models-hit-prod-in-2025",
+      "title": "PyPI poisoned models hit prod in 2025",
+      "summary": "After reviewing enough code that touches supply chain, the same failure pattern keeps showing up. The default configuration is fine right up until it isn't. Here's what actually worked, and why. The gap between what the docs say and what production needs Most teams treat Python package indexes like "
     }
   ]
 }
