@@ -54,5 +54,7 @@
   "How AI changed what 'self-service' means for platform teams in 2026",
   "The supply chain attacks on AI models and datasets that actually happened to teams we know",
   "Why most 'self-healing' AI pipelines still page humans at 3am \u2014 and what we changed",
-  "How Nairobi-based teams are competing on AI features despite higher inference latency to major providers"
+  "How Nairobi-based teams are competing on AI features despite higher inference latency to major providers",
+  "What changed in our stack when Starlink became reliable enough for production workloads in East Africa",
+  "How I measure and control token spend at 50k+ daily LLM calls without killing UX"
 ]
