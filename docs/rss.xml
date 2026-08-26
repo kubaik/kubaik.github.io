@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Tue, 25 Aug 2026 12:54:58 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Aug 2026 01:29:22 +0000</lastBuildDate>
+    <item>
+      <title>AI on slow networks: Nairobi teams&apos; 2026 playbook</title>
+      <link>https://kubaik.github.io/ai-on-slow-networks-nairobi-teams-2026-playbook/</link>
+      <description>AI on slow networks: Nairobi teams&amp;#x27; 2026 playbook — cache 80 % of requests to cut perceived latency 90 % while using Bedrock for the remaining 20 %.</description>
+      <pubDate>Wed, 26 Aug 2026 01:29:12 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-on-slow-networks-nairobi-teams-2026-playbook/</guid>
+    </item>
     <item>
       <title>Pydantic 2 + Redis: stop the 3am AI pages</title>
       <link>https://kubaik.github.io/pydantic-2-redis-stop-the-3am-ai-pages/</link>
@@ -138,13 +145,6 @@
       <description>Cut ledger reversals 95% with stricter parsers: why JSON mode alone fails on money endpoints and how structured output plus validation layers enforce…</description>
       <pubDate>Sat, 15 Aug 2026 01:24:32 +0000</pubDate>
       <guid>https://kubaik.github.io/money-moves-need-stricter-parsers/</guid>
-    </item>
-    <item>
-      <title>AI agents need circuit breakers in 2026</title>
-      <link>https://kubaik.github.io/ai-agents-need-circuit-breakers-in-2026/</link>
-      <description>In a 2026 incident report from a Lagos-based health tech team, an agent retrying on a 503 Service Unavailable response from a government gateway triggered…</description>
-      <pubDate>Fri, 14 Aug 2026 13:16:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-agents-need-circuit-breakers-in-2026/</guid>
     </item>
   </channel>
 </rss>

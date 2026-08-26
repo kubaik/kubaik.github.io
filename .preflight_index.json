@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-25T12:54:49.815633",
+  "built_at": "2026-08-26T01:29:15.190395",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4925,6 +4925,11 @@
       "slug": "pydantic-2-redis-stop-the-3am-ai-pages",
       "title": "Pydantic 2 + Redis: stop the 3am AI pages",
       "summary": "There's a gap between how most selfhealing is taught and how it actually behaves under load. The gap between the demo and the incident report is where this actually lives. Here's what I'd tell a colleague hitting this for the first time. Why I wrote this (the problem I kept hitting) Most \"self-heali"
+    },
+    {
+      "slug": "ai-on-slow-networks-nairobi-teams-2026-playbook",
+      "title": "AI on slow networks: Nairobi teams' 2026 playbook",
+      "summary": "I ran into this nairobibased teams problem while migrating a service under a hard deadline. The edge cases only show up once real users hit the system. This walks through the fix and the reasoning, not just the patch. The one-paragraph version (read this first) Teams in Nairobi routinely ship AI fea"
     }
   ]
 }
