@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 26 Aug 2026 13:00:22 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 26 Aug 2026 17:38:35 +0000</lastBuildDate>
+    <item>
+      <title>Mobile-first AI fails you didn’t plan…</title>
+      <link>https://kubaik.github.io/mobile-first-ai-fails-you-didnt-plan/</link>
+      <description>Mobile-first AI performance pitfalls — why user drop-off spikes at 2.5 s latency and $1.80/GB data costs derail global best practices.</description>
+      <pubDate>Wed, 26 Aug 2026 17:38:26 +0000</pubDate>
+      <guid>https://kubaik.github.io/mobile-first-ai-fails-you-didnt-plan/</guid>
+    </item>
     <item>
       <title>AI on slow networks: Nairobi teams&apos; 2026 playbook</title>
       <link>https://kubaik.github.io/ai-on-slow-networks-nairobi-teams-2026-playbook/</link>
@@ -138,13 +145,6 @@
       <description>ClearFlow’s fintech case study: why AI-era promotions go to engineers who treat AI output as data, not magic—schema validation, rollback caches, and the…</description>
       <pubDate>Sat, 15 Aug 2026 12:43:35 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-era-promotions-hinge-on-this-one-thing/</guid>
-    </item>
-    <item>
-      <title>Money moves need stricter parsers</title>
-      <link>https://kubaik.github.io/money-moves-need-stricter-parsers/</link>
-      <description>Cut ledger reversals 95% with stricter parsers: why JSON mode alone fails on money endpoints and how structured output plus validation layers enforce…</description>
-      <pubDate>Sat, 15 Aug 2026 01:24:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/money-moves-need-stricter-parsers/</guid>
     </item>
   </channel>
 </rss>

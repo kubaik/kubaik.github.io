@@ -2750,6 +2750,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/mobile-first-ai-fails-you-didnt-plan/</loc>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/mobile-first-ai-fails-you-didnt-plan.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/mobile-money-agent-fees-why-your-bot-keeps-failing/</loc>
     <lastmod>2026-08-05</lastmod>
     <changefreq>weekly</changefreq>

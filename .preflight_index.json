@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-26T01:29:15.190395",
+  "built_at": "2026-08-26T17:38:28.819299",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4930,6 +4930,11 @@
       "slug": "ai-on-slow-networks-nairobi-teams-2026-playbook",
       "title": "AI on slow networks: Nairobi teams' 2026 playbook",
       "summary": "I ran into this nairobibased teams problem while migrating a service under a hard deadline. The edge cases only show up once real users hit the system. This walks through the fix and the reasoning, not just the patch. The one-paragraph version (read this first) Teams in Nairobi routinely ship AI fea"
+    },
+    {
+      "slug": "mobile-first-ai-fails-you-didnt-plan",
+      "title": "Mobile-first AI fails you didn’t plan…",
+      "summary": "I spent longer than I should have on prompt tool before understanding what was actually happening. The default configuration is fine right up until it isn't. Here's what actually worked, and why. The one-paragraph version (read this first) Global AI best practices assume fast, cheap internet and pow"
     }
   ]
 }
