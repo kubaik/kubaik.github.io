@@ -58,5 +58,7 @@
   "What changed in our stack when Starlink became reliable enough for production workloads in East Africa",
   "How I measure and control token spend at 50k+ daily LLM calls without killing UX",
   "The prompt and tool injection attacks we actually saw in production (and how we blocked them)",
-  "Why global AI best practices often fail in markets with high mobile data costs and latency"
+  "Why global AI best practices often fail in markets with high mobile data costs and latency",
+  "The frontend performance budget that still matters when most traffic is from Africa",
+  "How we test and review agent-generated code and workflows at team scale"
 ]

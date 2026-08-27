@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-26T17:38:28.819299",
+  "built_at": "2026-08-27T08:16:42.181184",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4935,6 +4935,11 @@
       "slug": "mobile-first-ai-fails-you-didnt-plan",
       "title": "Mobile-first AI fails you didn’t plan…",
       "summary": "I spent longer than I should have on prompt tool before understanding what was actually happening. The default configuration is fine right up until it isn't. Here's what actually worked, and why. The one-paragraph version (read this first) Global AI best practices assume fast, cheap internet and pow"
+    },
+    {
+      "slug": "agent-code-review-gap-nobody-admits",
+      "title": "agent code review gap nobody admits",
+      "summary": "Most frontend performance guides assume a clean environment and a patient timeline. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke. The situation (what we were trying to solve) In late 2026, our team shipp"
     }
   ]
 }
