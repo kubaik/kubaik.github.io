@@ -418,7 +418,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/agent-code-review-gap-nobody-admits.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/agent-code-review-gap-nobody-admits.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -884,6 +884,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/ai-features-break-your-stack-every-6-months.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/ai-features-rot-faster-than-you-build-them.svg</image:loc>
     </image:image>
   </url>
   <url>

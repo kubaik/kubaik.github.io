@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 27 Aug 2026 08:16:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 27 Aug 2026 22:00:52 +0000</lastBuildDate>
+    <item>
+      <title>AI features rot faster than you build them</title>
+      <link>https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/</link>
+      <description>AI features rot faster than you build them — version contracts or pay for firefighting. Typical outages: 3 in 90 days, $4.2k cost, 11-hour recovery.</description>
+      <pubDate>Thu, 27 Aug 2026 22:00:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-features-rot-faster-than-you-build-them/</guid>
+    </item>
     <item>
       <title>agent code review gap nobody admits</title>
       <link>https://kubaik.github.io/agent-code-review-gap-nobody-admits/</link>
@@ -138,13 +145,6 @@
       <description>LLM feature latency spike after rollout: why 2.8 s p99 hides in downstream plumbing, not the model call — and how to cut it to 380 ms without losing eval…</description>
       <pubDate>Mon, 17 Aug 2026 01:27:10 +0000</pubDate>
       <guid>https://kubaik.github.io/latency-spike-after-llm-feature-rollout/</guid>
-    </item>
-    <item>
-      <title>Replace managed services with Postgres 17</title>
-      <link>https://kubaik.github.io/replace-managed-services-with-postgres-17/</link>
-      <description>Postgres 17 replaces Redis, Elasticsearch, and cron for startups in Southeast Asia — here’s the real latency, cost, and failure-mode trade-offs most…</description>
-      <pubDate>Sun, 16 Aug 2026 12:45:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/replace-managed-services-with-postgres-17/</guid>
     </item>
   </channel>
 </rss>

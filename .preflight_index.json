@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-27T08:16:42.181184",
+  "built_at": "2026-08-27T22:00:44.588264",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4940,6 +4940,11 @@
       "slug": "agent-code-review-gap-nobody-admits",
       "title": "agent code review gap nobody admits",
       "summary": "Most frontend performance guides assume a clean environment and a patient timeline. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke. The situation (what we were trying to solve) In late 2026, our team shipp"
+    },
+    {
+      "slug": "ai-features-rot-faster-than-you-build-them",
+      "title": "AI features rot faster than you build them",
+      "summary": "I've hit the same building golden mistake in more than one production codebase over the years. Production gives you neither a clean environment nor a patient timeline. Here's what I'd tell a colleague hitting this for the first time. The conventional wisdom (and why it's incomplete) Teams are told t"
     }
   ]
 }
