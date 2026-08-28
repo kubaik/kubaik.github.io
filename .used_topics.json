@@ -62,5 +62,9 @@
   "The frontend performance budget that still matters when most traffic is from Africa",
   "How we test and review agent-generated code and workflows at team scale",
   "Building golden paths for AI features that don't become maintenance nightmares",
-  "How we built agent-specific tracing that actually helped during incidents"
+  "How we built agent-specific tracing that actually helped during incidents",
+  "Memory systems for production agents: what worked and what leaked context over time",
+  "How we detect and contain agent drift before it creates bad user experiences",
+  "How Cursor, Claude Code, and Windsurf actually changed our daily engineering workflow in 2026",
+  "LLM evaluation pipelines that catch drift before users notice \u2014 real metrics from production"
 ]

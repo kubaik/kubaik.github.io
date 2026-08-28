@@ -517,7 +517,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/agent-tracing-when-logs-lie-and-metrics-mislead.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/agent-tracing-when-logs-lie-and-metrics-mislead.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -2567,6 +2567,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/llm-drift-the-silent-quality-drop-metrics-miss.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/llm-eval-drift-that-users-notice-first/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/llm-eval-drift-that-users-notice-first.svg</image:loc>
     </image:image>
   </url>
   <url>

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 28 Aug 2026 10:18:49 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 28 Aug 2026 21:57:03 +0000</lastBuildDate>
+    <item>
+      <title>LLM eval drift that users notice first</title>
+      <link>https://kubaik.github.io/llm-eval-drift-that-users-notice-first/</link>
+      <description>Detect LLM drift before users notice — real metrics from production pipelines, with concrete thresholds, code snippets, and cost figures for 2026…</description>
+      <pubDate>Fri, 28 Aug 2026 21:56:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-eval-drift-that-users-notice-first/</guid>
+    </item>
     <item>
       <title>Agent tracing: when logs lie and metrics mislead</title>
       <link>https://kubaik.github.io/agent-tracing-when-logs-lie-and-metrics-mislead/</link>
@@ -138,13 +145,6 @@
       <description>The gap between what the docs say and what production needs Most AI docs talk about tokens, embeddings, and vector search, but they skip the part that…</description>
       <pubDate>Tue, 18 Aug 2026 01:26:01 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-unit-costs-the-metric-both-teams-fight-over/</guid>
-    </item>
-    <item>
-      <title>Audit logs that scale: skip the 3AM fire drills</title>
-      <link>https://kubaik.github.io/audit-logs-that-scale-skip-the-3am-fire-drills/</link>
-      <description>Cut audit log storage 70% and query latency 90% with a dual-stream stack—Kafka 3.7, ClickHouse 23.11, S3 Parquet—while satisfying GDPR and SOC2 integrity…</description>
-      <pubDate>Mon, 17 Aug 2026 12:51:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/audit-logs-that-scale-skip-the-3am-fire-drills/</guid>
     </item>
   </channel>
 </rss>

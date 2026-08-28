@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-28T10:18:40.658620",
+  "built_at": "2026-08-28T21:56:57.223677",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4950,6 +4950,11 @@
       "slug": "agent-tracing-when-logs-lie-and-metrics-mislead",
       "title": "Agent tracing: when logs lie and metrics mislead",
       "summary": "The conventional advice on built agentspecific is incomplete in one specific, costly way. The edge cases only show up once real users hit the system. This post covers what comes after the happy path. The one-paragraph version (read this first) Most incident responders have stared at a trace that sho"
+    },
+    {
+      "slug": "llm-eval-drift-that-users-notice-first",
+      "title": "LLM eval drift that users notice first",
+      "summary": "I've hit the same detect contain mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. This post covers what comes after the happy path. The error and why it's confusing Teams ship an LLM feature, watch the latency graphs look hea"
     }
   ]
 }
