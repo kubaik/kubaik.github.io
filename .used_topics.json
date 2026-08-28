@@ -61,5 +61,6 @@
   "Why global AI best practices often fail in markets with high mobile data costs and latency",
   "The frontend performance budget that still matters when most traffic is from Africa",
   "How we test and review agent-generated code and workflows at team scale",
-  "Building golden paths for AI features that don't become maintenance nightmares"
+  "Building golden paths for AI features that don't become maintenance nightmares",
+  "How we built agent-specific tracing that actually helped during incidents"
 ]

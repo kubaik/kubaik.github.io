@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-27T22:00:44.588264",
+  "built_at": "2026-08-28T10:18:40.658620",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4945,6 +4945,11 @@
       "slug": "ai-features-rot-faster-than-you-build-them",
       "title": "AI features rot faster than you build them",
       "summary": "I've hit the same building golden mistake in more than one production codebase over the years. Production gives you neither a clean environment nor a patient timeline. Here's what I'd tell a colleague hitting this for the first time. The conventional wisdom (and why it's incomplete) Teams are told t"
+    },
+    {
+      "slug": "agent-tracing-when-logs-lie-and-metrics-mislead",
+      "title": "Agent tracing: when logs lie and metrics mislead",
+      "summary": "The conventional advice on built agentspecific is incomplete in one specific, costly way. The edge cases only show up once real users hit the system. This post covers what comes after the happy path. The one-paragraph version (read this first) Most incident responders have stared at a trace that sho"
     }
   ]
 }
