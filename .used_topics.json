@@ -66,5 +66,8 @@
   "Memory systems for production agents: what worked and what leaked context over time",
   "How we detect and contain agent drift before it creates bad user experiences",
   "How Cursor, Claude Code, and Windsurf actually changed our daily engineering workflow in 2026",
-  "LLM evaluation pipelines that catch drift before users notice \u2014 real metrics from production"
+  "LLM evaluation pipelines that catch drift before users notice \u2014 real metrics from production",
+  "Why our beautiful RAG pipeline fell over at 3am on a public holiday (and how we fixed it)",
+  "Purpose-built AI platforms vs general platforms: the decision we had to make in 2026",
+  "Building evaluation harnesses for multi-agent systems that developers actually trust"
 ]
