@@ -73,5 +73,6 @@
   "The observability stack that survived our move to heavy agentic workflows",
   "The leadership challenges of managing teams where output velocity increased dramatically but ownership became blurrier",
   "Why traditional APM missed 80%+ of our AI-related incidents",
-  "How we debugged silent LLM quality degradation that metrics didn't catch"
+  "How we debugged silent LLM quality degradation that metrics didn't catch",
+  "How we made egress costs visible to every engineer (and what changed as a result)"
 ]
