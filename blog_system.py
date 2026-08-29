@@ -1308,7 +1308,40 @@ def _build_humanization_note(topic: str) -> str:
 # ─────────────────────────────────────────────────────────────────
 
 
+# FIX (recurrence prevention, Aug 2026): the previous version of this list
+# only matched a fixed set of Western tech-survey names (Stack Overflow,
+# Gartner, Forrester, McKinsey, GitLab, GitHub, JetBrains). It caught zero
+# fabricated citations outside that list — e.g. "a study by Kenya's iHub
+# Research", "a 2025 paper from Makerere University", "a 2026 study by
+# Google's red-team" all shipped to production because none of those names
+# were on the list. A blocklist of specific names can never keep up with
+# what an LLM invents next, especially for regionally-flavored content
+# (the East-Africa focus of this site means the model reaches for locally
+# plausible institution names a US-tech-survey list was never going to
+# anticipate). Replaced with structural patterns that catch the *shape* of
+# a fabricated citation — "study/paper/report/research by/from <Proper
+# Noun>" or "according to <Proper Noun>" — regardless of which specific
+# name fills the slot. The old named-entity patterns are kept as an extra
+# belt-and-suspenders layer since they're cheap and still valid.
 _FABRICATED_CITATION_PATTERNS = [
+    # Structural: "a/the [YEAR] study/paper/report/research/survey/analysis
+    # by/from <Capitalized Name(s)>" — catches any named source, not just a
+    # fixed list. Requires 1-6 capitalized words after by/from so it doesn't
+    # false-positive on lowercase generic phrasing like "a study by teams".
+    r'\b(a |the )?(20\d\d )?(study|paper|report|research|survey|analysis)\s+'
+    r'(by|from)\s+([A-Z][\w&.\'-]*\s*){1,6}',
+
+    # Structural: "according to <Capitalized Name(s)>" — same idea, catches
+    # the other common attribution shape independent of what follows.
+    r'\baccording to (a |an |the )?([A-Z][\w&.\'-]*\s*){1,6}',
+
+    # Structural: "<Org/Institute/Lab/University/Team>'s <study|research|
+    # red-team|findings>" — catches possessive-form attribution, which the
+    # two patterns above miss (e.g. "Google's red-team found...").
+    r'\b([A-Z][\w&.\'-]*\s*){1,4}\'s\s+(study|research|red[\s-]?team|'
+    r'findings|report|analysis|survey)\b',
+
+    # Original named-entity list — kept as a fast, cheap extra check.
     r'\baccording to (a |an )?(20\d\d )?(stack overflow|gartner|forrester|mckinsey|'
     r'gitlab|github|jetbrains)\b',
     r'\b(20\d\d )?(stack overflow|gartner|forrester|mckinsey) (survey|report|study)\b',
@@ -1381,24 +1414,51 @@ def _reject_if_generic_meta_description(meta_description: str) -> Optional[str]:
     return None
 
 
+# FIX (recurrence prevention, Aug 2026): the broadened structural patterns
+# above will match plenty of ordinary, legitimate technical writing that
+# isn't a fabricated citation at all — "according to the Python docs",
+# "AWS's official documentation recommends...", "according to the error
+# message". None of those invent a third-party study; they reference
+# official/primary documentation, which is exactly the kind of sourcing
+# this site *should* be doing more of, not flagging. Skip the match if
+# any of these appear in the surrounding window instead of treating every
+# hit as fabrication.
+_LEGITIMATE_SOURCE_CONTEXT = re.compile(
+    r'\b(documentation|docs\b|changelog|release notes|official (docs|'
+    r'documentation|guide)|readme|man page|manual|rfc\s?\d|spec(ification)?|'
+    r'error message|log output|stack trace|source code|the source|'
+    r'\.md\b|github\.com|repository)\b',
+    re.IGNORECASE,
+)
+
+
 def _reject_if_fabricated_citation(content: str) -> Optional[str]:
     """Gate function: returns a rejection reason string if the draft attributes
-    a claim to a real, named third party (survey firm, company, publication)
-    with no accompanying source URL — this is citation fabrication, a stricter
-    and more dangerous failure mode than a generic unsourced number, since it
-    invents a specific real-world source a reader could try to verify and fail
-    to find. Call this in the publish gate alongside the existing word-count
-    check (around MIN_WORD_COUNT / MIN_ACCEPTABLE_WORDS) and hold the post for
-    regeneration rather than publishing it, same as a length failure today.
+    a claim to a real, named third party (survey firm, company, publication,
+    research org, university, red-team, etc.) with no accompanying source URL
+    and no legitimate-documentation context nearby — this is citation
+    fabrication, a stricter and more dangerous failure mode than a generic
+    unsourced number, since it invents a specific real-world source a reader
+    could try to verify and fail to find. Call this in the publish gate
+    alongside the existing word-count check (around MIN_WORD_COUNT /
+    MIN_ACCEPTABLE_WORDS) and hold the post for regeneration rather than
+    publishing it, same as a length failure today.
     """
     for pattern in _FABRICATED_CITATION_PATTERNS:
-        match = _re.search(pattern, content, _re.IGNORECASE)
-        if match:
-            # allow-list: if a real URL sits within 200 chars of the match,
-            # treat it as sourced rather than fabricated
+        for match in _re.finditer(pattern, content, _re.IGNORECASE):
             window = content[max(0, match.start() - 200):match.end() + 200]
-            if not _re.search(r'https?://', window):
-                return f"unverifiable named-source citation: '{match.group(0)}'"
+
+            # allow-list 1: a real URL nearby means it's actually sourced.
+            if _re.search(r'https?://', window):
+                continue
+
+            # allow-list 2: referencing official/primary documentation is
+            # legitimate technical writing, not a fabricated third-party
+            # study — don't punish the exact behavior we want more of.
+            if _LEGITIMATE_SOURCE_CONTEXT.search(window):
+                continue
+
+            return f"unverifiable named-source citation: '{match.group(0).strip()}'"
     return None
 
 
