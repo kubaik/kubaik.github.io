@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 29 Aug 2026 06:20:04 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Aug 2026 16:28:43 +0000</lastBuildDate>
+    <item>
+      <title>Prevent ownership drift when velocity explodes</title>
+      <link>https://kubaik.github.io/prevent-ownership-drift-when-velocity-explodes/</link>
+      <description>Fix ownership drift after velocity spikes — set explicit cache ownership, guardrails, and error budgets to prevent 75% fewer war rooms at 12k RPS.</description>
+      <pubDate>Sat, 29 Aug 2026 16:28:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/prevent-ownership-drift-when-velocity-explodes/</guid>
+    </item>
     <item>
       <title>LLM eval drift that users notice first</title>
       <link>https://kubaik.github.io/llm-eval-drift-that-users-notice-first/</link>
@@ -138,13 +145,6 @@
       <description>Evolve a FastAPI monolith without rewriting — keep the paved road evolvable with Redis 7.2 and SQLAlchemy 2.0.</description>
       <pubDate>Wed, 19 Aug 2026 06:58:57 +0000</pubDate>
       <guid>https://kubaik.github.io/evolve-your-monolith-without-rewriting-in-2026/</guid>
-    </item>
-    <item>
-      <title>AI unit costs: the metric both teams fight over</title>
-      <link>https://kubaik.github.io/ai-unit-costs-the-metric-both-teams-fight-over/</link>
-      <description>The gap between what the docs say and what production needs Most AI docs talk about tokens, embeddings, and vector search, but they skip the part that…</description>
-      <pubDate>Tue, 18 Aug 2026 01:26:01 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-unit-costs-the-metric-both-teams-fight-over/</guid>
     </item>
   </channel>
 </rss>

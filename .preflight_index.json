@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-28T21:56:57.223677",
+  "built_at": "2026-08-29T16:28:36.026781",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4955,6 +4955,11 @@
       "slug": "llm-eval-drift-that-users-notice-first",
       "title": "LLM eval drift that users notice first",
       "summary": "I've hit the same detect contain mistake in more than one production codebase over the years. Most write-ups stop exactly where the interesting part starts. This post covers what comes after the happy path. The error and why it's confusing Teams ship an LLM feature, watch the latency graphs look hea"
+    },
+    {
+      "slug": "prevent-ownership-drift-when-velocity-explodes",
+      "title": "Prevent ownership drift when velocity explodes",
+      "summary": "leadership challenges looks simple until it has to survive real traffic. Production gives you neither a clean environment nor a patient timeline. Here's what I'd tell a colleague hitting this for the first time. Why I wrote this (the problem I kept hitting) In 2026, a friend running an SME e-commerc"
     }
   ]
 }

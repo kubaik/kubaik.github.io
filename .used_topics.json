@@ -69,5 +69,7 @@
   "LLM evaluation pipelines that catch drift before users notice \u2014 real metrics from production",
   "Why our beautiful RAG pipeline fell over at 3am on a public holiday (and how we fixed it)",
   "Purpose-built AI platforms vs general platforms: the decision we had to make in 2026",
-  "Building evaluation harnesses for multi-agent systems that developers actually trust"
+  "Building evaluation harnesses for multi-agent systems that developers actually trust",
+  "The observability stack that survived our move to heavy agentic workflows",
+  "The leadership challenges of managing teams where output velocity increased dramatically but ownership became blurrier"
 ]

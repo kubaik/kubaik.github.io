@@ -3236,6 +3236,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/prevent-ownership-drift-when-velocity-explodes/</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/prevent-ownership-drift-when-velocity-explodes.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/price-ai-proof-skills-in-2026/</loc>
     <lastmod>2026-06-29</lastmod>
     <changefreq>weekly</changefreq>
