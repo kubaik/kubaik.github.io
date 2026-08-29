@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-29T16:28:36.026781",
+  "built_at": "2026-08-29T18:24:47.473494",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4960,6 +4960,11 @@
       "slug": "prevent-ownership-drift-when-velocity-explodes",
       "title": "Prevent ownership drift when velocity explodes",
       "summary": "leadership challenges looks simple until it has to survive real traffic. Production gives you neither a clean environment nor a patient timeline. Here's what I'd tell a colleague hitting this for the first time. Why I wrote this (the problem I kept hitting) In 2026, a friend running an SME e-commerc"
+    },
+    {
+      "slug": "serverless-ai-costs-explode-past-10kmo",
+      "title": "Serverless AI costs explode past $10k/mo",
+      "summary": "After reviewing enough code that touches serverless stops, the same failure pattern keeps showing up. Production gives you neither a clean environment nor a patient timeline. Here's what actually worked, and why. The situation (what we were trying to solve) In late 2026, our Nairobi fintech team bui"
     }
   ]
 }

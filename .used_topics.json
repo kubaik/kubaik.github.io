@@ -74,5 +74,6 @@
   "The leadership challenges of managing teams where output velocity increased dramatically but ownership became blurrier",
   "Why traditional APM missed 80%+ of our AI-related incidents",
   "How we debugged silent LLM quality degradation that metrics didn't catch",
-  "How we made egress costs visible to every engineer (and what changed as a result)"
+  "How we made egress costs visible to every engineer (and what changed as a result)",
+  "When serverless stops being cheap for AI workloads \u2014 the inflection points we hit"
 ]

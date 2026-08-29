@@ -3710,6 +3710,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/serverless-ai-costs-explode-past-10kmo/</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/serverless-ai-costs-explode-past-10kmo.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ship-1mb-pages-on-4g-starlink-africa-case-study/</loc>
     <lastmod>2026-06-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -4062,6 +4071,15 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/github/</loc>
+    <lastmod>2026-08-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og-default.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/tag/indiehacker/</loc>
     <lastmod>2026-08-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>

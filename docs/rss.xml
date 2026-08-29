@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 29 Aug 2026 18:17:58 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 29 Aug 2026 18:24:53 +0000</lastBuildDate>
+    <item>
+      <title>Serverless AI costs explode past $10k/mo</title>
+      <link>https://kubaik.github.io/serverless-ai-costs-explode-past-10kmo/</link>
+      <description>Serverless AI workloads turn expensive past 500 req/s — connection churn, cold starts, and retry storms drive the bill.</description>
+      <pubDate>Sat, 29 Aug 2026 18:24:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/serverless-ai-costs-explode-past-10kmo/</guid>
+    </item>
     <item>
       <title>Prevent ownership drift when velocity explodes</title>
       <link>https://kubaik.github.io/prevent-ownership-drift-when-velocity-explodes/</link>
@@ -138,13 +145,6 @@
       <description>Launch an AI micro-SaaS under $150/month — spot instances, vLLM, and Qdrant on $11/month EC2 that handles 10k requests/day across five countries</description>
       <pubDate>Thu, 20 Aug 2026 01:24:17 +0000</pubDate>
       <guid>https://kubaik.github.io/launched-ai-saas-under-150month/</guid>
-    </item>
-    <item>
-      <title>Evolve your monolith without rewriting in 2026</title>
-      <link>https://kubaik.github.io/evolve-your-monolith-without-rewriting-in-2026/</link>
-      <description>Evolve a FastAPI monolith without rewriting — keep the paved road evolvable with Redis 7.2 and SQLAlchemy 2.0.</description>
-      <pubDate>Wed, 19 Aug 2026 06:58:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/evolve-your-monolith-without-rewriting-in-2026/</guid>
     </item>
   </channel>
 </rss>
