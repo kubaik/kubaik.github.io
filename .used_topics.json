@@ -71,5 +71,7 @@
   "Purpose-built AI platforms vs general platforms: the decision we had to make in 2026",
   "Building evaluation harnesses for multi-agent systems that developers actually trust",
   "The observability stack that survived our move to heavy agentic workflows",
-  "The leadership challenges of managing teams where output velocity increased dramatically but ownership became blurrier"
+  "The leadership challenges of managing teams where output velocity increased dramatically but ownership became blurrier",
+  "Why traditional APM missed 80%+ of our AI-related incidents",
+  "How we debugged silent LLM quality degradation that metrics didn't catch"
 ]
