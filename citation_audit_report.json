@@ -1,0 +1,417 @@
+[
+  {
+    "slug": "47-ai-code-debt-in-2026",
+    "post_json": "docs/47-ai-code-debt-in-2026/post.json",
+    "title": "47% AI code debt in 2026",
+    "matches": [
+      {
+        "sentence": "A 2026 study by OWASP tracked 1,240 CVEs from AI-generated code: 68% were logic errors in boundary conditions the model never saw in training.",
+        "known_fabricated": false
+      },
+      {
+        "sentence": "A 2026 study by LinearB tracked developer sentiment across 50 teams and found that teams using manual review for AI-generated code reported 34% higher burnout scores than teams using automated guardrails.",
+        "known_fabricated": false
+      },
+      {
+        "sentence": "A 2026 study by Datadog tracked 200 teams and found teams using automated guardrails shipped AI-generated changes 3.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "ab-pricing-tests-that-lifted-arr-18",
+    "post_json": "docs/ab-pricing-tests-that-lifted-arr-18/post.json",
+    "title": "A/B pricing tests that lifted ARR 18%",
+    "matches": [
+      {
+        "sentence": "A 2026 study by ProfitWell showed that 68% of subscription businesses that ran structured pricing tests saw measurable impact on ARR, but 42% of those tests hurt conversion more than they helped.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "ai-api-docs-what-humans-still-write-in-2026",
+    "post_json": "docs/ai-api-docs-what-humans-still-write-in-2026/post.json",
+    "title": "AI API docs: what humans still write in 2026",
+    "matches": [
+      {
+        "sentence": "A 2026 study from the DevOps Research and Assessment (DORA) team showed that teams using auto-generated specs with enforced schema tests had a 43% lower incident rate on API changes.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "ai-ate-our-niche-heres-how-we-picked-a-new-one",
+    "post_json": "docs/ai-ate-our-niche-heres-how-we-picked-a-new-one/post.json",
+    "title": "AI ate our niche — here’s how we picked a new one",
+    "matches": [
+      {
+        "sentence": "A 2026 report from McKinsey showed that 62% of small retailers in Kenya were dropping standalone expense tools in favor of AI-powered spend insights integrated directly into their ERP.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "ai-codebases-guardrails-vs-chaos-in-2026",
+    "post_json": "docs/ai-codebases-guardrails-vs-chaos-in-2026/post.json",
+    "title": "AI codebases: guardrails vs chaos in 2026",
+    "matches": [
+      {
+        "sentence": "A 2026 survey by the African Tech Policy Forum found that 68% of NGOs using AI-assisted coding reported at least one runtime bug tied to AI assumptions about localization, units, or external APIs.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "ai-codes-hidden-cves-exposed",
+    "post_json": "docs/ai-codes-hidden-cves-exposed/post.json",
+    "title": "AI code’s hidden CVEs exposed",
+    "matches": [
+      {
+        "sentence": "**Benchmark**\nA 2026 study by Snyk scanned 4,218 public repos with AI-generated Dockerfiles; 26 % exposed port 8000 or 3000 to 0.",
+        "known_fabricated": false
+      },
+      {
+        "sentence": "In a 2026 survey by the Linux Foundation, 14 % of teams reported proprietary snippets appearing in public model responses.",
+        "known_fabricated": false
+      },
+      {
+        "sentence": "A 2026 study by OWASP found that AI-generated code reviewed by a human had 34 % fewer security issues than manual code.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "ai-scans-your-code-real-risks-and-defenses",
+    "post_json": "docs/ai-scans-your-code-real-risks-and-defenses/post.json",
+    "title": "AI scans your code: real risks and defenses",
+    "matches": [
+      {
+        "sentence": "A 2026 study by Trail of Bits on 23 open-source repos found that AI scanners caught 68% of the CVEs that had CWE numbers ≤ 89 (input validation), but only 12% of CVEs with CWE ≥ 362 (concurrency).",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "ai-services-slow-fix-the-network-first",
+    "post_json": "docs/ai-services-slow-fix-the-network-first/post.json",
+    "title": "AI services slow? Fix the network first",
+    "matches": [
+      {
+        "sentence": "A 2026 survey from the CNCF found 62% of teams running Istio or Linkerd still use the default 1-hour cert rotation.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "batteries-included-offline-mode-for-unreliable-networks",
+    "post_json": "docs/batteries-included-offline-mode-for-unreliable-networks/post.json",
+    "title": "Batteries-included offline mode for unreliable networks",
+    "matches": [
+      {
+        "sentence": "Market research from a 2024 study showed that 38 % of sessions were interrupted when the user walked into a building with weak signal, entered a bus, or simply stepped into a coverage hole.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "claude-4-prompts-broke-my-prod",
+    "post_json": "docs/claude-4-prompts-broke-my-prod/post.json",
+    "title": "Claude 4 prompts broke my prod",
+    "matches": [
+      {
+        "sentence": "A 2024 analysis by Stanford’s HAI found that only 3% of prompts triggered tone-based filters in those models.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "claude-code-in-2026-one-year-of-lessons-learned",
+    "post_json": "docs/claude-code-in-2026-one-year-of-lessons-learned/post.json",
+    "title": "Claude Code in 2026: one year of lessons learned",
+    "matches": [
+      {
+        "sentence": "\" This aligns with a 2026 study by McKinsey, which found that engineers are 3.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "dagster-replaced-airflow-in-2026-heres-the-stack-we",
+    "post_json": "docs/dagster-replaced-airflow-in-2026-heres-the-stack-we/post.json",
+    "title": "Dagster replaced Airflow in 2026 — here’s the stack we",
+    "matches": [
+      {
+        "sentence": "The sentiment survey from November 2025 showed 78% of engineers wanted to spend less than 20% of their time on pipeline plumbing.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "engineering-interviews-what-ai-wants-now",
+    "post_json": "docs/engineering-interviews-what-ai-wants-now/post.json",
+    "title": "Engineering interviews: what AI wants now",
+    "matches": [
+      {
+        "sentence": "A 2026 survey by the Kenya Software Engineering Association found that 68% of engineering managers now prioritize incident response skills over algorithmic puzzles.",
+        "known_fabricated": false
+      },
+      {
+        "sentence": "- **Error rate inflation**: A 2026 study by the Nairobi Tech Research Group found that AI-assisted code has 2.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "freelance-rates-after-ai-took-the-boilerplate",
+    "post_json": "docs/freelance-rates-after-ai-took-the-boilerplate/post.json",
+    "title": "Freelance rates after AI took the boilerplate",
+    "matches": [
+      {
+        "sentence": "A 2026 survey by Upwork found that 63% of freelancers who priced by the hour after adopting AI tools saw their effective hourly rate drop by at least 25% within six months.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "hiring-engineers-the-3-things-ai-cares-about-now",
+    "post_json": "docs/hiring-engineers-the-3-things-ai-cares-about-now/post.json",
+    "title": "Hiring engineers: the 3 things AI cares about now",
+    "matches": [
+      {
+        "sentence": "A 2026 study by DevIQ Labs found that teams using AI-driven behavioral probes in interviews reduced **onboarding ramp time by 34%** and **incident recurrence by 22%** in the first six months.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "internal-dev-portal-that-developers-open-daily",
+    "post_json": "docs/internal-dev-portal-that-developers-open-daily/post.json",
+    "title": "Internal Dev Portal that developers open daily",
+    "matches": [
+      {
+        "sentence": "A 2026 study by the Dev Interrupted community found that 67% of IDP projects fail because they prioritize tooling over developer experience.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "kubernetes-in-2026-what-teams-offload",
+    "post_json": "docs/kubernetes-in-2026-what-teams-offload/post.json",
+    "title": "Kubernetes in 2026: what teams offload",
+    "matches": [
+      {
+        "sentence": "A 2026 survey by the Cloud Native Computing Foundation found that 68% of teams running GPU workloads had misconfigured resource requests/limits.",
+        "known_fabricated": false
+      },
+      {
+        "sentence": "com\n      rules:\n      - apiGroups: [\"\"]\n        apiVersions: [\"v1\"]\n        operations: [\"CREATE\", \"UPDATE\"]\n        resources: [\"pods\"]\n      clientConfig:\n        service:\n          name: pod-admission-webhook\n          namespace: default\n          path: /validate\n      timeoutSeconds: 30\n      failurePolicy: Fail\n```\n\nA 2026 study by the SANS Institute found that 42% of admission webhook failures were due to timeouts, and 31% were due to misconfigured `failurePolicy`.",
+        "known_fabricated": false
+      },
+      {
+        "sentence": "```bash\n# Check kubelet logs for sandbox errors\njournalctl -u kubelet -n 100 | grep \"FailedCreatePodSandBox\"\n\n# Check containerd logs for runtime errors\njournalctl -u containerd -n 100 | grep \"runtime\"\n```\n\nA 2026 study by Datadog found that teams that verified fixes with metrics and logs reduced mean time to recovery (MTTR) by 63% compared to teams that relied on error messages alone.",
+        "known_fabricated": false
+      },
+      {
+        "sentence": "\"\n      pattern:\n        spec:\n          containers:\n          - name: \"*\"\n            resources:\n              requests:\n                cpu: \"?\"\n                memory: \"?\"\n              limits:\n                cpu: \"?\"\n                memory: \"?\"\n```\n\nA 2026 survey by the CNCF found that teams using policy-as-code reduced misconfigured workloads by 78% and reduced cluster incidents by 52%.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "land-a-45k-remote-job-africas-2026-map",
+    "post_json": "docs/land-a-45k-remote-job-africas-2026-map/post.json",
+    "title": "Land a $45k remote job? Africa’s 2026 map",
+    "matches": [
+      {
+        "sentence": "A 2026 study by Andela (yes, the same company that once promised “one million developers by 2026”) found that 73% of African engineers who applied to US/EU remote roles hadn’t run a load test on their own code.",
+        "known_fabricated": false
+      },
+      {
+        "sentence": "A 2026 report from RemoteOK showed that US companies offering $120k for a “full-stack” role would pay only $65k if the candidate self-reported as African—and 40% of those offers vanished after background checks.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "latency-spike-after-llm-feature-rollout",
+    "post_json": "docs/latency-spike-after-llm-feature-rollout/post.json",
+    "title": "Latency spike after LLM feature rollout",
+    "matches": [
+      {
+        "sentence": "A 2026 Chaos Engineering report from AWS shows that 63 % of latency anomalies introduced by downstream dependencies are masked by client-side retries.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "latency-trade-offs-nairobi-teams-beat-global-ai-providers",
+    "post_json": "docs/latency-trade-offs-nairobi-teams-beat-global-ai-providers/post.json",
+    "title": "Latency trade-offs: Nairobi teams beat global AI providers",
+    "matches": [
+      {
+        "sentence": "**Device battery life**: A study by Kenya’s iHub Research (2025) found that AI inference on mobile in East Africa drains batteries 22% faster when latency exceeds 600ms.",
+        "known_fabricated": true
+      },
+      {
+        "sentence": "A 2025 paper from Makerere University showed that fine-tuning a 3B model on Luganda parliamentary transcripts achieved 87% accuracy on local legal queries, beating a 13B general model at 79%.",
+        "known_fabricated": true
+      }
+    ]
+  },
+  {
+    "slug": "llm-evals-the-two-metrics-that-bite-you",
+    "post_json": "docs/llm-evals-the-two-metrics-that-bite-you/post.json",
+    "title": "LLM evals: the two metrics that bite you",
+    "matches": [
+      {
+        "sentence": "A 2026 paper from Stanford showed that in production systems, 40% of the perceived latency comes from token generation, not model inference.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "llm-security-mistakes-in-2026-owasp-top-10-fixes",
+    "post_json": "docs/llm-security-mistakes-in-2026-owasp-top-10-fixes/post.json",
+    "title": "LLM security mistakes in 2026: OWASP Top 10 fixes",
+    "matches": [
+      {
+        "sentence": "generate(prompt)\n    return {\"answer\": answer}\n```\n\nWhy these constraints? A 2026 study by the LLM Security Alliance showed that 68% of prompt-injection attempts succeed when the system prompt length is unbounded and the retrieval step trusts the user-supplied filename.",
+        "known_fabricated": false
+      },
+      {
+        "sentence": "A 2026 paper from Stanford showed that fine-tuned models still accept 12% of injection attempts unless the fine-tuning dataset is curated with adversarial examples.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "money-moves-need-stricter-parsers",
+    "post_json": "docs/money-moves-need-stricter-parsers/post.json",
+    "title": "Money moves need stricter parsers",
+    "matches": [
+      {
+        "sentence": "A 2026 report from a Singapore-based remittance startup found 8% of duplicate charges were caused by idempotency key collisions across regions.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "negotiate-salary-2026-with-ai-resume-tool",
+    "post_json": "docs/negotiate-salary-2026-with-ai-resume-tool/post.json",
+    "title": "Negotiate salary 2026 with AI resume tool",
+    "matches": [
+      {
+        "sentence": "A 2026 survey by Hired found that 78% of US tech employers use an AI parser to match resumes to postings before a human recruiter sees them.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "roll-your-own-migrations-why-blue-green-fails-you",
+    "post_json": "docs/roll-your-own-migrations-why-blue-green-fails-you/post.json",
+    "title": "Roll your own migrations: why blue-green fails you",
+    "matches": [
+      {
+        "sentence": "A 2026 survey by the PostgreSQL Contrib project found that 34% of teams running Flyway 10.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "scan-10k-repos-daily-without-false-positives",
+    "post_json": "docs/scan-10k-repos-daily-without-false-positives/post.json",
+    "title": "Scan 10k repos daily without false positives",
+    "matches": [
+      {
+        "sentence": "A 2025 study by the Cloud Security Alliance found that teams using severity-only filtering still spent 4.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "senior-devs-flee-big-tech-not-for-money",
+    "post_json": "docs/senior-devs-flee-big-tech-not-for-money/post.json",
+    "title": "Senior devs flee big tech (not for money)",
+    "matches": [
+      {
+        "sentence": "A 2026 study by the UC Berkeley Engineering School found that engineers with 3–7 years of experience at big tech companies spend 57% of their time in meetings, code reviews, and compliance tasks — only 43% on design, coding, and debugging.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "skip-the-zero-trust-hype-for-5-person-teams",
+    "post_json": "docs/skip-the-zero-trust-hype-for-5-person-teams/post.json",
+    "title": "Skip the zero-trust hype for 5-person teams",
+    "matches": [
+      {
+        "sentence": "A 2026 study by the Cloud Native Security Foundation found that small teams (≤25 people) that implemented full zero trust had a 2.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "stop-shipping-daily-the-burn-rate-math",
+    "post_json": "docs/stop-shipping-daily-the-burn-rate-math/post.json",
+    "title": "Stop shipping daily: the burn rate math",
+    "matches": [
+      {
+        "sentence": "**Context switching tax**: Switching from coding to recording a 30-second Loom demo takes ~4 minutes of context switching, according to a 2025 study by GitPrime (now Pluralsight Flow).",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "survive-ai-swipes-with-niche-picks",
+    "post_json": "docs/survive-ai-swipes-with-niche-picks/post.json",
+    "title": "Survive AI swipes with niche picks",
+    "matches": [
+      {
+        "sentence": "I ran into this when we benchmarked our own spend against a 2026 report from the Kenya Bankers Association: 34% of Kenyan fintechs had pivoted at least once in the prior 12 months, and the median pivot took 6 months and burned $85k in runway.",
+        "known_fabricated": false
+      },
+      {
+        "sentence": "A 2026 survey by iHub Research found that 68% of Kenyan SMEs with 5–20 employees still use Excel + mobile money for payroll.",
+        "known_fabricated": true
+      }
+    ]
+  },
+  {
+    "slug": "treat-every-user-input-as-hostile-in-2026",
+    "post_json": "docs/treat-every-user-input-as-hostile-in-2026/post.json",
+    "title": "Treat every user input as hostile in 2026",
+    "matches": [
+      {
+        "sentence": "A 2026 paper from Stanford’s AI Lab showed that state-of-the-art jailbreak detectors in production systems flagged fewer than 30 % of prompt-injection attacks that used natural language and no special characters.",
+        "known_fabricated": false
+      },
+      {
+        "sentence": "’ In a 2026 study by Google’s red-team, 63 % of such prompts flew past detectors that only looked for explicit jailbreak phrases.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "why-your-model-evaluation-missed-a-production-regression",
+    "post_json": "docs/why-your-model-evaluation-missed-a-production-regression/post.json",
+    "title": "Why your model evaluation missed a production regression",
+    "matches": [
+      {
+        "sentence": "A 2026 study by the Indonesian tech community (indodev.",
+        "known_fabricated": false
+      }
+    ]
+  },
+  {
+    "slug": "zero-trust-mcp-servers-auth-trap-youll-hit-first",
+    "post_json": "docs/zero-trust-mcp-servers-auth-trap-youll-hit-first/post.json",
+    "title": "Zero-trust MCP servers: auth trap you’ll hit first",
+    "matches": [
+      {
+        "sentence": "A 2026 survey by the SPIFFE maintainers found that teams using short-lived SVIDs (< 1 h) had 67 % fewer credential theft incidents than teams using long-lived certs.",
+        "known_fabricated": false
+      }
+    ]
+  }
+]

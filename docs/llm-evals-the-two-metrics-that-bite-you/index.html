@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-24T18:56:09.086501">
-        <meta property="article:modified_time" content="2026-06-24T18:56:09.086514">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.542167">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="LLM evals: the two metrics that bite you">
@@ -62,8 +62,8 @@
       "headline": "LLM evals: the two metrics that bite you",
       "description": "We measured 87% accuracy on the test set and felt good—until we looked at production logs.",
       "datePublished": "2026-06-24T18:56:09+00:00",
-      "dateModified": "2026-06-24T18:56:09+00:00",
-      "wordCount": 3741,
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 3733,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -237,9 +237,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         19 min read
-                        &nbsp;·&nbsp; 3741 words
+                        &nbsp;·&nbsp; 3733 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-24
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -250,7 +250,7 @@
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>Most teams start by copying the metrics from the LLM provider docs: accuracy, BLEU, ROUGE. That’s fine for research, but in a Nairobi fintech backend that processed 2.3M customer chats in 2026, those metrics told us almost nothing about whether the model was actually reducing support tickets or increasing NPS.</p>
 <p>I ran into this when we first rolled out a new “triage” LLM in our customer-support pipeline. We measured 87% accuracy on the test set and felt good—until we looked at production logs. Our average handle time (AHT) barely moved, and our chatbot deflection rate stayed flat at 38%. Turns out the model was outputting long, technically correct answers that customers still forwarded to human agents. The real problem wasn’t correctness; it was conciseness and actionability.</p>
-<p>The gap isn’t just about metrics. It’s about <em>latency budget</em> and <em>cost per inference</em>. A 2026 paper from Stanford showed that in production systems, 40% of the perceived latency comes from token generation, not model inference. Yet most eval guides ignore token count and generation speed. If your model outputs 150 tokens when 50 suffice, you’re burning GPU cycles and frustrating users with slow replies.</p>
+<p>The gap isn’t just about metrics. It’s about <em>latency budget</em> and <em>cost per inference</em>. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json] Yet most eval guides ignore token count and generation speed. If your model outputs 150 tokens when 50 suffice, you’re burning GPU cycles and frustrating users with slow replies.</p>
 <p>Another surprise: safety and compliance drift faster than accuracy. A model that scores 92% on a static safety test might violate new regulatory rules within weeks. We learned this the hard way after a customer complaint triggered a CMA audit. Our static safety eval had given the build a green light, but the model started suggesting payment links before KYC was complete. The fine wasn’t huge, but the reputational damage cost us 1.2% in customer churn that quarter.</p>
 <p>To close this gap, you need metrics that map to business outcomes—not just linguistic similarity. Start with:
 - <strong>Deflection rate</strong>: % of chats resolved without human handoff

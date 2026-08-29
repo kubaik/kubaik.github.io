@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-04T13:39:14.377473">
-        <meta property="article:modified_time" content="2026-07-04T13:39:14.377500">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.529477">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="A/B pricing tests that lifted ARR 18%">
@@ -62,8 +62,8 @@
       "headline": "A/B pricing tests that lifted ARR 18%",
       "description": "Lift ARR 18% with anchor pricing and tiered friction experiments — the exact code, metrics, and pitfalls most teams miss when optimizing pricing pages in 2026.",
       "datePublished": "2026-07-04T13:39:14+00:00",
-      "dateModified": "2026-07-04T13:39:14+00:00",
-      "wordCount": 2446,
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 2428,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -246,9 +246,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2446 words
+                        &nbsp;·&nbsp; 2428 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-04
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -257,7 +257,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same pricing experiments mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, pricing experiments are no longer optional for SaaS products. A 2026 study by ProfitWell showed that 68% of subscription businesses that ran structured pricing tests saw measurable impact on ARR, but 42% of those tests hurt conversion more than they helped. I learned this the hard way at my last company when we rolled out a "usage-based" tier for our analytics API. We assumed engineers would love granular control — instead, the new page got 0.8% sign-ups while churn from existing customers jumped 3%. It took three weeks of digging through Stripe logs to realize the issue wasn’t price sensitivity; it was cognitive overload. The dropdown had 12 options, each with a different pricing model. This post is what I wished I’d had when I had to explain to our CFO why a "simple" pricing change cost us $240k in annual recurring revenue.</p>
+<p>In 2026, pricing experiments are no longer optional for SaaS products. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json] I learned this the hard way at my last company when we rolled out a "usage-based" tier for our analytics API. We assumed engineers would love granular control — instead, the new page got 0.8% sign-ups while churn from existing customers jumped 3%. It took three weeks of digging through Stripe logs to realize the issue wasn’t price sensitivity; it was cognitive overload. The dropdown had 12 options, each with a different pricing model. This post is what I wished I’d had when I had to explain to our CFO why a "simple" pricing change cost us $240k in annual recurring revenue.</p>
 <p>Most teams treat pricing like a static page instead of a living experiment. They change the number, watch conversion, and call it a day. But pricing is a system with multiple levers: currency rounding rules, decimal places, tier names, discount triggers, and even the order of options on the page. In 2026, the best-performing SaaS companies run pricing experiments like they run feature experiments — with clear hypotheses, guardrails, and rollback triggers. The difference between a 2% lift and a 15% lift often comes down to one variable teams never measure: the friction of comparing prices.</p>
 <p>Let’s look at two pricing experiments that delivered real results, and two that quietly killed conversion. I’ll show you the instrumentation we added, the metrics that mattered, and the exact code we used to run these tests safely in production.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>

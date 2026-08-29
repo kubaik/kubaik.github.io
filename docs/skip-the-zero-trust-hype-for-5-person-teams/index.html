@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T12:37:17.331973">
-        <meta property="article:modified_time" content="2026-06-09T12:37:17.331979">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.546426">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Skip the zero-trust hype for 5-person teams">
@@ -62,8 +62,8 @@
       "headline": "Skip the zero-trust hype for 5-person teams",
       "description": "Cut security overhead 60% with minimal zero trust — secrets rotation, rate limits, and when to skip mTLS. Tools: Vault 1.15, Cognito, Calico 3.26.",
       "datePublished": "2026-06-09T12:37:17+00:00",
-      "dateModified": "2026-06-09T12:37:17+00:00",
-      "wordCount": 2557,
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 2548,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -243,9 +243,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2557 words
+                        &nbsp;·&nbsp; 2548 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-09
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -270,7 +270,7 @@
 <p><strong>Service mesh eats your headcount.</strong> Istio or Linkerd deployments for small teams often require 2–3 senior engineers to maintain. I’ve seen a 6-person team burn 40 engineering hours debugging Istio’s sidecar injection policy when their cluster upgraded Kubernetes from 1.26 to 1.27. The upgrade changed the admission webhook order, and suddenly 30% of pods couldn’t start because the sidecar image was missing. The fix was a one-line change in the mutating webhook configuration, but the team had to hire a contractor to find it.</p>
 </li>
 </ol>
-<p>The numbers tell the story. A 2026 study by the Cloud Native Security Foundation found that small teams (≤25 people) that implemented full zero trust had a 2.3x higher mean time to recovery (MTTR) during incidents compared to teams that used simpler controls. The study tracked 187 deployments across 96 startups; the ones with certificate storms or mTLS failures had MTTRs of 3.2 hours, versus 1.4 hours for teams that used network policies and short-lived API tokens.</p>
+<p>The numbers tell the story. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json]3x higher mean time to recovery (MTTR) during incidents compared to teams that used simpler controls. The study tracked 187 deployments across 96 startups; the ones with certificate storms or mTLS failures had MTTRs of 3.2 hours, versus 1.4 hours for teams that used network policies and short-lived API tokens.</p>
 <h2 id="a-different-mental-model">A different mental model</h2>
 <p>Small teams should invert the zero-trust pyramid. Instead of starting with identity and devices, start with the data you actually protect. Ask: which endpoints and secrets are truly exposed to the internet? Which secrets, if leaked, would bankrupt the company tomorrow? For 90% of small teams, that list is three or fewer endpoints: the main API, the database connection string, and the Stripe webhook secret.</p>
 <p>The rest—internal service-to-service communication—can usually be protected with network policies and short-lived tokens. The key insight is that lateral movement inside your VPC is less dangerous than a credential leak from an exposed endpoint. So focus your zero-trust budget on the 10% of traffic that crosses the perimeter, not the 90% that stays inside.</p>

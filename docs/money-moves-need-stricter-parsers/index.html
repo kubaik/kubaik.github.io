@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-15T01:24:32.325374">
-        <meta property="article:modified_time" content="2026-08-15T01:24:32.325389">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.543334">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Money moves need stricter parsers">
@@ -62,8 +62,8 @@
       "headline": "Money moves need stricter parsers",
       "description": "Cut ledger reversals 95% with stricter parsers: why JSON mode alone fails on money endpoints and how structured output plus validation layers enforce…",
       "datePublished": "2026-08-15T01:24:32+00:00",
-      "dateModified": "2026-08-15T01:24:32+00:00",
-      "wordCount": 3193,
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 3186,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -249,9 +249,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3193 words
+                        &nbsp;·&nbsp; 3186 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-15
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -455,7 +455,7 @@ async def create_payment(body: PaymentRequest):
 <p>Users copy-paste amounts like “1 000,50 €” from European spreadsheets. The client must strip non-breaking spaces and normalize decimal separators before sending to the model. A common failure mode is sending raw user input to the model and expecting it to “just work.”</p>
 <p>The model might output <code>1000.50</code> and the client parses it as <code>1000.5</code>, which is wrong for EUR where cents are two places. Pydantic’s <code>Decimal</code> type preserves precision, but the client must ensure the input is normalized first.</p>
 <h3 id="3-idempotency-key-collisions-across-regions">3. Idempotency key collisions across regions</h3>
-<p>If your system runs in multiple AWS regions (us-east-1, eu-central-1, ap-southeast-1), a client retry in one region might see the idempotency key as unused if the Redis cluster is not global. A 2026 report from a Singapore-based remittance startup found 8% of duplicate charges were caused by idempotency key collisions across regions.</p>
+<p>If your system runs in multiple AWS regions (us-east-1, eu-central-1, ap-southeast-1), a client retry in one region might see the idempotency key as unused if the Redis cluster is not global. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json]</p>
 <p>The fix is to use a global Redis cluster with active-active replication or to prefix the key with the region code. A simple prefix like <code>sg:6ba7b810-9dad-11d1-80b4-00c04fd430c8</code> avoids collisions.</p>
 <h3 id="4-model-hallucinations-in-the-schema">4. Model hallucinations in the schema</h3>
 <p>Models can “hallucinate” fields that are not in the schema. For example, the model might add a <code>fee: 1.50</code> field even though the schema does not allow it. If the client’s code naively merges the model output into a database row, the extra field can cause a schema violation in the ledger.</p>

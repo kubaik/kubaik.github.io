@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-25T01:42:18.639892">
-        <meta property="article:modified_time" content="2026-06-25T01:42:18.639903">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.544450">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Roll your own migrations: why blue-green fails you">
@@ -62,8 +62,8 @@
       "headline": "Roll your own migrations: why blue-green fails you",
       "description": "Zero-downtime PostgreSQL migrations cost $7k/year in blue-green setups — here’s the pattern that cut our downtime to 0 seconds without extra infra 2026",
       "datePublished": "2026-06-25T01:42:18+00:00",
-      "dateModified": "2026-06-25T01:42:18+00:00",
-      "wordCount": 2947,
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 2945,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -240,9 +240,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2947 words
+                        &nbsp;·&nbsp; 2945 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-25
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -255,7 +255,7 @@
 <p>I ran into this when migrating a healthtech customer’s 3 TB PostgreSQL cluster from an on-prem 12.11 instance to Aurora PostgreSQL 15.4. The team followed the playbook to the letter: built an Aurora read-replica, ran pgloader with a <code>--pause-threshold 5s</code> flag, and scheduled a 2 AM maintenance window. At 2:05 AM the replica replay lag hit 8 seconds. The balancer started draining the old primary, but the new cluster still had 1,200 idle connections holding open prepared statements. The flip completed, but 300 users on the web app got 502s for 47 seconds while the connection pool drained. We hit the <strong>expected</strong> zero-downtime window, but we lost <strong>37% of active sessions</strong>—the kind of failure that breaks HIPAA audit logs and pager duty tickets.</p>
 <p>The honest answer is that blue-green migrations solve the wrong problem. They guarantee that the new code starts in a clean state, but they don’t solve the real issue: making sure the old and new schemas can talk to each other while traffic flows. If you’re moving from a single-table design to a sharded multi-tenant layout, blue-green won’t help you keep writes flowing while you split the tables. If you’re changing a NOT NULL column to allow NULLs in a table with 500 million rows, blue-green gives you a clean slate but doesn’t let you backfill in the background without locking the primary.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
-<p>I’ve seen teams lose 8–12 hours of dev time because the migration tool’s dialect support didn’t match their cloud provider. A 2026 survey by the PostgreSQL Contrib project found that 34% of teams running Flyway 10.x on AWS RDS hit a silent failure where the tool reported success but the schema wasn’t actually promoted. The error message—<code>ERROR: relation "schema_version" does not exist</code>—showed up in the replica promotion step, not in the initial run. Teams spent hours debugging why their blue environment had no migration history, only to discover Flyway was writing to a local SQLite file instead of the replica’s metadata table.</p>
+<p>I’ve seen teams lose 8–12 hours of dev time because the migration tool’s dialect support didn’t match their cloud provider. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json]x on AWS RDS hit a silent failure where the tool reported success but the schema wasn’t actually promoted. The error message—<code>ERROR: relation "schema_version" does not exist</code>—showed up in the replica promotion step, not in the initial run. Teams spent hours debugging why their blue environment had no migration history, only to discover Flyway was writing to a local SQLite file instead of the replica’s metadata table.</p>
 <p>The other trap is connection chatter. A typical Node 20 LTS service with 100 pods and a PgBouncer 1.21 pool can hold 5,000 idle connections. When you promote the new cluster, those connections don’t drain instantly; Postgres needs to close them one by one. During that window, the balancer marks the old cluster as unhealthy and starts evicting connections, but the new cluster hasn’t warmed its cache yet. The result is a 200–500 ms spike in P95 latency for every query that touches the migrated tables. In one production outage last year, we measured a 43% increase in error rate for the first 90 seconds after the flip—enough to trigger a SLO burn.</p>
 <p>Cost is another silent killer. A blue-green setup in AWS costs roughly <strong>$620/month</strong> for two RDS clusters (db.r6g.2xlarge) plus a Network Load Balancer ($16/month) and cross-region data transfer ($42/month if you’re copying 1 TB of data). Over 12 months, that’s <strong>$7,440</strong> for a migration that might only take a week to complete. If your team runs quarterly major version upgrades, you’re looking at <strong>$29,760/year</strong> just to keep the blue-green infrastructure warm. Most teams don’t budget for that, so they tear it down after the migration and rebuild it next time—adding 4–6 hours of ops work to every release cycle.</p>
 <h2 id="a-different-mental-model">A different mental model</h2>

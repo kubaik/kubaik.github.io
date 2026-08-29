@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-11T08:38:57.184774">
-        <meta property="article:modified_time" content="2026-08-11T08:38:57.184787">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.551030">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Why your model evaluation missed a production regression">
@@ -62,8 +62,8 @@
       "headline": "Why your model evaluation missed a production regression",
       "description": "Missed model regression in prod? How to catch latency drift before users complain — input buckets, load-aware eval, and the instance-type trap most teams…",
       "datePublished": "2026-08-11T08:38:57+00:00",
-      "dateModified": "2026-08-11T08:38:57+00:00",
-      "wordCount": 2602,
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 2607,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -243,9 +243,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2602 words
+                        &nbsp;·&nbsp; 2607 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-11
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -265,7 +265,7 @@
 <p>Most evaluation pipelines optimize for <em>model accuracy</em>, not <em>system behavior under load</em>. They run inference on clean, preprocessed inputs with no concurrency, no upstream dependencies, and no rate limiting. In production, none of that holds true. The evaluation gap emerges in three layers:</p>
 <ol>
 <li>
-<p><strong>Input distribution drift</strong> – Your prod traffic contains inputs your evaluation data never saw. A 2026 study by the Indonesian tech community (indodev.id) found that 68% of production regressions in local startups traced back to input drift larger than 15% from the training set, but only 12% of teams measured this systematically.</p>
+<p><strong>Input distribution drift</strong> – Your prod traffic contains inputs your evaluation data never saw. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json]id) found that 68% of production regressions in local startups traced back to input drift larger than 15% from the training set, but only 12% of teams measured this systematically.</p>
 </li>
 <li>
 <p><strong>Latency amplification under concurrency</strong> – A model that takes 80ms on a single thread can jump to 250ms at 50 concurrent requests due to Python’s GIL (Python 3.12, default worker pool). This isn’t a model bug—it’s a runtime behavior that evaluation scripts rarely simulate.</p>

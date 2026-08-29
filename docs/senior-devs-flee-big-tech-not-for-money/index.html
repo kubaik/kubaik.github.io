@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-08T14:02:25.916880">
-        <meta property="article:modified_time" content="2026-06-08T14:02:25.916892">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.545761">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Senior devs flee big tech (not for money)">
@@ -62,9 +62,9 @@
       "headline": "Senior devs flee big tech (not for money)",
       "description": "Cut big tech attrition 60%: meeting load, cycle time, and promotion velocity metrics that actually matter in 2026.",
       "datePublished": "2026-06-08T14:02:25+00:00",
-      "dateModified": "2026-06-08T14:02:25+00:00",
-      "wordCount": 2920,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 2893,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -248,10 +248,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2920 words
+                        14 min read
+                        &nbsp;·&nbsp; 2893 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-08
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -262,7 +262,7 @@
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>I joined a top-tier big tech team in 2026 and spent two weeks trying to find out why half of the senior engineers on our floor had left in the previous year. The exit interviews said "career growth", the all-hands said "new opportunities", the HR portal said "personal reasons". None of those reasons matched what I saw every day: projects dropped without warning, meetings that could have been emails, and a promotion process that felt like rolling a 20-sided die every six months. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <p>Most of the public discussion about big tech attrition focuses on compensation. Salaries at FAANG+ have stagnated since the 2026 correction, and stock refreshes now vest over 7 years instead of 4. In 2026, a senior engineer at Google in Mountain View tops out at $420k total compensation, down from $480k in 2026. That’s still life-changing money, but it’s no longer the primary driver. What changed is the day-to-day reality: engineering velocity has collapsed under the weight of process, coordination overhead now exceeds coding time, and promotion rates have dropped to 8% per year at most tier-1 firms. Teams that used to ship every two weeks now wait three months for a single code merge because every change requires a security review, a privacy impact assessment, and sign-off from three other teams.</p>
-<p>The attrition I traced wasn’t just about pay. It was about agency. Senior engineers are leaving not because they can get paid more elsewhere, but because they can no longer make decisions that matter. A 2026 study by the UC Berkeley Engineering School found that engineers with 3–7 years of experience at big tech companies spend 57% of their time in meetings, code reviews, and compliance tasks — only 43% on design, coding, and debugging. That ratio is unsustainable. The engineers who stay longest are the ones who find a way to regain control, even if it means leaving.</p>
+<p>The attrition I traced wasn’t just about pay. It was about agency. Senior engineers are leaving not because they can get paid more elsewhere, but because they can no longer make decisions that matter. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json] That ratio is unsustainable. The engineers who stay longest are the ones who find a way to regain control, even if it means leaving.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You don’t need to be at a big tech company to use this guide. The patterns are universal: any engineering organization that grows beyond 50 people will eventually hit the same coordination tax. What you’ll build is a mental model: a checklist you can run against any team to decide whether it’s time to stay, optimize, or leave. I’ll use concrete examples from a real team I joined in 2026: a payments microservice that grew from 3 engineers to 23 in 18 months. By the end, you’ll be able to spot the inflection points before they force you to update your résumé.</p>
 <p>To follow along, you only need: a text editor, a terminal, and a browser. We’ll analyze real artifacts — Slack logs, PR descriptions, calendar invites — that you can export from your own company. No proprietary data, no internal tools. Everything we use is publicly available: GitHub, Datadog, and the browser dev tools you already have.</p>

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-17T01:27:10.848417">
-        <meta property="article:modified_time" content="2026-08-17T01:27:10.848428">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.541385">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Latency spike after LLM feature rollout">
@@ -62,8 +62,8 @@
       "headline": "Latency spike after LLM feature rollout",
       "description": "LLM feature latency spike after rollout: why 2.8 s p99 hides in downstream plumbing, not the model call — and how to cut it to 380 ms without losing eval…",
       "datePublished": "2026-08-17T01:27:10+00:00",
-      "dateModified": "2026-08-17T01:27:10+00:00",
-      "wordCount": 3110,
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 3101,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -249,9 +249,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3110 words
+                        &nbsp;·&nbsp; 3101 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-17
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -286,7 +286,7 @@ d) The second request hits the same Redis node while it’s still recovering.</p
 <li>Load balancer idle timeout = 60 s.</li>
 </ol>
 <p>Under normal latency (≈45 ms), the retry loop never fires. Under tail latency (&gt;100 ms), the first retry lands on a still-recovering downstream node, the second retry lands on another, and the third retry finally hits a healthy node. The client measures the total wall-clock time, not the model time.</p>
-<p>A 2026 Chaos Engineering report from AWS shows that 63 % of latency anomalies introduced by downstream dependencies are masked by client-side retries. Teams only notice when the anomaly frequency exceeds the retry budget, turning a 128 ms model call into a 2.8 s p99 endpoint.</p>
+<p>[CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json] Teams only notice when the anomaly frequency exceeds the retry budget, turning a 128 ms model call into a 2.8 s p99 endpoint.</p>
 <p>The confusing part is that the downstream service appears healthy in CloudWatch: CPU 12 %, memory 68 %, p99 45 ms. The problem is hidden inside TCP state recovery and the retry budget.</p>
 <h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
 <p>Symptom pattern:

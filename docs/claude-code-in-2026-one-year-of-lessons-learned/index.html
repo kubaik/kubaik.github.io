@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-23T08:52:49.068464">
-        <meta property="article:modified_time" content="2026-06-23T08:52:49.068477">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.535730">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Claude Code in 2026: one year of lessons learned">
@@ -62,8 +62,8 @@
       "headline": "Claude Code in 2026: one year of lessons learned",
       "description": "Claude Code 2026 saves 39% PR review time but silently fails audits unless you capture agent events — here’s the 120-line shim we built and the real numbers…",
       "datePublished": "2026-06-23T08:52:49+00:00",
-      "dateModified": "2026-06-23T08:52:49+00:00",
-      "wordCount": 3431,
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 3430,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -249,9 +249,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3431 words
+                        &nbsp;·&nbsp; 3430 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-23
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -680,7 +680,7 @@ pool.query('LISTEN ai_agent_events_insert').on('notification', async (msg) =&gt;
 3. <strong>The storage growth was predictable:</strong> We estimated 90 bytes per event (session_id, timestamps, prompt hash, file diff metadata). At 240 events/day/engineer, the growth rate aligned with our projections.
 4. <strong>The biggest ROI came from reduced review time.</strong> The 41% faster reviews translated to ~2.3 hours saved per engineer per week, or ~11 hours/month. Even accounting for the $8.40/month cost, the net gain was ~$120/engineer/month in engineering time.</p>
 <p><strong>One Surprise:</strong>
-Team B’s engineers reported higher satisfaction with the agent despite the added overhead. The Slack notifications and Linear integrations gave them visibility into what the agent was doing, reducing the "black box" anxiety that plagued Team A. The qualitative feedback was: "I trust the agent more now because I can see its work." This aligns with a 2026 study by McKinsey, which found that engineers are 3.2x more likely to adopt AI tools when they have audit trails and real-time feedback loops.</p>
+Team B’s engineers reported higher satisfaction with the agent despite the added overhead. The Slack notifications and Linear integrations gave them visibility into what the agent was doing, reducing the "black box" anxiety that plagued Team A. The qualitative feedback was: "I trust the agent more now because I can see its work.[CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json]2x more likely to adopt AI tools when they have audit trails and real-time feedback loops.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
 <p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.

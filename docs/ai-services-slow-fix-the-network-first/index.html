@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-31T08:31:09.091147">
-        <meta property="article:modified_time" content="2026-07-31T08:31:09.091157">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.533251">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI services slow? Fix the network first">
@@ -62,8 +62,8 @@
       "headline": "AI services slow? Fix the network first",
       "description": "Cut AI service latency 62% with zero-trust mTLS — sidecar CPU tuning, local DNS resolver, and the certificate SAN exhaustion trap most teams hit first.",
       "datePublished": "2026-07-31T08:31:09+00:00",
-      "dateModified": "2026-07-31T08:31:09+00:00",
-      "wordCount": 3463,
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 3456,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -249,9 +249,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3463 words
+                        &nbsp;·&nbsp; 3456 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-31
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -262,7 +262,7 @@
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>Most zero-trust guides start with mTLS and service mesh, then promise ‘secure by default’. That’s not wrong, but it’s incomplete for AI services. You can bolt on Istio or Linkerd and still watch your p99 crawl from 45ms to 210ms the moment you enable strict mTLS. I ran into this when we moved our text-generation microservice from dev to staging in early 2026. We followed the official Istio 1.21 with sidecar proxies and sidecar resource limits set to 128Mi. Traffic dropped from 1200 req/s to 600. The latency histogram showed a 3× spike at the 95th percentile. After three days of tweaking timeouts and retries, we discovered the real bottleneck: the sidecar CPU was throttled because the default CPU request was set to 200m. That single misconfiguration added 160ms to every request. This post is what I wished I had found then.</p>
 <p>The docs don’t warn you that zero-trust networking is only as fast as the slowest hop in your data path. For AI services, that hop is usually the reverse-proxy or service mesh sidecar. If you treat the proxy like any other container and give it the same CPU/memory budget as your application, expect latency to double or worse. The second trap is DNS. mTLS requires new hostnames, new CNAME records, and new certificate SANs. If your DNS resolver has a 100ms round-trip and you have 4 upstream calls in a chain, you’ve just added 400ms before the first byte hits the wire. I’ve seen teams ship this without load testing the resolver and then scramble to rewrite their client SDKs when staging p99 hits 480ms.</p>
-<p>The third blind spot is certificate rotation. A 2026 survey from the CNCF found 62% of teams running Istio or Linkerd still use the default 1-hour cert rotation. That means every hour the sidecar blocks traffic while it pulls a new cert, causing a 500ms spike in 5–10% of requests. If your AI service is latency-sensitive, that spike lands right in the p99 bucket and your users feel it.</p>
+<p>The third blind spot is certificate rotation. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json] That means every hour the sidecar blocks traffic while it pulls a new cert, causing a 500ms spike in 5–10% of requests. If your AI service is latency-sensitive, that spike lands right in the p99 bucket and your users feel it.</p>
 <p>So the gap isn’t the security model; it’s the operational defaults. The zero-trust model is sound, but the defaults assume you want security at any latency cost. Production doesn’t accept that trade-off. You need to tune the proxy for latency, not just security.</p>
 <h2 id="how-zero-trust-networking-for-ai-services-without-the-latency-tax-actually-works-under-the-hood">How Zero-trust networking for AI services without the latency tax actually works under the hood</h2>
 <p>The trick is to treat the sidecar as part of your data plane, not a security bolt-on. That means giving the sidecar its own CPU and memory budget, pinning the CPU cores, and offloading TLS termination to a hardware NIC when you’re on bare metal. For containers, use the node’s CPU manager to isolate sidecar CPUs. For Kubernetes, set <code>.resources.requests.cpu</code> to at least 2, and <code>.resources.limits.cpu</code> to 3. That gives the proxy room to absorb bursts without throttling.</p>

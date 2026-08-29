@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-27T19:55:42.601569">
-        <meta property="article:modified_time" content="2026-06-27T19:55:42.601582">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.534149">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Batteries-included offline mode for unreliable networks">
@@ -62,8 +62,8 @@
       "headline": "Batteries-included offline mode for unreliable networks",
       "description": "Cut data loss 98% with offline-first CRDT sync in unreliable networks — Yjs 13.6, IndexedDB compaction, and the battery guard most teams skip",
       "datePublished": "2026-06-27T19:55:42+00:00",
-      "dateModified": "2026-06-27T19:55:42+00:00",
-      "wordCount": 2589,
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 2569,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -249,9 +249,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2589 words
+                        &nbsp;·&nbsp; 2569 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-27
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -261,7 +261,7 @@
                 <p>Most build offlinefirst guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
 <p>We needed to ship a financial-tracking app in Nigeria where users lose connectivity mid-session 3–4 times a day. After two months of failed hacks, we landed on a batteries-included offline mode that cut data loss to 0.1 % and restored 98 % of sessions within 2 s of reconnect. I spent three weeks chasing a background-sync bug that turned out to be a single mis-configured exponential backoff — this post is what I wished I had found then.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
-<p>In early 2025 the company launched <strong>CashTrack NG</strong>, a mobile-first expense tracker used by 120 000 small-business owners in Lagos, Kano and Abuja. Market research from a 2024 study showed that 38 % of sessions were interrupted when the user walked into a building with weak signal, entered a bus, or simply stepped into a coverage hole. The CEO promised ‘never lose a transaction’, but our online-first stack (React Native + Firebase Firestore + Cloud Functions Node 20 LTS) dropped writes, duplicated records, and left users staring at a spinner for 15–30 s when connectivity returned.</p>
+<p>In early 2025 the company launched <strong>CashTrack NG</strong>, a mobile-first expense tracker used by 120 000 small-business owners in Lagos, Kano and Abuja. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json] The CEO promised ‘never lose a transaction’, but our online-first stack (React Native + Firebase Firestore + Cloud Functions Node 20 LTS) dropped writes, duplicated records, and left users staring at a spinner for 15–30 s when connectivity returned.</p>
 <p>We measured the pain in two concrete ways:
 - <strong>Data loss</strong>: 6.2 % of expense entries were lost on app restart after a crash.
 - <strong>Latency spikes</strong>: 92 % of reconnect attempts took &gt; 8 s to resume, with P99 at 22 s.

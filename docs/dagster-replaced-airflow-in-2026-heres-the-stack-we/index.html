@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-19T16:13:37.476018">
-        <meta property="article:modified_time" content="2026-06-19T16:13:37.476028">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.536286">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Dagster replaced Airflow in 2026 — here’s the stack we">
@@ -62,8 +62,8 @@
       "headline": "Dagster replaced Airflow in 2026 — here’s the stack we",
       "description": "Cut pipeline orchestration costs 74% and latency 92% by swapping Airflow for Dagster 1.7.0 — the asset-based model, RDS metadata, and IAM secrets that…",
       "datePublished": "2026-06-19T16:13:37+00:00",
-      "dateModified": "2026-06-19T16:13:37+00:00",
-      "wordCount": 2803,
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 2795,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -249,9 +249,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2803 words
+                        &nbsp;·&nbsp; 2795 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-19
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -262,7 +262,7 @@
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In late 2026, our data team faced a classic scaling wall: the Airflow cluster we’d loved at 10 engineers was now a 60-person org running 1,200 DAGs, 400 concurrent runs, and 32,000 tasks per weekday. The bill hit $28k/month on AWS EKS, and latency to the scheduler UI was 12–18 seconds once more than 150 users were active. Worse, the DAG authoring experience felt like maintaining a decade-old cron job collection: dynamic tasks were YAML macros wrapped in Jinja, secrets lived in environment variables that rotated weekly, and the only way to test a change was to push to <code>main</code>, wait for the scheduler to pick it up, and watch the logs for 10 minutes.</p>
 <p>I ran into this when we tried to add a nightly feature-flag rollout that depended on three upstream pipelines finishing within 30 minutes of each other. The DAG dependencies were expressed as <code>ExternalTaskSensor</code>, which Airflow polls every 30 seconds by default. With 48 such sensors across the codebase, the extra load added another 8–12 seconds to the average scheduler heartbeat. That meant our 30-minute SLA became a coin flip.</p>
-<p>The bigger issue was cultural. Every new engineer spent their first two weeks learning Airflow’s DSL instead of writing SQL or Python. We had 230 orphaned DAGs nobody dared delete because one of the 60 legacy services still depended on them. The sentiment survey from November 2025 showed 78% of engineers wanted to spend less than 20% of their time on pipeline plumbing.</p>
+<p>The bigger issue was cultural. Every new engineer spent their first two weeks learning Airflow’s DSL instead of writing SQL or Python. We had 230 orphaned DAGs nobody dared delete because one of the 60 legacy services still depended on them. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json]</p>
 <p>We needed a system that let us write data logic in the same language we used for the rest of the stack, ran faster under load, and gave us back our weekends.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>We started by throwing EC2 instances at Airflow. We moved the scheduler and workers to <code>r7g.2xlarge</code> instances with 8 vCPUs and 32 GiB RAM, and turned up <code>scheduler_zombie_task_threshold</code> to 120 seconds to reduce the heartbeat load. The bill jumped to $41k/month, and the UI latency only dropped to 8–10 seconds. The real kicker was that the autoscaling groups created so many short-lived pods that our Kubernetes API server started throttling requests at the 10k QPS limit.</p>

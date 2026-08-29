@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T21:45:26.745094">
-        <meta property="article:modified_time" content="2026-06-09T21:45:26.745101">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.530249">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI API docs: what humans still write in 2026">
@@ -62,8 +62,8 @@
       "headline": "AI API docs: what humans still write in 2026",
       "description": "Cut API error rates 63% with guardrail docs — learn what humans must still write, Speakeasy 2.8, FastAPI 0.111, and the guardrail doc template that blocks AI…",
       "datePublished": "2026-06-09T21:45:26+00:00",
-      "dateModified": "2026-06-09T21:45:26+00:00",
-      "wordCount": 3017,
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 3001,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -249,9 +249,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3017 words
+                        &nbsp;·&nbsp; 3001 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-09
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -265,7 +265,7 @@
 <p>Here’s what changed and what didn’t:</p>
 <ul>
 <li>Tooling improved: AI agents now auto-generate OpenAPI specs, TypeScript types, and even Postman collections from code. Tools like Speakeasy (v2.8) and Redocly (v3.27) now ship with built-in validators that run against your CI.</li>
-<li>Validation is stricter: teams now require AI-generated docs to pass schema tests before merging. A 2026 study from the DevOps Research and Assessment (DORA) team showed that teams using auto-generated specs with enforced schema tests had a 43% lower incident rate on API changes.</li>
+<li>Validation is stricter: teams now require AI-generated docs to pass schema tests before merging. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json]</li>
 <li>Human writing shifted: teams now write "guardrail docs"—concise notes that tell the AI what NOT to generate, not what to say. For example, a comment like <code># NEVER: generate a 200 OK for a failed payment</code> prevents the AI from inventing a happy-path response.</li>
 </ul>
 <p>The biggest surprise? AI is terrible at naming things consistently. I saw a single microservice where the AI kept switching between <code>userId</code>, <code>user_id</code>, and <code>uid</code> in three different endpoints. That inconsistency caused a 15% spike in 400 errors when the frontend client used the wrong casing.</p>

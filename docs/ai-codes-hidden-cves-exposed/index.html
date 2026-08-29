@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T09:26:14.857975">
-        <meta property="article:modified_time" content="2026-06-09T09:26:14.857980">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.532098">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI code’s hidden CVEs exposed">
@@ -62,8 +62,8 @@
       "headline": "AI code’s hidden CVEs exposed",
       "description": "Cut security incidents 60% by scanning AI-generated code for 7 hidden risks before they hit prod",
       "datePublished": "2026-06-09T09:26:14+00:00",
-      "dateModified": "2026-06-09T09:26:14+00:00",
-      "wordCount": 2390,
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 2368,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -246,9 +246,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2390 words
+                        &nbsp;·&nbsp; 2368 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-09
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -300,8 +300,7 @@ Catches the “I’ll fix it later” ports that end up in production Docker ima
 Port 8080 is usually safe, but the tool flags it anyway, so you end up disabling rules that actually matter.</p>
 <p><strong>Best for</strong>
 Teams shipping Node.js or Python web servers in containers.</p>
-<p><strong>Benchmark</strong>
-A 2026 study by Snyk scanned 4,218 public repos with AI-generated Dockerfiles; 26 % exposed port 8000 or 3000 to 0.0.0.0 by default. The false-positive rate was 41 %.</p>
+<p>[CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json]0.0.0 by default. The false-positive rate was 41 %.</p>
 <p><strong>Fix</strong></p>
 <pre><code class="language-dockerfile"># Node 20 LTS image
 EXPOSE 3000
@@ -480,11 +479,11 @@ Run <code>git secrets --scan</code> on the repo; it takes 12 seconds on a 50 k-l
 <p><strong>How do I convince my team to run these scans in CI?</strong>
 Start with a non-blocking PR comment: <code>semgrep --config=auto --json --output=semgrep.json &amp;&amp; cat semgrep.json | jq '.results[] | "\(.check_id) \(.path):\(.start.line)"'</code>. If the comment contains more than 5 issues, the team will usually fix them to keep the noise low. After two weeks, switch to blocking mode.</p>
 <p><strong>Aren’t AI tools trained on public repos? Could they leak my private code?</strong>
-Yes. In a 2026 survey by the Linux Foundation, 14 % of teams reported proprietary snippets appearing in public model responses. The safest policy is to run AI assistants only on ephemeral, non-sensitive code or to use a private model fine-tuned on your own repos with differential privacy.</p>
+Yes. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json] The safest policy is to run AI assistants only on ephemeral, non-sensitive code or to use a private model fine-tuned on your own repos with differential privacy.</p>
 <p><strong>My AI-generated code passes all security scans but still has bugs. What’s missing?</strong>
 Most scanners only look for known patterns (CVEs, secrets, regex). They don’t catch semantic issues like “this function trusts user input without validation.” Add a lightweight fuzzer (e.g., <code>node-fuzz</code> for JS, <code>hypothesis</code> for Python) to catch edge cases the AI missed. I’ve seen AI-generated parsers that accept invalid JSON as long as it’s not syntactically broken.</p>
 <p><strong>Should I ban AI-generated code entirely?</strong>
-No. The real risk is un-reviewed AI code. A 2026 study by OWASP found that AI-generated code reviewed by a human had 34 % fewer security issues than manual code. The trick is to gate AI-generated PRs behind a mandatory security scan and a 24-hour review window.</p>
+No. The real risk is un-reviewed AI code. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json] The trick is to gate AI-generated PRs behind a mandatory security scan and a 24-hour review window.</p>
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>Run Semgrep v1.52 with the <code>p/security-audit</code> ruleset on every AI-generated PR. It’s fast, free for small teams, and surfaces the seven classes of vulnerabilities I’ve seen blow up in production. Do it today:</p>
 <pre><code class="language-bash"># Install and run in one command

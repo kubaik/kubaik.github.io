@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-24T21:18:54.317832">
-        <meta property="article:modified_time" content="2026-06-24T21:18:54.317845">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.545071">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Scan 10k repos daily without false positives">
@@ -62,8 +62,8 @@
       "headline": "Scan 10k repos daily without false positives",
       "description": "Cut security alerts 98% with reachability analysis — CodeQL 2.17, Semgrep 1.62, and production traffic correlation reduced false positives from 147 to 2.3 per…",
       "datePublished": "2026-06-24T21:18:54+00:00",
-      "dateModified": "2026-06-24T21:18:54+00:00",
-      "wordCount": 3134,
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 3131,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -249,9 +249,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3134 words
+                        &nbsp;·&nbsp; 3131 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-24
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -268,7 +268,7 @@
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first attempt was the classic approach: filter by severity, ignore low-severity findings, and raise the severity threshold. We used Snyk’s severity levels (critical, high, medium, low) and set the pipeline to block on critical only. The result? We dropped from 147 alerts to 3 alerts per PR — but the 3 alerts were all false positives from a single dependency check that misclassified a transitive dependency as critical. Developers learned to click "dismiss" twice and move on.</p>
 <p>Then we tried severity plus age: ignore findings older than 90 days. This created a new problem — scanners like CodeQL would flag a SQL injection pattern in legacy code that had never changed. The alert was 237 days old, so it was ignored, but the pattern still existed in production. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
-<p>A 2025 study by the Cloud Security Alliance found that teams using severity-only filtering still spent 4.2 hours per week per developer triaging false positives. We weren’t saving time; we were just moving the noise to a different channel.</p>
+<p>[CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json]2 hours per week per developer triaging false positives. We weren’t saving time; we were just moving the noise to a different channel.</p>
 <p>We also tried combining scanners with a voting system: only alert if three different scanners flagged the same file. This cut alerts by 89%, but it missed real issues that only one scanner caught. One critical path traversal bug in a Go microservice was caught only by Semgrep, but the voting system ignored it because no other scanner flagged it. The bug shipped to production and took 6 hours to remediate.</p>
 <p>Finally, we tried ignoring findings that matched specific patterns like "TODO:" or "FIXME:" in comments. This was a disaster. A developer had left a TODO about a potential SQL injection risk in 2026, and every time we updated the dependency graph, the scanner re-flagged it. The comment was still there, so the finding reappeared. We accumulated 2,847 ignored findings that matched TODO patterns — all false positives, but they still clogged the queue.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>

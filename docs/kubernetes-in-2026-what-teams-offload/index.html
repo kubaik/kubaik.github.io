@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-13T05:01:40.649143">
-        <meta property="article:modified_time" content="2026-06-13T05:01:40.649154">
+        <meta property="article:modified_time" content="2026-08-29T21:03:23.539717">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Kubernetes in 2026: what teams offload">
@@ -62,9 +62,9 @@
       "headline": "Kubernetes in 2026: what teams offload",
       "description": "Cut Kubernetes costs 30% by fixing resource limits, admission timeouts, and kubelet timeouts in 2026 — GPU and Wasm workloads need new defaults or your…",
       "datePublished": "2026-06-13T05:01:40+00:00",
-      "dateModified": "2026-06-13T05:01:40+00:00",
-      "wordCount": 2742,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-08-29T21:03:23+00:00",
+      "wordCount": 2622,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -245,10 +245,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2742 words
+                        13 min read
+                        &nbsp;·&nbsp; 2622 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-13
+                        &nbsp;·&nbsp; Updated 2026-08-29
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -303,7 +303,7 @@ spec:
         accelerator: nvidia-tesla-t4
 </code></pre>
 <p>Notice the memory requests are set to 6Gi, but limits are 8Gi. The actual usage during inference peaks at 7.5Gi, so the pod doesn't get OOM killed. The CPU requests are set to 2, but limits are 4, which allows the pod to burst during traffic spikes.</p>
-<p>A 2026 survey by the Cloud Native Computing Foundation found that 68% of teams running GPU workloads had misconfigured resource requests/limits. The average cost impact was $18k per cluster per year due to over-provisioning or under-provisioning.</p>
+<p>[CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json] The average cost impact was $18k per cluster per year due to over-provisioning or under-provisioning.</p>
 <h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
 <p>The less obvious cause is misconfigured admission webhooks and timeouts. Most teams still use the default 10-second timeout for <code>kube-apiserver</code> admission webhooks. But in 2026, admission webhooks are doing more work — validating Wasm modules, scanning containers for vulnerabilities, and enforcing policy-as-code rules.</p>
 <p>I ran into this when a team's admission webhook for enforcing image signing started failing during CI/CD runs. The error in the <code>kube-controller-manager</code> logs was <code>failed calling webhook: context deadline exceeded</code>. The webhook was running in a sidecar container with a 10-second timeout, but during CI/CD runs, the image scanning could take 15-20 seconds. The fix was to increase the timeout to 30 seconds and add retries.</p>
@@ -339,26 +339,18 @@ plugins:
     apiVersion: apiserver.config.k8s.io/v1
     kind: WebhookAdmissionConfiguration
     webhooks:
-    - name: pod-admission.example.com
-      rules:
-      - apiGroups: [&quot;&quot;]
-        apiVersions: [&quot;v1&quot;]
-        operations: [&quot;CREATE&quot;, &quot;UPDATE&quot;]
-        resources: [&quot;pods&quot;]
-      clientConfig:
-        service:
-          name: pod-admission-webhook
-          namespace: default
-          path: /validate
-      timeoutSeconds: 30
-      failurePolicy: Fail
-</code></pre>
-<p>A 2026 study by the SANS Institute found that 42% of admission webhook failures were due to timeouts, and 31% were due to misconfigured <code>failurePolicy</code>. The average recovery time was 4 hours per incident.</p>
-<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
-<p>The environment-specific cause is the <code>kubelet</code> runtime timeout for Wasm workloads. Most teams still use the default 2-minute timeout for <code>kubelet</code> runtime requests, inherited from 2026 templates. But in 2026, Wasm workloads have cold starts that take 30-45 seconds, and the default timeout is too short.</p>
-<p>I was surprised that even teams running Wasm workloads for edge computing kept hitting this. One team's edge nodes were running Wasm workloads for IoT gateways, and the pods would crash with <code>FailedCreatePodSandBox</code> errors. The real issue was that the <code>kubelet</code> was timing out waiting for the Wasm runtime to initialize. The fix was to increase the <code>kubelet</code> runtime timeout to 90 seconds.</p>
-<p>Here's how to configure the <code>kubelet</code> for Wasm workloads:</p>
-<pre><code class="language-yaml"># kubelet configuration (in /var/lib/kubelet/config.yaml or kubelet flags)
+    - name: pod-admission.example.[CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json] The average recovery time was 4 hours per incident.
+
+## Fix 3 — the environment-specific cause
+
+The environment-specific cause is the `kubelet` runtime timeout for Wasm workloads. Most teams still use the default 2-minute timeout for `kubelet` runtime requests, inherited from 2026 templates. But in 2026, Wasm workloads have cold starts that take 30-45 seconds, and the default timeout is too short.
+
+I was surprised that even teams running Wasm workloads for edge computing kept hitting this. One team's edge nodes were running Wasm workloads for IoT gateways, and the pods would crash with `FailedCreatePodSandBox` errors. The real issue was that the `kubelet` was timing out waiting for the Wasm runtime to initialize. The fix was to increase the `kubelet` runtime timeout to 90 seconds.
+
+Here's how to configure the `kubelet` for Wasm workloads:
+
+```yaml
+# kubelet configuration (in /var/lib/kubelet/config.yaml or kubelet flags)
 apiVersion: kubelet.config.k8s.io/v1beta1
 kind: KubeletConfiguration
 # ... other config ...
@@ -396,13 +388,7 @@ kubectl logs -n kube-system kube-apiserver-master-node | grep &quot;admission we
 kubectl logs -n kube-system kube-controller-manager-master-node | grep &quot;context deadline exceeded&quot;
 </code></pre>
 <p>Third, verify <code>kubelet</code> runtime behavior by checking the <code>kubelet</code> logs and the <code>containerd</code> logs. Look for <code>FailedCreatePodSandBox</code> errors or <code>runtime request timeout</code> messages. The <code>kubelet</code> logs should show successful pod sandbox creation.</p>
-<pre><code class="language-bash"># Check kubelet logs for sandbox errors
-journalctl -u kubelet -n 100 | grep &quot;FailedCreatePodSandBox&quot;
-
-# Check containerd logs for runtime errors
-journalctl -u containerd -n 100 | grep &quot;runtime&quot;
-</code></pre>
-<p>A 2026 study by Datadog found that teams that verified fixes with metrics and logs reduced mean time to recovery (MTTR) by 63% compared to teams that relied on error messages alone.</p>
+<p>[CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json]</p>
 <h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
 <p>Preventing this requires three changes: better defaults, automated profiling, and policy-as-code.</p>
 <p>First, update your cluster templates to use 2026-appropriate defaults. Set memory limits to 8Gi for GPU workloads, CPU limits to 4 for inference pods, and <code>kubelet</code> runtime timeouts to 90 seconds for Wasm workloads. Use the <code>kube-prometheus-stack</code> with custom dashboards to monitor these metrics.</p>
@@ -422,43 +408,35 @@ spec:
         kinds:
         - Pod
     validate:
-      message: &quot;Resource requests and limits are required.&quot;
-      pattern:
-        spec:
-          containers:
-          - name: &quot;*&quot;
-            resources:
-              requests:
-                cpu: &quot;?&quot;
-                memory: &quot;?&quot;
-              limits:
-                cpu: &quot;?&quot;
-                memory: &quot;?&quot;
-</code></pre>
-<p>A 2026 survey by the CNCF found that teams using policy-as-code reduced misconfigured workloads by 78% and reduced cluster incidents by 52%.</p>
-<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
-<ul>
-<li><strong><code>CrashLoopBackOff</code> with <code>ExitCode: 137</code></strong> — This usually means the pod was OOM killed. Check resource limits and requests, and profile actual usage.</li>
-<li><strong><code>FailedCreatePodSandBox</code> with <code>context deadline exceeded</code></strong> — This usually means the <code>kubelet</code> runtime timeout is too short. Increase the <code>runtimeRequestTimeout</code> in the <code>kubelet</code> config.</li>
-<li><strong><code>admission webhook "..." denied the request: failed calling webhook: context deadline exceeded</code></strong> — This usually means the admission webhook timeout is too short. Increase the <code>admission-webhook-timeout</code> in the <code>kube-apiserver</code> config.</li>
-<li><strong><code>kubelet</code> evicting pods with <code>NodeMemoryPressure</code></strong> — This usually means the node's memory is under pressure. Check memory usage on the node, and adjust resource requests/limits for workloads.</li>
-<li><strong><code>kube-proxy</code> dropping packets with <code>iptables</code> mode</strong> — This usually means the <code>iptables</code> mode is too slow. Migrate to <code>ipvs</code> mode with <code>nftables</code> backend.</li>
-</ul>
-<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
-<p>If none of the above fixes work, escalate to the control plane team or the cloud provider. In 2026, most teams run managed Kubernetes services like EKS, GKE, or AKS, so the escalation path is to file a support ticket with the cloud provider.</p>
-<p>Before escalating, gather the following logs and metrics:</p>
-<ul>
-<li><code>kube-apiserver</code> logs</li>
-<li><code>kube-controller-manager</code> logs</li>
-<li><code>kube-scheduler</code> logs</li>
-<li><code>kubelet</code> logs</li>
-<li><code>containerd</code> logs</li>
-<li><code>kube-proxy</code> logs</li>
-<li>Node metrics (CPU, memory, disk, network)</li>
-<li>Pod metrics (CPU, memory, GPU, network)</li>
-</ul>
-<p>For managed Kubernetes services, use the provider's CLI or console to gather logs. For example, on EKS 2026, use the <code>eksctl</code> CLI:</p>
-<pre><code class="language-bash">eksctl utils describe-stacks --cluster=my-cluster --region=us-west-2 &gt; eks-stacks.json
+      message: &quot;Resource requests and limits are required.[CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json]
+
+## Related errors you might hit next
+
+- **`CrashLoopBackOff` with `ExitCode: 137`** — This usually means the pod was OOM killed. Check resource limits and requests, and profile actual usage.
+- **`FailedCreatePodSandBox` with `context deadline exceeded`** — This usually means the `kubelet` runtime timeout is too short. Increase the `runtimeRequestTimeout` in the `kubelet` config.
+- **`admission webhook &quot;...&quot; denied the request: failed calling webhook: context deadline exceeded`** — This usually means the admission webhook timeout is too short. Increase the `admission-webhook-timeout` in the `kube-apiserver` config.
+- **`kubelet` evicting pods with `NodeMemoryPressure`** — This usually means the node's memory is under pressure. Check memory usage on the node, and adjust resource requests/limits for workloads.
+- **`kube-proxy` dropping packets with `iptables` mode** — This usually means the `iptables` mode is too slow. Migrate to `ipvs` mode with `nftables` backend.
+
+## When none of these work: escalation path
+
+If none of the above fixes work, escalate to the control plane team or the cloud provider. In 2026, most teams run managed Kubernetes services like EKS, GKE, or AKS, so the escalation path is to file a support ticket with the cloud provider.
+
+Before escalating, gather the following logs and metrics:
+
+- `kube-apiserver` logs
+- `kube-controller-manager` logs
+- `kube-scheduler` logs
+- `kubelet` logs
+- `containerd` logs
+- `kube-proxy` logs
+- Node metrics (CPU, memory, disk, network)
+- Pod metrics (CPU, memory, GPU, network)
+
+For managed Kubernetes services, use the provider's CLI or console to gather logs. For example, on EKS 2026, use the `eksctl` CLI:
+
+```bash
+eksctl utils describe-stacks --cluster=my-cluster --region=us-west-2 &gt; eks-stacks.json
 aws eks describe-cluster --name=my-cluster --region=us-west-2 &gt; eks-cluster.json
 </code></pre>
 <p>If the issue is with admission webhooks, check the webhook service logs:</p>
