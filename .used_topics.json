@@ -77,5 +77,8 @@
   "How we made egress costs visible to every engineer (and what changed as a result)",
   "When serverless stops being cheap for AI workloads \u2014 the inflection points we hit",
   "Building audit trails for agent decisions that satisfy both compliance and debugging needs",
-  "Productionizing 'computer use' style agents without giving them dangerous permissions"
+  "Productionizing 'computer use' style agents without giving them dangerous permissions",
+  "The hidden latency tax of multi-agent handoffs and how we reduced it by 60%",
+  "The migration that went wrong because we trusted the AI-generated migration script too much",
+  "The OWASP LLM risks that turned out to be bigger than prompt injection in our environment"
 ]

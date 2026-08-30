@@ -2642,6 +2642,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/llm-risks-underestimated-in-owasp-top-10/</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/llm-risks-underestimated-in-owasp-top-10.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/llm-security-mistakes-in-2026-owasp-top-10-fixes/</loc>
     <lastmod>2026-08-29</lastmod>
     <changefreq>weekly</changefreq>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-29T18:24:47.473494",
+  "built_at": "2026-08-30T09:56:09.995848",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4965,6 +4965,11 @@
       "slug": "serverless-ai-costs-explode-past-10kmo",
       "title": "Serverless AI costs explode past $10k/mo",
       "summary": "After reviewing enough code that touches serverless stops, the same failure pattern keeps showing up. Production gives you neither a clean environment nor a patient timeline. Here's what actually worked, and why. The situation (what we were trying to solve) In late 2026, our Nairobi fintech team bui"
+    },
+    {
+      "slug": "llm-risks-underestimated-in-owasp-top-10",
+      "title": "LLM risks underestimated in OWASP Top 10",
+      "summary": "A colleague asked me about hidden latency during a code review recently, and my first answer wasn't a good one. The edge cases only show up once real users hit the system. This post covers what comes after the happy path. The conventional wisdom (and why it's incomplete) OWASP’s 2026 LLM Top 10 list"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Aug 2026 04:28:10 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Aug 2026 09:56:15 +0000</lastBuildDate>
+    <item>
+      <title>LLM risks underestimated in OWASP Top 10</title>
+      <link>https://kubaik.github.io/llm-risks-underestimated-in-owasp-top-10/</link>
+      <description>OWASP’s LLM risks miss the real threats in production — tool proliferation, context pollution, and output side effects cost teams real money and uptime.</description>
+      <pubDate>Sun, 30 Aug 2026 09:56:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-risks-underestimated-in-owasp-top-10/</guid>
+    </item>
     <item>
       <title>Serverless AI costs explode past $10k/mo</title>
       <link>https://kubaik.github.io/serverless-ai-costs-explode-past-10kmo/</link>
@@ -138,13 +145,6 @@
       <description>AI code doubled our on-call pages until we treated it like third-party code — build-time tests, runtime guards, and AI-aware runbooks cut pages back to…</description>
       <pubDate>Thu, 20 Aug 2026 12:56:57 +0000</pubDate>
       <guid>https://kubaik.github.io/40-ai-code-meant-60-more-alerts/</guid>
-    </item>
-    <item>
-      <title>Launched AI SaaS under $150/month</title>
-      <link>https://kubaik.github.io/launched-ai-saas-under-150month/</link>
-      <description>Launch an AI micro-SaaS under $150/month — spot instances, vLLM, and Qdrant on $11/month EC2 that handles 10k requests/day across five countries</description>
-      <pubDate>Thu, 20 Aug 2026 01:24:17 +0000</pubDate>
-      <guid>https://kubaik.github.io/launched-ai-saas-under-150month/</guid>
     </item>
   </channel>
 </rss>
