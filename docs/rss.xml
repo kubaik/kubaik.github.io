@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Aug 2026 12:51:43 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Aug 2026 16:20:52 +0000</lastBuildDate>
+    <item>
+      <title>Spot instances: the retry logic trap 90% miss</title>
+      <link>https://kubaik.github.io/spot-instances-the-retry-logic-trap-90-miss/</link>
+      <description>Spot instances cut AWS costs 69% for agent workloads in 2026 — but only if your retry logic doesn’t double the bill.</description>
+      <pubDate>Sun, 30 Aug 2026 16:20:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/spot-instances-the-retry-logic-trap-90-miss/</guid>
+    </item>
     <item>
       <title>Always-on agents cost more than you think</title>
       <link>https://kubaik.github.io/always-on-agents-cost-more-than-you-think/</link>
@@ -138,13 +145,6 @@
       <description>AI errors hide in plain latency: why token counts and perplexity miss user-visible slowdowns — plus a 2026 SLO checklist that cuts on-call pages 68 %</description>
       <pubDate>Fri, 21 Aug 2026 16:58:29 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-errors-hide-in-plain-latency/</guid>
-    </item>
-    <item>
-      <title>WebSockets vs Server-Sent Events: latency over 3G</title>
-      <link>https://kubaik.github.io/websockets-vs-server-sent-events-latency-over-3g/</link>
-      <description>Cut agent status latency 30% with Server-Sent Events in East Africa — ALB timeout tuning, Safari gotchas, and when WebSocket actually wins</description>
-      <pubDate>Fri, 21 Aug 2026 07:12:18 +0000</pubDate>
-      <guid>https://kubaik.github.io/websockets-vs-server-sent-events-latency-over-3g/</guid>
     </item>
   </channel>
 </rss>

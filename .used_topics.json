@@ -82,5 +82,6 @@
   "The migration that went wrong because we trusted the AI-generated migration script too much",
   "The OWASP LLM risks that turned out to be bigger than prompt injection in our environment",
   "The MCP server patterns that moved from experiment to critical infrastructure in our stack",
-  "The real cost of always-on vs on-demand agents in a Nairobi-based SaaS"
+  "The real cost of always-on vs on-demand agents in a Nairobi-based SaaS",
+  "How we use spot instances + smart retry logic for non-critical agent workloads"
 ]

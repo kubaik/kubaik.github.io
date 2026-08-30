@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-30T12:51:35.444255",
+  "built_at": "2026-08-30T16:20:43.558468",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4975,6 +4975,11 @@
       "slug": "always-on-agents-cost-more-than-you-think",
       "title": "Always-on agents cost more than you think",
       "summary": "A colleague asked me about real cost during a code review recently, and my first answer wasn't a good one. It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly. The gap between what the docs say and what production needs M"
+    },
+    {
+      "slug": "spot-instances-the-retry-logic-trap-90-miss",
+      "title": "Spot instances: the retry logic trap 90% miss",
+      "summary": "I spent longer than I should have on use spot before understanding what was actually happening. The edge cases only show up once real users hit the system. Here's the fuller picture, with the tradeoffs left in. The gap between what the docs say and what production needs Most teams read the AWS Spot "
     }
   ]
 }

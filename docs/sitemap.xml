@@ -1477,7 +1477,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/always-on-agents-cost-more-than-you-think.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/always-on-agents-cost-more-than-you-think.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -3851,6 +3851,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/spot-evictions-the-retry-logic-that-holds-up.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/spot-instances-the-retry-logic-trap-90-miss/</loc>
+    <lastmod>2026-08-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/spot-instances-the-retry-logic-trap-90-miss.svg</image:loc>
     </image:image>
   </url>
   <url>
