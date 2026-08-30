@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-30T09:56:09.995848",
+  "built_at": "2026-08-30T12:51:35.444255",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4970,6 +4970,11 @@
       "slug": "llm-risks-underestimated-in-owasp-top-10",
       "title": "LLM risks underestimated in OWASP Top 10",
       "summary": "A colleague asked me about hidden latency during a code review recently, and my first answer wasn't a good one. The edge cases only show up once real users hit the system. This post covers what comes after the happy path. The conventional wisdom (and why it's incomplete) OWASP’s 2026 LLM Top 10 list"
+    },
+    {
+      "slug": "always-on-agents-cost-more-than-you-think",
+      "title": "Always-on agents cost more than you think",
+      "summary": "A colleague asked me about real cost during a code review recently, and my first answer wasn't a good one. It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly. The gap between what the docs say and what production needs M"
     }
   ]
 }

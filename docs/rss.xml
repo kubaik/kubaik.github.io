@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Aug 2026 15:47:06 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 30 Aug 2026 12:51:43 +0000</lastBuildDate>
+    <item>
+      <title>Always-on agents cost more than you think</title>
+      <link>https://kubaik.github.io/always-on-agents-cost-more-than-you-think/</link>
+      <description>Cut Nairobi SaaS agent costs 40% with Redis Streams and BullMQ 5.12.0 — hybrid on-demand avoids cold starts, power cuts, and Redis eviction storms that…</description>
+      <pubDate>Sun, 30 Aug 2026 12:51:34 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on-agents-cost-more-than-you-think/</guid>
+    </item>
     <item>
       <title>LLM risks underestimated in OWASP Top 10</title>
       <link>https://kubaik.github.io/llm-risks-underestimated-in-owasp-top-10/</link>
@@ -138,13 +145,6 @@
       <description>Cut agent status latency 30% with Server-Sent Events in East Africa — ALB timeout tuning, Safari gotchas, and when WebSocket actually wins</description>
       <pubDate>Fri, 21 Aug 2026 07:12:18 +0000</pubDate>
       <guid>https://kubaik.github.io/websockets-vs-server-sent-events-latency-over-3g/</guid>
-    </item>
-    <item>
-      <title>40% AI code meant 60% more alerts</title>
-      <link>https://kubaik.github.io/40-ai-code-meant-60-more-alerts/</link>
-      <description>AI code doubled our on-call pages until we treated it like third-party code — build-time tests, runtime guards, and AI-aware runbooks cut pages back to…</description>
-      <pubDate>Thu, 20 Aug 2026 12:56:57 +0000</pubDate>
-      <guid>https://kubaik.github.io/40-ai-code-meant-60-more-alerts/</guid>
     </item>
   </channel>
 </rss>
