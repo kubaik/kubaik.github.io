@@ -228,7 +228,7 @@
                               data-tag-href="/tag/agent/">Agent</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/agentevals/">AgentEvals</span>
+                              >AgentEvals</span>
                         
                         <span class="tag"
                               data-tag-href="/tag/evaluation/">Evaluation</span>
@@ -254,10 +254,10 @@
                               data-tag-href="/tag/retrylogic/">RetryLogic</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/spotinstances/">SpotInstances</span>
+                              >SpotInstances</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/agentworkloads/">AgentWorkloads</span>
+                              >AgentWorkloads</span>
                         
                     </div>
                     
@@ -280,7 +280,7 @@
                               data-tag-href="/tag/saas/">Saas</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/alwayson/">AlwaysOn</span>
+                              >AlwaysOn</span>
                         
                         <span class="tag"
                               data-tag-href="/tag/africatech/">Africatech</span>
@@ -365,10 +365,10 @@
                               data-tag-href="/tag/redis/">Redis</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/rediscache/">RedisCache</span>
+                              >RedisCache</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/nodegateway/">NodeGateway</span>
+                              >NodeGateway</span>
                         
                     </div>
                     
@@ -414,13 +414,13 @@
                     <div class="tags">
                         
                         <span class="tag"
-                              data-tag-href="/tag/sqstracing/">Sqstracing</span>
+                              >Sqstracing</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/asynctracing/">AsyncTracing</span>
+                              >AsyncTracing</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/agenttracing/">AgentTracing</span>
+                              >AgentTracing</span>
                         
                     </div>
                     
@@ -446,7 +446,7 @@
                               data-tag-href="/tag/redis/">Redis</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/fastapi0109ai/">Fastapi0109ai</span>
+                              >Fastapi0109ai</span>
                         
                     </div>
                     
@@ -469,7 +469,7 @@
                               data-tag-href="/tag/ai/">Ai</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/staging/">Staging</span>
+                              >Staging</span>
                         
                         <span class="tag"
                               data-tag-href="/tag/generativeai/">Generativeai</span>
@@ -547,7 +547,7 @@
                               data-tag-href="/tag/ai/">Ai</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/mpesa/">Mpesa</span>
+                              >Mpesa</span>
                         
                         <span class="tag"
                               data-tag-href="/tag/redis/">Redis</span>
@@ -573,7 +573,7 @@
                               data-tag-href="/tag/ai/">Ai</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/dependency/">Dependency</span>
+                              >Dependency</span>
                         
                         <span class="tag"
                               data-tag-href="/tag/cybersecurity/">Cybersecurity</span>
@@ -602,7 +602,7 @@
                               data-tag-href="/tag/lambda/">Lambda</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/aiguardrails/">AiGuardrails</span>
+                              >AiGuardrails</span>
                         
                     </div>
                     
@@ -719,7 +719,7 @@
                               data-tag-href="/tag/llm/">Llm</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/llmrouting/">LlmRouting</span>
+                              >LlmRouting</span>
                         
                     </div>
                     
@@ -765,13 +765,13 @@
                     <div class="tags">
                         
                         <span class="tag"
-                              data-tag-href="/tag/3g/">3g</span>
+                              >3g</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/realtime/">Realtime</span>
+                              >Realtime</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/websockets/">Websockets</span>
+                              >Websockets</span>
                         
                     </div>
                     
@@ -794,7 +794,7 @@
                               data-tag-href="/tag/ai/">Ai</span>
                         
                         <span class="tag"
-                              data-tag-href="/tag/djangowithai/">DjangoWithAi</span>
+                              >DjangoWithAi</span>
                         
                         <span class="tag"
                               data-tag-href="/tag/generativeai/">Generativeai</span>
@@ -889,6 +889,11 @@
 
         var PAGE_SIZE = 24;
         var BASE_PATH = '';
+        // Tags with a real generated /tag/{slug}/ page. Posts loaded
+        // client-side from posts.json go through the same qualifying-tag
+        // check as server-rendered cards, so a JS-built card can never
+        // link to a tag page that doesn't exist either.
+        var QUALIFYING_TAG_SLUGS = ["4gwebperformance", "african", "africatech", "agent", "agentic", "agenticai", "agenticcoding", "agenticcodingtools", "agenticfinops", "agentpermissions", "ai", "aiagentpostmortem", "aialerttriage", "aicodebaseonboarding", "aicodegeneration", "aicodereview", "aicodesecurity", "aicodingtools", "aicostoptimization", "aifeaturemaintenance", "aigeneratedcode", "aiincidentresponse", "ainativeapplications", "aiobservability", "aiobservabilitytools", "aipairprogramming", "aiportfoliofilter", "aiproofcompensation", "airolloutstrategy", "aistatemanagement", "aistaticanalysis", "aiuitools", "aiwrapper2026", "aiwrapperbusiness", "androiddev", "apachekafka", "apidesign2026", "apiratelimiting", "apis", "apisecurity2026", "artificialintelligence", "asyncpython", "automated", "awscostoptimization", "backend", "backstage", "buildinpublic", "cache", "cacheownership", "cachestampede", "careeradvice", "cicd", "circuitbreaker", "claudecode", "claudecode2026", "cloudcomputing", "cloudflareworkersai", "codeownershipmodel", "codereviewautomation", "coding", "compensation", "connection", "connectionpooltuning", "constraint", "containers", "cursorai", "cybersecurity", "data", "database", "dataengineering", "developer", "developerproductivity", "developertoolpricing", "devops", "devtoolpricing", "devwellbeing", "distributed", "docker", "edgecaching2026", "edgenativebackend", "engineer", "engineering", "entrepreneurship", "ethicalhacking", "evaluation", "false", "fastapi", "fastapi0.109", "featureflags2026", "featureflagsai", "featureflagservice", "finetuning", "fintech", "fintechapidesign", "flutter", "flutterwave", "freelancing", "generativeai", "gethired", "github", "githubactionsai", "golang", "graphql", "hybrid", "iac", "idempotency", "idempotencykeys", "immutableauditlogs", "incremental", "indiehacker", "infosec", "internal", "javascript", "js", "jsonmodelimitations", "k8s", "kubernetes", "lambda", "langgraph", "latency", "legacy", "llm", "llmcostoptimization", "llmdriftdetection", "llmevaluationmetrics", "llmincidentresponse", "llmlatency", "llmlatencyp95", "llmobservability", "llmsecuritychecklist", "llmsecurityrisks", "llmstructuredoutput", "llmwrapper", "longrunningagents", "machinelearning", "microservices", "mobile", "mobiledev", "model", "mpesaintegration", "multi", "multiagent", "nairobi", "nairobitechstack", "negotiatesalary2026", "nextjs", "offlinefirstapps", "oncallautomation", "opensource", "opentelemetry", "owaspllmtop", "p99latency", "passiveincome", "payment", "performance", "pgvector0.7", "platform", "platformengineering", "pocketbase", "postgres", "postgres17features", "postgresql", "pricingexperiments", "programming", "prometheus", "prompt", "promptengineering", "promptinjection", "pydantic", "python", "python3", "python3.11async", "python311async", "rag", "ragpipelineproduction", "reactjs", "reactnative", "redis", "redis7.2", "redis7.2caching", "redis72", "rediscircuitbreaker", "regulatory", "remotesalarynegotiation", "retrylogic", "runbookautomation", "rustlang", "saas", "saasniche2026", "saccosoftwarekenya", "salary", "serverless", "softwareengineering", "solo", "sql", "startups", "stopapiabuse", "structured", "systemdesign", "tech", "techcareer", "techjobs", "technicaldebt2026", "technology", "terraform", "timescaledb", "tokenizer", "toolcallingpatterns", "typescript", "usagebasedpricing", "vector", "vectordb", "vectorsearch", "vibecoding", "webdev", "webhook", "webhookretries2026", "zero", "zerotrust"];
 
         var fullPosts   = [];
         var loadedCount = postsContainer
@@ -961,10 +966,13 @@
                 tags.slice().sort(function (x, y) { return x.length - y.length; })
                     .slice(0, 3)
                     .forEach(function (t) {
-                        var sp              = document.createElement('span');
-                        sp.className        = 'tag';
-                        sp.textContent      = t;
-                        sp.dataset.tagHref  = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\s+/g, '-') + '/';
+                        var sp         = document.createElement('span');
+                        sp.className   = 'tag';
+                        sp.textContent = t;
+                        var slug = t.toLowerCase().replace(/\s+/g, '-');
+                        if (QUALIFYING_TAG_SLUGS.indexOf(slug) !== -1) {
+                            sp.dataset.tagHref = BASE_PATH + '/tag/' + slug + '/';
+                        }
                         div.appendChild(sp);
                     });
                 a.appendChild(div);

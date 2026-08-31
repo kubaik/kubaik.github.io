@@ -11,6 +11,7 @@ import markdown as md
 import json
 import math
 import re
+import shutil
 
 
 import html as _html_stdlib
@@ -301,6 +302,19 @@ class StaticSiteGenerator:
         posts = self._get_all_posts()
         if not posts:
             print("No posts found. Creating placeholder homepage...")
+        # BUG FOUND IN AUDIT (Aug 2026): individual post pages and the
+        # homepage both linked to /tag/{slug}/ for EVERY tag a post has,
+        # but _generate_tag_pages() only creates a directory for tags with
+        # >= 2 posts. Any post whose tag is a singleton (used on just that
+        # one post) produced a real, crawlable <a href> 404 — this is the
+        # actual source of the "Not found (404), source: Website" errors
+        # in Search Console, not the sitemap (sitemap.xml never listed tag
+        # URLs at all and was already clean).
+        #
+        # Fix: compute the qualifying-tag set ONCE, up front, from the full
+        # post list, and hand it to every page generator so nothing ever
+        # links to a tag page that doesn't exist.
+        self._qualifying_tag_slugs = self._compute_qualifying_tag_slugs(posts)
         self._generate_default_og_image()
         self._generate_homepage(posts)
         self._generate_pagination_pages(posts)
@@ -489,6 +503,40 @@ Sitemap: {base_url}/sitemap.xml
 
         return posts
 
+    @staticmethod
+    def _tag_slug(tag: str) -> str:
+        """Single source of truth for tag -> URL slug, used everywhere a
+        tag is turned into a /tag/{slug}/ link or a directory name, so the
+        link-side and the page-generation-side can never drift apart."""
+        return tag.strip().lower().replace(' ', '-')
+
+    def _compute_qualifying_tag_slugs(self, posts: List[BlogPost]) -> set:
+        """Tags that will actually get a generated /tag/{slug}/ page (i.e.
+        used on >= 2 posts — same threshold as _generate_tag_pages). Any
+        tag NOT in this set must never be rendered as a clickable link
+        anywhere on the site, or it's a guaranteed 404."""
+        tag_map: Dict[str, List[BlogPost]] = {}
+        for post in posts:
+            for tag in post.tags:
+                clean = tag.strip().lower()
+                if not clean or len(clean) < 2:
+                    continue
+                tag_map.setdefault(clean, []).append(post)
+        return {self._tag_slug(t) for t, ps in tag_map.items() if len(ps) >= 2}
+
+    def _linkable_tags(self, tags: List[str], limit: int = 6) -> List[Dict]:
+        """Build the tag list a template should render: each entry knows
+        its own slug and whether it's safe to link (has a real page)."""
+        out = []
+        for tag in tags[:limit]:
+            slug = self._tag_slug(tag)
+            out.append({
+                'name': tag,
+                'slug': slug,
+                'linkable': slug in self._qualifying_tag_slugs,
+            })
+        return out
+
     def _reading_time_minutes(self, content: str) -> int:
         word_count = len(content.split())
         return max(1, round(word_count / 200))
@@ -529,6 +577,7 @@ Sitemap: {base_url}/sitemap.xml
             post_dict = p.to_dict()
             post_dict['display_date'] = self._format_display_date(p.created_at)
             post_dict['short_tags'] = sorted(p.tags, key=len)[:3]
+            post_dict['tag_links'] = self._linkable_tags(post_dict['short_tags'], limit=3)
             post_dict['reading_time'] = self._reading_time_minutes(p.content)
             post_dict['meta_description'] = _safe_excerpt(
                 p.meta_description, p.content, p.title)
@@ -545,6 +594,7 @@ Sitemap: {base_url}/sitemap.xml
             'posts': posts_data[:HOMEPAGE_SSR_LIMIT],
             'posts_per_page': HOMEPAGE_SSR_LIMIT,
             'total_posts': len(posts_data),
+            'qualifying_tag_slugs': sorted(self._qualifying_tag_slugs),
             'current_year': datetime.now().year,
             'social_links': self._valid_social_links(config),
             'global_meta_tags': self.seo.generate_global_meta_tags(),
@@ -596,6 +646,21 @@ Sitemap: {base_url}/sitemap.xml
         base_path = config.get('base_path', '')
         site_name = config.get('site_name', 'Tech Blog')
         current_year = datetime.now().year
+
+        # BUG FOUND IN AUDIT (Aug 2026): this loop only ever writes/
+        # overwrites page/2 .. page/total_pages. If the live post count
+        # SHRINKS between builds (purge_low_quality_posts tombstoning
+        # thin posts, duplicate-slug cleanup in _get_all_posts, etc.),
+        # total_pages goes down too — but the higher-numbered page/
+        # directories from the previous, larger build were never removed.
+        # Those stale pages kept serving real, crawlable <a href> links
+        # to posts that no longer exist — a direct source of Search
+        # Console's "Not found (404), source: Website" errors. Always
+        # wipe the whole page/ tree first so no page number can outlive
+        # the run that made it valid.
+        page_root = Path("./docs/page")
+        if page_root.exists():
+            shutil.rmtree(page_root)
 
         if len(posts) <= per_page:
             return  # everything already fits on the homepage
@@ -1165,6 +1230,11 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             post_dict['meta_description'] = _safe_excerpt(
                 post.meta_description, post.content, post.title)
             post_dict['review_date'] = datetime.now().strftime('%B %Y')
+            # Only tags with a real /tag/{slug}/ page get rendered as a
+            # link (see _compute_qualifying_tag_slugs) — singleton tags
+            # still show as text so the info isn't lost, they just aren't
+            # a dead <a href>.
+            post_dict['tag_links'] = self._linkable_tags(post.tags, limit=6)
 
             # FIX BUG-13: normalize before splitting so we handle ISO strings
             # that lack a 'T' separator (e.g. recovered posts from
@@ -1801,11 +1871,15 @@ def _build_templates() -> dict:
                 {% if post.meta_description %}
                 <p class="post-lead">{{ post.meta_description }}</p>
                 {% endif %}
-                {% if post.tags %}
+                {% if post.tag_links %}
                 <div class="tags">
-                    {% for tag in post.tags[:6] %}
-                    <a class="tag" href="{{ base_path }}/tag/{{ tag | lower | replace(' ', '-') }}/"
-                       style="text-decoration:none;">{{ tag }}</a>
+                    {% for tag in post.tag_links %}
+                    {% if tag.linkable %}
+                    <a class="tag" href="{{ base_path }}/tag/{{ tag.slug }}/"
+                       style="text-decoration:none;">{{ tag.name }}</a>
+                    {% else %}
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">{{ tag.name }}</span>
+                    {% endif %}
                     {% endfor %}
                 </div>
                 {% endif %}
@@ -2105,11 +2179,11 @@ def _build_templates() -> dict:
                     {% if post.reading_time %}
                     <p class="post-reading-time">{{ post.reading_time }} min read</p>
                     {% endif %}
-                    {% if post.tags %}
+                    {% if post.tag_links %}
                     <div class="tags">
-                        {% for tag in post.short_tags %}
+                        {% for tag in post.tag_links %}
                         <span class="tag"
-                              data-tag-href="{{ base_path }}/tag/{{ tag | lower | replace(' ', '-') }}/">{{ tag }}</span>
+                              {% if tag.linkable %}data-tag-href="{{ base_path }}/tag/{{ tag.slug }}/"{% endif %}>{{ tag.name }}</span>
                         {% endfor %}
                     </div>
                     {% endif %}
@@ -2172,6 +2246,11 @@ def _build_templates() -> dict:
 
         var PAGE_SIZE = {{ posts_per_page }};
         var BASE_PATH = '{{ base_path }}';
+        // Tags with a real generated /tag/{slug}/ page. Posts loaded
+        // client-side from posts.json go through the same qualifying-tag
+        // check as server-rendered cards, so a JS-built card can never
+        // link to a tag page that doesn't exist either.
+        var QUALIFYING_TAG_SLUGS = {{ qualifying_tag_slugs | tojson }};
 
         var fullPosts   = [];
         var loadedCount = postsContainer
@@ -2244,10 +2323,13 @@ def _build_templates() -> dict:
                 tags.slice().sort(function (x, y) { return x.length - y.length; })
                     .slice(0, 3)
                     .forEach(function (t) {
-                        var sp              = document.createElement('span');
-                        sp.className        = 'tag';
-                        sp.textContent      = t;
-                        sp.dataset.tagHref  = BASE_PATH + '/tag/' + t.toLowerCase().replace(/\\s+/g, '-') + '/';
+                        var sp         = document.createElement('span');
+                        sp.className   = 'tag';
+                        sp.textContent = t;
+                        var slug = t.toLowerCase().replace(/\\s+/g, '-');
+                        if (QUALIFYING_TAG_SLUGS.indexOf(slug) !== -1) {
+                            sp.dataset.tagHref = BASE_PATH + '/tag/' + slug + '/';
+                        }
                         div.appendChild(sp);
                     });
                 a.appendChild(div);
