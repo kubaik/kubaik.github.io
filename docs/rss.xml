@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 31 Aug 2026 12:22:19 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 31 Aug 2026 12:27:54 +0000</lastBuildDate>
+    <item>
+      <title>Commit ownership in AI pair coding</title>
+      <link>https://kubaik.github.io/commit-ownership-in-ai-pair-coding/</link>
+      <description>AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.</description>
+      <pubDate>Mon, 31 Aug 2026 12:27:42 +0000</pubDate>
+      <guid>https://kubaik.github.io/commit-ownership-in-ai-pair-coding/</guid>
+    </item>
     <item>
       <title>Ship evals before your agent ships</title>
       <link>https://kubaik.github.io/ship-evals-before-your-agent-ships/</link>
@@ -138,13 +145,6 @@
       <description>Agentic FinOps traps $3k+/month in hidden costs — state bloat, retry loops, and human hand-offs go unmeasured by LangSmith.</description>
       <pubDate>Sat, 22 Aug 2026 12:46:45 +0000</pubDate>
       <guid>https://kubaik.github.io/agentic-finops-is-a-trap/</guid>
-    </item>
-    <item>
-      <title>LLM costs: fine-tune vs route vs bigger model</title>
-      <link>https://kubaik.github.io/llm-costs-fine-tune-vs-route-vs-bigger-model/</link>
-      <description>LLM costs: fine-tune vs route vs bigger model — concrete 2026 decision framework with latency and cost results from a 6-month side project on Mistral-7B…</description>
-      <pubDate>Sat, 22 Aug 2026 01:23:52 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-costs-fine-tune-vs-route-vs-bigger-model/</guid>
     </item>
   </channel>
 </rss>

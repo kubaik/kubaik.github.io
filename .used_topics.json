@@ -88,5 +88,6 @@
   "Evaluation-driven development for agents: the loop that replaced vibe testing",
   "The infrastructure patterns that let us run 3x more AI experiments for the same budget",
   "The governance layer we added after our first agent caused a compliance incident",
-  "Platform engineering ROI: the metrics that convinced our leadership to keep funding it"
+  "Platform engineering ROI: the metrics that convinced our leadership to keep funding it",
+  "How we run AI-augmented teams without destroying code ownership and accountability"
 ]

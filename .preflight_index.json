@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-31T04:32:08.533683",
+  "built_at": "2026-08-31T12:27:45.980476",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4985,6 +4985,11 @@
       "slug": "ship-evals-before-your-agent-ships",
       "title": "Ship evals before your agent ships",
       "summary": "I've hit the same evaluationdriven development mistake in more than one production codebase over the years. The default configuration is fine right up until it isn't. Here's what I'd tell a colleague hitting this for the first time. Replace vibe testing with agent evals The docs show you one happy p"
+    },
+    {
+      "slug": "commit-ownership-in-ai-pair-coding",
+      "title": "Commit ownership in AI pair coding",
+      "summary": "The conventional advice on run aiaugmented is incomplete in one specific, costly way. The answers online were either wrong or skipped the part that mattered. This post covers what comes after the happy path. The gap between what the docs say and what production needs Most teams start using AI coding"
     }
   ]
 }
