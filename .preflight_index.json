@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-30T16:20:43.558468",
+  "built_at": "2026-08-31T04:32:08.533683",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4980,6 +4980,11 @@
       "slug": "spot-instances-the-retry-logic-trap-90-miss",
       "title": "Spot instances: the retry logic trap 90% miss",
       "summary": "I spent longer than I should have on use spot before understanding what was actually happening. The edge cases only show up once real users hit the system. Here's the fuller picture, with the tradeoffs left in. The gap between what the docs say and what production needs Most teams read the AWS Spot "
+    },
+    {
+      "slug": "ship-evals-before-your-agent-ships",
+      "title": "Ship evals before your agent ships",
+      "summary": "I've hit the same evaluationdriven development mistake in more than one production codebase over the years. The default configuration is fine right up until it isn't. Here's what I'd tell a colleague hitting this for the first time. Replace vibe testing with agent evals The docs show you one happy p"
     }
   ]
 }

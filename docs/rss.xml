@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 30 Aug 2026 16:20:52 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 31 Aug 2026 04:32:13 +0000</lastBuildDate>
+    <item>
+      <title>Ship evals before your agent ships</title>
+      <link>https://kubaik.github.io/ship-evals-before-your-agent-ships/</link>
+      <description>Replace vibe testing with agent evals — the loop that catches downstream 502s, prompt drift, and idempotency failures before users do.</description>
+      <pubDate>Mon, 31 Aug 2026 04:32:07 +0000</pubDate>
+      <guid>https://kubaik.github.io/ship-evals-before-your-agent-ships/</guid>
+    </item>
     <item>
       <title>Spot instances: the retry logic trap 90% miss</title>
       <link>https://kubaik.github.io/spot-instances-the-retry-logic-trap-90-miss/</link>
@@ -138,13 +145,6 @@
       <description>LLM costs: fine-tune vs route vs bigger model — concrete 2026 decision framework with latency and cost results from a 6-month side project on Mistral-7B…</description>
       <pubDate>Sat, 22 Aug 2026 01:23:52 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-costs-fine-tune-vs-route-vs-bigger-model/</guid>
-    </item>
-    <item>
-      <title>AI errors hide in plain latency</title>
-      <link>https://kubaik.github.io/ai-errors-hide-in-plain-latency/</link>
-      <description>AI errors hide in plain latency: why token counts and perplexity miss user-visible slowdowns — plus a 2026 SLO checklist that cuts on-call pages 68 %</description>
-      <pubDate>Fri, 21 Aug 2026 16:58:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-errors-hide-in-plain-latency/</guid>
     </item>
   </channel>
 </rss>

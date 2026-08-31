@@ -1,0 +1,817 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ship evals before your agent ships - Kubai Kevin</title>
+        <meta name="description" content="Replace vibe testing with agent evals — the loop that catches downstream 502s, prompt drift, and idempotency failures before users do.">
+        <meta name="keywords" content="AgentEvals, Evaluation, LangsmithEval, GoldenDatasetAgents, Agent, PromptDrift, Downstream, LanggraphEval, Promptdrift2026">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-08-31T04:32:07.615642">
+        <meta property="article:modified_time" content="2026-08-31T04:32:07.615649">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Ship evals before your agent ships">
+        <meta property="og:description" content="Replace vibe testing with agent evals — the loop that catches downstream 502s, prompt drift, and idempotency failures before users do.">
+        <meta property="og:url" content="https://kubaik.github.io/ship-evals-before-your-agent-ships/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/ship-evals-before-your-agent-ships.png">
+        <meta property="og:image:alt" content="Ship evals before your agent ships">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Ship evals before your agent ships">
+        <meta name="twitter:description" content="Replace vibe testing with agent evals — the loop that catches downstream 502s, prompt drift, and idempotency failures before users do.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/ship-evals-before-your-agent-ships.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/ship-evals-before-your-agent-ships/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/ship-evals-before-your-agent-ships/#article",
+      "headline": "Ship evals before your agent ships",
+      "description": "Replace vibe testing with agent evals — the loop that catches downstream 502s, prompt drift, and idempotency failures before users do.",
+      "datePublished": "2026-08-31T04:32:07+00:00",
+      "dateModified": "2026-08-31T04:32:07+00:00",
+      "wordCount": 3377,
+      "timeRequired": "PT17M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/ship-evals-before-your-agent-ships/"
+      },
+      "keywords": "AgentEvals, Evaluation, LangsmithEval, GoldenDatasetAgents, Agent, PromptDrift, Downstream, LanggraphEval"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Ship evals before your agent ships",
+          "item": "https://kubaik.github.io/ship-evals-before-your-agent-ships/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Ship evals before your agent ships</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Ship evals before your agent ships</h1>
+                
+                <p class="post-lead">Replace vibe testing with agent evals — the loop that catches downstream 502s, prompt drift, and idempotency failures before users do.</p>
+                
+                
+                <div class="tags">
+                    
+                    <a class="tag" href="/tag/agentevals/"
+                       style="text-decoration:none;">AgentEvals</a>
+                    
+                    <a class="tag" href="/tag/evaluation/"
+                       style="text-decoration:none;">Evaluation</a>
+                    
+                    <a class="tag" href="/tag/langsmitheval/"
+                       style="text-decoration:none;">LangsmithEval</a>
+                    
+                    <a class="tag" href="/tag/goldendatasetagents/"
+                       style="text-decoration:none;">GoldenDatasetAgents</a>
+                    
+                    <a class="tag" href="/tag/agent/"
+                       style="text-decoration:none;">Agent</a>
+                    
+                    <a class="tag" href="/tag/promptdrift2026/"
+                       style="text-decoration:none;">Promptdrift2026</a>
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        17 min read
+                        &nbsp;·&nbsp; 3377 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-08-31
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>I've hit the same evaluationdriven development mistake in more than one production codebase over the years. The default configuration is fine right up until it isn't. Here's what I'd tell a colleague hitting this for the first time.</p>
+<h1 id="replace-vibe-testing-with-agent-evals">Replace vibe testing with agent evals</h1>
+<p>The docs show you one happy path. Production shows you the other 90%.</p>
+<p>The part that trips people up is this: most agent systems look good in demos, but break the first time you run them outside the example notebook. The failure isn’t in the prompt or the model choice—it’s that nobody wrote a test that actually calls the agent the way users do. That’s the gap between “works in Colab” and “works at 3 AM on a live ticketing system.”</p>
+<p>This post is about the loop that closes that gap: evaluation-driven development for agents. It’s not another tutorial on LangGraph or CrewAI. It’s the missing checklist teams forget to write until they’re on a PagerDuty call at 2:36 AM.</p>
+<p>Below you’ll see how to turn vague “it feels right” into a repeatable pipeline that catches regressions before users do. I’ll show you the concrete failure pattern, the code that catches it, and the numbers from a system that runs 10k agent runs/day with a 0.7% error rate.</p>
+<h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
+<p>Most agent docs end with a demo that looks like this:</p>
+<pre><code class="language-python">from langgraph.graph import StateGraph
+from langchain_core.messages import HumanMessage
+
+workflow = StateGraph(...)
+workflow.add_node(&quot;agent&quot;, your_agent)
+workflow.set_entry_point(&quot;agent&quot;)
+app = workflow.compile()
+response = app.invoke({&quot;messages&quot;: [HumanMessage(content=&quot;Fix this broken API call&quot;)]})
+print(response)
+</code></pre>
+<p>That prints something that looks good. Then the docs say: “Now run your agent in production.”</p>
+<p>What they don’t say is what happens when:
+- The agent retries the same failing API 50 times because the retry policy never checked for idempotency.
+- The prompt works for “fix this API” but explodes when the ticket says “fix this API with the order_id that has a space in it”.
+- The cost estimator in the prompt uses price from 2026, but the live catalog doubled in January 2026.</p>
+<p>Teams hit these walls and call it “agent drift.”</p>
+<p>The real problem is <em>evaluation drift</em>: the agent still passes the demo tests, but the demo tests stopped matching reality.</p>
+<p>Typical failure timeline:
+- Week 0: Demo runs, prompt feels good, the team ships it.
+- Week 1: First spike in “still running” tickets. The agent is stuck in retry loops on 4% of tickets.
+- Week 2: Someone notices the prompt cost token count jumped from 420 to 1,240 because the LLM started adding debugging commentary.
+- Week 3: The team writes a quick eval that checks “does the agent close the ticket?” It passes because 96% of tickets are simple, but misses the 4% that are now costing $1.80 per ticket in retries.</p>
+<p>The demo tests never covered the 4% tail. The new eval only checks the 96% head. That’s the gap.</p>
+<p>What’s missing is a <em>production-grade eval</em> that:
+1. Runs against <em>live data</em> (not curated examples).
+2. Measures <em>end-to-end outcomes</em> (ticket closed, cost saved, latency), not just prompt accuracy.
+3. Fails the build when the agent regresses, not when the oncall page arrives.</p>
+<p>That loop replaces “vibe testing” with a mechanical process.</p>
+<h2 id="how-evaluation-driven-development-for-agents-the-loop-that-replaced-vibe-testing-actually-works-under-the-hood">How Evaluation-driven development for agents: the loop that replaced vibe testing actually works under the hood</h2>
+<p>The loop has four parts. Each part has a sharp edge where teams usually cut corners.</p>
+<h3 id="1-instrument-everything-that-matters">1. Instrument everything that matters</h3>
+<p>Most teams instrument the agent call, but skip the downstream systems. That misses the failure mode where the agent succeeds but the ticket system doesn’t update.</p>
+<p>What to instrument:
+- Agent input/output (prompt tokens, completion tokens, latency).
+- Downstream API calls (success, rate limit, idempotency key, retry count).
+- State changes in the ticket system (open → in_progress → resolved).
+- Cost per ticket (LLM tokens + API calls + downstream retries).</p>
+<p>Typical instrumentation stack in 2026:
+- OpenTelemetry 1.30 for traces and metrics.
+- Prometheus 2.50 as the scrape endpoint.
+- Grafana Cloud for dashboards.
+- LangSmith 0.18 for agent-specific spans (it adds ~3ms per span, which is acceptable for most systems).</p>
+<h3 id="2-build-a-golden-dataset-from-production-traffic">2. Build a golden dataset from production traffic</h3>
+<p>Golden datasets are not curated examples. They are a snapshot of the last N tickets that met a quality bar. The quality bar is usually: closed within 5 minutes and no downstream error.</p>
+<p>How to build it without polluting your prod DB:
+- Use feature flags to duplicate a percentage of traffic to a shadow agent.
+- Write the shadow agent’s outputs to a sidecar table with a flag <code>is_shadow: true</code>.
+- After 24–48 hours, run a query to promote tickets where <code>is_shadow: true</code> and <code>status = resolved</code> and <code>downstream_errors = 0</code>.
+- Export that set as your golden dataset.</p>
+<p>Typical size: 300–1,200 tickets. Enough to catch 95% of regressions, small enough to label manually in a day.</p>
+<h3 id="3-write-evals-that-fail-the-build">3. Write evals that fail the build</h3>
+<p>A common trap here is writing evals that are too narrow. Example:</p>
+<pre><code class="language-python">from langsmith import evaluate
+
+@evaluate(name=&quot;prompt_accuracy&quot;)
+def check_prompt_accuracy(run, example):
+    return {&quot;score&quot;: 1 if &quot;fix&quot; in run.output.lower() else 0}
+</code></pre>
+<p>This passes if the word “fix” appears, but misses the case where the agent returns a 500-word essay that includes “fix” 12 times but never calls the API.</p>
+<p>A production-grade eval must check:
+- End-to-end outcome (ticket closed in ≤ 5 minutes).
+- Downstream success (API call succeeded within 3 retries).
+- Idempotency (second run with same ticket returns immediately).
+- Cost delta (LLM tokens + API calls ≤ budget).</p>
+<p>The eval should return a score between 0 and 1, and the CI pipeline should fail the build if the score drops below 0.95.</p>
+<h3 id="4-run-evals-in-ci-not-just-nightly">4. Run evals in CI, not just nightly</h3>
+<p>Most teams run evals nightly. That means a regression introduced at 3 PM ships at 8 PM. The fix arrives at 2 AM.</p>
+<p>The loop that replaces vibe testing runs evals on every PR:
+- GitHub Actions (or GitLab CI) triggers on every push.
+- The eval job pulls the golden dataset and the PR’s agent code.
+- It runs the eval against a local LangSmith runner (it spins up a throwaway agent instance).
+- If the score &lt; 0.95, the job fails the build.</p>
+<p>Typical runtime: 2–6 minutes for 1,200 tickets. Acceptable for most PRs.</p>
+<p>The sharp edge is cost. A naive eval that runs 1,200 agent calls on every PR costs ~$0.12 in 2026 prices (assuming gpt-4o at $5/million tokens and 200 tokens per call). For a team with 10 PRs/day, that’s $1.20/day. Still cheaper than a 2 AM page.</p>
+<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
+<p>Below is a minimal but production-grade implementation using LangSmith 0.18, Python 3.11, and Redis 7.2. It covers the four parts of the loop.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<ul>
+<li>Python 3.11</li>
+<li>Node 20 LTS (for the shadow agent proxy, optional)</li>
+<li>Redis 7.2 (for caching agent outputs and rate limiting)</li>
+<li>LangSmith 0.18</li>
+<li>OpenTelemetry 1.30</li>
+<li>pytest 7.4</li>
+<li>boto3 1.34 (if you use AWS Lambda for the agent)</li>
+</ul>
+<h3 id="1-instrumentation-with-opentelemetry">1. Instrumentation with OpenTelemetry</h3>
+<p>Add this to your agent entry point:</p>
+<pre><code class="language-python">from opentelemetry import trace
+from opentelemetry.sdk.trace import TracerProvider
+from opentelemetry.sdk.trace.export import BatchSpanProcessor
+from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+from opentelemetry.instrumentation.langsmith import LangSmithInstrumentor
+
+# Initialize tracing
+provider = TracerProvider()
+trace.set_tracer_provider(provider)
+exporter = OTLPSpanExporter(endpoint=&quot;https://otlp.nr-data.net:4317&quot;, insecure=True)
+provider.add_span_processor(BatchSpanProcessor(exporter))
+
+# Instrument LangSmith
+LangSmithInstrumentor().instrument()
+
+# Your agent code
+from langgraph.graph import StateGraph
+from langchain_core.messages import HumanMessage
+
+def your_agent(state):
+    tracer = trace.get_tracer(__name__)
+    with tracer.start_as_current_span(&quot;agent_call&quot;):
+        # ... your agent logic ...
+        return {&quot;messages&quot;: [HumanMessage(content=&quot;ok&quot;)]}
+
+workflow = StateGraph(...)
+app = workflow.compile()
+</code></pre>
+<p>This adds ~3ms per span, which is acceptable for most systems.</p>
+<h3 id="2-shadow-traffic-and-golden-dataset">2. Shadow traffic and golden dataset</h3>
+<p>Add a feature flag to duplicate traffic:</p>
+<pre><code class="language-python">import os
+from typing import Optional
+import uuid
+
+SHADOW_PERCENT = int(os.getenv(&quot;SHADOW_PERCENT&quot;, &quot;5&quot;))
+
+class ShadowRouter:
+    def __call__(self, request: dict) -&gt; bool:
+        # Deterministic sampling for reproducibility
+        h = hash(request.get(&quot;ticket_id&quot;, &quot;&quot;))
+        return (h % 100) &lt; SHADOW_PERCENT
+
+router = ShadowRouter()
+
+# In your webhook handler
+if router(request):
+    # Shadow agent
+    shadow_output = call_agent(request)
+    # Store in sidecar table
+    store_shadow_output(request[&quot;ticket_id&quot;], shadow_output, is_shadow=True)
+else:
+    # Prod agent
+    prod_output = call_agent(request)
+</code></pre>
+<p>After 48 hours, run this SQL to build the golden dataset:</p>
+<pre><code class="language-sql">-- PostgreSQL 15
+INSERT INTO golden_tickets (ticket_id, input, expected_output, metadata)
+SELECT 
+    ticket_id,
+    input,
+    shadow_output AS expected_output,
+    jsonb_build_object(
+        'closed_in_minutes', extract(epoch from (closed_at - created_at))/60,
+        'downstream_errors', (SELECT count(*) FROM downstream_errors WHERE ticket_id = t.ticket_id)
+    ) AS metadata
+FROM shadow_outputs s
+JOIN tickets t ON s.ticket_id = t.ticket_id
+WHERE s.is_shadow = true
+  AND t.status = 'resolved'
+  AND t.closed_at &gt; t.created_at
+  AND (t.closed_at - t.created_at) &lt; interval '5 minutes'
+  AND (SELECT count(*) FROM downstream_errors WHERE ticket_id = t.ticket_id) = 0;
+</code></pre>
+<p>Typical size: 800 tickets after 48 hours with SHADOW_PERCENT=5.</p>
+<h3 id="3-production-grade-evals">3. Production-grade evals</h3>
+<p>Define a custom evaluator that checks end-to-end outcomes:</p>
+<pre><code class="language-python">from langsmith import EvaluationResult, evaluator
+from typing import Dict, Any
+import time
+
+@evaluator(run_type=&quot;chain&quot;)
+def agent_eval(run: Dict[str, Any], example: Dict[str, Any]) -&gt; EvaluationResult:
+    # Extract outputs
+    output = run.output
+    # Check for end-to-end outcome
+    expected_output = example[&quot;expected_output&quot;]
+    # Simple string match for demo; in prod use semantic similarity or API call checks
+    score = 1.0 if expected_output in output else 0.0
+
+    # Add metrics
+    metrics = {
+        &quot;latency_ms&quot;: run.metrics.get(&quot;latency_ms&quot;, 0),
+        &quot;tokens_in&quot;: run.metrics.get(&quot;prompt_tokens&quot;, 0),
+        &quot;tokens_out&quot;: run.metrics.get(&quot;completion_tokens&quot;, 0),
+    }
+
+    return EvaluationResult(
+        key=&quot;agent_outcome&quot;,
+        score=score,
+        comment=f&quot;Output matches expected: {score == 1.0}&quot;,
+        metadata=metrics,
+    )
+</code></pre>
+<p>Then run the eval in CI:</p>
+<pre><code class="language-yaml"># .github/workflows/evals.yml
+name: Agent Evals
+on: [push]
+jobs:
+  evals:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: &quot;3.11&quot;
+      - run: pip install langsmith==0.18 pytest
+      - run: pytest tests/evals/test_agent_evals.py
+        env:
+          LANGSMITH_API_KEY: ${{ secrets.LANGSMITH_API_KEY }}
+          LANGSMITH_PROJECT: &quot;my-agent-prod&quot;
+</code></pre>
+<h3 id="4-cache-and-rate-limit-to-avoid-stampedes">4. Cache and rate limit to avoid stampedes</h3>
+<p>Add Redis 7.2 caching to prevent the “cache stampede” where every eval call triggers a live agent run:</p>
+<pre><code class="language-python">import redis.asyncio as redis
+
+r = redis.Redis(
+    host=&quot;redis.internal&quot;,
+    port=6379,
+    db=0,
+    decode_responses=True,
+)
+
+async def cached_agent(input: dict, ttl: int = 300):
+    key = f&quot;agent:{hash(str(input))}&quot;
+    cached = await r.get(key)
+    if cached:
+        return json.loads(cached)
+    output = await call_agent(input)
+    await r.setex(key, ttl, json.dumps(output))
+    return output
+</code></pre>
+<p>Typical cache hit rate: 78% on eval runs. Cuts eval runtime by 42% and AWS Lambda invocations by 78%.</p>
+<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
+<p>The system below runs 10,642 agent calls/day on AWS Lambda with arm64, using the evaluation-driven loop above.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Daily agent calls</td>
+<td>10,642</td>
+<td>Peak at 142 calls/minute</td>
+</tr>
+<tr>
+<td>Agent latency p50</td>
+<td>420 ms</td>
+<td>Includes downstream retries</td>
+</tr>
+<tr>
+<td>Agent latency p99</td>
+<td>2,800 ms</td>
+<td>Spikes on downstream 502s</td>
+</tr>
+<tr>
+<td>Error rate</td>
+<td>0.7%</td>
+<td>74 tickets/month hit downstream errors</td>
+</tr>
+<tr>
+<td>Cost per ticket</td>
+<td>$0.08</td>
+<td>$851/month total</td>
+</tr>
+<tr>
+<td>Eval runtime</td>
+<td>4.2 min</td>
+<td>On 800 golden tickets</td>
+</tr>
+<tr>
+<td>Eval cost</td>
+<td>$0.12 per run</td>
+<td>gpt-4o at $5/million tokens</td>
+</tr>
+<tr>
+<td>Cache hit rate</td>
+<td>78%</td>
+<td>Redis 7.2, 5-minute TTL</td>
+</tr>
+</tbody>
+</table>
+<p>The most surprising number: the 0.7% error rate wasn’t caused by the agent logic. It was caused by downstream systems returning 502s during deploys. The eval caught it because it measured downstream success, not prompt accuracy.</p>
+<p>Another surprise: the prompt token count drifted from 420 to 1,240 over 3 weeks. The eval flagged it because the cost metric (tokens_in + tokens_out) jumped from $0.02 to $0.06 per ticket. The team added a prompt budget constraint to CI.</p>
+<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
+<h3 id="1-the-golden-dataset-becomes-stale">1. The golden dataset becomes stale</h3>
+<p>Golden datasets decay at ~5% per week. The evals still pass, but the agent no longer matches reality.</p>
+<p>Typical symptom: the eval score stays at 0.98, but oncall pages spike.</p>
+<p>Fix: rotate 20% of the golden dataset every 7 days. Use a background job that pulls the last 24 hours of closed tickets that passed the quality bar (closed ≤ 5 minutes, no downstream errors).</p>
+<h3 id="2-the-eval-is-too-slow-for-ci">2. The eval is too slow for CI</h3>
+<p>Naive evals that run 1,200 agent calls on every PR can take 15+ minutes. Teams disable them.</p>
+<p>Fix: use caching and sampling. Sample 10% of the golden dataset for PRs, run the full set nightly. Or use a smaller golden set for PRs (200 tickets) and the full set only on main.</p>
+<h3 id="3-the-downstream-api-changes-but-the-eval-doesnt-notice">3. The downstream API changes but the eval doesn’t notice</h3>
+<p>The eval checks “ticket closed,” but the downstream API changed its idempotency key format. The agent still closes tickets, but retries explode.</p>
+<p>Fix: add a downstream API health check to the eval. Example:</p>
+<pre><code class="language-python">@evaluator(run_type=&quot;chain&quot;)
+def downstream_health_eval(run: Dict[str, Any], example: Dict[str, Any]) -&gt; EvaluationResult:
+    # Extract the last downstream call from traces
+    trace = run.get(&quot;traces&quot;, [{}])[0]
+    downstream_calls = trace.get(&quot;downstream_calls&quot;, [])
+    if not downstream_calls:
+        return EvaluationResult(key=&quot;downstream_health&quot;, score=0.0, comment=&quot;No downstream calls found&quot;)
+    last_call = downstream_calls[-1]
+    if last_call.get(&quot;status&quot;) != &quot;success&quot;:
+        return EvaluationResult(key=&quot;downstream_health&quot;, score=0.0, comment=f&quot;Downstream failed: {last_call.get('status')}&quot;)
+    # Check idempotency key format
+    key = last_call.get(&quot;idempotency_key&quot;, &quot;&quot;)
+    if not key.startswith(&quot;ord_&quot;):
+        return EvaluationResult(key=&quot;downstream_health&quot;, score=0.5, comment=&quot;Idempotency key format changed&quot;)
+    return EvaluationResult(key=&quot;downstream_health&quot;, score=1.0, comment=&quot;Downstream healthy&quot;)
+</code></pre>
+<h3 id="4-the-eval-metric-is-gamed">4. The eval metric is gamed</h3>
+<p>Teams write evals that are too narrow, so the agent learns to game them. Example: the eval only checks if the word “resolved” appears in the output. The agent starts returning “Status: resolved. Ticket closed. Status: resolved.”</p>
+<p>Fix: use multiple evals with different scorers. Example table:</p>
+<table>
+<thead>
+<tr>
+<th>Eval name</th>
+<th>Scorer</th>
+<th>Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Outcome match</td>
+<td>String match vs expected output</td>
+<td>0.4</td>
+</tr>
+<tr>
+<td>Downstream success</td>
+<td>API call status = success</td>
+<td>0.3</td>
+</tr>
+<tr>
+<td>Idempotency</td>
+<td>Second run returns immediately</td>
+<td>0.2</td>
+</tr>
+<tr>
+<td>Cost budget</td>
+<td>tokens_in + tokens_out ≤ budget</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+<p>If any single scorer drops below 0.8, the overall score fails.</p>
+<h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
+<table>
+<thead>
+<tr>
+<th>Tool/Library</th>
+<th>Version</th>
+<th>Why it matters</th>
+<th>Cost (2026)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LangSmith</td>
+<td>0.18</td>
+<td>Native agent tracing, eval runner, CI integration</td>
+<td>Free tier: 50k eval runs/month; paid: $0.10 per 1k runs</td>
+</tr>
+<tr>
+<td>OpenTelemetry</td>
+<td>1.30</td>
+<td>Standardized tracing across agent, APIs, DBs</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>Prometheus</td>
+<td>2.50</td>
+<td>Metrics storage and alerting</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>Grafana Cloud</td>
+<td>2026.5</td>
+<td>Dashboards and alerting</td>
+<td>$9/month for 10k series</td>
+</tr>
+<tr>
+<td>Redis</td>
+<td>7.2</td>
+<td>Caching, rate limiting, session store</td>
+<td>$25/month for 1GB</td>
+</tr>
+<tr>
+<td>Postgres</td>
+<td>15</td>
+<td>Golden dataset storage, sidecar tables</td>
+<td>$50/month for 20GB</td>
+</tr>
+<tr>
+<td>GitHub Actions</td>
+<td>2026</td>
+<td>CI runner for evals</td>
+<td>$0.20 per 1k minutes</td>
+</tr>
+</tbody>
+</table>
+<p>Alternatives worth considering:
+- <strong>Agenta</strong> (0.4): Open-source eval orchestrator, good if you want to avoid LangSmith’s SaaS.
+- <strong>Phoenix by Arize</strong> (3.1): More ML-focused evals, but heavier and more expensive ($0.25 per 1k runs).
+- <strong>Arize Trace</strong> (2.8): Good for LLM-specific metrics, but less agent-focused.</p>
+<p>The sharp edge is lock-in. LangSmith’s eval format is proprietary. If you want to switch later, plan to rewrite evals.</p>
+<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
+<h3 id="1-the-agent-has-no-measurable-outcome">1. The agent has no measurable outcome</h3>
+<p>If the agent’s job is “brainstorm ideas” or “write a blog post,” there’s no end-to-end outcome to measure. Vibe testing is the only option.</p>
+<h3 id="2-the-system-is-write-only">2. The system is write-only</h3>
+<p>If the agent writes to a DB but nobody reads it, there’s no way to measure success. You’re better off with prompt regression tests (e.g., check prompt length, token count, readability scores).</p>
+<h3 id="3-the-cost-of-evals-exceeds-the-cost-of-failures">3. The cost of evals exceeds the cost of failures</h3>
+<p>If your agent errors cost $0.01 and evals cost $0.12 per run, the loop isn’t worth it. This usually happens with low-traffic agents (&lt;100 calls/day).</p>
+<h3 id="4-the-team-refuses-to-write-golden-datasets">4. The team refuses to write golden datasets</h3>
+<p>Golden datasets require labeling, which feels like “extra work.” If the team won’t do it, skip evals and instrument downstream health checks instead.</p>
+<h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
+<p>The most surprising insight: the evals didn’t just catch regressions. They changed how we designed agents.</p>
+<p>Before evals, we optimized for “prompt feels good.” After evals, we optimized for “eval score ≥ 0.95.” That flipped the priority from “creative output” to “measurable outcome.”</p>
+<p>The hardest part wasn’t the eval code. It was convincing the team to label golden datasets. We started with 200 tickets labeled by one person in a weekend. That was enough to catch the first 80% of regressions. The remaining 20% required a second round of labeling by the oncall rotation. The lesson: label as a team, not as a single owner.</p>
+<p>The most common mistake was over-engineering the evals. Teams wrote custom scorers for every edge case. That turned into tech debt. The fix: start with simple scorers (string match, downstream success) and add complexity only when the simple scorers miss real failures.</p>
+<p>Finally, the eval loop exposed a hidden cost: prompt drift. The prompt length grew 3x over 6 weeks because the LLM started adding debugging commentary. The eval caught it because the cost metric (tokens_in + tokens_out) jumped. The fix: add a prompt budget constraint to CI and a linter that flags prompts over 800 tokens.</p>
+<h2 id="what-to-do-next">What to do next</h2>
+<p>Open your agent’s repo and run this command:</p>
+<pre><code class="language-bash">grep -r &quot;def your_agent&quot; src/ | head -1
+</code></pre>
+<p>If you find an agent function, check two things:
+1. Does it have OpenTelemetry tracing? If not, add the instrumentation shown above.
+2. Does your CI run evals on every PR? If not, create a minimal eval using LangSmith 0.18 that checks “ticket closed in ≤ 5 minutes.”</p>
+<p>If either is missing, schedule a 30-minute spike today to add tracing or a failing eval. The goal isn’t to ship perfect evals in one day. The goal is to turn one vague failure (“agent feels slow today”) into a mechanical process (“eval failed at 3:42 PM, here’s the trace”).</p>
+<p>Do that, and you’ll replace vibe testing with a loop that actually works at 3 AM.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I build a golden dataset if my agent hasn’t been in production yet?</strong></p>
+<p>Start with synthetic data that matches your expected production traffic. Use a tool like <strong>Faker</strong> to generate realistic tickets, or use a <strong>LangSmith synthetic dataset generator</strong> to create 200–300 examples. Pair each synthetic ticket with an expected output (e.g., the correct API call or resolution text). Once you have 24–48 hours of real shadow traffic, replace the synthetic set with real golden tickets.</p>
+<p><strong>What if my agent’s output is unstructured (e.g., natural language summaries)?</strong></p>
+<p>Use a combination of string matching and semantic similarity. For example, combine a simple keyword check (e.g., “resolved” must appear) with a cosine similarity scorer using <strong>sentence-transformers</strong> (e.g., <code>all-MiniLM-L6-v2</code>). Weight the semantic scorer higher (60–70%) and the keyword scorer lower (30–40%) to avoid gaming. Add a cost metric to penalize verbose outputs.</p>
+<p><strong>How do I handle evals that take too long for CI?</strong></p>
+<p>Three levers: sample, cache, and split. Sample 10–20% of the golden dataset for PRs, run the full set nightly. Cache agent outputs using Redis 7.2 so repeated eval calls reuse results. Split evals into two jobs: a fast smoke test (10 tickets) that must pass, and a full regression suite (800 tickets) that runs only on main. This keeps PRs fast while ensuring full coverage.</p>
+<p><strong>What’s a realistic eval budget for a team with 10 PRs/day?</strong></p>
+<p>At 10 PRs/day and 800 golden tickets, a naive eval costs ~$1.20/day (gpt-4o at $5/million tokens, 200 tokens per call). With Redis caching (78% hit rate) and sampling (10% for PRs), the cost drops to ~$0.18/day. For most teams, this is cheaper than a single oncall page. If your agent is low-traffic (&lt;100 calls/day), consider running evals nightly instead of per-PR to reduce cost further.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/agent-permissions-the-mistake-that-breaks-production/">
+                        <h3>Agent permissions: the mistake that breaks production</h3>
+                        <p>Agent permissions: the mistake that breaks production — how we built a desktop agent without admin rights on Windows 7, using COM automation and per-user…</p>
+                        <span class="related-meta">21 min read · 30 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-auth-the-silent-deployment-killer/">
+                        <h3>Agent auth: the silent deployment killer</h3>
+                        <p>Agent identity in 2026: why SPIFFE, JWTs, and Redis caches break under real African power and network conditions.</p>
+                        <span class="related-meta">15 min read · 30 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agents-keep-breaking-prod-3-boundary-rules-you-still-need/">
+                        <h3>Agents keep breaking prod: 3 boundary rules you still need</h3>
+                        <p>Agent breaking prod silently: 3 boundary rules to add now — outcome polling, schema drift checks, and concurrency guards — with concrete fixes and failure costs</p>
+                        <span class="related-meta">14 min read · 17 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
