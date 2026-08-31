@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-31T12:27:45.980476",
+  "built_at": "2026-08-31T18:58:54.944760",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4990,6 +4990,11 @@
       "slug": "commit-ownership-in-ai-pair-coding",
       "title": "Commit ownership in AI pair coding",
       "summary": "The conventional advice on run aiaugmented is incomplete in one specific, costly way. The answers online were either wrong or skipped the part that mattered. This post covers what comes after the happy path. The gap between what the docs say and what production needs Most teams start using AI coding"
+    },
+    {
+      "slug": "only-boring-stacks-survive-ai-services",
+      "title": "Only boring stacks survive AI services",
+      "summary": "Most platform abstractions guides assume a clean environment and a patient timeline. The tutorials all show the happy path. This walks through the fix and the reasoning, not just the patch. The conventional wisdom (and why it's incomplete) Most advice about building AI-powered services assumes you’r"
     }
   ]
 }

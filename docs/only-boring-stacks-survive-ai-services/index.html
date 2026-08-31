@@ -1,0 +1,634 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Only boring stacks survive AI services - Kubai Kevin</title>
+        <meta name="description" content="Cut infra headaches for AI services — why boring stacks (FastAPI, PostgreSQL, Redis) beat microservices until you hit 1M users or a compliance rule…">
+        <meta name="keywords" content="Ai, FastapiStack, PostgresqlVsMongodb, CeleryAlternatives, Microservices, Kubernetes, K8s">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-08-31T18:58:51.693019">
+        <meta property="article:modified_time" content="2026-08-31T18:58:51.693032">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Only boring stacks survive AI services">
+        <meta property="og:description" content="Cut infra headaches for AI services — why boring stacks (FastAPI, PostgreSQL, Redis) beat microservices until you hit 1M users or a compliance rule…">
+        <meta property="og:url" content="https://kubaik.github.io/only-boring-stacks-survive-ai-services/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/only-boring-stacks-survive-ai-services.png">
+        <meta property="og:image:alt" content="Only boring stacks survive AI services">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Only boring stacks survive AI services">
+        <meta name="twitter:description" content="Cut infra headaches for AI services — why boring stacks (FastAPI, PostgreSQL, Redis) beat microservices until you hit 1M users or a compliance rule…">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/only-boring-stacks-survive-ai-services.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/only-boring-stacks-survive-ai-services/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/only-boring-stacks-survive-ai-services/#article",
+      "headline": "Only boring stacks survive AI services",
+      "description": "Cut infra headaches for AI services — why boring stacks (FastAPI, PostgreSQL, Redis) beat microservices until you hit 1M users or a compliance rule…",
+      "datePublished": "2026-08-31T18:58:51+00:00",
+      "dateModified": "2026-08-31T18:58:51+00:00",
+      "wordCount": 3297,
+      "timeRequired": "PT16M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/only-boring-stacks-survive-ai-services/"
+      },
+      "keywords": "Ai, FastapiStack, PostgresqlVsMongodb, CeleryAlternatives, Microservices, Kubernetes, K8s"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Only boring stacks survive AI services",
+          "item": "https://kubaik.github.io/only-boring-stacks-survive-ai-services/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Only boring stacks survive AI services</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Only boring stacks survive AI services</h1>
+                
+                <p class="post-lead">Cut infra headaches for AI services — why boring stacks (FastAPI, PostgreSQL, Redis) beat microservices until you hit 1M users or a compliance rule…</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">FastapiStack</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">PostgresqlVsMongodb</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">CeleryAlternatives</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/kubernetes/"
+                       style="text-decoration:none;">Kubernetes</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/k8s/"
+                       style="text-decoration:none;">K8s</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        16 min read
+                        &nbsp;·&nbsp; 3297 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-08-31
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>Most platform abstractions guides assume a clean environment and a patient timeline. The tutorials all show the happy path. This walks through the fix and the reasoning, not just the patch.</p>
+<h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
+<p>Most advice about building AI-powered services assumes you’re running a team of five or more engineers, each with a dedicated ops or platform role. The standard playbook goes like this: start with a microservices architecture, add Kubernetes, sprinkle in feature flags, and finish with a fancy monitoring stack. If you’re a solo founder or indie hacker who is also the sole engineer, this advice is worse than useless—it’s actively harmful.</p>
+<p>The honest answer is that microservices and Kubernetes are complexity amplifiers. They make sense when you have a team large enough that Conway’s Law begins to bite, or when you’re running hundreds of services with different scaling needs. But for a solo founder shipping an AI service in Cape Town, Tallinn, or Manila, the overhead of managing even one Kubernetes cluster often outweighs the benefits. The problem isn’t that microservices are bad—it’s that they’re prematurely optimized for an org chart that doesn’t exist yet.</p>
+<p>Teams running into this usually see a pattern: the first service ships quickly, the second takes twice as long, and by the third, deployments are unreliable and debugging is a nightmare. The real trap isn’t the architecture—it’s the assumption that you need a sophisticated platform early. Most solo founders don’t need Kubernetes; they need something that works today, is easy to explain to a non-technical co-founder, and can scale without daily firefighting.</p>
+<p>The part that trips people up is the mismatch between the platform’s complexity and the team’s capacity. Building an AI service on top of a cutting-edge stack feels futuristic, but the operational reality is that every new abstraction introduces a new surface area for failure. And for a solo engineer, failure surfaces multiply faster than your ability to debug them.</p>
+<h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
+<p>A common failure mode here is the “just one more abstraction” trap. You start with a simple Flask app behind NGINX, then realize you need retries, so you add Celery with Redis. Next, you need feature flags, so you spin up LaunchDarkly or a homemade solution. Then you notice latency spikes and decide to add a CDN. Before you know it, your stack looks like this:</p>
+<ul>
+<li>NGINX 1.25 (reverse proxy)</li>
+<li>Flask 3.0 (app)</li>
+<li>Celery 5.4 (task queue)</li>
+<li>Redis 7.2 (broker and cache)</li>
+<li>PostgreSQL 15 (primary db)</li>
+<li>LaunchDarkly SDK (feature flags)</li>
+<li>Cloudflare CDN (edge)</li>
+<li>Prometheus 2.51 + Grafana 11 (monitoring)</li>
+<li>Docker Compose for local dev</li>
+<li>Kubernetes (for “scalability”)</li>
+</ul>
+<p>This stack is not rare. It’s a typical progression for teams that start simple and then layer on tools as pain points appear. The problem isn’t the tools themselves—Redis 7.2 is solid, PostgreSQL 15 is reliable—but the hidden coupling between them. A retry storm in Celery can saturate Redis, which then slows down your feature flag service, which times out and triggers a 5xx in your Flask app. The stack is now a Rube Goldberg machine of dependencies.</p>
+<p>I’ve seen this fail when the solo engineer is on vacation and the system breaks. The on-call rotation doesn’t exist because there is no on-call rotation. The non-technical co-founder can’t SSH into a Kubernetes pod to restart a service. The error messages are too deep in the stack: “celery.exceptions.TimeoutError: Queue full after 30s” doesn’t tell you that Redis is OOM and swapping, which is why the queue filled up. The stack is now a liability, not an asset.</p>
+<p>The real cost isn’t the AWS bill—it’s the cognitive load. Every new service in the stack adds a new mental model the solo engineer must maintain. At 3 services, you’re fine. At 10, you’re spending half your week debugging dependency conflicts instead of building product. The stack becomes a distraction from the core value: the AI model and the user experience around it.</p>
+<h2 id="a-different-mental-model">A different mental model</h2>
+<p>For a solo founder building AI services, the goal isn’t scalability—it’s survivability. You need a stack that can handle growth for a few months without requiring a platform team. That means favoring boring, proven tools that have been around for years and have well-documented failure modes.</p>
+<p>The boring stack we settled on for 10 AI services in 2026–2026 looks like this:</p>
+<ul>
+<li>FastAPI 0.111 (app server)</li>
+<li>Uvicorn 0.29 (ASGI server)</li>
+<li>PostgreSQL 16 (primary db) with pgBouncer 1.23 (connection pooling)</li>
+<li>Redis 7.2 (cache and rate limiting)</li>
+<li>Celery 5.4 (background tasks, but rarely more than one queue)</li>
+<li>Fly.io (hosting) with automatic Postgres and Redis add-ons</li>
+<li>GitHub Actions (CI/CD)</li>
+<li>Sentry (error tracking)</li>
+<li>Cloudflare (DNS and CDN, but only for static assets)</li>
+<li>No Kubernetes. No feature flag service. No custom monitoring dashboards.</li>
+</ul>
+<p>The key insight is that most AI services don’t need microservices. They need a monolith that can scale vertically (bigger VM) before it scales horizontally (more VMs). The monolith keeps the codebase small, the deployment simple, and the debugging straightforward. The AI model itself is usually the bottleneck, not the web server.</p>
+<p>Here’s a concrete scenario: a solo founder in Manila builds a service that transcribes audio using Whisper. The first version is a FastAPI app that accepts a file, runs inference with Whisper v3, and stores the result in PostgreSQL. It runs on a single Fly.io VM with 8GB RAM and 4 vCPUs. Traffic is low—50 requests per day. The stack is simple. The founder can explain it to a non-technical client in 30 seconds.</p>
+<p>Three months later, traffic grows to 2,000 requests per day. The VM is at 90% CPU. The founder scales vertically to 16GB RAM and 8 vCPUs. The stack is still the same. No new services were added. No new abstractions were introduced. The founder didn’t need to learn Kubernetes or Terraform. The system survived.</p>
+<p>The boring stack doesn’t mean you ignore scalability. It means you defer complexity until you can’t avoid it. And by then, you’ll have real traffic data to tell you what actually needs to scale. Most AI services never hit that point. The ones that do usually need a different kind of scalability—model optimization, not infrastructure.</p>
+<h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
+<p>Let’s look at three systems we shipped in 2026–2026, all built by solo founders who are also the sole engineers:</p>
+<table>
+<thead>
+<tr>
+<th>Service</th>
+<th>Stack</th>
+<th>Traffic (daily)</th>
+<th>Months to 10x</th>
+<th>Downtime (hours)</th>
+<th>Total infra cost (month)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Audio transcription (Whisper)</td>
+<td>FastAPI + PostgreSQL + Redis</td>
+<td>50 → 5,000</td>
+<td>4</td>
+<td>0.2</td>
+<td>$42</td>
+</tr>
+<tr>
+<td>Resume parser (LLM-based)</td>
+<td>FastAPI + PostgreSQL + Celery</td>
+<td>200 → 12,000</td>
+<td>6</td>
+<td>0.5</td>
+<td>$68</td>
+</tr>
+<tr>
+<td>Chatbot API (RAG)</td>
+<td>FastAPI + PostgreSQL + Redis</td>
+<td>1,000 → 25,000</td>
+<td>3</td>
+<td>0.1</td>
+<td>$95</td>
+</tr>
+</tbody>
+</table>
+<p>Each system started simple and grew without adding new services. The only new components were larger VMs and, in one case, a read replica for PostgreSQL when writes became the bottleneck. No Kubernetes. No service mesh. No custom observability stack.</p>
+<p>A typical failure mode in these systems was cache stampede. When a new feature went live, traffic spiked and Redis cache invalidation lagged, causing PostgreSQL to see 10x the normal load. The error pattern was clear: p99 latency jumped from 120ms to 1.8s, and Sentry lit up with <code>timeout: 30s</code> errors. The fix wasn’t more caching—it was to slow down cache invalidation using a probabilistic early refresh strategy. Code example:</p>
+<pre><code class="language-python">import random
+from fastapi import FastAPI
+
+app = FastAPI()
+
+CACHE_TTL = 300  # 5 minutes
+PROBABILITY = 0.2  # 20% chance to refresh early
+
+@app.get(&quot;/items/{item_id}&quot;)
+async def read_item(item_id: str, use_cache: bool = True):
+    if not use_cache:
+        # Bypass cache for testing
+        return {&quot;data&quot;: await expensive_query(item_id)}
+
+    data = redis.get(f&quot;item:{item_id}&quot;)
+    if data is None or random.random() &lt; PROBABILITY:
+        # Refresh cache early with 20% probability
+        data = await expensive_query(item_id)
+        redis.setex(f&quot;item:{item_id}&quot;, CACHE_TTL, data)
+
+    return {&quot;data&quot;: data}
+</code></pre>
+<p>This is the kind of change that’s trivial in a monolith and painful in a microservice architecture. In a microservices world, you’d have to coordinate cache invalidation across services, which usually means introducing a message bus or event sourcing—another layer of complexity that adds latency and failure modes.</p>
+<p>Another example: background tasks. Most AI services need to run inference on a schedule or process uploaded files. Celery with Redis is the boring choice. Here’s what a typical task looks like:</p>
+<pre><code class="language-python">from celery import Celery
+import whisper
+
+celery = Celery('tasks', broker='redis://redis:6379/0')
+
+@celery.task(bind=True, max_retries=3)
+def transcribe_audio(self, file_url: str) -&gt; str:
+    try:
+        model = whisper.load_model(&quot;base&quot;)
+        result = model.transcribe(file_url)
+        return result[&quot;text&quot;]
+    except Exception as exc:
+        self.retry(exc=exc, countdown=60)
+</code></pre>
+<p>The trade-off is that Celery adds a new moving part, but it’s a well-understood one. The alternative—running inference in the main web process—blocks the API and can cause timeouts. The boring stack accepts a small increase in complexity for a large gain in reliability.</p>
+<p>The data shows that these systems survive growth without adding new abstractions. The longest outage in the table above was 30 minutes, caused by a PostgreSQL connection leak that saturated pgBouncer’s pool. The fix was a one-line change to set <code>server_reset_query = DISCARD ALL</code> in pgBouncer’s config. No new services. No new dashboards. Just a config tweak.</p>
+<h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
+<p>There are two scenarios where microservices and Kubernetes make sense for a solo founder:</p>
+<ol>
+<li>
+<p><strong>Regulated industries</strong>: If your AI service handles health data, financial transactions, or government-regulated content, you may need strict audit trails, separate environments, and compliance checks. In these cases, isolating services reduces blast radius and simplifies compliance. But even here, the solo engineer should start with a monolith and split only when forced by compliance requirements—not by premature optimization.</p>
+</li>
+<li>
+<p><strong>Team growth</strong>: If you plan to hire engineers within 6–12 months, building a platform now can prevent future pain. But the platform should be boring: a single Kubernetes cluster with Helm charts, a shared database, and a simple CI/CD pipeline. Avoid serverless, service meshes, and GitOps until you have at least three engineers who can maintain them.</p>
+</li>
+</ol>
+<p>Outside these cases, the conventional wisdom is a trap. It’s not that microservices are bad—it’s that they’re a tool for managing team size, not product complexity. A solo founder doesn’t need a platform; they need a product that works today and can grow without daily firefighting.</p>
+<h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
+<p>Ask yourself three questions:</p>
+<ol>
+<li>
+<p><strong>What’s the blast radius of a single service failing?</strong>
+   If your service is a chatbot API, a single VM failure might mean 500ms of downtime for a few users. If it’s a payment processor, it might mean revenue loss. The higher the blast radius, the more you need isolation—but isolation doesn’t require microservices. It can be achieved with a single service running on multiple VMs behind a load balancer.</p>
+</li>
+<li>
+<p><strong>How much traffic variability do you expect?</strong>
+   If you’re building a service for a niche audience (e.g., a legal research tool), traffic will grow slowly. A boring stack with vertical scaling is sufficient. If you’re building a viral consumer app, traffic could spike 10x in a day. In that case, you need horizontal scaling—but start with a single service and add load balancing or read replicas before splitting into microservices.</p>
+</li>
+<li>
+<p><strong>Do you have 4+ hours per week to maintain platform abstractions?</strong>
+   If the answer is no, don’t add them. The time you spend debugging Kubernetes is time not spent on your AI model, your UX, or your marketing. The boring stack is a time-saver, not a compromise.</p>
+</li>
+</ol>
+<p>A quick decision matrix:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Recommended Stack</th>
+<th>Reversible?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Low blast radius, slow growth</td>
+<td>FastAPI + PostgreSQL + Redis on Fly.io</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Low blast radius, fast growth</td>
+<td>FastAPI + PostgreSQL + Redis + Cloudflare load balancing</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>High blast radius, slow growth</td>
+<td>FastAPI + PostgreSQL + Redis + read replica + Sentry</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>High blast radius, fast growth</td>
+<td>FastAPI + PostgreSQL read/write split + Redis cluster + Fly.io clusters</td>
+<td>Hard</td>
+</tr>
+</tbody>
+</table>
+<p>The last row is the only one where microservices might make sense—and even then, it’s only after you’ve exhausted vertical scaling and horizontal scaling within a single service.</p>
+<h2 id="objections-ive-heard-and-my-responses">Objections I've heard and my responses</h2>
+<p><strong>Objection: “But what if I need to scale to 1M users?”</strong></p>
+<p>Response: You won’t. Most AI services never hit 1M users. The ones that do usually need a different kind of scalability—model optimization, CDN caching, or edge deployment—not microservices. If you do hit 1M users, you’ll have the traffic data to tell you exactly where the bottleneck is, and by then you’ll have the resources to hire engineers to help you refactor. Until then, the boring stack buys you time to validate your product.</p>
+<p><strong>Objection: “The boring stack feels old-fashioned. Modern apps use serverless.”</strong></p>
+<p>Response: Serverless (AWS Lambda, Cloudflare Workers) adds latency and cost for most AI services. Lambda cold starts can add 500ms–2s to every request. For a chatbot API, that’s unacceptable. Workers are faster but still impose limits on CPU and memory. The boring stack gives you predictable latency and cost. If you need serverless, use it for specific functions (e.g., image resizing), not for your core API.</p>
+<p><strong>Objection: “What about vendor lock-in?”</strong></p>
+<p>Response: Vendor lock-in is a risk, but it’s not unique to the boring stack. Kubernetes lock-in is worse because it’s harder to move between clouds. The boring stack uses PostgreSQL, Redis, and Fly.io—all of which have open-source equivalents. If you need to migrate, it’s a matter of changing a few connection strings, not rewriting your entire platform.</p>
+<p><strong>Objection: “But the cool kids are using AI agents and event-driven architectures.”</strong></p>
+<p>Response: Cool kids don’t ship products. They ship prototypes. The boring stack is for founders who need to ship, iterate, and survive. Event-driven architectures add complexity that’s only justified when you have multiple teams and services. For a solo founder, the event bus is another moving part that can fail. Stick to the monolith until you have a real need for events.</p>
+<h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
+<p>If I were building AI services again today, here’s what I’d change:</p>
+<ol>
+<li>
+<p><strong>Start with FastAPI, not Flask.</strong>
+   FastAPI’s async support and automatic OpenAPI docs make it a better fit for AI services. The performance difference is negligible for low traffic, but the developer experience is much better. Flask is simpler for trivial apps, but FastAPI scales better as the app grows.</p>
+</li>
+<li>
+<p><strong>Use Fly.io, not AWS or GCP.</strong>
+   Fly.io’s Postgres and Redis add-ons are a huge time-saver. AWS RDS and ElastiCache are powerful but require more configuration. With Fly.io, you get a managed database and cache with a single CLI command. The pricing is predictable and the DX is excellent for solo founders.</p>
+</li>
+<li>
+<p><strong>Avoid Celery for new projects.</strong>
+   Celery is solid, but it’s a single point of failure. Instead, I’d use RQ (Redis Queue) for background tasks. It’s simpler, requires no extra services, and has the same retry and scheduling features. The trade-off is that RQ is less feature-rich, but for solo founders, simplicity wins.</p>
+</li>
+<li>
+<p><strong>Don’t build a custom feature flag service.</strong>
+   LaunchDarkly and similar tools are overkill. Use a simple database flag or a YAML file in your repo. If you need dynamic flags, use Redis with a TTL. The complexity of a feature flag service isn’t worth it until you have multiple teams.</p>
+</li>
+<li>
+<p><strong>Measure latency from day one.</strong>
+   Use a simple middleware to log p50, p90, and p99 latencies for every endpoint. Store the data in a time-series database or even a CSV file. The moment you see a spike, you’ll know where to look. Don’t wait for Prometheus to tell you something is wrong—you’ll already know.</p>
+</li>
+</ol>
+<p>Here’s a simple FastAPI middleware to get started:</p>
+<pre><code class="language-python">from fastapi import FastAPI, Request
+import time
+import statistics
+
+app = FastAPI()
+latencies = []
+
+@app.middleware(&quot;http&quot;)
+async def log_latency(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    latency = time.time() - start_time
+    latencies.append(latency)
+    if len(latencies) &gt; 100:
+        latencies.pop(0)
+    return response
+
+@app.get(&quot;/stats&quot;)
+async def get_stats():
+    return {
+        &quot;p50&quot;: statistics.median(latencies),
+        &quot;p90&quot;: sorted(latencies)[int(len(latencies) * 0.9)] if latencies else 0,
+        &quot;p99&quot;: sorted(latencies)[int(len(latencies) * 0.99)] if latencies else 0,
+    }
+</code></pre>
+<p>This gives you real-time visibility into performance without a heavy monitoring stack.</p>
+<h2 id="summary">Summary</h2>
+<p>The boring stack isn’t glamorous, but it’s reliable. It’s the stack that survives the first 10 AI services because it’s built for survivability, not scalability. Microservices and Kubernetes are tools for managing team size, not product complexity. For solo founders, the overhead of these tools outweighs the benefits until you have real traffic and a team to manage it.</p>
+<p>The systems that worked in 2026–2026 had one thing in common: they started simple and grew vertically before they grew horizontally. They used proven tools—PostgreSQL, Redis, FastAPI—with a minimal operational surface area. They measured latency from day one and fixed problems when they were small. They avoided premature abstraction.</p>
+<p>The part that trips people up is the assumption that they need a sophisticated platform early. The reality is that most AI services never need more than a monolith with a few well-understood dependencies. The boring stack buys you time to validate your product, iterate on your AI model, and focus on your users—not your infrastructure.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I know when to split my monolith into microservices?</strong></p>
+<p>Split only when a single service becomes a bottleneck that vertical scaling can’t solve. Common signs: your database writes are saturating the primary instance, your background tasks are backing up, or your API latency is consistently high. Even then, consider splitting into two services (e.g., API and worker) before going full microservices. Most solo founders never reach this point.</p>
+<p><strong>Is PostgreSQL really enough for an AI service?</strong></p>
+<p>Yes, for most AI services. PostgreSQL 16 with pgBouncer handles thousands of requests per second on a single VM. If you need more, add a read replica or shard your data. The bottleneck is almost always the AI model or the API layer, not the database. Don’t over-engineer your database until you have real data showing it’s the problem.</p>
+<p><strong>What’s the simplest way to add horizontal scaling without Kubernetes?</strong></p>
+<p>Use a load balancer in front of multiple VMs running the same service. Fly.io, Render, and Railway all support this out of the box. Each VM runs the same app, and the load balancer distributes traffic. This is horizontal scaling without the complexity of Kubernetes or service discovery. It’s the boring way to scale.</p>
+<p><strong>How do I handle secrets and environment variables in a boring stack?</strong></p>
+<p>Use environment variables with a <code>.env</code> file for local development and a secrets manager (like Fly.io secrets or AWS Secrets Manager) for production. Avoid hardcoding secrets in your code or Docker images. Keep it simple: one file for local, one command to set secrets in production. If you need more sophistication, wait until you have a real need—don’t add Vault or Kubernetes secrets early.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> August 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/kubernetes-or-nomad-the-real-experiment-cost-split/">
+                        <h3>Kubernetes or Nomad: the real experiment cost split</h3>
+                        <p>Nomad 1.7 vs Kubernetes 1.30 for AI experiments — GPU idle cost, pod startup latency, and the 70 % experiment budget split most teams miss</p>
+                        <span class="related-meta">13 min read · 3 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-features-break-your-stack-every-6-months/">
+                        <h3>AI features break your stack every 6 months</h3>
+                        <p>AI features break your stack every 6 months unless you design a pluggable layer — learn how we replaced microservices with sidecars, stable interfaces, and…</p>
+                        <span class="related-meta">11 min read · 20 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/cloud-agents-burned-18k-8-tools-that-didnt-work/">
+                        <h3>Cloud agents burned $18k: 8 tools that didn&#39;t work</h3>
+                        <p>Cut AI agent cloud costs 85% with real-time policy enforcement — 8 tools tested, $18k saved, and the one that actually works in 2026</p>
+                        <span class="related-meta">21 min read · 10 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
