@@ -86,5 +86,7 @@
   "How we use spot instances + smart retry logic for non-critical agent workloads",
   "Production RAG that doesn't rot: chunking, indexing, and refresh strategies that survive real data change",
   "Evaluation-driven development for agents: the loop that replaced vibe testing",
-  "The infrastructure patterns that let us run 3x more AI experiments for the same budget"
+  "The infrastructure patterns that let us run 3x more AI experiments for the same budget",
+  "The governance layer we added after our first agent caused a compliance incident",
+  "Platform engineering ROI: the metrics that convinced our leadership to keep funding it"
 ]
