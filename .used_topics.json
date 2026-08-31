@@ -85,5 +85,6 @@
   "The real cost of always-on vs on-demand agents in a Nairobi-based SaaS",
   "How we use spot instances + smart retry logic for non-critical agent workloads",
   "Production RAG that doesn't rot: chunking, indexing, and refresh strategies that survive real data change",
-  "Evaluation-driven development for agents: the loop that replaced vibe testing"
+  "Evaluation-driven development for agents: the loop that replaced vibe testing",
+  "The infrastructure patterns that let us run 3x more AI experiments for the same budget"
 ]
