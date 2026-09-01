@@ -90,5 +90,6 @@
   "The governance layer we added after our first agent caused a compliance incident",
   "Platform engineering ROI: the metrics that convinced our leadership to keep funding it",
   "How we run AI-augmented teams without destroying code ownership and accountability",
-  "The platform abstractions that survived our first 10 AI-powered services"
+  "The platform abstractions that survived our first 10 AI-powered services",
+  "Why most production agents still need strong human-in-the-loop boundaries in 2026"
 ]

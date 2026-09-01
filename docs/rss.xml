@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 31 Aug 2026 18:59:03 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 01 Sep 2026 04:14:59 +0000</lastBuildDate>
+    <item>
+      <title>Agent drift: why prod breaks without human checkpoints</title>
+      <link>https://kubaik.github.io/agent-drift-why-prod-breaks-without-human-checkpoints/</link>
+      <description>Agent drift in 2026: why 68% of production agents degrade 15%+ within 30 days without human checkpoints — and how to stop it with confidence thresholds…</description>
+      <pubDate>Tue, 01 Sep 2026 04:14:50 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-drift-why-prod-breaks-without-human-checkpoints/</guid>
+    </item>
     <item>
       <title>Only boring stacks survive AI services</title>
       <link>https://kubaik.github.io/only-boring-stacks-survive-ai-services/</link>
@@ -138,13 +145,6 @@
       <description>Stop AI budget surprises with agentic spend control — per-request cost caps, Redis caching pitfalls, and the one proxy that adds 3 ms latency</description>
       <pubDate>Sun, 23 Aug 2026 12:46:54 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-agents-pinching-our-own-ai-budget/</guid>
-    </item>
-    <item>
-      <title>AI payments break in M-Pesa first</title>
-      <link>https://kubaik.github.io/ai-payments-break-in-m-pesa-first/</link>
-      <description>AI payments in Brazil, Colombia, and Mexico break on duplicate webhooks, idempotency key collisions, and sandbox lies—here’s what actually fails in 2026…</description>
-      <pubDate>Sun, 23 Aug 2026 01:36:53 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-payments-break-in-m-pesa-first/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-08-31T18:58:54.944760",
+  "built_at": "2026-09-01T04:14:52.677767",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -4995,6 +4995,11 @@
       "slug": "only-boring-stacks-survive-ai-services",
       "title": "Only boring stacks survive AI services",
       "summary": "Most platform abstractions guides assume a clean environment and a patient timeline. The tutorials all show the happy path. This walks through the fix and the reasoning, not just the patch. The conventional wisdom (and why it's incomplete) Most advice about building AI-powered services assumes you’r"
+    },
+    {
+      "slug": "agent-drift-why-prod-breaks-without-human-checkpoints",
+      "title": "Agent drift: why prod breaks without human checkpoints",
+      "summary": "There's a gap between how most production is taught and how it actually behaves under load. The edge cases only show up once real users hit the system. Here's what I'd tell a colleague hitting this for the first time. The error and why it's confusing Production agents that look fine in staging can s"
     }
   ]
 }
