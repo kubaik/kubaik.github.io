@@ -91,5 +91,11 @@
   "Platform engineering ROI: the metrics that convinced our leadership to keep funding it",
   "How we run AI-augmented teams without destroying code ownership and accountability",
   "The platform abstractions that survived our first 10 AI-powered services",
-  "Why most production agents still need strong human-in-the-loop boundaries in 2026"
+  "Why most production agents still need strong human-in-the-loop boundaries in 2026",
+  "Building a deployment platform that works for both senior engineers and new hires",
+  "Least-privilege for AI agents: the permission model that doesn't make developers revolt",
+  "How feature flags evolved into full AI rollout and experimentation platforms",
+  "WebAssembly on the server: where it actually beats containers in our production workloads",
+  "The real cost of running agents 24/7 vs on-demand \u2014 numbers from our production setup",
+  "Data residency and sovereign AI constraints for African fintech using global models"
 ]

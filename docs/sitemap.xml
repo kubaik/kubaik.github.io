@@ -463,7 +463,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/agent-drift-why-prod-breaks-without-human-checkpoints.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/agent-drift-why-prod-breaks-without-human-checkpoints.png</image:loc>
     </image:image>
   </url>
   <url>
