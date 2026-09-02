@@ -97,5 +97,7 @@
   "How feature flags evolved into full AI rollout and experimentation platforms",
   "WebAssembly on the server: where it actually beats containers in our production workloads",
   "The real cost of running agents 24/7 vs on-demand \u2014 numbers from our production setup",
-  "Data residency and sovereign AI constraints for African fintech using global models"
+  "Data residency and sovereign AI constraints for African fintech using global models",
+  "How we run local LLM agents for sensitive fintech workflows without sending data abroad",
+  "How our Internal Developer Platform evolved to support AI feature development in 2026"
 ]

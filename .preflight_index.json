@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-01T04:14:52.677767",
+  "built_at": "2026-09-02T03:37:39.902837",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5000,6 +5000,11 @@
       "slug": "agent-drift-why-prod-breaks-without-human-checkpoints",
       "title": "Agent drift: why prod breaks without human checkpoints",
       "summary": "There's a gap between how most production is taught and how it actually behaves under load. The edge cases only show up once real users hit the system. Here's what I'd tell a colleague hitting this for the first time. The error and why it's confusing Production agents that look fine in staging can s"
+    },
+    {
+      "slug": "idp-for-ai-2026-stack-evolution",
+      "title": "IDP for AI: 2026 stack evolution",
+      "summary": "Most run local guides assume a clean environment and a patient timeline. The edge cases only show up once real users hit the system. Here's the root cause, not just the symptom. Why I wrote this (the problem I kept hitting) In 2026, solo founders shipping AI features hit a wall: every new model or p"
     }
   ]
 }
