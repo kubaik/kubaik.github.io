@@ -104,5 +104,8 @@
   "Building internal tools that help non-AI engineers work safely with agents",
   "How we do red-teaming for internal agents without slowing down development velocity",
   "The portfolio projects that actually get African engineers hired into senior remote roles in 2026",
-  "Context window management strategies for agents that run for hours or days"
+  "Context window management strategies for agents that run for hours or days",
+  "Why our beautiful multi-agent research system quietly degraded over three months",
+  "Why traditional cloud cost tools failed us once agents started making autonomous decisions",
+  "How durable execution platforms (Temporal, Inngest, etc.) changed our agent workflow thinking"
 ]

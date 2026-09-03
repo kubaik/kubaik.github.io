@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 03 Sep 2026 11:36:44 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 03 Sep 2026 16:05:54 +0000</lastBuildDate>
+    <item>
+      <title>Temporal changed our agent retries for good</title>
+      <link>https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/</link>
+      <description>How durable execution platforms like Temporal 1.22.0 cut refund workflow latency 70% and drop errors from 0.8% to 0.02% — plus the exact gotcha most…</description>
+      <pubDate>Thu, 03 Sep 2026 16:05:45 +0000</pubDate>
+      <guid>https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/</guid>
+    </item>
     <item>
       <title>Agents running hours? You&apos;re losing context fast</title>
       <link>https://kubaik.github.io/agents-running-hours-youre-losing-context-fast/</link>
@@ -138,13 +145,6 @@
       <description>Cut API on-call pages 78% with strict Pydantic validation and Redis circuit breakers — the 502 errors most teams retry forever are often permanent schema…</description>
       <pubDate>Tue, 25 Aug 2026 12:54:46 +0000</pubDate>
       <guid>https://kubaik.github.io/pydantic-2-redis-stop-the-3am-ai-pages/</guid>
-    </item>
-    <item>
-      <title>PyPI poisoned models hit prod in 2025</title>
-      <link>https://kubaik.github.io/pypi-poisoned-models-hit-prod-in-2025/</link>
-      <description>PyPI poisoned models hit prod in 2025 — deterministic pins, hash verification, and dataset commit pins that teams actually used to stop supply-chain…</description>
-      <pubDate>Tue, 25 Aug 2026 01:25:20 +0000</pubDate>
-      <guid>https://kubaik.github.io/pypi-poisoned-models-hit-prod-in-2025/</guid>
     </item>
   </channel>
 </rss>

@@ -589,7 +589,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/agents-running-hours-youre-losing-context-fast.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/agents-running-hours-youre-losing-context-fast.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -4436,6 +4436,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/tame-python-asyncs-hidden-traps.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/temporal-changed-our-agent-retries-for-good.svg</image:loc>
     </image:image>
   </url>
   <url>
