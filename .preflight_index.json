@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-02T03:37:39.902837",
+  "built_at": "2026-09-03T03:37:04.264871",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5005,6 +5005,11 @@
       "slug": "idp-for-ai-2026-stack-evolution",
       "title": "IDP for AI: 2026 stack evolution",
       "summary": "Most run local guides assume a clean environment and a patient timeline. The edge cases only show up once real users hit the system. Here's the root cause, not just the symptom. Why I wrote this (the problem I kept hitting) In 2026, solo founders shipping AI features hit a wall: every new model or p"
+    },
+    {
+      "slug": "portfolio-projects-that-hire-remote-senior-devs",
+      "title": "Portfolio projects that hire remote senior devs",
+      "summary": "A colleague asked me about portfolio projects during a code review recently, and my first answer wasn't a good one. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in. Why I wrote this (the problem I kept hitting) In 20"
     }
   ]
 }
