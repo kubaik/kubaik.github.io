@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-03T03:37:04.264871",
+  "built_at": "2026-09-03T11:36:36.074721",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5010,6 +5010,11 @@
       "slug": "portfolio-projects-that-hire-remote-senior-devs",
       "title": "Portfolio projects that hire remote senior devs",
       "summary": "A colleague asked me about portfolio projects during a code review recently, and my first answer wasn't a good one. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in. Why I wrote this (the problem I kept hitting) In 20"
+    },
+    {
+      "slug": "agents-running-hours-youre-losing-context-fast",
+      "title": "Agents running hours? You're losing context fast",
+      "summary": "The tutorials all show the happy path. Most context window guides assume a clean environment and a patient timeline. This is the writeup with the mistakes left in, not edited out. The one-paragraph version (read this first) Agents that run for hours or days with large context windows waste compute, "
     }
   ]
 }

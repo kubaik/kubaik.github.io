@@ -103,5 +103,6 @@
   "The platform abstractions that made agent development 3x faster for our teams",
   "Building internal tools that help non-AI engineers work safely with agents",
   "How we do red-teaming for internal agents without slowing down development velocity",
-  "The portfolio projects that actually get African engineers hired into senior remote roles in 2026"
+  "The portfolio projects that actually get African engineers hired into senior remote roles in 2026",
+  "Context window management strategies for agents that run for hours or days"
 ]

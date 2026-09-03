@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 03 Sep 2026 14:32:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 03 Sep 2026 11:36:44 +0000</lastBuildDate>
+    <item>
+      <title>Agents running hours? You&apos;re losing context fast</title>
+      <link>https://kubaik.github.io/agents-running-hours-youre-losing-context-fast/</link>
+      <description>Keep long-running agents on track without ballooning prompts — sliding windows, archive thresholds, and PostgreSQL 16 JSONB with 3 concrete numbers and a…</description>
+      <pubDate>Thu, 03 Sep 2026 11:36:32 +0000</pubDate>
+      <guid>https://kubaik.github.io/agents-running-hours-youre-losing-context-fast/</guid>
+    </item>
     <item>
       <title>Portfolio projects that hire remote senior devs</title>
       <link>https://kubaik.github.io/portfolio-projects-that-hire-remote-senior-devs/</link>
@@ -138,13 +145,6 @@
       <description>PyPI poisoned models hit prod in 2025 — deterministic pins, hash verification, and dataset commit pins that teams actually used to stop supply-chain…</description>
       <pubDate>Tue, 25 Aug 2026 01:25:20 +0000</pubDate>
       <guid>https://kubaik.github.io/pypi-poisoned-models-hit-prod-in-2025/</guid>
-    </item>
-    <item>
-      <title>Self-service is broken without AI ops</title>
-      <link>https://kubaik.github.io/self-service-is-broken-without-ai-ops/</link>
-      <description>How AI turned &amp;#x27;self-service&amp;#x27; from a permissions problem into a guardrail system — with concrete AWS examples, Terraform snippets, and the metrics that…</description>
-      <pubDate>Mon, 24 Aug 2026 12:59:05 +0000</pubDate>
-      <guid>https://kubaik.github.io/self-service-is-broken-without-ai-ops/</guid>
     </item>
   </channel>
 </rss>
