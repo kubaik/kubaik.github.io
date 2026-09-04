@@ -81,7 +81,14 @@ _STOP_WORDS = {
 DUPLICATE_TITLE_THRESHOLD = 0.35
 
 MIN_WORD_COUNT = 2000
-MIN_WORD_PURGE = 1500
+# AUDIT FIX: was 1500. _validate_content_quality() hard-fails any NEW post
+# under 1800 words (see hard_failures check below), but audit_posts() /
+# purge_low_quality_posts() only tombstoned already-published posts under
+# 1500. That gap let ~300-1799 word legacy posts — thin content by the
+# site's own current bar — sit live indefinitely because the purge sweep
+# never flagged them. Raised to match the publish-time gate so one
+# "thin content" definition applies to both new and existing posts.
+MIN_WORD_PURGE = 1800
 
 MAX_GENERATION_ATTEMPTS = 5
 MIN_ACCEPTABLE_WORDS = 1500
@@ -418,6 +425,25 @@ def _truncate_description(desc: str, max_len: int = 155) -> str:
     return truncated.rstrip(" ,;:-") + "…"
 
 
+# AUDIT FIX: this list used to exist twice — once inline in audit_posts()'s
+# is_fallback check (2 substrings) and again, independently, as
+# boilerplate_markers inside _validate_content_quality() (6 substrings).
+# Same class of bug the file's own dedup-threshold comments warn about
+# elsewhere ("someone loosening one without noticing the other"): a post
+# generated with a NEW unfilled-template signature would be caught at
+# publish time by _validate_content_quality but silently missed by
+# audit_posts()'s purge sweep because the two lists had drifted apart.
+# Single source of truth now; both call sites import this.
+BOILERPLATE_FALLBACK_MARKERS = [
+    "class {topic_slug}Client",
+    "class Client:",
+    "max_retries = config.get",
+    "{topic_slug}",
+    "{topic}",
+    "topic_slug",
+]
+
+
 def audit_posts(docs_dir: Path) -> Dict:
     results = {"fallback": [], "short": [], "ok": []}
     if not docs_dir.exists():
@@ -435,8 +461,7 @@ def audit_posts(docs_dir: Path) -> Dict:
             wc = _count_words(content)
             is_fallback = (
                 data.get("monetization_data", {}).get("used_fallback", False)
-                or "class {topic_slug}Client" in content
-                or "class Client:" in content and "max_retries = config.get" in content
+                or any(marker in content for marker in BOILERPLATE_FALLBACK_MARKERS)
             )
             if is_fallback:
                 results["fallback"].append(post_dir.name)
@@ -472,15 +497,7 @@ def _validate_content_quality(content: str, title: str):
             "Google AdSense reviewers reject thin content immediately."
         )
 
-    boilerplate_markers = [
-        "class {topic_slug}Client",
-        "class Client:",
-        "max_retries = config.get",
-        "{topic_slug}",
-        "{topic}",
-        "topic_slug",
-    ]
-    for marker in boilerplate_markers:
+    for marker in BOILERPLATE_FALLBACK_MARKERS:
         if marker in content:
             hard_failures.append(
                 f"Template boilerplate detected: '{marker[:40]}'. "

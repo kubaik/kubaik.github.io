@@ -1117,6 +1117,34 @@ class VisibilityAutomator:
         keywords: Optional[List[str]] = None,
         max_replies: int = MAX_REPLIES_PER_RUN,
     ) -> Dict:
+        # AUDIT FIX: this method searches strangers' tweets by keyword and
+        # posts a canned, self-promotional reply containing a link back to
+        # the site — to accounts that never mentioned the site, using
+        # templates that don't actually engage with what the target tweet
+        # said (e.g. "Great point on {keyword}..." regardless of the
+        # tweet's actual content or stance). That's unsolicited automated
+        # reply/link-drop behavior:
+        #   - Violates X/Twitter's platform rules on spam and inauthentic
+        #     coordinated engagement (risk: account suspension).
+        #   - Referral traffic acquired this way is a low-intent, often
+        #     bounced click, not a genuine engagement/quality signal.
+        #   - If reported or noticed, it's a reputational liability for
+        #     the exact named author ("Kubai Kevin") this site's own
+        #     E-E-A-T footer stakes its credibility on.
+        # This is now opt-in only (config: enable_stranger_reply_bait:
+        # true) and off by default. Prefer post_at_peak_or_now() /
+        # post_single_tweet(), which promote the site's own content on
+        # its own timeline — no unsolicited contact with other accounts.
+        if not self.config.get("enable_stranger_reply_bait", False):
+            return {
+                "success": False,
+                "error": (
+                    "reply_to_trending() is disabled by default: auto-replying "
+                    "to strangers' tweets with a promotional link is a platform-"
+                    "policy and spam-signal risk. Set "
+                    "config['enable_stranger_reply_bait']=True to override."
+                ),
+            }
         if not self.twitter_client:
             return {"success": False, "error": "Twitter client not initialized."}
         if not keywords:
