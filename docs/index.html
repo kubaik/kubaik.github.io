@@ -212,6 +212,32 @@
             
             <div id="posts-container" class="post-grid">
                 
+                <a class="post-card" href="/why-your-routing-layer-will-collapse-at-scale/"
+                   data-title="Why your routing layer will collapse at scale"
+                   data-description="Cut model routing complexity with Redis state and auto-tune retries — GDPR audit trails, p95 latency under 450 ms, and €180 savings per 100k tokens"
+                   data-tags="LlmRouting,ModelRouting,GdprModelRouting,RedisRetryState,Model,Cloudcomputing,Llm,Redis">
+                    <h3>Why your routing layer will collapse at scale</h3>
+                    <p class="post-excerpt">Cut model routing complexity with Redis state and auto-tune retries — GDPR audit trails, p95 latency under 450 ms, and €180 savings per 100k tokens</p>
+                    
+                    <p class="post-reading-time">14 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/llm/">Llm</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/model/">Model</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/redis/">Redis</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
                 <a class="post-card" href="/temporal-changed-our-agent-retries-for-good/"
                    data-title="Temporal changed our agent retries for good"
                    data-description="How durable execution platforms like Temporal 1.22.0 cut refund workflow latency 70% and drop errors from 0.8% to 0.02% — plus the exact gotcha most…"
@@ -263,6 +289,13 @@
                     
                 </a>
                 
+                <div class="ad-middle" style="grid-column:1/-1;"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
                 
                 <a class="post-card" href="/portfolio-projects-that-hire-remote-senior-devs/"
                    data-title="Portfolio projects that hire remote senior devs"
@@ -282,13 +315,6 @@
                     </div>
                     
                 </a>
-                
-                <div class="ad-middle" style="grid-column:1/-1;"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
                 
                 <a class="post-card" href="/idp-for-ai-2026-stack-evolution/"
@@ -798,32 +824,6 @@
                 </a>
                 
                 
-                <a class="post-card" href="/ai-agents-pinching-our-own-ai-budget/"
-                   data-title="AI agents pinching our own AI budget"
-                   data-description="Stop AI budget surprises with agentic spend control — per-request cost caps, Redis caching pitfalls, and the one proxy that adds 3 ms latency"
-                   data-tags="AiCostOptimization,LlmCostControl,Agentic,AiSpendManagement,Prompt,Ai,Llm,Agenticai">
-                    <h3>AI agents pinching our own AI budget</h3>
-                    <p class="post-excerpt">Stop AI budget surprises with agentic spend control — per-request cost caps, Redis caching pitfalls, and the one proxy that adds 3 ms latency</p>
-                    
-                    <p class="post-reading-time">14 min read</p>
-                    
-                    
-                    <div class="tags">
-                        
-                        <span class="tag"
-                              data-tag-href="/tag/ai/">Ai</span>
-                        
-                        <span class="tag"
-                              data-tag-href="/tag/llm/">Llm</span>
-                        
-                        <span class="tag"
-                              data-tag-href="/tag/prompt/">Prompt</span>
-                        
-                    </div>
-                    
-                </a>
-                
-                
             </div>
 
             <div id="loading-spinner" class="loading-spinner" style="display:none;">
@@ -887,7 +887,7 @@
         // client-side from posts.json go through the same qualifying-tag
         // check as server-rendered cards, so a JS-built card can never
         // link to a tag page that doesn't exist either.
-        var QUALIFYING_TAG_SLUGS = ["4gwebperformance", "african", "africatech", "agent", "agentic", "agenticai", "agenticcoding", "agenticcodingtools", "agenticfinops", "agentpermissions", "ai", "aiagentpostmortem", "aialerttriage", "aicodebaseonboarding", "aicodegeneration", "aicodereview", "aicodesecurity", "aicodingtools", "aicostoptimization", "aifeaturemaintenance", "aigeneratedcode", "aiincidentresponse", "ainativeapplications", "aiobservability", "aiobservabilitytools", "aipairprogramming", "aiportfoliofilter", "aiproofcompensation", "airolloutstrategy", "aistatemanagement", "aistaticanalysis", "aiuitools", "aiwrapper2026", "aiwrapperbusiness", "androiddev", "apachekafka", "apidesign2026", "apiratelimiting", "apis", "apisecurity2026", "artificialintelligence", "asyncpython", "automated", "awscostoptimization", "backend", "backstage", "buildinpublic", "cache", "cacheownership", "cachestampede", "careeradvice", "cicd", "circuitbreaker", "claudecode", "claudecode2026", "cloudcomputing", "cloudflareworkersai", "codeownershipmodel", "codereviewautomation", "coding", "compensation", "connection", "connectionpooltuning", "constraint", "containers", "context", "cursorai", "cybersecurity", "data", "database", "dataengineering", "developer", "developerproductivity", "developertoolpricing", "devops", "devtoolpricing", "devwellbeing", "distributed", "docker", "edgecaching2026", "edgenativebackend", "engineer", "engineering", "entrepreneurship", "ethicalhacking", "evaluation", "false", "fastapi", "fastapi0.109", "featureflags2026", "featureflagsai", "featureflagservice", "finetuning", "fintech", "fintechapidesign", "flutter", "flutterwave", "freelancing", "generativeai", "gethired", "github", "githubactionsai", "golang", "graphql", "hybrid", "iac", "idempotency", "idempotencykeys", "immutableauditlogs", "incremental", "indiehacker", "infosec", "internal", "javascript", "js", "jsonmodelimitations", "k8s", "kubernetes", "lambda", "langgraph", "latency", "legacy", "llm", "llmcostoptimization", "llmdriftdetection", "llmevaluationmetrics", "llmincidentresponse", "llmlatency", "llmlatencyp95", "llmobservability", "llmsecuritychecklist", "llmsecurityrisks", "llmstructuredoutput", "llmwrapper", "longrunningagents", "machinelearning", "microservices", "mobile", "mobiledev", "model", "mpesaintegration", "multi", "multiagent", "nairobi", "nairobitechstack", "negotiatesalary2026", "nextjs", "offlinefirstapps", "oncallautomation", "opensource", "opentelemetry", "owaspllmtop", "p99latency", "passiveincome", "payment", "performance", "pgvector0.7", "platform", "platformengineering", "pocketbase", "postgres", "postgres17features", "postgresql", "pricingexperiments", "programming", "prometheus", "prompt", "promptengineering", "promptinjection", "pydantic", "python", "python3", "python3.11async", "python311async", "rag", "ragpipelineproduction", "reactjs", "reactnative", "redis", "redis7.2", "redis7.2caching", "redis72", "rediscircuitbreaker", "regulatory", "remotesalarynegotiation", "retrylogic", "runbookautomation", "rustlang", "saas", "saasniche2026", "saccosoftwarekenya", "salary", "serverless", "softwareengineering", "solo", "sql", "startups", "stopapiabuse", "structured", "systemdesign", "tech", "techcareer", "techjobs", "technicaldebt2026", "technology", "terraform", "timescaledb", "tokenizer", "toolcallingpatterns", "typescript", "usagebasedpricing", "vector", "vectordb", "vectorsearch", "vibecoding", "webdev", "webhook", "webhookretries2026", "zero", "zerotrust"];
+        var QUALIFYING_TAG_SLUGS = ["4gwebperformance", "african", "africatech", "agent", "agentic", "agenticai", "agenticcoding", "agenticcodingtools", "agenticfinops", "agentpermissions", "ai", "aiagentpostmortem", "aialerttriage", "aicodebaseonboarding", "aicodegeneration", "aicodereview", "aicodesecurity", "aicodingtools", "aicostoptimization", "aifeaturemaintenance", "aigeneratedcode", "aiincidentresponse", "ainativeapplications", "aiobservability", "aiobservabilitytools", "aipairprogramming", "aiportfoliofilter", "aiproofcompensation", "airolloutstrategy", "aistatemanagement", "aistaticanalysis", "aiuitools", "aiwrapper2026", "aiwrapperbusiness", "androiddev", "apachekafka", "apidesign2026", "apiratelimiting", "apis", "apisecurity2026", "artificialintelligence", "asyncpython", "automated", "awscostoptimization", "backend", "backstage", "buildinpublic", "cache", "cacheownership", "cachestampede", "careeradvice", "cicd", "circuitbreaker", "claudecode", "claudecode2026", "cloudcomputing", "cloudflareworkersai", "codeownershipmodel", "codereviewautomation", "coding", "compensation", "connection", "connectionpooltuning", "constraint", "containers", "context", "cursorai", "cybersecurity", "data", "database", "dataengineering", "developer", "developerproductivity", "developertoolpricing", "devops", "devtoolpricing", "devwellbeing", "distributed", "docker", "edgecaching2026", "edgenativebackend", "engineer", "engineering", "entrepreneurship", "ethicalhacking", "evaluation", "false", "fastapi", "fastapi0.109", "featureflags2026", "featureflagsai", "featureflagservice", "finetuning", "fintech", "fintechapidesign", "flutter", "flutterwave", "freelancing", "generativeai", "gethired", "github", "githubactionsai", "golang", "graphql", "hybrid", "iac", "idempotency", "idempotencykeys", "immutableauditlogs", "incremental", "indiehacker", "infosec", "internal", "javascript", "js", "jsonmodelimitations", "k8s", "kubernetes", "lambda", "langgraph", "latency", "legacy", "llm", "llmcostoptimization", "llmdriftdetection", "llmevaluationmetrics", "llmincidentresponse", "llmlatency", "llmlatencyp95", "llmobservability", "llmrouting", "llmsecuritychecklist", "llmsecurityrisks", "llmstructuredoutput", "llmwrapper", "longrunningagents", "machinelearning", "microservices", "mobile", "mobiledev", "model", "mpesaintegration", "multi", "multiagent", "nairobi", "nairobitechstack", "negotiatesalary2026", "nextjs", "offlinefirstapps", "oncallautomation", "opensource", "opentelemetry", "owaspllmtop", "p99latency", "passiveincome", "payment", "performance", "pgvector0.7", "platform", "platformengineering", "pocketbase", "postgres", "postgres17features", "postgresql", "pricingexperiments", "programming", "prometheus", "prompt", "promptengineering", "promptinjection", "pydantic", "python", "python3", "python3.11async", "python311async", "rag", "ragpipelineproduction", "reactjs", "reactnative", "redis", "redis7.2", "redis7.2caching", "redis72", "rediscircuitbreaker", "regulatory", "remotesalarynegotiation", "retrylogic", "runbookautomation", "rustlang", "saas", "saasniche2026", "saccosoftwarekenya", "salary", "serverless", "softwareengineering", "solo", "sql", "startups", "stopapiabuse", "structured", "systemdesign", "tech", "techcareer", "techjobs", "technicaldebt2026", "technology", "terraform", "timescaledb", "tokenizer", "toolcallingpatterns", "typescript", "usagebasedpricing", "vector", "vectordb", "vectorsearch", "vibecoding", "webdev", "webhook", "webhookretries2026", "zero", "zerotrust"];
 
         var fullPosts   = [];
         var loadedCount = postsContainer

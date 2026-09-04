@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 03 Sep 2026 16:05:54 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 04 Sep 2026 03:38:17 +0000</lastBuildDate>
+    <item>
+      <title>Why your routing layer will collapse at scale</title>
+      <link>https://kubaik.github.io/why-your-routing-layer-will-collapse-at-scale/</link>
+      <description>Cut model routing complexity with Redis state and auto-tune retries — GDPR audit trails, p95 latency under 450 ms, and €180 savings per 100k tokens</description>
+      <pubDate>Fri, 04 Sep 2026 03:38:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-your-routing-layer-will-collapse-at-scale/</guid>
+    </item>
     <item>
       <title>Temporal changed our agent retries for good</title>
       <link>https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/</link>
@@ -138,13 +145,6 @@
       <description>AI on slow networks: Nairobi teams&amp;#x27; 2026 playbook — cache 80 % of requests to cut perceived latency 90 % while using Bedrock for the remaining 20 %.</description>
       <pubDate>Wed, 26 Aug 2026 01:29:12 +0000</pubDate>
       <guid>https://kubaik.github.io/ai-on-slow-networks-nairobi-teams-2026-playbook/</guid>
-    </item>
-    <item>
-      <title>Pydantic 2 + Redis: stop the 3am AI pages</title>
-      <link>https://kubaik.github.io/pydantic-2-redis-stop-the-3am-ai-pages/</link>
-      <description>Cut API on-call pages 78% with strict Pydantic validation and Redis circuit breakers — the 502 errors most teams retry forever are often permanent schema…</description>
-      <pubDate>Tue, 25 Aug 2026 12:54:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/pydantic-2-redis-stop-the-3am-ai-pages/</guid>
     </item>
   </channel>
 </rss>

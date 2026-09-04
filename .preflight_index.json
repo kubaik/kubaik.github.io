@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-03T16:05:46.752811",
+  "built_at": "2026-09-04T03:38:09.160636",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5020,6 +5020,11 @@
       "slug": "temporal-changed-our-agent-retries-for-good",
       "title": "Temporal changed our agent retries for good",
       "summary": "We inherited a traditional cloud setup nobody could explain, and had to reverse-engineer the reasoning. Here's what I'd tell a colleague hitting this for the first time. It only shows up under the exact conditions nobody tests for. Why I wrote this Most agent platforms still rely on cron, queues, or"
+    },
+    {
+      "slug": "why-your-routing-layer-will-collapse-at-scale",
+      "title": "Why your routing layer will collapse at scale",
+      "summary": "The dashboards look healthy right up until the incident starts. regulatory tech broke in a way our monitoring wasn't even watching for. This is the version of the write-up that includes the part that broke. The gap between what the docs say and what production needs Teams read the model-provider doc"
     }
   ]
 }

@@ -107,5 +107,8 @@
   "Context window management strategies for agents that run for hours or days",
   "Why our beautiful multi-agent research system quietly degraded over three months",
   "Why traditional cloud cost tools failed us once agents started making autonomous decisions",
-  "How durable execution platforms (Temporal, Inngest, etc.) changed our agent workflow thinking"
+  "How durable execution platforms (Temporal, Inngest, etc.) changed our agent workflow thinking",
+  "The regulatory tech patterns we're now forced to implement because of 2026 African fintech rules",
+  "FinOps for LLM-heavy teams: the levers that actually move the needle in 2026",
+  "How I run local + cloud model routing without the complexity exploding"
 ]
