@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-04T03:38:09.160636",
+  "built_at": "2026-09-04T16:04:09.948022",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5025,6 +5025,11 @@
       "slug": "why-your-routing-layer-will-collapse-at-scale",
       "title": "Why your routing layer will collapse at scale",
       "summary": "The dashboards look healthy right up until the incident starts. regulatory tech broke in a way our monitoring wasn't even watching for. This is the version of the write-up that includes the part that broke. The gap between what the docs say and what production needs Teams read the model-provider doc"
+    },
+    {
+      "slug": "hybrid-cloud-routing-cost-speed-balance-for-sea",
+      "title": "Hybrid Cloud Routing: Cost-Speed Balance for SEA",
+      "summary": "nairobi teams taught me the difference between working and being trustworthy. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke. Southeast Asia’s startup scene is a crucible for innovation, but it’s also a ba"
     }
   ]
 }
