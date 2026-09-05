@@ -112,5 +112,6 @@
   "FinOps for LLM-heavy teams: the levers that actually move the needle in 2026",
   "How I run local + cloud model routing without the complexity exploding",
   "The regulatory and compliance realities of deploying autonomous agents in African fintech in 2026",
-  "How Nairobi teams are using local + cloud model routing to stay competitive on cost and speed"
+  "How Nairobi teams are using local + cloud model routing to stay competitive on cost and speed",
+  "Why structured logging + model pinning became non-negotiable once we had 15+ agents in production"
 ]
