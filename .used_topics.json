@@ -113,5 +113,10 @@
   "How I run local + cloud model routing without the complexity exploding",
   "The regulatory and compliance realities of deploying autonomous agents in African fintech in 2026",
   "How Nairobi teams are using local + cloud model routing to stay competitive on cost and speed",
-  "Why structured logging + model pinning became non-negotiable once we had 15+ agents in production"
+  "Why structured logging + model pinning became non-negotiable once we had 15+ agents in production",
+  "What traditional observability missed when we introduced our first production agents",
+  "How we implemented least-privilege access for agents that need to call 30+ tools",
+  "How newest models (Claude 4 / GPT-5 era) changed our agent architecture decisions",
+  "How we measure platform value when half the 'code' is now prompts and agent graphs",
+  "Building systems that can absorb new AI capabilities without major rewrites every 6 months"
 ]
