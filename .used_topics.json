@@ -126,5 +126,6 @@
   "The cost and reliability tradeoffs of running AI features for users paying in local currency",
   "How we built an IDP that developers actually use (instead of another Backstage nobody opens)",
   "Cost attribution for AI features that product managers actually understand",
-  "The tradeoffs we made when turning every team into platform consumers"
+  "The tradeoffs we made when turning every team into platform consumers",
+  "The self-service AI tooling layer we built so product teams could experiment safely"
 ]

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 06 Sep 2026 17:13:04 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 07 Sep 2026 03:38:40 +0000</lastBuildDate>
+    <item>
+      <title>AI Experimentation: Guardrails, Not Gates</title>
+      <link>https://kubaik.github.io/ai-experimentation-guardrails-not-gates/</link>
+      <description>They spent an estimated 80% of their time on boilerplate provisioning and basic integration tasks, leaving little room for actual platform development or…</description>
+      <pubDate>Mon, 07 Sep 2026 03:38:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-experimentation-guardrails-not-gates/</guid>
+    </item>
     <item>
       <title>Hybrid Cloud Routing: Cost-Speed Balance for SEA</title>
       <link>https://kubaik.github.io/hybrid-cloud-routing-cost-speed-balance-for-sea/</link>
@@ -138,13 +145,6 @@
       <description>Catch agent-generated code failures before merge — chaos testing, shadow traffic, and invariant checks that stop the $17k rollbacks most teams ignore</description>
       <pubDate>Thu, 27 Aug 2026 08:16:38 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-code-review-gap-nobody-admits/</guid>
-    </item>
-    <item>
-      <title>Mobile-first AI fails you didn’t plan…</title>
-      <link>https://kubaik.github.io/mobile-first-ai-fails-you-didnt-plan/</link>
-      <description>Mobile-first AI performance pitfalls — why user drop-off spikes at 2.5 s latency and $1.80/GB data costs derail global best practices.</description>
-      <pubDate>Wed, 26 Aug 2026 17:38:26 +0000</pubDate>
-      <guid>https://kubaik.github.io/mobile-first-ai-fails-you-didnt-plan/</guid>
     </item>
   </channel>
 </rss>

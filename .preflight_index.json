@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-04T16:04:09.948022",
+  "built_at": "2026-09-07T03:38:32.482561",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5030,6 +5030,11 @@
       "slug": "hybrid-cloud-routing-cost-speed-balance-for-sea",
       "title": "Hybrid Cloud Routing: Cost-Speed Balance for SEA",
       "summary": "nairobi teams taught me the difference between working and being trustworthy. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke. Southeast Asia’s startup scene is a crucible for innovation, but it’s also a ba"
+    },
+    {
+      "slug": "ai-experimentation-guardrails-not-gates",
+      "title": "AI Experimentation: Guardrails, Not Gates",
+      "summary": "The tutorials all show the happy path. Every selfservice tooling writeup I found assumed I'd already made the mistake it was warning about. Here's the fuller picture, with the tradeoffs left in. The situation (what we were trying to solve) By 2026, every product team wanted a slice of AI. From conte"
     }
   ]
 }
