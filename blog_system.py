@@ -968,12 +968,18 @@ def _derive_hashtags_from_keywords(
 
 _MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions"
 _MISTRAL_FREE_TIER_DELAY = 1.2
+# Minimum gap enforced between consecutive Mistral calls (free tier is
+# rate-limited to roughly 1 request/second; spacing calls out avoids
+# tripping the limiter in the first place instead of only reacting to it
+# with the 429 retry/backoff below).
+_MISTRAL_MIN_CALL_INTERVAL = 2.0
+# Backoff schedule used specifically when Mistral returns 429. Longer and
+# with more attempts than the generic RETRYABLE backoff, since free-tier
+# rate limits reset on the order of tens of seconds, not milliseconds.
+_MISTRAL_429_BACKOFF = [10, 20, 40]
 
 _NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 _NVIDIA_MODEL = "meta/llama-3.3-70b-instruct"
-
-_GITHUB_MODELS_URL = "https://models.github.ai/inference/chat/completions"
-_GITHUB_MODEL = "Llama-4-Scout-17B-16E-Instruct"
 
 _CF_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
 
@@ -2197,16 +2203,18 @@ class BlogSystem:
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
         self.cerebras_key = os.getenv("CEREBRAS_API_KEY")
         self.mistral_key = os.getenv("MISTRAL_API_KEY")
+        # Mistral's free tier enforces a low requests-per-second cap; track
+        # the last call time so we can space out requests and avoid tripping
+        # it (see _call_mistral's _MISTRAL_MIN_INTERVAL wait below).
+        self._last_mistral_call_time = 0.0
         self.nvidia_key = os.getenv("NVIDIA_API_KEY")
         self.gemini_key = os.getenv("GEMINI_API_KEY")
-        self.github_token = os.getenv("BLOGGITHUB_TOKEN")
 
         self._log_key_status()
 
         self.api_key = (
             self.groq_key or self.openrouter_key or self.cerebras_key
             or self.mistral_key or self.nvidia_key or self.gemini_key
-            or self.github_token
         )
 
         self.monetization = MonetizationManager(config)
@@ -2244,8 +2252,6 @@ class BlogSystem:
             f"  NVIDIA NIM:     {'configured' if self.nvidia_key           else 'NOT SET'}")
         print(
             f"  Gemini:         {'configured' if self.gemini_key           else 'NOT SET'}")
-        print(
-            f"  GitHub Models:  {'configured' if self.github_token         else 'NOT SET'}")
         print("======================")
 
     # ─────────────────────────────────────────────────────────────
@@ -2663,8 +2669,6 @@ class BlogSystem:
 
         if self.mistral_key:
             providers.append(("Mistral",         self._call_mistral))
-        if self.github_token:
-            providers.append(("GitHub Models",    self._call_github))
         if self.openrouter_key:
             providers.append(("OpenRouter",       self._call_openrouter))
         if self.groq_key:
@@ -2680,7 +2684,7 @@ class BlogSystem:
             raise Exception(
                 "No API keys configured. Set at least one of: GROQ_API_KEY, "
                 "OPENROUTER_API_KEY, CEREBRAS_API_KEY, MISTRAL_API_KEY, "
-                "NVIDIA_API_KEY, GEMINI_API_KEY, GITHUB_TOKEN, "
+                "NVIDIA_API_KEY, GEMINI_API_KEY, "
                 "or CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID."
             )
 
@@ -2814,25 +2818,57 @@ class BlogSystem:
         raise Exception("Cerebras unavailable.")
 
     async def _call_mistral(self, messages: List[Dict], max_tokens: int) -> str:
-        RETRYABLE = {503, 429, 500, 502, 504}
+        RETRYABLE = {503, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.mistral_key}",
                    "Content-Type": "application/json"}
         data = {"model": "mistral-small-latest", "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7}
         waits = [_MISTRAL_FREE_TIER_DELAY, 5, 10]
-        for attempt in range(1, 3):
+
+        # Enforce a minimum gap since the last Mistral call so bursts of
+        # back-to-back generations (e.g. multiple posts in one "auto" run)
+        # don't immediately hit the free-tier rate limit.
+        elapsed = asyncio.get_event_loop().time() - self._last_mistral_call_time
+        if elapsed < _MISTRAL_MIN_CALL_INTERVAL:
+            await asyncio.sleep(_MISTRAL_MIN_CALL_INTERVAL - elapsed)
+
+        max_attempts = max(3, len(_MISTRAL_429_BACKOFF) + 1)
+        for attempt in range(1, max_attempts + 1):
+            self._last_mistral_call_time = asyncio.get_event_loop().time()
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://api.mistral.ai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                    async with s.post(_MISTRAL_API_URL, headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
-                        if r.status in RETRYABLE and attempt < 2:
-                            await asyncio.sleep(waits[attempt - 1])
+
+                        if r.status == 429:
+                            # Respect the server's own cooldown if it gives
+                            # one; otherwise fall back to the fixed backoff
+                            # schedule. Free-tier 429s need real wait time
+                            # (seconds-to-tens-of-seconds), not the
+                            # sub-2-second generic RETRYABLE delay.
+                            if attempt <= len(_MISTRAL_429_BACKOFF):
+                                retry_after = r.headers.get("Retry-After")
+                                try:
+                                    delay = float(retry_after) if retry_after else _MISTRAL_429_BACKOFF[attempt - 1]
+                                except ValueError:
+                                    delay = _MISTRAL_429_BACKOFF[attempt - 1]
+                                print(
+                                    f"Mistral rate limited (429), waiting "
+                                    f"{delay:.0f}s before retry "
+                                    f"{attempt}/{max_attempts}..."
+                                )
+                                await asyncio.sleep(delay)
+                                continue
+                            raise Exception(f"Mistral 429: {await r.text()}")
+
+                        if r.status in RETRYABLE and attempt < max_attempts:
+                            await asyncio.sleep(waits[min(attempt - 1, len(waits) - 1)])
                             continue
                         raise Exception(f"Mistral {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
-                if attempt < 2:
-                    await asyncio.sleep(waits[attempt - 1])
+                if attempt < max_attempts:
+                    await asyncio.sleep(waits[min(attempt - 1, len(waits) - 1)])
                 else:
                     raise Exception(f"Mistral connection failed: {e}")
             except asyncio.TimeoutError:
@@ -2928,34 +2964,6 @@ class BlogSystem:
             except asyncio.TimeoutError:
                 raise Exception("Gemini timed out.")
         raise Exception("Gemini unavailable.")
-
-    async def _call_github(self, messages: List[Dict], max_tokens: int) -> str:
-        RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {"Authorization": f"Bearer {self.github_token}",
-                   "Content-Type": "application/json"}
-        data = {"model": "gpt-4o", "messages": messages,
-                "max_tokens": max_tokens, "temperature": 0.7}
-        waits = [2, 5, 10]
-        for attempt in range(1, 3):
-            try:
-                async with aiohttp.ClientSession() as s:
-                    async with s.post(_GITHUB_MODELS_URL, headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=120)) as r:
-                        if r.status == 200:
-                            return (await r.json())["choices"][0]["message"]["content"]
-                        if r.status in RETRYABLE and attempt < 2:
-                            await asyncio.sleep(waits[attempt - 1])
-                            continue
-                        body = await r.text()
-                        raise Exception(
-                            f"GitHub Models {r.status}: {body[:250]}")
-            except aiohttp.ClientConnectionError as e:
-                if attempt < 2:
-                    await asyncio.sleep(waits[attempt - 1])
-                else:
-                    raise Exception(f"GitHub Models connection failed: {e}")
-            except asyncio.TimeoutError:
-                raise Exception("GitHub Models timed out.")
-        raise Exception("GitHub Models unavailable.")
 
     # ─────────────────────────────────────────────────────────────
     # CONTENT GENERATION
@@ -4607,7 +4615,7 @@ def create_sample_config(config_path: str = "config.yaml"):
     print(
         "\nRequired GitHub secrets: GROQ_API_KEY, OPENROUTER_API_KEY, "
         "CEREBRAS_API_KEY, MISTRAL_API_KEY, NVIDIA_API_KEY, GEMINI_API_KEY, "
-        "BLOGGITHUB_TOKEN, CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID"
+        "CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID"
     )
 
 
@@ -4629,7 +4637,7 @@ if __name__ == "__main__":
             os.makedirs("docs/static", exist_ok=True)
             os.makedirs("analytics", exist_ok=True)
             print(
-                "Done! API chain: Mistral → GitHub Models → OpenRouter → Groq → "
+                "Done! API chain: Mistral → OpenRouter → Groq → "
                 "Cloudflare AI → Cerebras → Gemini → NVIDIA NIM → local template"
             )
 
