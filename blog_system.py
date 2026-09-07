@@ -978,6 +978,31 @@ _MISTRAL_MIN_CALL_INTERVAL = 2.0
 # rate limits reset on the order of tens of seconds, not milliseconds.
 _MISTRAL_429_BACKOFF = [10, 20, 40]
 
+# OpenRouter periodically retires a ":free" model slug and starts returning
+# 404 with "This model is unavailable for free ... use this slug instead:
+# <paid slug>" for it. We never auto-switch to the paid slug (that would
+# silently start spending money), so instead we keep a short list of other
+# known-free slugs and fall through to the next one on that specific 404.
+# First entry is the primary pick; the rest are only tried if it 404s.
+#
+# Verified against GET https://openrouter.ai/api/v1/models on 2026-09-07 —
+# at that point openai/gpt-oss-120b:free, meta-llama/llama-3.3-70b-instruct:free,
+# google/gemini-2.0-flash-exp:free, and qwen/qwen-2.5-72b-instruct:free had
+# ALL been retired (only the paid slugs remain), which is exactly the 404
+# this list exists to route around. Picked for general prose/instruction
+# quality and generous max_completion_tokens (all comfortably cover our
+# max_tokens=6500 article-generation calls). OpenRouter's free catalog
+# churns often — re-check https://openrouter.ai/models?max_price=0 (or hit
+# the API above and filter pricing.prompt == "0") every so often and update
+# this list if entries start 404ing again.
+_OPENROUTER_FREE_MODELS = [
+    "z-ai/glm-5.2:free",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "minimax/minimax-m3:free",
+    "thinkingmachines/inkling:free",
+    "google/gemma-4-31b-it:free",
+]
+
 _NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 _NVIDIA_MODEL = "meta/llama-3.3-70b-instruct"
 
@@ -2760,36 +2785,78 @@ class BlogSystem:
             "HTTP-Referer": self.config.get("base_url", "https://kubaik.github.io"),
             "X-Title": self.config.get("site_name", "Kubai Kevin"),
         }
-        data = {
-            "model": "openai/gpt-oss-120b:free",
-            "messages": messages,
-            "max_tokens": max_tokens,
-            "temperature": 0.7,
-            "provider": {"ignore": ["Venice"], "allow_fallbacks": True},
-        }
         waits = [2, 5, 10]
-        for attempt in range(1, 3):
-            try:
-                async with aiohttp.ClientSession() as s:
-                    async with s.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
-                        if r.status == 200:
-                            result = await r.json()
-                            if "error" in result:
-                                raise Exception(
-                                    f"OpenRouter error: {result['error']}")
-                            return result["choices"][0]["message"]["content"]
-                        if r.status in RETRYABLE and attempt < 2:
-                            await asyncio.sleep(waits[attempt - 1])
-                            continue
-                        raise Exception(f"OpenRouter {r.status}: {await r.text()}")
-            except aiohttp.ClientConnectionError as e:
-                if attempt < 2:
-                    await asyncio.sleep(waits[attempt - 1])
-                else:
-                    raise Exception(f"OpenRouter connection failed: {e}")
-            except asyncio.TimeoutError:
-                raise Exception("OpenRouter timed out.")
-        raise Exception("OpenRouter unavailable.")
+        last_error: Optional[Exception] = None
+
+        for model_id in _OPENROUTER_FREE_MODELS:
+            data = {
+                "model": model_id,
+                "messages": messages,
+                "max_tokens": max_tokens,
+                "temperature": 0.7,
+                "provider": {"ignore": ["Venice"], "allow_fallbacks": True},
+            }
+            for attempt in range(1, 3):
+                try:
+                    async with aiohttp.ClientSession() as s:
+                        async with s.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                            if r.status == 200:
+                                result = await r.json()
+                                if "error" in result:
+                                    raise Exception(
+                                        f"OpenRouter error: {result['error']}")
+                                return result["choices"][0]["message"]["content"]
+
+                            body = await r.text()
+
+                            if r.status == 404 and "unavailable for free" in body.lower():
+                                # OpenRouter retired this ":free" slug and is
+                                # nudging us toward the paid version — don't
+                                # take that bait, just move on to the next
+                                # known-free candidate model.
+                                print(
+                                    f"OpenRouter: {model_id} is no longer free "
+                                    f"({body[:200]}). Trying next free model..."
+                                )
+                                last_error = Exception(
+                                    f"OpenRouter 404 (model retired): {model_id}")
+                                break
+
+                            if r.status in RETRYABLE and attempt < 2:
+                                await asyncio.sleep(waits[attempt - 1])
+                                continue
+
+                            raise Exception(f"OpenRouter {r.status}: {body}")
+                except aiohttp.ClientConnectionError as e:
+                    last_error = e
+                    if attempt < 2:
+                        await asyncio.sleep(waits[attempt - 1])
+                        continue
+                    print(
+                        f"OpenRouter: {model_id} connection failed ({e}). "
+                        f"Trying next free model..."
+                    )
+                    break
+                except asyncio.TimeoutError as e:
+                    last_error = e
+                    print(
+                        f"OpenRouter: {model_id} timed out. "
+                        f"Trying next free model..."
+                    )
+                    break
+                except Exception as e:
+                    # Non-retryable, non-404 failure (bad response shape,
+                    # explicit "error" field, etc.) — try the next candidate
+                    # rather than giving up on OpenRouter entirely.
+                    last_error = e
+                    print(
+                        f"OpenRouter: {model_id} failed ({e}). "
+                        f"Trying next free model..."
+                    )
+                    break
+
+        raise Exception(
+            f"All OpenRouter free-model candidates failed. Last error: {last_error}")
 
     async def _call_cerebras(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
