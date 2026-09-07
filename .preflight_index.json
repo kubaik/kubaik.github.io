@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-07T08:09:05.009812",
+  "built_at": "2026-09-07T08:58:16.131299",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5040,6 +5040,11 @@
       "slug": "offline-agents-local-first-sync-patterns",
       "title": "Offline Agents: Local-First Sync Patterns",
       "summary": "After reviewing enough code that touches offlinecapable agent, the same failure pattern keeps showing up. Here's the version I wish someone had handed me first. The failure is quiet — no errors, just wrong answers. Why I wrote this (the problem I kept hitting) Working with teams serving European use"
+    },
+    {
+      "slug": "two-engineer-classes-the-ai-tool-norm-trap",
+      "title": "Two engineer classes: the AI tool norm trap",
+      "summary": "The metric everyone watches for building healthy isn't the one that would have warned us. The tutorials all show the happy path. This is the writeup with the mistakes left in, not edited out. The situation (what we were trying to solve) A team of fourteen engineers had a quiet problem that everyone "
     }
   ]
 }
