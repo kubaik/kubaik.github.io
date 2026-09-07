@@ -128,5 +128,7 @@
   "Cost attribution for AI features that product managers actually understand",
   "The tradeoffs we made when turning every team into platform consumers",
   "The self-service AI tooling layer we built so product teams could experiment safely",
-  "Offline-capable agent workflows for field agents and last-mile operations in Africa"
+  "Offline-capable agent workflows for field agents and last-mile operations in Africa",
+  "Why most internal developer platforms fail at the adoption layer, not the technical one",
+  "The hidden failure modes of tool-calling agents at scale (and how we guard against them)"
 ]
