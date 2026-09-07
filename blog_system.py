@@ -978,30 +978,27 @@ _MISTRAL_MIN_CALL_INTERVAL = 2.0
 # rate limits reset on the order of tens of seconds, not milliseconds.
 _MISTRAL_429_BACKOFF = [10, 20, 40]
 
-# OpenRouter periodically retires a ":free" model slug and starts returning
-# 404 with "This model is unavailable for free ... use this slug instead:
-# <paid slug>" for it. We never auto-switch to the paid slug (that would
-# silently start spending money), so instead we keep a short list of other
-# known-free slugs and fall through to the next one on that specific 404.
-# First entry is the primary pick; the rest are only tried if it 404s.
-#
-# Verified against GET https://openrouter.ai/api/v1/models on 2026-09-07 —
-# at that point openai/gpt-oss-120b:free, meta-llama/llama-3.3-70b-instruct:free,
-# google/gemini-2.0-flash-exp:free, and qwen/qwen-2.5-72b-instruct:free had
-# ALL been retired (only the paid slugs remain), which is exactly the 404
-# this list exists to route around. Picked for general prose/instruction
-# quality and generous max_completion_tokens (all comfortably cover our
-# max_tokens=6500 article-generation calls). OpenRouter's free catalog
-# churns often — re-check https://openrouter.ai/models?max_price=0 (or hit
-# the API above and filter pricing.prompt == "0") every so often and update
-# this list if entries start 404ing again.
-_OPENROUTER_FREE_MODELS = [
-    "z-ai/glm-5.2:free",
-    "nvidia/nemotron-3-ultra-550b-a55b:free",
+# OpenRouter's free-model catalog churns fast — models we hardcode here can
+# be retired again within days (see _fetch_openrouter_free_models, which is
+# tried first and makes this list mostly a last-resort). Only used if the
+# live /api/v1/models lookup itself fails (network issue, bad response,
+# etc). Refresh occasionally by checking https://openrouter.ai/models or
+# GET https://openrouter.ai/api/v1/models and filtering pricing.prompt=="0".
+_OPENROUTER_FALLBACK_MODELS = [
     "minimax/minimax-m3:free",
+    "nvidia/nemotron-3-ultra-550b-a55b:free",
     "thinkingmachines/inkling:free",
     "google/gemma-4-31b-it:free",
+    "nvidia/nemotron-3-super-120b-a12b:free",
 ]
+
+# Model-id substrings that disqualify a "free" catalog entry from being used
+# for blog-post generation even though it's priced at $0 — moderation/
+# guardrail models and pure translation models return unusable output for
+# our prompts.
+_OPENROUTER_FREE_MODEL_EXCLUDE_SUBSTRINGS = (
+    "safety", "safeguard", "guard", "moderat", "-mt", "content-safety",
+)
 
 _NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 _NVIDIA_MODEL = "meta/llama-3.3-70b-instruct"
@@ -2777,6 +2774,60 @@ class BlogSystem:
                 raise Exception("Groq timed out.")
         raise Exception("Groq unavailable.")
 
+    async def _fetch_openrouter_free_models(self, timeout: int = 20) -> List[str]:
+        """Pull OpenRouter's live model catalog and return currently-free
+        (`pricing.prompt == "0"` and `pricing.completion == "0"`) text-output
+        model ids, best candidates first. This exists because OpenRouter
+        retires ":free" slugs with no warning — sometimes within days of
+        each other — so a hardcoded list goes stale fast (see the
+        _OPENROUTER_FALLBACK_MODELS comment). Raises on any failure; the
+        caller falls back to the static list.
+        """
+        async with aiohttp.ClientSession() as s:
+            async with s.get(
+                "https://openrouter.ai/api/v1/models",
+                headers={"Authorization": f"Bearer {self.openrouter_key}"},
+                timeout=aiohttp.ClientTimeout(total=timeout),
+            ) as r:
+                if r.status != 200:
+                    raise Exception(
+                        f"OpenRouter models list {r.status}: {await r.text()}")
+                payload = await r.json()
+
+        candidates = []
+        today = datetime.now().strftime("%Y-%m-%d")
+        for m in payload.get("data", []):
+            model_id = m.get("id", "")
+            if not model_id.endswith(":free"):
+                continue
+            pricing = m.get("pricing", {})
+            if pricing.get("prompt") != "0" or pricing.get("completion") != "0":
+                continue
+            if "text" not in (m.get("architecture", {}).get(
+                    "output_modalities", []) or []):
+                continue
+            if any(bad in model_id.lower()
+                   for bad in _OPENROUTER_FREE_MODEL_EXCLUDE_SUBSTRINGS):
+                continue
+            expires = m.get("expiration_date")
+            if expires and expires < today:
+                continue
+            max_completion = (m.get("top_provider", {}) or {}).get(
+                "max_completion_tokens") or 0
+            # Too small to reliably return a full article body.
+            if max_completion and max_completion < 4000:
+                continue
+            candidates.append((model_id, max_completion, expires))
+
+        if not candidates:
+            raise Exception("No usable free models in OpenRouter catalog")
+
+        # Prefer models with more completion headroom, and push anything
+        # with a near-term expiration_date to the back (still usable as a
+        # last resort, just not first-pick).
+        candidates.sort(key=lambda c: (c[2] is not None, -c[1]))
+        return [c[0] for c in candidates]
+
     async def _call_openrouter(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {
@@ -2788,7 +2839,19 @@ class BlogSystem:
         waits = [2, 5, 10]
         last_error: Optional[Exception] = None
 
-        for model_id in _OPENROUTER_FREE_MODELS:
+        try:
+            candidate_models = await self._fetch_openrouter_free_models()
+        except Exception as e:
+            print(
+                f"OpenRouter: couldn't fetch live free-model list ({e}); "
+                f"falling back to the hardcoded list."
+            )
+            candidate_models = list(_OPENROUTER_FALLBACK_MODELS)
+
+        # Cap attempts per generation call — we don't want one blog post to
+        # burn through the entire free catalog if OpenRouter is having a
+        # bad day.
+        for model_id in candidate_models[:6]:
             data = {
                 "model": model_id,
                 "messages": messages,
