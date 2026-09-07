@@ -130,5 +130,6 @@
   "The self-service AI tooling layer we built so product teams could experiment safely",
   "Offline-capable agent workflows for field agents and last-mile operations in Africa",
   "Why most internal developer platforms fail at the adoption layer, not the technical one",
-  "The hidden failure modes of tool-calling agents at scale (and how we guard against them)"
+  "The hidden failure modes of tool-calling agents at scale (and how we guard against them)",
+  "How we built payment reconciliation that survives M-Pesa, Paystack, and Flutterwave failures"
 ]
