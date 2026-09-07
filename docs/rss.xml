@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Sep 2026 14:59:12 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 07 Sep 2026 12:11:50 +0000</lastBuildDate>
+    <item>
+      <title>Rogue Agent API Calls: Stop the Bleeding</title>
+      <link>https://kubaik.github.io/rogue-agent-api-calls-stop-the-bleeding/</link>
+      <description>This can turn a process that should make 100 API calls for 1000 items into one that makes 10,000 or even 100,000 calls for the same dataset, increasing…</description>
+      <pubDate>Mon, 07 Sep 2026 12:11:38 +0000</pubDate>
+      <guid>https://kubaik.github.io/rogue-agent-api-calls-stop-the-bleeding/</guid>
+    </item>
     <item>
       <title>Two engineer classes: the AI tool norm trap</title>
       <link>https://kubaik.github.io/two-engineer-classes-the-ai-tool-norm-trap/</link>
@@ -138,13 +145,6 @@
       <description>Detect LLM drift before users notice — real metrics from production pipelines, with concrete thresholds, code snippets, and cost figures for 2026…</description>
       <pubDate>Fri, 28 Aug 2026 21:56:56 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-eval-drift-that-users-notice-first/</guid>
-    </item>
-    <item>
-      <title>Agent tracing: when logs lie and metrics mislead</title>
-      <link>https://kubaik.github.io/agent-tracing-when-logs-lie-and-metrics-mislead/</link>
-      <description>Agent tracing: when logs lie and metrics mislead — cut incident debug time 40% by fixing Jaeger traces that show zero-duration gaps for async workers…</description>
-      <pubDate>Fri, 28 Aug 2026 10:18:37 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-tracing-when-logs-lie-and-metrics-mislead/</guid>
     </item>
   </channel>
 </rss>

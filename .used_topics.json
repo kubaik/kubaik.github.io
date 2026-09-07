@@ -132,5 +132,7 @@
   "Why most internal developer platforms fail at the adoption layer, not the technical one",
   "The hidden failure modes of tool-calling agents at scale (and how we guard against them)",
   "How we built payment reconciliation that survives M-Pesa, Paystack, and Flutterwave failures",
-  "Building healthy team norms around AI tool usage without creating two classes of engineers"
+  "Building healthy team norms around AI tool usage without creating two classes of engineers",
+  "How African engineering teams are adapting hiring and onboarding for the agentic era",
+  "How we recovered after an agent made thousands of low-value API calls overnight"
 ]

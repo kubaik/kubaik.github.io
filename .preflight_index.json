@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-07T08:58:16.131299",
+  "built_at": "2026-09-07T12:11:42.009569",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5045,6 +5045,11 @@
       "slug": "two-engineer-classes-the-ai-tool-norm-trap",
       "title": "Two engineer classes: the AI tool norm trap",
       "summary": "The metric everyone watches for building healthy isn't the one that would have warned us. The tutorials all show the happy path. This is the writeup with the mistakes left in, not edited out. The situation (what we were trying to solve) A team of fourteen engineers had a quiet problem that everyone "
+    },
+    {
+      "slug": "rogue-agent-api-calls-stop-the-bleeding",
+      "title": "Rogue Agent API Calls: Stop the Bleeding",
+      "summary": "The african engineering question that matters isn't in the FAQ, it's in the incident log. Here's the version I wish someone had handed me first. The answers online were either wrong or skipped the part that mattered. You wake up to an urgent email, or worse, a text from your bank about an unusual tr"
     }
   ]
 }

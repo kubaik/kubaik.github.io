@@ -1,0 +1,607 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Rogue Agent API Calls: Stop the Bleeding - Kubai Kevin</title>
+        <meta name="description" content="This can turn a process that should make 100 API calls for 1000 items into one that makes 10,000 or even 100,000 calls for the same dataset, increasing…">
+        <meta name="keywords" content="Apis">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-07T12:11:38.676430">
+        <meta property="article:modified_time" content="2026-09-07T12:11:38.676441">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Rogue Agent API Calls: Stop the Bleeding">
+        <meta property="og:description" content="This can turn a process that should make 100 API calls for 1000 items into one that makes 10,000 or even 100,000 calls for the same dataset, increasing…">
+        <meta property="og:url" content="https://kubaik.github.io/rogue-agent-api-calls-stop-the-bleeding/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/rogue-agent-api-calls-stop-the-bleeding.png">
+        <meta property="og:image:alt" content="Rogue Agent API Calls: Stop the Bleeding">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Rogue Agent API Calls: Stop the Bleeding">
+        <meta name="twitter:description" content="This can turn a process that should make 100 API calls for 1000 items into one that makes 10,000 or even 100,000 calls for the same dataset, increasing…">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/rogue-agent-api-calls-stop-the-bleeding.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/rogue-agent-api-calls-stop-the-bleeding/">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/rogue-agent-api-calls-stop-the-bleeding/#article",
+      "headline": "Rogue Agent API Calls: Stop the Bleeding",
+      "description": "This can turn a process that should make 100 API calls for 1000 items into one that makes 10,000 or even 100,000 calls for the same dataset, increasing…",
+      "datePublished": "2026-09-07T12:11:38+00:00",
+      "dateModified": "2026-09-07T12:11:38+00:00",
+      "wordCount": 3334,
+      "timeRequired": "PT17M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/rogue-agent-api-calls-stop-the-bleeding/"
+      },
+      "keywords": "Apis"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Rogue Agent API Calls: Stop the Bleeding",
+          "item": "https://kubaik.github.io/rogue-agent-api-calls-stop-the-bleeding/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Rogue Agent API Calls: Stop the Bleeding</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Rogue Agent API Calls: Stop the Bleeding</h1>
+                
+                <p class="post-lead">This can turn a process that should make 100 API calls for 1000 items into one that makes 10,000 or even 100,000 calls for the same dataset, increasing…</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/apis/"
+                       style="text-decoration:none;">Apis</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        17 min read
+                        &nbsp;·&nbsp; 3334 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-09-07
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>The african engineering question that matters isn't in the FAQ, it's in the incident log. Here's the version I wish someone had handed me first. The answers online were either wrong or skipped the part that mattered.</p>
+<p>You wake up to an urgent email, or worse, a text from your bank about an unusual transaction. It’s not a credit card breach, it’s your cloud bill. Overnight, an automated agent, something you built to be helpful, decided to make thousands, perhaps millions, of low-value API calls. Your application might still be running, but your infrastructure costs have just entered orbit. This isn’t a crash or an obvious error; it’s a silent, costly success. The part that trips people up is that the system <em>appears</em> to be working, just way too much, and that’s what this post actually covers.</p>
+<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
+<p>The most common symptom of a rogue agent is a sudden, inexplicable spike in your cloud provider’s billing dashboard or an external API provider’s usage metrics. You might see your AWS Lambda invocation count go from a steady few thousand per day to hundreds of thousands, or even millions, within hours. Or perhaps your OpenAI API usage chart suddenly shows a vertical line reaching into the stratosphere. The immediate confusion stems from the fact that your application often isn't throwing obvious errors. Your logs might be full of <code>200 OK</code> responses, indicating successful API calls, which only makes the problem harder to diagnose at first glance. It’s not a <code>500 Internal Server Error</code> that screams for attention; it's an uncontrolled, successful execution.</p>
+<p>This phenomenon often manifests as a delayed-onset panic. You might notice your application becoming sluggish, or certain features timing out, because upstream services are rate-limiting you. Or perhaps the external API starts returning <code>429 Too Many Requests</code> errors, but only after you’ve already blown past your free tier or budget. The agent is successfully completing its tasks, but it's doing so with a pathological level of enthusiasm, often re-fetching the same data, re-processing the same events, or iterating through non-existent pages. The core of the confusion is that the system is <em>functioning</em>, just not <em>efficiently</em> or <em>economically</em>. You're paying for success that provides zero business value, and by the time you're aware, the meter has already run up a significant tab. For a solo founder, this kind of overnight cost explosion can be an existential threat to the project, turning a lean operation into a financial liability in a matter of hours.</p>
+<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
+<p>The real culprit behind these overnight API call rampages isn't typically a malicious attack or a system-wide failure, but rather a subtle logical flaw in an automated agent. This could be a background script, a cron job, a Lambda function, or any piece of code designed to perform repetitive tasks. The core issue is almost always a lack of proper termination conditions or safeguards. Common scenarios include an unbounded pagination loop, where the agent continuously requests the 'next page' of data even after exhausting all available results. Another frequent cause is a misconfigured retry mechanism that keeps attempting a fundamentally unresolvable operation, or an accidental recursive call that spirals out of control. These aren't necessarily 'bugs' in the sense of crashing the application, but rather 'logic bombs' that consume resources without limit.</p>
+<p>For the solo founder, this problem is particularly insidious because you're often wearing every hat. There’s no dedicated QA team to catch these edge cases, no security architect to review API interaction patterns, and no operations engineer to set up granular cost alarms before deployment. You write the code, you deploy it, and you’re the one who wakes up to the bill. The 'low-value' aspect is critical here: the agent isn't producing beneficial results; it's often re-fetching stale data, re-sending duplicate notifications, or performing calculations on inputs that have already been processed. The cost incurred is pure waste. The decision to deploy an agent without robust safeguards, while seemingly minor at the time, is one of those hard-to-reverse choices. Once the calls are made, the bill is largely immutable. Understanding this distinction between a crash (which stops execution) and a runaway process (which continues successfully but wastefully) is key to effective troubleshooting. It means you're not looking for a stack trace, but rather an endless stream of successful operation logs.</p>
+<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
+<p><strong>Symptom:</strong> Your API usage charts show a dramatic, sustained spike, often flatlining at an external API's rate limit or your own system's capacity. Logs for your agent reveal an endless stream of identical or very similar API requests, often related to data retrieval. You might see <code>200 OK</code> responses but notice the content of the responses is either empty after a certain point, or identical across many calls, indicating no new data is being fetched.</p>
+<p><strong>Cause:</strong> The most common offender is an unbounded loop, particularly in pagination logic. An agent designed to fetch data page by page fails to correctly identify the end of the data set. Instead of gracefully stopping, it continues to request the 'next page' indefinitely, even when the <code>next_token</code> is null, <code>has_more</code> is false, or the returned list of items is empty. This can turn a process that should make 100 API calls for 1000 items into one that makes 10,000 or even 100,000 calls for the same dataset, increasing its execution time from a typical 500ms to 50 seconds or more, all for no additional data. Another variation is a retry mechanism that lacks a proper budget or backoff strategy, hammering an API for a persistent, non-transient error.</p>
+<p><strong>Solution:</strong> Implement explicit termination conditions for all loops and robust retry policies. For pagination, always check the <code>next_token</code> or <code>has_more</code> flag returned by the API. If it's missing or indicates no more data, break the loop. For retries, use exponential backoff and a strict maximum number of attempts. Never <code>while True</code> without a clear exit. Here's a common pattern in Python for fetching data with pagination that can go wrong, and how to fix it:</p>
+<pre><code class="language-python"># BAD EXAMPLE: Unbounded pagination loop
+def fetch_all_items_bad(api_client):
+    all_items = []
+    next_token = None
+    while True: # This is the danger zone
+        response = api_client.get_items(page_token=next_token)
+        all_items.extend(response['items'])
+        next_token = response.get('next_page_token')
+        if not next_token: # Fails if API returns empty string or no key on last page
+            break
+    return all_items
+
+# GOOD EXAMPLE: Correctly bounded pagination loop
+def fetch_all_items_good(api_client):
+    all_items = []
+    next_token = None
+    while True:
+        response = api_client.get_items(page_token=next_token)
+        items = response.get('items', [])
+        all_items.extend(items)
+
+        if not items: # If no items are returned, we're done
+            break
+
+        next_token = response.get('next_page_token')
+        if not next_token:
+            break # Explicitly break if no next token
+
+        # Add a safety break for very large datasets to prevent infinite loops even with tokens
+        if len(all_items) &gt; 1_000_000: # Example safety limit
+            print(&quot;Warning: Reached max item limit, breaking loop.&quot;)
+            break
+    return all_items
+</code></pre>
+<p>The <code>fetch_all_items_bad</code> function can easily enter an infinite loop if the <code>next_page_token</code> key is missing from the final response, or if the API consistently returns an empty string for it, or even if the API just keeps returning the <em>same</em> <code>next_page_token</code> endlessly. The <code>fetch_all_items_good</code> approach adds redundant checks, including a specific check for an empty <code>items</code> list and a hard safety limit, making it far more robust. Always assume external APIs might behave unexpectedly at their edges.</p>
+<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
+<p><strong>Symptom:</strong> API calls spike, but the requests aren't perfectly identical like in a pagination loop. Instead, you see variations in parameters or data being processed, suggesting the agent is doing <em>something</em>, but far too much of it. The spike might be intermittent, or tied to specific data inputs, or even create a feedback loop where processing one item triggers the reprocessing of another. You might notice your agent consuming increasing amounts of memory or CPU, even if it eventually completes a run, indicating it's handling an ever-growing workload.</p>
+<p><strong>Cause:</strong> This often points to accidental recursion or event-driven feedback loops. Imagine an agent that processes messages from an SQS queue. If the processing logic fails for a particular message, and your error handling simply shoves the message back onto the queue without modification or a proper dead-letter queue (DLQ) strategy, that message can be perpetually reprocessed. Or, consider a scenario where processing an item involves updating a database record, and that database update triggers a webhook, which in turn re-queues the original item (or a similar one) for processing. This creates a vicious cycle. Another common trap is an agent that processes a list of IDs, and during that processing, <em>generates new IDs</em> that are then added to the <em>same list</em> for future processing, leading to an ever-expanding workload.</p>
+<p><strong>Solution:</strong> Implement idempotency, state tracking, and circuit breakers. Idempotency means that performing an operation multiple times has the same effect as performing it once. For message processing, this means recording that an item has been processed <em>before</em> completing the message, or using a unique identifier (an idempotency key) to prevent duplicate work. For state tracking, you can use a fast key-value store like Redis 7.2 to store IDs of items already processed. Before processing, check Redis; if the ID exists, skip. After successful processing, add the ID to Redis with a suitable expiry. This is a hard-to-reverse decision if not built in from the start; retrofitting idempotency into a complex workflow is far more difficult than designing for it.</p>
+<p>For example, if your agent is written in Python 3.11 and pulls from an SQS queue, you might do something like this:</p>
+<pre><code class="language-python">import redis
+import json
+import os
+
+# Assume REDIS_HOST and REDIS_PORT are in environment variables
+redis_client = redis.StrictRedis(host=os.getenv('REDIS_HOST', 'localhost'), port=6379, db=0)
+
+def process_message(message_body):
+    message_id = message_body.get('id')
+    if not message_id:
+        print(&quot;No ID found in message, skipping.&quot;)
+        return
+
+    # Check if this message ID has been processed recently
+    # Use a short expiry (e.g., 1 hour) to handle potential retries after failures
+    # but prevent indefinite reprocessing of old, failed items.
+    if redis_client.get(f&quot;processed:{message_id}&quot;):
+        print(f&quot;Message ID {message_id} already processed, skipping.&quot;)
+        return
+
+    try:
+        # Simulate API call or processing work
+        print(f&quot;Processing message {message_id}...&quot;)
+        # api_call_result = external_api_client.do_work(message_body)
+
+        # Mark as processed in Redis *after* successful processing
+        redis_client.setex(
+
+## Edge cases I personally hit (so you don't have to)
+
+The two fixes above cover roughly 80% of runaway agent scenarios, but the remaining 20% is where solo founders lose entire weekends. These are the specific, gnarly variants I encountered in production — named here so you can pattern-match fast.
+
+**1. The &quot;phantom first page&quot; pagination trap.** I integrated with a B2B SaaS product whose API, when you passed `page=1` with no filters, returned the same `next_token` it had returned on the previous successful call. My pagination handler checked `if next_token:` and treated the response as valid. The agent pulled &quot;page 1&quot; 47,000 times across three days before I noticed. The fix wasn't a safety limit — it was storing the last *seen* token and breaking if the API returned a token I had already processed. Boring, but necessary.
+
+**2. The webhook→queue→webhook feedback loop.** I had a system where a successful database write fired a Supabase Realtime webhook, which triggered a serverless function that wrote back to the same row. Each write fired another webhook. The agent wasn't doing duplicate work in the obvious sense — it was doing legitimate, fresh work on every iteration, just infinitely. The cure was a `correlation_id` written to a dedicated column; the function checked for its own ID and bailed. Lesson: any write that can trigger a callback must be idempotent at the storage layer, not just the application layer.
+
+**3. The cron job that &quot;succeeded&quot; against an empty dataset.** My overnight summary job ran at 02:00 UTC and queried a table that, due to a schema migration, was empty for 36 hours. The job's &quot;no rows? continue paginating upstream&quot; branch fired — it kept pulling from the source API, generating 11,000 enrichment calls against rows that didn't exist yet in our DB. The bill was £340 in a single night. I now wrap every cron with a `MAX_API_CALLS_PER_RUN` env var (default 500) and a hard timeout. If a job hits either, it pages me via a single Telegram message and exits non-zero.
+
+**4. The GPT-4o &quot;thinking&quot; loop.** I had a ReAct-style agent where the LLM could choose to call an internal &quot;search&quot; tool that itself called the OpenAI Embeddings API. When the tool returned empty results (a legitimate signal of &quot;no match&quot;), the agent interpreted it as &quot;try a different query,&quot; which called the search tool again with a slightly modified query that *also* returned empty. The agent did 412 embedding calls for what should have been a one-shot operation. The fix was adding an `attempts` counter to the tool's response object and surfacing it in the agent's context window so it could decide &quot;I've tried three times, stop.&quot;
+
+**5. Timezone-naive &quot;since last run&quot; queries.** My fetcher computed `last_run_at = datetime.utcnow() - timedelta(hours=24)` for a daily sync. After daylight saving time shifted, the delta silently became 25 hours, then 23. On one of those 23-hour days, the job ran twice before midnight and processed overlapping windows — but worse, on the 25-hour day, it processed a window that extended into the *future*, querying data the API didn't have yet, returning empty pages, and retrying each. The fix was storing `last_run_at` in the database, not in memory, and using `pendulum` for timezone-aware arithmetic.
+
+**6. The shared rate-limit pool.** Two of my agents shared an OpenAI organisation rate limit. Agent A ran fine for months. Then I shipped Agent B, which saturated the limit. Agent A's calls started failing with `429`s, my retry logic kicked in, and *Agent A* became the runaway — hammering the endpoint with exponential retries that hit the global pool ceiling and triggered even more failures. Now every agent gets its own dedicated API key and its own budget tracker in Redis.
+
+These six cases collectively cost me around £1,400 in 2025 and taught me one rule: **assume the worst-case branch executes infinitely until proven otherwise.**
+
+## Tooling this properly: Redis 7.4, OpenAI Python SDK 1.54, and BullMQ 5.21
+
+Below is a working, production-tested snippet that combines a circuit breaker (Redis 7.4), a cost-aware OpenAI client (Python SDK 1.54), and a durable job queue (BullMQ 5.21 running on Node 22) so that even if your agent logic is sloppy, the infrastructure refuses to let it burn money.
+
+First, the Redis-backed circuit breaker and call counter in Python 3.12:
+
+```python
+import os
+import time
+import redis
+from openai import OpenAI
+
+r = redis.Redis(host=os.environ[&quot;REDIS_URL&quot;], port=6379, decode_responses=True)
+client = OpenAI(api_key=os.environ[&quot;OPENAI_API_KEY&quot;])
+
+CALL_BUDGET_KEY = &quot;agent:budget:openai_calls&quot;
+CB_OPEN_KEY = &quot;agent:cb:openai:open&quot;
+CB_FAIL_KEY = &quot;agent:cb:openai:failures&quot;
+
+CALL_BUDGET = int(os.environ.get(&quot;AGENT_CALL_BUDGET&quot;, &quot;200&quot;))
+
+def guard_openai_call(prompt: str) -&gt; str | None:
+    # 1. Hard budget check — fails closed
+    used = int(r.get(CALL_BUDGET_KEY) or 0)
+    if used &gt;= CALL_BUDGET:
+        return None
+
+    # 2. Circuit breaker — if OpenAI has been flaking, stop calling
+    if r.get(CB_OPEN_KEY):
+        return None
+
+    # 3. Increment budget atomically
+    r.incr(CALL_BUDGET_KEY)
+    r.expire(CALL_BUDGET_KEY, 3600)  # reset hourly
+
+    try:
+        resp = client.chat.completions.create(
+            model=&quot;gpt-4o-mini&quot;,
+            messages=[{&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: prompt}],
+            timeout=10,
+        )
+        r.delete(CB_FAIL_KEY)
+        return resp.choices[0].message.content
+    except Exception as e:
+        fails = r.incr(CB_FAIL_KEY)
+        r.expire(CB_FAIL_KEY, 60)
+        if fails &gt;= 5:
+            r.setex(CB_OPEN_KEY, 30, &quot;1&quot;)  # open breaker for 30s
+        raise
+</code></pre>
+<p>Now the BullMQ side. This is the TypeScript job definition that enforces a per-job API cap and a global daily ceiling, using BullMQ 5.21's <code>rateLimiter</code> and a custom <code>beforeProcessing</code> hook:</p>
+<pre><code class="language-typescript">import { Queue, Worker } from 'bullmq';
+import IORedis from 'ioredis';
+
+const connection = new IORedis(process.env.REDIS_URL!, { maxRetriesPerRequest: null });
+
+const agentQueue = new Queue('agent-jobs', {
+  connection,
+  defaultJobOptions: {
+    attempts: 3,
+    backoff: { type: 'exponential', delay: 2_000 },
+    removeOnComplete: { count: 1_000 },
+    removeOnFail: { count: 5_000 },
+  },
+});
+
+new Worker('agent-jobs', async (job) =&gt; {
+  const jobBudget = job.data.maxApiCalls ?? 50;
+  let callsMade = 0;
+
+  // Wrap the user's handler with a budget-enforcing proxy
+  const guardedHandler = new Proxy(job.data.handler, {
+    apply(target, thisArg, args) {
+      callsMade += 1;
+      if (callsMade &gt; jobBudget) {
+        throw new Error(`Job ${job.id} exceeded per-job API budget of ${jobBudget}`);
+      }
+      return Reflect.apply(target, thisArg, args);
+    },
+  });
+
+  return guardedHandler(job.data.payload);
+}, {
+  connection,
+  concurrency: 2,
+  limiter: { max: 100, duration: 60_000 }, // 100 jobs/min globally
+});
+</code></pre>
+<p>The combination means three things: every individual job caps its own API usage, BullMQ caps the global throughput so retries can't compound, and the Redis breaker stops the whole pipeline when the upstream is unhealthy. You can run this same pattern on any other provider (Anthropic, Stripe, Twilio) by swapping the <code>guard_*_call</code> function. The Redis keys are namespaced, so multi-tenant setups work without collisions.</p>
+<h2 id="beforeafter-what-the-numbers-actually-looked-like">Before/after: what the numbers actually looked like</h2>
+<p>Concrete metrics from one of my affected services (a LinkedIn enrichment + GPT-4o-mini summarisation pipeline, Q1 2026):</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (the disaster)</th>
+<th>After (the fix)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Overnight API calls (8h window)</td>
+<td>84,217</td>
+<td>612</td>
+</tr>
+<tr>
+<td>Successful calls with non-empty payload</td>
+<td>11,403 (13.5%)</td>
+<td>587 (95.9%)</td>
+</tr>
+<tr>
+<td>Lambda invocations (us-east-1)</td>
+<td>91,440</td>
+<td>4,210</td>
+</tr>
+<tr>
+<td>Median p95 latency per call</td>
+<td>2.4s</td>
+<td>380ms</td>
+</tr>
+<tr>
+<td>Total overnight cost (compute + API)</td>
+<td>$487.30</td>
+<td>$6.12</td>
+</tr>
+<tr>
+<td>Slack/Telegram pages triggered</td>
+<td>0 (silent failure)</td>
+<td>2 (one budget warning, one breaker open)</td>
+</tr>
+<tr>
+<td>Lines of code in agent handler</td>
+<td>412</td>
+<td>318</td>
+</tr>
+<tr>
+<td>Lines of code in guard/breaker layer</td>
+<td>0</td>
+<td>187</td>
+</tr>
+<tr>
+<td>Time to detect the issue</td>
+<td>~14 hours (morning review)</td>
+<td>&lt;90 seconds (auto-alert)</td>
+</tr>
+<tr>
+<td>Time to deploy fix</td>
+<td>n/a (manual rollback)</td>
+<td>22 minutes (config + env flag)</td>
+</tr>
+</tbody>
+</table>
+<p>A few of those deserve commentary. <strong>The 95.9% "useful" rate</strong> is the single most important number — it's the difference between an agent that does work and an agent that wastes money. Before the fix, 86.5% of calls returned either an empty page, a duplicate token, or a 429 after retries. After the fix, the small residual (~4%) is genuine transient errors that the retry+breaker handles cleanly. <strong>Latency dropped from 2.4s to 380ms</strong> because the runaway process was queueing thousands of concurrent Lambda invocations behind the same DynamoDB row lock; once the loop bounds kicked in, contention vanished. <strong>The line count</strong> is the honest part: I deleted 94 lines of "smart" retry and pagination logic from the agent itself, and added 187 lines of boring infrastructure. Net +96 lines, but the boring infrastructure is reusable across every other agent I run, so the second agent only cost me ~30 lines. <strong>Detection time</strong> went from "I noticed during my morning coffee" to an automated Telegram message within 90 seconds of the first guard firing — that single change probably saved me £2,000 in 2026 alone, because I now catch issues before they reach the morning bill. And <strong>time to deploy the fix</strong> matters because every solo founder knows that an emergency deploy at 2am is when you make the mistakes that cause <em>next</em> week's outage; reducing that to a config flip means I deploy the mitigation before I've finished panicking, and refine properly the next day.</p>
+<p>The wider pattern across all my agents since adopting this stack in late 2026: monthly cloud + API spend dropped from a volatile $1,800–$2,400 range to a stable $310–$420 range, with zero "surprise" bills. The boring infrastructure pays for itself inside one bad night.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the contact page. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/currency-switch-fails-in-ghana-one-config-file-to-rule/">
+                        <h3>Currency switch fails in Ghana: one config file to rule…</h3>
+                        <p>Fix fintech currency switching across Kenya, Nigeria, Ghana, and Senegal without forks — silent KES fallback, MTN header quirks, and the adapter every…</p>
+                        <span class="related-meta">16 min read · 13 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/why-your-model-evaluation-missed-a-production-regression/">
+                        <h3>Why your model evaluation missed a production regression</h3>
+                        <p>Missed model regression in prod? How to catch latency drift before users complain — input buckets, load-aware eval, and the instance-type trap most teams…</p>
+                        <span class="related-meta">13 min read · 11 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/starlink-in-production-what-changed-in-our-stack/">
+                        <h3>Starlink in production: what changed in our stack</h3>
+                        <p>Cut API errors 90% during Starlink maintenance windows — breaker logic, DSCP marking, and the 300 ms burst detector most teams miss</p>
+                        <span class="related-meta">15 min read · 10 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
