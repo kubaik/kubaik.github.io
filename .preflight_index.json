@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-07T03:38:32.482561",
+  "built_at": "2026-09-07T08:09:05.009812",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5035,6 +5035,11 @@
       "slug": "ai-experimentation-guardrails-not-gates",
       "title": "AI Experimentation: Guardrails, Not Gates",
       "summary": "The tutorials all show the happy path. Every selfservice tooling writeup I found assumed I'd already made the mistake it was warning about. Here's the fuller picture, with the tradeoffs left in. The situation (what we were trying to solve) By 2026, every product team wanted a slice of AI. From conte"
+    },
+    {
+      "slug": "offline-agents-local-first-sync-patterns",
+      "title": "Offline Agents: Local-First Sync Patterns",
+      "summary": "After reviewing enough code that touches offlinecapable agent, the same failure pattern keeps showing up. Here's the version I wish someone had handed me first. The failure is quiet — no errors, just wrong answers. Why I wrote this (the problem I kept hitting) Working with teams serving European use"
     }
   ]
 }
