@@ -975,9 +975,9 @@ def _derive_hashtags_from_keywords(
 _OPENROUTER_FALLBACK_MODELS = [
     "minimax/minimax-m3:free",
     "nvidia/nemotron-3-ultra-550b-a55b:free",
-    "thinkingmachines/inkling:free",
-    "google/gemma-4-31b-it:free",
     "nvidia/nemotron-3-super-120b-a12b:free",
+    "google/gemma-4-31b-it:free",
+    "nvidia/nemotron-nano-9b-v2:free",
 ]
 
 # Model-id substrings that disqualify a "free" catalog entry from being used
@@ -986,10 +986,13 @@ _OPENROUTER_FALLBACK_MODELS = [
 # our prompts.
 _OPENROUTER_FREE_MODEL_EXCLUDE_SUBSTRINGS = (
     "safety", "safeguard", "guard", "moderat", "-mt", "content-safety",
+    # thinkingmachines/inkling(-small) return 403 "only available on
+    # agentic harnesses" for plain chat-completion calls like ours.
+    "thinkingmachines",
 )
 
 _NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
-_NVIDIA_MODEL = "meta/llama-3.3-70b-instruct"
+_NVIDIA_MODEL = "meta/llama-3.1-70b-instruct"
 
 _CF_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
 
@@ -2736,7 +2739,7 @@ class BlogSystem:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.groq_key}",
                    "Content-Type": "application/json"}
-        data = {"model": "llama-3.3-70b-versatile", "messages": messages,
+        data = {"model": "openai/gpt-oss-120b", "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7}
         waits = [2, 5, 10]
         for attempt in range(1, 3):
@@ -2910,7 +2913,7 @@ class BlogSystem:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.cerebras_key}",
                    "Content-Type": "application/json"}
-        data = {"model": "qwen-3-235b-a22b-instruct-2507",
+        data = {"model": "gpt-oss-120b",
                 "messages": messages, "max_tokens": max_tokens, "temperature": 0.7}
         waits = [2, 5, 10]
         for attempt in range(1, 3):
@@ -2957,7 +2960,7 @@ class BlogSystem:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.nvidia_key}",
                    "Content-Type": "application/json"}
-        data = {"model": "meta/llama-3.3-70b-instruct", "messages": messages,
+        data = {"model": "meta/llama-3.1-70b-instruct", "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
         waits = [2, 5, 10]
         for attempt in range(1, 3):
