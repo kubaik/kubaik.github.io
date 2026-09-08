@@ -141,5 +141,8 @@
   "How we detect prompt injection attempts that look like normal user behavior",
   "Building reliable multi-agent systems without the orchestration tax most frameworks impose",
   "Secrets management for teams that now have 40+ LLM integrations",
-  "The MCP server security mistake that could have exposed internal tools"
+  "The MCP server security mistake that could have exposed internal tools",
+  "On-device and edge agents in 2026: when they finally beat cloud round-trips for African users",
+  "Why we moved some vector workloads back to dedicated ANN after trying everything in Postgres",
+  "How we run code reviews and architecture decisions when significant portions of the system are agent-orchestrated"
 ]
