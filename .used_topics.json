@@ -137,5 +137,9 @@
   "How we recovered after an agent made thousands of low-value API calls overnight",
   "How AI changed what 'senior engineer' actually means in 2026 hiring rubrics",
   "Agentic workflows that survive network partitions: the patterns that actually work in Africa",
-  "How we measure 'agent reliability' in a way that correlates with user trust"
+  "How we measure 'agent reliability' in a way that correlates with user trust",
+  "How we detect prompt injection attempts that look like normal user behavior",
+  "Building reliable multi-agent systems without the orchestration tax most frameworks impose",
+  "Secrets management for teams that now have 40+ LLM integrations",
+  "The MCP server security mistake that could have exposed internal tools"
 ]
