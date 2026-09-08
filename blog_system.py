@@ -2742,7 +2742,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                    async with s.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=45)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -2834,8 +2834,9 @@ class BlogSystem:
 
         # Cap attempts per generation call — we don't want one blog post to
         # burn through the entire free catalog if OpenRouter is having a
-        # bad day.
-        for model_id in candidate_models[:6]:
+        # bad day. Kept small (3 models x 2 attempts x 45s timeout = ~4.5min
+        # worst case) so a bad OpenRouter day can't eat the whole job budget.
+        for model_id in candidate_models[:3]:
             data = {
                 "model": model_id,
                 "messages": messages,
@@ -2846,7 +2847,7 @@ class BlogSystem:
             for attempt in range(1, 3):
                 try:
                     async with aiohttp.ClientSession() as s:
-                        async with s.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                        async with s.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=45)) as r:
                             if r.status == 200:
                                 result = await r.json()
                                 if "error" in result:
@@ -2915,7 +2916,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://api.cerebras.ai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                    async with s.post("https://api.cerebras.ai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=45)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -2940,7 +2941,7 @@ class BlogSystem:
                 "max_tokens": max_tokens, "temperature": 0.7}
         try:
             async with aiohttp.ClientSession() as s:
-                async with s.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                async with s.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=45)) as r:
                     if r.status == 200:
                         result = await r.json()
                         if "error" in result:
@@ -2962,7 +2963,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=120)) as r:
+                    async with s.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=60)) as r:
                         if r.status == 200:
                             return (await r.json())["choices"][0]["message"]["content"]
                         if r.status in RETRYABLE and attempt < 2:
@@ -3022,7 +3023,7 @@ class BlogSystem:
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post(api_url, json=payload, timeout=aiohttp.ClientTimeout(total=120)) as r:
+                    async with s.post(api_url, json=payload, timeout=aiohttp.ClientTimeout(total=60)) as r:
                         if r.status == 200:
                             result = await r.json()
                             try:
