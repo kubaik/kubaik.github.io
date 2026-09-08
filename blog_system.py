@@ -966,18 +966,6 @@ def _derive_hashtags_from_keywords(
 # Provider constants
 # ─────────────────────────────────────────────────────────────────
 
-_MISTRAL_API_URL = "https://api.mistral.ai/v1/chat/completions"
-_MISTRAL_FREE_TIER_DELAY = 1.2
-# Minimum gap enforced between consecutive Mistral calls (free tier is
-# rate-limited to roughly 1 request/second; spacing calls out avoids
-# tripping the limiter in the first place instead of only reacting to it
-# with the 429 retry/backoff below).
-_MISTRAL_MIN_CALL_INTERVAL = 2.0
-# Backoff schedule used specifically when Mistral returns 429. Longer and
-# with more attempts than the generic RETRYABLE backoff, since free-tier
-# rate limits reset on the order of tens of seconds, not milliseconds.
-_MISTRAL_429_BACKOFF = [10, 20, 40]
-
 # OpenRouter's free-model catalog churns fast — models we hardcode here can
 # be retired again within days (see _fetch_openrouter_free_models, which is
 # tried first and makes this list mostly a last-resort). Only used if the
@@ -2225,10 +2213,6 @@ class BlogSystem:
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
         self.cerebras_key = os.getenv("CEREBRAS_API_KEY")
         self.mistral_key = os.getenv("MISTRAL_API_KEY")
-        # Mistral's free tier enforces a low requests-per-second cap; track
-        # the last call time so we can space out requests and avoid tripping
-        # it (see _call_mistral's _MISTRAL_MIN_INTERVAL wait below).
-        self._last_mistral_call_time = 0.0
         self.nvidia_key = os.getenv("NVIDIA_API_KEY")
         self.gemini_key = os.getenv("GEMINI_API_KEY")
 
@@ -2948,62 +2932,25 @@ class BlogSystem:
         raise Exception("Cerebras unavailable.")
 
     async def _call_mistral(self, messages: List[Dict], max_tokens: int) -> str:
-        RETRYABLE = {503, 500, 502, 504}
-        headers = {"Authorization": f"Bearer {self.mistral_key}",
+        if not self.openrouter_key:
+            raise EnvironmentError("OPENROUTER_API_KEY not set")
+        headers = {"Authorization": f"Bearer {self.openrouter_key}",
                    "Content-Type": "application/json"}
-        data = {"model": "mistral-small-latest", "messages": messages,
+        data = {"model": "openrouter/free", "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7}
-        waits = [_MISTRAL_FREE_TIER_DELAY, 5, 10]
-
-        # Enforce a minimum gap since the last Mistral call so bursts of
-        # back-to-back generations (e.g. multiple posts in one "auto" run)
-        # don't immediately hit the free-tier rate limit.
-        elapsed = asyncio.get_event_loop().time() - self._last_mistral_call_time
-        if elapsed < _MISTRAL_MIN_CALL_INTERVAL:
-            await asyncio.sleep(_MISTRAL_MIN_CALL_INTERVAL - elapsed)
-
-        max_attempts = max(3, len(_MISTRAL_429_BACKOFF) + 1)
-        for attempt in range(1, max_attempts + 1):
-            self._last_mistral_call_time = asyncio.get_event_loop().time()
-            try:
-                async with aiohttp.ClientSession() as s:
-                    async with s.post(_MISTRAL_API_URL, headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
-                        if r.status == 200:
-                            return (await r.json())["choices"][0]["message"]["content"]
-
-                        if r.status == 429:
-                            # Respect the server's own cooldown if it gives
-                            # one; otherwise fall back to the fixed backoff
-                            # schedule. Free-tier 429s need real wait time
-                            # (seconds-to-tens-of-seconds), not the
-                            # sub-2-second generic RETRYABLE delay.
-                            if attempt <= len(_MISTRAL_429_BACKOFF):
-                                retry_after = r.headers.get("Retry-After")
-                                try:
-                                    delay = float(retry_after) if retry_after else _MISTRAL_429_BACKOFF[attempt - 1]
-                                except ValueError:
-                                    delay = _MISTRAL_429_BACKOFF[attempt - 1]
-                                print(
-                                    f"Mistral rate limited (429), waiting "
-                                    f"{delay:.0f}s before retry "
-                                    f"{attempt}/{max_attempts}..."
-                                )
-                                await asyncio.sleep(delay)
-                                continue
-                            raise Exception(f"Mistral 429: {await r.text()}")
-
-                        if r.status in RETRYABLE and attempt < max_attempts:
-                            await asyncio.sleep(waits[min(attempt - 1, len(waits) - 1)])
-                            continue
-                        raise Exception(f"Mistral {r.status}: {await r.text()}")
-            except aiohttp.ClientConnectionError as e:
-                if attempt < max_attempts:
-                    await asyncio.sleep(waits[min(attempt - 1, len(waits) - 1)])
-                else:
-                    raise Exception(f"Mistral connection failed: {e}")
-            except asyncio.TimeoutError:
-                raise Exception("Mistral timed out.")
-        raise Exception("Mistral unavailable.")
+        try:
+            async with aiohttp.ClientSession() as s:
+                async with s.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=90)) as r:
+                    if r.status == 200:
+                        result = await r.json()
+                        if "error" in result:
+                            raise Exception(f"Mistral error: {result['error']}")
+                        return result["choices"][0]["message"]["content"]
+                    raise Exception(f"Mistral {r.status}: {await r.text()}")
+        except aiohttp.ClientConnectionError as e:
+            raise Exception(f"Mistral connection failed: {e}")
+        except asyncio.TimeoutError:
+            raise Exception("Mistral timed out.")
 
     async def _call_nvidia(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
