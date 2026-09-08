@@ -144,5 +144,6 @@
   "The MCP server security mistake that could have exposed internal tools",
   "On-device and edge agents in 2026: when they finally beat cloud round-trips for African users",
   "Why we moved some vector workloads back to dedicated ANN after trying everything in Postgres",
-  "How we run code reviews and architecture decisions when significant portions of the system are agent-orchestrated"
+  "How we run code reviews and architecture decisions when significant portions of the system are agent-orchestrated",
+  "How we measure platform team impact without vanity metrics"
 ]

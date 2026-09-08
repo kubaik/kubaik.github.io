@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-07T12:11:42.009569",
+  "built_at": "2026-09-08T16:17:20.078166",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5050,6 +5050,11 @@
       "slug": "rogue-agent-api-calls-stop-the-bleeding",
       "title": "Rogue Agent API Calls: Stop the Bleeding",
       "summary": "The african engineering question that matters isn't in the FAQ, it's in the incident log. Here's the version I wish someone had handed me first. The answers online were either wrong or skipped the part that mattered. You wake up to an urgent email, or worse, a text from your bank about an unusual tr"
+    },
+    {
+      "slug": "why-platform-metrics-lie",
+      "title": "Why platform metrics lie",
+      "summary": "The measure platform advice that circulates internally rarely matches what's in the public docs. Here's the fuller picture, with the tradeoffs left in. The default configuration is fine right up until it isn't. When a platform team tries to prove its value, the first thing executives ask for is a sh"
     }
   ]
 }
