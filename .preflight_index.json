@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-08T16:17:20.078166",
+  "built_at": "2026-09-09T08:21:07.950937",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5055,6 +5055,11 @@
       "slug": "why-platform-metrics-lie",
       "title": "Why platform metrics lie",
       "summary": "The measure platform advice that circulates internally rarely matches what's in the public docs. Here's the fuller picture, with the tradeoffs left in. The default configuration is fine right up until it isn't. When a platform team tries to prove its value, the first thing executives ask for is a sh"
+    },
+    {
+      "slug": "why-do-production-agents-still-need-humans",
+      "title": "Why do production agents still need humans?",
+      "summary": "production agents broke in a way our monitoring wasn't even watching for. The tutorials all show the happy path. This is the writeup with the mistakes left in, not edited out. Production agents—whether they are LLM‑driven chat bots, automated fraud detectors, or inventory‑balancing micro‑services—ar"
     }
   ]
 }

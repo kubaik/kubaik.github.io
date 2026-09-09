@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 09 Sep 2026 11:11:55 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 09 Sep 2026 08:21:14 +0000</lastBuildDate>
+    <item>
+      <title>Why do production agents still need humans?</title>
+      <link>https://kubaik.github.io/why-do-production-agents-still-need-humans/</link>
+      <description>Human-in-the-loop for production agents cuts 30% failure risk and avoids costly retries on flaky networks and regional payment rails.</description>
+      <pubDate>Wed, 09 Sep 2026 08:21:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-do-production-agents-still-need-humans/</guid>
+    </item>
     <item>
       <title>Why platform metrics lie</title>
       <link>https://kubaik.github.io/why-platform-metrics-lie/</link>
@@ -138,13 +145,6 @@
       <description>Serverless AI workloads turn expensive past 500 req/s — connection churn, cold starts, and retry storms drive the bill.</description>
       <pubDate>Sat, 29 Aug 2026 18:24:44 +0000</pubDate>
       <guid>https://kubaik.github.io/serverless-ai-costs-explode-past-10kmo/</guid>
-    </item>
-    <item>
-      <title>Prevent ownership drift when velocity explodes</title>
-      <link>https://kubaik.github.io/prevent-ownership-drift-when-velocity-explodes/</link>
-      <description>Fix ownership drift after velocity spikes — set explicit cache ownership, guardrails, and error budgets to prevent 75% fewer war rooms at 12k RPS.</description>
-      <pubDate>Sat, 29 Aug 2026 16:28:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/prevent-ownership-drift-when-velocity-explodes/</guid>
     </item>
   </channel>
 </rss>

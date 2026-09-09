@@ -161,5 +161,6 @@
   "Building audit trails for agent decisions that satisfy compliance and debugging needs",
   "Running local LLM agents for sensitive fintech workflows without sending data abroad",
   "Context engineering for long-running agents: patterns that reduce hallucinations",
-  "How Cursor, Claude Code, and Windsurf are changing daily engineering workflows"
+  "How Cursor, Claude Code, and Windsurf are changing daily engineering workflows",
+  "Why production agents still need human-in-the-loop boundaries in 2026"
 ]
