@@ -151,5 +151,10 @@
   "How we version and rollback production agents without breaking downstream systems",
   "The postmortems we now write differently because an agent made the wrong decision",
   "The skills that still command premium remote rates when AI can do the obvious parts",
-  "Building postmortems that actually improve things when half the code is AI-generated"
+  "Building postmortems that actually improve things when half the code is AI-generated",
+  "How we detect when an agent is 'working' but producing low-quality or harmful output",
+  "The compensation negotiation playbook that works when the market knows AI increased your output",
+  "How we built a reliable multi-agent research system without LangGraph (and why we might switch back)",
+  "Why most AI wrapper businesses died in 2026 and what the survivors have in common",
+  "Why we chose HTMX + Islands over full client frameworks for our new internal tools"
 ]
