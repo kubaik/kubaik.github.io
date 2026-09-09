@@ -194,7 +194,7 @@ def inject_internal_links(post, posts_index: List[Dict], base_path: str = "") ->
             continue
         if "\x00CODE" in para:
             continue
-        if "](http" in para or "](/":  # already has links
+        if "](http" in para or "](/" in para:  # already has links
             continue
 
         for score, candidate in top_candidates:
