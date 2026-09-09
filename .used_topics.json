@@ -156,5 +156,10 @@
   "The compensation negotiation playbook that works when the market knows AI increased your output",
   "How we built a reliable multi-agent research system without LangGraph (and why we might switch back)",
   "Why most AI wrapper businesses died in 2026 and what the survivors have in common",
-  "Why we chose HTMX + Islands over full client frameworks for our new internal tools"
+  "Why we chose HTMX + Islands over full client frameworks for our new internal tools",
+  "Security models for MCP servers in regulated environments: a fintech-relevant comparison",
+  "Building audit trails for agent decisions that satisfy compliance and debugging needs",
+  "Running local LLM agents for sensitive fintech workflows without sending data abroad",
+  "Context engineering for long-running agents: patterns that reduce hallucinations",
+  "How Cursor, Claude Code, and Windsurf are changing daily engineering workflows"
 ]
