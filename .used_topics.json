@@ -163,5 +163,8 @@
   "Context engineering for long-running agents: patterns that reduce hallucinations",
   "How Cursor, Claude Code, and Windsurf are changing daily engineering workflows",
   "Why production agents still need human-in-the-loop boundaries in 2026",
-  "Why traditional cloud cost tools struggle once agents make autonomous scaling decisions"
+  "Why traditional cloud cost tools struggle once agents make autonomous scaling decisions",
+  "Productionizing 'computer use' style agents without granting dangerous permissions",
+  "Database and state management patterns that hold up under heavy agent usage",
+  "Detecting when an agent is 'working' but producing low-quality or harmful output"
 ]
