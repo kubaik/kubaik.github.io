@@ -4561,112 +4561,126 @@ def create_sample_config(config_path: str = "config.yaml"):
 
     config = existing  # alias for clarity below
     # ── content_topics: append only topics not already present ───────────────
+    # FIX (2026 anecdote-loop incident): this list previously used first-person
+    # "How we/I built/cut/detected..." phrasing throughout. That framing
+    # actively fights _flag_fabricated_anecdotes(), which rejects sentences
+    # opening with "I ", "I've", "I built", "I found", etc. — a topic titled
+    # "How we cut our AI inference bill 68%" all but instructs the model to
+    # narrate a specific, unverifiable first-person case study, so it
+    # regularly failed all MAX_GENERATION_ATTEMPTS and aborted with no post
+    # saved. Every entry below is now phrased in the third-person / comparative
+    # / instructional register ("X vs Y", "why X breaks", "the tradeoffs of
+    # X") that actually satisfies both _flag_fabricated_anecdotes() and
+    # _reject_if_fabricated_citation(), since it asks for documented,
+    # explainable mechanics rather than a personal narrative. Keep new
+    # entries in this style — if a topic can't be answered without inventing
+    # a specific incident, it doesn't belong here.
     NEW_TOPICS = [
         # ── TRENDING & EMERGING (Late 2026 / 2027) ────────────────────────────────
-        "MCP in production: the hidden operational costs and security gotchas nobody talks about",
-        "Why MCP won the agent-tool protocol war — and what it actually changed in how we build agents",
-        "Multi-agent orchestration patterns that survive production (supervisor, swarm, debate, pipeline)",
-        "The failure modes we only saw after running multi-agent systems at scale for 6 months",
-        "How we built a reliable multi-agent research system without LangGraph (and why we might switch back)",
-        "Agent-to-Agent (A2A) vs MCP: when to use each in 2026 production systems",
-        "Context engineering for long-running agents: the patterns that actually reduce hallucinations",
-        "Why most production agents still need strong human-in-the-loop boundaries in 2026",
-        "LLMOps in 2026: the evaluation and monitoring stack that replaced our old RAG dashboards",
-        "How newest models (Claude 4 / GPT-5 era) changed our agent architecture decisions",
+        "MCP in production: the operational costs and security gotchas most teams miss",
+        "Why MCP became the dominant agent-tool protocol, and what it changed in agent design",
+        "Multi-agent orchestration patterns compared: supervisor, swarm, debate, pipeline",
+        "Common failure modes of multi-agent systems at scale, and why they're hard to catch early",
+        "Building a multi-agent research system without LangGraph: a framework comparison",
+        "Agent-to-Agent (A2A) vs MCP: when to use each in a 2026 production system",
+        "Context engineering for long-running agents: patterns that reduce hallucinations",
+        "Why production agents still need human-in-the-loop boundaries in 2026",
+        "LLMOps in 2026: the evaluation and monitoring stack replacing old RAG dashboards",
+        "How the Claude 4 / GPT-5 model generation changed agent architecture decisions",
         "Agentic FinOps: tracking and optimizing the real cost of autonomous AI workflows",
-        "The token economics problem nobody solved yet for always-on agent teams",
+        "The token economics problem nobody has fully solved for always-on agent fleets",
         "Building evaluation harnesses for multi-agent systems that developers actually trust",
-        "Memory systems for production agents: what worked and what leaked context over time",
-        "How we detect and contain agent drift before it creates bad user experiences",
-        "Security model for MCP servers in regulated environments (fintech case study)",
-        "The governance layer we added after our first agent caused a compliance incident",
-        "On-device and edge agents in 2026: when they finally beat cloud round-trips for African users",
-        "How we run local LLM agents for sensitive fintech workflows without sending data abroad",
+        "Memory systems for production agents: approaches compared, and where each leaks context",
+        "Detecting and containing agent drift before it degrades the user experience",
+        "Security models for MCP servers in regulated environments: a fintech-relevant comparison",
+        "The governance layer agent systems need after a compliance-relevant failure",
+        "On-device and edge agents in 2026: when they beat cloud round-trips for African users",
+        "Running local LLM agents for sensitive fintech workflows without sending data abroad",
         "World models and physical AI: what they mean for backend engineers in 2026",
-        "Purpose-built AI platforms vs general platforms: the decision we had to make in 2026",
-        "Agentic cost management: using AI to optimize our own AI spend (and where it backfired)",
+        "Purpose-built AI platforms vs general platforms: a 2026 decision framework",
+        "Using AI to optimize AI spend: agentic cost management, and where it can backfire",
 
         # ── AI Engineering & LLMOps (Advanced) ────────────────────────────────────
-        "How we version and rollback production agents without breaking downstream systems",
-        "The hidden latency tax of multi-agent handoffs and how we reduced it by 60%",
+        "Versioning and rolling back production agents without breaking downstream systems",
+        "The hidden latency tax of multi-agent handoffs, and where it can be reduced",
         "Building durable agent workflows that survive restarts, model changes, and network blips",
-        "Why structured logging + model pinning became non-negotiable once we had 15+ agents in production",
-        "Evaluation-driven development for agents: the loop that replaced vibe testing",
-        "How we measure 'agent reliability' in a way that correlates with user trust",
-        "The tool-use patterns that scaled and the ones that created thundering herd problems",
+        "Why structured logging and model pinning become non-negotiable past 15+ agents in production",
+        "Evaluation-driven development for agents: replacing vibe testing with a real loop",
+        "Measuring 'agent reliability' in a way that correlates with user trust",
+        "Tool-use patterns that scale, and the ones that create thundering-herd problems",
         "Context window management strategies for agents that run for hours or days",
-        "How we added circuit breakers and bulkheads to agent systems after the first cascade failure",
-        "Productionizing 'computer use' style agents without giving them dangerous permissions",
+        "Circuit breakers and bulkheads for agent systems: designing for cascade failure",
+        "Productionizing 'computer use' style agents without granting dangerous permissions",
 
         # ── Platform Engineering for AI Teams ─────────────────────────────────────
-        "How our Internal Developer Platform evolved to support AI feature development in 2026",
-        "The platform abstractions that made agent development 3x faster for our teams",
-        "Why most platform teams are still building for 2024 developer workflows in an agentic world",
+        "How Internal Developer Platforms are evolving to support AI feature development",
+        "The platform abstractions that make agent development faster for engineering teams",
+        "Why platform teams building for 2024 developer workflows struggle in an agentic world",
         "Building golden paths for AI features that don't become maintenance nightmares",
-        "How we measure platform value when half the 'code' is now prompts and agent graphs",
-        "The self-service AI tooling layer we built so product teams could experiment safely",
+        "Measuring platform value when a growing share of 'code' is prompts and agent graphs",
+        "Self-service AI tooling layers that let product teams experiment safely",
 
         # ── Cost, FinOps & Infrastructure for AI Workloads ────────────────────────
-        "How we cut our monthly AI spend by 55% after implementing real token attribution",
-        "Agentic FinOps: the dashboards and alerts that finally made AI costs visible to leadership",
-        "The real cost of always-on vs on-demand agents in a Nairobi-based SaaS",
-        "How we use spot instances + smart retry logic for non-critical agent workloads",
-        "FinOps patterns that work when your biggest variable cost is now LLM tokens, not EC2",
-        "Why traditional cloud cost tools failed us once agents started making autonomous decisions",
-        "Building unit economics for AI features that product and finance teams can both understand",
+        "Token attribution models that make AI spend visible to product and finance teams",
+        "Agentic FinOps: the dashboards and alerts that make AI costs visible to leadership",
+        "The real cost of always-on vs on-demand agents for a Nairobi-based SaaS",
+        "Spot instances with smart retry logic for non-critical agent workloads: a cost comparison",
+        "FinOps patterns for teams whose biggest variable cost is now LLM tokens, not EC2",
+        "Why traditional cloud cost tools struggle once agents make autonomous scaling decisions",
+        "Building unit economics for AI features that product and finance teams can both read",
 
         # ── Observability, Reliability & Incident Response for Agents ─────────────
-        "What traditional observability missed when we introduced our first production agents",
-        "How we built agent-specific tracing that actually helped during incidents",
-        "The postmortems we now write differently because an agent made the wrong decision",
-        "Building SLOs for agentic features that don't just measure latency and error rate",
-        "How we detect when an agent is 'working' but producing low-quality or harmful output",
-        "The on-call changes we made after agents started creating incidents at 2am",
+        "What traditional observability misses when agents enter production",
+        "Agent-specific tracing patterns that actually help during incidents",
+        "Writing postmortems that account for agent-made decisions, not just human error",
+        "Building SLOs for agentic features beyond latency and error rate",
+        "Detecting when an agent is 'working' but producing low-quality or harmful output",
+        "On-call process changes teams make once agents can create incidents unattended",
 
         # ── Security, Governance & Compliance for AI Systems ──────────────────────
-        "How we implemented least-privilege access for agents that need to call 30+ tools",
-        "The prompt and tool injection attacks we actually saw in production (and how we blocked them)",
-        "Building audit trails for agent decisions that satisfy both compliance and debugging needs",
-        "Why agent identity and authentication became harder than we expected in 2026",
-        "How we do red-teaming for internal agents without slowing down development velocity",
+        "Least-privilege access models for agents that call 30+ internal tools",
+        "Prompt and tool injection attacks documented in production, and how teams block them",
+        "Building audit trails for agent decisions that satisfy compliance and debugging needs",
+        "Why agent identity and authentication is harder than traditional service auth",
+        "Red-teaming internal agents without slowing down development velocity",
         "Data residency and sovereign AI constraints for African fintech using global models",
 
         # ── Africa & Emerging Market Specific AI Engineering ──────────────────────
-        "How we built low-latency agent features for users on intermittent 3G/4G connections in East Africa",
-        "The cost and reliability tradeoffs of running agents for users who pay in local mobile money",
-        "Building AI features that work across M-Pesa, Paystack, and Flutterwave failure modes",
+        "Low-latency agent features for users on intermittent 3G/4G connections in East Africa",
+        "The cost and reliability tradeoffs of running agents for users paying via mobile money",
+        "Building AI features that tolerate M-Pesa, Paystack, and Flutterwave failure modes",
         "Why global AI best practices often fail in markets with high mobile data costs and latency",
-        "How Nairobi teams are using local + cloud model routing to stay competitive on cost and speed",
+        "Local plus cloud model routing: how teams stay competitive on cost and speed",
         "Offline-capable agent workflows for field agents and last-mile operations in Africa",
-        "The regulatory and compliance realities of deploying autonomous agents in African fintech in 2026",
+        "The regulatory and compliance realities of deploying autonomous agents in African fintech",
 
         # ── Frontend, DX & Tooling in the Agent Era ───────────────────────────────
-        "How Cursor, Claude Code, and Windsurf actually changed our daily engineering workflow in 2026",
-        "The developer experience gaps that still exist when building and debugging multi-agent systems",
-        "How we test and review agent-generated code and workflows at team scale",
+        "How Cursor, Claude Code, and Windsurf are changing daily engineering workflows",
+        "The developer experience gaps that remain in building and debugging multi-agent systems",
+        "Testing and reviewing agent-generated code and workflows at team scale",
         "Building internal tools that help non-AI engineers work safely with agents",
 
         # ── Career, Leadership & Team Dynamics in AI-Accelerated Teams ────────────
-        "How the role of 'AI Engineer' evolved in our team throughout 2026",
-        "The skills that became table stakes for senior engineers once agents were in production",
-        "How we run code reviews and architecture decisions when significant portions of the system are agent-orchestrated",
+        "How the 'AI Engineer' role has evolved through 2026",
+        "The skills that became table stakes for senior engineers once agents reached production",
+        "Code review and architecture decisions when large parts of a system are agent-orchestrated",
         "Building healthy team norms around AI tool usage without creating two classes of engineers",
-        "The leadership challenges of managing teams where output velocity increased dramatically but ownership became blurrier",
+        "Leadership challenges when output velocity rises faster than ownership clarity",
         "How African engineering teams are adapting hiring and onboarding for the agentic era",
 
         # ── Broader System Design & Architecture Trends ───────────────────────────
         "Event-driven vs agent-driven architectures: when each wins in 2026",
-        "How durable execution platforms (Temporal, Inngest, etc.) changed our agent workflow thinking",
-        "The database and state management patterns that survived heavy agent usage",
-        "Designing systems that can gracefully degrade when an upstream agent or model is slow or wrong",
-        "How we version and evolve agent capabilities without breaking existing users and integrations",
+        "How durable execution platforms (Temporal, Inngest, and peers) are reshaping agent workflows",
+        "Database and state management patterns that hold up under heavy agent usage",
+        "Designing systems that gracefully degrade when an upstream agent or model is slow or wrong",
+        "Versioning and evolving agent capabilities without breaking existing integrations",
 
         # ── Hard Lessons & Troubleshooting ────────────────────────────────────────
-        "The production incident caused by an agent that followed instructions too literally",
-        "Why our beautiful multi-agent research system quietly degraded over three months",
-        "The MCP server security mistake that could have exposed internal tools",
-        "How we recovered after an agent made thousands of low-value API calls overnight",
-        "The evaluation gap that let a subtle model behavior change slip into production",
+        "What happens when an agent follows instructions too literally: documented failure patterns",
+        "Why multi-agent research systems quietly degrade over time, and how to catch it",
+        "Common MCP server security mistakes that expose internal tools",
+        "Recovering from an agent that made thousands of low-value API calls overnight",
+        "Evaluation gaps that let subtle model behavior changes slip into production",
     ]
 
     existing_topics: list = config.get("content_topics") or []
