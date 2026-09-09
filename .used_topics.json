@@ -166,5 +166,10 @@
   "Why traditional cloud cost tools struggle once agents make autonomous scaling decisions",
   "Productionizing 'computer use' style agents without granting dangerous permissions",
   "Database and state management patterns that hold up under heavy agent usage",
-  "Detecting when an agent is 'working' but producing low-quality or harmful output"
+  "Detecting when an agent is 'working' but producing low-quality or harmful output",
+  "How Internal Developer Platforms are evolving to support AI feature development",
+  "What happens when an agent follows instructions too literally: documented failure patterns",
+  "The hidden latency tax of multi-agent handoffs, and where it can be reduced",
+  "Using AI to optimize AI spend: agentic cost management, and where it can backfire",
+  "Detecting and containing agent drift before it degrades the user experience"
 ]

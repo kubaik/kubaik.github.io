@@ -458,6 +458,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/agent-drift-why-it-hurts-ux/</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/agent-drift-why-it-hurts-ux.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/agent-drift-why-prod-breaks-without-human-checkpoints/</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>weekly</changefreq>

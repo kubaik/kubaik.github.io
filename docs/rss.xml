@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 09 Sep 2026 16:02:23 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 09 Sep 2026 16:16:06 +0000</lastBuildDate>
+    <item>
+      <title>Agent drift: why it hurts UX</title>
+      <link>https://kubaik.github.io/agent-drift-why-it-hurts-ux/</link>
+      <description>Detect agent drift before it ruins UX — spot version mismatches, latency spikes, and the silent config drift most teams miss.</description>
+      <pubDate>Wed, 09 Sep 2026 16:15:54 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-drift-why-it-hurts-ux/</guid>
+    </item>
     <item>
       <title>Cost tools fail when agents scale autonomously</title>
       <link>https://kubaik.github.io/cost-tools-fail-when-agents-scale-autonomously/</link>
@@ -138,13 +145,6 @@
       <description>Cut Nairobi SaaS agent costs 40% with Redis Streams and BullMQ 5.12.0 — hybrid on-demand avoids cold starts, power cuts, and Redis eviction storms that…</description>
       <pubDate>Sun, 30 Aug 2026 12:51:34 +0000</pubDate>
       <guid>https://kubaik.github.io/always-on-agents-cost-more-than-you-think/</guid>
-    </item>
-    <item>
-      <title>LLM risks underestimated in OWASP Top 10</title>
-      <link>https://kubaik.github.io/llm-risks-underestimated-in-owasp-top-10/</link>
-      <description>OWASP’s LLM risks miss the real threats in production — tool proliferation, context pollution, and output side effects cost teams real money and uptime.</description>
-      <pubDate>Sun, 30 Aug 2026 09:56:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-risks-underestimated-in-owasp-top-10/</guid>
     </item>
   </channel>
 </rss>

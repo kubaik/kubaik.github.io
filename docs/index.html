@@ -212,6 +212,32 @@
             
             <div id="posts-container" class="post-grid">
                 
+                <a class="post-card" href="/agent-drift-why-it-hurts-ux/"
+                   data-title="Agent drift: why it hurts UX"
+                   data-description="Detect agent drift before it ruins UX — spot version mismatches, latency spikes, and the silent config drift most teams miss."
+                   data-tags="AgentDrift,Ux,DetectAgentDrift,ContainAgentDrift">
+                    <h3>Agent drift: why it hurts UX</h3>
+                    <p class="post-excerpt">Detect agent drift before it ruins UX — spot version mismatches, latency spikes, and the silent config drift most teams miss.</p>
+                    
+                    <p class="post-reading-time">15 min read</p>
+                    
+                    
+                    <div class="tags">
+                        
+                        <span class="tag"
+                              >Ux</span>
+                        
+                        <span class="tag"
+                              data-tag-href="/tag/agentdrift/">AgentDrift</span>
+                        
+                        <span class="tag"
+                              >DetectAgentDrift</span>
+                        
+                    </div>
+                    
+                </a>
+                
+                
                 <a class="post-card" href="/cost-tools-fail-when-agents-scale-autonomously/"
                    data-title="Cost tools fail when agents scale autonomously"
                    data-description="Traditional cloud cost tools report hours after autonomous agents make scaling decisions — the attribution gap that turns $12,000 surprise bills into…"
@@ -263,6 +289,13 @@
                     
                 </a>
                 
+                <div class="ad-middle" style="grid-column:1/-1;"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
                 
                 <a class="post-card" href="/why-platform-metrics-lie/"
                    data-title="Why platform metrics lie"
@@ -288,13 +321,6 @@
                     </div>
                     
                 </a>
-                
-                <div class="ad-middle" style="grid-column:1/-1;"><ins class="adsbygoogle"
-     style="display:block;min-height:250px"
-     data-ad-client="ca-pub-4477679588953789"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
                 
                 
                 <a class="post-card" href="/rogue-agent-api-calls-stop-the-bleeding/"
@@ -539,7 +565,7 @@
                               data-tag-href="/tag/ai/">Ai</span>
                         
                         <span class="tag"
-                              >AgentDrift</span>
+                              data-tag-href="/tag/agentdrift/">AgentDrift</span>
                         
                         <span class="tag"
                               data-tag-href="/tag/productionagents/">ProductionAgents</span>
@@ -783,32 +809,6 @@
                 </a>
                 
                 
-                <a class="post-card" href="/agent-tracing-when-logs-lie-and-metrics-mislead/"
-                   data-title="Agent tracing: when logs lie and metrics mislead"
-                   data-description="Agent tracing: when logs lie and metrics mislead — cut incident debug time 40% by fixing Jaeger traces that show zero-duration gaps for async workers…"
-                   data-tags="AsyncTracing,AgentTracing,Opentelemetry,JaegerAsyncGaps,CeleryTracing,Sqstracing">
-                    <h3>Agent tracing: when logs lie and metrics mislead</h3>
-                    <p class="post-excerpt">Agent tracing: when logs lie and metrics mislead — cut incident debug time 40% by fixing Jaeger traces that show zero-duration gaps for async workers…</p>
-                    
-                    <p class="post-reading-time">11 min read</p>
-                    
-                    
-                    <div class="tags">
-                        
-                        <span class="tag"
-                              >Sqstracing</span>
-                        
-                        <span class="tag"
-                              >AsyncTracing</span>
-                        
-                        <span class="tag"
-                              >AgentTracing</span>
-                        
-                    </div>
-                    
-                </a>
-                
-                
             </div>
 
             <div id="loading-spinner" class="loading-spinner" style="display:none;">
@@ -872,7 +872,7 @@
         // client-side from posts.json go through the same qualifying-tag
         // check as server-rendered cards, so a JS-built card can never
         // link to a tag page that doesn't exist either.
-        var QUALIFYING_TAG_SLUGS = ["4gwebperformance", "african", "africatech", "agent", "agentic", "agenticai", "agenticcoding", "agenticcodingtools", "agenticfinops", "agentpermissions", "ai", "aiagentpostmortem", "aialerttriage", "aicodebaseonboarding", "aicodegeneration", "aicodereview", "aicodesecurity", "aicodingtools", "aicostoptimization", "aifeaturemaintenance", "aigeneratedcode", "aiincidentresponse", "ainativeapplications", "aiobservability", "aiobservabilitytools", "aipairprogramming", "aiportfoliofilter", "aiproofcompensation", "airolloutstrategy", "aistatemanagement", "aistaticanalysis", "aiuitools", "aiwrapper2026", "aiwrapperbusiness", "androiddev", "apachekafka", "apidesign2026", "apiratelimiting", "apis", "apisecurity2026", "artificialintelligence", "asyncpython", "automated", "awscostoptimization", "backend", "backstage", "buildinpublic", "cache", "cacheownership", "cachestampede", "careeradvice", "cicd", "circuitbreaker", "claudecode", "claudecode2026", "cloudcomputing", "cloudcosttools", "cloudflareworkersai", "codeownershipmodel", "codereviewautomation", "coding", "compensation", "connection", "connectionpooltuning", "constraint", "containers", "context", "cursorai", "cybersecurity", "data", "database", "dataengineering", "developer", "developerproductivity", "developertoolpricing", "devops", "devtoolpricing", "devwellbeing", "distributed", "docker", "edgecaching2026", "edgenativebackend", "engineer", "engineering", "entrepreneurship", "ethicalhacking", "evaluation", "false", "fastapi", "fastapi0.109", "featureflags2026", "featureflagsai", "featureflagservice", "finetuning", "fintech", "fintechapidesign", "flutter", "flutterwave", "freelancing", "generativeai", "gethired", "github", "githubactionsai", "golang", "graphql", "hybrid", "iac", "idempotency", "idempotencykeys", "immutableauditlogs", "incremental", "indiehacker", "infosec", "internal", "javascript", "js", "jsonmodelimitations", "k8s", "kubernetes", "lambda", "langgraph", "latency", "legacy", "llm", "llmcostoptimization", "llmdriftdetection", "llmevaluationmetrics", "llmincidentresponse", "llmlatency", "llmlatencyp95", "llmobservability", "llmrouting", "llmsecuritychecklist", "llmsecurityrisks", "llmstructuredoutput", "llmwrapper", "longrunningagents", "machinelearning", "microservices", "mobile", "mobiledev", "model", "mpesaintegration", "multi", "multiagent", "nairobi", "nairobitechstack", "negotiatesalary2026", "nextjs", "offlinefirstapps", "oncallautomation", "opensource", "opentelemetry", "owaspllmtop", "p99latency", "passiveincome", "payment", "performance", "pgvector0.7", "platform", "platformengineering", "pocketbase", "postgres", "postgres17features", "postgresql", "pricingexperiments", "productionagents", "programming", "prometheus", "prompt", "promptengineering", "promptinjection", "pydantic", "python", "python3", "python3.11async", "python311async", "rag", "ragpipelineproduction", "reactjs", "reactnative", "redis", "redis7.2", "redis7.2caching", "redis72", "rediscircuitbreaker", "regulatory", "remotesalarynegotiation", "retrylogic", "runbookautomation", "rustlang", "saas", "saasniche2026", "saccosoftwarekenya", "salary", "serverless", "softwareengineering", "solo", "sql", "startups", "stopapiabuse", "structured", "systemdesign", "tech", "techcareer", "techjobs", "technicaldebt2026", "technology", "terraform", "timescaledb", "tokenizer", "toolcallingpatterns", "typescript", "usagebasedpricing", "vector", "vectordb", "vectorsearch", "vibecoding", "webdev", "webhook", "webhookretries2026", "zero", "zerotrust"];
+        var QUALIFYING_TAG_SLUGS = ["4gwebperformance", "african", "africatech", "agent", "agentdrift", "agentic", "agenticai", "agenticcoding", "agenticcodingtools", "agenticfinops", "agentpermissions", "ai", "aiagentpostmortem", "aialerttriage", "aicodebaseonboarding", "aicodegeneration", "aicodereview", "aicodesecurity", "aicodingtools", "aicostoptimization", "aifeaturemaintenance", "aigeneratedcode", "aiincidentresponse", "ainativeapplications", "aiobservability", "aiobservabilitytools", "aipairprogramming", "aiportfoliofilter", "aiproofcompensation", "airolloutstrategy", "aistatemanagement", "aistaticanalysis", "aiuitools", "aiwrapper2026", "aiwrapperbusiness", "androiddev", "apachekafka", "apidesign2026", "apiratelimiting", "apis", "apisecurity2026", "artificialintelligence", "asyncpython", "automated", "awscostoptimization", "backend", "backstage", "buildinpublic", "cache", "cacheownership", "cachestampede", "careeradvice", "cicd", "circuitbreaker", "claudecode", "claudecode2026", "cloudcomputing", "cloudcosttools", "cloudflareworkersai", "codeownershipmodel", "codereviewautomation", "coding", "compensation", "connection", "connectionpooltuning", "constraint", "containers", "context", "cursorai", "cybersecurity", "data", "database", "dataengineering", "developer", "developerproductivity", "developertoolpricing", "devops", "devtoolpricing", "devwellbeing", "distributed", "docker", "edgecaching2026", "edgenativebackend", "engineer", "engineering", "entrepreneurship", "ethicalhacking", "evaluation", "false", "fastapi", "fastapi0.109", "featureflags2026", "featureflagsai", "featureflagservice", "finetuning", "fintech", "fintechapidesign", "flutter", "flutterwave", "freelancing", "generativeai", "gethired", "github", "githubactionsai", "golang", "graphql", "hybrid", "iac", "idempotency", "idempotencykeys", "immutableauditlogs", "incremental", "indiehacker", "infosec", "internal", "javascript", "js", "jsonmodelimitations", "k8s", "kubernetes", "lambda", "langgraph", "latency", "legacy", "llm", "llmcostoptimization", "llmdriftdetection", "llmevaluationmetrics", "llmincidentresponse", "llmlatency", "llmlatencyp95", "llmobservability", "llmrouting", "llmsecuritychecklist", "llmsecurityrisks", "llmstructuredoutput", "llmwrapper", "longrunningagents", "machinelearning", "microservices", "mobile", "mobiledev", "model", "mpesaintegration", "multi", "multiagent", "nairobi", "nairobitechstack", "negotiatesalary2026", "nextjs", "offlinefirstapps", "oncallautomation", "opensource", "opentelemetry", "owaspllmtop", "p99latency", "passiveincome", "payment", "performance", "pgvector0.7", "platform", "platformengineering", "pocketbase", "postgres", "postgres17features", "postgresql", "pricingexperiments", "productionagents", "programming", "prometheus", "prompt", "promptengineering", "promptinjection", "pydantic", "python", "python3", "python3.11async", "python311async", "rag", "ragpipelineproduction", "reactjs", "reactnative", "redis", "redis7.2", "redis7.2caching", "redis72", "rediscircuitbreaker", "regulatory", "remotesalarynegotiation", "retrylogic", "runbookautomation", "rustlang", "saas", "saasniche2026", "saccosoftwarekenya", "salary", "serverless", "softwareengineering", "solo", "sql", "startups", "stopapiabuse", "structured", "systemdesign", "tech", "techcareer", "techjobs", "technicaldebt2026", "technology", "terraform", "timescaledb", "tokenizer", "toolcallingpatterns", "typescript", "usagebasedpricing", "vector", "vectordb", "vectorsearch", "vibecoding", "webdev", "webhook", "webhookretries2026", "zero", "zerotrust"];
 
         var fullPosts   = [];
         var loadedCount = postsContainer
