@@ -879,7 +879,63 @@ def build_single_tweet_v2(post, base_url: str, hook_style: str = "auto") -> str:
         )
 
     if len(tweet) > 280:
-        tweet = _trim_to_budget(tweet, 277)
+        # BUG (found in production, 2026): this used to be
+        #   tweet = _trim_to_budget(tweet, 277)
+        # applied to the *entire* rendered string. _trim_to_budget has no
+        # concept of where {url} sits inside that string — when it can't
+        # find a punctuation boundary to cut on, it falls back to the last
+        # space and appends "…". Because {url} lives in the closer, near
+        # the very end, this could (and did) chop the tweet off right
+        # after the CTA line ("Full walkthrough 👇…") and silently eat the
+        # URL, shipping a tweet with no link back to the post.
+        #
+        # This stage only runs when even the teaser-stripped skeleton is
+        # still over 280 (e.g. long hashtags or a long topic phrase), so
+        # it's rare — but when it fires, the URL must be the last thing
+        # that gets sacrificed, not the first.
+        #
+        # FIX: drop tags here too (bait is already gone by this point) and
+        # re-render with url locked in, instead of blind-trimming the
+        # finished string.
+        minimal_skeleton = render_variant_template(
+            template,
+            seed=post.slug,
+            topic=topic,
+            teaser="",
+            url=post_url,
+            tags="",
+            bait="",
+            metric=metric,
+            pain=pain,
+            fin=fin,
+            time=time_val,
+        )
+        if len(minimal_skeleton) <= 280:
+            tweet = minimal_skeleton
+        else:
+            # Pathological case: even bare topic + url doesn't fit (e.g. an
+            # unusually long slug/url). Trim the topic phrase itself — a
+            # truncated headline is fine, a dead link is not.
+            overflow = len(minimal_skeleton) - 280
+            trimmed_topic = _trim_to_budget(
+                topic, max(10, len(topic) - overflow))
+            tweet = render_variant_template(
+                template,
+                seed=post.slug,
+                topic=trimmed_topic,
+                teaser="",
+                url=post_url,
+                tags="",
+                bait="",
+                metric=metric,
+                pain=pain,
+                fin=fin,
+                time=time_val,
+            )
+            if len(tweet) > 280:
+                # Absolute last resort, guaranteed to fit unless post_url
+                # itself is longer than 280 chars.
+                tweet = f"Full walkthrough 👇\n{post_url}"
 
     # Persist alternation state so the next run picks a different family
     engine.record(idx)
