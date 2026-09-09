@@ -145,5 +145,11 @@
   "On-device and edge agents in 2026: when they finally beat cloud round-trips for African users",
   "Why we moved some vector workloads back to dedicated ANN after trying everything in Postgres",
   "How we run code reviews and architecture decisions when significant portions of the system are agent-orchestrated",
-  "How we measure platform team impact without vanity metrics"
+  "How we measure platform team impact without vanity metrics",
+  "Agent-to-Agent (A2A) vs MCP: when to use each in 2026 production systems",
+  "The on-call changes we made after agents started creating incidents at 2am",
+  "How we version and rollback production agents without breaking downstream systems",
+  "The postmortems we now write differently because an agent made the wrong decision",
+  "The skills that still command premium remote rates when AI can do the obvious parts",
+  "Building postmortems that actually improve things when half the code is AI-generated"
 ]
