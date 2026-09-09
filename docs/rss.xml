@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 09 Sep 2026 15:48:30 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 09 Sep 2026 12:52:03 +0000</lastBuildDate>
+    <item>
+      <title>Cost tools fail when agents scale autonomously</title>
+      <link>https://kubaik.github.io/cost-tools-fail-when-agents-scale-autonomously/</link>
+      <description>Traditional cloud cost tools report hours after autonomous agents make scaling decisions — the attribution gap that turns $12,000 surprise bills into…</description>
+      <pubDate>Wed, 09 Sep 2026 12:51:51 +0000</pubDate>
+      <guid>https://kubaik.github.io/cost-tools-fail-when-agents-scale-autonomously/</guid>
+    </item>
     <item>
       <title>Why do production agents still need humans?</title>
       <link>https://kubaik.github.io/why-do-production-agents-still-need-humans/</link>
@@ -138,13 +145,6 @@
       <description>OWASP’s LLM risks miss the real threats in production — tool proliferation, context pollution, and output side effects cost teams real money and uptime.</description>
       <pubDate>Sun, 30 Aug 2026 09:56:07 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-risks-underestimated-in-owasp-top-10/</guid>
-    </item>
-    <item>
-      <title>Serverless AI costs explode past $10k/mo</title>
-      <link>https://kubaik.github.io/serverless-ai-costs-explode-past-10kmo/</link>
-      <description>Serverless AI workloads turn expensive past 500 req/s — connection churn, cold starts, and retry storms drive the bill.</description>
-      <pubDate>Sat, 29 Aug 2026 18:24:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/serverless-ai-costs-explode-past-10kmo/</guid>
     </item>
   </channel>
 </rss>

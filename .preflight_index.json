@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-09T08:21:07.950937",
+  "built_at": "2026-09-09T12:51:55.186269",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5060,6 +5060,11 @@
       "slug": "why-do-production-agents-still-need-humans",
       "title": "Why do production agents still need humans?",
       "summary": "production agents broke in a way our monitoring wasn't even watching for. The tutorials all show the happy path. This is the writeup with the mistakes left in, not edited out. Production agents—whether they are LLM‑driven chat bots, automated fraud detectors, or inventory‑balancing micro‑services—ar"
+    },
+    {
+      "slug": "cost-tools-fail-when-agents-scale-autonomously",
+      "title": "Cost tools fail when agents scale autonomously",
+      "summary": "traditional cloud looks simple until it has to survive real traffic. The dashboards look healthy right up until the incident starts. Here's the root cause, not just the symptom. Why this comparison matters right now Autonomous scaling agents are no longer experimental. Teams running Kubernetes clust"
     }
   ]
 }
