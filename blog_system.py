@@ -4943,8 +4943,19 @@ if __name__ == "__main__":
                         for warning in sim_result.warnings:
                             print(f"  ⚠️  Similarity: {warning}")
                 except Exception as sim_err:
-                    print(
-                        f"  ⚠️  SimilarityGuard failed (non-fatal): {sim_err}")
+                    # FAIL CLOSED — similarity_guard.py's own docstring is
+                    # explicit that a raised exception here MUST be treated
+                    # as a hard failure, not swallowed as non-fatal. This is
+                    # the one real duplicate-content gate in the pipeline;
+                    # silently publishing when it errors defeats its purpose.
+                    print(f"\n🛑  SimilarityGuard raised an error — aborting "
+                          f"per its fail-closed contract: {sim_err}")
+                    import traceback
+                    traceback.print_exc()
+                    print("   This post has been aborted. No file was written.")
+                    print("   Investigate the SimilarityGuard/.similarity_index.json "
+                          "error above before re-running.")
+                    sys.exit(1)
 
                 if not dup_detected:
                     inject_personal_intro(blog_post, topic)
