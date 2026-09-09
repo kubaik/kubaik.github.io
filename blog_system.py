@@ -2673,6 +2673,53 @@ class BlogSystem:
     # API FALLBACK CHAIN
     # ─────────────────────────────────────────────────────────────
 
+    @staticmethod
+    def _extract_message_content(payload: dict, provider_name: str) -> str:
+        """
+        Pull choices[0].message.content out of a chat-completion response and
+        raise if it's missing, null, or empty.
+
+        FIX (bundle-stage crash, found in review): every provider call site
+        used to `return result["choices"][0]["message"]["content"]` directly.
+        Several free/rotating models (seen on OpenRouter's "openrouter/free"
+        alias in particular) return HTTP 200 with a well-formed JSON body but
+        `message.content` set to null — e.g. a reasoning model that spent the
+        whole token budget on hidden reasoning tokens and finish_reason
+        "length" before emitting any visible content, or a safety/refusal
+        response with empty content. Because that was a *successful* HTTP
+        call, `_call_api_with_fallback` logged "responded successfully" and
+        returned None straight through — the crash then surfaced two frames
+        away as `raw.strip()` -> 'NoneType' object has no attribute 'strip'',
+        with no indication of which provider or why. That looked identical
+        to (and was misdiagnosed as) a content_topics/hallucination problem,
+        but it's unrelated: it fires regardless of topic, on any call whose
+        provider happens to return null content that attempt.
+        Raising here instead means _call_api_with_fallback's existing
+        try/except treats it as a normal provider failure and falls back to
+        the next provider/model, same as a timeout or 5xx.
+        """
+        try:
+            content = payload["choices"][0]["message"]["content"]
+        except (KeyError, IndexError, TypeError) as e:
+            raise Exception(
+                f"{provider_name} returned a malformed response "
+                f"(no choices[0].message.content): {e}. Raw keys: "
+                f"{list(payload.keys()) if isinstance(payload, dict) else type(payload)}"
+            )
+        if not content or not content.strip():
+            finish_reason = None
+            try:
+                finish_reason = payload["choices"][0].get("finish_reason")
+            except Exception:
+                pass
+            raise Exception(
+                f"{provider_name} returned empty/null message content "
+                f"(finish_reason={finish_reason!r}) — likely a reasoning "
+                f"model that exhausted max_tokens before emitting visible "
+                f"output, or a safety refusal with no content."
+            )
+        return content
+
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 6000) -> str:
         providers = []
 
@@ -2747,7 +2794,7 @@ class BlogSystem:
                 async with aiohttp.ClientSession() as s:
                     async with s.post("https://api.groq.com/openai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=45)) as r:
                         if r.status == 200:
-                            return (await r.json())["choices"][0]["message"]["content"]
+                            return self._extract_message_content(await r.json(), "Groq")
                         if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
                             continue
@@ -2856,7 +2903,8 @@ class BlogSystem:
                                 if "error" in result:
                                     raise Exception(
                                         f"OpenRouter error: {result['error']}")
-                                return result["choices"][0]["message"]["content"]
+                                return self._extract_message_content(
+                                    result, f"OpenRouter ({model_id})")
 
                             body = await r.text()
 
@@ -2921,7 +2969,7 @@ class BlogSystem:
                 async with aiohttp.ClientSession() as s:
                     async with s.post("https://api.cerebras.ai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=45)) as r:
                         if r.status == 200:
-                            return (await r.json())["choices"][0]["message"]["content"]
+                            return self._extract_message_content(await r.json(), "Cerebras")
                         if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
                             continue
@@ -2949,7 +2997,7 @@ class BlogSystem:
                         result = await r.json()
                         if "error" in result:
                             raise Exception(f"Mistral error: {result['error']}")
-                        return result["choices"][0]["message"]["content"]
+                        return self._extract_message_content(result, "Mistral")
                     raise Exception(f"Mistral {r.status}: {await r.text()}")
         except aiohttp.ClientConnectionError as e:
             raise Exception(f"Mistral connection failed: {e}")
@@ -2968,7 +3016,7 @@ class BlogSystem:
                 async with aiohttp.ClientSession() as s:
                     async with s.post("https://integrate.api.nvidia.com/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=60)) as r:
                         if r.status == 200:
-                            return (await r.json())["choices"][0]["message"]["content"]
+                            return self._extract_message_content(await r.json(), "NVIDIA NIM")
                         if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
                             continue
@@ -3000,7 +3048,14 @@ class BlogSystem:
                      "system" else "USER: ") + m.get("content", "")
                     for m in messages
                 ]
-                return model.generate_content("\n\n".join(parts) + "\n\nASSISTANT:").text
+                text = model.generate_content(
+                    "\n\n".join(parts) + "\n\nASSISTANT:").text
+                if not text or not text.strip():
+                    raise Exception(
+                        "Gemini returned empty content (likely a safety "
+                        "block or max_output_tokens hit before any text)."
+                    )
+                return text
             return await asyncio.get_event_loop().run_in_executor(None, _sdk_call)
         except ImportError:
             pass
@@ -3030,9 +3085,15 @@ class BlogSystem:
                         if r.status == 200:
                             result = await r.json()
                             try:
-                                return result["candidates"][0]["content"]["parts"][0]["text"]
+                                text = result["candidates"][0]["content"]["parts"][0]["text"]
                             except (KeyError, IndexError) as e:
                                 raise Exception(f"Gemini parse error: {e}")
+                            if not text or not text.strip():
+                                raise Exception(
+                                    "Gemini REST returned empty text "
+                                    f"(finish reason: {result['candidates'][0].get('finishReason')})."
+                                )
+                            return text
                         if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
                             continue
