@@ -179,5 +179,7 @@
   "How the Claude 4 / GPT-5 model generation changed agent architecture decisions",
   "Measuring platform value when a growing share of 'code' is prompts and agent graphs",
   "How durable execution platforms (Temporal, Inngest, and peers) are reshaping agent workflows",
-  "Tool-use patterns that scale, and the ones that create thundering-herd problems"
+  "Tool-use patterns that scale, and the ones that create thundering-herd problems",
+  "Building a multi-agent research system without LangGraph: a framework comparison",
+  "Purpose-built AI platforms vs general platforms: a 2026 decision framework"
 ]

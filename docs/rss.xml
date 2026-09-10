@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 10 Sep 2026 08:30:04 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 10 Sep 2026 16:09:03 +0000</lastBuildDate>
+    <item>
+      <title>Purpose-Built AI vs General Platforms</title>
+      <link>https://kubaik.github.io/purpose-built-ai-vs-general-platforms/</link>
+      <description>Choose the right AI platform for your project in 2026. Compare purpose-built and general-purpose platforms to find the best fit for your needs.</description>
+      <pubDate>Thu, 10 Sep 2026 16:08:55 +0000</pubDate>
+      <guid>https://kubaik.github.io/purpose-built-ai-vs-general-platforms/</guid>
+    </item>
     <item>
       <title>Thundering Herd: The Hidden Scaling Trap</title>
       <link>https://kubaik.github.io/thundering-herd-the-hidden-scaling-trap/</link>
@@ -138,13 +145,6 @@
       <description>AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.</description>
       <pubDate>Mon, 31 Aug 2026 12:27:42 +0000</pubDate>
       <guid>https://kubaik.github.io/commit-ownership-in-ai-pair-coding/</guid>
-    </item>
-    <item>
-      <title>Ship evals before your agent ships</title>
-      <link>https://kubaik.github.io/ship-evals-before-your-agent-ships/</link>
-      <description>Replace vibe testing with agent evals — the loop that catches downstream 502s, prompt drift, and idempotency failures before users do.</description>
-      <pubDate>Mon, 31 Aug 2026 04:32:07 +0000</pubDate>
-      <guid>https://kubaik.github.io/ship-evals-before-your-agent-ships/</guid>
     </item>
   </channel>
 </rss>

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-10T08:29:59.317179",
+  "built_at": "2026-09-10T16:08:57.022903",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5080,6 +5080,11 @@
       "slug": "thundering-herd-the-hidden-scaling-trap",
       "title": "Thundering Herd: The Hidden Scaling Trap",
       "summary": "I changed my mind about durable execution after watching it fail somewhere it wasn't supposed to. Here's the version I wish someone had handed me first. Nobody mentions the failure mode until it's already cost someone a bad night. The one-paragraph version (read this first) The thundering herd probl"
+    },
+    {
+      "slug": "purpose-built-ai-vs-general-platforms",
+      "title": "Purpose-Built AI vs General Platforms",
+      "summary": "After reviewing enough code that touches purposebuilt platforms, the same failure pattern keeps showing up. This walks through the fix and the reasoning, not just the patch. It's the kind of thing that works for months, then all at once doesn't. Why this comparison matters right now In 2026, the AI "
     }
   ]
 }
