@@ -2615,6 +2615,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/llm-agents-why-monoliths-win/</loc>
+    <lastmod>2026-09-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/llm-agents-why-monoliths-win.svg</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/llm-apps-owasp-risks-you-missed/</loc>
     <lastmod>2026-06-16</lastmod>
     <changefreq>weekly</changefreq>

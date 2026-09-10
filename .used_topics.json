@@ -174,5 +174,7 @@
   "Detecting and containing agent drift before it degrades the user experience",
   "Agent-to-Agent (A2A) vs MCP: when to use each in a 2026 production system",
   "The real cost of always-on vs on-demand agents for a Nairobi-based SaaS",
-  "Common MCP server security mistakes that expose internal tools"
+  "Common MCP server security mistakes that expose internal tools",
+  "Red-teaming internal agents without slowing down development velocity",
+  "How the Claude 4 / GPT-5 model generation changed agent architecture decisions"
 ]

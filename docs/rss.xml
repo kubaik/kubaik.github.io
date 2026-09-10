@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 10 Sep 2026 03:52:48 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 10 Sep 2026 08:01:50 +0000</lastBuildDate>
+    <item>
+      <title>LLM agents: why monoliths win</title>
+      <link>https://kubaik.github.io/llm-agents-why-monoliths-win/</link>
+      <description>LLM agent architecture – avoid hidden latency spikes; learn how monolithic designs cut p99 by 45 ms and keep GDPR audit trails intact.</description>
+      <pubDate>Thu, 10 Sep 2026 08:01:41 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-agents-why-monoliths-win/</guid>
+    </item>
     <item>
       <title>Agent drift: why it hurts UX</title>
       <link>https://kubaik.github.io/agent-drift-why-it-hurts-ux/</link>
@@ -138,13 +145,6 @@
       <description>Spot instances cut AWS costs 69% for agent workloads in 2026 — but only if your retry logic doesn’t double the bill.</description>
       <pubDate>Sun, 30 Aug 2026 16:20:40 +0000</pubDate>
       <guid>https://kubaik.github.io/spot-instances-the-retry-logic-trap-90-miss/</guid>
-    </item>
-    <item>
-      <title>Always-on agents cost more than you think</title>
-      <link>https://kubaik.github.io/always-on-agents-cost-more-than-you-think/</link>
-      <description>Cut Nairobi SaaS agent costs 40% with Redis Streams and BullMQ 5.12.0 — hybrid on-demand avoids cold starts, power cuts, and Redis eviction storms that…</description>
-      <pubDate>Sun, 30 Aug 2026 12:51:34 +0000</pubDate>
-      <guid>https://kubaik.github.io/always-on-agents-cost-more-than-you-think/</guid>
     </item>
   </channel>
 </rss>

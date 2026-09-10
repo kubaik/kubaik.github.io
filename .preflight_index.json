@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-09T16:15:57.446551",
+  "built_at": "2026-09-10T08:01:44.235986",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5070,6 +5070,11 @@
       "slug": "agent-drift-why-it-hurts-ux",
       "title": "Agent drift: why it hurts UX",
       "summary": "I changed my mind about internal developer after watching it fail somewhere it wasn't supposed to. The gap between the demo and the incident report is where this actually lives. This post covers what comes after the happy path. When a fleet of background agents – telemetry collectors, security scann"
+    },
+    {
+      "slug": "llm-agents-why-monoliths-win",
+      "title": "LLM agents: why monoliths win",
+      "summary": "The redteaming internal advice that circulates internally rarely matches what's in the public docs. The default configuration is fine right up until it isn't. This covers the fix, the cost of not knowing sooner, and what we monitor now. When the Claude 4 and GPT‑5 models hit the market, the hype mac"
     }
   ]
 }
