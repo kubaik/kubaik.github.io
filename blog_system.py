@@ -992,8 +992,18 @@ _OPENROUTER_FREE_MODEL_EXCLUDE_SUBSTRINGS = (
 )
 
 _NVIDIA_API_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
-_NVIDIA_MODEL = "meta/llama-3.1-70b-instruct"
+_NVIDIA_MODEL = "meta/llama-3.3-70b-instruct"
 
+_GROQ_MODEL = "openai/gpt-oss-120b"
+_MISTRAL_MODEL = "mistral-small-latest"
+_GEMINI_MODEL = "gemini-2.5-flash"
+_HF_MODEL = "Qwen/Qwen2.5-72B-Instruct"
+_ZAI_MODEL = "glm-4.7-flash"
+_LLM7_MODEL = "default"
+
+# Cloudflare Workers AI is ping-only (10k neurons/day) — not in the
+# content-generation chain. Kept here so a future ping/health check can
+# reuse the same model id without hunting docs.
 _CF_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
 
 
@@ -2214,16 +2224,19 @@ class BlogSystem:
 
         self.groq_key = os.getenv("GROQ_API_KEY")
         self.openrouter_key = os.getenv("OPENROUTER_API_KEY")
-        self.cerebras_key = os.getenv("CEREBRAS_API_KEY")
         self.mistral_key = os.getenv("MISTRAL_API_KEY")
         self.nvidia_key = os.getenv("NVIDIA_API_KEY")
         self.gemini_key = os.getenv("GEMINI_API_KEY")
+        self.hf_token = os.getenv("HF_TOKEN")
+        self.zai_key = os.getenv("ZAI_API_KEY")
+        self.llm7_key = os.getenv("LLM7_API_KEY")  # optional; "unused" works
 
         self._log_key_status()
 
         self.api_key = (
-            self.groq_key or self.openrouter_key or self.cerebras_key
-            or self.mistral_key or self.nvidia_key or self.gemini_key
+            self.groq_key or self.openrouter_key or self.gemini_key
+            or self.hf_token or self.mistral_key or self.nvidia_key
+            or self.zai_key or self.llm7_key or "unused"
         )
 
         self.monetization = MonetizationManager(config)
@@ -2254,13 +2267,17 @@ class BlogSystem:
         print(
             f"  OpenRouter:     {'configured' if self.openrouter_key       else 'NOT SET'}")
         print(
-            f"  Cerebras:       {'configured' if self.cerebras_key         else 'NOT SET'}")
+            f"  Gemini:         {'configured' if self.gemini_key           else 'NOT SET'}")
+        print(
+            f"  Hugging Face:   {'configured' if self.hf_token             else 'NOT SET'}")
         print(
             f"  Mistral:        {'configured' if self.mistral_key          else 'NOT SET'}")
         print(
             f"  NVIDIA NIM:     {'configured' if self.nvidia_key           else 'NOT SET'}")
         print(
-            f"  Gemini:         {'configured' if self.gemini_key           else 'NOT SET'}")
+            f"  Z.AI / Zhipu:   {'configured' if self.zai_key              else 'NOT SET'}")
+        print(
+            f"  LLM7.io:        {'configured' if self.llm7_key             else 'anon (unused)'}")
         print("======================")
 
     # ─────────────────────────────────────────────────────────────
@@ -2699,14 +2716,24 @@ class BlogSystem:
         the next provider/model, same as a timeout or 5xx.
         """
         try:
-            content = payload["choices"][0]["message"]["content"]
+            message = payload["choices"][0]["message"]
+            content = message.get("content")
         except (KeyError, IndexError, TypeError) as e:
             raise Exception(
                 f"{provider_name} returned a malformed response "
                 f"(no choices[0].message.content): {e}. Raw keys: "
                 f"{list(payload.keys()) if isinstance(payload, dict) else type(payload)}"
             )
-        if not content or not content.strip():
+        if not content or not str(content).strip():
+            # GLM / DeepSeek-style reasoning models put the visible answer
+            # in reasoning_content when thinking burns the token budget.
+            reasoning = ""
+            try:
+                reasoning = message.get("reasoning_content") or ""
+            except Exception:
+                pass
+            if reasoning and str(reasoning).strip():
+                return str(reasoning)
             finish_reason = None
             try:
                 finish_reason = payload["choices"][0].get("finish_reason")
@@ -2723,25 +2750,32 @@ class BlogSystem:
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 6000) -> str:
         providers = []
 
-        if self.mistral_key:
-            providers.append(("Mistral",         self._call_mistral))
-        if self.openrouter_key:
-            providers.append(("OpenRouter",       self._call_openrouter))
+        # First-party / durable free tiers first. Mistral is later because
+        # the Experiment free tier has been returning standing 429s.
+        # Cerebras and GitHub Models were removed (decommissioned).
+        # Cloudflare Workers AI is not in this chain (10k neurons/day).
         if self.groq_key:
             providers.append(("Groq",             self._call_groq))
-        if self.cerebras_key:
-            providers.append(("Cerebras",         self._call_cerebras))
         if self.gemini_key:
             providers.append(("Gemini",           self._call_gemini))
+        if self.openrouter_key:
+            providers.append(("OpenRouter",       self._call_openrouter))
+        if self.hf_token:
+            providers.append(("Hugging Face",     self._call_huggingface))
         if self.nvidia_key:
             providers.append(("NVIDIA NIM",       self._call_nvidia))
+        if self.mistral_key:
+            providers.append(("Mistral",          self._call_mistral))
+        if self.zai_key:
+            providers.append(("Z.AI",             self._call_zai))
+        # LLM7 anonymous fallback — last resort, no key required.
+        providers.append(("LLM7.io",              self._call_llm7))
 
         if not providers:
             raise Exception(
-                "No API keys configured. Set at least one of: GROQ_API_KEY, "
-                "OPENROUTER_API_KEY, CEREBRAS_API_KEY, MISTRAL_API_KEY, "
-                "NVIDIA_API_KEY, GEMINI_API_KEY, "
-                "or CLOUDFLARE_API_TOKEN + CLOUDFLARE_ACCOUNT_ID."
+                "No API providers available. Set at least one of: GROQ_API_KEY, "
+                "GEMINI_API_KEY, OPENROUTER_API_KEY, HF_TOKEN, "
+                "NVIDIA_API_KEY, MISTRAL_API_KEY, ZAI_API_KEY, LLM7_API_KEY."
             )
 
         _RETRY_DELAYS = [5, 15, 30]
@@ -2786,7 +2820,7 @@ class BlogSystem:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.groq_key}",
                    "Content-Type": "application/json"}
-        data = {"model": "openai/gpt-oss-120b", "messages": messages,
+        data = {"model": _GROQ_MODEL, "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7}
         waits = [2, 5, 10]
         for attempt in range(1, 3):
@@ -2957,58 +2991,160 @@ class BlogSystem:
         raise Exception(
             f"All OpenRouter free-model candidates failed. Last error: {last_error}")
 
-    async def _call_cerebras(self, messages: List[Dict], max_tokens: int) -> str:
+    async def _call_mistral(self, messages: List[Dict], max_tokens: int) -> str:
+        if not self.mistral_key:
+            raise EnvironmentError("MISTRAL_API_KEY not set")
         RETRYABLE = {503, 429, 500, 502, 504}
-        headers = {"Authorization": f"Bearer {self.cerebras_key}",
+        headers = {"Authorization": f"Bearer {self.mistral_key}",
                    "Content-Type": "application/json"}
-        data = {"model": "gpt-oss-120b",
-                "messages": messages, "max_tokens": max_tokens, "temperature": 0.7}
-        waits = [2, 5, 10]
+        data = {"model": _MISTRAL_MODEL, "messages": messages,
+                "max_tokens": max_tokens, "temperature": 0.7}
+        waits = [5, 15]
         for attempt in range(1, 3):
             try:
                 async with aiohttp.ClientSession() as s:
-                    async with s.post("https://api.cerebras.ai/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=45)) as r:
+                    async with s.post(
+                        "https://api.mistral.ai/v1/chat/completions",
+                        headers=headers, json=data,
+                        timeout=aiohttp.ClientTimeout(total=60),
+                    ) as r:
                         if r.status == 200:
-                            return self._extract_message_content(await r.json(), "Cerebras")
+                            result = await r.json()
+                            if "error" in result:
+                                raise Exception(
+                                    f"Mistral error: {result['error']}")
+                            return self._extract_message_content(result, "Mistral")
                         if r.status in RETRYABLE and attempt < 2:
                             await asyncio.sleep(waits[attempt - 1])
                             continue
-                        raise Exception(f"Cerebras {r.status}: {await r.text()}")
+                        raise Exception(f"Mistral {r.status}: {await r.text()}")
             except aiohttp.ClientConnectionError as e:
                 if attempt < 2:
                     await asyncio.sleep(waits[attempt - 1])
                 else:
-                    raise Exception(f"Cerebras connection failed: {e}")
+                    raise Exception(f"Mistral connection failed: {e}")
             except asyncio.TimeoutError:
-                raise Exception("Cerebras timed out.")
-        raise Exception("Cerebras unavailable.")
+                raise Exception("Mistral timed out.")
+        raise Exception("Mistral unavailable.")
 
-    async def _call_mistral(self, messages: List[Dict], max_tokens: int) -> str:
-        if not self.openrouter_key:
-            raise EnvironmentError("OPENROUTER_API_KEY not set")
-        headers = {"Authorization": f"Bearer {self.openrouter_key}",
+    async def _call_huggingface(self, messages: List[Dict], max_tokens: int) -> str:
+        if not self.hf_token:
+            raise EnvironmentError("HF_TOKEN not set")
+        RETRYABLE = {503, 429, 500, 502, 504}
+        headers = {"Authorization": f"Bearer {self.hf_token}",
                    "Content-Type": "application/json"}
-        data = {"model": "openrouter/free", "messages": messages,
-                "max_tokens": max_tokens, "temperature": 0.7}
-        try:
-            async with aiohttp.ClientSession() as s:
-                async with s.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data, timeout=aiohttp.ClientTimeout(total=45)) as r:
-                    if r.status == 200:
-                        result = await r.json()
-                        if "error" in result:
-                            raise Exception(f"Mistral error: {result['error']}")
-                        return self._extract_message_content(result, "Mistral")
-                    raise Exception(f"Mistral {r.status}: {await r.text()}")
-        except aiohttp.ClientConnectionError as e:
-            raise Exception(f"Mistral connection failed: {e}")
-        except asyncio.TimeoutError:
-            raise Exception("Mistral timed out.")
+        data = {"model": _HF_MODEL, "messages": messages,
+                "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
+        waits = [2, 8]
+        for attempt in range(1, 3):
+            try:
+                async with aiohttp.ClientSession() as s:
+                    async with s.post(
+                        "https://router.huggingface.co/v1/chat/completions",
+                        headers=headers, json=data,
+                        timeout=aiohttp.ClientTimeout(total=180),
+                    ) as r:
+                        if r.status == 200:
+                            return self._extract_message_content(
+                                await r.json(), "Hugging Face")
+                        if r.status in RETRYABLE and attempt < 2:
+                            await asyncio.sleep(waits[attempt - 1])
+                            continue
+                        raise Exception(
+                            f"Hugging Face {r.status}: {await r.text()}")
+            except aiohttp.ClientConnectionError as e:
+                if attempt < 2:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception(f"Hugging Face connection failed: {e}")
+            except asyncio.TimeoutError:
+                raise Exception("Hugging Face timed out.")
+        raise Exception("Hugging Face unavailable.")
+
+    async def _call_zai(self, messages: List[Dict], max_tokens: int) -> str:
+        if not self.zai_key:
+            raise EnvironmentError("ZAI_API_KEY not set")
+        RETRYABLE = {503, 429, 500, 502, 504}
+        headers = {
+            "Authorization": f"Bearer {self.zai_key}",
+            "Content-Type": "application/json",
+            "Accept-Language": "en-US,en",
+        }
+        # thinking disabled so the token budget is spent on visible content
+        # (glm-4.7-flash otherwise fills reasoning_content and returns "").
+        data = {
+            "model": _ZAI_MODEL,
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": 0.7,
+            "stream": False,
+            "thinking": {"type": "disabled"},
+        }
+        waits = [2, 8]
+        for attempt in range(1, 3):
+            try:
+                async with aiohttp.ClientSession() as s:
+                    async with s.post(
+                        "https://api.z.ai/api/paas/v4/chat/completions",
+                        headers=headers, json=data,
+                        timeout=aiohttp.ClientTimeout(total=120),
+                    ) as r:
+                        if r.status == 200:
+                            return self._extract_message_content(
+                                await r.json(), "Z.AI")
+                        if r.status in RETRYABLE and attempt < 2:
+                            await asyncio.sleep(waits[attempt - 1])
+                            continue
+                        raise Exception(f"Z.AI {r.status}: {await r.text()}")
+            except aiohttp.ClientConnectionError as e:
+                if attempt < 2:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception(f"Z.AI connection failed: {e}")
+            except asyncio.TimeoutError:
+                raise Exception("Z.AI timed out.")
+        raise Exception("Z.AI unavailable.")
+
+    async def _call_llm7(self, messages: List[Dict], max_tokens: int) -> str:
+        key = self.llm7_key or "unused"
+        RETRYABLE = {503, 429, 500, 502, 504}
+        headers = {"Authorization": f"Bearer {key}",
+                   "Content-Type": "application/json"}
+        data = {"model": _LLM7_MODEL, "messages": messages,
+                "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
+        waits = [2, 8]
+        for attempt in range(1, 3):
+            try:
+                async with aiohttp.ClientSession() as s:
+                    async with s.post(
+                        "https://api.llm7.io/v1/chat/completions",
+                        headers=headers, json=data,
+                        timeout=aiohttp.ClientTimeout(total=120),
+                    ) as r:
+                        if r.status == 200:
+                            result = await r.json()
+                            if "error" in result:
+                                raise Exception(
+                                    f"LLM7 error: {result['error']}")
+                            return self._extract_message_content(result, "LLM7.io")
+                        if r.status in RETRYABLE and attempt < 2:
+                            await asyncio.sleep(waits[attempt - 1])
+                            continue
+                        raise Exception(f"LLM7 {r.status}: {await r.text()}")
+            except aiohttp.ClientConnectionError as e:
+                if attempt < 2:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception(f"LLM7 connection failed: {e}")
+            except asyncio.TimeoutError:
+                raise Exception("LLM7 timed out.")
+        raise Exception("LLM7 unavailable.")
 
     async def _call_nvidia(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
         headers = {"Authorization": f"Bearer {self.nvidia_key}",
                    "Content-Type": "application/json"}
-        data = {"model": "meta/llama-3.1-70b-instruct", "messages": messages,
+        data = {"model": _NVIDIA_MODEL, "messages": messages,
                 "max_tokens": max_tokens, "temperature": 0.7, "stream": False}
         waits = [2, 5, 10]
         for attempt in range(1, 3):
@@ -3031,7 +3167,7 @@ class BlogSystem:
         raise Exception("NVIDIA NIM unavailable.")
 
     async def _call_gemini(self, messages: List[Dict], max_tokens: int) -> str:
-        GEMINI_MODEL = "gemini-2.5-flash"
+        GEMINI_MODEL = _GEMINI_MODEL
         RETRYABLE = {503, 429, 500, 502, 504}
         try:
             import google.generativeai as genai
@@ -4770,8 +4906,8 @@ def create_sample_config(config_path: str = "config.yaml"):
 
     print(
         "\nRequired GitHub secrets: GROQ_API_KEY, OPENROUTER_API_KEY, "
-        "CEREBRAS_API_KEY, MISTRAL_API_KEY, NVIDIA_API_KEY, GEMINI_API_KEY, "
-        "CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID"
+        "GEMINI_API_KEY, HF_TOKEN, NVIDIA_API_KEY, MISTRAL_API_KEY, "
+        "ZAI_API_KEY, LLM7_API_KEY (optional — anonymous fallback works)"
     )
 
 
@@ -4793,8 +4929,8 @@ if __name__ == "__main__":
             os.makedirs("docs/static", exist_ok=True)
             os.makedirs("analytics", exist_ok=True)
             print(
-                "Done! API chain: Mistral → OpenRouter → Groq → "
-                "Cloudflare AI → Cerebras → Gemini → NVIDIA NIM → local template"
+                "Done! API chain: Groq → Gemini → OpenRouter → "
+                "Hugging Face → NVIDIA NIM → Mistral → Z.AI → LLM7.io"
             )
 
         elif mode == "auto":
