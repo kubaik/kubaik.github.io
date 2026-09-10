@@ -176,5 +176,8 @@
   "The real cost of always-on vs on-demand agents for a Nairobi-based SaaS",
   "Common MCP server security mistakes that expose internal tools",
   "Red-teaming internal agents without slowing down development velocity",
-  "How the Claude 4 / GPT-5 model generation changed agent architecture decisions"
+  "How the Claude 4 / GPT-5 model generation changed agent architecture decisions",
+  "Measuring platform value when a growing share of 'code' is prompts and agent graphs",
+  "How durable execution platforms (Temporal, Inngest, and peers) are reshaping agent workflows",
+  "Tool-use patterns that scale, and the ones that create thundering-herd problems"
 ]

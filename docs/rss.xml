@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 10 Sep 2026 08:01:50 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 10 Sep 2026 08:30:04 +0000</lastBuildDate>
+    <item>
+      <title>Thundering Herd: The Hidden Scaling Trap</title>
+      <link>https://kubaik.github.io/thundering-herd-the-hidden-scaling-trap/</link>
+      <description>A concrete worked example Consider a common pattern in serverless architectures: a fleet of AWS Lambda functions (using the Node.js 20 LTS runtime)…</description>
+      <pubDate>Thu, 10 Sep 2026 08:29:58 +0000</pubDate>
+      <guid>https://kubaik.github.io/thundering-herd-the-hidden-scaling-trap/</guid>
+    </item>
     <item>
       <title>LLM agents: why monoliths win</title>
       <link>https://kubaik.github.io/llm-agents-why-monoliths-win/</link>
@@ -138,13 +145,6 @@
       <description>Replace vibe testing with agent evals — the loop that catches downstream 502s, prompt drift, and idempotency failures before users do.</description>
       <pubDate>Mon, 31 Aug 2026 04:32:07 +0000</pubDate>
       <guid>https://kubaik.github.io/ship-evals-before-your-agent-ships/</guid>
-    </item>
-    <item>
-      <title>Spot instances: the retry logic trap 90% miss</title>
-      <link>https://kubaik.github.io/spot-instances-the-retry-logic-trap-90-miss/</link>
-      <description>Spot instances cut AWS costs 69% for agent workloads in 2026 — but only if your retry logic doesn’t double the bill.</description>
-      <pubDate>Sun, 30 Aug 2026 16:20:40 +0000</pubDate>
-      <guid>https://kubaik.github.io/spot-instances-the-retry-logic-trap-90-miss/</guid>
     </item>
   </channel>
 </rss>

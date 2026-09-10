@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-10T08:01:44.235986",
+  "built_at": "2026-09-10T08:29:59.317179",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5075,6 +5075,11 @@
       "slug": "llm-agents-why-monoliths-win",
       "title": "LLM agents: why monoliths win",
       "summary": "The redteaming internal advice that circulates internally rarely matches what's in the public docs. The default configuration is fine right up until it isn't. This covers the fix, the cost of not knowing sooner, and what we monitor now. When the Claude 4 and GPT‑5 models hit the market, the hype mac"
+    },
+    {
+      "slug": "thundering-herd-the-hidden-scaling-trap",
+      "title": "Thundering Herd: The Hidden Scaling Trap",
+      "summary": "I changed my mind about durable execution after watching it fail somewhere it wasn't supposed to. Here's the version I wish someone had handed me first. Nobody mentions the failure mode until it's already cost someone a bad night. The one-paragraph version (read this first) The thundering herd probl"
     }
   ]
 }
