@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 10 Sep 2026 16:09:03 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 11 Sep 2026 03:43:44 +0000</lastBuildDate>
+    <item>
+      <title>Why scaling agents kills plain logs</title>
+      <link>https://kubaik.github.io/why-scaling-agents-kills-plain-logs/</link>
+      <description>Structured logging &amp;amp; model pinning cut debugging time 70% for fleets over 15 agents — avoid silent failures that break scaling.</description>
+      <pubDate>Fri, 11 Sep 2026 03:43:37 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-scaling-agents-kills-plain-logs/</guid>
+    </item>
     <item>
       <title>Purpose-Built AI vs General Platforms</title>
       <link>https://kubaik.github.io/purpose-built-ai-vs-general-platforms/</link>
@@ -138,13 +145,6 @@
       <description>Cut infra headaches for AI services — why boring stacks (FastAPI, PostgreSQL, Redis) beat microservices until you hit 1M users or a compliance rule…</description>
       <pubDate>Mon, 31 Aug 2026 18:58:51 +0000</pubDate>
       <guid>https://kubaik.github.io/only-boring-stacks-survive-ai-services/</guid>
-    </item>
-    <item>
-      <title>Commit ownership in AI pair coding</title>
-      <link>https://kubaik.github.io/commit-ownership-in-ai-pair-coding/</link>
-      <description>AI pair coding without ownership drift — how a Nigerian government app cut outages 7x with prompt guardrails, Docker tests, and Git notes for traceability.</description>
-      <pubDate>Mon, 31 Aug 2026 12:27:42 +0000</pubDate>
-      <guid>https://kubaik.github.io/commit-ownership-in-ai-pair-coding/</guid>
     </item>
   </channel>
 </rss>

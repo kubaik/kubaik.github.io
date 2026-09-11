@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-10T16:08:57.022903",
+  "built_at": "2026-09-11T03:43:39.561502",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5085,6 +5085,11 @@
       "slug": "purpose-built-ai-vs-general-platforms",
       "title": "Purpose-Built AI vs General Platforms",
       "summary": "After reviewing enough code that touches purposebuilt platforms, the same failure pattern keeps showing up. This walks through the fix and the reasoning, not just the patch. It's the kind of thing that works for months, then all at once doesn't. Why this comparison matters right now In 2026, the AI "
+    },
+    {
+      "slug": "why-scaling-agents-kills-plain-logs",
+      "title": "Why scaling agents kills plain logs",
+      "summary": "structured logging is easy to demo and hard to keep honest at scale. The postmortem always says the same thing: we should have caught this sooner. Here's what I'd tell a colleague hitting this for the first time. The gap between what the docs say and what production needs Documentation for logging l"
     }
   ]
 }
