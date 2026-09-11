@@ -182,5 +182,8 @@
   "Tool-use patterns that scale, and the ones that create thundering-herd problems",
   "Building a multi-agent research system without LangGraph: a framework comparison",
   "Purpose-built AI platforms vs general platforms: a 2026 decision framework",
-  "Why structured logging and model pinning become non-negotiable past 15+ agents in production"
+  "Why structured logging and model pinning become non-negotiable past 15+ agents in production",
+  "How the role of 'AI Engineer' evolved in our team throughout 2026",
+  "Building unit economics for AI features that product and finance teams can both read",
+  "Evaluation gaps that let subtle model behavior changes slip into production"
 ]

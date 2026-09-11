@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-11T03:43:39.561502",
+  "built_at": "2026-09-11T07:51:05.878766",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5090,6 +5090,11 @@
       "slug": "why-scaling-agents-kills-plain-logs",
       "title": "Why scaling agents kills plain logs",
       "summary": "structured logging is easy to demo and hard to keep honest at scale. The postmortem always says the same thing: we should have caught this sooner. Here's what I'd tell a colleague hitting this for the first time. The gap between what the docs say and what production needs Documentation for logging l"
+    },
+    {
+      "slug": "why-does-my-model-drift-after-deploy",
+      "title": "Why does my model drift after deploy?",
+      "summary": "Most role engineer incidents trace back to a default nobody remembers choosing. The answers online were either wrong or skipped the part that mattered. Here's the version I wish someone had handed me first. The one-paragraph version (read this first) When a machine‑learning model looks perfect in th"
     }
   ]
 }

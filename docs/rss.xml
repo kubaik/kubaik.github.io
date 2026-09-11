@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 Sep 2026 10:44:47 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 11 Sep 2026 07:51:14 +0000</lastBuildDate>
+    <item>
+      <title>Why does my model drift after deploy?</title>
+      <link>https://kubaik.github.io/why-does-my-model-drift-after-deploy/</link>
+      <description>Spot hidden model drift before production — avoid silent 0.8% accuracy loss that can cost $10k monthly.</description>
+      <pubDate>Fri, 11 Sep 2026 07:51:02 +0000</pubDate>
+      <guid>https://kubaik.github.io/why-does-my-model-drift-after-deploy/</guid>
+    </item>
     <item>
       <title>Why scaling agents kills plain logs</title>
       <link>https://kubaik.github.io/why-scaling-agents-kills-plain-logs/</link>
@@ -138,13 +145,6 @@
       <description>Agent drift in 2026: why 68% of production agents degrade 15%+ within 30 days without human checkpoints — and how to stop it with confidence thresholds…</description>
       <pubDate>Tue, 01 Sep 2026 04:14:50 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-drift-why-prod-breaks-without-human-checkpoints/</guid>
-    </item>
-    <item>
-      <title>Only boring stacks survive AI services</title>
-      <link>https://kubaik.github.io/only-boring-stacks-survive-ai-services/</link>
-      <description>Cut infra headaches for AI services — why boring stacks (FastAPI, PostgreSQL, Redis) beat microservices until you hit 1M users or a compliance rule…</description>
-      <pubDate>Mon, 31 Aug 2026 18:58:51 +0000</pubDate>
-      <guid>https://kubaik.github.io/only-boring-stacks-survive-ai-services/</guid>
     </item>
   </channel>
 </rss>
