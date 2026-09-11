@@ -1643,8 +1643,26 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         config = self.blog_system.config
         base_url = config.get('base_url', '')
         today = datetime.now().strftime('%Y-%m-%d')
+
+        # Google's image sitemap extension only lists jpeg/png/gif/webp —
+        # SVG isn't in the supported set, so unlike the has_og_image check
+        # in _generate_post_pages() (which accepts svg as an og:image
+        # fallback), the sitemap only ever points at a real .png. If a post
+        # only has an .svg card, it's skipped here rather than emitting a
+        # <image:loc> Google won't credit.
+        og_card_dir = Path("./docs/static/og")
+
+        def image_block(slug: str) -> str:
+            if (og_card_dir / f"{slug}.png").exists():
+                return (
+                    f'<image:image><image:loc>{base_url}/static/og/{slug}.png'
+                    f'</image:loc></image:image>'
+                )
+            return ''
+
         urls = [
-            f'<url><loc>{base_url}/</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>',
+            f'<url><loc>{base_url}/</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority>'
+            f'<image:image><image:loc>{base_url}/static/og-default.png</image:loc></image:image></url>',
             f'<url><loc>{base_url}/about/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>',
             f'<url><loc>{base_url}/contact/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>',
             f'<url><loc>{base_url}/privacy-policy/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.5</priority></url>',
@@ -1668,17 +1686,14 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
                 f'<url><loc>{base_url}/{post.slug}/</loc>'
                 f'<lastmod>{last_mod}</lastmod>'
                 f'<changefreq>{changefreq}</changefreq>'
-                f'<priority>{priority}</priority></url>'
+                f'<priority>{priority}</priority>'
+                f'{image_block(post.slug)}</url>'
             )
 
-        # FIX BUG-9: The original used chr(10).join(urls) inside an f-string
-        # that opened with "  " indentation. This caused the first <url> to
-        # have no leading whitespace while subsequent ones did, producing
-        # inconsistent indentation that some XML validators reject.
-        # Fixed by joining with '\n  ' so every entry is uniformly indented.
         sitemap = (
             '<?xml version="1.0" encoding="UTF-8"?>\n'
-            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  '
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+            'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n  '
             + '\n  '.join(urls)
             + '\n</urlset>'
         )
