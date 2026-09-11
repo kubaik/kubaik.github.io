@@ -239,60 +239,19 @@ class SEOOptimizer:
     #  STRUCTURED DATA                                                     #
     # ------------------------------------------------------------------ #
 
-    def generate_structured_data(self, post) -> str:
-        """
-        Emit a minimal BlogPosting schema.
-
-        NOTE: static_site_generator._generate_article_schema() already emits
-        a richer Article + BreadcrumbList @graph block for every post page.
-        This method is called alongside it.  To avoid duplicate @type:Article
-        nodes that confuse Google's Rich Results Test, we emit BlogPosting
-        (a subtype) so the two schemas are distinguishable.  Ideally you would
-        consolidate to a single schema block — tracked as a future improvement.
-        """
-        base_url = self.config.get("base_url", "")
-        base_path = self.config.get("base_path", "")
-        post_url = f"{base_url}/{post.slug}/"
-
-        schema = {
-            "@context": "https://schema.org",
-            "@type": "BlogPosting",
-            "@id": f"{post_url}#blogposting",
-            "headline": post.title,
-            "description": post.meta_description or "",
-            "author": {
-                "@type": "Person",
-                "@id": f"{base_url}/about/#author",
-                "name": "Kubai Kevin",
-                "url": f"{base_url}/about/",
-                "sameAs": [
-                    "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
-                    "https://twitter.com/KubaiKevin",
-                ],
-            },
-            "publisher": {
-                "@type": "Organization",
-                "name": self.config.get("site_name", "Tech Blog"),
-                "url": f"{base_url}/",
-            },
-            "datePublished": _normalize_iso_date(post.created_at),
-            "dateModified": _normalize_iso_date(post.updated_at),
-            "url": post_url,
-            "mainEntityOfPage": {"@type": "WebPage", "@id": post_url},
-        }
-
-        if hasattr(post, "seo_keywords") and post.seo_keywords:
-            schema["keywords"] = (
-                ", ".join(post.seo_keywords)
-                if isinstance(post.seo_keywords, list)
-                else post.seo_keywords
-            )
-
-        return (
-            f'<script type="application/ld+json">\n'
-            f"{json.dumps(schema, indent=2, ensure_ascii=False)}\n"
-            f"</script>"
-        )
+    # REMOVED: generate_structured_data() (a duplicate BlogPosting schema)
+    # used to be emitted alongside static_site_generator._generate_article_
+    # schema()'s Article + BreadcrumbList @graph block. Two competing
+    # schema nodes with different @type and different publisher names for
+    # the same URL is exactly what Google's Rich Results Test flags as
+    # conflicting structured data, and can cause the page's markup to be
+    # ignored entirely. static_site_generator.py's call site was already
+    # updated to stop calling this; the method is deleted here too so it
+    # can't be silently wired back up. The Article schema now lives solely
+    # in static_site_generator._generate_article_schema(), which also emits
+    # BreadcrumbList and (as of this fix) a required 'image' property, and
+    # is checked against adsense_fixes/schema_validator.py's
+    # validate_article_schema() before being written.
 
     def generate_organization_schema(self) -> str:
         """Emit Organization JSON-LD with clean sameAs URLs.

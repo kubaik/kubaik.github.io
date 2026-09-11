@@ -843,6 +843,7 @@ Sitemap: {base_url}/sitemap.xml
 
     def _generate_article_schema(self, post, base_url: str, site_name: str = None) -> str:
         import json as _json
+        from adsense_fixes.schema_validator import validate_article_schema
 
         word_count = len(post.content.split())
         reading_time = max(1, round(word_count / 200))
@@ -893,6 +894,18 @@ Sitemap: {base_url}/sitemap.xml
                     "@id": f"{base_url}/{post.slug}/"
                 },
                 "keywords": ", ".join(post.seo_keywords[:8]) if post.seo_keywords else "",
+                # FIX: 'image' is a required Article property for Google Rich
+                # Results (see adsense_fixes/schema_validator.py
+                # _REQUIRED_ARTICLE_PROPS) but was never emitted here, even
+                # though image_optimizer.generate_og_card() already writes
+                # docs/static/og/{slug}.svg for every post. Point the schema
+                # at the asset that already exists on disk.
+                "image": {
+                    "@type": "ImageObject",
+                    "url": f"{base_url}/static/og/{post.slug}.svg",
+                    "width": 1200,
+                    "height": 630,
+                },
             },
             {
                 "@type": "BreadcrumbList",
@@ -904,6 +917,15 @@ Sitemap: {base_url}/sitemap.xml
                 ]
             }
         ]
+
+        # FIX: schema_validator.py's validate_article_schema() was written
+        # and documented for exactly this call site but was never imported
+        # here. Non-mutating — just surfaces a warning if a future edit to
+        # this function accidentally drops a required property again.
+        schema_issues = validate_article_schema(schemas)
+        if schema_issues:
+            print(
+                f"  ⚠️  Schema issues for {post.slug}: {'; '.join(schema_issues)}")
 
         output_blocks = [f'''<script type="application/ld+json">
 {_json.dumps({"@context": "https://schema.org", "@graph": schemas},
