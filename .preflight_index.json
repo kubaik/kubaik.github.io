@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-12T13:48:07.086059",
+  "built_at": "2026-09-12T15:17:51.576376",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5105,6 +5105,11 @@
       "slug": "mcp-hidden-cost-traps",
       "title": "MCP hidden cost traps",
       "summary": "It only shows up under the exact conditions nobody tests for. We shipped mcp production twice — the second time was because the first version lied to us quietly. Here's the version I wish someone had handed me first. In large‑scale fintech and healthtech deployments, teams love the promise of a Mana"
+    },
+    {
+      "slug": "platform-teams-agentic-world-struggle",
+      "title": "Platform Teams: Agentic World Struggle",
+      "summary": "finops patterns broke in a way our monitoring wasn't even watching for. Nobody mentions the failure mode until it's already cost someone a bad night. This covers the fix, the cost of not knowing sooner, and what we monitor now. Why I wrote this (the problem I kept hitting) Southeast Asia's startup s"
     }
   ]
 }

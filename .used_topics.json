@@ -189,5 +189,8 @@
   "On-call process changes teams make once agents can create incidents unattended",
   "Least-privilege access models for agents that call 30+ internal tools",
   "Circuit breakers and bulkheads for agent systems: designing for cascade failure",
-  "MCP in production: the operational costs and security gotchas most teams miss"
+  "MCP in production: the operational costs and security gotchas most teams miss",
+  "FinOps patterns for teams whose biggest variable cost is now LLM tokens, not EC2",
+  "How AI changed the sales cycle for developer tools \u2014 and what still works",
+  "Why platform teams building for 2024 developer workflows struggle in an agentic world"
 ]

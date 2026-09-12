@@ -2836,7 +2836,7 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://kubaik.github.io/static/og/mcp-hidden-cost-traps.svg</image:loc>
+      <image:loc>https://kubaik.github.io/static/og/mcp-hidden-cost-traps.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -3260,6 +3260,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/pick-saas-niches-ai-cant-erode.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/platform-teams-agentic-world-struggle/</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/platform-teams-agentic-world-struggle.svg</image:loc>
     </image:image>
   </url>
   <url>
