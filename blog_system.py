@@ -1508,6 +1508,62 @@ def _reject_if_fabricated_citation(content: str) -> Optional[str]:
     return None
 
 
+def _check_expansion_completeness(content: str) -> List[str]:
+    """
+    Detect the two failure modes observed in production expansion output:
+    the response getting cut off mid-generation, and the model echoing the
+    expansion prompt's instruction phrasing verbatim as a heading instead of
+    writing a real one. Returns a list of issue strings (empty = looks fine).
+    """
+    issues: List[str] = []
+    if not content:
+        return ["empty content"]
+
+    stripped = content.rstrip()
+
+    # Unbalanced fenced code blocks — a closed article never ends inside one.
+    if stripped.count('```') % 2 != 0:
+        issues.append("unbalanced code fence (```) — likely cut off mid code block")
+
+    # FIX (audit follow-up): the E-E-A-T/freshness footer's last line is
+    # "**Last reviewed:** <date>" or "**Last generated:** <date>" (see
+    # _EEAT_FOOTER_TEMPLATE / _inject_freshness_footer_inline) — a bare date
+    # with no trailing punctuation, by design. Before this fix, that made the
+    # "ends on a finished sentence" check below fire on essentially every
+    # published post regardless of whether it was actually truncated, since
+    # almost all of them end on this footer. Recognize a well-formed footer
+    # line as a valid ending; a footer that's genuinely cut off mid-word
+    # (e.g. "**Last revi") won't match this pattern and is still flagged.
+    _FOOTER_DATE_LINE = re.compile(
+        r'^\*\*Last (?:reviewed|generated):\*\*\s*\S.*\S$|^\*\*Last (?:reviewed|generated):\*\*\s*\S$'
+    )
+    last_line = stripped.rsplit('\n', 1)[-1].strip()
+    ends_on_footer_date = bool(_FOOTER_DATE_LINE.match(last_line))
+
+    # Doesn't end on a finished sentence/line.
+    if (
+        stripped
+        and stripped[-1] not in '.!?`"\')]}\n'
+        and not stripped.endswith('```')
+        and not ends_on_footer_date
+    ):
+        tail = stripped[-60:].replace('\n', ' ')
+        issues.append(f"content does not end on a finished sentence (tail: …{tail!r})")
+
+    # Instruction phrasing from the expansion prompt leaking into a heading.
+    _LEAKED_INSTRUCTION_PHRASES = (
+        "you personally encountered",
+        "name them specifically",
+        "with actual numbers (latency, cost",
+    )
+    lower = content.lower()
+    for phrase in _LEAKED_INSTRUCTION_PHRASES:
+        if phrase in lower:
+            issues.append(f"heading appears to echo prompt instruction text: '{phrase}'")
+
+    return issues
+
+
 def _build_system_prompt(author_note: str, format_name: str, format_note: str, year_guidance: str) -> str:
     return (
         f"{author_note}\n\n"
@@ -2538,6 +2594,27 @@ class BlogSystem:
                 results["errors"].append(msg)
                 continue
 
+            # FIX (audit follow-up): _refresh_post_content()'s output was never
+            # checked for truncation / mid-code-block cutoffs / leaked prompt
+            # instruction text before being written to post.json. Unlike
+            # _expand_content() — which already runs _check_expansion_completeness()
+            # and discards a bad result — this refresh path only checked word
+            # count, so a response that was long enough but cut off mid-sentence
+            # sailed straight through and got published with a fresh "Last
+            # reviewed" date on it. Apply the same guard here: if the refreshed
+            # content looks incomplete, skip the save and keep the original
+            # (untouched) post.json rather than overwriting good content with
+            # broken content.
+            completeness_issues = _check_expansion_completeness(refreshed_content)
+            if completeness_issues:
+                msg = (
+                    f"{slug}: refreshed content looks incomplete/truncated "
+                    f"({'; '.join(completeness_issues)}) — keeping original, not saved"
+                )
+                print(f"  ⚠️  Skip: {msg}")
+                results["skipped"].append(msg)
+                continue
+
             refreshed_count = _count_words(refreshed_content)
             original_count = _count_words(original_content)
 
@@ -2684,7 +2761,17 @@ class BlogSystem:
             },
         ]
 
-        return await self._call_api_with_fallback(messages, max_tokens=6500)
+        # FIX (audit follow-up): max_tokens was a fixed 6500 regardless of the
+        # original article's length, same as the bug already fixed in
+        # _expand_content() — the model has to echo the entire original
+        # article back before/while applying updates, so long posts left too
+        # little budget for a complete response and the output got cut off
+        # mid-sentence or mid-code-block. Scale the budget to the input size
+        # so there's always headroom to finish. (_check_expansion_completeness()
+        # in refresh_stale_posts() is the backstop if this still isn't enough.)
+        original_tokens_est = max(1, len(original_content) // 4)
+        budget = min(16000, max(6500, original_tokens_est + 3500))
+        return await self._call_api_with_fallback(messages, max_tokens=budget)
 
     # ─────────────────────────────────────────────────────────────
     # API FALLBACK CHAIN
@@ -4223,20 +4310,47 @@ Return ONLY the JSON object.""",
                 "role": "user",
                 "content": (
                     f"The following blog post about '{topic}' needs more depth. "
-                    "Add 3 additional sections at the end (each 300+ words):\n"
-                    "1. Advanced edge cases you personally encountered — name them specifically\n"
-                    "2. Integration with 2–3 real tools (name versions), with a working code snippet\n"
-                    "3. A before/after comparison with actual numbers (latency, cost, lines of code, etc.)\n\n"
+                    "Add 3 additional sections at the end (each 300+ words). Below is what "
+                    "EACH SECTION SHOULD COVER — write your own natural, specific ## heading "
+                    "for each one; do NOT copy this instruction text into the heading itself:\n"
+                    "1. Cover advanced edge cases someone would plausibly hit — name them "
+                    "specifically, framed as typical/common cases (not a fabricated personal "
+                    "incident).\n"
+                    "2. Cover integration with 2–3 real tools (name versions), with a working "
+                    "code snippet.\n"
+                    "3. Cover a before/after comparison with realistic numbers (latency, cost, "
+                    "lines of code, etc.).\n\n"
                     f"Existing content:\n{existing_content}\n\n"
                     "Return the COMPLETE article — every word of the original content first, "
                     "then the 3 new sections appended at the end. "
                     "Do not summarise, truncate, or paraphrase the original. "
                     "Do not repeat the title. Keep the same author voice throughout. "
-                    "The response must be longer than the input."
+                    "The response must be longer than the input. "
+                    "CRITICAL: your response must be a fully finished article — every code "
+                    "block closed, every section complete, ending on a finished sentence. "
+                    "A cut-off response is worse than a shorter complete one."
                 ),
             },
         ]
-        return await self._call_api_with_fallback(messages, max_tokens=6500)
+        # FIX: max_tokens was a fixed 6500 regardless of input size. The model
+        # must echo the entire existing_content back before writing new
+        # material, so long posts left too little budget for the 3 new
+        # sections and the completion was cut off mid-sentence / mid-code-
+        # block — confirmed in production posts (e.g. content ending
+        # "log = structlog.get" with no closing fence). Scale the budget to
+        # the input so there's always headroom for a complete response.
+        existing_tokens_est = max(1, len(existing_content) // 4)
+        budget = min(16000, max(6500, existing_tokens_est + 3500))
+        result = await self._call_api_with_fallback(messages, max_tokens=budget)
+
+        issues = _check_expansion_completeness(result)
+        if issues:
+            print(
+                f"  ⚠️  Expansion looks incomplete/truncated ({'; '.join(issues)}) "
+                f"— discarding expansion, keeping original content for '{title}'."
+            )
+            return existing_content
+        return result
 
     # ─────────────────────────────────────────────────────────────
     # LOCAL FALLBACK
