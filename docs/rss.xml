@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 11 Sep 2026 14:44:48 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 12 Sep 2026 11:54:56 +0000</lastBuildDate>
+    <item>
+      <title>Agent Systems: Circuit Breakers Are Not Enough</title>
+      <link>https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/</link>
+      <description>The naïve circuit breaker on Agent A sees a fast‑failing call (the round‑trip takes &amp;lt; 5 ms) and opens, but because the failure is logical rather than…</description>
+      <pubDate>Sat, 12 Sep 2026 11:54:46 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/</guid>
+    </item>
     <item>
       <title>Why does my model drift after deploy?</title>
       <link>https://kubaik.github.io/why-does-my-model-drift-after-deploy/</link>
@@ -138,13 +145,6 @@
       <description>Move from script hell to self-healing AI feature platform in 2026 — Node 20, Redis 7.2, Lambda arm64, OpenSearch 2.11.</description>
       <pubDate>Wed, 02 Sep 2026 03:37:36 +0000</pubDate>
       <guid>https://kubaik.github.io/idp-for-ai-2026-stack-evolution/</guid>
-    </item>
-    <item>
-      <title>Agent drift: why prod breaks without human checkpoints</title>
-      <link>https://kubaik.github.io/agent-drift-why-prod-breaks-without-human-checkpoints/</link>
-      <description>Agent drift in 2026: why 68% of production agents degrade 15%+ within 30 days without human checkpoints — and how to stop it with confidence thresholds…</description>
-      <pubDate>Tue, 01 Sep 2026 04:14:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-drift-why-prod-breaks-without-human-checkpoints/</guid>
     </item>
   </channel>
 </rss>

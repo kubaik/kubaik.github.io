@@ -185,5 +185,8 @@
   "Why structured logging and model pinning become non-negotiable past 15+ agents in production",
   "How the role of 'AI Engineer' evolved in our team throughout 2026",
   "Building unit economics for AI features that product and finance teams can both read",
-  "Evaluation gaps that let subtle model behavior changes slip into production"
+  "Evaluation gaps that let subtle model behavior changes slip into production",
+  "On-call process changes teams make once agents can create incidents unattended",
+  "Least-privilege access models for agents that call 30+ internal tools",
+  "Circuit breakers and bulkheads for agent systems: designing for cascade failure"
 ]

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-11T07:51:05.878766",
+  "built_at": "2026-09-12T11:54:47.777087",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5095,6 +5095,11 @@
       "slug": "why-does-my-model-drift-after-deploy",
       "title": "Why does my model drift after deploy?",
       "summary": "Most role engineer incidents trace back to a default nobody remembers choosing. The answers online were either wrong or skipped the part that mattered. Here's the version I wish someone had handed me first. The one-paragraph version (read this first) When a machine‑learning model looks perfect in th"
+    },
+    {
+      "slug": "agent-systems-circuit-breakers-are-not-enough",
+      "title": "Agent Systems: Circuit Breakers Are Not Enough",
+      "summary": "The conventional advice on circuit breakers is incomplete in one specific, costly way. This is the version of the write-up that includes the part that broke. Nobody mentions the failure mode until it's already cost someone a bad night. The tech industry loves a good hype cycle. We've seen it with bl"
     }
   ]
 }
