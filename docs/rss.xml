@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 12 Sep 2026 16:44:57 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 12 Sep 2026 13:48:16 +0000</lastBuildDate>
+    <item>
+      <title>MCP hidden cost traps</title>
+      <link>https://kubaik.github.io/mcp-hidden-cost-traps/</link>
+      <description>MCP operational costs expose hidden $12k monthly waste and security gaps that most teams overlook, with concrete steps to fix scaling and secret leaks.</description>
+      <pubDate>Sat, 12 Sep 2026 13:48:03 +0000</pubDate>
+      <guid>https://kubaik.github.io/mcp-hidden-cost-traps/</guid>
+    </item>
     <item>
       <title>Agent Systems: Circuit Breakers Are Not Enough</title>
       <link>https://kubaik.github.io/agent-systems-circuit-breakers-are-not-enough/</link>
@@ -138,13 +145,6 @@
       <description>A 2026 survey of 214 remote job postings for senior engineers based in Africa (posted on LinkedIn, AngelList, and RemoteOK) showed that 68% explicitly…</description>
       <pubDate>Thu, 03 Sep 2026 03:37:01 +0000</pubDate>
       <guid>https://kubaik.github.io/portfolio-projects-that-hire-remote-senior-devs/</guid>
-    </item>
-    <item>
-      <title>IDP for AI: 2026 stack evolution</title>
-      <link>https://kubaik.github.io/idp-for-ai-2026-stack-evolution/</link>
-      <description>Move from script hell to self-healing AI feature platform in 2026 — Node 20, Redis 7.2, Lambda arm64, OpenSearch 2.11.</description>
-      <pubDate>Wed, 02 Sep 2026 03:37:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/idp-for-ai-2026-stack-evolution/</guid>
     </item>
   </channel>
 </rss>
