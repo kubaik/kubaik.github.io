@@ -40,7 +40,6 @@ from adsense_fixes.image_optimizer import inject_alt_text, generate_og_card
 from adsense_fixes.canonical_guard import validate_canonical, audit_duplicate_slugs
 from adsense_fixes.schema_validator import extract_and_build_faq_schema
 from adsense_fixes.content_freshness import inject_freshness_footer, get_publishing_schedule_status
-from adsense_fixes.topic_dedup import check_topic_duplicate
 
 try:
     from title_validator import (
@@ -5219,28 +5218,48 @@ if __name__ == "__main__":
                           "error above before re-running.")
                     sys.exit(1)
 
-                # Second, independent duplicate-topic gate: title+keyword
-                # Jaccard rather than SimilarityGuard's body-text check (see
-                # adsense_fixes/topic_dedup.py's docstring for why body-text
-                # similarity alone misses same-topic/different-wording
-                # duplicates on this corpus). Only checked if SimilarityGuard
-                # didn't already block, same short-circuit style as the rest
-                # of this block.
+                # SECOND, INDEPENDENT duplicate gate (found in review, 2026):
+                # SimilarityGuard's topic-key score is measured on body text
+                # and, run against this site's live 501-post corpus, tops
+                # out at 30% pairwise (median 2%) — under even its own 35%
+                # WARN threshold — because this generator paraphrases too
+                # aggressively at the sentence level for word-overlap to
+                # survive. Confirmed real duplicates (e.g. "AI rollouts:
+                # feature flags in 2026" vs "AI rollouts live or die by
+                # flags") slip through as a result. topic_dedup.py scores
+                # TITLE keywords instead, which the paraphrasing doesn't
+                # touch, and catches exactly the pairs SimilarityGuard
+                # misses. Same fail-open-non-fatal posture as the other
+                # injection steps below is deliberately NOT used here —
+                # like SimilarityGuard, a duplicate topic is disqualifying,
+                # not a warning.
                 if not dup_detected:
                     try:
+                        from adsense_fixes.topic_dedup import check_topic_duplicate
                         topic_dup = check_topic_duplicate(
                             blog_post.title,
-                            getattr(blog_post, "meta_description", ""),
+                            blog_post.meta_description or "",
                             blog_system.output_dir,
+                            exclude_slug=blog_post.slug,
                         )
                         if topic_dup:
                             dup_detected = True
                             dup_reason = (
-                                f"TOPIC-KEY BLOCK: {topic_dup['score']:.0%} title match with "
-                                f"existing post '{topic_dup['title']}' (/{topic_dup['slug']}/)"
+                                f"TOPIC-KEY BLOCK: {topic_dup['score']:.0%} title "
+                                f"match with existing post '{topic_dup['title']}' "
+                                f"(/{topic_dup['slug']}/)"
                             )
                     except Exception as topic_err:
-                        print(f"  ⚠️  topic_dedup check failed (non-fatal): {topic_err}")
+                        # Same fail-closed contract as SimilarityGuard above —
+                        # this is a duplicate-content gate, not a cosmetic
+                        # check, so an error here must abort rather than
+                        # silently let a duplicate through.
+                        print(f"\n🛑  topic_dedup raised an error — aborting "
+                              f"per its fail-closed contract: {topic_err}")
+                        import traceback
+                        traceback.print_exc()
+                        print("   This post has been aborted. No file was written.")
+                        sys.exit(1)
 
                 if not dup_detected:
                     inject_personal_intro(blog_post, topic)
@@ -5701,8 +5720,22 @@ if __name__ == "__main__":
                 print(
                     f"Today: {vc.today_count()}/{vc.effective_limit()} posts published")
             elif subcmd == "reset":
-                Path(".publish_velocity.json").unlink(missing_ok=True)
-                print("Velocity counter reset.")
+                # FIX (found in review, 2026): there is no longer a separate
+                # counter file to delete — today_count()/domain age are
+                # derived live from docs/*/post.json created_at fields (see
+                # velocity_controller.py module docstring). "Resetting" the
+                # count would mean deleting today's actual published posts,
+                # which this command should never do silently. Left as an
+                # explicit no-op with an explanation rather than removing
+                # the subcommand outright, so existing scripts/habits that
+                # call `velocity reset` get a clear answer instead of a
+                # confusing "unknown command" error.
+                print(
+                    "Nothing to reset: the publish count is derived live from "
+                    "docs/*/post.json, not a separate counter file. "
+                    f"Today's real count is {vc.today_count()} — delete a post "
+                    "from docs/ if that count is genuinely wrong, not this command."
+                )
             else:
                 print("Usage: python blog_system.py velocity [status|reset]")
 

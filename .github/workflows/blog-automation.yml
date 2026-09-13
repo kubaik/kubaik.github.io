@@ -304,22 +304,31 @@ jobs:
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          # FIX (found in review, 2026): `git add .` already covers this file,
-          # but it was silently never present at commit time — meaning it was
-          # never actually persisted across runs, so VelocityController's
-          # daily cap (blog_system.py `auto` mode, already gated correctly in
-          # code) reset to 0 on every fresh checkout instead of accumulating.
-          # That's the real cause of the 8-26 posts/day bursts seen in the
-          # corpus. Naming it explicitly here (rather than relying on `.`)
-          # makes the dependency visible and stops it from being dropped
-          # again if this step is ever refactored.
+          # FIX (found in review, 2026 — reverted after live failure): an
+          # earlier version of this step force-added .publish_velocity.json
+          # here to fix VelocityController's daily cap resetting every run.
+          # That failed in production: .publish_velocity.json is DELIBERATELY
+          # gitignored under "Runtime caches — rebuilt automatically from
+          # docs/, never commit these", so `git add . .publish_velocity.json`
+          # exits 1 (git refuses to add an ignored path without -f), which
+          # took the whole job down at the commit step — see the run that
+          # failed with "The following paths are ignored by one of your
+          # .gitignore files: .publish_velocity.json".
           #
-          # .duplicate_backups/ and .fabrication_backups/ are named
-          # explicitly for the same reason — they're the only copy of
-          # anything scripts/auto_retire_duplicates.py and
-          # scripts/process_regeneration_queue.py touched this run, and a
+          # The real fix went into velocity_controller.py instead: it no
+          # longer persists a counter file at all. today_count() and domain
+          # age are now derived live from docs/*/post.json created_at
+          # fields, matching the exact convention that .gitignore comment
+          # describes for every other runtime cache in this repo. Nothing
+          # needs to be added here for velocity tracking to work.
+          #
+          # .duplicate_backups/ and .fabrication_backups/ ARE named
+          # explicitly below, for the opposite reason: they are NOT
+          # gitignored, and they're the only copy of anything
+          # scripts/auto_retire_duplicates.py and
+          # scripts/process_regeneration_queue.py touched this run — a
           # backup that isn't persisted across checkouts isn't a backup.
-          git add . .publish_velocity.json .duplicate_backups/ .fabrication_backups/
+          git add . .duplicate_backups/ .fabrication_backups/
           if git diff --staged --quiet; then
             echo "Nothing to commit"
           else
