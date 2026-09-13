@@ -40,6 +40,7 @@ from adsense_fixes.image_optimizer import inject_alt_text, generate_og_card
 from adsense_fixes.canonical_guard import validate_canonical, audit_duplicate_slugs
 from adsense_fixes.schema_validator import extract_and_build_faq_schema
 from adsense_fixes.content_freshness import inject_freshness_footer, get_publishing_schedule_status
+from adsense_fixes.topic_dedup import check_topic_duplicate
 
 try:
     from title_validator import (
@@ -5217,6 +5218,29 @@ if __name__ == "__main__":
                     print("   Investigate the SimilarityGuard/.similarity_index.json "
                           "error above before re-running.")
                     sys.exit(1)
+
+                # Second, independent duplicate-topic gate: title+keyword
+                # Jaccard rather than SimilarityGuard's body-text check (see
+                # adsense_fixes/topic_dedup.py's docstring for why body-text
+                # similarity alone misses same-topic/different-wording
+                # duplicates on this corpus). Only checked if SimilarityGuard
+                # didn't already block, same short-circuit style as the rest
+                # of this block.
+                if not dup_detected:
+                    try:
+                        topic_dup = check_topic_duplicate(
+                            blog_post.title,
+                            getattr(blog_post, "meta_description", ""),
+                            blog_system.output_dir,
+                        )
+                        if topic_dup:
+                            dup_detected = True
+                            dup_reason = (
+                                f"TOPIC-KEY BLOCK: {topic_dup['score']:.0%} title match with "
+                                f"existing post '{topic_dup['title']}' (/{topic_dup['slug']}/)"
+                            )
+                    except Exception as topic_err:
+                        print(f"  ⚠️  topic_dedup check failed (non-fatal): {topic_err}")
 
                 if not dup_detected:
                     inject_personal_intro(blog_post, topic)

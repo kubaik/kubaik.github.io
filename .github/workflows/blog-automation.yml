@@ -194,6 +194,82 @@ jobs:
             --csv ./quality_report_full.csv \
             --queue ./regeneration_queue.json
 
+      # Re-scores every ALREADY-PUBLISHED post against the current
+      # fabrication gates in blog_system.py (_reject_if_fabricated_citation,
+      # _flag_fabricated_anecdotes) and appends hits to the same
+      # regeneration_queue.json quality_gate.py writes to. Read-only against
+      # docs/ — only ever appends to the queue file. The "🧹 Process
+      # fabrication regeneration queue" step further down is what actually
+      # acts on what this step finds.
+      - name: 🔎 Retroactive fabrication audit
+        run: |
+          python scripts/retroactive_fabrication_audit.py \
+            --docs-dir ./docs \
+            --queue ./regeneration_queue.json
+
+      # Read-only — crawls every published post's internal Markdown links
+      # and reports any pointing at a slug with no post.json (broken by a
+      # deletion, a failed generation, or an auto-retired duplicate).
+      # Nothing gets deleted or blocked here; this only surfaces the report
+      # in the run log so it doesn't rely on someone remembering to run
+      # `python blog_system.py audit-links` by hand.
+      - name: 🔗 Full-corpus internal link audit
+        run: |
+          python -c "
+          from pathlib import Path
+          from adsense_fixes.link_validator import audit_all_internal_links
+          report = audit_all_internal_links(Path('./docs'))
+          print(report)
+          with open('link_audit_report.txt', 'w') as f:
+              f.write(report)
+          "
+
+      # Bounded, backup-then-delete cleanup of the duplicate-topic clusters
+      # adsense_fixes/topic_dedup.py's find_clusters() reports. Only acts on
+      # pairs scoring >= --min-score (the highest-confidence half of the
+      # corpus), capped at --max-deletions per run so a bad match can't take
+      # out more than 2 posts before a human notices. Every retired post is
+      # backed up to .duplicate_backups/ first and replaced with a noindex
+      # meta-refresh redirect stub pointing at the keeper post, so inbound
+      # links don't 404 and the retired URL drops out of the next sitemap
+      # build automatically (generate_sitemap.py already skips noindex /
+      # meta-refresh pages).
+      - name: 🧹 Auto-retire confirmed duplicate posts (bounded)
+        run: |
+          python scripts/auto_retire_duplicates.py \
+            --docs-dir ./docs \
+            --max-deletions 2 \
+            --min-score 0.50 \
+            --backup-dir ./.duplicate_backups \
+            --base-url "https://kubaik.github.io" \
+            --confirm
+
+      # Bounded consumer for the fabrication entries retroactive_fabrication_audit.py
+      # just queued. Removes only the offending sentence(s) — verified against
+      # the real blog_system.py gate functions, not reimplemented — and leaves
+      # the rest of the post intact. Anything it can't fully clear (or any
+      # quality_gate-sourced entry, which is out of scope here) is left in
+      # regeneration_queue.json for manual review. Backs up each edited
+      # post.json to .fabrication_backups/ before writing.
+      - name: 🧹 Process fabrication regeneration queue (bounded)
+        run: |
+          python scripts/process_regeneration_queue.py \
+            --docs-dir ./docs \
+            --queue ./regeneration_queue.json \
+            --max-posts 5 \
+            --backup-dir ./.fabrication_backups \
+            --confirm
+
+      # The two bounded steps above can change what's on disk in docs/:
+      # auto_retire_duplicates.py writes its own redirect-stub HTML directly,
+      # but process_regeneration_queue.py only edits post.json's `content`
+      # field — the already-built index.html for that post is now stale.
+      # Rebuild so sitemap/OG/schema generation below reflect the current
+      # state rather than what was built before this job's cleanup steps ran.
+      - name: 🔁 Rebuild site after automated fixes
+        run: |
+          python blog_system.py build
+
       # Generate single sitemap.xml (no chunking)
       - name: 🗺️ Generate sitemap.xml
         run: |
@@ -237,7 +313,13 @@ jobs:
           # corpus. Naming it explicitly here (rather than relying on `.`)
           # makes the dependency visible and stops it from being dropped
           # again if this step is ever refactored.
-          git add . .publish_velocity.json
+          #
+          # .duplicate_backups/ and .fabrication_backups/ are named
+          # explicitly for the same reason — they're the only copy of
+          # anything scripts/auto_retire_duplicates.py and
+          # scripts/process_regeneration_queue.py touched this run, and a
+          # backup that isn't persisted across checkouts isn't a backup.
+          git add . .publish_velocity.json .duplicate_backups/ .fabrication_backups/
           if git diff --staged --quiet; then
             echo "Nothing to commit"
           else
