@@ -192,5 +192,7 @@
   "MCP in production: the operational costs and security gotchas most teams miss",
   "FinOps patterns for teams whose biggest variable cost is now LLM tokens, not EC2",
   "How AI changed the sales cycle for developer tools \u2014 and what still works",
-  "Why platform teams building for 2024 developer workflows struggle in an agentic world"
+  "Why platform teams building for 2024 developer workflows struggle in an agentic world",
+  "What traditional observability misses when agents enter production",
+  "Building AI features that tolerate M-Pesa, Paystack, and Flutterwave failure modes"
 ]

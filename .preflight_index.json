@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-12T15:17:51.576376",
+  "built_at": "2026-09-13T03:56:29.388418",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5110,6 +5110,11 @@
       "slug": "platform-teams-agentic-world-struggle",
       "title": "Platform Teams: Agentic World Struggle",
       "summary": "finops patterns broke in a way our monitoring wasn't even watching for. Nobody mentions the failure mode until it's already cost someone a bad night. This covers the fix, the cost of not knowing sooner, and what we monitor now. Why I wrote this (the problem I kept hitting) Southeast Asia's startup s"
+    },
+    {
+      "slug": "stop-assuming-payment-apis-never-fail",
+      "title": "Stop assuming payment APIs never fail",
+      "summary": "The default configuration is fine right up until it isn't. traditional observability was never the hard part. Knowing when it was about to fail was. Here's the fuller picture, with the tradeoffs left in. Why I wrote this (the problem I kept hitting) When you stitch an AI recommendation engine into a"
     }
   ]
 }

@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 12 Sep 2026 15:17:59 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 13 Sep 2026 03:56:37 +0000</lastBuildDate>
+    <item>
+      <title>Stop assuming payment APIs never fail</title>
+      <link>https://kubaik.github.io/stop-assuming-payment-apis-never-fail/</link>
+      <description>AI checkout with M-Pesa, Paystack, Flutterwave – avoid silent failures, add retries, circuit breaker, and fallback to keep conversion high.</description>
+      <pubDate>Sun, 13 Sep 2026 03:56:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-assuming-payment-apis-never-fail/</guid>
+    </item>
     <item>
       <title>Platform Teams: Agentic World Struggle</title>
       <link>https://kubaik.github.io/platform-teams-agentic-world-struggle/</link>
@@ -138,13 +145,6 @@
       <description>How durable execution platforms like Temporal 1.22.0 cut refund workflow latency 70% and drop errors from 0.8% to 0.02% — plus the exact gotcha most…</description>
       <pubDate>Thu, 03 Sep 2026 16:05:45 +0000</pubDate>
       <guid>https://kubaik.github.io/temporal-changed-our-agent-retries-for-good/</guid>
-    </item>
-    <item>
-      <title>Agents running hours? You&apos;re losing context fast</title>
-      <link>https://kubaik.github.io/agents-running-hours-youre-losing-context-fast/</link>
-      <description>Keep long-running agents on track without ballooning prompts — sliding windows, archive thresholds, and PostgreSQL 16 JSONB with 3 concrete numbers and a…</description>
-      <pubDate>Thu, 03 Sep 2026 11:36:32 +0000</pubDate>
-      <guid>https://kubaik.github.io/agents-running-hours-youre-losing-context-fast/</guid>
     </item>
   </channel>
 </rss>
