@@ -1392,6 +1392,17 @@ _FABRICATED_CITATION_PATTERNS = [
     r'gitlab|github|jetbrains)\b',
     r'\b(20\d\d )?(stack overflow|gartner|forrester|mckinsey) (survey|report|study)\b',
     r'\ba (survey|study) of [\d,]+\s+(developers|engineers|teams|companies)\b',
+
+    # FIX (found in review, 2026): the three structural patterns above only
+    # catch "survey/study BY/FROM <Name>" and the possessive "<Name>'s
+    # study". They miss the adjectival form — "<Name> survey/study" with no
+    # by/from/possessive — which is the LLM's single most common fabrication
+    # shape and shipped unblocked, e.g. docs/47-ai-code-debt-in-2026:
+    # "a 2026 GitClear survey that tracked 12 million lines of diffs".
+    # This pattern closes that gap without re-introducing a fixed name list.
+    r'\b(a |the )?(20\d\d )?([A-Z][\w&.\'-]*\s*){1,4}'
+    r'(survey|study|report|research|analysis|benchmark)\s+(that\s+|which\s+)?'
+    r'(found|shows?|tracked|reveals?|says?|showed)\b',
 ]
 
 

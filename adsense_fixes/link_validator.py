@@ -67,14 +67,25 @@ def _extract_slug_from_path(path: str) -> str:
     return parts[-1]
 
 
+# FIX (found in review, 2026): static, non-post pages that the E-E-A-T
+# footer and template link to on every single post (author bio, contact)
+# don't have a post.json — they're rendered from fixed templates, not the
+# post pipeline. Without this allowlist, every post's "Kubai Kevin" author
+# link and "please contact me" link was reported as a broken internal link,
+# which isn't true (docs/about/index.html and docs/contact/index.html both
+# exist) and buries genuinely broken links in the noise.
+_STATIC_PAGE_SLUGS = {"about", "contact"}
+
+
 def _get_published_slugs(docs_dir: Path) -> Set[str]:
     """
     Return the set of all valid published slugs in docs_dir.
-    A slug is valid if docs_dir/{slug}/post.json exists.
+    A slug is valid if docs_dir/{slug}/post.json exists, OR it's one of
+    the known static template pages that every post links to.
     """
     if not docs_dir.exists():
-        return set()
-    slugs = set()
+        return set(_STATIC_PAGE_SLUGS)
+    slugs = set(_STATIC_PAGE_SLUGS)
     for item in docs_dir.iterdir():
         if item.is_dir() and (item / "post.json").exists():
             slugs.add(item.name)

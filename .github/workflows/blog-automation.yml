@@ -228,7 +228,16 @@ jobs:
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add .
+          # FIX (found in review, 2026): `git add .` already covers this file,
+          # but it was silently never present at commit time — meaning it was
+          # never actually persisted across runs, so VelocityController's
+          # daily cap (blog_system.py `auto` mode, already gated correctly in
+          # code) reset to 0 on every fresh checkout instead of accumulating.
+          # That's the real cause of the 8-26 posts/day bursts seen in the
+          # corpus. Naming it explicitly here (rather than relying on `.`)
+          # makes the dependency visible and stops it from being dropped
+          # again if this step is ever refactored.
+          git add . .publish_velocity.json
           if git diff --staged --quiet; then
             echo "Nothing to commit"
           else

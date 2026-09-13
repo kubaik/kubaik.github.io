@@ -894,18 +894,27 @@ Sitemap: {base_url}/sitemap.xml
                     "@id": f"{base_url}/{post.slug}/"
                 },
                 "keywords": ", ".join(post.seo_keywords[:8]) if post.seo_keywords else "",
-                # FIX: 'image' is a required Article property for Google Rich
-                # Results (see adsense_fixes/schema_validator.py
-                # _REQUIRED_ARTICLE_PROPS) but was never emitted here, even
-                # though image_optimizer.generate_og_card() already writes
-                # docs/static/og/{slug}.svg for every post. Point the schema
-                # at the asset that already exists on disk.
-                "image": {
+                # FIX (found in review, 2026): the previous fix here pointed
+                # at image_optimizer.generate_og_card()'s .svg output because
+                # that's what existed on disk at the time. Since then,
+                # scripts/generate_og_images.py was added to the workflow and
+                # now generates the REAL 1200x630 PNG that og:image actually
+                # uses (confirmed live: og:image meta tag correctly says
+                # .png; this JSON-LD block still said .svg). SVG is not a
+                # supported format for the Article `image` property per
+                # Google's Rich Results requirements (JPEG/PNG/WebP/GIF
+                # only) — every post was silently ineligible for Article
+                # image rich results with no error anywhere. Point at the
+                # .png that og:image already uses, and only emit the field
+                # at all if that file actually exists on disk, so a future
+                # OG-generation failure fails loud (schema_issues warning
+                # below) instead of silently citing a broken/unsupported URL.
+                **({"image": {
                     "@type": "ImageObject",
-                    "url": f"{base_url}/static/og/{post.slug}.svg",
+                    "url": f"{base_url}/static/og/{post.slug}.png",
                     "width": 1200,
                     "height": 630,
-                },
+                }} if (Path("./docs") / "static" / "og" / f"{post.slug}.png").exists() else {}),
             },
             {
                 "@type": "BreadcrumbList",
