@@ -63,7 +63,7 @@
       "description": "Cut Kubernetes drift 90% with GitOps — Flux v2.3 syncs in 390 ms, costs 0.9 vCPU, and runs for two years without a UI meltdown.",
       "datePublished": "2026-06-09T15:58:21+00:00",
       "dateModified": "2026-06-09T15:58:21+00:00",
-      "wordCount": 2100,
+      "wordCount": 1939,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -263,7 +263,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         10 min read
-                        &nbsp;·&nbsp; 2100 words
+                        &nbsp;·&nbsp; 1939 words
                         
                         &nbsp;·&nbsp; Updated 2026-06-09
                         
@@ -272,21 +272,18 @@
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this gitops 2026 problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered. </p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>In late 2026 I inherited a set of Kubernetes clusters running in AWS EKS that had been managed with a mix of Helm charts, hand-rolled YAML, and a couple of cron jobs that ran <code>kubectl apply</code>. The rollout process for a new container image took between 12 and 48 hours depending on who was on call, and the SLA for a rollback was measured in hours, not minutes. I wanted one source of truth, one workflow, and a single command to promote an image from dev to prod. GitOps looked like the answer.</p>
-<p>I spent three days debugging why ArgoCD would restart pods every 30 seconds when the only change was a ConfigMap update — it turned out the application wasn’t watching the file at all, but ArgoCD kept reconciling because the live state didn’t match the repo. This post is what I wished I had found then.</p>
+<p>In late 2026 I inherited a set of Kubernetes clusters running in AWS EKS that had been managed with a mix of Helm charts, hand-rolled YAML, and a couple of cron jobs that ran <code>kubectl apply</code>. The rollout process for a new container image took between 12 and 48 hours depending on who was on call, and the SLA for a rollback was measured in hours, not minutes. GitOps looked like the answer.</p>
+<p>This post is what I wished I had found then.</p>
 <p>Two years later, with clusters in production running 200+ services and GitOps pipelines deployed on 50+ repos, I finally know what actually matters when you pick ArgoCD vs Flux.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
-<p>I evaluated every mainstream GitOps tool I could get my hands on: ArgoCD, Flux, Weave GitOps, and a few internal prototypes we built on top of the Kubernetes Operator pattern. I ran each one in staging for 90 days, then promoted to production for another 90 days. I measured:</p>
-<ul>
-<li><strong>Sync time</strong>: end-to-end time from Git push to pod ready (measured with <code>kubectl wait --for=condition=Ready pod</code>).</li>
-<li><strong>Resource cost</strong>: extra CPU/memory overhead on the cluster compared to the baseline (no GitOps agent).</li>
-<li><strong>Difficulty curve</strong>: time to train a junior engineer to run the tool without breaking prod.</li>
-<li><strong>Stability under load</strong>: number of reconciliation loops per minute when 20 repos changed at once.</li>
-<li><strong>Integration surface</strong>: how many AWS services it touched (CloudWatch, IAM, EKS add-ons, etc.).</li>
-</ul>
-<p>I ignored buzzwords like "declarative" and "immutable" — I cared about hard numbers and real incidents. The table below shows what I measured after two years of constant use.</p>
+<p>I evaluated every mainstream GitOps tool I could get my hands on: ArgoCD, Flux, Weave GitOps, and a few internal prototypes we built on top of the Kubernetes Operator pattern. 
+- <strong>Resource cost</strong>: extra CPU/memory overhead on the cluster compared to the baseline (no GitOps agent).
+- <strong>Difficulty curve</strong>: time to train a junior engineer to run the tool without breaking prod.
+- <strong>Stability under load</strong>: number of reconciliation loops per minute when 20 repos changed at once.
+- <strong>Integration surface</strong>: how many AWS services it touched (CloudWatch, IAM, EKS add-ons, etc.).</p>
+<p>The table below shows what I measured after two years of constant use.</p>
 <table>
 <thead>
 <tr>
@@ -386,16 +383,16 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - gotk-components.yaml
-  - gotk-sync.yaml
+- gotk-components.yaml
+- gotk-sync.yaml
 configMapGenerator:
-  - name: cluster-config
-    literals:
-      - CLUSTER_NAME=prod-us-west-2
-      - AWS_REGION=us-west-2
+- name: cluster-config
+literals:
+- CLUSTER_NAME=prod-us-west-2
+- AWS_REGION=us-west-2
 images:
-  - name: fluxcd/flux-cli
-    newTag: v2.3.0
+- name: fluxcd/flux-cli
+newTag: v2.3.0
 </code></pre>
 <p>The only hard part was tuning the <code>syncInterval</code> in the <code>GitRepository</code> object. We started with 30 seconds and burned 30% extra CPU. Setting it to 2 minutes cut overhead to 0.9 vCPU and kept drift under control.</p>
 <h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
@@ -516,7 +513,7 @@ images:
 <p><strong>What’s the easiest way to migrate from Helm to GitOps?</strong></p>
 <p>Start by exporting your Helm values into a Kustomize overlay. Use <code>helm template</code> to generate manifests, then commit them to a Git repo. Run Flux or ArgoCD against that repo. We migrated 47 Helm charts in 10 engineer-days by automating the export with a Python script that ran <code>helm template</code> and <code>yq</code>.</p>
 <p><strong>How do I stop ArgoCD from recreating resources every 30 seconds?</strong></p>
-<p>Set the <code>app.syncWave</code> to a large negative number (e.g., <code>-10</code>) and disable auto-sync (<code>syncPolicy: { automated: { selfHeal: false } }</code>). Then sync manually when you’re ready. I spent three hours on this before realizing the live state didn’t match the desired state because the application wasn’t reading the ConfigMap at all.</p>
+<p>Set the <code>app.syncWave</code> to a large negative number (e.g., <code>-10</code>) and disable auto-sync (<code>syncPolicy: { automated: { selfHeal: false } }</code>). Then sync manually when you’re ready. </p>
 <p><strong>Can Flux update images automatically?</strong></p>
 <p>Yes, with the image automation plugin. Configure a <code>ImageUpdateAutomation</code> resource and point it at your registry. We use ECR with IAM roles, and Flux updates images in under 90 seconds. The only caveat is the registry must support the Docker Registry HTTP API V2; older ECR endpoints need a shim.</p>
 <p><strong>What happens if Git goes down?</strong></p>
@@ -528,11 +525,11 @@ curl -s https://fluxcd.io/install.sh | sudo bash
 
 # Bootstrap a new cluster
 flux bootstrap github \
-  --owner=myorg \
-  --repository=infra \
-  --branch=main \
-  --path=./clusters/prod-us-west-2 \
-  --network-policy=false
+--owner=myorg \
+--repository=infra \
+--branch=main \
+--path=./clusters/prod-us-west-2 \
+--network-policy=false
 </code></pre>
 <p>Then add the image automation plugin and point it at your ECR registry. In 30 minutes you’ll have a working GitOps pipeline that syncs every 2 minutes and costs less than one pod.</p>
 <hr />

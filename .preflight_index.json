@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-13T03:56:29.388418",
+  "built_at": "2026-09-13T16:15:38.207194",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5115,6 +5115,11 @@
       "slug": "stop-assuming-payment-apis-never-fail",
       "title": "Stop assuming payment APIs never fail",
       "summary": "The default configuration is fine right up until it isn't. traditional observability was never the hard part. Knowing when it was about to fail was. Here's the fuller picture, with the tradeoffs left in. Why I wrote this (the problem I kept hitting) When you stitch an AI recommendation engine into a"
+    },
+    {
+      "slug": "why-our-schema-survived-ai-scaling",
+      "title": "Why our schema survived AI scaling",
+      "summary": "data modeling taught me the difference between working and being trustworthy. Here's the version I wish someone had handed me first. Most write-ups stop exactly where the interesting part starts. When a fintech platform starts feeding user transactions through large language models, the temptation i"
     }
   ]
 }

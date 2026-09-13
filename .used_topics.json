@@ -194,5 +194,6 @@
   "How AI changed the sales cycle for developer tools \u2014 and what still works",
   "Why platform teams building for 2024 developer workflows struggle in an agentic world",
   "What traditional observability misses when agents enter production",
-  "Building AI features that tolerate M-Pesa, Paystack, and Flutterwave failure modes"
+  "Building AI features that tolerate M-Pesa, Paystack, and Flutterwave failure modes",
+  "The data modeling decisions that survived our move to heavy AI feature usage"
 ]

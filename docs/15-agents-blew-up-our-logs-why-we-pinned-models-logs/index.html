@@ -63,7 +63,7 @@
       "description": "Cut log debugging 78% with structured logs + model pinning — exact schema IDs, pinned Docker tags, and the rollback mistake most teams skip.",
       "datePublished": "2026-07-04T10:14:14+00:00",
       "dateModified": "2026-07-04T10:14:14+00:00",
-      "wordCount": 2182,
+      "wordCount": 2146,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -263,7 +263,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2182 words
+                        &nbsp;·&nbsp; 2146 words
                         
                         &nbsp;·&nbsp; Updated 2026-07-04
                         
@@ -272,11 +272,11 @@
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The short version: the conventional advice on structured logging is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
+                <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
 <p>Once you run more than a dozen agents in production, the logs stop making sense unless you enforce two rules: every log line must be structured so machines can parse it, and every model or library version must be pinned so rollbacks are safe. Without structure, a 1 GB JSON log file is just noise; without pinning, a rollback can break your API because the new agent binary expects a field the old one never sent. We learned this the hard way when our 17th agent started sending malformed timestamps, which broke our Loki dashboards at 3 a.m. and cost us 4.2 hours of sleep. The fix was simple in theory—switch to JSON-formatted logs with schema IDs and pin agent dependencies to exact versions—but the migration took three sprints because we assumed the agents would keep their contracts stable. They did not.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>Most engineers think logging is just about turning on <code>DEBUG</code> mode or redirecting stdout to a file. That works for one or two agents running on a dev laptop, but once you scale to 15 agents in production—each with its own lifecycle, binary upgrades, and third-party SDKs—raw text logs become a liability. I ran into this when our Prometheus scrape targets started failing after an agent upgrade because the new binary emitted logs in a different format. The logs themselves were still there, but the fields we relied on (<code>timestamp</code>, <code>level</code>, <code>request_id</code>) were now nested under <code>metadata</code> and missing a <code>level</code> field entirely. The confusion isn’t technical—it’s psychological. We assume logs are free-form text for humans, but at scale they become a contract between machines. That contract must be explicit, versioned, and enforced.</p>
+<p>Most engineers think logging is just about turning on <code>DEBUG</code> mode or redirecting stdout to a file. That works for one or two agents running on a dev laptop, but once you scale to 15 agents in production—each with its own lifecycle, binary upgrades, and third-party SDKs—raw text logs become a liability. The logs themselves were still there, but the fields we relied on (<code>timestamp</code>, <code>level</code>, <code>request_id</code>) were now nested under <code>metadata</code> and missing a <code>level</code> field entirely. The confusion isn’t technical—it’s psychological. We assume logs are free-form text for humans, but at scale they become a contract between machines. That contract must be explicit, versioned, and enforced.</p>
 <p>Another layer of confusion comes from the word “structured.” People picture something like Avro schemas or Protocol Buffers, but the minimum viable structure in 2026 is JSON with a fixed schema ID in each line. We started with plain JSON logs and assumed the schema would stay stable; it did not. After six weeks of flaky Loki queries, we added schema IDs (like <code>log_schema_v1</code>) and pinned every agent to a specific Docker image tag so we knew which schema version to expect. Simple in hindsight, but hard to sell to product managers who wanted “just logs” instead of “log contracts.”</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
 <p>Think of your logs as a database table. Each row is a log line, and each column is a field like <code>timestamp</code>, <code>level</code>, <code>trace_id</code>, or <code>user_id</code>. If you let every agent insert rows with arbitrary columns, your table schema changes constantly, and every query breaks. The fix is twofold:</p>
@@ -297,9 +297,9 @@ import time
 logging.basicConfig(level=logging.INFO)
 
 def process_request(request_id, user_id):
-    logging.info(f&quot;Started {request_id} for user {user_id}&quot;)
-    time.sleep(0.1)
-    logging.info(f&quot;Finished {request_id} for user {user_id}&quot;)
+logging.info(f&quot;Started {request_id} for user {user_id}&quot;)
+time.sleep(0.1)
+logging.info(f&quot;Finished {request_id} for user {user_id}&quot;)
 </code></pre>
 <p>After the first agent upgrade, the log format changed because the new SDK expected a <code>trace_id</code> field. Our Loki queries broke because they relied on <code>request_id</code>. The fix required three steps:</p>
 <ol>
@@ -312,39 +312,39 @@ import time
 
 # Structured logger with schema ID
 class StructuredLogger:
-    def __init__(self):
-        self.schema_id = &quot;log_schema_v2&quot;
+def __init__(self):
+self.schema_id = &quot;log_schema_v2&quot;
 
-    def log(self, level, message, **fields):
-        log_line = {
-            &quot;schema_id&quot;: self.schema_id,
-            &quot;timestamp&quot;: int(time.time() * 1000),
-            &quot;level&quot;: level,
-            &quot;message&quot;: message,
-            **fields
-        }
-        print(json.dumps(log_line))
+def log(self, level, message, **fields):
+log_line = {
+&quot;schema_id&quot;: self.schema_id,
+&quot;timestamp&quot;: int(time.time() * 1000),
+&quot;level&quot;: level,
+&quot;message&quot;: message,
+**fields
+}
+print(json.dumps(log_line))
 
 logger = StructuredLogger()
 
 def process_request(request_id, user_id):
-    logger.log(&quot;INFO&quot;, &quot;Started request&quot;, request_id=request_id, user_id=user_id, trace_id=&quot;abc123&quot;)
-    time.sleep(0.1)
-    logger.log(&quot;INFO&quot;, &quot;Finished request&quot;, request_id=request_id, user_id=user_id)
+logger.log(&quot;INFO&quot;, &quot;Started request&quot;, request_id=request_id, user_id=user_id, trace_id=&quot;abc123&quot;)
+time.sleep(0.1)
+logger.log(&quot;INFO&quot;, &quot;Finished request&quot;, request_id=request_id, user_id=user_id)
 </code></pre>
 <ol>
 <li>Update the log router (Loki in our case) to reject unknown schemas:</li>
 </ol>
 <pre><code class="language-yaml"># loki-ingress.yaml
 scrape_configs:
-  - job_name: agent
-    pipeline_stages:
-      - json:
-          expressions:
-            schema_id: schema_id
-      - match:
-          selector: '{schema_id!=&quot;log_schema_v2&quot;}'
-          action: drop
+- job_name: agent
+pipeline_stages:
+- json:
+expressions:
+schema_id: schema_id
+- match:
+selector: '{schema_id!=&quot;log_schema_v2&quot;}'
+action: drop
 </code></pre>
 <p>The cost of this change was 42 lines of code and one all-hands rollback when we forgot to pin the Docker tag in CI. The benefit was a 78% reduction in log-related incidents within two weeks.</p>
 <h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
@@ -373,14 +373,14 @@ from schemactl import SchemaRegistry
 
 @dataclass
 class LogV3:
-    schema_id: str = &quot;log_schema_v3&quot;
-    timestamp: int
-    level: str
-    message: str
-    trace_id: str
-    user_id: str
-    # Optional: new field added in v3
-    duration_ms: int | None = None
+schema_id: str = &quot;log_schema_v3&quot;
+timestamp: int
+level: str
+message: str
+trace_id: str
+user_id: str
+# Optional: new field added in v3
+duration_ms: int | None = None
 
 registry = SchemaRegistry(&quot;arn:aws:glue:eu-west-1:123456789012:schema/log_v3&quot;)
 registry.register(LogV3)
