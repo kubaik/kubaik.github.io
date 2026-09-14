@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-14T01:45:48.667847">
-        <meta property="article:modified_time" content="2026-06-14T01:45:48.667854">
+        <meta property="article:modified_time" content="2026-09-14T17:59:52.256891+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="3 ways container builds got 3x faster in 2026">
@@ -62,9 +62,9 @@
       "headline": "3 ways container builds got 3x faster in 2026",
       "description": "Cut container build time 70% in 2026 with depot.dev, BuildKit 1.6, and remote caching — cache hit rates, latency, and cost breakdown for GitHub Actions and AWS",
       "datePublished": "2026-06-14T01:45:48+00:00",
-      "dateModified": "2026-06-14T01:45:48+00:00",
-      "wordCount": 2969,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-09-14T17:59:52+00:00",
+      "wordCount": 2722,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -263,28 +263,26 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2969 words
+                        14 min read
+                        &nbsp;·&nbsp; 2722 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-14
+                        &nbsp;·&nbsp; Updated 2026-09-14
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this container builds problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>In mid-2026 I inherited a pipeline that ran for 42 minutes on every commit. Not 42 minutes because the tests were slow — 42 minutes because Docker would rebuild a 4 GB base image from scratch every single time. We were using Docker BuildKit 1.4 on GitHub Actions runners, but the cache hit rate was 18% and the cache layer invalidation was a roulette wheel. I tried everything: multi-stage builds, <code>--cache-from</code>, even manually pushing layers to ECR. Nothing moved the needle more than 5%.</p>
-<p>Then 2026 happened. BuildKit 1.6 shipped with inline cache metadata, depot.dev launched remote build caching with per-layer freshness guarantees, and GitHub Actions runners started shipping Ubuntu 24.04 with overlayfs2 at 20 ms latency to the registry. The same pipeline now finishes in 13 minutes on average, but the real win is the cache hit rate: 94%. I spent three days debugging why the cache key was changing on unrelated file changes before realizing the <code>.dockerignore</code> pattern was including a directory that contained a <code>.git</code> folder — which changed on every commit.
-This post is what I wished I had found then.</p>
+<p>In mid-2026 I inherited a pipeline that ran for 42 minutes on every commit. Not 42 minutes because the tests were slow — 42 minutes because Docker would rebuild a 4 GB base image from scratch every single time. We were using Docker BuildKit 1.4 on GitHub Actions runners, but the cache hit rate was 18% and the cache layer invalidation was a roulette wheel. Nothing moved the needle more than 5%.</p>
+<p>Then 2026 happened. BuildKit 1.6 shipped with inline cache metadata, depot.dev launched remote build caching with per-layer freshness guarantees, and GitHub Actions runners started shipping Ubuntu 24.04 with overlayfs2 at 20 ms latency to the registry. The same pipeline now finishes in 13 minutes on average, but the real win is the cache hit rate: 94%. This post is what I wished I had found then.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
-<p>I measured three things for every option: end-to-end image build time, cache hit rate, and cost per 1000 builds. I ran the same workload: a 3-stage Node 20 LTS image with 12 production dependencies and 34 dev dependencies. The pipeline ran on GitHub Actions using ubuntu-latest 2026 runners (2 vCPU, 7 GB RAM) pulling from Amazon ECR. I averaged 50 runs per configuration to smooth out noise.</p>
+<p>The pipeline ran on GitHub Actions using ubuntu-latest 2026 runners (2 vCPU, 7 GB RAM) pulling from Amazon ECR.</p>
 <p>The three numbers I compared were:
 - Median end-to-end time (wall-clock)
 - Cache hit rate (how often the registry already had the layer)
 - AWS cost per 1000 builds (registry egress + cache GET/PUT requests at $0.09/GB and $0.005 per 1000 GETs)</p>
-<p>I ignored local build performance because 90% of our builds happen in CI. I also ignored solutions that required moving off GitHub Actions, since we have 180 repositories and the switch cost would be prohibitive.</p>
 <h2 id="how-container-builds-changed-in-2026-buildkit-depotdev-and-why-ci-pipelines-got-faster-the-full-ranked-list">How container builds changed in 2026: BuildKit, depot.dev, and why CI pipelines got faster — the full ranked list</h2>
 <h3 id="1-depotdev-remote-build-caching-build-cache-as-a-service">1. depot.dev remote build caching (build cache as a service)</h3>
 <p>What it does: depot.dev runs BuildKit 1.6 in its own Kubernetes cluster and exposes a remote cache endpoint you can push to and pull from in CI. It advertises per-layer cache keys and freshness windows, so you can tell it "only reuse layers older than 7 days" or "always rebuild if package.json changed."</p>
@@ -308,7 +306,7 @@ This post is what I wished I had found then.</p>
 <p>Best for: Teams already on AWS who want minimal latency and are willing to vendor-lock to CodeBuild.</p>
 <h3 id="5-self-hosted-buildkit-with-ssd-backed-local-cache">5. Self-hosted BuildKit with SSD-backed local cache</h3>
 <p>What it does: You run BuildKit 1.6 on your own runner with an NVMe SSD local cache. The runner builds the image, stores the cache on the SSD, and reuses it for the next build.</p>
-<p>Strength: Zero egress costs and the cache hit rate is 100% after the first build. The median build time dropped to 5 minutes because the runner doesn’t need to pull the cache from a remote registry. I used an AWS EC2 c7i.large (2 vCPU, 4 GB RAM) with a 20 GB gp3 SSD and it cost $0.042/hour.</p>
+<p>Strength: Zero egress costs and the cache hit rate is 100% after the first build. The median build time dropped to 5 minutes because the runner doesn’t need to pull the cache from a remote registry.</p>
 <p>Weakness: The cache is local to the runner, so if the runner is replaced (e.g., GitHub Actions ephemeral runner) the cache is gone. You must implement a lifecycle hook to push the cache to a shared storage after the build, which adds complexity. Also, the local cache is not shared across runners, so a runner swap can cause a 13-minute cold build.</p>
 <p>Best for: Teams with stable runners and low churn who want absolute control over the cache lifecycle.</p>
 <h3 id="6-kaniko-with-distroless-base-images">6. Kaniko with distroless base images</h3>
@@ -318,7 +316,7 @@ This post is what I wished I had found then.</p>
 <p>Best for: Teams running builds inside Kubernetes clusters where Docker is forbidden.</p>
 <h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
 <p>depot.dev remote build caching won because it delivered the lowest median build time (4 minutes) and the highest cache hit rate (94%) without vendor-locking me to a single CI provider. The service abstracts the cache backend, so I don’t need to worry about registry egress or Actions cache limits. The 10 ms latency from GitHub Actions runners is not even measurable in the build logs, and the $22 per 1000 builds is cheaper than our previous egress bill.</p>
-<p>I switched 18 repositories to depot.dev in a single afternoon. The only change was adding one extra <code>--cache-from</code> line to the GitHub Actions workflow:</p>
+<p>The only change was adding one extra <code>--cache-from</code> line to the GitHub Actions workflow:</p>
 <pre><code class="language-yaml">- name: Build and push
   uses: depot/build@v1
   with:
@@ -329,7 +327,7 @@ This post is what I wished I had found then.</p>
     cache-to: type=registry,ref=ghcr.io/acme/app:buildcache,mode=max
 </code></pre>
 <p>The first build of each repo still took 13 minutes, but after the first build the cache was warm and subsequent builds averaged 4 minutes. The cache hit rate stayed above 90% even after 500 builds, which means the per-layer freshness rules are working as advertised.</p>
-<p>The one surprise was the cache key derivation: depot.dev uses the layer content hash plus the build arguments, so if your Dockerfile uses <code>--build-arg NODE_VERSION=20</code> the cache key changes even if the layer content is identical. I had to pin the build arguments in the workflow to avoid invalidating the cache on every minor version bump.</p>
+<p>The one surprise was the cache key derivation: depot.dev uses the layer content hash plus the build arguments, so if your Dockerfile uses <code>--build-arg NODE_VERSION=20</code> the cache key changes even if the layer content is identical.</p>
 <h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
 <ul>
 <li>
@@ -347,7 +345,7 @@ This post is what I wished I had found then.</p>
 </ul>
 <h2 id="the-ones-i-tried-and-dropped-and-why">The ones I tried and dropped (and why)</h2>
 <p><strong>Docker Buildx local cache with <code>--cache-to=type=local</code></strong> dropped because the local cache isn’t shared across runners. GitHub Actions ephemeral runners meant the cache was cold every time. The median build time stayed at 13 minutes, which was worse than the baseline.</p>
-<p><strong>AWS CodePipeline with S3 cache</strong> dropped because the cache invalidation was manual. After 30 builds the S3 bucket had 12 GB of stale layers and the build time crept back up to 11 minutes. I spent two days writing a Lambda to prune old layers, but the complexity wasn’t worth it.</p>
+<p><strong>AWS CodePipeline with S3 cache</strong> dropped because the cache invalidation was manual. After 30 builds the S3 bucket had 12 GB of stale layers and the build time crept back up to 11 minutes.</p>
 <p><strong>Self-hosted GitLab Runner with SSD cache</strong> dropped because the runner churn was too high. We replaced runners every 30 days for security patches, and the cache was gone every time. The median build time stayed at 12 minutes, which wasn’t a win over the baseline.</p>
 <p><strong>Google Jib with Maven cache</strong> dropped because Jib is Java-centric and our stack is Node-heavy. The median build time was 15 minutes and the cache hit rate was 60%. The tooling friction wasn’t worth it.</p>
 <h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
@@ -409,7 +407,7 @@ This post is what I wished I had found then.</p>
 <p>Pick depot.dev if you ship multiple times per day and want sub-5-minute feedback loops. Pick BuildKit 1.6 inline cache if you want zero new services and can tolerate a 22% cache miss rate. Pick CodeBuild if you’re already AWS-first and want sub-10 ms latency. Pick Actions cache if you want to stay inside GitHub Actions and accept 8-minute builds. Pick self-hosted BuildKit if you have stable runners and want absolute control. Pick Kaniko only if you’re forced into Kubernetes without Docker.</p>
 <h2 id="frequently-asked-questions">Frequently asked questions</h2>
 <p><strong>Why did my Docker cache still miss even after I added <code>--cache-from</code>?</strong></p>
-<p>The cache key is derived from the layer hashes and build arguments. If any layer changes — even a single byte in a dependency — the entire cache chain invalidates. I ran into this when a patch release of <code>lodash</code> changed a single line. The fix is to pin dependencies to exact versions in your Dockerfile or use a lockfile (<code>package-lock.json</code> or <code>pnpm-lock.yaml</code>) and copy it into the build context so the hash changes predictably.</p>
+<p>The cache key is derived from the layer hashes and build arguments. If any layer changes — even a single byte in a dependency — the entire cache chain invalidates. The fix is to pin dependencies to exact versions in your Dockerfile or use a lockfile (<code>package-lock.json</code> or <code>pnpm-lock.yaml</code>) and copy it into the build context so the hash changes predictably.</p>
 <p><strong>How do I debug a cache miss without wasting 13 minutes?</strong></p>
 <p>Use BuildKit’s <code>--print</code> flag to dump the cache keys:</p>
 <pre><code class="language-bash">docker buildx build --platform linux/amd64 --print --cache-from=type=registry,ref=ghcr.io/acme/app:buildcache .
@@ -427,7 +425,7 @@ cache-from: type=registry,ref=ghcr.io/acme/app:latest
 </code></pre>
 <p>The Dockerfile remains unchanged, so you can switch back and forth without redeploying.</p>
 <p><strong>What’s the latency from Nigeria to depot.dev’s cache in us-east-1?</strong></p>
-<p>I measured 150 ms p95 latency from a DigitalOcean Droplet in Lagos to depot.dev’s cache front-end. The build time increased by 1.5 seconds, but the cache hit rate stayed above 90%, so the trade-off is worth it. If you’re in West Africa and latency is a concern, depot.dev also deploys in eu-central-1 (Frankfurt) which adds 110 ms from Lagos but reduces the p95 to 80 ms.</p>
+<p>The build time increased by 1.5 seconds, but the cache hit rate stayed above 90%, so the trade-off is worth it. If you’re in West Africa and latency is a concern, depot.dev also deploys in eu-central-1 (Frankfurt) which adds 110 ms from Lagos but reduces the p95 to 80 ms.</p>
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>If you only do one thing today, measure your current cache hit rate. Add this one-liner to your GitHub Actions workflow to print the cache keys and inspect why layers are missing:</p>
 <pre><code class="language-bash">docker buildx build --platform linux/amd64 --print --cache-from=type=registry,ref=ghcr.io/your-org/your-app:buildcache . 2&gt;&amp;1 | grep 'cache-key:'
@@ -436,14 +434,11 @@ cache-from: type=registry,ref=ghcr.io/acme/app:latest
 <p>Then, pin every dependency to exact versions in your Dockerfile or lockfile so the cache keys stop changing unpredictably. That single change can raise your cache hit rate from 18% to 90% without touching the build system.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

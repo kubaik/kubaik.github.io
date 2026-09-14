@@ -201,5 +201,6 @@
   "Token attribution models that make AI spend visible to product and finance teams",
   "Versioning and evolving agent capabilities without breaking existing integrations",
   "The cost and reliability tradeoffs of running agents for users who pay in local mobile money",
-  "The token economics problem nobody has fully solved for always-on agent fleets"
+  "The token economics problem nobody has fully solved for always-on agent fleets",
+  "Code review and architecture decisions when large parts of a system are agent-orchestrated"
 ]

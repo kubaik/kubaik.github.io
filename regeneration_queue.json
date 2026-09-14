@@ -73,31 +73,36 @@
     "slug": "3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that",
     "title": "3 vibe-coding tricks that kill MVPs — and 5 tools that",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this vibe coding problem while migrating a service under a hard deadl; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "3-ways-container-builds-got-3x-faster-in-2026",
     "title": "3 ways container builds got 3x faster in 2026",
     "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I ran into this container builds problem while migrating a service under a hard ; Here's what actually worked.; I tried everything: multi-stage builds,  , even manually pushing layers to ECR.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "4-ai-tools-that-level-the-dev-salary-gap-in-2026",
     "title": "4 AI tools that level the dev salary gap in 2026",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this east african problem while migrating a service under a hard dead; Here's what actually worked.; I ran a spike in January 2026 using Python 3.11 and Node 20 LTS.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "40-ai-code-meant-60-more-alerts",
     "title": "40% AI code meant 60% more alerts",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "47-ai-code-debt-in-2026",
     "title": "47% AI code debt in 2026",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'a 2026 GitClear survey that tracked'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "5-ai-tools-that-let-us-ship-faster-than-sf-teams",
@@ -2778,6 +2783,12 @@
     "slug": "why-token-economics-break-alwayson-fleets",
     "title": "Why token economics break always‑on fleets",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
+    "action": "regenerate"
+  },
+  {
+    "slug": "stop-trusting-agents-for-core-logic",
+    "title": "Stop trusting agents for core logic",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
     "action": "regenerate"
   }
 ]

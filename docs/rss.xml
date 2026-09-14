@@ -5,13 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 14 Sep 2026 08:05:09 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 14 Sep 2026 18:00:01 +0000</lastBuildDate>
     <item>
-      <title>Why token economics break always‑on fleets</title>
-      <link>https://kubaik.github.io/why-token-economics-break-alwayson-fleets/</link>
-      <description>Token economics mis‑pricing stalls always‑on agent fleets — avoid hidden quota overspend and latency spikes by fixing budgeting logic.</description>
-      <pubDate>Mon, 14 Sep 2026 08:01:49 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-token-economics-break-alwayson-fleets/</guid>
+      <title>Stop trusting agents for core logic</title>
+      <link>https://kubaik.github.io/stop-trusting-agents-for-core-logic/</link>
+      <description>Agent‑orchestrated systems often hide coupling; discover a contract‑first approach that cuts latency 60% and avoids hidden failures.</description>
+      <pubDate>Mon, 14 Sep 2026 17:56:40 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-trusting-agents-for-core-logic/</guid>
     </item>
     <item>
       <title>Why does my agent version break clients?</title>

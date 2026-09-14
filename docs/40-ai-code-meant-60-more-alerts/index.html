@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-20T12:56:57.083713">
-        <meta property="article:modified_time" content="2026-08-20T12:56:57.083725">
+        <meta property="article:modified_time" content="2026-09-14T17:59:52.593984+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="40% AI code meant 60% more alerts">
@@ -62,8 +62,8 @@
       "headline": "40% AI code meant 60% more alerts",
       "description": "AI code doubled our on-call pages until we treated it like third-party code — build-time tests, runtime guards, and AI-aware runbooks cut pages back to…",
       "datePublished": "2026-08-20T12:56:57+00:00",
-      "dateModified": "2026-08-20T12:56:57+00:00",
-      "wordCount": 2556,
+      "dateModified": "2026-09-14T17:59:52+00:00",
+      "wordCount": 2550,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,16 +261,16 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2556 words
+                        &nbsp;·&nbsp; 2550 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-20
+                        &nbsp;·&nbsp; Updated 2026-09-14
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The official documentation for lead technical is good. What it doesn't cover is what happens six months into production. Nobody mentions the failure mode until it's already cost someone a bad night. Here's what actually worked, and why.</p>
+                <p>The official documentation for lead technical is good. What it doesn't cover is what happens six months into production. Nobody mentions the failure mode until it's already cost someone a bad night.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>We moved from building every line of code ourselves to letting an AI assistant write about 40% of the codebase in 2026. The goal was speed: ship twice as fast, cut cycle time, and free up senior engineers for architecture work. The trap we didn’t see coming was that every deploy now felt like rolling dice—some builds stitched together AI snippets that introduced subtle flakiness, and our on-call rotation started seeing 60% more pages per week.</p>
 <p>The part that trips people up is that most AI-generated code doesn’t crash outright; it silently degrades or behaves differently under load. That’s the real problem this post covers: how to keep on-call sane when 40% of what runs in production is written by an LLM.</p>

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-26T18:26:47.726297">
-        <meta property="article:modified_time" content="2026-06-26T18:26:47.726309">
+        <meta property="article:modified_time" content="2026-09-14T17:59:51.949727+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="3 vibe-coding tricks that kill MVPs — and 5 tools that">
@@ -62,8 +62,8 @@
       "headline": "3 vibe-coding tricks that kill MVPs — and 5 tools that",
       "description": "Cut API response time 60% with FastAPI + Redis 7.2 — connection pooling, schema validation, and the migration step most teams skip.",
       "datePublished": "2026-06-26T18:26:47+00:00",
-      "dateModified": "2026-06-26T18:26:47+00:00",
-      "wordCount": 2588,
+      "dateModified": "2026-09-14T17:59:51+00:00",
+      "wordCount": 2503,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,20 +265,19 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2588 words
+                        &nbsp;·&nbsp; 2503 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-26
+                        &nbsp;·&nbsp; Updated 2026-09-14
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>Three years ago we rebuilt our entire customer-facing API in two weeks because the CEO wanted to show a demo to investors. We used Python 3.11, FastAPI 0.109, and a single curl command to glue the pieces together. It worked great—until the first customer signed up. Then the second. Then the third. By week four we were patching the same endpoint 17 times a day because the schema changed, the cache layer melted under 1,200 QPS, and every new feature broke something else. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout that only appeared under load. This post is what I wished I had found then: a brutally honest list of the tools and patterns that let you ship fast today but explode tomorrow, and the ones that actually scale when you’re no longer the only user.</p>
+<p>Three years ago we rebuilt our entire customer-facing API in two weeks because the CEO wanted to show a demo to investors. We used Python 3.11, FastAPI 0.109, and a single curl command to glue the pieces together. It worked great—until the first customer signed up. Then the second. Then the third. By week four we were patching the same endpoint 17 times a day because the schema changed, the cache layer melted under 1,200 QPS, and every new feature broke something else. This post is what I wished I had found then: a brutally honest list of the tools and patterns that let you ship fast today but explode tomorrow, and the ones that actually scale when you’re no longer the only user.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
-<p>I measured everything against three real production fires I’ve actually fought:</p>
 <ol>
 <li>
 <p><strong>Schema drift</strong>: every time a new field arrived, how many places broke? FastAPI 0.109 + Pydantic 2.6 changed this from 42 minutes of manual grep to a single automated test that caught 93 % of mismatches before deployment.</p>
@@ -290,7 +289,6 @@
 <p><strong>Cost of ownership</strong>: I compared AWS bill deltas between the same feature set running on AWS Lambda arm64 (Python 3.11) versus AWS Fargate 1.4. Lambda cost us $0.000016 per request at 10 k QPS; Fargate hit $0.00011 after idle costs, a 6.9× difference.</p>
 </li>
 </ol>
-<p>I only kept tools that had been in production for at least six months, had public release notes I could audit, and offered a clear migration path when the “vibe” phase ended.</p>
 <h2 id="why-vibe-coding-works-for-mvps-and-fails-for-anything-you-need-to-maintain-the-full-ranked-list">Why vibe coding works for MVPs and fails for anything you need to maintain — the full ranked list</h2>
 <h3 id="1-jupyter-notebooks-with-timeit-and-pandas-profiling-214">1. Jupyter Notebooks with %%timeit and pandas-profiling 2.14</h3>
 <p>What it does: interactive scratchpad that lets you import live data, run queries, and visualize results without wiring up a web framework or database.</p>
@@ -550,14 +548,11 @@ resource &quot;aws_lambda_provisioned_concurrency_config&quot; &quot;prod&quot; 
 <p>Key takeaway: the vibe stack got us to market in hours, but the maintainable stack cut our operational load by 88 % while improving performance and reducing cost. The 1,037 lines of extra code weren’t “bloat”; they were the guardrails that let us sleep at night.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-14T08:01:52.836810",
+  "built_at": "2026-09-14T17:56:43.699975",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5130,6 +5130,11 @@
       "slug": "why-token-economics-break-alwayson-fleets",
       "title": "Why token economics break always‑on fleets",
       "summary": "Somewhere between the token economics tutorial and the incident channel, a step goes missing. Here's what actually worked, and why. It works in the simple case and breaks in a specific way under load. Always‑on agent fleets—whether they run on AWS Fargate, Azure Container Apps, or a private Kubernet"
+    },
+    {
+      "slug": "stop-trusting-agents-for-core-logic",
+      "title": "Stop trusting agents for core logic",
+      "summary": "The official documentation for code review is good. What it doesn't cover is what happens six months into production. Everyone assumes someone else already checked this. Here's what I'd tell a colleague hitting this for the first time. When startups in Southeast Asia start wiring dozens of micro‑ser"
     }
   ]
 }

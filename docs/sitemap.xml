@@ -129,7 +129,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that/</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -138,7 +138,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/3-ways-container-builds-got-3x-faster-in-2026/</loc>
-    <lastmod>2026-06-14</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -156,7 +156,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/40-ai-code-meant-60-more-alerts/</loc>
-    <lastmod>2026-08-20</lastmod>
+    <lastmod>2026-09-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -4061,6 +4061,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/stop-trusting-agents-for-core-logic/</loc>
+    <lastmod>2026-09-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/stop-trusting-agents-for-core-logic.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/store-data-once-serve-everywhere-cheaper/</loc>
     <lastmod>2026-06-25</lastmod>
     <changefreq>weekly</changefreq>
@@ -4865,15 +4874,6 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/why-scaling-agents-kills-plain-logs.png</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://kubaik.github.io/why-token-economics-break-alwayson-fleets/</loc>
-    <lastmod>2026-09-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://kubaik.github.io/static/og/why-token-economics-break-alwayson-fleets.png</image:loc>
     </image:image>
   </url>
   <url>
