@@ -1,2 +1,10 @@
-✅ Internal link audit: PASS
-   501 posts checked — no broken internal links found.
+❌ Internal link audit: 1 broken link(s) found across 499 posts checked.
+
+Source Post                              Anchor Text                    Missing Target
+------------------------------------------------------------------------------------------
+  /agent-systems-circuit-breakers-are-not-enough on circuit breakers            /ai-agents-need-circuit-breakers-in-2026/
+
+Resolution options:
+  1. Re-publish the missing posts.
+  2. Remove the links manually from the source posts.
+  3. Run the auto-fix: validate_post_links() on each source post.

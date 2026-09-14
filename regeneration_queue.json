@@ -3,31 +3,36 @@
     "slug": "10-ai-wrappers-that-shipped-in-2026-8-died-fast",
     "title": "10 AI wrappers that shipped in 2026 — 8 died fast",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I ran into this wrapper businesses problem while migrating a service under a har; Here's what actually worked.; I spent three weeks benchmarking every wrapper we’d adopted — some 12 of them — ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "2026-ai-stack-solo-saas-cost-showdown",
     "title": "2026 AI stack: solo SaaS cost showdown",
     "reason": "retroactive_fabrication_audit: 16 unverifiable first-person anecdote(s): I've seen the same changed economics mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "2026-salary-hacks-prove-ai-didnt-steal-your-value",
     "title": "2026 salary hacks: Prove AI didn’t steal your value",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'the 2026 Stack Overflow Developer Survey that shows'",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "2026-tech-salaries-where-cuts-stopped-where-raises",
     "title": "2026 tech salaries: where cuts stopped, where raises",
     "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): The short version: the conventional advice on tech salaries is incomplete.; I was surprised when two of our SREs in Nairobi both got offers 25% above their ; I spent three weeks last quarter parsing 180 offer letters from Nairobi startups",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "2026-technical-screens-what-actually-works",
     "title": "2026 technical screens: what actually works",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I had to fork   and add exponential backoff capped at 1 second; that change alon",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "3-ai-coders-ranked-cursor-windsurf-claude-code-in",
@@ -2758,5 +2763,10 @@
     "title": "Zero-trust MCP servers: auth trap you’ll hit first",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I once inherited a system where the MCP server ran as the same user as the agent; I had to write custom OPA rules that map SPIFFE IDs to a set of allowed operatio",
     "action": "regenerate"
+  },
+  {
+    "slug": "purpose-built-ai-vs-general-platforms",
+    "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
+    "priority": "normal"
   }
 ]
