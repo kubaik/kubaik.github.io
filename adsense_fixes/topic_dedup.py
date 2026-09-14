@@ -98,6 +98,12 @@ def _load_corpus(docs_dir: Path) -> List[Dict]:
             data = json.loads(pj.read_text(encoding="utf-8"))
         except json.JSONDecodeError:
             continue
+        # Skip already-retired redirect stubs (see scripts/auto_retire_duplicates.py)
+        # — without this, a stub whose post.json still carries the original
+        # title would keep re-matching its keeper and get "retired" again on
+        # every subsequent run, backing up the stub instead of real content.
+        if data.get("redirect_to"):
+            continue
         title = data.get("title", "")
         meta = data.get("meta_description", "")
         entries.append({
@@ -179,6 +185,19 @@ def find_clusters(docs_dir: Path) -> List[List[Dict]]:
     result = [c for c in clusters.values() if len(c) > 1]
     for c in result:
         c.sort(key=lambda e: -e["words"])  # longest first == recommended KEEP
+        # FIX: attach each non-keep member's DIRECT pairwise score against
+        # this cluster's specific keeper. Without this, a threshold like
+        # "only auto-act on score >= 0.50" would be applied against the
+        # transitive union-find grouping instead of the actual pair — a
+        # 3-way cluster can chain B~C at 46% and C~A at 46% without B~A
+        # ever scoring above 30%, which is a real result on this site (see
+        # the LLM-evals 3-way cluster). Downstream consumers that need a
+        # confidence threshold per deletion should read score_vs_keep, not
+        # assume cluster membership alone implies a strong match to KEEP.
+        keep = c[0]
+        keep["score_vs_keep"] = 1.0
+        for e in c[1:]:
+            e["score_vs_keep"] = _jaccard(keep["keys"], e["keys"])
     return result
 
 
@@ -192,7 +211,7 @@ def _cli(docs_dir: Path) -> None:
         keep = c[0]
         print(f"KEEP  {keep['words']:5d}w  {keep['slug']}  | {keep['title']}")
         for e in c[1:]:
-            print(f"  DEL {e['words']:5d}w  {e['slug']}  | {e['title']}")
+            print(f"  DEL {e['words']:5d}w  {e['score_vs_keep']:.0%} vs keep  {e['slug']}  | {e['title']}")
         print()
 
     if not clusters:

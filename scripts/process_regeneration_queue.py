@@ -1,85 +1,62 @@
-#!/usr/bin/env python3
 """
 scripts/process_regeneration_queue.py
+========================================
+Bounded, automated consumer for the fabrication entries
+scripts/retroactive_fabrication_audit.py appends to regeneration_queue.json.
 
-Consumes the fabrication-audit entries in regeneration_queue.json and
-closes the loop that scripts/retroactive_fabrication_audit.py left
-open: that script only ever WRITES to the queue, nothing reads it.
+WHY THIS EXISTS
+---------------
+retroactive_fabrication_audit.py only ever appends to the queue file —
+nothing consumed it, so flagged posts sat there indefinitely (the same
+gap auto_retire_duplicates.py closes for topic_dedup.py's clusters).
+This is that consumer, scoped ONLY to entries this repo's own
+fabrication scan produced (identified by the "retroactive_fabrication_audit:"
+reason prefix) — quality_gate.py's lower-level score-based entries are
+left untouched for manual review, since "score < 50" doesn't tell you
+WHAT to remove the way a specific regex match does.
 
-WHY "STRIP-AND-KEEP" RATHER THAN DELETE-AND-REGENERATE
---------------------------------------------------------
-A flagged post is usually a decent article with one bad sentence in
-it (an invented statistic, a fabricated "when I tested this..."
-anecdote) — not a bad article. Deleting the whole post throws away
-everything else in it and costs a slug/URL/backlink. This script
-removes only the sentence(s) that trip the SAME two gate functions
-blog_system.py already uses at generation time:
+HOW IT REMOVES CONTENT
+-----------------------
+This does NOT reimplement the fabrication rules. It imports the exact
+same gate functions and pattern lists blog_system.py's generation-time
+gates use (_FABRICATED_CITATION_PATTERNS, _LEGITIMATE_SOURCE_CONTEXT,
+_SKIP_PATTERNS, _reject_if_fabricated_citation, _flag_fabricated_anecdotes)
+so there is no drift between "what blocks a new post" and "what this
+strips from an old one." For each queued post:
+  1. Split content into paragraphs, mask fenced code blocks.
+  2. Within each non-code paragraph, split into sentences and drop any
+     sentence that (a) matches _SKIP_PATTERNS (fabricated first-person
+     anecdote opener) or (b) contains a _FABRICATED_CITATION_PATTERNS
+     match not covered by either of that gate's own allow-lists (a
+     nearby URL, or nearby legitimate-documentation context).
+  3. Re-run _reject_if_fabricated_citation() and _flag_fabricated_anecdotes()
+     on the RESULT. Only if the result now comes back clean does this
+     write the change — if stripping sentence-by-sentence didn't fully
+     clear it (e.g. the fabricated claim spans multiple sentences), the
+     post is left untouched and stays in the queue with a note, rather
+     than shipping a partial, possibly-still-fabricated edit.
 
-    _reject_if_fabricated_citation(content)  -> str | None
-    _flag_fabricated_anecdotes(content)      -> List[str]
-
-There is no reimplementation of the fabrication regexes here — the
-real functions are imported and called directly, exactly like
-retroactive_fabrication_audit.py already does. That matters because
-_reject_if_fabricated_citation() only reports its FIRST match, and
-allow-lists a hit if a real URL or legitimate-documentation phrase
-(e.g. "official docs", "changelog") appears within 200 characters of
-it — logic this script does not try to duplicate. Instead:
-
-  1. Call the real gate function against the CURRENT content.
-  2. If it flags something, locate the exact matched phrase it names
-     in its reason string, find the sentence that phrase sits inside,
-     and remove that whole sentence.
-  3. Re-run the gate against the new content and repeat (bounded), so
-     later matches are evaluated with correct, up-to-date context —
-     never against a stale offset.
-  4. After stripping, re-run BOTH gates on the full resulting content.
-     If anything is still flagged, the post is left untouched and
-     reported as "needs manual review" instead of being force-edited.
-     This script never guesses past what the real gates confirm.
-
-SCOPE — READ THIS BEFORE WIRING INTO CI
------------------------------------------
-This script only processes queue entries written by
-retroactive_fabrication_audit.py (reason string starts with
-"retroactive_fabrication_audit:"). Entries written by quality_gate.py
-(thin content, near-duplicate, weak meta, etc.) are left untouched and
-reported as skipped — stripping a sentence doesn't fix thin content or
-a weak meta_description, so bolting that logic in here would be
-unsafe. Those either need a real regen (existing
-`python blog_system.py auto` content pipeline) or a human, and staying
-out of their way is intentional, not an oversight.
+SAFETY MODEL
+------------
+Same posture as auto_retire_duplicates.py:
+  - --max-posts bounds how many posts get edited per run.
+  - Every post.json is copied to --backup-dir before being modified.
+  - Without --confirm, this only reports what it would change.
+  - A post this can't fully clean is left alone and flagged, not forced.
 
 USAGE
 -----
-    # Dry run — see exactly what would be stripped, nothing written
-    python scripts/process_regeneration_queue.py --docs-dir ./docs
+    # Dry run:
+    python scripts/process_regeneration_queue.py --docs-dir ./docs --queue ./regeneration_queue.json
 
-    # Apply, bounded to 5 posts this run
+    # Apply, bounded:
     python scripts/process_regeneration_queue.py \\
         --docs-dir ./docs \\
+        --queue ./regeneration_queue.json \\
         --max-posts 5 \\
         --backup-dir ./.fabrication_backups \\
         --confirm
-
-Recommended CI wiring, right after the retroactive fabrication audit
-step (bounded, same pattern as auto_retire_duplicates.py):
-
-    - name: 🧹 Process fabrication regeneration queue (bounded)
-      run: |
-        python scripts/process_regeneration_queue.py \\
-          --docs-dir ./docs \\
-          --max-posts 5 \\
-          --backup-dir ./.fabrication_backups \\
-          --confirm
-
-After this runs, rebuild the site (scripts/rebuild_site.py or
-`python blog_system.py build`) so the edited post.json is re-rendered
-to HTML — the existing blog-automation.yml build/sitemap/OG steps
-already do this on every scheduled run.
 """
-
-from __future__ import annotations
 
 import argparse
 import json
@@ -88,300 +65,258 @@ import shutil
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import List, Tuple
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-if str(REPO_ROOT) not in sys.path:
-    sys.path.insert(0, str(REPO_ROOT))
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from blog_system import (  # noqa: E402
-    _flag_fabricated_anecdotes,
+    _FABRICATED_CITATION_PATTERNS,
+    _LEGITIMATE_SOURCE_CONTEXT,
+    _SKIP_PATTERNS,
     _reject_if_fabricated_citation,
+    _flag_fabricated_anecdotes,
 )
 
-DEFAULT_MAX_POSTS = 5
-DEFAULT_BACKUP_DIR = REPO_ROOT / ".fabrication_backups"
-DEFAULT_QUEUE = REPO_ROOT / "regeneration_queue.json"
-DEFAULT_DOCS_DIR = REPO_ROOT / "docs"
-DEFAULT_REPORT_PATH = REPO_ROOT / "fabrication_strip_report.json"
-MAX_STRIP_ITERATIONS = 8
-
-_QUEUE_SOURCE_PREFIX = "retroactive_fabrication_audit:"
-
-# Matches the phrase _reject_if_fabricated_citation() quotes in its own
-# reason string: "unverifiable named-source citation: '<phrase>'"
-_CITATION_REASON_RE = re.compile(r": '(.+)'$")
+_QUEUE_MARKER = "retroactive_fabrication_audit:"
+_CONTEXT_WINDOW = 200  # matches the window blog_system.py's own gate uses
 
 
-def _tidy_whitespace(text: str) -> str:
-    text = re.sub(r"[ \t]{2,}", " ", text)
-    text = re.sub(r"\n[ \t]+", "\n", text)
-    text = re.sub(r"\n{3,}", "\n\n", text)
-    return text
+def _mask_code_blocks(content: str) -> Tuple[str, List[str]]:
+    blocks: List[str] = []
+
+    def _mask(m: "re.Match") -> str:
+        blocks.append(m.group(0))
+        return f"\x00CODE{len(blocks) - 1}\x00"
+
+    return re.sub(r"```[\s\S]*?```", _mask, content), blocks
 
 
-def _sentence_bounds(content: str, around_index: int) -> Tuple[int, int]:
+def _restore_code_blocks(content: str, blocks: List[str]) -> str:
+    for i, block in enumerate(blocks):
+        content = content.replace(f"\x00CODE{i}\x00", block)
+    return content
+
+
+def _sentence_spans(text: str) -> List[Tuple[int, int, str]]:
+    """(start, end, sentence_text) for each sentence, positions into `text`."""
+    spans = []
+    pos = 0
+    for sent in re.split(r"(?<=[.!?])\s+", text):
+        if not sent:
+            continue
+        idx = text.find(sent, pos)
+        if idx == -1:
+            continue
+        spans.append((idx, idx + len(sent), sent))
+        pos = idx + len(sent)
+    return spans
+
+
+def _find_fabricated_citation_spans(text: str) -> List[Tuple[int, int]]:
     """
-    Return (start, end) offsets of the sentence containing around_index,
-    using simple terminal-punctuation scanning. Good enough given the
-    final full-content re-verification step backstops any imprecision:
-    if a boundary is slightly off, the worst case is either an adjacent
-    fragment gets pulled in/left behind, and the re-verify step below
-    catches whether the result actually passes the real gates before
-    anything is written.
+    Match spans in `text` that trip a citation pattern and survive neither
+    allow-list — same two checks _reject_if_fabricated_citation() applies,
+    just returning every span instead of stopping at the first.
     """
-    before = content[:around_index]
-    backs = list(re.finditer(r"[.!?]\s+", before))
-    start = backs[-1].end() if backs else 0
+    bad_spans = []
+    for pattern in _FABRICATED_CITATION_PATTERNS:
+        for m in re.finditer(pattern, text, re.IGNORECASE):
+            window = text[max(0, m.start() - _CONTEXT_WINDOW): m.end() + _CONTEXT_WINDOW]
+            if re.search(r"https?://", window):
+                continue
+            if _LEGITIMATE_SOURCE_CONTEXT.search(window):
+                continue
+            bad_spans.append((m.start(), m.end()))
+    return bad_spans
 
-    after = content[around_index:]
-    fwd = re.search(r"[.!?]", after)
-    end = around_index + fwd.end() if fwd else len(content)
 
-    return start, end
-
-
-def _strip_one_citation_hit(content: str) -> Optional[Tuple[str, str]]:
+def strip_fabricated_content(content: str) -> Tuple[str, int]:
     """
-    Run the real _reject_if_fabricated_citation() gate once. If it flags
-    something, remove the sentence containing the exact phrase it named
-    and return (new_content, removed_sentence). Returns None if nothing
-    was flagged, or if the flagged phrase couldn't be located verbatim
-    in the content (defensive — should not normally happen).
+    Remove sentences that trip either fabrication gate, preserving
+    everything else including code blocks. Returns (new_content, removed_count).
     """
-    issue = _reject_if_fabricated_citation(content)
-    if not issue:
-        return None
-    m = _CITATION_REASON_RE.search(issue)
-    if not m:
-        return None
-    phrase = m.group(1)
-    idx = content.find(phrase)
-    if idx == -1:
-        return None
-    start, end = _sentence_bounds(content, idx)
-    removed = content[start:end].strip()
-    new_content = _tidy_whitespace(content[:start] + content[end:])
-    return new_content, removed
+    masked, code_blocks = _mask_code_blocks(content)
+    paragraphs = masked.split("\n\n")
+    new_paragraphs = []
+    removed = 0
+
+    for para in paragraphs:
+        # Skip structural paragraphs entirely — same convention
+        # internal_linker.py already uses for headings/code/tables/quotes,
+        # extended here to bullet and numbered list blocks. Without this,
+        # a multi-line list with no blank line between items is one
+        # "paragraph" to split(\"\\n\\n\"); sentence-splitting that whole
+        # block on punctuation cuts across list-item boundaries, so one
+        # flagged citation partway through a list can pull adjacent,
+        # unrelated list items out with it. Confirmed on a real post: a
+        # 9-row cost-comparison list lost ~30 unrelated lines this way
+        # before this guard was added. A citation fabricated INSIDE a list
+        # item is rarer and left for manual review (still caught by the
+        # re-check below, which will flag the post as still-dirty) rather
+        # than risking further collateral damage from list-aware splitting.
+        stripped_para = para.strip()
+        is_list_block = bool(re.match(r'^(-|\*|\d+\.)\s', stripped_para))
+        if "\x00CODE" in para or stripped_para.startswith(("#", "|", ">")) or is_list_block:
+            new_paragraphs.append(para)
+            continue
+
+        bad_spans = _find_fabricated_citation_spans(para)
+        kept_sentences = []
+        for start, end, sent in _sentence_spans(para):
+            stripped_sent = sent.strip()
+            if not stripped_sent:
+                continue
+
+            if _SKIP_PATTERNS.match(stripped_sent):
+                removed += 1
+                continue
+
+            overlaps_bad_span = any(
+                start < b_end and end > b_start for b_start, b_end in bad_spans
+            )
+            if overlaps_bad_span:
+                removed += 1
+                continue
+
+            kept_sentences.append(sent)
+
+        new_para = " ".join(kept_sentences).strip()
+        if new_para:
+            new_paragraphs.append(new_para)
+        # A paragraph that becomes entirely empty is dropped, not kept as
+        # a blank line — avoids leaving stray double gaps in the output.
+
+    new_content = "\n\n".join(new_paragraphs)
+    return _restore_code_blocks(new_content, code_blocks), removed
 
 
-def _strip_one_anecdote_hit(content: str) -> Optional[Tuple[str, str]]:
-    """
-    Run the real _flag_fabricated_anecdotes() gate once. It returns
-    sentences already truncated to 80 chars, matching a sentence's
-    actual start (the gate matches _SKIP_PATTERNS against sentence
-    starts). Locate that prefix in content and remove the full sentence.
-    """
-    hits = _flag_fabricated_anecdotes(content)
-    if not hits:
-        return None
-    prefix = hits[0][:40]
-    idx = content.find(prefix)
-    if idx == -1:
-        return None
-    start, end = _sentence_bounds(content, idx)
-    removed = content[start:end].strip()
-    new_content = _tidy_whitespace(content[:start] + content[end:])
-    return new_content, removed
-
-
-def strip_fabricated_content(content: str) -> Tuple[str, List[str]]:
-    """
-    Repeatedly call the real gate functions against the current content
-    and remove one flagged sentence at a time, bounded by
-    MAX_STRIP_ITERATIONS. Returns (new_content, removed_sentences).
-    """
-    working = content
-    removed: List[str] = []
-
-    for _ in range(MAX_STRIP_ITERATIONS):
-        progressed = False
-
-        citation_result = _strip_one_citation_hit(working)
-        if citation_result:
-            working, removed_sentence = citation_result
-            if removed_sentence:
-                removed.append(removed_sentence)
-            progressed = True
-
-        anecdote_result = _strip_one_anecdote_hit(working)
-        if anecdote_result:
-            working, removed_sentence = anecdote_result
-            if removed_sentence:
-                removed.append(removed_sentence)
-            progressed = True
-
-        if not progressed:
-            break
-
-    return working.strip(), removed
-
-
-def load_queue(queue_path: Path) -> List[Dict]:
-    if not queue_path.exists():
-        return []
-    try:
-        data = json.loads(queue_path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
-        print(f"  ⚠️  {queue_path} was not valid JSON — treating as empty.")
-        return []
-    return data if isinstance(data, list) else []
-
-
-def is_fabrication_entry(entry: Dict) -> bool:
-    reason = entry.get("reason", "")
-    return isinstance(reason, str) and reason.startswith(_QUEUE_SOURCE_PREFIX)
-
-
-def backup_post_json(post_json: Path, backup_dir: Path) -> Path:
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    backup_dir.mkdir(parents=True, exist_ok=True)
-    dest = backup_dir / f"{post_json.parent.name}-{timestamp}.post.json"
+def _backup_post_json(post_json: Path, backup_dir: Path, slug: str) -> Path:
+    dest = backup_dir / f"{slug}.post.json"
+    if dest.exists():
+        stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+        dest = backup_dir / f"{slug}.post.json__{stamp}"
     shutil.copy2(post_json, dest)
     return dest
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument("--docs-dir", type=str, default=str(DEFAULT_DOCS_DIR))
-    parser.add_argument("--queue", type=str, default=str(DEFAULT_QUEUE))
-    parser.add_argument("--max-posts", type=int, default=DEFAULT_MAX_POSTS,
-                        help=f"Cap on how many posts this run can edit (default: {DEFAULT_MAX_POSTS})")
-    parser.add_argument("--backup-dir", type=str, default=str(DEFAULT_BACKUP_DIR),
-                        help="Where the original post.json is copied before editing")
-    parser.add_argument("--report", type=str, default=str(DEFAULT_REPORT_PATH),
-                        help="Where to write a JSON report of what happened this run")
-    parser.add_argument("--confirm", action="store_true",
-                        help="Actually write changes. Without this flag, dry-run only.")
-    args = parser.parse_args()
+def run(
+    docs_dir: Path,
+    queue_path: Path,
+    max_posts: int,
+    backup_dir: Path,
+    confirm: bool,
+) -> int:
+    if not queue_path.exists():
+        print(f"{queue_path} not found — nothing to process.")
+        return 0
 
-    docs_dir = Path(args.docs_dir)
-    queue_path = Path(args.queue)
-    backup_dir = Path(args.backup_dir)
-    report_path = Path(args.report)
+    try:
+        queue = json.loads(queue_path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        print(f"⚠️  {queue_path} is not valid JSON — aborting without changes.")
+        return 1
 
-    queue = load_queue(queue_path)
-    fabrication_entries = [e for e in queue if isinstance(e, dict) and is_fabrication_entry(e)]
-    other_entries = [e for e in queue if not (isinstance(e, dict) and is_fabrication_entry(e))]
+    pending = [
+        e for e in queue
+        if isinstance(e, dict)
+        and str(e.get("reason", "")).startswith(_QUEUE_MARKER)
+        and e.get("status", "pending") == "pending"
+    ]
 
-    print(
-        f"process_regeneration_queue: {len(queue)} total entr{'y' if len(queue)==1 else 'ies'} in queue — "
-        f"{len(fabrication_entries)} from retroactive_fabrication_audit, "
-        f"{len(other_entries)} from other sources (skipped, out of scope for strip-and-keep)."
-    )
+    if not pending:
+        print("No pending fabrication-audit entries in the queue. Nothing to do.")
+        return 0
 
-    to_process = fabrication_entries[: args.max_posts]
-    remaining = fabrication_entries[args.max_posts:]
-    print(
-        f"  -> processing {len(to_process)} this run "
-        f"(capped at --max-posts {args.max_posts}); "
-        f"{len(remaining)} left for a future run."
-    )
+    batch = pending[:max_posts]
+    deferred = pending[max_posts:]
 
-    report_entries = []
-    processed_slugs = set()
+    print(f"{len(pending)} pending fabrication entr{'y' if len(pending) == 1 else 'ies'} in queue.")
+    print(f"{'Processing' if confirm else 'Would process'} {len(batch)} this run "
+          f"(--max-posts {max_posts}):\n")
 
-    for entry in to_process:
-        slug = entry.get("slug", "")
-        post_dir = docs_dir / slug
-        post_json_path = post_dir / "post.json"
+    if not confirm:
+        for e in batch:
+            print(f"  {e['slug']}  | {e.get('title', '')}")
+        if deferred:
+            print(f"\n{len(deferred)} more deferred to a future run: "
+                  f"{', '.join(d['slug'] for d in deferred)}")
+        print("\nDry run — nothing was written. Re-run with --confirm to apply.")
+        return 0
 
-        result = {
-            "slug": slug,
-            "queue_reason": entry.get("reason", ""),
-            "status": None,
-            "removed_sentences": [],
-            "backup_path": None,
-        }
+    backup_dir.mkdir(parents=True, exist_ok=True)
+    cleaned, needs_review = 0, 0
 
-        if not post_json_path.exists():
-            result["status"] = "SKIPPED — post.json not found (post may already be retired/deleted)"
-            report_entries.append(result)
+    for entry in batch:
+        slug = entry["slug"]
+        post_json = docs_dir / slug / "post.json"
+        if not post_json.exists():
+            print(f"  ⚠️  {slug}: post.json missing (likely retired by another script this run) — marking resolved.")
+            entry["status"] = "resolved_elsewhere"
             continue
 
         try:
-            data = json.loads(post_json_path.read_text(encoding="utf-8"))
+            data = json.loads(post_json.read_text(encoding="utf-8"))
         except json.JSONDecodeError:
-            result["status"] = "SKIPPED — post.json is not valid JSON"
-            report_entries.append(result)
+            print(f"  ⚠️  {slug}: post.json is not valid JSON — skipping, left in queue.")
+            continue
+
+        if data.get("redirect_to"):
+            print(f"  ⏭️  {slug}: already a redirect stub (see auto_retire_duplicates.py) "
+                  f"— nothing to fix, marking resolved.")
+            entry["status"] = "resolved_elsewhere"
             continue
 
         content = data.get("content", "")
-        if not content:
-            result["status"] = "SKIPPED — post has no content"
-            report_entries.append(result)
-            continue
+        new_content, removed_count = strip_fabricated_content(content)
 
-        new_content, removed = strip_fabricated_content(content)
-
-        if not removed:
-            result["status"] = (
-                "SKIPPED — could not locate a removable sentence for the flagged "
-                "issue (gate may need manual review — see queue_reason)"
-            )
-            report_entries.append(result)
-            continue
-
-        # Re-verify against the REAL gates on the full resulting content.
-        # If anything is still flagged, don't guess further — leave the
-        # post untouched and flag for a human.
-        still_flagged = bool(_reject_if_fabricated_citation(new_content)) or bool(
-            _flag_fabricated_anecdotes(new_content)
+        still_flagged = (
+            _reject_if_fabricated_citation(new_content) is not None
+            or bool(_flag_fabricated_anecdotes(new_content))
         )
+
         if still_flagged:
-            result["status"] = (
-                "SKIPPED — still flagged by the real gates after stripping "
-                f"{len(removed)} sentence(s) (hit MAX_STRIP_ITERATIONS or a "
-                "residual case); needs manual review"
-            )
-            result["removed_sentences"] = removed
-            report_entries.append(result)
+            print(f"  ⚠️  {slug}: removed {removed_count} sentence(s) but the gate "
+                  f"still flags the result — leaving post.json untouched, "
+                  f"marking for manual review.")
+            entry["status"] = "needs_review"
+            needs_review += 1
             continue
 
-        result["removed_sentences"] = removed
+        backup_path = _backup_post_json(post_json, backup_dir, slug)
+        data["content"] = new_content
+        data["updated_at"] = datetime.now(timezone.utc).isoformat()
+        post_json.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
 
-        if args.confirm:
-            backup_path = backup_post_json(post_json_path, backup_dir)
-            data["content"] = new_content
-            post_json_path.write_text(
-                json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8"
-            )
-            result["status"] = "APPLIED"
-            result["backup_path"] = str(backup_path)
-            processed_slugs.add(slug)
-            print(f"  ✅ {slug}: removed {len(removed)} sentence(s), backed up to {backup_path}")
-        else:
-            result["status"] = "WOULD APPLY (dry-run)"
-            print(f"  🔎 {slug}: would remove {len(removed)} sentence(s) —")
-            for s in removed:
-                print(f"       - {s[:140]}{'…' if len(s) > 140 else ''}")
+        print(f"  ✅ {slug}: removed {removed_count} sentence(s), gate now clean. "
+              f"Backup at {backup_path}")
+        entry["status"] = "stripped"
+        cleaned += 1
 
-        report_entries.append(result)
+    queue_path.write_text(json.dumps(queue, indent=2, ensure_ascii=False), encoding="utf-8")
 
-    # Remove successfully-processed entries from the queue so re-running
-    # this script doesn't reprocess them. Entries left untouched (other
-    # sources, skipped, still-flagged) stay in the queue.
-    if args.confirm and processed_slugs:
-        new_queue = [e for e in queue if not (isinstance(e, dict) and e.get("slug") in processed_slugs)]
-        queue_path.write_text(json.dumps(new_queue, indent=2, ensure_ascii=False), encoding="utf-8")
-        print(f"\nQueue updated: removed {len(processed_slugs)} resolved entr{'y' if len(processed_slugs)==1 else 'ies'} -> {queue_path}")
-
-    report_path.write_text(json.dumps({
-        "ran_at": datetime.now(timezone.utc).isoformat(),
-        "confirm": args.confirm,
-        "max_posts": args.max_posts,
-        "fabrication_entries_in_queue": len(fabrication_entries),
-        "other_entries_skipped": len(other_entries),
-        "processed_this_run": report_entries,
-        "remaining_for_future_runs": len(remaining),
-    }, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"Report written to {report_path}")
-
-    if not args.confirm:
-        print("\nDry run only — nothing was changed. Re-run with --confirm to apply.")
-
+    print(f"\n{cleaned} post(s) cleaned, {needs_review} flagged for manual review, "
+          f"{len(deferred)} deferred.")
+    if cleaned:
+        print("   Run 'python blog_system.py build' to regenerate the affected "
+              "index.html files before the sitemap and OG steps.")
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    parser = argparse.ArgumentParser(
+        description="Bounded, automated consumer for fabrication-audit queue entries."
+    )
+    parser.add_argument("--docs-dir", default="./docs")
+    parser.add_argument("--queue", default="./regeneration_queue.json")
+    parser.add_argument("--max-posts", type=int, default=5)
+    parser.add_argument("--backup-dir", default="./.fabrication_backups")
+    parser.add_argument("--confirm", action="store_true", help="Actually write changes. Omit for a dry run.")
+    args = parser.parse_args()
+
+    sys.exit(run(
+        docs_dir=Path(args.docs_dir),
+        queue_path=Path(args.queue),
+        max_posts=args.max_posts,
+        backup_dir=Path(args.backup_dir),
+        confirm=args.confirm,
+    ))
