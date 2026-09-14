@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-14T04:09:02.151353",
+  "built_at": "2026-09-14T08:01:52.836810",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5125,6 +5125,11 @@
       "slug": "why-does-my-agent-version-break-clients",
       "title": "Why does my agent version break clients?",
       "summary": "Nobody mentions the failure mode until it's already cost someone a bad night. The metric everyone watches for versioning evolving isn't the one that would have warned us. This post covers what comes after the happy path. When a microservice that hosts an AI‑driven \"agent\" rolls out a new capability,"
+    },
+    {
+      "slug": "why-token-economics-break-alwayson-fleets",
+      "title": "Why token economics break always‑on fleets",
+      "summary": "Somewhere between the token economics tutorial and the incident channel, a step goes missing. Here's what actually worked, and why. It works in the simple case and breaks in a specific way under load. Always‑on agent fleets—whether they run on AWS Fargate, Azure Container Apps, or a private Kubernet"
     }
   ]
 }

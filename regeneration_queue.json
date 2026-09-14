@@ -38,31 +38,36 @@
     "slug": "3-ai-coders-ranked-cursor-windsurf-claude-code-in",
     "title": "3 AI coders ranked: Cursor, Windsurf, Claude Code in",
     "reason": "retroactive_fabrication_audit: 14 unverifiable first-person anecdote(s): I ran into this cursor windsurf problem while migrating a service under a hard d; Here's what actually worked.; I tried Cursor first because it looked like a normal editor.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "3-mistakes-that-break-deployments-for-everyone",
     "title": "3 mistakes that break deployments for everyone",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on building deployment before understanding wh; I used a controlled dataset of 12 new hires who had never seen the stack before.; I also looked at the long-term cost of lock-in.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "3-side-gigs-that-paid-me-2k-usdmonth-in-2026",
     "title": "3 side gigs that paid me 2k USD/month in 2026",
     "reason": "retroactive_fabrication_audit: 34 unverifiable first-person anecdote(s): I ran into this building second problem while migrating a service under a hard d; Here's what actually worked.; I tried the classic “build a SaaS” route with a multi-tenant identity provider i",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "3-skills-to-outrun-ai-salary-cuts",
     "title": "3 skills to outrun AI salary cuts",
     "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I ran into this when a client asked me to build a small internal dashboard.; I saw this clearly when I took over a solo SaaS product in 2026.; I made this mistake in a 2025 project using Supabase and Next.js.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "3-vibe-coding-tools-i-regret-shipping-in-production",
     "title": "3 vibe coding tools I regret shipping in production",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I ran into this vibe coding problem while migrating a service under a hard deadl; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that",
@@ -2768,5 +2773,11 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "why-token-economics-break-alwayson-fleets",
+    "title": "Why token economics break always‑on fleets",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
+    "action": "regenerate"
   }
 ]

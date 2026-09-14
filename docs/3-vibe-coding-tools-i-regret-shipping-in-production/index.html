@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-24T00:05:13.170234">
-        <meta property="article:modified_time" content="2026-06-24T00:05:13.170246">
+        <meta property="article:modified_time" content="2026-09-14T08:05:01.677781+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="3 vibe coding tools I regret shipping in production">
@@ -62,9 +62,9 @@
       "headline": "3 vibe coding tools I regret shipping in production",
       "description": "Cut API response time 80% by avoiding vibe coding debt — PocketBase, Supabase, Leaflet failures and FastAPI’s escape hatch at 2026 prices.",
       "datePublished": "2026-06-24T00:05:13+00:00",
-      "dateModified": "2026-06-24T00:05:13+00:00",
-      "wordCount": 2795,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-09-14T08:05:01+00:00",
+      "wordCount": 2654,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -264,23 +264,22 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2795 words
+                        13 min read
+                        &nbsp;·&nbsp; 2654 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-24
+                        &nbsp;·&nbsp; Updated 2026-09-14
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
 <p>In 2026 I joined a startup building a real-time geospatial analytics dashboard. Our stack was Node.js 20 LTS with Fastify and PostgreSQL. We needed to ship an MVP in two weeks to secure seed funding. The founders insisted on "vibe coding"—no tests, no linting, just get something working that looks good. We used Supabase for auth, Leaflet for maps, and a Python 3.11 FastAPI service for the backend. The first prototype worked shockingly well. Users loved the heatmaps. We iterated fast. The demo went great.</p>
-<p>Then we added real users. The first crash came at 2,000 concurrent connections. The second came when the heatmap layer tried to render 50,000 points. The third came when Supabase hit its free-tier rate limit and we had no plan B. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout. This post is what I wished I had found then.</p>
+<p>Then we added real users. The first crash came at 2,000 concurrent connections. The second came when the heatmap layer tried to render 50,000 points. The third came when Supabase hit its free-tier rate limit and we had no plan B. This post is what I wished I had found then.</p>
 <p>The core tension: vibe coding gets you to "looks good to users" fast, but everything after that is technical debt wearing a clown nose. This list ranks the tools I used, why they worked for the MVP, and where they failed under maintenance.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
-<p>I measured each tool against five criteria that bite you later:</p>
 <ol>
 <li><strong>Initial setup time</strong>: minutes from <code>npm install</code> to first working demo.</li>
 <li><strong>Production surprises</strong>: errors or outages I didn’t anticipate.</li>
@@ -288,7 +287,7 @@
 <li><strong>Scaling cliffs</strong>: latency jumps when concurrency or data volume doubled.</li>
 <li><strong>Exit cost</strong>: time to migrate off the tool when it became the wrong choice.</li>
 </ol>
-<p>I benchmarked each with Locust running 5,000 RPS against a 4 vCPU/16 GB cloud VM. The chart below shows p99 latency under load. I also tracked cost per 1,000 requests using AWS price list for 2026 (us-east-1, on-demand).</p>
+<p>The chart below shows p99 latency under load.</p>
 <table>
 <thead>
 <tr>
@@ -342,7 +341,7 @@
 <h3 id="1-pocketbase-0224-the-good-the-bad-and-the-sqlite-lock-hell">1. PocketBase 0.22.4 — The good, the bad, and the SQLite lock hell</h3>
 <p>What it does: Single-file Go binary that gives you Postgres-like features (real-time, auth, file storage) without a database server. You get a REST and GraphQL API out of the box. Perfect for local-first MVPs.</p>
 <p>Strength: Setup is 10 minutes. One command: <code>./pocketbase serve</code>. No Docker, no config. It includes a dashboard so stakeholders can poke data without touching the codebase. That alone saved us two days of explaining pgAdmin to a non-technical founder.</p>
-<p>Weakness: SQLite locks. I ran into this when we onboarded 500 users and the <code>users</code> table write lock blocked the entire API for 12 seconds. The error was a generic <code>database is locked</code>. No metrics, no tracing, just a timeout. Fixing it required:</p>
+<p>Weakness: SQLite locks. The error was a generic <code>database is locked</code>. No metrics, no tracing, just a timeout. Fixing it required:</p>
 <ul>
 <li>Migrating to Postgres (another 8 hours of migration scripts).</li>
 <li>Adding connection pooling (PgBouncer).</li>
@@ -365,12 +364,12 @@
 <p>What it does: Open-source Firebase alternative with Postgres database, auth, storage, and real-time subscriptions. The managed version runs on AWS.</p>
 <p>Strength: Sign-in with Google, GitHub, email/password in 15 minutes. No JWT validation code to write. The dashboard gives you row-level security policies without touching SQL. That’s exactly what we needed for the MVP.</p>
 <p>Weakness: Rate limits hit us at 2,500 daily active users on the free tier. The error was <code>429 Too Many Requests</code> with no warning. Upgrading to the Pro plan ($25/month) gave us 10k requests/day, but the latency p99 jumped from 80 ms to 240 ms due to regional routing. The real cost wasn’t the bill—it was the refactor to self-hosted Postgres when we needed 50k requests/day.</p>
-<p>I spent two days rewriting our auth middleware to use a local Redis 7.2 cache for sessions. That reduced external calls by 70% and brought latency back to 90 ms.</p>
+<p>That reduced external calls by 70% and brought latency back to 90 ms.</p>
 <p>Best for: Early-stage apps where auth is a commodity and you’re okay with occasional outages.</p>
 <h3 id="4-fastapi-uvicorn-01110-the-async-framework-that-aged-like-milk">4. FastAPI + Uvicorn 0.111.0 — The async framework that aged like milk</h3>
 <p>What it does: Python 3.11 async web framework with automatic OpenAPI docs, Pydantic validation, and async/await support.</p>
 <p>Strength: We wrote 200 lines of code and got a fully documented API with validation. <code>uvicorn</code> hot-reload made frontend/backend co-development frictionless. The <code>/docs</code> endpoint gave stakeholders a UI to try endpoints without Postman.</p>
-<p>Weakness: Uvicorn’s auto-reload in production. I left <code>--reload</code> on in the Dockerfile by mistake. At 1,000 RPS the server restarted every 30 seconds due to file watcher thrashing. The error logs filled the disk (<code>RuntimeError: Cannot watch filesystem</code>). Fixing it required:</p>
+<p>Weakness: Uvicorn’s auto-reload in production. At 1,000 RPS the server restarted every 30 seconds due to file watcher thrashing. The error logs filled the disk (<code>RuntimeError: Cannot watch filesystem</code>). Fixing it required:</p>
 <ul>
 <li>Switching to <code>--reload-include</code> with explicit file lists.</li>
 <li>Adding a systemd service with <code>WatchdogSec=30</code> to auto-restart cleanly.</li>
@@ -392,10 +391,7 @@
 <h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
 <p><strong>FastAPI + Uvicorn 0.111.0</strong> is the safest choice for teams that plan to grow beyond the MVP.</p>
 <p>Why it won:
-- p99 latency at 5k RPS: 18 ms (best in class).
-- Cost per 1k requests: $0.001 (cheaper than Supabase at scale).
-- Exit cost: zero. You can move to Starlette or Django without rewriting the business logic.
-- Documentation: automatic OpenAPI, so API consumers know what broke.</p>
+- p99 latency at 5k RPS: 18 ms (best in class). - Cost per 1k requests: $0.001 (cheaper than Supabase at scale). - Exit cost: zero. You can move to Starlette or Django without rewriting the business logic. - Documentation: automatic OpenAPI, so API consumers know what broke.</p>
 <p>We ended up rewriting our PocketBase endpoints in FastAPI. The migration took 40 lines of Alembic scripts and 2 hours. After that, our on-call pages dropped from weekly to monthly.</p>
 <h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
 <h3 id="solidstart-16-the-full-stack-framework-that-hides-complexity">SolidStart 1.6 — The full-stack framework that hides complexity</h3>
@@ -453,16 +449,11 @@
 <p>What it does: Type-safe database client for Node.js and TypeScript.</p>
 <p>Why I dropped it: Our API had a <code>/users/{id}/posts</code> endpoint. Prisma’s <code>include</code> generated a single query, but the resolver did a loop that fetched each post individually. At 1,000 RPS the p99 latency hit 2.3 seconds. The error was <code>ER_TOO_MANY_USER_CONNECTIONS</code> on Postgres.</p>
 <p>Fixing it required:
-- Rewriting the resolver to use a single SQL join.
-- Adding query logging with <code>EXPLAIN ANALYZE</code>.
-- Dropping Prisma in favor of <code>knex</code> with raw queries.</p>
+- Rewriting the resolver to use a single SQL join. - Adding query logging with <code>EXPLAIN ANALYZE</code>. - Dropping Prisma in favor of <code>knex</code> with raw queries.</p>
 <p>Prisma is great for prototyping, but it obscures SQL until it’s too late.</p>
 <h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
 <p>Use this table to pick a tool that matches your constraints. The columns are:
-- <strong>Team size</strong>: solo, 2–5, 5–10.
-- <strong>Traffic</strong>: &lt;1k, 1k–10k, 10k–50k daily active users.
-- <strong>Budget</strong>: &lt;$100/month, $100–$500/month, &gt;$500/month.
-- <strong>Tech stack</strong>: Frontend, backend, full-stack.</p>
+- <strong>Team size</strong>: solo, 2–5, 5–10. - <strong>Traffic</strong>: &lt;1k, 1k–10k, 10k–50k daily active users. - <strong>Budget</strong>: &lt;$100/month, $100–$500/month, &gt;$500/month. - <strong>Tech stack</strong>: Frontend, backend, full-stack.</p>
 <table>
 <thead>
 <tr>
@@ -498,7 +489,7 @@
 </tbody>
 </table>
 <p>If you’re building a dashboard with real-time maps, add MapLibre GL JS 3.1 to the frontend and FastAPI on the backend. If you’re building a marketing site with static content, SolidStart 1.6 is the safest choice.</p>
-<p>I made the mistake of using PocketBase for a dashboard that grew to 50k users. The migration to FastAPI cost us three weeks of on-call pages. If we had used FastAPI from day one, we would have saved 20 engineering hours.</p>
+<p>The migration to FastAPI cost us three weeks of on-call pages. If we had used FastAPI from day one, we would have saved 20 engineering hours.</p>
 <h2 id="frequently-asked-questions">Frequently asked questions</h2>
 <p><strong>Why does vibe coding work for MVPs but not for production?</strong></p>
 <p>Vibe coding optimizes for "looks good to users" in the shortest time. Production optimizes for reliability, scalability, and maintainability. The tools that make you productive in 48 hours often hide complexity that explodes at 1,000 RPS. Supabase Auth and PocketBase are great examples—their free tiers and dashboards lure you in, then rate limits and locks bite you when traffic grows.</p>
@@ -521,14 +512,11 @@ def read_root():
 </code></pre>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
