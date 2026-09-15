@@ -28,48 +28,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-apps-break-when-you-treat-them-like-regular-software",
-    "title": "AI apps break when you treat them like regular software",
-    "reason": "retroactive_fabrication_audit: 32 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I had treated the AI system like any other web service — stateless, deterministi",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "dumped-kubernetes-for-200-and-no-one-noticed",
-    "title": "Dumped Kubernetes for $200 and no one noticed",
-    "reason": "retroactive_fabrication_audit: 28 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin; I was the only engineer and the only person who could explain the architecture t",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "7-passive-income-streams-for-devs-in-2026",
     "title": "7 passive income streams for devs in 2026",
     "reason": "retroactive_fabrication_audit: 27 unverifiable first-person anecdote(s): I ran into this building second problem while migrating a service under a hard d; Here's what actually worked.; I tried a few things: freelancing, building a tiny SaaS, even tutoring.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "7-ways-to-measure-prompt-platform-roi-in-2026",
     "title": "7 ways to measure prompt platform ROI in 2026",
     "reason": "retroactive_fabrication_audit: 27 unverifiable first-person anecdote(s): I ran into this measure platform problem while migrating a service under a hard ; Here's what actually worked.; I spent three weeks trying to retrofit CloudWatch Logs Insights queries before r",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "grew-5k-mrr-on-a-29-vps",
     "title": "Grew $5k MRR on a $29 VPS",
     "reason": "retroactive_fabrication_audit: 23 unverifiable first-person anecdote(s): The short version: the conventional advice on got mrr is incomplete.; I made three mistakes that cost me the first 6 months: relying on referral progr; I fell into both traps.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "postgres-vector-search-what-breaks-first",
     "title": "Postgres vector search: what breaks first",
     "reason": "retroactive_fabrication_audit: 22 unverifiable first-person anecdote(s): I spent a week tweaking the pgvector index type (IVFFlat → HNSW → Sparse → dense; I finally broke down and profiled the query itself with   and saw 98% of the tim; I measured three things for every option:\n\n1.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "hit-5k-mrr-without-a-marketing-team",
     "title": "Hit $5k MRR without a marketing team",
     "reason": "retroactive_fabrication_audit: 21 unverifiable first-person anecdote(s): The short version: the conventional advice on got mrr is incomplete.; I did this by focusing on three levers: (1) building an integration that competi; I made the mistake of launching with a $29/month plan, only to realize later tha",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "deploy-a-solo-stack-for-20month-in-2026",
@@ -2729,6 +2720,20 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "ai-apps-break-when-you-treat-them-like-regular-software",
+    "title": "AI apps break when you treat them like regular software",
+    "reason": "retroactive_fabrication_audit: 32 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I had treated the AI system like any other web service — stateless, deterministi",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "dumped-kubernetes-for-200-and-no-one-noticed",
+    "title": "Dumped Kubernetes for $200 and no one noticed",
+    "reason": "retroactive_fabrication_audit: 28 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin; I was the only engineer and the only person who could explain the architecture t",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "2026-ai-stack-solo-saas-cost-showdown",

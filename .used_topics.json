@@ -206,5 +206,7 @@
   "On-device and edge agents in 2026: when they beat cloud round-trips for African users",
   "How the 'AI Engineer' role has evolved through 2026",
   "Memory systems for production agents: approaches compared, and where each leaks context",
-  "Evaluation-driven development for agents: replacing vibe testing with a real loop"
+  "Evaluation-driven development for agents: replacing vibe testing with a real loop",
+  "Testing and reviewing agent-generated code and workflows at team scale",
+  "The skills that became table stakes for senior engineers once agents reached production"
 ]
