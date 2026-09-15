@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-30T22:23:14.312622">
-        <meta property="article:modified_time" content="2026-06-30T22:23:14.312630">
+        <meta property="article:modified_time" content="2026-09-15T04:12:08.232197+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="5 ways to find hidden latency before production">
@@ -62,9 +62,9 @@
       "headline": "5 ways to find hidden latency before production",
       "description": "Cut hidden latency detection time 92%: 5 observability pipelines with concrete numbers, versioned tools, and real postmortems from 2026 production incidents.",
       "datePublished": "2026-06-30T22:23:14+00:00",
-      "dateModified": "2026-06-30T22:23:14+00:00",
-      "wordCount": 2575,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-09-15T04:12:08+00:00",
+      "wordCount": 2486,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -257,22 +257,21 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2575 words
+                        12 min read
+                        &nbsp;·&nbsp; 2486 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-30
+                        &nbsp;·&nbsp; Updated 2026-09-15
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
-<h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>I spent three weeks chasing a 150ms p99 latency spike in a Python FastAPI service that only appeared between 2:00 AM and 4:00 AM. The CPU looked fine. The GC wasn’t spiking. All the Prometheus metrics were green. When I finally reproduced it locally with <code>vegeta</code> and <code>pprof</code>, the culprit was a third-party client library that opened 4096 TCP connections to Redis 7.2 during initialization and never reused them. The pool size was set to 100 in the config, but the library created its own pools internally with a default of 5 connections each.</p>
+                <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
+<p>The CPU looked fine. The GC wasn’t spiking. All the Prometheus metrics were green. When I finally reproduced it locally with <code>vegeta</code> and <code>pprof</code>, the culprit was a third-party client library that opened 4096 TCP connections to Redis 7.2 during initialization and never reused them. The pool size was set to 100 in the config, but the library created its own pools internally with a default of 5 connections each.</p>
 <p>That taught me a hard lesson: if your pipeline only measures what you <em>think</em> matters, you’ll miss exactly the latency that matters most. This list is what I wish I had back then — concrete, versioned tools and patterns that force hidden latency to surface before it hits users.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
-<p>I tested every approach on a live monorepo at 2026 traffic levels: ~8k requests/sec across 42 services running on Kubernetes 1.28 with Node 20 LTS workers and Python 3.11 FastAPI endpoints. Each option got a score on five criteria:</p>
+<p>Each option got a score on five criteria:</p>
 <ol>
 <li>Mean-time-to-detection (MTTD) for a synthetic 120ms latency injection</li>
 <li>False-positive rate after 30 days in production</li>
@@ -467,14 +466,11 @@ services:
 <p>That’s the entire setup — no new tools, no dashboards, just a 30-minute fix that pays off the first time it catches a hidden latency spike.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

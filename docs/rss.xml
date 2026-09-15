@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 14 Sep 2026 18:00:01 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 15 Sep 2026 04:12:14 +0000</lastBuildDate>
+    <item>
+      <title>Memory Systems for Production Agents</title>
+      <link>https://kubaik.github.io/memory-systems-for-production-agents/</link>
+      <description>Understand the context leaks in memory systems for production agents — in-memory databases, caching layers, and stateful microservices.</description>
+      <pubDate>Tue, 15 Sep 2026 04:09:36 +0000</pubDate>
+      <guid>https://kubaik.github.io/memory-systems-for-production-agents/</guid>
+    </item>
     <item>
       <title>Stop trusting agents for core logic</title>
       <link>https://kubaik.github.io/stop-trusting-agents-for-core-logic/</link>
@@ -138,13 +145,6 @@
       <description>A single misconfigured bucket or database could lead to non-compliance and hefty fines under GDPR, which can reach up to €20 million or 4% of annual…</description>
       <pubDate>Mon, 07 Sep 2026 08:09:01 +0000</pubDate>
       <guid>https://kubaik.github.io/offline-agents-local-first-sync-patterns/</guid>
-    </item>
-    <item>
-      <title>AI Experimentation: Guardrails, Not Gates</title>
-      <link>https://kubaik.github.io/ai-experimentation-guardrails-not-gates/</link>
-      <description>They spent an estimated 80% of their time on boilerplate provisioning and basic integration tasks, leaving little room for actual platform development or…</description>
-      <pubDate>Mon, 07 Sep 2026 03:38:29 +0000</pubDate>
-      <guid>https://kubaik.github.io/ai-experimentation-guardrails-not-gates/</guid>
     </item>
   </channel>
 </rss>

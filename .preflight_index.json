@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-14T17:56:43.699975",
+  "built_at": "2026-09-15T04:09:38.900869",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5135,6 +5135,11 @@
       "slug": "stop-trusting-agents-for-core-logic",
       "title": "Stop trusting agents for core logic",
       "summary": "The official documentation for code review is good. What it doesn't cover is what happens six months into production. Everyone assumes someone else already checked this. Here's what I'd tell a colleague hitting this for the first time. When startups in Southeast Asia start wiring dozens of micro‑ser"
+    },
+    {
+      "slug": "memory-systems-for-production-agents",
+      "title": "Memory Systems for Production Agents",
+      "summary": "Production gives you neither a clean environment nor a patient timeline. I've hit the same ondevice edge mistake in more than one production codebase over the years. Here's what changed once we stopped guessing and started measuring. The gap between what the docs say and what production needs When i"
     }
   ]
 }

@@ -108,31 +108,36 @@
     "slug": "5-ai-tools-that-let-us-ship-faster-than-sf-teams",
     "title": "5 AI tools that let us ship faster than SF teams",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I ran into this east african problem while migrating a service under a hard dead; Here's what actually worked.; I thought AI could close the gap, but I had no idea how to measure \"closing the ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "5-notification-systems-ranked-push-email-sms",
     "title": "5 notification systems ranked: push, email, SMS",
     "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I ran into this designing notification problem while migrating a service under a; Here's what actually worked.; I spent three weeks untangling the mess before I realised the real problem wasn’",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "5-ways-to-find-hidden-latency-before-production",
     "title": "5 ways to find hidden latency before production",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "50-locations-50-headaches-edge-native-backends-in",
     "title": "50 locations, 50 headaches: edge-native backends in",
     "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): The short version: the conventional advice on edgenative backends is incomplete.; I learned that the hard way when a global rollout of a simple user-service tripl; I once assumed I could reuse my regional Redis Cluster and just put a Cloudflare",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "5k-remote-roles-nairobi-lagos-playbook",
     "title": "$5k remote roles: Nairobi-Lagos playbook",
     "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I first noticed the trend after I posted my own remote switch.; I dug into their hiring funnels and found every hire had one thing in common: a ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "7-code-review-traps-when-ai-writes-half-your-code",
@@ -2789,6 +2794,12 @@
     "slug": "stop-trusting-agents-for-core-logic",
     "title": "Stop trusting agents for core logic",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
+    "action": "regenerate"
+  },
+  {
+    "slug": "memory-systems-for-production-agents",
+    "title": "Memory Systems for Production Agents",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same ondevice edge mistake in more than one production codebase ove; Here's what changed once we stopped guessing and started measuring.",
     "action": "regenerate"
   }
 ]
