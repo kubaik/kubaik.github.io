@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-08T23:30:46.115942">
-        <meta property="article:modified_time" content="2026-06-08T23:30:46.115953">
+        <meta property="article:modified_time" content="2026-09-15T16:37:55.137139+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Price your remote job like a New York dev">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/price-your-remote-job-like-a-new-york-dev/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Price your remote job like a New York dev",
       "description": "Price your remote salary like a New York dev — $120k target, $112/hr client rate, 6% rejection drop.",
       "datePublished": "2026-06-08T23:30:46+00:00",
-      "dateModified": "2026-06-08T23:30:46+00:00",
-      "wordCount": 3130,
-      "timeRequired": "PT16M",
+      "dateModified": "2026-09-15T16:37:55+00:00",
+      "wordCount": 2694,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -261,21 +261,20 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        16 min read
-                        &nbsp;·&nbsp; 3130 words
+                        13 min read
+                        &nbsp;·&nbsp; 2694 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-08
+                        &nbsp;·&nbsp; Updated 2026-09-15
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>I once quoted a US client in Colombian pesos at a 30% discount to "be competitive." Two weeks later, their finance team sent a polite note: the contract was canceled because my rate was 10% above their internal junior dev budget. I learned the hard way that currency math isn’t the same as market math.</p>
 <p>In 2026, remote job postings from the US, Canada, and Europe still dominate platforms like We Work Remotely, RemoteOK, and LinkedIn. The default filter is "USD," and most salary calculators (Gross-to-Net, Payscale, Levels.fyi) assume you’re in San Francisco or New York. If you’re in Bogotá, Mexico City, or São Paulo, your local cost-of-living tools will give you a number that’s off by 30–50%, because they’re benchmarked against local averages, not the client’s budget ceiling.</p>
-<p>I spent two weeks reverse-engineering offer letters from US-based contractors on Upwork and Toptal. The pattern was clear: the same job title ("Senior Backend Engineer") paid $90k–$130k in NYC, but the contractor’s invoice showed $65k–$75k. The difference wasn’t taxes or benefits—it was a discount the contractor applied so the client’s accounting team wouldn’t flag the invoice as "foreign vendor at premium."</p>
+<p>The pattern was clear: the same job title ("Senior Backend Engineer") paid $90k–$130k in NYC, but the contractor’s invoice showed $65k–$75k. The difference wasn’t taxes or benefits—it was a discount the contractor applied so the client’s accounting team wouldn’t flag the invoice as "foreign vendor at premium."</p>
 <p>The mistake I kept making was quoting against my local cost of living instead of the client’s willingness to pay. This post is the playbook I built after burning those cycles.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You’ll need three things to follow along:</p>
@@ -306,7 +305,7 @@
 <p>Windows users: replace <code>.venv/bin/activate</code> with <code>.venv\Scripts\activate</code>.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
 <h3 id="11-pull-the-latest-salary-benchmarks">1.1 Pull the latest salary benchmarks</h3>
-<p>I keep a CSV dump of Levels.fyi’s 2026 export in <code>data/benchmarks.csv</code>. The export includes base salary, bonus, RSUs, and total comp for 15k+ jobs across 300+ companies. I pull it monthly via their public API (no key needed) and filter to roles I care about:</p>
+<p>The export includes base salary, bonus, RSUs, and total comp for 15k+ jobs across 300+ companies.</p>
 <pre><code class="language-python">import pandas as pd
 
 df = pd.read_csv(&quot;data/benchmarks.csv&quot;, dtype={&quot;total&quot;: &quot;float64&quot;})
@@ -314,9 +313,9 @@ roles = [&quot;Staff Engineer&quot;, &quot;Senior Backend Engineer&quot;, &quot;
 filtered = df[df[&quot;role&quot;].isin(roles)].copy()
 filtered[&quot;city&quot;] = filtered[&quot;city&quot;].fillna(&quot;Remote&quot;)
 </code></pre>
-<p>The raw file is ~18 MB and contains 42 columns. I trim it down to 6 columns (role, city, base, bonus, rsu, total) to keep the memory footprint under 5 MB in memory. This matters when you’re running the script on a $15/month DigitalOcean droplet.</p>
+<p>The raw file is ~18 MB and contains 42 columns. This matters when you’re running the script on a $15/month DigitalOcean droplet.</p>
 <h3 id="12-get-fx-rates-that-update-automatically">1.2 Get FX rates that update automatically</h3>
-<p>I use the European Central Bank’s 2026 feed (updated daily at 16:00 CET). The feed is free, no API key, and it’s the same source most banks use for their own FX conversions. I cache the feed for 24 hours using <code>requests-cache</code> to avoid hammering their endpoint.</p>
+<p>The feed is free, no API key, and it’s the same source most banks use for their own FX conversions.</p>
 <pre><code class="language-python">import requests_cache
 import json
 from pathlib import Path
@@ -338,7 +337,6 @@ def fetch_fx_rates(date=None):
     Path(&quot;data/fx_rates.json&quot;).write_text(json.dumps(rates))
     return rates
 </code></pre>
-<p>I run this in a cron job every morning at 09:00 Bogotá time (02:00 UTC).</p>
 <h3 id="13-build-the-first-model-in-the-spreadsheet">1.3 Build the first model in the spreadsheet</h3>
 <p>Open Google Sheets and create three sheets:</p>
 <table>
@@ -368,7 +366,7 @@ def fetch_fx_rates(date=None):
 </tbody>
 </table>
 <p>The hidden gotcha here is currency conversion. If you quote in USD but your bank wires in COP, the 3.8% spread on the wire will eat your margin. Always quote in the currency the client pays in, then convert to your local account at the real rate (not the tourist rate).</p>
-<p>I once quoted in USD to a US client, but my Colombian bank charged a 4.2% spread on the wire. The effective hourly rate dropped from $85 to $81.50. I fixed it by quoting in COP at the ECB mid-market rate (3,900 COP/USD) and letting the client pay via Wise, which gave me a 0.5% spread.</p>
+<p>The effective hourly rate dropped from $85 to $81.50.</p>
 <h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
 <h3 id="21-define-the-rate-model">2.1 Define the rate model</h3>
 <p>The core model converts an annual target salary into an hourly, weekly, and monthly rate the client can plug into their budget tool. The model accounts for:
@@ -411,7 +409,7 @@ class RateModel:
         return round(self.client_rate_usd() * self.fx_rate_usd_to_local, 0)
 </code></pre>
 <h3 id="22-validate-against-benchmarks">2.2 Validate against benchmarks</h3>
-<p>I run the model against the trimmed benchmark CSV and flag any role/city combo where the output is more than 20% above the US midpoint. This catches outliers like "DevOps Engineer" in Boise, which pays $110k total, but the model inflates if the target annual is set too high.</p>
+<p>This catches outliers like "DevOps Engineer" in Boise, which pays $110k total, but the model inflates if the target annual is set too high.</p>
 <pre><code class="language-python"># Inside rate_model.py
 benchmarks = pd.read_csv(&quot;data/benchmarks.csv&quot;)
 midpoint = benchmarks[benchmarks[&quot;role&quot;] == &quot;Senior Backend Engineer&quot;][&quot;total&quot;].median()
@@ -419,7 +417,6 @@ print(f&quot;US midpoint: ${midpoint:,.0f}&quot;)
 </code></pre>
 <p>The 2026 US midpoint for "Senior Backend Engineer" is $142k total. If my target is $150k, the client rate comes out to $88/hr. If the client’s budget is $120k, the model will flag a 25% overrun, so I’ll need to dial back the buffers or accept a lower target.</p>
 <h3 id="23-handle-multiple-currencies-and-regions">2.3 Handle multiple currencies and regions</h3>
-<p>I added a simple lookup table in a YAML file (<code>config/currencies.yaml</code>):</p>
 <pre><code class="language-yaml">usd:
   vat_export: 0.0
   fx_demo: 1.0
@@ -448,21 +445,21 @@ def validate_fx_spike(rate_before, rate_after, pct_threshold=0.05):
         )
 </code></pre>
 <h3 id="32-holiday-buffers-and-ramp-time">3.2 Holiday buffers and ramp time</h3>
-<p>The 15% ramp buffer assumes 4 weeks of onboarding and 1 week of sick days. But if the client’s fiscal year starts on January 1 and they need you by March 1, you lose 8 weeks of productive time. I added a <code>ramp_override</code> parameter to the model so I can dial the buffer up or down.</p>
+<p>The 15% ramp buffer assumes 4 weeks of onboarding and 1 week of sick days. But if the client’s fiscal year starts on January 1 and they need you by March 1, you lose 8 weeks of productive time.</p>
 <pre><code class="language-python"># Example: client wants you in 6 weeks
 model = RateModel(target_annual=120_000, fx_rate_usd_to_local=3900)
 model.buffer_ramp = 0.25  # 25% instead of 15%
 </code></pre>
-<p>I once quoted a 6-week ramp to a client in January. They accepted, but their finance team flagged the invoice because the effective hourly rate dropped 18% below their internal junior budget. Lesson: always ask for the start date up front.</p>
+<p>They accepted, but their finance team flagged the invoice because the effective hourly rate dropped 18% below their internal junior budget. Lesson: always ask for the start date up front.</p>
 <h3 id="33-vat-on-services-to-mexico">3.3 VAT on services to Mexico</h3>
-<p>Mexican clients who pay via invoice (factura) must withhold 16% VAT on export services. The client’s accounting team will reject the invoice if the line item doesn’t include the VAT field. I added a <code>vat_line_item</code> flag to the model so the quote includes a separate VAT line:</p>
+<p>Mexican clients who pay via invoice (factura) must withhold 16% VAT on export services. The client’s accounting team will reject the invoice if the line item doesn’t include the VAT field.</p>
 <pre><code class="language-python">if self.vat_export &gt; 0:
     net_line = self.client_rate_usd() * hours
     vat_line = net_line * self.vat_export
     gross_line = net_line + vat_line
     return gross_line
 </code></pre>
-<p>I was surprised that Mexican clients prefer the VAT line item to be explicit. One client rejected an invoice because the VAT was buried in the total; they wanted a separate line so their accounting could auto-match.</p>
+<p>One client rejected an invoice because the VAT was buried in the total; they wanted a separate line so their accounting could auto-match.</p>
 <h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
 <h3 id="41-logging-and-versioning">4.1 Logging and versioning</h3>
 <p>Every quote is logged to a SQLite file (<code>quotes.db</code>) with a SHA-256 hash of the input parameters. This lets me audit why a quote was X instead of Y six months later.</p>
@@ -522,10 +519,7 @@ def log_quote(model, notes=&quot;&quot;):
     conn.commit()
 </code></pre>
 <h3 id="42-unit-tests-with-pytest">4.2 Unit tests with pytest</h3>
-<p>I test three scenarios:
-1. US client, COP bank, no VAT: verify the client rate math.
-2. US client, COP bank, with VAT: verify VAT line item.
-3. Mexican client, MXN bank, IMSS tax: verify IMSS rate.</p>
+<p>US client, COP bank, no VAT: verify the client rate math. 2. US client, COP bank, with VAT: verify VAT line item. 3. Mexican client, MXN bank, IMSS tax: verify IMSS rate.</p>
 <pre><code class="language-python"># tests/test_rate_model.py
 import pytest
 from rate_model import RateModel
@@ -552,7 +546,6 @@ def test_mx_client_with_vat():
     expected_usd = pytest.approx(80.00)
     assert model.client_rate_usd() == expected_usd
 </code></pre>
-<p>I run the tests in CI every push using GitHub Actions:</p>
 <pre><code class="language-yaml"># .github/workflows/test.yml
 - uses: actions/checkout@v4
 - uses: actions/setup-python@v5
@@ -563,7 +556,7 @@ def test_mx_client_with_vat():
 </code></pre>
 <p>Tests caught a regression in March 2026 when I accidentally swapped the <code>vat_export</code> and <code>self_employment_tax</code> parameters. The Mexican client quotes were inflating by 20% because the VAT was applied twice.</p>
 <h3 id="43-alerting-on-stale-fx-rates">4.3 Alerting on stale FX rates</h3>
-<p>I set an uptime check via UptimeRobot to hit an endpoint that returns the timestamp of the last FX pull. If the feed is older than 48 hours, I get an email and a Slack ping:</p>
+<p>If the feed is older than 48 hours, I get an email and a Slack ping:</p>
 <pre><code class="language-python"># scripts/sanity_check.py
 import requests
 
@@ -613,10 +606,9 @@ if fx_age() &gt; 48:
 </tbody>
 </table>
 <p>The 32 percentage point drop in rejections came from two changes:
-1. Quoting in the client’s currency (USD) instead of local (COP/ARS/MXN).
-2. Pre-validating the FX rate against a 48-hour window.</p>
+1. Quoting in the client’s currency (USD) instead of local (COP/ARS/MXN). 2. Pre-validating the FX rate against a 48-hour window.</p>
 <h3 id="52-case-study-staff-engineer-at-a-series-b">5.2 Case study: Staff Engineer at a Series B</h3>
-<p>I used the model to quote a Staff Engineer role for a Series B in San Francisco. The benchmark midpoint for Staff Engineer in SF is $220k total. My target was $180k net after tax and buffers.</p>
+<p>The benchmark midpoint for Staff Engineer in SF is $220k total. My target was $180k net after tax and buffers.</p>
 <ul>
 <li>US midpoint: $220k</li>
 <li>Model output: $180k target → $112/hr client rate</li>
@@ -629,16 +621,16 @@ if fx_age() &gt; 48:
 <p>Without the lock, I would have lost ~$180 on a $7,800 invoice.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <h3 id="do-i-have-to-quote-in-usd">Do I have to quote in USD?</h3>
-<p>No. You can quote in EUR if the client pays in EUR (e.g., German or Dutch startups). The model automatically adjusts the self-employment tax rate (Germany: 18.6%, Netherlands: 22.1%). I keep a small JSON table with EU tax rates and update it quarterly.</p>
+<p>No. You can quote in EUR if the client pays in EUR (e.g., German or Dutch startups). The model automatically adjusts the self-employment tax rate (Germany: 18.6%, Netherlands: 22.1%).</p>
 <h3 id="how-do-i-handle-equity-or-bonuses">How do I handle equity or bonuses?</h3>
-<p>I treat equity as a separate line item. If the client offers 0.1% RSUs vesting over 4 years, I add a separate row to the quote:</p>
+<p>If the client offers 0.1% RSUs vesting over 4 years, I add a separate row to the quote:</p>
 <pre><code class="language-yaml">- type: equity
   amount: 0.1
   vesting: 4 years
   current_value_usd: 12000
   probability: 0.7
 </code></pre>
-<p>The model doesn’t discount equity because most Latin American contractors can’t easily sell it. I present it as upside, not part of the target salary.</p>
+<p>The model doesn’t discount equity because most Latin American contractors can’t easily sell it.</p>
 <h3 id="what-if-the-client-pays-via-deel-or-remote">What if the client pays via Deel or Remote?</h3>
 <p>Deel and Remote act as employers-of-record (EOR). They withhold local taxes and issue you a 1099 or equivalent. The model still works, but you set <code>self_employment_tax=0</code> because the EOR handles it. The VAT export field depends on the EOR’s jurisdiction:</p>
 <table>
@@ -672,9 +664,9 @@ if fx_age() &gt; 48:
 </tr>
 </tbody>
 </table>
-<p>I once used Deel Colombia for a US client. The invoice came back rejected because Deel’s system auto-applied the 19% Colombian VAT, but the client was in the US and VAT export was 0%. Lesson: always ask the EOR for a VAT export flag.</p>
+<p>The invoice came back rejected because Deel’s system auto-applied the 19% Colombian VAT, but the client was in the US and VAT export was 0%. Lesson: always ask the EOR for a VAT export flag.</p>
 <h3 id="should-i-use-a-local-agency-instead-of-going-direct">Should I use a local agency instead of going direct?</h3>
-<p>Local agencies in Bogotá and Mexico City take 10–25% commission. If your target is $120k, the agency will quote $133k–$150k to the client, which may push you above their budget. I tested this with one agency in 2026 and lost three deals because the agency’s markup was higher than my buffer. Going direct keeps the spread under 5%.</p>
+<p>Local agencies in Bogotá and Mexico City take 10–25% commission. If your target is $120k, the agency will quote $133k–$150k to the client, which may push you above their budget. Going direct keeps the spread under 5%.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Take the model you built in this post and run it against one real job posting today. Open the spreadsheet, plug in the role, city, and your target annual salary, then export the client rate to a PDF quote. Send it to a friend who works at a US startup and ask for feedback on the numbers. The goal isn’t to get a yes today—it’s to find out where the model breaks against real-world budgets. If the client rate is 20% above their midpoint, dial back the buffers or lower your target. If it’s 10% below, you have room to negotiate up before you even open your mouth.</p>
 <p>Open <code>scripts/rate_model.py</code>, change the <code>target_annual</code> to your desired salary, and run:</p>
@@ -684,14 +676,11 @@ if fx_age() &gt; 48:
 If they say no, tune the buffers until it does. That’s the real negotiation—before the client even sees the quote.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

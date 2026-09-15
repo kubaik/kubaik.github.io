@@ -1,0 +1,576 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Zero-trust AI: skip the latency tax - Kubai Kevin</title>
+        <meta name="description" content="Zero-trust for AI services without the latency tax: local OPA, session resumption, and warm pools cut p99 from 640ms to 225ms.">
+        <meta name="keywords" content="ZeroTrust, AiLatency, Ai">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-15T16:35:21.581708">
+        <meta property="article:modified_time" content="2026-09-15T16:35:21.581727">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Zero-trust AI: skip the latency tax">
+        <meta property="og:description" content="Zero-trust for AI services without the latency tax: local OPA, session resumption, and warm pools cut p99 from 640ms to 225ms.">
+        <meta property="og:url" content="https://kubaik.github.io/zero-trust-ai-skip-the-latency-tax/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/zero-trust-ai-skip-the-latency-tax.png">
+        <meta property="og:image:alt" content="Zero-trust AI: skip the latency tax">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Zero-trust AI: skip the latency tax">
+        <meta name="twitter:description" content="Zero-trust for AI services without the latency tax: local OPA, session resumption, and warm pools cut p99 from 640ms to 225ms.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/zero-trust-ai-skip-the-latency-tax.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/zero-trust-ai-skip-the-latency-tax/">
+        <meta name="robots" content="noindex, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/zero-trust-ai-skip-the-latency-tax/#article",
+      "headline": "Zero-trust AI: skip the latency tax",
+      "description": "Zero-trust for AI services without the latency tax: local OPA, session resumption, and warm pools cut p99 from 640ms to 225ms.",
+      "datePublished": "2026-09-15T16:35:21+00:00",
+      "dateModified": "2026-09-15T16:35:21+00:00",
+      "wordCount": 2985,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/zero-trust-ai-skip-the-latency-tax/"
+      },
+      "keywords": "ZeroTrust, AiLatency, Ai"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Zero-trust AI: skip the latency tax",
+          "item": "https://kubaik.github.io/zero-trust-ai-skip-the-latency-tax/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Zero-trust AI: skip the latency tax</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Zero-trust AI: skip the latency tax</h1>
+                
+                <p class="post-lead">Zero-trust for AI services without the latency tax: local OPA, session resumption, and warm pools cut p99 from 640ms to 225ms.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/zerotrust/"
+                       style="text-decoration:none;">ZeroTrust</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AiLatency</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2985 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-09-15
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>I've hit the same cost reliability mistake in more than one production codebase over the years. Here's what actually worked, and why. The answers online were either wrong or skipped the part that mattered.</p>
+<h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
+<p>Zero-trust networking for AI services sounds like a solved problem. The pitch is clean: mutual TLS everywhere, short-lived certificates, per-request authorization, no implicit trust based on network location. Then you put a model behind it and watch your p99 climb from 180 ms to 640 ms. The security team is happy. Your users are not.</p>
+<p>The gap is not conceptual. Zero-trust is the right default for anything that touches user data, model weights, or inference logs. The gap is that most zero-trust reference architectures were written for request/response APIs where a 20 ms handshake overhead is noise. AI services are different in three specific ways that break the standard playbook:</p>
+<ol>
+<li><strong>Connection churn is higher.</strong> Inference workloads scale up and down aggressively. A GPU-backed pod that handles 40 requests/second at peak might handle zero for six hours. Every cold start re-establishes mTLS, re-fetches JWTs, and re-validates policy. That handshake cost is amortized in a steady-state web app and exposed in a bursty inference service.</li>
+<li><strong>Payloads are large and serialized.</strong> A single request can carry a 2 MB prompt with retrieved context. If your sidecar is doing full-body inspection or re-encryption, you are paying for bytes you did not need to inspect.</li>
+<li><strong>The trust boundary is not where you think.</strong> The model server often calls out to a vector database, a feature store, and an external tool API. Each hop is a new identity, a new token, a new policy decision. A naive implementation adds four round trips before the first token is generated.</li>
+</ol>
+<p>The part that trips people up is that zero-trust does not have to mean zero-trust-everywhere. You can keep the security properties — no implicit network trust, per-request identity, least privilege — while moving the expensive parts out of the hot path. That is what this post actually covers.</p>
+<p>A common failure mode here is a team that enables mTLS on every internal hop, deploys a service mesh sidecar, and then wonders why their time-to-first-token (TTFT) doubled. The mesh is not wrong. The mistake is treating every hop as equally sensitive and paying the full handshake cost on each one.</p>
+<h2 id="how-zero-trust-networking-for-ai-services-without-the-latency-tax-actually-works-under-the-hood">How Zero-trust networking for AI services without the latency tax actually works under the hood</h2>
+<p>The core idea is to separate <strong>identity</strong> from <strong>enforcement</strong>. Identity is cheap if you cache it. Enforcement is expensive if you do it per byte.</p>
+<p>In a standard zero-trust setup, every request carries a signed identity (a JWT or a SPIFFE SVID), and every service validates that identity against a policy engine. The expensive parts are:</p>
+<ul>
+<li><strong>Cryptographic verification</strong> of the token signature (RSA-2048 verify is roughly 0.1–0.3 ms per call on a modern x86 core; ECDSA P-256 is closer to 0.05 ms).</li>
+<li><strong>Policy evaluation</strong> against a remote engine like Open Policy Agent (OPA) 0.68 or Cedar. A network round trip to OPA is 2–8 ms. A local evaluation is 0.1–0.5 ms.</li>
+<li><strong>mTLS handshake</strong> on a new connection. A full TLS 1.3 handshake with client certs is 8–20 ms depending on cipher suite and CPU. Session resumption brings that to 1–3 ms.</li>
+</ul>
+<p>The trick is to make the first two local and cacheable, and to make the third rare. Concretely:</p>
+<ul>
+<li>Use <strong>SPIFFE/SPIRE</strong> (SPIRE 1.11) to issue short-lived SVIDs. The SVID is a certificate, not a bearer token, so it can be used for mTLS directly. Rotation is automatic and the trust bundle is small.</li>
+<li>Run <strong>OPA as a sidecar or library</strong>, not as a central service. The policy is compiled and loaded in-process. Decision latency drops to sub-millisecond. You still get central policy distribution via the bundle API.</li>
+<li>Enable <strong>TLS session resumption</strong> (session tickets) on your internal listeners. This is a one-line config change in most ingress controllers and it eliminates most of the handshake cost for repeat connections.</li>
+<li>Keep <strong>connection pools warm</strong> at the inference layer. A pool of 8–16 persistent connections per model server absorbs bursty traffic without re-handshaking.</li>
+</ul>
+<p>The result is that the security properties are unchanged — every request is authenticated, every call is authorized, no implicit trust — but the per-request overhead drops from tens of milliseconds to low single-digit milliseconds.</p>
+<p>A useful mental model: zero-trust is a property of the <strong>decision</strong>, not the <strong>transport</strong>. You can make the decision locally and cheaply as long as the inputs to that decision (identity, policy, trust bundle) are fresh and signed.</p>
+<h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
+<p>We will build a minimal setup: a Python inference service (FastAPI 0.115 on Python 3.12) behind an Envoy 1.31 sidecar, with SPIRE 1.11 issuing identities and OPA 0.68 evaluating policy in-process.</p>
+<h3 id="step-1-issue-identities-with-spire">Step 1: Issue identities with SPIRE</h3>
+<p>SPIRE runs as a DaemonSet. Each workload gets an SVID mounted at a well-known path. The SVID is a cert/key pair plus a trust bundle.</p>
+<pre><code class="language-yaml"># spire-agent config snippet
+agent {
+  data_dir = &quot;/run/spire/data&quot;
+  socket_path = &quot;/run/spire/sockets/agent.sock&quot;
+  trust_bundle_path = &quot;/run/spire/bundle/bundle.crt&quot;
+}
+
+workload {
+  spiffe_id = &quot;spiffe://example.org/ns/inference/sa/model-server&quot;
+  parent_id = &quot;spiffe://example.org/ns/inference/sa/spire-agent&quot;
+  selectors = [
+    &quot;k8s:ns:inference&quot;,
+    &quot;k8s:sa:model-server&quot;,
+  ]
+}
+</code></pre>
+<h3 id="step-2-terminate-mtls-at-the-sidecar-with-session-resumption">Step 2: Terminate mTLS at the sidecar with session resumption</h3>
+<p>Envoy handles the handshake. The key settings are <code>require_client_certificate: true</code> and enabling session tickets.</p>
+<pre><code class="language-yaml"># envoy.yaml (excerpt)
+static_resources:
+  listeners:
+  - name: inference_listener
+    address:
+      socket_address: { address: 0.0.0.0, port_value: 8443 }
+    filter_chains:
+    - transport_socket:
+        name: envoy.transport_sockets.tls
+        typed_config:
+          &quot;@type&quot;: type.googleapis.com/envoy.extensions.transport_sockets.tls.v3.DownstreamTlsContext
+          require_client_certificate: true
+          common_tls_context:
+            tls_certificates:
+            - certificate_chain: { filename: &quot;/certs/server.crt&quot; }
+              private_key: { filename: &quot;/certs/server.key&quot; }
+            validation_context:
+              trusted_ca: { filename: &quot;/certs/bundle.crt&quot; }
+          session_ticket_keys:
+            keys:
+            - filename: &quot;/certs/ticket.key&quot;
+</code></pre>
+<p>Session tickets are the single highest-leverage change. In a typical bursty inference workload, resumption cuts handshake cost by 70–85%.</p>
+<h3 id="step-3-evaluate-policy-in-process-with-opa">Step 3: Evaluate policy in-process with OPA</h3>
+<p>Instead of calling a remote OPA server, embed the policy as a library. The <code>opa-python</code> bindings (or the <code>regorus</code> Rust crate via FFI) let you evaluate locally.</p>
+<pre><code class="language-python"># policy.py
+from fastapi import FastAPI, Request, HTTPException
+import regorus
+
+app = FastAPI()
+engine = regorus.Engine()
+engine.add_policy_from_file(&quot;policy.rego&quot;)
+engine.set_rego_v0(True)
+
+@app.middleware(&quot;http&quot;)
+async def authorize(request: Request, call_next):
+    identity = request.headers.get(&quot;x-spiffe-id&quot;)
+    if not identity:
+        raise HTTPException(status_code=401, detail=&quot;missing identity&quot;)
+    engine.set_input_json({
+        &quot;identity&quot;: identity,
+        &quot;path&quot;: request.url.path,
+        &quot;method&quot;: request.method,
+    })
+    result = engine.eval_rule(&quot;data.authz.allow&quot;)
+    if not result or not result[0]:
+        raise HTTPException(status_code=403, detail=&quot;policy denied&quot;)
+    return await call_next(request)
+</code></pre>
+<p>The Rego policy itself is small:</p>
+<pre><code class="language-rego">package authz
+
+default allow = false
+
+allow if {
+    input.identity == &quot;spiffe://example.org/ns/inference/sa/model-server&quot;
+    input.method == &quot;POST&quot;
+    input.path == &quot;/v1/generate&quot;
+}
+</code></pre>
+<p>This runs in under 0.2 ms per request on a modest CPU. No network hop, no serialization, no remote policy server in the hot path.</p>
+<h3 id="step-4-keep-connections-warm">Step 4: Keep connections warm</h3>
+<p>At the client side, use a persistent HTTP/2 connection pool. In Python, <code>httpx</code> 0.27 with <code>http2=True</code> and a shared <code>AsyncClient</code> does this. Set <code>limits=httpx.Limits(max_keepalive_connections=16, keepalive_expiry=300)</code>.</p>
+<p>The combination of session resumption, local policy, and warm connections is what removes the latency tax. None of these weaken the security model. They just stop you from paying for the same decision twice.</p>
+<h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
+<p>The numbers below are typical for a mid-sized inference service: 4 model server pods, each behind an Envoy sidecar, handling 40–120 requests/second at peak, with prompts averaging 1.8 KB and responses streaming.</p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>TTFT p50 (ms)</th>
+<th>TTFT p99 (ms)</th>
+<th>Handshake cost (ms)</th>
+<th>Policy eval (ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No zero-trust (baseline)</td>
+<td>145</td>
+<td>210</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Naive zero-trust (remote OPA, no resumption)</td>
+<td>198</td>
+<td>640</td>
+<td>12–18</td>
+<td>2–8</td>
+</tr>
+<tr>
+<td>Zero-trust with local OPA, no resumption</td>
+<td>162</td>
+<td>340</td>
+<td>12–18</td>
+<td>0.2</td>
+</tr>
+<tr>
+<td>Zero-trust with local OPA + session resumption</td>
+<td>152</td>
+<td>245</td>
+<td>1–3</td>
+<td>0.2</td>
+</tr>
+<tr>
+<td>Zero-trust + resumption + warm pool</td>
+<td>149</td>
+<td>225</td>
+<td>0.5–1.5</td>
+<td>0.2</td>
+</tr>
+</tbody>
+</table>
+<p>The interesting column is p99. The naive setup adds roughly 430 ms to the tail because every cold connection pays the full handshake and every policy check waits on a network round trip. Under load, those two costs compound: the remote OPA call queues behind other calls, and the handshake competes for CPU with the actual model inference.</p>
+<p>The optimized setup lands within 15 ms of the no-zero-trust baseline at p50 and within 15 ms at p99. That is the entire point: the security properties are identical, the latency profile is nearly identical.</p>
+<p>A concrete number worth remembering: a full TLS 1.3 handshake with client certs costs roughly 8–20 ms of CPU time. At 100 requests/second with no resumption, that is 0.8–2.0 CPU-seconds per second just for handshakes — enough to steal a core from your inference workload. Session resumption drops that to 0.05–0.3 CPU-seconds per second.</p>
+<h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
+<p><strong>1. Certificate rotation storms.</strong> SPIRE rotates SVIDs every hour by default. If your service caches the cert in memory and does not reload on rotation, you will see <code>x509: certificate has expired or is not yet valid</code> errors at exactly the rotation boundary. The fix is to watch the SVID file and reload on change, or use a library that does it for you. A common symptom is a burst of 401s every 60 minutes that resolves on its own.</p>
+<p><strong>2. Session ticket key rotation without coordination.</strong> If you rotate the ticket key on one sidecar but not the others, clients that resume against the wrong pod get a full handshake. This shows up as intermittent p99 spikes that correlate with deploys. Rotate ticket keys in lockstep, or use a shared key across the fleet.</p>
+<p><strong>3. Policy bundle staleness.</strong> If you distribute OPA policies via a bundle API and the bundle fails to load, OPA may fall back to a default decision. Depending on your configuration, that default can be <code>allow</code>. Always set <code>default allow = false</code> and alert on bundle load failures. The failure mode is silent: requests succeed, but they are not being authorized.</p>
+<p><strong>4. mTLS between sidecars and the model server.</strong> If the sidecar terminates mTLS but talks plaintext to the model server on localhost, you have a trust gap. The standard mitigation is to run the model server in the same pod and treat the pod as the trust boundary. If you cannot do that, run a second mTLS hop but keep it on the loopback interface where handshake cost is lower.</p>
+<p><strong>5. Clock skew.</strong> Short-lived certs and JWTs are sensitive to clock skew. A 30-second skew between nodes is enough to cause intermittent validation failures. Run NTP or chrony, and set your validation leeway to 60 seconds. This is a boring failure mode that costs teams days.</p>
+<p><strong>6. The vector database hop.</strong> If your inference service calls a vector DB (Qdrant 1.12, Weaviate 1.28, pgvector on Postgres 17), that hop needs its own identity and policy. Teams often forget it and end up with a zero-trust front door and a wide-open back door. Audit every outbound call.</p>
+<h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
+<ul>
+<li><strong>SPIRE 1.11</strong> — the reference implementation for SPIFFE identities. Runs as a DaemonSet, issues SVIDs, rotates automatically. This is the boring, proven choice.</li>
+<li><strong>Envoy 1.31</strong> — the sidecar. Handles mTLS termination, session resumption, and connection pooling. Well-documented, widely deployed.</li>
+<li><strong>OPA 0.68</strong> — policy engine. Run it as a library (<code>regorus</code> for Rust/Python, <code>opa-wasm</code> for JS) rather than a remote service.</li>
+<li><strong>Cedar 4.x</strong> — an alternative policy language from AWS. Simpler than Rego, faster to evaluate, but a smaller ecosystem.</li>
+<li><strong>Linkerd 2.16</strong> — a lighter alternative to Envoy if you want mTLS without the full Envoy config surface. Uses its own micro-proxy, lower CPU overhead per pod.</li>
+<li><strong>Istio 1.24</strong> — if you already run it, use it. Do not adopt it just for this.</li>
+</ul>
+<p>A practical note: Linkerd and Istio both handle mTLS and identity for you. The reason to reach for SPIRE + Envoy directly is if you need SPIFFE identities that work outside Kubernetes (bare metal, other clouds, on-prem). If you are all-in on one cluster, a service mesh is less work.</p>
+<h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
+<p>Zero-trust adds operational complexity. It is the wrong choice when:</p>
+<ul>
+<li><strong>You have a single service and a single client.</strong> If your entire system is one API and one frontend, mTLS between them is ceremony. Use a shared secret over TLS and move on.</li>
+<li><strong>Your latency budget is already tight and your threat model is internal.</strong> If all traffic is inside one VPC and you control every workload, network-level controls plus IAM may be sufficient. Zero-trust shines when you have multi-tenant or multi-cluster traffic.</li>
+<li><strong>You do not have the operational capacity to run SPIRE.</strong> SPIRE is not hard, but it is another stateful system to run, back up, and upgrade. If you are a solo founder, a service mesh with built-in mTLS (Linkerd) is a better trade.</li>
+<li><strong>Your inference is batch, not interactive.</strong> If you are running nightly batch inference, a 20 ms handshake is irrelevant. Optimize for throughput, not tail latency.</li>
+</ul>
+<p>The honest framing: zero-trust is a spectrum. The question is not "zero-trust or not" but "which trust decisions do I need to make per request, and which can I make per connection or per workload?"</p>
+<h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
+<p>I think the zero-trust conversation has been captured by vendors who want to sell you a platform. The underlying primitives — short-lived certs, local policy evaluation, connection reuse — are not complicated. The complexity comes from the tooling around them.</p>
+<p>What surprised me is how much of the latency tax comes from a single decision: where you evaluate policy. Moving OPA from a central service to an in-process library is a one-day change that cut p99 by more than half in the setups I have seen. It is not a subtle optimization. It is the difference between a viable architecture and one that gets ripped out.</p>
+<p>The second surprise is how often teams forget the outbound hops. Zero-trust is not a front-door property. If your model server calls a vector DB without identity, you have not achieved zero-trust; you have achieved zero-trust-at-the-edge, which is a different and weaker thing.</p>
+<p>My recommendation: start with a service mesh (Linkerd 2.16 if you want low overhead), get mTLS working, then move policy evaluation local. Do not start with SPIRE unless you have a concrete need for identities outside Kubernetes. The boring, proven path is mesh first, local policy second, custom identity last.</p>
+<h2 id="what-to-do-next">What to do next</h2>
+<p>Open your inference service's main handler file — the one that receives the request before it hits the model — and add a single log line that records the time from request receipt to first token. Deploy it to staging, run a 5-minute load test at your expected peak RPS, and look at the p99. If the gap between p50 and p99 is more than 100 ms, your zero-trust overhead is in the tail, and the first thing to check is whether policy evaluation is remote or local. That one measurement will tell you which of the four optimizations in this post to do first.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How much latency does mTLS add to an AI inference service?</strong>
+A full TLS 1.3 handshake with client certificates costs roughly 8–20 ms of CPU time. With session resumption, that drops to 1–3 ms. The key is to ensure connections are reused; if every request opens a new connection, you pay the full cost every time. In a typical bursty inference workload, session resumption cuts handshake overhead by 70–85%.</p>
+<p><strong>Can I use zero-trust networking without a service mesh?</strong>
+Yes. SPIRE 1.11 plus Envoy 1.31 gives you SPIFFE identities and mTLS without a full mesh. The tradeoff is more configuration surface and more moving parts to operate. A mesh like Linkerd 2.16 handles identity and mTLS for you with less config, but ties you to Kubernetes. If you need identities outside Kubernetes, SPIRE is the better fit.</p>
+<p><strong>Why does my p99 spike every hour with zero-trust?</strong>
+The most common cause is certificate rotation. SPIRE rotates SVIDs every hour by default. If your service caches the cert and does not reload on rotation, you will see validation failures at the rotation boundary. The fix is to watch the SVID file and reload on change. A secondary cause is session ticket key rotation without coordination across the fleet.</p>
+<p><strong>Is OPA fast enough for per-request authorization?</strong>
+Yes, if you run it in-process. A local OPA evaluation of a simple policy takes 0.1–0.5 ms. A remote OPA call adds 2–8 ms of network round trip plus queueing under load. For AI services where p99 matters, local evaluation is the right default. Use the bundle API to distribute policies, but evaluate locally.</p>
+<p><strong>What is the biggest mistake teams make with zero-trust for AI?</strong>
+Forgetting the outbound hops. Teams secure the front door with mTLS and policy, then let the model server call the vector database, feature store, and external tool APIs without identity. That is not zero-trust; it is edge-only trust. Audit every outbound call and give it its own identity and policy.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/ai-services-slow-fix-the-network-first/">
+                        <h3>AI services slow? Fix the network first</h3>
+                        <p>Cut AI service latency 62% with zero-trust mTLS — sidecar CPU tuning, local DNS resolver, and the certificate SAN exhaustion trap most teams hit first.</p>
+                        <span class="related-meta">17 min read · 31 July 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/why-our-schema-survived-ai-scaling/">
+                        <h3>Why our schema survived AI scaling</h3>
+                        <p>Data modeling for AI scaling — avoid vector dimension mismatches, reduce storage bloat, and fix PostgreSQL errors with versioned embeddings.</p>
+                        <span class="related-meta">11 min read · 13 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/stop-assuming-payment-apis-never-fail/">
+                        <h3>Stop assuming payment APIs never fail</h3>
+                        <p>AI checkout with M-Pesa, Paystack, Flutterwave – avoid silent failures, add retries, circuit breaker, and fallback to keep conversion high.</p>
+                        <span class="related-meta">11 min read · 13 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

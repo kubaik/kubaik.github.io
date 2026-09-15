@@ -35,62 +35,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "saved-3kmonth-by-ditching-kubernetes",
-    "title": "Saved $3k/month by ditching Kubernetes",
-    "reason": "retroactive_fabrication_audit: 20 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I inherited this setup from a previous engineer who had moved the product from a; I tried scaling down the cluster to two worker nodes and switching to   instance",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-solo-saas-2026-build-vs-buy",
-    "title": "AI solo SaaS 2026: build vs buy",
-    "reason": "retroactive_fabrication_audit: 19 unverifiable first-person anecdote(s): I've seen the same changed economics mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when I tried to build a micro-SaaS for Kenyan SMEs i",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "m-pesa-failures-cost-us-40-hours",
-    "title": "M-Pesa failures cost us 40 hours",
-    "reason": "retroactive_fabrication_audit: 19 unverifiable first-person anecdote(s): I learned this the hard way in 2026 while helping a client in Nairobi scale thei; I discovered this after 14 hours of debugging why 12% of payments never reconcil; I had to add jitter to our retries to avoid thundering herds when the system rec",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-ate-the-niches-first",
-    "title": "AI ate the niches first",
-    "reason": "retroactive_fabrication_audit: 18 unverifiable first-person anecdote(s): A colleague asked me about microsaas 2026 during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I believed that too—until I watched three seemingly safe niches collapse into $0",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "bootstrapped-5k-mrr-without-ads",
     "title": "Bootstrapped $5k MRR without ads",
     "reason": "retroactive_fabrication_audit: 17 unverifiable first-person anecdote(s): The short version: the conventional advice on got mrr is incomplete.; I bootstrapped a SaaS product from $0 to $5,240 MRR in 15 months using product-l; I spent three weeks building a feature I assumed would drive signups — only to l",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "legacy-codebases-let-ai-own-the-boring-parts",
     "title": "Legacy codebases? Let AI own the boring parts",
     "reason": "retroactive_fabrication_audit: 17 unverifiable first-person anecdote(s): I learned this the hard way on a 2016 PHP monolith running on a t2.micro in us-e; I spent three days debugging a connection pool issue that turned out to be a sin; I tried running a local LLM (Llama 3.2 3B) on a 2026 MacBook Pro with 16GB RAM.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "map-legacy-code-with-ai-before-it-breaks",
     "title": "Map legacy code with AI before it breaks",
     "reason": "retroactive_fabrication_audit: 17 unverifiable first-person anecdote(s): I spent three days trying to reproduce a bug where certain user sessions would r; I was convinced it was a database lock or a slow query.; I once fed a legacy Python Flask app into an AI tool, and it confidently told me",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "price-your-remote-job-like-a-new-york-dev",
     "title": "Price your remote job like a New York dev",
     "reason": "retroactive_fabrication_audit: 17 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I learned the hard way that currency math isn’t the same as market math.; I spent two weeks reverse-engineering offer letters from US-based contractors on",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "remote-salary-negotiate-without-sounding-cheap",
     "title": "Remote salary: negotiate without sounding cheap",
     "reason": "retroactive_fabrication_audit: 17 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I immediately countered with $6,200.; I accepted, only to realise later that the same role was paying a US-based contr",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-ops-datadog-vs-granfa-for-infra-automation",
@@ -2146,6 +2123,12 @@
     "action": "regenerate"
   },
   {
+    "slug": "zero-trust-ai-skip-the-latency-tax",
+    "title": "Zero-trust AI: skip the latency tax",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I've hit the same cost reliability mistake in more than one production codebase ; Here's what actually worked, and why.",
+    "action": "regenerate"
+  },
+  {
     "slug": "african-fintech-agents-the-compliance-cliff-most-miss",
     "title": "African fintech agents: the compliance cliff most miss",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this regulatory compliance problem while migrating a service under a ",
@@ -2690,6 +2673,34 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "saved-3kmonth-by-ditching-kubernetes",
+    "title": "Saved $3k/month by ditching Kubernetes",
+    "reason": "retroactive_fabrication_audit: 20 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I inherited this setup from a previous engineer who had moved the product from a; I tried scaling down the cluster to two worker nodes and switching to   instance",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-solo-saas-2026-build-vs-buy",
+    "title": "AI solo SaaS 2026: build vs buy",
+    "reason": "retroactive_fabrication_audit: 19 unverifiable first-person anecdote(s): I've seen the same changed economics mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when I tried to build a micro-SaaS for Kenyan SMEs i",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "m-pesa-failures-cost-us-40-hours",
+    "title": "M-Pesa failures cost us 40 hours",
+    "reason": "retroactive_fabrication_audit: 19 unverifiable first-person anecdote(s): I learned this the hard way in 2026 while helping a client in Nairobi scale thei; I discovered this after 14 hours of debugging why 12% of payments never reconcil; I had to add jitter to our retries to avoid thundering herds when the system rec",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-ate-the-niches-first",
+    "title": "AI ate the niches first",
+    "reason": "retroactive_fabrication_audit: 18 unverifiable first-person anecdote(s): A colleague asked me about microsaas 2026 during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I believed that too—until I watched three seemingly safe niches collapse into $0",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "7-passive-income-streams-for-devs-in-2026",

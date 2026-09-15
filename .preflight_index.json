@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-15T04:09:38.900869",
+  "built_at": "2026-09-15T16:35:24.525173",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5140,6 +5140,11 @@
       "slug": "memory-systems-for-production-agents",
       "title": "Memory Systems for Production Agents",
       "summary": "Production gives you neither a clean environment nor a patient timeline. I've hit the same ondevice edge mistake in more than one production codebase over the years. Here's what changed once we stopped guessing and started measuring. The gap between what the docs say and what production needs When i"
+    },
+    {
+      "slug": "zero-trust-ai-skip-the-latency-tax",
+      "title": "Zero-trust AI: skip the latency tax",
+      "summary": "I've hit the same cost reliability mistake in more than one production codebase over the years. Here's what actually worked, and why. The answers online were either wrong or skipped the part that mattered. The gap between what the docs say and what production needs Zero-trust networking for AI servi"
     }
   ]
 }

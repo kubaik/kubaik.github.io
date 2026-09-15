@@ -410,6 +410,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/map-legacy-code-with-ai-before-it-breaks.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/mcp-hidden-cost-traps/</loc>
     <lastmod>2026-09-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -464,10 +473,28 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/price-your-remote-job-like-a-new-york-dev/</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/price-your-remote-job-like-a-new-york-dev.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/privacy-policy/</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/remote-salary-negotiate-without-sounding-cheap/</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/remote-salary-negotiate-without-sounding-cheap.png</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://kubaik.github.io/rogue-agent-api-calls-stop-the-bleeding/</loc>

@@ -210,5 +210,7 @@
   "Testing and reviewing agent-generated code and workflows at team scale",
   "The skills that became table stakes for senior engineers once agents reached production",
   "Prompt and tool injection attacks documented in production, and how teams block them",
-  "Writing postmortems that account for agent-made decisions, not just human error"
+  "Writing postmortems that account for agent-made decisions, not just human error",
+  "The cost and reliability tradeoffs of running agents for users paying via mobile money",
+  "Zero-trust networking for AI services without the latency tax"
 ]

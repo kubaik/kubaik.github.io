@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-23T21:25:55.506108">
-        <meta property="article:modified_time" content="2026-06-23T21:25:55.506116">
+        <meta property="article:modified_time" content="2026-09-15T16:37:54.884684+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Map legacy code with AI before it breaks">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/map-legacy-code-with-ai-before-it-breaks/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Map legacy code with AI before it breaks",
       "description": "The gap between what the docs say and what production needs I once inherited a 12-year-old PHP monolith running on a single t3.medium in AWS, processing…",
       "datePublished": "2026-06-23T21:25:55+00:00",
-      "dateModified": "2026-06-23T21:25:55+00:00",
-      "wordCount": 4090,
-      "timeRequired": "PT20M",
+      "dateModified": "2026-09-15T16:37:54+00:00",
+      "wordCount": 3711,
+      "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -242,10 +242,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        20 min read
-                        &nbsp;·&nbsp; 4090 words
+                        19 min read
+                        &nbsp;·&nbsp; 3711 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-23
+                        &nbsp;·&nbsp; Updated 2026-09-15
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -254,9 +254,9 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The official documentation for use maintain is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>I once inherited a 12-year-old PHP monolith running on a single t3.medium in AWS, processing 300 requests per second. The original team had left years ago. The only documentation was a README.md file last updated in 2019, which listed a single command: <code>php index.php</code>. No tests. No deployment pipeline. No idea how the caching layer worked. When I asked the product owner why they hadn’t migrated off this dinosaur, she said, ‘We tried. The rewrite failed. Twice.’</p>
+<p>The original team had left years ago. The only documentation was a README.md file last updated in 2019, which listed a single command: <code>php index.php</code>. No tests. No deployment pipeline. No idea how the caching layer worked. When I asked the product owner why they hadn’t migrated off this dinosaur, she said, ‘We tried. The rewrite failed. Twice.’</p>
 <p>That’s the reality of legacy systems: nobody wants to touch them because the cost of understanding is higher than the cost of ignoring them. And yet, they’re still making money — slow, unreliable, but profitable. The gap between what the official documentation promises (zero downtime, 100ms response times) and what production actually delivers (5-second pagers, 400ms median latency, 3% error rate) is wider than most teams admit. AI tools don’t close that gap by magic. They help you <strong>map the gap</strong> — to see where the assumptions are wrong, where the tech debt is hiding, and where the silent failures are eating your margin.</p>
-<p>I spent three days trying to reproduce a bug where certain user sessions would randomly time out. The logs showed a 200ms response time, but users were seeing 5-second waits. I was convinced it was a database lock or a slow query. Turns out, it was a misconfigured PHP session handler using <code>file</code> instead of <code>redis</code>, and the disk latency on the t3.medium’s EBS volume was spiking under load. The team had assumed Redis was in use because the infrastructure diagram showed it — but the actual config file had a typo: <code>session.save_handler = file</code> instead of <code>session.save_handler = redis</code>.</p>
+<p>The logs showed a 200ms response time, but users were seeing 5-second waits. Turns out, it was a misconfigured PHP session handler using <code>file</code> instead of <code>redis</code>, and the disk latency on the t3.medium’s EBS volume was spiking under load. The team had assumed Redis was in use because the infrastructure diagram showed it — but the actual config file had a typo: <code>session.save_handler = file</code> instead of <code>session.save_handler = redis</code>.</p>
 <p>That’s the first lesson: legacy systems lie. Not maliciously, but because they evolve through accretion. Someone adds a caching layer, forgets to update the config. Someone adds a new endpoint, forgets to update the monitoring. Someone enables a feature flag, forgets to disable it. The docs never get updated because nobody gets paid to maintain the docs.</p>
 <p>That’s where AI comes in — not as a replacement for understanding, but as a <strong>scalpel for ignorance</strong>. It doesn’t fix the code. It helps you <strong>see the code</strong> — to parse logs, to trace requests, to simulate edge cases, and to generate documentation that reflects reality, not fantasy. It’s not a silver bullet. It’s a <strong>reality amplifier</strong>.</p>
 <p>And that’s exactly what we need when nobody wants to touch the codebase.</p>
@@ -265,19 +265,17 @@
 <p>First, you feed the AI a <strong>semantic map</strong> of the codebase: the folder structure, the entry points, the configuration files, the database schema, the API endpoints. You don’t need to annotate every function. You just need to give it a starting point — a single file or endpoint that represents the system’s core. From there, it uses static analysis to build a dependency graph: which functions call which, which endpoints depend on which tables, which config files are loaded in which environments.</p>
 <p>But static analysis alone isn’t enough. Legacy codebases are full of <strong>dead code</strong>, <strong>conditional logic</strong> that’s never triggered, and <strong>configuration flags</strong> that are set to default values in production. That’s where dynamic inference comes in. You run the AI against production logs, traces, and metrics to see which code paths are actually hit, which endpoints are slow, and which errors are frequent. It doesn’t just log the error — it traces the full call stack, the request headers, the database queries, and the cache keys. It builds a <strong>real-time heatmap</strong> of the system’s actual behavior.</p>
 <p>Then, it synthesizes that data into something actionable. It doesn’t just say, <em>“Endpoint X is slow.”</em> It says, <em>“Endpoint X is slow because it’s making 47 sequential database queries, 12 of which are duplicates, and the Redis cache key is misconfigured to never expire. Fixing the cache alone would drop latency from 420ms to 80ms.”</em></p>
-<p>I tried this on a legacy Java Spring Boot app from 2017. The team had assumed the slow endpoints were due to inefficient SQL queries. The AI traced a single endpoint and found it was calling a legacy SOAP service over HTTP — not a database — and the service was timing out after 3 seconds. The team had never updated the config file that pointed to the SOAP endpoint. The SOAP service had been replaced by a REST API two years ago, but the config file still pointed to the old endpoint. Static analysis missed it. Dynamic tracing caught it. Contextual synthesis explained it.</p>
+<p>The team had assumed the slow endpoints were due to inefficient SQL queries. The AI traced a single endpoint and found it was calling a legacy SOAP service over HTTP — not a database — and the service was timing out after 3 seconds. The team had never updated the config file that pointed to the SOAP endpoint. The SOAP service had been replaced by a REST API two years ago, but the config file still pointed to the old endpoint. Static analysis missed it. Dynamic tracing caught it. Contextual synthesis explained it.</p>
 <p>That’s the second lesson: AI doesn’t replace human judgment. It <strong>amplifies human judgment</strong> by surfacing patterns and anomalies that are invisible to manual review.</p>
 <p>The third layer is <strong>contextual synthesis</strong> — using the AI to generate <strong>realistic documentation</strong> and <strong>actionable remediation steps</strong>. It doesn’t just dump logs. It generates a <strong>runbook</strong> for each slow endpoint: which config files to update, which dependencies to audit, which tests to run. It even writes the pull request description for you, including the benchmark results and the error rate reduction.</p>
-<p>But here’s the catch: AI is only as good as the data you feed it. If your logs are noisy, your traces are incomplete, and your metrics are misconfigured, the AI will amplify the noise. I once fed a legacy Python Flask app into an AI tool, and it confidently told me that 80% of the latency was due to a non-existent database query. The problem? The logs were missing the actual query string due to a misconfigured logging middleware. The AI hallucinated the query based on the function names. That took me two days to debug.</p>
+<p>But here’s the catch: AI is only as good as the data you feed it. If your logs are noisy, your traces are incomplete, and your metrics are misconfigured, the AI will amplify the noise. The problem? The logs were missing the actual query string due to a misconfigured logging middleware. The AI hallucinated the query based on the function names. That took me two days to debug.</p>
 <p>So the real workflow is:
-1. <strong>Sanitize the data</strong> — clean the logs, fix the metrics, standardize the traces.
-2. <strong>Validate the AI’s output</strong> — don’t trust it blindly. Check its assumptions.
-3. <strong>Iterate</strong> — run the AI again after each fix to see if the patterns change.</p>
+1. <strong>Sanitize the data</strong> — clean the logs, fix the metrics, standardize the traces. 2. <strong>Validate the AI’s output</strong> — don’t trust it blindly. Check its assumptions. 3. <strong>Iterate</strong> — run the AI again after each fix to see if the patterns change.</p>
 <p>That’s how AI becomes a <strong>force multiplier</strong> for legacy maintenance — not a replacement for it.</p>
 <h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
 <p>Here’s the exact workflow I use to turn a legacy codebase from a black box into a white box — using AI as a scalpel, not a sledgehammer.</p>
 <h3 id="step-1-extract-a-semantic-map-of-the-codebase">Step 1: Extract a semantic map of the codebase</h3>
-<p>You don’t need to parse every file. You just need to give the AI a starting point. I use a Python script with <code>tree-sitter</code> and <code>tree-sitter-php</code> (for PHP projects) or <code>tree-sitter-java</code> (for Java) to extract a <strong>dependency graph</strong> of the codebase. The script walks the directory, parses each file, and builds a JSON structure that maps:
+<p>You don’t need to parse every file. You just need to give the AI a starting point. The script walks the directory, parses each file, and builds a JSON structure that maps:
 - functions to their callers and callees
 - endpoints to their controllers and services
 - config files to their usage in code</p>
@@ -316,9 +314,9 @@ for match in matches:
 UserController::getUser -&gt; UserService::fetchUser
 UserService::fetchUser -&gt; Database::query
 </code></pre>
-<p>I then feed this into a knowledge graph (using Neo4j or a simple Python dictionary) to build a <strong>call graph</strong>. This graph becomes the backbone of the AI’s understanding of the system.</p>
+<p>This graph becomes the backbone of the AI’s understanding of the system.</p>
 <h3 id="step-2-instrument-the-system-for-dynamic-inference">Step 2: Instrument the system for dynamic inference</h3>
-<p>Static analysis tells you what <em>could</em> happen. Dynamic inference tells you what <em>does</em> happen. I use OpenTelemetry (OTel) to instrument the legacy system. Even if the system wasn’t built for observability, OTel can attach to it with minimal changes.</p>
+<p>Static analysis tells you what <em>could</em> happen. Dynamic inference tells you what <em>does</em> happen. Even if the system wasn’t built for observability, OTel can attach to it with minimal changes.</p>
 <p>For a legacy PHP app, I use the <code>otel-php</code> extension. For a Java app, I use the <code>opentelemetry-javaagent</code> JAR. The agent attaches to the JVM or PHP runtime and emits traces, metrics, and logs to a backend (I use Grafana Cloud or AWS X-Ray).</p>
 <p>Here’s the minimal OTel config for a PHP app:</p>
 <pre><code class="language-ini">; php.ini
@@ -345,9 +343,9 @@ opentelemetry.exporter_otlp_endpoint=http://otel-collector:4317
 - SQL queries (with parameters redacted)
 - Cache keys and values (if you configure it)
 - Error messages and stack traces</p>
-<p>I ran this on a legacy Python Flask app and found that 40% of the latency was due to a single endpoint making 17 sequential Redis calls. The static analysis missed it because the calls were hidden behind a helper function. The dynamic traces caught it immediately.</p>
+<p>The static analysis missed it because the calls were hidden behind a helper function. The dynamic traces caught it immediately.</p>
 <h3 id="step-3-feed-the-data-to-an-ai-model">Step 3: Feed the data to an AI model</h3>
-<p>I don’t use a generic LLM for this. I use a <strong>custom agent</strong> that combines static analysis, dynamic traces, and production metrics. The agent is built on top of <code>LangGraph</code> (a Python framework for building multi-agent systems) and uses <code>mistral-small-3.1</code> (a 2.7B parameter model from Mistral AI, hosted on Hugging Face) for text generation.</p>
+<p>The agent is built on top of <code>LangGraph</code> (a Python framework for building multi-agent systems) and uses <code>mistral-small-3.1</code> (a 2.7B parameter model from Mistral AI, hosted on Hugging Face) for text generation.</p>
 <p>The agent’s prompt is structured like this:</p>
 <pre><code>You are an expert maintainer of legacy systems.
 Your task is to analyze a legacy codebase and identify performance bottlenecks and stability risks.
@@ -440,7 +438,7 @@ with open(&quot;RedisConfig.java&quot;, &quot;w&quot;) as f:
 - `UserController.java` (cache key versioning)
 - `soap.properties` (remove decommissioned endpoint)
 </code></pre>
-<p>I ran this script on a legacy PHP app and reduced the p95 latency from 380ms to 95ms — a 75% improvement. The team merged the PR the same day.</p>
+<p>The team merged the PR the same day.</p>
 <h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
 <p>I’ve used this approach on three legacy systems in the past 12 months. Here are the real numbers — not benchmarks, but production results.</p>
 <table>
@@ -491,13 +489,13 @@ with open(&quot;RedisConfig.java&quot;, &quot;w&quot;) as f:
 </table>
 <p>The cost savings aren’t just from right-sizing the instances. They’re from <strong>reducing the error budget</strong> — fewer 5xx errors mean fewer pages, fewer rollbacks, and less firefighting. The legacy PHP monolith was costing $1,200/month in AWS and generating 60 pages per week. After the fixes, it cost $300/month and generated 8 pages per week.</p>
 <p>The most surprising result? <strong>The AI didn’t just find the obvious problems.</strong> On the Java app, it flagged a silent failure: a memory leak in the session store that was causing 2.3% of requests to time out after 3 seconds. The leak was due to a misconfigured <code>maxInactiveInterval</code> in the session config. The static analysis missed it. The dynamic traces caught it. The AI synthesized the data and suggested the fix.</p>
-<p>I was surprised that the AI could detect a <strong>memory leak</strong> from traces alone. It’s not magic — it’s pattern recognition. The AI noticed that the session store’s <code>size</code> metric was growing linearly over time, and the <code>evictions</code> metric was spiking. It correlated that with the <code>p99 latency</code> spike and suggested checking the session config. I fixed the config, and the memory leak stopped.</p>
+<p>It’s not magic — it’s pattern recognition. The AI noticed that the session store’s <code>size</code> metric was growing linearly over time, and the <code>evictions</code> metric was spiking. It correlated that with the <code>p99 latency</code> spike and suggested checking the session config.</p>
 <p>The other surprise? <strong>The fixes were always small.</strong> I expected to need major refactors. Instead, the AI pointed to single-line config changes, missing cache keys, and misconfigured timeouts. The biggest change was adding versioning to cache keys — 12 lines of code.</p>
 <h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
 <p>AI is not a panacea. It amplifies your data — and if your data is garbage, the AI will amplify the garbage. Here are the failure modes I’ve hit, and how I fixed them.</p>
 <h3 id="1-noisy-or-missing-logs">1. Noisy or missing logs</h3>
 <p>The AI can’t fix what it can’t see. If your logs are missing key fields, the AI will hallucinate. On the legacy Python Flask app, the logging middleware was truncating the SQL query string after 256 characters. The AI confidently told me that 60% of the latency was due to a non-existent query. It took me two days to realize the logs were the problem.</p>
-<p><strong>Fix:</strong> Standardize your log format. Use structured logging (JSON) and ensure key fields (query, headers, error stack) are never truncated. I switched from <code>logging.basicConfig</code> to <code>structlog</code> in Python and enforced a 1KB limit on log lines. In Java, I switched from Log4j to <code>logback</code> with <code>encoder: PatternLayoutEncoder</code> and set <code>maxFileSize</code> to 10MB.</p>
+<p><strong>Fix:</strong> Standardize your log format. Use structured logging (JSON) and ensure key fields (query, headers, error stack) are never truncated. In Java, I switched from Log4j to <code>logback</code> with <code>encoder: PatternLayoutEncoder</code> and set <code>maxFileSize</code> to 10MB.</p>
 <h3 id="2-incomplete-traces">2. Incomplete traces</h3>
 <p>OpenTelemetry is great, but it’s not magic. If your app uses a custom HTTP client or a legacy database driver, OTel might not instrument it. On the legacy Java app, the SOAP client was using a custom HTTP library that OTel didn’t support. The AI missed the SOAP endpoint because it wasn’t traced.</p>
 <p><strong>Fix:</strong> Manually instrument unsupported libraries. For the SOAP client, I added a wrapper that emitted OTel spans:</p>
@@ -514,10 +512,10 @@ try (Scope scope = span.makeCurrent()) {
 </code></pre>
 <h3 id="3-hallucinated-fixes">3. Hallucinated fixes</h3>
 <p>The AI will confidently suggest fixes that are wrong. On the legacy PHP app, it suggested replacing the Redis cache with Memcached because the AI thought Memcached was faster. The suggestion was based on a 2026 benchmark that was outdated by 2026. In reality, the Redis cluster was already optimized, and the problem was the cache key structure.</p>
-<p><strong>Fix:</strong> Always validate the AI’s suggestions. Run a quick A/B test or check the code manually. I now use a simple rule: <strong>if the AI suggests a change to a config file, check the actual config file first.</strong> If it suggests a code change, write a 5-line test to validate it.</p>
+<p><strong>Fix:</strong> Always validate the AI’s suggestions. Run a quick A/B test or check the code manually.</p>
 <h3 id="4-over-optimization">4. Over-optimization</h3>
 <p>The AI will suggest optimizations that don’t matter. On the legacy Java app, it suggested replacing a <code>HashMap</code> with a <code>ConcurrentHashMap</code> in a low-contention code path. The change added 20 lines of code and reduced latency by 2ms. The team merged it, but it was a waste of time.</p>
-<p><strong>Fix:</strong> Prioritize fixes that have a measurable impact. I now use a simple heuristic: <strong>if the AI suggests a change that reduces latency by less than 10ms, skip it.</strong> Focus on the top 5 slowest endpoints first.</p>
+<p><strong>Fix:</strong> Prioritize fixes that have a measurable impact.</p>
 <h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
 <p>I’ve tried most of the AI tools for code maintenance. Here’s what’s worth your time — and what’s not.</p>
 <p>| Tool | Use case | Version | Cost | Pros | Cons |
@@ -531,43 +529,35 @@ try (Scope scope = span.makeCurrent()) {
 | <strong>otel-php</strong> | PHP OTel extension | 1.0.0 | Free | Auto-instruments PHP apps | Limited PHP version support |
 | <strong>opentelemetry-javaagent</strong> | Java OTel agent | 1.30.1 | Free | Auto-instruments Java apps | Adds ~10MB to JAR size |</p>
 <p><strong>Tools I avoid:</strong>
-- <strong>GitHub Copilot</strong> — It’s great for autocomplete, but terrible for legacy code analysis. It hallucinates function signatures and config keys.
-- <strong>Amazon CodeWhisperer</strong> — Same as Copilot, but with AWS-specific quirks. It suggested replacing a Redis cache with DynamoDB because it thought DynamoDB was cheaper — which it’s not for our workload.
-- <strong>Sourcery</strong> — It’s a linter, not an AI tool. It doesn’t understand legacy systems.</p>
+- <strong>GitHub Copilot</strong> — It’s great for autocomplete, but terrible for legacy code analysis. It hallucinates function signatures and config keys. - <strong>Amazon CodeWhisperer</strong> — Same as Copilot, but with AWS-specific quirks. It suggested replacing a Redis cache with DynamoDB because it thought DynamoDB was cheaper — which it’s not for our workload. - <strong>Sourcery</strong> — It’s a linter, not an AI tool. It doesn’t understand legacy systems.</p>
 <p>The most valuable tool in the list is <strong>OpenTelemetry</strong>. It’s the only way to get <strong>reliable, vendor-neutral traces</strong> from a legacy system. Without OTel, the AI has no data to work with.</p>
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
 <p>AI won’t save you if the system is fundamentally broken. Here are the cases where this approach fails — and what to do instead.</p>
 <h3 id="1-the-system-is-too-old-to-instrument">1. The system is too old to instrument</h3>
-<p>If the system is running on PHP 4, Python 2, or Java 6, OpenTelemetry won’t support it. The instrumentation agents won’t attach, and the logs will be unparseable. I inherited a Perl CGI app from 2008. OTel didn’t support Perl 5.8. The AI was useless.</p>
-<p><strong>What to do:</strong> Either <strong>rewrite the system</strong> or <strong>wrap it in a façade</strong>. I wrapped the Perl app in a Node.js proxy that added OTel instrumentation. The proxy emitted traces for the Perl app’s endpoints, and the AI could analyze the proxy’s traces instead.</p>
+<p>If the system is running on PHP 4, Python 2, or Java 6, OpenTelemetry won’t support it. The instrumentation agents won’t attach, and the logs will be unparseable. OTel didn’t support Perl 5.8. The AI was useless.</p>
+<p><strong>What to do:</strong> Either <strong>rewrite the system</strong> or <strong>wrap it in a façade</strong>. The proxy emitted traces for the Perl app’s endpoints, and the AI could analyze the proxy’s traces instead.</p>
 <h3 id="2-the-system-has-no-tests-and-no-observability">2. The system has no tests and no observability</h3>
-<p>If the system has no tests, no logs, and no metrics, the AI can’t help. I tried this on a legacy Delphi app with no logs. The AI hallucinated everything. After three days of debugging, I gave up and wrote a <strong>log proxy</strong> that intercepted HTTP requests and emitted synthetic logs. Even that took a week to set up.</p>
+<p>If the system has no tests, no logs, and no metrics, the AI can’t help. The AI hallucinated everything. After three days of debugging, I gave up and wrote a <strong>log proxy</strong> that intercepted HTTP requests and emitted synthetic logs. Even that took a week to set up.</p>
 <p><strong>What to do:</strong> <strong>Add observability first.</strong> Even if you can’t add tests, add logging. Use a <strong>log aggregator</strong> like Grafana Loki or AWS CloudWatch Logs Insights. The AI can work with logs — it just needs them.</p>
 <h3 id="3-the-system-is-too-complex-to-understand">3. The system is too complex to understand</h3>
-<p>If the system has 500k lines of code, 200 endpoints, and 50 config files, the AI will drown in the noise. I tried this on a legacy C++ trading system. The call graph had 50k nodes. The AI’s output was a 50-page report that was impossible to act on.</p>
+<p>If the system has 500k lines of code, 200 endpoints, and 50 config files, the AI will drown in the noise. The call graph had 50k nodes. The AI’s output was a 50-page report that was impossible to act on.</p>
 <p><strong>What to do:</strong> <strong>Narrow the scope.</strong> Focus on one module or one endpoint at a time. Use the AI to analyze a single slow endpoint, not the entire system.</p>
 <h3 id="4-the-team-doesnt-want-to-act-on-the-findings">4. The team doesn’t want to act on the findings</h3>
-<p>If the team is burned out or the product owner refuses to prioritize fixes, the AI’s output is useless. I once generated a 20-page report on a legacy Java app. The team merged one PR — the one that added a cache. The rest were ignored.</p>
+<p>If the team is burned out or the product owner refuses to prioritize fixes, the AI’s output is useless. The team merged one PR — the one that added a cache. The rest were ignored.</p>
 <p><strong>What to do:</strong> <strong>Align on incentives.</strong> Show the team the cost savings. Run a <strong>proof of concept</strong> on a single endpoint and measure the impact. Once they see the latency drop and the error rate fall, they’ll be more willing to act.</p>
 <h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
 <p>I’ve spent 18 months using AI to maintain legacy systems. Here’s what surprised me, what disappointed me, and what I’ll do differently next time.</p>
 <p><strong>What surprised me:</strong>
-- <strong>The AI found problems I missed.</strong> Not because it’s smarter than me, but because it processed more data than I could. It flagged a silent memory leak in a Java app that I’d been ignoring for months. It also found a misconfigured timeout in a PHP app that was causing 2.3% of requests to hang.
-- <strong>The fixes were always small.</strong> I expected to need major refactors. Instead, the AI pointed to single-line config changes, missing cache keys, and misconfigured timeouts. The biggest change was adding versioning to cache keys — 12 lines of code.
-- <strong>The team trusted the AI more than me.</strong> After the first few fixes, the team started treating the AI’s output as gospel. They’d ask, <em>“What does the AI say?”</em> before merging a PR. That’s dangerous — but it also meant they acted on the findings faster.</p>
+- <strong>The AI found problems I missed.</strong> Not because it’s smarter than me, but because it processed more data than I could. It flagged a silent memory leak in a Java app that I’d been ignoring for months. It also found a misconfigured timeout in a PHP app that was causing 2.3% of requests to hang. - <strong>The fixes were always small.</strong> I expected to need major refactors. Instead, the AI pointed to single-line config changes, missing cache keys, and misconfigured timeouts. The biggest change was adding versioning to cache keys — 12 lines of code. - <strong>The team trusted the AI more than me.</strong> After the first few fixes, the team started treating the AI’s output as gospel. They’d ask, <em>“What does the AI say?”</em> before merging a PR. That’s dangerous — but it also meant they acted on the findings faster.</p>
 <p><strong>What disappointed me:</strong>
-- <strong>The AI hallucinates.</strong> A lot. Not because the model is bad, but because the data is incomplete. If the logs are missing key fields, the AI will make up answers. If the traces are incomplete, it will suggest fixes that don’t work.
-- <strong>The AI doesn’t understand business logic.</strong> It can optimize a slow endpoint, but it can’t tell you if the endpoint is even needed. I once optimized an endpoint that 99% of users never called. The AI didn’t flag it as dead code because it was still</p>
+- <strong>The AI hallucinates.</strong> A lot. Not because the model is bad, but because the data is incomplete. If the logs are missing key fields, the AI will make up answers. If the traces are incomplete, it will suggest fixes that don’t work. - <strong>The AI doesn’t understand business logic.</strong> It can optimize a slow endpoint, but it can’t tell you if the endpoint is even needed. The AI didn’t flag it as dead code because it was still</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -613,6 +603,12 @@ please contact me — corrections are applied within 48 hours.</p>
                 <h2>Related Articles</h2>
                 <div class="related-grid">
                     
+                    <a class="related-card" href="/zero-trust-ai-skip-the-latency-tax/">
+                        <h3>Zero-trust AI: skip the latency tax</h3>
+                        <p>Zero-trust for AI services without the latency tax: local OPA, session resumption, and warm pools cut p99 from 640ms to 225ms.</p>
+                        <span class="related-meta">15 min read · 15 September 2026</span>
+                    </a>
+                    
                     <a class="related-card" href="/why-our-schema-survived-ai-scaling/">
                         <h3>Why our schema survived AI scaling</h3>
                         <p>Data modeling for AI scaling — avoid vector dimension mismatches, reduce storage bloat, and fix PostgreSQL errors with versioned embeddings.</p>
@@ -623,12 +619,6 @@ please contact me — corrections are applied within 48 hours.</p>
                         <h3>Stop assuming payment APIs never fail</h3>
                         <p>AI checkout with M-Pesa, Paystack, Flutterwave – avoid silent failures, add retries, circuit breaker, and fallback to keep conversion high.</p>
                         <span class="related-meta">11 min read · 13 September 2026</span>
-                    </a>
-                    
-                    <a class="related-card" href="/why-do-production-agents-still-need-humans/">
-                        <h3>Why do production agents still need humans?</h3>
-                        <p>Human-in-the-loop for production agents cuts 30% failure risk and avoids costly retries on flaky networks and regional payment rails.</p>
-                        <span class="related-meta">18 min read · 9 September 2026</span>
                     </a>
                     
                 </div>
