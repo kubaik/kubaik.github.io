@@ -205,5 +205,6 @@
   "Code review and architecture decisions when large parts of a system are agent-orchestrated",
   "On-device and edge agents in 2026: when they beat cloud round-trips for African users",
   "How the 'AI Engineer' role has evolved through 2026",
-  "Memory systems for production agents: approaches compared, and where each leaks context"
+  "Memory systems for production agents: approaches compared, and where each leaks context",
+  "Evaluation-driven development for agents: replacing vibe testing with a real loop"
 ]
