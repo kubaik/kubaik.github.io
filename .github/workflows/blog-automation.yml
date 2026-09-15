@@ -76,7 +76,7 @@ jobs:
                      CEREBRAS_API_KEY MISTRAL_API_KEY NVIDIA_API_KEY \
                      TWITTER_API_KEY TWITTER_API_SECRET \
                      TWITTER_ACCESS_TOKEN TWITTER_ACCESS_TOKEN_SECRET \
-                     TWITTER_BEARER_TOKEN BLOGGITHUB_TOKEN HF_TOKEN ZAI_API_KEY LLM7_API_KEY ENABLE_TWITTER_POSTING; do
+                     TWITTER_BEARER_TOKEN BLOGGITHUB_TOKEN HF_TOKEN ZAI_API_KEY LLM7_API_KEY DEEPSEEK_API_KEY ENABLE_TWITTER_POSTING; do
             if [ -z "${!VAR}" ]; then
               echo "WARNING: $VAR is not set"
             else
@@ -99,6 +99,7 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
           LLM7_API_KEY: ${{ secrets.LLM7_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           ENABLE_TWITTER_POSTING: ${{ secrets.ENABLE_TWITTER_POSTING }}
 
       - name: Resolve Twitter posting flag
@@ -160,6 +161,7 @@ jobs:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
           ZAI_API_KEY: ${{ secrets.ZAI_API_KEY }}
           LLM7_API_KEY: ${{ secrets.LLM7_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           ENABLE_TWITTER_POSTING: ${{ steps.twitter_flag.outputs.effective_flag }}
         run: |
           python blog_system.py auto || {

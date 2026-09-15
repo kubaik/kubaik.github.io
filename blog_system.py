@@ -1001,6 +1001,15 @@ _HF_MODEL = "Qwen/Qwen2.5-72B-Instruct"
 _ZAI_MODEL = "glm-4.7-flash"
 _LLM7_MODEL = "default"
 
+# Primary model. DeepSeek-V4.1-Flash: 1M context, JSON output + tool calls,
+# by far the cheapest usable option (~$0.15/M in / $0.6/M out off-peak — see
+# https://api-docs.deepseek.com/quick_start/pricing), and no daily free-tier
+# cap to run out mid-run the way Groq/OpenRouter's free tiers can. The
+# legacy "deepseek-chat"/"deepseek-reasoner" aliases were deprecated
+# 2026-07-24 in favor of "deepseek-flash" / "deepseek-v4-pro" — don't
+# revert to the old name.
+_DEEPSEEK_MODEL = "deepseek-flash"
+
 # Cloudflare Workers AI is ping-only (10k neurons/day) — not in the
 # content-generation chain. Kept here so a future ping/health check can
 # reuse the same model id without hunting docs.
@@ -2297,13 +2306,14 @@ class BlogSystem:
         self.hf_token = os.getenv("HF_TOKEN")
         self.zai_key = os.getenv("ZAI_API_KEY")
         self.llm7_key = os.getenv("LLM7_API_KEY")  # optional; "unused" works
+        self.deepseek_key = os.getenv("DEEPSEEK_API_KEY")
 
         self._log_key_status()
 
         self.api_key = (
-            self.groq_key or self.openrouter_key or self.gemini_key
-            or self.hf_token or self.mistral_key or self.nvidia_key
-            or self.zai_key or self.llm7_key or "unused"
+            self.deepseek_key or self.groq_key or self.openrouter_key
+            or self.gemini_key or self.hf_token or self.mistral_key
+            or self.nvidia_key or self.zai_key or self.llm7_key or "unused"
         )
 
         self.monetization = MonetizationManager(config)
@@ -2329,6 +2339,8 @@ class BlogSystem:
 
     def _log_key_status(self):
         print("=== API Key Status ===")
+        print(
+            f"  DeepSeek (primary): {'configured' if self.deepseek_key    else 'NOT SET'}")
         print(
             f"  Groq:           {'configured' if self.groq_key            else 'NOT SET'}")
         print(
@@ -2848,10 +2860,16 @@ class BlogSystem:
     async def _call_api_with_fallback(self, messages: List[Dict], max_tokens: int = 6000) -> str:
         providers = []
 
-        # First-party / durable free tiers first. Mistral is later because
-        # the Experiment free tier has been returning standing 429s.
-        # Cerebras and GitHub Models were removed (decommissioned).
-        # Cloudflare Workers AI is not in this chain (10k neurons/day).
+        # DeepSeek Flash is primary: cheapest usable option with no daily
+        # free-tier cap to run dry mid-batch (unlike Groq/OpenRouter's free
+        # tiers), 1M context, and reliable JSON/long-form output. Everything
+        # below it is an existing free-tier fallback, unchanged in order.
+        # Mistral is later because the Experiment free tier has been
+        # returning standing 429s. Cerebras and GitHub Models were removed
+        # (decommissioned). Cloudflare Workers AI is not in this chain
+        # (10k neurons/day).
+        if self.deepseek_key:
+            providers.append(("DeepSeek",         self._call_deepseek))
         if self.groq_key:
             providers.append(("Groq",             self._call_groq))
         if self.gemini_key:
@@ -2871,8 +2889,8 @@ class BlogSystem:
 
         if not providers:
             raise Exception(
-                "No API providers available. Set at least one of: GROQ_API_KEY, "
-                "GEMINI_API_KEY, OPENROUTER_API_KEY, HF_TOKEN, "
+                "No API providers available. Set at least one of: DEEPSEEK_API_KEY, "
+                "GROQ_API_KEY, GEMINI_API_KEY, OPENROUTER_API_KEY, HF_TOKEN, "
                 "NVIDIA_API_KEY, MISTRAL_API_KEY, ZAI_API_KEY, LLM7_API_KEY."
             )
 
@@ -2913,6 +2931,59 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
     # PROVIDERS
     # ─────────────────────────────────────────────────────────────
+
+    async def _call_deepseek(self, messages: List[Dict], max_tokens: int) -> str:
+        """Primary provider. DeepSeek Flash (DeepSeek-V4.1-Flash).
+
+        Thinking mode is ON by default for this model, and reasoning
+        tokens count against max_tokens — for a long-form generation call
+        with no multi-step reasoning need, that can silently burn the
+        whole budget on hidden reasoning_content before any visible
+        content is written (same failure mode _call_zai already works
+        around for GLM, and the exact bug that produced the short,
+        keyword-less test output seen before this was wired in).
+        Disabled here so the full budget goes to the article.
+        """
+        if not self.deepseek_key:
+            raise EnvironmentError("DEEPSEEK_API_KEY not set")
+        RETRYABLE = {503, 429, 500, 502, 504}
+        headers = {"Authorization": f"Bearer {self.deepseek_key}",
+                   "Content-Type": "application/json"}
+        data = {
+            "model": _DEEPSEEK_MODEL,
+            "messages": messages,
+            "max_tokens": max_tokens,
+            "temperature": 0.7,
+            "stream": False,
+            "thinking": {"type": "disabled"},
+        }
+        waits = [2, 8]
+        for attempt in range(1, 3):
+            try:
+                async with aiohttp.ClientSession() as s:
+                    async with s.post(
+                        "https://api.deepseek.com/chat/completions",
+                        headers=headers, json=data,
+                        timeout=aiohttp.ClientTimeout(total=90),
+                    ) as r:
+                        if r.status == 200:
+                            result = await r.json()
+                            if "error" in result:
+                                raise Exception(
+                                    f"DeepSeek error: {result['error']}")
+                            return self._extract_message_content(result, "DeepSeek")
+                        if r.status in RETRYABLE and attempt < 2:
+                            await asyncio.sleep(waits[attempt - 1])
+                            continue
+                        raise Exception(f"DeepSeek {r.status}: {await r.text()}")
+            except aiohttp.ClientConnectionError as e:
+                if attempt < 2:
+                    await asyncio.sleep(waits[attempt - 1])
+                else:
+                    raise Exception(f"DeepSeek connection failed: {e}")
+            except asyncio.TimeoutError:
+                raise Exception("DeepSeek timed out.")
+        raise Exception("DeepSeek unavailable.")
 
     async def _call_groq(self, messages: List[Dict], max_tokens: int) -> str:
         RETRYABLE = {503, 429, 500, 502, 504}
@@ -5030,9 +5101,9 @@ def create_sample_config(config_path: str = "config.yaml"):
         print(f"{CONFIG_FILE} is already up to date — nothing changed.")
 
     print(
-        "\nRequired GitHub secrets: GROQ_API_KEY, OPENROUTER_API_KEY, "
-        "GEMINI_API_KEY, HF_TOKEN, NVIDIA_API_KEY, MISTRAL_API_KEY, "
-        "ZAI_API_KEY, LLM7_API_KEY (optional — anonymous fallback works)"
+        "\nRequired GitHub secrets: DEEPSEEK_API_KEY (primary), GROQ_API_KEY, "
+        "OPENROUTER_API_KEY, GEMINI_API_KEY, HF_TOKEN, NVIDIA_API_KEY, "
+        "MISTRAL_API_KEY, ZAI_API_KEY, LLM7_API_KEY (optional — anonymous fallback works)"
     )
 
 
