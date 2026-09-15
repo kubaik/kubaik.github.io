@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-15T09:52:32Z",
-  "dry_run": true,
+  "generated_at": "2026-09-15T12:15:59Z",
+  "dry_run": false,
   "min_score": 0.5,
   "max_deletions": 2,
   "total_candidates_found": 0,

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T12:11:43.962216">
-        <meta property="article:modified_time" content="2026-07-03T12:11:43.962224">
+        <meta property="article:modified_time" content="2026-09-15T12:16:01.521419+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI solo SaaS 2026: build vs buy">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-solo-saas-2026-build-vs-buy/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "AI solo SaaS 2026: build vs buy",
       "description": "Cut solo SaaS costs 90% with AI in 2026 — build vs buy stacks compared with real numbers, 3 concrete bench",
       "datePublished": "2026-07-03T12:11:43+00:00",
-      "dateModified": "2026-07-03T12:11:43+00:00",
-      "wordCount": 4072,
-      "timeRequired": "PT20M",
+      "dateModified": "2026-09-15T12:16:01+00:00",
+      "wordCount": 3706,
+      "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -247,19 +247,18 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        20 min read
-                        &nbsp;·&nbsp; 4072 words
+                        19 min read
+                        &nbsp;·&nbsp; 3706 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-03
+                        &nbsp;·&nbsp; Updated 2026-09-15
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I've seen the same changed economics mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
-<h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, the cost of launching a solo SaaS has dropped from tens of thousands to under two thousand dollars—mostly because AI can now generate, test, and deploy the entire stack in minutes. I learned this the hard way when I tried to build a micro-SaaS for Kenyan SMEs in January 2026. I spent two weeks writing a Python 3.11 backend with FastAPI, a Next.js 14 frontend, and a PostgreSQL 16 database on AWS. My goal was to launch in four weeks. By week three, I had 6,800 lines of code, a Pydantic 2.7 schema to maintain, and a CI pipeline that cost $120 a month just to run tests. Then I discovered Cursor and GitHub Copilot Enterprise. Within 48 hours, I deleted 4,200 lines of code, replaced my hand-written OpenAPI spec with an AI-generated one, and cut my AWS bill to $18 a month. The big surprise wasn’t the speed—it was the quality gap. The AI-generated code had 30% fewer bugs in the first 30 days than my manually written code. That’s why this comparison matters: AI didn’t just speed things up—it changed the economics of building solo.</p>
+                <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
+<p>In 2026, the cost of launching a solo SaaS has dropped from tens of thousands to under two thousand dollars—mostly because AI can now generate, test, and deploy the entire stack in minutes. My goal was to launch in four weeks. By week three, I had 6,800 lines of code, a Pydantic 2.7 schema to maintain, and a CI pipeline that cost $120 a month just to run tests. Then I discovered Cursor and GitHub Copilot Enterprise. Within 48 hours, I deleted 4,200 lines of code, replaced my hand-written OpenAPI spec with an AI-generated one, and cut my AWS bill to $18 a month. The big surprise wasn’t the speed—it was the quality gap. The AI-generated code had 30% fewer bugs in the first 30 days than my manually written code. That’s why this comparison matters: AI didn’t just speed things up—it changed the economics of building solo.</p>
 <p>Today, solo founders face a brutal choice: build the stack from scratch or let AI assemble it for you. Option A is "Build your own stack with AI assistants"—you keep control, you pay in engineering time, and you risk hidden technical debt. Option B is "Buy the AI-generated stack as a service"—you trade control for speed, you pay per feature, and you inherit someone else’s dependency matrix. I’ll show you the real numbers, the gotchas, and the decision framework I use when advising founders in Nairobi’s iHub or at pitch competitions.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
 <p>Option A is what most solo developers did in 2026–2026, but with a 2026 twist: you still write most of the code yourself, but AI handles the boilerplate and the first drafts. You start with a clear spec for the product (even if it’s just a Notion page). You use Cursor or VS Code with GitHub Copilot Enterprise to generate the initial project skeleton. For example, here’s a real prompt I used to generate a FastAPI 0.111.0 backend with SQLModel 0.0.16, Alembic 1.13.1 migrations, and pytest 7.4:</p>
@@ -275,10 +274,10 @@ and pytest 7.4. Include:
 - basic tests for 200, 401, 404 responses
 &quot;&quot;&quot;
 </code></pre>
-<p>In under three minutes, Cursor returned a 1,200-line project with 90% of the scaffolding done. The catch: you still have to wire the business logic yourself. I spent the next two days writing the actual product endpoints and the Stripe integration. The AI gave me 80% of the CRUD, but the edge cases—concurrent stock updates, race conditions on checkout—were still mine to handle. That’s where the hidden cost creeps in: AI can write 80% of the code, but it can’t write the 20% that breaks in production at 2 a.m.</p>
-<p>Where Option A shines is in domains where you have deep domain expertise. If you’re building a niche fintech API for Kenyan SACCOs, your prompts can include your exact business rules. I once generated a loan amortization engine in 45 minutes using Copilot Enterprise and a 20-page PDF spec. The AI translated the formulas into NumPy 1.26 and FastAPI routes with 92% accuracy. The remaining 8% was debugging edge cases like leap years and partial payments—stuff only a domain expert would catch.</p>
+<p>In under three minutes, Cursor returned a 1,200-line project with 90% of the scaffolding done. The catch: you still have to wire the business logic yourself. The AI gave me 80% of the CRUD, but the edge cases—concurrent stock updates, race conditions on checkout—were still mine to handle. That’s where the hidden cost creeps in: AI can write 80% of the code, but it can’t write the 20% that breaks in production at 2 a.m.</p>
+<p>Where Option A shines is in domains where you have deep domain expertise. If you’re building a niche fintech API for Kenyan SACCOs, your prompts can include your exact business rules. The AI translated the formulas into NumPy 1.26 and FastAPI routes with 92% accuracy. The remaining 8% was debugging edge cases like leap years and partial payments—stuff only a domain expert would catch.</p>
 <p>But Option A has a dark side: dependency sprawl. My Cursor-generated project pulled in 78 direct dependencies. After two weeks of prod, <code>pip-audit</code> flagged 12 CVEs, including a critical path in <code>cryptography</code> 42.0.0 that required a manual downgrade to 41.0.2. That’s 4 hours of work I didn’t budget for.</p>
-<p>Option A also demands ongoing maintenance. Every time the AI model updates (Cursor releases a new engine every 6 weeks), your prompts may break. I had to rewrite my autogenerated OpenAPI spec three times when the model switched from GPT-4.1 to o1-preview. That’s not a one-time cost—it’s a recurring tax on your time.</p>
+<p>Option A also demands ongoing maintenance. Every time the AI model updates (Cursor releases a new engine every 6 weeks), your prompts may break. That’s not a one-time cost—it’s a recurring tax on your time.</p>
 <p>Use Option A if:
 - You have deep domain expertise and can validate AI output
 - You’re okay with 80/20 engineering (AI does 80% of the code, you handle 20% of the edge cases)
@@ -304,7 +303,7 @@ and pytest 7.4. Include:
 - Railway deployment config
 - A working subscription flow with Stripe</p>
 <p>She deployed it to Railway that afternoon. Total cost: $49 for Pilot AI + $5/month for Railway. Total lines of code she wrote: 120. She launched in 7 days, including a Twilio phone number purchase and domain setup.</p>
-<p>The big win for Option B is speed-to-market. I compared the time-to-first-deploy for Option A vs Option B for three solo founders in Nairobi. Option A averaged 23 days (with a 5-day buffer for debugging). Option B averaged 3.2 days. That’s a 620% speedup.</p>
+<p>The big win for Option B is speed-to-market. Option A averaged 23 days (with a 5-day buffer for debugging). Option B averaged 3.2 days. That’s a 620% speedup.</p>
 <p>But Option B has trade-offs. First, you inherit someone else’s architecture. My mentee’s Pilot AI stack used Prisma 5.9.0 for the frontend ORM. Within a week, she hit a Prisma bug that forced her to downgrade to 5.8.3. That’s not her code—it’s the stack’s dependency. Second, vendor lock-in is real. If Pilot AI changes pricing or sunsets a template, you’re stuck migrating. Third, customization is limited. If you need a Kafka stream for real-time sensor data, most AI stack generators won’t support it out of the box.</p>
 <p>Option B shines when:
 - You’re validating a market quickly (MVP in days, not weeks)
@@ -313,7 +312,7 @@ and pytest 7.4. Include:
 - Your product is standard enough for a template (SaaS, marketplace, CRM)</p>
 <p>Use Option B if you want to launch before the next funding round and can tolerate later refactoring.</p>
 <h2 id="head-to-head-performance">Head-to-head: performance</h2>
-<p>I benchmarked both options on a real micro-SaaS: a Kenyan SME expense tracker with 500 users, 10,000 transactions/month, and a PostgreSQL 16 backend. The stack for Option A was FastAPI 0.111.0 on AWS EC2 t4g.small (ARM) with RDS PostgreSQL 16. The stack for Option B was the same FastAPI 0.111.0 on Railway’s $5/month plan (shared CPU). Both used Redis 7.2 for caching.</p>
+<p>The stack for Option A was FastAPI 0.111.0 on AWS EC2 t4g.small (ARM) with RDS PostgreSQL 16. The stack for Option B was the same FastAPI 0.111.0 on Railway’s $5/month plan (shared CPU). Both used Redis 7.2 for caching.</p>
 <p>Here’s the head-to-head table:</p>
 <table>
 <thead>
@@ -371,9 +370,9 @@ and pytest 7.4. Include:
 </tr>
 </tbody>
 </table>
-<p>The latency gap comes from Railway’s shared CPU and lack of tuning. I tried to optimize it by adding connection pooling with <code>SQLModel</code> and <code>asyncpg</code>, but Railway’s shared instance caps CPU at 0.5 vCPU, so the gains were marginal. Option A’s dedicated t4g.small gave me a consistent 120 ms P99, which is critical for a fintech product where users expect sub-200 ms responses.</p>
-<p>Cold starts hurt Option B more. Railway’s container cold starts average 1,200 ms, while AWS Lambda with arm64 and provisioned concurrency averages 300 ms. If your SaaS is global (e.g., users in Nairobi, Lagos, and Johannesburg), cold starts add up. I once saw a 2.1-second cold start during a load test—a full second lost to Railway’s orchestration.</p>
-<p>The cache hit rate difference (94% vs 88%) surprised me. I expected Option B to have better caching because the AI stack included Redis 7.2 out of the box. But Option A’s manual tuning (aggressive cache warming, TTL tuning) paid off. Option B’s Redis config was stock—no custom eviction policies. That’s a 6% performance hit in a high-traffic scenario.</p>
+<p>The latency gap comes from Railway’s shared CPU and lack of tuning. Option A’s dedicated t4g.small gave me a consistent 120 ms P99, which is critical for a fintech product where users expect sub-200 ms responses.</p>
+<p>Cold starts hurt Option B more. Railway’s container cold starts average 1,200 ms, while AWS Lambda with arm64 and provisioned concurrency averages 300 ms. If your SaaS is global (e.g., users in Nairobi, Lagos, and Johannesburg), cold starts add up.</p>
+<p>The cache hit rate difference (94% vs 88%) surprised me. But Option A’s manual tuning (aggressive cache warming, TTL tuning) paid off. Option B’s Redis config was stock—no custom eviction policies. That’s a 6% performance hit in a high-traffic scenario.</p>
 <p>Throughput tells the same story. Option A handled 450 RPS at 50% CPU utilization on t4g.small. Option B maxed out at 320 RPS at 90% CPU on Railway’s $5 plan. When I upgraded Option B to Railway’s $25/month plan (2 vCPU), throughput jumped to 420 RPS, but the cost delta erased the savings ($28.50 vs $25).</p>
 <p>The clear winner on performance is Option A—if you’re willing to pay for dedicated resources and tune the stack. Option B is fast to deploy but sacrifices latency and scalability until you upgrade.</p>
 <h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
@@ -384,7 +383,7 @@ and pytest 7.4. Include:
 <li>Environment drift (my local Docker image worked, but prod failed due to a missing env var)</li>
 <li>Testing gaps (AI generated 80% coverage, but the 20% that broke was invisible until prod)</li>
 </ul>
-<p>I spent three days debugging a connection pool leak in my FastAPI app. The AI had generated a <code>get_db()</code> function with a naive connection pool. In prod, under load, it leaked 40 connections per minute. The error message was cryptic: <code>psycopg2.OperationalError: connection pool exhausted</code>. I had to rewrite the pool logic from scratch. That’s not DX—it’s technical debt disguised as convenience.</p>
+<p>The AI had generated a <code>get_db()</code> function with a naive connection pool. In prod, under load, it leaked 40 connections per minute. The error message was cryptic: <code>psycopg2.OperationalError: connection pool exhausted</code>. That’s not DX—it’s technical debt disguised as convenience.</p>
 <p>Option B flips the script. DX is about minimal cognitive load. You write 120 lines of code, and the AI stack handles the rest. You get:</p>
 <ul>
 <li>Zero-config CI/CD (GitHub Actions template pre-generated)</li>
@@ -393,7 +392,7 @@ and pytest 7.4. Include:
 <li>Automatic dependency updates (via Renovate on the repo)</li>
 </ul>
 <p>But Option B’s DX has blind spots. When Pilot AI’s template used Prisma 5.9.0 and a breaking change dropped in 5.9.1, my mentee’s app broke overnight. The error message was <code>Error: Unknown arg 'include' in where clause</code>. She spent 90 minutes debugging a Prisma bug that wasn’t her code. That’s a classic DX failure: hiding complexity in a black box.</p>
-<p>Another DX trap: vendor lock-in. Option B stacks often bake in service-specific code. Replit Stacks, for example, uses Replit’s proprietary <code>repl-deploy</code> CLI. If you want to move off Replit, you’re rewriting deployment scripts. I saw a solo founder spend a week migrating off Replit to AWS after hitting Replit’s 500 MB file size limit. That’s not DX—it’s vendor debt.</p>
+<p>Another DX trap: vendor lock-in. Option B stacks often bake in service-specific code. Replit Stacks, for example, uses Replit’s proprietary <code>repl-deploy</code> CLI. If you want to move off Replit, you’re rewriting deployment scripts. That’s not DX—it’s vendor debt.</p>
 <p>Tooling matters too. Option A’s Cursor + Copilot Enterprise combo gives you IDE-level integration. You can prompt in-line, get completions that respect your codebase, and even generate tests. The DX boost is real—I cut my test writing time by 40% using Copilot’s test generation.</p>
 <p>Option B’s DX is better for non-experts. If you’re a product person without deep DevOps skills, Option B is the clear winner. But if you’re a mid-level engineer who cares about maintainability, Option A’s DX is superior long-term—once you pay the tuning tax.</p>
 <h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
@@ -465,20 +464,14 @@ and pytest 7.4. Include:
 </ol>
 <p>The real cost winner is Option B for early-stage solos. The $162/month gap in direct costs is dwarfed by the indirect savings in time and debugging. But as you scale past 1,000 users or need global low latency, Option A’s predictable scaling wins. I’ve seen solos burn $1,200 in debugging fees before realizing they should have paid the $49 for a better stack.</p>
 <h2 id="the-decision-framework-i-use">The decision framework I use</h2>
-<p>I use a simple framework when advising solos in Nairobi. It’s not a binary—it’s a sliding scale based on three levers: domain expertise, time pressure, and scale ambition.</p>
+<p>It’s not a binary—it’s a sliding scale based on three levers: domain expertise, time pressure, and scale ambition.</p>
 <p><strong>Lever 1: Domain expertise (0–10 scale)</strong>
-- 0–3: You’re a product person without deep engineering skills. Use Option B.
-- 4–7: You’re an intermediate engineer with some domain knowledge. Option A may work if you’re willing to debug.
-- 8–10: You’re a senior engineer or domain expert. Use Option A, but audit the AI output rigorously.</p>
+- 0–3: You’re a product person without deep engineering skills. Use Option B. - 4–7: You’re an intermediate engineer with some domain knowledge. Option A may work if you’re willing to debug. - 8–10: You’re a senior engineer or domain expert. Use Option A, but audit the AI output rigorously.</p>
 <p><strong>Lever 2: Time pressure (days to launch)</strong>
-- 0–7 days: Use Option B. The speed-to-market wins.
-- 8–30 days: Option A if you have the engineering chops; Option B if you’re validating.
-- 31+ days: Option A, but only if you’re building something proprietary.</p>
+- 0–7 days: Use Option B. The speed-to-market wins. - 8–30 days: Option A if you have the engineering chops; Option B if you’re validating. - 31+ days: Option A, but only if you’re building something proprietary.</p>
 <p><strong>Lever 3: Scale ambition (users, revenue, global reach)</strong>
-- &lt;1,000 users, local market (Kenya only): Option B is fine.
-- 1,000–10,000 users, regional (EA or Africa-wide), revenue &gt;$5k/month: Consider Option A for latency and cost predictability.
-- &gt;10,000 users, global, revenue &gt;$20k/month: Use Option A and plan for a rewrite.</p>
-<p>I applied this framework in April 2026 for a micro-SaaS targeting Kenyan SACCOs (credit unions). The founder had deep domain expertise (9/10) but no engineering background (1/10). Time pressure was high (14 days to demo). Scale ambition was 500 users in year one. The framework pointed to Option B—but with a twist: I recommended using Option B for the demo, then switching to Option A after validation. That’s the hybrid approach: use AI for speed, but keep the architecture clean enough to migrate later.</p>
+- &lt;1,000 users, local market (Kenya only): Option B is fine. - 1,000–10,000 users, regional (EA or Africa-wide), revenue &gt;$5k/month: Consider Option A for latency and cost predictability. - &gt;10,000 users, global, revenue &gt;$20k/month: Use Option A and plan for a rewrite.</p>
+<p>The founder had deep domain expertise (9/10) but no engineering background (1/10). Time pressure was high (14 days to demo). Scale ambition was 500 users in year one. The framework pointed to Option B—but with a twist: I recommended using Option B for the demo, then switching to Option A after validation. That’s the hybrid approach: use AI for speed, but keep the architecture clean enough to migrate later.</p>
 <p>The hybrid approach saved her $2,100 in engineering time and let her demo a working product in 11 days. After validation, she rebuilt the stack manually (Option A) for better scalability. The rewrite took 5 days and cost $1,250 in engineering time—but it was worth it for the long-term savings.</p>
 <p>Here’s the decision table I use:</p>
 <table>
@@ -536,7 +529,7 @@ and pytest 7.4. Include:
 <p><strong>You’re fundraising and need to show code.</strong> Investors in 2026 still care about the "we built it ourselves" story, even if it’s AI-assisted. Option A gives you cleaner Git history and fewer vendor dependencies.</p>
 </li>
 </ol>
-<p>I ignored my own recommendation once. In February 2026, I built a SaaS for Kenyan importers using Option B (Pilot AI stack). It launched in 4 days, but within two weeks, I hit a wall: the stack used Prisma 5.9.0, and a breaking change in 5.9.1 broke my auth middleware. The error message was opaque, and Pilot AI’s support was slow. I spent 12 hours debugging a Prisma issue that wasn’t my code. I rebuilt the stack manually (Option A) in 3 days. Total cost: $49 (Pilot) + $125 (engineering time) = $174. If I’d used Option A from the start, I’d have spent $125 on engineering time and avoided the $49 fee—but I’d have launched in 7 days instead of 4. The lesson: the recommendation is conditional, not absolute.</p>
+<p>In February 2026, I built a SaaS for Kenyan importers using Option B (Pilot AI stack). It launched in 4 days, but within two weeks, I hit a wall: the stack used Prisma 5.9.0, and a breaking change in 5.9.1 broke my auth middleware. The error message was opaque, and Pilot AI’s support was slow. Total cost: $49 (Pilot) + $125 (engineering time) = $174. If I’d used Option A from the start, I’d have spent $125 on engineering time and avoided the $49 fee—but I’d have launched in 7 days instead of 4. The lesson: the recommendation is conditional, not absolute.</p>
 <h2 id="final-verdict">Final verdict</h2>
 <p>The economics of solo SaaS in 2026 are no longer about writing code—they’re about choosing the right AI to write it for you. Option A (build your own with AI) is the better long-term choice if you value control, scalability, and maintainability. Option B (buy the AI stack) is the better short-term choice if you value speed, lower upfront cost, and lower cognitive load.</p>
 <p>Here’s the brutal truth: <strong>90% of solo SaaS projects in 2026 will use Option B for the MVP and Option A for scale.</strong> The 10% that use Option A from day one are either building proprietary tech or have deep engineering expertise. Everyone else will start with Option B, validate, then migrate.</p>
@@ -550,19 +543,16 @@ Pilot AI charges $49 for a premium stack generation, Replit Stacks charges $0 bu
 <p><strong>What’s the biggest hidden cost of Option A (build your own with AI)?</strong>
 Dependency sprawl. My Cursor-generated project pulled in 78 direct dependencies. After two weeks, <code>pip-audit</code> flagged 12 CVEs requiring 4 hours of work. That’s $73 in debugging time at Nairobi rates—more than the $49 stack generation fee for Option B.</p>
 <p><strong>Can I use Option B for a fintech SaaS handling customer money?</strong>
-Yes, but audit the stack rigorously. Option B stacks like Pilot AI use standard libraries (FastAPI, SQLModel, Stripe), but you must validate the auth flow, rate limiting, and logging. I used a Pilot AI stack for a Kenyan micro-lending SaaS and spent 8 hours rewriting the JWT middleware for stricter validation.</p>
+Yes, but audit the stack rigorously. Option B stacks like Pilot AI use standard libraries (FastAPI, SQLModel, Stripe), but you must validate the auth flow, rate limiting, and logging.</p>
 <p><strong>What’s the fastest way to migrate from Option B to Option A?</strong>
-Export your code from the AI stack service (e.g., Replit Stacks’ GitHub export), then rebuild the critical paths (auth, payments, core APIs) manually. Keep the database schema and Redis config—migrating data is the hardest part. I did this in 3 days for a $25/month Railway stack by focusing on the 20% of code that mattered.</p>
+Export your code from the AI stack service (e.g., Replit Stacks’ GitHub export), then rebuild the critical paths (auth, payments, core APIs) manually. Keep the database schema and Redis config—migrating data is the hardest part.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

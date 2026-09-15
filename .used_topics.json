@@ -208,5 +208,7 @@
   "Memory systems for production agents: approaches compared, and where each leaks context",
   "Evaluation-driven development for agents: replacing vibe testing with a real loop",
   "Testing and reviewing agent-generated code and workflows at team scale",
-  "The skills that became table stakes for senior engineers once agents reached production"
+  "The skills that became table stakes for senior engineers once agents reached production",
+  "Prompt and tool injection attacks documented in production, and how teams block them",
+  "Writing postmortems that account for agent-made decisions, not just human error"
 ]

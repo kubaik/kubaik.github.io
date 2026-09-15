@@ -28,69 +28,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "7-passive-income-streams-for-devs-in-2026",
-    "title": "7 passive income streams for devs in 2026",
-    "reason": "retroactive_fabrication_audit: 27 unverifiable first-person anecdote(s): I ran into this building second problem while migrating a service under a hard d; Here's what actually worked.; I tried a few things: freelancing, building a tiny SaaS, even tutoring.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "7-ways-to-measure-prompt-platform-roi-in-2026",
-    "title": "7 ways to measure prompt platform ROI in 2026",
-    "reason": "retroactive_fabrication_audit: 27 unverifiable first-person anecdote(s): I ran into this measure platform problem while migrating a service under a hard ; Here's what actually worked.; I spent three weeks trying to retrofit CloudWatch Logs Insights queries before r",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "grew-5k-mrr-on-a-29-vps",
-    "title": "Grew $5k MRR on a $29 VPS",
-    "reason": "retroactive_fabrication_audit: 23 unverifiable first-person anecdote(s): The short version: the conventional advice on got mrr is incomplete.; I made three mistakes that cost me the first 6 months: relying on referral progr; I fell into both traps.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "postgres-vector-search-what-breaks-first",
-    "title": "Postgres vector search: what breaks first",
-    "reason": "retroactive_fabrication_audit: 22 unverifiable first-person anecdote(s): I spent a week tweaking the pgvector index type (IVFFlat → HNSW → Sparse → dense; I finally broke down and profiled the query itself with   and saw 98% of the tim; I measured three things for every option:\n\n1.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "hit-5k-mrr-without-a-marketing-team",
-    "title": "Hit $5k MRR without a marketing team",
-    "reason": "retroactive_fabrication_audit: 21 unverifiable first-person anecdote(s): The short version: the conventional advice on got mrr is incomplete.; I did this by focusing on three levers: (1) building an integration that competi; I made the mistake of launching with a $29/month plan, only to realize later tha",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "deploy-a-solo-stack-for-20month-in-2026",
     "title": "Deploy a solo stack for $20/month in 2026",
     "reason": "retroactive_fabrication_audit: 20 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I learned this the hard way when I launched a small API in 2026 using the \"just ; I spent three days debugging cold starts and connection pool timeouts before rea",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "saved-3kmonth-by-ditching-kubernetes",
     "title": "Saved $3k/month by ditching Kubernetes",
     "reason": "retroactive_fabrication_audit: 20 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I inherited this setup from a previous engineer who had moved the product from a; I tried scaling down the cluster to two worker nodes and switching to   instance",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-solo-saas-2026-build-vs-buy",
     "title": "AI solo SaaS 2026: build vs buy",
     "reason": "retroactive_fabrication_audit: 19 unverifiable first-person anecdote(s): I've seen the same changed economics mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when I tried to build a micro-SaaS for Kenyan SMEs i",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "m-pesa-failures-cost-us-40-hours",
     "title": "M-Pesa failures cost us 40 hours",
     "reason": "retroactive_fabrication_audit: 19 unverifiable first-person anecdote(s): I learned this the hard way in 2026 while helping a client in Nairobi scale thei; I discovered this after 14 hours of debugging why 12% of payments never reconcil; I had to add jitter to our retries to avoid thundering herds when the system rec",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-ate-the-niches-first",
     "title": "AI ate the niches first",
     "reason": "retroactive_fabrication_audit: 18 unverifiable first-person anecdote(s): A colleague asked me about microsaas 2026 during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I believed that too—until I watched three seemingly safe niches collapse into $0",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "bootstrapped-5k-mrr-without-ads",
@@ -2720,6 +2690,41 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "7-passive-income-streams-for-devs-in-2026",
+    "title": "7 passive income streams for devs in 2026",
+    "reason": "retroactive_fabrication_audit: 27 unverifiable first-person anecdote(s): I ran into this building second problem while migrating a service under a hard d; Here's what actually worked.; I tried a few things: freelancing, building a tiny SaaS, even tutoring.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "7-ways-to-measure-prompt-platform-roi-in-2026",
+    "title": "7 ways to measure prompt platform ROI in 2026",
+    "reason": "retroactive_fabrication_audit: 27 unverifiable first-person anecdote(s): I ran into this measure platform problem while migrating a service under a hard ; Here's what actually worked.; I spent three weeks trying to retrofit CloudWatch Logs Insights queries before r",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "grew-5k-mrr-on-a-29-vps",
+    "title": "Grew $5k MRR on a $29 VPS",
+    "reason": "retroactive_fabrication_audit: 23 unverifiable first-person anecdote(s): The short version: the conventional advice on got mrr is incomplete.; I made three mistakes that cost me the first 6 months: relying on referral progr; I fell into both traps.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "postgres-vector-search-what-breaks-first",
+    "title": "Postgres vector search: what breaks first",
+    "reason": "retroactive_fabrication_audit: 22 unverifiable first-person anecdote(s): I spent a week tweaking the pgvector index type (IVFFlat → HNSW → Sparse → dense; I finally broke down and profiled the query itself with   and saw 98% of the tim; I measured three things for every option:\n\n1.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "hit-5k-mrr-without-a-marketing-team",
+    "title": "Hit $5k MRR without a marketing team",
+    "reason": "retroactive_fabrication_audit: 21 unverifiable first-person anecdote(s): The short version: the conventional advice on got mrr is incomplete.; I did this by focusing on three levers: (1) building an integration that competi; I made the mistake of launching with a $29/month plan, only to realize later tha",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-apps-break-when-you-treat-them-like-regular-software",
