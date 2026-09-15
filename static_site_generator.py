@@ -13,6 +13,12 @@ import math
 import re
 import shutil
 
+from adsense_fixes.canonical_guard import (
+    is_merge_stub,
+    get_redirect_target,
+)
+from adsense_fixes.queue_noindex_guard import get_quarantined_slugs
+
 
 import html as _html_stdlib
 
@@ -315,6 +321,33 @@ class StaticSiteGenerator:
         # post list, and hand it to every page generator so nothing ever
         # links to a tag page that doesn't exist.
         self._qualifying_tag_slugs = self._compute_qualifying_tag_slugs(posts)
+
+        # FIX (audit, 2026-09-15): two independent sources of "this post
+        # should not be indexed right now" existed with nothing consuming
+        # them at render time:
+        #   1. auto_retire_duplicates.py merge-redirect stubs — thin,
+        #      self-canonical, never noindexed (13 confirmed live, 2 still
+        #      in sitemap.xml).
+        #   2. regeneration_queue.json fabrication entries (unprocessed or
+        #      needs_review) — posts with unresolved fabricated
+        #      anecdotes/citations, fully live and indexed while queued.
+        # Computed once per build and threaded through _generate_post_pages
+        # and _generate_sitemap below so both the per-post robots meta tag
+        # and the sitemap stay in sync with the same source of truth.
+        stub_slugs = {p.slug for p in posts if is_merge_stub(p)}
+        fabrication_quarantine_slugs = get_quarantined_slugs(
+            Path("./regeneration_queue.json"))
+        self._noindex_slugs = stub_slugs | fabrication_quarantine_slugs
+        self._stub_redirect_targets = {
+            p.slug: get_redirect_target(p) for p in posts if is_merge_stub(p)
+        }
+        if self._noindex_slugs:
+            print(
+                f"  🔒 {len(stub_slugs)} merge-stub post(s), "
+                f"{len(fabrication_quarantine_slugs)} fabrication-quarantined post(s) "
+                f"→ {len(self._noindex_slugs)} total noindexed this build"
+            )
+
         self._generate_default_og_image()
         self._generate_homepage(posts)
         self._generate_pagination_pages(posts)
@@ -1295,6 +1328,29 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
                   'checks; not individually reviewed by a human before publishing')
             post_dict['affiliate_links'] = post.affiliate_links or []
 
+            # FIX (audit, 2026-09-15): canonical previously always pointed
+            # at the post's own URL, even for auto_retire_duplicates.py
+            # merge stubs whose entire body says "go read the other post" —
+            # a self-referential canonical on a page telling Google to
+            # index somewhere else. A stub now canonicalizes to its
+            # survivor. robots_directive previously didn't exist at all on
+            # individual post pages (no <meta name="robots"> was ever
+            # rendered for them) — merge stubs and posts currently
+            # quarantined in regeneration_queue.json (unresolved fabricated
+            # anecdotes/citations) now get noindex,follow instead of
+            # silently staying indexable while known-compromised.
+            redirect_target = self._stub_redirect_targets.get(post.slug)
+            base_url_cfg = config.get('base_url', '').rstrip('/')
+            if redirect_target:
+                post_dict['canonical_url'] = f"{base_url_cfg}/{redirect_target}/"
+            else:
+                post_dict['canonical_url'] = f"{base_url_cfg}/{post.slug}/"
+
+            post_dict['robots_directive'] = (
+                "noindex, follow" if post.slug in self._noindex_slugs
+                else "index, follow"
+            )
+
             # FIX BUG-7: has_og_image was never set on post_dict, so the Jinja
             # template's {{ og_img_png if post.has_og_image else og_img_fallback }}
             # always fell through to the generic icon PNG, defeating Twitter card
@@ -1702,7 +1758,18 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
             f'<url><loc>{base_url}/dmca/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>',
             f'<url><loc>{base_url}/ai-content-policy/</loc><lastmod>{today}</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>',
         ]
+        # FIX (audit, 2026-09-15): this loop previously added every post
+        # unconditionally — the reason 2 of 13 merge-redirect stubs were
+        # confirmed live in sitemap.xml despite being retired. Now skips
+        # anything generate_site() marked noindex (merge stubs and
+        # fabrication-quarantined posts), matching what the per-post
+        # <meta name="robots"> tag in _generate_post_pages() now says.
+        noindex_slugs = getattr(self, '_noindex_slugs', set())
+        skipped = 0
         for post in posts:
+            if post.slug in noindex_slugs:
+                skipped += 1
+                continue
             last_mod = post.updated_at.split(
                 'T')[0] if 'T' in post.updated_at else post.updated_at
             try:
@@ -1730,7 +1797,10 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         )
         with open("./docs/sitemap.xml", 'w', encoding='utf-8') as f:
             f.write(sitemap)
-        print("Generated sitemap")
+        if skipped:
+            print(f"Generated sitemap ({skipped} noindexed post(s) excluded)")
+        else:
+            print("Generated sitemap")
 
     def _generate_posts_json(self, posts: List[BlogPost]):
         """
@@ -1818,7 +1888,8 @@ def _build_templates() -> dict:
         <meta name="twitter:image" content="{{ og_img_actual if post.has_og_image else og_img_fallback }}">
         <meta name="twitter:site" content="@KubaiKevin">
 
-        <link rel="canonical" href="{{ base_url }}/{{ post.slug }}/">
+        <link rel="canonical" href="{{ post.canonical_url }}">
+        <meta name="robots" content="{{ post.robots_directive }}">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
