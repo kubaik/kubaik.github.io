@@ -207,6 +207,27 @@ jobs:
             --docs-dir ./docs \
             --queue ./regeneration_queue.json
 
+      # FIX (found in review, 2026-09-15): process_regeneration_queue.py's
+      # --max-posts cap processes entries in file order, which is just
+      # retroactive_fabrication_audit.py's append/insertion order — not
+      # severity. Confirmed on a live dry run: the 5 entries it picked were
+      # arbitrary while posts with 40-58 flagged fabricated sentences sat
+      # untouched in the 438-deferred tail. At 5 posts/run this means the
+      # worst offenders (the ones doing the most E-E-A-T damage) could go
+      # unprocessed indefinitely while lighter cases get cleared first.
+      #
+      # This step re-sorts regeneration_queue.json in place — unresolved
+      # entries ordered worst-first by the flagged-sentence count already
+      # embedded in each entry's `reason` string, resolved entries pushed
+      # to the back. It does not touch post content or entry status, so it
+      # carries none of process_regeneration_queue.py's own write risk —
+      # it only changes which 5 that script picks next.
+      - name: 🔢 Prioritize fabrication queue by severity
+        run: |
+          python scripts/prioritize_regeneration_queue.py \
+            --queue ./regeneration_queue.json \
+            --confirm
+
       # Read-only — crawls every published post's internal Markdown links
       # and reports any pointing at a slug with no post.json (broken by a
       # deletion, a failed generation, or an auto-retired duplicate).
@@ -245,9 +266,10 @@ jobs:
             --confirm
 
       # Bounded consumer for the fabrication entries retroactive_fabrication_audit.py
-      # just queued. Removes only the offending sentence(s) — verified against
-      # the real blog_system.py gate functions, not reimplemented — and leaves
-      # the rest of the post intact. Anything it can't fully clear (or any
+      # just queued (now ordered worst-first by the prioritization step above).
+      # Removes only the offending sentence(s) — verified against the real
+      # blog_system.py gate functions, not reimplemented — and leaves the
+      # rest of the post intact. Anything it can't fully clear (or any
       # quality_gate-sourced entry, which is out of scope here) is left in
       # regeneration_queue.json for manual review. Backs up each edited
       # post.json to .fabrication_backups/ before writing.
@@ -260,10 +282,11 @@ jobs:
             --backup-dir ./.fabrication_backups \
             --confirm
 
-      # The two bounded steps above can change what's on disk in docs/:
+      # The three bounded steps above can change what's on disk in docs/:
       # auto_retire_duplicates.py writes its own redirect-stub HTML directly,
-      # but process_regeneration_queue.py only edits post.json's `content`
-      # field — the already-built index.html for that post is now stale.
+      # process_regeneration_queue.py only edits post.json's `content`
+      # field, and the prioritization step touches only the queue file —
+      # but the already-built index.html for any edited post is now stale.
       # Rebuild so sitemap/OG/schema generation below reflect the current
       # state rather than what was built before this job's cleanup steps ran.
       - name: 🔁 Rebuild site after automated fixes

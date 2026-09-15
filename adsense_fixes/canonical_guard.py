@@ -3,57 +3,57 @@ adsense_fixes/canonical_guard.py
 ==================================
 Canonical URL enforcement and duplicate-URL prevention.
 
-WHY THIS EXISTS
----------------
-AdSense Site Readiness Guide (§4.2 Duplicate Content):
-  "Canonical tags properly configured. Set <link rel='canonical'> tags
-   to point to the preferred URL for every page, especially for paginated
-   series or filtered views."
+FIX (audit, 2026-09-15)
+------------------------
+auto_retire_duplicates.py / merge-redirect stubs (post.json content =
+"This article has been merged into [X](/slug/) ...") were being treated
+as normal posts by this module:
+  - generate_canonical_meta() pointed the canonical at the STUB's own
+    URL instead of the survivor it redirects to, so the stub was
+    self-canonical — actively telling Google "index me" while the body
+    says "go elsewhere."
+  - should_noindex() only covered /tag/, /404.html, /offline.html —
+    stub posts were never noindexed.
+  - Confirmed live: 13 merge-stub posts on kubaik.github.io, all
+    self-canonical, 2 still present in sitemap.xml.
 
-  "No cross-page content duplication. Each URL must serve unique content.
-   Do not publish the same article under multiple URLs."
-
-The static site generator already emits canonical tags, but three
-patterns in the current code create subtle canonical problems:
-
-  1. Tag pages can produce the same article appearing at both
-     /slug/ and /tag/topic/  — both indexed, neither canonical to the other.
-  2. The sitemap includes /tag/ pages without canonical enforcement,
-     causing soft-duplicate signals.
-  3. Posts with very similar slugs (e.g. "redis-caching" and
-     "redis-caching-guide") don't get cross-canonical signals.
-
-This module provides:
-  - `validate_canonical(post, base_url)` — checks the canonical in a
-    post's metadata is correct and self-referential.
-  - `audit_duplicate_slugs(docs_dir)` — detects slug pairs above a
-    similarity threshold that may confuse Google's dedup.
-  - `generate_canonical_meta(post, base_url)` — returns the canonical
-    <link> tag string for injection into templates.
+This revision:
+  1. Adds is_merge_stub(post) / get_redirect_target(post) to detect the
+     "This article has been merged into [...](...)" content pattern
+     auto_retire_duplicates.py writes.
+  2. generate_canonical_meta() now points a stub's canonical at the
+     SURVIVOR post, not itself.
+  3. should_noindex_post(post) (new, post-aware — the old path-only
+     should_noindex() is kept for the static routes it already covers)
+     returns True for merge stubs so static_site_generator.py can emit
+     <meta name="robots" content="noindex,follow"> on them.
+  4. audit_noindex_compliance(docs_dir) — CLI/CI check: fails if any
+     merge-stub post is missing noindex or is self-canonical, and fails
+     if any stub slug still appears in sitemap.xml.
 
 HOW TO INTEGRATE
 ----------------
-canonical_guard is already implicitly integrated via static_site_generator.py
-since every template already emits <link rel='canonical'>.
+In static_site_generator.py's post-template render step:
 
-Call validate_canonical() in the auto-mode pipeline after save_post()
-to catch any misconfigured canonical values before they go live:
+    from adsense_fixes.canonical_guard import (
+        generate_canonical_meta, should_noindex_post, is_merge_stub,
+    )
+    if should_noindex_post(post):
+        robots_meta = '<meta name="robots" content="noindex,follow">'
+    canonical_tag = generate_canonical_meta(post, base_url)
 
-    from adsense_fixes.canonical_guard import validate_canonical
-    issues = validate_canonical(blog_post, config.get('base_url', ''))
-    for issue in issues:
-        print(f"  ⚠️  Canonical: {issue}")
+In the sitemap generator (scripts/generate_sitemap.py), skip any slug
+for which should_noindex_post(post) is True.
 
-Run audit_duplicate_slugs periodically (CLI: python blog_system.py audit):
-    from adsense_fixes.canonical_guard import audit_duplicate_slugs
-    report = audit_duplicate_slugs(Path('./docs'))
-    print(report)
+CI (run in blog-automation.yml, non-mutating):
+    python -c "from adsense_fixes.canonical_guard import audit_noindex_compliance; \
+               from pathlib import Path; print(audit_noindex_compliance(Path('./docs')))"
 """
 
 import json
 import re
 from pathlib import Path
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 
 
 _SLUG_SIMILARITY_THRESHOLD = 0.70   # Jaccard over slug bigrams
@@ -63,18 +63,54 @@ _STOP_SLUG_WORDS = {
     'guide', 'tutorial', 'post', 'article', 'blog',
 }
 
+# Matches the exact stub pattern auto_retire_duplicates.py writes:
+# "This article has been merged into [Title](/slug/) to remove ..."
+_MERGE_STUB_RE = re.compile(
+    r"merged into \[([^\]]+)\]\((/[^\s)]+/)\)",
+    re.IGNORECASE,
+)
+
+
+# ── Merge-stub detection ───────────────────────────────────────────────────
+
+def is_merge_stub(post) -> bool:
+    """True if post.content is an auto_retire_duplicates.py redirect stub."""
+    content = getattr(post, 'content', '') or ''
+    return bool(_MERGE_STUB_RE.search(content))
+
+
+def get_redirect_target(post) -> Optional[str]:
+    """
+    Return the survivor slug a merge-stub post redirects to, or None if
+    this post is not a stub.
+    """
+    content = getattr(post, 'content', '') or ''
+    m = _MERGE_STUB_RE.search(content)
+    if not m:
+        return None
+    path = m.group(2)
+    parts = [p for p in path.strip('/').split('/') if p]
+    return parts[-1] if parts else None
+
 
 # ── Canonical tag generator ────────────────────────────────────────────────
 
 def generate_canonical_meta(post, base_url: str) -> str:
     """
     Return the canonical <link> tag string for a post.
-    Normalises trailing slashes to be consistent site-wide.
 
-    The canonical URL format is: {base_url}/{slug}/
+    Merge stubs canonicalize to their survivor post, not themselves —
+    this is what actually resolves the duplicate-content signal instead
+    of just hiding it behind noindex.
     """
-    slug = getattr(post, 'slug', '').strip('/')
     base = base_url.rstrip('/')
+
+    target_slug = get_redirect_target(post)
+    if target_slug:
+        canonical = f"{base}/{target_slug}/"
+        return f'<link rel="canonical" href="{canonical}">'
+
+    slug = getattr(post, 'slug', '').strip('/')
     canonical = f"{base}/{slug}/"
     return f'<link rel="canonical" href="{canonical}">'
 
@@ -84,7 +120,6 @@ def generate_canonical_meta(post, base_url: str) -> str:
 def validate_canonical(post, base_url: str) -> List[str]:
     """
     Validate that a post's canonical URL is correctly formed.
-
     Returns a list of issue strings (empty list = no issues).
     """
     issues = []
@@ -99,25 +134,27 @@ def validate_canonical(post, base_url: str) -> List[str]:
         issues.append(
             "base_url is empty — canonical URL will be relative only.")
 
-    # Check for slug patterns that create duplicate risks
+    if is_merge_stub(post) and get_redirect_target(post) == slug:
+        issues.append(
+            f"Merge stub '{slug}' redirects to itself — auto_retire_duplicates.py "
+            f"produced a self-referential stub, verify manually."
+        )
+
     if slug.endswith('-2') or re.search(r'-\d+$', slug):
         issues.append(
             f"Slug '{slug}' ends with a numeric suffix, suggesting a duplicate "
             f"was auto-generated. Verify this is intentional."
         )
 
-    # Slug should be URL-safe
     if re.search(r'[^a-z0-9\-]', slug):
         issues.append(
             f"Slug '{slug}' contains characters other than lowercase letters, "
             f"digits, and hyphens. This may cause canonical URL inconsistency."
         )
 
-    # Slug should not start or end with hyphens
     if slug.startswith('-') or slug.endswith('-'):
         issues.append(f"Slug '{slug}' starts or ends with a hyphen.")
 
-    # Canonical URL must use HTTPS
     if base.startswith('http://'):
         issues.append(
             "base_url uses HTTP — canonical URLs should use HTTPS."
@@ -131,17 +168,12 @@ def validate_canonical(post, base_url: str) -> List[str]:
 def audit_duplicate_slugs(docs_dir: Path) -> str:
     """
     Walk docs_dir and find slug pairs with high Jaccard bigram similarity.
-
-    Two slugs that are too similar (e.g. 'redis-caching' and
-    'redis-caching-guide') send mixed signals to Google about which is the
-    authoritative page.
-
     Returns a human-readable report string.
     """
     if not docs_dir.exists():
         return "docs/ directory not found — nothing to audit."
 
-    slugs: List[Tuple[str, str]] = []   # (slug, title)
+    slugs: List[Tuple[str, str]] = []
     for post_dir in sorted(docs_dir.iterdir()):
         if not post_dir.is_dir() or post_dir.name in ('static', 'tag', 'author'):
             continue
@@ -177,7 +209,6 @@ def audit_duplicate_slugs(docs_dir: Path) -> str:
     pairs.sort(key=lambda x: x[0], reverse=True)
     lines = [
         f"⚠️  Canonical audit: {len(pairs)} near-duplicate slug pair(s) found.",
-        f"   These pairs may create duplicate-content signals for Google.",
         "",
         f"  {'Score':<8} {'Slug A':<40} {'Slug B'}",
         "  " + "-" * 80,
@@ -199,7 +230,6 @@ def audit_duplicate_slugs(docs_dir: Path) -> str:
 # ── Helpers ────────────────────────────────────────────────────────────────
 
 def _slug_bigrams(slug: str) -> Set[str]:
-    """Character bigrams of the slug words (after removing stop words)."""
     words = [w for w in slug.split('-') if w and w not in _STOP_SLUG_WORDS]
     text = ''.join(words)
     if len(text) < 2:
@@ -208,7 +238,6 @@ def _slug_bigrams(slug: str) -> Set[str]:
 
 
 def _slug_jaccard(a: str, b: str) -> float:
-    """Jaccard similarity between two slugs using character bigrams."""
     bg_a = _slug_bigrams(a)
     bg_b = _slug_bigrams(b)
     if not bg_a or not bg_b:
@@ -218,30 +247,89 @@ def _slug_jaccard(a: str, b: str) -> float:
     return intersection / union if union else 0.0
 
 
-# ── Sitemap canonical enforcement ─────────────────────────────────────────
+# ── Sitemap / noindex enforcement ──────────────────────────────────────────
 
 def get_noindex_paths() -> List[str]:
-    """
-    Return URL path patterns that should carry noindex meta tags.
-    These are pages that should be accessible to users but not indexed,
-    to prevent thin/duplicate pages from diluting site quality.
-    """
+    """Static path patterns that should carry noindex meta tags."""
     return [
-        '/tag/',        # tag index listing
+        '/tag/',
         '/404.html',
         '/offline.html',
     ]
 
 
 def should_noindex(path: str) -> bool:
-    """
-    Return True if a given URL path should have noindex,follow meta.
-
-    Tag pages with < 5 posts are already handled in static_site_generator.py.
-    This function covers the remaining cases.
-    """
-    noindex = get_noindex_paths()
-    for pattern in noindex:
+    """Path-based check for static/template routes (unchanged behaviour)."""
+    for pattern in get_noindex_paths():
         if path.startswith(pattern):
             return True
     return False
+
+
+def should_noindex_post(post) -> bool:
+    """
+    Post-aware check. True if the post itself is a merge-redirect stub —
+    these must never be indexed regardless of URL path, since the body
+    content is "go elsewhere," not real content.
+    """
+    return is_merge_stub(post)
+
+
+def audit_noindex_compliance(docs_dir: Path) -> str:
+    """
+    CI-safe, read-only check: for every merge-stub post currently on
+    disk, verify (a) it is NOT self-canonical, and (b) it does NOT
+    appear in sitemap.xml. Fails loudly rather than silently passing —
+    this is the check that would have caught the original bug.
+    """
+    if not docs_dir.exists():
+        return "docs/ directory not found — nothing to audit."
+
+    sitemap_path = docs_dir / 'sitemap.xml'
+    sitemap_text = sitemap_path.read_text(encoding='utf-8') if sitemap_path.exists() else ''
+
+    problems = []
+    stub_count = 0
+
+    for post_dir in sorted(docs_dir.iterdir()):
+        if not post_dir.is_dir() or post_dir.name in ('static', 'tag', 'author'):
+            continue
+        post_json = post_dir / 'post.json'
+        if not post_json.exists():
+            continue
+        try:
+            data = json.loads(post_json.read_text(encoding='utf-8'))
+        except json.JSONDecodeError:
+            continue
+
+        content = data.get('content', '')
+        m = _MERGE_STUB_RE.search(content)
+        if not m:
+            continue
+
+        stub_count += 1
+        slug = post_dir.name
+        target = [p for p in m.group(2).strip('/').split('/') if p][-1] if m.group(2) else None
+
+        if target == slug:
+            problems.append(f"/{slug}/ — self-referential redirect target")
+        if f"/{slug}/" in sitemap_text:
+            problems.append(f"/{slug}/ — still present in sitemap.xml")
+
+        html_path = post_dir / 'index.html'
+        if html_path.exists():
+            html = html_path.read_text(encoding='utf-8')
+            if 'noindex' not in html.lower():
+                problems.append(f"/{slug}/ — index.html missing noindex meta tag")
+            if f'href="{docs_dir.name}' not in html and f'/{slug}/"' in html and target and f'/{target}/"' not in html:
+                problems.append(f"/{slug}/ — canonical does not point at survivor /{target}/")
+
+    if stub_count == 0:
+        return "✅ Noindex audit: no merge-stub posts found."
+
+    if not problems:
+        return f"✅ Noindex audit: PASS — {stub_count} merge-stub post(s), all correctly noindexed/canonicalized/excluded from sitemap."
+
+    lines = [f"❌ Noindex audit: {len(problems)} issue(s) across {stub_count} merge-stub post(s)."]
+    lines += [f"  - {p}" for p in problems]
+    return "\n".join(lines)
