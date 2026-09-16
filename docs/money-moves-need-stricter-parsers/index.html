@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-15T01:24:32.325374">
-        <meta property="article:modified_time" content="2026-08-29T21:03:23.543334">
+        <meta property="article:modified_time" content="2026-09-16T12:12:00.404151+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Money moves need stricter parsers">
@@ -63,7 +63,7 @@
       "headline": "Money moves need stricter parsers",
       "description": "Cut ledger reversals 95% with stricter parsers: why JSON mode alone fails on money endpoints and how structured output plus validation layers enforce…",
       "datePublished": "2026-08-15T01:24:32+00:00",
-      "dateModified": "2026-08-29T21:03:23+00:00",
+      "dateModified": "2026-09-16T12:12:00+00:00",
       "wordCount": 3186,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
@@ -267,7 +267,7 @@
                         16 min read
                         &nbsp;·&nbsp; 3186 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-29
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -391,9 +391,7 @@ async def create_payment(body: PaymentRequest):
     )
 </code></pre>
 <p>Key points:
-- The <code>body</code> parameter is automatically parsed and validated by Pydantic before the function runs.
-- The idempotency check happens before any domain rule, reducing wasted work.
-- The endpoint returns a JSON response, but it is built from a <strong>validated object</strong>, not raw JSON.</p>
+- The <code>body</code> parameter is automatically parsed and validated by Pydantic before the function runs. - The idempotency check happens before any domain rule, reducing wasted work. - The endpoint returns a JSON response, but it is built from a <strong>validated object</strong>, not raw JSON.</p>
 <h3 id="3-calling-the-endpoint-from-a-client">3. Calling the endpoint from a client</h3>
 <p>The client sends a request with a schema hint. In OpenAI’s Chat Completions API v1, you can use the <code>response_format</code> parameter with a JSON Schema object:</p>
 <pre><code class="language-json">{

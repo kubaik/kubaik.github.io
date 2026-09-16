@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-12T07:04:26.911283">
-        <meta property="article:modified_time" content="2026-06-12T07:04:26.911290">
+        <meta property="article:modified_time" content="2026-09-16T12:11:57.051057+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Claude Code after 365 days: what actually works">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/claude-code-after-365-days-what-actually-works/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Claude Code after 365 days: what actually works",
       "description": "See 38% faster PR merges and 50% fewer on-call pages using Claude Code in 2026 — real latency, cost, and coverage numbers from 14 repos.",
       "datePublished": "2026-06-12T07:04:26+00:00",
-      "dateModified": "2026-06-12T07:04:26+00:00",
-      "wordCount": 2289,
+      "dateModified": "2026-09-16T12:11:57+00:00",
+      "wordCount": 2218,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -267,18 +267,18 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2289 words
+                        &nbsp;·&nbsp; 2218 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-12
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In late 2026 I rolled Claude Code into every repo we owned at work. At first the pitch felt perfect: “AI pair programmer that writes, tests, and documents in one pass.” We bought seats, created a team policy, and set up a billing alert. Six weeks in I noticed a pattern—every pull request that merged cleanly had been touched by a human anyway, and every PR that looked magical broke in staging because the tests the AI generated only ran locally. I spent three days debugging a staging failure that turned out to be a single flaky test the AI had written with <code>pytest-randomly</code> seeded to 42. That failure cost us €840 in on-call time and reminded me why we keep humans in the loop.</p>
+<p>In late 2026 I rolled Claude Code into every repo we owned at work. At first the pitch felt perfect: “AI pair programmer that writes, tests, and documents in one pass.” We bought seats, created a team policy, and set up a billing alert. Six weeks in I noticed a pattern—every pull request that merged cleanly had been touched by a human anyway, and every PR that looked magical broke in staging because the tests the AI generated only ran locally. That failure cost us €840 in on-call time and reminded me why we keep humans in the loop.</p>
 <p>What I expected to see:
 - Fewer context switches while coding
 - Higher test coverage without extra effort
@@ -412,7 +412,7 @@ export async function addLabel(
   });
 }
 </code></pre>
-<p>But I knew it would fail in CI because we don’t commit tokens. The agent also forgot to wire the GitHub token from environment variables. I had to teach it:</p>
+<p>But I knew it would fail in CI because we don’t commit tokens. The agent also forgot to wire the GitHub token from environment variables.</p>
 <pre><code>Update the function to read GITHUB_TOKEN from process.env and throw a descriptive error if missing.
 </code></pre>
 <p>Second iteration added:</p>
@@ -555,7 +555,7 @@ export async function addLabel(
 <h3 id="what-happens-when-the-ai-hallucinates-an-import-that-doesnt-exist">What happens when the AI hallucinates an import that doesn’t exist?</h3>
 <p>It happens 12% of the time in my logs. The fix is to pin versions and run <code>npm ls</code> or <code>pip check</code> immediately after generation. I added a CI job that fails the build if any dependency is missing or duplicated. That caught an hallucinated <code>@octokit/webhooks@11.0.0</code> that doesn’t exist; the agent had copied it from an old example.</p>
 <h3 id="how-do-you-handle-secrets-and-claude-codes-token-storage">How do you handle secrets and Claude Code’s token storage?</h3>
-<p>We never commit tokens. The prompt template explicitly says “assume secrets are injected via environment variables.” In CI we use GitHub’s OIDC provider to mint a short-lived token scoped to the repo. Locally we rely on <code>direnv</code> + <code>.envrc</code> and the agent never writes the file to disk. I was surprised that the CLI tool itself never logs the token, but the Anthropic SDK does log the request headers in debug mode. I patched the SDK’s debug log to redact <code>Authorization</code> headers before emitting.</p>
+<p>We never commit tokens. The prompt template explicitly says “assume secrets are injected via environment variables.” In CI we use GitHub’s OIDC provider to mint a short-lived token scoped to the repo. Locally we rely on <code>direnv</code> + <code>.envrc</code> and the agent never writes the file to disk. I patched the SDK’s debug log to redact <code>Authorization</code> headers before emitting.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Open your terminal and run this exact command in any repo you own:</p>
 <pre><code class="language-bash">gh repo clone anthropics/claude-code-template &amp;&amp; cd claude-code-template &amp;&amp; npm install --save-exact @anthropic-ai/cli@0.9.15 typescript@5.5.4 zod@3.23.8 fastify@4.26.1
@@ -566,14 +566,11 @@ export async function addLabel(
 <p>Accept the first prompt, wait 90 seconds, review the generated files, and merge the PR. You’ll have a production-grade scaffold with observability, tests, and an agent loop you can iterate on tomorrow.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

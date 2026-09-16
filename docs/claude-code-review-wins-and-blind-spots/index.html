@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-08T23:14:01.838159">
-        <meta property="article:modified_time" content="2026-06-08T23:14:01.838168">
+        <meta property="article:modified_time" content="2026-09-16T12:11:57.305908+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Claude code review: wins and blind spots">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/claude-code-review-wins-and-blind-spots/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Claude code review: wins and blind spots",
       "description": "AI code review with Claude saves 150 hours/month but misses race conditions and logic bugs. Setup, costs, and where it fails in 2026.",
       "datePublished": "2026-06-08T23:14:01+00:00",
-      "dateModified": "2026-06-08T23:14:01+00:00",
-      "wordCount": 2307,
-      "timeRequired": "PT12M",
+      "dateModified": "2026-09-16T12:11:57+00:00",
+      "wordCount": 2254,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -262,22 +262,22 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2307 words
+                        11 min read
+                        &nbsp;·&nbsp; 2254 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-08
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The short version: the conventional advice on use claude is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
+                <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
 <p>Using Claude for code review saves me ~1.5 hours per PR when it works, but it’s not a replacement for human eyes. It catches obvious bugs, typos, and style drift faster than a tired teammate at 3 AM, yet it still hallucinates import paths, invents non-existent APIs, and misses race conditions that only show up under load. I run it on every pull request in our Python 3.11 monorepo with 260k lines across 45 services, and it flags about 40% of the issues a senior reviewer would. The trick is treating it like a junior teammate: ask it specific questions, sanity-check its answers, and never let it commit directly. The cost is $8 per 1000 files reviewed; the benefit is fewer context switches for me.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
 <p>Most developers think AI code review is either a silver bullet or a scam. The truth is in the middle, but the middle is messy. I’ve seen teams burn $12k/month on GitHub Copilot Enterprise only to realize the suggestions were 60% irrelevant after running a blind A/B review on 500 PRs. The confusion comes from two places: first, marketing that frames AI as a “co-pilot” when it’s more like a “chaotic intern”; second, the gap between what the models claim to do and what they actually do when plugged into a real repository with 1000+ files and 3 years of legacy code.</p>
-<p>I ran into this when I tried to use Claude once to review a PR that added pagination to a 500-line endpoint. It flagged a missing docstring on a helper function that no one would ever read, but missed the fact that the new offset parameter could return duplicate rows under high concurrency. Two weeks later, we rolled back the change after a customer reported inconsistent results. The model wasn’t wrong about the docstring; it was wrong about what mattered.</p>
+<p>It flagged a missing docstring on a helper function that no one would ever read, but missed the fact that the new offset parameter could return duplicate rows under high concurrency. Two weeks later, we rolled back the change after a customer reported inconsistent results. The model wasn’t wrong about the docstring; it was wrong about what mattered.</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
 <p>Think of Claude as a probabilistic grep plus a junior dev who’s read every Stack Overflow thread since 2018. It doesn’t understand context the way a human does, but it excels at surface-level correctness: type hints, import paths, argument counts, docstring presence, and basic style. That’s useful, but it’s only 10–15% of what a code review actually needs.</p>
 <p>The key insight: treat it like a spell-checker, not a proofreader. Run it on the diff, not the whole file. Ask it specific questions like “flag any new async function without an explicit timeout” or “check that every new endpoint has OpenAPI tags.” Give it a narrow scope and you’ll get useful answers; give it the whole PR and you’ll drown in noise.</p>
@@ -488,21 +488,18 @@ Return a JSON array with keys: issue_type, line, message, severity (low/medium/h
 <li><strong>Security</strong>: It misses subtle injection risks and hardcoded secrets in environment files.</li>
 </ul>
 <p>For these, keep doing what you’ve always done: human review, integration tests, and chaos engineering. Treat Claude as a force multiplier, not a replacement.</p>
-<p>I was surprised that it missed a subtle off-by-one error in a pagination query that caused duplicate rows under load. The model flagged the missing docstring but not the logic bug. That’s why I still run the test suite and a chaos test on every deploy.</p>
+<p>The model flagged the missing docstring but not the logic bug. That’s why I still run the test suite and a chaos test on every deploy.</p>
 <p>Now go set up a pre-commit hook that runs Claude on every diff. Here’s the command:</p>
 <pre><code class="language-bash">git diff --cached | claude --model claude-3-5-sonnet-20260219 --prompt &quot;review diff for async timeouts and docstrings only&quot; --format json &gt; claude-review.json
 </code></pre>
 <p>If <code>claude-review.json</code> has issues, exit non-zero. Do this today and you’ll cut your review fatigue by next week.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

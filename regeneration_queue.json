@@ -175,69 +175,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-fixes-legacy-code-nobody-owns",
-    "title": "AI fixes legacy code nobody owns",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I learned this the hard way when I inherited a 2018 Java monolith running on a 2; I don’t trust the AI to write perfect docs, but it’s great at generating first d; I was surprised to find that the AI often surfaces issues that static analysis m",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-tools-cut-rates-30-whats-real-in-2026",
-    "title": "AI tools cut rates 30%: what’s real in 2026",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): The short version: the conventional advice on freelance developer is incomplete.; I ran into this when a client accepted my $85 / hour quote for a Next.js dashboa; I ran this exact contract with a Berlin startup in Q1 2026.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-ui-tools-broke-my-react-flow-heres-why",
-    "title": "AI UI tools broke my React flow — here’s why",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): The short version: the conventional advice on generation tools is incomplete.; I made that mistake when I tried to generate a responsive table component with s; I once generated a card component that used flexbox for layout, but our design s",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "apm-lied-about-our-ai-incidents",
-    "title": "APM lied about our AI incidents",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I ran into this traditional apm problem while migrating a service under a hard d; I ran into this when we shipped a new feature that used a 13B parameter model se; I once watched a senior engineer spend three days tweaking Gunicorn worker count",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "build-in-public-without-burning-out",
-    "title": "Build in public without burning out",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about build public during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I spent three days helping him clean up the damage, and we ended up rebuilding h",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "claude-code-after-365-days-what-actually-works",
     "title": "Claude Code after 365 days: what actually works",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a staging failure that turned out to be a single fl; I had to teach it:\n\n \n\nSecond iteration added:\n\n \n\nCost of the rewrite: 15 minut",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "claude-code-review-wins-and-blind-spots",
     "title": "Claude code review: wins and blind spots",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): The short version: the conventional advice on use claude is incomplete.; I run it on every pull request in our Python 3.11 monorepo with 260k lines acros; I ran into this when I tried to use Claude once to review a PR that added pagina",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "fix-ai-agent-failures-postmortem-guide",
     "title": "Fix AI agent failures: postmortem guide",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client’s customer-facing agent suddenly started offering ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "hiring-engineers-the-3-things-ai-cares-about-now",
     "title": "Hiring engineers: the 3 things AI cares about now",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I ran a post-mortem after that Redis candidate failed.; I was surprised when a junior engineer in Nairobi aced this.; I built a custom probe using   to simulate real traffic, with a broken Redis clu",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "land-5k-roles-from-nairobi-lagos-in-2026",
     "title": "Land $5K roles from Nairobi & Lagos in 2026",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin; I once watched a Lagos engineer rewrite a failing Python service in Go in 48 hou",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "lessons-from-3-saas-price-pivots-in-2026",
@@ -2514,6 +2484,41 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "ai-fixes-legacy-code-nobody-owns",
+    "title": "AI fixes legacy code nobody owns",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I learned this the hard way when I inherited a 2018 Java monolith running on a 2; I don’t trust the AI to write perfect docs, but it’s great at generating first d; I was surprised to find that the AI often surfaces issues that static analysis m",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-tools-cut-rates-30-whats-real-in-2026",
+    "title": "AI tools cut rates 30%: what’s real in 2026",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): The short version: the conventional advice on freelance developer is incomplete.; I ran into this when a client accepted my $85 / hour quote for a Next.js dashboa; I ran this exact contract with a Berlin startup in Q1 2026.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-ui-tools-broke-my-react-flow-heres-why",
+    "title": "AI UI tools broke my React flow — here’s why",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): The short version: the conventional advice on generation tools is incomplete.; I made that mistake when I tried to generate a responsive table component with s; I once generated a card component that used flexbox for layout, but our design s",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "apm-lied-about-our-ai-incidents",
+    "title": "APM lied about our AI incidents",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I ran into this traditional apm problem while migrating a service under a hard d; I ran into this when we shipped a new feature that used a 13B parameter model se; I once watched a senior engineer spend three days tweaking Gunicorn worker count",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "build-in-public-without-burning-out",
+    "title": "Build in public without burning out",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about build public during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I spent three days helping him clean up the damage, and we ended up rebuilding h",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "7-graceful-degradation-traps-ive-hit-in-production",

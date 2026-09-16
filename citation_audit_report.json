@@ -288,7 +288,8 @@
         "sentence": "A 2026 paper from Stanford showed that in production systems, 40% of the perceived latency comes from token generation, not model inference.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "llm-security-mistakes-in-2026-owasp-top-10-fixes",
@@ -303,7 +304,8 @@
         "sentence": "A 2026 paper from Stanford showed that fine-tuned models still accept 12% of injection attempts unless the fine-tuning dataset is curated with adversarial examples.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "money-moves-need-stricter-parsers",
@@ -314,7 +316,8 @@
         "sentence": "A 2026 report from a Singapore-based remittance startup found 8% of duplicate charges were caused by idempotency key collisions across regions.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "negotiate-salary-2026-with-ai-resume-tool",
@@ -325,7 +328,8 @@
         "sentence": "A 2026 survey by Hired found that 78% of US tech employers use an AI parser to match resumes to postings before a human recruiter sees them.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "roll-your-own-migrations-why-blue-green-fails-you",
@@ -336,7 +340,8 @@
         "sentence": "A 2026 survey by the PostgreSQL Contrib project found that 34% of teams running Flyway 10.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "scan-10k-repos-daily-without-false-positives",
