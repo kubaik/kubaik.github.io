@@ -91,41 +91,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "marketing-without-budget-5k-mrr-in-18-months",
-    "title": "Marketing without budget: $5k MRR in 18 months",
-    "reason": "retroactive_fabrication_audit: 14 unverifiable first-person anecdote(s): The short version: the conventional advice on got mrr is incomplete.; I stopped optimizing for features and started optimizing for trust signals devel; I did the same thing at first.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "9-ai-wrapper-apis-that-paid-off-in-2026",
     "title": "9 AI wrapper APIs that paid off in 2026",
     "reason": "retroactive_fabrication_audit: 13 unverifiable first-person anecdote(s): I ran into this wrapper businesses problem while migrating a service under a har; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "ai-ui-tools-6-months-in-what-i-gained-and-lost",
     "title": "AI UI tools: 6 months in, what I gained and lost",
     "reason": "retroactive_fabrication_audit: 13 unverifiable first-person anecdote(s): The short version: the conventional advice on generation tools is incomplete.; I ran into this when I asked Cursor to generate a modal with a shadow and border; I saw a team generate 120 React components in two days using v0, only to realize",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "failed-ai-wrappers-2026-what-the-survivors-did-right",
     "title": "Failed AI wrappers 2026: what the survivors did right",
     "reason": "retroactive_fabrication_audit: 13 unverifiable first-person anecdote(s): I ran into this wrapper businesses problem while migrating a service under a har; Here's what actually worked.; I spent three weeks writing custom diff tools to detect API changes before they ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "mcp-servers-real-time-pipelines-without-agents",
     "title": "MCP servers: real-time pipelines without agents",
     "reason": "retroactive_fabrication_audit: 13 unverifiable first-person anecdote(s): I ran into a brick wall when I tried to bolt a lightweight MCP (Message Channel ; I spent three weeks fighting GC pauses and COBOL-CICS data type mismatches befor; I needed a way to turn those COBOL copybooks into a streaming interface that cou",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "signals-5-state-tricks-that-broke-my-app",
     "title": "Signals: 5 state tricks that broke my app",
     "reason": "retroactive_fabrication_audit: 13 unverifiable first-person anecdote(s): I ran into this signals changed problem while migrating a service under a hard d; Here's what actually worked.; I tried Context, Redux Toolkit, Zustand, and even RxJS before realizing none of ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "why-i-picked-playwright-and-vitest-in-2026",
@@ -2634,6 +2632,13 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "marketing-without-budget-5k-mrr-in-18-months",
+    "title": "Marketing without budget: $5k MRR in 18 months",
+    "reason": "retroactive_fabrication_audit: 14 unverifiable first-person anecdote(s): The short version: the conventional advice on got mrr is incomplete.; I stopped optimizing for features and started optimizing for trust signals devel; I did the same thing at first.",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-ops-datadog-vs-granfa-for-infra-automation",

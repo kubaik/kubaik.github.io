@@ -220,5 +220,6 @@
   "Why MCP became the dominant agent-tool protocol, and what it changed in agent design",
   "Why multi-agent research systems quietly degrade over time, and how to catch it",
   "Common failure modes of multi-agent systems at scale, and why they're hard to catch early",
-  "Local plus cloud model routing: how teams stay competitive on cost and speed"
+  "Local plus cloud model routing: how teams stay competitive on cost and speed",
+  "The developer experience gaps that remain in building and debugging multi-agent systems"
 ]
