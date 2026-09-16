@@ -222,5 +222,10 @@
   "Common failure modes of multi-agent systems at scale, and why they're hard to catch early",
   "Local plus cloud model routing: how teams stay competitive on cost and speed",
   "The developer experience gaps that remain in building and debugging multi-agent systems",
-  "The token economics problem nobody solved yet for always-on agent teams"
+  "The token economics problem nobody solved yet for always-on agent teams",
+  "The governance layer agent systems need after a compliance-relevant failure",
+  "Agent-specific tracing patterns that actually help during incidents",
+  "Building SLOs for agentic features that don't just measure latency and error rate",
+  "React 19 + Server Components in production: what we actually shipped and what we rolled back",
+  "The regulatory and compliance realities of deploying autonomous agents in African fintech"
 ]

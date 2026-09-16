@@ -140,44 +140,18 @@
     "status": "needs_review"
   },
   {
-    "slug": "7-skills-senior-engineers-need-now-agents-are-live",
-    "title": "7 skills senior engineers need now agents are live",
-    "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I ran into this skills that problem while migrating a service under a hard deadl; Here's what actually worked.; I spent three days debugging a memory leak that turned out to be a single miscon",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-scanners-overlook-real-vulns",
-    "title": "AI scanners overlook real vulns",
-    "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): The short version: the conventional advice on being used is incomplete.; I ran into this when I used GitHub Advanced Security’s AI-powered code scanning ; I ran this in GitHub Advanced Security with CodeQL 2.14.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "save-12kmonth-cloud-egress-costs-in-2026",
-    "title": "Save $12k/month: cloud egress costs in 2026",
-    "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I ran into this cloud egress problem while migrating a service under a hard dead; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ship-a-solo-project-pipeline-under-20month",
-    "title": "Ship a solo project pipeline under $20/month",
-    "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I moved the build step into a single 50-line Python script that runs locally and; I built this with a FastAPI service that started at 180 lines of code and ended ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "tool-calling-patterns-patterns-that-survive-load-vs",
     "title": "Tool calling patterns: patterns that survive load vs",
     "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I've seen the same toolcalling patterns mistake in multiple production codebases; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way during a Black Friday sale when our order service st",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "which-ai-wrappers-made-money-in-2026",
     "title": "Which AI wrappers made money in 2026",
     "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I ran into this wrapper businesses problem while migrating a service under a har; Here's what actually worked.; I spent three weeks tuning prompts, testing retrieval chunks, and sharding Redis",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "5-notification-systems-ranked-push-email-sms",
@@ -197,19 +171,22 @@
     "slug": "ai-proof-your-mid-level-salary",
     "title": "AI-proof your mid-level salary",
     "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I ran into this when a client in Manila asked me to rebuild a Rails API they’d p; I was surprised when I audited my own time tracking for a SaaS project.; I thought I was spending 20% of my time on architecture decisions, but the data ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "cicd-for-django-in-20ms-africa-networks",
     "title": "CI/CD for Django in 20ms Africa networks",
     "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I chose a self-hosted GitHub Actions runner on a 2 vCPU/4 GB VM running Ubuntu 2; I was surprised to see the runner queueing jobs when the VM had only 500 MB free",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "compare-kafka-redpanda-nats-for-event-driven-systems",
     "title": "Compare Kafka, Redpanda, NATS for event-driven systems",
     "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I spent three weeks prototyping each one for a real-time fraud detection pipelin; I picked Kafka for durability, then spent two days tuning   and   to hit our 50m; I hit this when we ingested 20k events/sec from mobile clients.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "context-windows-live-longer-than-you-think",
@@ -2643,6 +2620,34 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "7-skills-senior-engineers-need-now-agents-are-live",
+    "title": "7 skills senior engineers need now agents are live",
+    "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I ran into this skills that problem while migrating a service under a hard deadl; Here's what actually worked.; I spent three days debugging a memory leak that turned out to be a single miscon",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-scanners-overlook-real-vulns",
+    "title": "AI scanners overlook real vulns",
+    "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): The short version: the conventional advice on being used is incomplete.; I ran into this when I used GitHub Advanced Security’s AI-powered code scanning ; I ran this in GitHub Advanced Security with CodeQL 2.14.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "save-12kmonth-cloud-egress-costs-in-2026",
+    "title": "Save $12k/month: cloud egress costs in 2026",
+    "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I ran into this cloud egress problem while migrating a service under a hard dead; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ship-a-solo-project-pipeline-under-20month",
+    "title": "Ship a solo project pipeline under $20/month",
+    "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I moved the build step into a single 50-line Python script that runs locally and; I built this with a FastAPI service that started at 180 lines of code and ended ",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "marketing-without-budget-5k-mrr-in-18-months",
