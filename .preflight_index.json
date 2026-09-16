@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-16T07:33:46.909214",
+  "built_at": "2026-09-16T09:14:47.635951",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5150,6 +5150,11 @@
       "slug": "always-on-agents-the-token-bill-nobody-models",
       "title": "Always-on agents: the token bill nobody models",
       "summary": "token economics is easy to demo and hard to keep honest at scale. The tutorials all show the happy path. Here's what actually worked, and why. The gap between what the docs say and what production needs Every framework for building agent teams ships a cost calculator that assumes a request-response "
+    },
+    {
+      "slug": "agent-auth-tokens-arent-enough",
+      "title": "Agent auth: tokens aren't enough",
+      "summary": "Teams often end up shipping building change twice — the second time because the first version failed quietly. The default configuration is fine right up until it isn't. This post covers what comes after the happy path. The situation (what we were trying to solve) A team building a multi-agent custom"
     }
   ]
 }

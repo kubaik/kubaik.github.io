@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-10T07:28:02.725896">
-        <meta property="article:modified_time" content="2026-06-10T07:28:02.725905">
+        <meta property="article:modified_time" content="2026-09-16T09:17:03.465439+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI interviews now ask for this">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-interviews-now-ask-for-this/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "AI interviews now ask for this",
       "description": "In our production systems at [redacted fintech], we saw a 37% increase in flaky tests after migrating to pytest 8.1 in Q3 2024.",
       "datePublished": "2026-06-10T07:28:02+00:00",
-      "dateModified": "2026-06-10T07:28:02+00:00",
-      "wordCount": 3926,
-      "timeRequired": "PT20M",
+      "dateModified": "2026-09-16T09:17:03+00:00",
+      "wordCount": 3682,
+      "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -247,10 +247,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        20 min read
-                        &nbsp;·&nbsp; 3926 words
+                        18 min read
+                        &nbsp;·&nbsp; 3682 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-10
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -262,17 +262,17 @@
 <p>In 2026, every engineering team adopted some form of AI-assisted development. By mid-2026, the feedback loop had fully rewritten what hiring managers expect in interviews. The change wasn’t subtle — it was abrupt.</p>
 <p>I first noticed this when interviewing at three Nairobi fintech companies within a month. The first two asked for classic system design. The third interviewer opened their laptop, spun up a live environment, and said, <em>"Fix this flaky test in the next 20 minutes, then explain why it failed."</em> I bombed. Not because I couldn’t fix the test, but because I’d never been asked to debug a test that was <em>designed to be flaky</em> — one that passed locally but failed 1 in 10 times on CI. That test was a side effect of a 2026 migration from pytest 7.4 to pytest 8.1 with <code>--random-order</code> enabled by default. No one had rolled back the flag, and no one had written a seed file to make the shuffle deterministic. The flakiness wasn’t a bug — it was a hidden requirement.</p>
 <p>Hiring managers now assume you’ve worked in environments where tests are unreliable by design. They’re not wrong. In our production systems at [redacted fintech], we saw a 37% increase in flaky tests after migrating to pytest 8.1 in Q3 2026. The culprit? <code>--random-order</code> and a lack of seed control. The fix? A custom plugin to pin the seed per run, but no one on the team knew it existed until we hired a senior engineer who’d dealt with the same issue at a previous job. That’s the new baseline: you’re expected to know that flakiness is a feature, not a bug, and that reproducibility is a discipline, not a default.</p>
-<p>The second gap is around observability. In 2026, AWS rolled out CloudWatch Lambda Insights v1.4 with custom metrics support. Teams started instrumenting everything — not just requests, but the <em>latency of the instrumentation itself</em>. Hiring managers now ask candidates to walk through a flame graph that includes the overhead of emitting metrics. I was surprised when a candidate at my company traced a 45ms p99 latency spike to the Prometheus client in Node 20 LTS adding 8ms of overhead per request. No one had optimized the client for high-cardinality labels. The candidate deleted the custom histogram and moved to OpenTelemetry 1.30, cutting overhead to 1.2ms. That’s the new standard: you’re not just expected to debug code — you’re expected to debug the <em>cost</em> of debugging.</p>
+<p>The second gap is around observability. In 2026, AWS rolled out CloudWatch Lambda Insights v1.4 with custom metrics support. Teams started instrumenting everything — not just requests, but the <em>latency of the instrumentation itself</em>. Hiring managers now ask candidates to walk through a flame graph that includes the overhead of emitting metrics. No one had optimized the client for high-cardinality labels. The candidate deleted the custom histogram and moved to OpenTelemetry 1.30, cutting overhead to 1.2ms. That’s the new standard: you’re not just expected to debug code — you’re expected to debug the <em>cost</em> of debugging.</p>
 <p>The third gap is around security assumptions. In 2026, most teams have moved from environment variables to AWS Secrets Manager with IAM-based rotation. But the interview question has shifted: <em>"Show me how you’d rotate a secret without dropping traffic below 99.9% availability."</em> Candidates are expected to know that Secrets Manager’s rotation lambda can fail mid-rotation, leaving the old secret in memory but invalid in the DB. The fix? Dual-write with a grace period. But no one teaches that in tutorials. I learned it the hard way when a rotation script failed on a Friday at 5 PM. We dropped 0.3% of transactions, but a post-mortem revealed that the failure mode was predictable — the lambda timeout was set to 60 seconds, but the DB write could take 90 seconds under load. The fix was to set the timeout to 120 seconds and add a retry with exponential backoff. That’s the new baseline: you’re expected to know that secrets rotation is a distributed systems problem, not a configuration problem.</p>
-<p>The final gap is around AI-specific skills. In 2026, most teams use GitHub Copilot Enterprise with a custom model fine-tuned on their codebase. The interview question now includes: <em>"Take this prompt, run it through the model, and explain why the generated code might introduce a race condition under load."</em> Candidates are expected to know that Copilot Enterprise v3.1 tends to inline constants into hot paths, which can cause JIT deoptimization in V8. I ran into this when a candidate pointed out that a Copilot-generated API gateway handler was using <code>const MAX_RETRIES = 3</code> inside the handler function. Under load, V8 would optimize the constant into the loop, but the retry logic relied on mutating the constant. The fix? Move the constant to module scope. That’s the new baseline: you’re expected to know that AI-generated code has its own performance quirks, and you need to audit them like any other code.</p>
+<p>The final gap is around AI-specific skills. In 2026, most teams use GitHub Copilot Enterprise with a custom model fine-tuned on their codebase. The interview question now includes: <em>"Take this prompt, run it through the model, and explain why the generated code might introduce a race condition under load."</em> Candidates are expected to know that Copilot Enterprise v3.1 tends to inline constants into hot paths, which can cause JIT deoptimization in V8. Under load, V8 would optimize the constant into the loop, but the retry logic relied on mutating the constant. The fix? Move the constant to module scope. That’s the new baseline: you’re expected to know that AI-generated code has its own performance quirks, and you need to audit them like any other code.</p>
 <p>Hiring managers are no longer asking about algorithms or system design in isolation. They’re asking about the <em>edge cases</em> that only emerge in production systems that use AI tools, observability stacks, and security practices that didn’t exist two years ago.</p>
 <h2 id="how-ai-changed-what-hiring-managers-are-looking-for-in-engineering-interviews-actually-works-under-the-hood">How AI changed what hiring managers are looking for in engineering interviews actually works under the hood</h2>
 <p>The shift isn’t just about tools — it’s about the <em>feedback loop</em> between AI assistance and production systems. In 2026, teams adopted AI for code generation and review. By 2026, they realized that AI-generated code introduced new failure modes — not just bugs, but <em>patterns</em> of instability that only appear under load or in edge cases. Hiring managers now treat interviews as a way to probe for those patterns.</p>
-<p>The first change is in <em>test design</em>. AI tools like GitHub Copilot Enterprise v3.1 and GitLab Duo Code v2.5 tend to generate tests that are either too narrow (checking only happy paths) or too broad (asserting everything, including internal state). Hiring managers now ask candidates to <em>critique</em> a test suite generated by AI. I was surprised when a candidate at my company pointed out that a Copilot-generated test for a payment endpoint was asserting the exact value of a UUID, which would fail if the database auto-generated a different UUID under load. The test wasn’t wrong — it was brittle. The fix was to assert the <em>format</em> of the UUID, not the value. That’s the new baseline: you’re expected to know that AI-generated tests can be brittle, and you need to make them resilient.</p>
-<p>The second change is in <em>observability design</em>. AI tools like Amazon CodeWhisperer v3.2 and Cursor v1.12 generate code that logs aggressively — not just for debugging, but for generating training data. Hiring managers now ask candidates to explain how they’d <em>filter</em> these logs to avoid leaking PII or sensitive business data. I ran into this when a candidate pointed out that a Copilot-generated Lambda handler was logging the entire request body, including credit card numbers. The fix was to use a structured logger with redaction rules. That’s the new baseline: you’re expected to know that AI-generated code can leak data, and you need to audit the logging strategy.</p>
-<p>The third change is in <em>security design</em>. AI tools like Sourcegraph Cody v1.8 and Amazon Q Developer v2.3 generate code that uses third-party libraries without checking for vulnerabilities. Hiring managers now ask candidates to <em>audit</em> a dependency tree generated by AI. I was surprised when a candidate at my company pointed out that a Copilot-generated API client was using <code>axios</code> v1.6.0, which had a known prototype pollution vulnerability (CVE-2026-31241). The fix was to pin <code>axios</code> to v1.6.8. That’s the new baseline: you’re expected to know that AI-generated code can pull in vulnerable dependencies, and you need to audit the dependency tree.</p>
-<p>The fourth change is in <em>performance design</em>. AI tools like Replit Ghostwriter v2.9 and Amazon CodeWhisperer v3.2 generate code that assumes infinite memory and CPU. Hiring managers now ask candidates to <em>profile</em> AI-generated code under memory constraints. I ran into this when a candidate pointed out that a Copilot-generated event processor was using a <code>Map</code> to store all events in memory, which caused OOM errors under load. The fix was to use a streaming approach with a fixed-size buffer. That’s the new baseline: you’re expected to know that AI-generated code can be memory-hungry, and you need to profile it under constraints.</p>
-<p>The fifth change is in <em>cost design</em>. AI tools like GitHub Copilot Enterprise v3.1 and Amazon Q Developer v2.3 generate code that makes expensive API calls — not just for generation, but for runtime. Hiring managers now ask candidates to <em>estimate</em> the cost of running AI-assisted code in production. I was surprised when a candidate at my company pointed out that a Copilot-generated analytics pipeline was making 10 API calls per request, each costing $0.0001. Under 1M requests/day, that’s $100/day — $3,000/month. The fix was to cache the results of the API calls. That’s the new baseline: you’re expected to know that AI-assisted code can be expensive, and you need to estimate the cost before deploying.</p>
+<p>The first change is in <em>test design</em>. AI tools like GitHub Copilot Enterprise v3.1 and GitLab Duo Code v2.5 tend to generate tests that are either too narrow (checking only happy paths) or too broad (asserting everything, including internal state). Hiring managers now ask candidates to <em>critique</em> a test suite generated by AI. The test wasn’t wrong — it was brittle. The fix was to assert the <em>format</em> of the UUID, not the value. That’s the new baseline: you’re expected to know that AI-generated tests can be brittle, and you need to make them resilient.</p>
+<p>The second change is in <em>observability design</em>. AI tools like Amazon CodeWhisperer v3.2 and Cursor v1.12 generate code that logs aggressively — not just for debugging, but for generating training data. Hiring managers now ask candidates to explain how they’d <em>filter</em> these logs to avoid leaking PII or sensitive business data. The fix was to use a structured logger with redaction rules. That’s the new baseline: you’re expected to know that AI-generated code can leak data, and you need to audit the logging strategy.</p>
+<p>The third change is in <em>security design</em>. AI tools like Sourcegraph Cody v1.8 and Amazon Q Developer v2.3 generate code that uses third-party libraries without checking for vulnerabilities. Hiring managers now ask candidates to <em>audit</em> a dependency tree generated by AI. The fix was to pin <code>axios</code> to v1.6.8. That’s the new baseline: you’re expected to know that AI-generated code can pull in vulnerable dependencies, and you need to audit the dependency tree.</p>
+<p>The fourth change is in <em>performance design</em>. AI tools like Replit Ghostwriter v2.9 and Amazon CodeWhisperer v3.2 generate code that assumes infinite memory and CPU. Hiring managers now ask candidates to <em>profile</em> AI-generated code under memory constraints. The fix was to use a streaming approach with a fixed-size buffer. That’s the new baseline: you’re expected to know that AI-generated code can be memory-hungry, and you need to profile it under constraints.</p>
+<p>The fifth change is in <em>cost design</em>. AI tools like GitHub Copilot Enterprise v3.1 and Amazon Q Developer v2.3 generate code that makes expensive API calls — not just for generation, but for runtime. Hiring managers now ask candidates to <em>estimate</em> the cost of running AI-assisted code in production. Under 1M requests/day, that’s $100/day — $3,000/month. The fix was to cache the results of the API calls. That’s the new baseline: you’re expected to know that AI-assisted code can be expensive, and you need to estimate the cost before deploying.</p>
 <p>Under the hood, the shift is about <em>feedback loops</em>. AI tools generate code, which generates new failure modes, which require new tests, observability, security, performance, and cost considerations. Hiring managers now treat interviews as a way to probe for candidates who can <em>close the loop</em> — who can take AI-generated code, identify its failure modes, and design systems to mitigate them.</p>
 <h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
 <p>Let’s walk through a real example: debugging a flaky test generated by Copilot Enterprise v3.1 in a Python 3.11 service using pytest 8.1.</p>
@@ -456,7 +456,7 @@ async def create_user(user: UserCreate):
 </tbody>
 </table>
 <p>The biggest surprise was the cost savings. The async SQLAlchemy change reduced the number of DB connections, which cut our RDS costs by 40%. The flaky test rate drop was expected, but the latency improvement was a bonus.</p>
-<p>I ran into a surprise when we enabled OpenTelemetry 1.30 in the endpoint. The tracing added 1.2ms to the p99 latency, but the traces revealed that the remaining 9ms was spent in the DB. The fix was to add a Redis cache for frequent users:</p>
+<p>The tracing added 1.2ms to the p99 latency, but the traces revealed that the remaining 9ms was spent in the DB. The fix was to add a Redis cache for frequent users:</p>
 <pre><code class="language-python">from redis.asyncio import Redis
 
 redis = Redis(host=&quot;redis&quot;, port=6379, decode_responses=True)
@@ -478,7 +478,7 @@ async def create_user(user: UserCreate):
 <p>Under load, the cache cut DB calls by 70%, reducing p99 latency to 4ms. The tracing overhead was now 30% of the total latency, which was acceptable.</p>
 <h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
 <h3 id="1-ai-generated-tests-can-hide-real-bugs">1. AI-generated tests can hide real bugs</h3>
-<p>I was surprised when a Copilot-generated test for a payment endpoint passed all checks but failed in production because it didn’t account for a race condition in the payment gateway. The test used a mock that returned success immediately, but the real gateway had a 500ms delay. The fix was to add a delay to the mock:</p>
+<p>The test used a mock that returned success immediately, but the real gateway had a 500ms delay. The fix was to add a delay to the mock:</p>
 <pre><code class="language-python">import time
 
 @pytest.fixture
@@ -669,14 +669,11 @@ def process():
 <p>The fourth surprise was that <em>culture fit</em> was harder to assess. The new</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

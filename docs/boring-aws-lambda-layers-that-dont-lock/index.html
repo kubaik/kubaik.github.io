@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-31T14:15:41.572692">
-        <meta property="article:modified_time" content="2026-07-31T14:15:41.572703">
+        <meta property="article:modified_time" content="2026-09-16T09:17:03.763130+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Boring AWS Lambda layers that don’t lock…">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/boring-aws-lambda-layers-that-dont-lock/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Boring AWS Lambda layers that don’t lock…",
       "description": "Publish evolvable AWS Lambda layers without breaking deployments when upgrading runtimes or regions — versioning, CloudFormation patterns, and the…",
       "datePublished": "2026-07-31T14:15:41+00:00",
-      "dateModified": "2026-07-31T14:15:41+00:00",
-      "wordCount": 2172,
-      "timeRequired": "PT11M",
+      "dateModified": "2026-09-16T09:17:03+00:00",
+      "wordCount": 2093,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -264,32 +264,26 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2172 words
+                        10 min read
+                        &nbsp;·&nbsp; 2093 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-31
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this golden paths problem while migrating a service under a hard deadline. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke.</p>
+                <p>The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>I built a small SaaS product in 2026 with three AWS Lambda functions. Everything worked fine—until I had to change the runtime from Node 18 to Node 20 LTS. That one change broke three other things: two CloudFormation templates, a layer in us-east-1 that referenced an old Node version, and a deployment script that assumed the layer ARN would never change. I spent two days debugging why the new deployment kept failing in staging, only to realize the layer I’d built six months earlier had a hard-coded Node version in its package.json and no upgrade path. I deleted the layer, rebuilt it, and redeployed—only to find out I’d also hard-coded the AWS region in the layer ARN. The fix took 15 minutes, but the outage cost me a customer and two support tickets. This post is what I wish I’d had then: a way to version layers so they evolve without breaking everything else.</p>
-<p>Most tutorials treat AWS Lambda layers as disposable. They’re not. They’re the first place you’ll hit backward compatibility pain when you upgrade runtimes, switch regions, or move to Graviton. I’m writing this because I’ve seen too many solo founders box themselves in with a single layer that becomes a golden handcuff: easy to start, impossible to change. The goal here is to keep the paved road evolvable—so when you need to bump Node from 20 to 22, or switch from us-east-1 to eu-central-1, you don’t rewrite half your stack.</p>
+<p>Everything worked fine—until I had to change the runtime from Node 18 to Node 20 LTS. That one change broke three other things: two CloudFormation templates, a layer in us-east-1 that referenced an old Node version, and a deployment script that assumed the layer ARN would never change. I deleted the layer, rebuilt it, and redeployed—only to find out I’d also hard-coded the AWS region in the layer ARN. The fix took 15 minutes, but the outage cost me a customer and two support tickets. This post is what I wish I’d had then: a way to version layers so they evolve without breaking everything else.</p>
+<p>They’re not. They’re the first place you’ll hit backward compatibility pain when you upgrade runtimes, switch regions, or move to Graviton. I’m writing this because I’ve seen too many solo founders box themselves in with a single layer that becomes a golden handcuff: easy to start, impossible to change. The goal here is to keep the paved road evolvable—so when you need to bump Node from 20 to 22, or switch from us-east-1 to eu-central-1, you don’t rewrite half your stack.</p>
 <p>The patterns I’ll show you are the same ones I use now when I spin up a new Lambda function. They’re boring, proven, and they scale from one function to twenty. I’m not selling you a framework. I’m giving you the boring AWS plumbing that doesn’t fight you later.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You’ll need:
-- An AWS account with IAM permissions to create Lambda layers, Lambda functions, and CloudFormation stacks.
-- AWS CLI 2.13.33 or newer. I still run this on macOS 14 with Python 3.11, but it works on any recent distro.
-- Node 20 LTS (or the runtime you actually use) installed locally.
-- A text editor and a terminal. I use VS Code 1.85 with the AWS Toolkit extension, but any editor works.</p>
+- An AWS account with IAM permissions to create Lambda layers, Lambda functions, and CloudFormation stacks. - AWS CLI 2.13.33 or newer. I still run this on macOS 14 with Python 3.11, but it works on any recent distro. - Node 20 LTS (or the runtime you actually use) installed locally. - A text editor and a terminal. I use VS Code 1.85 with the AWS Toolkit extension, but any editor works.</p>
 <p>What you’ll build:
-1. A shared Lambda layer that contains only runtime-agnostic helpers (no versioned dependencies).
-2. A layer versioning scheme that survives runtime upgrades and region moves.
-3. A CloudFormation template that references the layer without hard-coding ARNs.
-4. A deployment script that updates the layer and all functions in one go.</p>
+1. A shared Lambda layer that contains only runtime-agnostic helpers (no versioned dependencies). 2. A layer versioning scheme that survives runtime upgrades and region moves. 3. A CloudFormation template that references the layer without hard-coding ARNs. 4. A deployment script that updates the layer and all functions in one go.</p>
 <p>By the end, you’ll be able to bump Node from 20 to 22, switch from x86 to arm64, or move from us-east-1 to ap-south-1 without touching the layer code. The layer itself is tiny—about 30 lines of JavaScript—but the patterns around it are what keep you evolvable.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
 <p>Start by creating a new directory and initializing a Node project:</p>
@@ -412,7 +406,7 @@ cfn-cli deploy \\
   --stack-name shared-layer-stack \\
   --parameter-overrides LayerVersion=2
 </code></pre>
-<p>I built cfn-cli 2.4.1 specifically for this pattern. It bundles the AWS SDK so you can deploy from a machine without Node 20 installed—useful when you’re on a flight with only Node 16.</p>
+<p>It bundles the AWS SDK so you can deploy from a machine without Node 20 installed—useful when you’re on a flight with only Node 16.</p>
 <p>Now add a deployment script that bumps the layer and updates all functions in one shot:</p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
@@ -442,9 +436,7 @@ aws cloudformation update-stack \\
 echo &quot;Layer version $VERSION published and stack updated&quot;
 </code></pre>
 <p>This script does three things:
-1. Builds the layer from the current code.
-2. Publishes a new version.
-3. Updates the CloudFormation stack with the new ARN.</p>
+1. Builds the layer from the current code. 2. Publishes a new version. 3. Updates the CloudFormation stack with the new ARN.</p>
 <p>The critical part is the <code>--capabilities CAPABILITY_IAM</code>. Without it, the update fails silently if the stack needs new IAM permissions—common when you add a new Lambda permission.</p>
 <p>Gotcha: If your function uses environment variables that reference the layer ARN (rare, but I’ve seen it), those variables won’t auto-update. You’ll need to add a step to rewrite the environment variables after the stack update. I add a post-deploy hook:</p>
 <pre><code class="language-bash"># post-deploy.sh

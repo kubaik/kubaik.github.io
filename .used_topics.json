@@ -227,5 +227,7 @@
   "Agent-specific tracing patterns that actually help during incidents",
   "Building SLOs for agentic features that don't just measure latency and error rate",
   "React 19 + Server Components in production: what we actually shipped and what we rolled back",
-  "The regulatory and compliance realities of deploying autonomous agents in African fintech"
+  "The regulatory and compliance realities of deploying autonomous agents in African fintech",
+  "Building change data capture that doesn't fall over when your LLM pipeline goes wild",
+  "Why agent identity and authentication is harder than traditional service auth"
 ]

@@ -140,20 +140,6 @@
     "status": "needs_review"
   },
   {
-    "slug": "tool-calling-patterns-patterns-that-survive-load-vs",
-    "title": "Tool calling patterns: patterns that survive load vs",
-    "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I've seen the same toolcalling patterns mistake in multiple production codebases; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way during a Black Friday sale when our order service st",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "which-ai-wrappers-made-money-in-2026",
-    "title": "Which AI wrappers made money in 2026",
-    "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I ran into this wrapper businesses problem while migrating a service under a har; Here's what actually worked.; I spent three weeks tuning prompts, testing retrieval chunks, and sharding Redis",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "5-notification-systems-ranked-push-email-sms",
     "title": "5 notification systems ranked: push, email, SMS",
     "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I ran into this designing notification problem while migrating a service under a; Here's what actually worked.; I spent three weeks untangling the mess before I realised the real problem wasn’",
@@ -168,55 +154,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-proof-your-mid-level-salary",
-    "title": "AI-proof your mid-level salary",
-    "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I ran into this when a client in Manila asked me to rebuild a Rails API they’d p; I was surprised when I audited my own time tracking for a SaaS project.; I thought I was spending 20% of my time on architecture decisions, but the data ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "cicd-for-django-in-20ms-africa-networks",
-    "title": "CI/CD for Django in 20ms Africa networks",
-    "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I chose a self-hosted GitHub Actions runner on a 2 vCPU/4 GB VM running Ubuntu 2; I was surprised to see the runner queueing jobs when the VM had only 500 MB free",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "compare-kafka-redpanda-nats-for-event-driven-systems",
-    "title": "Compare Kafka, Redpanda, NATS for event-driven systems",
-    "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I spent three weeks prototyping each one for a real-time fraud detection pipelin; I picked Kafka for durability, then spent two days tuning   and   to hit our 50m; I hit this when we ingested 20k events/sec from mobile clients.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "context-windows-live-longer-than-you-think",
     "title": "Context windows live longer than you think",
     "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I spent longer than I should have on prompt tool before understanding what was a; Here's what actually worked, and why.; I ran into this when a customer support agent in Brazil kept producing hallucina",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "tame-python-asyncs-hidden-traps",
     "title": "Tame Python async’s hidden traps",
     "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I've seen the same async python mistake in multiple production codebases, includ; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when I moved a 500k daily active user API from Flask 2.3 to Fast",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "9-ai-wrapper-plays-that-worked-in-2026",
     "title": "9 AI wrapper plays that worked in 2026",
     "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I ran into this wrapper businesses problem while migrating a service under a har; Here's what actually worked.; I spent three weeks wiring a Next.js dashboard on top of a Python CLI using Lang",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-interviews-now-ask-for-this",
     "title": "AI interviews now ask for this",
     "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I first noticed this when interviewing at three Nairobi fintech companies within; I was surprised when a candidate at my company traced a 45ms p99 latency spike t; I learned it the hard way when a rotation script failed on a Friday at 5 PM.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "boring-aws-lambda-layers-that-dont-lock",
     "title": "Boring AWS Lambda layers that don’t lock…",
     "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I ran into this golden paths problem while migrating a service under a hard dead; I spent two days debugging why the new deployment kept failing in staging, only ; I deleted the layer, rebuilt it, and redeployed—only to find out I’d also hard-c",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "build-a-nairobi-saas-stack-for-32kmonth",
@@ -2620,6 +2590,41 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "tool-calling-patterns-patterns-that-survive-load-vs",
+    "title": "Tool calling patterns: patterns that survive load vs",
+    "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I've seen the same toolcalling patterns mistake in multiple production codebases; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way during a Black Friday sale when our order service st",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "which-ai-wrappers-made-money-in-2026",
+    "title": "Which AI wrappers made money in 2026",
+    "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I ran into this wrapper businesses problem while migrating a service under a har; Here's what actually worked.; I spent three weeks tuning prompts, testing retrieval chunks, and sharding Redis",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-proof-your-mid-level-salary",
+    "title": "AI-proof your mid-level salary",
+    "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I ran into this when a client in Manila asked me to rebuild a Rails API they’d p; I was surprised when I audited my own time tracking for a SaaS project.; I thought I was spending 20% of my time on architecture decisions, but the data ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "cicd-for-django-in-20ms-africa-networks",
+    "title": "CI/CD for Django in 20ms Africa networks",
+    "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I chose a self-hosted GitHub Actions runner on a 2 vCPU/4 GB VM running Ubuntu 2; I was surprised to see the runner queueing jobs when the VM had only 500 MB free",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "compare-kafka-redpanda-nats-for-event-driven-systems",
+    "title": "Compare Kafka, Redpanda, NATS for event-driven systems",
+    "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I spent three weeks prototyping each one for a real-time fraud detection pipelin; I picked Kafka for durability, then spent two days tuning   and   to hit our 50m; I hit this when we ingested 20k events/sec from mobile clients.",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "7-skills-senior-engineers-need-now-agents-are-live",

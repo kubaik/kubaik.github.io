@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-17T14:10:50.529115">
-        <meta property="article:modified_time" content="2026-06-17T14:10:50.529133">
+        <meta property="article:modified_time" content="2026-09-16T09:17:03.003358+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="9 AI wrapper plays that worked in 2026">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/9-ai-wrapper-plays-that-worked-in-2026/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "9 AI wrapper plays that worked in 2026",
       "description": "9 AI wrapper businesses survived 2026 — the ones that got pricing right made $12M ARR, the rest died.",
       "datePublished": "2026-06-17T14:10:50+00:00",
-      "dateModified": "2026-06-17T14:10:50+00:00",
-      "wordCount": 2887,
+      "dateModified": "2026-09-16T09:17:03+00:00",
+      "wordCount": 2824,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,19 +265,19 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2887 words
+                        &nbsp;·&nbsp; 2824 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-17
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
 <p>In early 2026 I joined a small team building a developer productivity tool. We thought wrapping an LLM around an existing CLI and selling it as SaaS would be an easy win. The market looked hungry: every company with a CLI was shopping for an "AI co-pilot" slide deck. We raised a seed round on that promise.</p>
-<p>I spent three weeks wiring a Next.js dashboard on top of a Python CLI using LangChain’s 0.1.x tooling. We launched a private beta in March 2026. By June our churn rate hit 42% and our per-user ARR plateaued at $18. The magic was gone faster than the VC slide deck could cool. Worse, we learned that most of our users weren’t paying for the AI; they just wanted faster access to the underlying CLI. That’s when I realized we had built a wrapper around a wrapper and called it a product.</p>
+<p>We launched a private beta in March 2026. By June our churn rate hit 42% and our per-user ARR plateaued at $18. The magic was gone faster than the VC slide deck could cool. Worse, we learned that most of our users weren’t paying for the AI; they just wanted faster access to the underlying CLI. That’s when I realized we had built a wrapper around a wrapper and called it a product.</p>
 <p>This post is what I wish we had read before we started. It ranks the AI wrapper business models that survived 2026-2026, explains why 84% of the ones I studied died, and gives concrete signals to pick the right path for your niche.</p>
 <hr />
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
@@ -392,7 +392,7 @@
 <hr />
 <h2 id="the-ones-i-tried-and-dropped-and-why">The ones I tried and dropped (and why)</h2>
 <p><strong>Multi-model gateway (abstraction layer)</strong></p>
-<p>I built a 1,200-line Python router in January 2026 that routed every prompt to the cheapest model available: Mistral 8x22B, Llama 3.1 405B, or Cohere Command R+ depending on price. At first glance the gross margin looked great: 78% on a $0.001 per token routed fee.</p>
+<p>At first glance the gross margin looked great: 78% on a $0.001 per token routed fee.</p>
 <p>Reality hit when I saw the support tickets. Users expected consistent behavior across models. A prompt that returned JSON from Mistral would return markdown from Llama. Debugging took 4 hours per ticket. By March churn hit 38% and I shut it down.</p>
 <p>Lesson: Abstraction costs more than you think when models drift.</p>
 <p><strong>Code review robot</strong></p>
@@ -585,14 +585,11 @@ response = query_engine.query(&quot;How to authenticate with the API?&quot;)
 </table>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

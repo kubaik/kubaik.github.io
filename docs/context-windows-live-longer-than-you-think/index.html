@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-25T13:43:38.060125">
-        <meta property="article:modified_time" content="2026-07-25T13:43:38.060133">
+        <meta property="article:modified_time" content="2026-09-16T09:17:02.499836+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Context windows live longer than you think">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/context-windows-live-longer-than-you-think/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Context windows live longer than you think",
       "description": "Context window management for agents that run hours or days — stop hallucinating names and blowing budgets with these concrete strategies and code you can run…",
       "datePublished": "2026-07-25T13:43:38+00:00",
-      "dateModified": "2026-07-25T13:43:38+00:00",
-      "wordCount": 2756,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-09-16T09:17:02+00:00",
+      "wordCount": 2681,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -264,21 +264,21 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2756 words
+                        13 min read
+                        &nbsp;·&nbsp; 2681 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-25
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on prompt tool before understanding what was actually happening. The default configuration is fine right up until it isn't. Here's what actually worked, and why.</p>
+                <p>The default configuration is fine right up until it isn't. Here's what actually worked, and why.</p>
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
-<p>If your agent runs for hours or days, its context window isn’t just another token bucket you refill every few minutes — it’s a live ledger that grows without bounds until it collapses under its own weight. I ran into this when a customer support agent in Brazil kept producing hallucinated names and ticket IDs after 18 hours of continuous chat; the root cause wasn’t the LLM, it was the rolling 16k-token window that never actually rolled because the pruning logic missed two edge cases. The fix wasn’t bigger models or longer prompts; it was to treat the context window like a database that needs indexing, backups, and a retention policy. This post shows how to do that with concrete code and trade-offs you can test today.</p>
+<p>If your agent runs for hours or days, its context window isn’t just another token bucket you refill every few minutes — it’s a live ledger that grows without bounds until it collapses under its own weight. The fix wasn’t bigger models or longer prompts; it was to treat the context window like a database that needs indexing, backups, and a retention policy. This post shows how to do that with concrete code and trade-offs you can test today.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>Most tutorials assume agents run for minutes, not hours or days. They talk about truncation, summarization, and keep-it-short rules that work fine when your session ends by lunch. But when your agent is a background worker handling support tickets across São Paulo, Bogotá, and Mexico City, the context window becomes a growing scar tissue: every token you keep is a token you’ll pay for, a prompt you’ll inject, and a hallucination you might ship. I’ve seen teams burn 30–40% more on inference costs because they treated the context window like a scratchpad instead of an audit trail that needs active management.</p>
+<p>They talk about truncation, summarization, and keep-it-short rules that work fine when your session ends by lunch. But when your agent is a background worker handling support tickets across São Paulo, Bogotá, and Mexico City, the context window becomes a growing scar tissue: every token you keep is a token you’ll pay for, a prompt you’ll inject, and a hallucination you might ship. I’ve seen teams burn 30–40% more on inference costs because they treated the context window like a scratchpad instead of an audit trail that needs active management.</p>
 <p>The confusion starts with the word “window.” It sounds like a frame you slide, but in long-running agents it’s more like a ledger that never closes — until it does, and then it’s too late. You’ll see examples where teams set a 32k token limit and call it “enough,” only to discover that after 24 hours the agent is re-reading the same boilerplate policies for every ticket because the pruning logic couldn’t keep up with the growing tail of irrelevant context.</p>
 <p>Another trap is assuming the LLM will naturally forget. It won’t. It will keep quoting stale references, customer IDs, and internal jargon that no longer applies. I once had a customer in Mexico complain that the agent kept asking for their “previous order ID from last month” — even though that order had been refunded and the agent had already closed the ticket. The problem wasn’t the agent’s memory; it was the agent’s refusal to forget.</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
