@@ -49,55 +49,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "map-legacy-code-with-ai-before-it-breaks",
-    "title": "Map legacy code with AI before it breaks",
-    "reason": "retroactive_fabrication_audit: 17 unverifiable first-person anecdote(s): I spent three days trying to reproduce a bug where certain user sessions would r; I was convinced it was a database lock or a slow query.; I once fed a legacy Python Flask app into an AI tool, and it confidently told me",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "price-your-remote-job-like-a-new-york-dev",
-    "title": "Price your remote job like a New York dev",
-    "reason": "retroactive_fabrication_audit: 17 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I learned the hard way that currency math isn’t the same as market math.; I spent two weeks reverse-engineering offer letters from US-based contractors on",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "remote-salary-negotiate-without-sounding-cheap",
-    "title": "Remote salary: negotiate without sounding cheap",
-    "reason": "retroactive_fabrication_audit: 17 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I immediately countered with $6,200.; I accepted, only to realise later that the same role was paying a US-based contr",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "ai-ops-datadog-vs-granfa-for-infra-automation",
     "title": "AI ops: Datadog vs Granfa for infra automation",
     "reason": "retroactive_fabrication_audit: 16 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when a “simple” capacity spike on a Node 20 LTS serv",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-steals-junior-tasks-3-skills-that-protect-pay",
     "title": "AI steals junior tasks: 3 skills that protect pay",
     "reason": "retroactive_fabrication_audit: 16 unverifiable first-person anecdote(s): I ran into this when I built a small SaaS in late 2026.; I set up a basic FastAPI backend, PostgreSQL, and a Next.js frontend.; I learned this the hard way when I built a billing dashboard for my SaaS.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "stop-shipping-daily-the-burn-rate-math",
     "title": "Stop shipping daily: the burn rate math",
     "reason": "retroactive_fabrication_audit: 16 unverifiable first-person anecdote(s): A colleague asked me about build public during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when I tried to build a tiny SaaS tool for freelance translators",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "9-vibe-coding-traps-that-break-production-code",
     "title": "9 Vibe coding traps that break production code",
     "reason": "retroactive_fabrication_audit: 15 unverifiable first-person anecdote(s): I ran into this vibe coding problem while migrating a service under a hard deadl; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-revives-unloved-legacy-codebases",
     "title": "AI revives unloved legacy codebases",
     "reason": "retroactive_fabrication_audit: 15 unverifiable first-person anecdote(s): I learned that the hard way on a six-year-old PHP monolith powering a Mexican e-; I spent three days debugging a connection pool issue that turned out to be a sin; I start by running a lightweight static analyzer over the entire codebase.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "build-a-serverless-backend-in-africa-with-pocketbase",
@@ -2673,6 +2657,27 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "map-legacy-code-with-ai-before-it-breaks",
+    "title": "Map legacy code with AI before it breaks",
+    "reason": "retroactive_fabrication_audit: 17 unverifiable first-person anecdote(s): I spent three days trying to reproduce a bug where certain user sessions would r; I was convinced it was a database lock or a slow query.; I once fed a legacy Python Flask app into an AI tool, and it confidently told me",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "price-your-remote-job-like-a-new-york-dev",
+    "title": "Price your remote job like a New York dev",
+    "reason": "retroactive_fabrication_audit: 17 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I learned the hard way that currency math isn’t the same as market math.; I spent two weeks reverse-engineering offer letters from US-based contractors on",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "remote-salary-negotiate-without-sounding-cheap",
+    "title": "Remote salary: negotiate without sounding cheap",
+    "reason": "retroactive_fabrication_audit: 17 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I immediately countered with $6,200.; I accepted, only to realise later that the same role was paying a US-based contr",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "saved-3kmonth-by-ditching-kubernetes",

@@ -3,7 +3,7 @@
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://kubaik.github.io/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -137,8 +137,17 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/9-vibe-coding-traps-that-break-production-code/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/9-vibe-coding-traps-that-break-production-code.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/about/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -216,7 +225,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/ai-content-policy/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -239,12 +248,30 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-ops-datadog-vs-granfa-for-infra-automation/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/ai-ops-datadog-vs-granfa-for-infra-automation.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ai-payments-break-in-m-pesa-first/</loc>
     <lastmod>2026-08-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/ai-payments-break-in-m-pesa-first.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/ai-revives-unloved-legacy-codebases/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/ai-revives-unloved-legacy-codebases.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -257,8 +284,17 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-steals-junior-tasks-3-skills-that-protect-pay/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/ai-steals-junior-tasks-3-skills-that-protect-pay.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/author/kubai-kevin/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -282,7 +318,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/contact/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -297,7 +333,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/dmca/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -483,7 +519,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/privacy-policy/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -534,7 +570,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/africatech/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -543,7 +579,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/agent/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -552,7 +588,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/agenticai/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -561,7 +597,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/ai/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -570,7 +606,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/aicodereview/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -579,7 +615,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/apis/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -588,7 +624,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/artificialintelligence/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -597,7 +633,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/backend/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -606,7 +642,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/cloudcomputing/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -615,7 +651,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/coding/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -624,7 +660,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/containers/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -633,7 +669,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/cybersecurity/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -642,7 +678,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/database/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -651,7 +687,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/dataengineering/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -660,7 +696,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/docker/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -669,7 +705,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/flutter/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -678,7 +714,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/generativeai/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -687,7 +723,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/github/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -696,7 +732,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/indiehacker/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -705,7 +741,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/infosec/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -714,7 +750,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/k8s/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -723,7 +759,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/kubernetes/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -732,7 +768,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/llm/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -741,7 +777,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/microservices/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -750,7 +786,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/mobiledev/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -759,7 +795,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/multiagent/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -768,7 +804,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/nextjs/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -777,7 +813,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/performance/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -786,7 +822,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/postgresql/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -795,7 +831,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/python/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -804,7 +840,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/python3/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -813,7 +849,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/rag/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -822,7 +858,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/reactjs/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -831,7 +867,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/redis/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -840,7 +876,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/saas/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -849,7 +885,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/serverless/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -858,7 +894,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/softwareengineering/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -867,7 +903,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/systemdesign/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -876,7 +912,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/tech/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -885,7 +921,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/techjobs/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -894,7 +930,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/technology/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -903,7 +939,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/vectordb/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -912,7 +948,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/vectorsearch/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -921,7 +957,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/tag/webdev/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
     <image:image>
@@ -930,7 +966,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/terms-of-service/</loc>
-    <lastmod>2026-09-15</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>

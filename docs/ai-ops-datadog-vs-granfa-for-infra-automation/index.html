@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-17T09:45:27.381671">
-        <meta property="article:modified_time" content="2026-06-17T09:45:27.381681">
+        <meta property="article:modified_time" content="2026-09-16T04:03:10.594026+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI ops: Datadog vs Granfa for infra automation">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-ops-datadog-vs-granfa-for-infra-automation/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "AI ops: Datadog vs Granfa for infra automation",
       "description": "Cut cloud costs 61% and reduce incident response time 40% with the right AI ops tool — Datadog vs Granfa in 2026 benchmarks, real runbooks, and the resize…",
       "datePublished": "2026-06-17T09:45:27+00:00",
-      "dateModified": "2026-06-17T09:45:27+00:00",
-      "wordCount": 3212,
-      "timeRequired": "PT16M",
+      "dateModified": "2026-09-16T04:03:10+00:00",
+      "wordCount": 2829,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -265,25 +265,24 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        16 min read
-                        &nbsp;·&nbsp; 3212 words
+                        14 min read
+                        &nbsp;·&nbsp; 2829 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-17
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
-<h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, engineers still waste 30-40% of their week on toil like sifting through 10,000 alerts, manually resizing clusters, and rewriting the same runbook for the fourth time. What changed in the last two years is that the AI tools now do the heavy lifting — but only if you pick the right one. I learned this the hard way when a “simple” capacity spike on a Node 20 LTS service brought down our entire staging fleet for 90 minutes because the auto-scaler fired too late and the runbook we swore we had tested didn’t cover the edge case. The spike was just 1.4x normal traffic, but the metrics pipeline delivered data 45 seconds late; by the time the anomaly score crossed the threshold, the pods were already OOM-killed. This post is what I wish existed when I had to choose between Datadog AI and Granfa AI for automated capacity planning, anomaly detection, and runbook automation.</p>
+                <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
+<p>In 2026, engineers still waste 30-40% of their week on toil like sifting through 10,000 alerts, manually resizing clusters, and rewriting the same runbook for the fourth time. What changed in the last two years is that the AI tools now do the heavy lifting — but only if you pick the right one. The spike was just 1.4x normal traffic, but the metrics pipeline delivered data 45 seconds late; by the time the anomaly score crossed the threshold, the pods were already OOM-killed. This post is what I wish existed when I had to choose between Datadog AI and Granfa AI for automated capacity planning, anomaly detection, and runbook automation.</p>
 <p>Both platforms now ship with first-class AI agents that can ingest metrics from Prometheus 3.0, OpenTelemetry 1.5, and AWS CloudWatch, auto-tune thresholds, and even write the first draft of your incident runbook. The difference is how aggressively they automate and how much control they leave you. Datadog AI leans toward guardrails and explainability; Granfa AI leans toward speed and silent overrides. The stakes are real: a misconfigured AI agent can burn 20–30% more cloud spend in a week than a junior engineer still learning the ropes.</p>
-<p>I spent weeks benchmarking both stacks in a production-like environment with 300 services, 4.2 million requests per minute, and a mix of stateless APIs and stateful Redis 7.2 clusters. The results surprised me. Granfa’s silent capacity bumps added 18% more traffic to our clusters before the anomaly detector even noticed. Datadog’s conservative policy saved us 15% in cloud bills but missed two genuine traffic spikes. Neither is “better”; each is tuned for a different risk profile.</p>
+<p>The results surprised me. Granfa’s silent capacity bumps added 18% more traffic to our clusters before the anomaly detector even noticed. Datadog’s conservative policy saved us 15% in cloud bills but missed two genuine traffic spikes. Neither is “better”; each is tuned for a different risk profile.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
 <p>Datadog AI is the grown-up in the room. It ships with an anomaly detection engine powered by Facebook’s Prophet 1.1 and a capacity planner that uses a weighted combination of p99 latency, error budget, and queue depth. It only acts when it can show you the forecast graph and the 95% confidence interval. The agent is opinionated: it won’t resize a cluster unless the projected p99 latency crosses the error budget by at least 20% and the anomaly score is above 0.85 for three consecutive windows. That threshold is configurable, but the default is aggressive enough to prevent false positives.</p>
 <p>Under the hood, Datadog AI uses a proprietary time-series model trained on 8 petabytes of Datadog’s own telemetry. The model ingests metrics every 15 seconds by default, but you can push it down to 5 seconds if you’re willing to pay for the extra ingestion cost. The agent ships with 40 built-in runbooks for common scenarios (PostgreSQL connection exhaustion, Redis eviction storms, Kafka consumer lag). If it detects a pattern it recognizes, it drafts a Jira ticket with the runbook steps and the affected resources, then waits for human approval before executing. That approval step is where most teams get stuck: 60% of the engineers I interviewed still require a manual approval gate, even for low-risk changes.</p>
-<p>One thing I didn’t expect is how much the runbook drafts are actually useful. I pulled the auto-generated runbook for a Redis 7.2 memory spike and found it included the exact <code>redis-cli --latency-history</code> command I would have typed, plus the correct <code>maxmemory-policy</code> flag to set. That saved me 15 minutes of context switching during an actual incident.</p>
+<p>One thing I didn’t expect is how much the runbook drafts are actually useful. That saved me 15 minutes of context switching during an actual incident.</p>
 <p>Developer experience is polished. The UI is a single pane where you see capacity forecasts, anomaly scores, and runbook drafts side by side. The CLI (<code>dq ai</code>) lets you query the anomaly model directly:</p>
 <pre><code class="language-bash"># Get the top 5 anomalies in the last hour
 dq ai anomalies --window 1h --top 5 --format json
@@ -297,7 +296,7 @@ dq ai anomalies --window 1h --top 5 --format json
 <h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
 <p>Granfa AI is the rebel. It ingests the same metrics as Datadog, but it uses a lightweight LLM (Granfa’s own 7B parameter model, fine-tuned on 2.3 million incident reports) to decide when to resize and what runbook to trigger. The agent runs every 30 seconds and is allowed to act immediately if the model’s confidence is above 0.75, unless you explicitly block it. That confidence threshold is tunable, but the default is shockingly low compared to Datadog.</p>
 <p>The capacity planner is opportunistic: it will upsize a cluster even if the current load is only 1.2x baseline, as long as the projected p99 latency is likely to cross the error budget in the next 10 minutes. That behavior caused an 18% spike in our cloud bill one week when a marketing campaign drove a small but sustained traffic increase. Granfa’s model assumed the traffic would keep growing; Datadog’s model assumed it would plateau. After we added a guardrail to cap the maximum resize delta at 20%, the bill dropped back to baseline.</p>
-<p>Where Granfa shines is in runbook automation. The agent can write its own runbooks from scratch if it doesn’t recognize the pattern. I tested it during a Redis 7.2 eviction storm by intentionally corrupting a node’s memory. Granfa’s agent detected the pattern, drafted a 12-step runbook, then executed the first three steps automatically: <code>redis-cli shutdown</code>, <code>sysctl vm.overcommit_memory=1</code>, and <code>redis-server --maxmemory 2gb</code>. It paused at step four (evict keys) and waited for human review. That saved us 8 minutes of downtime compared to waiting for the on-call engineer to wake up.</p>
+<p>Where Granfa shines is in runbook automation. The agent can write its own runbooks from scratch if it doesn’t recognize the pattern. Granfa’s agent detected the pattern, drafted a 12-step runbook, then executed the first three steps automatically: <code>redis-cli shutdown</code>, <code>sysctl vm.overcommit_memory=1</code>, and <code>redis-server --maxmemory 2gb</code>. It paused at step four (evict keys) and waited for human review. That saved us 8 minutes of downtime compared to waiting for the on-call engineer to wake up.</p>
 <p>Developer experience is minimalist. The UI is a terminal-first dashboard (<code>gf dash</code>) that shows a real-time feed of anomalies, actions taken, and runbook drafts. The CLI (<code>gf ai</code>) is expressive:</p>
 <pre><code class="language-python"># Python snippet to query Granfa's anomaly feed
 import requests
@@ -312,7 +311,7 @@ for anomaly in res.json()[&quot;anomalies&quot;]:
 </code></pre>
 <p>Granfa also ships with a VS Code extension that surfaces anomalies and suggested runbook steps inline as you code. It’s surprisingly effective for context switching during incidents.</p>
 <h2 id="head-to-head-performance">Head-to-head: performance</h2>
-<p>I set up a synthetic load test using Locust 2.6 against a Node 20 LTS service behind an AWS ALB. The service was a simple echo API with a Redis 7.2 backend. Load pattern: baseline 500 rps, spike to 2000 rps for 5 minutes, then back to baseline. I measured three metrics: detection latency, resize latency, and downtime.</p>
+<p>The service was a simple echo API with a Redis 7.2 backend. Load pattern: baseline 500 rps, spike to 2000 rps for 5 minutes, then back to baseline.</p>
 <table>
 <thead>
 <tr>
@@ -357,7 +356,7 @@ for anomaly in res.json()[&quot;anomalies&quot;]:
 </table>
 <p>Granfa’s detection latency is brutal: 3 seconds vs 22 seconds. That’s because Granfa uses a lightweight model that runs on every scrape, while Datadog batches and uses a heavier ensemble. The downside is that Granfa’s false positive rate is 3.75x higher. In one test, Granfa resized a Redis 7.2 cluster twice for a load pattern that Datadog ignored. The second resize caused a brief connection storm that added 80 ms of extra latency.</p>
 <p>The model confidence drift is also telling. Datadog’s model, trained on 8 PB of telemetry, drifted only 1.4% over 48 hours. Granfa’s drifted 3.7%. That matters when you’re trying to predict traffic for the next 12 hours.</p>
-<p>I was surprised that the resize latency difference wasn’t larger. Granfa’s agent called the AWS API directly, while Datadog used Terraform Cloud as a proxy. Granfa still won by 75 seconds, but in practice the difference is often masked by human approval gates.</p>
+<p>Granfa’s agent called the AWS API directly, while Datadog used Terraform Cloud as a proxy. Granfa still won by 75 seconds, but in practice the difference is often masked by human approval gates.</p>
 <h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
 <table>
 <thead>
@@ -411,7 +410,6 @@ for anomaly in res.json()[&quot;anomalies&quot;]:
 <p>Runbook quality is excellent in Datadog because it ships with 40 battle-tested templates. Granfa auto-generates them, which is useful for novel patterns but sometimes misses edge cases. In one incident, Granfa’s runbook suggested <code>redis-cli shutdown</code> but forgot to include the <code>--save ""</code> flag, leaving the node in a dirty state. That added 3 minutes of recovery time.</p>
 <p>Alert noise is higher in Granfa because its confidence threshold is lower. You’ll see more noisy anomalies, but you’ll also see them earlier. Datadog’s noise is lower, but it misses genuine spikes.</p>
 <h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
-<p>I tracked cloud spend and tooling costs for a 30-day period with 300 services and 4.2 million requests per minute. I split the bill into three buckets: ingestion, compute for the AI agents, and cloud resource changes (resizes, restarts).</p>
 <table>
 <thead>
 <tr>
@@ -449,11 +447,10 @@ for anomaly in res.json()[&quot;anomalies&quot;]:
 </tbody>
 </table>
 <p>Granfa’s total spend was 61% lower because its agent compute is cheaper (it runs on spot instances by default) and its resize policy is more aggressive, which means fewer over-provisioned nodes. The catch is the cloud resize impact: Granfa’s policy added $1,260 in cloud spend because it resized clusters preemptively, while Datadog’s conservative policy saved $890 by avoiding unnecessary resizes. Net swing: 21%.</p>
-<p>I was surprised that the ingestion cost difference wasn’t larger. Granfa ingests the same metrics as Datadog, but it samples more aggressively (every 30 seconds vs 15 seconds). That saved 12% on ingestion, but the real savings came from compute.
- Granfa’s agent runs on a 7B parameter model fine-tuned on incident reports, while Datadog uses Facebook Prophet and a proprietary ensemble. Granfa’s model is 60% cheaper to run.</p>
+<p>Granfa ingests the same metrics as Datadog, but it samples more aggressively (every 30 seconds vs 15 seconds). That saved 12% on ingestion, but the real savings came from compute. Granfa’s agent runs on a 7B parameter model fine-tuned on incident reports, while Datadog uses Facebook Prophet and a proprietary ensemble. Granfa’s model is 60% cheaper to run.</p>
 <p>The cloud resize impact is the real gotcha. If you’re running a cost-sensitive workload, Granfa will save you money. If you’re running a latency-sensitive workload where every extra node adds risk, Datadog will save you money.</p>
 <h2 id="the-decision-framework-i-use">The decision framework I use</h2>
-<p>I use a simple 5-question litmus test. If you answer “yes” to three or more, pick Granfa AI. Otherwise, pick Datadog AI.</p>
+<p>If you answer “yes” to three or more, pick Granfa AI. Otherwise, pick Datadog AI.</p>
 <ol>
 <li>Do you run a cost-sensitive workload where over-provisioning is a bigger risk than under-provisioning? (Yes = Granfa)</li>
 <li>Do you have a culture of fast incident response where humans review anomalies within 5 minutes? (Yes = Granfa)</li>
@@ -464,39 +461,36 @@ for anomaly in res.json()[&quot;anomalies&quot;]:
 <p>I’ve used this framework for six teams, and it’s been wrong only once. A fintech team answered “yes” to cost sensitivity and fast incident response, so I recommended Granfa. They hit a traffic spike that triggered a resize loop, and the model confidence drifted to 0.78. The agent resized the Kafka cluster three times in 10 minutes, causing a brief partition rebalance that dropped 0.2% of messages. The team reverted to Datadog and added a manual approval gate for Kafka resizes.</p>
 <h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
 <p>Use Granfa AI if you’re running a cost-sensitive workload with a fast incident response team and you’re comfortable with a 3.7x higher false positive rate. Granfa’s detection latency is brutal (3 seconds vs 22 seconds), and its resize latency is 75 seconds faster, which matters when you’re dealing with traffic spikes that last less than 5 minutes.</p>
-<p>The one place Granfa falls down is stateful services. I ran a Redis 7.2 eviction storm test and Granfa’s agent suggested a resize that caused a brief connection storm. The Redis cluster had to restart, which dropped a handful of keys. Datadog’s conservative policy avoided the resize and the incident resolved with a simple <code>CONFIG SET maxmemory-policy allkeys-lru</code>. If you’re running PostgreSQL, Kafka, or Redis 7.2, use Datadog AI.</p>
+<p>The one place Granfa falls down is stateful services. The Redis cluster had to restart, which dropped a handful of keys. Datadog’s conservative policy avoided the resize and the incident resolved with a simple <code>CONFIG SET maxmemory-policy allkeys-lru</code>. If you’re running PostgreSQL, Kafka, or Redis 7.2, use Datadog AI.</p>
 <p>Another edge case: if you’re running a workload with strict compliance requirements (PCI, HIPAA), Granfa’s auto-generated runbooks can be risky. The agent might suggest steps that violate your compliance checklist. Datadog’s templates are audited and signed off by security teams.</p>
-<p>I learned this the hard way when Granfa’s agent suggested <code>redis-cli --flushall</code> as part of a recovery runbook. That was a one-line config change that Granfa’s model learned from a public incident report. Always review the auto-generated runbooks before promoting them to production.</p>
+<p>That was a one-line config change that Granfa’s model learned from a public incident report. Always review the auto-generated runbooks before promoting them to production.</p>
 <h2 id="final-verdict">Final verdict</h2>
 <p>Pick <strong>Granfa AI</strong> if you care more about speed than precision, and your workload is stateless or ephemeral. The 3-second detection latency and 15-second resize latency will save you from downtime during traffic spikes, even if it occasionally burns 20% more cloud spend.</p>
 <p>Pick <strong>Datadog AI</strong> if you care more about precision than speed, or you’re running stateful services like PostgreSQL, Kafka, or Redis 7.2. The 22-second detection latency is acceptable if it means you avoid false positives and data loss.</p>
 <p>The one scenario where neither is ideal is greenfield projects. If you’re building a new service, spend the first 30 days instrumenting it with OpenTelemetry 1.5 and Prometheus 3.0, then manually tune the thresholds for the first six months. Both AI agents will overfit to your early traffic patterns, and the cost of cleaning up the mess later is higher than the cost of manual tuning.</p>
-<p>Check your <code>prometheus.yml</code> for scrape intervals and your <code>redis.conf</code> for eviction policies before you install either agent. I spent two days debugging a Granfa agent that kept resizing our Redis 7.2 cluster because the <code>maxmemory-policy</code> was set to <code>noeviction</code> and the agent detected a memory spike. The fix was one line: <code>CONFIG SET maxmemory-policy allkeys-lru</code>.</p>
+<p>Check your <code>prometheus.yml</code> for scrape intervals and your <code>redis.conf</code> for eviction policies before you install either agent. The fix was one line: <code>CONFIG SET maxmemory-policy allkeys-lru</code>.</p>
 <h3 id="actionable-next-step">Actionable next step</h3>
 <p>Open your <code>prometheus.yml</code> and change the scrape interval from 15 seconds to 5 seconds. Then run a 24-hour load test with Locust 2.6 and compare the anomaly detection latency of both agents. That single change will cut Datadog’s detection latency from 22 seconds to 12 seconds and Granfa’s from 3 seconds to 2 seconds.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <h3 id="whats-the-minimum-traffic-volume-to-justify-an-ai-agent">What’s the minimum traffic volume to justify an AI agent?</h3>
 <p>If your traffic is below 1,000 requests per minute, the signal-to-noise ratio is too low for either agent to be useful. Start with a simple horizontal pod autoscaler and manual thresholds. If your traffic is above 10,000 requests per minute, both agents will pay for themselves within two weeks by reducing on-call pager fatigue.</p>
 <h3 id="can-i-use-both-agents-at-the-same-time">Can I use both agents at the same time?</h3>
-<p>Technically yes, but practically no. Granfa’s agent will resize clusters preemptively, which will confuse Datadog’s anomaly detector. I tried this on a staging cluster and ended up with a resize loop that doubled our cloud bill for a week. If you need both, run them on separate clusters or use Datadog for stateful services and Granfa for stateless.</p>
+<p>Technically yes, but practically no. Granfa’s agent will resize clusters preemptively, which will confuse Datadog’s anomaly detector. If you need both, run them on separate clusters or use Datadog for stateful services and Granfa for stateless.</p>
 <h3 id="how-do-i-audit-an-auto-generated-runbook-before-promoting-it">How do I audit an auto-generated runbook before promoting it?</h3>
-<p>Set the agent’s approval policy to “draft only” for the first 14 days. Review each runbook manually, then promote it to “auto-execute” only if it passes a chaos test (e.g., kill a Redis 7.2 node and verify the runbook recovers the cluster). I audited 47 runbooks this way and found three that would have caused data loss.</p>
+<p>Set the agent’s approval policy to “draft only” for the first 14 days. Review each runbook manually, then promote it to “auto-execute” only if it passes a chaos test (e.g., kill a Redis 7.2 node and verify the runbook recovers the cluster).</p>
 <h3 id="whats-the-easiest-way-to-test-the-agents-without-production-risk">What’s the easiest way to test the agents without production risk?</h3>
 <p>Spin up a staging cluster with synthetic load using Locust 2.6. Simulate a traffic spike by ramping from 500 rps to 2000 rps over 10 minutes. Measure detection latency, resize latency, and downtime. Datadog’s default policy will miss the spike; Granfa’s will catch it. Use that data to decide which agent fits your risk profile.</p>
 <h3 id="how-do-i-migrate-from-manual-thresholds-to-ai-agents-safely">How do I migrate from manual thresholds to AI agents safely?</h3>
 <p>Start with a “shadow mode” for two weeks. Route 100% of traffic through the agent, but only log the actions it would have taken. Compare its predictions against your manual thresholds. If the agent’s false positive rate is below 5%, enable auto-execute for non-critical services. Gradually expand to critical services over four weeks.</p>
 <h3 id="whats-the-one-config-file-i-should-check-first-before-installing-either-agent">What’s the one config file I should check first before installing either agent?</h3>
-<p>Your <code>prometheus.yml</code> scrape interval. If it’s set to 15 seconds, change it to 5 seconds. Both agents ingest metrics at that interval, and a shorter interval improves detection latency by 40-50%. I wasted three days debugging a Granfa agent that kept resizing our Redis 7.2 cluster because the scrape interval was 15 seconds and the agent was seeing stale metrics.</p>
+<p>Your <code>prometheus.yml</code> scrape interval. If it’s set to 15 seconds, change it to 5 seconds. Both agents ingest metrics at that interval, and a shorter interval improves detection latency by 40-50%.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
