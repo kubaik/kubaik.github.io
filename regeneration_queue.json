@@ -154,27 +154,6 @@
     "status": "needs_review"
   },
   {
-    "slug": "build-a-nairobi-saas-stack-for-32kmonth",
-    "title": "Build a Nairobi SaaS stack for $3.2k/month",
-    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three weeks debugging a deadlock between PostgreSQL 15 and Redis 7.2 tha; I learned this the hard way when a single fibre cut took our primary database re",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "cloud-agents-burned-18k-8-tools-that-didnt-work",
-    "title": "Cloud agents burned $18k: 8 tools that didn't work",
-    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I ran into this traditional cloud problem while migrating a service under a hard; Here's what actually worked.; I spent three weeks trying to shoehorn Datadog Cost Analytics into catching agen",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "freelance-rates-after-ai-took-the-boilerplate",
-    "title": "Freelance rates after AI took the boilerplate",
-    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): The short version: the conventional advice on freelance developer is incomplete.; I spent three days debugging a connection pool issue that turned out to be a sin; I ran into this when a client asked me to build a REST API with CRUD endpoints; ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "pass-interviews-without-a-cs-degree",
     "title": "Pass interviews without a CS degree",
     "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): A colleague asked me about pass technical during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I spent three weeks in 2026 coaching a self-taught engineer who had quit their d",
@@ -199,31 +178,36 @@
     "slug": "7-graceful-degradation-traps-ive-hit-in-production",
     "title": "7 graceful degradation traps I’ve hit in production",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I ran into this designing systems problem while migrating a service under a hard; Here's what actually worked.; I traced the issue to a hardcoded timeout of 100 ms and a fallback path that ass",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "africa-devs-ship-production-code-not-crud",
     "title": "Africa devs: Ship production code, not CRUD",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about building portfolio during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I learned this the hard way in 2026.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agent-context-short-term-vs-long-term-memory",
     "title": "Agent context: short-term vs long-term memory",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same context engineering mistake in multiple production codebases,; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a fraud detection agent we shipped to a Kenyan bank kept ha",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-agent-postmortems-the-three-surprises",
     "title": "AI agent postmortems: the three surprises",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when helping a Colombian fintech scale their fraud-detection age",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-agent-postmortems-trace-vs-logs-vs-code",
     "title": "AI agent postmortems: trace vs logs vs code",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client’s agent started recommending out-of-stock items 43",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-fixes-legacy-code-nobody-owns",
@@ -2560,6 +2544,27 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "build-a-nairobi-saas-stack-for-32kmonth",
+    "title": "Build a Nairobi SaaS stack for $3.2k/month",
+    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three weeks debugging a deadlock between PostgreSQL 15 and Redis 7.2 tha; I learned this the hard way when a single fibre cut took our primary database re",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "cloud-agents-burned-18k-8-tools-that-didnt-work",
+    "title": "Cloud agents burned $18k: 8 tools that didn't work",
+    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I ran into this traditional cloud problem while migrating a service under a hard; Here's what actually worked.; I spent three weeks trying to shoehorn Datadog Cost Analytics into catching agen",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "freelance-rates-after-ai-took-the-boilerplate",
+    "title": "Freelance rates after AI took the boilerplate",
+    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): The short version: the conventional advice on freelance developer is incomplete.; I spent three days debugging a connection pool issue that turned out to be a sin; I ran into this when a client asked me to build a REST API with CRUD endpoints; ",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "context-windows-live-longer-than-you-think",

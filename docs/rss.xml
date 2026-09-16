@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 16 Sep 2026 12:50:31 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 16 Sep 2026 09:55:36 +0000</lastBuildDate>
+    <item>
+      <title>Self-service AI tooling: where it breaks first</title>
+      <link>https://kubaik.github.io/self-service-ai-tooling-where-it-breaks-first/</link>
+      <description>Self-service AI tooling 429 and 403 errors: per-key rate limits, budget guards, and model pins that stop one team&amp;#x27;s experiment from breaking everyone…</description>
+      <pubDate>Wed, 16 Sep 2026 09:53:25 +0000</pubDate>
+      <guid>https://kubaik.github.io/self-service-ai-tooling-where-it-breaks-first/</guid>
+    </item>
     <item>
       <title>Agent platform abstractions: a case study</title>
       <link>https://kubaik.github.io/agent-platform-abstractions-a-case-study/</link>
@@ -138,13 +145,6 @@
       <description>This can turn a process that should make 100 API calls for 1000 items into one that makes 10,000 or even 100,000 calls for the same dataset, increasing…</description>
       <pubDate>Mon, 07 Sep 2026 12:11:38 +0000</pubDate>
       <guid>https://kubaik.github.io/rogue-agent-api-calls-stop-the-bleeding/</guid>
-    </item>
-    <item>
-      <title>Two engineer classes: the AI tool norm trap</title>
-      <link>https://kubaik.github.io/two-engineer-classes-the-ai-tool-norm-trap/</link>
-      <description>AI tool norms that prevent a two-class engineering team: PR template disclosure, intent comments on generated code, and a review-load dashboard that…</description>
-      <pubDate>Mon, 07 Sep 2026 08:58:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/two-engineer-classes-the-ai-tool-norm-trap/</guid>
     </item>
   </channel>
 </rss>

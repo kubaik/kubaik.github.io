@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-16T09:38:07.452296",
+  "built_at": "2026-09-16T09:53:27.867616",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5160,6 +5160,11 @@
       "slug": "agent-platform-abstractions-a-case-study",
       "title": "Agent platform abstractions: a case study",
       "summary": "The answers online were either wrong or skipped the part that mattered. platform abstractions has a habit of breaking in ways the monitoring wasn't watching for. This covers the fix, the cost of not knowing sooner, and what we monitor now. The situation (what we were trying to solve) A mid-sized fin"
+    },
+    {
+      "slug": "self-service-ai-tooling-where-it-breaks-first",
+      "title": "Self-service AI tooling: where it breaks first",
+      "summary": "The selfservice tooling question that matters isn't in the FAQ, it's in the incident log. This is the version of the write-up that includes the part that broke. The tutorials all show the happy path. The error and why it's confusing You give a product team a sandboxed AI toolkit: a hosted notebook, "
     }
   ]
 }

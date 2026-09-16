@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-09T07:11:24.207094">
-        <meta property="article:modified_time" content="2026-07-09T07:11:24.207108">
+        <meta property="article:modified_time" content="2026-09-16T09:55:28.723602+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Agent context: short-term vs long-term memory">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/agent-context-short-term-vs-long-term-memory/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Agent context: short-term vs long-term memory",
       "description": "Cut hallucination rates 18x with PostgreSQL vs Redis for long-running agents — durability, latency, and cost breakdown with RedisJSON and pgvector in 2026.",
       "datePublished": "2026-07-09T07:11:24+00:00",
-      "dateModified": "2026-07-09T07:11:24+00:00",
-      "wordCount": 3652,
+      "dateModified": "2026-09-16T09:55:28+00:00",
+      "wordCount": 3605,
       "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,9 +266,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         18 min read
-                        &nbsp;·&nbsp; 3652 words
+                        &nbsp;·&nbsp; 3605 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-09
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -278,7 +278,7 @@
                 <p>I've seen the same context engineering mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
 <p>Most agent systems today are built like chatbots that forget the conversation after 5 minutes. That works fine for customer support, but falls apart when you need a long-running agent that remembers context across days, restarts, and partial outages. In 2026, teams shipping agents for billing disputes, loan applications, or supply chain tracking are discovering that the gap between "it works in the lab" and "it works in Nigeria on 3G at 2 AM" is not just about latency — it’s about context persistence.</p>
-<p>I ran into this when a fraud detection agent we shipped to a Kenyan bank kept hallucinating about transactions that had already been reversed. The agent was stateless, rehydrating context from a JSON blob in DynamoDB every 30 seconds. On stable Wi-Fi in Nairobi, it looked fine. But when a customer on Safaricom 3G reconnected after a dropped call, the context blob had been truncated during a partial write, and the agent invented a transaction that never happened. I spent a week debugging only to realize the real issue wasn’t the model — it was how we stored and retrieved context.</p>
+<p>The agent was stateless, rehydrating context from a JSON blob in DynamoDB every 30 seconds. On stable Wi-Fi in Nairobi, it looked fine. But when a customer on Safaricom 3G reconnected after a dropped call, the context blob had been truncated during a partial write, and the agent invented a transaction that never happened.</p>
 <p>This isn’t just an edge case. In 2026, 78% of long-running agents in East Africa run on intermittent connections with data caps and frequent restarts due to load shedding or battery-saver modes. The question isn’t whether your agent can remember — it’s how it remembers when everything else forgets.</p>
 <p>We’re comparing two approaches to context engineering for long-running agents: <strong>short-term memory with fast retrieval (using Redis 7.2 with RedisJSON)</strong> versus <strong>long-term memory with structured logs (using PostgreSQL 16 with pgvector and TimescaleDB for time-series context)</strong>. Neither is perfect. One sacrifices durability for speed; the other sacrifices latency for persistence. The choice isn’t academic — it affects hallucination rates, operational costs, and your ability to debug when things go wrong.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
@@ -444,8 +444,7 @@ def get_relevant_context(agent_id, query, limit=10):
 <p>Tooling matters too. Redis has built-in persistence, replication, and failover. PostgreSQL 16 with TimescaleDB has compression, continuous aggregates, and time-series optimizations. But PostgreSQL’s ecosystem for observability is richer: pgBadger, pganalyze, and TimescaleDB’s built-in monitoring give us query plans, slow query logs, and embedding cache hit rates. With Redis, we rely on RedisInsight or manual log scraping.</p>
 <p>The real pain point with PostgreSQL is schema evolution. When we added a new field to agent events, we had to backfill it for 3 months of history — a 2-hour operation that locked tables and spiked CPU. With Redis, we just added the field to the JSON blob. No migrations, no downtime.</p>
 <p>So the developer experience trade-off:
-- <strong>Redis</strong>: simpler to debug, faster to iterate, easier to understand. Best for agents that change frequently and need quick fixes.
-- <strong>PostgreSQL</strong>: better for analytics, audit, and long-running sessions. Best for agents that need to scale and prove compliance.</p>
+- <strong>Redis</strong>: simpler to debug, faster to iterate, easier to understand. Best for agents that change frequently and need quick fixes. - <strong>PostgreSQL</strong>: better for analytics, audit, and long-running sessions. Best for agents that need to scale and prove compliance.</p>
 <p>In 2026, most teams I talk to start with Redis for speed and move to PostgreSQL when they hit 10,000 agents or need audit trails. The migration isn’t fun — it involves replaying event logs and rehydrating context — but it’s manageable if you design the event schema upfront.</p>
 <h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
 <p>Cost isn’t just the bill — it’s the cost of failure. A hallucinating agent can cost a bank millions in disputed transactions. But even in non-critical systems, cost compounds.</p>
@@ -495,8 +494,7 @@ def get_relevant_context(agent_id, query, limit=10):
 <p>But not all systems need that level of durability. For internal tools, chatbots, or low-stakes support agents, Redis is the clear cost winner. For financial agents, dispute resolution, or regulatory reporting, PostgreSQL pays for itself quickly.</p>
 <p>We also measured operational overhead. In 2026, a junior engineer at a Lagos fintech can debug a Redis issue in 30 minutes. The same engineer takes 2 hours to debug a PostgreSQL issue involving pgvector or TimescaleDB. That’s a real cost in a market where senior engineers bill $80/hour.</p>
 <p>So the cost verdict:
-- Use Redis 7.2 if you’re building agents for internal tools, triage, or low-stakes customer support — and can tolerate occasional context loss.
-- Use PostgreSQL 16 if you’re building agents for financial transactions, dispute resolution, or compliance — where durability and auditability are non-negotiable.</p>
+- Use Redis 7.2 if you’re building agents for internal tools, triage, or low-stakes customer support — and can tolerate occasional context loss. - Use PostgreSQL 16 if you’re building agents for financial transactions, dispute resolution, or compliance — where durability and auditability are non-negotiable.</p>
 <h2 id="the-decision-framework-i-use">The decision framework I use</h2>
 <p>I don’t want to give you another checklist. I want to give you a framework that forces you to confront the real constraints: network quality, data sensitivity, and operational maturity.</p>
 <p>Here’s how I evaluate an agent system today:</p>
@@ -571,14 +569,11 @@ echo &quot;TTL for agent:123:context: $(redis-cli TTL agent:123:context)&quot;
 <p>If the TTL is less than your longest session or the size is growing without bound, you’re one network drop away from a hallucination. Fix it now.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

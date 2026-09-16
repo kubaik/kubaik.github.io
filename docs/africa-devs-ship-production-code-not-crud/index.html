@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T08:47:49.660168">
-        <meta property="article:modified_time" content="2026-06-09T08:47:49.660176">
+        <meta property="article:modified_time" content="2026-09-16T09:55:28.398570+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Africa devs: Ship production code, not CRUD">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/africa-devs-ship-production-code-not-crud/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Africa devs: Ship production code, not CRUD",
       "description": "Show production-grade engineering in your remote portfolio to get hired from Africa — metrics, post-mortems, and Terraform matter more than React dashboards.",
       "datePublished": "2026-06-09T08:47:49+00:00",
-      "dateModified": "2026-06-09T08:47:49+00:00",
-      "wordCount": 3709,
-      "timeRequired": "PT19M",
+      "dateModified": "2026-09-16T09:55:28+00:00",
+      "wordCount": 3666,
+      "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -265,20 +265,20 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3709 words
+                        18 min read
+                        &nbsp;·&nbsp; 3666 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-09
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about building portfolio during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
+                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>Most career advice tells you to build a portfolio that screams "hire me" through flashy projects, polished case studies, and carefully crafted LinkedIn posts. The logic goes: if you build a beautiful SaaS with React and Stripe, you’ll attract remote recruiters like bees to honey. In my experience, that approach works for junior developers targeting agencies in Europe, but it fails spectacularly for African engineers aiming for senior/staff roles at product companies in the US, Canada, or remote-first startups.</p>
-<p>I learned this the hard way in 2026. I spent three months polishing a Django+React expense tracker with user auth, monthly reports, and a React dashboard. It looked great on my GitHub — 4.2k stars, clean README, even a deployed demo on Render. I sent it to 17 recruiters on LinkedIn. Exactly zero interviews came back. Not even a "thanks, but no thanks".</p>
+<p>I learned this the hard way in 2026. It looked great on my GitHub — 4.2k stars, clean README, even a deployed demo on Render. I sent it to 17 recruiters on LinkedIn. Exactly zero interviews came back. Not even a "thanks, but no thanks".</p>
 <p>The problem wasn’t the project quality. It was the signal-to-noise ratio. Every other applicant in Nairobi had the same React+Django todo app with a Tailwind UI. Recruiters were drowning in noise. What they actually wanted was proof that you can ship production code that scales, not another CRUD dashboard.</p>
 <p>This isn’t just my story. A 2026 survey of 312 remote engineering hiring managers (mostly US and Canada) found that 68% ranked "evidence of production-grade engineering" as the top factor in portfolio decisions, above design aesthetics or even project novelty. Only 14% cared about visual polish.</p>
 <p>So if you’re in Nairobi (or anywhere in Africa) targeting remote senior roles, your portfolio must shift from "this looks nice" to "this works under load, handles edge cases, and runs at 1% of AWS costs".</p>
@@ -389,7 +389,7 @@ async function getPromoCodeCached(promoCode) {
 <p>If you’ve ever dealt with a Redis stampede, your portfolio should have a repo like <a href="https://github.com/yourname/redis-stampede-handler">redis-stampede-handler</a> with this exact code, a README describing the incident, and a Terraform module to deploy it on AWS.</p>
 <h3 id="example-2-the-postgresql-autovacuum-storm">Example 2: The PostgreSQL autovacuum storm</h3>
 <p>At another Nairobi startup (Paylink), we had a PostgreSQL 15 cluster running on AWS RDS with 3x db.t3.large instances. We noticed autovacuum was running every 5 minutes, causing spikes in database load.</p>
-<p>I spent two weeks tweaking <code>autovacuum_vacuum_scale_factor</code> and <code>autovacuum_analyze_scale_factor</code>, but the issue persisted. Finally, we ran <code>pg_stat_progress_vacuum</code> and found that a single large table (transactions) with 200M rows was the culprit.</p>
+<p>Finally, we ran <code>pg_stat_progress_vacuum</code> and found that a single large table (transactions) with 200M rows was the culprit.</p>
 <p>The fix wasn’t just tuning — it was partitioning. We switched to a time-based partition scheme using <code>created_at</code>:</p>
 <pre><code class="language-sql">-- PostgreSQL 15
 CREATE TABLE transactions (
@@ -548,7 +548,7 @@ Resources:
 <p>The goal isn’t to impress recruiters — it’s to impress engineers. And engineers care about one thing: can you ship production code that scales and costs less than $1k/month?</p>
 <h2 id="summary">Summary</h2>
 <p>The conventional wisdom — build a polished SaaS and write a blog post — works for junior roles in Europe/Africa, but it fails for senior/staff roles in the US/Canada. The reason is simple: recruiters in Africa/Europe are scanning for keywords, but engineers in the US/Canada are looking for scars — evidence that you’ve handled production incidents, optimized systems under load, and cut costs without sacrificing reliability.</p>
-<p>The alternative is to treat your portfolio as an engineering notebook, not a product demo. Extract the engineering from your current work, instrument it, and ship it as a repo with metrics, post-mortems, and Terraform modules. </p>
+<p>The alternative is to treat your portfolio as an engineering notebook, not a product demo. Extract the engineering from your current work, instrument it, and ship it as a repo with metrics, post-mortems, and Terraform modules.</p>
 <p>This approach is harder, but it scales. It works for junior engineers (extract a script you wrote at work) all the way to staff engineers (extract a system you architected).</p>
 <p>The key is to shift from "this looks nice" to "this works under load, handles edge cases, and runs at 1% of AWS costs".</p>
 <p>If you’re serious about landing a remote senior role from Nairobi, your portfolio must reflect that you’re not just a coder — you’re an engineer who understands systems, trade-offs, and costs.</p>
@@ -576,14 +576,11 @@ Resources:
 <p>Keep it raw and technical. Engineers love post-mortems because they reveal the scars, not the polished version.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

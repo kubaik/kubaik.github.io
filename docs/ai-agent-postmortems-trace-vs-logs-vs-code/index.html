@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-14T02:06:40.789398">
-        <meta property="article:modified_time" content="2026-06-14T02:06:40.789409">
+        <meta property="article:modified_time" content="2026-09-16T09:55:29.334366+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI agent postmortems: trace vs logs vs code">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-agent-postmortems-trace-vs-logs-vs-code/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "AI agent postmortems: trace vs logs vs code",
       "description": "Cut AI agent postmortem time 70% with the right tool — evaluation logs vs tracing in 2026 with concrete numbers, costs, and code samples.",
       "datePublished": "2026-06-14T02:06:40+00:00",
-      "dateModified": "2026-06-14T02:06:40+00:00",
-      "wordCount": 2797,
+      "dateModified": "2026-09-16T09:55:29+00:00",
+      "wordCount": 2777,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2797 words
+                        &nbsp;·&nbsp; 2777 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-14
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -276,7 +276,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>AI agent failures don’t look like regular incidents. A 500 ms latency spike in a microservice leaves a clear trace in logs and metrics. An AI agent that starts hallucinating product recommendations after a model update doesn’t. The symptoms show up as business metrics: 8% lower conversion, 12% more support tickets, or a customer churn notice in Slack. I ran into this when a client’s agent started recommending out-of-stock items 43% of the time after a model refresh. The logs said everything was fine. The traces showed normal latency. Only the business metrics told the real story.</p>
+<p>AI agent failures don’t look like regular incidents. A 500 ms latency spike in a microservice leaves a clear trace in logs and metrics. An AI agent that starts hallucinating product recommendations after a model update doesn’t. The symptoms show up as business metrics: 8% lower conversion, 12% more support tickets, or a customer churn notice in Slack. The logs said everything was fine. The traces showed normal latency. Only the business metrics told the real story.</p>
 <p>Regular postmortems focus on uptime, latency, and error rates. AI agent postmortems must also track consistency, correctness, and drift. A single prompt template change can cascade into thousands of hallucinations without touching any observable system metric. The tools we use for regular incidents—logs, dashboards, alerts—are necessary but not sufficient for AI agents. You need to add evaluation traces, consistency checks, and business metric correlation to the mix.</p>
 <p>This post compares three approaches teams use to diagnose AI agent failures in 2026: tracing frameworks, evaluation logs, and code-level debugging. Not all failures are visible in the same place, and the wrong tool can waste days chasing ghosts. I’ll show you where each approach shines, where it fails, and how to combine them for a real diagnosis.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
@@ -579,9 +579,7 @@ if __name__ == &quot;__main__&quot;:
 <p><strong>Recommendation</strong>: Start with <strong>evaluation logs</strong> (DeepEval/Ragas) for new agents or agents under active development. Add <strong>tracing</strong> (OpenTelemetry with AI Semantic Conventions) once the agent stabilizes or when you need real-time debugging. Use both for mission-critical agents handling &gt;10k requests/day.</p>
 <p><strong>Why</strong>: Evaluation logs catch 80% of failures during test runs, with minimal runtime overhead and cost. Tracing catches the remaining 20% of failures that only appear in production, but with higher overhead and cost. Combining both gives you the best of both worlds: fast regression detection and real-time debugging.</p>
 <p><strong>When to ignore this</strong>:
-- <strong>Low-risk agents</strong>: If the agent’s failures can’t impact business metrics (e.g., a toy demo), skip both and rely on logs.
-- <strong>Legacy agents</strong>: If the agent is stable, unchanged for 6+ months, and has no test suite, evaluation logs may not be worth the setup time.
-- <strong>Regulated environments</strong>: If you need audit trails for every user interaction (e.g., healthcare or finance), tracing is mandatory even for early-stage agents.</p>
+- <strong>Low-risk agents</strong>: If the agent’s failures can’t impact business metrics (e.g., a toy demo), skip both and rely on logs. - <strong>Legacy agents</strong>: If the agent is stable, unchanged for 6+ months, and has no test suite, evaluation logs may not be worth the setup time. - <strong>Regulated environments</strong>: If you need audit trails for every user interaction (e.g., healthcare or finance), tracing is mandatory even for early-stage agents.</p>
 <p>I ignored this recommendation once for a client in Mexico. They had a new agent handling 3k requests/day for a banking chatbot. I went straight to tracing to “be thorough.” The tracing backend cost $180/month, and the engineering team spent 2 weeks instrumenting spans. Only then did we realize we needed evaluation logs to catch prompt regressions before they hit production. We ended up using both, but the delay cost us $900 in cloud bills and 3 weeks of engineering time.</p>
 <h2 id="final-verdict">Final verdict</h2>
 <p>Use <strong>evaluation logs first</strong> for most agents in 2026. They are cheaper, faster to set up, and catch 80% of failures during test runs. Add <strong>tracing</strong> when you need real-time debugging or when your agent is mission-critical (&gt;10k requests/day).</p>
@@ -589,14 +587,11 @@ if __name__ == &quot;__main__&quot;:
 <p><strong>Actionable next step</strong>: Open your agent’s test suite (or create one if it doesn’t exist) and add 10 test cases covering edge cases like out-of-stock items, ambiguous queries, and rare product categories. Run the suite locally using DeepEval 0.2.3 and log the results to <code>eval_results.jsonl</code>. Check for any failures and correlate them with business metrics if available.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

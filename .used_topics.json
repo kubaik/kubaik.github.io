@@ -230,5 +230,6 @@
   "The regulatory and compliance realities of deploying autonomous agents in African fintech",
   "Building change data capture that doesn't fall over when your LLM pipeline goes wild",
   "Why agent identity and authentication is harder than traditional service auth",
-  "The platform abstractions that make agent development faster for engineering teams"
+  "The platform abstractions that make agent development faster for engineering teams",
+  "Self-service AI tooling layers that let product teams experiment safely"
 ]

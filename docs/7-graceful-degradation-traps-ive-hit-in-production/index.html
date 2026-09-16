@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-09T03:37:10.879272">
-        <meta property="article:modified_time" content="2026-07-09T03:37:10.879280">
+        <meta property="article:modified_time" content="2026-09-16T09:55:28.075506+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="7 graceful degradation traps I’ve hit in production">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/7-graceful-degradation-traps-ive-hit-in-production/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "7 graceful degradation traps I’ve hit in production",
       "description": "Ship 150 ms timeouts and hardcoded fallbacks today — measure p99 latency, error rates, and cost with Prometheus 2.47 and Python 3.11 before you pick any other…",
       "datePublished": "2026-07-09T03:37:10+00:00",
-      "dateModified": "2026-07-09T03:37:10+00:00",
-      "wordCount": 3020,
+      "dateModified": "2026-09-16T09:55:28+00:00",
+      "wordCount": 2977,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -252,18 +252,18 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3020 words
+                        &nbsp;·&nbsp; 2977 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-09
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this designing systems problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>I spent three weeks debugging a payment service that should have degraded gracefully when an upstream fraud model returned a 2-second response instead of the expected 50 ms. The circuit breaker opened, the fallback returned a false positive, and $18k in legitimate orders were rejected. I traced the issue to a hardcoded timeout of 100 ms and a fallback path that assumed every upstream call would fail fast. This post is what I wished I had read before I wrote that code.</p>
+<p>The circuit breaker opened, the fallback returned a false positive, and $18k in legitimate orders were rejected. I traced the issue to a hardcoded timeout of 100 ms and a fallback path that assumed every upstream call would fail fast. This post is what I wished I had read before I wrote that code.</p>
 <p>Graceful degradation isn’t about making your system perfect; it’s about making it predictable when things go wrong. The Internet is a shared resource, and any dependency can become a liability. Services you call can:
 - Return 5xx errors at 100 req/s
 - Time out after 5 s instead of 200 ms
@@ -320,9 +320,7 @@
 <h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
 <p>Timeouts with explicit fallback paths won the resiliency score index with 0.92, beating circuit breakers (0.85) and caching (0.81). The metric that broke the tie was error rate amplification: timeouts added 0% errors, while circuit breakers added 0.4% and caching added 1.2%.</p>
 <p>The implementation is simple but strict:
-- Use Python 3.11’s <code>httpx.AsyncClient</code> with a 150 ms timeout and <code>httpx.ReadTimeout</code> exception.
-- Return a hardcoded JSON fallback <code>{ "risk": "low" }</code> on timeout.
-- Cache the fallback for 5 minutes and refresh it in the background every 4 minutes using <code>asyncio.create_task</code>.</p>
+- Use Python 3.11’s <code>httpx.AsyncClient</code> with a 150 ms timeout and <code>httpx.ReadTimeout</code> exception. - Return a hardcoded JSON fallback <code>{ "risk": "low" }</code> on timeout. - Cache the fallback for 5 minutes and refresh it in the background every 4 minutes using <code>asyncio.create_task</code>.</p>
 <p>We measured p99 latency at 48 ms vs. 210 ms when the upstream API was slow, and we never amplified errors because the fallback path never failed. The only time we had to tune it was when the fraud model returned a stale score; we added a 5-minute TTL and a background refresh job that runs every 4 minutes.</p>
 <pre><code class="language-python"># Python 3.11 with httpx 0.27 and asyncio
 import httpx
@@ -473,14 +471,11 @@ async def get_risk(user_id: str):
 <p><strong>Action for the next 30 minutes:</strong> Open your slowest upstream call in your editor, wrap it in a 200 ms timeout using Python 3.11’s <code>httpx.AsyncClient</code>, and return a hardcoded fallback on timeout. Deploy it behind a feature flag and watch Prometheus 2.47 dashboards for p99 latency and fallback count. You’ll know within an hour whether this pattern works for your system.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

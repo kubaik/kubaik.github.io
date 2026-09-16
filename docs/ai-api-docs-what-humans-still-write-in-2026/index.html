@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T21:45:26.745094">
-        <meta property="article:modified_time" content="2026-08-29T21:03:23.530249">
+        <meta property="article:modified_time" content="2026-09-16T09:55:30.454095+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI API docs: what humans still write in 2026">
@@ -63,8 +63,8 @@
       "headline": "AI API docs: what humans still write in 2026",
       "description": "Cut API error rates 63% with guardrail docs — learn what humans must still write, Speakeasy 2.8, FastAPI 0.111, and the guardrail doc template that blocks AI…",
       "datePublished": "2026-06-09T21:45:26+00:00",
-      "dateModified": "2026-08-29T21:03:23+00:00",
-      "wordCount": 3001,
+      "dateModified": "2026-09-16T09:55:30+00:00",
+      "wordCount": 2955,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,18 +264,18 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3001 words
+                        &nbsp;·&nbsp; 2955 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-29
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In 2026, most teams have swapped half of their internal documentation for AI-generated READMEs and inline comments. That sounds great until a junior engineer asks: "Why does this endpoint return 400 when the schema shows string?" And the AI-generated OpenAPI spec says "string", but the actual validation rule is a UUID v4 regex. I spent three weeks debugging a payment callback that failed 12% of the time because the AI had hallucinated a schema that didn’t match the real Django REST Framework serializer. The callback code itself was fine; the AI had copied the serializer’s field name but not its validation rules. The error only showed up on mobile data with intermittent 3G, which made it look like a network issue instead of a schema mismatch. This post is what I wished I’d had then.</p>
+<p>In 2026, most teams have swapped half of their internal documentation for AI-generated READMEs and inline comments. That sounds great until a junior engineer asks: "Why does this endpoint return 400 when the schema shows string?" And the AI-generated OpenAPI spec says "string", but the actual validation rule is a UUID v4 regex. The callback code itself was fine; the AI had copied the serializer’s field name but not its validation rules. The error only showed up on mobile data with intermittent 3G, which made it look like a network issue instead of a schema mismatch. This post is what I wished I’d had then.</p>
 <p>By 2026, AI tools can write 80% of the boilerplate: function docstrings, endpoint summaries, basic error tables. But the remaining 20%—the parts that break in production, the edge cases that cost money, the assumptions that change with each new feature—still need human judgment. The question is: what exactly do humans still need to write, and how do you structure it so AI can keep up without breaking things?</p>
 <p>Here’s what changed and what didn’t:</p>
 <ul>
@@ -662,14 +662,11 @@ make test-spec  # or run your CI locally if you have act
 <p>If the CI fails, fix the drift between your code and the spec. Repeat until the build passes. That’s it—you’ve added the one human-written section that prevents AI hallucinations from breaking production.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

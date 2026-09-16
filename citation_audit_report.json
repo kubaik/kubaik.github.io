@@ -16,7 +16,8 @@
         "sentence": "A 2026 study by Datadog tracked 200 teams and found teams using automated guardrails shipped AI-generated changes 3.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "needs_review"
   },
   {
     "slug": "ab-pricing-tests-that-lifted-arr-18",
@@ -27,7 +28,8 @@
         "sentence": "A 2026 study by ProfitWell showed that 68% of subscription businesses that ran structured pricing tests saw measurable impact on ARR, but 42% of those tests hurt conversion more than they helped.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "ai-api-docs-what-humans-still-write-in-2026",
@@ -38,7 +40,8 @@
         "sentence": "A 2026 study from the DevOps Research and Assessment (DORA) team showed that teams using auto-generated specs with enforced schema tests had a 43% lower incident rate on API changes.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "ai-ate-our-niche-heres-how-we-picked-a-new-one",
@@ -49,7 +52,8 @@
         "sentence": "A 2026 report from McKinsey showed that 62% of small retailers in Kenya were dropping standalone expense tools in favor of AI-powered spend insights integrated directly into their ERP.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "ai-codebases-guardrails-vs-chaos-in-2026",
@@ -60,7 +64,8 @@
         "sentence": "A 2026 survey by the African Tech Policy Forum found that 68% of NGOs using AI-assisted coding reported at least one runtime bug tied to AI assumptions about localization, units, or external APIs.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "ai-codes-hidden-cves-exposed",
