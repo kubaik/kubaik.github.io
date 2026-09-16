@@ -93,6 +93,15 @@ MIN_WORD_PURGE = 1800
 MAX_GENERATION_ATTEMPTS = 5
 MIN_ACCEPTABLE_WORDS = 1500
 
+# How many cheap, targeted in-place repair passes (_repair_anecdotes /
+# _repair_near_duplicate) to try on the SAME topic + draft before falling
+# back to a full topic-switch (which consumes a MAX_GENERATION_ATTEMPTS
+# slot and throws away an otherwise-good draft + a pre-flight-vetted
+# topic). Added after production runs showed all 5 attempts exhausted by
+# topic-switching on drafts that had only 1-2 flagged sentences, or were
+# duplicate in wording but not in underlying topic.
+_MAX_REPAIR_ATTEMPTS = 2
+
 # How many times the CLI "auto" flow will pick a fresh topic and regenerate
 # a whole post from scratch after a post-generation duplicate-content block
 # (SimilarityGuard or the save_post()-time ContentDuplicateGate). This is
@@ -341,11 +350,35 @@ def _extract_numbers(text: str) -> str:
 # system flags. Hoisted to module scope so both _derive_description() and
 # _flag_fabricated_anecdotes() (below) share one definition instead of
 # drifting apart.
+# FIX (false-positive reduction, found in production log): the previous
+# version matched bare `^I ` / `^I've` / `^I have `, which flags ANY
+# sentence starting with "I" regardless of what follows — including
+# genuine first-person opinion ("I think that reflex is mostly wrong..."),
+# which the design notes above (_AUTHOR_CONTEXTS) explicitly say is fine
+# ("I think X is overrated" is an opinion, not a fabricated event). It also
+# flagged plain expository phrasing ("Here's what that interceptor looks
+# like in practice...") that isn't a personal-experience claim at all.
+# Real generation logs showed exactly these two categories causing
+# otherwise-good 2000-3000 word posts to be discarded and whole topics
+# burned on retries.
+#
+# Fixed version only matches "I" / "I've" / "I have" when followed by a
+# concrete, unverifiable EXPERIENCE-CLAIM verb (spent three days, built,
+# shipped, debugged, ran into, kept seeing, etc.) — not opinion verbs
+# (think, believe, suspect, argue, recommend, prefer, doubt, feel) or
+# analytical framing verbs (evaluated, found, noticed) that read more like
+# "here's my reasoning" than "here's a specific incident that happened to
+# me." Genuine fabricated-incident language ("I kept seeing teams ship
+# agents with dashboards that showed green...") is still caught.
 _SKIP_PATTERNS = re.compile(
-    r'^(I |A colleague|This took me|I\'ve|The short version|I ran into|'
-    r'I spent|I have |Here\'s what|Writing this|This is a topic|'
-    r'Most of the answers|Most tutorials|I noticed|I found|'
-    r'I was surprised|I built|I worked|I saw )',
+    r'^('
+    r'A colleague\b|This took me\b|The short version\b|Writing this\b|'
+    r'This is a topic\b|Most of the answers\b|Most tutorials\b|'
+    r"I(?:'ve|'m|\s+have)?\s+(?:spent|built|shipped|deployed|migrated|"
+    r"worked\s+(?:on|with|at)|ran\s+into|debugged|broke|fixed|caught|"
+    r"hit\s+a|dealt\s+with|went\s+through|had\s+to|ended\s+up|"
+    r"kept\s+seeing|was\s+surprised|watched|witnessed|saw\s+firsthand)\b"
+    r')',
     re.IGNORECASE
 )
 
@@ -3854,10 +3887,36 @@ class BlogSystem:
             # gates immediately above/below: same retry-on-new-topic pattern,
             # so a hit doesn't silently ship the way it was doing before.
             anecdote_hits = _flag_fabricated_anecdotes(content)
+            # FIX (avoid discarding good drafts): a hit here used to
+            # immediately switch topics and regenerate from scratch, even
+            # when it was 1-2 flagged sentences in an otherwise good
+            # 2000-3000 word article. Try a cheap, targeted in-place repair
+            # first — rewrite just the flagged sentences — and only fall
+            # back to burning a full topic-switch attempt if that doesn't
+            # clear the gate.
+            repair_tries = 0
+            while anecdote_hits and repair_tries < _MAX_REPAIR_ATTEMPTS:
+                repair_tries += 1
+                print(
+                    f"  ⚠️  {len(anecdote_hits)} unverifiable first-person "
+                    f"anecdote(s) detected — attempting in-place repair "
+                    f"({repair_tries}/{_MAX_REPAIR_ATTEMPTS}):"
+                )
+                for h in anecdote_hits[:3]:
+                    print(f"    - \"{h}...\"")
+                repaired = await self._repair_anecdotes(
+                    content, title, current_topic, anecdote_hits
+                )
+                if repaired is None:
+                    break
+                content = _scrub_stale_years(repaired)
+                word_count = _count_words(content)
+                anecdote_hits = _flag_fabricated_anecdotes(content)
             if anecdote_hits:
                 print(
                     f"\n❌  Attempt {attempt_num}/{MAX_GENERATION_ATTEMPTS} FAILED: "
-                    f"{len(anecdote_hits)} unverifiable first-person anecdote(s) detected:"
+                    f"{len(anecdote_hits)} unverifiable first-person anecdote(s) "
+                    f"remain after repair attempts:"
                 )
                 for h in anecdote_hits[:3]:
                     print(f"    - \"{h}...\"")
@@ -3876,10 +3935,34 @@ class BlogSystem:
             content_dup_problem = _reject_if_near_duplicate_content(
                 content, self.output_dir, exclude_slug=None
             )
+            # FIX (avoid discarding good topics): a hit here used to
+            # immediately switch to a brand-new topic, discarding a topic
+            # that pre-flight had already vetted just because THIS draft's
+            # specific wording/structure overlapped an existing post. Try a
+            # targeted rewrite of the same topic first — different angle,
+            # different examples — before burning a topic-switch attempt.
+            repair_tries = 0
+            while content_dup_problem and repair_tries < _MAX_REPAIR_ATTEMPTS:
+                repair_tries += 1
+                print(
+                    f"  ⚠️  {content_dup_problem} — attempting in-place "
+                    f"rewrite for distinctiveness ({repair_tries}/"
+                    f"{_MAX_REPAIR_ATTEMPTS})..."
+                )
+                rewritten = await self._repair_near_duplicate(
+                    content, title, current_topic, content_dup_problem
+                )
+                if rewritten is None:
+                    break
+                content = _scrub_stale_years(rewritten)
+                word_count = _count_words(content)
+                content_dup_problem = _reject_if_near_duplicate_content(
+                    content, self.output_dir, exclude_slug=None
+                )
             if content_dup_problem:
                 print(
                     f"\n❌  Attempt {attempt_num}/{MAX_GENERATION_ATTEMPTS} FAILED: "
-                    f"{content_dup_problem}."
+                    f"{content_dup_problem} (still duplicate after repair attempts)."
                 )
                 if attempt_num < MAX_GENERATION_ATTEMPTS:
                     current_topic = self._pick_retry_topic(
@@ -4628,6 +4711,134 @@ Return ONLY the JSON object.""",
     # ─────────────────────────────────────────────────────────────
     # EXPANSION
     # ─────────────────────────────────────────────────────────────
+
+    async def _repair_anecdotes(
+        self, content: str, title: str, topic: str, hits: List[str]
+    ) -> Optional[str]:
+        """
+        Targeted, cheap alternative to discarding an entire draft and burning
+        a full topic-switch attempt when _flag_fabricated_anecdotes() finds a
+        small number of unverifiable first-person anecdotes in an otherwise
+        good article. Sends back just the offending sentences and asks the
+        model to rewrite them in place (as typical/common-pattern framing
+        instead of a specific personal incident) while leaving everything
+        else untouched. Returns the repaired content, or None if the repair
+        call failed, was truncated, or dropped too much of the original.
+        Call sites should re-run _flag_fabricated_anecdotes() on the result
+        and only treat this as a success if it comes back clean.
+        """
+        quoted = "\n".join(f'- "{h}"' for h in hits[:6])
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You are a careful technical editor. You rewrite specific "
+                    "sentences in an existing blog post without changing "
+                    "anything else about it. You never invent a fabricated "
+                    "personal anecdote or specific incident that didn't "
+                    "happen; instead you rephrase such sentences as "
+                    "typical/common industry patterns."
+                ),
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"Below is a blog post about '{topic}'. The following "
+                    "sentences (or their close paraphrases within the post) "
+                    "read as unverifiable personal-experience claims — a "
+                    "specific incident, timeframe, or outcome presented as "
+                    "something that actually happened to the author — and "
+                    "must be rewritten:\n\n"
+                    f"{quoted}\n\n"
+                    "Rewrite ONLY sentences with this problem so they "
+                    "describe a typical/common industry pattern instead of a "
+                    "specific personal incident — for example, 'I spent three "
+                    "days debugging X' becomes something like 'X is a common "
+                    "source of multi-day debugging sessions.' Keep genuine "
+                    "first-person OPINION untouched (e.g. 'I think X is "
+                    "overrated' is fine and must NOT be changed — only "
+                    "specific-incident claims are the problem). Do not change "
+                    "anything else: same headings, same structure, same code "
+                    "blocks, same overall length. Return the COMPLETE article "
+                    "with only the flagged sentences rewritten.\n\n"
+                    f"Full post:\n{content}"
+                ),
+            },
+        ]
+        existing_tokens_est = max(1, len(content) // 4)
+        budget = min(16000, max(6500, existing_tokens_est + 1500))
+        try:
+            repaired = await self._call_api_with_fallback(messages, max_tokens=budget)
+        except Exception as e:
+            print(f"  ⚠️  Anecdote repair call failed: {e}")
+            return None
+
+        issues = _check_expansion_completeness(repaired)
+        if issues:
+            print(
+                f"  ⚠️  Anecdote repair looks incomplete/truncated "
+                f"({'; '.join(issues)}) — discarding repair."
+            )
+            return None
+        if _count_words(repaired) < _count_words(content) * 0.85:
+            print("  ⚠️  Anecdote repair dropped too much content — discarding repair.")
+            return None
+        return repaired
+
+    async def _repair_near_duplicate(
+        self, content: str, title: str, topic: str, dup_reason: str
+    ) -> Optional[str]:
+        """
+        Targeted alternative to abandoning the topic entirely when the draft
+        is flagged as a near-duplicate of an already-published post. The
+        topic itself already passed pre-flight (it's not the problem) — it's
+        this specific draft's structure/examples/wording that overlaps too
+        much. Asks the model to substantially restructure the same topic
+        (different angle, different concrete examples/tools/numbers,
+        different opening hook) rather than burning a topic-switch attempt
+        and losing a topic that was otherwise fine.
+        """
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You are a technical writer revising a draft that overlaps "
+                    "too much with a previously published article on the same "
+                    "site. Keep the same topic but make the piece genuinely "
+                    "different: a different structural angle, different "
+                    "concrete examples, different tools/versions named, "
+                    "different code, a different opening hook."
+                ),
+            },
+            {
+                "role": "user",
+                "content": (
+                    f"This draft about '{topic}' was rejected: {dup_reason}.\n\n"
+                    "Rewrite it as a genuinely distinct article on the same "
+                    "topic: change the structural angle (e.g. from a "
+                    "walkthrough to a comparison, or vice versa), swap in "
+                    "different concrete examples/tools/numbers, and open with "
+                    "a different hook. Do not just reword sentences — "
+                    "restructure. Match the original length and depth "
+                    "(2000+ words). Return ONLY the complete rewritten "
+                    "article body (no title line, no meta commentary).\n\n"
+                    f"Original draft:\n{content}"
+                ),
+            },
+        ]
+        try:
+            rewritten = await self._call_api_with_fallback(messages, max_tokens=7000)
+        except Exception as e:
+            print(f"  ⚠️  Duplicate-content repair call failed: {e}")
+            return None
+
+        if _count_words(rewritten) < MIN_ACCEPTABLE_WORDS:
+            print(
+                "  ⚠️  Duplicate-content repair produced too little content — "
+                "discarding repair."
+            )
+            return None
+        return rewritten
 
     async def _expand_content(self, existing_content: str, title: str, topic: str) -> str:
         author_note = _build_humanization_note(topic)
