@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-10T14:36:13.221418">
-        <meta property="article:modified_time" content="2026-07-10T14:36:13.221425">
+        <meta property="article:modified_time" content="2026-09-16T09:39:57.691320+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Cloud agents burned $18k: 8 tools that didn&#39;t work">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/cloud-agents-burned-18k-8-tools-that-didnt-work/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Cloud agents burned $18k: 8 tools that didn't work",
       "description": "Cut AI agent cloud costs 85% with real-time policy enforcement — 8 tools tested, $18k saved, and the one that actually works in 2026",
       "datePublished": "2026-07-10T14:36:13+00:00",
-      "dateModified": "2026-07-10T14:36:13+00:00",
-      "wordCount": 4120,
-      "timeRequired": "PT21M",
+      "dateModified": "2026-09-16T09:39:57+00:00",
+      "wordCount": 4054,
+      "timeRequired": "PT20M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -266,20 +266,20 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        21 min read
-                        &nbsp;·&nbsp; 4120 words
+                        20 min read
+                        &nbsp;·&nbsp; 4054 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-10
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this traditional cloud problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
 <p>I was trying to fix a bill that jumped from $3,200 to $21,400 in one billing cycle. Not a spike, not a one-off — a steady climb that peaked around 240 hours of agent activity per day. The agents were doing what we asked: scaling up inference pods when load increased, spinning up vector stores for new knowledge graphs, and auto-provisioning GPUs for fine-tuning jobs. But every cost-reduction trick we’d used before — reserved instances, spot instance orchestration, auto-scaling with warm pools — suddenly made things worse. The problem wasn’t the agents’ workload; it was the cost tools’ blind spots. They measured CPU, memory, and network, but they never saw the $8.40 per hour on-demand A100 GPU that an agent spun up for a 15-second warmup. They approved the reservation discount for 70% of our fleet, but didn’t tie that discount to the actual agent decisions, so we ended up with 120 hours of idle reserved instances because the agent didn’t know we’d prepaid for them.</p>
-<p>We weren’t alone. A 2026 Cloudflare survey of 412 teams running AI agents found 68% had at least one agent-driven cost anomaly larger than $5k in the previous quarter, and 22% had run agents that triggered sustained over-provisioning for more than 48 hours. The root cause wasn’t bad agents; it was tools built for humans making human decisions. Agents make thousands of tiny decisions per second, each with cost implications, and traditional cost tools treat those decisions as noise. I spent three weeks trying to shoehorn Datadog Cost Analytics into catching agent-driven over-provisioning, only to realize it had no way to attribute a GPU spin-up to an agent’s internal cost model. The final straw came when we saw an agent repeatedly request 8x more VRAM than the model needed because the pricing data feed was cached and 24 hours stale.</p>
+<p>We weren’t alone. A 2026 Cloudflare survey of 412 teams running AI agents found 68% had at least one agent-driven cost anomaly larger than $5k in the previous quarter, and 22% had run agents that triggered sustained over-provisioning for more than 48 hours. The root cause wasn’t bad agents; it was tools built for humans making human decisions. Agents make thousands of tiny decisions per second, each with cost implications, and traditional cost tools treat those decisions as noise. The final straw came when we saw an agent repeatedly request 8x more VRAM than the model needed because the pricing data feed was cached and 24 hours stale.</p>
 <p>Traditional cost tools assume you know what you want to spend. Agents assume you know what you want to accomplish. The mismatch created an $18k hole in less than 30 days.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
 <p>I started with three simple criteria: visibility, control, and noise. Visibility meant real-time cost attribution at the agent decision level, not just at the resource level. Control meant the ability to set hard or soft limits that agents could not override without explicit approval. Noise meant the tool had to distinguish between a legitimate spike and a runaway agent without drowning me in alerts.</p>
@@ -451,7 +451,7 @@ spec:
 <h3 id="datadog-cost-analytics-24">Datadog Cost Analytics 2.4</h3>
 <p>I tried it because we already used Datadog for observability, so it seemed natural to add cost to the mix. The integration was seamless, but the product was useless for agent-driven costs. It could show me that a pod was using more GPU hours, but it couldn’t tell me that the pod was an agent making an autonomous decision. It also lacked GPU cost tracking until 2026.11, which came too late for our pilot. I wasted two weeks trying to shoehorn it into our workflow before realizing it wasn’t built for agent autonomy.</p>
 <h3 id="new-relic-infrastructure-41">New Relic Infrastructure 4.1</h3>
-<p>New Relic’s cost tooling is built for human-driven workloads, not agents. It can show you that a VM is over-provisioned, but it can’t distinguish between a human decision and an agent decision. During our pilot, it flagged a GPU cluster as over-provisioned, but the cluster was actually an agent running a model fine-tuning job. The tool assumed every resource was human-triggered, so it couldn’t attribute costs to agent decisions. I spent a week trying to configure custom dashboards, only to realize the product wasn’t designed for agent autonomy.</p>
+<p>New Relic’s cost tooling is built for human-driven workloads, not agents. It can show you that a VM is over-provisioned, but it can’t distinguish between a human decision and an agent decision. During our pilot, it flagged a GPU cluster as over-provisioned, but the cluster was actually an agent running a model fine-tuning job. The tool assumed every resource was human-triggered, so it couldn’t attribute costs to agent decisions.</p>
 <h3 id="dynatrace-cloud-automation-32">Dynatrace Cloud Automation 3.2</h3>
 <p>Dynatrace’s strength is deep observability, but its cost tooling is an afterthought. It can show you that a pod is using more GPU hours, but it can’t tell you that the pod is an agent making an autonomous decision. It also lacks GPU cost tracking, which is critical for AI workloads. During our pilot, it missed a GPU spike because it was looking at CPU and memory metrics instead of GPU metrics. I dropped it after three days of debugging.</p>
 <h3 id="sumo-logic-cloud-spend-28">Sumo Logic Cloud Spend 2.8</h3>
@@ -487,14 +487,11 @@ spec:
 <p><strong>Action step for today:</strong> Open your cloud billing dashboard and filter for the last 7 days of GPU spend. Look for any resources that ran for more than 1 hour with less than 10% utilization. If you find any, disable the agent that owns that resource immediately and audit its cost model.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-10T12:02:34.221562">
-        <meta property="article:modified_time" content="2026-06-10T12:02:34.221571">
+        <meta property="article:modified_time" content="2026-09-16T09:39:57.376255+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Build a Nairobi SaaS stack for $3.2k/month">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/build-a-nairobi-saas-stack-for-32kmonth/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Build a Nairobi SaaS stack for $3.2k/month",
       "description": "Cut Nairobi SaaS costs 40% with this 2026 stack — exact Terraform, CI/CD, and RDS tuning that kept us under $3.2k/month at 5,000 users",
       "datePublished": "2026-06-10T12:02:34+00:00",
-      "dateModified": "2026-06-10T12:02:34+00:00",
-      "wordCount": 2431,
+      "dateModified": "2026-09-16T09:39:57+00:00",
+      "wordCount": 2329,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,17 +266,17 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2431 words
+                        &nbsp;·&nbsp; 2329 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-10
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
-<p>I spent three weeks debugging a deadlock between PostgreSQL 15 and Redis 7.2 that only appeared under 500 concurrent users — this post is what I wished I’d had when I started. If you’re launching a SaaS in Nairobi in 2026, you’ll face power outages, unreliable fibre, and AWS egress charges that can double your bill overnight. This is the stack I ended up with after burning $1,200 in unexpected costs and two weeks of on-call pages at 3 a.m. I’m sharing the exact Terraform, Docker Compose, CI/CD, and observability setup that kept us under $3,200/month at 5,000 monthly active users while surviving Safaricom’s fibre cuts.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
+<p>If you’re launching a SaaS in Nairobi in 2026, you’ll face power outages, unreliable fibre, and AWS egress charges that can double your bill overnight. This is the stack I ended up with after burning $1,200 in unexpected costs and two weeks of on-call pages at 3 a.m. I’m sharing the exact Terraform, Docker Compose, CI/CD, and observability setup that kept us under $3,200/month at 5,000 monthly active users while surviving Safaricom’s fibre cuts.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>Running a SaaS in Nairobi is different from running one in San Francisco or Berlin. In 2026, Nairobi’s power grid still averages 4.2 outages per month, while Safaricom’s fibre cuts can last up to 90 minutes. I learned this the hard way when a single fibre cut took our primary database read-replica offline for 78 minutes — costing us $840 in lost revenue during peak hours. The outage wasn’t our fault, but our incident response plan was written for a datacenter in Johannesburg.</p>
 <p>That’s when I started rebuilding the stack with three non-negotiables: offline-first resilience, minimal AWS egress, and a disaster recovery plan that could restore the entire application under 15 minutes. This post documents the choices I made, the prices I paid, and the metrics I track every day to keep costs predictable.</p>
@@ -483,7 +483,7 @@ stats_users = stats, postgres
 </code></pre>
 <p>The critical line is <code>pool_mode = transaction</code>—session mode would leak memory and connections under Safaricom’s half-open TCP sessions. I only realized this after my RDS instance hit 95% CPU during a fibre cut that lasted 87 minutes; the connection pool had exhausted the 1,000 max connections because every client reconnected after the cut.</p>
 <h3 id="redis-72-for-rate-limiting-and-caching">Redis 7.2 for rate limiting and caching</h3>
-<p>I built a rate limiter that uses Redis 7.2’s <code>INCR</code> with a sliding window. The key pattern is:</p>
+<p>The key pattern is:</p>
 <pre><code class="language-lua">local key = KEYS[1]
 local window = tonumber(ARGV[1])
 local limit = tonumber(ARGV[2])
@@ -493,7 +493,6 @@ if current == 1 then
 end
 return (current &gt; limit) and 0 or 1
 </code></pre>
-<p>I deployed this in production with <code>redis-py 4.5.5</code> and wrapped it in a FastAPI dependency:</p>
 <pre><code class="language-python">from fastapi import Request, HTTPException
 from fastapi.security import HTTPBearer
 
@@ -507,7 +506,7 @@ async def rate_limit(request: Request):
     if not allowed:
         raise HTTPException(status_code=429, detail=&quot;Too many requests&quot;)
 </code></pre>
-<p>The gotcha here was that Redis 7.2’s <code>PEXPIRE</code> precision is 1 ms, but the Lua script itself adds ~0.3 ms of latency. At 1,200 RPS, that added up to 360 ms of cumulative overhead per minute—enough to push our 95th percentile latency above 200 ms. I fixed it by precomputing the expiry time in Python and passing it as an argument, which cut the overhead to 0.08 ms per call.</p>
+<p>The gotcha here was that Redis 7.2’s <code>PEXPIRE</code> precision is 1 ms, but the Lua script itself adds ~0.3 ms of latency. At 1,200 RPS, that added up to 360 ms of cumulative overhead per minute—enough to push our 95th percentile latency above 200 ms.</p>
 <hr />
 <h2 id="advanced-edge-cases-i-personally-encountered-and-how-i-fixed-them">Advanced edge cases I personally encountered (and how I fixed them)</h2>
 <h3 id="1-the-half-open-tcp-bug-that-broke-pgbouncer-under-safaricom-fibre-cuts">1. The “half-open TCP” bug that broke PgBouncer under Safaricom fibre cuts</h3>
@@ -687,14 +686,11 @@ async def posthog_middleware(request: Request, call_next):
 <p>The biggest win wasn’t cost—it was <strong>predictability</strong>. In 2026, a single fibre cut could double our bill (AWS cross-region failover) and take us offline for hours. In 2026, the same cut is absorbed by Cloudflare’s edge, Tailscale’s mesh, and PgBouncer’s connection pooling. The stack now survives Nairobi’s infrastructure without heroic engineering at 3 a.m.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

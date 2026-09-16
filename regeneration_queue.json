@@ -154,69 +154,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "context-windows-live-longer-than-you-think",
-    "title": "Context windows live longer than you think",
-    "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I spent longer than I should have on prompt tool before understanding what was a; Here's what actually worked, and why.; I ran into this when a customer support agent in Brazil kept producing hallucina",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "tame-python-asyncs-hidden-traps",
-    "title": "Tame Python async’s hidden traps",
-    "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I've seen the same async python mistake in multiple production codebases, includ; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when I moved a 500k daily active user API from Flask 2.3 to Fast",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "9-ai-wrapper-plays-that-worked-in-2026",
-    "title": "9 AI wrapper plays that worked in 2026",
-    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I ran into this wrapper businesses problem while migrating a service under a har; Here's what actually worked.; I spent three weeks wiring a Next.js dashboard on top of a Python CLI using Lang",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-interviews-now-ask-for-this",
-    "title": "AI interviews now ask for this",
-    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I first noticed this when interviewing at three Nairobi fintech companies within; I was surprised when a candidate at my company traced a 45ms p99 latency spike t; I learned it the hard way when a rotation script failed on a Friday at 5 PM.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "boring-aws-lambda-layers-that-dont-lock",
-    "title": "Boring AWS Lambda layers that don’t lock…",
-    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I ran into this golden paths problem while migrating a service under a hard dead; I spent two days debugging why the new deployment kept failing in staging, only ; I deleted the layer, rebuilt it, and redeployed—only to find out I’d also hard-c",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "build-a-nairobi-saas-stack-for-32kmonth",
     "title": "Build a Nairobi SaaS stack for $3.2k/month",
     "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three weeks debugging a deadlock between PostgreSQL 15 and Redis 7.2 tha; I learned this the hard way when a single fibre cut took our primary database re",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "cloud-agents-burned-18k-8-tools-that-didnt-work",
     "title": "Cloud agents burned $18k: 8 tools that didn't work",
     "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I ran into this traditional cloud problem while migrating a service under a hard; Here's what actually worked.; I spent three weeks trying to shoehorn Datadog Cost Analytics into catching agen",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "freelance-rates-after-ai-took-the-boilerplate",
     "title": "Freelance rates after AI took the boilerplate",
     "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): The short version: the conventional advice on freelance developer is incomplete.; I spent three days debugging a connection pool issue that turned out to be a sin; I ran into this when a client asked me to build a REST API with CRUD endpoints; ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "pass-interviews-without-a-cs-degree",
     "title": "Pass interviews without a CS degree",
     "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): A colleague asked me about pass technical during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I spent three weeks in 2026 coaching a self-taught engineer who had quit their d",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "ship-to-nairobi-users-starlink-latency-guide-2026",
     "title": "Ship to Nairobi users: Starlink latency guide 2026",
     "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I kept seeing teams ship the same fix: move assets to CloudFront, enable gzip/br",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "10-ai-wrappers-that-shipped-in-2026-8-died-fast",
@@ -2590,6 +2560,41 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "context-windows-live-longer-than-you-think",
+    "title": "Context windows live longer than you think",
+    "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I spent longer than I should have on prompt tool before understanding what was a; Here's what actually worked, and why.; I ran into this when a customer support agent in Brazil kept producing hallucina",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "tame-python-asyncs-hidden-traps",
+    "title": "Tame Python async’s hidden traps",
+    "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I've seen the same async python mistake in multiple production codebases, includ; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when I moved a 500k daily active user API from Flask 2.3 to Fast",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "9-ai-wrapper-plays-that-worked-in-2026",
+    "title": "9 AI wrapper plays that worked in 2026",
+    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I ran into this wrapper businesses problem while migrating a service under a har; Here's what actually worked.; I spent three weeks wiring a Next.js dashboard on top of a Python CLI using Lang",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-interviews-now-ask-for-this",
+    "title": "AI interviews now ask for this",
+    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I first noticed this when interviewing at three Nairobi fintech companies within; I was surprised when a candidate at my company traced a 45ms p99 latency spike t; I learned it the hard way when a rotation script failed on a Friday at 5 PM.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "boring-aws-lambda-layers-that-dont-lock",
+    "title": "Boring AWS Lambda layers that don’t lock…",
+    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I ran into this golden paths problem while migrating a service under a hard dead; I spent two days debugging why the new deployment kept failing in staging, only ; I deleted the layer, rebuilt it, and redeployed—only to find out I’d also hard-c",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "tool-calling-patterns-patterns-that-survive-load-vs",

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-16T09:14:47.635951",
+  "built_at": "2026-09-16T09:38:07.452296",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5155,6 +5155,11 @@
       "slug": "agent-auth-tokens-arent-enough",
       "title": "Agent auth: tokens aren't enough",
       "summary": "Teams often end up shipping building change twice — the second time because the first version failed quietly. The default configuration is fine right up until it isn't. This post covers what comes after the happy path. The situation (what we were trying to solve) A team building a multi-agent custom"
+    },
+    {
+      "slug": "agent-platform-abstractions-a-case-study",
+      "title": "Agent platform abstractions: a case study",
+      "summary": "The answers online were either wrong or skipped the part that mattered. platform abstractions has a habit of breaking in ways the monitoring wasn't watching for. This covers the fix, the cost of not knowing sooner, and what we monitor now. The situation (what we were trying to solve) A mid-sized fin"
     }
   ]
 }

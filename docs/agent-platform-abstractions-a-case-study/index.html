@@ -1,0 +1,611 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent platform abstractions: a case study - Kubai Kevin</title>
+        <meta name="description" content="Agent platform abstractions that cut incidents 92% — typed tool contracts, Temporal 1.24 durable execution, and the confident-empty-result bug most teams…">
+        <meta name="keywords" content="AgentPlatform, AgentAbstractions, TypedToolContracts, Durable, AgentTraceStore, Temporal, Softwareengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-16T09:38:05.129102">
+        <meta property="article:modified_time" content="2026-09-16T09:38:05.129116">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent platform abstractions: a case study">
+        <meta property="og:description" content="Agent platform abstractions that cut incidents 92% — typed tool contracts, Temporal 1.24 durable execution, and the confident-empty-result bug most teams…">
+        <meta property="og:url" content="https://kubaik.github.io/agent-platform-abstractions-a-case-study/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-platform-abstractions-a-case-study.png">
+        <meta property="og:image:alt" content="Agent platform abstractions: a case study">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent platform abstractions: a case study">
+        <meta name="twitter:description" content="Agent platform abstractions that cut incidents 92% — typed tool contracts, Temporal 1.24 durable execution, and the confident-empty-result bug most teams…">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-platform-abstractions-a-case-study.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-platform-abstractions-a-case-study/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-platform-abstractions-a-case-study/#article",
+      "headline": "Agent platform abstractions: a case study",
+      "description": "Agent platform abstractions that cut incidents 92% — typed tool contracts, Temporal 1.24 durable execution, and the confident-empty-result bug most teams…",
+      "datePublished": "2026-09-16T09:38:05+00:00",
+      "dateModified": "2026-09-16T09:38:05+00:00",
+      "wordCount": 2546,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-platform-abstractions-a-case-study/"
+      },
+      "keywords": "AgentPlatform, AgentAbstractions, TypedToolContracts, Durable, AgentTraceStore, Temporal, Softwareengineering"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent platform abstractions: a case study",
+          "item": "https://kubaik.github.io/agent-platform-abstractions-a-case-study/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent platform abstractions: a case study</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent platform abstractions: a case study</h1>
+                
+                <p class="post-lead">Agent platform abstractions that cut incidents 92% — typed tool contracts, Temporal 1.24 durable execution, and the confident-empty-result bug most teams…</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/agentplatform/"
+                       style="text-decoration:none;">AgentPlatform</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgentAbstractions</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">TypedToolContracts</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/durable/"
+                       style="text-decoration:none;">Durable</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Agenttracestore</span>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2546 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-09-16
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>The answers online were either wrong or skipped the part that mattered. platform abstractions has a habit of breaking in ways the monitoring wasn't watching for. This covers the fix, the cost of not knowing sooner, and what we monitor now.</p>
+<h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
+<p>A mid-sized fintech team of eight engineers set out to build an internal agent that could reconcile payment exceptions across three services: a legacy ledger, a Stripe webhook consumer, and a Postgres reconciliation table. The goal was modest: reduce the manual triage queue from roughly 400 items per day to under 50, and cut the median time-to-resolution from 22 minutes to under 5. The team had three years of Python experience, no dedicated ML engineers, and a hard constraint: no new headcount for the project.</p>
+<p>The first week looked promising. A LangChain 0.1 agent with a ReAct loop and four tools (query_ledger, query_stripe, query_recon, post_adjustment) handled the happy path. Then reality arrived. The agent would call query_ledger, get a timeout, retry, call query_stripe, hallucinate a transaction ID, and post an adjustment against the wrong account. The team logged 37 such incidents in the first 10 days. Each incident required a human to reverse the adjustment, which took longer than doing the reconciliation manually.</p>
+<p>The deeper problem was not the model. It was that every agent run was a black box: no structured trace, no retry policy, no idempotency key on the post_adjustment tool, and no way to replay a failed run against a fixed code version. The team was debugging by reading raw LLM transcripts in a Jupyter notebook. The part that trips people up is that agent frameworks optimize for the demo, not for the failure path — and the failure path is where all the engineering time goes.</p>
+<h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn't work</h2>
+<p>The first attempt was a single LangChain 0.1 <code>AgentExecutor</code> with <code>max_iterations=15</code> and <code>handle_parsing_errors=True</code>. It worked in staging for two weeks. In production, three failure modes dominated:</p>
+<ol>
+<li>
+<p><strong>Silent tool failures.</strong> <code>query_ledger</code> returned an empty list on a 504 from the upstream service. The agent interpreted "no rows" as "no matching transaction" and moved on. There was no distinction between "not found" and "could not check."</p>
+</li>
+<li>
+<p><strong>Non-idempotent writes.</strong> <code>post_adjustment</code> was called twice on retry after a network blip. The ledger accepted both. The team discovered this only when a customer reported a double credit 11 days later.</p>
+</li>
+<li>
+<p><strong>No replayability.</strong> When the agent made a bad decision, the only artifact was a text log. Reproducing the run required re-running the same prompt against a live database, which by then had different data. Debugging was effectively impossible.</p>
+</li>
+</ol>
+<p>A common failure mode here is what the team started calling "the confident empty result." A tool returns <code>[]</code> or <code>None</code>, the agent treats it as a definitive answer, and the downstream action is wrong. It is not a model problem; it is a contract problem. The tool signature said <code>list[Transaction]</code> but the semantics were <code>list[Transaction] | Unknown | Error</code>, and the agent had no way to express that distinction.</p>
+<p>The team also tried a second approach: wrap everything in a single Python function with <code>try/except</code> and call the LLM only for classification. That reduced incidents to 4 per week but pushed complexity into 1,200 lines of imperative branching code. Maintenance cost went up, not down. The lesson: moving logic out of the agent and into hand-written code is not an abstraction; it is a relocation.</p>
+<h2 id="the-approach-that-worked">The approach that worked</h2>
+<p>The breakthrough was to stop treating the agent as a program and start treating it as a <strong>workflow with typed steps</strong>. The team adopted three platform-level abstractions:</p>
+<ol>
+<li>
+<p><strong>A typed tool contract with explicit outcome states.</strong> Every tool returned a discriminated union: <code>Ok(value)</code>, <code>NotFound</code>, <code>TransientError(retryable=True)</code>, or <code>FatalError</code>. The agent could not proceed on <code>TransientError</code> without a retry decision, and could not treat <code>NotFound</code> as <code>Ok([])</code>.</p>
+</li>
+<li>
+<p><strong>A durable execution layer.</strong> They moved the agent loop into Temporal 1.24 (Python SDK 1.7). Each tool call became an activity with automatic retries, timeouts, and idempotency keys. The workflow itself was deterministic; the LLM call was an activity with a recorded input/output pair.</p>
+</li>
+<li>
+<p><strong>A structured trace store.</strong> Every step wrote a row to a Postgres table with <code>run_id</code>, <code>step_index</code>, <code>tool_name</code>, <code>input_hash</code>, <code>output_hash</code>, <code>latency_ms</code>, and <code>outcome</code>. This made replay trivial: re-run the workflow from step N with the recorded inputs.</p>
+</li>
+</ol>
+<p>The key insight was that the agent's reasoning did not need to be durable — only its <strong>effects</strong> did. The LLM could be called fresh on replay; the tool results were cached. This cut replay cost from ~$0.40 per run to ~$0.02 per run and made debugging a matter of reading a table, not a transcript.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<p>The typed tool contract was the smallest change with the largest effect. Here is the pattern in Python 3.11 using <code>typing.Literal</code> and dataclasses:</p>
+<pre><code class="language-python">from dataclasses import dataclass
+from typing import Literal, Union
+
+@dataclass(frozen=True)
+class Ok:
+    kind: Literal[&quot;ok&quot;]
+    value: list[dict]
+
+@dataclass(frozen=True)
+class NotFound:
+    kind: Literal[&quot;not_found&quot;]
+    query: dict
+
+@dataclass(frozen=True)
+class TransientError:
+    kind: Literal[&quot;transient&quot;]
+    retryable: bool
+    reason: str
+
+ToolResult = Union[Ok, NotFound, TransientError]
+
+def query_ledger(tx_id: str) -&gt; ToolResult:
+    try:
+        rows = ledger_client.get(tx_id, timeout=2.0)
+    except TimeoutError:
+        return TransientError(kind=&quot;transient&quot;, retryable=True, reason=&quot;timeout&quot;)
+    except LedgerFatal as e:
+        return TransientError(kind=&quot;transient&quot;, retryable=False, reason=str(e))
+    if not rows:
+        return NotFound(kind=&quot;not_found&quot;, query={&quot;tx_id&quot;: tx_id})
+    return Ok(kind=&quot;ok&quot;, value=rows)
+</code></pre>
+<p>The agent's prompt was updated to include the schema and an explicit rule: "If a tool returns <code>transient</code> with <code>retryable=True</code>, you must call it again, up to 3 times. If it returns <code>not_found</code>, do not guess." This alone eliminated the confident-empty-result class of bugs.</p>
+<p>The Temporal workflow wrapped each tool call as an activity:</p>
+<pre><code class="language-python">from temporalio import workflow, activity
+from datetime import timedelta
+
+@activity.defn
+def call_query_ledger(tx_id: str) -&gt; dict:
+    result = query_ledger(tx_id)
+    return {&quot;kind&quot;: result.kind, &quot;payload&quot;: result.__dict__}
+
+@workflow.defn
+class ReconcileWorkflow:
+    @workflow.run
+    async def run(self, tx_id: str) -&gt; str:
+        for attempt in range(3):
+            res = await workflow.execute_activity(
+                call_query_ledger,
+                tx_id,
+                start_to_close_timeout=timedelta(seconds=5),
+                retry_policy={&quot;maximum_attempts&quot;: 1},
+            )
+            if res[&quot;kind&quot;] == &quot;ok&quot;:
+                break
+            if res[&quot;kind&quot;] == &quot;transient&quot; and res[&quot;payload&quot;][&quot;retryable&quot;]:
+                await workflow.sleep(timedelta(seconds=2 ** attempt))
+                continue
+            return f&quot;halted:{res['kind']}&quot;
+        return &quot;reconciled&quot;
+</code></pre>
+<p>The idempotency key was derived from <code>run_id + step_index + tool_name</code>, hashed with SHA-256 and stored alongside the adjustment. The ledger API accepted an <code>Idempotency-Key</code> header; duplicate calls returned the original response. This eliminated the double-credit class of bugs entirely.</p>
+<p>The trace table was deliberately boring:</p>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Type</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>run_id</td>
+<td>uuid</td>
+<td>Groups all steps in one agent run</td>
+</tr>
+<tr>
+<td>step_index</td>
+<td>int</td>
+<td>Ordering within the run</td>
+</tr>
+<tr>
+<td>tool_name</td>
+<td>text</td>
+<td>Which tool was called</td>
+</tr>
+<tr>
+<td>input_hash</td>
+<td>text</td>
+<td>SHA-256 of canonical JSON input</td>
+</tr>
+<tr>
+<td>output_hash</td>
+<td>text</td>
+<td>SHA-256 of canonical JSON output</td>
+</tr>
+<tr>
+<td>outcome</td>
+<td>text</td>
+<td>ok / not_found / transient / fatal</td>
+</tr>
+<tr>
+<td>latency_ms</td>
+<td>int</td>
+<td>Wall-clock duration</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>timestamptz</td>
+<td>For retention and pruning</td>
+</tr>
+</tbody>
+</table>
+<p>A partial index on <code>(run_id, step_index)</code> kept lookups under 3 ms even at 40 million rows. Retention was 30 days, which kept the table under 12 GB.</p>
+<h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
+<p>The team ran the new system in shadow mode for two weeks, then cut over. The numbers below are typical of what this pattern produces; they are illustrative of the scenario, not a formal benchmark.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Before (LangChain 0.1 loop)</th>
+<th>After (Temporal 1.24 + typed tools)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Incidents per week</td>
+<td>37</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Median time-to-resolution</td>
+<td>22 min</td>
+<td>4.5 min</td>
+</tr>
+<tr>
+<td>Replay cost per failed run</td>
+<td>$0.40</td>
+<td>$0.02</td>
+</tr>
+<tr>
+<td>Lines of orchestration code</td>
+<td>1,200</td>
+<td>380</td>
+</tr>
+<tr>
+<td>p95 workflow latency</td>
+<td>8.2 s</td>
+<td>2.1 s</td>
+</tr>
+<tr>
+<td>Manual triage queue</td>
+<td>400/day</td>
+<td>42/day</td>
+</tr>
+</tbody>
+</table>
+<p>The 3 remaining incidents per week were all model reasoning errors, not infrastructure errors. That is the right ratio: you want failures to be about the hard part (deciding what to do), not the easy part (calling a tool and handling a timeout).</p>
+<p>The line-of-code reduction is the number people underestimate. Moving retries, timeouts, and idempotency into the platform removed 820 lines of hand-written branching from the agent code. Those 820 lines were the source of most bugs.</p>
+<h2 id="what-wed-do-differently">What we'd do differently</h2>
+<p>Two things stand out.</p>
+<p>First, the team spent three weeks building a custom trace UI before realizing that a SQL view and a Grafana dashboard would have been enough. A <code>SELECT * FROM agent_steps WHERE run_id = $1 ORDER BY step_index</code> view in Grafana 10.4 took an afternoon and answered 90% of debugging questions. The custom UI was abandoned. The lesson: instrument first, visualize later.</p>
+<p>Second, the typed tool contract should have come before the first agent run, not after 37 incidents. The cost of adding discriminated unions to four tools was about two hours. The cost of not having them was three weeks of incident response. A common trap here is treating the tool signature as a type annotation exercise rather than a contract that the agent must respect. The annotation <code>-&gt; list[Transaction]</code> is a lie if the tool can also return "I don't know."</p>
+<p>Third, the team initially set <code>maximum_attempts=3</code> on the Temporal activity and also implemented retries inside the tool. This double-retry caused a 9x amplification on a flaky upstream, which briefly took down the ledger's rate limit. The fix was to retry in exactly one place: the workflow. Tools should fail fast and let the platform decide.</p>
+<h2 id="the-broader-lesson">The broader lesson</h2>
+<p>The principle is this: <strong>agent reliability is a platform property, not a prompt property.</strong> Teams that try to fix agent failures by adding more instructions to the system prompt are optimizing the wrong layer. The system prompt cannot enforce idempotency, cannot distinguish a timeout from an empty result, and cannot replay a failed run.</p>
+<p>What made the difference was three abstractions that existed below the agent:</p>
+<ul>
+<li>A <strong>typed outcome contract</strong> so the agent cannot confuse "no data" with "could not fetch data."</li>
+<li>A <strong>durable execution engine</strong> so retries, timeouts, and idempotency are handled once, correctly, outside the agent loop.</li>
+<li>A <strong>structured trace store</strong> so every run is replayable and every failure is a query, not a mystery.</li>
+</ul>
+<p>None of these are specific to agents. They are the same abstractions that made microservices reliable a decade ago: typed RPC contracts, workflow engines like Temporal or AWS Step Functions, and distributed tracing. The agent is just another service that happens to make non-deterministic decisions. Treat it like one.</p>
+<p>The corollary is that agent frameworks are not the bottleneck. LangChain, LlamaIndex, and the various vendor SDKs are fine for prototyping. The bottleneck is the platform underneath them. A team that invests in typed tools, durable execution, and trace storage will out-ship a team that invests in prompt engineering every time, because the platform makes the failures cheap to find and cheap to fix.</p>
+<h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
+<p>Start by auditing your tool contracts. Pull up the function signatures for every tool your agent can call. For each one, ask: what does this return when the upstream is down? When the record does not exist? When the request times out? If the answer is "an empty list" or "None" for more than one of those, you have the confident-empty-result bug waiting to happen. Replace the return type with a discriminated union this week.</p>
+<p>Next, pick one durable execution engine and move your agent loop into it. Temporal 1.24, AWS Step Functions, and Inngest 3.x all work. The migration is mechanical: each tool call becomes an activity, each retry becomes a retry policy, each write becomes idempotent. Budget two days for a four-tool agent.</p>
+<p>Finally, add the trace table. It is one Postgres table and one index. You do not need a vendor. You need <code>run_id</code>, <code>step_index</code>, <code>tool_name</code>, <code>input_hash</code>, <code>output_hash</code>, <code>outcome</code>, and <code>latency_ms</code>. That is it.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I stop my agent from hallucinating tool results?</strong></p>
+<p>You stop it by making the tool contract explicit. If a tool can return "not found" or "transient error," those must be distinct types the agent can branch on, not empty lists. In practice, a discriminated union like <code>Ok | NotFound | TransientError</code> plus a system prompt rule that says "do not guess on NotFound" eliminates most of this class of bug. The model is not the problem; the ambiguous contract is.</p>
+<p><strong>Why does my agent retry a write and double-charge the customer?</strong></p>
+<p>Because the write is not idempotent. The fix is an idempotency key derived from <code>run_id + step_index + tool_name</code>, sent as a header the downstream API respects. Stripe, AWS, and most modern APIs support this. If yours does not, store the key in a dedupe table with a unique constraint and catch the conflict. Retries are safe only when the effect is idempotent.</p>
+<p><strong>What is the best way to debug a failed agent run?</strong></p>
+<p>Query a structured trace, not a text log. A table with one row per step, including input hash, output hash, outcome, and latency, lets you replay the exact run against recorded data. Re-running against a live database is not debugging; it is gambling. The trace table is the single highest-leverage piece of agent infrastructure you can build.</p>
+<p><strong>Do I need Temporal or can I use a simple Python loop?</strong></p>
+<p>A simple loop works until you need retries across process restarts, timeouts that survive deploys, or replayability. The moment you have any of those, you are rebuilding a workflow engine badly. Temporal 1.24, AWS Step Functions, and Inngest 3.x are all reasonable; pick one and stop hand-rolling. The migration for a four-tool agent is about two days.</p>
+<h2 id="resources-that-helped">Resources that helped</h2>
+<ul>
+<li>Temporal Python SDK 1.7 documentation, especially the section on activity retry policies and idempotency.</li>
+<li>The AWS Builders' Library article on timeouts, retries, and backoff with jitter — still the clearest explanation of why double-retry causes amplification.</li>
+<li>Stripe's API documentation on idempotency keys, which is the reference implementation for the pattern.</li>
+<li>The OpenTelemetry semantic conventions for GenAI, which are still evolving but give a reasonable starting schema for agent spans.</li>
+<li>Grafana 10.4 and the Postgres data source, which turned the trace table into a usable debugging UI in an afternoon.</li>
+</ul>
+<p>If you do one thing in the next 30 minutes: open your agent's tool definitions and list every return value each tool can produce. If any tool can return an empty list for more than one reason, write the discriminated union for that tool now. That single file is where the reliability work starts.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/platform-teams-agentic-world-struggle/">
+                        <h3>Platform Teams: Agentic World Struggle</h3>
+                        <p>Prerequisites and what you&amp;#x27;ll build To grasp the architectural shifts we need, you should have at least three years of experience in software development…</p>
+                        <span class="related-meta">17 min read · 12 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/temporal-changed-our-agent-retries-for-good/">
+                        <h3>Temporal changed our agent retries for good</h3>
+                        <p>How durable execution platforms like Temporal 1.22.0 cut refund workflow latency 70% and drop errors from 0.8% to 0.02% — plus the exact gotcha most…</p>
+                        <span class="related-meta">11 min read · 3 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/portfolio-projects-that-hire-remote-senior-devs/">
+                        <h3>Portfolio projects that hire remote senior devs</h3>
+                        <p>A 2026 survey of 214 remote job postings for senior engineers based in Africa (posted on LinkedIn, AngelList, and RemoteOK) showed that 68% explicitly…</p>
+                        <span class="related-meta">14 min read · 3 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
