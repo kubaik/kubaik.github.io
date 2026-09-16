@@ -5,13 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 16 Sep 2026 12:40:16 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 16 Sep 2026 16:30:27 +0000</lastBuildDate>
     <item>
-      <title>Token attribution: the bill nobody audits</title>
-      <link>https://kubaik.github.io/token-attribution-the-bill-nobody-audits/</link>
-      <description>Token attribution exposes the 40% of AI spend nobody can explain. Wrap your LLM calls, reconcile against the provider invoice, and find the retry storm.</description>
-      <pubDate>Wed, 16 Sep 2026 12:36:50 +0000</pubDate>
-      <guid>https://kubaik.github.io/token-attribution-the-bill-nobody-audits/</guid>
+      <title>LLM token costs: unit economics that hold</title>
+      <link>https://kubaik.github.io/llm-token-costs-unit-economics-that-hold/</link>
+      <description>LLM token costs break flat-rate FinOps assumptions.</description>
+      <pubDate>Wed, 16 Sep 2026 16:27:44 +0000</pubDate>
+      <guid>https://kubaik.github.io/llm-token-costs-unit-economics-that-hold/</guid>
     </item>
     <item>
       <title>Which agent stack survives 3G?</title>

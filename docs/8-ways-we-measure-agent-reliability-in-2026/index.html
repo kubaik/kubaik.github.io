@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-04T18:09:38.422091">
-        <meta property="article:modified_time" content="2026-07-04T18:09:38.422100">
+        <meta property="article:modified_time" content="2026-09-16T16:30:19.853175+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="8 ways we measure agent reliability in 2026">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/8-ways-we-measure-agent-reliability-in-2026/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "8 ways we measure agent reliability in 2026",
       "description": "Measure agent reliability with 8 metrics that actually predict user trust — hallucination rates, consistency, recovery speed, and more.",
       "datePublished": "2026-07-04T18:09:38+00:00",
-      "dateModified": "2026-07-04T18:09:38+00:00",
-      "wordCount": 2604,
+      "dateModified": "2026-09-16T16:30:19+00:00",
+      "wordCount": 2571,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,18 +264,18 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2604 words
+                        &nbsp;·&nbsp; 2571 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-04
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this measure agent problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>I spent three months tweaking a customer-support agent that was supposed to cut our ticket volume by 40%. The agent looked great in staging: it handled 95% of simple refunds without a human. But when we A/B-tested it against the old rule-based system, support tickets actually rose 12% and CSAT dropped 8 points. That’s when I realized we were measuring the wrong things. We tracked first-response time, resolution rate, and escalation count, but none of those correlated with whether users trusted the agent enough to keep using it. I needed metrics that told me, in real time, whether an end user would say “this feels safe” instead of “this feels sketchy.”</p>
+<p>The agent looked great in staging: it handled 95% of simple refunds without a human. But when we A/B-tested it against the old rule-based system, support tickets actually rose 12% and CSAT dropped 8 points. That’s when I realized we were measuring the wrong things. We tracked first-response time, resolution rate, and escalation count, but none of those correlated with whether users trusted the agent enough to keep using it. I needed metrics that told me, in real time, whether an end user would say “this feels safe” instead of “this feels sketchy.”</p>
 <p>By 2026 every company ships agents—chatbots, RAG pipelines, even autonomous refund bots—but most teams still evaluate reliability the same way they did in 2026: accuracy, latency, uptime. Those are table stakes. What actually moves trust? Things like consistency over time, explainability for failures, and the ability to recover from edge cases without dumping the user into a support queue. I set out to find a set of metrics that, when plotted on a dashboard, would predict whether a user would recommend our product to a friend.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
 <p>I started with a public dataset from the AI Alliance’s 2026 “TrustBench” release, which contains 3.2 million agent interactions across fintech, healthtech, and e-commerce. I filtered for interactions longer than 30 seconds because anything shorter is usually a misfire. From there I built a synthetic “trust score” for each interaction by labeling it +1 if the user left a 5-star rating or used positive emoji reactions, –1 if they escalated or left a complaint, and 0 otherwise. I then trained a simple logistic regression on 80% of the data to see which of the 20 candidate metrics best predicted that trust score.</p>
@@ -354,8 +354,7 @@
 <li>Average explanation depth when the agent fails (AUC 0.82)</li>
 </ol>
 <p>What it does: When the agent hands off to a human or returns a “I’m not sure” message, we measure how many tokens the agent used to explain why it couldn’t answer. We cap the max at 50 tokens so a verbose model doesn’t game the metric. We then average this depth per session.</p>
-<p>Strength: Users forgive failure if the agent explains itself quickly and clearly. This metric captures that nuance.</p>
-<p>Weakness: Explanations can be gamed by prompt engineering—adding a boilerplate “I used X tool to calculate your balance” even when the tool failed.</p>
+<p>Strength: Users forgive failure if the agent explains itself quickly and clearly. This metric captures that nuance. Weakness: Explanations can be gamed by prompt engineering—adding a boilerplate “I used X tool to calculate your balance” even when the tool failed.</p>
 <p>Best for: Regulated products (fintech, healthtech) where audit trails matter.</p>
 <ol>
 <li>Recovery latency after user correction (AUC 0.80)</li>
@@ -521,14 +520,11 @@ def get_consistency_score(query: str, answer: str, window: int = 50) -&gt; float
 </code></pre>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -580,10 +576,10 @@ please contact me — corrections are applied within 48 hours.</p>
                         <span class="related-meta">16 min read · 4 July 2026</span>
                     </a>
                     
-                    <a class="related-card" href="/token-attribution-the-bill-nobody-audits/">
-                        <h3>Token attribution: the bill nobody audits</h3>
-                        <p>Token attribution exposes the 40% of AI spend nobody can explain. Wrap your LLM calls, reconcile against the provider invoice, and find the retry storm.</p>
-                        <span class="related-meta">16 min read · 16 September 2026</span>
+                    <a class="related-card" href="/llm-token-costs-unit-economics-that-hold/">
+                        <h3>LLM token costs: unit economics that hold</h3>
+                        <p>LLM token costs break flat-rate FinOps assumptions.</p>
+                        <span class="related-meta">14 min read · 16 September 2026</span>
                     </a>
                     
                     <a class="related-card" href="/agents-running-hours-youre-losing-context-fast/">

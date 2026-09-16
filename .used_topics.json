@@ -3,5 +3,8 @@
   "The architecture decisions that let us serve users on 2G/3G as a first-class experience in 2026",
   "How Cursor, Claude Code, and Windsurf actually changed our daily engineering workflow in 2026",
   "Agent-to-Agent (A2A) vs MCP: when to use each in a 2026 production system",
-  "How we cut our monthly AI spend by 55% after implementing real token attribution"
+  "How we cut our monthly AI spend by 55% after implementing real token attribution",
+  "Why structured output + validation layers beat JSON mode for anything that touches money",
+  "The governance layer we added after our first agent caused a compliance incident",
+  "FinOps patterns that work when your biggest variable cost is now LLM tokens, not EC2"
 ]

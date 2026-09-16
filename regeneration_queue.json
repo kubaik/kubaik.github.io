@@ -175,69 +175,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "purpose-built-beats-general-ai-tools",
-    "title": "Purpose-built beats general AI tools",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've hit the same purposebuilt platforms mistake in more than one production cod; I ran into this when we moved our customer support chatbot from a general AI pla; I saw a SaaS product in Tallinn go from $80/month to $1,200/month after adding a",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "react-19-compiler-my-components-changed-how",
-    "title": "React 19 compiler: my components changed how",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same react production mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a supposedly \"memoized\" callback in a   dependency array ch",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse",
-    "title": "Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client’s Node 20 LTS API suddenly jumped from 5,000 EPS t",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "stay-relevant-when-tools-change-faster-than-you-can",
-    "title": "Stay relevant when tools change faster than you can",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): The short version: the conventional advice on stay technically is incomplete.; I fell into the second trap in 2026 when I decided to skip Bun 1.0 for a critica; I learned this the hard way while running a Django 3.2 monolith in 2026.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "stop-guessing-tech-stacks-validate-tools-in-2-hours",
-    "title": "Stop guessing tech stacks: validate tools in 2 hours",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent three days debugging a connection pool timeout that turned out to be a m; I once had a team add a CDN layer on top of Cloudflare while also using Fastly—b",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "8-ways-we-measure-agent-reliability-in-2026",
     "title": "8 ways we measure agent reliability in 2026",
     "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this measure agent problem while migrating a service under a hard dea; Here's what actually worked.; I needed metrics that told me, in real time, whether an end user would say “this",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agents-roll-back-without-breaking-anything",
     "title": "Agents roll back without breaking anything",
     "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.; I once pushed a rollback of a GraphQL agent from v3.4.1 to v3.4.0 and spent thre; I ran into this when we rolled back a Node 20 LTS agent from v20.12.0 to v20.11.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-chats-hidden-wcag-fails",
     "title": "AI chat's hidden WCAG fails",
     "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this when we shipped an AI assistant that passed automated WCAG scann; I saw this in production when users with screen readers reported messages disapp; I saw production error logs where users flagged \"unreadable code blocks\" — the A",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-code-40-how-to-keep-it-from-rotting-your-repo",
     "title": "AI code 40% — how to keep it from rotting your repo",
     "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I've seen the same maintain codebase mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three weeks trying to onboard a new hire onto a Django app that had 38 %",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-code-debt-llm-debt-vs-prompt-debt",
     "title": "AI code debt: LLM debt vs prompt debt",
     "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I've seen the same technical debt mistake in multiple production codebases, incl; Here's what it looks like, why it's hard to spot, and how to fix it.; I pulled the logs and found 1,200 lines of JavaScript generated by an LLM that n",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "ai-stole-system-design",
@@ -2424,6 +2394,41 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "purpose-built-beats-general-ai-tools",
+    "title": "Purpose-built beats general AI tools",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've hit the same purposebuilt platforms mistake in more than one production cod; I ran into this when we moved our customer support chatbot from a general AI pla; I saw a SaaS product in Tallinn go from $80/month to $1,200/month after adding a",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "react-19-compiler-my-components-changed-how",
+    "title": "React 19 compiler: my components changed how",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same react production mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a supposedly \"memoized\" callback in a   dependency array ch",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse",
+    "title": "Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client’s Node 20 LTS API suddenly jumped from 5,000 EPS t",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "stay-relevant-when-tools-change-faster-than-you-can",
+    "title": "Stay relevant when tools change faster than you can",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): The short version: the conventional advice on stay technically is incomplete.; I fell into the second trap in 2026 when I decided to skip Bun 1.0 for a critica; I learned this the hard way while running a Django 3.2 monolith in 2026.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "stop-guessing-tech-stacks-validate-tools-in-2-hours",
+    "title": "Stop guessing tech stacks: validate tools in 2 hours",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent three days debugging a connection pool timeout that turned out to be a m; I once had a team add a CDN layer on top of Cloudflare while also using Fastly—b",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "lessons-from-3-saas-price-pivots-in-2026",

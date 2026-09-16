@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-16T12:36:54.355336",
+  "built_at": "2026-09-16T16:27:47.561337",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5175,6 +5175,11 @@
       "slug": "token-attribution-the-bill-nobody-audits",
       "title": "Token attribution: the bill nobody audits",
       "summary": "Opinions on real cost tend to change fast after watching it fail somewhere it wasn't supposed to. The default configuration is fine right up until it isn't. This is the version of the write-up that includes the part that broke. The gap between what the docs say and what production needs Every major "
+    },
+    {
+      "slug": "llm-token-costs-unit-economics-that-hold",
+      "title": "LLM token costs: unit economics that hold",
+      "summary": "The workaround gets copy-pasted forward long after the original reason is forgotten. structured output problems have a habit of surfacing mid-migration, right when there's no time to solve them properly. This post covers what comes after the happy path. Why I wrote this (the problem I kept hitting) "
     }
   ]
 }
