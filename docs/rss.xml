@@ -5,14 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 16 Sep 2026 09:17:09 +0000</lastBuildDate>
-    <item>
-      <title>Agent auth: tokens aren&apos;t enough</title>
-      <link>https://kubaik.github.io/agent-auth-tokens-arent-enough/</link>
-      <description>In one test run, 12% of requests failed because the agent forgot to include the tenant ID.</description>
-      <pubDate>Wed, 16 Sep 2026 09:14:45 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-auth-tokens-arent-enough/</guid>
-    </item>
+    <lastBuildDate>Wed, 16 Sep 2026 12:35:35 +0000</lastBuildDate>
     <item>
       <title>Zero-trust AI: skip the latency tax</title>
       <link>https://kubaik.github.io/zero-trust-ai-skip-the-latency-tax/</link>
@@ -91,13 +84,6 @@
       <guid>https://kubaik.github.io/why-scaling-agents-kills-plain-logs/</guid>
     </item>
     <item>
-      <title>Purpose-Built AI vs General Platforms</title>
-      <link>https://kubaik.github.io/purpose-built-ai-vs-general-platforms/</link>
-      <description>Merged into Purpose-built beats general AI tools.</description>
-      <pubDate>Thu, 10 Sep 2026 16:08:55 +0000</pubDate>
-      <guid>https://kubaik.github.io/purpose-built-ai-vs-general-platforms/</guid>
-    </item>
-    <item>
       <title>Thundering Herd: The Hidden Scaling Trap</title>
       <link>https://kubaik.github.io/thundering-herd-the-hidden-scaling-trap/</link>
       <description>A concrete worked example Consider a common pattern in serverless architectures: a fleet of AWS Lambda functions (using the Node.js 20 LTS runtime)…</description>
@@ -145,6 +131,20 @@
       <description>This can turn a process that should make 100 API calls for 1000 items into one that makes 10,000 or even 100,000 calls for the same dataset, increasing…</description>
       <pubDate>Mon, 07 Sep 2026 12:11:38 +0000</pubDate>
       <guid>https://kubaik.github.io/rogue-agent-api-calls-stop-the-bleeding/</guid>
+    </item>
+    <item>
+      <title>Two engineer classes: the AI tool norm trap</title>
+      <link>https://kubaik.github.io/two-engineer-classes-the-ai-tool-norm-trap/</link>
+      <description>AI tool norms that prevent a two-class engineering team: PR template disclosure, intent comments on generated code, and a review-load dashboard that…</description>
+      <pubDate>Mon, 07 Sep 2026 08:58:13 +0000</pubDate>
+      <guid>https://kubaik.github.io/two-engineer-classes-the-ai-tool-norm-trap/</guid>
+    </item>
+    <item>
+      <title>Offline Agents: Local-First Sync Patterns</title>
+      <link>https://kubaik.github.io/offline-agents-local-first-sync-patterns/</link>
+      <description>A single misconfigured bucket or database could lead to non-compliance and hefty fines under GDPR, which can reach up to €20 million or 4% of annual…</description>
+      <pubDate>Mon, 07 Sep 2026 08:09:01 +0000</pubDate>
+      <guid>https://kubaik.github.io/offline-agents-local-first-sync-patterns/</guid>
     </item>
   </channel>
 </rss>
