@@ -144,7 +144,8 @@
         "sentence": "\" This aligns with a 2026 study by McKinsey, which found that engineers are 3.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "dagster-replaced-airflow-in-2026-heres-the-stack-we",
@@ -155,7 +156,8 @@
         "sentence": "The sentiment survey from November 2025 showed 78% of engineers wanted to spend less than 20% of their time on pipeline plumbing.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "engineering-interviews-what-ai-wants-now",
@@ -170,7 +172,8 @@
         "sentence": "- **Error rate inflation**: A 2026 study by the Nairobi Tech Research Group found that AI-assisted code has 2.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "freelance-rates-after-ai-took-the-boilerplate",
@@ -181,7 +184,8 @@
         "sentence": "A 2026 survey by Upwork found that 63% of freelancers who priced by the hour after adopting AI tools saw their effective hourly rate drop by at least 25% within six months.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "hiring-engineers-the-3-things-ai-cares-about-now",
@@ -192,7 +196,8 @@
         "sentence": "A 2026 study by DevIQ Labs found that teams using AI-driven behavioral probes in interviews reduced **onboarding ramp time by 34%** and **incident recurrence by 22%** in the first six months.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "internal-dev-portal-that-developers-open-daily",
@@ -203,7 +208,8 @@
         "sentence": "A 2026 study by the Dev Interrupted community found that 67% of IDP projects fail because they prioritize tooling over developer experience.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "kubernetes-in-2026-what-teams-offload",
@@ -226,7 +232,8 @@
         "sentence": "\"\n      pattern:\n        spec:\n          containers:\n          - name: \"*\"\n            resources:\n              requests:\n                cpu: \"?\"\n                memory: \"?\"\n              limits:\n                cpu: \"?\"\n                memory: \"?\"\n```\n\nA 2026 survey by the CNCF found that teams using policy-as-code reduced misconfigured workloads by 78% and reduced cluster incidents by 52%.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "land-a-45k-remote-job-africas-2026-map",
@@ -241,7 +248,8 @@
         "sentence": "A 2026 report from RemoteOK showed that US companies offering $120k for a “full-stack” role would pay only $65k if the candidate self-reported as African—and 40% of those offers vanished after background checks.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "latency-spike-after-llm-feature-rollout",
@@ -252,7 +260,8 @@
         "sentence": "A 2026 Chaos Engineering report from AWS shows that 63 % of latency anomalies introduced by downstream dependencies are masked by client-side retries.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "latency-trade-offs-nairobi-teams-beat-global-ai-providers",
@@ -267,7 +276,8 @@
         "sentence": "A 2025 paper from Makerere University showed that fine-tuning a 3B model on Luganda parliamentary transcripts achieved 87% accuracy on local legal queries, beating a 13B general model at 79%.",
         "known_fabricated": true
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "llm-evals-the-two-metrics-that-bite-you",

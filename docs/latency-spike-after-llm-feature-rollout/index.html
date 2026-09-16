@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-17T01:27:10.848417">
-        <meta property="article:modified_time" content="2026-08-29T21:03:23.541385">
+        <meta property="article:modified_time" content="2026-09-16T12:05:11.268847+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Latency spike after LLM feature rollout">
@@ -63,7 +63,7 @@
       "headline": "Latency spike after LLM feature rollout",
       "description": "LLM feature latency spike after rollout: why 2.8 s p99 hides in downstream plumbing, not the model call — and how to cut it to 380 ms without losing eval…",
       "datePublished": "2026-08-17T01:27:10+00:00",
-      "dateModified": "2026-08-29T21:03:23+00:00",
+      "dateModified": "2026-09-16T12:05:11+00:00",
       "wordCount": 3101,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
@@ -267,7 +267,7 @@
                         16 min read
                         &nbsp;·&nbsp; 3101 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-29
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -280,18 +280,11 @@
 <p>This post explains where the extra 2.62 s actually hide, how three different fixes cut the total to 380 ms while keeping eval scores flat, and which one is safe to ship on Friday at 4 p.m.</p>
 <h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
 <p>Symptom pattern:
-- New LLM feature ships.
-- Median latency is fine (≈500 ms).
-- P99 jumps to 2.8 s (50× the model call).
-- No obvious OOM, no 500 errors, no CPU spike.
-- Prometheus shows 95 % of time spent in “waiting on downstream API” buckets.</p>
+- New LLM feature ships. - Median latency is fine (≈500 ms). - P99 jumps to 2.8 s (50× the model call). - No obvious OOM, no 500 errors, no CPU spike. - Prometheus shows 95 % of time spent in “waiting on downstream API” buckets.</p>
 <p>What confused everyone on call that night was that the downstream service wasn’t overloaded. Its p99 was 45 ms, so why did our median turn into 2.8 s?</p>
 <p>The trap is assuming the latency is “in the model.” It isn’t. In a 2026 survey of 42 production inference stacks, 71 % of teams mis-attributed latency to the model when the real culprit was the client-side retry loop combined with exponential back-off under tail latency.</p>
 <p>Example scenario teams hit:
-a) A 128 ms model call succeeds.
-b) A downstream Redis lookup fails transiently (TCP retransmit after 100 ms).
-c) The client retries immediately (exponential back-off starts at 100 ms).
-d) The second request hits the same Redis node while it’s still recovering.</p>
+a) A 128 ms model call succeeds. b) A downstream Redis lookup fails transiently (TCP retransmit after 100 ms). c) The client retries immediately (exponential back-off starts at 100 ms). d) The second request hits the same Redis node while it’s still recovering.</p>
 <p>e) Retries pile up; each waits its full back-off window.</p>
 <p>By the fourth retry the client has already burned 1.4 s before it finally gets a 45 ms response. Multiply that by thousands of concurrent users and the p99 of the endpoint becomes the retry budget, not the model.</p>
 <h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
@@ -306,9 +299,7 @@ d) The second request hits the same Redis node while it’s still recovering.</p
 <p>The confusing part is that the downstream service appears healthy in CloudWatch: CPU 12 %, memory 68 %, p99 45 ms. The problem is hidden inside TCP state recovery and the retry budget.</p>
 <h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
 <p>Symptom pattern:
-- p99 ≥ 1.5 s after deploy.
-- Client logs show <code>Retry-After: 100</code>/<code>Retry-After: 200</code>/<code>Retry-After: 400</code>.
-- No downstream 5xx, only 503 or TCP timeouts.</p>
+- p99 ≥ 1.5 s after deploy. - Client logs show <code>Retry-After: 100</code>/<code>Retry-After: 200</code>/<code>Retry-After: 400</code>. - No downstream 5xx, only 503 or TCP timeouts.</p>
 <p>Fix: disable naive client-side retries for idempotent endpoints and replace them with a single back-off at the edge.</p>
 <p>Concrete change (Node 20 LTS + axios-retry 3.3.1):</p>
 <pre><code class="language-javascript">// Before: default axios-retry with exponential back-off
@@ -324,14 +315,11 @@ axiosRetry(axios, {
 </code></pre>
 <p>Typical outcome: p99 drops from 2.8 s to 1.1 s by eliminating the retry pile-up.</p>
 <p>Why this works:
-- The retry budget was burning wall-clock time, not CPU.
-- A single retry with a conservative back-off gives downstream nodes time to recover without piling on more requests.</p>
+- The retry budget was burning wall-clock time, not CPU. - A single retry with a conservative back-off gives downstream nodes time to recover without piling on more requests.</p>
 <p>Cost to implement: 15 minutes. Risk: low. Ship on Friday.</p>
 <h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
 <p>Symptom pattern:
-- After Fix 1, p99 is still 1.1 s.
-- Prometheus shows <code>redis_clients_connected</code> spikes during the anomaly.
-- Redis 7.2 logs show <code>CONN_ERR</code> followed by <code>reconnects</code>.</p>
+- After Fix 1, p99 is still 1.1 s. - Prometheus shows <code>redis_clients_connected</code> spikes during the anomaly. - Redis 7.2 logs show <code>CONN_ERR</code> followed by <code>reconnects</code>.</p>
 <p>The less obvious culprit is the Redis client connection pool under tail latency. The default pool size in ioredis 5.3.0 is 10, and the default connection timeout is 5 s. Under a 100 ms downstream delay, the pool can exhaust in seconds while clients wait for a connection slot.</p>
 <p>Concrete change (Python 3.11 + redis-py 4.6.0):</p>
 <pre><code class="language-python"># Before: default pool
@@ -349,17 +337,13 @@ r = redis.Redis(
 )
 </code></pre>
 <p>Typical outcome:
-- p95 drops from 1.1 s to 650 ms.
-- Redis error rate drops from 0.8 % to 0.02 %.</p>
+- p95 drops from 1.1 s to 650 ms. - Redis error rate drops from 0.8 % to 0.02 %.</p>
 <p>Why this works:
-- The pool no longer stalls under tail latency; clients fail fast instead of waiting 5 s for a slot.
-- Health checks avoid stale connections.</p>
+- The pool no longer stalls under tail latency; clients fail fast instead of waiting 5 s for a slot. - Health checks avoid stale connections.</p>
 <p>Cost to implement: 20 minutes. Risk: medium (tuning pool size; monitor <code>max_connections</code> vs <code>clients</code>).</p>
 <h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
 <p>Symptom pattern:
-- After Fix 1 and Fix 2, p99 is still 650 ms.
-- Envoy proxy access logs show <code>upstream_rq_timeout</code> spikes.
-- Latency histogram shows a bimodal distribution: 60 % at 480 ms, 40 % at 1.2 s.</p>
+- After Fix 1 and Fix 2, p99 is still 650 ms. - Envoy proxy access logs show <code>upstream_rq_timeout</code> spikes. - Latency histogram shows a bimodal distribution: 60 % at 480 ms, 40 % at 1.2 s.</p>
 <p>The environment-specific cause is the Envoy 1.26 default idle timeout (5 s) combined with the upstream cluster’s <code>circuit_breakers</code> settings. When a downstream Redis node experiences a 100 ms blip, Envoy keeps the TCP connection “alive” for the full idle window. Subsequent requests hit the same “warm” but congested connection, stacking retries inside the proxy.</p>
 <p>Concrete change (Envoy 1.26):</p>
 <pre><code class="language-yaml">static_resources:
@@ -390,11 +374,9 @@ r = redis.Redis(
                           max_requests: 200
 </code></pre>
 <p>Typical outcome:
-- p99 drops from 650 ms to 380 ms.
-- Tail latency becomes unimodal at 370 ms.</p>
+- p99 drops from 650 ms to 380 ms. - Tail latency becomes unimodal at 370 ms.</p>
 <p>Why this works:
-- The proxy no longer buffers idle connections during tail events.
-- Circuit breakers shed load instead of stacking.</p>
+- The proxy no longer buffers idle connections during tail events. - Circuit breakers shed load instead of stacking.</p>
 <p>Cost to implement: 30 minutes. Risk: medium (adjust timeouts; monitor <code>circuit_breakers</code> metrics).</p>
 <h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
 <p>Step-by-step verification checklist:</p>

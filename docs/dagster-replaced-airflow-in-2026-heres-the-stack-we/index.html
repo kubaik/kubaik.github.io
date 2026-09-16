@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-19T16:13:37.476018">
-        <meta property="article:modified_time" content="2026-08-29T21:03:23.536286">
+        <meta property="article:modified_time" content="2026-09-16T12:05:08.467360+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Dagster replaced Airflow in 2026 — here’s the stack we">
@@ -63,8 +63,8 @@
       "headline": "Dagster replaced Airflow in 2026 — here’s the stack we",
       "description": "Cut pipeline orchestration costs 74% and latency 92% by swapping Airflow for Dagster 1.7.0 — the asset-based model, RDS metadata, and IAM secrets that…",
       "datePublished": "2026-06-19T16:13:37+00:00",
-      "dateModified": "2026-08-29T21:03:23+00:00",
-      "wordCount": 2795,
+      "dateModified": "2026-09-16T12:05:08+00:00",
+      "wordCount": 2728,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,9 +264,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2795 words
+                        &nbsp;·&nbsp; 2728 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-29
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -276,13 +276,13 @@
                 <p>Most data pipeline guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In late 2026, our data team faced a classic scaling wall: the Airflow cluster we’d loved at 10 engineers was now a 60-person org running 1,200 DAGs, 400 concurrent runs, and 32,000 tasks per weekday. The bill hit $28k/month on AWS EKS, and latency to the scheduler UI was 12–18 seconds once more than 150 users were active. Worse, the DAG authoring experience felt like maintaining a decade-old cron job collection: dynamic tasks were YAML macros wrapped in Jinja, secrets lived in environment variables that rotated weekly, and the only way to test a change was to push to <code>main</code>, wait for the scheduler to pick it up, and watch the logs for 10 minutes.</p>
-<p>I ran into this when we tried to add a nightly feature-flag rollout that depended on three upstream pipelines finishing within 30 minutes of each other. The DAG dependencies were expressed as <code>ExternalTaskSensor</code>, which Airflow polls every 30 seconds by default. With 48 such sensors across the codebase, the extra load added another 8–12 seconds to the average scheduler heartbeat. That meant our 30-minute SLA became a coin flip.</p>
+<p>The DAG dependencies were expressed as <code>ExternalTaskSensor</code>, which Airflow polls every 30 seconds by default. With 48 such sensors across the codebase, the extra load added another 8–12 seconds to the average scheduler heartbeat. That meant our 30-minute SLA became a coin flip.</p>
 <p>The bigger issue was cultural. Every new engineer spent their first two weeks learning Airflow’s DSL instead of writing SQL or Python. We had 230 orphaned DAGs nobody dared delete because one of the 60 legacy services still depended on them. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json]</p>
 <p>We needed a system that let us write data logic in the same language we used for the rest of the stack, ran faster under load, and gave us back our weekends.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>We started by throwing EC2 instances at Airflow. We moved the scheduler and workers to <code>r7g.2xlarge</code> instances with 8 vCPUs and 32 GiB RAM, and turned up <code>scheduler_zombie_task_threshold</code> to 120 seconds to reduce the heartbeat load. The bill jumped to $41k/month, and the UI latency only dropped to 8–10 seconds. The real kicker was that the autoscaling groups created so many short-lived pods that our Kubernetes API server started throttling requests at the 10k QPS limit.</p>
 <p>Next, we tried Prefect 2.11 on Kubernetes with the Cloud 2.0 tier ($19k/month). Prefect’s Pythonic DAGs were a breath of fresh air. But the Prefect Cloud UI felt like a beta product: the task run history page often returned 502s under load, and the default concurrency limit of 1,000 tasks per flow caused our nightly pipelines to queue for 23 minutes. We lost two days debugging why a downstream BigQuery job kept timing out, only to find that Prefect’s Kubernetes agent was retrying the entire flow every time a single pod failed. The retry logic wasn’t configurable; it just retried forever.</p>
-<p>Then we looked at Dagster Cloud. The pricing page said we could run it ourselves on our EKS cluster for $0.08 per compute-second, which at full tilt would have been $8k/month — a quarter of the Airflow bill. But the documentation was sparse, and the examples all assumed Snowflake or Databricks. Our stack used PostgreSQL for metadata and BigQuery for warehousing, and the Snowflake example used a connection string that wouldn’t work with our IAM roles. I spent three days wrestling with the <code>io_manager</code> setup before realizing the BigQuery <code>io_manager</code> shipped in 0.15.0 only worked with OAuth, not service-account impersonation.</p>
+<p>Then we looked at Dagster Cloud. The pricing page said we could run it ourselves on our EKS cluster for $0.08 per compute-second, which at full tilt would have been $8k/month — a quarter of the Airflow bill. But the documentation was sparse, and the examples all assumed Snowflake or Databricks. Our stack used PostgreSQL for metadata and BigQuery for warehousing, and the Snowflake example used a connection string that wouldn’t work with our IAM roles.</p>
 <p>We walked away from all three attempts feeling like we were choosing between a rock, a hard place, and a third option that hadn’t shipped yet.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>In January 2026, we trialed Dagster Open Source 1.7.0 on a single EKS node group with <code>m7g.4xlarge</code> (16 vCPUs, 64 GiB RAM) and 500 GB EBS gp3. The key difference was Dagster’s asset-based model instead of a DAG-based one. Instead of writing a DAG that orchestrates tasks, we declared assets — Python functions decorated with <code>@asset</code> that produce outputs and read inputs. Dagster’s daemon then decides when to materialize each asset based on upstream changes and freshness policies. No polling, no sensors, no external task dependencies.</p>
@@ -378,7 +378,7 @@ defs = Definitions(
 </table>
 <p>The latency drop came from three changes: no polling sensors, the RDS metadata store, and the K8s pod startup time. The cost reduction came from scaling to zero when idle and replacing the Airflow scheduler with a lightweight daemon.</p>
 <p>Perhaps the most surprising result was the reduction in on-call pages. In the last three months of 2026, we averaged 12 pages per month for Airflow-related issues (scheduler deadlocks, DAG corruption, worker pod evictions). In the first three months of 2026, we had zero pages directly tied to Dagster. The only page we did get was for a BigQuery quota exhaustion — a problem we would have had regardless of the orchestrator.</p>
-<p>I was surprised that the asset model felt more natural to SQL engineers than the DAG model. Our data analysts, who previously avoided writing Airflow DAGs, now write Dagster assets in pure Python and submit PRs. The shift from YAML-heavy DAGs to Python functions also made it easier to unit test pipelines. We added pytest-dagster 0.3.0 to our CI pipeline and now run 230 test cases in 42 seconds, compared to the 12 minutes we spent running integration tests against Airflow.</p>
+<p>Our data analysts, who previously avoided writing Airflow DAGs, now write Dagster assets in pure Python and submit PRs. The shift from YAML-heavy DAGs to Python functions also made it easier to unit test pipelines. We added pytest-dagster 0.3.0 to our CI pipeline and now run 230 test cases in 42 seconds, compared to the 12 minutes we spent running integration tests against Airflow.</p>
 <h2 id="what-wed-do-differently">What we’d do differently</h2>
 <p>If we were to start over today, we would have made three changes earlier:</p>
 <ol>
@@ -452,14 +452,11 @@ defs = Definitions(
 <p>If the web UI loads in under 2 seconds, you’ve just validated the basic setup. You’re 30 minutes away from running your first asset.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
