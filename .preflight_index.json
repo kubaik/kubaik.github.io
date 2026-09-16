@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-16T11:27:01.647546",
+  "built_at": "2026-09-16T12:36:54.355336",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5170,6 +5170,11 @@
       "slug": "which-agent-stack-survives-3g",
       "title": "Which agent stack survives 3G?",
       "summary": "The postmortem always says the same thing: we should have caught this sooner. After enough code that touches measuring agent gets reviewed, the same failure pattern keeps showing up. Here's the root cause, not just the symptom. Why this comparison matters right now In 2026, the median mobile connect"
+    },
+    {
+      "slug": "token-attribution-the-bill-nobody-audits",
+      "title": "Token attribution: the bill nobody audits",
+      "summary": "Opinions on real cost tend to change fast after watching it fail somewhere it wasn't supposed to. The default configuration is fine right up until it isn't. This is the version of the write-up that includes the part that broke. The gap between what the docs say and what production needs Every major "
     }
   ]
 }

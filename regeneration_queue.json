@@ -175,69 +175,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "lessons-from-3-saas-price-pivots-in-2026",
-    "title": "Lessons from 3 SaaS price pivots in 2026",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I set an annual plan at $99/user/year thinking indie hackers would love it.; I dug into the logs and found most churn came from teams of 5–10 people who’d ha",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "monolith-to-services-without-a-rewrite",
-    "title": "Monolith to services without a rewrite",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about migrated monolith during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran a project in Lagos in 2026 where the monolith handled 8,000 requests per s",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "negotiate-salaries-with-ai-skills-in-2026",
-    "title": "Negotiate salaries with AI skills in 2026",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I finally refused the offer, only to see the same JD posted three months later w; I built a simple script that scrapes public salary data, filters for roles where",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "negotiate-salary-2026-with-ai-resume-tool",
-    "title": "Negotiate salary 2026 with AI resume tool",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I realized most engineers don’t negotiate around AI clauses—they treat them as b; I spent three days debugging a package that looked fair until I ran the numbers:",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "pick-one-stripe-lemon-squeezy-paddle-in-2026",
-    "title": "Pick one: Stripe, Lemon Squeezy, Paddle in 2026",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about stripe lemon during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when I tried to move a $9/month indie project from Stripe to Pad",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "purpose-built-beats-general-ai-tools",
     "title": "Purpose-built beats general AI tools",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've hit the same purposebuilt platforms mistake in more than one production cod; I ran into this when we moved our customer support chatbot from a general AI pla; I saw a SaaS product in Tallinn go from $80/month to $1,200/month after adding a",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "react-19-compiler-my-components-changed-how",
     "title": "React 19 compiler: my components changed how",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same react production mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a supposedly \"memoized\" callback in a   dependency array ch",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse",
     "title": "Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client’s Node 20 LTS API suddenly jumped from 5,000 EPS t",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "stay-relevant-when-tools-change-faster-than-you-can",
     "title": "Stay relevant when tools change faster than you can",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): The short version: the conventional advice on stay technically is incomplete.; I fell into the second trap in 2026 when I decided to skip Bun 1.0 for a critica; I learned this the hard way while running a Django 3.2 monolith in 2026.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "stop-guessing-tech-stacks-validate-tools-in-2-hours",
     "title": "Stop guessing tech stacks: validate tools in 2 hours",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent three days debugging a connection pool timeout that turned out to be a m; I once had a team add a CDN layer on top of Cloudflare while also using Fastly—b",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "8-ways-we-measure-agent-reliability-in-2026",
@@ -2454,6 +2424,41 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "lessons-from-3-saas-price-pivots-in-2026",
+    "title": "Lessons from 3 SaaS price pivots in 2026",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I set an annual plan at $99/user/year thinking indie hackers would love it.; I dug into the logs and found most churn came from teams of 5–10 people who’d ha",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "monolith-to-services-without-a-rewrite",
+    "title": "Monolith to services without a rewrite",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about migrated monolith during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran a project in Lagos in 2026 where the monolith handled 8,000 requests per s",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "negotiate-salaries-with-ai-skills-in-2026",
+    "title": "Negotiate salaries with AI skills in 2026",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I finally refused the offer, only to see the same JD posted three months later w; I built a simple script that scrapes public salary data, filters for roles where",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "negotiate-salary-2026-with-ai-resume-tool",
+    "title": "Negotiate salary 2026 with AI resume tool",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I realized most engineers don’t negotiate around AI clauses—they treat them as b; I spent three days debugging a package that looked fair until I ran the numbers:",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "pick-one-stripe-lemon-squeezy-paddle-in-2026",
+    "title": "Pick one: Stripe, Lemon Squeezy, Paddle in 2026",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about stripe lemon during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when I tried to move a $9/month indie project from Stripe to Pad",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "claude-code-after-365-days-what-actually-works",

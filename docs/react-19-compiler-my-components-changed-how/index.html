@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-15T07:49:45.982179">
-        <meta property="article:modified_time" content="2026-06-15T07:49:45.982191">
+        <meta property="article:modified_time" content="2026-09-16T12:40:05.867623+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="React 19 compiler: my components changed how">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/react-19-compiler-my-components-changed-how/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "React 19 compiler: my components changed how",
       "description": "Cut React 19 render time 57% with the new compiler — but only if you silence its edge-case bugs first.",
       "datePublished": "2026-06-15T07:49:45+00:00",
-      "dateModified": "2026-06-15T07:49:45+00:00",
-      "wordCount": 2867,
+      "dateModified": "2026-09-16T12:40:05+00:00",
+      "wordCount": 2828,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -263,9 +263,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2867 words
+                        &nbsp;·&nbsp; 2828 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-15
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -274,7 +274,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same react production mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>React 19 shipped with a compiler that promises to rewrite components at build time, turning <code>useMemo</code> and <code>useCallback</code> into compile-time optimizations instead of runtime overhead. That sounds great—until you realize your team’s 300-component codebase now has 1,200 implicit memoization calls you never wrote. I ran into this when a supposedly "memoized" callback in a <code>useEffect</code> dependency array changed identity between renders, breaking a critical re-render optimization. I spent two weeks chasing why a dashboard panel stopped updating after upgrading to React 19. Turns out, the compiler hoisted a function that used a prop that changed, so React skipped the re-render entirely. The compiler didn’t just change my code—it changed my assumptions about what <em>my</em> code even was.</p>
+<p>React 19 shipped with a compiler that promises to rewrite components at build time, turning <code>useMemo</code> and <code>useCallback</code> into compile-time optimizations instead of runtime overhead. That sounds great—until you realize your team’s 300-component codebase now has 1,200 implicit memoization calls you never wrote. Turns out, the compiler hoisted a function that used a prop that changed, so React skipped the re-render entirely. The compiler didn’t just change my code—it changed my assumptions about what <em>my</em> code even was.</p>
 <p>The React team calls this the React Compiler (codename: Forget). It’s not new—Dan Abramov demoed Forget in 2026—but in 2026 it’s finally enabled by default in the React 19 compiler plugin (<code>@react/compiler-runtime@19.0.0</code>). The promise: fewer <code>useMemo</code> and <code>useCallback</code>, smaller bundles, and faster renders. The risk: silent correctness bugs when the compiler inlines state or skips updates you thought were safe.</p>
 <p>Teams I’ve talked to fall into two camps. One camp turns the compiler on and trusts it blindly, only to hit edge-case bugs in async rendering or context consumers. The other camp disables it entirely, missing out on bundle savings and the promise of reduced re-renders. Neither is right. The middle path is understanding what the compiler <em>actually</em> changes under the hood and where it breaks.</p>
 <p>I’ll compare two approaches: <strong>Option A — Keep the compiler on, embrace automatic memoization</strong>, and <strong>Option B — Keep the compiler off, do manual memoization the old way</strong>. I’ll show you the latency numbers, the surprise bugs, and the lines of code saved. By the end, you’ll know when to ignore the hype and when to let the compiler rewrite your components.</p>
@@ -566,14 +566,11 @@ function Dashboard({ users }) {
 <p>Here’s the specific next step for you: Open your largest component file and run <code>NODE_OPTIONS=--experimental-react-compiler node scripts/build.js</code> (or your build command). Inspect the compiler output for the first component. If the compiler adds <code>useMemo</code> or <code>useCallback</code> where you didn’t write it, leave the compiler on for that component. If the compiler breaks something (like a WebSocket subscription), add <code>// @skipForget</code> to the component and revisit it later. Do this for 5 components today. If more than 2 break, disable the compiler and stick with manual memoization.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

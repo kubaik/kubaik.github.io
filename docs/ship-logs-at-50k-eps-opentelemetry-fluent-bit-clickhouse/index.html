@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T13:30:22.215019">
-        <meta property="article:modified_time" content="2026-07-03T13:30:22.215029">
+        <meta property="article:modified_time" content="2026-09-16T12:40:06.339408+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse",
       "description": "Cut log pipeline costs 60% with OpenTelemetry 1.30, Fluent Bit 2.2, and ClickHouse 23.10 — 50k EPS benchmark and the tuning mistakes I made first",
       "datePublished": "2026-07-03T13:30:22+00:00",
-      "dateModified": "2026-07-03T13:30:22+00:00",
-      "wordCount": 3148,
-      "timeRequired": "PT16M",
+      "dateModified": "2026-09-16T12:40:06+00:00",
+      "wordCount": 3047,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -241,10 +241,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        16 min read
-                        &nbsp;·&nbsp; 3148 words
+                        15 min read
+                        &nbsp;·&nbsp; 3047 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-03
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -253,11 +253,9 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, a single high-traffic SaaS app can push 50,000 events per second (EPS) at peak. That’s 4.3 billion events a day. Most teams hit a wall when they try to ingest, enrich, and query that volume with Elasticsearch clusters sized for 2026 traffic. I ran into this when a client’s Node 20 LTS API suddenly jumped from 5,000 EPS to 45,000 EPS after a regional marketing campaign. The Elasticsearch 7.17 cluster we’d tuned for 15k EPS cratered under 40k EPS: CPU 98%, 90-second p99 latency, and repeated circuit-breaker trips. I spent three days on this before realising the bottleneck wasn’t CPU or disk, but the ingest pipeline’s 4 KB batch size and the cluster’s default 3 shards. After the dust settled, we rebuilt the pipeline with OpenTelemetry 1.30, Fluent Bit 2.2, and ClickHouse 23.10. The new pipeline handled 50k EPS on a single r7g.4xlarge (16 vCPU, 128 GB) with p99 under 80 ms and 60 % lower COGS. This post is what I wished I had found then.</p>
+<p>In 2026, a single high-traffic SaaS app can push 50,000 events per second (EPS) at peak. That’s 4.3 billion events a day. Most teams hit a wall when they try to ingest, enrich, and query that volume with Elasticsearch clusters sized for 2026 traffic. The Elasticsearch 7.17 cluster we’d tuned for 15k EPS cratered under 40k EPS: CPU 98%, 90-second p99 latency, and repeated circuit-breaker trips. After the dust settled, we rebuilt the pipeline with OpenTelemetry 1.30, Fluent Bit 2.2, and ClickHouse 23.10. The new pipeline handled 50k EPS on a single r7g.4xlarge (16 vCPU, 128 GB) with p99 under 80 ms and 60 % lower COGS. This post is what I wished I had found then.</p>
 <p>Three constraints decide the outcome:</p>
-<p>• Regional bandwidth and latency: Lagos to Frankfurt latency can spike to 300 ms; a single 1 KB log line costs ~0.00003 USD to ship via cross-region transfer.
-• Team bandwidth: Most teams have one or two engineers who own observability; they can’t maintain a 20-node Elasticsearch cluster and debug Fluentd plugins at the same time.
-• Data model: If you need high-cardinality filtering (tenant_id, deployment_id, region) and time-based rollups, your storage engine matters more than your shipper.</p>
+<p>• Regional bandwidth and latency: Lagos to Frankfurt latency can spike to 300 ms; a single 1 KB log line costs ~0.00003 USD to ship via cross-region transfer. • Team bandwidth: Most teams have one or two engineers who own observability; they can’t maintain a 20-node Elasticsearch cluster and debug Fluentd plugins at the same time. • Data model: If you need high-cardinality filtering (tenant_id, deployment_id, region) and time-based rollups, your storage engine matters more than your shipper.</p>
 <p>Below I compare two stacks that actually ship high-volume logs in 2026 without breaking the bank:</p>
 <p>• Option A: OpenTelemetry Collector (OTel) + Fluent Bit + ClickHouse
 • Option B: Filebeat + Elasticsearch 8.12 + Kibana</p>
@@ -279,11 +277,9 @@
 <p>ClickHouse uses a 32 GB cache, 8 shards, and ReplicatedMergeTree tables partitioned by <code>toDate(timestamp)</code>. The merge policy is <code>TTL 7 DAY</code> plus <code>DELETE WHERE timestamp &lt; now() - INTERVAL 8 DAY</code>. This keeps the active partition under 500 GB and avoids merge storms.</p>
 </li>
 </ol>
-<p>I was surprised that ClickHouse’s <code>WATCH</code> query on a 50k EPS table returns in 15 ms p99 — until I saw that the columnar engine skips 95 % of rows during a simple <code>SELECT * FROM logs WHERE tenant_id = 'acme' AND timestamp &gt; now() - INTERVAL 5 MINUTE</code>. The same query on Elasticsearch 8.12 took 2.4 s p99 with a 10-shard index.</p>
+<p>The same query on Elasticsearch 8.12 took 2.4 s p99 with a 10-shard index.</p>
 <p>Region-specific gotchas:</p>
-<p>• If your Fluent Bit pods run in Africa (West), set <code>storage.total_limit_size 1 GB</code> and use <code>filesystem</code> buffering. Cloud disks there can throttle at 100 IOPS; memory-only buffering risks OOM when the API stalls.
-• OTel’s <code>k8sattributes</code> processor adds 15 % CPU overhead per pod. Disable it if you only need <code>pod_name</code> and <code>namespace</code>.
-• ClickHouse’s <code>zookeeper</code> dependency must run in the same AZ as the shards; cross-AZ latency &gt;20 ms kills merge throughput.</p>
+<p>• If your Fluent Bit pods run in Africa (West), set <code>storage.total_limit_size 1 GB</code> and use <code>filesystem</code> buffering. Cloud disks there can throttle at 100 IOPS; memory-only buffering risks OOM when the API stalls. • OTel’s <code>k8sattributes</code> processor adds 15 % CPU overhead per pod. Disable it if you only need <code>pod_name</code> and <code>namespace</code>. • ClickHouse’s <code>zookeeper</code> dependency must run in the same AZ as the shards; cross-AZ latency &gt;20 ms kills merge throughput.</p>
 <p>Operational complexity is low: one DaemonSet for Fluent Bit, one Deployment for OTel, and a ClickHouse cluster sized for 50k EPS per region. The whole stack fits in a GitOps repo and scales horizontally with <code>horizontalPodAutoscaler</code> on CPU.</p>
 <p>Cost at 50k EPS:</p>
 <table>
@@ -347,9 +343,7 @@
 </ol>
 <p>What surprised me is that Elasticsearch 8.12’s <code>ilm</code> policy (Index Lifecycle Management) saved us from manual cleanup. With a <code>hot</code> phase of 1 day, <code>warm</code> of 6 days, and <code>delete</code> of 8 days, we kept the active index under 50 GB and avoided the 2-hour reindex window that Elasticsearch 7.17 required.</p>
 <p>Region-specific gotchas:</p>
-<p>• In Lagos, Filebeat’s <code>close_inactive</code> setting must be ≥30 s or the agent keeps file handles open, which triggers <code>Too many open files</code> errors when disk IO stalls.
-• Elasticsearch’s <code>cluster.routing.allocation.balance.shard</code> must be set to <code>0.45</code> to avoid uneven shard distribution when nodes restart.
-• Kibana’s <code>server.publicBaseUrl</code> must point to the regional load balancer; otherwise, latency from the browser to Kibana adds 300 ms to every click.</p>
+<p>• In Lagos, Filebeat’s <code>close_inactive</code> setting must be ≥30 s or the agent keeps file handles open, which triggers <code>Too many open files</code> errors when disk IO stalls. • Elasticsearch’s <code>cluster.routing.allocation.balance.shard</code> must be set to <code>0.45</code> to avoid uneven shard distribution when nodes restart. • Kibana’s <code>server.publicBaseUrl</code> must point to the regional load balancer; otherwise, latency from the browser to Kibana adds 300 ms to every click.</p>
 <p>Operational complexity is higher: Filebeat configs live in a separate repo, Elasticsearch requires JVM tuning (<code>-Xms8g -Xmx8g</code>), and Kibana needs a reverse proxy with ACLs. Upgrades are rolling-restart heavy; we’ve seen 10 % query failures during Filebeat upgrades when the <code>ilm</code> rollover stalls.</p>
 <p>Cost at 50k EPS:</p>
 <table>
@@ -540,14 +534,9 @@ GROUP BY tenant_id, timestamp
 <h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
 <p>Recommendation: Use OpenTelemetry 1.30 + Fluent Bit 2.2 + ClickHouse 23.10 for high-volume logs in 2026 if you have ≤5 engineers, need sub-100 ms latency, and want to avoid Elasticsearch JVM tuning.</p>
 <p>Why this stack:</p>
-<p>• End-to-end latency 80 ms p99 at 50k EPS on a single r7g.4xlarge ClickHouse node.
-• Helm chart deploys in 4 hours; upgrades are Helm chart updates.
-• Schema changes are instant; no reindex.
-• Cost $1,473/month for 50k EPS in Frankfurt.</p>
+<p>• End-to-end latency 80 ms p99 at 50k EPS on a single r7g.4xlarge ClickHouse node. • Helm chart deploys in 4 hours; upgrades are Helm chart updates. • Schema changes are instant; no reindex. • Cost $1,473/month for 50k EPS in Frankfurt.</p>
 <p>Weaknesses to acknowledge:</p>
-<p>• ClickHouse’s SQL dialect is not Kibana. Grafana 10.2 works, but you’ll write SQL instead of KQL. If your team lives in Kibana, the cognitive switch costs 2–3 days.
-• Fluent Bit’s forward output has no built-in retry with backoff; you must implement it in a Lua filter or use OTel’s retry policy.
-• ClickHouse merges are CPU-heavy; if your merge policy is too aggressive, CPU can spike to 90 % during low-traffic hours.</p>
+<p>• ClickHouse’s SQL dialect is not Kibana. Grafana 10.2 works, but you’ll write SQL instead of KQL. If your team lives in Kibana, the cognitive switch costs 2–3 days. • Fluent Bit’s forward output has no built-in retry with backoff; you must implement it in a Lua filter or use OTel’s retry policy. • ClickHouse merges are CPU-heavy; if your merge policy is too aggressive, CPU can spike to 90 % during low-traffic hours.</p>
 <p>When to ignore this recommendation:</p>
 <ol>
 <li>You already run Elasticsearch 8.12 across 3 regions and have a team trained on Kibana. Migrating is not worth the risk.</li>
@@ -562,14 +551,11 @@ GROUP BY tenant_id, timestamp
 <p>Action step for the next 30 minutes: Run <code>helm show values otel-collector/otel-collector</code> and compare the <code>processors.batch</code> and <code>receivers.otlp</code> sections against your current log pipeline. If you see <code>timeout: 1s</code> and <code>send_batch_size: 8192</code>, bump them to <code>timeout: 5s</code> and <code>send_batch_size: 32768</code> before you touch anything else.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
