@@ -231,5 +231,7 @@
   "Building change data capture that doesn't fall over when your LLM pipeline goes wild",
   "Why agent identity and authentication is harder than traditional service auth",
   "The platform abstractions that make agent development faster for engineering teams",
-  "Self-service AI tooling layers that let product teams experiment safely"
+  "Self-service AI tooling layers that let product teams experiment safely",
+  "Measuring 'agent reliability' in a way that correlates with user trust",
+  "Low-latency agent features for users on intermittent 3G/4G connections in East Africa"
 ]

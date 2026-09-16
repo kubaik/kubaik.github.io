@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-01T10:34:29.244977">
-        <meta property="article:modified_time" content="2026-08-01T10:34:29.244988">
+        <meta property="article:modified_time" content="2026-09-16T11:29:32.579699+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="APM lied about our AI incidents">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/apm-lied-about-our-ai-incidents/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "APM lied about our AI incidents",
       "description": "AI incident detection in 2026: why Datadog APM 1.47 misses 80%+ of GPU-related failures — and the three metrics you need to catch them before users…",
       "datePublished": "2026-08-01T10:34:29+00:00",
-      "dateModified": "2026-08-01T10:34:29+00:00",
-      "wordCount": 2866,
+      "dateModified": "2026-09-16T11:29:32+00:00",
+      "wordCount": 2808,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -263,25 +263,23 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2866 words
+                        &nbsp;·&nbsp; 2808 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-01
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this traditional apm problem while migrating a service under a hard deadline. The answers online were either wrong or skipped the part that mattered. Here's the fuller picture, with the tradeoffs left in.</p>
+                <p>The answers online were either wrong or skipped the part that mattered. Here's the fuller picture, with the tradeoffs left in.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
-<p>Most teams still treat Application Performance Monitoring (APM) as the single source of truth for incidents. That’s fine when your system is CPU-bound, your latency budget is &lt;100ms, and your logs are on fast NVMe storage. But in 2026, once you plug an LLM endpoint into your stack, the old rules break. I ran into this when we shipped a new feature that used a 13B parameter model served via vLLM 0.5 on an A100 GPU in AWS us-east-1. Our APM (Datadog APM 1.47) showed p99 latency at 420ms, green health, and no errors — yet users in Lagos were seeing 2.1s timeouts. The honest answer is that APM tools excel at measuring code paths they can see, but they miss everything that happens after your process hands off control to an external binary or hardware accelerator.</p>
+<p>Most teams still treat Application Performance Monitoring (APM) as the single source of truth for incidents. That’s fine when your system is CPU-bound, your latency budget is &lt;100ms, and your logs are on fast NVMe storage. But in 2026, once you plug an LLM endpoint into your stack, the old rules break. Our APM (Datadog APM 1.47) showed p99 latency at 420ms, green health, and no errors — yet users in Lagos were seeing 2.1s timeouts. The honest answer is that APM tools excel at measuring code paths they can see, but they miss everything that happens after your process hands off control to an external binary or hardware accelerator.</p>
 <p>The standard advice says: “Add tracing, set up SLOs, and monitor your endpoints.” That advice assumes the endpoint is a Python function or a Node route. When your endpoint is a 13B parameter model that offloads requests to a CUDA kernel, the tracer can’t see inside the CUDA context, the GPU’s internal scheduler, or the vLLM batching queue. The tracer only records the time from when your process writes the prompt to when it gets the first token back — but the user’s experience includes the entire token generation loop, network hops, and browser rendering. The gap between what APM shows and what the user feels can be 5× or more.</p>
 <p>I once watched a senior engineer spend three days tweaking Gunicorn worker counts only to realise the real bottleneck was the GPU’s memory bandwidth during batch decoding. The APM graphs were all flat; the only clue was a 1.8s tail latency spike on the GPU metrics endpoint we had added as an afterthought. That metric wasn’t in the APM dashboard, it was scraped from a Prometheus exporter pointed at the NVIDIA DCGM 3.2 metrics endpoint.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
 <p>Most APM setups start with one of three patterns:
-1. <strong>Auto-instrumentation</strong>: Turn on Datadog’s Python tracer, get traces for every endpoint.
-2. <strong>SLO-based</strong>: Set a p95 latency budget of 500ms and alert if it breaches.
-3. <strong>Log aggregation</strong>: Ship all logs to Loki and query with Grafana.</p>
+1. <strong>Auto-instrumentation</strong>: Turn on Datadog’s Python tracer, get traces for every endpoint. 2. <strong>SLO-based</strong>: Set a p95 latency budget of 500ms and alert if it breaches. 3. <strong>Log aggregation</strong>: Ship all logs to Loki and query with Grafana.</p>
 <p>Here’s what breaks when you add an LLM endpoint:</p>
 <ul>
 <li><strong>The tracer doesn’t follow GPU control flow</strong>: When your endpoint calls <code>model.generate()</code>, the tracer records the start and end of the Python call, but not the CUDA kernel execution, the GPU’s internal queueing, or the vLLM batch scheduler. The actual user-perceived latency is the sum of:</li>
@@ -497,7 +495,7 @@
       - targets: ['localhost:9400']
 </code></pre>
 <p>I’d also add a single custom metric: <code>ai_endpoint_user_timeout_ratio</code> calculated as <code>(user_reported_timeouts / total_requests) * 100</code>. This metric bridges the gap between hardware telemetry and user experience. If the ratio spikes while APM and GPU metrics are green, it’s a sign the APM is missing the real bottleneck.</p>
-<p>I spent six months debugging a 900ms tail latency on a model endpoint using only APM. If I’d started with DCGM and vLLM internal metrics, I would have caught the GPU memory pressure in under an hour. The lesson is: don’t wait for the APM to show red; instrument the layers the APM can’t see.</p>
+<p>If I’d started with DCGM and vLLM internal metrics, I would have caught the GPU memory pressure in under an hour. The lesson is: don’t wait for the APM to show red; instrument the layers the APM can’t see.</p>
 <h2 id="summary">Summary</h2>
 <p>Traditional APM tools miss most AI incidents because they’re built for CPU-bound code, not GPU-accelerated inference. The gap between what APM shows and what users feel can be 5× or more. To catch these incidents, you need to monitor GPU memory pressure, batch scheduler state, and token economics — not just Python call latency.</p>
 <p>Start by adding NVIDIA DCGM 3.2 and vLLM 0.5 internal metrics to your stack. Pick one GPU metric (<code>DCGM_FI_DEV_MEM_COPY_UTIL</code>) and one vLLM metric (<code>vllm:num_requests_waiting</code>). Add a Prometheus scrape config, a single Grafana dashboard, and an alert that triggers if either metric breaches your SLO — even if the APM is green.</p>

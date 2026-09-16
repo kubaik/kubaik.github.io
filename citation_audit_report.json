@@ -84,7 +84,8 @@
         "sentence": "A 2026 study by OWASP found that AI-generated code reviewed by a human had 34 % fewer security issues than manual code.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "ai-scans-your-code-real-risks-and-defenses",
@@ -95,7 +96,8 @@
         "sentence": "A 2026 study by Trail of Bits on 23 open-source repos found that AI scanners caught 68% of the CVEs that had CWE numbers ≤ 89 (input validation), but only 12% of CVEs with CWE ≥ 362 (concurrency).",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "ai-services-slow-fix-the-network-first",
@@ -106,7 +108,8 @@
         "sentence": "A 2026 survey from the CNCF found 62% of teams running Istio or Linkerd still use the default 1-hour cert rotation.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "batteries-included-offline-mode-for-unreliable-networks",
@@ -117,7 +120,8 @@
         "sentence": "Market research from a 2024 study showed that 38 % of sessions were interrupted when the user walked into a building with weak signal, entered a bus, or simply stepped into a coverage hole.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "claude-4-prompts-broke-my-prod",
@@ -128,7 +132,8 @@
         "sentence": "A 2024 analysis by Stanford’s HAI found that only 3% of prompts triggered tone-based filters in those models.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "claude-code-in-2026-one-year-of-lessons-learned",

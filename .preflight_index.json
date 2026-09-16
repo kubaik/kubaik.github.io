@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-16T09:53:27.867616",
+  "built_at": "2026-09-16T11:27:01.647546",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5165,6 +5165,11 @@
       "slug": "self-service-ai-tooling-where-it-breaks-first",
       "title": "Self-service AI tooling: where it breaks first",
       "summary": "The selfservice tooling question that matters isn't in the FAQ, it's in the incident log. This is the version of the write-up that includes the part that broke. The tutorials all show the happy path. The error and why it's confusing You give a product team a sandboxed AI toolkit: a hosted notebook, "
+    },
+    {
+      "slug": "which-agent-stack-survives-3g",
+      "title": "Which agent stack survives 3G?",
+      "summary": "The postmortem always says the same thing: we should have caught this sooner. After enough code that touches measuring agent gets reviewed, the same failure pattern keeps showing up. Here's the root cause, not just the symptom. Why this comparison matters right now In 2026, the median mobile connect"
     }
   ]
 }

@@ -320,6 +320,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-fixes-legacy-code-nobody-owns/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/ai-fixes-legacy-code-nobody-owns.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ai-interviews-now-ask-for-this/</loc>
     <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -392,6 +401,33 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-tools-cut-rates-30-whats-real-in-2026/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/ai-tools-cut-rates-30-whats-real-in-2026.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/ai-ui-tools-broke-my-react-flow-heres-why.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/apm-lied-about-our-ai-incidents/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/apm-lied-about-our-ai-incidents.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/author/kubai-kevin/</loc>
     <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -416,6 +452,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/build-in-public-without-burning-out/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/build-in-public-without-burning-out.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/cicd-for-django-in-20ms-africa-networks/</loc>
     <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -426,7 +471,7 @@
   </url>
   <url>
     <loc>https://kubaik.github.io/claude-4-prompts-broke-my-prod/</loc>
-    <lastmod>2026-08-29</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -1202,6 +1247,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/websockets-vs-server-sent-events-latency-over-3g.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/which-agent-stack-survives-3g/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/which-agent-stack-survives-3g.png</image:loc>
     </image:image>
   </url>
   <url>

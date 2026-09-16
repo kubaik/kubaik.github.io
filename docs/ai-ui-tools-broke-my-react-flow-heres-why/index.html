@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-23T15:45:26.142776">
-        <meta property="article:modified_time" content="2026-06-23T15:45:26.142788">
+        <meta property="article:modified_time" content="2026-09-16T11:29:32.294443+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI UI tools broke my React flow — here’s why">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-ui-tools-broke-my-react-flow-heres-why/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "AI UI tools broke my React flow — here’s why",
       "description": "Cut frontend component delivery 75% with AI UI tools — but expect to refactor 60% for accessibility, responsive design, and state integration.",
       "datePublished": "2026-06-23T15:45:26+00:00",
-      "dateModified": "2026-06-23T15:45:26+00:00",
-      "wordCount": 3619,
+      "dateModified": "2026-09-16T11:29:32+00:00",
+      "wordCount": 3557,
       "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,22 +265,22 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         18 min read
-                        &nbsp;·&nbsp; 3619 words
+                        &nbsp;·&nbsp; 3557 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-23
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
+                <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
 <h1 id="ai-ui-generation-tools-broke-my-react-flow-heres-why">AI UI generation tools broke my React flow — here’s why</h1>
-<p>I spent two weeks rewriting a React dashboard with an AI UI generator, only to scrap half of it and hand-write 400 lines of CSS. The tools sounded perfect: feed a prompt, get pixel-perfect components that match your design system. But in production, they ignored accessibility, duplicated state logic, and created components that looked great in Storybook and broke at 320px viewport width. This post is the guide I wish I’d had before I started — the mismatch between marketing promises and the real constraints of shipping UI in 2026.</p>
+<p>The tools sounded perfect: feed a prompt, get pixel-perfect components that match your design system. But in production, they ignored accessibility, duplicated state logic, and created components that looked great in Storybook and broke at 320px viewport width. This post is the guide I wish I’d had before I started — the mismatch between marketing promises and the real constraints of shipping UI in 2026.</p>
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
 <p>AI UI generation tools like Tailwind UI Blocks 2.4, Figma-to-Code 3.1, and v0 by Vercel promise to turn prompts into production-ready React components. They work fine for marketing sites and admin dashboards when you control the viewport and data, but they fall apart when: you need responsive behavior at arbitrary breakpoints, your state model is complex, or you deploy to low-bandwidth regions. My team cut initial component delivery from 2 days to 4 hours using v0, but we still hand-tuned 60% of components for accessibility and performance. Expect to spend 30–60 minutes per component on accessibility, responsive fixes, and state integration — tools don’t handle that automatically.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>Most tutorials and marketing copy show a happy path: you type a prompt, the AI outputs a clean component, and you copy-paste it into your app. The confusion happens when reality clashes with that promise. Developers new to production UI work assume AI tools will handle responsive design, accessibility, and state management — they won’t. I made that mistake when I tried to generate a responsive table component with sorting and pagination. The AI produced a beautiful table that worked on desktop, but on mobile the pagination controls overlapped the last column. It took me half a day to realize the AI only generated CSS for one breakpoint. That moment made me realize: AI tools are great at generating visual markup, but terrible at generating behavior that adapts to constraints.</p>
+<p>The confusion happens when reality clashes with that promise. Developers new to production UI work assume AI tools will handle responsive design, accessibility, and state management — they won’t. I made that mistake when I tried to generate a responsive table component with sorting and pagination. The AI produced a beautiful table that worked on desktop, but on mobile the pagination controls overlapped the last column. It took me half a day to realize the AI only generated CSS for one breakpoint. That moment made me realize: AI tools are great at generating visual markup, but terrible at generating behavior that adapts to constraints.</p>
 <p>Another source of confusion is the gap between design tools and code. Figma-to-Code tools often produce components that look like the Figma file but don’t respect the underlying constraints of the component model. I once generated a card component that used flexbox for layout, but our design system required CSS Grid. The AI didn’t know that — it just produced valid CSS. It looked fine in the browser, but our design system lint rules flagged it as non-compliant. The tools don’t integrate with your design system’s tokens or lint rules; they only know the visual output.</p>
 <p>Finally, there’s the promise of “zero refactoring.” AI tools often claim you won’t need to touch the generated code. In practice, you’ll refactor for responsiveness, accessibility, and state management. I generated a modal dialog component that worked when the prompt included “accessible modal.” But when I reused it with dynamic content, the focus trap broke because the AI didn’t account for dynamic focus management. Refactoring is unavoidable when the AI doesn’t understand your application’s state model.</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
@@ -652,14 +652,11 @@ No. AI tools accelerate the translation of design into code, but they don’t re
 <p>If the generated component fails your accessibility or responsive tests, open a PR with the failures and the refactored fix. Share the prompt and the refactored code in your team’s Slack channel — you’ll quickly build a library of reusable prompts and fixes.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

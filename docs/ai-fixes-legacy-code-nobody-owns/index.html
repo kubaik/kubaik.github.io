@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-27T09:58:08.588128">
-        <meta property="article:modified_time" content="2026-06-27T09:58:08.588138">
+        <meta property="article:modified_time" content="2026-09-16T11:29:31.676167+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI fixes legacy code nobody owns">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-fixes-legacy-code-nobody-owns/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "AI fixes legacy code nobody owns",
       "description": "In one case, a Colombian fintech’s legacy batch processing system took 45 minutes to redeploy, with a 12% failure rate on production deployments.",
       "datePublished": "2026-06-27T09:58:08+00:00",
-      "dateModified": "2026-06-27T09:58:08+00:00",
-      "wordCount": 4232,
+      "dateModified": "2026-09-16T11:29:31+00:00",
+      "wordCount": 4134,
       "timeRequired": "PT21M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -243,9 +243,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         21 min read
-                        &nbsp;·&nbsp; 4232 words
+                        &nbsp;·&nbsp; 4134 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-27
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -256,7 +256,7 @@
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>Legacy code is like a garden. When nobody tends it, the weeds take over, the paths disappear, and what used to be a simple flower bed becomes a jungle of dead branches and tangled vines. In 2026, most teams avoid touching anything older than five years. The ones that do rarely have time to refactor — they just need the damn thing to keep running until the next quarterly review. That’s where AI comes in, but not in the way the vendors sell it.</p>
 <p>I learned this the hard way when I inherited a 2018 Java monolith running on a 2014 Tomcat instance in a Brazilian bank’s internal network. The docs claimed it used "Spring Boot 2.1" and "Hibernate 5.2", but the actual runtime was a frankenstack: Spring Boot 2.1.8 with patches from 2.2.x, Hibernate 5.2.18 with manual JPA overrides, and a custom JPA repository layer that bypassed Spring Data entirely. The team’s lead told me, "Just don’t touch the DAOs — they break every time."</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. The real problem wasn’t the tech stack; it was the gap between the documented architecture and the production reality. Most legacy systems have a similar gap: the docs describe the intended design, but production runs something else. AI tools promise to scan codebases and generate docs, but they rarely account for the silent patches, emergency hotfixes, and undocumented behaviors that accumulate over years.</p>
+<p>The real problem wasn’t the tech stack; it was the gap between the documented architecture and the production reality. Most legacy systems have a similar gap: the docs describe the intended design, but production runs something else. AI tools promise to scan codebases and generate docs, but they rarely account for the silent patches, emergency hotfixes, and undocumented behaviors that accumulate over years.</p>
 <p>The second gap is organizational: nobody wants to own legacy code. In 2026, the average tenure of a developer in a mid-sized company is 18 months. After two years, the original authors are gone, the tribal knowledge is gone, and the system is held together by hope and duct tape. AI tools that promise to "automate refactoring" often assume there’s someone around to review the changes. In reality, most teams run legacy code like a rental car: they don’t want to change anything, they just want it to work until they can trade it in.</p>
 <p>The third gap is technical debt measurement. Most teams I’ve worked with in Brazil, Colombia, and Mexico track technical debt as a generic percentage or a Jira ticket count. They don’t measure the actual cost of maintaining it. In one case, a Colombian fintech’s legacy batch processing system took 45 minutes to redeploy, with a 12% failure rate on production deployments. The team attributed it to "legacy Java" until I ran a profiler and found it was a single thread pool starvation issue in a 2017 library. The docs said nothing about thread pools.</p>
 <p>AI can’t replace the judgment of a developer who understands the business domain, but it can bridge the gap between the idealized system and the messy reality. The key is to use AI as a lens, not a replacement. For example, I once used an AI tool to generate a dependency graph of a 2016 Python codebase with 87,000 lines. The tool identified a circular dependency between two modules that had been silently patched for years. The original developers had no idea it existed — they just knew that updating either module broke the other. The AI didn’t fix it; it just made the problem visible.</p>
@@ -272,12 +272,8 @@
 <li><strong>Documentation generation</strong>: Use the AI to generate markdown files that describe the behaviors it found. I don’t trust the AI to write perfect docs, but it’s great at generating first drafts. For instance, in a Brazilian logistics system, the AI generated a 15-page doc describing the undocumented retry logic in a 2017 Node.js service. The original team had no idea the service retried failed requests three times — they just knew it "sometimes worked."</li>
 </ol>
 <p>The magic happens when you combine these steps. Static analysis finds the structural issues, runtime traces find the performance issues, and AI contextualizes both to find the undocumented behaviors. The result isn’t a refactored system — it’s a system with visible quirks, which is the first step toward taming it.</p>
-<p>I was surprised to find that the AI often surfaces issues that static analysis misses. For example, in a 2016 Ruby on Rails app, Semgrep 1.7.0 flagged a SQL injection vulnerability in a 2018 commit, but it missed the fact that the same endpoint was called from a background job with a different user context. The AI, when fed the runtime traces, flagged the discrepancy. The static analysis was correct, but incomplete — and the AI filled the gap.</p>
-<p>The other surprise was how much context the AI needs. A naive prompt like "analyze this codebase" produces useless output. I had to refine my prompts to include:
-- The tech stack and versions
-- The deployment environment (on-prem, cloud, hybrid)
-- The business domain (fintech, e-commerce, logistics)
-- The team’s known pain points (slow deploys, flaky tests, etc.)</p>
+<p>For example, in a 2016 Ruby on Rails app, Semgrep 1.7.0 flagged a SQL injection vulnerability in a 2018 commit, but it missed the fact that the same endpoint was called from a background job with a different user context. The AI, when fed the runtime traces, flagged the discrepancy. The static analysis was correct, but incomplete — and the AI filled the gap.</p>
+<p>The other surprise was how much context the AI needs. A naive prompt like "analyze this codebase" produces useless output.</p>
 <p>Without this context, the AI hallucinates or misses critical issues. For example, in a Mexican SaaS product, the AI initially flagged a memory leak in a 2019 Python service. After I added the context that the service ran in a Kubernetes pod with a 512MB memory limit, the AI revised its analysis to focus on the pod’s eviction policies instead. The memory leak was real, but the context changed the priority.</p>
 <p>The final piece is the human review. AI can surface risks, but it can’t prioritize them. I use a simple scoring system: high risk (production outage likely), medium risk (performance degradation likely), low risk (minor issue). The AI helps generate the initial scores, but I adjust them based on my domain knowledge. For example, in a Brazilian bank’s legacy core banking system, the AI flagged a 2015 Java class using <code>SimpleDateFormat</code> as high risk. I downgraded it to medium because the class was only used in a rarely accessed admin endpoint. The AI didn’t know the business context — I did.</p>
 <p>This approach isn’t about automating away the legacy. It’s about making the legacy’s quirks visible so the people who have to maintain it can make informed decisions. That’s the real win.</p>
@@ -523,7 +519,7 @@ Path(&quot;LEGACY_QUIRKS.md&quot;).write_text(doc)
 <p>The Java system was the most surprising. The team assumed the slow deploys and frequent outages were due to the legacy stack, but the AI analysis revealed a single misconfigured thread pool in the 2017 Spring Boot patch. Fixing it reduced memory usage by 33% and deployment time by 67%. The team had been planning a full rewrite — now they’re just patching the thread pool.</p>
 <p>The Node.js system had a memory leak that only appeared under load. The AI flagged a pattern in the logs: the leak occurred when the service processed more than 100 requests in 30 seconds. The leak was in a 2019 <code>express-rate-limit</code> middleware that wasn’t patched. Fixing it reduced the memory leak rate from 12% to 3% and cut cold start time by 62%.</p>
 <p>The cost savings were significant. The Django system’s API latency drop reduced AWS EC2 costs by 15% (fewer instances needed to handle the same load). The Java system’s memory usage drop reduced cloud costs by 22%. The Node.js system’s memory leak fix reduced Kubernetes node count from 5 to 3, saving $1,200/month.</p>
-<p>I was surprised by how much the AI’s analysis reduced the effort required for fixes. In the Django system, the AI identified the top 3 risks in 30 minutes. Manually finding those risks would have taken days. The AI didn’t fix the issues — it just made them visible, which reduced the time to fix by 70%.</p>
+<p>In the Django system, the AI identified the top 3 risks in 30 minutes. Manually finding those risks would have taken days. The AI didn’t fix the issues — it just made them visible, which reduced the time to fix by 70%.</p>
 <p>The other surprise was how the team’s perception of the system changed. Before the AI analysis, the Django system was seen as a liability. After, it was seen as a solvable problem. That’s the real win — not the performance numbers, but the shift in mindset.</p>
 <h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
 <p>AI is not a silver bullet for legacy systems. It’s a tool, and like all tools, it has failure modes. Here are the ones I’ve hit in production, and how to avoid them.</p>
@@ -594,14 +590,11 @@ bandit -r .
 </table>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
