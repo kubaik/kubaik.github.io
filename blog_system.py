@@ -252,6 +252,40 @@ def _load_existing_titles(docs_dir: Path) -> List[str]:
     return titles
 
 
+def _load_recent_hook_styles(docs_dir: Path, limit: int = 3) -> List[str]:
+    """
+    Return the tweet hook 'style' label used by the most recently published
+    posts, newest first, read live from docs/*/post.json.
+
+    Mirrors _load_existing_titles() / VelocityController's approach: no
+    separately persisted state file (those get wiped on every fresh
+    GitHub Actions checkout — see velocity_controller.py), just derive
+    "what was recently used" from the same post.json files that are
+    already the source of truth. Used to stop the same hook style (e.g.
+    "unpopular opinion") from being picked for several posts in a row.
+    """
+    entries = []
+    if not docs_dir.exists():
+        return []
+    for post_dir in docs_dir.iterdir():
+        if not post_dir.is_dir() or post_dir.name in ("static", "tag", "author"):
+            continue
+        post_json = post_dir / "post.json"
+        if not post_json.exists():
+            continue
+        try:
+            with open(post_json, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            style = data.get("tweet_hook_style", "")
+            created_at = data.get("created_at", "")
+            if style:
+                entries.append((created_at, style))
+        except Exception:
+            continue
+    entries.sort(key=lambda pair: pair[0], reverse=True)
+    return [style for _created_at, style in entries[:limit]]
+
+
 def _count_words(text: str) -> int:
     return len(text.split())
 
@@ -1835,7 +1869,7 @@ def build_intro(keyword: str, seed: str) -> str:
 # X/Twitter hook examples for the bundle prompt  (FIX: hook repetition)
 # ─────────────────────────────────────────────────────────────────
 #
-# PREVIOUS DESIGN FLAW (found in production): the "tweet_text" field in
+# PREVIOUS DESIGN FLAW #1 (found in production): the "tweet_text" field in
 # the bundle prompt carried exactly ONE hard-coded "Good:" example —
 # "Most teams burn $8k+ on AI tools before measuring ROI...". Because
 # few-shot examples are the strongest signal a model follows, the LLM
@@ -1843,82 +1877,189 @@ def build_intro(keyword: str, seed: str) -> str:
 # opener specifically) across a large share of posts, which is what
 # produced the repeated hook the user noticed on kubaik.github.io.
 #
-# FIX: rotate through a pool of hook styles the same way title shapes
-# and intro sentences already rotate elsewhere in this file. One style
-# is deterministically selected per topic via `_select`, so two
-# different topics get two different example shapes, and the prompt
-# explicitly tells the model the example is inspiration for STYLE only
-# — not text to reuse or imitate line-for-line.
+# FIX #1: rotate through a pool of hook styles the same way title shapes
+# and intro sentences already rotate elsewhere in this file.
+#
+# PREVIOUS DESIGN FLAW #2 (found in review, 2026): fix #1 stopped short.
+# The "unpopular opinion" style's example was the literal string
+# "Unpopular take: most teams optimize the wrong layer first...". Every
+# other style's example demonstrates a STRUCTURE (a number lead, a
+# before/after, a docs gap) without spelling out a quotable two-word
+# label for it. "Unpopular opinion" was the exception — its example
+# opens with the exact meta-label ("Unpopular take:") that names the
+# style itself, so it reads to the model less like "here is one way to
+# write a contrarian hook" and more like "the sentence to use is
+# 'Unpopular take: ...'". That's a much stronger, much more literal
+# thing for an LLM to imitate than an abstract structure is, which is
+# why three separate posts all opened with "Unpopular opinion:" /
+# "Unpopular take:" even though the prompt says the example is for
+# style only. A single hard-coded example has the same problem for
+# every style, just less visibly — one topic hashing onto "before /
+# after contrast" twice, for instance, would hand the model the exact
+# same seed sentence both times.
+#
+# FIX #2: each style now holds several differently-worded examples
+# (none of which spell out the style's own name as a reusable opener),
+# and one is picked per post — seeded independently from the style
+# selection — so even repeat visits to the same style don't hand the
+# model the same anchor sentence twice.
 _TWEET_HOOK_EXAMPLES = [
     {
         "style": "cost / waste framing",
-        "example": (
+        "examples": [
             "Most teams burn $8k+ on AI tools before measuring ROI.\\n\\n"
             "Most of it goes to autocomplete nobody audits.\\n\\n"
-            "Here is what actually paid off 👇"
-        ),
+            "Here is what actually paid off 👇",
+
+            "The AI tooling bill quietly doubles long before anyone checks "
+            "what it's buying.\\n\\n"
+            "Here's where the spend actually goes 👇",
+
+            "Half the AI spend on a typical team goes to seats nobody logs "
+            "into twice.\\n\\n"
+            "Here's how to find out which half 👇",
+        ],
     },
     {
         "style": "before / after contrast",
-        "example": (
+        "examples": [
             "Before: two engineers, two days, one timeout nobody could explain.\\n\\n"
             "After: a single config line.\\n\\n"
-            "Here's what changed 👇"
-        ),
+            "Here's what changed 👇",
+
+            "The setup that took a full sprint to build now takes one "
+            "afternoon, thanks to one removed step.\\n\\n"
+            "Here's the diff 👇",
+
+            "It used to take a postmortem to find this. Now it's a linter "
+            "rule.\\n\\n"
+            "Here's what moved 👇",
+        ],
     },
     {
         "style": "docs gap",
-        "example": (
+        "examples": [
             "The docs for this are good. They just skip the part that pages "
             "you at 2am.\\n\\n"
-            "Here's the gap nobody mentions 👇"
-        ),
+            "Here's the gap nobody mentions 👇",
+
+            "Official docs cover the setup. Almost none cover what happens "
+            "at month four.\\n\\n"
+            "Here's the part that's missing 👇",
+
+            "The reference guide is accurate right up until the first edge "
+            "case that actually matters.\\n\\n"
+            "Here's where it stops helping 👇",
+        ],
     },
     {
         "style": "specific number lead",
-        "example": (
+        "examples": [
             "One misconfigured connection pool added 400ms to every request.\\n\\n"
             "It took a day to find and one line to fix.\\n\\n"
-            "Here's how 👇"
-        ),
+            "Here's how 👇",
+
+            "A single default setting was quietly adding 30% to every build.\\n\\n"
+            "Here's the one that mattered 👇",
+
+            "One missing index turned a 40ms query into a 4-second one.\\n\\n"
+            "Here's how it was found 👇",
+        ],
     },
     {
         "style": "confession / mistake",
-        "example": (
+        "examples": [
             "It took three failed deploys to find the real cause of this.\\n\\n"
             "The fix was smaller than the debugging session.\\n\\n"
-            "Here's what finally worked 👇"
-        ),
+            "Here's what finally worked 👇",
+
+            "This shipped broken for weeks before anyone noticed the numbers "
+            "were wrong.\\n\\n"
+            "Here's what the postmortem found 👇",
+
+            "The rollback happened before the root cause was understood.\\n\\n"
+            "Here's what actually caused it 👇",
+        ],
     },
     {
         "style": "unpopular opinion",
-        "example": (
-            "Unpopular take: most teams optimize the wrong layer first.\\n\\n"
-            "Here's the one that actually moves the needle 👇"
-        ),
+        "examples": [
+            # NOTE: none of these open with a literal "Unpopular X:" label —
+            # see the FIX #2 note above for why that specific phrase is
+            # what leaked into three consecutive live posts.
+            "Most teams optimize the wrong layer first, and the fix that "
+            "actually moves the needle looks nothing like the usual advice.\\n\\n"
+            "Here's the layer that mattered 👇",
+
+            "The advice repeated most often about this is also the least "
+            "useful part of it.\\n\\n"
+            "Here's what actually worked instead 👇",
+
+            "Conventional wisdom here optimizes for the tutorial case, not "
+            "the production one.\\n\\n"
+            "Here's where that falls apart 👇",
+
+            "The standard mental model for this teaches the wrong thing "
+            "first, and most of the confusion traces back to that.\\n\\n"
+            "Here's the model that holds up under load 👇",
+        ],
     },
     {
         "style": "pattern across many examples",
-        "example": (
+        "examples": [
             "Reviewed a dozen implementations of this pattern.\\n\\n"
             "Almost all of them hit the same wall.\\n\\n"
-            "Here's the fix that held up in production 👇"
-        ),
+            "Here's the fix that held up in production 👇",
+
+            "Same failure mode, three unrelated codebases, same root cause.\\n\\n"
+            "Here's the pattern 👇",
+
+            "The teams that get this right all made one decision early.\\n\\n"
+            "Here's what it was 👇",
+        ],
     },
     {
         "style": "open question",
-        "example": (
+        "examples": [
             "How long should this actually take a team to get right?\\n\\n"
-            "Longer than the docs suggest — and here's why 👇"
-        ),
+            "Longer than the docs suggest — and here's why 👇",
+
+            "At what point does this stop being a config problem and start "
+            "being a design problem?\\n\\n"
+            "Here's where that line usually is 👇",
+
+            "What's the assumption here that costs the most time to unlearn?\\n\\n"
+            "Here's the one that trips up the most teams 👇",
+        ],
     },
 ]
 
 
-def _pick_tweet_hook_example(topic: str) -> dict:
-    """Deterministically pick one hook style per topic so consecutive
-    posts don't converge on the same 'Most teams burn $X' framing."""
-    return _select(_TWEET_HOOK_EXAMPLES, f"tweethook:{topic}")
+def _pick_tweet_hook_example(topic: str, recent_styles: Optional[List[str]] = None) -> dict:
+    """
+    Deterministically pick one hook style per topic (avoiding styles used
+    by the last few posts, when known) and then one worded example within
+    that style, so consecutive posts don't converge on the same style OR
+    the same literal anchor sentence for that style.
+
+    `recent_styles` should be the output of _load_recent_hook_styles() —
+    the style labels used by the most recently published posts, newest
+    first. Passing it in (rather than reading docs/ here) keeps this
+    function pure/testable and matches how existing_titles is threaded
+    through the rest of the generation pipeline.
+    """
+    recent = set(recent_styles or [])
+    pool = _TWEET_HOOK_EXAMPLES
+    candidates = [entry for entry in pool if entry["style"] not in recent]
+    if not candidates:
+        candidates = pool  # every style was recently used — fall back to all
+
+    chosen = _select(candidates, f"tweethook:{topic}")
+
+    examples = chosen["examples"]
+    example_text = _select(examples, f"tweethookexample:{topic}:{chosen['style']}")
+
+    return {"style": chosen["style"], "example": example_text}
 
 
 def inject_personal_intro(post, topic: str) -> None:
@@ -3913,6 +4054,12 @@ class BlogSystem:
                 f"#{h.replace(' ', '').replace('-', '')}" for h in hashtags
             )
 
+            # Recorded regardless of whether tweet_text came through, so
+            # _load_recent_hook_styles() has an accurate recent-style
+            # history to avoid even on attempts that fall back to the
+            # template path.
+            post.tweet_hook_style = bundle.get("_hook_style", "")
+
             bundle_tweet = bundle.get("tweet_text", "").strip()
             if bundle_tweet:
                 # FIX: was missing the trailing slash. Every other URL surface
@@ -4061,7 +4208,8 @@ class BlogSystem:
     ) -> dict:
         format_name, headings, format_note = _pick_structure(topic)
         author_note = _build_humanization_note(topic)
-        hook_example = _pick_tweet_hook_example(topic)
+        recent_hook_styles = _load_recent_hook_styles(self.output_dir)
+        hook_example = _pick_tweet_hook_example(topic, recent_styles=recent_hook_styles)
 
         resolved_headings = [h.replace("{topic}", topic) for h in headings]
         heading_block = "\n".join(resolved_headings)
@@ -4252,6 +4400,7 @@ Return ONLY the JSON object.""",
                 "Note: tweet_text missing from bundle — template fallback will be used.")
 
         data["_format"] = format_name
+        data["_hook_style"] = hook_style
         return data
 
     # ─────────────────────────────────────────────────────────────
@@ -4714,6 +4863,9 @@ Return ONLY the JSON object.""",
 
         if hasattr(post, 'prewritten_tweet') and post.prewritten_tweet:
             post_data['prewritten_tweet'] = post.prewritten_tweet
+
+        if hasattr(post, 'tweet_hook_style') and post.tweet_hook_style:
+            post_data['tweet_hook_style'] = post.tweet_hook_style
 
         with open(post_dir / "post.json", "w", encoding="utf-8") as f:
             json.dump(post_data, f, indent=2, ensure_ascii=False)
