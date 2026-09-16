@@ -175,69 +175,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "claude-code-after-365-days-what-actually-works",
-    "title": "Claude Code after 365 days: what actually works",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a staging failure that turned out to be a single fl; I had to teach it:\n\n \n\nSecond iteration added:\n\n \n\nCost of the rewrite: 15 minut",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "claude-code-review-wins-and-blind-spots",
-    "title": "Claude code review: wins and blind spots",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): The short version: the conventional advice on use claude is incomplete.; I run it on every pull request in our Python 3.11 monorepo with 260k lines acros; I ran into this when I tried to use Claude once to review a PR that added pagina",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "fix-ai-agent-failures-postmortem-guide",
-    "title": "Fix AI agent failures: postmortem guide",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client’s customer-facing agent suddenly started offering ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "hiring-engineers-the-3-things-ai-cares-about-now",
-    "title": "Hiring engineers: the 3 things AI cares about now",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I ran a post-mortem after that Redis candidate failed.; I was surprised when a junior engineer in Nairobi aced this.; I built a custom probe using   to simulate real traffic, with a broken Redis clu",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "land-5k-roles-from-nairobi-lagos-in-2026",
-    "title": "Land $5K roles from Nairobi & Lagos in 2026",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin; I once watched a Lagos engineer rewrite a failing Python service in Go in 48 hou",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "lessons-from-3-saas-price-pivots-in-2026",
     "title": "Lessons from 3 SaaS price pivots in 2026",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I set an annual plan at $99/user/year thinking indie hackers would love it.; I dug into the logs and found most churn came from teams of 5–10 people who’d ha",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "monolith-to-services-without-a-rewrite",
     "title": "Monolith to services without a rewrite",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about migrated monolith during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran a project in Lagos in 2026 where the monolith handled 8,000 requests per s",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "negotiate-salaries-with-ai-skills-in-2026",
     "title": "Negotiate salaries with AI skills in 2026",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I finally refused the offer, only to see the same JD posted three months later w; I built a simple script that scrapes public salary data, filters for roles where",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "negotiate-salary-2026-with-ai-resume-tool",
     "title": "Negotiate salary 2026 with AI resume tool",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I realized most engineers don’t negotiate around AI clauses—they treat them as b; I spent three days debugging a package that looked fair until I ran the numbers:",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "pick-one-stripe-lemon-squeezy-paddle-in-2026",
     "title": "Pick one: Stripe, Lemon Squeezy, Paddle in 2026",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about stripe lemon during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when I tried to move a $9/month indie project from Stripe to Pad",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "purpose-built-beats-general-ai-tools",
@@ -2484,6 +2454,41 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "claude-code-after-365-days-what-actually-works",
+    "title": "Claude Code after 365 days: what actually works",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a staging failure that turned out to be a single fl; I had to teach it:\n\n \n\nSecond iteration added:\n\n \n\nCost of the rewrite: 15 minut",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "claude-code-review-wins-and-blind-spots",
+    "title": "Claude code review: wins and blind spots",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): The short version: the conventional advice on use claude is incomplete.; I run it on every pull request in our Python 3.11 monorepo with 260k lines acros; I ran into this when I tried to use Claude once to review a PR that added pagina",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "fix-ai-agent-failures-postmortem-guide",
+    "title": "Fix AI agent failures: postmortem guide",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client’s customer-facing agent suddenly started offering ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "hiring-engineers-the-3-things-ai-cares-about-now",
+    "title": "Hiring engineers: the 3 things AI cares about now",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I ran a post-mortem after that Redis candidate failed.; I was surprised when a junior engineer in Nairobi aced this.; I built a custom probe using   to simulate real traffic, with a broken Redis clu",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "land-5k-roles-from-nairobi-lagos-in-2026",
+    "title": "Land $5K roles from Nairobi & Lagos in 2026",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin; I once watched a Lagos engineer rewrite a failing Python service in Go in 48 hou",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-fixes-legacy-code-nobody-owns",

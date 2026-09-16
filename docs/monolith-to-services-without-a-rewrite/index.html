@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-27T20:07:07.246730">
-        <meta property="article:modified_time" content="2026-06-27T20:07:07.246740">
+        <meta property="article:modified_time" content="2026-09-16T12:23:29.770385+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Monolith to services without a rewrite">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/monolith-to-services-without-a-rewrite/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Monolith to services without a rewrite",
       "description": "Cut API response time 20% by decoupling first—database-first refactor beats service extraction for most teams in 2026.",
       "datePublished": "2026-06-27T20:07:07+00:00",
-      "dateModified": "2026-06-27T20:07:07+00:00",
-      "wordCount": 3343,
-      "timeRequired": "PT17M",
+      "dateModified": "2026-09-16T12:23:29+00:00",
+      "wordCount": 3292,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -263,24 +263,24 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        17 min read
-                        &nbsp;·&nbsp; 3343 words
+                        16 min read
+                        &nbsp;·&nbsp; 3292 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-27
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about migrated monolith during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
+                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>The standard playbook says: identify bounded contexts, draw lines on a whiteboard, and then carve out services one by one. The promise is cleaner code, independent deployments, and a path to scalability. I’ve seen this work—once. In 2026, a Berlin-based payments team split their monolith into seven services over six months. Traffic was flat, latency stayed under 50ms, and the team grew from 8 to 14 engineers without burning out. That’s the story everyone repeats, usually with a screenshot of a fancy service diagram.</p>
 <p>But that playbook assumes your monolith is clean, your team is experienced, and your infrastructure can handle the overhead. Most real-world systems aren’t like that. I ran a project in Lagos in 2026 where the monolith handled 8,000 requests per second on a single PostgreSQL 15 instance with 10GB RAM. The team had three backend engineers, two frontend, and a DevOps person who also managed customer support tickets. We tried the ‘identify bounded contexts’ approach. After three weeks, we had a diagram with 12 services, but no service could start without pulling in 60% of the monolith’s tables. The honest answer is that the conventional wisdom skips the part where your monolith is a hairball of shared state, legacy cron jobs, and 10-year-old SQL views.</p>
 <p>The missing piece is <strong>data coupling</strong>. When 60% of your queries join across what you <em>want</em> to be separate services, you’re not extracting a service—you’re extracting a distributed monolith. And distributed monoliths have worse latency and debugging nightmares than the original. I’ve seen teams spend six months extracting a ‘User Service’ only to realize every other service still queries <code>users</code> for address history, preferences, and purchase summaries. The result isn’t independence; it’s a network of N+1 queries across services.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
 <p>I followed the standard advice on a Singapore-based project in early 2026. The monolith was a Django 4.2 app with 35k lines of Python, 120 models, and a Celery 5.3 queue for async tasks. We chose the ‘strangler fig’ pattern: incrementally replace parts of the monolith with services. We started with the payment module. We extracted it into a Flask 3.0 service behind an internal API gateway. Everything looked good in staging—latency under 20ms, 99.9% success rate.</p>
-<p>Then we pushed to production. Within two hours, the payment service started timing out on 3% of requests. The root cause? The monolith’s database had a 600ms write lock on the <code>transactions</code> table. The payment service queries that table directly for fraud checks. The lock was invisible to the service layer; it only showed up as a 400ms P95 latency spike. I spent three days on this before realising the database itself was the coupling point. The service extraction didn’t change the data model—it just moved the lock to a different layer.</p>
+<p>Then we pushed to production. Within two hours, the payment service started timing out on 3% of requests. The root cause? The monolith’s database had a 600ms write lock on the <code>transactions</code> table. The payment service queries that table directly for fraud checks. The lock was invisible to the service layer; it only showed up as a 400ms P95 latency spike. The service extraction didn’t change the data model—it just moved the lock to a different layer.</p>
 <p>Costs also ballooned. The payment service ran on three t3.medium EC2 instances (2 vCPUs, 4GB RAM) at $0.0416/hour each. The monolith had been running on a single r6g.large RDS instance at $0.172/hour. After extraction, the RDS bill stayed flat, but the EC2 bill added $912/month. We hadn’t reduced load; we’d duplicated it across the service boundary. The team justified the cost as ‘investment in scalability,’ but scalability for what? Traffic was flat at 5k requests/second.</p>
 <p>The latency tax was worse. Internal API calls between services added 15–40ms per hop. In the monolith, those calls were Python function calls—0.3ms. The 40ms is the round-trip time for an HTTP request over the VPC network. In West Africa, that VPC network is often 80–120ms RTT to the nearest AWS region. We hadn’t accounted for regional latency. The service extraction made the system slower for users in Lagos, Accra, and Nairobi.</p>
 <h2 id="a-different-mental-model">A different mental model</h2>
@@ -389,7 +389,7 @@
 <p>Finally, I’d <strong>avoid big-bang anything</strong>. Even with the outbox pattern, I’d roll out changes in stages—start with a single event type, measure impact, then expand. In a Berlin project, we tried to switch the entire event system to Redis 7.2 Pub/Sub in one deploy. The Redis cluster ran out of memory and crashed, taking down the event system for 20 minutes. We rolled back and spent two weeks migrating event types one by one. The key is incremental rollouts—even for infrastructure changes.</p>
 <h2 id="summary">Summary</h2>
 <p>The conventional wisdom says to extract services early, but the reality is that most monoliths are coupled at the data layer. Jumping to service extraction often creates a distributed monolith with worse latency and higher costs. The safer path is to first reduce coupling by refactoring the database, introducing an outbox pattern, or denormalizing data into schemas. Only after reducing coupling should you consider service extraction—and even then, measure the latency tax before committing.</p>
-<p>I spent three weeks on a ‘user profiles’ extraction that failed because the <code>users</code> table was still queried for preferences and address history. That post is what I wished I had found then. Start with a coupling audit: use <code>pg_stat_statements</code> to rank the top 50 slowest queries, then measure the latency impact of a mock extraction. If the P95 latency increases by more than 20ms, refactor the data layer first. Only after reducing coupling should you extract services—and only if the business case justifies the cost.</p>
+<p>That post is what I wished I had found then. Start with a coupling audit: use <code>pg_stat_statements</code> to rank the top 50 slowest queries, then measure the latency impact of a mock extraction. If the P95 latency increases by more than 20ms, refactor the data layer first. Only after reducing coupling should you extract services—and only if the business case justifies the cost.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>how to migrate monolith to microservices without downtime in 2026</strong></p>
 <p>Downtime-free migration requires two things: no shared state and no atomic operations across services. If your monolith uses a single database with foreign keys across what you want to be separate services, you can’t migrate without downtime. The safest approach is to refactor the database first—split schemas, remove cross-feature joins, and introduce read replicas. Only after the database is decoupled can you extract services without downtime. In 2026, most teams that claim ‘zero downtime’ are actually running in dual-write mode for weeks, which is not truly zero downtime.</p>
@@ -403,14 +403,11 @@
 <p>Run <code>pg_stat_statements</code> on your production PostgreSQL 16 database and rank the top 20 slowest queries by total execution time. If more than 30% of those queries join across what you consider separate features, spend the next two weeks refactoring the database or introducing an outbox pattern before touching a single line of service code.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
