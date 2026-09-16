@@ -284,16 +284,62 @@ jobs:
             --backup-dir ./.fabrication_backups \
             --confirm
 
-      # The three bounded steps above can change what's on disk in docs/:
+      # FIX (2026-09-16): citation_audit_report.json (33 posts / 46 flagged
+      # sentences — fabricated-sounding stats attributed to real orgs like
+      # OWASP, Datadog, LinearB) had no automated consumer. It's produced by
+      # adsense_credibility_cleanup.py's `scan` mode, which deliberately
+      # defers to a human `review` mode by design for a one-off pass — good
+      # for that, but nothing closed the loop automatically run over run,
+      # unlike the anecdote queue above. This step is a direct mirror of
+      # "🧹 Process fabrication regeneration queue": same bounded/backup/
+      # confirm safety model, reusing the exact same strip_fabricated_content()
+      # and blog_system.py gate functions (no separate fabrication logic to
+      # drift out of sync). A post it can't fully clean is left alone and
+      # marked needs_review in citation_audit_report.json for a human to run
+      # `python adsense_credibility_cleanup.py review` on specifically,
+      # rather than being forced or silently skipped.
+      - name: 🧹 Process citation regeneration queue (bounded)
+        run: |
+          python scripts/process_citation_queue.py \
+            --docs-dir ./docs \
+            --queue ./citation_audit_report.json \
+            --max-posts 5 \
+            --backup-dir ./.citation_backups \
+            --confirm
+
+      # The four bounded steps above can change what's on disk in docs/:
       # auto_retire_duplicates.py writes its own redirect-stub HTML directly,
-      # process_regeneration_queue.py only edits post.json's `content`
-      # field, and the prioritization step touches only the queue file —
-      # but the already-built index.html for any edited post is now stale.
-      # Rebuild so sitemap/OG/schema generation below reflect the current
-      # state rather than what was built before this job's cleanup steps ran.
+      # process_regeneration_queue.py and process_citation_queue.py only edit
+      # post.json's `content` field, and the prioritization step touches only
+      # the fabrication queue file — but the already-built index.html for any
+      # edited post is now stale. Rebuild so sitemap/OG/schema generation
+      # below reflect the current state rather than what was built before
+      # this job's cleanup steps ran.
       - name: 🔁 Rebuild site after automated fixes
         run: |
           python blog_system.py build
+
+      # FIX (2026-09-16): read-only regression guard for the self-canonical /
+      # missing-noindex bug the 2026-09-15 audit found on merge-redirect
+      # stubs (2 of 13 confirmed still live in sitemap.xml at the time).
+      # static_site_generator.py's generate_site() now computes
+      # _noindex_slugs (merge stubs ∪ regeneration_queue.json-quarantined
+      # posts) and both _generate_post_pages() and _generate_sitemap() key
+      # off the same set — this step is what would have caught that bug
+      # before it shipped, and now runs every 12h as a standing check that
+      # it stays fixed. Never fails the job; if it ever reports a problem,
+      # the summary step below still surfaces it in the run log for someone
+      # to look at, same posture as the link-audit step.
+      - name: 🔒 Noindex compliance audit
+        run: |
+          python -c "
+          from pathlib import Path
+          from adsense_fixes.canonical_guard import audit_noindex_compliance
+          report = audit_noindex_compliance(Path('./docs'))
+          print(report)
+          with open('noindex_audit_report.txt', 'w') as f:
+              f.write(report)
+          "
 
       # Generate single sitemap.xml (no chunking)
       - name: 🗺️ Generate sitemap.xml
@@ -347,13 +393,14 @@ jobs:
           # describes for every other runtime cache in this repo. Nothing
           # needs to be added here for velocity tracking to work.
           #
-          # .duplicate_backups/ and .fabrication_backups/ ARE named
-          # explicitly below, for the opposite reason: they are NOT
-          # gitignored, and they're the only copy of anything
-          # scripts/auto_retire_duplicates.py and
-          # scripts/process_regeneration_queue.py touched this run — a
-          # backup that isn't persisted across checkouts isn't a backup.
-          git add . .duplicate_backups/ .fabrication_backups/
+          # .duplicate_backups/, .fabrication_backups/, and
+          # .citation_backups/ ARE named explicitly below, for the opposite
+          # reason: they are NOT gitignored, and they're the only copy of
+          # anything scripts/auto_retire_duplicates.py,
+          # scripts/process_regeneration_queue.py, and
+          # scripts/process_citation_queue.py touched this run — a backup
+          # that isn't persisted across checkouts isn't a backup.
+          git add . .duplicate_backups/ .fabrication_backups/ .citation_backups/
           if git diff --staged --quiet; then
             echo "Nothing to commit"
           else
