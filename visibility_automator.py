@@ -42,6 +42,23 @@ _TECH_RELEVANCE_SIGNALS = {
     "database", "sql", "nosql", "redis", "kafka", "blockchain", "crypto",
 }
 
+# FIX (found in review, 2026): the actual failure observed in production
+# was #Crypto and #Blockchain getting injected as the LEAD hashtag on
+# AI-agent/LLMOps posts. _TECH_RELEVANCE_SIGNALS above technically
+# contains "crypto" and "blockchain" (they're broadly "tech"), so even a
+# fully wired-up relevance filter using that set alone would have let both
+# through — "is this generically tech" isn't the same question as "is this
+# relevant to THIS blog's niche." This explicit block-list excludes topics
+# that are tech-adjacent but off-niche for an AI-agent/dev-tooling blog and
+# that read as unrelated (or spammy) hashtag-stuffing when attached to a
+# post about MCP servers or model routing.
+_BLOCKED_TRENDING_TOPICS = {
+    "crypto", "cryptocurrency", "bitcoin", "btc", "eth", "ethereum",
+    "blockchain", "nft", "nfts", "web3", "defi", "altcoin", "metaverse",
+    "forex", "stocks", "stockmarket", "trading", "gambling", "betting",
+    "casino", "sportsbook",
+}
+
 # ─────────────────────────────────────────────────────────────────
 # Stop-word set for topic-phrase extraction
 # ─────────────────────────────────────────────────────────────────
@@ -301,10 +318,45 @@ def _extract_teaser(meta_description: str, max_chars: int = 120) -> str:
 # Trending hashtag — cache read only (used in tweets as a tag slot)
 # ─────────────────────────────────────────────────────────────────
 
-def _load_trending_cache() -> Optional[str]:
+def _is_relevant_trending_tag(
+    tag: str, context_tokens: Optional[set] = None
+) -> bool:
     """
-    Load the trending hashtag cache and return ONE randomly chosen tag.
-    Returns a string like '#MachineLearning', or None if cache is absent/empty.
+    Decide whether a trending-cache tag is safe/relevant to inject on this
+    blog. Always excludes _BLOCKED_TRENDING_TOPICS regardless of context.
+    When context_tokens is given (the current post's own tags/keywords/
+    title words), the tag must additionally relate to THAT post, not just
+    be generically "tech" — the real bug this replaces was that
+    "crypto"/"blockchain" pass a generic tech check even on a post about
+    MCP servers, because both words ARE broadly tech-related; they just
+    aren't related to the specific post being tweeted.
+    """
+    t = re.sub(r"[^\w]", "", tag.lstrip("#")).lower()
+    if not t:
+        return False
+    if any(blocked in t for blocked in _BLOCKED_TRENDING_TOPICS):
+        return False
+    if context_tokens:
+        if not any(
+            sig in t or t in sig
+            for sig in context_tokens
+            if len(sig) >= 3
+        ):
+            return False
+    elif not any(sig in t for sig in _TECH_RELEVANCE_SIGNALS):
+        # No post-specific context available — fall back to the old
+        # generic-tech gate rather than accepting literally anything.
+        return False
+    return True
+
+
+def _load_trending_cache(context_tokens: Optional[set] = None) -> Optional[str]:
+    """
+    Load the trending hashtag cache and return ONE relevant tag, or None if
+    the cache is absent/empty or nothing in it clears the relevance/
+    block-list filter (see _is_relevant_trending_tag). Returning None here
+    is the correct outcome when nothing fits — no trending tag is strictly
+    better than an off-topic one.
     """
     if not _TRENDING_CACHE_FILE.exists():
         print(f"ℹ️  No trending cache file found at {_TRENDING_CACHE_FILE}.")
@@ -313,30 +365,35 @@ def _load_trending_cache() -> Optional[str]:
         with open(_TRENDING_CACHE_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
         hashtags = data.get("hashtags")
-        if hashtags and isinstance(hashtags, list):
-            valid = [h.strip()
-                     for h in hashtags if isinstance(h, str) and h.strip()]
-            if valid:
-                chosen = random.choice(valid)
-                # Ensure it's a single word (no spaces) with # prefix
-                chosen = re.sub(r"[^\w]", "", chosen.lstrip("#"))
-                chosen = f"#{chosen}"
-                print(
-                    f"📦 Trending cache pool ({len(valid)} tags) — "
-                    f"randomly selected for first slot: {chosen}"
-                )
-                return chosen
+        if not hashtags:
+            legacy = data.get("hashtag", "").strip()
+            hashtags = [legacy] if legacy else []
+        if not (hashtags and isinstance(hashtags, list)):
+            print("ℹ️  Trending cache file contains no usable tags.")
+            return None
+
+        valid = [h.strip() for h in hashtags if isinstance(h, str) and h.strip()]
+        if not valid:
             print("ℹ️  'hashtags' array in cache is empty.")
             return None
-        # Legacy single-tag format
-        tag = data.get("hashtag", "").strip()
-        if tag:
-            tag = re.sub(r"[^\w]", "", tag.lstrip("#"))
-            tag = f"#{tag}"
-            print(f"📦 Trending tag from cache (legacy) — will go first: {tag}")
-            return tag
-        print("ℹ️  Trending cache file contains no usable tags.")
-        return None
+
+        relevant = [h for h in valid if _is_relevant_trending_tag(h, context_tokens)]
+        if not relevant:
+            print(
+                f"ℹ️  Trending cache pool ({len(valid)} tags) — none passed "
+                "the relevance/block-list filter for this post. Skipping "
+                "trending tag rather than injecting an off-topic one."
+            )
+            return None
+
+        chosen = random.choice(relevant)
+        chosen = re.sub(r"[^\w]", "", chosen.lstrip("#"))
+        chosen = f"#{chosen}"
+        print(
+            f"📦 Trending cache pool ({len(valid)} tags, {len(relevant)} relevant) — "
+            f"selected for first slot: {chosen}"
+        )
+        return chosen
     except Exception as e:
         print(f"⚠️  Could not read trending cache: {e}")
         return None
@@ -386,6 +443,8 @@ def fetch_daily_trending_hashtag(twitter_client) -> Optional[str]:
 
     def _relevance_score(tag: str, freq: int) -> float:
         t = tag.lower()
+        if any(blocked in t for blocked in _BLOCKED_TRENDING_TOPICS):
+            return 0
         if t in _TECH_RELEVANCE_SIGNALS:
             return freq * 3
         if any(sig in t for sig in _TECH_RELEVANCE_SIGNALS):
@@ -490,23 +549,42 @@ def _get_hashtags_for_post(post, max_tags: int = 4) -> str:
         else:
             clean = ["#Programming", "#SoftwareEngineering", "#TechBlog"]
 
-    # ── 5. Inject one random trending tag (always first slot) ─────────────
-    trending_tag = _load_trending_cache()
+    # ── 5. Inject one relevant trending tag, if room and if it fits ────────
+    # FIX (found in review, 2026): this used to always call
+    # _load_trending_cache() with no context, so it had no way to know
+    # whether the cached trending tag actually related to THIS post, and
+    # would evict a real, curated, on-topic tag from `clean` to make room
+    # for whatever random trending tag came back (see the
+    # "clean[:max_tags-1]" eviction below, which is now gone). Build the
+    # context from the post's own already-curated vocabulary — the same
+    # words that produced `clean` and seo_keywords — and only take the
+    # trending slot if it fits without displacing a curated, relevant tag.
+    context_tokens = set(seen)
+    if hasattr(post, "title") and post.title:
+        context_tokens |= {
+            w.lower() for w in re.findall(r"[A-Za-z]{3,}", post.title)
+        }
+
+    trending_tag = _load_trending_cache(context_tokens=context_tokens)
     if trending_tag:
         trending_word = _make_single_word_tag(trending_tag)
         trending_formatted = f"#{trending_word}"
-        if trending_word.lower() not in seen:
+        if trending_word.lower() in seen:
+            print(
+                f"  ℹ️  Trending tag {trending_formatted} already present — skipped.")
+        else:
             if len(clean) >= max_tags:
-                # Insert at front, drop last tag to stay within budget
+                # Safe to swap out the lowest-priority curated tag now:
+                # _load_trending_cache() only returned this tag because it
+                # already overlaps this post's own vocabulary (see
+                # context_tokens above), so it isn't the irrelevant
+                # eviction this used to be.
                 clean = [trending_formatted] + clean[: max_tags - 1]
             else:
                 clean = [trending_formatted] + clean
             seen.add(trending_word.lower())
             print(
                 f"  🔥 Trending tag injected as first hashtag: {trending_formatted}")
-        else:
-            print(
-                f"  ℹ️  Trending tag {trending_formatted} already present — skipped.")
 
     return " ".join(clean[:max_tags])
 

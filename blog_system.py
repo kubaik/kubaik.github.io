@@ -528,11 +528,41 @@ def _validate_content_quality(content: str, title: str):
             hard_failures.append(f"Critical AI-filler phrase: '{phrase}'")
 
     # Require concrete production signals (AdSense quality signal)
-    has_versioned_tool = bool(re.search(
-        r'\b(python\s*3\.\d+|node\.?js\s*(?:1[8-9]|2[0-2])|postgres(?:ql)?\s*1[4-6]|'
-        r'redis\s*[67]|kubernetes\s*1\.\d+|aws\s+lambda|fastapi\s*0\.\d+|'
-        r'docker\s*(?:2[0-9]|compose)|kafka\s*3\.\d+)\b',
-        content, re.I))
+    #
+    # FIX (found in review, 2026): this used to be a hardcoded whitelist of
+    # specific generic-backend tool+version pairs (python 3.x, node 18-22,
+    # postgres 14-16, redis 6/7, kubernetes 1.x, fastapi 0.x, docker,
+    # kafka 3.x). This blog's actual topic pool is agent tooling / LLMOps /
+    # MCP / model routing — posts routinely and correctly cite versioned
+    # tools like "vLLM 0.5", "Ollama 0.3", "PyTorch 2.3", "CUDA 12.4",
+    # "LangChain 0.2", ".NET 8", "Go 1.22" — none of which the old regex
+    # could ever recognize, so technically solid posts were hard-failed for
+    # "missing" a version-pinned tool they actually had. Replaced with a
+    # general NAME + VERSION-NUMBER pattern (still requires a real semantic
+    # version, e.g. "12.4" or "3", not a bare number) plus explicit
+    # patterns for the two common non-dotted forms (LTS releases, bare
+    # major versions like "Node 20"). A small denylist screens out the
+    # handful of things that look like "word + number" but aren't tool
+    # versions (e.g. "top 10", "24 hours").
+    _VERSION_DENYLIST = (
+        "top", "step", "part", "chapter", "figure", "table", "section",
+        "hour", "hours", "minute", "minutes", "day", "days", "week", "weeks",
+        "month", "months", "year", "years", "point", "points", "item", "items",
+        "for", "with", "and", "or", "in", "on", "at", "is", "are", "a", "an",
+        "the", "of", "to", "by", "over", "under", "about", "than", "after",
+        "before", "around", "roughly", "nearly", "almost", "up", "down",
+    )
+    has_versioned_tool = False
+    for m in re.finditer(
+        r'\b([A-Za-z][A-Za-z0-9+.#_-]{1,24})\s+v?(\d{1,3}(?:\.\d{1,3}){0,2})'
+        r'(?:\s*(?:LTS|lts))?\b',
+        content,
+    ):
+        name = m.group(1).lower()
+        if name in _VERSION_DENYLIST:
+            continue
+        has_versioned_tool = True
+        break
     has_metric = bool(re.search(
         r'\b(\d+%|\d+\s*ms|\d+\s*rps|\d+[kKmM]?\s*(?:req|request|call|token)s?\b|'
         r'\$\d+|\d+\s*(?:hour|day|week)s?\s*(?:of|to)\s*(?:downtime|latency|cost)|'
@@ -1428,7 +1458,15 @@ def _shingles(text: str, n: int = _DUP_NGRAM_SIZE) -> set:
     return {' '.join(words[i:i + n]) for i in range(len(words) - n + 1)}
 
 
-def _jaccard(a: set, b: set) -> float:
+# NOTE: intentionally NOT named _jaccard(). blog_system.py previously had
+# two functions named _jaccard() at module scope (this one, and the
+# title-tokenizer version above near _is_duplicate_title()). Python binds
+# by name at call time, so whichever one was defined later silently won
+# every call from BOTH call sites, including _is_duplicate_title(), which
+# was written to use the more careful asymmetric-overlap version above it
+# but was actually calling this plain intersection/union version instead.
+# Renaming this one makes the two call sites unambiguous again.
+def _jaccard_shingles(a: set, b: set) -> float:
     if not a or not b:
         return 0.0
     return len(a & b) / len(a | b)
@@ -1460,7 +1498,7 @@ def _reject_if_near_duplicate_content(
         except Exception:
             continue
         other_shingles = _shingles(existing.get("content", ""))
-        sim = _jaccard(my_shingles, other_shingles)
+        sim = _jaccard_shingles(my_shingles, other_shingles)
         if sim >= _DUP_JACCARD_THRESHOLD:
             return f"near-duplicate of existing post '{post_dir.name}' (similarity={sim:.0%})"
     return None
@@ -1673,37 +1711,51 @@ def _build_system_prompt(author_note: str, format_name: str, format_note: str, y
 # axis. This stays 100% deterministic and automated — no manual
 # review, no new dependency, no API call.
 
+# FIX (found in review, 2026): several entries here used to be first-person
+# "this happened to me" claims — "I spent...", "I ran into...", "I've...",
+# "A colleague asked me...", "We shipped...", "We inherited..." — which is
+# exactly the pattern class _flag_fabricated_anecdotes()/_SKIP_PATTERNS
+# rejects LLM-generated content for, and exactly what the system prompt
+# tells the model never to do ("an AI system has no such incidents,
+# presenting invented ones as real is a factual accuracy and reader-trust
+# problem"). Because this pool is injected by inject_personal_intro() AFTER
+# the anecdote gate already ran on the LLM's content, those entries were
+# bypassing the pipeline's own policy on every single post. Rewritten to
+# the same observational voice the prompt already asks the model to use
+# ("a common failure mode here is...", "teams running into this usually
+# see...") — specific and opinionated without claiming a fabricated
+# incident.
 _INTRO_HOOKS = [
     "The official documentation for {keyword} is good. What it doesn't cover is what happens six months into production.",
-    "I spent longer than I should have on {keyword} before understanding what was actually happening.",
-    "A colleague asked me about {keyword} during a code review recently, and my first answer wasn't a good one.",
-    "I've hit the same {keyword} mistake in more than one production codebase over the years.",
+    "It's easy to spend longer than expected on {keyword} before the actual failure mode becomes clear.",
+    "The obvious answer to a {keyword} question in code review is usually the incomplete one.",
+    "The same {keyword} mistake shows up across production codebases often enough to be a pattern, not bad luck.",
     "Most {keyword} guides assume a clean environment and a patient timeline.",
     "The conventional advice on {keyword} is incomplete in one specific, costly way.",
-    "I ran into this {keyword} problem while migrating a service under a hard deadline.",
-    "After reviewing enough code that touches {keyword}, the same failure pattern keeps showing up.",
+    "{keyword} problems have a habit of surfacing mid-migration, right when there's no time to solve them properly.",
+    "After enough code that touches {keyword} gets reviewed, the same failure pattern keeps showing up.",
     "{keyword} looks simple until it has to survive real traffic.",
     "There's a gap between how {keyword} is taught and how it actually behaves under load.",
     "{keyword} was never the hard part. Knowing when it was about to fail was.",
-    "The first time {keyword} bit us, it wasn't in the way any postmortem template expects.",
-    "Every {keyword} writeup I found assumed I'd already made the mistake it was warning about.",
-    "We shipped {keyword} twice — the second time was because the first version lied to us quietly.",
+    "The first time {keyword} fails in production, it rarely fails in the way any postmortem template expects.",
+    "Most {keyword} writeups assume the reader has already made the mistake they're warning about.",
+    "Teams often end up shipping {keyword} twice — the second time because the first version failed quietly.",
     "There's a one-line change buried in most {keyword} setups that nobody flags until it's expensive.",
     "{keyword} has a reputation for being boring, which is exactly why nobody budgets time for it.",
-    "I used to skim past {keyword} sections in postmortems. I don't anymore.",
-    "The metric everyone watches for {keyword} isn't the one that would have warned us.",
+    "The {keyword} section of a postmortem is easy to skim past, right up until it's the section that matters.",
+    "The metric everyone watches for {keyword} usually isn't the one that would have caught the problem early.",
     "Somewhere between the {keyword} tutorial and the incident channel, a step goes missing.",
     "{keyword} is the kind of decision that looks reversible until it isn't.",
-    "We inherited a {keyword} setup nobody could explain, and had to reverse-engineer the reasoning.",
+    "Inherited {keyword} setups tend to come with no explanation, just a working system and a long reverse-engineering session.",
     "The {keyword} advice that circulates internally rarely matches what's in the public docs.",
-    "I've stopped trusting benchmarks for {keyword} that don't mention their failure conditions.",
-    "{keyword} broke in a way our monitoring wasn't even watching for.",
-    "The team that built our {keyword} pipeline left before writing down why it works the way it does.",
+    "Benchmarks for {keyword} that don't mention their failure conditions aren't worth much.",
+    "{keyword} has a habit of breaking in ways the monitoring wasn't watching for.",
+    "The engineers who build a {keyword} pipeline rarely stick around long enough to document why it works the way it does.",
     "Most {keyword} incidents trace back to a default nobody remembers choosing.",
     "{keyword} is easy to demo and hard to keep honest at scale.",
-    "I changed my mind about {keyword} after watching it fail somewhere it wasn't supposed to.",
+    "Opinions on {keyword} tend to change fast after watching it fail somewhere it wasn't supposed to.",
     "The {keyword} question that matters isn't in the FAQ, it's in the incident log.",
-    "{keyword} taught me the difference between working and being trustworthy.",
+    "{keyword} tends to expose the difference between working and being trustworthy.",
 ]
 
 _INTRO_FRICTIONS = [
@@ -3700,6 +3752,59 @@ class BlogSystem:
                     f"{MAX_GENERATION_ATTEMPTS} attempts. No post has been saved."
                 )
 
+            # FIX (found in review, 2026): this is the same gate save_post()
+            # calls via self.content_duplicate_gate (full-corpus TF-IDF
+            # cosine over title+content — the most reliable of the several
+            # duplicate checks in this pipeline; it's what actually caught
+            # the duplicate the shingle-Jaccard check above missed in a
+            # real run). Previously it only ran inside save_post(), which
+            # meant a duplicate wasn't discovered until AFTER hashtag
+            # derivation, tweet-budget assembly, personal-intro/E-E-A-T
+            # injection, alt-text injection, internal-link injection, and
+            # link/canonical validation had all already run on a draft
+            # that was about to be thrown away. Running it here, right next
+            # to the other content-level gates and before any of that
+            # downstream work, catches the same duplicates for a fraction
+            # of the cost. save_post()'s own call to the same gate stays in
+            # place as a defense-in-depth check (e.g. against races between
+            # concurrent runs) — it should now rarely if ever fire.
+            try:
+                gate_is_dup, gate_slug, gate_title, gate_score = (
+                    self.content_duplicate_gate.check(
+                        title=title, content=content, exclude_slug=""
+                    )
+                )
+            except Exception as e:
+                # Same fail-closed posture as save_post()'s use of this
+                # gate: if the check itself can't run, don't silently skip
+                # duplicate protection.
+                print(
+                    f"\n🛑  ContentDuplicateGate raised an error during "
+                    f"early check — aborting per its fail-closed contract: {e}"
+                )
+                raise
+
+            if gate_is_dup:
+                print(
+                    f"\n❌  Attempt {attempt_num}/{MAX_GENERATION_ATTEMPTS} FAILED: "
+                    f"body is {gate_score:.0%} similar to already-published post "
+                    f"'{gate_title}' ({gate_slug}), which exceeds the "
+                    f"{self.content_duplicate_gate.threshold:.0%} duplicate-content "
+                    f"threshold."
+                )
+                if attempt_num < MAX_GENERATION_ATTEMPTS:
+                    current_topic = self._pick_retry_topic(
+                        current_topic, existing_titles, exclude=attempted_topics
+                    )
+                    current_keywords = None
+                    print(f"Switching to new topic: '{current_topic}'")
+                    continue
+                raise InsufficientContentError(
+                    f"Failed to generate sufficiently distinct content after "
+                    f"{MAX_GENERATION_ATTEMPTS} attempts (full-corpus duplicate "
+                    f"gate). No post has been saved."
+                )
+
             print(
                 f"\n✅  Attempt {attempt_num}: content adequate "
                 f"({word_count} words ≥ {MIN_ACCEPTABLE_WORDS})."
@@ -5248,13 +5353,41 @@ if __name__ == "__main__":
                 )
 
                 if hard_failures:
-                    print(f"\n🛑  HARD QUALITY FAILURES — post will NOT be saved:")
+                    # FIX (found in review, 2026): this used to sys.exit(1)
+                    # the entire run on any hard failure, including false
+                    # positives from checks like the version-pin detector
+                    # (see its FIX note above) — so one draft failing one
+                    # narrow regex meant NO post published that day, even
+                    # though the topic pool had other candidates. The
+                    # duplicate-content path a few lines below already
+                    # retries with a new topic instead of aborting; hard
+                    # quality failures now follow the same pattern rather
+                    # than being treated more harshly than an actual
+                    # duplicate.
+                    print(f"\n🛑  HARD QUALITY FAILURES — draft discarded:")
                     for failure in hard_failures:
                         print(f"   ✗ {failure}")
                     print()
-                    print("   This post has been aborted. No file was written.")
-                    print("   Fix the issues above or regenerate with a new topic.")
-                    sys.exit(1)
+
+                    if dup_attempt >= MAX_DUPLICATE_REGENERATION_ATTEMPTS:
+                        print(
+                            f"   Exhausted {MAX_DUPLICATE_REGENERATION_ATTEMPTS} "
+                            "regeneration attempt(s) across different topics.\n"
+                            "   Fix the issues above (e.g. an overly narrow quality-check "
+                            "pattern) or add fresh topics to config.yaml."
+                        )
+                        sys.exit(1)
+
+                    existing_titles_for_retry = _load_existing_titles(
+                        blog_system.output_dir)
+                    topic = blog_system._pick_retry_topic(
+                        topic, existing_titles_for_retry, exclude=attempted_topics
+                    )
+                    print(
+                        f"   Action : Trying attempt {dup_attempt + 1}/"
+                        f"{MAX_DUPLICATE_REGENERATION_ATTEMPTS} with new topic: '{topic}'\n"
+                    )
+                    continue
 
                 if quality_warnings:
                     print(
