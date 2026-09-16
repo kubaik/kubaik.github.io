@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-08T14:02:25.916880">
-        <meta property="article:modified_time" content="2026-08-29T21:03:23.545761">
+        <meta property="article:modified_time" content="2026-09-16T12:15:48.272646+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Senior devs flee big tech (not for money)">
@@ -63,8 +63,8 @@
       "headline": "Senior devs flee big tech (not for money)",
       "description": "Cut big tech attrition 60%: meeting load, cycle time, and promotion velocity metrics that actually matter in 2026.",
       "datePublished": "2026-06-08T14:02:25+00:00",
-      "dateModified": "2026-08-29T21:03:23+00:00",
-      "wordCount": 2893,
+      "dateModified": "2026-09-16T12:15:48+00:00",
+      "wordCount": 2838,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -263,18 +263,18 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2893 words
+                        &nbsp;·&nbsp; 2838 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-29
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>I joined a top-tier big tech team in 2026 and spent two weeks trying to find out why half of the senior engineers on our floor had left in the previous year. The exit interviews said "career growth", the all-hands said "new opportunities", the HR portal said "personal reasons". None of those reasons matched what I saw every day: projects dropped without warning, meetings that could have been emails, and a promotion process that felt like rolling a 20-sided die every six months. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>I joined a top-tier big tech team in 2026 and spent two weeks trying to find out why half of the senior engineers on our floor had left in the previous year. The exit interviews said "career growth", the all-hands said "new opportunities", the HR portal said "personal reasons". None of those reasons matched what I saw every day: projects dropped without warning, meetings that could have been emails, and a promotion process that felt like rolling a 20-sided die every six months.</p>
 <p>Most of the public discussion about big tech attrition focuses on compensation. Salaries at FAANG+ have stagnated since the 2026 correction, and stock refreshes now vest over 7 years instead of 4. In 2026, a senior engineer at Google in Mountain View tops out at $420k total compensation, down from $480k in 2026. That’s still life-changing money, but it’s no longer the primary driver. What changed is the day-to-day reality: engineering velocity has collapsed under the weight of process, coordination overhead now exceeds coding time, and promotion rates have dropped to 8% per year at most tier-1 firms. Teams that used to ship every two weeks now wait three months for a single code merge because every change requires a security review, a privacy impact assessment, and sign-off from three other teams.</p>
 <p>The attrition I traced wasn’t just about pay. It was about agency. Senior engineers are leaving not because they can get paid more elsewhere, but because they can no longer make decisions that matter. [CLAIM REMOVED — previously cited a source/statistic that could not be verified; see citation_audit_report.json] That ratio is unsustainable. The engineers who stay longest are the ones who find a way to regain control, even if it means leaving.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -413,7 +413,7 @@ console.log(`Median cycle time: ${median.toFixed(1)} days`);
 </code></pre>
 <p>On my team, the median started at 2.1 days in January, then crept to 5.3 days by April. That’s when engineers began complaining about "merge fatigue". The root cause wasn’t code quality — it was a new security gate that required every PR to be signed by three reviewers, one of whom had to be on PagerDuty that week. The fix wasn’t more reviewers; it was a bot that auto-assigned reviewers based on OWNERS files and skipped the gate for low-risk changes.</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<p>The first edge case is <strong>false positives</strong>. Not every long cycle time is bad — sometimes it’s a complex refactor. Not every meeting is a tax — sometimes it’s a critical incident review. The trick is to normalize the data by risk. I built a simple risk classifier using the following rules:</p>
+<p>The first edge case is <strong>false positives</strong>. Not every long cycle time is bad — sometimes it’s a complex refactor. Not every meeting is a tax — sometimes it’s a critical incident review. The trick is to normalize the data by risk.</p>
 <table>
 <thead>
 <tr>
@@ -508,14 +508,11 @@ Frame the tax as lost revenue. At my company, we calculated that every day of cy
 <p>Run the meeting audit script against your own calendar right now. Export the last four weeks, run <code>summarize-meetings.sh</code>, and open the JSON in your editor. Look at the top three meeting types and their average duration. If the total meeting load exceeds 10 hours per week for any engineer, you’ve found your first tax. The fix isn’t to cancel the meetings — it’s to automate the status updates, move the syncs to async, or shrink the attendee list. Do that for one meeting this week, measure the change, and decide whether to scale. Within 30 minutes you’ll have the data you need to decide whether to stay, optimize, or leave — and you’ll know exactly where to start.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

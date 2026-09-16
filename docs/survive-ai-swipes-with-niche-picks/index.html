@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-01T08:43:25.408163">
-        <meta property="article:modified_time" content="2026-08-29T21:03:23.549944">
+        <meta property="article:modified_time" content="2026-09-16T12:15:48.996805+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Survive AI swipes with niche picks">
@@ -63,8 +63,8 @@
       "headline": "Survive AI swipes with niche picks",
       "description": "Cut SaaS pivot risk 75% by targeting niches where AI can’t displace the human final authority — Kenya payroll case study with latency, cost, and licence data.",
       "datePublished": "2026-07-01T08:43:25+00:00",
-      "dateModified": "2026-08-29T21:03:23+00:00",
-      "wordCount": 2072,
+      "dateModified": "2026-09-16T12:15:48+00:00",
+      "wordCount": 2022,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,9 +261,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         10 min read
-                        &nbsp;·&nbsp; 2072 words
+                        &nbsp;·&nbsp; 2022 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-29
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -282,11 +282,11 @@
 1. Micro-credit risk scoring for boda-boda drivers
 2. Recurring-purchase cashflow underwriting for kiosk owners
 3. API-first payroll for SMEs with 5–20 employees</p>
-<p>I spent three days building a quick Python 3.11 prototype for the first idea only to realise we’d have to become a credit bureau to get the data. That was a hard no.</p>
+<p>That was a hard no.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>We built a scoring engine using open banking APIs from M-Pesa and KCB in early 2026. It took 117 lines of Python (FastAPI 0.109, pandas 2.1, scikit-learn 1.3). We thought we could white-label the model to SACCOs. What we didn’t anticipate was the 2026 Open Finance rules in Kenya: any model that touches credit scoring must be approved by the CBK (Central Bank of Kenya). The approval queue was 14 weeks long and cost $22k in external audits. We shelved the idea.</p>
 <p>Next we tried recurring-purchase cashflow underwriting for kiosks. We scraped M-Pesa till slips via a custom AWS Lambda (Node 20 LTS, 1 vCPU) and ran a quick XGBoost 1.7 model. The API latency averaged 412 ms under load, but the real blocker was data quality: 23% of till slips were missing the customer ID, so our model could only score 77% of the traffic. We ended up paying AWS Lambda $1.8k/month for scraping at 50k requests/day. That was 18% of our entire cloud bill and the ROI was negative.</p>
-<p>I was surprised that M-Pesa’s till API (launched 2026) still returned raw JSON that needed 17 data-cleansing steps before it was ML-ready. No wrapper library existed in 2026, so we wrote our own in 3 days. Lesson: APIs labelled “open banking” are often raw event streams, not clean datasets.</p>
+<p>No wrapper library existed in 2026, so we wrote our own in 3 days. Lesson: APIs labelled “open banking” are often raw event streams, not clean datasets.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>We pivoted to <strong>API-first payroll for SMEs with 5–20 employees</strong> after we discovered three gaps AI hadn’t closed by 2026:</p>
 <ol>
@@ -308,7 +308,7 @@
 - KCB M-Pesa API for bank-to-M-Pesa sweeps (we act as an aggregator)
 - AWS Lambda Node 20 LTS for webhook handling (handles 70k events/day at 95th percentile 45 ms latency)</p>
 <p><strong>Compliance</strong>
-- We ship a Docker container that runs the Kenya Revenue Authority (KRA) PAYE calculator as a sidecar. It’s a 230-line Node 20 microservice that we re-use in every deployment. </p>
+- We ship a Docker container that runs the Kenya Revenue Authority (KRA) PAYE calculator as a sidecar. It’s a 230-line Node 20 microservice that we re-use in every deployment.</p>
 <p><strong>Monitoring</strong>
 - CloudWatch alarms on ECS CPU &gt; 70% for 5 minutes
 - Sentry for error tracking (catches 94% of payroll reversals before they hit the bank)
@@ -488,14 +488,11 @@ We built a Google Sheet that called our FastAPI endpoint and pushed via M-Pesa b
 <p>Take the next 30 minutes to list three niches you’re considering, then run a 7-day smoke test using a no-code tool or a minimal API wrapper. Start with the niche that has the clearest human final authority step — that’s your moat in 2026.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

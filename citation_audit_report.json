@@ -352,7 +352,8 @@
         "sentence": "A 2025 study by the Cloud Security Alliance found that teams using severity-only filtering still spent 4.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "senior-devs-flee-big-tech-not-for-money",
@@ -363,7 +364,8 @@
         "sentence": "A 2026 study by the UC Berkeley Engineering School found that engineers with 3–7 years of experience at big tech companies spend 57% of their time in meetings, code reviews, and compliance tasks — only 43% on design, coding, and debugging.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "skip-the-zero-trust-hype-for-5-person-teams",
@@ -374,7 +376,8 @@
         "sentence": "A 2026 study by the Cloud Native Security Foundation found that small teams (≤25 people) that implemented full zero trust had a 2.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "stop-shipping-daily-the-burn-rate-math",
@@ -385,7 +388,8 @@
         "sentence": "**Context switching tax**: Switching from coding to recording a 30-second Loom demo takes ~4 minutes of context switching, according to a 2025 study by GitPrime (now Pluralsight Flow).",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "needs_review"
   },
   {
     "slug": "survive-ai-swipes-with-niche-picks",
@@ -400,7 +404,8 @@
         "sentence": "A 2026 survey by iHub Research found that 68% of Kenyan SMEs with 5–20 employees still use Excel + mobile money for payroll.",
         "known_fabricated": true
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "treat-every-user-input-as-hostile-in-2026",
@@ -415,7 +420,8 @@
         "sentence": "’ In a 2026 study by Google’s red-team, 63 % of such prompts flew past detectors that only looked for explicit jailbreak phrases.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "why-your-model-evaluation-missed-a-production-regression",
@@ -426,7 +432,8 @@
         "sentence": "A 2026 study by the Indonesian tech community (indodev.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   },
   {
     "slug": "zero-trust-mcp-servers-auth-trap-youll-hit-first",
@@ -437,6 +444,7 @@
         "sentence": "A 2026 survey by the SPIFFE maintainers found that teams using short-lived SVIDs (< 1 h) had 67 % fewer credential theft incidents than teams using long-lived certs.",
         "known_fabricated": false
       }
-    ]
+    ],
+    "status": "stripped"
   }
 ]
