@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-15T16:35:24.525173",
+  "built_at": "2026-09-16T07:33:46.909214",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5145,6 +5145,11 @@
       "slug": "zero-trust-ai-skip-the-latency-tax",
       "title": "Zero-trust AI: skip the latency tax",
       "summary": "I've hit the same cost reliability mistake in more than one production codebase over the years. Here's what actually worked, and why. The answers online were either wrong or skipped the part that mattered. The gap between what the docs say and what production needs Zero-trust networking for AI servi"
+    },
+    {
+      "slug": "always-on-agents-the-token-bill-nobody-models",
+      "title": "Always-on agents: the token bill nobody models",
+      "summary": "token economics is easy to demo and hard to keep honest at scale. The tutorials all show the happy path. Here's what actually worked, and why. The gap between what the docs say and what production needs Every framework for building agent teams ships a cost calculator that assumes a request-response "
     }
   ]
 }

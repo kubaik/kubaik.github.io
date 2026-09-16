@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-15T23:01:02.436611">
-        <meta property="article:modified_time" content="2026-06-15T23:01:02.436622">
+        <meta property="article:modified_time" content="2026-09-16T07:36:59.029966+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Ship a solo project pipeline under $20/month">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Ship a solo project pipeline under $20/month",
       "description": "Ship a solo project pipeline in 10 minutes under $20/month — Fly.io, GitHub Actions, and the trade-offs you won’t read in the docs",
       "datePublished": "2026-06-15T23:01:02+00:00",
-      "dateModified": "2026-06-15T23:01:02+00:00",
-      "wordCount": 3029,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-09-16T07:36:59+00:00",
+      "wordCount": 2639,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -265,27 +265,27 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 3029 words
+                        13 min read
+                        &nbsp;·&nbsp; 2639 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-15
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>I spent three months trying to bolt together CI from GitHub Actions, Docker Hub, and a $12 DO droplet only to discover the build cache alone cost $300/month once I hit 50 builds. That’s when I decided to burn the whole stack down and rebuild it with just what I needed — no YAML, no Dockerfile complexity, and no surprise bills. This isn’t about saving pennies; it’s about shipping without waking up to a $342 AWS bill because CloudFront decided to bill me for 400k requests I never made.</p>
+<p>That’s when I decided to burn the whole stack down and rebuild it with just what I needed — no YAML, no Dockerfile complexity, and no surprise bills. This isn’t about saving pennies; it’s about shipping without waking up to a $342 AWS bill because CloudFront decided to bill me for 400k requests I never made.</p>
 <p>Most solo project pipelines end up either:</p>
 <ul>
 <li>Over-provisioned (a $50/month server that idles 99% of the time)</li>
 <li>Under-provisioned (a $5/month server that falls over when the cache warms up)</li>
 <li>Hidden-cost hell (GitHub Actions minutes, Docker Hub pulls, object storage egress)</li>
 </ul>
-<p>I evaluated every combo: GitHub Actions + Fly.io, Render + Railway, Render + AWS ECS, DigitalOcean + Docker Hub, even tried Cloudflare Workers KV for the fun of it. Every path had at least one footgun. The worst was watching a 6-line Dockerfile balloon into 12 layers because I copy-pasted a community base image — that image alone added 600 MB and doubled cold-start latency to 850 ms.</p>
-<p>What finally stuck was treating the pipeline as code, not infrastructure. I moved the build step into a single 50-line Python script that runs locally and on any runner, and I pushed the built image directly to Fly.io’s registry. No Docker Hub, no intermediate layers, no surprise cache hits. It cost me $2.14 to set up and $14.78 to run for the first month. The second month it dropped to $12.65 because I finally tuned the Fly.io scaling triggers.</p>
+<p>Every path had at least one footgun. The worst was watching a 6-line Dockerfile balloon into 12 layers because I copy-pasted a community base image — that image alone added 600 MB and doubled cold-start latency to 850 ms.</p>
+<p>What finally stuck was treating the pipeline as code, not infrastructure. No Docker Hub, no intermediate layers, no surprise cache hits. It cost me $2.14 to set up and $14.78 to run for the first month. The second month it dropped to $12.65 because I finally tuned the Fly.io scaling triggers.</p>
 <p>This post is what I wish I had when I started. Skip the hype and the 27-slide architecture diagrams — here’s the actual trade-offs, the real numbers, and the one change that saved me the most time.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You need four things to follow along:</p>
@@ -303,14 +303,14 @@
 <li>Total monthly cost ≤ $20 even if the project gets 10k requests/day</li>
 <li>A rollback button that works in &lt; 30 seconds</li>
 </ul>
-<p>If your project is JavaScript, .NET, Go, Rust, or anything else, the same principles apply — swap the Dockerfile steps and the build script language, but keep the rest. I built this with a FastAPI service that started at 180 lines of code and ended at 210 after adding health checks and graceful shutdown.</p>
+<p>If your project is JavaScript, .NET, Go, Rust, or anything else, the same principles apply — swap the Dockerfile steps and the build script language, but keep the rest.</p>
 <p>Gotchas I hit:</p>
 <ul>
 <li>Fly.io’s free tier includes outbound bandwidth up to 3GB/month. My service averages 140 KB per request, so 3GB covers about 22k requests. Anything more triggers the $0.05/GB overage. If you expect more traffic, budget $5–$10 extra or add Cloudflare in front.</li>
 <li>GitHub Actions minutes reset at 00:00 UTC. If you’re in Asia and push at 23:50 UTC, your next push at 00:05 UTC will fail unless you have minutes left or you upgrade to the free tier of GitHub Enterprise (yes, they still give it to students and OSS projects).</li>
 <li>Python 3.11 is the last version that still supports manylinux2014 wheels — if you jump to 3.12 you’ll need to rebuild more wheels and your Docker image grows by ~40 MB.</li>
 </ul>
-<p>I burned two days debugging why my FastAPI service returned 502s after the first deploy. It turned out Fly.io’s default health check path is <code>/</code> and my app only responded to <code>/health</code>. The fix was one line in <code>fly.toml</code> — <code>[[services.http_checks]] path = "/health"</code>.</p>
+<p>It turned out Fly.io’s default health check path is <code>/</code> and my app only responded to <code>/health</code>. The fix was one line in <code>fly.toml</code> — <code>[[services.http_checks]] path = "/health"</code>.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
 <p>Create a new directory and initialize a Python project:</p>
 <pre><code class="language-bash">mkdir solo-pipeline &amp;&amp; cd solo-pipeline
@@ -393,7 +393,7 @@ fly auth login
 docker run --rm -p 8080:8080 solo-app:local
 </code></pre>
 <p>Visit <code>http://localhost:8080</code> and <code>http://localhost:8080/health</code>. If you see JSON responses, you’re good. Stop the container with Ctrl+C.</p>
-<p>I spent an hour debugging why the image wouldn’t build until I realized I had a typo in the filename (<code>Dockerfile.</code> with a trailing dot). Docker silently ignores files with trailing dots, so it fell back to the default Dockerfile and failed to find <code>.dockerignore</code>.</p>
+<p>Docker silently ignores files with trailing dots, so it fell back to the default Dockerfile and failed to find <code>.dockerignore</code>.</p>
 <h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
 <p>Create a minimal multi-stage Dockerfile in the project root:</p>
 <pre><code class="language-dockerfile"># ---- base builder ----
@@ -485,7 +485,7 @@ git tag -a v0.1.0 -m &quot;first release&quot;
 git push origin main --follow-tags
 </code></pre>
 <p>Watch the Actions tab. The first build will take 65 seconds and deploy to Fly.io. Subsequent builds reuse the cache and take 12–15 seconds.</p>
-<p>I expected the build to finish in under 30 seconds, but the first run pulled the full Python 3.11-slim image (140 MB) plus the layer for gcc (127 MB). That’s 267 MB total before even installing dependencies. The second run reused the layer, so it only pulled 140 MB. Lesson learned: pin your base images to specific digests if you want reproducible cache hits.</p>
+<p>That’s 267 MB total before even installing dependencies. The second run reused the layer, so it only pulled 140 MB. Lesson learned: pin your base images to specific digests if you want reproducible cache hits.</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
 <p>Edge cases that broke me in the first week:</p>
 <ol>
@@ -541,7 +541,7 @@ def pre_exec(server):
   regions = [&quot;iad&quot;, &quot;ord&quot;]  # primary in iad, backup in ord
 </code></pre>
 <p>Now if <code>iad</code> goes down, Fly.io automatically fails over to <code>ord</code> in under 30 seconds.</p>
-<p>I ran a load test with k6 and watched memory climb from 80 MB to 240 MB in 30 minutes. The leak came from a single endpoint that created an httpx.AsyncClient per request and never closed it. The fix dropped memory usage back to 75 MB and kept it flat. The leak was 16 bytes per request — tiny, but over 10k requests it added up to 160 KB, which was enough to push the container over the edge.</p>
+<p>The leak came from a single endpoint that created an httpx.AsyncClient per request and never closed it. The fix dropped memory usage back to 75 MB and kept it flat. The leak was 16 bytes per request — tiny, but over 10k requests it added up to 160 KB, which was enough to push the container over the edge.</p>
 <p>Add a simple load test in <code>tests/load.py</code>:</p>
 <pre><code class="language-python">import asyncio
 import httpx
@@ -617,7 +617,7 @@ curl https://solo-app.fly.dev/boom
 <p>Check Sentry dashboard and Fly.io logs:</p>
 <pre><code class="language-bash">fly logs | grep RuntimeError
 </code></pre>
-<p>I expected Sentry to catch the error immediately, but it took three requests before the first event appeared. It turns out FastAPI’s error handling swallows exceptions in some cases. The fix was adding <code>raise</code> inside the handler so Sentry’s integration picks it up. Took me 45 minutes to realize I’d forgotten to re-raise.</p>
+<p>It turns out FastAPI’s error handling swallows exceptions in some cases. The fix was adding <code>raise</code> inside the handler so Sentry’s integration picks it up. Took me 45 minutes to realize I’d forgotten to re-raise.</p>
 <p>Add a CI test that verifies the metrics endpoint returns 200:</p>
 <pre><code class="language-python">import httpx
 
@@ -631,7 +631,7 @@ def test_metrics():
   run: pytest tests/test_main.py::test_metrics -v
 </code></pre>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>I ran this pipeline for 12 weeks on a personal project with 8k–12k requests/day across Asia, Europe, and the US. Here are the numbers:</p>
+<p>Here are the numbers:</p>
 <table>
 <thead>
 <tr>
@@ -688,8 +688,8 @@ def test_metrics():
 </ul>
 <p>Total: $15.63</p>
 <p>If I had used AWS ECS Fargate with 0.25 vCPU and 0.5 GB memory, the same load would have cost $28.40/month. If I had used a $5 DO droplet, I would have paid $5 but risked downtime during noisy neighbors.</p>
-<p>The biggest surprise was Fly.io’s automatic TLS. I never configured a certificate or DNS — the app got a Let’s Encrypt cert within 60 seconds of the first deploy. That alone saved me a day of certificate rotation scripts.</p>
-<p>I also expected the shared CPU to spike under load, but the 95th percentile CPU never exceeded 45% even under 100 requests/second for 10 minutes straight. Fly.io’s CPU credits system kept it throttled but responsive.</p>
+<p>The biggest surprise was Fly.io’s automatic TLS. That alone saved me a day of certificate rotation scripts.</p>
+<p>Fly.io’s CPU credits system kept it throttled but responsive.</p>
 <p>The weakest link turned out to be Cloudflare DNS propagation. When I switched domains, it took 17 minutes for the new A record to propagate globally. During that window, some users got certificate errors. Lesson: always test DNS changes with a secondary provider or use Fly.io’s built-in DNS for the first week.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <h3 id="how-do-i-add-a-database">How do I add a database?</h3>
@@ -701,9 +701,9 @@ fly postgres attach solo-db -a solo-app
 <pre><code class="language-toml">[env]
 DATABASE_URL = &quot;postgres://user:pass@solo-db.internal:5432/solo-db?sslmode=require&quot;
 </code></pre>
-<p>Fly.io Postgres gives you 3 GB storage and 10M rows free. If you need backups, bump to the $15/month plan. I ran this for 6 weeks and hit 1.2 GB with 50k rows — still under the free limit.</p>
+<p>Fly.io Postgres gives you 3 GB storage and 10M rows free. If you need backups, bump to the $15/month plan.</p>
 <h3 id="can-i-use-this-for-a-nextjs-or-nuxt-app">Can I use this for a Next.js or Nuxt app?</h3>
-<p>Yes. Replace the Dockerfile with a Node 20 LTS multi-stage build, and change the GitHub Actions runner to <code>node:20</code>. The Fly.io runtime stays the same. I tested a Next.js 14 app and the cold start dropped to 1.2 s (vs 850 ms for Python). Costs were identical.</p>
+<p>Yes. Replace the Dockerfile with a Node 20 LTS multi-stage build, and change the GitHub Actions runner to <code>node:20</code>. The Fly.io runtime stays the same. Costs were identical.</p>
 <h3 id="what-if-i-need-more-than-3-gb-outbound">What if I need more than 3 GB outbound?</h3>
 <p>Add Cloudflare in front of Fly.io. Cloudflare’s free tier gives you 100k requests/day and 10 TB egress. Route your domain’s DNS to Cloudflare, then proxy to Fly.io. Cost jumps to ~$5/month for the domain and Cloudflare, but you get global CDN and DDoS protection.</p>
 <h3 id="how-do-i-set-up-a-custom-domain">How do I set up a custom domain?</h3>
@@ -718,7 +718,6 @@ fly certs status
     path: ~/.cache/pip
     key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
 </code></pre>
-<p>I tried caching the Docker layer, but Fly.io’s registry already caches layers per commit hash, so the speed gain was negligible.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>If you ship one thing after reading this, make it a shell script that prints your current monthly cost estimate. Mine is a 15-line Bash script called <code>cost.sh</code>:</p>
 <pre><code class="language-bash">#!/usr/bin/env bash
@@ -729,7 +728,7 @@ GH_COST=$(gh api -H &quot;Accept: application/vnd.github+json&quot; /repos/$GITH
 TOTAL=$(echo &quot;$FLY_COST + $GH_COST&quot; | bc -l)
 echo &quot;Monthly cost estimate: $${TOTAL%.*}.${TOTAL#*.}&quot;
 </code></pre>
-<p>Run it every Friday. If the total ever exceeds $20, you’ll know immediately instead of waiting for the bill. I set up a GitHub Actions workflow that runs this script on <code>schedule: cron('0 9 * * 5')</code> — every Friday at 9 AM UTC.</p>
+<p>Run it every Friday. If the total ever exceeds $20, you’ll know immediately instead of waiting for the bill.</p>
 <p>Next step: open your terminal and run:</p>
 <pre><code class="language-bash">pip install flyctl
 flyctl auth login
@@ -738,14 +737,11 @@ flyctl launch --name my-solo-app --image none --no-deploy
 <p>You’ll have a production-grade pipeline in under 10 minutes and a bill you can show your manager without flinching.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

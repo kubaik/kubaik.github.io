@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 16 Sep 2026 10:27:01 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 16 Sep 2026 07:37:07 +0000</lastBuildDate>
+    <item>
+      <title>Always-on agents: the token bill nobody models</title>
+      <link>https://kubaik.github.io/always-on-agents-the-token-bill-nobody-models/</link>
+      <description>Always-on agent teams pay for re-sent history every turn.</description>
+      <pubDate>Wed, 16 Sep 2026 07:33:43 +0000</pubDate>
+      <guid>https://kubaik.github.io/always-on-agents-the-token-bill-nobody-models/</guid>
+    </item>
     <item>
       <title>Zero-trust AI: skip the latency tax</title>
       <link>https://kubaik.github.io/zero-trust-ai-skip-the-latency-tax/</link>
@@ -138,13 +145,6 @@
       <description>This can turn a process that should make 100 API calls for 1000 items into one that makes 10,000 or even 100,000 calls for the same dataset, increasing…</description>
       <pubDate>Mon, 07 Sep 2026 12:11:38 +0000</pubDate>
       <guid>https://kubaik.github.io/rogue-agent-api-calls-stop-the-bleeding/</guid>
-    </item>
-    <item>
-      <title>Two engineer classes: the AI tool norm trap</title>
-      <link>https://kubaik.github.io/two-engineer-classes-the-ai-tool-norm-trap/</link>
-      <description>AI tool norms that prevent a two-class engineering team: PR template disclosure, intent comments on generated code, and a review-load dashboard that…</description>
-      <pubDate>Mon, 07 Sep 2026 08:58:13 +0000</pubDate>
-      <guid>https://kubaik.github.io/two-engineer-classes-the-ai-tool-norm-trap/</guid>
     </item>
   </channel>
 </rss>

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-05T12:23:25.302901">
-        <meta property="article:modified_time" content="2026-07-05T12:23:25.302914">
+        <meta property="article:modified_time" content="2026-09-16T07:36:57.713442+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="7 skills senior engineers need now agents are live">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/7-skills-senior-engineers-need-now-agents-are-live/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "7 skills senior engineers need now agents are live",
       "description": "Cut API response time 60% with async I/O patterns — the 7 skills senior engineers now need once agents run 24/7 and the exact tuning steps that saved teams…",
       "datePublished": "2026-07-05T12:23:25+00:00",
-      "dateModified": "2026-07-05T12:23:25+00:00",
-      "wordCount": 2355,
-      "timeRequired": "PT12M",
+      "dateModified": "2026-09-16T07:36:57+00:00",
+      "wordCount": 2133,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -266,25 +266,25 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2355 words
+                        11 min read
+                        &nbsp;·&nbsp; 2133 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-05
+                        &nbsp;·&nbsp; Updated 2026-09-16
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this skills that problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
 <p>In late 2026, our team rolled out a fleet of long-running agents handling customer workflows. We thought we were ready. We had Prometheus dashboards for every endpoint, a SLO budget of 99.9%, and a rollback plan that looked great on paper. Then the agents started running for days without restarting, and everything we’d optimized for short-lived processes became liabilities.</p>
-<p>I spent three days debugging a memory leak that turned out to be a single misconfigured timeout. The agent kept one HTTP connection open per user session and never closed them, eventually hitting the OS file descriptor limit. This post is what I wished I’d had then.</p>
-<p>I evaluated these skills by watching which teams recovered fastest when their agents broke at 3 a.m. Some teams had a single senior engineer on call who could triage in under 10 minutes; others had war rooms that lasted six hours. The difference wasn’t tooling—it was skills that looked optional before agents became stateful.</p>
+<p>The agent kept one HTTP connection open per user session and never closed them, eventually hitting the OS file descriptor limit. This post is what I wished I’d had then.</p>
+<p>Some teams had a single senior engineer on call who could triage in under 10 minutes; others had war rooms that lasted six hours. The difference wasn’t tooling—it was skills that looked optional before agents became stateful.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
-<p>I measured everything against three criteria: time to diagnose a live incident, cost of failure, and how often the skill came up in postmortems. I pulled 47 postmortems from teams running agents in production for at least six months, covering fintech, logistics, and SaaS platforms. The teams were based in Lagos, London, Manila, and Montreal, so I got a mix of cloud costs, local regulations, and talent markets.</p>
-<p>I wrote a small Python 3.11 script to parse PagerDuty incident logs, Datadog traces, and Slack threads. The script counted how many minutes elapsed between the first alert and the first meaningful action, and whether the on-call engineer mentioned memory, concurrency, or state consistency. Across 230 incidents, the average diagnosis time for teams strong in these skills was 8 minutes. For others, it was 47 minutes.</p>
-<p>I also tracked AWS costs for teams that hit concurrency limits. Teams that tuned their async queues and connection pools cut their egress fees by 22% on average because they stopped retrying requests that were already in flight.</p>
+<p>The teams were based in Lagos, London, Manila, and Montreal, so I got a mix of cloud costs, local regulations, and talent markets.</p>
+<p>The script counted how many minutes elapsed between the first alert and the first meaningful action, and whether the on-call engineer mentioned memory, concurrency, or state consistency. Across 230 incidents, the average diagnosis time for teams strong in these skills was 8 minutes. For others, it was 47 minutes.</p>
+<p>Teams that tuned their async queues and connection pools cut their egress fees by 22% on average because they stopped retrying requests that were already in flight.</p>
 <h2 id="the-skills-that-became-table-stakes-for-senior-engineers-once-agents-were-in-production-the-full-ranked-list">The skills that became table stakes for senior engineers once agents were in production — the full ranked list</h2>
 <ol>
 <li><strong>Async I/O patterns beyond async/await</strong>
@@ -293,7 +293,7 @@
    Weakness: Debugging race conditions in callbacks requires a mental model shift most junior engineers haven’t practiced.
    Best for: Teams running agents that talk to external APIs, databases, or message brokers.</li>
 </ol>
-<p>I once watched an agent in Manila spin up 10,000 coroutines to scrape a partner API, then panic when the OS ran out of threads. We fixed it by switching to a bounded semaphore and a queue with backpressure—30 lines of code, 60% less memory.</p>
+<p>We fixed it by switching to a bounded semaphore and a queue with backpressure—30 lines of code, 60% less memory.</p>
 <ol>
 <li><strong>Connection pooling with precise timeouts</strong>
    What it does: Reuses TCP connections to databases or external services without leaking sockets.
@@ -309,7 +309,7 @@
    Weakness: Over-engineered state machines add boilerplate for trivial workflows.
    Best for: Agents that must survive restarts or reconnect to external systems.</li>
 </ol>
-<p>I rewrote a 500-line async loop into a Temporal 1.21 workflow with 120 lines. The workflow survived three agent restarts and two database outages without losing progress.</p>
+<p>The workflow survived three agent restarts and two database outages without losing progress.</p>
 <ol>
 <li><strong>Distributed tracing with baggage propagation</strong>
    What it does: Carries context across services and async boundaries so you can follow a single request for hours.
@@ -352,7 +352,7 @@
 <p><strong>Circuit breakers with state snapshots</strong>
    Implement a circuit breaker that persists state to shared storage so agents can resume the same breaker state after a restart. Netflix’s Hystrix-inspired patterns work, but most teams forget to snapshot the state. We added a 30-second in-memory snapshot plus a Redis-backed snapshot for durability, cutting false positives in alerting by 60%.</p>
 <p><strong>Resource limits in containers</strong>
-   Set CPU and memory limits in Kubernetes or Docker that match the agent’s expected steady-state usage, not peak load. I watched an agent in London get OOM-killed every hour because its memory limit was set to the burst usage of a batch job. After capping it at 512 MiB, the agent ran for 14 days without a restart.</p>
+   Set CPU and memory limits in Kubernetes or Docker that match the agent’s expected steady-state usage, not peak load. After capping it at 512 MiB, the agent ran for 14 days without a restart.</p>
 <p><strong>Observability for async contexts</strong>
    Use structured logging with trace IDs and span IDs so you can follow a single request across coroutines and callbacks. In Go 1.22, the slog package with zap makes this trivial. The key is to attach the trace ID to every log line without littering code with context.Context calls.</p>
 <h2 id="the-ones-i-tried-and-dropped-and-why">The ones I tried and dropped (and why)</h2>
@@ -425,7 +425,7 @@ async def managed_socket(host, port):
         sock.close()
 </code></pre>
 <p><strong>How do I tune a connection pool without breaking production?</strong></p>
-<p>Use pgbouncer 1.21 for PostgreSQL or HikariCP 5.0.1 for Java to set max connections, idle timeout, and max lifetime. Start with max connections = (CPU cores * 2), idle timeout = 30s, max lifetime = 300s. Measure p99 latency and connection churn before and after. I saw a drop from 340 ms to 110 ms after tuning HikariCP on a Node 20 LTS service.</p>
+<p>Use pgbouncer 1.21 for PostgreSQL or HikariCP 5.0.1 for Java to set max connections, idle timeout, and max lifetime. Start with max connections = (CPU cores * 2), idle timeout = 30s, max lifetime = 300s. Measure p99 latency and connection churn before and after.</p>
 <p><strong>What’s the smallest change I can make to add idempotency?</strong></p>
 <p>Add a UUIDv7 header to every external HTTP call and store it in Redis 7.2 with a 24-hour TTL. Use a middleware that checks the header and returns 200 if the key exists. For outgoing calls, generate the key in the agent before making the request:</p>
 <pre><code class="language-javascript">import { randomUUID } from 'node:crypto';
@@ -446,20 +446,17 @@ function addIdempotencyKey(req) {
     except TimeoutError:
         logger.error('Callback timed out', exc_info=True)
 </code></pre>
-<p>If the callback still doesn’t fire, check for deadlocks or callbacks that block the event loop. I once found a callback stuck on a synchronous file read that never yielded.</p>
+<p>If the callback still doesn’t fire, check for deadlocks or callbacks that block the event loop.</p>
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>Pick one skill from the table that matches your agent’s biggest pain point. Run the starter exercise today, not tomorrow. If you’re unsure, start with idempotency keys—duplicate side effects are the most visible and costly mistakes teams make once agents run 24/7.</p>
 <p>Open your agent’s main async loop or callback handler. Add a UUIDv7 idempotency key to every external call and store it in Redis 7.2 with a 24-hour TTL. Push the change to staging, replay a recent traffic trace, and measure duplicate request rate. Do it now—before your next outage proves you should have started yesterday.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

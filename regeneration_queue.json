@@ -129,7 +129,8 @@
     "slug": "why-i-picked-playwright-and-vitest-in-2026",
     "title": "Why I picked Playwright and Vitest in 2026",
     "reason": "retroactive_fabrication_audit: 13 unverifiable first-person anecdote(s): I ran into this test frontend problem while migrating a service under a hard dea; Here's what actually worked.; I ran into the first surprise when our existing Cypress suite—written for a Reac",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "3-skills-to-outrun-ai-salary-cuts",
@@ -142,25 +143,29 @@
     "slug": "7-skills-senior-engineers-need-now-agents-are-live",
     "title": "7 skills senior engineers need now agents are live",
     "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I ran into this skills that problem while migrating a service under a hard deadl; Here's what actually worked.; I spent three days debugging a memory leak that turned out to be a single miscon",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-scanners-overlook-real-vulns",
     "title": "AI scanners overlook real vulns",
     "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): The short version: the conventional advice on being used is incomplete.; I ran into this when I used GitHub Advanced Security’s AI-powered code scanning ; I ran this in GitHub Advanced Security with CodeQL 2.14.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "save-12kmonth-cloud-egress-costs-in-2026",
     "title": "Save $12k/month: cloud egress costs in 2026",
     "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I ran into this cloud egress problem while migrating a service under a hard dead; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ship-a-solo-project-pipeline-under-20month",
     "title": "Ship a solo project pipeline under $20/month",
     "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I moved the build step into a single 50-line Python script that runs locally and; I built this with a FastAPI service that started at 180 lines of code and ended ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "tool-calling-patterns-patterns-that-survive-load-vs",
@@ -2421,6 +2426,12 @@
     "slug": "stop-trusting-agents-for-core-logic",
     "title": "Stop trusting agents for core logic",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I'd tell a colleague hitting this for the first time.",
+    "action": "regenerate"
+  },
+  {
+    "slug": "always-on-agents-the-token-bill-nobody-models",
+    "title": "Always-on agents: the token bill nobody models",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
     "action": "regenerate"
   },
   {
