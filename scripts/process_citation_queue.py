@@ -65,8 +65,7 @@ Identical to process_regeneration_queue.py:
 USAGE
 -----
     # Dry run:
-    python scripts/process_citation_queue.py \\
-        --docs-dir ./docs --queue ./citation_audit_report.json
+    python scripts/process_citation_queue.py --docs-dir ./docs --queue ./citation_audit_report.json
 
     # Apply, bounded:
     python scripts/process_citation_queue.py \\
