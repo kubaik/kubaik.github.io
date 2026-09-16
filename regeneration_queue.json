@@ -49,20 +49,6 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-ops-datadog-vs-granfa-for-infra-automation",
-    "title": "AI ops: Datadog vs Granfa for infra automation",
-    "reason": "retroactive_fabrication_audit: 16 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when a “simple” capacity spike on a Node 20 LTS serv",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-steals-junior-tasks-3-skills-that-protect-pay",
-    "title": "AI steals junior tasks: 3 skills that protect pay",
-    "reason": "retroactive_fabrication_audit: 16 unverifiable first-person anecdote(s): I ran into this when I built a small SaaS in late 2026.; I set up a basic FastAPI backend, PostgreSQL, and a Next.js frontend.; I learned this the hard way when I built a billing dashboard for my SaaS.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "stop-shipping-daily-the-burn-rate-math",
     "title": "Stop shipping daily: the burn rate math",
     "reason": "retroactive_fabrication_audit: 16 unverifiable first-person anecdote(s): A colleague asked me about build public during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when I tried to build a tiny SaaS tool for freelance translators",
@@ -70,30 +56,18 @@
     "status": "needs_review"
   },
   {
-    "slug": "9-vibe-coding-traps-that-break-production-code",
-    "title": "9 Vibe coding traps that break production code",
-    "reason": "retroactive_fabrication_audit: 15 unverifiable first-person anecdote(s): I ran into this vibe coding problem while migrating a service under a hard deadl; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-revives-unloved-legacy-codebases",
-    "title": "AI revives unloved legacy codebases",
-    "reason": "retroactive_fabrication_audit: 15 unverifiable first-person anecdote(s): I learned that the hard way on a six-year-old PHP monolith powering a Mexican e-; I spent three days debugging a connection pool issue that turned out to be a sin; I start by running a lightweight static analyzer over the entire codebase.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "build-a-serverless-backend-in-africa-with-pocketbase",
     "title": "Build a serverless backend in Africa with PocketBase",
     "reason": "retroactive_fabrication_audit: 15 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I set out to evaluate the state of low-code backend platforms that African start; I spun up proof-of-concept services on ten stacks across AWS Lambda, Fly.io, and",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "price-your-remote-salary-4-step-script",
     "title": "Price your remote salary: 4-step script",
     "reason": "retroactive_fabrication_audit: 15 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I had no idea how to translate cost-of-living or local salary bands into a numbe; I ran into this when I tried to move to a higher-paying offer and the recruiter ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "3-ai-coders-ranked-cursor-windsurf-claude-code-in",
@@ -106,19 +80,22 @@
     "slug": "african-fintech-rules-broke-our-stack",
     "title": "African fintech rules broke our stack",
     "reason": "retroactive_fabrication_audit: 14 unverifiable first-person anecdote(s): I ran into this regulatory tech problem while migrating a service under a hard d; I ran into this when I joined a Lagos-based fintech in 2026 and inherited a stac; I was surprised that the same Docker image pulled 15% slower in Johannesburg tha",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "ai-tools-rewrote-my-engineering-rules",
     "title": "AI tools rewrote my engineering rules",
     "reason": "retroactive_fabrication_audit: 14 unverifiable first-person anecdote(s): A colleague asked me about engineering principles during a code review last week; I realised I couldn't give a clean explanation — which meant I didn't understand; I bought it—until I didn’t.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "marketing-without-budget-5k-mrr-in-18-months",
     "title": "Marketing without budget: $5k MRR in 18 months",
     "reason": "retroactive_fabrication_audit: 14 unverifiable first-person anecdote(s): The short version: the conventional advice on got mrr is incomplete.; I stopped optimizing for features and started optimizing for trust signals devel; I did the same thing at first.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "9-ai-wrapper-apis-that-paid-off-in-2026",
@@ -2657,6 +2634,34 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "ai-ops-datadog-vs-granfa-for-infra-automation",
+    "title": "AI ops: Datadog vs Granfa for infra automation",
+    "reason": "retroactive_fabrication_audit: 16 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when a “simple” capacity spike on a Node 20 LTS serv",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-steals-junior-tasks-3-skills-that-protect-pay",
+    "title": "AI steals junior tasks: 3 skills that protect pay",
+    "reason": "retroactive_fabrication_audit: 16 unverifiable first-person anecdote(s): I ran into this when I built a small SaaS in late 2026.; I set up a basic FastAPI backend, PostgreSQL, and a Next.js frontend.; I learned this the hard way when I built a billing dashboard for my SaaS.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "9-vibe-coding-traps-that-break-production-code",
+    "title": "9 Vibe coding traps that break production code",
+    "reason": "retroactive_fabrication_audit: 15 unverifiable first-person anecdote(s): I ran into this vibe coding problem while migrating a service under a hard deadl; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-revives-unloved-legacy-codebases",
+    "title": "AI revives unloved legacy codebases",
+    "reason": "retroactive_fabrication_audit: 15 unverifiable first-person anecdote(s): I learned that the hard way on a six-year-old PHP monolith powering a Mexican e-; I spent three days debugging a connection pool issue that turned out to be a sin; I start by running a lightweight static analyzer over the entire codebase.",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "map-legacy-code-with-ai-before-it-breaks",

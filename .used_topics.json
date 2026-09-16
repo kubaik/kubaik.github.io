@@ -216,5 +216,9 @@
   "Building SLOs for agentic features beyond latency and error rate",
   "Recovering from an agent that made thousands of low-value API calls overnight",
   "pgvector at 100k+ QPS: what broke and what we had to change",
-  "Designing systems that gracefully degrade when an upstream agent or model is slow or wrong"
+  "Designing systems that gracefully degrade when an upstream agent or model is slow or wrong",
+  "Why MCP became the dominant agent-tool protocol, and what it changed in agent design",
+  "Why multi-agent research systems quietly degrade over time, and how to catch it",
+  "Common failure modes of multi-agent systems at scale, and why they're hard to catch early",
+  "Local plus cloud model routing: how teams stay competitive on cost and speed"
 ]
