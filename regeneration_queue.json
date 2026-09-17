@@ -175,34 +175,6 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-stole-system-design",
-    "title": "AI stole system design",
-    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this when a senior backend candidate in Medellín walked me through a ; I asked how they’d shard the embedding cache.; I was surprised that even experienced engineers fell for it.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "debug-ai-agents-failures-arent-just-bugs",
-    "title": "Debug AI agents: failures aren't just bugs",
-    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three weeks in February 2026 debugging an agent that started giving fina",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "failed-ai-wrappers-vs-the-3-that-worked-in-2026",
-    "title": "Failed AI wrappers vs. the 3 that worked in 2026",
-    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this wrapper businesses problem while migrating a service under a har; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "killed-3k-kubernetes-kept-200-infra",
-    "title": "Killed $3k Kubernetes, kept $200 infra",
-    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin; I knew there had to be a simpler way, but I wasn’t sure where to start.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "progressive-web-apps-what-browser-apis-finally-fixed",
     "title": "Progressive Web Apps: what browser APIs finally fixed",
     "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): The short version: the conventional advice on progressive web is incomplete.; I ran into this when I tried to explain to a non-technical co-founder why our Sa; I was surprised that Safari on iOS 17.4+ supports Service Worker but limits cach",
@@ -213,31 +185,36 @@
     "slug": "senior-devs-flee-big-tech-not-for-money",
     "title": "Senior devs flee big tech (not for money)",
     "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I ran this on my payments team and found we averaged 18 meetings per engineer pe",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "test-ai-code-without-testing-the-ai",
     "title": "Test AI code without testing the AI",
     "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this write tests problem while migrating a service under a hard deadl; Here's what actually worked.; I wanted a testing strategy that treats AI output like any other external depend",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "why-ai-interviewers-failed-68-of-us-in-2026",
     "title": "Why AI interviewers failed 68% of us in 2026",
     "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this when interviewing at three companies in Mexico: my designs passe; I spent two weeks rebuilding the same system three different ways, each time get; I saw this when I proposed a **Redis Streams + Lua script aggregation** solution",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "added-circuit-breakers-3-days-after-cascade-failure",
     "title": "Added circuit breakers 3 days after cascade failure",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this added circuit problem while migrating a service under a hard dea; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-agents-circuit-breakers-are-not-optional",
     "title": "AI agents: circuit breakers are not optional",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I learned this the hard way during the August 2026 outage at Kopo Kopo.; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the simplest metric — response length — was more reliable t",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-agents-vs-argo-tekton-which-pipeline-heals-itself",
@@ -2364,6 +2341,34 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "ai-stole-system-design",
+    "title": "AI stole system design",
+    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this when a senior backend candidate in Medellín walked me through a ; I asked how they’d shard the embedding cache.; I was surprised that even experienced engineers fell for it.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "debug-ai-agents-failures-arent-just-bugs",
+    "title": "Debug AI agents: failures aren't just bugs",
+    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three weeks in February 2026 debugging an agent that started giving fina",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "failed-ai-wrappers-vs-the-3-that-worked-in-2026",
+    "title": "Failed AI wrappers vs. the 3 that worked in 2026",
+    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this wrapper businesses problem while migrating a service under a har; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "killed-3k-kubernetes-kept-200-infra",
+    "title": "Killed $3k Kubernetes, kept $200 infra",
+    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin; I knew there had to be a simpler way, but I wasn’t sure where to start.",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "8-ways-we-measure-agent-reliability-in-2026",

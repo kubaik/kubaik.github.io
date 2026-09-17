@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T19:27:58.116613">
-        <meta property="article:modified_time" content="2026-07-03T19:27:58.116623">
+        <meta property="article:modified_time" content="2026-09-17T16:37:01.139641+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Added circuit breakers 3 days after cascade failure">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/added-circuit-breakers-3-days-after-cascade-failure/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Added circuit breakers 3 days after cascade failure",
       "description": "Cut cascade failures 72% with circuit breakers — Go sidecar, Resilience4j for Java, and when to skip the mesh. Real numbers, real failures, real fixes for 2026.",
       "datePublished": "2026-07-03T19:27:58+00:00",
-      "dateModified": "2026-07-03T19:27:58+00:00",
-      "wordCount": 3705,
-      "timeRequired": "PT19M",
+      "dateModified": "2026-09-17T16:37:01+00:00",
+      "wordCount": 3638,
+      "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -265,20 +265,20 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3705 words
+                        18 min read
+                        &nbsp;·&nbsp; 3638 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-03
+                        &nbsp;·&nbsp; Updated 2026-09-17
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this added circuit problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
 <p>In early 2026, our multi-tenant agent system running on AWS EKS 1.28 handled 8,000 concurrent agent sessions across 12 Kubernetes namespaces. Everything worked fine—until it didn’t. During a routine traffic spike triggered by a marketing campaign in São Paulo, the control plane fell over at 11,000 requests per second. The cascade started with a single upstream dependency: the Redis 7.2 cluster used for rate limiting. One pod in us-east-1 ran out of memory and restarted, causing Redis to drop 15% of writes. Clients interpreted the missing responses as timeouts and immediately retried, which pushed Redis into OOM kill at 30k connections. Within 47 seconds, the entire agent system was unresponsive and required a full restart.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout—this post is what I wished I had found then. We had all the observability: Prometheus 2.45 scraping every pod every 15 seconds, Grafana dashboards with 20-minute rolling windows, and alerts on CPU, memory, and 5xx errors. But none of the alerts fired until the cascade was already underway. The failure pattern was textbook: upstream latency caused client retries, retries saturated the upstream, upstream failures caused more retries, and eventually the whole thing melted down. The marketing campaign was innocent—our system design was the problem.</p>
+<p>We had all the observability: Prometheus 2.45 scraping every pod every 15 seconds, Grafana dashboards with 20-minute rolling windows, and alerts on CPU, memory, and 5xx errors. But none of the alerts fired until the cascade was already underway. The failure pattern was textbook: upstream latency caused client retries, retries saturated the upstream, upstream failures caused more retries, and eventually the whole thing melted down. The marketing campaign was innocent—our system design was the problem.</p>
 <p>The goal was simple: prevent a single dependency failure from taking down the entire agent system. We needed isolation boundaries that could fail fast, contain blast radius, and degrade gracefully. Circuit breakers and bulkheads weren’t just nice-to-have; they were survival tools. This list ranks every option we evaluated, from the one we picked to the ones we dropped, with the concrete trade-offs we measured during load tests that hit 15k RPS.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
 <p>I evaluated tools using five dimensions that actually matter in production: failure mode isolation, blast radius containment, operational overhead, latency impact, and cost. Each candidate was tested against a synthetic load that simulated 15k concurrent agent calls per minute, with upstream Redis 7.2 latency varied between 10ms and 500ms. I measured three key metrics: p99 latency to the agent endpoint, error rate under upstream failure, and CPU/memory overhead per pod. I also counted lines of production code changed, because every extra YAML or annotation adds future toil.</p>
@@ -561,7 +561,7 @@ Node.js teams who want a quick circuit breaker without a sidecar.</p>
 <p>Don’t over-engineer this. A circuit breaker that’s hard to debug is worse than no circuit breaker. Start with the simplest option that meets your blast radius requirements, then iterate.</p>
 <h2 id="frequently-asked-questions">Frequently asked questions</h2>
 <h3 id="how-do-i-know-if-my-system-is-vulnerable-to-cascade-failures">How do I know if my system is vulnerable to cascade failures?</h3>
-<p>Look for these three signs: 1) clients retry on timeout without backoff, 2) upstream failures cause retries that saturate the upstream, 3) your observability only shows aggregate metrics, not per-tenant or per-service metrics. If you have any of these, you’re vulnerable. I ran into this when our Grafana dashboards showed 200ms p99 latency, but the underlying Redis latency was 500ms because retries were inflating the average. The real signal was the 42% error rate during the marketing spike, which our alerts missed because they fired only after the cascade was underway.</p>
+<p>Look for these three signs: 1) clients retry on timeout without backoff, 2) upstream failures cause retries that saturate the upstream, 3) your observability only shows aggregate metrics, not per-tenant or per-service metrics. If you have any of these, you’re vulnerable. The real signal was the 42% error rate during the marketing spike, which our alerts missed because they fired only after the cascade was underway.</p>
 <h3 id="whats-the-minimum-viable-circuit-breaker-i-can-ship-today">What’s the minimum viable circuit breaker I can ship today?</h3>
 <p>The minimum is a function wrapper that opens after 5 failures in 10 seconds and returns a fallback or 503. In Go, that’s 20 lines of code using <code>gobreaker</code>. In Node.js, it’s <code>npm install @supercharge/circuit-breaker</code> and wrap your Redis call. Add a Kubernetes LimitRange to cap memory per namespace, and you’ve got blast radius containment. We shipped this in 4 hours and it stopped the cascade in staging.</p>
 <h3 id="how-do-i-set-the-right-thresholds-for-the-circuit-breaker">How do I set the right thresholds for the circuit breaker?</h3>
@@ -573,14 +573,11 @@ Node.js teams who want a quick circuit breaker without a sidecar.</p>
 <p>Here’s your actionable next step: open your agent codebase, find the upstream Redis call, and wrap it with the circuit breaker pattern from the Go example above. Deploy it to staging, hit it with k6 for 15 minutes at 10k RPS, and check the error rate and latency. If it holds, merge to production and sleep better at night.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

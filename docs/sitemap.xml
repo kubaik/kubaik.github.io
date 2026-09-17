@@ -188,12 +188,30 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/added-circuit-breakers-3-days-after-cascade-failure/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/added-circuit-breakers-3-days-after-cascade-failure.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/africa-devs-ship-production-code-not-crud/</loc>
     <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/africa-devs-ship-production-code-not-crud.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/agent-access-for-non-ai-engineers/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/agent-access-for-non-ai-engineers.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -293,6 +311,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/ai-agent-postmortems-trace-vs-logs-vs-code.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/ai-agents-circuit-breakers-are-not-optional.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -974,6 +1001,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/senior-devs-flee-big-tech-not-for-money/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/senior-devs-flee-big-tech-not-for-money.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ship-a-solo-project-pipeline-under-20month/</loc>
     <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -1439,6 +1475,15 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://kubaik.github.io/test-ai-code-without-testing-the-ai/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/test-ai-code-without-testing-the-ai.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/tool-calling-patterns-patterns-that-survive-load-vs/</loc>
     <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -1481,6 +1526,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/which-ai-wrappers-made-money-in-2026.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/why-ai-interviewers-failed-68-of-us-in-2026/</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/why-ai-interviewers-failed-68-of-us-in-2026.png</image:loc>
     </image:image>
   </url>
   <url>

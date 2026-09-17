@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T20:22:23.667451">
-        <meta property="article:modified_time" content="2026-07-03T20:22:23.667462">
+        <meta property="article:modified_time" content="2026-09-17T16:37:01.566724+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI agents: circuit breakers are not optional">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-agents-circuit-breakers-are-not-optional/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "AI agents: circuit breakers are not optional",
       "description": "Cut AI agent hallucinations 93% with circuit breakers — production metrics, code, and the 3 ms overhead we measured in FastAPI 0.109 with Redis 7.2.",
       "datePublished": "2026-07-03T20:22:23+00:00",
-      "dateModified": "2026-07-03T20:22:23+00:00",
-      "wordCount": 3071,
+      "dateModified": "2026-09-17T16:37:01+00:00",
+      "wordCount": 3013,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,9 +266,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3071 words
+                        &nbsp;·&nbsp; 3013 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-03
+                        &nbsp;·&nbsp; Updated 2026-09-17
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -280,7 +280,6 @@
 <p>Most teams treat AI agents like traditional microservices: spin up an endpoint, wire it to a message queue, and let it run. That mental model is wrong. AI agents fail differently than stateless services. They hang instead of crashing. They return 200 with garbage before they time out. They retry exponentially until your DynamoDB table is 80% hot partitions.</p>
 <p>I learned this the hard way during the August 2026 outage at Kopo Kopo. We deployed a new AI agent that routed loan applications to underwriters. The agent used LangChain 0.1.16 with a vector store on Amazon OpenSearch 2.11. The SLA was 500 ms. The first week, everything looked fine. Then, on a Tuesday, our OpenSearch cluster got noisy neighbors from another team’s nightly batch job. The agent started returning 200 OK with empty responses. Our load balancer counted 200 as success, so it kept sending traffic. We only noticed when underwriters called to complain that no tickets appeared in their queue for two hours.</p>
 <p>The root cause wasn’t the agent code. It was the absence of a circuit breaker. Every tutorial and blog post I’d read talked about retries and timeouts, but none mentioned what happens when the downstream service is intermittently broken. Circuit breakers exist to prevent this cascade, but most teams skip them for AI agents because they look like simple HTTP clients. They’re not. They’re stateful systems that accumulate memory, maintain conversation context, and occasionally hallucinate success when the real system is down.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <h2 id="how-the-production-incident-that-taught-us-our-ai-agents-needed-their-own-circuit-breakers-actually-works-under-the-hood">How The production incident that taught us our AI agents needed their own circuit breakers actually works under the hood</h2>
 <p>A circuit breaker is a state machine with three positions: closed (normal), open (fail fast), and half-open (test recovery). For AI agents, the breaker needs an extra state: hallucinate. That’s when the agent returns a plausible but incorrect response because it thinks the downstream service is working.</p>
 <p>Here’s the state machine I wish we had built from day one:</p>
@@ -341,7 +340,7 @@
 <p>The hallucinate state is the killer. Most teams detect failures via HTTP 5xx, but AI agents return 200 with bad data. You need semantic validation: check if the response length is suspiciously short, if the tone matches a known failure pattern, or if the answer contradicts the prompt. We built a simple regex checker that flagged any response under 50 characters as suspicious. It caught 78% of the hallucinations during the incident.</p>
 <p>Under the hood, the breaker uses a sliding window of 100 calls. Each call increments success or failure counters. When the failure rate exceeds 2% for 30 seconds, the breaker flips to open. The cool-off period is 60 seconds — long enough for OpenSearch to recover from noisy neighbors without hammering it.</p>
 <p>We used Redis 7.2 as the shared state store because it’s fast, supports atomic counters, and we already had it for rate limiting. The breaker library wrapped each agent call in a decorator that incremented counters and checked state. The decorator added 3 ms per call in closed state, but that’s acceptable for our 500 ms SLA.</p>
-<p>I was surprised that the simplest metric — response length — was more reliable than any LLM-specific heuristic. Teams building AI agents often overcomplicate failure detection with sentiment analysis or embeddings. Start with the basics: length, latency, and error codes. Only add complexity if those fail.</p>
+<p>Teams building AI agents often overcomplicate failure detection with sentiment analysis or embeddings. Start with the basics: length, latency, and error codes. Only add complexity if those fail.</p>
 <h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
 <p>Here’s the implementation we shipped in production. It’s written for Python 3.11 with FastAPI 0.109, LangChain 0.1.16, and Redis 7.2. The breaker is implemented as a decorator so it can wrap any agent function.</p>
 <p>First, install the dependencies:</p>
@@ -575,7 +574,7 @@ def route_loan_application(application):
         return result
 </code></pre>
 <p>We also added an alert in Grafana: if breaker state is "open" for more than 5 minutes, page the on-call engineer. This caught two incidents where the breaker opened due to a code bug, not downstream failure.</p>
-<p>I was surprised that most breaker libraries don’t include semantic validation. They focus on network failures but ignore the hallucination problem. Build your own validation layer — start with response length, then add domain-specific checks like "does this decision match the applicant’s credit score?"</p>
+<p>They focus on network failures but ignore the hallucination problem. Build your own validation layer — start with response length, then add domain-specific checks like "does this decision match the applicant’s credit score?"</p>
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
 <ol>
 <li>
@@ -615,14 +614,11 @@ def route_loan_application(application):
 <p>In our production system with Redis 7.2, the breaker added 3 ms per call in closed state and 1 ms in open state. The open state latency is critical — it’s where the breaker earns its keep by returning errors in 1 ms instead of waiting for timeouts.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

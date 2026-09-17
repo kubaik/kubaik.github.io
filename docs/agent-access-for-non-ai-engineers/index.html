@@ -1,0 +1,587 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Agent access for non-AI engineers - Kubai Kevin</title>
+        <meta name="description" content="Agent access for non-AI engineers: typed tool schemas, dry-run defaults, and idempotency keys that stop hallucinated arguments from reaching prod.">
+        <meta name="keywords" content="AgentTools, InternalTools, AgentGuardrails, Ai, Softwareengineering">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-17T16:33:46.471776">
+        <meta property="article:modified_time" content="2026-09-17T16:33:46.471788">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Agent access for non-AI engineers">
+        <meta property="og:description" content="Agent access for non-AI engineers: typed tool schemas, dry-run defaults, and idempotency keys that stop hallucinated arguments from reaching prod.">
+        <meta property="og:url" content="https://kubaik.github.io/agent-access-for-non-ai-engineers/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/agent-access-for-non-ai-engineers.png">
+        <meta property="og:image:alt" content="Agent access for non-AI engineers">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Agent access for non-AI engineers">
+        <meta name="twitter:description" content="Agent access for non-AI engineers: typed tool schemas, dry-run defaults, and idempotency keys that stop hallucinated arguments from reaching prod.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/agent-access-for-non-ai-engineers.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/agent-access-for-non-ai-engineers/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/agent-access-for-non-ai-engineers/#article",
+      "headline": "Agent access for non-AI engineers",
+      "description": "Agent access for non-AI engineers: typed tool schemas, dry-run defaults, and idempotency keys that stop hallucinated arguments from reaching prod.",
+      "datePublished": "2026-09-17T16:33:46+00:00",
+      "dateModified": "2026-09-17T16:33:46+00:00",
+      "wordCount": 2830,
+      "timeRequired": "PT14M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/agent-access-for-non-ai-engineers/"
+      },
+      "keywords": "AgentTools, InternalTools, AgentGuardrails, Ai, Softwareengineering"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Agent access for non-AI engineers",
+          "item": "https://kubaik.github.io/agent-access-for-non-ai-engineers/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Agent access for non-AI engineers</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Agent access for non-AI engineers</h1>
+                
+                <p class="post-lead">Agent access for non-AI engineers: typed tool schemas, dry-run defaults, and idempotency keys that stop hallucinated arguments from reaching prod.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgentTools</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">InternalTools</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">AgentGuardrails</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/softwareengineering/"
+                       style="text-decoration:none;">Softwareengineering</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        14 min read
+                        &nbsp;·&nbsp; 2830 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-09-17
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>building internal looks simple until it has to survive real traffic. The edge cases only show up once real users hit the system. Here's what changed once we stopped guessing and started measuring.</p>
+<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
+<p>Non-AI engineers — backend, frontend, data, SRE — need to call agents without understanding transformer internals, and agents need to call their code without breaking it. Internal tools that broker this safely usually have three parts: a policy layer that decides what an agent can do, a typed tool interface that makes every agent action inspectable, and a sandbox that limits blast radius when the model hallucinates a parameter. Get those three right and a team of 40 engineers can ship agent-powered features without a dedicated ML platform group. Get them wrong and you get the classic failure mode: an agent writes to production because the tool schema said <code>environment: string</code> instead of an enum. The confusion this post resolves is why "just call the API" doesn't work for agents, and what to build instead.</p>
+<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
+<p>The confusion starts with a category error. Engineers treat an LLM agent like a microservice, because the interface looks similar: you send JSON, you get JSON back. But a microservice is deterministic given its inputs. An agent is a stochastic policy over a tool space, and the tool space is defined by whatever you expose.</p>
+<p>That difference shows up in three places that surprise people:</p>
+<p><strong>Argument validation is not optional.</strong> When a human calls <code>POST /orders</code>, they read the schema. When an agent calls it, the model samples from a distribution over plausible arguments. A field typed as <code>string</code> in your OpenAPI spec is, to the model, a suggestion. A common failure: the schema says <code>quantity: integer</code>, the model emits <code>quantity: 3.0</code> because JSON numbers don't distinguish, and your strict Pydantic v2 model raises <code>ValidationError: Input should be a valid integer, got a number with a fractional part</code>. That's a 400 the agent will retry, sometimes in a loop, sometimes with the same value.</p>
+<p><strong>Idempotency is a different problem.</strong> Humans click once. Agents retry. If your internal tool doesn't carry an idempotency key derived from the agent's reasoning step, a transient 503 turns into three refunds. This is well-documented in the Stripe idempotency model — the pattern is old, but agents make it mandatory rather than nice-to-have.</p>
+<p><strong>Observability doesn't transfer.</strong> A trace of a normal request shows spans for HTTP calls and DB queries. A trace of an agent request shows a reasoning chain, tool calls, and tool results, and the interesting failures are semantic: the agent picked the wrong tool, or picked the right tool with a plausible-but-wrong argument. Your existing Jaeger or Datadog dashboards will show a 200 OK and tell you nothing.</p>
+<p>The part that trips people up is that all three problems are solvable with ordinary backend engineering — typed schemas, idempotency keys, structured logging — but only if you stop thinking of the agent as a client and start thinking of it as an untrusted caller with a fluent but unreliable understanding of your API.</p>
+<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
+<p>Think of it like a database driver exposed to a SQL generator you didn't write. You wouldn't hand a generated query string to <code>psycopg</code> and hope. You'd parameterize, you'd set a statement timeout, you'd run it against a read replica first. The agent is the SQL generator; your internal tool is the driver.</p>
+<p>That analogy gives you four concrete design rules:</p>
+<ol>
+<li>
+<p><strong>Parameterize everything.</strong> Every agent-facing tool takes typed, validated arguments. No free-form <code>payload: object</code>. If you need flexibility, use a discriminated union (Pydantic v2 <code>Field(discriminator=...)</code> or a TypeScript discriminated union) so the model has to pick from a closed set.</p>
+</li>
+<li>
+<p><strong>Set a statement timeout.</strong> Agents loop. Every tool call gets a wall-clock budget — 5 seconds for a read, 30 seconds for a write, hard kill after. This is the single highest-value guardrail and the one teams skip most often.</p>
+</li>
+<li>
+<p><strong>Run against a replica first.</strong> For any tool that mutates state, give the agent a dry-run mode that returns what <em>would</em> happen. Most agent frameworks (LangGraph 0.2, OpenAI Assistants API, Anthropic's tool-use) support a two-phase call pattern where the model can inspect the dry-run result before committing.</p>
+</li>
+<li>
+<p><strong>Log the query, not just the result.</strong> You need the exact arguments the model produced, not just the outcome, because the interesting bug is "the model picked <code>region: 'us-east-1'</code> when the user meant <code>eu-west-1'</code>" — a semantic error that a 200 response hides.</p>
+</li>
+</ol>
+<p>Here's what that looks like as a minimal Python tool definition using Pydantic 2.7 and the standard <code>@tool</code> decorator pattern that works with LangChain 0.2 or standalone:</p>
+<pre><code class="language-python">from enum import Enum
+from pydantic import BaseModel, Field, field_validator
+from typing import Literal
+from decimal import Decimal
+
+class Region(str, Enum):
+    us_east_1 = &quot;us-east-1&quot;
+    eu_west_1 = &quot;eu-west-1&quot;
+    ap_southeast_1 = &quot;ap-southeast-1&quot;
+
+class RefundRequest(BaseModel):
+    order_id: str = Field(pattern=r&quot;^ord_[A-Za-z0-9]{16}$&quot;)
+    amount: Decimal = Field(gt=0, le=Decimal(&quot;10000&quot;))
+    currency: Literal[&quot;USD&quot;, &quot;EUR&quot;, &quot;SGD&quot;]
+    region: Region
+    idempotency_key: str = Field(min_length=16, max_length=64)
+    dry_run: bool = True
+
+    @field_validator(&quot;amount&quot;)
+    @classmethod
+    def quantize(cls, v: Decimal) -&gt; Decimal:
+        return v.quantize(Decimal(&quot;0.01&quot;))
+</code></pre>
+<p>The <code>dry_run: bool = True</code> default is the important line. It means a model that forgets to set it still can't issue a real refund. The <code>Region</code> enum means the model cannot invent a region that doesn't exist. The regex on <code>order_id</code> catches the common hallucination where the model produces <code>ord_123</code> because it pattern-matched from the prompt instead of from a real lookup.</p>
+<h2 id="a-concrete-worked-example">A concrete worked example</h2>
+<p>A common scenario: an internal "deploy service" tool. The naive version exposes <code>deploy(service: str, version: str, environment: str)</code>. Within a week of giving this to an agent, a team typically sees one of these:</p>
+<ul>
+<li>The agent deploys <code>service: "api"</code> to <code>environment: "prod"</code> when the user asked for staging, because "prod" appeared earlier in the conversation context.</li>
+<li>The agent retries a failed deploy three times, and the third retry succeeds against a partially-deployed state, leaving two versions running.</li>
+<li>The agent passes <code>version: "latest"</code>, which your tool accepts, and which silently resolves to whatever tag was pushed most recently — including from a feature branch.</li>
+</ul>
+<p>The fix is not a better prompt. It's a tool that makes these failures structurally impossible:</p>
+<pre><code class="language-javascript">// Node 20 LTS, using zod 3.23 for runtime validation
+import { z } from &quot;zod&quot;;
+
+const DeployArgs = z.object({
+  service: z.enum([&quot;api&quot;, &quot;worker&quot;, &quot;web&quot;]),
+  version: z.string().regex(/^v\d+\.\d+\.\d+-[0-9a-f]{7}$/), // git SHA required
+  environment: z.enum([&quot;staging&quot;, &quot;prod&quot;]),
+  confirmation: z.literal(&quot;CONFIRM_DEPLOY&quot;), // model must echo this
+  idempotency_key: z.string().uuid(),
+});
+
+export async function deploy(rawArgs) {
+  const args = DeployArgs.parse(rawArgs); // throws on any mismatch
+  if (args.environment === &quot;prod&quot;) {
+    await requireApproval(args); // human-in-the-loop via Slack
+  }
+  return runDeploy(args);
+}
+</code></pre>
+<p>Three things changed. The <code>version</code> regex rejects <code>latest</code> and any tag that isn't a full semver plus git SHA — the model can't pass a branch name. The <code>confirmation</code> literal is a speed bump: the model has to produce an exact string, which reduces (not eliminates) accidental prod deploys. And <code>requireApproval</code> makes prod deploys asynchronous with a human in the loop, which is the only reliable guardrail for irreversible actions.</p>
+<p>Teams that adopt this pattern report the same thing: the agent's success rate on the <em>first</em> attempt drops, because the model now has to produce valid arguments, but the rate of <em>dangerous</em> actions drops to near zero. That trade is almost always correct for internal tools.</p>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Agent success rate (typical)</th>
+<th>Dangerous action rate</th>
+<th>Ops overhead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Free-form JSON args</td>
+<td>85–90%</td>
+<td>2–5%</td>
+<td>Low initially, high after incident</td>
+</tr>
+<tr>
+<td>Typed schema, no confirmation</td>
+<td>75–82%</td>
+<td>0.5–1%</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Typed + confirmation + dry-run</td>
+<td>65–75%</td>
+<td>&lt;0.1%</td>
+<td>Medium-high</td>
+</tr>
+<tr>
+<td>Typed + human approval for writes</td>
+<td>60–70%</td>
+<td>~0%</td>
+<td>High</td>
+</tr>
+</tbody>
+</table>
+<p>Those numbers are illustrative ranges from teams running this pattern, not benchmarks — your mileage depends heavily on how well the tool descriptions map to the model's training distribution. The shape of the trade-off is what matters.</p>
+<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
+<p>If you've built an internal API gateway, you already know 80% of this. The agent is just a client with unusual properties:</p>
+<ul>
+<li><strong>Rate limiting</strong> — same as any untrusted client. Agents burst. A token bucket at 10 req/s per agent session is reasonable.</li>
+<li><strong>Circuit breakers</strong> — same. If a downstream tool fails 5 times in 30 seconds, stop calling it and return a structured error the agent can reason about.</li>
+<li><strong>Schema registries</strong> — same idea as Confluent Schema Registry, but for tool definitions. Version your tool schemas; when you change one, agents running against the old version should fail loudly, not silently.</li>
+<li><strong>Audit logs</strong> — same as any compliance-relevant write. Log the agent ID, the reasoning trace ID, the arguments, and the outcome. 90-day retention is a common baseline.</li>
+</ul>
+<p>The new thing is that the <em>caller</em> is non-deterministic, which means your error messages are now part of the interface. A <code>400 Bad Request</code> with a stack trace teaches the agent nothing. A <code>400</code> with <code>{"error": "invalid_region", "allowed": ["us-east-1", "eu-west-1"], "hint": "region must match the customer's data residency"}</code> lets the agent self-correct on the next turn. This is the same principle as good API design for humans, but the cost of a bad error message is now measured in retry loops rather than support tickets.</p>
+<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
+<p><strong>"We need a dedicated ML platform team."</strong> No. The work is backend engineering: schemas, validation, idempotency, observability. A team of two senior backend engineers can build the initial broker in 3–4 weeks. The ML expertise you need is narrow — understanding that models hallucinate plausible arguments, not understanding attention mechanisms.</p>
+<p><strong>"The agent will figure out the right tool."</strong> It will, if your tool descriptions are written like API docs for a very literal reader. "Deploy a service to an environment" is worse than "Deploy a versioned build (git SHA required) of a service to staging or prod. Prod requires human approval." Description quality is a bigger lever than model choice in most internal-tool settings.</p>
+<p><strong>"We can add guardrails later."</strong> You can't, because the incident that makes you want guardrails is the incident that already wrote to prod. Add the <code>dry_run</code> default and the <code>confirmation</code> literal on day one. They cost an hour.</p>
+<p><strong>"Structured output means we're safe."</strong> Structured output (OpenAI's <code>response_format</code>, Anthropic's tool-use schema) guarantees the <em>shape</em> is valid. It does not guarantee the <em>values</em> are correct. A perfectly-typed <code>region: "us-east-1"</code> is still wrong if the customer is in Frankfurt.</p>
+<p><strong>"We'll just use a bigger model."</strong> Bigger models hallucinate fewer arguments but not zero, and they cost more per call. The guardrail work is orthogonal to model choice, and it's the part you control.</p>
+<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
+<p>Once the basic broker is in place, three things become worth building:</p>
+<p><strong>Per-agent capability tokens.</strong> Instead of one tool surface, issue scoped tokens per agent session. A "read-only analytics" agent gets tokens that can call <code>query_metrics</code> but not <code>deploy</code>. This is the same principle as AWS IAM roles for service accounts, applied to agents. Implementation is usually a signed JWT with a <code>tools</code> claim, validated at the broker.</p>
+<p><strong>Semantic argument validation.</strong> Beyond types, validate <em>meaning</em>. If <code>region: "eu-west-1"</code> but the customer's contract says data must stay in <code>ap-southeast-1</code>, reject. This is a rules engine, not an ML problem, and it catches the class of errors that typed schemas miss. A common implementation is a small policy file evaluated per tool call, using something like OPA or a hand-rolled rule set.</p>
+<p><strong>Replayable traces.</strong> Store the full agent turn — prompt, tool calls, arguments, results — in a queryable store (Postgres with a JSONB column works fine at internal-tool scale, up to a few million turns). When an agent does something surprising, you can replay the exact sequence against a fixed tool version and see whether the model or the tool changed. This is the agent equivalent of a database WAL, and it's what turns "the agent did something weird" into a debuggable incident.</p>
+<p>A realistic scale target: 40 engineers, 200 agent sessions per day, 5 tool calls per session, 1,000 turns per day. That's 30,000 rows per month in your trace table — trivial for Postgres 16 with a BRIN index on the timestamp column. You do not need a vector database or a data lake for this.</p>
+<h2 id="quick-reference">Quick reference</h2>
+<table>
+<thead>
+<tr>
+<th>Concern</th>
+<th>Guardrail</th>
+<th>Where it lives</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Invalid arguments</td>
+<td>Typed schema (Pydantic 2.7 / zod 3.23)</td>
+<td>Tool definition</td>
+</tr>
+<tr>
+<td>Hallucinated values</td>
+<td>Enums, regex patterns, discriminated unions</td>
+<td>Tool definition</td>
+</tr>
+<tr>
+<td>Accidental writes</td>
+<td><code>dry_run: bool = True</code> default</td>
+<td>Tool definition</td>
+</tr>
+<tr>
+<td>Irreversible actions</td>
+<td>Human approval, confirmation literal</td>
+<td>Broker</td>
+</tr>
+<tr>
+<td>Retry storms</td>
+<td>Idempotency key, circuit breaker</td>
+<td>Broker</td>
+</tr>
+<tr>
+<td>Runaway loops</td>
+<td>Wall-clock budget (5s read / 30s write)</td>
+<td>Broker</td>
+</tr>
+<tr>
+<td>Semantic errors</td>
+<td>Policy rules (OPA or hand-rolled)</td>
+<td>Broker</td>
+</tr>
+<tr>
+<td>Debugging</td>
+<td>Replayable traces in Postgres JSONB</td>
+<td>Storage</td>
+</tr>
+<tr>
+<td>Scope creep</td>
+<td>Per-session capability tokens (JWT)</td>
+<td>Auth layer</td>
+</tr>
+</tbody>
+</table>
+<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
+<ul>
+<li>The Stripe idempotency documentation is still the clearest explanation of why retry-safe writes matter, and it applies directly to agent tool calls.</li>
+<li>Pydantic v2's discriminated union docs show the exact pattern for closed-set arguments.</li>
+<li>The OpenTelemetry semantic conventions for GenAI (still evolving as of 2026) are worth tracking if you want your agent traces to interoperate with existing APM tooling.</li>
+<li>If you're on AWS, look at Bedrock Guardrails and Lambda's reserved concurrency as two cheap levers for limiting agent blast radius without building a platform.</li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I stop an agent from calling a destructive tool by accident?</strong>
+Make the destructive path require an explicit, hard-to-hallucinate confirmation — a literal string like <code>"CONFIRM_DEPLOY"</code> that the model has to echo, plus a human approval step for anything irreversible. Default every mutating tool to <code>dry_run: True</code> so the model has to opt in to real execution. This doesn't eliminate the risk, but it moves the failure from "accidental prod write" to "agent asks for approval," which is a recoverable state.</p>
+<p><strong>Why does my agent keep retrying the same failing tool call?</strong>
+Because the error message doesn't tell it what to do differently. A generic <code>400 Bad Request</code> gives the model nothing to work with, so it resamples the same distribution and produces the same invalid argument. Return structured errors with the allowed values, the field that failed, and a hint. Also add a per-tool retry cap (3 is typical) and a circuit breaker — after N failures in a window, stop calling and return a terminal error the agent must surface to the user.</p>
+<p><strong>What's the difference between structured output and a validated tool schema?</strong>
+Structured output guarantees the JSON shape matches a schema you provided. A validated tool schema additionally checks semantic constraints — enums, regex patterns, numeric ranges, cross-field rules — at the point the tool executes. You want both. Structured output alone will happily produce <code>region: "us-east-1"</code> for a Frankfurt customer because the shape is valid; only a semantic validator catches that.</p>
+<p><strong>Do I need a vector database to build internal agent tooling?</strong>
+Almost certainly not. The storage you need is a trace table — prompt, tool calls, arguments, results, outcome — and Postgres with a JSONB column handles millions of rows fine. Vector databases solve similarity search over embeddings, which is a different problem. If you're reaching for one before you have trace replay working, you're solving the wrong problem first.</p>
+<h2 id="the-one-thing-to-do-in-the-next-30-minutes">The one thing to do in the next 30 minutes</h2>
+<p>Open the tool definition file for your most dangerous agent-callable function — the one that writes to prod, sends money, or deletes data — and add a single line: <code>dry_run: bool = True</code> as the default for its arguments, plus a <code>confirmation</code> literal field that the caller must set to a fixed string. Run your existing agent test suite against it. If any test starts failing, that test was exercising a path that could have written to prod without approval, and you just found your first real guardrail gap.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/self-service-is-broken-without-ai-ops/">
+                        <h3>Self-service is broken without AI ops</h3>
+                        <p>How AI turned &amp;#x27;self-service&amp;#x27; from a permissions problem into a guardrail system — with concrete AWS examples, Terraform snippets, and the metrics that…</p>
+                        <span class="related-meta">12 min read · 24 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-portfolios-ruin-yours-fix-your-signal/">
+                        <h3>AI portfolios ruin yours? Fix your signal</h3>
+                        <p>AI portfolios ruin yours? Fix your signal — turn generic READMEs into human-graded constraint tables and ship artifacts that prove judgment, not code…</p>
+                        <span class="related-meta">11 min read · 6 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/ai-tools-wont-help-if-everyone-writes-the-same-code/">
+                        <h3>AI tools won’t help if everyone writes the same code</h3>
+                        <p>AI tools create two classes of engineers unless you measure outcomes, not output.</p>
+                        <span class="related-meta">14 min read · 29 July 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

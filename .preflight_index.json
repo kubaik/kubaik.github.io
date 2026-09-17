@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-17T04:06:25.206082",
+  "built_at": "2026-09-17T16:33:49.930810",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5185,6 +5185,11 @@
       "slug": "stop-putting-llm-keys-in-env",
       "title": "Stop Putting LLM Keys in .env",
       "summary": "mcp server has a habit of breaking in ways the monitoring wasn't watching for. The postmortem always says the same thing: we should have caught this sooner. This covers the fix, the cost of not knowing sooner, and what we monitor now. The conventional wisdom (and why it's incomplete) Every secrets m"
+    },
+    {
+      "slug": "agent-access-for-non-ai-engineers",
+      "title": "Agent access for non-AI engineers",
+      "summary": "building internal looks simple until it has to survive real traffic. The edge cases only show up once real users hit the system. Here's what changed once we stopped guessing and started measuring. The one-paragraph version (read this first) Non-AI engineers — backend, frontend, data, SRE — need to c"
     }
   ]
 }

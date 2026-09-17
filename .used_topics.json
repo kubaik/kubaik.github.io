@@ -9,5 +9,6 @@
   "FinOps patterns that work when your biggest variable cost is now LLM tokens, not EC2",
   "The MCP server patterns that moved from experiment to critical infrastructure in our stack",
   "Connection poolers in the age of serverless and AI agents \u2014 what still makes sense",
-  "Secrets management for teams that now have 40+ LLM integrations"
+  "Secrets management for teams that now have 40+ LLM integrations",
+  "Building internal tools that help non-AI engineers work safely with agents"
 ]
