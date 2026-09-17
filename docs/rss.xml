@@ -5,13 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Wed, 16 Sep 2026 16:30:27 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 17 Sep 2026 04:09:47 +0000</lastBuildDate>
     <item>
-      <title>LLM token costs: unit economics that hold</title>
-      <link>https://kubaik.github.io/llm-token-costs-unit-economics-that-hold/</link>
-      <description>LLM token costs break flat-rate FinOps assumptions.</description>
-      <pubDate>Wed, 16 Sep 2026 16:27:44 +0000</pubDate>
-      <guid>https://kubaik.github.io/llm-token-costs-unit-economics-that-hold/</guid>
+      <title>Stop Putting LLM Keys in .env</title>
+      <link>https://kubaik.github.io/stop-putting-llm-keys-in-env/</link>
+      <description>Why .env files fail at 40+ LLM integrations — the env-dump leak, build-arg exposure, and the gateway pattern that fixes rotation and audit.</description>
+      <pubDate>Thu, 17 Sep 2026 04:06:21 +0000</pubDate>
+      <guid>https://kubaik.github.io/stop-putting-llm-keys-in-env/</guid>
     </item>
     <item>
       <title>Which agent stack survives 3G?</title>

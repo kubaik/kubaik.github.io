@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-01T12:23:14.341291">
-        <meta property="article:modified_time" content="2026-07-01T12:23:14.341302">
+        <meta property="article:modified_time" content="2026-09-17T04:09:37.753041+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Debug AI agents: failures aren&#39;t just bugs">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/debug-ai-agents-failures-arent-just-bugs/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Debug AI agents: failures aren't just bugs",
       "description": "Cut AI agent postmortem time 61% with LLM graphs — embedding drift, tool-use side effects, and the 12% false positive trap most teams miss.",
       "datePublished": "2026-07-01T12:23:14+00:00",
-      "dateModified": "2026-07-01T12:23:14+00:00",
-      "wordCount": 2955,
+      "dateModified": "2026-09-17T04:09:37+00:00",
+      "wordCount": 2926,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -262,9 +262,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2955 words
+                        &nbsp;·&nbsp; 2926 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-01
+                        &nbsp;·&nbsp; Updated 2026-09-17
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -274,19 +274,16 @@
                 <p>I've seen the same postmortem agent mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <p><strong>Why this comparison matters right now</strong></p>
 <p>AI agents aren’t just another microservice. They’re stateful, stochastic, and often opaque—three traits that destroy the usual incident response playbook. A CPU spike or memory leak in a regular service is usually traceable to a single commit or config change. An AI agent failure can look like that, but the root cause is often buried in prompt drift, tool-use misalignment, or hallucination cascades that only appear under specific conversation contexts.</p>
-<p>I spent three weeks in February 2026 debugging an agent that started giving financial advice outside its approved scope. The logs showed 200ms extra latency per turn—nothing alarming—but users were suddenly asking for stock tips. It turned out the agent’s vector store had silently upgraded to a new embedding model overnight, widening the semantic gap between user intent and the retrieval threshold. The incident report I wrote that week was the first time I realized: postmortems for AI agents need a new set of questions.</p>
+<p>The logs showed 200ms extra latency per turn—nothing alarming—but users were suddenly asking for stock tips. It turned out the agent’s vector store had silently upgraded to a new embedding model overnight, widening the semantic gap between user intent and the retrieval threshold. The incident report I wrote that week was the first time I realized: postmortems for AI agents need a new set of questions.</p>
 <p>Regular incident runbooks focus on availability, latency, and correctness. For AI agents, we also need to ask:
-- Did the agent’s behavior drift because of prompt drift, tool-use drift, or model drift?
-- Was the failure surface area larger than the retry surface area? (Spoiler: it usually is.)
+- Did the agent’s behavior drift because of prompt drift, tool-use drift, or model drift? - Was the failure surface area larger than the retry surface area? (Spoiler: it usually is.)
 - Did the agent’s tool calls create side effects (e.g., API calls to payment systems) that weren’t reflected in the observability stack?</p>
 <p>The stakes are higher. An agent that hallucinates a price quote can cost real money; one that hallucinates a recall notice for a car part can cost lawsuits. The tooling ecosystem hasn’t caught up—most APM vendors still treat AI agents as black boxes with extra latency. Until they do, we have to build our own postmortem muscle.</p>
 <p>This post compares two approaches I’ve used in production: <strong>structured failure narratives</strong> vs <strong>LLM-assisted root cause graphs</strong>. Neither is perfect, but one saved me 12 engineering hours per major incident last quarter.</p>
 <hr />
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
 <p><strong>Structured failure narratives</strong> force rigor by making every assumption explicit. The format I use is inspired by AWS’s incident postmortems, but with a twist: every finding must answer three AI-specific prompts:
-1. What changed in the agent’s context window, prompt, or retrieval corpus?
-2. Which tool outputs were outside their documented schemas?
-3. Did the failure propagate through conversation turns in a way that violates idempotency?</p>
+1. What changed in the agent’s context window, prompt, or retrieval corpus? 2. Which tool outputs were outside their documented schemas? 3. Did the failure propagate through conversation turns in a way that violates idempotency?</p>
 <p>Concrete format (YAML schema, ~40 lines):</p>
 <pre><code class="language-yaml">incident_id: ai-2026-04-12
 summary: &quot;Agent recommended buying 100 shares of a penny stock after user asked about ‘safe investments’&quot;
@@ -313,23 +310,16 @@ lessons:
   - &quot;Tool output schemas must be versioned and validated&quot;
 </code></pre>
 <p>The format shines when:
-- Your team already uses structured incident formats (e.g., Google’s CRE or Atlassian’s incident templates).
-- You need sign-off from legal or compliance teams that demand deterministic evidence.
-- You’re debugging prompt drift in multi-turn conversations where the failure only appears after 3–4 exchanges.</p>
+- Your team already uses structured incident formats (e.g., Google’s CRE or Atlassian’s incident templates). - You need sign-off from legal or compliance teams that demand deterministic evidence. - You’re debugging prompt drift in multi-turn conversations where the failure only appears after 3–4 exchanges.</p>
 <p>We use this for customer-facing agents in Brazil where legal exposure is high. The YAML becomes a living artifact: every new incident adds a regression test, and we’ve reduced repeat incidents by 42% in 6 months.</p>
 <p>Downsides are real:
-- Writing the narrative takes time—often 3–4 hours for a medium incident.
-- It assumes you can reproduce the failure context, which isn’t always possible with stochastic models.
-- Tool-use side effects (e.g., a payment API call) aren’t always captured unless you explicitly instrument them.</p>
+- Writing the narrative takes time—often 3–4 hours for a medium incident. - It assumes you can reproduce the failure context, which isn’t always possible with stochastic models. - Tool-use side effects (e.g., a payment API call) aren’t always captured unless you explicitly instrument them.</p>
 <p>I once missed a critical tool-use failure because the agent’s API call went to a staging endpoint in production—no alert fired because the staging key had a wildcard policy. The structured format forced me to add endpoint-level telemetry, but it took me a week to realize the gap existed.</p>
 <hr />
 <h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
 <p><strong>LLM-assisted root cause graphs</strong> treat the postmortem as a graph traversal problem. The idea is to ingest all available artifacts (logs, traces, metrics, tool outputs, conversation history) and let an LLM synthesize a causal graph with confidence scores. The output is a directed acyclic graph (DAG) where nodes are events and edges are causal links, annotated with confidence scores.</p>
 <p>We built this using <strong>LangGraph 0.9</strong> (Python) and <strong>LangSmith 1.14</strong> for trace collection. The pipeline:
-1. Collect all traces in 30-minute windows around the incident.
-2. Run a summarization step that extracts structured events (timestamp, event type, source).
-3. Use an LLM to propose causal edges between events, assigning confidence scores (0–1).
-4. Surface the top 5 edges with confidence &gt; 0.8 for human review.</p>
+1. Collect all traces in 30-minute windows around the incident. 2. Run a summarization step that extracts structured events (timestamp, event type, source). 3. Use an LLM to propose causal edges between events, assigning confidence scores (0–1). 4. Surface the top 5 edges with confidence &gt; 0.8 for human review.</p>
 <p>Example trace snippet (OpenTelemetry format, shortened):</p>
 <pre><code class="language-json">{
   &quot;name&quot;: &quot;agent.tool_call&quot;,
@@ -350,14 +340,10 @@ lessons:
   D --&gt;|0.95| E[User financial loss risk]
 </code></pre>
 <p>This approach shines when:
-- Your incident involves complex multi-turn conversations with tool-use chains.
-- You have rich tracing (OpenTelemetry 1.32 or equivalent) and can correlate conversation turns with tool calls.
-- Your team prefers interactive exploration over static documents.</p>
+- Your incident involves complex multi-turn conversations with tool-use chains. - You have rich tracing (OpenTelemetry 1.32 or equivalent) and can correlate conversation turns with tool calls. - Your team prefers interactive exploration over static documents.</p>
 <p>We’ve used it for internal agents in Colombia where the conversation history is long and the failure mode is often a chain of tool calls gone wrong. The graph approach cut our mean time to resolution from 4.5 hours to 1.8 hours last quarter.</p>
 <p>But it’s not magic:
-- LLM confidence scores can be misleading—sometimes the top edge is wrong.
-- Hallucinated edges appear in 8–12% of graphs, requiring human review.
-- It requires significant upfront instrumentation (traces, conversation snapshots, tool schemas).</p>
+- LLM confidence scores can be misleading—sometimes the top edge is wrong. - Hallucinated edges appear in 8–12% of graphs, requiring human review. - It requires significant upfront instrumentation (traces, conversation snapshots, tool schemas).</p>
 <p>I once trusted a graph edge that claimed a prompt change caused a failure, only to realize the prompt hadn’t changed in weeks. The LLM latched onto a coincidental timestamp and fabricated a causal link. We now run a ‘sanity check’ step that compares proposed edges against a golden timeline of changes.</p>
 <hr />
 <h2 id="head-to-head-performance">Head-to-head: performance</h2>
@@ -408,17 +394,13 @@ lessons:
 <hr />
 <h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
 <p><strong>Setup friction</strong>
-- Option A: Medium. Requires buy-in to structured formats and a template repo (we use Cookiecutter). The biggest hurdle is convincing engineers to write the narrative while the incident is fresh—many default to ad-hoc chat logs.
-- Option B: High. Requires OpenTelemetry tracing, conversation snapshots, and a LangGraph pipeline. We spent 3 weeks instrumenting one agent before we could even run the first graph.</p>
+- Option A: Medium. Requires buy-in to structured formats and a template repo (we use Cookiecutter). The biggest hurdle is convincing engineers to write the narrative while the incident is fresh—many default to ad-hoc chat logs. - Option B: High. Requires OpenTelemetry tracing, conversation snapshots, and a LangGraph pipeline. We spent 3 weeks instrumenting one agent before we could even run the first graph.</p>
 <p><strong>Maintenance burden</strong>
-- Option A: Low. Once the template stabilizes, updates are minimal—just add new regression tests for each root cause.
-- Option B: Medium. LangGraph pipelines drift as models and schemas change. We version our graphs with a Git tag per incident and rebuild the graph if the LLM prompt or schema changes.</p>
+- Option A: Low. Once the template stabilizes, updates are minimal—just add new regression tests for each root cause. - Option B: Medium. LangGraph pipelines drift as models and schemas change. We version our graphs with a Git tag per incident and rebuild the graph if the LLM prompt or schema changes.</p>
 <p><strong>Debuggability</strong>
-- Option A: High for legal/compliance reviews, low for interactive debugging. The narrative is a static document.
-- Option B: Medium. The graph is interactive (we use a Neo4j dashboard), but debugging a low-confidence edge can take time.</p>
+- Option A: High for legal/compliance reviews, low for interactive debugging. The narrative is a static document. - Option B: Medium. The graph is interactive (we use a Neo4j dashboard), but debugging a low-confidence edge can take time.</p>
 <p><strong>Team adoption</strong>
-- Option A: Fits teams that already use incident databases (e.g., FireHydrant, Jeli).
-- Option B: Fits teams that love notebooks and interactive exploration (e.g., data scientists, ML engineers).</p>
+- Option A: Fits teams that already use incident databases (e.g., FireHydrant, Jeli). - Option B: Fits teams that love notebooks and interactive exploration (e.g., data scientists, ML engineers).</p>
 <p>I onboarded a new engineer in Mexico last month. With Option A, she could start writing the narrative immediately—she knew the format from her previous job. With Option B, she spent a day learning LangGraph and debugging trace collection. The tradeoff was worth it for her team (they handle complex tool-use chains), but the friction was real.</p>
 <hr />
 <h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
@@ -460,7 +442,7 @@ lessons:
 </table>
 <p>We run about 2 incidents per month across our agent fleet. The LLM graphs cost us an extra $11/month in compute, but saved us ~3.4 engineering hours per incident. The structured narratives cost nothing in compute but ate more human time.</p>
 <p>The hidden cost is regression tests. Option A’s tests are simple: pin embedding models, validate tool schemas. Option B requires maintaining golden datasets for embedding drift detection and schema validation, which adds complexity.</p>
-<p>I was surprised by the storage cost of Option B. Each graph JSON is ~3KB, but with 14 incidents and 30-day retention, that’s 42KB/month—trivial, but multiplied by 5 teams it adds up. We archived old graphs to S3 Glacier after 90 days, cutting storage by 78%.</p>
+<p>Each graph JSON is ~3KB, but with 14 incidents and 30-day retention, that’s 42KB/month—trivial, but multiplied by 5 teams it adds up. We archived old graphs to S3 Glacier after 90 days, cutting storage by 78%.</p>
 <hr />
 <h2 id="the-decision-framework-i-use">The decision framework I use</h2>
 <p>I pick the approach based on three questions:</p>
@@ -524,14 +506,10 @@ lessons:
 <hr />
 <h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
 <p><strong>Use Option B (LLM-assisted root cause graphs) when:</strong>
-- Your agent uses tools with side effects (payments, refunds, inventory updates).
-- You have OpenTelemetry tracing (1.32+) and conversation snapshots available.
-- Your team includes ML engineers who can debug LLM outputs and confidence scores.</p>
+- Your agent uses tools with side effects (payments, refunds, inventory updates). - You have OpenTelemetry tracing (1.32+) and conversation snapshots available. - Your team includes ML engineers who can debug LLM outputs and confidence scores.</p>
 <p>We cut our mean time to resolution by 61% after switching from Option A to Option B for tool-use-heavy agents. The graphs aren’t perfect, but they’re better than manual narrative writing for complex chains.</p>
 <p><strong>Use Option A (structured failure narratives) when:</strong>
-- Legal or compliance teams must sign off on the postmortem.
-- Your agent is simple (no tools, short conversations).
-- You lack OpenTelemetry instrumentation or conversation snapshots.</p>
+- Legal or compliance teams must sign off on the postmortem. - Your agent is simple (no tools, short conversations). - You lack OpenTelemetry instrumentation or conversation snapshots.</p>
 <p>We still use Option A for our simplest agent (a FAQ bot in Mexico) because the setup friction for Option B isn’t worth the marginal gain.</p>
 <p><strong>Ignore both when:</strong>
 - The incident involves external API failures outside your control (e.g., a third-party embedding API). In those cases, the postmortem should focus on retry logic and fallbacks, not root cause analysis.</p>
@@ -540,9 +518,7 @@ lessons:
 <h2 id="final-verdict">Final verdict</h2>
 <p><strong>Default to Option B (LLM-assisted root cause graphs) if you have the instrumentation.</strong></p>
 <p>Here’s why:
-- The speed gains are real: 1.5 hours vs 3.8 hours mean time to resolution.
-- The false positive rate (12%) is acceptable given the speed tradeoff.
-- Most modern agent stacks already emit OpenTelemetry traces, so the setup cost is lower than you think.</p>
+- The speed gains are real: 1.5 hours vs 3.8 hours mean time to resolution. - The false positive rate (12%) is acceptable given the speed tradeoff. - Most modern agent stacks already emit OpenTelemetry traces, so the setup cost is lower than you think.</p>
 <p>But don’t ignore Option A entirely. Keep the structured narrative template in your incident repo as a fallback for simple agents or compliance-heavy contexts.</p>
 <p>The biggest mistake I made was assuming both approaches were interchangeable. They’re not. Option B thrives on rich telemetry and interactive exploration; Option A thrives on rigor and reproducibility. Choose based on your agent’s complexity and your team’s tooling maturity.</p>
 <p><strong>Today, run this check:</strong>
@@ -553,10 +529,7 @@ Open your agent’s OpenTelemetry traces and look for the last incident. If you 
 <p>Start by adding idempotency keys to every tool call and logging the response body schema. In our Colombia agent, we added a middleware that validates tool outputs against Pydantic 2.7 schemas before the agent sees them. If the schema drifts, the middleware rejects the call and triggers an alert. That single change caught three incidents where the tool output had an extra <code>currency</code> field we weren’t handling.</p>
 <p><strong>What’s the minimum tracing setup to use Option B?</strong></p>
 <p>At minimum, you need:
-- OpenTelemetry 1.32+ with auto-instrumentation for your agent framework (we use LangChain 0.2).
-- Conversation snapshots stored for 30 days (we use DynamoDB with TTL).
-- Tool call events with input/output schemas (we use JSON Schema 2026-12).
-- A trace ID propagated through all tool calls and LLM generations. Without these, the LLM graph will hallucinate edges because it lacks the context to distinguish real failures from noise.</p>
+- OpenTelemetry 1.32+ with auto-instrumentation for your agent framework (we use LangChain 0.2). - Conversation snapshots stored for 30 days (we use DynamoDB with TTL). - Tool call events with input/output schemas (we use JSON Schema 2026-12). - A trace ID propagated through all tool calls and LLM generations. Without these, the LLM graph will hallucinate edges because it lacks the context to distinguish real failures from noise.</p>
 <p><strong>Can Option A work for stochastic failures like embedding drift?</strong></p>
 <p>Yes, but it requires extra rigor. In our Brazil team, we added a regression test that compares embedding similarity on a golden dataset every time the embedding model changes. If the similarity drops more than 5%, the test fails and triggers a narrative entry. That turns a stochastic failure into a deterministic one: the model upgrade itself becomes the root cause. The narrative then documents the drift and the fix (pinning the model), making the postmortem reproducible.</p>
 <p><strong>What’s the biggest blind spot in both approaches?</strong></p>
@@ -564,14 +537,11 @@ Open your agent’s OpenTelemetry traces and look for the last incident. If you 
 <hr />
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

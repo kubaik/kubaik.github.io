@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T18:45:32.172116">
-        <meta property="article:modified_time" content="2026-06-09T18:45:32.172124">
+        <meta property="article:modified_time" content="2026-09-17T04:09:38.730524+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Killed $3k Kubernetes, kept $200 infra">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/killed-3k-kubernetes-kept-200-infra/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Killed $3k Kubernetes, kept $200 infra",
       "description": "Cut AWS infrastructure costs 86% by replacing $3k/month Kubernetes with ECS Fargate, CloudFront, and Redis — real numbers, real stack, real mistakes.",
       "datePublished": "2026-06-09T18:45:32+00:00",
-      "dateModified": "2026-06-09T18:45:32+00:00",
-      "wordCount": 3710,
-      "timeRequired": "PT19M",
+      "dateModified": "2026-09-17T04:09:38+00:00",
+      "wordCount": 3659,
+      "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,10 +260,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3710 words
+                        18 min read
+                        &nbsp;·&nbsp; 3659 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-09
+                        &nbsp;·&nbsp; Updated 2026-09-17
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -273,7 +273,7 @@
                 <p>Most replaced 3kmonth guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In early 2026, our SaaS product had grown enough that the marketing site kept crashing during traffic spikes. We were running on a managed Kubernetes cluster in AWS EKS (v1.27) with 3 <code>t3.xlarge</code> nodes, an RDS <code>db.t3.2xlarge</code> instance, and an ElastiCache <code>cache.t3.medium</code> cluster for Redis. The bill hit $3,127/month, and the CFO sent me a Slack message that read: <em>"Is this normal?"</em> I ran a quick calculation and realized that 68% of that cost was for the Kubernetes control plane and the over-provisioned compute nodes. The marketing site averaged 150 requests/second but spiked to 1,800 requests/second during product launches. The Redis cache was only hit 42% of the time because our Django app (Python 3.11) was using a naive connection strategy that held connections open for the entire request lifecycle, causing the cache to bottleneck under load.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. The site was slow (median response time 420ms), the Redis cache was underutilized, and the Kubernetes setup was more maintenance than value. We needed a solution that could handle traffic spikes without breaking the bank and without me babysitting the infrastructure every time AWS pushed a security patch.</p>
+<p>The site was slow (median response time 420ms), the Redis cache was underutilized, and the Kubernetes setup was more maintenance than value. We needed a solution that could handle traffic spikes without breaking the bank and without me babysitting the infrastructure every time AWS pushed a security patch.</p>
 <p>Our stack was straightforward: Django, PostgreSQL, Redis, and a small Next.js frontend hosted on Vercel. The marketing site was static but needed server-side rendering for SEO. We didn’t need autoscaling, multi-region failover, or even persistent volumes. We just needed something that wouldn’t melt under 10x traffic and cost less than a junior developer’s salary.</p>
 <p>The real problem wasn’t Kubernetes itself — it was the overhead. Every time we deployed, I had to update Helm charts, rotate secrets, and pray the ingress controller wouldn’t time out. The <code>t3.xlarge</code> nodes were overkill for 95% of our traffic, but we’d scaled up during a Black Friday sale and never dialed it back. The ElastiCache cluster was another $240/month for a cache we barely used. I knew there had to be a simpler way, but I wasn’t sure where to start.</p>
 <p>We considered serverless options, but AWS Lambda (Node 20 LTS) had cold starts that added 150–300ms to every request. That ruled it out for a site where performance mattered. We also looked at Fly.io and Render, but their pricing models were unpredictable, and I didn’t want to gamble our uptime on a startup’s runway. Static site generators like Next.js Static Exports were fast, but they couldn’t handle server-side features like form submissions or dynamic content without a backend.</p>
@@ -298,7 +298,7 @@ CACHES = {
 }
 </code></pre>
 <p>This configuration held Redis connections open for the entire request, causing the cache to bottleneck under load. When traffic spiked, Redis would hit its connection limit (10,000 by default), and Django would start queuing requests, adding 500–800ms of latency. I tried reducing <code>max_connections</code> to 50, but that just shifted the bottleneck to the Django app, which started dropping connections at 1,200 requests/second.</p>
-<p>The final straw was the Kubernetes control plane. Every security patch required a manual upgrade, and the EKS control plane itself cost $72/month. I spent two hours one weekend upgrading from v1.27 to v1.28, and the process failed twice because of a misconfigured IAM role. That’s when I decided to scrap the whole thing and find something simpler.</p>
+<p>The final straw was the Kubernetes control plane. Every security patch required a manual upgrade, and the EKS control plane itself cost $72/month. That’s when I decided to scrap the whole thing and find something simpler.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>The solution was to replace Kubernetes with a combination of AWS Elastic Container Service (ECS) with Fargate, CloudFront for caching, and a single Redis instance on ElastiCache (not a cluster). ECS Fargate gave us container orchestration without the Kubernetes overhead, and CloudFront acted as a global CDN with Lambda@Edge for dynamic content.</p>
 <p>The key insight was that we didn’t need horizontal scaling for the marketing site. A single Fargate task with 2 vCPUs and 4GB RAM could handle 1,800 requests/second with a median latency of 120ms. CloudFront cached 95% of the static content at the edge, reducing the load on the origin server. For dynamic content (like form submissions), we used Lambda@Edge to proxy requests to the ECS service only when necessary.</p>
@@ -574,14 +574,11 @@ echo &quot;Hit rate: $((hits * 100 / (hits + misses)))%&quot;
 <p>If the hit rate is below 70%, your cache isn’t working efficiently. Adjust your pool size and timeouts, then retest. Do this in the next 30 minutes — it’s the fastest way to cut costs and improve performance.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

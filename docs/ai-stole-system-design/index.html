@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-21T15:10:03.056592">
-        <meta property="article:modified_time" content="2026-06-21T15:10:03.056599">
+        <meta property="article:modified_time" content="2026-09-17T04:09:37.269681+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI stole system design">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-stole-system-design/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "AI stole system design",
       "description": "Detect AI-generated system designs in 2026 interviews — 3 concrete red flags, a live debugging fix, and the exact Terraform command to audit Terraform pasted…",
       "datePublished": "2026-06-21T15:10:03+00:00",
-      "dateModified": "2026-06-21T15:10:03+00:00",
-      "wordCount": 2073,
+      "dateModified": "2026-09-17T04:09:37+00:00",
+      "wordCount": 2037,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,9 +266,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         10 min read
-                        &nbsp;·&nbsp; 2073 words
+                        &nbsp;·&nbsp; 2037 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-21
+                        &nbsp;·&nbsp; Updated 2026-09-17
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,12 +277,12 @@
             <div class="post-content" itemprop="articleBody">
                 <p>After reviewing a lot of code that touches system design, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.</p>
 <h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
-<p>If you’ve interviewed in 2026, you’ve probably seen this: a candidate’s system design doc reads like a vendor whitepaper, full of buzzwords like “multi-agent orchestration,” “embedding cache,” and “vectorized state machines.” Yet when you dig in, the candidate can’t explain how sharding actually works or why they picked DynamoDB over MongoDB. I ran into this when a senior backend candidate in Medellín walked me through a “real-time LLM inference pipeline” that hit 99th-percentile latency of 12 ms. I asked how they’d shard the embedding cache. They paused, then said, “Isn’t it automatically handled by the vector database?” That’s when I realized the interview had been outsourced to an AI assistant.</p>
+<p>If you’ve interviewed in 2026, you’ve probably seen this: a candidate’s system design doc reads like a vendor whitepaper, full of buzzwords like “multi-agent orchestration,” “embedding cache,” and “vectorized state machines.” Yet when you dig in, the candidate can’t explain how sharding actually works or why they picked DynamoDB over MongoDB. I asked how they’d shard the embedding cache. They paused, then said, “Isn’t it automatically handled by the vector database?” That’s when I realized the interview had been outsourced to an AI assistant.</p>
 <p>The surface symptom is slick-looking diagrams and confident-sounding prose, but the real issue is that candidates are using AI to generate system designs verbatim from 2026 blog posts. The result? Every interviewer has a story about a candidate who quoted exact latency numbers (e.g., “Redis Cluster supports 1M ops/sec”) without understanding how replication lag affects that number in practice.</p>
 <h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
 <p>AI assistants like Cursor, GitHub Copilot Enterprise, and Amazon Q Developer have gotten too good at generating system designs. In 2026, these tools can produce a passable AWS architecture diagram and Terraform from a one-line prompt like “build a multi-region event streaming system.” Candidates copy-paste that output into their interview doc, swap out a few variable names, and present it as their own work.</p>
 <p>The deeper cause is that system design interviews still rely on the candidate’s ability to explain trade-offs in real time. AI can’t simulate the pressure of explaining why you’d choose S3 over EFS when the interviewer says, “Assume a 10 TB dataset with 100 MB/s write throughput and 5 ms read latency.” Candidates who rely on AI output hit a wall when asked to justify constraints, estimate cost, or describe failure modes.</p>
-<p>I was surprised that even experienced engineers fell for it. One candidate in Bogotá delivered a flawless design for a “global CDN with edge workers” but couldn’t explain how their edge cache invalidation policy would behave during a regional outage. When I probed, they admitted they’d used Cursor’s “Generate system design” feature and pasted the result. The tool had invented a fictional CDN provider called “CloudFront Edge Plus” that doesn’t exist.</p>
+<p>One candidate in Bogotá delivered a flawless design for a “global CDN with edge workers” but couldn’t explain how their edge cache invalidation policy would behave during a regional outage. When I probed, they admitted they’d used Cursor’s “Generate system design” feature and pasted the result. The tool had invented a fictional CDN provider called “CloudFront Edge Plus” that doesn’t exist.</p>
 <h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
 <p>The most common cause is that the candidate’s design doc is too polished. If every arrow is perfectly aligned, every latency number is a round decimal, and every AWS service name is spelled correctly, it’s likely AI-generated. Authentic designs usually have messy notes, crossed-out boxes, and back-of-the-envelope calculations scribbled in the margin.</p>
 <p>To detect this, ask the candidate to redraw their architecture on a whiteboard or shared doc in real time. Watch how they handle constraints: “What happens if your primary region goes down?” or “How much will this cost at 10x scale?” If they pivot smoothly, they understand the system. If they stall or over-rely on jargon, they’re reciting.</p>
@@ -370,14 +370,11 @@
 <p>Your next step in the next 30 minutes: open your last system design interview rubric and replace the “design quality” section with a 20-minute live debugging exercise on a 3-node Redis Cluster. Spin it up with Docker Compose using Redis 7.2, then write a failing test that returns stale data after a write. That’s your new baseline for authenticity.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

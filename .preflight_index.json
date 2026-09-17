@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-16T16:27:47.561337",
+  "built_at": "2026-09-17T04:06:25.206082",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5180,6 +5180,11 @@
       "slug": "llm-token-costs-unit-economics-that-hold",
       "title": "LLM token costs: unit economics that hold",
       "summary": "The workaround gets copy-pasted forward long after the original reason is forgotten. structured output problems have a habit of surfacing mid-migration, right when there's no time to solve them properly. This post covers what comes after the happy path. Why I wrote this (the problem I kept hitting) "
+    },
+    {
+      "slug": "stop-putting-llm-keys-in-env",
+      "title": "Stop Putting LLM Keys in .env",
+      "summary": "mcp server has a habit of breaking in ways the monitoring wasn't watching for. The postmortem always says the same thing: we should have caught this sooner. This covers the fix, the cost of not knowing sooner, and what we monitor now. The conventional wisdom (and why it's incomplete) Every secrets m"
     }
   ]
 }

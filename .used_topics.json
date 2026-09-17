@@ -6,5 +6,8 @@
   "How we cut our monthly AI spend by 55% after implementing real token attribution",
   "Why structured output + validation layers beat JSON mode for anything that touches money",
   "The governance layer we added after our first agent caused a compliance incident",
-  "FinOps patterns that work when your biggest variable cost is now LLM tokens, not EC2"
+  "FinOps patterns that work when your biggest variable cost is now LLM tokens, not EC2",
+  "The MCP server patterns that moved from experiment to critical infrastructure in our stack",
+  "Connection poolers in the age of serverless and AI agents \u2014 what still makes sense",
+  "Secrets management for teams that now have 40+ LLM integrations"
 ]
