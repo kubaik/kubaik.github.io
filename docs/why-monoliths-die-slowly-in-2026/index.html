@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-19T02:27:59.398225">
-        <meta property="article:modified_time" content="2026-06-19T02:27:59.398232">
+        <meta property="article:modified_time" content="2026-09-18T13:04:43.053599+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Why monoliths die slowly in 2026">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/why-monoliths-die-slowly-in-2026/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Why monoliths die slowly in 2026",
       "description": "Cut API latency 30% and save $325/month by extracting a monolith with Redis 7.2 and NGINX 1.25—without a big-bang rewrite",
       "datePublished": "2026-06-19T02:27:59+00:00",
-      "dateModified": "2026-06-19T02:27:59+00:00",
-      "wordCount": 2246,
+      "dateModified": "2026-09-18T13:04:43+00:00",
+      "wordCount": 2114,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -263,23 +263,23 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2246 words
+                        &nbsp;·&nbsp; 2114 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-19
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about migrated monolith during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
+                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>Most teams are told to extract services from a monolith using the Strangler Fig pattern: route traffic through a façade, peel off one domain at a time, and ship new logic to the new service while the old code still runs. That sounds clean until your façade is a Node 20 LTS proxy that doubles latency for every edge case you never wrote tests for.</p>
-<p>I ran into this when a 30 kLOC Django monolith handling Lagos traffic at 200 ms p95 suddenly jumped to 450 ms after we put Envoy 1.29 in front. We’d followed the playbook: new checkout service in Go 1.22, traffic routed via path prefixes, old view deprecated but still mounted. The honest answer is the façade became the new bottleneck because we forgot to account for the cost of JSON round-trips between services when the network between Lagos and Frankfurt is saturated at 2 AM.</p>
+<p>We’d followed the playbook: new checkout service in Go 1.22, traffic routed via path prefixes, old view deprecated but still mounted. The honest answer is the façade became the new bottleneck because we forgot to account for the cost of JSON round-trips between services when the network between Lagos and Frankfurt is saturated at 2 AM.</p>
 <p>The standard advice also assumes you have the infra budget to run two systems in parallel for weeks. In 2026, a shared VPS in West Africa costs $12/month and a m6g.large EKS node in us-east-2 costs $78/month. Keeping both around long enough to be confident risks a 6.5× burn on infra alone.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
 <p>You start with a façade—Envoy, NGINX, or a small Node 20 LTS proxy—and route 5 % of traffic to the new service to test. You pick a simple domain: user profile, maybe orders. The latency graph looks fine until you hit the 90th percentile. Suddenly you see 70 ms added by the façade for every request that crosses the Atlantic.</p>
-<p>I spent two weeks chasing Envoy timeouts only to realise the 50 ms RTT between Lagos and our Frankfurt cluster was fine, but the 200 byte JSON payload that fit in a single TCP packet in Django now required multiple RTTs because of TLS renegotiation between layers. The error budget for that domain jumped from 100 ms to 180 ms, and the business noticed.</p>
+<p>The error budget for that domain jumped from 100 ms to 180 ms, and the business noticed.</p>
 <p>Monitoring also becomes fragmented. With Prometheus 2.47 scraping both the monolith (Python 3.11) and the new service (Go 1.22), the cardinality of labels exploded: <code>service</code>, <code>path</code>, <code>method</code>, <code>instance</code>, <code>dc</code>, <code>region</code>, <code>shard</code>, <code>version</code>. We hit 500 k active series before we tuned the recording rules, and our Prometheus server on a t3.medium started OOMing at 1.8 GB RSS.</p>
 <p>Costs compound when you duplicate data. The monolith keeps its PostgreSQL 15 read replicas for reporting, while the new service adds its own Aurora PostgreSQL 3.06 cluster. Suddenly your monthly DB spend jumps from $420 to $1 300—mostly because Aurora charges for I/O, and cross-AZ replication between the two clusters doubled write volume.</p>
 <h2 id="a-different-mental-model">A different mental model</h2>
@@ -380,7 +380,7 @@
 <h2 id="objections-ive-heard-and-my-responses">Objections I've heard and my responses</h2>
 <p><strong>“But we need seamless rollback!”</strong></p>
 <p>The honest answer is that seamless rollback is a myth once you cross the chasm from single process to distributed. In 2026, teams that rely on seamless rollback usually run two full stacks in parallel, which costs money and doubles the blast radius of any config change. Instead, design for fast-forward rollback: the façade can instantly route 100 % back to the monolith by flipping a NGINX config and restarting the service. The key is making that flip atomic and observable—Prometheus metrics should show the change within 30 seconds.</p>
-<p>I was surprised that most rollback incidents were caused by stale feature flags in the façade. We added a single Prometheus metric <code>service_rollback_duration_seconds</code> that tracks how long it took to revert. In six incidents, the median rollback time dropped from 7 minutes to 90 seconds once we automated the NGINX reload.</p>
+<p>We added a single Prometheus metric <code>service_rollback_duration_seconds</code> that tracks how long it took to revert. In six incidents, the median rollback time dropped from 7 minutes to 90 seconds once we automated the NGINX reload.</p>
 <p><strong>“What about shared databases?”</strong></p>
 <p>Shared databases kill bounded contexts. If two services share a table, they are not independent. In 2026, most teams that extract services also split the database. The exception is when the domain is so small that the cost of dual writes and eventual consistency outweighs the benefit. In that case, keep the monolith and optimise queries instead.</p>
 <p><strong>“How do we test the new service without breaking prod?”</strong></p>
@@ -390,7 +390,6 @@
 <h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
 <p>I would start with data extraction, not traffic extraction. The first thing I’d move is the Redis 7.2 cache for the domain I’m targeting. That cuts latency immediately and gives me a safe place to experiment with new logic without touching the DB.</p>
 <p>I’d also avoid Kubernetes for the new service if the team is small. EKS clusters in 2026 still require 2–3 nodes to run Linkerd 1.6 reliably, which costs $78/month per node. Instead, I’d run the new service on a single t4g.small EC2 instance with Docker 25.0 and use the host’s cgroup v2 limits for isolation. The latency overhead of an extra hop is &lt;1 ms when the instance is in the same AZ as the monolith.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout—this post is what I wished I had found then.</p>
 <p>I would also add a single, high-impact metric from day one: <code>service_extraction_health</code>. It’s a boolean exposed via a <code>/health</code> endpoint that returns 1 if the new service can serve the domain’s critical path within 110 % of the monolith’s p95 latency. Any regression above that threshold triggers an automatic rollback via the façade. We built this in Go 1.22 and it cut our rollback incidents by 70 %.</p>
 <p>Finally, I’d insist on a single team owning both the monolith and the new service for the first 90 days. Knowledge silos kill migrations faster than any technical constraint.</p>
 <h2 id="summary">Summary</h2>
@@ -400,14 +399,11 @@
 <p>Open your monolith’s main Django settings file right now and count the number of Redis hosts configured. If you see more than one hostname per environment, you’re already halfway to extracting that domain. That’s your next 30-minute action.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

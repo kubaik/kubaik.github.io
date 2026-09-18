@@ -1,0 +1,513 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Spot instances vs on-demand for AI experiments - Kubai Kevin</title>
+        <meta name="description" content="Spot vs on-demand GPU instances for AI experiments: the $8k/month crossover, checkpoint interval math, and the resume bug that silently corrupts results.">
+        <meta name="keywords" content="SpotInstances, GpuCost, Checkpoint, Preemptible, Ai">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-18T13:01:40.090270">
+        <meta property="article:modified_time" content="2026-09-18T13:01:40.090281">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Spot instances vs on-demand for AI experiments">
+        <meta property="og:description" content="Spot vs on-demand GPU instances for AI experiments: the $8k/month crossover, checkpoint interval math, and the resume bug that silently corrupts results.">
+        <meta property="og:url" content="https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/spot-instances-vs-on-demand-for-ai-experiments.png">
+        <meta property="og:image:alt" content="Spot instances vs on-demand for AI experiments">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Spot instances vs on-demand for AI experiments">
+        <meta name="twitter:description" content="Spot vs on-demand GPU instances for AI experiments: the $8k/month crossover, checkpoint interval math, and the resume bug that silently corrupts results.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/spot-instances-vs-on-demand-for-ai-experiments.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/#article",
+      "headline": "Spot instances vs on-demand for AI experiments",
+      "description": "Spot vs on-demand GPU instances for AI experiments: the $8k/month crossover, checkpoint interval math, and the resume bug that silently corrupts results.",
+      "datePublished": "2026-09-18T13:01:40+00:00",
+      "dateModified": "2026-09-18T13:01:40+00:00",
+      "wordCount": 2592,
+      "timeRequired": "PT13M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/"
+      },
+      "keywords": "SpotInstances, GpuCost, Checkpoint, Preemptible, Ai"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Spot instances vs on-demand for AI experiments",
+          "item": "https://kubaik.github.io/spot-instances-vs-on-demand-for-ai-experiments/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Spot instances vs on-demand for AI experiments</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Spot instances vs on-demand for AI experiments</h1>
+                
+                <p class="post-lead">Spot vs on-demand GPU instances for AI experiments: the $8k/month crossover, checkpoint interval math, and the resume bug that silently corrupts results.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/spotinstances/"
+                       style="text-decoration:none;">SpotInstances</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">GpuCost</span>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">Checkpoint</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/ai/"
+                       style="text-decoration:none;">Ai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        13 min read
+                        &nbsp;·&nbsp; 2592 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-09-18
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>infrastructure patterns is easy to demo and hard to keep honest at scale. The workaround gets copy-pasted forward long after the original reason is forgotten. This is the writeup with the mistakes left in, not edited out.</p>
+<h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
+<p>AI experimentation budgets are under pressure. A typical fine-tuning run on a 7B parameter model with LoRA uses around 12 GPU-hours on an A100. At on-demand rates of roughly $3.50 per GPU-hour, that's $42 per experiment. Multiply by 50 experiments a week across a small team and you're looking at $8,400 a month before you've even served a single user. The instinct is to cut experiments. The better move is to cut the cost per experiment.</p>
+<p>The two levers that actually move the needle <a href="/gpu-spot-instances-reserved-for-ai-costs/">are spot instances</a> (or their equivalents on other clouds) and aggressive checkpointing with preemptible-friendly orchestration. But there's a catch: spot instances are not a drop-in replacement for on-demand. They come with a 2-minute warning before termination on AWS, and if your training loop can't survive a mid-epoch kill, you'll spend more time babysitting than you saved in dollars.</p>
+<p>A common failure mode here is teams enabling spot, watching their first job get preempted at epoch 3, and immediately concluding spot is unusable. The real issue is almost always that the training script has no resumable checkpoint, or the checkpoint saves only at epoch boundaries while the job runs 6-hour epochs. The part that trips people up is the interaction between checkpoint frequency and preemption rate, and that's what this post actually covers.</p>
+<h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
+<p>Option A is the spot-instance pattern: request capacity from a pool of unused cloud VMs at a 60–90% discount, accept that the provider can reclaim it with short notice, and design your training job to survive that. On AWS, this means EC2 Spot with a capacity-optimized allocation strategy across multiple instance types. On GCP, it's Spot VMs (formerly preemptible). On Azure, it's Spot Virtual Machines.</p>
+<p>The core mechanic is the interruption notice. AWS gives you a 2-minute warning via the instance metadata service and an EventBridge event. GCP gives you 30 seconds via a metadata endpoint that flips to <code>TRUE</code>. Azure gives you 30 seconds via Scheduled Events. Your job either handles that signal or it doesn't.</p>
+<p>Where spot shines is embarrassingly parallel work and long training runs with frequent checkpoints. A hyperparameter sweep over 200 configurations, each taking 20 minutes, is a perfect fit: if 10% get preempted, you lose 10% of the work and rerun it. A single 8-hour training run is a worse fit unless you checkpoint every 10–15 minutes.</p>
+<p>The discount is real but variable. In 2026, typical spot discounts for GPU instances (A10G, L4, A100) hover between 55% and 75% off on-demand, depending on region and time of day. CPU instance discounts are deeper, often 70–90%. The catch is that the discount is not guaranteed, and during capacity crunches spot prices can spike toward on-demand.</p>
+<pre><code class="language-python"># spot_handler.py — minimal interruption handler for AWS EC2 Spot
+import requests
+import signal
+import sys
+import threading
+import time
+
+CHECKPOINT_INTERVAL = 600  # seconds
+
+def watch_for_termination():
+    while True:
+        try:
+            r = requests.get(
+                &quot;http://169.254.169.254/latest/meta-data/spot/termination-time&quot;,
+                timeout=2,
+            )
+            if r.status_code == 200:
+                print(f&quot;Termination notice: {r.text}&quot;, file=sys.stderr)
+                # Trigger emergency checkpoint
+                save_checkpoint(emergency=True)
+                sys.exit(0)
+        except requests.exceptions.RequestException:
+            pass
+        time.sleep(5)
+
+threading.Thread(target=watch_for_termination, daemon=True).start()
+</code></pre>
+<h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
+<p>Option B is the on-demand-plus-autoscaling pattern: run on on-demand instances, but scale the fleet down to zero between experiments and use a queue (SQS, Pub/Sub, or a simple Redis list) to feed jobs to workers. The win here isn't the per-hour rate; it's the utilization rate. Most teams running AI experiments leave idle GPU instances running overnight and on weekends. A single A100 left on for a weekend costs about $168 at $3.50/hour. Ten of them cost $1,680.</p>
+<p>On-demand shines when your job can't tolerate interruption, when you need guaranteed capacity for a deadline, or when your workload is short enough that checkpoint overhead dominates. A 5-minute inference benchmark doesn't need spot; it needs to not run on a machine that's been idle for 3 hours.</p>
+<p>The autoscaling pattern is well-supported: AWS Auto Scaling groups with GPU instance types, GCP Managed Instance Groups, or Kubernetes with Karpenter 0.37+ or Cluster Autoscaler. Karpenter in particular has gotten good at provisioning GPU nodes quickly, though cold-start times for GPU nodes are still 3–8 minutes, which matters if your experiments are short.</p>
+<p>The other on-demand lever is commitment: 1-year or 3-year Savings Plans or Reserved Instances cut 30–60% off on-demand for steady-state workloads. If you know you'll run at least 4 GPU instances continuously, a Compute Savings Plan is usually cheaper than spot once you account for the engineering time spent on interruption handling.</p>
+<pre><code class="language-yaml"># karpenter-nodepool.yaml — GPU nodepool with aggressive consolidation
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: gpu-experiments
+spec:
+  template:
+    spec:
+      requirements:
+        - key: karpenter.sh/capacity-type
+          operator: In
+          values: [&quot;spot&quot;, &quot;on-demand&quot;]
+        - key: node.kubernetes.io/instance-type
+          operator: In
+          values: [&quot;g5.xlarge&quot;, &quot;g5.2xlarge&quot;, &quot;g6.xlarge&quot;]
+  disruption:
+    consolidationPolicy: WhenEmptyOrUnderutilized
+    consolidateAfter: 5m
+  limits:
+    nvidia.com/gpu: 32
+</code></pre>
+<h2 id="head-to-head-performance">Head-to-head: performance</h2>
+<p>Performance here means two things: raw throughput and effective throughput after preemptions. Raw throughput on spot and on-demand is identical — same hardware. The difference is effective throughput.</p>
+<p>With a 10% preemption rate and checkpoints every 15 minutes on a job with 6-hour epochs, a typical team sees effective throughput drop by 15–25% versus on-demand, because each preemption costs you the work since the last checkpoint plus the 3–5 minutes to get a new instance and reload state. With checkpoints every 2 minutes, that drop falls to 5–8%. The trade-off is checkpoint I/O: saving a 7B model's optimizer state is roughly 50–80 GB, and writing that every 2 minutes to S3 at 200 MB/s takes 4–6 minutes, which is longer than the interval. That's the trap: checkpointing too often makes the job checkpoint-bound.</p>
+<p>The practical sweet spot for most teams is checkpointing every 8–12 minutes to a local NVMe drive, with async upload to S3. That keeps the preemption penalty around 10% while keeping I/O off the critical path.</p>
+<p>On-demand has no preemption penalty but suffers from queue latency if you're scaling from zero. GPU node cold start on EKS with Karpenter is typically 3–8 minutes in 2026. If your experiments are 10 minutes long, that's a 30–80% overhead. The fix is a small warm pool of 1–2 on-demand instances that stay up, which reintroduces some idle cost but bounds it.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Spot (checkpoint 10 min)</th>
+<th>On-demand (warm pool)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Effective throughput vs raw</td>
+<td>88–92%</td>
+<td>95–99%</td>
+</tr>
+<tr>
+<td>Preemption penalty per event</td>
+<td>~10 min work + 4 min restart</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Cold start (scale from zero)</td>
+<td>3–8 min</td>
+<td>3–8 min</td>
+</tr>
+<tr>
+<td>Cost per A100-hour (typical)</td>
+<td>$0.90–$1.60</td>
+<td>$3.20–$3.80</td>
+</tr>
+<tr>
+<td>Engineering overhead</td>
+<td>Medium–high</td>
+<td>Low</td>
+</tr>
+</tbody>
+</table>
+<h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
+<p>Spot is worse to develop against, and anyone who says otherwise is selling something. The interruption handler is easy to write; making the whole training pipeline idempotent and resumable is not. You need deterministic data loading (seed your shuffles), checkpoint versioning, and a way to detect and discard partially-written checkpoints. A common bug is a checkpoint that writes the model weights but not the optimizer state, so a resumed job silently trains from a worse starting point and you don't notice until the eval numbers are off by 4%.</p>
+<p>On-demand is boring, and boring is a feature. Your job runs, you read the logs, you move on. The DX cost is mostly in cost visibility: without tagging and a budget alarm, on-demand instances quietly accumulate. AWS Budgets with a $500 threshold and a Slack webhook catches most of this.</p>
+<p>The tooling matters here. Weights &amp; Biases 0.17 and MLflow 2.12 both handle resumable runs reasonably well, but neither will save you from a non-idempotent data pipeline. If you're using Ray 2.9+ for distributed training, its fault tolerance is genuinely good — Ray Train will restart workers on preemption if you configure <code>max_failures</code>. If you're rolling your own <code>torchrun</code> loop, you're writing the resume logic yourself.</p>
+<p>A specific gotcha: on AWS, the spot termination notice endpoint returns 404 until a termination is imminent, and some HTTP clients treat 404 as an exception rather than a status code. If your handler catches <code>requests.exceptions.RequestException</code> and exits on any exception, you'll kill your job on the first poll. The handler above checks <code>status_code == 200</code> explicitly for this reason.</p>
+<h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
+<p>Let's put numbers on it. Assume a team running 50 experiments a week, each averaging 4 GPU-hours on an A100-equivalent. That's 200 GPU-hours per week, or ~870 per month.</p>
+<ul>
+<li>On-demand at $3.50/hour: <strong>$3,045/month</strong> in compute, plus ~$400 in idle warm-pool overhead, so ~$3,445.</li>
+<li>Spot at a 65% discount ($1.23/hour): <strong>$1,070/month</strong> in compute, plus ~15% effective-throughput loss (you need ~1,000 GPU-hours to do 870 hours of work), so ~$1,230, plus engineering time.</li>
+</ul>
+<p>The engineering time is the honest part. Building and maintaining a resumable spot pipeline is realistically 2–4 weeks of initial work and 2–4 hours a month of maintenance. At a fully-loaded engineer cost of ~$100/hour, that's $8,000–$16,000 up front and $200–$400/month ongoing. If your compute bill is $3,445/month, spot saves you ~$2,200/month, so the payback period is 4–7 months. If your compute bill is $30,000/month, payback is under a month.</p>
+<p>This is the threshold most teams get wrong. Spot doesn't pay off at small scale unless you already have the resumable infrastructure for other reasons. It pays off enormously at large scale. The crossover is roughly $8,000–$10,000/month in GPU spend.</p>
+<p>The third option, which people forget, is to make experiments cheaper rather than instances cheaper. LoRA instead of full fine-tuning cuts GPU-hours by 5–10x. Distillation cuts inference cost. Quantization to int8 or int4 cuts serving cost 2–4x. These are often bigger levers than spot, and they don't require interruption handling.</p>
+<h2 id="the-decision-framework-i-use">The decision framework I use</h2>
+<p>I default to on-demand with a warm pool and a queue, and I move to spot when one of three conditions holds:</p>
+<ol>
+<li>Monthly GPU spend is above ~$8,000 and the workload is checkpointable.</li>
+<li>The workload is embarrassingly parallel (sweeps, batch inference) where a lost unit just gets requeued.</li>
+<li>The team already has resumable training infrastructure for other reasons (multi-day runs, spot-tolerant frameworks like Ray).</li>
+</ol>
+<p>I stay on on-demand when experiments are short (under 15 minutes), when deadlines are tight and a preemption would blow a demo, or when the team is small enough that 2 weeks of spot engineering is 10% of total engineering capacity for the quarter.</p>
+<p>The framework is deliberately conservative because the failure mode of spot is not "we spent more money," it's "we spent more money and the results are subtly wrong because a resumed run used a stale checkpoint." That's a worse outcome than overpaying on-demand.</p>
+<p>There's also a hybrid that works well: run the long training jobs on spot and the short eval/inference jobs on on-demand. The long jobs benefit most from the discount and are the easiest to checkpoint; the short jobs benefit most from instant availability. This split typically captures 70–80% of the spot savings with 20% of the operational complexity.</p>
+<h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
+<p>Use spot if your monthly GPU spend exceeds ~$8,000, your training jobs run longer than 20 minutes, and you have or can build idempotent checkpointing. Use on-demand with a warm pool and autoscaling if you're below that threshold, or if your experiments are short, or if your team is small enough that the engineering time is the real constraint.</p>
+<p>The weakness in my preferred option (spot for large teams) is that it's fragile in ways that don't show up in benchmarks. A resumed run that silently diverges, a checkpoint that races with a termination notice, a data loader that isn't seeded — these are the bugs that cost you a week and a paper deadline. If you don't have the engineering discipline to test resume paths, don't use spot. The discount is not worth a wrong result.</p>
+<p>The weakness in on-demand is that it's easy to let it drift. Without tagging and budget alarms, idle instances accumulate and you're back to the original problem, just paying full price for it. The autoscaling pattern only saves money if you actually scale down.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How much cheaper are spot instances than on-demand for GPU training in 2026?</strong>
+Typical discounts for GPU instances (A10G, L4, A100) run 55–75% off on-demand, varying by region and time. CPU instances often see 70–90% discounts. The discount is not fixed; during capacity crunches spot prices can approach on-demand. Always check current spot pricing for your specific instance type and region before committing to a savings estimate.</p>
+<p><strong>What happens to my training job when a spot instance is preempted?</strong>
+On AWS you get a 2-minute warning via the instance metadata endpoint and an EventBridge event. On GCP and Azure it's 30 seconds. If your job doesn't handle the signal, it's killed and you lose everything since the last checkpoint. The fix is a background thread that polls the metadata endpoint and triggers an emergency checkpoint on notice.</p>
+<p><strong>Why does my resumed training run produce worse results than an uninterrupted one?</strong>
+The most common cause is a checkpoint that saves model weights but not optimizer state, or a data loader whose shuffle isn't seeded, so the resumed run sees a different data order. Both cause silent divergence. Test your resume path explicitly by killing a job mid-epoch and comparing the final loss to an uninterrupted run.</p>
+<p><strong>Is spot worth it for a small team running 20 experiments a week?</strong>
+Usually not. If your monthly GPU spend is under ~$8,000, the engineering cost of building and maintaining resumable spot infrastructure typically exceeds the compute savings, with a payback period of 4–7 months. Spend that effort on making experiments cheaper instead — LoRA, distillation, or quantization often cut GPU-hours more than spot cuts GPU prices.</p>
+<h2 id="final-verdict">Final verdict</h2>
+<p>Spot instances are the bigger lever, but only above a spend threshold that most small teams don't hit. Below ~$8,000/month in GPU spend, the honest answer is that on-demand with good autoscaling and a warm pool is cheaper once you account for engineering time. Above that threshold, spot with 10-minute checkpoints and a tested resume path is the single biggest cost reduction available, and it's not close.</p>
+<p>The action for today: open your cloud billing console, filter GPU instances for the last 30 days, and write down two numbers — total GPU spend and average utilization (idle hours divided by total hours). If spend is above $8,000 and utilization is below 60%, you have both a spot opportunity and an autoscaling opportunity, and the autoscaling one is cheaper to fix first. Start there before you touch spot.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/local-llm-agents-vllm-vs-ollama-for-fintech/">
+                        <h3>Local LLM agents: vLLM vs Ollama for fintech</h3>
+                        <p>vLLM vs Ollama for local fintech LLM agents: concurrency limits, guided JSON, and the p95 latency number that decides which serving stack you actually…</p>
+                        <span class="related-meta">15 min read · 18 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-drift-the-failure-mode-you-didnt-log/">
+                        <h3>Agent drift: the failure mode you didn&#39;t log</h3>
+                        <p>Agent drift hides in flat latency and clean eval suites.</p>
+                        <span class="related-meta">14 min read · 18 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/feature-flags-became-ai-rollout-platforms/">
+                        <h3>Feature flags became AI rollout platforms</h3>
+                        <p>Feature flags now gate AI rollouts. Ranked review of 7 platforms, the eval-metric rollback gap, and the SDK fallback mistake that takes down requests.</p>
+                        <span class="related-meta">16 min read · 18 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

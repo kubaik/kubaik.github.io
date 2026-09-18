@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T12:42:45.257141",
+  "built_at": "2026-09-18T13:01:43.302631",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5210,6 +5210,11 @@
       "slug": "local-llm-agents-vllm-vs-ollama-for-fintech",
       "title": "Local LLM agents: vLLM vs Ollama for fintech",
       "summary": "Inherited run local setups tend to come with no explanation, just a working system and a long reverse-engineering session. Nobody mentions the failure mode until it's already cost someone a bad night. Here's what actually worked, and why. Why this comparison matters right now If you work on fintech "
+    },
+    {
+      "slug": "spot-instances-vs-on-demand-for-ai-experiments",
+      "title": "Spot instances vs on-demand for AI experiments",
+      "summary": "infrastructure patterns is easy to demo and hard to keep honest at scale. The workaround gets copy-pasted forward long after the original reason is forgotten. This is the writeup with the mistakes left in, not edited out. Why this comparison matters right now AI experimentation budgets are under pre"
     }
   ]
 }

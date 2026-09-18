@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-19T09:01:43.310641">
-        <meta property="article:modified_time" content="2026-06-19T09:01:43.310651">
+        <meta property="article:modified_time" content="2026-09-18T13:04:42.348345+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Tool calling: stateless beats stateful under load">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/tool-calling-stateless-beats-stateful-under-load/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Tool calling: stateless beats stateful under load",
       "description": "Cut p99 latency 60% and save $41 per 1000 RPS by switching from stateful to stateless tool calls — the one metric to watch first and the three-line config…",
       "datePublished": "2026-06-19T09:01:43+00:00",
-      "dateModified": "2026-06-19T09:01:43+00:00",
-      "wordCount": 3141,
+      "dateModified": "2026-09-18T13:04:42+00:00",
+      "wordCount": 3123,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,9 +266,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3141 words
+                        &nbsp;·&nbsp; 3123 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-19
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,7 +277,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same toolcalling patterns mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, every microservice I touch either talks to Postgres, Redis, or an external API. The patterns we pick for those calls decide whether the system survives traffic spikes or collapses under its own weight. I ran into this when a new endpoint went from 500 ms to 5 s under 800 RPS. After three hours of flamegraphs and tcpdumps, the culprit wasn’t the SQL query or the Redis SET—it was the unbounded fan-out of tool calls inside a single handler. State-keeping tool calls (ones that keep a session alive across multiple invocations) looked fine in unit tests, but exploded into 400 open connections at 1000 RPS and hit the kernel’s file-descriptor limit. That taught me the hard way: the tool-calling pattern that works on the laptop rarely survives in production.</p>
+<p>In 2026, every microservice I touch either talks to Postgres, Redis, or an external API. The patterns we pick for those calls decide whether the system survives traffic spikes or collapses under its own weight. After three hours of flamegraphs and tcpdumps, the culprit wasn’t the SQL query or the Redis SET—it was the unbounded fan-out of tool calls inside a single handler. State-keeping tool calls (ones that keep a session alive across multiple invocations) looked fine in unit tests, but exploded into 400 open connections at 1000 RPS and hit the kernel’s file-descriptor limit. That taught me the hard way: the tool-calling pattern that works on the laptop rarely survives in production.</p>
 <p>The difference isn’t theoretical. In a 2025 study of 200 production services, 67 % of outages traced to tool calls that maintained state across requests—stateful tool calls, retry storms, or unbounded async work queues. The remaining 33 % were plain old CPU or memory pressure, but the pattern that broke fastest was always the same: keeping a long-lived connection or context per request instead of creating a fresh one.</p>
 <p>If you’re running anything more complex than a ‘Hello World’, you need to know which pattern survives load and which one becomes the next pager.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
@@ -297,9 +297,7 @@ def call_tool(query: str) -&gt; str:
 </code></pre>
 <p>Under the hood, this uses a fresh TCP connection per request. The OS kernel tears down the socket immediately, so the process never leaks file descriptors. Reusing the same client instance across many requests (a common micro-optimisation) is tempting, but it silently keeps the socket alive and accumulates TIME_WAIT entries. I’ve seen a single mis-configured <code>requests.Session()</code> balloon a container from 1024 open files to 8192 in under 15 minutes at 2000 RPS.</p>
 <p>Where it shines:
-- Simple mental model: one call, one socket, one result.
-- Predictable latency: no connection reuse means no head-of-line blocking across calls.
-- Resilient to upstream failures: a crashed upstream service only affects the single request that hit it, not every caller sharing a pool.</p>
+- Simple mental model: one call, one socket, one result. - Predictable latency: no connection reuse means no head-of-line blocking across calls. - Resilient to upstream failures: a crashed upstream service only affects the single request that hit it, not every caller sharing a pool.</p>
 <p>It also fits the 12-factor app pattern: each new request starts clean, no leftover state can poison the next call.</p>
 <h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
 <p>Option B keeps a persistent session across multiple invocations—think a Redis pipeline, a Postgres connection, or a WebSocket that stays open between tool calls. This is the pattern you reach for when you need low latency or when the upstream charges per connection.</p>
@@ -319,9 +317,7 @@ async function batchLookup(keys: string[]) {
 </code></pre>
 <p>The same pattern applies to Postgres: <code>psycopg3</code>’s connection pool or <code>pgBouncer</code> in transaction pooling mode keeps a handful of connections open and reuses them. The trick is that the pool is bounded—you decide the size at start-up and the kernel’s file descriptor limit becomes an explicit dial, not an invisible grenade.</p>
 <p>Where it shines:
-- Lower latency for high-frequency operations (e.g., rate-limit lookups, feature-flag checks).
-- Reduced upstream load: one connection can serve many tool calls instead of opening a new one each time.
-- Lower cost on services that bill per connection (looking at you, Anthropic API).</p>
+- Lower latency for high-frequency operations (e.g., rate-limit lookups, feature-flag checks). - Reduced upstream load: one connection can serve many tool calls instead of opening a new one each time. - Lower cost on services that bill per connection (looking at you, Anthropic API).</p>
 <p>The catch is that every shared resource needs a timeout, backoff, and a circuit breaker. Without them, a slow upstream or a misbehaving query can pin the pool and starve every other request.</p>
 <p>I once left a Postgres pool size at 10 for a service expecting 500 RPS. Under 1000 RPS, every API call waited 2–3 s for a connection. The fix wasn’t bigger hardware—it was a 30-line patch to set <code>max_connections=50</code> and add <code>statement_timeout=2000</code> on every query.</p>
 <h2 id="head-to-head-performance">Head-to-head: performance</h2>
@@ -404,9 +400,7 @@ def test_call_tool_success():
 <p>I keep a 20-line YAML snippet in my repo that toggles between stateless and pooled via an environment variable. The snippet sets timeouts, pool sizes, and circuit-breaker thresholds in one place. This lets me validate both patterns in staging without touching the application code.</p>
 <h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
 <p>Recommendation: use <strong>stateless tool calls by default</strong>. They are simpler to reason about, safer under load, and cheaper to operate once you hit scale. The only time I override this is when all three of these conditions are true:
-- The upstream latency is &gt;50 ms per call.
-- The upstream bills per connection or per concurrent request.
-- The team has production experience with connection pools and can tune them.</p>
+- The upstream latency is &gt;50 ms per call. - The upstream bills per connection or per concurrent request. - The team has production experience with connection pools and can tune them.</p>
 <p>Even then, I start with a tiny pool size (10–20 connections) and strict timeouts (200 ms per call, 1 s total timeout) and only increase once I’ve proven the pattern survives a load test at 3× expected traffic.</p>
 <p>I ignored this rule for a batch feature-flag service that talked to LaunchDarkly. I used a single persistent client across 100 pods to cut latency. Under a 30 % traffic spike, 12 pods ran out of file descriptors because the kernel hit <code>net.ipv4.ip_local_port_range</code>. The service fell over while the upstream kept serving flags. Rewriting to stateless calls fixed it in 45 minutes.</p>
 <h2 id="final-verdict">Final verdict</h2>
@@ -622,14 +616,11 @@ async function safeBatchLookup(keys) {
 <p>If upstream latency drops to &lt;10 ms (e.g., in-region Redis), the stateless pattern may become competitive again. Always rerun the load test when upstream characteristics change.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

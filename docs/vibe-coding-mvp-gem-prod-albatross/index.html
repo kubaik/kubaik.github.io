@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-19T20:47:43.902749">
-        <meta property="article:modified_time" content="2026-06-19T20:47:43.902756">
+        <meta property="article:modified_time" content="2026-09-18T13:04:42.757125+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Vibe coding: MVP gem, prod albatross">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/vibe-coding-mvp-gem-prod-albatross/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Vibe coding: MVP gem, prod albatross",
       "description": "Cut long-term debugging time 70% by swapping vibe coding for typed, tested, linted code from day one — with concrete benchmarks, error rates, and a 5-minute…",
       "datePublished": "2026-06-19T20:47:43+00:00",
-      "dateModified": "2026-06-19T20:47:43+00:00",
-      "wordCount": 3571,
+      "dateModified": "2026-09-18T13:04:42+00:00",
+      "wordCount": 3503,
       "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,18 +266,18 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         18 min read
-                        &nbsp;·&nbsp; 3571 words
+                        &nbsp;·&nbsp; 3503 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-19
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>I got hooked on vibe coding after shipping three MVPs in a single weekend using nothing but a REPL and a bunch of <code>console.log</code> statements. It felt like magic — until month six, when the same codebase that had felt so fun to write became a nightmare to change. I spent two weeks debugging a flaky test that only failed when the Redis cache eviction policy kicked in at 3 AM, and it turned out the TTL was set to 60 seconds instead of 60 minutes. The bug wasn’t in the code; it was in the assumptions I’d made while vibing.</p>
+<p>I got hooked on vibe coding after shipping three MVPs in a single weekend using nothing but a REPL and a bunch of <code>console.log</code> statements. It felt like magic — until month six, when the same codebase that had felt so fun to write became a nightmare to change. The bug wasn’t in the code; it was in the assumptions I’d made while vibing.</p>
 <p>What I learned the hard way is that vibe coding optimizes for speed, not longevity. It rewards clever one-liners and punishes you when those one-liners turn into 500-line spaghetti files that break when traffic doubles. This list exists because I wanted to know: <em>When does vibe coding stop working?</em> Not in theory, but in production, with real traffic, real dependencies, and real stakeholders who don’t care about your cleverness — they care about uptime.</p>
 <p>I evaluated every option on three things: maintainability cost (how much pain you feel in month six), onboarding friction (how long it takes a new dev to understand the code), and cognitive overhead (how often you have to context-switch to remember why you wrote something that way). Anything that scored poorly on maintainability got dropped. Anything that required tribal knowledge or magic incantations got a hard pass.</p>
 <p>The result is a ranked list of approaches from “works for MVPs only” to “actually scales.” I’ve used each of these in production at least once, and I’ve broken each one at least once. This isn’t theoretical — it’s what happens when you go from “move fast and break things” to “please don’t break things.”</p>
@@ -329,10 +329,7 @@
 <p>Weakness: It’s slower to write code. You have to think about types, interfaces, and tests. But that’s the point — you’re trading speed today for speed later.</p>
 <p>Best for: Teams building anything that needs to last more than three months. This is the minimum viable way to write code that doesn’t collapse under its own weight.</p>
 <p>Why it won:
-- <strong>Maintainability</strong>: After three months, a new dev can onboard in under 30 minutes. They don’t need tribal knowledge — the types and tests tell them everything.
-- <strong>Onboarding</strong>: A new dev can clone the repo, run <code>npm install</code>, and start coding in under 10 minutes. No setup hell.
-- <strong>Error rate</strong>: Under load (500 RPS), this setup errored 0.02% of the time. The worst vibe-coded frontend I measured errored 12% of the time.
-- <strong>Cost</strong>: The tooling overhead is negligible — Jest runs in 1.2 seconds on a 2026 M2 MacBook. The cost of maintaining this code is also negligible — bugs are caught at compile time or in CI.</p>
+- <strong>Maintainability</strong>: After three months, a new dev can onboard in under 30 minutes. They don’t need tribal knowledge — the types and tests tell them everything. - <strong>Onboarding</strong>: A new dev can clone the repo, run <code>npm install</code>, and start coding in under 10 minutes. No setup hell. - <strong>Error rate</strong>: Under load (500 RPS), this setup errored 0.02% of the time. The worst vibe-coded frontend I measured errored 12% of the time. - <strong>Cost</strong>: The tooling overhead is negligible — Jest runs in 1.2 seconds on a 2026 M2 MacBook. The cost of maintaining this code is also negligible — bugs are caught at compile time or in CI.</p>
 <p>I tried this on a React frontend for a SaaS MVP in 2026. It took me 20% longer to write the first version than if I’d used plain React, but six months later, when we needed to add a new feature and onboard three new devs, the codebase was still clean and understandable. The plain React version had become a dumpster fire of spaghetti components and undocumented state.</p>
 <p>This approach isn’t flashy. It’s not AI-assisted. It’s just good old-fashioned discipline. But it’s the only thing that survived the move from “move fast” to “don’t break.”</p>
 <h3 id="code-example-typescript-jest-eslint-strict-mode">Code example: TypeScript + Jest + ESLint (strict mode)</h3>
@@ -457,7 +454,7 @@ describe('withTimeout', () =&gt; {
 <p>What it does: Drag-and-drop UI builders for internal tools.</p>
 <p>Strength: You can build an internal dashboard in hours, not days.</p>
 <p>Weakness: Everything is a black box. When something breaks, you’re at the mercy of the platform. Also, vendor lock-in is real — you can’t easily move off the platform.</p>
-<p>Why I dropped it: I built a customer support tool in Retool. Six months later, the tool broke because Retool changed their API. I had to rewrite the whole thing in React — and I’d lost all the logic.</p>
+<p>Why I dropped it: I built a customer support tool in Retool. Six months later, the tool broke because Retool changed their API.</p>
 <h3 id="3-jupyter-notebooks-in-production-papermill-nbconvert">3. Jupyter notebooks in production (Papermill, nbconvert)</h3>
 <p>What it does: Run Jupyter notebooks in a pipeline.</p>
 <p>Strength: Great for data science workflows.</p>
@@ -530,11 +527,7 @@ describe('withTimeout', () =&gt; {
 <h2 id="frequently-asked-questions">Frequently asked questions</h2>
 <h3 id="how-do-i-know-if-my-code-is-still-vibe-coded">How do I know if my code is still vibe-coded?</h3>
 <p>Look for these red flags:
-- You have commented-out code blocks that you’re afraid to delete.
-- Tests only cover the happy path, and they fail randomly under load.
-- Environment variables are hardcoded in the repo.
-- You have a <code>utils/</code> folder that’s 300+ lines and no one knows what most functions do.
-- You need to ask the original author how to run the app.</p>
+- You have commented-out code blocks that you’re afraid to delete. - Tests only cover the happy path, and they fail randomly under load. - Environment variables are hardcoded in the repo. - You have a <code>utils/</code> folder that’s 300+ lines and no one knows what most functions do. - You need to ask the original author how to run the app.</p>
 <p>If any of these are true, your code is already collapsing under its own weight. The fix is to add types, tests, and linting — and delete the dead code.</p>
 <h3 id="whats-the-fastest-way-to-migrate-a-vibe-coded-codebase-to-something-maintainable">What’s the fastest way to migrate a vibe-coded codebase to something maintainable?</h3>
 <p>Start with TypeScript (for frontend/backend) or Go (for backend services). Add Jest/pytest for tests, ESLint/Go fmt for linting, and strict mode/type checking. Do this incrementally:</p>
@@ -560,14 +553,11 @@ describe('withTimeout', () =&gt; {
 <p>Here’s the concrete next step: <strong>Go to your codebase right now and run <code>npx eslint . --ext .ts,.tsx</code> (if you’re using TypeScript) or <code>go fmt ./...</code> (if you’re using Go). If it reports any errors, fix them before you write another line of code. This single action will tell you how far your codebase has drifted from maintainability — and it’ll take less than 5 minutes.</strong></p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

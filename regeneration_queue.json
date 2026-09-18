@@ -182,69 +182,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "migrations-stop-running-them-live",
-    "title": "Migrations? Stop running them live",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about handle database during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I followed that playbook for three years at a healthtech startup serving 1.2 mil",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "price-saas-tools-in-2026-what-we-learned-pricing-a",
-    "title": "Price SaaS tools in 2026: what we learned pricing a",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I learned the hard way that pricing is not a spreadsheet exercise; it’s a system",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "rag-rots-if-you-dont-refresh-indexes",
-    "title": "RAG rots if you don’t refresh indexes",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): Here's what actually worked, and why.; Most tutorials stop there.; I ran into this when I shipped a customer support chatbot in 2026 using Pinecone",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "remote-work-in-2026-which-tools-survived",
-    "title": "Remote work in 2026: which tools survived",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I ran into this when a government grant portal we built in Kenya kept failing de; I was surprised that even in 2026, the median company running a fully remote sta",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "self-healing-pipelines-argo-vs-crossplane-in-2026",
-    "title": "Self-healing pipelines: Argo vs Crossplane in 2026",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same built selfhealing mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when a single misconfigured retry policy in a 2024 d",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "tool-calling-stateless-beats-stateful-under-load",
     "title": "Tool calling: stateless beats stateful under load",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same toolcalling patterns mistake in multiple production codebases; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a new endpoint went from 500 ms to 5 s under 800 RPS.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "vibe-coding-mvp-gem-prod-albatross",
     "title": "Vibe coding: MVP gem, prod albatross",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this vibe coding problem while migrating a service under a hard deadl; Here's what actually worked.; I spent two weeks debugging a flaky test that only failed when the Redis cache e",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "why-monoliths-die-slowly-in-2026",
     "title": "Why monoliths die slowly in 2026",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about migrated monolith during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when a 30 kLOC Django monolith handling Lagos traffic at 200 ms ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agent-governance-opa-vs-kyverno-after-our-incident",
     "title": "Agent governance: OPA vs Kyverno after our incident",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I've seen the same governance layer mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three days debugging why our SOC2 auditor flagged the incident as \"unpre",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-alert-triage-cut-pages-80-in-production",
     "title": "AI alert triage: cut pages 80% in production",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I did too—until I realized we were still paging humans for 30 % of alerts that t; I spent two weeks debugging why the AI kept saying \"high memory\" when the pod wa",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-codebases-guardrails-vs-chaos-in-2026",
@@ -2221,6 +2191,41 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "migrations-stop-running-them-live",
+    "title": "Migrations? Stop running them live",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about handle database during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I followed that playbook for three years at a healthtech startup serving 1.2 mil",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "price-saas-tools-in-2026-what-we-learned-pricing-a",
+    "title": "Price SaaS tools in 2026: what we learned pricing a",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I learned the hard way that pricing is not a spreadsheet exercise; it’s a system",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "rag-rots-if-you-dont-refresh-indexes",
+    "title": "RAG rots if you don’t refresh indexes",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): Here's what actually worked, and why.; Most tutorials stop there.; I ran into this when I shipped a customer support chatbot in 2026 using Pinecone",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "remote-work-in-2026-which-tools-survived",
+    "title": "Remote work in 2026: which tools survived",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I ran into this when a government grant portal we built in Kenya kept failing de; I was surprised that even in 2026, the median company running a fully remote sta",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "self-healing-pipelines-argo-vs-crossplane-in-2026",
+    "title": "Self-healing pipelines: Argo vs Crossplane in 2026",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same built selfhealing mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when a single misconfigured retry policy in a 2024 d",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "evaluate-agents-with-spark-vs-custom-harness",

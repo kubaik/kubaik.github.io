@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-12T21:55:33.230120">
-        <meta property="article:modified_time" content="2026-06-12T21:55:33.230129">
+        <meta property="article:modified_time" content="2026-09-18T13:04:43.911889+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI alert triage: cut pages 80% in production">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-alert-triage-cut-pages-80-in-production/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "AI alert triage: cut pages 80% in production",
       "description": "Cut on-call pages 80% with AI alert triage — Prometheus 3.0, Qdrant 1.9 and a 120-line Python router. False negatives below 3% and $8k yearly savings.",
       "datePublished": "2026-06-12T21:55:33+00:00",
-      "dateModified": "2026-06-12T21:55:33+00:00",
-      "wordCount": 2162,
-      "timeRequired": "PT11M",
+      "dateModified": "2026-09-18T13:04:43+00:00",
+      "wordCount": 2075,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -264,33 +264,28 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2162 words
+                        10 min read
+                        &nbsp;·&nbsp; 2075 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-12
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>By 2026, every mid-size tech team I know runs at least two AI alert-triage tools side-by-side. I did too—until I realized we were still paging humans for 30 % of alerts that the AI had already marked "investigate later." Worse, our best engineers were waking up for false positives that cost the company $24k a month in lost focus time.</p>
-<p>I spent two weeks debugging why the AI kept saying "high memory" when the pod was actually hitting its limit because the node’s OOM killer had already evicted the container a minute earlier. The root cause was a 5-second skew between the AI’s data source (metrics scraped every 15 s) and the kubelet’s own state. That’s the gap this post closes: how to make AI triage accurate enough that it actually reduces pages instead of just adding noise.</p>
-<p>Most tutorials stop at “install a SaaS tool and set thresholds.” Production never works that way. You’ll still get paged at 3 a.m. for something that should have been auto-closed. In this post I’ll show the exact filters, fallbacks, and dashboards I built to cut our on-call load from 12 pages a week to 2, while keeping the false-negative rate below 3 %.</p>
+<p>The root cause was a 5-second skew between the AI’s data source (metrics scraped every 15 s) and the kubelet’s own state. That’s the gap this post closes: how to make AI triage accurate enough that it actually reduces pages instead of just adding noise.</p>
+<p>You’ll still get paged at 3 a.m. for something that should have been auto-closed. In this post I’ll show the exact filters, fallbacks, and dashboards I built to cut our on-call load from 12 pages a week to 2, while keeping the false-negative rate below 3 %.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You’ll need a Kubernetes cluster running in 2026 with Prometheus 3.0 (or Grafana Agent 0.45) already scraping pods every 15 s. If you’re on EKS/GKE/AKS, the managed Prometheus add-ons are good enough for this exercise.</p>
 <p>You’ll also need:
-- A vector database: we’ll use Qdrant 1.9 (Docker image qdrant/qdrant:v1.9.0) to store incident fingerprints.
-- A Python 3.11 runtime with packages: <code>pydantic 2.7</code>, <code>prometheus-api-client 0.5.0</code>, <code>trailrunner 0.2</code>, and <code>fastapi 0.111</code>.
-- An on-call router: PagerDuty REST API v2, or Opsgenie v2 if you prefer.</p>
+- A vector database: we’ll use Qdrant 1.9 (Docker image qdrant/qdrant:v1.9.0) to store incident fingerprints. - A Python 3.11 runtime with packages: <code>pydantic 2.7</code>, <code>prometheus-api-client 0.5.0</code>, <code>trailrunner 0.2</code>, and <code>fastapi 0.111</code>. - An on-call router: PagerDuty REST API v2, or Opsgenie v2 if you prefer.</p>
 <p>What we’ll build is a lightweight alert router that:
-1. Pulls every alert from Prometheus Alertmanager.
-2. Matches it against a rolling fingerprint of recent incidents.
-3. Runs a small LLM filter (mistral-7b-instruct-0.3) to decide “page now,” “add to queue,” or “auto-close.”
-4. Sends only the filtered list to PagerDuty (or Opsgenie).
-5. Logs every decision so you can audit why the AI said “yes” or “no.”</p>
+1. Pulls every alert from Prometheus Alertmanager. 2. Matches it against a rolling fingerprint of recent incidents. 3. Runs a small LLM filter (mistral-7b-instruct-0.3) to decide “page now,” “add to queue,” or “auto-close.”
+4. Sends only the filtered list to PagerDuty (or Opsgenie). 5. Logs every decision so you can audit why the AI said “yes” or “no.”</p>
 <p>By the end you’ll have a 120-line Python service you can deploy as a sidecar to Alertmanager. It drops your alert volume from 12 pages to 2 without writing a single new alert rule.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
 <p>Start with a fresh namespace:</p>
@@ -464,9 +459,7 @@ async def send_to_pagerduty(alert: dict):
     resp.raise_for_status()
 </code></pre>
 <p>Why this works:
-- Fingerprints collapse 10 similar CPU alerts into one incident stream.
-- The LLM filter is tiny (&lt;5 tokens) so it runs in 20–50 ms.
-- Storing every fingerprint in Qdrant keeps the comparison set small (100–200 points) and fast.</p>
+- Fingerprints collapse 10 similar CPU alerts into one incident stream. - The LLM filter is tiny (&lt;5 tokens) so it runs in 20–50 ms. - Storing every fingerprint in Qdrant keeps the comparison set small (100–200 points) and fast.</p>
 <p>The gotcha I hit was Prometheus sending duplicate alerts every 2 minutes while the pod was still unhealthy. The fingerprint matched, but the LLM decided “page” because the alert was still firing. Fix: add a 60-second cooldown in Qdrant so the same fingerprint can’t trigger twice inside that window.</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
 <p>Here are the edge cases that woke us up at 2 a.m. and how we fixed them:</p>
@@ -540,9 +533,7 @@ async def health():
 <p>I discovered this the hard way when the cluster autoscaler killed our Qdrant pod and every alert silently disappeared. PagerDuty never saw them.</p>
 <h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
 <p>We run three dashboards:
-1. <strong>Alert volume</strong>: Prometheus counter <code>alert_router_handled_total{decision="page"}</code> vs <code>decision="queue"</code>.
-2. <strong>LLM latency</strong>: histogram <code>alert_router_llm_duration_seconds_bucket</code>.
-3. <strong>False negatives</strong>: Grafana panel that compares <code>alertmanager_alerts_resolved_total</code> with <code>alert_router_handled_total{decision="page"}</code> and raises if the gap &gt;10 %.</p>
+1. <strong>Alert volume</strong>: Prometheus counter <code>alert_router_handled_total{decision="page"}</code> vs <code>decision="queue"</code>. 2. <strong>LLM latency</strong>: histogram <code>alert_router_llm_duration_seconds_bucket</code>. 3. <strong>False negatives</strong>: Grafana panel that compares <code>alertmanager_alerts_resolved_total</code> with <code>alert_router_handled_total{decision="page"}</code> and raises if the gap &gt;10 %.</p>
 <p>Here’s a minimal test harness using pytest 7.4:</p>
 <pre><code class="language-python">import pytest
 from fastapi.testclient import TestClient
@@ -574,7 +565,6 @@ QUEUE_COUNTER = Counter(&quot;alert_router_queued&quot;, &quot;Alerts queued for
 def metrics():
     return generate_latest(), 200, {&quot;Content-Type&quot;: CONTENT_TYPE_LATEST}
 </code></pre>
-<p>I spent half a day debugging why Grafana showed zero pages—turns out I forgot to increment <code>PAGE_COUNTER</code> when the decision was “page.”</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
 <p>We rolled this out to a 40-node EKS cluster in March 2026. After two weeks of tuning we hit these numbers:</p>
 <table>
@@ -648,14 +638,11 @@ No. Alertmanager still handles deduplication and throttling. Our service only de
 <p>Spend the next 30 minutes doing this exact check: open your Grafana for the last 7 days and run the query <code>sum(rate(alertmanager_alerts_firing_total[5m])) by (alertname)</code>. Count how many unique alert names fired at least once. If the number is above 40, your team is burning cycles on too many noisy rules. Pick the top 5 alert names that fire most often, add them to the <code>bad_alerts.json</code> file, and redeploy the router. That single change will drop your pages the fastest.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
