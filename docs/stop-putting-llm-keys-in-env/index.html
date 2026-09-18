@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-09-17T04:06:21.695546">
-        <meta property="article:modified_time" content="2026-09-17T04:06:21.695560">
+        <meta property="article:modified_time" content="2026-09-18T11:25:18.714784+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Stop Putting LLM Keys in .env">
@@ -63,7 +63,7 @@
       "headline": "Stop Putting LLM Keys in .env",
       "description": "Why .env files fail at 40+ LLM integrations — the env-dump leak, build-arg exposure, and the gateway pattern that fixes rotation and audit.",
       "datePublished": "2026-09-17T04:06:21+00:00",
-      "dateModified": "2026-09-17T04:06:21+00:00",
+      "dateModified": "2026-09-18T11:25:18+00:00",
       "wordCount": 2704,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
@@ -266,7 +266,7 @@
                         14 min read
                         &nbsp;·&nbsp; 2704 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-17
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -289,9 +289,7 @@
 <p>The shift is from "where do I put this string" to "who or what needs to call this API, for how long, and with what scope." That framing changes everything. A capability has an owner, a lifetime, a scope, and an audit trail. A string in a <code>.env</code> file has none of those things.</p>
 <p>In practice, this means three moves:</p>
 <ol>
-<li><strong>Centralize the store.</strong> Use a real secrets manager — AWS Secrets Manager, GCP Secret Manager, HashiCorp Vault 1.16, or Doppler. The specific tool matters less than the fact that there's one source of truth with versioning and access logs.</li>
-<li><strong>Broker short-lived credentials.</strong> Instead of handing your app a long-lived API key, hand it a token that expires in 15 minutes and is scoped to a single provider. AWS IAM Roles for Service Accounts (IRSA) does this for AWS resources; the same pattern applies to LLM gateways like LiteLLM or Portkey, which can hold the upstream keys and issue scoped virtual keys to your services.</li>
-<li><strong>Route through a gateway.</strong> A gateway gives you one place to enforce rate limits, log usage, redact PII, and rotate upstream keys without touching application code. For 40 integrations, this is the single highest-leverage change you can make.</li>
+<li><strong>Centralize the store.</strong> Use a real secrets manager — AWS Secrets Manager, GCP Secret Manager, HashiCorp Vault 1.16, or Doppler. The specific tool matters less than the fact that there's one source of truth with versioning and access logs. 2. <strong>Broker short-lived credentials.</strong> Instead of handing your app a long-lived API key, hand it a token that expires in 15 minutes and is scoped to a single provider. AWS IAM Roles for Service Accounts (IRSA) does this for AWS resources; the same pattern applies to LLM gateways like LiteLLM or Portkey, which can hold the upstream keys and issue scoped virtual keys to your services. 3. <strong>Route through a gateway.</strong> A gateway gives you one place to enforce rate limits, log usage, redact PII, and rotate upstream keys without touching application code. For 40 integrations, this is the single highest-leverage change you can make.</li>
 </ol>
 <p>The reason this matters more for LLM integrations than for, say, a Postgres connection is that LLM keys are unusually dangerous. They're bearer tokens with no IP binding by default, they often have generous rate limits, and they're directly monetizable. A leaked OpenAI key can be drained in hours. A leaked Postgres credential requires the attacker to also reach your VPC.</p>
 <h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>

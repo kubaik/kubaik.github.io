@@ -1,0 +1,167 @@
+{
+  "2026-technical-screens-what-actually-works": {
+    "removed_at": "2026-09-18T11:25:18.686784+00:00",
+    "reason": "Queue needs_review + fabricated hiring claims",
+    "source": "content_audit_verdicts"
+  },
+  "47-ai-code-debt-in-2026": {
+    "removed_at": "2026-09-18T11:25:18.688150+00:00",
+    "reason": "Fabricated studies + queue needs_review",
+    "source": "content_audit_verdicts"
+  },
+  "ab-pricing-tests-that-lifted-arr-18": {
+    "removed_at": "2026-09-18T11:25:18.688891+00:00",
+    "reason": "Fabricated ProfitWell stats",
+    "source": "content_audit_verdicts"
+  },
+  "ai-api-docs-what-humans-still-write-in-2026": {
+    "removed_at": "2026-09-18T11:25:18.689464+00:00",
+    "reason": "Fabricated DORA stats",
+    "source": "content_audit_verdicts"
+  },
+  "ai-ate-our-niche-heres-how-we-picked-a-new-one": {
+    "removed_at": "2026-09-18T11:25:18.690330+00:00",
+    "reason": "Fabricated McKinsey Kenya stats",
+    "source": "content_audit_verdicts"
+  },
+  "ai-codebases-guardrails-vs-chaos-in-2026": {
+    "removed_at": "2026-09-18T11:25:18.691082+00:00",
+    "reason": "Fabricated African Tech Policy Forum survey",
+    "source": "content_audit_verdicts"
+  },
+  "ai-codes-hidden-cves-exposed": {
+    "removed_at": "2026-09-18T11:25:18.691643+00:00",
+    "reason": "Fabricated Snyk / LF / OWASP benchmarks",
+    "source": "content_audit_verdicts"
+  },
+  "ai-scans-your-code-real-risks-and-defenses": {
+    "removed_at": "2026-09-18T11:25:18.692623+00:00",
+    "reason": "Fabricated Trail of Bits study",
+    "source": "content_audit_verdicts"
+  },
+  "ai-services-slow-fix-the-network-first": {
+    "removed_at": "2026-09-18T11:25:18.693700+00:00",
+    "reason": "Fabricated CNCF survey",
+    "source": "content_audit_verdicts"
+  },
+  "batteries-included-offline-mode-for-unreliable-networks": {
+    "removed_at": "2026-09-18T11:25:18.694691+00:00",
+    "reason": "Unsourced market research",
+    "source": "content_audit_verdicts"
+  },
+  "claude-4-prompts-broke-my-prod": {
+    "removed_at": "2026-09-18T11:25:18.695257+00:00",
+    "reason": "Fabricated Stanford HAI stat",
+    "source": "content_audit_verdicts"
+  },
+  "claude-code-in-2026-one-year-of-lessons-learned": {
+    "removed_at": "2026-09-18T11:25:18.695876+00:00",
+    "reason": "Fabricated McKinsey stat",
+    "source": "content_audit_verdicts"
+  },
+  "dagster-replaced-airflow-in-2026-heres-the-stack-we": {
+    "removed_at": "2026-09-18T11:25:18.696667+00:00",
+    "reason": "Invented sentiment survey",
+    "source": "content_audit_verdicts"
+  },
+  "engineering-interviews-what-ai-wants-now": {
+    "removed_at": "2026-09-18T11:25:18.697284+00:00",
+    "reason": "Fabricated KSEA / NTRG studies",
+    "source": "content_audit_verdicts"
+  },
+  "freelance-rates-after-ai-took-the-boilerplate": {
+    "removed_at": "2026-09-18T11:25:18.698006+00:00",
+    "reason": "Fabricated Upwork survey",
+    "source": "content_audit_verdicts"
+  },
+  "hiring-engineers-the-3-things-ai-cares-about-now": {
+    "removed_at": "2026-09-18T11:25:18.698598+00:00",
+    "reason": "Fabricated DevIQ Labs study",
+    "source": "content_audit_verdicts"
+  },
+  "internal-dev-portal-that-developers-open-daily": {
+    "removed_at": "2026-09-18T11:25:18.699064+00:00",
+    "reason": "Fabricated Dev Interrupted study",
+    "source": "content_audit_verdicts"
+  },
+  "kubernetes-in-2026-what-teams-offload": {
+    "removed_at": "2026-09-18T11:25:18.699591+00:00",
+    "reason": "Fabricated CNCF survey",
+    "source": "content_audit_verdicts"
+  },
+  "land-a-45k-remote-job-africas-2026-map": {
+    "removed_at": "2026-09-18T11:25:18.700035+00:00",
+    "reason": "Unverifiable salary-map claims",
+    "source": "content_audit_verdicts"
+  },
+  "latency-spike-after-llm-feature-rollout": {
+    "removed_at": "2026-09-18T11:25:18.700610+00:00",
+    "reason": "Invented incident numbers",
+    "source": "content_audit_verdicts"
+  },
+  "llm-evals-the-two-metrics-that-bite-you": {
+    "removed_at": "2026-09-18T11:25:18.701068+00:00",
+    "reason": "Fabricated eval benchmarks",
+    "source": "content_audit_verdicts"
+  },
+  "llm-security-mistakes-in-2026-owasp-top-10-fixes": {
+    "removed_at": "2026-09-18T11:25:18.701569+00:00",
+    "reason": "Fake OWASP attribution",
+    "source": "content_audit_verdicts"
+  },
+  "money-moves-need-stricter-parsers": {
+    "removed_at": "2026-09-18T11:25:18.702189+00:00",
+    "reason": "Unsourced fintech incident stats",
+    "source": "content_audit_verdicts"
+  },
+  "negotiate-salary-2026-with-ai-resume-tool": {
+    "removed_at": "2026-09-18T11:25:18.703009+00:00",
+    "reason": "Thin career bait + invented comps",
+    "source": "content_audit_verdicts"
+  },
+  "roll-your-own-migrations-why-blue-green-fails-you": {
+    "removed_at": "2026-09-18T11:25:18.703783+00:00",
+    "reason": "Fabricated migration-failure stats",
+    "source": "content_audit_verdicts"
+  },
+  "scan-10k-repos-daily-without-false-positives": {
+    "removed_at": "2026-09-18T11:25:18.704424+00:00",
+    "reason": "Fabricated scanner benchmarks",
+    "source": "content_audit_verdicts"
+  },
+  "senior-devs-flee-big-tech-not-for-money": {
+    "removed_at": "2026-09-18T11:25:18.704906+00:00",
+    "reason": "Unverifiable attrition anecdotes",
+    "source": "content_audit_verdicts"
+  },
+  "skip-the-zero-trust-hype-for-5-person-teams": {
+    "removed_at": "2026-09-18T11:25:18.705497+00:00",
+    "reason": "Fabricated survey claims",
+    "source": "content_audit_verdicts"
+  },
+  "stop-shipping-daily-the-burn-rate-math": {
+    "removed_at": "2026-09-18T11:25:18.706601+00:00",
+    "reason": "Invented burn-rate figures",
+    "source": "content_audit_verdicts"
+  },
+  "survive-ai-swipes-with-niche-picks": {
+    "removed_at": "2026-09-18T11:25:18.707390+00:00",
+    "reason": "Thin / keyword-farm",
+    "source": "content_audit_verdicts"
+  },
+  "treat-every-user-input-as-hostile-in-2026": {
+    "removed_at": "2026-09-18T11:25:18.707951+00:00",
+    "reason": "Fabricated security stats",
+    "source": "content_audit_verdicts"
+  },
+  "why-your-model-evaluation-missed-a-production-regression": {
+    "removed_at": "2026-09-18T11:25:18.708485+00:00",
+    "reason": "Invented eval-miss numbers",
+    "source": "content_audit_verdicts"
+  },
+  "zero-trust-mcp-servers-auth-trap-youll-hit-first": {
+    "removed_at": "2026-09-18T11:25:18.709087+00:00",
+    "reason": "Fabricated auth-incident stats",
+    "source": "content_audit_verdicts"
+  }
+}

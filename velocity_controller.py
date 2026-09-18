@@ -78,7 +78,7 @@ _ENV_LIMIT_KEY = "PUBLISH_DAILY_LIMIT"
 _DEFAULT_CAPS = {
     "early":   1,   # 0-30 days
     "growing": 2,   # 31-90 days
-    "mature":  10,   # 91-180 days
+    "mature":  5,   # 91-180 days
     "scaled":  4,   # 181+ days
 }
 

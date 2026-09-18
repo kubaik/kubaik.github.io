@@ -18,6 +18,7 @@ from adsense_fixes.canonical_guard import (
     get_redirect_target,
 )
 from adsense_fixes.queue_noindex_guard import get_quarantined_slugs
+from adsense_fixes.ads_txt_sync import AdsTxtError, sync_ads_txt
 
 
 import html as _html_stdlib
@@ -388,16 +389,18 @@ class StaticSiteGenerator:
             print(f"Warning: could not generate default OG image: {e}")
 
     def _generate_ads_txt(self):
+        """Write ads.txt to repo root AND docs/ so Pages and raw GitHub match."""
         config = self.blog_system.config
         adsense_id = config.get('google_adsense_id', '')
-        if adsense_id:
-            pub_id = adsense_id.replace('ca-pub-', '')
-            ads_txt_content = f"google.com, pub-{pub_id}, DIRECT, f08c47fec0942fa0\n"
-            with open("./docs/ads.txt", 'w', encoding='utf-8') as f:
-                f.write(ads_txt_content)
-            print("Generated ads.txt")
-        else:
-            print("Warning: no google_adsense_id in config — skipping ads.txt")
+        try:
+            written = sync_ads_txt(adsense_id, repo_root=Path('.'))
+            for path in written:
+                print(f"Generated ads.txt → {path}")
+        except AdsTxtError as exc:
+            # Fail the build rather than ship a site AdSense cannot verify.
+            raise RuntimeError(
+                f"ads.txt generation failed: {exc}"
+            ) from exc
 
     def _generate_robots_txt(self):
         """Generate a clean and effective robots.txt file."""

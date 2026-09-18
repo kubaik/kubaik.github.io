@@ -30,9 +30,7 @@ The shift is from "where do I put this string" to "who or what needs to call thi
 
 In practice, this means three moves:
 
-1. **Centralize the store.** Use a real secrets manager — AWS Secrets Manager, GCP Secret Manager, HashiCorp Vault 1.16, or Doppler. The specific tool matters less than the fact that there's one source of truth with versioning and access logs.
-2. **Broker short-lived credentials.** Instead of handing your app a long-lived API key, hand it a token that expires in 15 minutes and is scoped to a single provider. AWS IAM Roles for Service Accounts (IRSA) does this for AWS resources; the same pattern applies to LLM gateways like LiteLLM or Portkey, which can hold the upstream keys and issue scoped virtual keys to your services.
-3. **Route through a gateway.** A gateway gives you one place to enforce rate limits, log usage, redact PII, and rotate upstream keys without touching application code. For 40 integrations, this is the single highest-leverage change you can make.
+1. **Centralize the store.** Use a real secrets manager — AWS Secrets Manager, GCP Secret Manager, HashiCorp Vault 1.16, or Doppler. The specific tool matters less than the fact that there's one source of truth with versioning and access logs. 2. **Broker short-lived credentials.** Instead of handing your app a long-lived API key, hand it a token that expires in 15 minutes and is scoped to a single provider. AWS IAM Roles for Service Accounts (IRSA) does this for AWS resources; the same pattern applies to LLM gateways like LiteLLM or Portkey, which can hold the upstream keys and issue scoped virtual keys to your services. 3. **Route through a gateway.** A gateway gives you one place to enforce rate limits, log usage, redact PII, and rotate upstream keys without touching application code. For 40 integrations, this is the single highest-leverage change you can make.
 
 The reason this matters more for LLM integrations than for, say, a Postgres connection is that LLM keys are unusually dangerous. They're bearer tokens with no IP binding by default, they often have generous rate limits, and they're directly monetizable. A leaked OpenAI key can be drained in hours. A leaked Postgres credential requires the attacker to also reach your VPC.
 
@@ -151,7 +149,6 @@ Two patterns dominate: crash handlers that dump `process.env` into a log aggrega
 
 **Can I use short-lived credentials for long-running batch jobs?**
 Yes, via token refresh. The job holds a refresh credential and exchanges it for short-lived tokens as needed — the same pattern cloud SDKs already use. It's slightly more code than a static key, but it means a leaked token is useless within minutes instead of months.
-
 
 ---
 

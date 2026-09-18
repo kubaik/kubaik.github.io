@@ -40,6 +40,8 @@ from adsense_fixes.image_optimizer import inject_alt_text, generate_og_card
 from adsense_fixes.canonical_guard import validate_canonical, audit_duplicate_slugs
 from adsense_fixes.schema_validator import extract_and_build_faq_schema
 from adsense_fixes.content_freshness import inject_freshness_footer, get_publishing_schedule_status
+from adsense_fixes.claim_gate import check_claims, ClaimGateError
+from adsense_fixes.topic_dedup import check_topic_duplicate
 
 try:
     from title_validator import (
@@ -4989,6 +4991,21 @@ Return ONLY the JSON object.""",
                 "Minimum is 1500. This post would harm AdSense approval."
             )
 
+        # ── Fabricated citation / first-person incident gate ────────────
+        # Last line of defense so generate_blog_post(), refresh-stale, and
+        # any future caller cannot persist a draft that invents a named
+        # study or an unverifiable personal incident. Fail closed.
+        try:
+            claim_result = check_claims(post.content, post.title)
+        except Exception as claim_err:
+            raise ClaimGateError(
+                f"claim_gate failed closed while saving '{post.title}': {claim_err}"
+            ) from claim_err
+        if claim_result.blocked:
+            raise ClaimGateError(
+                f"Refusing to save '{post.title}': " + "; ".join(claim_result.reasons)
+            )
+
         # ── Full-body near-duplicate gate ───────────────────────────────
         # Runs against every already-published post's actual content, not
         # just the topic/title that was checked before generation. This is
@@ -5867,7 +5884,6 @@ if __name__ == "__main__":
                 # not a warning.
                 if not dup_detected:
                     try:
-                        from adsense_fixes.topic_dedup import check_topic_duplicate
                         topic_dup = check_topic_duplicate(
                             blog_post.title,
                             blog_post.meta_description or "",
@@ -5897,6 +5913,45 @@ if __name__ == "__main__":
                     inject_personal_intro(blog_post, topic)
                     inject_eeat_signals(blog_post, topic)
                     inject_freshness_footer(blog_post)
+
+                    # Claim gate MUST run after intro/footer injection.
+                    # inject_personal_intro() can prepend first-person
+                    # hooks; running the gate only on the raw LLM draft
+                    # would let those sentences publish.
+                    try:
+                        claim_result = check_claims(
+                            blog_post.content, blog_post.title
+                        )
+                    except Exception as claim_err:
+                        print(f"\n🛑  claim_gate raised an error — aborting "
+                              f"per its fail-closed contract: {claim_err}")
+                        import traceback
+                        traceback.print_exc()
+                        print("   This post has been aborted. No file was written.")
+                        sys.exit(1)
+                    if claim_result.blocked:
+                        print(f"\n🛑  CLAIM GATE — draft discarded:")
+                        for reason in claim_result.reasons:
+                            print(f"   ✗ {reason}")
+                        print()
+                        if dup_attempt >= MAX_DUPLICATE_REGENERATION_ATTEMPTS:
+                            print(
+                                f"   Exhausted {MAX_DUPLICATE_REGENERATION_ATTEMPTS} "
+                                "regeneration attempt(s) across different topics.\n"
+                                "   Drop first-person incident language and unsourced "
+                                "named studies from the generation prompt, then retry."
+                            )
+                            sys.exit(1)
+                        existing_titles_for_retry = _load_existing_titles(
+                            blog_system.output_dir)
+                        topic = blog_system._pick_retry_topic(
+                            topic, existing_titles_for_retry, exclude=attempted_topics
+                        )
+                        print(
+                            f"   Action : Trying attempt {dup_attempt + 1}/"
+                            f"{MAX_DUPLICATE_REGENERATION_ATTEMPTS} with new topic: '{topic}'\n"
+                        )
+                        continue
 
                     try:
                         injected_imgs = inject_alt_text(blog_post)
