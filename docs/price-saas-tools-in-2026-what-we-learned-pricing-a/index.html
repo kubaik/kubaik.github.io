@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-15T02:11:37.118773">
-        <meta property="article:modified_time" content="2026-06-15T02:11:37.118786">
+        <meta property="article:modified_time" content="2026-09-18T12:45:40.596634+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Price SaaS tools in 2026: what we learned pricing a">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/price-saas-tools-in-2026-what-we-learned-pricing-a/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Price SaaS tools in 2026: what we learned pricing a",
       "description": "Cut pricing guesswork 70%: how to model infra cost, support tickets and concurrency in 2026 with real numbers and a free toolkit — Node 20, Redis 7.2…",
       "datePublished": "2026-06-15T02:11:37+00:00",
-      "dateModified": "2026-06-15T02:11:37+00:00",
-      "wordCount": 2539,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-09-18T12:45:40+00:00",
+      "wordCount": 2477,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -264,19 +264,19 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2539 words
+                        12 min read
+                        &nbsp;·&nbsp; 2477 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-15
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In 2026 I helped launch an internal dev tool at a Series B startup in Jakarta. By early 2026 it had 12 000 daily active engineers and a usage curve that scared the CFO: our AWS bill tripled in one quarter. We had never touched pricing; we just counted seats and hit “publish”. When I dug into the bill I found $42 k of it went to Kinesis Firehose that nobody was reading after day 30. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>In 2026 I helped launch an internal dev tool at a Series B startup in Jakarta. By early 2026 it had 12 000 daily active engineers and a usage curve that scared the CFO: our AWS bill tripled in one quarter. We had never touched pricing; we just counted seats and hit “publish”. When I dug into the bill I found $42 k of it went to Kinesis Firehose that nobody was reading after day 30.</p>
 <p>I’ve seen the same pattern in Vietnam, the Philippines and Singapore: teams build a tool, get traction with early adopters, and then freeze when someone asks for a price list. The usual advice is “just survey competitors” or “charge 20 % of what you save users”, but those answers ignore the hard parts:</p>
 <ul>
 <li>Your infra bill is not your price floor. In one Vietnamese e-commerce stack the infra cost per API call was $0.00004 but we billed at $0.00012 and still lost money because support tickets cost $28 each.</li>
@@ -612,7 +612,7 @@ test('margin is respected', () =&gt; {
 <li>Concurrency-based pricing reduced our largest customer’s bill from $2 100 to $840 even though their request count grew 3×. They stayed because the new model matched their usage pattern.</li>
 <li>The 5-second cache cut Redis CPU from 60 % to 8 %, saving $210/month in RDS instances.</li>
 </ul>
-<p>I was surprised that the margin improved even as we lowered prices for 60 % of customers. The trick was removing the seat-based floor and charging only for what actually costs money.</p>
+<p>The trick was removing the seat-based floor and charging only for what actually costs money.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>How do I price if my infra is serverless and usage is spiky?</strong></p>
 <p>Use a two-part tariff: a small fixed fee (e.g., $5/month) plus a variable rate tied to the 95th percentile of concurrent jobs. In our Singapore cluster the fixed fee covers the baseline DynamoDB throughput and the variable rate reflects the Lambda burst cost. If your top user runs 200 concurrent jobs for 10 minutes, the fee is $0.00012 × 200 × 10 × 60 = $1.44. We charge the 95th percentile per month, so a single burst doesn’t bankrupt you.</p>
@@ -637,14 +637,11 @@ docker run -it --rm -v $(pwd):/app -w /app node:20-alpine \
 <p>In 30 minutes you will have a data-driven price list and a cost breakdown you can show your CFO. If the model suggests $0.00, you just found the bug before anyone else did.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

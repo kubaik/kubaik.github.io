@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T11:29:44.566881",
+  "built_at": "2026-09-18T12:42:45.257141",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5205,6 +5205,11 @@
       "slug": "multi-agent-systems-why-failures-hide",
       "title": "Multi-agent systems: why failures hide",
       "summary": "The common failure question that matters isn't in the FAQ, it's in the incident log. This is the writeup with the mistakes left in, not edited out. Most write-ups stop exactly where the interesting part starts. Why I wrote this (the problem I kept hitting) Multi-agent systems are sold as a way to pa"
+    },
+    {
+      "slug": "local-llm-agents-vllm-vs-ollama-for-fintech",
+      "title": "Local LLM agents: vLLM vs Ollama for fintech",
+      "summary": "Inherited run local setups tend to come with no explanation, just a working system and a long reverse-engineering session. Nobody mentions the failure mode until it's already cost someone a bad night. Here's what actually worked, and why. Why this comparison matters right now If you work on fintech "
     }
   ]
 }

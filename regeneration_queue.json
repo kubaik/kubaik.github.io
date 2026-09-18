@@ -182,69 +182,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "evaluate-agents-with-spark-vs-custom-harness",
-    "title": "Evaluate agents with Spark vs custom harness",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same building evaluation mistake in multiple production codebases,; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three weeks chasing a 2.3% regression that turned out to be a single mis",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "graphql-vs-rest-vs-trpc-2026s-api-fight",
-    "title": "GraphQL vs REST vs tRPC: 2026’s API fight",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same api design mistake in multiple production codebases, includin; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned that the hard way when I shipped a GraphQL API for a payments dashboar",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "htmx-stack-swap-5-things-i-gained-3-i-lost",
-    "title": "HTMX stack swap: 5 things I gained, 3 I lost",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this htmx changed problem while migrating a service under a hard dead; Here's what actually worked.; I assumed it was a database bottleneck.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "log-audit-costs-without-breaking-compliance",
-    "title": "Log audit costs without breaking compliance",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same building audit mistake in multiple production codebases, incl; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client in Frankfurt hit 12 ms average latency on  s durin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "merge-three-payment-apis-into-one-system",
-    "title": "Merge three payment APIs into one system",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about build payment during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I followed it too — until I saw the first bill.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "migrations-stop-running-them-live",
     "title": "Migrations? Stop running them live",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about handle database during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I followed that playbook for three years at a healthtech startup serving 1.2 mil",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "price-saas-tools-in-2026-what-we-learned-pricing-a",
     "title": "Price SaaS tools in 2026: what we learned pricing a",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I learned the hard way that pricing is not a spreadsheet exercise; it’s a system",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "rag-rots-if-you-dont-refresh-indexes",
     "title": "RAG rots if you don’t refresh indexes",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): Here's what actually worked, and why.; Most tutorials stop there.; I ran into this when I shipped a customer support chatbot in 2026 using Pinecone",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "remote-work-in-2026-which-tools-survived",
     "title": "Remote work in 2026: which tools survived",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I ran into this when a government grant portal we built in Kenya kept failing de; I was surprised that even in 2026, the median company running a fully remote sta",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "self-healing-pipelines-argo-vs-crossplane-in-2026",
     "title": "Self-healing pipelines: Argo vs Crossplane in 2026",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same built selfhealing mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when a single misconfigured retry policy in a 2024 d",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "tool-calling-stateless-beats-stateful-under-load",
@@ -2251,6 +2221,41 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "evaluate-agents-with-spark-vs-custom-harness",
+    "title": "Evaluate agents with Spark vs custom harness",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same building evaluation mistake in multiple production codebases,; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three weeks chasing a 2.3% regression that turned out to be a single mis",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "graphql-vs-rest-vs-trpc-2026s-api-fight",
+    "title": "GraphQL vs REST vs tRPC: 2026’s API fight",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same api design mistake in multiple production codebases, includin; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned that the hard way when I shipped a GraphQL API for a payments dashboar",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "htmx-stack-swap-5-things-i-gained-3-i-lost",
+    "title": "HTMX stack swap: 5 things I gained, 3 I lost",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this htmx changed problem while migrating a service under a hard dead; Here's what actually worked.; I assumed it was a database bottleneck.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "log-audit-costs-without-breaking-compliance",
+    "title": "Log audit costs without breaking compliance",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same building audit mistake in multiple production codebases, incl; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client in Frankfurt hit 12 ms average latency on  s durin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "merge-three-payment-apis-into-one-system",
+    "title": "Merge three payment APIs into one system",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about build payment during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I followed it too — until I saw the first bill.",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-sales-cycles-3x-faster-40-less-talk",

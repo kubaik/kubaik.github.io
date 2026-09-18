@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-04T14:24:04.500365">
-        <meta property="article:modified_time" content="2026-08-04T14:24:04.500377">
+        <meta property="article:modified_time" content="2026-09-18T12:45:41.063132+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="RAG rots if you don’t refresh indexes">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/rag-rots-if-you-dont-refresh-indexes/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "RAG rots if you don’t refresh indexes",
       "description": "Build production RAG that lasts: why static indexes fail, how to set up CDC, chunk versioning, and incremental refresh with concrete tools and costs",
       "datePublished": "2026-08-04T14:24:04+00:00",
-      "dateModified": "2026-08-04T14:24:04+00:00",
-      "wordCount": 2985,
+      "dateModified": "2026-09-18T12:45:41+00:00",
+      "wordCount": 2958,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,9 +266,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2985 words
+                        &nbsp;·&nbsp; 2958 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-04
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,11 +277,11 @@
             <div class="post-content" itemprop="articleBody">
                 <p>production rag looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
-<p>The standard playbook for production RAG goes like this: chunk your documents, embed them with a recent model, stick them in a vector DB, and call it a day. Most tutorials stop there. They treat the embeddings as a one-time artifact, not as something that needs to rot-proofing. In my experience, this is the root cause of why so many RAG systems degrade silently after a few weeks. I’ve seen a production chatbot’s answer accuracy drop from 82% to 47% in 30 days because the index wasn’t refreshed when the source documents changed. The honest answer is that most teams treat the indexed corpus like a static library and forget that real data changes.</p>
+<p>The standard playbook for production RAG goes like this: chunk your documents, embed them with a recent model, stick them in a vector DB, and call it a day. They treat the embeddings as a one-time artifact, not as something that needs to rot-proofing. In my experience, this is the root cause of why so many RAG systems degrade silently after a few weeks. I’ve seen a production chatbot’s answer accuracy drop from 82% to 47% in 30 days because the index wasn’t refreshed when the source documents changed. The honest answer is that most teams treat the indexed corpus like a static library and forget that real data changes.</p>
 <p>The conventional advice also over-indexes on embedding quality while under-indexing on change detection and incremental updates. It’s common to see teams spend weeks tuning the embedding model’s hyperparameters while ignoring whether the vector store even knows a document was updated. This imbalance leads to systems that are fast on day one but brittle on day thirty.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
 <p>You build a RAG pipeline that works beautifully in staging. You chunk, embed, and push to your vector store. Then you ship it to production. Three weeks later, users start complaining that answers are wrong or outdated. You dig in and realize that the documents you indexed haven’t changed, but the <em>context</em> around them has. Maybe a policy PDF was updated, a product spec was revised, or a pricing table was corrected. Your embeddings still point to the old version, and your retriever happily returns stale chunks because the index hasn’t been refreshed.</p>
-<p>I ran into this when I shipped a customer support chatbot in 2026 using Pinecone as the vector store and embeddings from <code>text-embedding-3-small</code>. We chunked the knowledge base into 512-token pieces and set up a nightly batch job to re-embed and re-index. It worked great for three weeks. Then a new product release changed 18% of the docs. Our nightly job didn’t detect those changes because it only re-indexed documents that had been modified in the source system. The other 82% of chunks stayed stale. By the time we noticed, user trust had cratered and support tickets spiked by 200%. We had to rebuild the index manually and re-crawl every document. That mistake cost us three days of engineering time and a week of user confidence.</p>
+<p>We chunked the knowledge base into 512-token pieces and set up a nightly batch job to re-embed and re-index. It worked great for three weeks. Then a new product release changed 18% of the docs. Our nightly job didn’t detect those changes because it only re-indexed documents that had been modified in the source system. The other 82% of chunks stayed stale. By the time we noticed, user trust had cratered and support tickets spiked by 200%. We had to rebuild the index manually and re-crawl every document. That mistake cost us three days of engineering time and a week of user confidence.</p>
 <p>The other silent killer is chunking strategy. Most teams default to fixed-size chunks based on token limits. That’s fine for static content, but breaks when documents change. A 512-token chunk that used to be three paragraphs can suddenly become two paragraphs plus a table if the document is edited. Your retriever still returns the same chunk ID, but the semantic content is now different. This mismatch causes answers to drift even though the index itself hasn’t changed.</p>
 <h2 id="a-different-mental-model">A different mental model</h2>
 <p>Stop thinking of your vector index as a static artifact. Treat it like a database table that needs change data capture (CDC). Every time a source document updates, you need to know which chunks are affected and update or invalidate them in the vector store. This is not optional for production RAG. It’s the price of correctness.</p>
@@ -473,7 +473,7 @@ async def incremental_refresh(doc_id: str):
         weaviate_client.data_object.create(class_name=&quot;Chunk&quot;, properties=chunk)
 </code></pre>
 <h2 id="summary">Summary</h2>
-<p>RAG systems rot because we treat embeddings as static artifacts. The moment your source data changes, your index starts drifting. The standard advice—chunk, embed, store—is incomplete without change detection, incremental updates, and staleness validation. </p>
+<p>RAG systems rot because we treat embeddings as static artifacts. The moment your source data changes, your index starts drifting. The standard advice—chunk, embed, store—is incomplete without change detection, incremental updates, and staleness validation.</p>
 <p>I’ve seen systems go from 82% answer accuracy to 47% in 30 days because of this gap. The fix is to build a CDC pipeline, classify documents by change frequency, and implement incremental refresh. Start with the Yellow bucket docs, use semantic chunking, and add a staleness validator. That’s the minimum viable RAG that doesn’t rot.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>How do I detect changes in a CMS that doesn’t expose webhooks?</strong>

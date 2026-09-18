@@ -896,6 +896,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/local-llm-agents-vllm-vs-ollama-for-fintech/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/local-llm-agents-vllm-vs-ollama-for-fintech.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/log-audit-costs-without-breaking-compliance/</loc>
     <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -947,6 +956,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/merge-three-payment-apis-into-one-system.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/migrations-stop-running-them-live/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/migrations-stop-running-them-live.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -1022,6 +1040,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/price-saas-tools-in-2026-what-we-learned-pricing-a/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/price-saas-tools-in-2026-what-we-learned-pricing-a.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/price-your-remote-job-like-a-new-york-dev/</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -1046,6 +1073,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/rag-rots-if-you-dont-refresh-indexes/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/rag-rots-if-you-dont-refresh-indexes.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/react-19-compiler-my-components-changed-how/</loc>
     <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -1061,6 +1097,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/remote-salary-negotiate-without-sounding-cheap.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/remote-work-in-2026-which-tools-survived/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/remote-work-in-2026-which-tools-survived.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -1097,6 +1142,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/saved-3kmonth-by-ditching-kubernetes.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/self-healing-pipelines-argo-vs-crossplane-in-2026/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/self-healing-pipelines-argo-vs-crossplane-in-2026.png</image:loc>
     </image:image>
   </url>
   <url>
