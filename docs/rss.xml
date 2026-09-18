@@ -5,14 +5,7 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 18 Sep 2026 11:32:49 +0000</lastBuildDate>
-    <item>
-      <title>Multi-agent systems: why failures hide</title>
-      <link>https://kubaik.github.io/multi-agent-systems-why-failures-hide/</link>
-      <description>Multi-agent systems fail silently at scale — token budget overruns, retry storms, and deadlocks.</description>
-      <pubDate>Fri, 18 Sep 2026 11:29:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-agent-systems-why-failures-hide/</guid>
-    </item>
+    <lastBuildDate>Fri, 18 Sep 2026 15:37:47 +0000</lastBuildDate>
     <item>
       <title>Agent drift: the failure mode you didn&apos;t log</title>
       <link>https://kubaik.github.io/agent-drift-the-failure-mode-you-didnt-log/</link>
