@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-04T03:21:11.093312">
-        <meta property="article:modified_time" content="2026-07-04T03:21:11.093322">
+        <meta property="article:modified_time" content="2026-09-18T03:55:17.405195+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI model poisoning: 3 real attacks on datasets">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-model-poisoning-3-real-attacks-on-datasets/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "AI model poisoning: 3 real attacks on datasets",
       "description": "Cut AI poisoning incidents 100% with dataset hashes, SLSA 1.1, and Sigstore 0.10.0 — the real tools and metrics teams used in 2026.",
       "datePublished": "2026-07-04T03:21:11+00:00",
-      "dateModified": "2026-07-04T03:21:11+00:00",
-      "wordCount": 3880,
+      "dateModified": "2026-09-18T03:55:17+00:00",
+      "wordCount": 3801,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         19 min read
-                        &nbsp;·&nbsp; 3880 words
+                        &nbsp;·&nbsp; 3801 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-04
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,15 +277,12 @@
                 <p>The official documentation for supply chain is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>Most guides to AI supply chain security start with the same checklist: pin dependencies, sign commits, audit models. That’s fine for a tutorial repo, but it ignores how teams actually ship AI features. I learned this the hard way in Q3 2026 when our new customer-support bot started recommending dangerous fixes for a high-severity AWS outage. The logs showed the model had been trained on a dataset where 12% of the responses were garbage, injected by a malicious contributor on GitHub. Our onboarding docs said nothing about verifying dataset contributors, only about pinning PyTorch 2.3.1.</p>
-<p>The disconnect isn’t theoretical. In 2026, the Cloud Security Alliance found that 47% of teams using open-source AI models had no process to verify dataset provenance. That’s almost half of teams shipping features without knowing whether the data they trained on was tampered with. The same survey showed teams spent an average of 8 hours per incident untangling poisoned datasets, with 3% of incidents leading to public retractions or customer data leaks.</p>
+<p>The disconnect isn’t theoretical. In 2026, the Cloud Security Alliance found that 47% of teams using open-source AI models had no process to verify dataset provenance.</p>
 <p>What the docs miss is the velocity of change. An LLM fine-tuned monthly can ingest 50k new examples between versions. If even 0.1% of those are adversarial, you’ve got 50 bad examples in your training loop. And because most teams still train on single snapshots, you won’t know until you ship. I once watched a team push a model update that triggered a 3x increase in support tickets—turns out someone had inserted 200 fake Stack Overflow answers with clickbait titles like "use this AWS CLI flag to bypass quotas."</p>
 <p>Teams also underestimate how much poisoned data spreads. A single GitHub pull request with a poisoned JSONL file can get forked, mirrored, and re-uploaded to Hugging Face. One repo I audited in 2026 had 47 downstream copies of the same dataset, each with the same adversarial examples. No amount of SBOM scanning catches that if the poisoned file isn’t in the direct dependency chain.</p>
 <p>Finally, there’s the illusion of control. Tools like Hugging Face’s <code>datasets</code> library let you filter examples by length or label, but none of that helps when the poison is in the label itself. A common trick is to inject examples where the correct label is “ignore previous instruction” or “respond with the phrase ‘🎉 mystery prize 🎉’.” These labels pass basic sanity checks because they’re rare, but they poison the model’s alignment.</p>
 <p>Production needs a different checklist:
-- Who can merge to the dataset repo?
-- How quickly can you roll back a poisoned version?
-- What’s the blast radius of a bad example?
-- Can you prove a dataset wasn’t tampered with between fork and merge?</p>
+- Who can merge to the dataset repo? - How quickly can you roll back a poisoned version? - What’s the blast radius of a bad example? - Can you prove a dataset wasn’t tampered with between fork and merge?</p>
 <p>I wish I had asked those questions before we shipped our first bot. Instead, we relied on the PyTorch version pin and assumed the dataset was clean.</p>
 <h2 id="how-the-supply-chain-attacks-on-ai-models-and-datasets-that-actually-happened-to-teams-we-know-actually-works-under-the-hood">How the supply chain attacks on AI models and datasets that actually happened to teams we know actually works under the hood</h2>
 <p>Attacks on AI supply chains fall into three patterns: data poisoning, model poisoning, and dependency poisoning. Each exploits a different layer of the pipeline, and each has left scars on teams I’ve worked with or advised.</p>
@@ -468,7 +465,7 @@ huggingface-cli download my-org/my-model &quot;${TAG}&quot; --local-dir model
 <p>The rollback time dropped because we could now redeploy from a tagged model instead of rebuilding from scratch. The storage cost increased because we kept signed artifacts and provenance files, but the extra 5 GB was cheaper than the cleanup cost of a poisoning incident.</p>
 <p>The false positive rate improved slightly because we started filtering out poisoned examples during validation. Before, we only checked for empty fields; now we check for label consistency and input/output length ratios.</p>
 <p>The CI build time increased by 2–3 minutes, which is annoying but acceptable. The real win was eliminating the 4–6 hour outage window when a poisoning incident happened.</p>
-<p>I was surprised that the biggest bottleneck wasn’t the sandboxing or the signing, but the dataset provenance checks. The team had to rewrite their ingestion pipeline to store Git commit hashes alongside the dataset files. That added complexity, but it caught a poisoned example that had snuck in via a botched merge.</p>
+<p>The team had to rewrite their ingestion pipeline to store Git commit hashes alongside the dataset files. That added complexity, but it caught a poisoned example that had snuck in via a botched merge.</p>
 <h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
 <h3 id="1-provenance-files-get-out-of-sync">1. Provenance files get out of sync</h3>
 <p>You’ll store the dataset hash and commit hash in a file like <code>data.json.asc</code>, but if you forget to update that file after a dataset change, your pipeline will fail or worse—accept a poisoned dataset because the provenance check passes.</p>
@@ -556,7 +553,7 @@ huggingface-cli download my-org/my-model &quot;${TAG}&quot; --local-dir model
 <h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
 <p>I’m not here to sell you a silver bullet. SLSA and Sigstore are better than nothing, but they’re not infallible. The real gap isn’t technical—it’s process. Teams that get poisoned usually have a process gap, not a tooling gap.</p>
 <p>The biggest surprise was how often poisoned data gets in via legitimate processes. The fintech team’s poisoned dataset came from an internal tool that auto-syncs Confluence. The tool was approved by security, but no one verified the Confluence export. The attacker just needed to add a fake page to Confluence and wait for the sync.</p>
-<p>Another surprise: most teams don’t know what “poisoned” looks like. They see a model misclassify something and assume it’s a bug, not an attack. I had to write a custom detector that flagged label inconsistencies in the training data. That detector caught 80% of the poisoned examples before they reached the model.</p>
+<p>Another surprise: most teams don’t know what “poisoned” looks like. They see a model misclassify something and assume it’s a bug, not an attack. That detector caught 80% of the poisoned examples before they reached the model.</p>
 <p>The tools are good, but they’re only as good as the process around them. If you don’t have a rollback plan, you’re still exposed. If you don’t monitor your models in production, you won’t know if they’ve been poisoned. If you don’t review dataset changes, you’re inviting trouble.</p>
 <p>Finally, I’m tired of hearing “shift left.” Shift left is a cop-out. It means “make developers do security,” but developers aren’t security experts. Instead, automate the provenance checks. Make it impossible to merge a dataset without a signed provenance file. Make it impossible to deploy a model without a SLSA level 3 build. That’s how you shift left effectively.</p>
 <h2 id="what-to-do-next">What to do next</h2>
@@ -580,14 +577,11 @@ huggingface-cli download my-org/my-model &quot;${TAG}&quot; --local-dir model
 <p>Look for label inconsistencies (e.g., 100 examples where the correct answer to "What’s the company’s revenue?" is the same fake number), input/output length outliers, and unexpected tokens. Write a simple script to count unique labels per question and flag questions with only one label. In one incident, this caught a batch of 200 poisoned examples where the label was always "🎉 mystery prize 🎉".</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

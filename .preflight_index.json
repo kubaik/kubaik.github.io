@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-17T16:33:49.930810",
+  "built_at": "2026-09-18T03:52:05.346346",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5190,6 +5190,11 @@
       "slug": "agent-access-for-non-ai-engineers",
       "title": "Agent access for non-AI engineers",
       "summary": "building internal looks simple until it has to survive real traffic. The edge cases only show up once real users hit the system. Here's what changed once we stopped guessing and started measuring. The one-paragraph version (read this first) Non-AI engineers — backend, frontend, data, SRE — need to c"
+    },
+    {
+      "slug": "feature-flags-became-ai-rollout-platforms",
+      "title": "Feature flags became AI rollout platforms",
+      "summary": "The default configuration is fine right up until it isn't. feature flags problems have a habit of surfacing mid-migration, right when there's no time to solve them properly. Here's the root cause, not just the symptom. Why this list exists (what I was actually trying to solve) Feature flags started "
     }
   ]
 }

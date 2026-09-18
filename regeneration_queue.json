@@ -182,69 +182,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "senior-devs-flee-big-tech-not-for-money",
-    "title": "Senior devs flee big tech (not for money)",
-    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I ran this on my payments team and found we averaged 18 meetings per engineer pe",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "test-ai-code-without-testing-the-ai",
-    "title": "Test AI code without testing the AI",
-    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this write tests problem while migrating a service under a hard deadl; Here's what actually worked.; I wanted a testing strategy that treats AI output like any other external depend",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "why-ai-interviewers-failed-68-of-us-in-2026",
-    "title": "Why AI interviewers failed 68% of us in 2026",
-    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this when interviewing at three companies in Mexico: my designs passe; I spent two weeks rebuilding the same system three different ways, each time get; I saw this when I proposed a **Redis Streams + Lua script aggregation** solution",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "added-circuit-breakers-3-days-after-cascade-failure",
-    "title": "Added circuit breakers 3 days after cascade failure",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this added circuit problem while migrating a service under a hard dea; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-agents-circuit-breakers-are-not-optional",
-    "title": "AI agents: circuit breakers are not optional",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I learned this the hard way during the August 2026 outage at Kopo Kopo.; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the simplest metric — response length — was more reliable t",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "ai-agents-vs-argo-tekton-which-pipeline-heals-itself",
     "title": "AI agents vs Argo, Tekton: which pipeline heals itself?",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same built selfhealing mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when our staging cluster ran dry of disk space because a nightly",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-codes-hidden-cves-exposed",
     "title": "AI code’s hidden CVEs exposed",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this aigenerated code problem while migrating a service under a hard ; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-features-as-tech-debt-or-golden-paths",
     "title": "AI features as tech debt or golden paths",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've hit the same building golden mistake in more than one production codebase o; Here's what I'd tell a colleague hitting this for the first time.; I spent three days debugging why our AI chatbot in Ghana kept returning 502 erro",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-model-poisoning-3-real-attacks-on-datasets",
     "title": "AI model poisoning: 3 real attacks on datasets",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I learned this the hard way in Q3 2026 when our new customer-support bot started; I once watched a team push a model update that triggered a 3x increase in suppor; I wish I had asked those questions before we shipped our first bot.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-ops-pagerduty-vs-firehydrant-for-oncall",
     "title": "AI ops: PagerDuty vs FireHydrant for oncall",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same aiassisted incident mistake in multiple production codebases,; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when a 500 ms latency spike on a single endpoint tri",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-sales-cycles-3x-faster-40-less-talk",
@@ -2341,6 +2311,41 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "senior-devs-flee-big-tech-not-for-money",
+    "title": "Senior devs flee big tech (not for money)",
+    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I ran this on my payments team and found we averaged 18 meetings per engineer pe",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "test-ai-code-without-testing-the-ai",
+    "title": "Test AI code without testing the AI",
+    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this write tests problem while migrating a service under a hard deadl; Here's what actually worked.; I wanted a testing strategy that treats AI output like any other external depend",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "why-ai-interviewers-failed-68-of-us-in-2026",
+    "title": "Why AI interviewers failed 68% of us in 2026",
+    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this when interviewing at three companies in Mexico: my designs passe; I spent two weeks rebuilding the same system three different ways, each time get; I saw this when I proposed a **Redis Streams + Lua script aggregation** solution",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "added-circuit-breakers-3-days-after-cascade-failure",
+    "title": "Added circuit breakers 3 days after cascade failure",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this added circuit problem while migrating a service under a hard dea; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-agents-circuit-breakers-are-not-optional",
+    "title": "AI agents: circuit breakers are not optional",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I learned this the hard way during the August 2026 outage at Kopo Kopo.; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the simplest metric — response length — was more reliable t",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-stole-system-design",

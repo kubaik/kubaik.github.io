@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-17T02:53:25.164323">
-        <meta property="article:modified_time" content="2026-07-17T02:53:25.164335">
+        <meta property="article:modified_time" content="2026-09-18T03:55:16.829986+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI features as tech debt or golden paths">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-features-as-tech-debt-or-golden-paths/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "AI features as tech debt or golden paths",
       "description": "AI features built with standard wrappers often become maintenance nightmares in Africa.",
       "datePublished": "2026-07-17T02:53:25+00:00",
-      "dateModified": "2026-07-17T02:53:25+00:00",
-      "wordCount": 2665,
+      "dateModified": "2026-09-18T03:55:16+00:00",
+      "wordCount": 2638,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2665 words
+                        &nbsp;·&nbsp; 2638 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-17
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -278,7 +278,7 @@
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>The standard playbook for shipping AI features goes like this: wrap an LLM call behind a clean API, cache aggressively, add a feature flag, and ship. We’ve all heard it: "Use a wrapper layer so you can swap models later." "Cache the top 100 prompts to cut costs." "Put it behind a feature flag so you can roll back instantly." It sounds reasonable, but in practice this approach turns AI features into a ticking maintenance bomb.</p>
 <p>I’ve seen teams burn 40% of their engineering hours on AI-related support tickets within three months. The problem isn’t the AI itself — it’s the assumptions we layer on top. We assume the model won’t drift, the cache will always be warm, and the feature flag will never get stale. None of these hold in real traffic from Lagos to Nairobi, where 3G is still the norm and users drop on and off mid-conversation.</p>
-<p>The honest answer is: most AI feature wrappers are built for the ideal world — fast connections, stable latency, predictable input. Reality is the opposite. I spent three days debugging why our AI chatbot in Ghana kept returning 502 errors only to realize the CloudFront cache wasn’t respecting 504s from the origin. The cache layer assumed all errors were transient — but 502s from an overloaded API are not. That assumption baked itself into our wrapper layer and cost us 12% of daily active users in the first week.</p>
+<p>The honest answer is: most AI feature wrappers are built for the ideal world — fast connections, stable latency, predictable input. Reality is the opposite. The cache layer assumed all errors were transient — but 502s from an overloaded API are not. That assumption baked itself into our wrapper layer and cost us 12% of daily active users in the first week.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
 <p>Let’s walk through a typical flow. You build an AI summarization feature behind a wrapper service using FastAPI 0.111, with Redis 7.2 for caching and a LaunchDarkly flag for rollout. You expect:</p>
 <ul>
