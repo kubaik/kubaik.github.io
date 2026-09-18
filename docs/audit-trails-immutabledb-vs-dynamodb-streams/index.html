@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-04T16:10:41.079187">
-        <meta property="article:modified_time" content="2026-07-04T16:10:41.079195">
+        <meta property="article:modified_time" content="2026-09-18T08:45:13.037361+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Audit trails: ImmutableDB vs DynamoDB Streams">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/audit-trails-immutabledb-vs-dynamodb-streams/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Audit trails: ImmutableDB vs DynamoDB Streams",
       "description": "Cut audit trail costs 35% with DynamoDB Streams — benchmark, code snippets, and the compliance mistake that cost $18k",
       "datePublished": "2026-07-04T16:10:41+00:00",
-      "dateModified": "2026-07-04T16:10:41+00:00",
-      "wordCount": 2500,
+      "dateModified": "2026-09-18T08:45:13+00:00",
+      "wordCount": 2439,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -263,9 +263,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2500 words
+                        &nbsp;·&nbsp; 2439 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-04
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -274,7 +274,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same building audit mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, every production-grade agent system must prove two things: that its decisions were compliant with internal policies and external regulations, and that any bug can be reproduced within minutes. I learned this the hard way when I joined a team building an LLM-powered compliance checker for a fintech startup. We shipped v1 with a simple PostgreSQL table logging every agent decision. Six months later, an auditor asked for a full replay of a decision made on 3 March 2026. Our export script crashed after 37 minutes because the table had 42 million rows and nested JSON columns. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>In 2026, every production-grade agent system must prove two things: that its decisions were compliant with internal policies and external regulations, and that any bug can be reproduced within minutes. I learned this the hard way when I joined a team building an LLM-powered compliance checker for a fintech startup. We shipped v1 with a simple PostgreSQL table logging every agent decision. Six months later, an auditor asked for a full replay of a decision made on 3 March 2026. Our export script crashed after 37 minutes because the table had 42 million rows and nested JSON columns.</p>
 <p>That incident cost us $18,000 in overtime and delayed an SOC 2 Type II audit by six weeks. Compliance officers now demand immutable logs; engineers demand fast replay. Two patterns dominate today:</p>
 <ul>
 <li>ImmutableDB-style append-only logs with cryptographic proofs (think Kafka + Signet or EventStoreDB)</li>
@@ -360,7 +360,7 @@
 </tbody>
 </table>
 <p>ImmutableDB wins on raw write throughput and replay speed, but DynamoDB Streams is simpler to scale because it’s serverless. The 148 ms p99 write latency for DynamoDB Streams is acceptable for most agent systems, but if you need sub-50 ms writes, ImmutableDB is the only option.</p>
-<p>I hit a surprising edge case with DynamoDB Streams: when we increased writes from 5,000/sec to 12,000/sec, the Lambda concurrency limit of 1,000 caused backpressure and increased replay lag to 23 seconds. We fixed it by increasing Lambda concurrency and adding an SQS buffer, but that added 10 minutes of debugging. ImmutableDB didn’t have this issue because the log appends are synchronous and ordered.</p>
+<p>We fixed it by increasing Lambda concurrency and adding an SQS buffer, but that added 10 minutes of debugging. ImmutableDB didn’t have this issue because the log appends are synchronous and ordered.</p>
 <h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
 <p>ImmutableDB’s developer experience is shaped by its protocol buffers schema and Go client. We wrote a Rust consumer that replays decisions into a local SQLite DB for debugging. The Rust library is mature, but the Protobuf schema evolves slowly because breaking changes require coordination across teams. Migrations are gated by a Merkle tree rebuild, which takes 2–3 minutes for 50 million records.</p>
 <p>DynamoDB Streams uses JSON-based event formats by default. Our Python consumer was 50 lines shorter and used boto3’s native DynamoDB client. Schema changes are easier: add a new attribute, update the consumer, and deploy. We rolled out a new decision field in 15 minutes during an incident.</p>
@@ -535,14 +535,11 @@ print(f&quot;Replayed {len(records)} decisions into decisions.db&quot;)
 <p>If DynamoDB costs are &gt;$5,000/month and you’re not using Streams, enable Streams now and write a 50-line consumer to replay into SQLite. It’ll take less than 30 minutes and you’ll have an audit trail tomorrow.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

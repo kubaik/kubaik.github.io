@@ -11,5 +11,6 @@
   "Connection poolers in the age of serverless and AI agents \u2014 what still makes sense",
   "Secrets management for teams that now have 40+ LLM integrations",
   "Building internal tools that help non-AI engineers work safely with agents",
-  "How feature flags evolved into full AI rollout and experimentation platforms"
+  "How feature flags evolved into full AI rollout and experimentation platforms",
+  "How we detect and contain agent drift before it creates bad user experiences"
 ]

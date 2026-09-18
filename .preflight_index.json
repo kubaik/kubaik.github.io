@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T03:52:05.346346",
+  "built_at": "2026-09-18T08:42:03.392660",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5195,6 +5195,11 @@
       "slug": "feature-flags-became-ai-rollout-platforms",
       "title": "Feature flags became AI rollout platforms",
       "summary": "The default configuration is fine right up until it isn't. feature flags problems have a habit of surfacing mid-migration, right when there's no time to solve them properly. Here's the root cause, not just the symptom. Why this list exists (what I was actually trying to solve) Feature flags started "
+    },
+    {
+      "slug": "agent-drift-the-failure-mode-you-didnt-log",
+      "title": "Agent drift: the failure mode you didn't log",
+      "summary": "It's the kind of problem that's easy to reproduce and hard to explain. It's easy to spend longer than expected on detect contain before the actual failure mode becomes clear. This is the version of the write-up that includes the part that broke. The gap between what the docs say and what production "
     }
   ]
 }

@@ -242,6 +242,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/agent-drift-the-failure-mode-you-didnt-log/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/agent-drift-the-failure-mode-you-didnt-log.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/agent-frameworks-stop-rewriting-the-same-glue-code/</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>weekly</changefreq>
@@ -482,6 +491,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/ai-sales-cycles-3x-faster-40-less-talk/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/ai-sales-cycles-3x-faster-40-less-talk.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/ai-scanners-overlook-real-vulns/</loc>
     <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -545,6 +563,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/audit-trails-immutabledb-vs-dynamodb-streams/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/audit-trails-immutabledb-vs-dynamodb-streams.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/author/kubai-kevin/</loc>
     <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
@@ -578,12 +605,30 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/cache-stampedes-the-patterns-that-scale-and-the-ones.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/cicd-for-django-in-20ms-africa-networks/</loc>
     <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/cicd-for-django-in-20ms-africa-networks.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/circleci-still-beats-github-actions-at-50k-builds/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/circleci-still-beats-github-actions-at-50k-builds.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -671,6 +716,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/debug-ai-agents-failures-arent-just-bugs.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/debug-async-python-before-it-deadlocks/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/debug-async-python-before-it-deadlocks.png</image:loc>
     </image:image>
   </url>
   <url>

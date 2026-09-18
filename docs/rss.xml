@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Fri, 18 Sep 2026 03:55:26 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 18 Sep 2026 08:45:22 +0000</lastBuildDate>
+    <item>
+      <title>Agent drift: the failure mode you didn&apos;t log</title>
+      <link>https://kubaik.github.io/agent-drift-the-failure-mode-you-didnt-log/</link>
+      <description>Agent drift hides in flat latency and clean eval suites.</description>
+      <pubDate>Fri, 18 Sep 2026 08:41:59 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-drift-the-failure-mode-you-didnt-log/</guid>
+    </item>
     <item>
       <title>Feature flags became AI rollout platforms</title>
       <link>https://kubaik.github.io/feature-flags-became-ai-rollout-platforms/</link>
@@ -138,13 +145,6 @@
       <description>LLM agent architecture – avoid hidden latency spikes; learn how monolithic designs cut p99 by 45 ms and keep GDPR audit trails intact.</description>
       <pubDate>Thu, 10 Sep 2026 08:01:41 +0000</pubDate>
       <guid>https://kubaik.github.io/llm-agents-why-monoliths-win/</guid>
-    </item>
-    <item>
-      <title>Agent drift: why it hurts UX</title>
-      <link>https://kubaik.github.io/agent-drift-why-it-hurts-ux/</link>
-      <description>Detect agent drift before it ruins UX — spot version mismatches, latency spikes, and the silent config drift most teams miss.</description>
-      <pubDate>Wed, 09 Sep 2026 16:15:54 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-drift-why-it-hurts-ux/</guid>
     </item>
   </channel>
 </rss>

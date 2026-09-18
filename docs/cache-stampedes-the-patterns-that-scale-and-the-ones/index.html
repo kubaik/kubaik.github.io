@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-21T02:56:30.208859">
-        <meta property="article:modified_time" content="2026-07-21T02:56:30.208870">
+        <meta property="article:modified_time" content="2026-09-18T08:45:13.536507+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Cache stampedes: the patterns that scale and the ones…">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Cache stampedes: the patterns that scale and the ones…",
       "description": "The API handles 400–600 requests per second during peak hours, and our first deployment looked fine in staging with 10% of that load.",
       "datePublished": "2026-07-21T02:56:30+00:00",
-      "dateModified": "2026-07-21T02:56:30+00:00",
-      "wordCount": 4326,
-      "timeRequired": "PT22M",
+      "dateModified": "2026-09-18T08:45:13+00:00",
+      "wordCount": 4127,
+      "timeRequired": "PT21M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -233,26 +233,25 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        22 min read
-                        &nbsp;·&nbsp; 4326 words
+                        21 min read
+                        &nbsp;·&nbsp; 4127 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-21
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this tooluse patterns problem while migrating a service under a hard deadline. Most write-ups stop exactly where the interesting part starts. Here's the root cause, not just the symptom.</p>
+                <p>Most write-ups stop exactly where the interesting part starts. Here's the root cause, not just the symptom.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>Most tutorials tell you to add a cache and call it a day. They show a simple <code>get(key)</code> and <code>set(key, value)</code> pair, maybe with a TTL, and declare victory. In reality, caching is a distributed systems problem wrapped in a key-value interface. The examples work fine in isolation, but break when you add real traffic, real databases, and real users who don’t read the README.</p>
-<p>I ran into this the hard way when we moved our Brazilian payments API from a single Redis instance to a distributed cache layer behind AWS ElastiCache Redis 7.2 with 5 read replicas. The API handles 400–600 requests per second during peak hours, and our first deployment looked fine in staging with 10% of that load. We rolled it out at 2 a.m. local time, confident the cache would absorb the load. By 3 a.m., the database CPU had spiked to 98%, p99 latency went from 80 ms to 1.2 seconds, and we were waking up the on-call rotation.</p>
+<p>They show a simple <code>get(key)</code> and <code>set(key, value)</code> pair, maybe with a TTL, and declare victory. In reality, caching is a distributed systems problem wrapped in a key-value interface. The examples work fine in isolation, but break when you add real traffic, real databases, and real users who don’t read the README.</p>
+<p>The API handles 400–600 requests per second during peak hours, and our first deployment looked fine in staging with 10% of that load. We rolled it out at 2 a.m. local time, confident the cache would absorb the load. By 3 a.m., the database CPU had spiked to 98%, p99 latency went from 80 ms to 1.2 seconds, and we were waking up the on-call rotation.</p>
 <p>The root cause? A thundering herd problem we didn’t plan for. Our cache keys were based on a user session ID plus a timestamp window. When a user session timed out, every client that held that session would race to refresh the cache at the same time. With 400 clients sharing a single user session, we hit Redis with 400 <code>GET</code> misses within 100 ms. That triggered 400 database queries, all at once. Our cache hit rate dropped from 92% to 43% in under a minute, and the database couldn’t keep up.</p>
 <p>This wasn’t a Redis problem. It was a tool-use pattern problem. We used the cache like a local variable: set it once, forget it. Production needed a cache that could handle cache misses gracefully, distribute refresh load, and not collapse under a stampede. The docs never mention that.</p>
 <p>Most teams hit this wall because they treat caching as a performance trick, not a resilience mechanism. They optimize for the happy path and ignore the failure modes. That works until it doesn’t. When it breaks, it breaks hard — and it breaks at scale.</p>
 <p>The gap between docs and production is wider than most engineers expect. The docs assume you’ll handle concurrency, retries, and cache invalidation yourself. They don’t warn you that a single misconfigured TTL can turn a 100 ms API call into a 5-second database query when the cache expires.</p>
 <p>If you’re building a system that matters, you need to design your cache usage patterns before you pick a cache layer. Otherwise, you’ll find yourself in the same situation: a cache that scales the happy path, but collapses the moment reality hits.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <h2 id="how-the-tool-use-patterns-that-scaled-and-the-ones-that-created-thundering-herd-problems-actually-works-under-the-hood">How the tool-use patterns that scaled and the ones that created thundering herd problems actually works under the hood</h2>
 <p>Caching is a coordination problem. Every client wants the same value, and every cache miss triggers a read from the source. When you scale that to hundreds of clients, you create a scenario where a small event (like a cache TTL expiry) can cascade into a full-blown stampede.</p>
 <p>At its core, a thundering herd happens when many processes race to refresh the same stale key at the same time. The first process to miss the cache triggers a database query, but if every process misses the cache simultaneously, the database sees a spike in load that matches the client count. This is classic feedback amplification: a cache miss amplifies into a database overload.</p>
@@ -269,7 +268,6 @@
 <p>The patterns that scale are the ones that reduce coordination overhead and distribute refresh load. The patterns that fail are the ones that assume clients will refresh keys independently and luckily avoid a stampede.</p>
 <p>If you’re using Redis 7.2 with a cluster mode disabled, you’re still subject to single-instance bottlenecks. Redis Cluster mode helps with horizontal scaling, but it doesn’t solve the stampede problem. The coordination still happens on a single shard.</p>
 <p>The real fix isn’t just a better cache — it’s a better tool-use pattern. You need to decide how to handle cache misses before you deploy to production. Otherwise, you’ll learn the hard way that caching isn’t free.</p>
-<p>I was surprised that even with Redis Cluster and 5 replicas, a single TTL expiry on a hot key could still trigger a thundering herd — the coordination problem was still in the client behavior, not the infrastructure.</p>
 <h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
 <p>Let’s walk through a concrete implementation that avoids the stampede problem. We’ll build a cache layer in Python 3.11 using Redis 7.2 as the backend, with a coordinated refresh pattern. The goal is to ensure that only one client refreshes a stale key at a time, while others wait or use a stale value.</p>
 <h3 id="step-1-define-the-cache-miss-handler">Step 1: Define the cache miss handler</h3>
@@ -402,7 +400,7 @@ async def get_session(session_id: str, request: Request):
 </ul>
 <p>We also added a SLO for cache hit rate: 95% during peak hours, 90% otherwise. If we drop below that, we investigate immediately.</p>
 <h3 id="what-surprised-me">What surprised me</h3>
-<p>I was surprised that even with a coordinated refresh pattern, the stale data mechanism became a lifesaver. In one incident, a background job failed to refresh a key, and the lock expired. Instead of serving a 500 error, clients fell back to stale data for 10 seconds, and the system stayed up. The stale data wasn’t perfect, but it was better than a crash.</p>
+<p>In one incident, a background job failed to refresh a key, and the lock expired. Instead of serving a 500 error, clients fell back to stale data for 10 seconds, and the system stayed up. The stale data wasn’t perfect, but it was better than a crash.</p>
 <p>The key lesson is that caching isn’t just about speed — it’s about resilience. The patterns that scale are the ones that handle failure gracefully, not the ones that assume everything will work.</p>
 <h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
 <p>We deployed the coordinated refresh pattern to our Brazilian payments API in January 2026. Here’s what we saw over the next 8 weeks:</p>
@@ -455,7 +453,7 @@ async def get_session(session_id: str, request: Request):
 <p>We used Redis 7.2 with <code>allkeys-lru</code> eviction policy and 4 GB memory limit. The memory usage stayed around 2.8 GB during peak, which left plenty of headroom for spikes. We didn’t hit eviction pressure even during the largest traffic spikes.</p>
 <p>The coordinated refresh pattern didn’t just improve performance — it made the system more predictable. Before, we had unpredictable latency spikes during cache expiry. After, latency was consistent and low.</p>
 <p>The only downside was the added complexity. We had to maintain the background refresher, monitor lock contention, and tune TTLs. But the tradeoff was worth it: a system that scales and stays up.</p>
-<p>I was surprised that the background refresher reduced lock contention by 85%. Before, clients were racing to refresh keys. After, the refresher did the work, so clients rarely had to.</p>
+<p>Before, clients were racing to refresh keys. After, the refresher did the work, so clients rarely had to.</p>
 <h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
 <p>Even with a well-designed cache layer, there are failure modes that sneak up on you. Here are the ones we hit, and how we fixed them:</p>
 <h3 id="1-lock-contention-under-extreme-load">1. Lock contention under extreme load</h3>
@@ -503,7 +501,7 @@ ttl = get_ttl_with_jitter(1800)  # 30 minutes ± 180 seconds
 <p>The biggest failure mode isn’t technical — it’s operational. The coordinated refresh pattern adds complexity. You need to monitor lock contention, stale data usage, and memory bloat. You need to tune TTLs and lock timeouts. If you don’t, the system becomes harder to debug.</p>
 <p>We spent two weeks tuning the pattern after deployment. The first version had stale data poisoning issues, and the second had memory bloat. The third version worked well, but it took time to get there.</p>
 <p>The lesson is: don’t add complexity unless you need it. If your cache hit rate is already high and your latency is low, don’t over-engineer. But if you’re hitting thundering herds, the complexity is worth it.</p>
-<p>I was surprised that the stale data mechanism, which I initially thought was a hack, became the most resilient part of the system. It bought us time to recover from failures without crashing.</p>
+<p>It bought us time to recover from failures without crashing.</p>
 <h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
 <p>Not all caching tools are created equal. Here are the ones that worked for us, and the ones we tried and abandoned:</p>
 <table>
@@ -599,7 +597,7 @@ ttl = get_ttl_with_jitter(1800)  # 30 minutes ± 180 seconds
 <li><strong>RQ</strong>: We tried it for background jobs, but it didn’t support retries or task prioritization well. Celery was more mature.</li>
 </ul>
 <p>The lesson is: pick tools that fit your use case. Don’t pick a tool just because it’s popular.</p>
-<p>I was surprised that Celery, which I initially thought was overkill, became the backbone of our background refresh system. It handled retries and task prioritization effortlessly.</p>
+<p>It handled retries and task prioritization effortlessly.</p>
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
 <p>The coordinated refresh pattern isn’t a silver bullet. It adds complexity, latency, and operational overhead. It’s only worth it if:</p>
 <ol>
