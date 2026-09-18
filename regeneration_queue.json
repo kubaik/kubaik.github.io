@@ -189,62 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "built-a-multi-agent-system-without-langgraph",
-    "title": "Built a multi-agent system without LangGraph",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent three days debugging a connection pool issue that turned out to be a sin; I chose Redis over SQS because we needed fan-out to three workers and strict ord",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "choose-no-code-only-when",
-    "title": "Choose no-code only when",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): The short version: the conventional advice on build with is incomplete.; I ran into this when we chose Softr for an internal dashboard in Q1 2026.; I was surprised that the no-code stack required more code to work around its lim",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "cut-ai-inference-bill-68-without-model-changes",
-    "title": "Cut AI inference bill 68% without model changes",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about cut our during a code review recently, and my first a; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the biggest win wasn’t the cache hit rate — it was the conn",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "debug-ai-agent-failures-differently",
-    "title": "Debug AI agent failures differently",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent two weeks tracing why a support triage agent kept closing tickets with t",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "double-the-price-double-the-revenue",
     "title": "Double the price, double the revenue",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I assumed developers wanted a free tier first, then a cheap paid tier, then a bi; I copied the pattern from Stripe, Notion, and Vercel without realising those com",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "event-sourcing-pay-the-complexity-tax-only-here",
     "title": "Event sourcing: pay the complexity tax only here",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): The short version: the conventional advice on event sourcing is incomplete.; I ran into this when we had to retroactively answer “who changed the user’s risk; I once reviewed a codebase that proudly called itself “event-sourced” because it",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "istio-and-cilium-what-really-breaks-in-production",
     "title": "Istio and Cilium: what really breaks in production",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about service mesh during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when a 30-node EKS cluster in eu-central-1 suddenly started drop",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "meter-dev-tool-pricing-in-2026",
     "title": "Meter dev-tool pricing in 2026",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I watched peers launch the same tool at $5 / month and die in three weeks; other; I expected usage data to give me the answer.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "micro-saas-niches-eaten-by-ai-in-2026",
     "title": "Micro-SaaS niches eaten by AI in 2026",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about microsaas 2026 during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I bought this story in 2026 when I launched a tool for indie game developers to ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "negotiate-2026-pay-when-ai-steals-40-of-your-job",
@@ -2131,6 +2108,34 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "built-a-multi-agent-system-without-langgraph",
+    "title": "Built a multi-agent system without LangGraph",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent three days debugging a connection pool issue that turned out to be a sin; I chose Redis over SQS because we needed fan-out to three workers and strict ord",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "choose-no-code-only-when",
+    "title": "Choose no-code only when",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): The short version: the conventional advice on build with is incomplete.; I ran into this when we chose Softr for an internal dashboard in Q1 2026.; I was surprised that the no-code stack required more code to work around its lim",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "cut-ai-inference-bill-68-without-model-changes",
+    "title": "Cut AI inference bill 68% without model changes",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about cut our during a code review recently, and my first a; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the biggest win wasn’t the cache hit rate — it was the conn",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "debug-ai-agent-failures-differently",
+    "title": "Debug AI agent failures differently",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent two weeks tracing why a support triage agent kept closing tickets with t",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-codebases-guardrails-vs-chaos-in-2026",

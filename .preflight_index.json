@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T13:01:43.302631",
+  "built_at": "2026-09-18T16:47:54.888157",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5215,6 +5215,11 @@
       "slug": "spot-instances-vs-on-demand-for-ai-experiments",
       "title": "Spot instances vs on-demand for AI experiments",
       "summary": "infrastructure patterns is easy to demo and hard to keep honest at scale. The workaround gets copy-pasted forward long after the original reason is forgotten. This is the writeup with the mistakes left in, not edited out. Why this comparison matters right now AI experimentation budgets are under pre"
+    },
+    {
+      "slug": "mobile-money-agents-when-m-pesa-api-fails",
+      "title": "Mobile money agents: when M-Pesa API fails",
+      "summary": "hidden failure is easy to demo and hard to keep honest at scale. It's the kind of problem that's easy to reproduce and hard to explain. This is the version of the write-up that includes the part that broke. The error and why it's confusing You've built an agent that accepts payments in local mobile "
     }
   ]
 }

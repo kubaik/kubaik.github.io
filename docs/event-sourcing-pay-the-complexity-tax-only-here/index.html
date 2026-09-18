@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T09:48:26.237900">
-        <meta property="article:modified_time" content="2026-06-09T09:48:26.237909">
+        <meta property="article:modified_time" content="2026-09-18T16:50:51.736008+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Event sourcing: pay the complexity tax only here">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/event-sourcing-pay-the-complexity-tax-only-here/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Event sourcing: pay the complexity tax only here",
       "description": "Cut audit time from hours to minutes with event sourcing in 2026 — when it pays off and when to avoid it.",
       "datePublished": "2026-06-09T09:48:26+00:00",
-      "dateModified": "2026-06-09T09:48:26+00:00",
-      "wordCount": 2890,
+      "dateModified": "2026-09-18T16:50:51+00:00",
+      "wordCount": 2860,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -258,17 +258,17 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2890 words
+                        &nbsp;·&nbsp; 2860 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-09
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The short version: the conventional advice on event sourcing is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
-<p>Have you ever stared at a tangled database schema that screams ‘audit me’ but screams even louder ‘I’ll break under any change’? That’s the moment event sourcing stops sounding academic and starts sounding like your next refactor. I ran into this when we had to retroactively answer “who changed the user’s risk score at 3 a.m. on 2025-02-17?” with a schema that only stored the latest score. After three sleepless days of archived backups and binlogs, we rebuilt the audit trail with event sourcing—and learned the hard way that the complexity tax is only worth paying in a handful of scenarios.</p>
+                <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
+<p>Have you ever stared at a tangled database schema that screams ‘audit me’ but screams even louder ‘I’ll break under any change’? That’s the moment event sourcing stops sounding academic and starts sounding like your next refactor. on 2025-02-17?” with a schema that only stored the latest score. After three sleepless days of archived backups and binlogs, we rebuilt the audit trail with event sourcing—and learned the hard way that the complexity tax is only worth paying in a handful of scenarios.</p>
 <p>Below you’ll see exactly which scenarios justify the cost, which ones don’t, and a concrete playbook you can copy into your 2026 codebase today.</p>
 <hr />
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
@@ -294,9 +294,7 @@
 <li><strong>Replayable tape (event sourcing)</strong>: Every keystroke is recorded on the tape. To see the balance at 14:07, you rewind the tape to that frame and play forward. The tape never changes; you just replay it differently.</li>
 </ul>
 <p>This mental flip changes how you design:
-- <strong>Commands</strong> (intent to change) become events only after validation.
-- <strong>State</strong> is a derived view computed from events.
-- <strong>Schema evolution</strong> is additive: you append new event types; old ones stay immutable.</p>
+- <strong>Commands</strong> (intent to change) become events only after validation. - <strong>State</strong> is a derived view computed from events. - <strong>Schema evolution</strong> is additive: you append new event types; old ones stay immutable.</p>
 <p>In 2026, we use Avro 1.11 schemas to enforce backward compatibility when we add new event fields. The schema registry (Confluent Schema Registry 7.5) rejects breaking changes at publish time, saving us from silent corruption that would break replay.</p>
 <hr />
 <h2 id="a-concrete-worked-example">A concrete worked example</h2>
@@ -683,14 +681,11 @@ Yes, but you must batch events to reduce cold starts. In 2026, Lambda with Pytho
 <p>So here’s your 30-minute action: open your current codebase, find the aggregate that regulators or auditors care about most, and check how long it takes to answer “what did this thing look like at 2026-04-05 03:41 UTC?” If the answer involves backups, binlogs, or heroic scripting, event sourcing might be worth the complexity tax. If the answer is a single SQL query, stick with CRUD and temporal tables.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

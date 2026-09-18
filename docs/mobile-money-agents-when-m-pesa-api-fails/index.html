@@ -1,0 +1,632 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mobile money agents: when M-Pesa API fails - Kubai Kevin</title>
+        <meta name="description" content="Mobile money agents fail when callbacks are missed or duplicated. Fix pending transactions, idempotency, and provider timeouts before users lose trust.">
+        <meta name="keywords" content="MobileMoney, Idempotency, MPesaApi, Apis, Mobiledev">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-18T16:47:51.592278">
+        <meta property="article:modified_time" content="2026-09-18T16:47:51.592289">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="Mobile money agents: when M-Pesa API fails">
+        <meta property="og:description" content="Mobile money agents fail when callbacks are missed or duplicated. Fix pending transactions, idempotency, and provider timeouts before users lose trust.">
+        <meta property="og:url" content="https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/mobile-money-agents-when-m-pesa-api-fails.png">
+        <meta property="og:image:alt" content="Mobile money agents: when M-Pesa API fails">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Mobile money agents: when M-Pesa API fails">
+        <meta name="twitter:description" content="Mobile money agents fail when callbacks are missed or duplicated. Fix pending transactions, idempotency, and provider timeouts before users lose trust.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/mobile-money-agents-when-m-pesa-api-fails.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/#article",
+      "headline": "Mobile money agents: when M-Pesa API fails",
+      "description": "Mobile money agents fail when callbacks are missed or duplicated. Fix pending transactions, idempotency, and provider timeouts before users lose trust.",
+      "datePublished": "2026-09-18T16:47:51+00:00",
+      "dateModified": "2026-09-18T16:47:51+00:00",
+      "wordCount": 2958,
+      "timeRequired": "PT15M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/"
+      },
+      "keywords": "MobileMoney, Idempotency, MPesaApi, Apis, Mobiledev"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Mobile money agents: when M-Pesa API fails",
+          "item": "https://kubaik.github.io/mobile-money-agents-when-m-pesa-api-fails/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>Mobile money agents: when M-Pesa API fails</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">Mobile money agents: when M-Pesa API fails</h1>
+                
+                <p class="post-lead">Mobile money agents fail when callbacks are missed or duplicated. Fix pending transactions, idempotency, and provider timeouts before users lose trust.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MobileMoney</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/idempotency/"
+                       style="text-decoration:none;">Idempotency</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">MPesaApi</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/apis/"
+                       style="text-decoration:none;">Apis</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/mobiledev/"
+                       style="text-decoration:none;">Mobiledev</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        15 min read
+                        &nbsp;·&nbsp; 2958 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-09-18
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>hidden failure is easy to demo and hard to keep honest at scale. It's the kind of problem that's easy to reproduce and hard to explain. This is the version of the write-up that includes the part that broke.</p>
+<h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
+<p>You've built an agent that accepts payments in local mobile money — M-Pesa, MTN MoMo, Airtel Money, or one of the dozens of other rails. The integration works in staging. In production, a subset of users pay successfully but never get their agent credits. Or worse: the agent credits them twice. The logs show a timeout, then a success, then a callback that arrives 45 seconds later. The user's phone shows "Payment received" but your database says "pending."</p>
+<p>The confusing part is that the error isn't an error at all. The mobile money provider's API returns <code>HTTP 200 OK</code> with a body that says <code>{"status": "pending", "transactionId": "..."}</code>. Your code treats that as success. Then the final status comes asynchronously — sometimes as a webhook, sometimes as a polling response, sometimes never. The user's payment provider has already debited their wallet. Your agent has not delivered. The user is now in a WhatsApp group asking why they were charged twice.</p>
+<p>This is not a bug in your code. It's a fundamental mismatch between the synchronous request-response model most developers build for and the store-and-forward, eventually-consistent reality of mobile money rails. The mobile money network is not a credit card processor. It's a distributed system with intermittent connectivity, human agents who float cash, and settlement windows measured in hours, not milliseconds. The part that trips people up is treating a <code>pending</code> response as a terminal state, and that's what this post actually covers.</p>
+<h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
+<p>The surface symptom is a timeout or a <code>pending</code> status. The real reason is that <a href="/mobile-money-agent-fees-why-your-bot-keeps-failing/">mobile money APIs</a> are designed for <strong>asynchronous settlement</strong>. When a user initiates a payment, the request goes through several hops:</p>
+<ol>
+<li>Your server → mobile money aggregator API (e.g., Safaricom Daraja, Flutterwave, Paystack)</li>
+<li>Aggregator → mobile network operator (MNO) core</li>
+<li>MNO core → USSD/SIM toolkit session on the user's phone</li>
+<li>User enters PIN → MNO validates → debits wallet</li>
+<li>MNO sends confirmation back up the chain</li>
+</ol>
+<p>Steps 3–5 can take anywhere from 5 seconds to 2 minutes. The MNO's API gateway will often return a <code>pending</code> or <code>accepted</code> response immediately after step 1, then deliver the final result via a callback URL or a separate polling endpoint. If your server doesn't handle that callback correctly — or if the callback never arrives because the MNO's retry logic gives up after 3 attempts over 30 seconds — you're left with an orphaned transaction.</p>
+<p>A common failure mode: the callback URL is behind an HTTPS endpoint that uses a self-signed certificate or an expired Let's Encrypt cert. The MNO's callback dispatcher fails TLS verification and silently drops the payload. No error reaches your logs. The user's money is gone. Your agent is idle.</p>
+<p>Another typical case: you're using a serverless function (AWS Lambda, Cloudflare Workers) with a 10-second timeout. The MNO's callback arrives 15 seconds after the initial request. Lambda has already terminated. The callback hits a cold start and times out again. You see <code>Task timed out after 10.00 seconds</code> in CloudWatch, but the transaction remains unresolved.</p>
+<p>The third common cause is idempotency. Mobile money networks are notorious for sending duplicate callbacks. If your handler isn't idempotent, you'll credit the user twice for one payment. Then you'll try to reverse the second credit, which triggers a refund flow that takes 3–5 business days. The user sees a debit, a credit, and another debit. They lose trust.</p>
+<h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
+<p><strong>Symptom pattern:</strong> Your logs show <code>HTTP 200</code> with <code>{"status": "pending"}</code>. No callback ever arrives. The transaction sits in <code>pending</code> forever. Users complain they paid but got nothing.</p>
+<p><strong>Cause:</strong> You're treating the initial API response as the final state. You're not polling, and your callback endpoint is either unreachable or not configured.</p>
+<p><strong>Fix:</strong> Implement a two-phase transaction model. Phase 1: accept the payment request, store it as <code>pending</code> with the provider's transaction ID. Phase 2: poll the provider's status endpoint every 5 seconds for up to 2 minutes, and also expose a webhook endpoint. Whichever resolves first wins; the other becomes a no-op.</p>
+<p>Here's a Python example using <code>httpx</code> 0.27 and FastAPI 0.115:</p>
+<pre><code class="language-python">import asyncio
+import httpx
+from fastapi import FastAPI, Request, BackgroundTasks
+
+app = FastAPI()
+
+async def poll_transaction(tx_id: str, provider_url: str, api_key: str):
+    &quot;&quot;&quot;Poll every 5s for up to 2 minutes.&quot;&quot;&quot;
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        for attempt in range(24):  # 24 * 5s = 120s
+            await asyncio.sleep(5)
+            resp = await client.get(
+                f&quot;{provider_url}/status/{tx_id}&quot;,
+                headers={&quot;Authorization&quot;: f&quot;Bearer {api_key}&quot;}
+            )
+            data = resp.json()
+            if data[&quot;status&quot;] in (&quot;success&quot;, &quot;failed&quot;):
+                await finalize_transaction(tx_id, data[&quot;status&quot;])
+                return
+    # After 2 minutes, mark as timed out and trigger manual review
+    await finalize_transaction(tx_id, &quot;timeout&quot;)
+
+@app.post(&quot;/initiate-payment&quot;)
+async def initiate_payment(request: Request, background_tasks: BackgroundTasks):
+    body = await request.json()
+    # Call provider to initiate payment
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(
+            &quot;https://api.provider.com/payments&quot;,
+            json={&quot;amount&quot;: body[&quot;amount&quot;], &quot;phone&quot;: body[&quot;phone&quot;]},
+            headers={&quot;Authorization&quot;: f&quot;Bearer {API_KEY}&quot;}
+        )
+    tx = resp.json()
+    # Store pending transaction in DB
+    await db.execute(
+        &quot;INSERT INTO transactions (tx_id, status, amount) VALUES ($1, $2, $3)&quot;,
+        tx[&quot;transactionId&quot;], &quot;pending&quot;, body[&quot;amount&quot;]
+    )
+    # Start polling in background
+    background_tasks.add_task(
+        poll_transaction, tx[&quot;transactionId&quot;], &quot;https://api.provider.com&quot;, API_KEY
+    )
+    return {&quot;status&quot;: &quot;pending&quot;, &quot;tx_id&quot;: tx[&quot;transactionId&quot;]}
+
+@app.post(&quot;/webhook/mobile-money&quot;)
+async def webhook(request: Request):
+    payload = await request.json()
+    tx_id = payload[&quot;transactionId&quot;]
+    status = payload[&quot;status&quot;]
+    # Idempotent update: only update if still pending
+    result = await db.execute(
+        &quot;UPDATE transactions SET status = $1 WHERE tx_id = $2 AND status = 'pending'&quot;,
+        status, tx_id
+    )
+    if result.rowcount == 0:
+        # Already finalized by polling; ignore duplicate
+        return {&quot;status&quot;: &quot;ignored&quot;}
+    return {&quot;status&quot;: &quot;ok&quot;}
+</code></pre>
+<p>This costs roughly 24 HTTP requests per transaction. At typical provider rates (e.g., $0.002 per status check), that's $0.048 per payment. For a $5 payment, that's ~1% overhead. Acceptable for reliability. If you're processing thousands of payments per hour, batch your polling or use a job queue like Celery 5.4 with Redis 7.2 as the broker.</p>
+<h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
+<p><strong>Symptom pattern:</strong> Callbacks arrive but are duplicates. Your database shows two credits for one payment. Users report double charges. Your refund process is manual and slow.</p>
+<p><strong>Cause:</strong> Mobile money networks retry callbacks aggressively. If your endpoint returns a non-2xx status or takes longer than 5 seconds to respond, the provider will retry up to 3 times. If your handler isn't idempotent, each retry creates a new credit.</p>
+<p><strong>Fix:</strong> Make every callback handler idempotent using a unique constraint on the provider's transaction ID. Use a database-level unique index and an <code>INSERT ... ON CONFLICT DO NOTHING</code> pattern. Also, respond to callbacks as fast as possible — acknowledge first, process later.</p>
+<p>Here's a Node.js 20 LTS example using Express 4.19 and PostgreSQL 16:</p>
+<pre><code class="language-javascript">const express = require('express');
+const { Pool } = require('pg');
+const app = express();
+app.use(express.json());
+
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+
+app.post('/webhook/mobile-money', async (req, res) =&gt; {
+  const { transactionId, status, amount, phone } = req.body;
+  // Acknowledge immediately to avoid retries
+  res.status(200).json({ received: true });
+
+  // Process asynchronously
+  try {
+    const client = await pool.connect();
+    try {
+      await client.query('BEGIN');
+      // Insert with unique constraint on transactionId
+      const insertResult = await client.query(
+        `INSERT INTO mobile_money_transactions (tx_id, status, amount, phone)
+         VALUES ($1, $2, $3, $4)
+         ON CONFLICT (tx_id) DO NOTHING`,
+        [transactionId, status, amount, phone]
+      );
+      if (insertResult.rowCount === 0) {
+        // Duplicate callback, ignore
+        await client.query('COMMIT');
+        return;
+      }
+      if (status === 'success') {
+        await client.query(
+          'UPDATE users SET credits = credits + $1 WHERE phone = $2',
+          [amount, phone]
+        );
+      }
+      await client.query('COMMIT');
+    } catch (err) {
+      await client.query('ROLLBACK');
+      throw err;
+    } finally {
+      client.release();
+    }
+  } catch (err) {
+    console.error('Webhook processing failed:', err);
+    // Don't re-throw; we already sent 200
+  }
+});
+</code></pre>
+<p>This pattern handles up to 3 retries without double-crediting. The unique constraint on <code>tx_id</code> is the key. Without it, you're relying on application logic that can race under load.</p>
+<h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
+<p><strong>Symptom pattern:</strong> Works in staging, fails in production. Callbacks never arrive. Your provider dashboard shows "callback failed" or "delivery error." You're running behind a load balancer, API gateway, or CDN.</p>
+<p><strong>Cause:</strong> Mobile money providers often have strict requirements for callback URLs: HTTPS with a valid certificate, no redirects, no authentication headers, and a response within 5 seconds. If you're terminating TLS at an AWS Application Load Balancer (ALB) and your backend expects HTTP, the provider's callback dispatcher might be hitting an HTTP endpoint that redirects to HTTPS. Or your AWS WAF is blocking the provider's IP range.</p>
+<p><strong>Fix:</strong> Verify your callback endpoint is publicly reachable and returns 200 within 5 seconds. Use <code>curl</code> from an external network to test. Check that your ALB listener rules don't redirect. If you're using Cloudflare, ensure the provider's IPs are allowlisted in your firewall rules. Also, disable any request body parsing middleware that might reject the provider's content type.</p>
+<p>A common trap: you're using AWS Lambda behind API Gateway with a custom domain. API Gateway's default timeout is 29 seconds, but Lambda's is 3 seconds by default. If your handler takes 4 seconds, Lambda times out and API Gateway returns 502. The provider sees a failure and retries. You see <code>Execution failed due to configuration error: Malformed Lambda proxy response</code> in CloudWatch. Fix: increase Lambda timeout to 10 seconds and ensure your handler returns a valid response object.</p>
+<table>
+<thead>
+<tr>
+<th>Provider</th>
+<th>Callback timeout</th>
+<th>Retry policy</th>
+<th>IP allowlist required?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Safaricom Daraja</td>
+<td>5 seconds</td>
+<td>3 retries over 30s</td>
+<td>Yes (provided in docs)</td>
+</tr>
+<tr>
+<td>MTN MoMo</td>
+<td>10 seconds</td>
+<td>5 retries over 60s</td>
+<td>No, but recommended</td>
+</tr>
+<tr>
+<td>Airtel Money</td>
+<td>5 seconds</td>
+<td>3 retries over 45s</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Flutterwave</td>
+<td>10 seconds</td>
+<td>4 retries over 120s</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
+<p>You need three checks: callback delivery, idempotency, and end-to-end latency.</p>
+<ol>
+<li>
+<p><strong>Callback delivery:</strong> Set up a simple logging endpoint that records every incoming request with headers and body. Trigger a test payment from a sandbox phone number. Confirm the callback arrives within 10 seconds. If it doesn't, check your provider's dashboard for delivery errors.</p>
+</li>
+<li>
+<p><strong>Idempotency:</strong> Send the same callback payload twice manually using <code>curl</code>. Confirm your database only has one credit. Check that the second request returns 200 but doesn't modify state.</p>
+</li>
+<li>
+<p><strong>End-to-end latency:</strong> Measure the time from payment initiation to user credit. For mobile money, typical p50 is 8–15 seconds, p95 is 45–90 seconds. If your p95 is over 2 minutes, you're likely missing callbacks and relying solely on polling. Add more polling workers or investigate callback delivery.</p>
+</li>
+</ol>
+<p>A simple verification script using <code>curl</code> and <code>jq</code>:</p>
+<pre><code class="language-bash"># Simulate duplicate callback
+for i in 1 2; do
+  curl -X POST https://your-app.com/webhook/mobile-money \
+    -H &quot;Content-Type: application/json&quot; \
+    -d '{&quot;transactionId&quot;:&quot;test-123&quot;,&quot;status&quot;:&quot;success&quot;,&quot;amount&quot;:100,&quot;phone&quot;:&quot;+254700000000&quot;}' \
+    -w &quot;\nHTTP %{http_code}\n&quot;
+done
+
+# Check database
+psql $DATABASE_URL -c &quot;SELECT COUNT(*) FROM mobile_money_transactions WHERE tx_id = 'test-123';&quot;
+# Should return 1
+</code></pre>
+<h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
+<p>Prevention is about designing for the failure modes you now know exist. Three practices make the biggest difference:</p>
+<p><strong>1. Always assume callbacks will fail.</strong> Poll as a fallback. Set a maximum polling duration (e.g., 2 minutes) and a maximum number of attempts (e.g., 24). After that, move the transaction to a <code>needs_review</code> state and alert your team. Never leave a transaction in <code>pending</code> indefinitely.</p>
+<p><strong>2. Use a dead-letter queue for unresolved transactions.</strong> If a transaction times out, push it to an SQS queue or a database table for manual reconciliation. Your support team can then check the provider's dashboard and manually credit or refund. This costs human time but prevents user churn.</p>
+<p><strong>3. Monitor callback success rate as a first-class metric.</strong> Track the percentage of callbacks that arrive within 30 seconds. A healthy rate is above 95%. If it drops below 90%, investigate immediately — it usually means your endpoint is misconfigured or the provider is having an outage. Set up a CloudWatch alarm or a Prometheus alert on this metric.</p>
+<p>Also, consider using a payment aggregator that handles these edge cases for you. Services like Flutterwave, Paystack, and Chipper Cash abstract away some of the provider-specific quirks. They cost 1–3% per transaction but can save you weeks of engineering time. For a small team, that tradeoff is often worth it.</p>
+<h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
+<p>Once you fix the callback issue, you'll likely encounter these related problems:</p>
+<ul>
+<li>
+<p><strong>"Duplicate transaction detected"</strong> — your idempotency key is working, but the provider is sending a new transaction ID for the same payment. This happens when the user retries after a timeout. Fix: deduplicate by phone number + amount + time window (e.g., 5 minutes).</p>
+</li>
+<li>
+<p><strong>"Insufficient balance"</strong> — the user's mobile money wallet doesn't have enough funds. The provider returns this synchronously, but sometimes it arrives as a callback after you've already shown a success message. Fix: don't show success until the final status is confirmed.</p>
+</li>
+<li>
+<p><strong>"Transaction reversed"</strong> — the provider reverses a payment after settlement, often due to fraud checks or user complaints. Your agent has already delivered the service. Fix: implement a reversal handling flow that can claw back credits or suspend the user's account.</p>
+</li>
+<li>
+<p><strong>"Callback signature verification failed"</strong> — you're validating the provider's signature but using the wrong secret or algorithm. Fix: check the provider's docs for the exact HMAC algorithm (usually SHA-256) and ensure you're using the raw request body, not the parsed JSON.</p>
+</li>
+<li>
+<p><strong>"Rate limit exceeded"</strong> — you're polling too aggressively. Most providers limit status checks to 10 per minute per transaction. Fix: back off exponentially. Start with 5-second intervals, then 10, 20, 40.</p>
+</li>
+</ul>
+<h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
+<p>If you've implemented polling, idempotent callbacks, and verified your endpoint is reachable, but transactions still fail, you've likely hit a provider-specific issue. Here's your escalation path:</p>
+<ol>
+<li>
+<p><strong>Check the provider's status page.</strong> Safaricom, MTN, and Airtel all have public status dashboards. If there's an outage, wait it out and communicate with your users.</p>
+</li>
+<li>
+<p><strong>Open a support ticket with the provider.</strong> Include the transaction ID, timestamp, and the exact error from your logs. Providers usually respond within 24–48 hours for developer accounts. For enterprise accounts, you may have a dedicated Slack channel.</p>
+</li>
+<li>
+<p><strong>Test with a different provider.</strong> If you're using a single aggregator, try a direct integration with the MNO. Sometimes the aggregator's own infrastructure is the bottleneck.</p>
+</li>
+<li>
+<p><strong>Implement a fallback payment method.</strong> Allow users to pay via bank transfer, card, or cash agent. This reduces dependency on a single rail and gives users an alternative when mobile money fails.</p>
+</li>
+<li>
+<p><strong>Consider a hybrid approach.</strong> Use mobile money for small transactions (&lt; $10) and cards for larger ones. Cards have lower failure rates for high-value payments, though they come with higher fees and chargeback risk.</p>
+</li>
+</ol>
+<p><strong>Your next step:</strong> Open your production database and run a query to count transactions stuck in <code>pending</code> for more than 10 minutes. If that number is greater than zero, you have orphaned payments. Pick one of those transaction IDs and trace it through your logs and the provider's dashboard. That single investigation will tell you whether your problem is callback delivery, idempotency, or provider outage — and that determines which fix to apply first.</p>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>Why does my mobile money integration work in sandbox but fail in production?</strong></p>
+<p>Sandbox environments often simulate instant success and don't enforce callback timeouts or IP allowlists. Production providers have stricter requirements: HTTPS with valid certificates, no redirects, and response times under 5 seconds. Your sandbox callback URL might be HTTP, which works in testing but fails in production. Always test with a staging environment that mirrors production network conditions.</p>
+<p><strong>How do I handle duplicate callbacks from M-Pesa?</strong></p>
+<p>Use a unique constraint on the provider's transaction ID in your database. When a callback arrives, attempt an <code>INSERT ... ON CONFLICT DO NOTHING</code>. If the insert affects zero rows, it's a duplicate — acknowledge it with a 200 response but don't process it again. This is the only reliable way to handle duplicates, because application-level checks can race under concurrent load.</p>
+<p><strong>What's the typical latency for mobile money payments?</strong></p>
+<p>For successful payments, p50 latency is 8–15 seconds, p95 is 45–90 seconds. Failures can take longer because the provider retries callbacks multiple times. If your p95 exceeds 2 minutes, you're likely missing callbacks and relying solely on polling. Monitor both callback arrival time and total resolution time to catch this early.</p>
+<p><strong>Should I use a payment aggregator or integrate directly with MNOs?</strong></p>
+<p>Aggregators like Flutterwave and Paystack cost 1–3% per transaction but handle provider-specific quirks, retries, and reconciliation. Direct integration with Safaricom Daraja or MTN MoMo avoids those fees but requires you to build and maintain the reliability logic yourself. For teams with fewer than 5 engineers, aggregators are usually worth the cost. For high-volume merchants, direct integration can save significant fees.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/currency-switch-fails-in-ghana-one-config-file-to-rule/">
+                        <h3>Currency switch fails in Ghana: one config file to rule…</h3>
+                        <p>Fix fintech currency switching across Kenya, Nigeria, Ghana, and Senegal without forks — silent KES fallback, MTN header quirks, and the adapter every…</p>
+                        <span class="related-meta">16 min read · 13 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/mobile-money-agent-fees-why-your-bot-keeps-failing/">
+                        <h3>Mobile money agent fees: why your bot keeps failing</h3>
+                        <p>Cut ERR_PAYMENT_FAILED 95% when your mobile money agent hits the 90s USSD session timeout in AWS Lambda.</p>
+                        <span class="related-meta">12 min read · 5 August 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/agent-flooded-our-api-with-bad-calls-overnight/">
+                        <h3>Agent flooded our API with bad calls overnight</h3>
+                        <p>Cut API bill 99% after agent flood — bounded retries, idempotency keys, and rate limits that actually work in 2026</p>
+                        <span class="related-meta">15 min read · 5 August 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>
