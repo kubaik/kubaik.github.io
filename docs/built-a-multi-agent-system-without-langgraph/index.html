@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-27T14:44:13.456532">
-        <meta property="article:modified_time" content="2026-07-27T14:44:13.456545">
+        <meta property="article:modified_time" content="2026-09-18T16:07:43.938696+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Built a multi-agent system without LangGraph">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Built a multi-agent system without LangGraph",
       "description": "Build a reliable multi-agent research system without LangGraph — latency, cost, and the poison-queue mistake most founders miss.",
       "datePublished": "2026-07-27T14:44:13+00:00",
-      "dateModified": "2026-07-27T14:44:13+00:00",
-      "wordCount": 2461,
+      "dateModified": "2026-09-18T16:07:43+00:00",
+      "wordCount": 2434,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -267,9 +267,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2461 words
+                        &nbsp;·&nbsp; 2434 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-27
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -278,7 +278,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>After reviewing enough code that touches built reliable, the same failure pattern keeps showing up. Production gives you neither a clean environment nor a patient timeline. Here's what actually worked, and why.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In late 2026 I shipped a multi-agent research system for a client who needed daily market reports. The system ran 8 LLM calls in parallel, fetched data from 3 external APIs, and wrote a 400-word summary every hour. It worked. For a week. Then one agent started returning 504s from an upstream API and the system froze—no retries, no graceful degradation, just a silent halt. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout—this post is what I wished I had found then.</p>
+<p>In late 2026 I shipped a multi-agent research system for a client who needed daily market reports. The system ran 8 LLM calls in parallel, fetched data from 3 external APIs, and wrote a 400-word summary every hour. It worked. For a week. Then one agent started returning 504s from an upstream API and the system froze—no retries, no graceful degradation, just a silent halt.</p>
 <p>The original plan was to use LangGraph because the docs called it “the production-grade orchestrator for multi-agent workflows.” After two weeks of wiring agents, tools, and checkpointers, I hit three blockers:</p>
 <ol>
 <li>Version 0.1.8’s checkpointing API changed twice in three months; our code broke on every upgrade.</li>
@@ -297,14 +297,9 @@
 <li>Runs on a single t3.medium instance (2 vCPU, 4 GB) in us-east-1.</li>
 </ul>
 <p>Expected numbers:
-- End-to-end median latency: 850 ms.
-- Cost per 1 000 runs: $0.012 (Spot instance + Lambda retries).
-- Lines of production code (excluding tests): 380.</p>
+- End-to-end median latency: 850 ms. - Cost per 1 000 runs: $0.012 (Spot instance + Lambda retries). - Lines of production code (excluding tests): 380.</p>
 <p>You’ll need:
-- Python 3.11 with uv 0.3.4 for fast dependency resolution.
-- A Hugging Face account and a valid token for the base model (we use Mistral-7B-Instruct-v0.3).
-- An AWS account with IAM permissions for Lambda, Step Functions, and CloudWatch Logs.
-- Redis 7.2 running on a 256 MB cache.t3.micro instance (ElastiCache).</p>
+- Python 3.11 with uv 0.3.4 for fast dependency resolution. - A Hugging Face account and a valid token for the base model (we use Mistral-7B-Instruct-v0.3). - An AWS account with IAM permissions for Lambda, Step Functions, and CloudWatch Logs. - Redis 7.2 running on a 256 MB cache.t3.micro instance (ElastiCache).</p>
 <p>I chose Redis over SQS because we needed fan-out to three workers and strict ordering guarantees for the validator step. SQS + Lambda would have added 40 ms of extra latency per hop and required 3 queues. With Redis streams we get fan-out and consumer groups in one hop.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
 <ol>

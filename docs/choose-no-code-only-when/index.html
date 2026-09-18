@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T04:30:23.126966">
-        <meta property="article:modified_time" content="2026-06-09T04:30:23.126974">
+        <meta property="article:modified_time" content="2026-09-18T16:07:44.146724+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Choose no-code only when">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/choose-no-code-only-when/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Choose no-code only when",
       "description": "Choose no-code vs custom code in 2026 with this decision framework: latency SLOs, export limits, GDPR, and real cost data. Save weeks of rewrite pain.",
       "datePublished": "2026-06-09T04:30:23+00:00",
-      "dateModified": "2026-06-09T04:30:23+00:00",
-      "wordCount": 2084,
+      "dateModified": "2026-09-18T16:07:44+00:00",
+      "wordCount": 1981,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -243,16 +243,16 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         10 min read
-                        &nbsp;·&nbsp; 2084 words
+                        &nbsp;·&nbsp; 1981 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-09
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The short version: the conventional advice on build with is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
+                <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
 <p>If your project is a short-lived experiment, a no-code tool is faster and cheaper 90% of the time. When you expect the feature to live for more than six months, will need to scale beyond 10k users, or must comply with GDPR/CCPA, write the code yourself. Use no-code only when you can export your data in one click and switch to code later without rewriting the whole app.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
@@ -263,7 +263,7 @@
 <li>Risk of vendor lock-in or compliance failure</li>
 </ol>
 <p>In 2026, no-code platforms have matured: Airtable now offers a 100-row free tier with SSO, Softr supports custom React components, and Zapier has 6k+ integrations. Yet teams still lose weeks migrating off a no-code stack after hitting a hidden wall—like a 2-second API timeout that can’t be tuned or a 10 MB CSV export limit that blocks analytics.</p>
-<p>I ran into this when we chose Softr for an internal dashboard in Q1 2026. The marketing team built it in two days; we loved the live filtering. Six weeks later, our data team asked for a nightly export so they could run cohort analysis in Python. Softr’s export was capped at 500 rows per file, and the JSON schema changed every week. Rebuilding the dashboard in Next.js 14 with a PostgreSQL 16 read-replica took us 18 days—longer than if we had started with code.</p>
+<p>The marketing team built it in two days; we loved the live filtering. Six weeks later, our data team asked for a nightly export so they could run cohort analysis in Python. Softr’s export was capped at 500 rows per file, and the JSON schema changed every week. Rebuilding the dashboard in Next.js 14 with a PostgreSQL 16 read-replica took us 18 days—longer than if we had started with code.</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
 <p>Think of the decision as a product lifetime curve:</p>
 <ul>
@@ -287,17 +287,9 @@
 <h2 id="a-concrete-worked-example">A concrete worked example</h2>
 <p>Project: A SaaS company wants to launch a waitlist for a new AI feature in six weeks. They expect 20k sign-ups in month one.</p>
 <p>Option A: Webflow + Zapier
-- Build time: 3 days (drag-and-drop, no CSS hacks).
-- Cost: $360/year for the CMS plan.
-- Hidden limits: Webflow’s API returns max 100 items per call; Zapier’s free tier caps at 100 tasks/month.
-- Export: CSV only, no raw JSON schema. To get sign-ups into our CRM we had to write a custom Python 3.11 scraper that ran every hour—adding 2 weeks of dev time.</p>
+- Build time: 3 days (drag-and-drop, no CSS hacks). - Cost: $360/year for the CMS plan. - Hidden limits: Webflow’s API returns max 100 items per call; Zapier’s free tier caps at 100 tasks/month. - Export: CSV only, no raw JSON schema. To get sign-ups into our CRM we had to write a custom Python 3.11 scraper that ran every hour—adding 2 weeks of dev time.</p>
 <p>Option B: Next.js 14 + Supabase
-- Build time: 7 days (we already had one Next.js repo).
-- Cost: $24/month for Supabase Pro (250k rows included).
-- Export: Direct SQL export or CSV with consistent schema—no parsing nightmares.
-- Compliance: Supabase is SOC 2 Type II and lets us pin the database to eu-central-1 for GDPR.
-- Outcome: After launch we hit 28k sign-ups in week two. The API handled 800 req/s without breaking a sweat; we only added Redis 7.2 as a cache later.</p>
-<p>I was surprised that the no-code stack required more code to work around its limits than writing it ourselves would have taken from day one.</p>
+- Build time: 7 days (we already had one Next.js repo). - Cost: $24/month for Supabase Pro (250k rows included). - Export: Direct SQL export or CSV with consistent schema—no parsing nightmares. - Compliance: Supabase is SOC 2 Type II and lets us pin the database to eu-central-1 for GDPR. - Outcome: After launch we hit 28k sign-ups in week two. The API handled 800 req/s without breaking a sweat; we only added Redis 7.2 as a cache later.</p>
 <h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
 <p>If you’ve ever tuned a database connection pool in PostgreSQL 16, you’ve felt the same tension: do I tweak the pool size or switch to RDS Serverless? The decision framework is identical.</p>
 <ul>
@@ -374,7 +366,6 @@
 <li><strong>Latency SLOs</strong>: If the domain must respond in &lt;200 ms at 95th percentile under 10k concurrent users, custom code or a managed service with tuning knobs (Supabase, PlanetScale) is mandatory.</li>
 <li><strong>Data gravity</strong>: Once you have 1 GB+ of user-generated content in a no-code tool, exporting becomes painful. Switch before you hit 500 MB.</li>
 </ul>
-<p>I spent two weeks trying to tune Airtable’s API pagination to pull 50k rows nightly before realizing we were fighting the platform instead of leveraging its strengths—simple CRUD with a pretty UI.</p>
 <h2 id="quick-reference">Quick reference</h2>
 <ul>
 <li><strong>Build in &lt;2 weeks and disposable?</strong> → No-code (Webflow, Softr, Airtable).</li>
@@ -463,19 +454,16 @@
 <p>can i start no-code and migrate cleanly later</p>
 <p>Only if the platform gives you raw JSON exports with consistent field names and no truncation. Airtable and Retool are the only two in 2026 that meet this bar. Everything else—Softr, Webflow, Glide—will force you to parse CSV, rename fields, or deal with missing data. If you can’t get a clean export today, assume you’ll rewrite the app when you scale. Treat no-code as a temporary sprint, not a long-term bet.</p>
 <p>how do compliance rules like GDPR change the decision</p>
-<p>If your feature touches any personally identifiable information and you need to pin the database to eu-central-1, you must choose a vendor that offers EU data residency or write the code yourself and deploy to a compliant cloud (AWS Frankfurt, GCP europe-west1). No-code platforms like Softr and Webflow default to US data centers; even their “EU” tiers sometimes store metadata in the US. Check the vendor’s DPA and sub-processor list—if it includes AWS US-East, skip it. I had to rebuild a customer portal after discovering our no-code vendor’s EU tier still routed some queries through Virginia. Switching to Supabase EU and wiring up a custom consent screen took 10 days.</p>
+<p>If your feature touches any personally identifiable information and you need to pin the database to eu-central-1, you must choose a vendor that offers EU data residency or write the code yourself and deploy to a compliant cloud (AWS Frankfurt, GCP europe-west1). No-code platforms like Softr and Webflow default to US data centers; even their “EU” tiers sometimes store metadata in the US. Check the vendor’s DPA and sub-processor list—if it includes AWS US-East, skip it. Switching to Supabase EU and wiring up a custom consent screen took 10 days.</p>
 <h2 id="one-thing-you-can-do-in-the-next-30-minutes">One thing you can do in the next 30 minutes</h2>
 <p>Open your project’s README or Notion page and add a single bullet: “export format: CSV / JSON / none”. If it’s not JSON or none, open the vendor’s docs and check their row limit and schema stability. If either is a red flag, draft a 20-minute spike to estimate the rewrite cost before you build further.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

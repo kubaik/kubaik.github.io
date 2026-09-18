@@ -182,69 +182,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-codebases-guardrails-vs-chaos-in-2026",
-    "title": "AI codebases: guardrails vs chaos in 2026",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I've seen the same maintain codebase mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when deploying a voter registration system in Kenya last quarter",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "ai-latency-cut-28s-to-380ms-without-retraining",
-    "title": "AI latency cut: 2.8s to 380ms without retraining",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I ran into this when we launched a real-time chat assistant in 2026 — the first ; I was surprised that our monitoring stack missed the queueing entirely.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-observability-the-metrics-that-matter",
-    "title": "AI observability: the metrics that matter",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I ran into this the hard way on a Django 4.2 stack in 2026 when we moved from a ; I was surprised to find that 70% of our Prometheus scrape time in 2026 was spent; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "arm-in-production-graviton4-vs-ampere-in-2026",
-    "title": "ARM in production: Graviton4 vs Ampere in 2026",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I learned the hard way that the first cluster you migrate should be disposable—o; I made the mistake of not setting arch requirements first—our staging cluster ra",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "big-model-api-vs-fine-tune-the-2026-math",
-    "title": "Big model API vs fine-tune: the 2026 math",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I ran into this when a client asked me to cut their LLM bill by 70% without drop; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised to learn that the KV cache is the real memory hog.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "build-apps-that-still-work-on-500-ms-latency",
     "title": "Build apps that still work on 500 ms latency",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I ran into this when a React dashboard we built for a Nairobi fintech kept timin; I measured a 200 ms drop in TTI when the browser could fetch the JS bundle while",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "needs_review"
   },
   {
     "slug": "built-a-multi-agent-system-without-langgraph",
     "title": "Built a multi-agent system without LangGraph",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent three days debugging a connection pool issue that turned out to be a sin; I chose Redis over SQS because we needed fan-out to three workers and strict ord",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "choose-no-code-only-when",
     "title": "Choose no-code only when",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): The short version: the conventional advice on build with is incomplete.; I ran into this when we chose Softr for an internal dashboard in Q1 2026.; I was surprised that the no-code stack required more code to work around its lim",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "cut-ai-inference-bill-68-without-model-changes",
     "title": "Cut AI inference bill 68% without model changes",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about cut our during a code review recently, and my first a; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the biggest win wasn’t the cache hit rate — it was the conn",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "debug-ai-agent-failures-differently",
     "title": "Debug AI agent failures differently",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent two weeks tracing why a support triage agent kept closing tickets with t",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "double-the-price-double-the-revenue",
@@ -2161,6 +2131,41 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "ai-codebases-guardrails-vs-chaos-in-2026",
+    "title": "AI codebases: guardrails vs chaos in 2026",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I've seen the same maintain codebase mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when deploying a voter registration system in Kenya last quarter",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "ai-latency-cut-28s-to-380ms-without-retraining",
+    "title": "AI latency cut: 2.8s to 380ms without retraining",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I ran into this when we launched a real-time chat assistant in 2026 — the first ; I was surprised that our monitoring stack missed the queueing entirely.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-observability-the-metrics-that-matter",
+    "title": "AI observability: the metrics that matter",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I ran into this the hard way on a Django 4.2 stack in 2026 when we moved from a ; I was surprised to find that 70% of our Prometheus scrape time in 2026 was spent; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "arm-in-production-graviton4-vs-ampere-in-2026",
+    "title": "ARM in production: Graviton4 vs Ampere in 2026",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I learned the hard way that the first cluster you migrate should be disposable—o; I made the mistake of not setting arch requirements first—our staging cluster ra",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "big-model-api-vs-fine-tune-the-2026-math",
+    "title": "Big model API vs fine-tune: the 2026 math",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I ran into this when a client asked me to cut their LLM bill by 70% without drop; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised to learn that the KV cache is the real memory hog.",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "tool-calling-stateless-beats-stateful-under-load",

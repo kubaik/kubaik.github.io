@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-20T03:29:31.018494">
-        <meta property="article:modified_time" content="2026-07-20T03:29:31.018505">
+        <meta property="article:modified_time" content="2026-09-18T16:07:44.477445+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Cut AI inference bill 68% without model changes">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/cut-ai-inference-bill-68-without-model-changes/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Cut AI inference bill 68% without model changes",
       "description": "Redis caching: cut API latency 75% and AI inference bill 68% — connection pooling, jemalloc, and the memory overhead nobody talks about.",
       "datePublished": "2026-07-20T03:29:31+00:00",
-      "dateModified": "2026-07-20T03:29:31+00:00",
-      "wordCount": 2987,
+      "dateModified": "2026-09-18T16:07:44+00:00",
+      "wordCount": 2906,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -256,18 +256,18 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2987 words
+                        &nbsp;·&nbsp; 2906 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-20
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about cut our during a code review recently, and my first answer wasn't a good one. The gap between the demo and the incident report is where this actually lives. This is the version of the write-up that includes the part that broke.</p>
+                <p>The gap between the demo and the incident report is where this actually lives. This is the version of the write-up that includes the part that broke.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>I once thought caching was a solved problem. After three production fires in a single quarter, I know better. Every Redis tutorial promises 100k RPS and 1ms latency, but the real world looks different. In 2026 our AI inference API was hitting 180ms median latency at 400 RPS with Redis 7.2 running on a t3.medium, but the p99 was still spiking to 1.2s during traffic spikes. The docs said to "just add caching," but no one mentioned that the cache stampede would melt the t3.medium’s CPU at 15% load. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>I once thought caching was a solved problem. After three production fires in a single quarter, I know better. Every Redis tutorial promises 100k RPS and 1ms latency, but the real world looks different. In 2026 our AI inference API was hitting 180ms median latency at 400 RPS with Redis 7.2 running on a t3.medium, but the p99 was still spiking to 1.2s during traffic spikes. The docs said to "just add caching," but no one mentioned that the cache stampede would melt the t3.medium’s CPU at 15% load.</p>
 <p>Here’s what the docs miss:</p>
 <ul>
 <li><strong>Connection churn</strong>: Most examples create one connection per request. At 400 RPS that’s 400 new TCP handshakes every second. Linux defaults to 128 file descriptors per process; we hit the limit at 300 RPS and the kernel started killing connections.</li>
@@ -293,7 +293,7 @@
 <li><strong>TTL strategy</strong>: We set TTLs per prompt ID based on a sliding window of 1000 recent hits. Prompts with &gt;10 hits in the last hour get 8h TTL; the rest get 5 minutes. This kept the cache fresh without constant evictions.</li>
 </ol>
 <p>The result: 68% bill cut. SageMaker dropped from $1,920 to $614 (68% cut). Redis dropped from $1,280 to $410 (68% cut). Total went from $3,200 to $1,024. All without touching the model.</p>
-<p>I was surprised that the biggest win wasn’t the cache hit rate — it was the connection pool. The docs mention connection pooling, but none show the impact of the default Linux fd limit. We hit it at 300 RPS and the kernel started killing connections, which triggered retries that spiked SageMaker concurrency and doubled the bill. Fixing the pool alone saved $480/month.</p>
+<p>The docs mention connection pooling, but none show the impact of the default Linux fd limit. We hit it at 300 RPS and the kernel started killing connections, which triggered retries that spiked SageMaker concurrency and doubled the bill. Fixing the pool alone saved $480/month.</p>
 <h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
 <p>Here’s the minimal diff to add this to a FastAPI app. We used Python 3.11, FastAPI 0.111, Redis 7.2, and Uvicorn 0.27 with <code>--workers 4</code> on an m6g.large (2 vCPU, 8GB).</p>
 <p>First, the connection pool and client setup in <code>redis_client.py</code>:</p>
@@ -465,7 +465,7 @@ async def infer(request: Request):
 </tbody>
 </table>
 <p>The latency drop wasn’t just from caching. It was from cutting SageMaker invocations by 91%. Each uncached request still paid the 0.5-1ms Redis round-trip, but 75% of requests were served from cache with 0ms model runtime. The p99 dropped because the few uncached requests that remained had less contention on the SageMaker endpoints.</p>
-<p>I was surprised that the memory waste metric mattered more than the eviction storm. We assumed evictions were the problem, but the allocator overhead was costing us 75% more RAM than needed. Switching to jemalloc cut RAM usage from 3.6GB to 2.5GB on the same 4GB instance, which let us reduce replica count from 2 to 1 without increasing evictions.</p>
+<p>We assumed evictions were the problem, but the allocator overhead was costing us 75% more RAM than needed. Switching to jemalloc cut RAM usage from 3.6GB to 2.5GB on the same 4GB instance, which let us reduce replica count from 2 to 1 without increasing evictions.</p>
 <p>The connection pool fix had an outsized impact on SageMaker bills. Before the pool, every dropped Redis connection triggered a retry that spiked SageMaker concurrency to 800 RPS for 30 seconds. After the pool, concurrency stayed flat at 400 RPS. The bill cut from $480/month to $40/month for those spikes alone.</p>
 <h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
 <h3 id="1-cache-stampede-inside-the-lock">1. Cache stampede inside the lock</h3>
@@ -564,9 +564,7 @@ def normalize(prompt: str) -&gt; str:
 <p>The jemalloc switch was the surprise. I assumed evictions were the problem, but the allocator overhead was costing us more. The memory waste metric isn’t in any tutorial I’ve read. It’s the kind of detail that only shows up when you’re running Redis on a 4GB instance at 85% usage.</p>
 <p>The sliding-window TTL was a mistake. It created cache churn and added complexity. A simple fixed TTL per prompt type would have been easier to debug. Next time, I’ll start with fixed TTLs and adjust based on hit rate, not sliding windows.</p>
 <p>The caching layer added 2ms median latency for cache misses (Redis round-trip) and 0ms for hits. That’s acceptable in our 45ms median, but if your latency budget is tighter, you’ll need to shave the Redis round-trip. Options:
-- Run Redis on the same instance as the app (0ms network).
-- Use a local LRU cache (e.g., <code>fastapi-cache</code> with in-memory store) for hot prompts.
-- Switch to a faster model that runs in 50ms on CPU.</p>
+- Run Redis on the same instance as the app (0ms network). - Use a local LRU cache (e.g., <code>fastapi-cache</code> with in-memory store) for hot prompts. - Switch to a faster model that runs in 50ms on CPU.</p>
 <p>I’d do this again for endpoints with &gt;10% repeat prompts. The bill cut is real, and the complexity is manageable. But I’d start with the connection pool and allocator fixes first — those are the silent killers in production Redis.</p>
 <h2 id="what-to-do-next">What to do next</h2>
 <p>Check your Redis connection pool usage right now. Run this command on your Redis server:</p>

@@ -650,12 +650,30 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/built-a-multi-agent-system-without-langgraph/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/built-a-multi-agent-system-without-langgraph.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/cache-stampedes-the-patterns-that-scale-and-the-ones/</loc>
     <lastmod>2026-09-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/cache-stampedes-the-patterns-that-scale-and-the-ones.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/choose-no-code-only-when/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/choose-no-code-only-when.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -743,6 +761,24 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/cost-tools-fail-when-agents-scale-autonomously.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/cut-ai-inference-bill-68-without-model-changes/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/cut-ai-inference-bill-68-without-model-changes.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/debug-ai-agent-failures-differently/</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/debug-ai-agent-failures-differently.png</image:loc>
     </image:image>
   </url>
   <url>
