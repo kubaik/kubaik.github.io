@@ -1,0 +1,6241 @@
+[
+  {
+    "slug": "10-ai-wrappers-that-shipped-in-2026-8-died-fast",
+    "title": "10 AI wrappers that shipped in 2026 \u2014 8 died fast",
+    "category": "IMPROVE",
+    "word_count": 2168,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/10-ai-wrappers-that-shipped-in-2026-8-died-fast/post.json"
+  },
+  {
+    "slug": "15-agents-blew-up-our-logs-why-we-pinned-models-logs",
+    "title": "15 agents blew up our logs: why we pinned models + logs",
+    "category": "OK",
+    "word_count": 2146,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/15-agents-blew-up-our-logs-why-we-pinned-models-logs/post.json"
+  },
+  {
+    "slug": "2026-ai-stack-solo-saas-cost-showdown",
+    "title": "2026 AI stack: solo SaaS cost showdown",
+    "category": "OK",
+    "word_count": 3602,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/2026-ai-stack-solo-saas-cost-showdown/post.json"
+  },
+  {
+    "slug": "2026-alert-triage-when-opsgenie-slept-for-you",
+    "title": "2026 alert triage: when Opsgenie slept for you",
+    "category": "OK",
+    "word_count": 3149,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/2026-alert-triage-when-opsgenie-slept-for-you/post.json"
+  },
+  {
+    "slug": "2026-gitops-showdown-argocd-vs-flux-after-two-years",
+    "title": "2026 GitOps showdown: ArgoCD vs Flux after two years",
+    "category": "OK",
+    "word_count": 1939,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/2026-gitops-showdown-argocd-vs-flux-after-two-years/post.json"
+  },
+  {
+    "slug": "2026-salary-hacks-prove-ai-didnt-steal-your-value",
+    "title": "2026 salary hacks: Prove AI didn\u2019t steal your value",
+    "category": "DELETE",
+    "word_count": 2600,
+    "reasons": [
+      "Policy-risk title: Income/salary/side-gig bait \u2014 low-value monetization content and unverifiable earnings claims."
+    ],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/2026-salary-hacks-prove-ai-didnt-steal-your-value/post.json"
+  },
+  {
+    "slug": "2026-tech-salaries-where-cuts-stopped-where-raises",
+    "title": "2026 tech salaries: where cuts stopped, where raises",
+    "category": "IMPROVE",
+    "word_count": 2658,
+    "reasons": [
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/2026-tech-salaries-where-cuts-stopped-where-raises/post.json"
+  },
+  {
+    "slug": "3-ai-coders-ranked-cursor-windsurf-claude-code-in",
+    "title": "3 AI coders ranked: Cursor, Windsurf, Claude Code in",
+    "category": "IMPROVE",
+    "word_count": 3233,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/3-ai-coders-ranked-cursor-windsurf-claude-code-in/post.json"
+  },
+  {
+    "slug": "3-mistakes-that-break-deployments-for-everyone",
+    "title": "3 mistakes that break deployments for everyone",
+    "category": "IMPROVE",
+    "word_count": 3542,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/3-mistakes-that-break-deployments-for-everyone/post.json"
+  },
+  {
+    "slug": "3-side-gigs-that-paid-me-2k-usdmonth-in-2026",
+    "title": "3 side gigs that paid me 2k USD/month in 2026",
+    "category": "DELETE",
+    "word_count": 3860,
+    "reasons": [
+      "Policy-risk title: Income/salary/side-gig bait \u2014 low-value monetization content and unverifiable earnings claims.",
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/3-side-gigs-that-paid-me-2k-usdmonth-in-2026/post.json"
+  },
+  {
+    "slug": "3-skills-to-outrun-ai-salary-cuts",
+    "title": "3 skills to outrun AI salary cuts",
+    "category": "OK",
+    "word_count": 3319,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/3-skills-to-outrun-ai-salary-cuts/post.json"
+  },
+  {
+    "slug": "3-vibe-coding-tools-i-regret-shipping-in-production",
+    "title": "3 vibe coding tools I regret shipping in production",
+    "category": "OK",
+    "word_count": 2654,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/3-vibe-coding-tools-i-regret-shipping-in-production/post.json"
+  },
+  {
+    "slug": "3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that",
+    "title": "3 vibe-coding tricks that kill MVPs \u2014 and 5 tools that",
+    "category": "OK",
+    "word_count": 2503,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that/post.json"
+  },
+  {
+    "slug": "3-ways-container-builds-got-3x-faster-in-2026",
+    "title": "3 ways container builds got 3x faster in 2026",
+    "category": "OK",
+    "word_count": 2722,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/3-ways-container-builds-got-3x-faster-in-2026/post.json"
+  },
+  {
+    "slug": "40-ai-code-meant-60-more-alerts",
+    "title": "40% AI code meant 60% more alerts",
+    "category": "OK",
+    "word_count": 2550,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/40-ai-code-meant-60-more-alerts/post.json"
+  },
+  {
+    "slug": "5-ai-tools-that-let-us-ship-faster-than-sf-teams",
+    "title": "5 AI tools that let us ship faster than SF teams",
+    "category": "OK",
+    "word_count": 2915,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/5-ai-tools-that-let-us-ship-faster-than-sf-teams/post.json"
+  },
+  {
+    "slug": "5-notification-systems-ranked-push-email-sms",
+    "title": "5 notification systems ranked: push, email, SMS",
+    "category": "IMPROVE",
+    "word_count": 2428,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s)).",
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/5-notification-systems-ranked-push-email-sms/post.json"
+  },
+  {
+    "slug": "5-ways-to-find-hidden-latency-before-production",
+    "title": "5 ways to find hidden latency before production",
+    "category": "OK",
+    "word_count": 2486,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/5-ways-to-find-hidden-latency-before-production/post.json"
+  },
+  {
+    "slug": "50-locations-50-headaches-edge-native-backends-in",
+    "title": "50 locations, 50 headaches: edge-native backends in",
+    "category": "IMPROVE",
+    "word_count": 2480,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/50-locations-50-headaches-edge-native-backends-in/post.json"
+  },
+  {
+    "slug": "7-code-review-traps-when-ai-writes-half-your-code",
+    "title": "7 code review traps when AI writes half your code",
+    "category": "IMPROVE",
+    "word_count": 2782,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/7-code-review-traps-when-ai-writes-half-your-code/post.json"
+  },
+  {
+    "slug": "7-graceful-degradation-traps-ive-hit-in-production",
+    "title": "7 graceful degradation traps I\u2019ve hit in production",
+    "category": "OK",
+    "word_count": 2977,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/7-graceful-degradation-traps-ive-hit-in-production/post.json"
+  },
+  {
+    "slug": "7-passive-income-streams-for-devs-in-2026",
+    "title": "7 passive income streams for devs in 2026",
+    "category": "DELETE",
+    "word_count": 2730,
+    "reasons": [
+      "Policy-risk title: Income/salary/side-gig bait \u2014 low-value monetization content and unverifiable earnings claims."
+    ],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/7-passive-income-streams-for-devs-in-2026/post.json"
+  },
+  {
+    "slug": "7-patterns-for-systems-that-stay-up-when-everything",
+    "title": "7 patterns for systems that stay up when everything",
+    "category": "IMPROVE",
+    "word_count": 2530,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/7-patterns-for-systems-that-stay-up-when-everything/post.json"
+  },
+  {
+    "slug": "7-patterns-for-systems-that-wont-die-when-networks",
+    "title": "7 patterns for systems that won\u2019t die when networks",
+    "category": "IMPROVE",
+    "word_count": 3882,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/7-patterns-for-systems-that-wont-die-when-networks/post.json"
+  },
+  {
+    "slug": "7-skills-senior-engineers-need-now-agents-are-live",
+    "title": "7 skills senior engineers need now agents are live",
+    "category": "OK",
+    "word_count": 2133,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/7-skills-senior-engineers-need-now-agents-are-live/post.json"
+  },
+  {
+    "slug": "7-ways-to-earn-extra-in-2026-without-shipping-saas",
+    "title": "7 ways to earn extra in 2026 without shipping SaaS",
+    "category": "IMPROVE",
+    "word_count": 4269,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (4 sentence(s)).",
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/7-ways-to-earn-extra-in-2026-without-shipping-saas/post.json"
+  },
+  {
+    "slug": "7-ways-to-measure-prompt-platform-roi-in-2026",
+    "title": "7 ways to measure prompt platform ROI in 2026",
+    "category": "OK",
+    "word_count": 2627,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/7-ways-to-measure-prompt-platform-roi-in-2026/post.json"
+  },
+  {
+    "slug": "8-ways-we-measure-agent-reliability-in-2026",
+    "title": "8 ways we measure agent reliability in 2026",
+    "category": "OK",
+    "word_count": 2571,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/8-ways-we-measure-agent-reliability-in-2026/post.json"
+  },
+  {
+    "slug": "9-ai-wrapper-apis-that-paid-off-in-2026",
+    "title": "9 AI wrapper APIs that paid off in 2026",
+    "category": "IMPROVE",
+    "word_count": 2400,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/9-ai-wrapper-apis-that-paid-off-in-2026/post.json"
+  },
+  {
+    "slug": "9-ai-wrapper-plays-that-worked-in-2026",
+    "title": "9 AI wrapper plays that worked in 2026",
+    "category": "IMPROVE",
+    "word_count": 2824,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/9-ai-wrapper-plays-that-worked-in-2026/post.json"
+  },
+  {
+    "slug": "9-vibe-coding-traps-that-break-production-code",
+    "title": "9 Vibe coding traps that break production code",
+    "category": "IMPROVE",
+    "word_count": 2447,
+    "reasons": [
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/9-vibe-coding-traps-that-break-production-code/post.json"
+  },
+  {
+    "slug": "about",
+    "title": "about",
+    "category": "DELETE",
+    "word_count": 0,
+    "reasons": [
+      "HTML orphan \u2014 no post.json"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/about/index.html"
+  },
+  {
+    "slug": "added-circuit-breakers-3-days-after-cascade-failure",
+    "title": "Added circuit breakers 3 days after cascade failure",
+    "category": "OK",
+    "word_count": 3638,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/added-circuit-breakers-3-days-after-cascade-failure/post.json"
+  },
+  {
+    "slug": "africa-devs-ship-production-code-not-crud",
+    "title": "Africa devs: Ship production code, not CRUD",
+    "category": "OK",
+    "word_count": 3666,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/africa-devs-ship-production-code-not-crud/post.json"
+  },
+  {
+    "slug": "african-devs-ai-tools-that-work-now-2026",
+    "title": "African devs: AI tools that work now (2026)",
+    "category": "IMPROVE",
+    "word_count": 2500,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/african-devs-ai-tools-that-work-now-2026/post.json"
+  },
+  {
+    "slug": "african-devs-arc-vs-andela-vs-toptal-in-2026",
+    "title": "African devs: Arc vs Andela vs Toptal in 2026",
+    "category": "IMPROVE",
+    "word_count": 3604,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (5 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/african-devs-arc-vs-andela-vs-toptal-in-2026/post.json"
+  },
+  {
+    "slug": "african-fintech-agents-the-compliance-cliff-most-miss",
+    "title": "African fintech agents: the compliance cliff most miss",
+    "category": "IMPROVE",
+    "word_count": 2718,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/african-fintech-agents-the-compliance-cliff-most-miss/post.json"
+  },
+  {
+    "slug": "african-fintech-rules-broke-our-stack",
+    "title": "African fintech rules broke our stack",
+    "category": "IMPROVE",
+    "word_count": 4720,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s)).",
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/african-fintech-rules-broke-our-stack/post.json"
+  },
+  {
+    "slug": "agent-access-for-non-ai-engineers",
+    "title": "Agent access for non-AI engineers",
+    "category": "OK",
+    "word_count": 2830,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-access-for-non-ai-engineers/post.json"
+  },
+  {
+    "slug": "agent-auth-the-silent-deployment-killer",
+    "title": "Agent auth: the silent deployment killer",
+    "category": "OK",
+    "word_count": 2947,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-auth-the-silent-deployment-killer/post.json"
+  },
+  {
+    "slug": "agent-auth-where-the-docs-ended-up-lying",
+    "title": "Agent auth: where the docs ended up lying",
+    "category": "OK",
+    "word_count": 3379,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-auth-where-the-docs-ended-up-lying/post.json"
+  },
+  {
+    "slug": "agent-code-review-gap-nobody-admits",
+    "title": "agent code review gap nobody admits",
+    "category": "OK",
+    "word_count": 3477,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-code-review-gap-nobody-admits/post.json"
+  },
+  {
+    "slug": "agent-code-reviews-1200-tests-per-pr",
+    "title": "Agent code reviews: 1,200 tests per PR",
+    "category": "IMPROVE",
+    "word_count": 2949,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-code-reviews-1200-tests-per-pr/post.json"
+  },
+  {
+    "slug": "agent-context-short-term-vs-long-term-memory",
+    "title": "Agent context: short-term vs long-term memory",
+    "category": "OK",
+    "word_count": 3605,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-context-short-term-vs-long-term-memory/post.json"
+  },
+  {
+    "slug": "agent-decisions-cost-us-three-days-of-logs",
+    "title": "Agent decisions cost us three days of logs",
+    "category": "IMPROVE",
+    "word_count": 3098,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (4 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-decisions-cost-us-three-days-of-logs/post.json"
+  },
+  {
+    "slug": "agent-design-after-llm-4-we-broke-5-assumptions",
+    "title": "Agent design after LLM-4: we broke 5 assumptions",
+    "category": "OK",
+    "word_count": 2101,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-design-after-llm-4-we-broke-5-assumptions/post.json"
+  },
+  {
+    "slug": "agent-drift-the-failure-mode-you-didnt-log",
+    "title": "Agent drift: the failure mode you didn't log",
+    "category": "OK",
+    "word_count": 2888,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-drift-the-failure-mode-you-didnt-log/post.json"
+  },
+  {
+    "slug": "agent-drift-why-it-hurts-ux",
+    "title": "Agent drift: why it hurts UX",
+    "category": "OK",
+    "word_count": 2945,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-drift-why-it-hurts-ux/post.json"
+  },
+  {
+    "slug": "agent-drift-why-prod-breaks-without-human-checkpoints",
+    "title": "Agent drift: why prod breaks without human checkpoints",
+    "category": "OK",
+    "word_count": 2509,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-drift-why-prod-breaks-without-human-checkpoints/post.json"
+  },
+  {
+    "slug": "agent-flooded-our-api-with-bad-calls-overnight",
+    "title": "Agent flooded our API with bad calls overnight",
+    "category": "OK",
+    "word_count": 2913,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-flooded-our-api-with-bad-calls-overnight/post.json"
+  },
+  {
+    "slug": "agent-followed-instructions-too-literally-the-cron-job-trap",
+    "title": "Agent followed instructions too literally: the cron job trap",
+    "category": "OK",
+    "word_count": 2628,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-followed-instructions-too-literally-the-cron-job-trap/post.json"
+  },
+  {
+    "slug": "agent-frameworks-stop-rewriting-the-same-glue-code",
+    "title": "Agent frameworks: stop rewriting the same glue code",
+    "category": "OK",
+    "word_count": 3845,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-frameworks-stop-rewriting-the-same-glue-code/post.json"
+  },
+  {
+    "slug": "agent-governance-opa-vs-kyverno-after-our-incident",
+    "title": "Agent governance: OPA vs Kyverno after our incident",
+    "category": "OK",
+    "word_count": 2736,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-governance-opa-vs-kyverno-after-our-incident/post.json"
+  },
+  {
+    "slug": "agent-permissions-the-mistake-that-breaks-production",
+    "title": "Agent permissions: the mistake that breaks production",
+    "category": "IMPROVE",
+    "word_count": 4176,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-permissions-the-mistake-that-breaks-production/post.json"
+  },
+  {
+    "slug": "agent-platform-abstractions-a-case-study",
+    "title": "Agent platform abstractions: a case study",
+    "category": "OK",
+    "word_count": 2546,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-platform-abstractions-a-case-study/post.json"
+  },
+  {
+    "slug": "agent-slos-measure-what-agents-actually-do",
+    "title": "Agent SLOs: measure what agents actually do",
+    "category": "IMPROVE",
+    "word_count": 2590,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-slos-measure-what-agents-actually-do/post.json"
+  },
+  {
+    "slug": "agent-systems-circuit-breakers-are-not-enough",
+    "title": "Agent Systems: Circuit Breakers Are Not Enough",
+    "category": "OK",
+    "word_count": 2032,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-systems-circuit-breakers-are-not-enough/post.json"
+  },
+  {
+    "slug": "agent-tracing-when-logs-lie-and-metrics-mislead",
+    "title": "Agent tracing: when logs lie and metrics mislead",
+    "category": "OK",
+    "word_count": 2199,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agent-tracing-when-logs-lie-and-metrics-mislead/post.json"
+  },
+  {
+    "slug": "agentic-finops-is-a-trap",
+    "title": "Agentic FinOps is a trap",
+    "category": "OK",
+    "word_count": 2673,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agentic-finops-is-a-trap/post.json"
+  },
+  {
+    "slug": "agentic-workflows-how-we-kept-the-lights",
+    "title": "Agentic workflows: how we kept the lights\u2026",
+    "category": "OK",
+    "word_count": 2967,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agentic-workflows-how-we-kept-the-lights/post.json"
+  },
+  {
+    "slug": "agents-247-vs-on-demand-42k-bill-shock",
+    "title": "Agents 24/7 vs on-demand: $42k bill shock",
+    "category": "IMPROVE",
+    "word_count": 4167,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agents-247-vs-on-demand-42k-bill-shock/post.json"
+  },
+  {
+    "slug": "agents-create-incidents-at-2am",
+    "title": "Agents create incidents at 2am",
+    "category": "IMPROVE",
+    "word_count": 2359,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agents-create-incidents-at-2am/post.json"
+  },
+  {
+    "slug": "agents-keep-breaking-prod-3-boundary-rules-you-still-need",
+    "title": "Agents keep breaking prod: 3 boundary rules you still need",
+    "category": "IMPROVE",
+    "word_count": 2815,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agents-keep-breaking-prod-3-boundary-rules-you-still-need/post.json"
+  },
+  {
+    "slug": "agents-roll-back-without-breaking-anything",
+    "title": "Agents roll back without breaking anything",
+    "category": "OK",
+    "word_count": 2470,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agents-roll-back-without-breaking-anything/post.json"
+  },
+  {
+    "slug": "agents-running-hours-youre-losing-context-fast",
+    "title": "Agents running hours? You're losing context fast",
+    "category": "OK",
+    "word_count": 2205,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/agents-running-hours-youre-losing-context-fast/post.json"
+  },
+  {
+    "slug": "ai-agent-postmortem-human-loop-vs-blind-replay",
+    "title": "AI agent postmortem: human loop vs blind replay",
+    "category": "OK",
+    "word_count": 3312,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-agent-postmortem-human-loop-vs-blind-replay/post.json"
+  },
+  {
+    "slug": "ai-agent-postmortems-the-three-surprises",
+    "title": "AI agent postmortems: the three surprises",
+    "category": "IMPROVE",
+    "word_count": 2753,
+    "reasons": [
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/ai-agent-postmortems-the-three-surprises/post.json"
+  },
+  {
+    "slug": "ai-agent-postmortems-trace-vs-logs-vs-code",
+    "title": "AI agent postmortems: trace vs logs vs code",
+    "category": "OK",
+    "word_count": 2777,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-agent-postmortems-trace-vs-logs-vs-code/post.json"
+  },
+  {
+    "slug": "ai-agents-circuit-breakers-are-not-optional",
+    "title": "AI agents: circuit breakers are not optional",
+    "category": "OK",
+    "word_count": 3013,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-agents-circuit-breakers-are-not-optional/post.json"
+  },
+  {
+    "slug": "ai-agents-eat-your-budget-3-ways",
+    "title": "AI agents eat your budget 3 ways",
+    "category": "IMPROVE",
+    "word_count": 3493,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-agents-eat-your-budget-3-ways/post.json"
+  },
+  {
+    "slug": "ai-agents-killed-dev-tool-sales-cycles",
+    "title": "AI agents killed dev tool sales cycles",
+    "category": "IMPROVE",
+    "word_count": 2583,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-agents-killed-dev-tool-sales-cycles/post.json"
+  },
+  {
+    "slug": "ai-agents-vs-argo-tekton-which-pipeline-heals-itself",
+    "title": "AI agents vs Argo, Tekton: which pipeline heals itself?",
+    "category": "OK",
+    "word_count": 3450,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-agents-vs-argo-tekton-which-pipeline-heals-itself/post.json"
+  },
+  {
+    "slug": "ai-agents-why-devtools-now-sell-like-saas-in-2026",
+    "title": "AI agents: why devtools now sell like SaaS in 2026",
+    "category": "IMPROVE",
+    "word_count": 2728,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-agents-why-devtools-now-sell-like-saas-in-2026/post.json"
+  },
+  {
+    "slug": "ai-alert-triage-cut-pages-80-in-production",
+    "title": "AI alert triage: cut pages 80% in production",
+    "category": "OK",
+    "word_count": 2075,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-alert-triage-cut-pages-80-in-production/post.json"
+  },
+  {
+    "slug": "ai-apps-break-when-you-treat-them-like-regular-software",
+    "title": "AI apps break when you treat them like regular software",
+    "category": "IMPROVE",
+    "word_count": 3710,
+    "reasons": [
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/ai-apps-break-when-you-treat-them-like-regular-software/post.json"
+  },
+  {
+    "slug": "ai-apps-break-your-stack-heres-the-fix",
+    "title": "AI apps break your stack \u2014 here\u2019s the fix",
+    "category": "IMPROVE",
+    "word_count": 1960,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-apps-break-your-stack-heres-the-fix/post.json"
+  },
+  {
+    "slug": "ai-ate-the-niches-first",
+    "title": "AI ate the niches first",
+    "category": "OK",
+    "word_count": 2596,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-ate-the-niches-first/post.json"
+  },
+  {
+    "slug": "ai-benchmarking-3-mistakes-we-made-first",
+    "title": "AI benchmarking: 3 mistakes we made first",
+    "category": "IMPROVE",
+    "word_count": 2718,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-benchmarking-3-mistakes-we-made-first/post.json"
+  },
+  {
+    "slug": "ai-burnout-why-output-pressure-rose-even-as-tools-got",
+    "title": "AI burnout: why output pressure rose even as tools got",
+    "category": "OK",
+    "word_count": 2759,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-burnout-why-output-pressure-rose-even-as-tools-got/post.json"
+  },
+  {
+    "slug": "ai-chats-hidden-wcag-fails",
+    "title": "AI chat's hidden WCAG fails",
+    "category": "OK",
+    "word_count": 3668,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-chats-hidden-wcag-fails/post.json"
+  },
+  {
+    "slug": "ai-code-40-how-to-keep-it-from-rotting-your-repo",
+    "title": "AI code 40% \u2014 how to keep it from rotting your repo",
+    "category": "OK",
+    "word_count": 2676,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-code-40-how-to-keep-it-from-rotting-your-repo/post.json"
+  },
+  {
+    "slug": "ai-code-in-prod-postmortems-still-work",
+    "title": "AI code in prod? Postmortems still work",
+    "category": "IMPROVE",
+    "word_count": 3015,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-code-in-prod-postmortems-still-work/post.json"
+  },
+  {
+    "slug": "ai-code-traps-copilot-vs-cursor-smackdown",
+    "title": "AI code traps: Copilot vs Cursor smackdown",
+    "category": "IMPROVE",
+    "word_count": 2713,
+    "reasons": [
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/ai-code-traps-copilot-vs-cursor-smackdown/post.json"
+  },
+  {
+    "slug": "ai-codebase-guardrails-over-guardrails",
+    "title": "AI codebase? Guardrails over guardrails",
+    "category": "IMPROVE",
+    "word_count": 2902,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-codebase-guardrails-over-guardrails/post.json"
+  },
+  {
+    "slug": "ai-codebase-onboarding-2-paths-tested",
+    "title": "AI codebase onboarding: 2 paths tested",
+    "category": "IMPROVE",
+    "word_count": 2773,
+    "reasons": [
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/ai-codebase-onboarding-2-paths-tested/post.json"
+  },
+  {
+    "slug": "ai-codebases-two-onboarding-paths-that-actually-work",
+    "title": "AI codebases: two onboarding paths that actually work",
+    "category": "IMPROVE",
+    "word_count": 3176,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-codebases-two-onboarding-paths-that-actually-work/post.json"
+  },
+  {
+    "slug": "ai-content-policy",
+    "title": "ai-content-policy",
+    "category": "DELETE",
+    "word_count": 0,
+    "reasons": [
+      "HTML orphan \u2014 no post.json"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/ai-content-policy/index.html"
+  },
+  {
+    "slug": "ai-cost-attribution-without-the-spreadsheet-hell",
+    "title": "AI cost attribution without the spreadsheet hell",
+    "category": "IMPROVE",
+    "word_count": 2835,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-cost-attribution-without-the-spreadsheet-hell/post.json"
+  },
+  {
+    "slug": "ai-engineer-role-vanished-in-6-months",
+    "title": "AI Engineer role vanished in 6 months",
+    "category": "IMPROVE",
+    "word_count": 2214,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-engineer-role-vanished-in-6-months/post.json"
+  },
+  {
+    "slug": "ai-era-promotions-hinge-on-this-one-thing",
+    "title": "AI-era promotions hinge on this one thing",
+    "category": "OK",
+    "word_count": 2267,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-era-promotions-hinge-on-this-one-thing/post.json"
+  },
+  {
+    "slug": "ai-errors-hide-in-plain-latency",
+    "title": "AI errors hide in plain latency",
+    "category": "OK",
+    "word_count": 2381,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-errors-hide-in-plain-latency/post.json"
+  },
+  {
+    "slug": "ai-experimentation-guardrails-not-gates",
+    "title": "AI Experimentation: Guardrails, Not Gates",
+    "category": "OK",
+    "word_count": 2563,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-experimentation-guardrails-not-gates/post.json"
+  },
+  {
+    "slug": "ai-feature-drift-why-your-model-died-at-midnight",
+    "title": "AI feature drift: why your model died at midnight",
+    "category": "IMPROVE",
+    "word_count": 3733,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-feature-drift-why-your-model-died-at-midnight/post.json"
+  },
+  {
+    "slug": "ai-features-as-tech-debt-or-golden-paths",
+    "title": "AI features as tech debt or golden paths",
+    "category": "IMPROVE",
+    "word_count": 2638,
+    "reasons": [
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/ai-features-as-tech-debt-or-golden-paths/post.json"
+  },
+  {
+    "slug": "ai-features-break-your-stack-every-6-months",
+    "title": "AI features break your stack every 6 months",
+    "category": "IMPROVE",
+    "word_count": 2160,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-features-break-your-stack-every-6-months/post.json"
+  },
+  {
+    "slug": "ai-features-rot-faster-than-you-build-them",
+    "title": "AI features rot faster than you build them",
+    "category": "OK",
+    "word_count": 3469,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-features-rot-faster-than-you-build-them/post.json"
+  },
+  {
+    "slug": "ai-fixes-legacy-code-nobody-owns",
+    "title": "AI fixes legacy code nobody owns",
+    "category": "OK",
+    "word_count": 4134,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-fixes-legacy-code-nobody-owns/post.json"
+  },
+  {
+    "slug": "ai-freelance-rates-2026-which-stacks-still-pay",
+    "title": "AI freelance rates 2026: which stacks still pay",
+    "category": "OK",
+    "word_count": 1928,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-freelance-rates-2026-which-stacks-still-pay/post.json"
+  },
+  {
+    "slug": "ai-glue-code-3-ways-to-avoid-duct-taping-models",
+    "title": "AI glue code: 3 ways to avoid duct-taping models",
+    "category": "OK",
+    "word_count": 3182,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-glue-code-3-ways-to-avoid-duct-taping-models/post.json"
+  },
+  {
+    "slug": "ai-hiring-what-actually-moves-the-bar",
+    "title": "AI hiring: what actually moves the bar",
+    "category": "IMPROVE",
+    "word_count": 2865,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-hiring-what-actually-moves-the-bar/post.json"
+  },
+  {
+    "slug": "ai-in-local-currency-costs-that-surprise",
+    "title": "AI in local currency: costs that surprise\u2026",
+    "category": "IMPROVE",
+    "word_count": 3917,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-in-local-currency-costs-that-surprise/post.json"
+  },
+  {
+    "slug": "ai-in-slow-networks-why-models-flop-where-data-costs-rise",
+    "title": "AI in slow networks: why models flop where data costs rise",
+    "category": "IMPROVE",
+    "word_count": 2691,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-in-slow-networks-why-models-flop-where-data-costs-rise/post.json"
+  },
+  {
+    "slug": "ai-infra-capacity-planning-vs-runbooks-what-id",
+    "title": "AI infra: capacity planning vs runbooks \u2014 what I\u2019d",
+    "category": "OK",
+    "word_count": 3457,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-infra-capacity-planning-vs-runbooks-what-id/post.json"
+  },
+  {
+    "slug": "ai-interviews-4-questions-that-caught-80-of-weak",
+    "title": "AI interviews: 4 questions that caught 80% of weak",
+    "category": "IMPROVE",
+    "word_count": 2859,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s)).",
+      "AI-filler phrase: game-changer"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-interviews-4-questions-that-caught-80-of-weak/post.json"
+  },
+  {
+    "slug": "ai-interviews-break-systems-5-real-mistakes-in-2026",
+    "title": "AI interviews break systems: 5 real mistakes in 2026",
+    "category": "IMPROVE",
+    "word_count": 3653,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (6 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-interviews-break-systems-5-real-mistakes-in-2026/post.json"
+  },
+  {
+    "slug": "ai-interviews-broke-system-design-3-patterns-that",
+    "title": "AI interviews broke system design: 3 patterns that",
+    "category": "IMPROVE",
+    "word_count": 3833,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-interviews-broke-system-design-3-patterns-that/post.json"
+  },
+  {
+    "slug": "ai-interviews-now-ask-for-this",
+    "title": "AI interviews now ask for this",
+    "category": "OK",
+    "word_count": 3682,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-interviews-now-ask-for-this/post.json"
+  },
+  {
+    "slug": "ai-latency-cut-28s-to-380ms-without-retraining",
+    "title": "AI latency cut: 2.8s to 380ms without retraining",
+    "category": "IMPROVE",
+    "word_count": 3620,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-latency-cut-28s-to-380ms-without-retraining/post.json"
+  },
+  {
+    "slug": "ai-made-self-service-platforms-trivial-in-2026",
+    "title": "AI made self-service platforms trivial in 2026",
+    "category": "OK",
+    "word_count": 2080,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-made-self-service-platforms-trivial-in-2026/post.json"
+  },
+  {
+    "slug": "ai-memory-systems-context-that-survives-sessions",
+    "title": "AI memory systems: context that survives sessions",
+    "category": "IMPROVE",
+    "word_count": 3690,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-memory-systems-context-that-survives-sessions/post.json"
+  },
+  {
+    "slug": "ai-micro-saas-under-150month-the-real-infra-choices",
+    "title": "AI micro-SaaS under $150/month: the real infra choices",
+    "category": "OK",
+    "word_count": 2984,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-micro-saas-under-150month-the-real-infra-choices/post.json"
+  },
+  {
+    "slug": "ai-model-poisoning-3-real-attacks-on-datasets",
+    "title": "AI model poisoning: 3 real attacks on datasets",
+    "category": "OK",
+    "word_count": 3801,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-model-poisoning-3-real-attacks-on-datasets/post.json"
+  },
+  {
+    "slug": "ai-native-apps-break-when-you-copy-old-rules",
+    "title": "AI-native apps break when you copy old rules",
+    "category": "IMPROVE",
+    "word_count": 3787,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-native-apps-break-when-you-copy-old-rules/post.json"
+  },
+  {
+    "slug": "ai-native-apps-forget-the-old-stack",
+    "title": "AI-native apps: forget the old stack",
+    "category": "IMPROVE",
+    "word_count": 2416,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-native-apps-forget-the-old-stack/post.json"
+  },
+  {
+    "slug": "ai-observability-isnt-monitoring-heres-why",
+    "title": "AI observability isn\u2019t monitoring \u2014 here\u2019s why",
+    "category": "IMPROVE",
+    "word_count": 3731,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-observability-isnt-monitoring-heres-why/post.json"
+  },
+  {
+    "slug": "ai-observability-real-time-dashboards-without-the",
+    "title": "AI observability: real-time dashboards without the",
+    "category": "IMPROVE",
+    "word_count": 3046,
+    "reasons": [
+      "AI-filler phrase: game-changer"
+    ],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-observability-real-time-dashboards-without-the/post.json"
+  },
+  {
+    "slug": "ai-observability-the-metrics-that-matter",
+    "title": "AI observability: the metrics that matter",
+    "category": "OK",
+    "word_count": 3927,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-observability-the-metrics-that-matter/post.json"
+  },
+  {
+    "slug": "ai-on-lambda-when-the-bill-explodes",
+    "title": "AI on Lambda: when the bill explodes",
+    "category": "IMPROVE",
+    "word_count": 2284,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-on-lambda-when-the-bill-explodes/post.json"
+  },
+  {
+    "slug": "ai-on-slow-networks-nairobi-teams-2026-playbook",
+    "title": "AI on slow networks: Nairobi teams' 2026 playbook",
+    "category": "IMPROVE",
+    "word_count": 2676,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-on-slow-networks-nairobi-teams-2026-playbook/post.json"
+  },
+  {
+    "slug": "ai-ops-datadog-vs-granfa-for-infra-automation",
+    "title": "AI ops: Datadog vs Granfa for infra automation",
+    "category": "DELETE",
+    "word_count": 2829,
+    "reasons": [
+      "Claim: Named organization 'Datadog' paired with a precise statistic and no verifiable source URL."
+    ],
+    "claim_hits": [
+      "named_org_stat"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-ops-datadog-vs-granfa-for-infra-automation/post.json"
+  },
+  {
+    "slug": "ai-ops-pagerduty-vs-firehydrant-for-oncall",
+    "title": "AI ops: PagerDuty vs FireHydrant for oncall",
+    "category": "IMPROVE",
+    "word_count": 2269,
+    "reasons": [
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/ai-ops-pagerduty-vs-firehydrant-for-oncall/post.json"
+  },
+  {
+    "slug": "ai-ops-pagerduty-vs-opsgenie-which-burns-your-team",
+    "title": "AI ops: PagerDuty vs Opsgenie \u2014 which burns your team",
+    "category": "IMPROVE",
+    "word_count": 2815,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-ops-pagerduty-vs-opsgenie-which-burns-your-team/post.json"
+  },
+  {
+    "slug": "ai-ops-vs-dumb-alerts-the-incident-that-broke-us",
+    "title": "AI ops vs dumb alerts: the incident that broke us",
+    "category": "IMPROVE",
+    "word_count": 2617,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-ops-vs-dumb-alerts-the-incident-that-broke-us/post.json"
+  },
+  {
+    "slug": "ai-ops-vs-human-ops-the-incidents-that-broke-them",
+    "title": "AI ops vs human ops: the incidents that broke them",
+    "category": "IMPROVE",
+    "word_count": 2670,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-ops-vs-human-ops-the-incidents-that-broke-them/post.json"
+  },
+  {
+    "slug": "ai-pair-coding-killed-pull-request-reviews",
+    "title": "AI pair coding killed pull request reviews",
+    "category": "IMPROVE",
+    "word_count": 2378,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-pair-coding-killed-pull-request-reviews/post.json"
+  },
+  {
+    "slug": "ai-pair-coding-who-owns-the-diff-now",
+    "title": "AI pair coding: who owns the diff now?",
+    "category": "IMPROVE",
+    "word_count": 2253,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-pair-coding-who-owns-the-diff-now/post.json"
+  },
+  {
+    "slug": "ai-pair-programming-stole-my-code-review-job",
+    "title": "AI pair programming stole my code review job",
+    "category": "IMPROVE",
+    "word_count": 3235,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-pair-programming-stole-my-code-review-job/post.json"
+  },
+  {
+    "slug": "ai-pair-prompts-9-setups-we-tried-in-2026",
+    "title": "AI pair prompts: 9 setups we tried in 2026",
+    "category": "IMPROVE",
+    "word_count": 3233,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-pair-prompts-9-setups-we-tried-in-2026/post.json"
+  },
+  {
+    "slug": "ai-payments-break-in-m-pesa-first",
+    "title": "AI payments break in M-Pesa first",
+    "category": "OK",
+    "word_count": 3747,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-payments-break-in-m-pesa-first/post.json"
+  },
+  {
+    "slug": "ai-portfolios-ruin-yours-fix-your-signal",
+    "title": "AI portfolios ruin yours? Fix your signal",
+    "category": "OK",
+    "word_count": 2297,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-portfolios-ruin-yours-fix-your-signal/post.json"
+  },
+  {
+    "slug": "ai-proof-your-mid-level-salary",
+    "title": "AI-proof your mid-level salary",
+    "category": "OK",
+    "word_count": 3277,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-proof-your-mid-level-salary/post.json"
+  },
+  {
+    "slug": "ai-reshaped-my-engineering-principles",
+    "title": "AI reshaped my engineering principles",
+    "category": "IMPROVE",
+    "word_count": 2432,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-reshaped-my-engineering-principles/post.json"
+  },
+  {
+    "slug": "ai-revives-unloved-legacy-codebases",
+    "title": "AI revives unloved legacy codebases",
+    "category": "OK",
+    "word_count": 3620,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-revives-unloved-legacy-codebases/post.json"
+  },
+  {
+    "slug": "ai-rollouts-live-or-die-by-flags",
+    "title": "AI rollouts live or die by flags",
+    "category": "IMPROVE",
+    "word_count": 2672,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-rollouts-live-or-die-by-flags/post.json"
+  },
+  {
+    "slug": "ai-sales-cycle-what-changed-for-devtool-founders",
+    "title": "AI sales cycle: what changed for devtool founders",
+    "category": "IMPROVE",
+    "word_count": 1988,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-sales-cycle-what-changed-for-devtool-founders/post.json"
+  },
+  {
+    "slug": "ai-sales-cycles-3x-faster-40-less-talk",
+    "title": "AI sales cycles: 3x faster, 40% less talk",
+    "category": "OK",
+    "word_count": 3479,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-sales-cycles-3x-faster-40-less-talk/post.json"
+  },
+  {
+    "slug": "ai-sales-cycles-why-dev-tools-now-need-3-demos",
+    "title": "AI sales cycles: why dev tools now need 3 demos",
+    "category": "IMPROVE",
+    "word_count": 2460,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-sales-cycles-why-dev-tools-now-need-3-demos/post.json"
+  },
+  {
+    "slug": "ai-scanners-overlook-real-vulns",
+    "title": "AI scanners overlook real vulns",
+    "category": "OK",
+    "word_count": 2337,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-scanners-overlook-real-vulns/post.json"
+  },
+  {
+    "slug": "ai-skills-that-pay-data-vs-prompt-skills-in-2026",
+    "title": "AI skills that pay: data vs prompt skills in 2026",
+    "category": "IMPROVE",
+    "word_count": 3254,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-skills-that-pay-data-vs-prompt-skills-in-2026/post.json"
+  },
+  {
+    "slug": "ai-solo-saas-2026-build-vs-buy",
+    "title": "AI solo SaaS 2026: build vs buy",
+    "category": "OK",
+    "word_count": 3706,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-solo-saas-2026-build-vs-buy/post.json"
+  },
+  {
+    "slug": "ai-static-analysis-vs-legacy-sast-5x-faster-scans",
+    "title": "AI static analysis vs legacy SAST: 5x faster scans",
+    "category": "OK",
+    "word_count": 3786,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-static-analysis-vs-legacy-sast-5x-faster-scans/post.json"
+  },
+  {
+    "slug": "ai-steals-junior-tasks-3-skills-that-protect-pay",
+    "title": "AI steals junior tasks: 3 skills that protect pay",
+    "category": "OK",
+    "word_count": 2738,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-steals-junior-tasks-3-skills-that-protect-pay/post.json"
+  },
+  {
+    "slug": "ai-stole-system-design",
+    "title": "AI stole system design",
+    "category": "IMPROVE",
+    "word_count": 2037,
+    "reasons": [
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/ai-stole-system-design/post.json"
+  },
+  {
+    "slug": "ai-tools-cut-rates-30-whats-real-in-2026",
+    "title": "AI tools cut rates 30%: what\u2019s real in 2026",
+    "category": "DELETE",
+    "word_count": 2384,
+    "reasons": [
+      "Claim: Unsourced 'study/survey/report by' phrasing \u2014 treat as a fabricated citation."
+    ],
+    "claim_hits": [
+      "fake_authority"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-tools-cut-rates-30-whats-real-in-2026/post.json"
+  },
+  {
+    "slug": "ai-tools-rewrote-my-engineering-rules",
+    "title": "AI tools rewrote my engineering rules",
+    "category": "IMPROVE",
+    "word_count": 3122,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-tools-rewrote-my-engineering-rules/post.json"
+  },
+  {
+    "slug": "ai-tools-wont-help-if-everyone-writes-the-same-code",
+    "title": "AI tools won\u2019t help if everyone writes the same code",
+    "category": "OK",
+    "word_count": 2855,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-tools-wont-help-if-everyone-writes-the-same-code/post.json"
+  },
+  {
+    "slug": "ai-ui-generation-what-it-fixed-and-what-still-breaks",
+    "title": "AI UI generation: what it fixed and what still breaks",
+    "category": "IMPROVE",
+    "word_count": 3490,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-ui-generation-what-it-fixed-and-what-still-breaks/post.json"
+  },
+  {
+    "slug": "ai-ui-tools-6-months-in-what-i-gained-and-lost",
+    "title": "AI UI tools: 6 months in, what I gained and lost",
+    "category": "IMPROVE",
+    "word_count": 3122,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-ui-tools-6-months-in-what-i-gained-and-lost/post.json"
+  },
+  {
+    "slug": "ai-ui-tools-broke-my-react-flow-heres-why",
+    "title": "AI UI tools broke my React flow \u2014 here\u2019s why",
+    "category": "OK",
+    "word_count": 3557,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-ui-tools-broke-my-react-flow-heres-why/post.json"
+  },
+  {
+    "slug": "ai-ui-tools-promise-vs-production",
+    "title": "AI UI tools: promise vs. production",
+    "category": "IMPROVE",
+    "word_count": 1921,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-ui-tools-promise-vs-production/post.json"
+  },
+  {
+    "slug": "ai-unit-costs-the-metric-both-teams-fight-over",
+    "title": "AI unit costs: the metric both teams fight over",
+    "category": "OK",
+    "word_count": 3504,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-unit-costs-the-metric-both-teams-fight-over/post.json"
+  },
+  {
+    "slug": "ai-wrote-40-of-our-code-heres-what-broke-our-on-call",
+    "title": "AI wrote 40% of our code \u2014 here\u2019s what broke our on-call",
+    "category": "IMPROVE",
+    "word_count": 3593,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-wrote-40-of-our-code-heres-what-broke-our-on-call/post.json"
+  },
+  {
+    "slug": "ai-wrote-the-docs-humans-wrote-the-gaps",
+    "title": "AI wrote the docs \u2014 humans wrote the gaps",
+    "category": "IMPROVE",
+    "word_count": 2722,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ai-wrote-the-docs-humans-wrote-the-gaps/post.json"
+  },
+  {
+    "slug": "airflows-replacement-what-80-of-teams-moved-to-in",
+    "title": "Airflow\u2019s replacement: what 80% of teams moved to in",
+    "category": "IMPROVE",
+    "word_count": 3177,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/airflows-replacement-what-80-of-teams-moved-to-in/post.json"
+  },
+  {
+    "slug": "alerts-2026-ai-turns-false-alarms-to-silence",
+    "title": "Alerts 2026: AI turns false alarms to silence",
+    "category": "IMPROVE",
+    "word_count": 2532,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/alerts-2026-ai-turns-false-alarms-to-silence/post.json"
+  },
+  {
+    "slug": "always-on-agents-cost-more-than-you-think",
+    "title": "Always-on agents cost more than you think",
+    "category": "IMPROVE",
+    "word_count": 3632,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/always-on-agents-cost-more-than-you-think/post.json"
+  },
+  {
+    "slug": "api-abuse-2026-5-attacks-we-missed-until-costs-spiked",
+    "title": "API abuse 2026: 5 attacks we missed until costs spiked",
+    "category": "OK",
+    "word_count": 2815,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/api-abuse-2026-5-attacks-we-missed-until-costs-spiked/post.json"
+  },
+  {
+    "slug": "api-abuse-patterns-rising-in-2026",
+    "title": "API abuse patterns rising in 2026",
+    "category": "IMPROVE",
+    "word_count": 2212,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/api-abuse-patterns-rising-in-2026/post.json"
+  },
+  {
+    "slug": "api-attacks-rising-40-the-3-patterns-to-block-now",
+    "title": "API attacks rising 40%: the 3 patterns to block now",
+    "category": "IMPROVE",
+    "word_count": 2785,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/api-attacks-rising-40-the-3-patterns-to-block-now/post.json"
+  },
+  {
+    "slug": "api-security-the-attacks-rising-in-2026",
+    "title": "API security: the attacks rising in 2026",
+    "category": "IMPROVE",
+    "word_count": 3444,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/api-security-the-attacks-rising-in-2026/post.json"
+  },
+  {
+    "slug": "apis-must-die-in-2026",
+    "title": "APIs must die in 2026",
+    "category": "IMPROVE",
+    "word_count": 2859,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s)).",
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/apis-must-die-in-2026/post.json"
+  },
+  {
+    "slug": "apm-lied-about-our-ai-incidents",
+    "title": "APM lied about our AI incidents",
+    "category": "OK",
+    "word_count": 2808,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/apm-lied-about-our-ai-incidents/post.json"
+  },
+  {
+    "slug": "arm-in-production-graviton4-vs-ampere-in-2026",
+    "title": "ARM in production: Graviton4 vs Ampere in 2026",
+    "category": "IMPROVE",
+    "word_count": 3017,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/arm-in-production-graviton4-vs-ampere-in-2026/post.json"
+  },
+  {
+    "slug": "audit-logs-ship-them-fast-keep-them-forever",
+    "title": "Audit logs: ship them fast, keep them forever",
+    "category": "IMPROVE",
+    "word_count": 2908,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/audit-logs-ship-them-fast-keep-them-forever/post.json"
+  },
+  {
+    "slug": "audit-logs-that-scale-skip-the-3am-fire-drills",
+    "title": "Audit logs that scale: skip the 3AM fire drills",
+    "category": "OK",
+    "word_count": 2624,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/audit-logs-that-scale-skip-the-3am-fire-drills/post.json"
+  },
+  {
+    "slug": "audit-trails-immutabledb-vs-dynamodb-streams",
+    "title": "Audit trails: ImmutableDB vs DynamoDB Streams",
+    "category": "OK",
+    "word_count": 2439,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/audit-trails-immutabledb-vs-dynamodb-streams/post.json"
+  },
+  {
+    "slug": "aws-cloudwatch-synthetics-for-ai-pipelines",
+    "title": "AWS CloudWatch Synthetics for AI pipelines",
+    "category": "OK",
+    "word_count": 2265,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/aws-cloudwatch-synthetics-for-ai-pipelines/post.json"
+  },
+  {
+    "slug": "aws-cost-levers-2026-the-3-that-cut-bills-30",
+    "title": "AWS cost levers 2026: the 3 that cut bills 30%",
+    "category": "IMPROVE",
+    "word_count": 2762,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/aws-cost-levers-2026-the-3-that-cut-bills-30/post.json"
+  },
+  {
+    "slug": "aws-costs-for-nairobi-saas-2026-bill-split",
+    "title": "AWS costs for Nairobi SaaS: 2026 bill split",
+    "category": "IMPROVE",
+    "word_count": 2538,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/aws-costs-for-nairobi-saas-2026-bill-split/post.json"
+  },
+  {
+    "slug": "aws-finops-levers-what-mid-size-teams-ignore-in-2026",
+    "title": "AWS FinOps levers: what mid-size teams ignore in 2026",
+    "category": "IMPROVE",
+    "word_count": 2716,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/aws-finops-levers-what-mid-size-teams-ignore-in-2026/post.json"
+  },
+  {
+    "slug": "aws-local-zones-vs-localstack-ai-microservices-in",
+    "title": "AWS Local Zones vs LocalStack: AI microservices in",
+    "category": "IMPROVE",
+    "word_count": 3434,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/aws-local-zones-vs-localstack-ai-microservices-in/post.json"
+  },
+  {
+    "slug": "backstage-plugins-for-ai-3-hidden-costs-fixed-in-2026",
+    "title": "Backstage plugins for AI: 3 hidden costs fixed in 2026",
+    "category": "IMPROVE",
+    "word_count": 2536,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/backstage-plugins-for-ai-3-hidden-costs-fixed-in-2026/post.json"
+  },
+  {
+    "slug": "bank-apis-broke-under-african-2g",
+    "title": "Bank APIs broke under African 2G",
+    "category": "IMPROVE",
+    "word_count": 3527,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/bank-apis-broke-under-african-2g/post.json"
+  },
+  {
+    "slug": "big-model-api-vs-fine-tune-the-2026-math",
+    "title": "Big model API vs fine-tune: the 2026 math",
+    "category": "IMPROVE",
+    "word_count": 3652,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/big-model-api-vs-fine-tune-the-2026-math/post.json"
+  },
+  {
+    "slug": "biometrics-beat-passwords-passkey-2026-shift",
+    "title": "Biometrics beat passwords: passkey 2026 shift",
+    "category": "IMPROVE",
+    "word_count": 3442,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/biometrics-beat-passwords-passkey-2026-shift/post.json"
+  },
+  {
+    "slug": "block-api-abuse-in-2026-before-it-blocks",
+    "title": "Block API abuse in 2026 before it blocks\u2026",
+    "category": "DELETE",
+    "word_count": 2925,
+    "reasons": [
+      "Claim: Named organization 'Cloudflare' paired with a precise statistic and no verifiable source URL.",
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "named_org_stat",
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/block-api-abuse-in-2026-before-it-blocks/post.json"
+  },
+  {
+    "slug": "block-api-replay-attacks-in-2026",
+    "title": "Block API replay attacks in 2026",
+    "category": "OK",
+    "word_count": 2471,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/block-api-replay-attacks-in-2026/post.json"
+  },
+  {
+    "slug": "bootcamp-to-120k-2026-steps-that-pay",
+    "title": "Bootcamp to $120k: 2026 steps that pay",
+    "category": "DELETE",
+    "word_count": 3140,
+    "reasons": [
+      "Claim: Named organization 'Cloudflare' paired with a precise statistic and no verifiable source URL.",
+      "Claim: Unverifiable first-person incident language (2 sentence(s)).",
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [
+      "named_org_stat",
+      "first_person_incident"
+    ],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/bootcamp-to-120k-2026-steps-that-pay/post.json"
+  },
+  {
+    "slug": "bootstrapped-5k-mrr-without-ads",
+    "title": "Bootstrapped $5k MRR without ads",
+    "category": "IMPROVE",
+    "word_count": 2384,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/bootstrapped-5k-mrr-without-ads/post.json"
+  },
+  {
+    "slug": "boring-aws-lambda-layers-that-dont-lock",
+    "title": "Boring AWS Lambda layers that don\u2019t lock\u2026",
+    "category": "OK",
+    "word_count": 2093,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/boring-aws-lambda-layers-that-dont-lock/post.json"
+  },
+  {
+    "slug": "breakdown-nairobi-saas-infra-costs-2026",
+    "title": "Breakdown: Nairobi SaaS infra costs 2026",
+    "category": "IMPROVE",
+    "word_count": 3349,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/breakdown-nairobi-saas-infra-costs-2026/post.json"
+  },
+  {
+    "slug": "build-a-nairobi-saas-stack-for-32kmonth",
+    "title": "Build a Nairobi SaaS stack for $3.2k/month",
+    "category": "OK",
+    "word_count": 2329,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/build-a-nairobi-saas-stack-for-32kmonth/post.json"
+  },
+  {
+    "slug": "build-a-portfolio-that-beats-the-ai-clone-pile",
+    "title": "Build a portfolio that beats the AI clone pile",
+    "category": "IMPROVE",
+    "word_count": 2915,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/build-a-portfolio-that-beats-the-ai-clone-pile/post.json"
+  },
+  {
+    "slug": "build-a-search-system-in-2026-semantic-keyword",
+    "title": "Build a search system in 2026: semantic, keyword",
+    "category": "IMPROVE",
+    "word_count": 2582,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/build-a-search-system-in-2026-semantic-keyword/post.json"
+  },
+  {
+    "slug": "build-a-serverless-backend-in-africa-with-pocketbase",
+    "title": "Build a serverless backend in Africa with PocketBase",
+    "category": "IMPROVE",
+    "word_count": 2160,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/build-a-serverless-backend-in-africa-with-pocketbase/post.json"
+  },
+  {
+    "slug": "build-a-static-analyzer-in-14-days-with-tree-sitter",
+    "title": "Build a static analyzer in 14 days with Tree-sitter",
+    "category": "OK",
+    "word_count": 2298,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/build-a-static-analyzer-in-14-days-with-tree-sitter/post.json"
+  },
+  {
+    "slug": "build-agent-workflows-that-survive-restarts",
+    "title": "Build agent workflows that survive restarts",
+    "category": "IMPROVE",
+    "word_count": 2099,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/build-agent-workflows-that-survive-restarts/post.json"
+  },
+  {
+    "slug": "build-apps-that-still-work-on-500-ms-latency",
+    "title": "Build apps that still work on 500 ms latency",
+    "category": "IMPROVE",
+    "word_count": 3412,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/build-apps-that-still-work-on-500-ms-latency/post.json"
+  },
+  {
+    "slug": "build-dev-platform-for-2kmonth",
+    "title": "Build dev platform for $2k/month",
+    "category": "OK",
+    "word_count": 3180,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/build-dev-platform-for-2kmonth/post.json"
+  },
+  {
+    "slug": "build-in-public-without-burning-out",
+    "title": "Build in public without burning out",
+    "category": "IMPROVE",
+    "word_count": 3188,
+    "reasons": [
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/build-in-public-without-burning-out/post.json"
+  },
+  {
+    "slug": "built-a-multi-agent-system-without-langgraph",
+    "title": "Built a multi-agent system without LangGraph",
+    "category": "OK",
+    "word_count": 2461,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/built-a-multi-agent-system-without-langgraph/post.json"
+  },
+  {
+    "slug": "bundle-size-70-lighter-with-server-components",
+    "title": "Bundle size: 70% lighter with server components",
+    "category": "IMPROVE",
+    "word_count": 3635,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/bundle-size-70-lighter-with-server-components/post.json"
+  },
+  {
+    "slug": "buy-vs-build-ai-3-hard-rules-for-2026",
+    "title": "Buy vs build AI: 3 hard rules for 2026",
+    "category": "OK",
+    "word_count": 3661,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/buy-vs-build-ai-3-hard-rules-for-2026/post.json"
+  },
+  {
+    "slug": "cache-stampedes-the-patterns-that-scale-and-the-ones",
+    "title": "Cache stampedes: the patterns that scale and the ones\u2026",
+    "category": "OK",
+    "word_count": 4127,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/cache-stampedes-the-patterns-that-scale-and-the-ones/post.json"
+  },
+  {
+    "slug": "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash",
+    "title": "CDC pipeline death spiral: one bad LLM call can crash\u2026",
+    "category": "IMPROVE",
+    "word_count": 2479,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/cdc-pipeline-death-spiral-one-bad-llm-call-can-crash/post.json"
+  },
+  {
+    "slug": "choose-no-code-only-when",
+    "title": "Choose no-code only when",
+    "category": "IMPROVE",
+    "word_count": 2084,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s)).",
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/choose-no-code-only-when/post.json"
+  },
+  {
+    "slug": "cicd-for-ai-code-test-secure-rollback-fast",
+    "title": "CI/CD for AI code: test, secure, rollback fast",
+    "category": "IMPROVE",
+    "word_count": 2808,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/cicd-for-ai-code-test-secure-rollback-fast/post.json"
+  },
+  {
+    "slug": "cicd-for-django-in-20ms-africa-networks",
+    "title": "CI/CD for Django in 20ms Africa networks",
+    "category": "OK",
+    "word_count": 2141,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/cicd-for-django-in-20ms-africa-networks/post.json"
+  },
+  {
+    "slug": "cicd-pipelines-stall-with-gpu-pods-2026-benchmarks",
+    "title": "CI/CD pipelines stall with GPU pods: 2026 benchmarks",
+    "category": "IMPROVE",
+    "word_count": 2789,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/cicd-pipelines-stall-with-gpu-pods-2026-benchmarks/post.json"
+  },
+  {
+    "slug": "circleci-still-beats-github-actions-at-50k-builds",
+    "title": "CircleCI still beats GitHub Actions at 50k builds",
+    "category": "OK",
+    "word_count": 3061,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/circleci-still-beats-github-actions-at-50k-builds/post.json"
+  },
+  {
+    "slug": "claude-code-after-365-days-what-actually-works",
+    "title": "Claude Code after 365 days: what actually works",
+    "category": "OK",
+    "word_count": 2218,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/claude-code-after-365-days-what-actually-works/post.json"
+  },
+  {
+    "slug": "claude-code-after-a-year-daily-wins",
+    "title": "Claude Code after a year: daily wins",
+    "category": "IMPROVE",
+    "word_count": 2726,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/claude-code-after-a-year-daily-wins/post.json"
+  },
+  {
+    "slug": "claude-code-review-wins-and-blind-spots",
+    "title": "Claude code review: wins and blind spots",
+    "category": "OK",
+    "word_count": 2254,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/claude-code-review-wins-and-blind-spots/post.json"
+  },
+  {
+    "slug": "cloud-agents-burned-18k-8-tools-that-didnt-work",
+    "title": "Cloud agents burned $18k: 8 tools that didn't work",
+    "category": "OK",
+    "word_count": 4054,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/cloud-agents-burned-18k-8-tools-that-didnt-work/post.json"
+  },
+  {
+    "slug": "code-ai-wont-rewrite",
+    "title": "Code AI won\u2019t rewrite",
+    "category": "IMPROVE",
+    "word_count": 2982,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/code-ai-wont-rewrite/post.json"
+  },
+  {
+    "slug": "commit-ownership-in-ai-pair-coding",
+    "title": "Commit ownership in AI pair coding",
+    "category": "OK",
+    "word_count": 3297,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/commit-ownership-in-ai-pair-coding/post.json"
+  },
+  {
+    "slug": "compare-kafka-redpanda-nats-for-event-driven-systems",
+    "title": "Compare Kafka, Redpanda, NATS for event-driven systems",
+    "category": "OK",
+    "word_count": 2297,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/compare-kafka-redpanda-nats-for-event-driven-systems/post.json"
+  },
+  {
+    "slug": "contact",
+    "title": "contact",
+    "category": "DELETE",
+    "word_count": 0,
+    "reasons": [
+      "HTML orphan \u2014 no post.json"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/contact/index.html"
+  },
+  {
+    "slug": "context-windows-live-longer-than-you-think",
+    "title": "Context windows live longer than you think",
+    "category": "OK",
+    "word_count": 2681,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/context-windows-live-longer-than-you-think/post.json"
+  },
+  {
+    "slug": "core-web-vitals-2026-inp-is-now-stable",
+    "title": "Core Web Vitals 2026: INP is now stable",
+    "category": "IMPROVE",
+    "word_count": 3416,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/core-web-vitals-2026-inp-is-now-stable/post.json"
+  },
+  {
+    "slug": "cost-tools-fail-when-agents-scale-autonomously",
+    "title": "Cost tools fail when agents scale autonomously",
+    "category": "OK",
+    "word_count": 2730,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/cost-tools-fail-when-agents-scale-autonomously/post.json"
+  },
+  {
+    "slug": "css-2026-container-queries-retired-our-utility-class",
+    "title": "CSS 2026: container queries retired our utility class",
+    "category": "IMPROVE",
+    "word_count": 2751,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/css-2026-container-queries-retired-our-utility-class/post.json"
+  },
+  {
+    "slug": "currency-switch-fails-in-ghana-one-config-file-to-rule",
+    "title": "Currency switch fails in Ghana: one config file to rule\u2026",
+    "category": "OK",
+    "word_count": 3207,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/currency-switch-fails-in-ghana-one-config-file-to-rule/post.json"
+  },
+  {
+    "slug": "cut-ai-inference-bill-68-without-model-changes",
+    "title": "Cut AI inference bill 68% without model changes",
+    "category": "IMPROVE",
+    "word_count": 2987,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/cut-ai-inference-bill-68-without-model-changes/post.json"
+  },
+  {
+    "slug": "cut-cold-starts-70-lambda-cost-hack",
+    "title": "Cut cold starts 70%: Lambda cost hack",
+    "category": "IMPROVE",
+    "word_count": 2391,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/cut-cold-starts-70-lambda-cost-hack/post.json"
+  },
+  {
+    "slug": "cut-false-positives-85-with-this-ci-security-trick",
+    "title": "Cut false positives 85% with this CI security trick",
+    "category": "IMPROVE",
+    "word_count": 2705,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/cut-false-positives-85-with-this-ci-security-trick/post.json"
+  },
+  {
+    "slug": "debug-ai-agent-failures-differently",
+    "title": "Debug AI agent failures differently",
+    "category": "IMPROVE",
+    "word_count": 3008,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/debug-ai-agent-failures-differently/post.json"
+  },
+  {
+    "slug": "debug-ai-agents-failures-arent-just-bugs",
+    "title": "Debug AI agents: failures aren't just bugs",
+    "category": "OK",
+    "word_count": 2926,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/debug-ai-agents-failures-arent-just-bugs/post.json"
+  },
+  {
+    "slug": "debug-async-python-before-it-deadlocks",
+    "title": "Debug async Python before it deadlocks\u2026",
+    "category": "OK",
+    "word_count": 2164,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/debug-async-python-before-it-deadlocks/post.json"
+  },
+  {
+    "slug": "deploy-a-solo-stack-for-20month-in-2026",
+    "title": "Deploy a solo stack for $20/month in 2026",
+    "category": "IMPROVE",
+    "word_count": 3314,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/deploy-a-solo-stack-for-20month-in-2026/post.json"
+  },
+  {
+    "slug": "detect-lazy-agents-without-false-alarms",
+    "title": "Detect lazy agents without false alarms",
+    "category": "IMPROVE",
+    "word_count": 3250,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/detect-lazy-agents-without-false-alarms/post.json"
+  },
+  {
+    "slug": "dmca",
+    "title": "dmca",
+    "category": "DELETE",
+    "word_count": 0,
+    "reasons": [
+      "HTML orphan \u2014 no post.json"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/dmca/index.html"
+  },
+  {
+    "slug": "double-the-price-double-the-revenue",
+    "title": "Double the price, double the revenue",
+    "category": "IMPROVE",
+    "word_count": 2372,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/double-the-price-double-the-revenue/post.json"
+  },
+  {
+    "slug": "drop-checklists-ai-code-reviews-that-scale",
+    "title": "Drop checklists: AI code reviews that scale",
+    "category": "OK",
+    "word_count": 3785,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/drop-checklists-ai-code-reviews-that-scale/post.json"
+  },
+  {
+    "slug": "drop-ec2-bills-70-without-code",
+    "title": "Drop EC2 bills 70% without code",
+    "category": "IMPROVE",
+    "word_count": 3210,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/drop-ec2-bills-70-without-code/post.json"
+  },
+  {
+    "slug": "dumped-kubernetes-for-200-and-no-one-noticed",
+    "title": "Dumped Kubernetes for $200 and no one noticed",
+    "category": "OK",
+    "word_count": 2855,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/dumped-kubernetes-for-200-and-no-one-noticed/post.json"
+  },
+  {
+    "slug": "ebpf-observability-in-2026-what-actually-works",
+    "title": "eBPF observability in 2026: what actually works",
+    "category": "OK",
+    "word_count": 2955,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ebpf-observability-in-2026-what-actually-works/post.json"
+  },
+  {
+    "slug": "edge-agents-vs-cloud-round-trips-in-2026",
+    "title": "Edge agents vs cloud round-trips in 2026",
+    "category": "IMPROVE",
+    "word_count": 2364,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/edge-agents-vs-cloud-round-trips-in-2026/post.json"
+  },
+  {
+    "slug": "evaluate-agents-with-spark-vs-custom-harness",
+    "title": "Evaluate agents with Spark vs custom harness",
+    "category": "OK",
+    "word_count": 2443,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/evaluate-agents-with-spark-vs-custom-harness/post.json"
+  },
+  {
+    "slug": "event-driven-beats-agent-driven-910-times",
+    "title": "Event-driven beats agent-driven 9/10 times",
+    "category": "IMPROVE",
+    "word_count": 3743,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/event-driven-beats-agent-driven-910-times/post.json"
+  },
+  {
+    "slug": "event-sourcing-pay-the-complexity-tax-only-here",
+    "title": "Event sourcing: pay the complexity tax only here",
+    "category": "OK",
+    "word_count": 2890,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/event-sourcing-pay-the-complexity-tax-only-here/post.json"
+  },
+  {
+    "slug": "evolve-your-monolith-without-rewriting-in-2026",
+    "title": "Evolve your monolith without rewriting in 2026",
+    "category": "IMPROVE",
+    "word_count": 2465,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/evolve-your-monolith-without-rewriting-in-2026/post.json"
+  },
+  {
+    "slug": "failed-ai-wrappers-2026-what-the-survivors-did-right",
+    "title": "Failed AI wrappers 2026: what the survivors did right",
+    "category": "IMPROVE",
+    "word_count": 2869,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/failed-ai-wrappers-2026-what-the-survivors-did-right/post.json"
+  },
+  {
+    "slug": "failed-ai-wrappers-vs-the-3-that-worked-in-2026",
+    "title": "Failed AI wrappers vs. the 3 that worked in 2026",
+    "category": "OK",
+    "word_count": 2189,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/failed-ai-wrappers-vs-the-3-that-worked-in-2026/post.json"
+  },
+  {
+    "slug": "feature-flags-became-ai-rollout-platforms",
+    "title": "Feature flags became AI rollout platforms",
+    "category": "OK",
+    "word_count": 3229,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/feature-flags-became-ai-rollout-platforms/post.json"
+  },
+  {
+    "slug": "fintech-features-break-in-ghana-the-real-fix",
+    "title": "Fintech features break in Ghana: the real fix",
+    "category": "IMPROVE",
+    "word_count": 2643,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/fintech-features-break-in-ghana-the-real-fix/post.json"
+  },
+  {
+    "slug": "fix-ai-agent-failures-postmortem-guide",
+    "title": "Fix AI agent failures: postmortem guide",
+    "category": "OK",
+    "word_count": 2770,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/fix-ai-agent-failures-postmortem-guide/post.json"
+  },
+  {
+    "slug": "flag-your-ai-rollouts-in-2026",
+    "title": "Flag your AI rollouts in 2026",
+    "category": "IMPROVE",
+    "word_count": 2797,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/flag-your-ai-rollouts-in-2026/post.json"
+  },
+  {
+    "slug": "flip-your-dev-tool-sales-cycle-in-2026",
+    "title": "Flip your dev-tool sales cycle in 2026",
+    "category": "IMPROVE",
+    "word_count": 2544,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/flip-your-dev-tool-sales-cycle-in-2026/post.json"
+  },
+  {
+    "slug": "foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality",
+    "title": "Foreign AI models vs sovereign fintech stacks: 2026 reality",
+    "category": "OK",
+    "word_count": 2760,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/foreign-ai-models-vs-sovereign-fintech-stacks-2026-reality/post.json"
+  },
+  {
+    "slug": "found-niche-in-2026-saas-that-ai-cant-copy",
+    "title": "Found niche in 2026: SaaS that AI can\u2019t copy",
+    "category": "IMPROVE",
+    "word_count": 2613,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/found-niche-in-2026-saas-that-ai-cant-copy/post.json"
+  },
+  {
+    "slug": "global-state-is-the-wrong-tool-for-ai-features",
+    "title": "Global state is the wrong tool for AI features",
+    "category": "IMPROVE",
+    "word_count": 2701,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/global-state-is-the-wrong-tool-for-ai-features/post.json"
+  },
+  {
+    "slug": "gpu-spot-instances-reserved-for-ai-costs",
+    "title": "GPU spot instances > reserved for AI costs",
+    "category": "IMPROVE",
+    "word_count": 3167,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/gpu-spot-instances-reserved-for-ai-costs/post.json"
+  },
+  {
+    "slug": "graphql-vs-rest-vs-trpc-2026s-api-fight",
+    "title": "GraphQL vs REST vs tRPC: 2026\u2019s API fight",
+    "category": "IMPROVE",
+    "word_count": 2328,
+    "reasons": [
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/graphql-vs-rest-vs-trpc-2026s-api-fight/post.json"
+  },
+  {
+    "slug": "grew-5k-mrr-on-a-29-vps",
+    "title": "Grew $5k MRR on a $29 VPS",
+    "category": "IMPROVE",
+    "word_count": 1839,
+    "reasons": [
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/grew-5k-mrr-on-a-29-vps/post.json"
+  },
+  {
+    "slug": "hire-for-agents-not-autocomplete",
+    "title": "Hire for agents, not autocomplete",
+    "category": "IMPROVE",
+    "word_count": 3252,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/hire-for-agents-not-autocomplete/post.json"
+  },
+  {
+    "slug": "hit-5k-mrr-without-a-marketing-team",
+    "title": "Hit $5k MRR without a marketing team",
+    "category": "IMPROVE",
+    "word_count": 1772,
+    "reasons": [
+      "Below target length (1772 < 1800 words)"
+    ],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/hit-5k-mrr-without-a-marketing-team/post.json"
+  },
+  {
+    "slug": "htmx-stack-swap-5-things-i-gained-3-i-lost",
+    "title": "HTMX stack swap: 5 things I gained, 3 I lost",
+    "category": "IMPROVE",
+    "word_count": 2811,
+    "reasons": [
+      "AI-filler phrase: paradigm shift",
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/htmx-stack-swap-5-things-i-gained-3-i-lost/post.json"
+  },
+  {
+    "slug": "hybrid-cloud-routing-cost-speed-balance-for-sea",
+    "title": "Hybrid Cloud Routing: Cost-Speed Balance for SEA",
+    "category": "OK",
+    "word_count": 2633,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/hybrid-cloud-routing-cost-speed-balance-for-sea/post.json"
+  },
+  {
+    "slug": "idp-for-ai-2026-stack-evolution",
+    "title": "IDP for AI: 2026 stack evolution",
+    "category": "OK",
+    "word_count": 2423,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/idp-for-ai-2026-stack-evolution/post.json"
+  },
+  {
+    "slug": "internal-platform-adoption-one-metric-kills-velocity",
+    "title": "Internal platform adoption: one metric kills velocity",
+    "category": "IMPROVE",
+    "word_count": 2634,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/internal-platform-adoption-one-metric-kills-velocity/post.json"
+  },
+  {
+    "slug": "istio-and-cilium-what-really-breaks-in-production",
+    "title": "Istio and Cilium: what really breaks in production",
+    "category": "IMPROVE",
+    "word_count": 3348,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s)).",
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/istio-and-cilium-what-really-breaks-in-production/post.json"
+  },
+  {
+    "slug": "json-modes-hidden-costs-revealed",
+    "title": "JSON mode's hidden costs revealed",
+    "category": "OK",
+    "word_count": 2528,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/json-modes-hidden-costs-revealed/post.json"
+  },
+  {
+    "slug": "json-modes-silent-failures-exposed",
+    "title": "JSON mode\u2019s silent failures exposed",
+    "category": "OK",
+    "word_count": 2410,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/json-modes-silent-failures-exposed/post.json"
+  },
+  {
+    "slug": "keep-multi-model-systems-stable-6-rules-that-worked",
+    "title": "Keep multi-model systems stable: 6 rules that worked",
+    "category": "IMPROVE",
+    "word_count": 2746,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/keep-multi-model-systems-stable-6-rules-that-worked/post.json"
+  },
+  {
+    "slug": "kill-noisy-alerts-the-triage-system-that-restored-sleep",
+    "title": "Kill noisy alerts: the triage system that restored sleep",
+    "category": "IMPROVE",
+    "word_count": 3387,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/kill-noisy-alerts-the-triage-system-that-restored-sleep/post.json"
+  },
+  {
+    "slug": "killed-3k-kubernetes-kept-200-infra",
+    "title": "Killed $3k Kubernetes, kept $200 infra",
+    "category": "OK",
+    "word_count": 3659,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/killed-3k-kubernetes-kept-200-infra/post.json"
+  },
+  {
+    "slug": "kubernetes-or-nomad-the-real-experiment-cost-split",
+    "title": "Kubernetes or Nomad: the real experiment cost split",
+    "category": "IMPROVE",
+    "word_count": 2691,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/kubernetes-or-nomad-the-real-experiment-cost-split/post.json"
+  },
+  {
+    "slug": "land-5k-remote-roles-what-nairobi-devs-got-right",
+    "title": "Land $5k remote roles: what Nairobi devs got right",
+    "category": "IMPROVE",
+    "word_count": 2941,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/land-5k-remote-roles-what-nairobi-devs-got-right/post.json"
+  },
+  {
+    "slug": "land-5k-roles-from-nairobi-lagos-in-2026",
+    "title": "Land $5K roles from Nairobi & Lagos in 2026",
+    "category": "OK",
+    "word_count": 3242,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/land-5k-roles-from-nairobi-lagos-in-2026/post.json"
+  },
+  {
+    "slug": "latency-trade-offs-nairobi-teams-beat-global-ai-providers",
+    "title": "Latency trade-offs: Nairobi teams beat global AI providers",
+    "category": "OK",
+    "word_count": 2470,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/latency-trade-offs-nairobi-teams-beat-global-ai-providers/post.json"
+  },
+  {
+    "slug": "launch-saas-in-6-weeks-the-ai-shortcut-i-actually-used",
+    "title": "Launch SaaS in 6 weeks: the AI shortcut I actually used",
+    "category": "IMPROVE",
+    "word_count": 3165,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (4 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/launch-saas-in-6-weeks-the-ai-shortcut-i-actually-used/post.json"
+  },
+  {
+    "slug": "launched-ai-saas-under-150month",
+    "title": "Launched AI SaaS under $150/month",
+    "category": "OK",
+    "word_count": 2894,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/launched-ai-saas-under-150month/post.json"
+  },
+  {
+    "slug": "least-privilege-for-agents-the-config-line-nobody-writes",
+    "title": "Least privilege for agents: the config line nobody writes",
+    "category": "OK",
+    "word_count": 2846,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/least-privilege-for-agents-the-config-line-nobody-writes/post.json"
+  },
+  {
+    "slug": "legacy-codebases-let-ai-own-the-boring-parts",
+    "title": "Legacy codebases? Let AI own the boring parts",
+    "category": "OK",
+    "word_count": 4123,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/legacy-codebases-let-ai-own-the-boring-parts/post.json"
+  },
+  {
+    "slug": "lessons-from-3-saas-price-pivots-in-2026",
+    "title": "Lessons from 3 SaaS price pivots in 2026",
+    "category": "OK",
+    "word_count": 2869,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/lessons-from-3-saas-price-pivots-in-2026/post.json"
+  },
+  {
+    "slug": "llm-agents-why-monoliths-win",
+    "title": "LLM agents: why monoliths win",
+    "category": "OK",
+    "word_count": 2557,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/llm-agents-why-monoliths-win/post.json"
+  },
+  {
+    "slug": "llm-apps-owasp-risks-you-missed",
+    "title": "LLM apps: OWASP risks you missed",
+    "category": "IMPROVE",
+    "word_count": 2261,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/llm-apps-owasp-risks-you-missed/post.json"
+  },
+  {
+    "slug": "llm-costs-fine-tune-vs-route-vs-bigger-model",
+    "title": "LLM costs: fine-tune vs route vs bigger model",
+    "category": "OK",
+    "word_count": 2936,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/llm-costs-fine-tune-vs-route-vs-bigger-model/post.json"
+  },
+  {
+    "slug": "llm-drift-before-users-complain-catch-it-early",
+    "title": "LLM drift before users complain: catch it early",
+    "category": "OK",
+    "word_count": 2836,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/llm-drift-before-users-complain-catch-it-early/post.json"
+  },
+  {
+    "slug": "llm-drift-the-silent-quality-drop-metrics-miss",
+    "title": "LLM drift: the silent quality drop metrics miss",
+    "category": "IMPROVE",
+    "word_count": 2346,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/llm-drift-the-silent-quality-drop-metrics-miss/post.json"
+  },
+  {
+    "slug": "llm-eval-drift-that-users-notice-first",
+    "title": "LLM eval drift that users notice first",
+    "category": "OK",
+    "word_count": 3460,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/llm-eval-drift-that-users-notice-first/post.json"
+  },
+  {
+    "slug": "llm-evals-skip-the-hype-track-these-4-metrics",
+    "title": "LLM evals: skip the hype, track these 4 metrics",
+    "category": "IMPROVE",
+    "word_count": 2904,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/llm-evals-skip-the-hype-track-these-4-metrics/post.json"
+  },
+  {
+    "slug": "llm-metrics-that-stop-wasting-time",
+    "title": "LLM metrics that stop wasting time",
+    "category": "IMPROVE",
+    "word_count": 3937,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/llm-metrics-that-stop-wasting-time/post.json"
+  },
+  {
+    "slug": "llm-output-metrics-that-actually-move-the-needle",
+    "title": "LLM output metrics that actually move the needle",
+    "category": "IMPROVE",
+    "word_count": 2739,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/llm-output-metrics-that-actually-move-the-needle/post.json"
+  },
+  {
+    "slug": "llm-outputs-break-workflows-unless-you-do-this",
+    "title": "LLM outputs break workflows unless you do this",
+    "category": "IMPROVE",
+    "word_count": 3095,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/llm-outputs-break-workflows-unless-you-do-this/post.json"
+  },
+  {
+    "slug": "llm-quality-metrics-that-cut-hallucinations-40",
+    "title": "LLM quality: metrics that cut hallucinations 40%",
+    "category": "IMPROVE",
+    "word_count": 3049,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/llm-quality-metrics-that-cut-hallucinations-40/post.json"
+  },
+  {
+    "slug": "llm-risks-underestimated-in-owasp-top-10",
+    "title": "LLM risks underestimated in OWASP Top 10",
+    "category": "IMPROVE",
+    "word_count": 2335,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/llm-risks-underestimated-in-owasp-top-10/post.json"
+  },
+  {
+    "slug": "llm-structured-output-json-mode-fails-at-scale",
+    "title": "LLM structured output: JSON mode fails at scale",
+    "category": "IMPROVE",
+    "word_count": 3044,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/llm-structured-output-json-mode-fails-at-scale/post.json"
+  },
+  {
+    "slug": "llmops-2026-evaluation-stack-that-replaced-rag-dashboards",
+    "title": "LLMOps 2026: evaluation stack that replaced RAG dashboards",
+    "category": "IMPROVE",
+    "word_count": 2568,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/llmops-2026-evaluation-stack-that-replaced-rag-dashboards/post.json"
+  },
+  {
+    "slug": "local-llm-agents-vllm-vs-ollama-for-fintech",
+    "title": "Local LLM agents: vLLM vs Ollama for fintech",
+    "category": "OK",
+    "word_count": 3009,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/local-llm-agents-vllm-vs-ollama-for-fintech/post.json"
+  },
+  {
+    "slug": "local-llms-on-macbook-pro-the-4-models-that-run",
+    "title": "Local LLMs on MacBook Pro: the 4 models that run",
+    "category": "OK",
+    "word_count": 3610,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/local-llms-on-macbook-pro-the-4-models-that-run/post.json"
+  },
+  {
+    "slug": "log-audit-costs-without-breaking-compliance",
+    "title": "Log audit costs without breaking compliance",
+    "category": "OK",
+    "word_count": 2482,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/log-audit-costs-without-breaking-compliance/post.json"
+  },
+  {
+    "slug": "m-pesa-daraja-20-your-2026-migration-checklist",
+    "title": "M-Pesa Daraja 2.0: your 2026 migration checklist",
+    "category": "IMPROVE",
+    "word_count": 2321,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/m-pesa-daraja-20-your-2026-migration-checklist/post.json"
+  },
+  {
+    "slug": "m-pesa-failures-cost-us-40-hours",
+    "title": "M-Pesa failures cost us 40 hours",
+    "category": "OK",
+    "word_count": 3226,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/m-pesa-failures-cost-us-40-hours/post.json"
+  },
+  {
+    "slug": "map-legacy-code-with-ai-before-it-breaks",
+    "title": "Map legacy code with AI before it breaks",
+    "category": "OK",
+    "word_count": 3711,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/map-legacy-code-with-ai-before-it-breaks/post.json"
+  },
+  {
+    "slug": "marketing-without-budget-5k-mrr-in-18-months",
+    "title": "Marketing without budget: $5k MRR in 18 months",
+    "category": "OK",
+    "word_count": 2817,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/marketing-without-budget-5k-mrr-in-18-months/post.json"
+  },
+  {
+    "slug": "mcp-hidden-cost-traps",
+    "title": "MCP hidden cost traps",
+    "category": "OK",
+    "word_count": 2213,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/mcp-hidden-cost-traps/post.json"
+  },
+  {
+    "slug": "mcp-servers-real-time-pipelines-without-agents",
+    "title": "MCP servers: real-time pipelines without agents",
+    "category": "OK",
+    "word_count": 2862,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/mcp-servers-real-time-pipelines-without-agents/post.json"
+  },
+  {
+    "slug": "mcp-servers-the-3-hidden-costs-nobody-quotes",
+    "title": "MCP servers: the 3 hidden costs nobody quotes",
+    "category": "IMPROVE",
+    "word_count": 3725,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/mcp-servers-the-3-hidden-costs-nobody-quotes/post.json"
+  },
+  {
+    "slug": "memory-systems-for-production-agents",
+    "title": "Memory Systems for Production Agents",
+    "category": "OK",
+    "word_count": 2233,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/memory-systems-for-production-agents/post.json"
+  },
+  {
+    "slug": "merge-three-payment-apis-into-one-system",
+    "title": "Merge three payment APIs into one system",
+    "category": "OK",
+    "word_count": 3548,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/merge-three-payment-apis-into-one-system/post.json"
+  },
+  {
+    "slug": "meter-dev-tool-pricing-in-2026",
+    "title": "Meter dev-tool pricing in 2026",
+    "category": "IMPROVE",
+    "word_count": 2244,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/meter-dev-tool-pricing-in-2026/post.json"
+  },
+  {
+    "slug": "micro-saas-niches-eaten-by-ai-in-2026",
+    "title": "Micro-SaaS niches eaten by AI in 2026",
+    "category": "IMPROVE",
+    "word_count": 3765,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s)).",
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/micro-saas-niches-eaten-by-ai-in-2026/post.json"
+  },
+  {
+    "slug": "migrations-stop-running-them-live",
+    "title": "Migrations? Stop running them live",
+    "category": "OK",
+    "word_count": 2782,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/migrations-stop-running-them-live/post.json"
+  },
+  {
+    "slug": "mobile-first-ai-fails-you-didnt-plan",
+    "title": "Mobile-first AI fails you didn\u2019t plan\u2026",
+    "category": "IMPROVE",
+    "word_count": 2243,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/mobile-first-ai-fails-you-didnt-plan/post.json"
+  },
+  {
+    "slug": "mobile-money-agent-fees-why-your-bot-keeps-failing",
+    "title": "Mobile money agent fees: why your bot keeps failing",
+    "category": "IMPROVE",
+    "word_count": 2409,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/mobile-money-agent-fees-why-your-bot-keeps-failing/post.json"
+  },
+  {
+    "slug": "model-router-keep-it-simple-keep-it-local",
+    "title": "Model router: keep it simple, keep it local",
+    "category": "IMPROVE",
+    "word_count": 3773,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s)).",
+      "AI-filler phrase: game-changer"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/model-router-keep-it-simple-keep-it-local/post.json"
+  },
+  {
+    "slug": "monolith-to-services-without-a-rewrite",
+    "title": "Monolith to services without a rewrite",
+    "category": "IMPROVE",
+    "word_count": 3292,
+    "reasons": [
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/monolith-to-services-without-a-rewrite/post.json"
+  },
+  {
+    "slug": "move-images-50-faster-in-2026-with-starlink-cdn",
+    "title": "Move images 50% faster in 2026 with Starlink CDN",
+    "category": "IMPROVE",
+    "word_count": 2192,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/move-images-50-faster-in-2026-with-starlink-cdn/post.json"
+  },
+  {
+    "slug": "multi-agent-frameworks-in-2026-langgraph-wins",
+    "title": "Multi-agent frameworks in 2026: LangGraph wins",
+    "category": "IMPROVE",
+    "word_count": 3216,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (4 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/multi-agent-frameworks-in-2026-langgraph-wins/post.json"
+  },
+  {
+    "slug": "multi-agent-systems-break-first",
+    "title": "Multi-agent systems break first",
+    "category": "OK",
+    "word_count": 3576,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/multi-agent-systems-break-first/post.json"
+  },
+  {
+    "slug": "multi-agent-systems-why-failures-hide",
+    "title": "Multi-agent systems: why failures hide",
+    "category": "OK",
+    "word_count": 2436,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/multi-agent-systems-why-failures-hide/post.json"
+  },
+  {
+    "slug": "ndpr-2026-broke-fintech-apis",
+    "title": "NDPR 2026 broke fintech APIs",
+    "category": "IMPROVE",
+    "word_count": 3703,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ndpr-2026-broke-fintech-apis/post.json"
+  },
+  {
+    "slug": "negotiate-2026-pay-when-ai-steals-40-of-your-job",
+    "title": "Negotiate 2026 pay when AI steals 40% of your job",
+    "category": "IMPROVE",
+    "word_count": 3201,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/negotiate-2026-pay-when-ai-steals-40-of-your-job/post.json"
+  },
+  {
+    "slug": "negotiate-after-ai-boosts-your-output",
+    "title": "Negotiate after AI boosts your output",
+    "category": "IMPROVE",
+    "word_count": 2249,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/negotiate-after-ai-boosts-your-output/post.json"
+  },
+  {
+    "slug": "negotiate-pay-in-2026-with-ai-proof-points",
+    "title": "Negotiate pay in 2026 with AI proof points",
+    "category": "IMPROVE",
+    "word_count": 2038,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/negotiate-pay-in-2026-with-ai-proof-points/post.json"
+  },
+  {
+    "slug": "negotiate-salaries-with-ai-skills-in-2026",
+    "title": "Negotiate salaries with AI skills in 2026",
+    "category": "OK",
+    "word_count": 2305,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/negotiate-salaries-with-ai-skills-in-2026/post.json"
+  },
+  {
+    "slug": "neon-vs-planetscale-vs-turso-which-broke-first",
+    "title": "Neon vs PlanetScale vs Turso: which broke first?",
+    "category": "IMPROVE",
+    "word_count": 3456,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/neon-vs-planetscale-vs-turso-which-broke-first/post.json"
+  },
+  {
+    "slug": "nextjs-15-vs-remix-vs-sveltekit-2026-choices",
+    "title": "Next.js 15 vs Remix vs SvelteKit: 2026 choices",
+    "category": "OK",
+    "word_count": 3367,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/nextjs-15-vs-remix-vs-sveltekit-2026-choices/post.json"
+  },
+  {
+    "slug": "nigerias-2026-api-rules-broke-our-microservices",
+    "title": "Nigeria\u2019s 2026 API rules broke our microservices",
+    "category": "IMPROVE",
+    "word_count": 2914,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (4 sentence(s)).",
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/nigerias-2026-api-rules-broke-our-microservices/post.json"
+  },
+  {
+    "slug": "observability-2026-ditch-the-three-pillars",
+    "title": "Observability 2026: ditch the three pillars",
+    "category": "OK",
+    "word_count": 3378,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/observability-2026-ditch-the-three-pillars/post.json"
+  },
+  {
+    "slug": "observability-agents-lied-to-us",
+    "title": "Observability agents lied to us",
+    "category": "IMPROVE",
+    "word_count": 2699,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/observability-agents-lied-to-us/post.json"
+  },
+  {
+    "slug": "observe-llm-features-90-faster",
+    "title": "Observe LLM features 90% faster\u2026",
+    "category": "IMPROVE",
+    "word_count": 3348,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/observe-llm-features-90-faster/post.json"
+  },
+  {
+    "slug": "offline-agents-local-first-sync-patterns",
+    "title": "Offline Agents: Local-First Sync Patterns",
+    "category": "OK",
+    "word_count": 2512,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/offline-agents-local-first-sync-patterns/post.json"
+  },
+  {
+    "slug": "offline-first-agents-for-field-teams",
+    "title": "Offline-first agents for field teams",
+    "category": "OK",
+    "word_count": 2103,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/offline-first-agents-for-field-teams/post.json"
+  },
+  {
+    "slug": "offline-first-apps-what-3g-markets-taught-us",
+    "title": "Offline-first apps: what 3G markets taught us",
+    "category": "OK",
+    "word_count": 3209,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/offline-first-apps-what-3g-markets-taught-us/post.json"
+  },
+  {
+    "slug": "offline-first-money-apps-with-dynamodb-streams",
+    "title": "Offline-first money apps with DynamoDB Streams",
+    "category": "IMPROVE",
+    "word_count": 2620,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/offline-first-money-apps-with-dynamodb-streams/post.json"
+  },
+  {
+    "slug": "ollama-local-vs-ollama-cloud-fintech-data-stays-in-kenya",
+    "title": "Ollama Local vs Ollama Cloud: fintech data stays in Kenya",
+    "category": "IMPROVE",
+    "word_count": 3515,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ollama-local-vs-ollama-cloud-fintech-data-stays-in-kenya/post.json"
+  },
+  {
+    "slug": "one-misconfigured-pool-drained-4kmonth",
+    "title": "One misconfigured pool drained $4k/month",
+    "category": "IMPROVE",
+    "word_count": 2391,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/one-misconfigured-pool-drained-4kmonth/post.json"
+  },
+  {
+    "slug": "one-misconfigured-vector-db-killed-our-rag-pipeline",
+    "title": "One misconfigured vector DB killed our RAG pipeline",
+    "category": "IMPROVE",
+    "word_count": 2537,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/one-misconfigured-vector-db-killed-our-rag-pipeline/post.json"
+  },
+  {
+    "slug": "one-payment-stack-for-kenya-nigeria-ghana",
+    "title": "One payment stack for Kenya, Nigeria, Ghana",
+    "category": "IMPROVE",
+    "word_count": 2730,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/one-payment-stack-for-kenya-nigeria-ghana/post.json"
+  },
+  {
+    "slug": "only-boring-stacks-survive-ai-services",
+    "title": "Only boring stacks survive AI services",
+    "category": "OK",
+    "word_count": 3297,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/only-boring-stacks-survive-ai-services/post.json"
+  },
+  {
+    "slug": "optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache",
+    "title": "Optimise agent sync on 3G: gzip + CDN vs local cache",
+    "category": "OK",
+    "word_count": 2456,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache/post.json"
+  },
+  {
+    "slug": "orchestration-tax-kills-multi-agent-systems",
+    "title": "Orchestration tax kills multi-agent systems",
+    "category": "OK",
+    "word_count": 2610,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/orchestration-tax-kills-multi-agent-systems/post.json"
+  },
+  {
+    "slug": "orm-2026-prisma-vs-drizzle-vs-sqlalchemy",
+    "title": "ORM 2026: Prisma vs Drizzle vs SQLAlchemy",
+    "category": "OK",
+    "word_count": 3316,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/orm-2026-prisma-vs-drizzle-vs-sqlalchemy/post.json"
+  },
+  {
+    "slug": "page",
+    "title": "",
+    "category": "MISSING",
+    "word_count": 0,
+    "reasons": [
+      "No post.json"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/page"
+  },
+  {
+    "slug": "pass-interviews-without-a-cs-degree",
+    "title": "Pass interviews without a CS degree",
+    "category": "IMPROVE",
+    "word_count": 3361,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (4 sentence(s)).",
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/pass-interviews-without-a-cs-degree/post.json"
+  },
+  {
+    "slug": "payments-fail-how-we-fixed-flutterwave-paystack-m-pesa",
+    "title": "Payments fail? How we fixed Flutterwave, Paystack, M-Pesa\u2026",
+    "category": "IMPROVE",
+    "word_count": 2679,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/payments-fail-how-we-fixed-flutterwave-paystack-m-pesa/post.json"
+  },
+  {
+    "slug": "personal-ai-assistants-avoid-vendor-lock-in-traps",
+    "title": "Personal AI assistants: avoid vendor lock-in traps",
+    "category": "OK",
+    "word_count": 3350,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/personal-ai-assistants-avoid-vendor-lock-in-traps/post.json"
+  },
+  {
+    "slug": "pick-niches-ai-wont-eat-in-2026",
+    "title": "Pick niches AI won\u2019t eat in 2026",
+    "category": "IMPROVE",
+    "word_count": 2770,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/pick-niches-ai-wont-eat-in-2026/post.json"
+  },
+  {
+    "slug": "pick-one-stripe-lemon-squeezy-paddle-in-2026",
+    "title": "Pick one: Stripe, Lemon Squeezy, Paddle in 2026",
+    "category": "OK",
+    "word_count": 4111,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/pick-one-stripe-lemon-squeezy-paddle-in-2026/post.json"
+  },
+  {
+    "slug": "platform-teams-agentic-world-struggle",
+    "title": "Platform Teams: Agentic World Struggle",
+    "category": "OK",
+    "word_count": 3322,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/platform-teams-agentic-world-struggle/post.json"
+  },
+  {
+    "slug": "platform-teams-in-2026-docs-vs-production-reality",
+    "title": "Platform teams in 2026: Docs vs. production reality",
+    "category": "IMPROVE",
+    "word_count": 3828,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/platform-teams-in-2026-docs-vs-production-reality/post.json"
+  },
+  {
+    "slug": "platform-teams-in-2026-why-your-devs-hate-your-golden-path",
+    "title": "Platform teams in 2026: why your devs hate your golden path",
+    "category": "IMPROVE",
+    "word_count": 2579,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/platform-teams-in-2026-why-your-devs-hate-your-golden-path/post.json"
+  },
+  {
+    "slug": "poolers-wont-save-your-serverless-db",
+    "title": "Poolers won\u2019t save your serverless DB",
+    "category": "OK",
+    "word_count": 2987,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/poolers-wont-save-your-serverless-db/post.json"
+  },
+  {
+    "slug": "portfolio-projects-that-beat-ai-clones-4-signals",
+    "title": "Portfolio projects that beat AI clones: 4 signals",
+    "category": "IMPROVE",
+    "word_count": 3016,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/portfolio-projects-that-beat-ai-clones-4-signals/post.json"
+  },
+  {
+    "slug": "portfolio-projects-that-hire-remote-senior-devs",
+    "title": "Portfolio projects that hire remote senior devs",
+    "category": "IMPROVE",
+    "word_count": 2826,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/portfolio-projects-that-hire-remote-senior-devs/post.json"
+  },
+  {
+    "slug": "portfolio-that-hires-6-projects-i-actually-used-to",
+    "title": "Portfolio that hires: 6 projects I actually used to",
+    "category": "OK",
+    "word_count": 2788,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/portfolio-that-hires-6-projects-i-actually-used-to/post.json"
+  },
+  {
+    "slug": "portfolio-that-hires-show-constraints-not-code",
+    "title": "Portfolio that hires: show constraints, not code",
+    "category": "OK",
+    "word_count": 2296,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/portfolio-that-hires-show-constraints-not-code/post.json"
+  },
+  {
+    "slug": "portfolio-that-stands-out-when-everyone-uses-ai",
+    "title": "Portfolio that stands out when everyone uses AI",
+    "category": "IMPROVE",
+    "word_count": 2390,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/portfolio-that-stands-out-when-everyone-uses-ai/post.json"
+  },
+  {
+    "slug": "postgres-17-buried-redis-s3-cron",
+    "title": "Postgres 17 buried Redis, S3, cron",
+    "category": "IMPROVE",
+    "word_count": 3029,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/postgres-17-buried-redis-s3-cron/post.json"
+  },
+  {
+    "slug": "postgres-17-swallowed-redis-kafka-timescale",
+    "title": "Postgres 17 swallowed Redis, Kafka, Timescale",
+    "category": "IMPROVE",
+    "word_count": 3096,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/postgres-17-swallowed-redis-kafka-timescale/post.json"
+  },
+  {
+    "slug": "postgres-vector-search-what-breaks-first",
+    "title": "Postgres vector search: what breaks first",
+    "category": "OK",
+    "word_count": 3156,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/postgres-vector-search-what-breaks-first/post.json"
+  },
+  {
+    "slug": "pr-checklists-are-dead-ai-agents-do-reviews-now",
+    "title": "PR checklists are dead: AI agents do reviews now",
+    "category": "IMPROVE",
+    "word_count": 2531,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/pr-checklists-are-dead-ai-agents-do-reviews-now/post.json"
+  },
+  {
+    "slug": "prepare-tls-for-post-quantum-reality",
+    "title": "Prepare TLS for post-quantum reality",
+    "category": "IMPROVE",
+    "word_count": 2778,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/prepare-tls-for-post-quantum-reality/post.json"
+  },
+  {
+    "slug": "prevent-ownership-drift-when-velocity-explodes",
+    "title": "Prevent ownership drift when velocity explodes",
+    "category": "OK",
+    "word_count": 2914,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/prevent-ownership-drift-when-velocity-explodes/post.json"
+  },
+  {
+    "slug": "price-ai-proof-skills-in-2026",
+    "title": "Price AI-proof skills in 2026",
+    "category": "IMPROVE",
+    "word_count": 2538,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/price-ai-proof-skills-in-2026/post.json"
+  },
+  {
+    "slug": "price-saas-dev-tools-in-2026-without-guessing",
+    "title": "Price SaaS dev tools in 2026 without guessing",
+    "category": "IMPROVE",
+    "word_count": 2232,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/price-saas-dev-tools-in-2026-without-guessing/post.json"
+  },
+  {
+    "slug": "price-saas-tools-in-2026-what-we-learned-pricing-a",
+    "title": "Price SaaS tools in 2026: what we learned pricing a",
+    "category": "OK",
+    "word_count": 2477,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/price-saas-tools-in-2026-what-we-learned-pricing-a/post.json"
+  },
+  {
+    "slug": "price-tests-that-raised-revenue-vs-tests-that-killed",
+    "title": "Price tests that raised revenue vs tests that killed\u2026",
+    "category": "DELETE",
+    "word_count": 2391,
+    "reasons": [
+      "Claim: Named organization 'Cloudflare' paired with a precise statistic and no verifiable source URL.",
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "named_org_stat",
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/price-tests-that-raised-revenue-vs-tests-that-killed/post.json"
+  },
+  {
+    "slug": "price-your-remote-job-like-a-new-york-dev",
+    "title": "Price your remote job like a New York dev",
+    "category": "OK",
+    "word_count": 2694,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/price-your-remote-job-like-a-new-york-dev/post.json"
+  },
+  {
+    "slug": "price-your-remote-salary-4-step-script",
+    "title": "Price your remote salary: 4-step script",
+    "category": "IMPROVE",
+    "word_count": 2776,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/price-your-remote-salary-4-step-script/post.json"
+  },
+  {
+    "slug": "privacy-policy",
+    "title": "privacy-policy",
+    "category": "DELETE",
+    "word_count": 0,
+    "reasons": [
+      "HTML orphan \u2014 no post.json"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/privacy-policy/index.html"
+  },
+  {
+    "slug": "progressive-web-apps-what-browser-apis-finally-fixed",
+    "title": "Progressive Web Apps: what browser APIs finally fixed",
+    "category": "OK",
+    "word_count": 2338,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/progressive-web-apps-what-browser-apis-finally-fixed/post.json"
+  },
+  {
+    "slug": "prompt-injection-got-the-hype-poison-data-ruined-us",
+    "title": "Prompt injection got the hype \u2014 poison data ruined us",
+    "category": "IMPROVE",
+    "word_count": 3249,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/prompt-injection-got-the-hype-poison-data-ruined-us/post.json"
+  },
+  {
+    "slug": "prompt-injections-hidden-aws-tax",
+    "title": "Prompt injection\u2019s hidden AWS tax",
+    "category": "IMPROVE",
+    "word_count": 3745,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/prompt-injections-hidden-aws-tax/post.json"
+  },
+  {
+    "slug": "pulumi-vs-terraform-vs-opentofu-in-2026",
+    "title": "Pulumi vs Terraform vs OpenTofu in 2026",
+    "category": "IMPROVE",
+    "word_count": 2706,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/pulumi-vs-terraform-vs-opentofu-in-2026/post.json"
+  },
+  {
+    "slug": "purpose-built-beats-general-ai-tools",
+    "title": "Purpose-built beats general AI tools",
+    "category": "OK",
+    "word_count": 3878,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/purpose-built-beats-general-ai-tools/post.json"
+  },
+  {
+    "slug": "pydantic-2-redis-stop-the-3am-ai-pages",
+    "title": "Pydantic 2 + Redis: stop the 3am AI pages",
+    "category": "OK",
+    "word_count": 2113,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/pydantic-2-redis-stop-the-3am-ai-pages/post.json"
+  },
+  {
+    "slug": "pypi-poisoned-models-hit-prod-in-2025",
+    "title": "PyPI poisoned models hit prod in 2025",
+    "category": "OK",
+    "word_count": 2717,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/pypi-poisoned-models-hit-prod-in-2025/post.json"
+  },
+  {
+    "slug": "rag-in-prod-what-tutorials-wont-tell-you",
+    "title": "RAG in prod: what tutorials won\u2019t tell you",
+    "category": "OK",
+    "word_count": 2593,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/rag-in-prod-what-tutorials-wont-tell-you/post.json"
+  },
+  {
+    "slug": "rag-in-prod-why-demos-crumble",
+    "title": "RAG in prod: why demos crumble",
+    "category": "IMPROVE",
+    "word_count": 2699,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/rag-in-prod-why-demos-crumble/post.json"
+  },
+  {
+    "slug": "rag-is-not-enough-hybrid-search-reranking-in-2026",
+    "title": "RAG is not enough: hybrid search + reranking in 2026",
+    "category": "OK",
+    "word_count": 3385,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/rag-is-not-enough-hybrid-search-reranking-in-2026/post.json"
+  },
+  {
+    "slug": "rag-on-legacy-systems-vector-db-vs-full-text-sql",
+    "title": "RAG on legacy systems: vector DB vs. full-text SQL",
+    "category": "IMPROVE",
+    "word_count": 3017,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/rag-on-legacy-systems-vector-db-vs-full-text-sql/post.json"
+  },
+  {
+    "slug": "rag-pipelines-4-silent-prod-killers",
+    "title": "RAG pipelines: 4 silent prod killers",
+    "category": "IMPROVE",
+    "word_count": 2431,
+    "reasons": [
+      "AI-filler phrase: game-changer"
+    ],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/rag-pipelines-4-silent-prod-killers/post.json"
+  },
+  {
+    "slug": "rag-rots-if-you-dont-refresh-indexes",
+    "title": "RAG rots if you don\u2019t refresh indexes",
+    "category": "OK",
+    "word_count": 2958,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/rag-rots-if-you-dont-refresh-indexes/post.json"
+  },
+  {
+    "slug": "react-19-compiler-my-components-changed-how",
+    "title": "React 19 compiler: my components changed how",
+    "category": "OK",
+    "word_count": 2828,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/react-19-compiler-my-components-changed-how/post.json"
+  },
+  {
+    "slug": "rebalance-pay-when-ai-fills-half-your-role",
+    "title": "Rebalance pay when AI fills half your role",
+    "category": "IMPROVE",
+    "word_count": 2447,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/rebalance-pay-when-ai-fills-half-your-role/post.json"
+  },
+  {
+    "slug": "reconcile-mobile-money-in-3-days-edge-cases-paystack",
+    "title": "Reconcile mobile money in 3 days \u2014 edge cases Paystack",
+    "category": "IMPROVE",
+    "word_count": 2702,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/reconcile-mobile-money-in-3-days-edge-cases-paystack/post.json"
+  },
+  {
+    "slug": "reconciling-mobile-money-edge-cases-banks-ignore",
+    "title": "Reconciling mobile money: edge cases banks ignore",
+    "category": "IMPROVE",
+    "word_count": 4044,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/reconciling-mobile-money-edge-cases-banks-ignore/post.json"
+  },
+  {
+    "slug": "red-teaming-agents-without-killing-velocity",
+    "title": "Red-teaming agents without killing velocity",
+    "category": "IMPROVE",
+    "word_count": 2242,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/red-teaming-agents-without-killing-velocity/post.json"
+  },
+  {
+    "slug": "regulations-forced-better-apis-the-2026-fintech",
+    "title": "Regulations forced better APIs: the 2026 fintech",
+    "category": "IMPROVE",
+    "word_count": 3293,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/regulations-forced-better-apis-the-2026-fintech/post.json"
+  },
+  {
+    "slug": "regulations-killed-our-elegant-apis",
+    "title": "Regulations killed our elegant APIs",
+    "category": "IMPROVE",
+    "word_count": 2762,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/regulations-killed-our-elegant-apis/post.json"
+  },
+  {
+    "slug": "regulators-broke-our-api-design",
+    "title": "Regulators broke our API design",
+    "category": "IMPROVE",
+    "word_count": 3228,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s)).",
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/regulators-broke-our-api-design/post.json"
+  },
+  {
+    "slug": "remote-salary-negotiate-without-sounding-cheap",
+    "title": "Remote salary: negotiate without sounding cheap",
+    "category": "OK",
+    "word_count": 3174,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/remote-salary-negotiate-without-sounding-cheap/post.json"
+  },
+  {
+    "slug": "remote-work-in-2026-which-tools-survived",
+    "title": "Remote work in 2026: which tools survived",
+    "category": "OK",
+    "word_count": 2510,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/remote-work-in-2026-which-tools-survived/post.json"
+  },
+  {
+    "slug": "replace-env-with-these-in-2026",
+    "title": "Replace .env with these in 2026",
+    "category": "IMPROVE",
+    "word_count": 3750,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s)).",
+      "AI-filler phrase: game-changer"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/replace-env-with-these-in-2026/post.json"
+  },
+  {
+    "slug": "replace-managed-services-with-postgres-17",
+    "title": "Replace managed services with Postgres 17",
+    "category": "IMPROVE",
+    "word_count": 2692,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/replace-managed-services-with-postgres-17/post.json"
+  },
+  {
+    "slug": "replace-vibe-testing-with-agent-evals-now",
+    "title": "Replace vibe testing with agent evals now",
+    "category": "IMPROVE",
+    "word_count": 2975,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/replace-vibe-testing-with-agent-evals-now/post.json"
+  },
+  {
+    "slug": "replaced-celery-in-2026-what-actually-worked",
+    "title": "Replaced Celery in 2026: what actually worked",
+    "category": "IMPROVE",
+    "word_count": 2368,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/replaced-celery-in-2026-what-actually-worked/post.json"
+  },
+  {
+    "slug": "rogue-agent-api-calls-stop-the-bleeding",
+    "title": "Rogue Agent API Calls: Stop the Bleeding",
+    "category": "OK",
+    "word_count": 3334,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/rogue-agent-api-calls-stop-the-bleeding/post.json"
+  },
+  {
+    "slug": "row-level-security-for-saas-in-2026-the-surprise-cost",
+    "title": "Row-level security for SaaS in 2026: the surprise cost",
+    "category": "IMPROVE",
+    "word_count": 2464,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/row-level-security-for-saas-in-2026-the-surprise-cost/post.json"
+  },
+  {
+    "slug": "run-apis-in-50-spots-what-breaks-first",
+    "title": "Run APIs in 50 spots: what breaks first",
+    "category": "OK",
+    "word_count": 3102,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/run-apis-in-50-spots-what-breaks-first/post.json"
+  },
+  {
+    "slug": "runbooks-vs-ai-which-cuts-outages-50",
+    "title": "Runbooks vs AI: which cuts outages 50%",
+    "category": "OK",
+    "word_count": 3428,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/runbooks-vs-ai-which-cuts-outages-50/post.json"
+  },
+  {
+    "slug": "rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026",
+    "title": "Rust SDK vs FastAPI for LLM ops: trust in 2026",
+    "category": "OK",
+    "word_count": 2386,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/rust-sdk-vs-fastapi-for-llm-ops-trust-in-2026/post.json"
+  },
+  {
+    "slug": "saas-niche-in-2026-pick-a-sliver-no-llm-can-eat",
+    "title": "SaaS niche in 2026: pick a sliver no LLM can eat",
+    "category": "IMPROVE",
+    "word_count": 2826,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/saas-niche-in-2026-pick-a-sliver-no-llm-can-eat/post.json"
+  },
+  {
+    "slug": "save-12kmonth-cloud-egress-costs-in-2026",
+    "title": "Save $12k/month: cloud egress costs in 2026",
+    "category": "OK",
+    "word_count": 3467,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/save-12kmonth-cloud-egress-costs-in-2026/post.json"
+  },
+  {
+    "slug": "saved-3kmonth-by-ditching-kubernetes",
+    "title": "Saved $3k/month by ditching Kubernetes",
+    "category": "OK",
+    "word_count": 2712,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/saved-3kmonth-by-ditching-kubernetes/post.json"
+  },
+  {
+    "slug": "self-healing-ai-agents-vs-rule-based-ops-40-fewer",
+    "title": "Self-healing AI agents vs rule-based ops: 40% fewer",
+    "category": "IMPROVE",
+    "word_count": 4082,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/self-healing-ai-agents-vs-rule-based-ops-40-fewer/post.json"
+  },
+  {
+    "slug": "self-healing-pipelines-argo-vs-crossplane-in-2026",
+    "title": "Self-healing pipelines: Argo vs Crossplane in 2026",
+    "category": "IMPROVE",
+    "word_count": 3936,
+    "reasons": [
+      "AI-filler phrase: paradigm shift"
+    ],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/self-healing-pipelines-argo-vs-crossplane-in-2026/post.json"
+  },
+  {
+    "slug": "self-service-ai-tooling-where-it-breaks-first",
+    "title": "Self-service AI tooling: where it breaks first",
+    "category": "OK",
+    "word_count": 2864,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/self-service-ai-tooling-where-it-breaks-first/post.json"
+  },
+  {
+    "slug": "self-service-is-broken-without-ai-ops",
+    "title": "Self-service is broken without AI ops",
+    "category": "IMPROVE",
+    "word_count": 2382,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/self-service-is-broken-without-ai-ops/post.json"
+  },
+  {
+    "slug": "sell-dev-tools-in-the-ai-sales-cycle",
+    "title": "Sell dev tools in the AI sales cycle",
+    "category": "IMPROVE",
+    "word_count": 3016,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/sell-dev-tools-in-the-ai-sales-cycle/post.json"
+  },
+  {
+    "slug": "senior-engineer-title-inflation-in-2026",
+    "title": "Senior engineer title inflation in 2026",
+    "category": "OK",
+    "word_count": 2335,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/senior-engineer-title-inflation-in-2026/post.json"
+  },
+  {
+    "slug": "senior-role-projects-3-real-paths",
+    "title": "Senior role projects: 3 real paths",
+    "category": "IMPROVE",
+    "word_count": 2488,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/senior-role-projects-3-real-paths/post.json"
+  },
+  {
+    "slug": "serve-4g-as-baseline-apps-in-2026",
+    "title": "Serve 4G-as-baseline apps in 2026",
+    "category": "IMPROVE",
+    "word_count": 2502,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/serve-4g-as-baseline-apps-in-2026/post.json"
+  },
+  {
+    "slug": "serverless-ai-costs-explode-past-10kmo",
+    "title": "Serverless AI costs explode past $10k/mo",
+    "category": "DELETE",
+    "word_count": 2534,
+    "reasons": [
+      "Policy-risk title: Income/salary/side-gig bait \u2014 low-value monetization content and unverifiable earnings claims."
+    ],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/serverless-ai-costs-explode-past-10kmo/post.json"
+  },
+  {
+    "slug": "ship-1mb-pages-on-4g-starlink-africa-case-study",
+    "title": "Ship 1MB pages on 4G: Starlink Africa case study",
+    "category": "IMPROVE",
+    "word_count": 3258,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ship-1mb-pages-on-4g-starlink-africa-case-study/post.json"
+  },
+  {
+    "slug": "ship-a-solo-project-pipeline-under-20month",
+    "title": "Ship a solo project pipeline under $20/month",
+    "category": "OK",
+    "word_count": 2639,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ship-a-solo-project-pipeline-under-20month/post.json"
+  },
+  {
+    "slug": "ship-evals-before-your-agent-ships",
+    "title": "Ship evals before your agent ships",
+    "category": "OK",
+    "word_count": 3377,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ship-evals-before-your-agent-ships/post.json"
+  },
+  {
+    "slug": "ship-faster-with-a-paved-road-4-weeks-to-80-less-toil",
+    "title": "Ship faster with a paved road: 4 weeks to 80% less toil",
+    "category": "OK",
+    "word_count": 3011,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ship-faster-with-a-paved-road-4-weeks-to-80-less-toil/post.json"
+  },
+  {
+    "slug": "ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse",
+    "title": "Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse",
+    "category": "OK",
+    "word_count": 3047,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse/post.json"
+  },
+  {
+    "slug": "ship-to-nairobi-users-starlink-latency-guide-2026",
+    "title": "Ship to Nairobi users: Starlink latency guide 2026",
+    "category": "IMPROVE",
+    "word_count": 2472,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ship-to-nairobi-users-starlink-latency-guide-2026/post.json"
+  },
+  {
+    "slug": "show-real-work-not-ai-clones",
+    "title": "Show real work, not AI clones",
+    "category": "IMPROVE",
+    "word_count": 3253,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/show-real-work-not-ai-clones/post.json"
+  },
+  {
+    "slug": "signals-5-state-tricks-that-broke-my-app",
+    "title": "Signals: 5 state tricks that broke my app",
+    "category": "IMPROVE",
+    "word_count": 2680,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/signals-5-state-tricks-that-broke-my-app/post.json"
+  },
+  {
+    "slug": "skip-m-pesa-build-one-api-for-3-african-markets",
+    "title": "Skip M-Pesa: build one API for 3 African markets",
+    "category": "IMPROVE",
+    "word_count": 3214,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/skip-m-pesa-build-one-api-for-3-african-markets/post.json"
+  },
+  {
+    "slug": "slsa-and-sigstore-the-2026-supply-chain-baseline",
+    "title": "SLSA and Sigstore: the 2026 supply chain baseline",
+    "category": "IMPROVE",
+    "word_count": 3617,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/slsa-and-sigstore-the-2026-supply-chain-baseline/post.json"
+  },
+  {
+    "slug": "soft-deletes-fail-what-breaks-first",
+    "title": "Soft deletes fail: what breaks first",
+    "category": "IMPROVE",
+    "word_count": 2550,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/soft-deletes-fail-what-breaks-first/post.json"
+  },
+  {
+    "slug": "spot-ais-hidden-cost-spike-in-your-stack",
+    "title": "Spot AI\u2019s hidden cost spike in your stack",
+    "category": "IMPROVE",
+    "word_count": 3108,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/spot-ais-hidden-cost-spike-in-your-stack/post.json"
+  },
+  {
+    "slug": "spot-evictions-the-retry-logic-that-holds-up",
+    "title": "Spot evictions: the retry logic that holds up",
+    "category": "IMPROVE",
+    "word_count": 2819,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/spot-evictions-the-retry-logic-that-holds-up/post.json"
+  },
+  {
+    "slug": "spot-instances-the-retry-logic-trap-90-miss",
+    "title": "Spot instances: the retry logic trap 90% miss",
+    "category": "IMPROVE",
+    "word_count": 3259,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/spot-instances-the-retry-logic-trap-90-miss/post.json"
+  },
+  {
+    "slug": "spot-instances-vs-on-demand-for-ai-experiments",
+    "title": "Spot instances vs on-demand for AI experiments",
+    "category": "OK",
+    "word_count": 2592,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/spot-instances-vs-on-demand-for-ai-experiments/post.json"
+  },
+  {
+    "slug": "starlink-4g-fallback-serve-pages-under-800ms",
+    "title": "Starlink 4G fallback: serve pages under 800ms",
+    "category": "IMPROVE",
+    "word_count": 2482,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/starlink-4g-fallback-serve-pages-under-800ms/post.json"
+  },
+  {
+    "slug": "starlink-in-production-what-changed-in-our-stack",
+    "title": "Starlink in production: what changed in our stack",
+    "category": "IMPROVE",
+    "word_count": 3042,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/starlink-in-production-what-changed-in-our-stack/post.json"
+  },
+  {
+    "slug": "stay-relevant-when-tools-change-faster-than-you-can",
+    "title": "Stay relevant when tools change faster than you can",
+    "category": "OK",
+    "word_count": 3234,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/stay-relevant-when-tools-change-faster-than-you-can/post.json"
+  },
+  {
+    "slug": "stop-assuming-payment-apis-never-fail",
+    "title": "Stop assuming payment APIs never fail",
+    "category": "OK",
+    "word_count": 2207,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/stop-assuming-payment-apis-never-fail/post.json"
+  },
+  {
+    "slug": "stop-false-positives-in-ci-scanning-now",
+    "title": "Stop false positives in CI scanning now",
+    "category": "IMPROVE",
+    "word_count": 3169,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/stop-false-positives-in-ci-scanning-now/post.json"
+  },
+  {
+    "slug": "stop-guessing-tech-stacks-validate-tools-in-2-hours",
+    "title": "Stop guessing tech stacks: validate tools in 2 hours",
+    "category": "OK",
+    "word_count": 2466,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/stop-guessing-tech-stacks-validate-tools-in-2-hours/post.json"
+  },
+  {
+    "slug": "stop-putting-llm-keys-in-env",
+    "title": "Stop Putting LLM Keys in .env",
+    "category": "IMPROVE",
+    "word_count": 2704,
+    "reasons": [
+      "On manual IMPROVE list"
+    ],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/stop-putting-llm-keys-in-env/post.json"
+  },
+  {
+    "slug": "stop-the-writes-zero-downtime-db-migrations",
+    "title": "Stop the writes \u2014 zero-downtime DB migrations",
+    "category": "IMPROVE",
+    "word_count": 2647,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/stop-the-writes-zero-downtime-db-migrations/post.json"
+  },
+  {
+    "slug": "stop-trusting-agents-for-core-logic",
+    "title": "Stop trusting agents for core logic",
+    "category": "OK",
+    "word_count": 2101,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/stop-trusting-agents-for-core-logic/post.json"
+  },
+  {
+    "slug": "store-data-once-serve-everywhere-cheaper",
+    "title": "Store data once, serve everywhere: cheaper",
+    "category": "IMPROVE",
+    "word_count": 3378,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/store-data-once-serve-everywhere-cheaper/post.json"
+  },
+  {
+    "slug": "supervisor-vs-swarm-vs-debate-vs-pipeline",
+    "title": "Supervisor vs swarm vs debate vs pipeline",
+    "category": "IMPROVE",
+    "word_count": 3485,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/supervisor-vs-swarm-vs-debate-vs-pipeline/post.json"
+  },
+  {
+    "slug": "survive-90s-db-failover-without-melting",
+    "title": "Survive 90s DB failover without melting",
+    "category": "IMPROVE",
+    "word_count": 3674,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/survive-90s-db-failover-without-melting/post.json"
+  },
+  {
+    "slug": "survive-network-drops-agentic-workflows-that-keep-running",
+    "title": "Survive network drops: agentic workflows that keep running",
+    "category": "IMPROVE",
+    "word_count": 2620,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/survive-network-drops-agentic-workflows-that-keep-running/post.json"
+  },
+  {
+    "slug": "survived-12000-agents-with-redis",
+    "title": "Survived 12,000 agents with Redis",
+    "category": "IMPROVE",
+    "word_count": 2791,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/survived-12000-agents-with-redis/post.json"
+  },
+  {
+    "slug": "tame-python-asyncs-hidden-traps",
+    "title": "Tame Python async\u2019s hidden traps",
+    "category": "OK",
+    "word_count": 2538,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/tame-python-asyncs-hidden-traps/post.json"
+  },
+  {
+    "slug": "temporal-changed-our-agent-retries-for-good",
+    "title": "Temporal changed our agent retries for good",
+    "category": "OK",
+    "word_count": 2193,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/temporal-changed-our-agent-retries-for-good/post.json"
+  },
+  {
+    "slug": "terms-of-service",
+    "title": "terms-of-service",
+    "category": "DELETE",
+    "word_count": 0,
+    "reasons": [
+      "HTML orphan \u2014 no post.json"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/terms-of-service/index.html"
+  },
+  {
+    "slug": "test-ai-code-without-testing-the-ai",
+    "title": "Test AI code without testing the AI",
+    "category": "OK",
+    "word_count": 3737,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/test-ai-code-without-testing-the-ai/post.json"
+  },
+  {
+    "slug": "thundering-herd-the-hidden-scaling-trap",
+    "title": "Thundering Herd: The Hidden Scaling Trap",
+    "category": "OK",
+    "word_count": 2399,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/thundering-herd-the-hidden-scaling-trap/post.json"
+  },
+  {
+    "slug": "tls-13-post-quantum-what-breaks-at-scale",
+    "title": "TLS 1.3 + post-quantum: what breaks at scale",
+    "category": "IMPROVE",
+    "word_count": 2437,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/tls-13-post-quantum-what-breaks-at-scale/post.json"
+  },
+  {
+    "slug": "tool-calling-patterns-patterns-that-survive-load-vs",
+    "title": "Tool calling patterns: patterns that survive load vs",
+    "category": "OK",
+    "word_count": 3005,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/tool-calling-patterns-patterns-that-survive-load-vs/post.json"
+  },
+  {
+    "slug": "tool-calling-stateless-beats-stateful-under-load",
+    "title": "Tool calling: stateless beats stateful under load",
+    "category": "OK",
+    "word_count": 3123,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/tool-calling-stateless-beats-stateful-under-load/post.json"
+  },
+  {
+    "slug": "tool-calls-at-scale-sync-vs-async-patterns-that-live",
+    "title": "Tool calls at scale: sync vs async patterns that live",
+    "category": "IMPROVE",
+    "word_count": 2731,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/tool-calls-at-scale-sync-vs-async-patterns-that-live/post.json"
+  },
+  {
+    "slug": "tool-calls-under-load-async-batch-vs-fire-and-forget",
+    "title": "Tool calls under load: async batch vs fire-and-forget",
+    "category": "IMPROVE",
+    "word_count": 3820,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/tool-calls-under-load-async-batch-vs-fire-and-forget/post.json"
+  },
+  {
+    "slug": "track-ai-agent-costs-in-fractal-workflows",
+    "title": "Track AI agent costs in fractal workflows",
+    "category": "IMPROVE",
+    "word_count": 3243,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/track-ai-agent-costs-in-fractal-workflows/post.json"
+  },
+  {
+    "slug": "trim-aws-iam-policies-in-one-afternoon",
+    "title": "Trim AWS IAM policies in one afternoon",
+    "category": "IMPROVE",
+    "word_count": 3405,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/trim-aws-iam-policies-in-one-afternoon/post.json"
+  },
+  {
+    "slug": "trim-llm-bills-3-finops-moves-that-work",
+    "title": "Trim LLM bills: 3 FinOps moves that work",
+    "category": "IMPROVE",
+    "word_count": 2442,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/trim-llm-bills-3-finops-moves-that-work/post.json"
+  },
+  {
+    "slug": "two-engineer-classes-the-ai-tool-norm-trap",
+    "title": "Two engineer classes: the AI tool norm trap",
+    "category": "OK",
+    "word_count": 2734,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/two-engineer-classes-the-ai-tool-norm-trap/post.json"
+  },
+  {
+    "slug": "typescript-53-changed-how-we-model-domains",
+    "title": "TypeScript 5.3 changed how we model domains",
+    "category": "OK",
+    "word_count": 2614,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/typescript-53-changed-how-we-model-domains/post.json"
+  },
+  {
+    "slug": "unlock-python-313s-free-threaded-gil-for-web-apps",
+    "title": "Unlock Python 3.13's free-threaded GIL for web apps",
+    "category": "IMPROVE",
+    "word_count": 2438,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/unlock-python-313s-free-threaded-gil-for-web-apps/post.json"
+  },
+  {
+    "slug": "use-feature-flags-to-deploy-ai-models-safely",
+    "title": "Use feature flags to deploy AI models safely",
+    "category": "IMPROVE",
+    "word_count": 2742,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/use-feature-flags-to-deploy-ai-models-safely/post.json"
+  },
+  {
+    "slug": "ussd-fintech-in-2026-the-300m-user-channel-nobody",
+    "title": "USSD fintech in 2026: the 300M user channel nobody",
+    "category": "IMPROVE",
+    "word_count": 2917,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/ussd-fintech-in-2026-the-300m-user-channel-nobody/post.json"
+  },
+  {
+    "slug": "vibe-code-works-great-fails-forever",
+    "title": "Vibe code: works great, fails forever",
+    "category": "IMPROVE",
+    "word_count": 2648,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/vibe-code-works-great-fails-forever/post.json"
+  },
+  {
+    "slug": "vibe-coding-mvp-gem-prod-albatross",
+    "title": "Vibe coding: MVP gem, prod albatross",
+    "category": "IMPROVE",
+    "word_count": 3503,
+    "reasons": [
+      "AI-filler phrase: game-changer"
+    ],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/vibe-coding-mvp-gem-prod-albatross/post.json"
+  },
+  {
+    "slug": "wasm-ml-models-keep-dev-speed-at-the-edge",
+    "title": "WASM ML models: keep dev speed at the edge",
+    "category": "IMPROVE",
+    "word_count": 2686,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/wasm-ml-models-keep-dev-speed-at-the-edge/post.json"
+  },
+  {
+    "slug": "wasm-servers-beat-containers-here",
+    "title": "WASM servers beat containers here",
+    "category": "OK",
+    "word_count": 2485,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/wasm-servers-beat-containers-here/post.json"
+  },
+  {
+    "slug": "webhooks-2026-retries-idempotency-and-the-9995",
+    "title": "Webhooks 2026: retries, idempotency, and the 99.95%",
+    "category": "OK",
+    "word_count": 2782,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/webhooks-2026-retries-idempotency-and-the-9995/post.json"
+  },
+  {
+    "slug": "webhooks-done-right-retries-that-dont-explode-in-2026",
+    "title": "Webhooks done right: retries that don\u2019t explode in 2026",
+    "category": "OK",
+    "word_count": 2011,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/webhooks-done-right-retries-that-dont-explode-in-2026/post.json"
+  },
+  {
+    "slug": "websockets-vs-server-sent-events-latency-over-3g",
+    "title": "WebSockets vs Server-Sent Events: latency over 3G",
+    "category": "OK",
+    "word_count": 3713,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/websockets-vs-server-sent-events-latency-over-3g/post.json"
+  },
+  {
+    "slug": "when-astro-islands-shine-in-2026",
+    "title": "When Astro islands shine in 2026",
+    "category": "IMPROVE",
+    "word_count": 3459,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/when-astro-islands-shine-in-2026/post.json"
+  },
+  {
+    "slug": "when-flags-become-experiments",
+    "title": "When flags become experiments",
+    "category": "IMPROVE",
+    "word_count": 3744,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s)).",
+      "AI-filler phrase: game-changer"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/when-flags-become-experiments/post.json"
+  },
+  {
+    "slug": "which-agent-stack-survives-3g",
+    "title": "Which agent stack survives 3G?",
+    "category": "OK",
+    "word_count": 2723,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/which-agent-stack-survives-3g/post.json"
+  },
+  {
+    "slug": "which-ai-wrappers-made-money-in-2026",
+    "title": "Which AI wrappers made money in 2026",
+    "category": "OK",
+    "word_count": 2329,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/which-ai-wrappers-made-money-in-2026/post.json"
+  },
+  {
+    "slug": "who-owns-ai-generated-code",
+    "title": "Who owns AI-generated code?",
+    "category": "IMPROVE",
+    "word_count": 2573,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/who-owns-ai-generated-code/post.json"
+  },
+  {
+    "slug": "why-ai-interviewers-failed-68-of-us-in-2026",
+    "title": "Why AI interviewers failed 68% of us in 2026",
+    "category": "OK",
+    "word_count": 3042,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/why-ai-interviewers-failed-68-of-us-in-2026/post.json"
+  },
+  {
+    "slug": "why-do-production-agents-still-need-humans",
+    "title": "Why do production agents still need humans?",
+    "category": "OK",
+    "word_count": 3640,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/why-do-production-agents-still-need-humans/post.json"
+  },
+  {
+    "slug": "why-does-my-agent-version-break-clients",
+    "title": "Why does my agent version break clients?",
+    "category": "OK",
+    "word_count": 2530,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/why-does-my-agent-version-break-clients/post.json"
+  },
+  {
+    "slug": "why-does-my-model-drift-after-deploy",
+    "title": "Why does my model drift after deploy?",
+    "category": "OK",
+    "word_count": 3464,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/why-does-my-model-drift-after-deploy/post.json"
+  },
+  {
+    "slug": "why-i-picked-playwright-and-vitest-in-2026",
+    "title": "Why I picked Playwright and Vitest in 2026",
+    "category": "IMPROVE",
+    "word_count": 2326,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (3 sentence(s)).",
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/why-i-picked-playwright-and-vitest-in-2026/post.json"
+  },
+  {
+    "slug": "why-monoliths-die-slowly-in-2026",
+    "title": "Why monoliths die slowly in 2026",
+    "category": "IMPROVE",
+    "word_count": 2114,
+    "reasons": [
+      "Technical post with fewer than two code fences"
+    ],
+    "claim_hits": [],
+    "has_code": false,
+    "is_stub": false,
+    "path": "docs/why-monoliths-die-slowly-in-2026/post.json"
+  },
+  {
+    "slug": "why-our-schema-survived-ai-scaling",
+    "title": "Why our schema survived AI scaling",
+    "category": "OK",
+    "word_count": 2241,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/why-our-schema-survived-ai-scaling/post.json"
+  },
+  {
+    "slug": "why-platform-metrics-lie",
+    "title": "Why platform metrics lie",
+    "category": "OK",
+    "word_count": 2753,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/why-platform-metrics-lie/post.json"
+  },
+  {
+    "slug": "why-progressive-web-apps-fail-on-2g-and-how-to-fix",
+    "title": "Why progressive web apps fail on 2G and how to fix\u2026",
+    "category": "OK",
+    "word_count": 2678,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/why-progressive-web-apps-fail-on-2g-and-how-to-fix/post.json"
+  },
+  {
+    "slug": "why-scaling-agents-kills-plain-logs",
+    "title": "Why scaling agents kills plain logs",
+    "category": "OK",
+    "word_count": 2735,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/why-scaling-agents-kills-plain-logs/post.json"
+  },
+  {
+    "slug": "why-your-ai-portfolio-bombs-in-nigeria",
+    "title": "Why your AI portfolio bombs in Nigeria",
+    "category": "IMPROVE",
+    "word_count": 2623,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/why-your-ai-portfolio-bombs-in-nigeria/post.json"
+  },
+  {
+    "slug": "why-your-multi-agent-system-degraded-slowly",
+    "title": "Why your multi-agent system degraded slowly",
+    "category": "OK",
+    "word_count": 3064,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/why-your-multi-agent-system-degraded-slowly/post.json"
+  },
+  {
+    "slug": "why-your-routing-layer-will-collapse-at-scale",
+    "title": "Why your routing layer will collapse at scale",
+    "category": "OK",
+    "word_count": 2846,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/why-your-routing-layer-will-collapse-at-scale/post.json"
+  },
+  {
+    "slug": "wireguard-vs-tailscale-for-5month-zero-trust",
+    "title": "WireGuard vs Tailscale for $5/month zero trust",
+    "category": "DELETE",
+    "word_count": 3142,
+    "reasons": [
+      "Claim: Unsourced 'study/survey/report by' phrasing \u2014 treat as a fabricated citation.",
+      "Claim: Unverifiable first-person incident language (2 sentence(s))."
+    ],
+    "claim_hits": [
+      "fake_authority",
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/wireguard-vs-tailscale-for-5month-zero-trust/post.json"
+  },
+  {
+    "slug": "zero-downtime-postgres-schema-changes-in-2026",
+    "title": "Zero-downtime Postgres schema changes in 2026",
+    "category": "IMPROVE",
+    "word_count": 3202,
+    "reasons": [
+      "Claim: Unverifiable first-person incident language (1 sentence(s))."
+    ],
+    "claim_hits": [
+      "first_person_incident"
+    ],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/zero-downtime-postgres-schema-changes-in-2026/post.json"
+  },
+  {
+    "slug": "zero-trust-ai-skip-the-latency-tax",
+    "title": "Zero-trust AI: skip the latency tax",
+    "category": "OK",
+    "word_count": 2985,
+    "reasons": [],
+    "claim_hits": [],
+    "has_code": true,
+    "is_stub": false,
+    "path": "docs/zero-trust-ai-skip-the-latency-tax/post.json"
+  }
+]

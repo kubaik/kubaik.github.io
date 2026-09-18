@@ -42,6 +42,7 @@ from adsense_fixes.schema_validator import extract_and_build_faq_schema
 from adsense_fixes.content_freshness import inject_freshness_footer, get_publishing_schedule_status
 from adsense_fixes.claim_gate import check_claims, ClaimGateError
 from adsense_fixes.topic_dedup import check_topic_duplicate
+from adsense_fixes.policy_risk import filter_safe_topics, topic_policy_violation
 
 try:
     from title_validator import (
@@ -645,17 +646,27 @@ def _validate_content_quality(content: str, title: str):
             "(e.g. Python 3.12, Redis 7.2, Kubernetes 1.29). "
             "Required for AdSense-quality technical content."
         )
+    # Do NOT hard-fail on missing metrics. That rule trained the model to
+    # invent "cut latency 40%" and "a 2026 study by OWASP found 68%".
     if not has_metric:
-        hard_failures.append(
-            "Missing concrete metric or number "
-            "(%, ms, rps, cost, latency, throughput). "
-            "Required signal of original technical substance."
+        warnings.append(
+            "No concrete metric (ms, rps, cost). Prefer a documented figure "
+            "or omit the number — do not invent one."
         )
     if not has_code:
         hard_failures.append(
             "Fewer than two fenced code blocks. "
             "Technical posts without code are low-value for AdSense review."
         )
+
+    title_violation = topic_policy_violation(title)
+    if title_violation:
+        hard_failures.append(f"Policy-risk title: {title_violation}")
+
+    claim_result = check_claims(content, title)
+    if claim_result.blocked:
+        for reason in claim_result.reasons:
+            hard_failures.append(f"Claim gate: {reason}")
 
     # ── Warnings (logged; post still publishes) ───────────────────────────────
 
@@ -3645,6 +3656,12 @@ class BlogSystem:
     # ─────────────────────────────────────────────────────────────
 
     async def generate_blog_post(self, topic: str, keywords: List[str] = None) -> "BlogPost":
+        banned = topic_policy_violation(topic or "")
+        if banned:
+            raise InsufficientContentError(
+                f"Refusing to generate topic {topic!r}: {banned}"
+            )
+
         if not self.api_key:
             print("No API keys configured. Using local template content.")
             return self._generate_fallback_post(topic)
@@ -4314,22 +4331,20 @@ class BlogSystem:
             "tutorial":        "Title: MAX 50 chars. Name the outcome + tool only. E.g. 'FastAPI rate limiting in 20 lines'.",
             "opinion":         "Title: MAX 50 chars. State the contrarian take directly. E.g. 'Microservices slowed us down'.",
             "comparison":      "Title: MAX 50 chars. Name both options + the verdict angle. E.g. 'Redis vs Memcached: the benchmark that matters'.",
-            "case_study":      "Title: MAX 50 chars. Lead with the result. E.g. 'How we cut latency 60% with one index'.",
+            "case_study":      "Title: MAX 50 chars. Name the mechanism, not a fake percentage. E.g. 'One btree index removed the seq scan'.",
             "explainer":       "Title: MAX 50 chars. Name the confusion being resolved. E.g. 'Async Python: when it helps, when it hurts'.",
-            "listicle":        "Title: MAX 50 chars. Number + specific promise. E.g. '7 TypeScript traps I keep seeing in code reviews'.",
+            "listicle":        "Title: MAX 50 chars. Number + specific promise. E.g. '7 TypeScript traps that show up in reviews'.",
             "troubleshooting": "Title: MAX 50 chars. Use the exact error symptom. E.g. 'Node.js memory leak: how to find it in 10 min'.",
         }.get(format_name, "Title: MAX 50 chars. Specific, benefit-driven, no filler.")
 
         year_guidance = (
-            "YEAR POLICY: The current year is 2026. All data, statistics, salary "
-            "figures, tool versions, and 'as of' references must use 2026 as the "
-            "baseline. You may cite research or historical context from earlier years "
-            "only when it is explicitly labelled as historical "
-            "(e.g. 'a 2024 Stack Overflow survey found...'). "
-            "Never present pre-2025 figures as current. "
-            "Never write phrases like 'in 2024' or 'as of 2023' without the historical label. "
-            "When citing salary ranges, hiring trends, or tool adoption rates, "
-            "use 2026 figures or clearly state the year of the source data."
+            "YEAR POLICY: The current year is 2026. Tool versions and 'as of' "
+            "references may say 2026. Do NOT invent salary figures, adoption "
+            "rates, or 'a 2026 study by <Vendor> found X%'. If you do not have "
+            "a real URL for a statistic, describe the mechanism instead of "
+            "a number. Historical sources must be labelled historical and "
+            "must include a real URL. Never write side-gig, passive-income, "
+            "or '$Nk/mo' claims."
         )
 
         system_content = _build_system_prompt(
@@ -4944,19 +4959,20 @@ Return ONLY the JSON object.""",
 
         all_topics = self.config.get("content_topics", [])
 
+        safe_topics = filter_safe_topics(all_topics)
         candidates = [
-            t for t in all_topics
+            t for t in safe_topics
             if t != failed_topic and t not in exclude and t not in used
         ]
 
         if not candidates:
             candidates = [
-                t for t in all_topics
+                t for t in safe_topics
                 if t != failed_topic and t not in exclude
             ]
 
         if not candidates:
-            candidates = [t for t in all_topics if t != failed_topic]
+            candidates = [t for t in safe_topics if t != failed_topic]
 
         if not candidates:
             return failed_topic
@@ -4985,10 +5001,10 @@ Return ONLY the JSON object.""",
         word_count = len(post.content.split())
         reading_time = max(1, round(word_count / 200))
 
-        if word_count < 1500:
+        if word_count < 1800:
             raise ValueError(
                 f"Refusing to save '{post.title}': only {word_count} words. "
-                "Minimum is 1500. This post would harm AdSense approval."
+                "Minimum is 1800. This post would harm AdSense approval."
             )
 
         # ── Fabricated citation / first-person incident gate ────────────
@@ -5274,10 +5290,10 @@ def pick_next_topic(
         except (json.JSONDecodeError, FileNotFoundError):
             used = []
 
-    available = [t for t in topics if t not in used]
+    available = [t for t in filter_safe_topics(topics) if t not in used]
     if not available:
         print("All topics used, resetting...")
-        available = topics
+        available = filter_safe_topics(topics)
         used = []
 
     docs_dir = Path("./docs")
@@ -5628,7 +5644,10 @@ def create_sample_config(config_path: str = "config.yaml"):
 
     existing_topics: list = config.get("content_topics") or []
     existing_topic_set = set(existing_topics)
-    appended_topics = [t for t in NEW_TOPICS if t not in existing_topic_set]
+    appended_topics = [
+        t for t in filter_safe_topics(NEW_TOPICS)
+        if t not in existing_topic_set
+    ]
     config["content_topics"] = existing_topics + appended_topics
     if appended_topics:
         changed_keys.append(
@@ -6381,6 +6400,14 @@ if __name__ == "__main__":
             if refresh_results['refreshed']:
                 StaticSiteGenerator(blog_system).generate_site()
                 print("Site rebuilt after stale-post refresh.")
+
+        elif mode == "classify":
+            from adsense_fixes.classify_posts import main as classify_main
+            raise SystemExit(classify_main(sys.argv[2:]))
+
+        elif mode == "apply-verdicts":
+            from adsense_fixes.content_audit_verdicts import main as verdicts_main
+            raise SystemExit(verdicts_main(sys.argv[2:]))
 
         elif mode == "audit-links":
             from adsense_fixes.link_validator import audit_all_internal_links

@@ -21,11 +21,9 @@ _BANNED_TOPIC_RE = re.compile(
     r"\bsalary hacks?\b|"
     r"\bnegotiate salary\b|"
     r"\bland a \$?\d+k\b|"
-    r"\b\$?\d+k\s*/?\s*mo\b|"
-    r"\b\d+kmo\b|"
+    r"\b(?:make|earn|paid(?:\s+me)?|profit)\b.{0,24}\$?\d+k\s*/?\s*mo\b|"
     r"\bvc[\s-]?insights\b|"
-    r"\bmake \$?\d+k\b|"
-    r"\b12kmo\b"
+    r"\bmake \$?\d+k\b"
     r")",
     re.IGNORECASE,
 )
@@ -53,3 +51,42 @@ def topic_policy_violation(text: str) -> Optional[str]:
 
 def filter_safe_topics(topics: List[str]) -> List[str]:
     return [t for t in topics if not topic_policy_violation(t)]
+
+
+# Site chrome under docs/ — never classify, tombstone, or queue these.
+STATIC_PAGE_SLUGS = frozenset({
+    "about",
+    "contact",
+    "privacy-policy",
+    "privacy",
+    "terms-of-service",
+    "terms",
+    "tos",
+    "dmca",
+    "ai-content-policy",
+    "cookie-policy",
+    "cookies",
+    "disclaimer",
+    "legal",
+    "page",
+})
+
+SKIP_SITE_DIRS = frozenset({
+    "static",
+    "tag",
+    "author",
+    "tags",
+    "authors",
+    "assets",
+    "css",
+    "js",
+    "images",
+}) | STATIC_PAGE_SLUGS
+
+
+def is_static_page(slug: str) -> bool:
+    """True for about/contact/legal and other non-post dirs."""
+    if not slug:
+        return True
+    name = slug.strip("/").split("/")[-1].lower()
+    return name in SKIP_SITE_DIRS

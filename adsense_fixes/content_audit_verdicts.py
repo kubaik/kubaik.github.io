@@ -30,7 +30,7 @@ if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
 from adsense_fixes.claim_gate import check_claims
-from adsense_fixes.policy_risk import topic_policy_violation
+from adsense_fixes.policy_risk import is_static_page, topic_policy_violation, SKIP_SITE_DIRS
 
 try:
     from adsense_fixes.canonical_guard import _MERGE_STUB_RE
@@ -44,7 +44,7 @@ except ImportError:
 DOCS_DIR = Path("./docs")
 QUEUE_PATH = Path("./regeneration_queue.json")
 REMOVED_LOG = DOCS_DIR / "_removed_posts.json"
-SKIP_DIRS = {"static", "tag", "author"}
+SKIP_DIRS = set(SKIP_SITE_DIRS)
 
 DELETE_VERDICTS: Dict[str, str] = {
     "47-ai-code-debt-in-2026": "Fabricated studies + queue needs_review",
@@ -175,6 +175,8 @@ def _slug_exists(slug: str) -> bool:
 
 
 def tombstone_slug(slug: str, reason: str, apply: bool) -> str:
+    if is_static_page(slug):
+        return f"SKIPPED  /{slug}/  (static site page — never tombstone)"
     post_dir = DOCS_DIR / slug
     if not post_dir.exists():
         return f"MISSING  /{slug}/  ({reason})"
@@ -250,6 +252,8 @@ def _enqueue_improve(slug: str, reason: str) -> None:
 
 
 def improve_slug(slug: str, reason: str, apply: bool) -> str:
+    if is_static_page(slug):
+        return f"SKIPPED  /{slug}/  (static site page — never rewrite)"
     pj = _post_json_path(slug)
     if not pj.exists():
         return f"MISSING  /{slug}/  (improve skipped — {reason})"
@@ -291,23 +295,48 @@ def improve_slug(slug: str, reason: str, apply: bool) -> str:
     return f"IMPROVED /{slug}/  stripped {removed} sentence(s), {after} words, clean"
 
 
-def run(apply: bool, delete_only: bool, improve_only: bool) -> int:
-    delete_map = dict(DELETE_VERDICTS)
-    delete_map.update(_discover_merge_stubs())
+def _verdicts_from_classifier(docs_dir: Path) -> Tuple[Dict[str, str], Dict[str, str]]:
+    """Live DELETE / IMPROVE maps from classify_posts.scan()."""
+    from adsense_fixes.classify_posts import scan
+
+    delete_map: Dict[str, str] = {}
+    improve_map: Dict[str, str] = {}
+    for v in scan(docs_dir):
+        if is_static_page(v.slug):
+            continue
+        reason = "; ".join(v.reasons) if v.reasons else v.category
+        if v.category == "DELETE":
+            delete_map[v.slug] = reason
+        elif v.category == "IMPROVE":
+            improve_map[v.slug] = reason
+    return delete_map, improve_map
+
+
+def run(apply: bool, delete_only: bool, improve_only: bool, from_classify: bool = True) -> int:
+    if from_classify:
+        delete_map, improve_map = _verdicts_from_classifier(DOCS_DIR)
+    else:
+        delete_map = {
+            slug: reason
+            for slug, reason in {**DELETE_VERDICTS, **_discover_merge_stubs()}.items()
+            if not is_static_page(slug)
+        }
+        improve_map = dict(IMPROVE_VERDICTS)
 
     print("Content Audit Verdicts")
     print("=" * 64)
     print(f"Mode        : {'APPLY' if apply else 'DRY-RUN'}")
+    print(f"Source      : {'live classify_posts' if from_classify else 'hardcoded lists'}")
     print(f"Docs        : {DOCS_DIR.resolve()}")
-    print(f"Delete list : {len(delete_map)} slugs (includes live merge stubs)")
-    print(f"Improve list: {len(IMPROVE_VERDICTS)} slugs")
+    print(f"Delete list : {len(delete_map)} slugs")
+    print(f"Improve list: {len(improve_map)} slugs")
     print("=" * 64)
 
     actions: List[str] = []
     if not improve_only:
         print("\nDELETE")
         for slug, reason in sorted(delete_map.items()):
-            if slug in IMPROVE_VERDICTS:
+            if slug in improve_map:
                 continue
             line = tombstone_slug(slug, reason, apply)
             actions.append(line)
@@ -315,7 +344,7 @@ def run(apply: bool, delete_only: bool, improve_only: bool) -> int:
 
     if not delete_only:
         print("\nIMPROVE")
-        for slug, reason in sorted(IMPROVE_VERDICTS.items()):
+        for slug, reason in sorted(improve_map.items()):
             if slug in delete_map:
                 line = tombstone_slug(slug, f"also on delete list: {reason}", apply)
             else:
@@ -339,8 +368,13 @@ def main(argv: List[str] = None) -> int:
     parser.add_argument("--apply", action="store_true", help="Write changes (default: dry-run)")
     parser.add_argument("--delete-only", action="store_true")
     parser.add_argument("--improve-only", action="store_true")
+    parser.add_argument(
+        "--hardcoded",
+        action="store_true",
+        help="Use the built-in slug lists instead of live classify_posts results",
+    )
     args = parser.parse_args(argv)
-    return run(args.apply, args.delete_only, args.improve_only)
+    return run(args.apply, args.delete_only, args.improve_only, from_classify=not args.hardcoded)
 
 
 if __name__ == "__main__":
