@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-10T02:38:19.531287">
-        <meta property="article:modified_time" content="2026-06-10T02:38:19.531294">
+        <meta property="article:modified_time" content="2026-09-18T11:32:41.517135+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Merge three payment APIs into one system">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/merge-three-payment-apis-into-one-system/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Merge three payment APIs into one system",
       "description": "Cut payment integrations from three APIs to one gateway in Kenya, Nigeria, and Ghana.",
       "datePublished": "2026-06-10T02:38:19+00:00",
-      "dateModified": "2026-06-10T02:38:19+00:00",
-      "wordCount": 3617,
+      "dateModified": "2026-09-18T11:32:41+00:00",
+      "wordCount": 3548,
       "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -248,19 +248,19 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         18 min read
-                        &nbsp;·&nbsp; 3617 words
+                        &nbsp;·&nbsp; 3548 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-10
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about build payment during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
+                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>The standard playbook says: build one adapter per country. M-Pesa needs an SDK, Flutterwave handles Nigeria, and Paystack covers Ghana. You’ll wrap each in a clean interface like <code>PaymentProcessor.sendPayment()</code>, throw in some feature flags, and call it a day. That’s what most teams do because it’s the path of least resistance. I followed it too — until I saw the first bill.</p>
-<p>In 2026, my team at a Nairobi fintech launched three country-specific adapters. Each adapter averaged 800ms for a card payment and 1.2s for a mobile money push. We hit 1,000 TPS on a Tuesday and the AWS bill spiked by $8,200. The finance team called at 3am asking why we burned 22% of the month’s cloud budget on payment integrations. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>In 2026, my team at a Nairobi fintech launched three country-specific adapters. Each adapter averaged 800ms for a card payment and 1.2s for a mobile money push. We hit 1,000 TPS on a Tuesday and the AWS bill spiked by $8,200. The finance team called at 3am asking why we burned 22% of the month’s cloud budget on payment integrations.</p>
 <p>The conventional view ignores three hidden costs:</p>
 <ol>
 <li><strong>Latency tax</strong>: Each hop between your service and the provider adds round-trip time. Three providers mean three hops, which can inflate your p99 from 400ms to 1.4s under load.</li>
@@ -276,7 +276,7 @@
 - M-Pesa: <code>Timeout on /stkpush</code>
 - Paystack: <code>Webhook signature validation failed</code></p>
 <p>The ops team spends 15 engineer-hours per week on on-call rotations. That’s 60 hours a month — more than the time it took to build the adapters in the first place.</p>
-<p>I ran into this when I tried to scale a Nairobi-based lending app to Accra. Our p99 was 420ms with one provider. After adding Ghana and Nigeria, the p99 jumped to 1.7s. The bottleneck wasn’t CPU or memory — it was the three separate connection pools fighting for the same 512MB heap in the Node.js runtime.</p>
+<p>Our p99 was 420ms with one provider. After adding Ghana and Nigeria, the p99 jumped to 1.7s. The bottleneck wasn’t CPU or memory — it was the three separate connection pools fighting for the same 512MB heap in the Node.js runtime.</p>
 <h2 id="a-different-mental-model">A different mental model</h2>
 <p>Forget adapters. Think of payment providers as <strong>fallible, high-latency subsystems</strong> that need circuit breakers, bulkheads, and caching, not just clean interfaces. Instead of one adapter per country, build one <strong>gateway</strong> that handles all three providers under a single domain model. The gateway becomes the single source of truth for payment state, retries, and observability.</p>
 <p>The gateway pattern gives you three concrete wins:</p>
@@ -286,7 +286,7 @@
 <li><strong>Unified observability</strong>: A single <code>/health</code> endpoint aggregates provider health. You stop guessing which provider is slow and start seeing it in a single Grafana dashboard.</li>
 </ol>
 <p>The honest mistake is to treat the gateway like a façade. It’s not. It’s a <strong>state machine</strong> that owns payment state, not just a router. When a webhook arrives from Flutterwave, the gateway updates the payment record and broadcasts the event. That reduces race conditions and eliminates duplicate webhook handling.</p>
-<p>I was surprised that the biggest latency win came from <strong>batching webhooks</strong>. Instead of processing each Flutterwave webhook immediately, we buffered them for 500ms and sent a single batched update to our ledger. That cut ledger write time from 180ms to 45ms, even though the external latency stayed the same.</p>
+<p>Instead of processing each Flutterwave webhook immediately, we buffered them for 500ms and sent a single batched update to our ledger. That cut ledger write time from 180ms to 45ms, even though the external latency stayed the same.</p>
 <h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
 <p>At a Nairobi neobank, we rebuilt the payment gateway in Rust 1.75 and Tokio 1.29. The old Node.js 18 adapters averaged 800ms per payment. The new gateway averaged 240ms at 5,000 TPS, a 3.3x improvement. The memory footprint dropped from 512MB to 128MB. The key was a single connection pool using <code>hyper</code> with <code>h2</code> and a custom load balancer that prioritized providers by SLA.</p>
 <p>In Lagos, a logistics startup used the gateway pattern to cut Flutterwave fees by 18% by implementing dynamic routing based on transaction risk. Low-risk transactions ($1–$10) went to Flutterwave’s sandbox, while high-risk ($50+) went to Paystack’s live endpoint. The routing logic lived in a single 30-line YAML file, not scattered across three repos.</p>
@@ -383,10 +383,7 @@ curl http://localhost:4000/metrics | grep pool_size
 - Our ledger’s duplicate check used the raw provider key, not a normalized ID.
 - Two transactions with the same Flutterwave key (<code>req_abc...</code>) and M-Pesa key (<code>123456789012</code>) were treated as distinct.</p>
 <p><strong>The fix:</strong> We introduced a <code>provider_key_normalization</code> table in Postgres 16, mapping raw keys to a 36-character UUID. The gateway now:
-1. Receives a provider-specific key.
-2. Looks it up in the normalization table.
-3. If missing, generates a UUID and stores it.
-4. Uses the UUID for all downstream operations.</p>
+1. Receives a provider-specific key. 2. Looks it up in the normalization table. 3. If missing, generates a UUID and stores it. 4. Uses the UUID for all downstream operations.</p>
 <p><strong>Latency cost:</strong> The lookup adds 1–2ms, but it prevents 92% of duplicate payments. We verified this by comparing ledger reconciliation reports before and after the change—the duplicate rate dropped from 1.8% to 0.15%.</p>
 <p><strong>Query to check for collisions:</strong></p>
 <pre><code class="language-sql">SELECT
@@ -428,9 +425,7 @@ HAVING COUNT(*) &gt; COUNT(DISTINCT normalized_id);
 <h4 id="4-the-regional-latency-jitter-problem"><strong>4. The "Regional Latency Jitter" Problem</strong></h4>
 <p>In Ghana, MTN Mobile Money’s API has a 200ms baseline latency, but during peak hours (7–9 PM), it spikes to 1.8s due to regional load balancer issues in Accra. Our gateway was naively retrying failed requests, which made the problem worse. The retry policy (3 retries, exponential backoff) caused some transactions to exceed our 2s SLA.</p>
 <p><strong>The fix:</strong> Dynamic retry logic based on <strong>real-time regional latency</strong>:
-1. We added a <code>provider_regional_latency_ms</code> histogram, updated every 30s.
-2. If latency &gt; 500ms, we reduce the retry count to 1 and increase the timeout to 3s.
-3. If latency &gt; 1s, we switch to the next-best provider (Paystack) immediately.</p>
+1. We added a <code>provider_regional_latency_ms</code> histogram, updated every 30s. 2. If latency &gt; 500ms, we reduce the retry count to 1 and increase the timeout to 3s. 3. If latency &gt; 1s, we switch to the next-best provider (Paystack) immediately.</p>
 <p><strong>Code snippet (Rust with <code>tokio</code> 1.29):</strong></p>
 <pre><code class="language-rust">async fn route_payment(provider: &amp;str, tx: &amp;Transaction) -&gt; Result&lt;PaymentId, PaymentError&gt; {
     let latency = PROVIDER_LATENCY.get(provider).unwrap().load();
@@ -528,9 +523,7 @@ HAVING COUNT(*) &gt; COUNT(DISTINCT normalized_id);
             path: &quot;/status&quot;
 </code></pre>
 <p><strong>Why this works:</strong>
-- Envoy’s circuit breaker (<code>max_connections: 50</code>) prevents provider overload.
-- The <code>retry_policy</code> retries only on 5xx or connection failures (not 4xx).
-- Health checks fail fast if <code>/status</code> takes &gt;1s, reducing tail latency.</p>
+- Envoy’s circuit breaker (<code>max_connections: 50</code>) prevents provider overload. - The <code>retry_policy</code> retries only on 5xx or connection failures (not 4xx). - Health checks fail fast if <code>/status</code> takes &gt;1s, reducing tail latency.</p>
 <hr />
 <h4 id="3-postgres-16-pgbouncer-122-connection-pooling"><strong>3. Postgres 16 + pgBouncer 1.22 (Connection Pooling)</strong></h4>
 <p>Our gateway uses Postgres 16 for ledger storage. With pgBouncer 1.22, we share a single connection pool across providers:</p>
@@ -545,9 +538,7 @@ default_pool_size = 50
 reserve_pool_size = 10
 </code></pre>
 <p><strong>Key optimizations:</strong>
-1. <strong>Transaction pooling</strong> (<code>pool_mode = transaction</code>): Reuses connections aggressively during high load.
-2. <strong>Reserve pool</strong>: Handles spikes without opening new connections.
-3. <strong>Idle timeout</strong>: <code>server_idle_timeout = 30</code> prevents stale connections.</p>
+1. <strong>Transaction pooling</strong> (<code>pool_mode = transaction</code>): Reuses connections aggressively during high load. 2. <strong>Reserve pool</strong>: Handles spikes without opening new connections. 3. <strong>Idle timeout</strong>: <code>server_idle_timeout = 30</code> prevents stale connections.</p>
 <p><strong>Monitoring query (run every 5m):</strong></p>
 <pre><code class="language-sql">SELECT
     usename,
@@ -712,14 +703,11 @@ export async function sendPayment(payload) {
 </ul>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

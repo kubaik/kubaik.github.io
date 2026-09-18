@@ -1,8 +1,9 @@
-❌ Internal link audit: 1 broken link(s) found across 496 posts checked.
+❌ Internal link audit: 2 broken link(s) found across 464 posts checked.
 
 Source Post                              Anchor Text                    Missing Target
 ------------------------------------------------------------------------------------------
   /agent-systems-circuit-breakers-are-not-enough on circuit breakers            /ai-agents-need-circuit-breakers-in-2026/
+  /why-does-my-model-drift-after-deploy   model hit production.          /why-your-model-evaluation-missed-a-production-regression/
 
 Resolution options:
   1. Re-publish the missing posts.

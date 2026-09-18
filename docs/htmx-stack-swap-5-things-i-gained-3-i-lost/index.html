@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-26T11:39:00.782771">
-        <meta property="article:modified_time" content="2026-06-26T11:39:00.782784">
+        <meta property="article:modified_time" content="2026-09-18T11:32:39.571207+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="HTMX stack swap: 5 things I gained, 3 I lost">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/htmx-stack-swap-5-things-i-gained-3-i-lost/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "HTMX stack swap: 5 things I gained, 3 I lost",
       "description": "HTMX 2.0 cut our frontend bundle from 245 KiB to 8 KiB and dropped AWS fees 48% — here’s the real trade-off we made and what we gained by swapping React for…",
       "datePublished": "2026-06-26T11:39:00+00:00",
-      "dateModified": "2026-06-26T11:39:00+00:00",
-      "wordCount": 2876,
+      "dateModified": "2026-09-18T11:32:39+00:00",
+      "wordCount": 2811,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -263,23 +263,22 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2876 words
+                        &nbsp;·&nbsp; 2811 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-26
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this htmx changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <p>It started with a Slack ping from a colleague in São Paulo: “prod API is timing out at 1000 BPS but the staging cluster handles 5000 BPS on the same hardware.” Node 20 LTS on Kubernetes 1.28, PostgreSQL 15 on AWS RDS i3.2xlarge. Same code, same container image, different outcomes. The only difference was the frontend. Staging used Next.js with client-side data fetching; prod used a classic server-rendered Django + Alpine stack that had been living on borrowed time for two years.</p>
 <p>I assumed it was a database bottleneck. Query time in prod was 47 ms median vs 19 ms staging. That’s 28 ms extra per query, not enough to explain 5× throughput collapse. I tried connection pooling: PgBouncer 1.21, pool size 50, max client connections 500. Nothing moved. Then I measured the actual HTTP layer: Node 20 LTS running Express served 4.8 k RPS with 120 ms p99 latency on staging. Django 4.2 on the same hardware returned 1.1 k RPS and 850 ms p99. The gap wasn’t CPU or DB; it was the round-trip cost of JSON serialization, client hydration, and browser JavaScript execution. The frontend was the elephant in the room.</p>
 <p>I needed a way to keep the backend simple, avoid heavy JavaScript tooling, and still give users the interactivity they expected. That’s when I started evaluating HTMX, Stimulus, and a few micro-frontend ideas. This list is the result of that evaluation — what worked, what didn’t, and what I traded away to land on HTMX.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
-<p>I built a minimal reproduction: a dashboard with a table of 200 rows that could sort, paginate, and update in place. I tested each candidate against four concrete metrics:</p>
+<p>I tested each candidate against four concrete metrics:</p>
 <ol>
 <li><strong>Lines of code</strong> added to the backend to support the feature.</li>
 <li><strong>Client-side JavaScript bundle size</strong> after minification and gzip.</li>
@@ -458,14 +457,11 @@
 <p>The next step is to take one page in your app and rewrite it with HTMX. Create a new template that returns HTML fragments. Add the <code>hx-get</code> attribute to a button, point it at your endpoint, and swap the table row or form. Measure the latency drop and the bundle size. If it feels good, duplicate the pattern. In 30 minutes you’ll know whether HTMX fits your workflow — and whether it’s time to delete that 245 KiB JavaScript bundle for good.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

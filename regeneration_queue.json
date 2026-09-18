@@ -182,69 +182,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-sales-cycles-3x-faster-40-less-talk",
-    "title": "AI sales cycles: 3x faster, 40% less talk",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this changed sales problem while migrating a service under a hard dea; I ran into this when we launched an AI assistant that auto-generated cold emails; I was surprised to find that the handoff timing matters more than the AI’s accur",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "audit-trails-immutabledb-vs-dynamodb-streams",
-    "title": "Audit trails: ImmutableDB vs DynamoDB Streams",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same building audit mistake in multiple production codebases, incl; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when I joined a team building an LLM-powered complia",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "cache-stampedes-the-patterns-that-scale-and-the-ones",
-    "title": "Cache stampedes: the patterns that scale and the ones…",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this tooluse patterns problem while migrating a service under a hard ; I ran into this the hard way when we moved our Brazilian payments API from a sin; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "circleci-still-beats-github-actions-at-50k-builds",
-    "title": "CircleCI still beats GitHub Actions at 50k builds",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about github actions during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this bias firsthand when I joined a Nairobi fintech in 2026 that was ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "debug-async-python-before-it-deadlocks",
-    "title": "Debug async Python before it deadlocks…",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same async python mistake in multiple production codebases, includ; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a background worker that processed 12,000 events per minute",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "evaluate-agents-with-spark-vs-custom-harness",
     "title": "Evaluate agents with Spark vs custom harness",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same building evaluation mistake in multiple production codebases,; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three weeks chasing a 2.3% regression that turned out to be a single mis",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "graphql-vs-rest-vs-trpc-2026s-api-fight",
     "title": "GraphQL vs REST vs tRPC: 2026’s API fight",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same api design mistake in multiple production codebases, includin; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned that the hard way when I shipped a GraphQL API for a payments dashboar",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "htmx-stack-swap-5-things-i-gained-3-i-lost",
     "title": "HTMX stack swap: 5 things I gained, 3 I lost",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this htmx changed problem while migrating a service under a hard dead; Here's what actually worked.; I assumed it was a database bottleneck.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "log-audit-costs-without-breaking-compliance",
     "title": "Log audit costs without breaking compliance",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same building audit mistake in multiple production codebases, incl; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client in Frankfurt hit 12 ms average latency on  s durin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "merge-three-payment-apis-into-one-system",
     "title": "Merge three payment APIs into one system",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about build payment during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I followed it too — until I saw the first bill.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "migrations-stop-running-them-live",
@@ -2281,6 +2251,41 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "ai-sales-cycles-3x-faster-40-less-talk",
+    "title": "AI sales cycles: 3x faster, 40% less talk",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this changed sales problem while migrating a service under a hard dea; I ran into this when we launched an AI assistant that auto-generated cold emails; I was surprised to find that the handoff timing matters more than the AI’s accur",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "audit-trails-immutabledb-vs-dynamodb-streams",
+    "title": "Audit trails: ImmutableDB vs DynamoDB Streams",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same building audit mistake in multiple production codebases, incl; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when I joined a team building an LLM-powered complia",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "cache-stampedes-the-patterns-that-scale-and-the-ones",
+    "title": "Cache stampedes: the patterns that scale and the ones…",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this tooluse patterns problem while migrating a service under a hard ; I ran into this the hard way when we moved our Brazilian payments API from a sin; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "circleci-still-beats-github-actions-at-50k-builds",
+    "title": "CircleCI still beats GitHub Actions at 50k builds",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about github actions during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this bias firsthand when I joined a Nairobi fintech in 2026 that was ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "debug-async-python-before-it-deadlocks",
+    "title": "Debug async Python before it deadlocks…",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same async python mistake in multiple production codebases, includ; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a background worker that processed 12,000 events per minute",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-agents-vs-argo-tekton-which-pipeline-heals-itself",

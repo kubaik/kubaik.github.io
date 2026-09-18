@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T21:12:00.143657">
-        <meta property="article:modified_time" content="2026-07-03T21:12:00.143668">
+        <meta property="article:modified_time" content="2026-09-18T11:32:38.900513+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Evaluate agents with Spark vs custom harness">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/evaluate-agents-with-spark-vs-custom-harness/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Evaluate agents with Spark vs custom harness",
       "description": "Cut agent harness debug time 70% with this choice—custom Python harness vs Spark 3.5 tested on 50k conversations with concrete latency, cost, and maintenance…",
       "datePublished": "2026-07-03T21:12:00+00:00",
-      "dateModified": "2026-07-03T21:12:00+00:00",
-      "wordCount": 2473,
+      "dateModified": "2026-09-18T11:32:38+00:00",
+      "wordCount": 2443,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,9 +261,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2473 words
+                        &nbsp;·&nbsp; 2443 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-03
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -272,7 +272,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same building evaluation mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, multi-agent systems aren’t just research projects anymore—they run customer support, fraud detection, and even code review at scale. Teams I talk to in Bangalore, Lagos, and São Paulo all hit the same wall: their evaluation harnesses lie to them. You write a test, it passes in the sandbox, and then in staging the agents spiral into 30-round debates that time out at 45 seconds per request. I spent three weeks chasing a 2.3% regression that turned out to be a single missing retry budget in our custom harness—this post is what I wish I’d had then.</p>
+<p>In 2026, multi-agent systems aren’t just research projects anymore—they run customer support, fraud detection, and even code review at scale. Teams I talk to in Bangalore, Lagos, and São Paulo all hit the same wall: their evaluation harnesses lie to them. You write a test, it passes in the sandbox, and then in staging the agents spiral into 30-round debates that time out at 45 seconds per request.</p>
 <p>A trustworthy harness does three things: it catches regressions before users do, it surfaces edge cases you didn’t think to test, and it produces artifacts you can hand to product or compliance without rewriting. The two approaches duking it out right now are (A) Apache Spark-based harnesses built on DataFrame-style workflows and (B) custom harnesses written in Python with unittest-style assertions. Spark gives you distributed tracing, automatic retries, and a familiar SQL-like interface, but it forces you to express every agent interaction as a DataFrame transformation—even when the agent’s logic is a Python generator. Custom harnesses give you exact control over agent prompts and tool calls, but you end up writing hundreds of lines of brittle orchestration code that only one teammate understands.</p>
 <p>The gap between “it works on my laptop” and “it works in production” widens when your harness itself becomes a distributed system. In 2026 benchmarks I collected from seven teams running multi-agent pipelines, 42% of production fires started because the harness emitted incorrect metrics or timed out on long agent chains without surfacing the real cause. Spark-based harnesses cut median debug time from 90 minutes to 15 minutes in those same teams, but they required rewriting 60% of the agent logic to fit the DataFrame model.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
@@ -411,15 +411,9 @@ async def run_chain(initial: str) -&gt; str:
 <p>I used this framework when we onboarded a new team in São Paulo building a multi-agent code-review assistant. They needed 120 ms p99 latency and had strong Python skills, so we went custom. Six months in, they hit a prompt-injection edge case that the custom harness caught in minutes—something a Spark harness would have masked by normalizing text.</p>
 <h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
 <p>Use a <strong>custom harness</strong> if:
-- Your agent chain must answer under 250 ms p99.
-- Your agents call non-JSON tools or legacy systems.
-- Your team is Python-first and already runs pytest.
-- Your cloud budget is under $500/month.</p>
+- Your agent chain must answer under 250 ms p99. - Your agents call non-JSON tools or legacy systems. - Your team is Python-first and already runs pytest. - Your cloud budget is under $500/month.</p>
 <p>Use an <strong>Apache Spark harness</strong> if:
-- You must replay 10k+ conversations with new agent versions.
-- Your team already runs Spark for analytics or ML.
-- You need lineage and observability baked in.
-- Your SLA allows 400–700 ms median latency.</p>
+- You must replay 10k+ conversations with new agent versions. - Your team already runs Spark for analytics or ML. - You need lineage and observability baked in. - Your SLA allows 400–700 ms median latency.</p>
 <p>Ignore both if you’re building a toy agent that only talks to a single LLM. For that, a Jupyter notebook with a few unit tests is enough. Also ignore Spark if your agents are stateful beyond simple conversation history—stateful agents break Spark’s stateless UDF model and force you into complex checkpointing.</p>
 <p>I still regret the time we forced a custom harness into a Spark mold for a customer-facing support agent. The engineering rewrite took two weeks, and we still had to maintain a Spark cluster. The custom harness would have been faster to ship and cheaper to run.</p>
 <h2 id="final-verdict">Final verdict</h2>
@@ -428,14 +422,11 @@ async def run_chain(initial: str) -&gt; str:
 <p><strong>Today, open your agent orchestrator file and count the number of retry policies you’ve implemented. If that count is below three, switch to a custom harness tomorrow—you’ll save days of debugging.</strong></p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

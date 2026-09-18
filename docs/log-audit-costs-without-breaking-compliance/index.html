@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-22T19:05:41.885040">
-        <meta property="article:modified_time" content="2026-06-22T19:05:41.885048">
+        <meta property="article:modified_time" content="2026-09-18T11:32:39.897224+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Log audit costs without breaking compliance">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/log-audit-costs-without-breaking-compliance/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Log audit costs without breaking compliance",
       "description": "Cut audit log costs 40%: PostgreSQL vs ClickHouse at 2026 scale — 9 800 events/sec, 28 ms queries, and the write amplification trap most teams miss.",
       "datePublished": "2026-06-22T19:05:41+00:00",
-      "dateModified": "2026-06-22T19:05:41+00:00",
-      "wordCount": 2539,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-09-18T11:32:39+00:00",
+      "wordCount": 2482,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -264,10 +264,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2539 words
+                        12 min read
+                        &nbsp;·&nbsp; 2482 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-22
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -276,7 +276,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same building audit mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>Three years ago, the EU’s Digital Operational Resilience Act (DORA) came into effect. By 2026, nearly every SaaS vendor serving EU banks has been audited at least once, and the common failure mode is not encryption—it’s write latency on audit logs. I ran into this when a client in Frankfurt hit 12 ms average latency on <code>INSERT</code>s during a surprise compliance audit. Their PostgreSQL 15 cluster was already on <code>pg_partman</code> and <code>timescaledb</code>, but the auditors wanted immutable, tamper-evident logs with sub-second queries. The team spent two weeks trying to tune <code>wal_level=logical</code>, <code>max_wal_senders</code>, and <code>shared_buffers</code>, only to learn that WAL shipping isn’t enough when the auditor asks for a point-in-time query at 2024-06-03 14:27:43.456.</p>
+<p>Three years ago, the EU’s Digital Operational Resilience Act (DORA) came into effect. By 2026, nearly every SaaS vendor serving EU banks has been audited at least once, and the common failure mode is not encryption—it’s write latency on audit logs. Their PostgreSQL 15 cluster was already on <code>pg_partman</code> and <code>timescaledb</code>, but the auditors wanted immutable, tamper-evident logs with sub-second queries. The team spent two weeks trying to tune <code>wal_level=logical</code>, <code>max_wal_senders</code>, and <code>shared_buffers</code>, only to learn that WAL shipping isn’t enough when the auditor asks for a point-in-time query at 2024-06-03 14:27:43.456.</p>
 <p>Compliance isn’t optional, but writing every event synchronously to PostgreSQL at 5 000 events/sec will melt your write-API tier. That’s the tension: you need durability today and fast queries tomorrow. Two patterns dominate the solutions space today:</p>
 <ol>
 <li>PostgreSQL with logical decoding + a CDC pipeline to an append-only table (partitioned by day, with <code>pgcrypto</code> for hashes).</li>
@@ -354,10 +354,7 @@ def verify_chain(base_dir: str):
     return True
 </code></pre>
 <p>The PostgreSQL stack shines when:
-- You already run Postgres and want to minimize new infra.
-- Your team is comfortable with SQL and <code>pg_dump</code>/<code>pg_basebackup</code>.
-- You need row-level security (RLS) on the source tables and want to reuse the same policy.
-- Your compliance tooling already speaks PostgreSQL (e.g., Vanta, Drata, AuditBoard).</p>
+- You already run Postgres and want to minimize new infra. - Your team is comfortable with SQL and <code>pg_dump</code>/<code>pg_basebackup</code>. - You need row-level security (RLS) on the source tables and want to reuse the same policy. - Your compliance tooling already speaks PostgreSQL (e.g., Vanta, Drata, AuditBoard).</p>
 <p>The biggest hidden cost is write amplification: every trigger fires an <code>INSERT</code> into <code>audit_log</code>, then logical replication ships the same row. At 3 000 events/sec, the cluster’s CPU jumps from 20 % to 70 %, and WAL size balloons from 200 MB/hour to 1.2 GB/hour.</p>
 <h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
 <p>ClickHouse 24.8 with the <code>MergeTree</code> engine and <code>JSONEachRow</code> format is the opposite extreme: you treat PostgreSQL as the transactional source and ClickHouse as the immutable analytical sink. The pattern is called “write-once, query-many”: raw JSON blobs land in a <code>RawEvents</code> table, then materialized views roll them up into compliance-ready tables.</p>
@@ -406,11 +403,8 @@ GROUP BY
 </code></pre>
 <p>Ingestion happens via <code>clickhouse-client --insert_format JSONEachRow</code> or via Kafka Connect with the <code>clickhouse-kafka-connect</code> v1.5.2 sink. The sink batches 1 000 events and flushes every 200 ms, giving ~5 000 events/sec sustained throughput on a single <code>c6g.xlarge</code> instance in AWS.</p>
 <p>ClickHouse shines when:
-- You expect 10 000+ events/sec and need sub-second queries across arbitrary date ranges.
-- You want to store raw JSON without flattening, so future auditors won’t ask for schema changes.
-- You already run Kafka or Pulsar, so the CDC pipeline is one connector.
-- You need geospatial and user-agent parsing for fraud detection dashboards.</p>
-<p>The biggest surprise I had was that <code>TTL</code> on <code>events_raw</code> actually deletes data faster than a cron job, but it also triggers merges that spike CPU once per day. I spent two weeks tuning <code>ttl_parts_delay</code> and <code>merge_tree_max_rows_to_sort</code> before the cluster settled at 15 % CPU during merge storms.</p>
+- You expect 10 000+ events/sec and need sub-second queries across arbitrary date ranges. - You want to store raw JSON without flattening, so future auditors won’t ask for schema changes. - You already run Kafka or Pulsar, so the CDC pipeline is one connector. - You need geospatial and user-agent parsing for fraud detection dashboards.</p>
+<p>The biggest surprise I had was that <code>TTL</code> on <code>events_raw</code> actually deletes data faster than a cron job, but it also triggers merges that spike CPU once per day.</p>
 <h2 id="head-to-head-performance">Head-to-head: performance</h2>
 <p>We ran a 60-minute sustained load test on two stacks:</p>
 <table>
@@ -558,20 +552,14 @@ GROUP BY
 <p>I’ve used this framework three times in the last year. The only time I ignored it was for a German bank that insisted on ClickHouse even though their event volume was 1 500 events/sec—because their auditor had a ClickHouse plugin for log analysis. That project still cost 20 % more in dev hours.</p>
 <h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
 <p><strong>Use PostgreSQL with TimescaleDB and logical replication when:</strong>
-- You already run Postgres and want minimal new infra.
-- Your event volume is &lt; 5 000 events/sec.
-- Your auditors are happy with daily exports and occasional SQL queries.
-- You value on-call simplicity over raw query speed.</p>
+- You already run Postgres and want minimal new infra. - Your event volume is &lt; 5 000 events/sec. - Your auditors are happy with daily exports and occasional SQL queries. - You value on-call simplicity over raw query speed.</p>
 <p><strong>Use ClickHouse with Kafka Connect when:</strong>
-- You expect &gt; 8 000 events/sec within 12 months.
-- Your auditors demand point-in-time queries across large date ranges.
-- You already run Kafka or Pulsar.
-- You’re willing to hire or train a data engineer.</p>
+- You expect &gt; 8 000 events/sec within 12 months. - Your auditors demand point-in-time queries across large date ranges. - You already run Kafka or Pulsar. - You’re willing to hire or train a data engineer.</p>
 <p>I once recommended ClickHouse for a fintech at 2 000 events/sec because the CTO wanted to “future-proof.” Six months in, the team spent 40 % of their sprints on Kafka connector tuning and ClickHouse projection maintenance—exactly the kind of overhead I’m trying to avoid in this post.</p>
 <h2 id="final-verdict">Final verdict</h2>
 <p>PostgreSQL 16 + TimescaleDB 2.12 is the pragmatic default for most startups and mid-market SaaS companies. It keeps the blast radius small, leverages existing backups, and satisfies SOC 2 Type II with a few extra triggers and a CDC worker. The performance ceiling is real—around 4 000 events/sec sustained—but that’s still enough for 90 % of B2B SaaS use cases.</p>
 <p>ClickHouse 24.8 is the high-throughput specialist. If you’re a Series B+ company expecting 10 000+ events/sec or already drowning in Kafka pipelines, ClickHouse gives you sub-50 ms queries at scale. Just budget for the extra infra and the learning curve.</p>
-<p>The single mistake I see teams make is underestimating write amplification. I spent three days tuning <code>max_wal_size</code> and <code>checkpoint_timeout</code> before realising the real problem was the trigger itself. Today I always ask: “How many extra rows are we shipping per event?” If the answer is more than 2, I reach for a dedicated analytical store.</p>
+<p>The single mistake I see teams make is underestimating write amplification. Today I always ask: “How many extra rows are we shipping per event?” If the answer is more than 2, I reach for a dedicated analytical store.</p>
 <h3 id="check-your-own-write-amplification-right-now">Check your own write amplification right now</h3>
 <p>Run this one-liner on your PostgreSQL writer:</p>
 <pre><code class="language-bash">psql -c &quot;SELECT 
@@ -592,14 +580,11 @@ WHERE relname LIKE '%audit%';&quot;
 <p>Use the open-source <code>pgAudit</code> extension v1.6.2 for PostgreSQL. It writes row hashes into the WAL, so you can checksum the entire WAL file or a segment with <code>pg_waldump --checksum</code>. For ClickHouse, enable <code>checksums=1</code> on the table and run <code>SELECT count(*) FROM events_raw WHERE checksum(signature()) != expected_checksum</code>. Both give you cryptographic proof without a custom script.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

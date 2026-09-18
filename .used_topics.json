@@ -12,5 +12,6 @@
   "Secrets management for teams that now have 40+ LLM integrations",
   "Building internal tools that help non-AI engineers work safely with agents",
   "How feature flags evolved into full AI rollout and experimentation platforms",
-  "How we detect and contain agent drift before it creates bad user experiences"
+  "How we detect and contain agent drift before it creates bad user experiences",
+  "Common failure modes of multi-agent systems at scale, and why they're hard to catch early"
 ]
