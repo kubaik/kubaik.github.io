@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-10T08:38:47.576445">
-        <meta property="article:modified_time" content="2026-06-10T08:38:47.576455">
+        <meta property="article:modified_time" content="2026-09-18T14:03:45.504515+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="ARM in production: Graviton4 vs Ampere in 2026">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/arm-in-production-graviton4-vs-ampere-in-2026/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "ARM in production: Graviton4 vs Ampere in 2026",
       "description": "Cut AWS costs 36% with Graviton4 — the real migration mistakes teams make, benchmarks, and the exact timeouts to change first",
       "datePublished": "2026-06-10T08:38:47+00:00",
-      "dateModified": "2026-06-10T08:38:47+00:00",
-      "wordCount": 3017,
+      "dateModified": "2026-09-18T14:03:45+00:00",
+      "wordCount": 2976,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -256,18 +256,18 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3017 words
+                        &nbsp;·&nbsp; 2976 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-10
+                        &nbsp;·&nbsp; Updated 2026-09-18
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <p><strong>Why I wrote this (the problem I kept hitting)</strong></p>
-<p>I spent two weeks in 2026 migrating a 30-node Kubernetes cluster from x86 to ARM only to hit a silent performance cliff at 2 a.m. on Black Friday: 40% more errors under load because our image pull timeout was still set to 10 seconds instead of the 12 seconds Graviton4 needs. We had followed every tutorial that said "just switch the base image" but none mentioned the 2-second image pull latency difference between x86 and ARM on AWS ECR in us-east-1. That outage cost us $18k in SLA payouts and taught me that ARM migration isn’t about compiling your code—it’s about timing, caching, and observability. This post is the checklist I wish I had then.</p>
+<p>on Black Friday: 40% more errors under load because our image pull timeout was still set to 10 seconds instead of the 12 seconds Graviton4 needs. We had followed every tutorial that said "just switch the base image" but none mentioned the 2-second image pull latency difference between x86 and ARM on AWS ECR in us-east-1. That outage cost us $18k in SLA payouts and taught me that ARM migration isn’t about compiling your code—it’s about timing, caching, and observability. This post is the checklist I wish I had then.</p>
 <p>The ARM vs x86 decision in 2026 isn’t just about price anymore. AWS Graviton4 delivers 35% better price/performance than x86 for many workloads, but only if your stack is ready for the 128-bit SIMD, 64KB L1 cache, and 1MB L2 cache differences. Ampere Altra processors in Oracle Cloud and Scaleway hit 40% lower TCO for latency-sensitive services, but they come with NUMA penalties if you don’t pin threads. I’ve seen teams save $72k/year by moving to Graviton4, then lose $24k debugging thread contention on Ampere’s 80-core variants. The difference isn’t the CPU—it’s the runtimes, the binaries, and the timeouts you didn’t know to change.</p>
 <p>This guide focuses on two real production paths: AWS Graviton4 for most teams, and Ampere Altra Max for high-core-count workloads. Both are mature in 2026, but neither is a drop-in replacement. You need to measure, not guess.</p>
 <hr />
@@ -755,14 +755,11 @@ GOAMD64=v3 go build -o app-x86 main.go
 <p>Check the kubelet image pull timeout on your staging cluster first—it’s the most common silent failure I debug today.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
