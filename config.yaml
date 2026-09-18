@@ -345,6 +345,62 @@ content_topics:
 - Common MCP server security mistakes that expose internal tools
 - Recovering from an agent that made thousands of low-value API calls overnight
 - Evaluation gaps that let subtle model behavior changes slip into production
+- Why leader election still breaks in subtle ways on modern cloud networks
+- 'ClickHouse vs Postgres for analytics: the tradeoffs that actually matter at scale'
+- Sharding strategies that survive a 10x traffic spike without a rewrite
+- The CAP theorem tradeoffs teams actually hit once they run multi-region databases
+- Building a double-entry ledger that stays consistent under concurrent writes
+- 'Idempotency keys done right: the payment API bugs they prevent and the ones they
+  don''t'
+- Why read replicas quietly cause more bugs than they fix
+- 'DuckDB in production: where an embedded analytics engine replaces a whole data
+  warehouse'
+- The reconciliation engine patterns that keep ledgers and payment providers in sync
+- 'gRPC vs REST vs GraphQL for internal services: a decision framework past the hype'
+- API versioning strategies that don't turn into a graveyard of v1 endpoints
+- Designing rate limiters that treat legitimate bursts differently from abuse
+- What actually breaks when you migrate a public API from REST to GraphQL
+- 'HTTP/3 and QUIC in production: what changed for backend teams and what didn''t'
+- Webhook delivery systems that survive downstream outages without losing events
+- 'Passkeys and WebAuthn adoption: the rollout mistakes that locked users out'
+- 'OAuth 2.1 migration notes: what breaks in existing integrations'
+- Supply chain security for a normal backend stack, not just AI models
+- Secrets rotation at scale without breaking services mid-deploy
+- The PCI DSS requirements that actually shape how payment systems get architected
+- 'Rust for backend services: where the rewrite paid off and where it didn''t'
+- Why some teams are moving hot paths from Python to Go, and what they give up
+- 'Zig, Rust, and Go for systems programming: a practical 2026 comparison'
+- Debugging techniques that outlast whatever framework or language is trendy
+- The Terraform patterns that keep infrastructure changes reviewable at scale
+- 'Property-based testing for financial systems: catching the bugs example tests miss'
+- 'Contract testing between services: the discipline that prevents integration breakage'
+- Chaos engineering practices that fit a team without a dedicated SRE function
+- Why flaky tests are a reliability problem, not a testing inconvenience
+- Building a staging environment that actually catches production-only bugs
+- 'ISO 20022 messaging in practice: what it changes for teams building payment rails'
+- 'Open banking APIs across markets: the integration differences nobody warns you
+  about'
+- 'Fraud detection systems architecture: rules engines, scoring, and where they intersect'
+- Settlement and clearing systems explained for backend engineers who've never touched
+  them
+- Currency conversion edge cases that quietly corrupt financial reports
+- Technical interview loops that actually predict on-the-job performance
+- Writing engineering documentation that survives the person who wrote it leaving
+- The code review habits that separate senior engineers from everyone else
+- Negotiating a remote engineering offer when the recruiter won't share a band
+- What actually gets a portfolio project noticed by hiring managers in 2026
+- 'Monolith to microservices: the signals that mean it''s actually time to split'
+- 'CQRS in practice: the projects where it earned its complexity and the ones where
+  it didn''t'
+- Feature flag systems that don't turn into unmanageable spaghetti after a year
+- Designing background job queues that handle poison messages gracefully
+- 'The outbox pattern explained: solving dual writes without distributed transactions'
+- 'Core Web Vitals in 2026: what actually moves the needle versus what''s cargo cult'
+- Edge caching strategies that cut latency without serving stale financial data
+- Bundling and code-splitting decisions that still matter with modern frameworks
+- Running a blameless postmortem process that people actually participate in
+- The on-call rotation structures that don't burn out a small engineering team
+- How engineering managers should evaluate output when velocity is hard to measure
 duplicate_similarity_threshold: 0.45
 google_adsense_id: ca-pub-4477679588953789
 google_adsense_verification: ca-pub-4477679588953789
