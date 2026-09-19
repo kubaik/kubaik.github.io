@@ -14,7 +14,7 @@
   "meta_description": "Cut on-call wake-ups 70% with AI alert triage — Prometheus 2.47, Node 20, and a 128-line service that silences staging noise in 2026",
   "featured_image": "/static/images/alerts-2026-ai-turns-false-alarms-to-silence.jpg",
   "created_at": "2026-06-24T15:17:37.579453",
-  "updated_at": "2026-09-19T09:15:54.647012+00:00",
+  "updated_at": "2026-09-19T08:27:13.820179+00:00",
   "seo_keywords": [
     "AiAlertTriage",
     "OnCallAutomation",

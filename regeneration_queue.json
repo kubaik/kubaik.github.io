@@ -168,69 +168,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-in-slow-networks-why-models-flop-where-data-costs-rise",
-    "title": "AI in slow networks: why models flop where data costs rise",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): The short version: the conventional advice on global best is incomplete.; I once shipped a 300 MB Whisper ASR model to a Nairobi fintech app; 78% of users; I once traced a 1.8 s median response time for a chatbot in Mombasa back to 12 s",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-infra-capacity-planning-vs-runbooks-what-id",
-    "title": "AI infra: capacity planning vs runbooks — what I’d",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when we provisioned an extra 128 vCPU cluster for a Black Friday",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-native-apps-forget-the-old-stack",
-    "title": "AI-native apps: forget the old stack",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we moved our help-desk bot from a Jupyter notebook to a Fas",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-pair-programming-stole-my-code-review-job",
-    "title": "AI pair programming stole my code review job",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when I personally got tagged on 18 PRs in a single day during a ; I spent three days debugging the slow query before realising the index was missi",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-reshaped-my-engineering-principles",
-    "title": "AI reshaped my engineering principles",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about engineering principles during a code review last week; I realised I couldn't give a clean explanation — which meant I didn't understand; I bought into this story for a while.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "ai-services-slow-fix-the-network-first",
     "title": "AI services slow? Fix the network first",
     "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent longer than I should have on zerotrust networking before understanding w; I ran into this when we moved our text-generation microservice from dev to stagi; I spent two weeks on this before realising the rotation was blocking because the",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "ai-static-analysis-vs-legacy-sast-5x-faster-scans",
     "title": "AI static analysis vs legacy SAST: 5x faster scans",
     "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin; I also measured the time from scan start to merge-block decision (the “gate time",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-wont-fix-your-legacy-code-but-my-script-did",
     "title": "AI won’t fix your legacy code — but my script did",
     "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I ran into this in 2026 when a client in Medellín handed me a 8-year-old Django ; I tried using Copilot on this Django app and it kept suggesting   — which doesn’; I was surprised that the slowest part wasn’t the LLM — it was the AST parsing.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "alerts-2026-ai-turns-false-alarms-to-silence",
     "title": "Alerts 2026: AI turns false alarms to silence",
     "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days on this before realising the alert threshold wasn’t the probl; I learned that the hard way when 56.7.0 dropped a new default for alertmanager.r",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "aws-cost-levers-2026-the-3-that-cut-bills-30",
     "title": "AWS cost levers 2026: the 3 that cut bills 30%",
     "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I've seen the same finops 2026 mistake in multiple production codebases, includi; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent two weeks in Q1 2026 debugging why a mid-size API service’s Reserved Ins",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "aws-costs-for-nairobi-saas-2026-bill-split",
@@ -2034,6 +2004,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T08:27:14.122451+00:00"
+  },
+  {
+    "slug": "ai-in-slow-networks-why-models-flop-where-data-costs-rise",
+    "title": "AI in slow networks: why models flop where data costs rise",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): The short version: the conventional advice on global best is incomplete.; I once shipped a 300 MB Whisper ASR model to a Nairobi fintech app; 78% of users; I once traced a 1.8 s median response time for a chatbot in Mombasa back to 12 s",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-infra-capacity-planning-vs-runbooks-what-id",
+    "title": "AI infra: capacity planning vs runbooks — what I’d",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when we provisioned an extra 128 vCPU cluster for a Black Friday",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-native-apps-forget-the-old-stack",
+    "title": "AI-native apps: forget the old stack",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we moved our help-desk bot from a Jupyter notebook to a Fas",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-pair-programming-stole-my-code-review-job",
+    "title": "AI pair programming stole my code review job",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when I personally got tagged on 18 PRs in a single day during a ; I spent three days debugging the slow query before realising the index was missi",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-reshaped-my-engineering-principles",
+    "title": "AI reshaped my engineering principles",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about engineering principles during a code review last week; I realised I couldn't give a clean explanation — which meant I didn't understand; I bought into this story for a while.",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "skip-m-pesa-build-one-api-for-3-african-markets",
