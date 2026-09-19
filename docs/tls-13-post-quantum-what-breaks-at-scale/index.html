@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-21T16:00:52.359876">
-        <meta property="article:modified_time" content="2026-06-21T16:00:52.359885">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.711749+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="TLS 1.3 + post-quantum: what breaks at scale">
@@ -63,8 +63,8 @@
       "headline": "TLS 1.3 + post-quantum: what breaks at scale",
       "description": "P99 TLS latency drops 37% when post-quantum crypto targets only session tickets — not full handshakes.",
       "datePublished": "2026-06-21T16:00:52+00:00",
-      "dateModified": "2026-06-21T16:00:52+00:00",
-      "wordCount": 2437,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2419,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -246,9 +246,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2437 words
+                        &nbsp;·&nbsp; 2419 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-21
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -259,7 +259,7 @@
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In late 2026 we rolled out TLS 1.3 across our edge network for all customer traffic. The compliance team had just added a new clause: <em>“All external endpoints must support post-quantum key exchange by 2026-Q2.”</em> The idea was simple—prepare today for the day a large-scale quantum computer cracks RSA-2048 or ECDH-P256. Our CTO signed off, the security team wrote the policy, and the infrastructure team (that’s us) got the ticket.</p>
 <p>We already ran TLS 1.3 with X25519 ECDH. Replacing the key exchange with a post-quantum variant meant swapping out the cipher suite list in Nginx and HAProxy configs. We expected this to be a five-line change: edit cipher string, reload, done. Reality hit fast.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout. The real surprise wasn’t the config—it was the latency spike. Our 95th-percentile TLS handshake time jumped from 18 ms to 112 ms once we enabled <code>kyber768_kyber768</code> and <code>x25519_kyber768</code> hybrid suites. That spike translated to visible API errors on mobile clients in Lagos and Bangalore where RTTs were already 120–180 ms. The business impact was clear: 0.4 % more 5xx responses and a support ticket titled <em>“Why is the app slow in Nigeria?”</em></p>
+<p>The real surprise wasn’t the config—it was the latency spike. Our 95th-percentile TLS handshake time jumped from 18 ms to 112 ms once we enabled <code>kyber768_kyber768</code> and <code>x25519_kyber768</code> hybrid suites. That spike translated to visible API errors on mobile clients in Lagos and Bangalore where RTTs were already 120–180 ms. The business impact was clear: 0.4 % more 5xx responses and a support ticket titled <em>“Why is the app slow in Nigeria?”</em></p>
 <p>We had to ship something that worked for tens of thousands of concurrent sessions, not just a curl loop in staging.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first attempt was the obvious one: drop in the new hybrid suites from the 2026 RFC draft. We used OpenSSL 3.0.12 (the first version with built-in Kyber support) and configured Nginx 1.25.3 with:</p>
@@ -306,9 +306,7 @@ ssl_conf_cmd PostHandshakeAuth on;
 <h2 id="implementation-details">Implementation details</h2>
 <p>We run Nginx 1.25.3 on Ubuntu 24.04 LTS with OpenSSL 3.0.13. The post-quantum KEM we targeted is Kyber768 from the 2026 NIST final selection (RFC 9180). We chose Kyber because:</p>
 <ul>
-<li>Kyber768 gives ~192-bit security, matching AES-256.</li>
-<li>The public key is 1184 bytes, ciphertext 1088 bytes—small enough for TLS.</li>
-<li>OpenSSL 3.0+ includes it in the default provider.</li>
+<li>Kyber768 gives ~192-bit security, matching AES-256. - The public key is 1184 bytes, ciphertext 1088 bytes—small enough for TLS. - OpenSSL 3.0+ includes it in the default provider.</li>
 </ul>
 <p>We built a custom Nginx module (<code>ngx_http_tls_pq_module</code>) that hooks into <code>SSL_CTX_set_tlsext_ticket_key_cb</code> to derive the ticket encryption key from Kyber768. The module is 287 lines of C and compiles in under 30 seconds on our build farm.</p>
 <p>We also added a Prometheus metric <code>tls_handshake_duration_seconds_bucket{kem="kyber768"}</code> so we can alert if the tail regresses.</p>
@@ -417,11 +415,7 @@ ssl_conf_cmd PostHandshakeAuth on;
 <p>Budget for extra memory per worker: 4–8 MB. That’s cheaper than a failed compliance audit.</p>
 <h2 id="resources-that-helped">Resources that helped</h2>
 <ul>
-<li>Cloudflare’s <em>hybrid post-quantum TLS</em> write-up (2026-03) – practical deployment notes and code.</li>
-<li>Open Quantum Safe project GitHub – daily builds of Kyber, Dilithium, and integration patches for Nginx/Apache.</li>
-<li>RFC 9180 (Hybrid Post-Quantum Key Encapsulation Mechanism Combinations for Transport Layer Security) – the spec we implemented.</li>
-<li>NIST IR 8309 (Status Report on Post-Quantum Cryptography, 2025 update) – the threat model and timeline.</li>
-<li><code>ngx_post_quantum</code> module source – the drop-in replacement we should have used from day one.</li>
+<li>Cloudflare’s <em>hybrid post-quantum TLS</em> write-up (2026-03) – practical deployment notes and code. - Open Quantum Safe project GitHub – daily builds of Kyber, Dilithium, and integration patches for Nginx/Apache. - RFC 9180 (Hybrid Post-Quantum Key Encapsulation Mechanism Combinations for Transport Layer Security) – the spec we implemented. - NIST IR 8309 (Status Report on Post-Quantum Cryptography, 2025 update) – the threat model and timeline. - <code>ngx_post_quantum</code> module source – the drop-in replacement we should have used from day one.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Why not just switch all cipher suites to post-quantum today?</strong>
@@ -438,14 +432,11 @@ ssl_conf_cmd PostHandshakeAuth on;
 <p>No. TLS is negotiated at the transport layer. As long as your application uses a TLS stack that negotiates cipher suites dynamically (e.g., Go’s <code>crypto/tls</code>, Python’s <code>ssl</code>, Java’s <code>SSLEngine</code>), the app code doesn’t change. The only risk is if you hardcode cipher strings in your client config (e.g., <code>openssl s_client -cipher ...</code>). Update those to include the hybrid suites to validate the new handshake path.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

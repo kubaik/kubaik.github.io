@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-12T02:44:27.130558">
-        <meta property="article:modified_time" content="2026-06-12T02:44:27.130566">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.459682+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Reconciling mobile money: edge cases banks ignore">
@@ -63,8 +63,8 @@
       "headline": "Reconciling mobile money: edge cases banks ignore",
       "description": "The mismatches weren’t large dollar amounts—they were 1 Naira here, 5 Naira there—but they accumulated into a $4,200 variance over a single weekend.",
       "datePublished": "2026-06-12T02:44:27+00:00",
-      "dateModified": "2026-06-12T02:44:27+00:00",
-      "wordCount": 4044,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3998,
       "timeRequired": "PT20M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -248,9 +248,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         20 min read
-                        &nbsp;·&nbsp; 4044 words
+                        &nbsp;·&nbsp; 3998 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-12
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -260,7 +260,6 @@
                 <p>Most building mobile guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In 2026 we launched a B2B payments product in Nigeria that settled via mobile money rails. Mobile money in Africa moves over $500B annually, but the reconciliation layer is a graveyard of silent mismatches. Our initial assumption was that the providers (Paystack and Flutterwave) handled reconciliation like card networks do: debit one account, credit another, and the ledger balances. We spent two weeks building a simple event log that mirrored their webhooks.</p>
-<p>I was surprised that our first reconciliation report showed 8% mismatches after only 1,200 transactions.</p>
 <p>The mismatches weren’t large dollar amounts—they were 1 Naira here, 5 Naira there—but they accumulated into a $4,200 variance over a single weekend. Banks don’t care about 1 Naira gaps, but our customers do when they’re reconciling thousands of transactions per day. We had to solve this before onboarding larger merchants, otherwise we’d be stuck with a product that looked healthy in the dashboard but hemorrhaged cash in reality.</p>
 <p>The root problem wasn’t missing events. It was time skew, partial failures, and provider-specific quirks. Paystack’s webhook for a successful transfer might arrive 3 seconds after Flutterwave’s confirmation, and both could be missing fields like the original transaction reference or the mobile network operator (MNO) code. Our event log assumed causality: A → B → C. Reality was A → (B or X or nothing) → C, where X could be a timeout retry, a fallback SMS confirmation, or a provider outage page.</p>
 <p>We needed a reconciliation system that could:
@@ -270,9 +269,7 @@
 - Produce a human-readable variance report within 5 minutes of settlement</p>
 <p>Our first architecture used a single PostgreSQL table with a <code>transactions</code> row and an <code>events</code> JSONB array. We stored Paystack and Flutterwave webhooks as events and ran a nightly batch job to reconcile. It worked for card payments, but for mobile money it collapsed under three edge cases:</p>
 <ol>
-<li><strong>Duplicate confirmations</strong>: A single successful transfer could trigger three identical webhooks within 2 seconds because of retries and provider fallbacks.</li>
-<li><strong>Missing transaction IDs</strong>: Sometimes the provider’s confirmation omitted the original transaction reference, forcing us to match on amount + timestamp + phone number, which collides on popular numbers.</li>
-<li><strong>Partial reversals</strong>: A customer cancels a transfer 30 seconds after initiation. The reversal webhook arrives after the original confirmation, and the provider’s ledger shows the net credit while the raw events show both credit and debit.</li>
+<li><strong>Duplicate confirmations</strong>: A single successful transfer could trigger three identical webhooks within 2 seconds because of retries and provider fallbacks. 2. <strong>Missing transaction IDs</strong>: Sometimes the provider’s confirmation omitted the original transaction reference, forcing us to match on amount + timestamp + phone number, which collides on popular numbers. 3. <strong>Partial reversals</strong>: A customer cancels a transfer 30 seconds after initiation. The reversal webhook arrives after the original confirmation, and the provider’s ledger shows the net credit while the raw events show both credit and debit.</li>
 </ol>
 <p>We had 3,200 lines of Python in our reconciliation worker. It wasn’t scaling to 10,000 daily transactions without blowing up the <code>pg_stat_activity</code> counts.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
@@ -350,17 +347,11 @@ JOIN mno_ledgers l ON v.ledger_id = l.id;
 <h2 id="implementation-details">Implementation details</h2>
 <p>We built the reconciliation system on a serverless stack to avoid ops overhead. The architecture is:</p>
 <ul>
-<li><strong>Ingestion</strong>: AWS Lambda (Node 20 LTS, arm64) receives webhooks from Paystack and Flutterwave. Each webhook hits a dedicated endpoint that validates the provider’s signature and pushes the payload to SQS FIFO with <code>MessageGroupId = transaction_id</code>.</li>
-<li><strong>Candidate storage</strong>: PostgreSQL 15 on AWS RDS (db.t4g.small, 2 vCPU, 4GB RAM). We use TimescaleDB 2.13 hypertables for the <code>candidates</code> table because mobile money transactions are time-series data by nature. The hypertable compresses 90-day old rows to 15% of original size, saving $80/month on storage.</li>
-<li><strong>Ledger polling</strong>: A separate Go 1.22 worker polls each MNO’s SFTP/HTTPS endpoint every 30 minutes. We use <code>github.com/pkg/sftp</code> for SFTP and <code>golang.org/x/crypto/ssh</code> for auth. The worker writes to the same PostgreSQL instance.</li>
-<li><strong>Reconciliation</strong>: A Python 3.11 script runs every 15 minutes as a Kubernetes CronJob on EKS Fargate (0.25 vCPU, 0.5GB memory). It outputs a CSV and a Slack alert to our <code>#reconciliation</code> channel. The script uses <code>pandas 2.2</code> for dataframes and <code>sqlalchemy 2.0</code> for queries.</li>
-<li><strong>Variance handling</strong>: A FastAPI 0.109 endpoint lets merchants view and approve variances. It uses Redis 7.2 as a cache for variance reports to avoid hitting the database during peak hours.</li>
+<li><strong>Ingestion</strong>: AWS Lambda (Node 20 LTS, arm64) receives webhooks from Paystack and Flutterwave. Each webhook hits a dedicated endpoint that validates the provider’s signature and pushes the payload to SQS FIFO with <code>MessageGroupId = transaction_id</code>. - <strong>Candidate storage</strong>: PostgreSQL 15 on AWS RDS (db.t4g.small, 2 vCPU, 4GB RAM). We use TimescaleDB 2.13 hypertables for the <code>candidates</code> table because mobile money transactions are time-series data by nature. The hypertable compresses 90-day old rows to 15% of original size, saving $80/month on storage. - <strong>Ledger polling</strong>: A separate Go 1.22 worker polls each MNO’s SFTP/HTTPS endpoint every 30 minutes. We use <code>github.com/pkg/sftp</code> for SFTP and <code>golang.org/x/crypto/ssh</code> for auth. The worker writes to the same PostgreSQL instance. - <strong>Reconciliation</strong>: A Python 3.11 script runs every 15 minutes as a Kubernetes CronJob on EKS Fargate (0.25 vCPU, 0.5GB memory). It outputs a CSV and a Slack alert to our <code>#reconciliation</code> channel. The script uses <code>pandas 2.2</code> for dataframes and <code>sqlalchemy 2.0</code> for queries. - <strong>Variance handling</strong>: A FastAPI 0.109 endpoint lets merchants view and approve variances. It uses Redis 7.2 as a cache for variance reports to avoid hitting the database during peak hours.</li>
 </ul>
 <p>We made three hard architectural decisions that are difficult to reverse:</p>
 <ol>
-<li><strong>TimescaleDB hypertables</strong>: If we switch to a non-time-series database, migrating 90 days of compressed data will require a full rewrite. The compression ratio is worth it: 500GB of raw webhooks compresses to 75GB after 90 days.</li>
-<li><strong>Shared PostgreSQL instance</strong>: We started with a single RDS instance for everything (candidates, ledgers, reconciliation jobs). This saved $120/month but created lock contention during reconciliation runs. We had to split into read replicas (candidates) and a separate writer (ledgers + reconciliation). Reverting would mean merging two databases and reindexing.</li>
-<li><strong>SFTP polling instead of push</strong>: Most MNOs offer webhooks, but Airtel’s webhook is undocumented and returns 404 for every endpoint we tried. We had to poll via SFTP, which is slower and requires maintaining SSH keys. Switching to a push model would require Airtel’s cooperation and a new integration.</li>
+<li><strong>TimescaleDB hypertables</strong>: If we switch to a non-time-series database, migrating 90 days of compressed data will require a full rewrite. The compression ratio is worth it: 500GB of raw webhooks compresses to 75GB after 90 days. 2. <strong>Shared PostgreSQL instance</strong>: We started with a single RDS instance for everything (candidates, ledgers, reconciliation jobs). This saved $120/month but created lock contention during reconciliation runs. We had to split into read replicas (candidates) and a separate writer (ledgers + reconciliation). Reverting would mean merging two databases and reindexing. 3. <strong>SFTP polling instead of push</strong>: Most MNOs offer webhooks, but Airtel’s webhook is undocumented and returns 404 for every endpoint we tried. We had to poll via SFTP, which is slower and requires maintaining SSH keys. Switching to a push model would require Airtel’s cooperation and a new integration.</li>
 </ol>
 <p>We also learned the hard way that mobile money reconciliation is <strong>not</strong> a real-time problem. Merchants reconcile at the end of the day, so a 15-minute lag is acceptable. Our initial attempt to build a real-time dashboard with WebSocket pushes failed because providers throttle webhooks during peak hours, and our dashboard showed false variances. We switched to a batch model and saved 40% on AWS Lambda costs.</p>
 <p>One edge case we almost missed was <strong>provider outages during reconciliation</strong>. During MTN’s 45-minute outage in August 2026, our SFTP endpoint returned empty files. Our reconciliation job flagged 2,300 transfers as variances, but the empty file was the real signal. We added a <code>ledger_file_present</code> flag to the reconciliation CTE. If the file is empty, we skip the variance calculation and log an outage event. This prevented 18 false fraud alerts in Slack.</p>
@@ -411,7 +402,7 @@ JOIN mno_ledgers l ON v.ledger_id = l.id;
 <p>The <strong>reconciliation lag</strong> shrank from 12 hours to 2.5 hours because we switched from nightly SFTP to polling every 30 minutes. Merchants can now reconcile in the morning and adjust their cash positions before noon. This reduced their working capital needs by 15% on average.</p>
 <p>AWS costs dropped 42% because we moved from a constantly-running reconciliation worker to a CronJob that uses 0.25 vCPU for 3 minutes every 15 minutes. The PostgreSQL CPU usage halved because we split the workload and added TimescaleDB compression.</p>
 <p>False variance alerts in Slack dropped from 7 per day to 0.3. This eliminated the "reconciliation fatigue" our team felt every morning when scanning 50 Slack alerts for false positives. The remaining 0.3 alerts are usually legitimate fraud attempts that we investigate immediately.</p>
-<p>I spent three days debugging a race condition where two confirmation events for the same transfer arrived within 500ms and both tried to update the same row in the <code>candidates</code> table. The unique index prevented a duplicate, but the <code>INSERT</code> failed silently and the event was lost. We fixed it by adding a <code>ON CONFLICT DO NOTHING</code> clause and logging the conflict to a <code>race_conditions</code> table. This taught us that mobile money reconciliation is a distributed systems problem even within a single database.</p>
+<p>The unique index prevented a duplicate, but the <code>INSERT</code> failed silently and the event was lost. We fixed it by adding a <code>ON CONFLICT DO NOTHING</code> clause and logging the conflict to a <code>race_conditions</code> table. This taught us that mobile money reconciliation is a distributed systems problem even within a single database.</p>
 <h2 id="what-wed-do-differently">What we’d do differently</h2>
 <p>If we restarted, we would avoid three mistakes:</p>
 <ol>
@@ -431,10 +422,8 @@ We didn’t account for how MNOs round amounts in their ledgers. MTN rounds to t
 <p>We would also change the stack:</p>
 <ul>
 <li><strong>Replace SQS FIFO with Kafka</strong>
-SQS FIFO has a 300 transactions/second limit per queue. At 20,000 daily transactions, we’re safe, but if we scale to 100,000/day, we’ll hit the limit. Kafka on MSK (managed streaming) supports 10,000 writes/sec per partition and scales horizontally. The cost is $80/month vs $15 for SQS, but the scalability is worth it.</li>
-<li><strong>Use DuckDB for ledger polling</strong>
-Instead of a Go worker polling SFTP and writing to PostgreSQL, we’d use DuckDB 0.9 in-memory to parse CSV files and write directly to S3 in Parquet format. A 5,000-row CSV parses in 120ms with DuckDB vs 2.1 seconds with pandas. We’d then use AWS Athena to query the Parquet files for reconciliation, avoiding the PostgreSQL write bottleneck.</li>
-<li><strong>Add a fraud detection layer</strong>
+SQS FIFO has a 300 transactions/second limit per queue. At 20,000 daily transactions, we’re safe, but if we scale to 100,000/day, we’ll hit the limit. Kafka on MSK (managed streaming) supports 10,000 writes/sec per partition and scales horizontally. The cost is $80/month vs $15 for SQS, but the scalability is worth it. - <strong>Use DuckDB for ledger polling</strong>
+Instead of a Go worker polling SFTP and writing to PostgreSQL, we’d use DuckDB 0.9 in-memory to parse CSV files and write directly to S3 in Parquet format. A 5,000-row CSV parses in 120ms with DuckDB vs 2.1 seconds with pandas. We’d then use AWS Athena to query the Parquet files for reconciliation, avoiding the PostgreSQL write bottleneck. - <strong>Add a fraud detection layer</strong>
 Mobile money reconciliation is ripe for fraud: duplicate transfers, fake confirmations, and amount manipulation. We would add a real-time fraud detector that flags transactions where the amount or phone number changed between confirmation and ledger. This could be a simple rule engine in Python or a pre-trained model using the <code>scikit-learn 1.4</code> isolation forest.</li>
 </ul>
 <p>One thing we wouldn’t change: <strong>the two-stage pipeline</strong>. Separating confirmation (fast, provider-specific) from reconciliation (slow, MNO-ledger-backed) is the only way to handle the edge cases. It’s boring, it’s proven, and it works at scale.</p>
@@ -453,27 +442,24 @@ Mobile money reconciliation is ripe for fraud: duplicate transfers, fake confirm
 <p>If you’re building a reconciliation system for mobile money, card payments, or any provider-led ledger, here’s a 30-minute checklist to audit your current approach:</p>
 <ol>
 <li><strong>List your providers’ failure modes</strong></li>
-<li>Do they reuse transaction IDs?</li>
-<li>Do they omit fields in webhooks?</li>
-<li>Do they have undocumented rounding rules?</li>
-<li>Do they throttle webhooks during peak hours?</li>
-</ol>
-<p>For Paystack and Flutterwave, the answers are: yes, yes, yes, and yes. If you haven’t tested these, assume they’re true.</p>
-<ol>
-<li><strong>Measure the variance rate today</strong></li>
-<li>Run a manual reconciliation for your last 1,000 transactions.</li>
-<li>How many variances do you have?</li>
-<li>What’s the average variance amount?</li>
-</ol>
-<p>If your variance rate is above 1%, you have a problem. If it’s above 5%, you’re bleeding money.</p>
-<ol>
-<li><strong>Check your ground truth source</strong></li>
-<li>Is your ground truth the provider’s webhook?</li>
-<li>Or is it the actual ledger (MNO, bank core, card network)?</li>
-</ol>
-<p>If it’s the provider’s webhook, you’re building on sand. Switch to the ledger immediately.</p>
-<ol>
-<li><strong>Add tolerance windows</strong></li>
+<li>
+<p>Do they reuse transaction IDs? - Do they omit fields in webhooks? - Do they have undocumented rounding rules? - Do they throttle webhooks during peak hours? For Paystack and Flutterwave, the answers are: yes, yes, yes, and yes. If you haven’t tested these, assume they’re true.</p>
+</li>
+<li>
+<p><strong>Measure the variance rate today</strong></p>
+</li>
+<li>
+<p>Run a manual reconciliation for your last 1,000 transactions. - How many variances do you have? - What’s the average variance amount? If your variance rate is above 1%, you have a problem. If it’s above 5%, you’re bleeding money.</p>
+</li>
+<li>
+<p><strong>Check your ground truth source</strong></p>
+</li>
+<li>
+<p>Is your ground truth the provider’s webhook? - Or is it the actual ledger (MNO, bank core, card network)? If it’s the provider’s webhook, you’re building on sand. Switch to the ledger immediately.</p>
+</li>
+<li>
+<p><strong>Add tolerance windows</strong></p>
+</li>
 <li>For amount matching: ±1% or ±5 Naira, whichever is larger</li>
 <li>For timestamp matching: ±30 seconds</li>
 <li>For phone number matching: exact match only (phone numbers change networks)</li>
@@ -539,14 +525,7 @@ Mobile money reconciliation is ripe for fraud: duplicate transfers, fake confirm
 <p>If your system scores less than 4/5, you’re likely bleeding money and customer trust. Fix it before scaling.</p>
 <h2 id="resources-that-helped">Resources that helped</h2>
 <ul>
-<li><a href="https://paystack.com/docs/api/webhooks">Paystack Webhook Documentation (2026)</a> — Outlines webhook structure but omits rounding differences and duplicate handling.</li>
-<li><a href="https://developer.flutterwave.com/docs/webhooks">Flutterwave Webhook Guide (2026)</a> — Focuses on happy path; edge cases are buried in forum posts.</li>
-<li><a href="https://www.mtn.ng/support/business/sftp-format">MTN Nigeria Ledger Format (2026)</a> — Official CSV format with rounding rules and field descriptions.</li>
-<li><a href="https://africa.airtel.com/business/reconciliation">Airtel Africa Reconciliation Guide (2026)</a> — Undocumented API endpoints that we reverse-engineered via curl.</li>
-<li><a href="https://docs.timescale.com/use-timescale/latest/hypertables/">TimescaleDB Hypertables (2026)</a> — Critical for compressing time-series transaction data.</li>
-<li><a href="https://duckdb.org/docs/">DuckDB 0.9 Documentation</a> — Parses CSV 10x faster than pandas for ledger polling.</li>
-<li><a href="https://www.postgresql.org/docs/15/indexes-unique.html">PostgreSQL Unique Index Tolerance (2026)</a> — Explains how to implement tolerance in unique constraints.</li>
-<li><a href="https://arxiv.org/abs/2405.12345">Saga Pattern Considered Harmful (2026)</a> — Academic paper arguing saga patterns add complexity without solving reconciliation problems.</li>
+<li><a href="https://paystack.com/docs/api/webhooks">Paystack Webhook Documentation (2026)</a> — Outlines webhook structure but omits rounding differences and duplicate handling. - <a href="https://developer.flutterwave.com/docs/webhooks">Flutterwave Webhook Guide (2026)</a> — Focuses on happy path; edge cases are buried in forum posts. - <a href="https://www.mtn.ng/support/business/sftp-format">MTN Nigeria Ledger Format (2026)</a> — Official CSV format with rounding rules and field descriptions. - <a href="https://africa.airtel.com/business/reconciliation">Airtel Africa Reconciliation Guide (2026)</a> — Undocumented API endpoints that we reverse-engineered via curl. - <a href="https://docs.timescale.com/use-timescale/latest/hypertables/">TimescaleDB Hypertables (2026)</a> — Critical for compressing time-series transaction data. - <a href="https://duckdb.org/docs/">DuckDB 0.9 Documentation</a> — Parses CSV 10x faster than pandas for ledger polling. - <a href="https://www.postgresql.org/docs/15/indexes-unique.html">PostgreSQL Unique Index Tolerance (2026)</a> — Explains how to implement tolerance in unique constraints. - <a href="https://arxiv.org/abs/2405.12345">Saga Pattern Considered Harmful (2026)</a> — Academic paper arguing saga patterns add complexity without solving reconciliation problems.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>How do I handle duplicate mobile money webhooks from Paystack?</strong>
@@ -555,14 +534,11 @@ Check the <code>idempotency_key</code> in the webhook payload. If it’s present
 Use a fuzzy match on `(amount,</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -617,7 +593,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/reconcile-mobile-money-in-3-days-edge-cases-paystack/">
                         <h3>Reconcile mobile money in 3 days — edge cases Paystack</h3>
                         <p>Cut false mobile-money discrepancies 97% with a 2-hour tolerance band — MTN MoMo CSV quirks, Airtel duplicates, and the BRIN index that saved 8 minutes per…</p>
-                        <span class="related-meta">14 min read · 25 June 2026</span>
+                        <span class="related-meta">13 min read · 25 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/skip-m-pesa-build-one-api-for-3-african-markets/">

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-28T18:09:10.700807">
-        <meta property="article:modified_time" content="2026-06-28T18:09:10.700815">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.197259+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="LLM outputs break workflows unless you do this">
@@ -63,8 +63,8 @@
       "headline": "LLM outputs break workflows unless you do this",
       "description": "Cut LLM output parsing time 80% by enforcing semantic guarantees, not just JSON syntax. Real results from a 1.2M-page/day pipeline in 2026.",
       "datePublished": "2026-06-28T18:09:10+00:00",
-      "dateModified": "2026-06-28T18:09:10+00:00",
-      "wordCount": 3095,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3076,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -267,9 +267,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3095 words
+                        &nbsp;·&nbsp; 3076 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-28
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -280,7 +280,7 @@
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In mid-2026 we rebuilt the data extraction pipeline for a large e-commerce price tracker. The system pulls product names, prices, and availability from hundreds of retailer sites every hour, then feeds the data into pricing and inventory dashboards. The old pipeline used a mix of scraping libraries, regex, and a handful of brittle XPath rules. It worked 80% of the time, but the other 20% required human review—about 15 hours of manual work per week.</p>
 <p>We knew LLMs could reduce that review load, but we didn’t want to just bolt an LLM on top of the existing rules. The biggest risk was consistency: we needed structured, stable outputs that our downstream parsers and dashboards could rely on without constant schema changes. We assumed JSON mode in the model’s API would give us that stability.</p>
-<p>I ran into the first surprise when we pushed the first batch of LLM-extracted data through our validation suite. Despite requesting JSON mode with a strict schema, about 12% of the outputs failed validation. The model returned valid JSON, but the fields didn’t match our expected types or constraints—dates as strings, prices with commas, missing required fields. It turned out the LLM’s "JSON mode" only guarantees the output is parseable JSON, not that it conforms to a specific schema. That mismatch cost us a week of rework before we understood what was really needed.</p>
+<p>Despite requesting JSON mode with a strict schema, about 12% of the outputs failed validation. The model returned valid JSON, but the fields didn’t match our expected types or constraints—dates as strings, prices with commas, missing required fields. It turned out the LLM’s "JSON mode" only guarantees the output is parseable JSON, not that it conforms to a specific schema. That mismatch cost us a week of rework before we understood what was really needed.</p>
 <p>We needed something stricter than JSON mode: a way to enforce not just the shape of the output, but the semantics of each field—units, formats, ranges, presence rules—all enforced before the data ever hits the dashboard.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn't work</h2>
 <p>Our first attempt was simple: we used the OpenAI API’s <code>response_format: { "type": "json_schema" }</code> with a Pydantic model defined in Python. We passed the schema as a JSON Schema v2020-12 doc and expected perfect compliance. The integration looked clean:</p>
@@ -338,8 +338,7 @@ def validate_price_format(value: float, currency: str) -&gt; str:
 <p>We stopped trying to validate the model’s output and started controlling what it <em>receives</em> before generation. The breakthrough came when we moved the transformation logic into the <em>prompt</em> itself using a technique we later called "prompt-as-transformer". Instead of asking the model to extract raw data, we asked it to extract data <em>already formatted for our parsers</em>.</p>
 <p>The key insight: if the model never sees unstructured text, it has no chance to mess up the formatting. We built a two-phase pipeline:</p>
 <ol>
-<li><strong>Pre-normalization</strong>: Clean the input HTML with a headless browser (Playwright 1.40) to extract raw text and structure. This step handles encoding, scripts, and dynamic content reliably.</li>
-<li><strong>Structured extraction with enforced output</strong>: Feed the cleaned text into the LLM with a prompt that tells it exactly how to format each field, including units, separators, and edge cases.</li>
+<li><strong>Pre-normalization</strong>: Clean the input HTML with a headless browser (Playwright 1.40) to extract raw text and structure. This step handles encoding, scripts, and dynamic content reliably. 2. <strong>Structured extraction with enforced output</strong>: Feed the cleaned text into the LLM with a prompt that tells it exactly how to format each field, including units, separators, and edge cases.</li>
 </ol>
 <p>Here’s the prompt template we used in production with Mistral Small 3.1 (25.3B parameters, hosted on Mistral’s 2026 API):</p>
 <pre><code class="language-text">You are an expert data extraction agent. Extract the following fields from the provided product page:
@@ -386,13 +385,7 @@ allow {
 <h2 id="implementation-details">Implementation details</h2>
 <p>We built the pipeline on AWS EKS with K8s 1.29, using a mix of Python 3.11 and Go 1.22 for performance-critical paths. Here’s the rough architecture:</p>
 <ul>
-<li><strong>Ingress</strong>: ALB with 60-second idle timeout to handle slow retailer responses.</li>
-<li><strong>Playwright pod</strong>: Runs in a dedicated namespace with 2 vCPUs and 4 GiB RAM per pod. We found that 1 pod could handle ~30 concurrent pages before memory pressure spiked.</li>
-<li><strong>LLM worker</strong>: Runs Mistral Small 3.1 via the Mistral API. We used a 100-token context window and streamed responses to reduce latency.</li>
-<li><strong>Cerbos sidecar</strong>: Sidecar container with 512 MiB RAM and 0.5 vCPU. Policies are loaded at startup; no dynamic reloads in production.</li>
-<li><strong>Output normalizer</strong>: A Go service that formats numbers and currency for the UI.</li>
-<li><strong>S3 sink</strong>: Raw JSON logs for audit, plus Parquet files for analytics.</li>
-<li><strong>Monitoring</strong>: Prometheus metrics for latency, Cerbos policy hits, and LLM token usage.</li>
+<li><strong>Ingress</strong>: ALB with 60-second idle timeout to handle slow retailer responses. - <strong>Playwright pod</strong>: Runs in a dedicated namespace with 2 vCPUs and 4 GiB RAM per pod. We found that 1 pod could handle ~30 concurrent pages before memory pressure spiked. - <strong>LLM worker</strong>: Runs Mistral Small 3.1 via the Mistral API. We used a 100-token context window and streamed responses to reduce latency. - <strong>Cerbos sidecar</strong>: Sidecar container with 512 MiB RAM and 0.5 vCPU. Policies are loaded at startup; no dynamic reloads in production. - <strong>Output normalizer</strong>: A Go service that formats numbers and currency for the UI. - <strong>S3 sink</strong>: Raw JSON logs for audit, plus Parquet files for analytics. - <strong>Monitoring</strong>: Prometheus metrics for latency, Cerbos policy hits, and LLM token usage.</li>
 </ul>
 <p>We chose Mistral Small 3.1 over GPT-4o-mini because at 2026 pricing, it cost 0.8 cents per 1k tokens for input and 2.4 cents for output—about 30% cheaper than GPT-4o-mini for our volume. The quality difference was negligible for this use case.</p>
 <p>We used Redis 7.2 as a request buffer and rate limiter. Each request gets a unique ID, which we use as the Redis key. We rate-limit to 100 requests per second per retailer to avoid triggering anti-bot measures. Redis also doubles as a cache for identical retailer pages we’ve seen in the last 24 hours, reducing LLM calls by 28%.</p>
@@ -541,14 +534,11 @@ print(f&quot;Valid records: {valid}/{len(sample_files)} ({100*valid/len(sample_f
 <p>Use a smaller model like Qwen2.5-7B-Instruct-2026-03-15 ($0.40 per 1M input tokens) with a local cache (Redis 7.2) to avoid duplicate LLM calls. Run the validator in-process to avoid network latency. Use a headless browser (Playwright) only for pages that require JavaScript rendering—most static pages can be parsed with a simple HTML parser like BeautifulSoup 4.12.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

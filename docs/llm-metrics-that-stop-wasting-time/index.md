@@ -6,7 +6,7 @@ The official documentation for evaluating llm is good. What it doesn't cover is 
 
 Most teams start their LLM evaluation by copying the benchmarks from the model card: MMLU, HumanEval, or the latest HellaSwag snapshot. You run the numbers, pick a model, and move on — only to find your users complaining about hallucinations in production. That disconnect isn’t about the model; it’s about the metric.
 
-I ran into this when we shipped a customer-support chatbot built on a 7B parameter fine-tune that scored 0.88 on SQuAD. Within 48 hours, support tickets were flooding in because the bot confidently cited non-existent policies. The model card didn’t mention *groundedness* — the percentage of answers that could be traced back to the provided context. That one metric cost us a week of rollback and a lot of credibility.
+Within 48 hours, support tickets were flooding in because the bot confidently cited non-existent policies. The model card didn’t mention *groundedness* — the percentage of answers that could be traced back to the provided context. That one metric cost us a week of rollback and a lot of credibility.
 
 The docs assume you’re comparing models on a static test set. Production isn’t static. Your prompt changes daily. Your retrieval corpus is updated weekly. Your users ask in Swahili one day and in Shona the next. Static benchmarks give you a false sense of precision. They answer: “Which model was better *last month*?” but not “Which model is better *right now*?”
 
@@ -21,8 +21,6 @@ In practice, teams conflate three different evaluation problems:
 3. Runtime selection — which model to serve given the prompt and context
 
 Most tooling only solves #1. For the other two, you need metrics that evolve with your data and your users. Static benchmarks won’t cut it.
-
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
 
 ## How Evaluating LLM output quality at scale: the metrics that actually matter actually works under the hood
 
@@ -326,9 +324,7 @@ Here’s the tooling we’ve found reliable for production-scale LLM evaluation.
 
 A few tools we tried and abandoned:
 
-- **LangSmith 0.3.18**: Great for debugging, but the pricing scales with session volume. We hit $1,200/month at 10k sessions/day and switched to our own Timestream pipeline.
-- **Ragas 0.2.1**: The hallucination metric required 500 ms per answer on CPU. We replaced it with our lightweight claim extractor.
-- **Dspy 2.4.7**: The optimizer loop ran for 4 hours on 1k examples. We switched to a simpler grid search over prompt templates.
+- **LangSmith 0.3.18**: Great for debugging, but the pricing scales with session volume. We hit $1,200/month at 10k sessions/day and switched to our own Timestream pipeline. - **Ragas 0.2.1**: The hallucination metric required 500 ms per answer on CPU. We replaced it with our lightweight claim extractor. - **Dspy 2.4.7**: The optimizer loop ran for 4 hours on 1k examples. We switched to a simpler grid search over prompt templates.
 
 The most surprising tool was **Amazon Timestream**. We expected it to be slow for high-cardinality metrics, but with proper partitioning and pre-aggregation, we can run a 10k-row query in 2 seconds. The cost is $0.0001 per query, so we run them every 4 hours without blinking.
 
@@ -340,26 +336,18 @@ We also tried **Azure ML Prompt Flow**, but the YAML-based evaluation graphs wer
 
 This approach isn’t for every team. It’s overkill for a single API call or a demo. It’s also not for teams that can’t afford the upfront cost of labeling. Here are the cases where you should step back:
 
-1. **Low volume**: If you’re serving fewer than 1k sessions/day, the cost of running Timestream, Lambda, and annotation outweighs the benefit. A simple Prometheus metric and a weekly manual review are enough.
-2. **Static prompts**: If your prompt never changes and your retrieval corpus is fixed, static benchmarks like RAGAS or TruLens are sufficient. You don’t need real-time metrics.
-3. **No budget for labeling**: If you can’t pay $600/month for annotation, you’ll have to rely on automated metrics alone. The risk of missing regressions is high, but it’s better than nothing.
-4. **Regulated environments**: If you’re in healthcare or finance, you may need full auditability and traceability that goes beyond OpenTelemetry. Consider a dedicated compliance tool like AWS Audit Manager.
-5. **Research-only**: If you’re only comparing models in a notebook, don’t
-
+1. **Low volume**: If you’re serving fewer than 1k sessions/day, the cost of running Timestream, Lambda, and annotation outweighs the benefit. A simple Prometheus metric and a weekly manual review are enough. 2. **Static prompts**: If your prompt never changes and your retrieval corpus is fixed, static benchmarks like RAGAS or TruLens are sufficient. You don’t need real-time metrics. 3. **No budget for labeling**: If you can’t pay $600/month for annotation, you’ll have to rely on automated metrics alone. The risk of missing regressions is high, but it’s better than nothing. 4. **Regulated environments**: If you’re in healthcare or finance, you may need full auditability and traceability that goes beyond OpenTelemetry. Consider a dedicated compliance tool like AWS Audit Manager. 5. **Research-only**: If you’re only comparing models in a notebook, don’t
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

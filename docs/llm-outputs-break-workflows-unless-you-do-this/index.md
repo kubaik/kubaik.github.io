@@ -8,7 +8,7 @@ In mid-2026 we rebuilt the data extraction pipeline for a large e-commerce price
 
 We knew LLMs could reduce that review load, but we didn’t want to just bolt an LLM on top of the existing rules. The biggest risk was consistency: we needed structured, stable outputs that our downstream parsers and dashboards could rely on without constant schema changes. We assumed JSON mode in the model’s API would give us that stability.
 
-I ran into the first surprise when we pushed the first batch of LLM-extracted data through our validation suite. Despite requesting JSON mode with a strict schema, about 12% of the outputs failed validation. The model returned valid JSON, but the fields didn’t match our expected types or constraints—dates as strings, prices with commas, missing required fields. It turned out the LLM’s "JSON mode" only guarantees the output is parseable JSON, not that it conforms to a specific schema. That mismatch cost us a week of rework before we understood what was really needed.
+Despite requesting JSON mode with a strict schema, about 12% of the outputs failed validation. The model returned valid JSON, but the fields didn’t match our expected types or constraints—dates as strings, prices with commas, missing required fields. It turned out the LLM’s "JSON mode" only guarantees the output is parseable JSON, not that it conforms to a specific schema. That mismatch cost us a week of rework before we understood what was really needed.
 
 We needed something stricter than JSON mode: a way to enforce not just the shape of the output, but the semantics of each field—units, formats, ranges, presence rules—all enforced before the data ever hits the dashboard.
 
@@ -84,8 +84,7 @@ We stopped trying to validate the model’s output and started controlling what 
 
 The key insight: if the model never sees unstructured text, it has no chance to mess up the formatting. We built a two-phase pipeline:
 
-1. **Pre-normalization**: Clean the input HTML with a headless browser (Playwright 1.40) to extract raw text and structure. This step handles encoding, scripts, and dynamic content reliably.
-2. **Structured extraction with enforced output**: Feed the cleaned text into the LLM with a prompt that tells it exactly how to format each field, including units, separators, and edge cases.
+1. **Pre-normalization**: Clean the input HTML with a headless browser (Playwright 1.40) to extract raw text and structure. This step handles encoding, scripts, and dynamic content reliably. 2. **Structured extraction with enforced output**: Feed the cleaned text into the LLM with a prompt that tells it exactly how to format each field, including units, separators, and edge cases.
 
 Here’s the prompt template we used in production with Mistral Small 3.1 (25.3B parameters, hosted on Mistral’s 2026 API):
 
@@ -142,13 +141,7 @@ The result was a pipeline that produced valid, consistent data 99.8% of the time
 
 We built the pipeline on AWS EKS with K8s 1.29, using a mix of Python 3.11 and Go 1.22 for performance-critical paths. Here’s the rough architecture:
 
-- **Ingress**: ALB with 60-second idle timeout to handle slow retailer responses.
-- **Playwright pod**: Runs in a dedicated namespace with 2 vCPUs and 4 GiB RAM per pod. We found that 1 pod could handle ~30 concurrent pages before memory pressure spiked.
-- **LLM worker**: Runs Mistral Small 3.1 via the Mistral API. We used a 100-token context window and streamed responses to reduce latency.
-- **Cerbos sidecar**: Sidecar container with 512 MiB RAM and 0.5 vCPU. Policies are loaded at startup; no dynamic reloads in production.
-- **Output normalizer**: A Go service that formats numbers and currency for the UI.
-- **S3 sink**: Raw JSON logs for audit, plus Parquet files for analytics.
-- **Monitoring**: Prometheus metrics for latency, Cerbos policy hits, and LLM token usage.
+- **Ingress**: ALB with 60-second idle timeout to handle slow retailer responses. - **Playwright pod**: Runs in a dedicated namespace with 2 vCPUs and 4 GiB RAM per pod. We found that 1 pod could handle ~30 concurrent pages before memory pressure spiked. - **LLM worker**: Runs Mistral Small 3.1 via the Mistral API. We used a 100-token context window and streamed responses to reduce latency. - **Cerbos sidecar**: Sidecar container with 512 MiB RAM and 0.5 vCPU. Policies are loaded at startup; no dynamic reloads in production. - **Output normalizer**: A Go service that formats numbers and currency for the UI. - **S3 sink**: Raw JSON logs for audit, plus Parquet files for analytics. - **Monitoring**: Prometheus metrics for latency, Cerbos policy hits, and LLM token usage.
 
 We chose Mistral Small 3.1 over GPT-4o-mini because at 2026 pricing, it cost 0.8 cents per 1k tokens for input and 2.4 cents for output—about 30% cheaper than GPT-4o-mini for our volume. The quality difference was negligible for this use case.
 
@@ -292,20 +285,16 @@ No. You can use Open Policy Agent (OPA) 1.8, AWS IAM policies, or even a simple 
 
 Use a smaller model like Qwen2.5-7B-Instruct-2026-03-15 ($0.40 per 1M input tokens) with a local cache (Redis 7.2) to avoid duplicate LLM calls. Run the validator in-process to avoid network latency. Use a headless browser (Playwright) only for pages that require JavaScript rendering—most static pages can be parsed with a simple HTML parser like BeautifulSoup 4.12.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

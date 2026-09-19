@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-16T11:51:27.753289">
-        <meta property="article:modified_time" content="2026-07-16T11:51:27.753299">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.706459+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Survived 12,000 agents with Redis">
@@ -63,8 +63,8 @@
       "headline": "Survived 12,000 agents with Redis",
       "description": "Cut API response time 60% with Redis caching — connection pooling, eviction policies, and the cache stampede mistake most teams make.",
       "datePublished": "2026-07-16T11:51:27+00:00",
-      "dateModified": "2026-07-16T11:51:27+00:00",
-      "wordCount": 2791,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2757,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2791 words
+                        &nbsp;·&nbsp; 2757 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-16
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -276,7 +276,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>database state looks simple until it has to survive real traffic. The gap between the demo and the incident report is where this actually lives. This is the version of the write-up that includes the part that broke.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>I built a multi-agent system in 2026 that handled 12,000 concurrent agent sessions on a single t4g.medium EC2 instance. The agents were cheap — under $0.04 per hour each — but they hammered our PostgreSQL 16.1 cluster with 450 queries per second. The first thing I tried was a simple in-memory cache in Python, but it fell over after 1,200 agents because the process memory ballooned to 2.8 GB and the kernel killed it for using too much RAM. That’s when I started digging into Redis as a shared cache layer, which worked better but introduced a new set of problems: connection storms, cache stampedes, and eviction policies that dropped the wrong keys during hot cache periods.</p>
+<p>The agents were cheap — under $0.04 per hour each — but they hammered our PostgreSQL 16.1 cluster with 450 queries per second. The first thing I tried was a simple in-memory cache in Python, but it fell over after 1,200 agents because the process memory ballooned to 2.8 GB and the kernel killed it for using too much RAM. That’s when I started digging into Redis as a shared cache layer, which worked better but introduced a new set of problems: connection storms, cache stampedes, and eviction policies that dropped the wrong keys during hot cache periods.</p>
 <p>What actually survived the load wasn’t the most obvious choice (like a simple <code>SET/GET</code> pattern) but a set of patterns that treated Redis as a <em>stateful control plane</em> rather than just a key-value store. The patterns I’m going to show you survived 24-hour agent marathons with p99 latencies under 45 ms and a Redis memory footprint that never exceeded 400 MB, even though the data set was 2.1 GB. I’ve open-sourced the core implementation so you can see exactly what I mean — it’s called <code>agent-cache</code> and it’s on GitHub.</p>
 <p>If you’ve ever watched a Redis instance peg at 100% CPU while your application crawls, or spent hours tuning <code>maxmemory-policy</code> only to have the wrong keys evicted under load, this post is for you. I’ll walk you through the exact patterns that worked after I burned through three other approaches.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -712,7 +712,7 @@ export default function () {
 <li>PostgreSQL CPU dropped 70%, so we downgraded from a db.t4g.large ($0.17/hr) to a db.t4g.small ($0.06/hr)</li>
 <li>We switched from a c6g.xlarge EC2 ($0.096/hr) to a c6g.medium ($0.048/hr) because the agents no longer hammered the API</li>
 </ol>
-<p>I was surprised that the biggest win wasn’t Redis itself but the PostgreSQL read replica. The replica handles 85% of the read load, which freed up the primary for writes. Without it, we’d still be at 95 ms p99.</p>
+<p>The replica handles 85% of the read load, which freed up the primary for writes. Without it, we’d still be at 95 ms p99.</p>
 <p>The patterns also survived a Redis failover in 2026. We ran Redis in cluster mode with 3 nodes, and when one node failed, the cluster rebalanced in 12 seconds. The agents never noticed — p99 stayed at 42 ms. That’s the real test: not just surviving load, but surviving infrastructure changes.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>Q: Why not use Redis Cluster from the start?</strong>

@@ -8,7 +8,7 @@ By mid-2026 our small team had built a CLI that auto-generated Python type hints
 
 The problem wasn’t the product—it ran on Python 3.11 and used Pydantic 2.7 for validation and Typer 0.9 for the CLI. The problem was the sales cycle. In 2026 we could still sell to engineering managers on a 9-to-5 schedule, demoing screenshots and running a 30-minute Zoom. By 2026 every engineering org with more than 20 developers had an AI-first budget line. CFOs now approved tools only after seeing a proof-of-concept that delivered measurable ROI within two weeks. Our free trial gave no ROI numbers, no security audit, and no way to turn on the feature for the whole team without a credit card.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout—this post is what I wished I had found then. We needed to move from a self-serve free tier to an enterprise funnel that could close deals inside the new AI-budget cycle.
+We needed to move from a self-serve free tier to an enterprise funnel that could close deals inside the new AI-budget cycle.
 
 ## What we tried first and why it didn’t work
 
@@ -154,12 +154,7 @@ We learned this the hard way. When we finally shipped the ROI-ready scan, the sa
 
 ## Resources that helped
 
-- [FastAPI 0.110 documentation](https://fastapi.tiangolo.com/release-notes/) – We used the async endpoints heavily for PDF generation.
-- [WeasyPrint 63.0 release notes](https://weasyprint.org/#download) – PDF rendering from HTML with zero external dependencies.
-- [GitHub Actions self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners) – Critical for running inside private networks.
-- [LaunchDarkly 2026.04 feature flags](https://launchdarkly.com/blog/launchdarkly-2026-04/) – Let us A/B test report designs without redeploys.
-- [Prometheus 2.51 time-series database](https://prometheus.io/blog/2026/01/15/whats-new-in-2-51/) – Instrumented trial flow and activation metrics.
-- [Burp Suite 2026.01](https://portswigger.net/burp/releases/professional-2026-01-1) – Security testing for private code scanning.
+- [FastAPI 0.110 documentation](https://fastapi.tiangolo.com/release-notes/) – We used the async endpoints heavily for PDF generation. - [WeasyPrint 63.0 release notes](https://weasyprint.org/#download) – PDF rendering from HTML with zero external dependencies. - [GitHub Actions self-hosted runners](https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners) – Critical for running inside private networks. - [LaunchDarkly 2026.04 feature flags](https://launchdarkly.com/blog/launchdarkly-2026-04/) – Let us A/B test report designs without redeploys. - [Prometheus 2.51 time-series database](https://prometheus.io/blog/2026/01/15/whats-new-in-2-51/) – Instrumented trial flow and activation metrics. - [Burp Suite 2026.01](https://portswigger.net/burp/releases/professional-2026-01-1) – Security testing for private code scanning.
 
 ## Frequently Asked Questions
 
@@ -183,20 +178,16 @@ Even if your tool is a web app, find the one-liner that produces a deliverable t
 
 Open your product’s README or docs site and add a single section called "ROI-ready scan". Write a one-liner command that runs your tool on a demo repo (even a public one) and outputs a PDF with three numbers: hours saved, lines affected, and payback months. If you don’t have a demo repo, clone a popular open-source project and run it there. Measure the time it takes from clone to PDF—aim for under 60 seconds. Ship it as a GitHub Action or a Docker image. You’ll know it works when your first enterprise trial request includes the PDF and the CFO’s email.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

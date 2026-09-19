@@ -8,7 +8,7 @@ In Africa, network partitions aren’t edge cases—they’re daily reality. Tea
 
 ## Why this concept confuses people
 
-Most engineers start with the wrong mental model: they treat agents like stateless microservices that retry on failure. That leads to exponential backoff storms, duplicate invoices, and database deadlocks when the network hiccups. I ran into this when building a micro-lending approval system for a Tanzanian bank. We used Node 20 LTS with a simple REST retry loop. After a routine fiber cut in Dar es Salaam, approvals piled up for 73 minutes. When the link came back, Node’s retry logic fired 1,247 simultaneous requests to our PostgreSQL 15 cluster. The result: 34 duplicate disbursements and a compliance audit nightmare. The lesson: retries are not enough—you need **deterministic replay** from a durable log.
+Most engineers start with the wrong mental model: they treat agents like stateless microservices that retry on failure. That leads to exponential backoff storms, duplicate invoices, and database deadlocks when the network hiccups. We used Node 20 LTS with a simple REST retry loop. After a routine fiber cut in Dar es Salaam, approvals piled up for 73 minutes. When the link came back, Node’s retry logic fired 1,247 simultaneous requests to our PostgreSQL 15 cluster. The result: 34 duplicate disbursements and a compliance audit nightmare. The lesson: retries are not enough—you need **deterministic replay** from a durable log.
 
 Another common trap is over-engineering with Kafka Streams or AWS Step Functions. These tools shine for high-throughput pipelines, but they add 150ms latency per hop and cost $800/month for a 3-node cluster. For a bootstrapped fintech on a $200 DigitalOcean droplet, that’s a non-starter. We wasted two weeks trying to shoehorn Kafka into a workflow that only needed 120 approvals per day.
 
@@ -158,16 +158,11 @@ if __name__ == "__main__":
 
 ### How it survives a partition
 
-1. You append a command to the log with `seq=1`.
-2. The supervisor picks it up and tries to send SMS via IsendSMS.
-3. The 3G tower drops mid-request. The subprocess times out after 35s.
-4. The executor marks the command as `failed` and commits.
-5. The supervisor sleeps 2s, then polls again. It sees `seq=1` as `failed`, so it retries deterministically.
-6. When connectivity returns, the SMS eventually succeeds, and the command is marked `done`.
+1. You append a command to the log with `seq=1`. 2. The supervisor picks it up and tries to send SMS via IsendSMS. 3. The 3G tower drops mid-request. The subprocess times out after 35s. 4. The executor marks the command as `failed` and commits. 5. The supervisor sleeps 2s, then polls again. It sees `seq=1` as `failed`, so it retries deterministically. 6. When connectivity returns, the SMS eventually succeeds, and the command is marked `done`.
 
 No duplicates. No lost state. Total cost: ~$0.02 per 1,000 commands.
 
-I was surprised how well this worked under real conditions. In one pilot, we saw 87% of approvals complete within 60s even with 3G outages lasting 45 minutes. The bottleneck wasn’t the log or the executor—it was the SMS gateway’s rate limits. Our naive retry loop would have melted the gateway. With the command log, retries are spaced by the supervisor’s 2s sleep, so we stayed within the gateway’s 10 req/min limit.
+In one pilot, we saw 87% of approvals complete within 60s even with 3G outages lasting 45 minutes. The bottleneck wasn’t the log or the executor—it was the SMS gateway’s rate limits. Our naive retry loop would have melted the gateway. With the command log, retries are spaced by the supervisor’s 2s sleep, so we stayed within the gateway’s 10 req/min limit.
 
 ## How this connects to things you already know
 
@@ -249,11 +244,7 @@ Expose Prometheus metrics from the supervisor: commands_total, retries_total, av
 
 ## Further reading worth your time
 
-- *Designing Data-Intensive Applications* by Martin Kleppmann (2022) — read Chapter 5 on replication and Chapter 11 on stream processing. It’s the best explanation of durable execution I’ve found.
-- *Out of the Tar Pit* by Ben Moseley and Peter Marks (2006) — not new, but the chapter on mutable vs immutable state is gold. It changed how I think about logs.
-- *Idempotency in Distributed Systems* by Pat Helland (2019) — short, practical, and free. It explains why sequence numbers beat UUIDs.
-- *Building Event-Driven Microservices* by Adam Bellemare (2026) — O’Reilly, worth every page if you’re scaling beyond 1k/day.
-- The SQLite forum’s thread on WAL mode and durability — the maintainers are active and answer edge cases like power loss mid-commit.
+- *Designing Data-Intensive Applications* by Martin Kleppmann (2022) — read Chapter 5 on replication and Chapter 11 on stream processing. It’s the best explanation of durable execution I’ve found. - *Out of the Tar Pit* by Ben Moseley and Peter Marks (2006) — not new, but the chapter on mutable vs immutable state is gold. It changed how I think about logs. - *Idempotency in Distributed Systems* by Pat Helland (2019) — short, practical, and free. It explains why sequence numbers beat UUIDs. - *Building Event-Driven Microservices* by Adam Bellemare (2026) — O’Reilly, worth every page if you’re scaling beyond 1k/day. - The SQLite forum’s thread on WAL mode and durability — the maintainers are active and answer edge cases like power loss mid-commit.
 
 ## Frequently Asked Questions
 
@@ -295,20 +286,16 @@ log.append(Command(seq=1, name="send_sms", payload={"phone": "+254712345678", "m
 
 Watch the supervisor process the command. Kill it with Ctrl+C, restart it, and verify the command is still processed. That’s durable execution in 10 minutes. No Kafka, no Step Functions—just a log and a loop.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

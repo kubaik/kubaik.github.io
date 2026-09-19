@@ -1,10 +1,10 @@
 # Backstage plugins for AI: 3 hidden costs fixed in 2026
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-In late 2026, our AI feature started returning inconsistent results. One day a customer could upload a PDF and get a perfect summary; the next day the same file would time out. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+In late 2026, our AI feature started returning inconsistent results. One day a customer could upload a PDF and get a perfect summary; the next day the same file would time out.
 
 Our stack was a monolith on Node 20 LTS behind an nginx front-end, with a Python 3.11 worker pool for the LLM calls. When we added the first internal AI feature — a summarizer for support tickets — we bolted it on with a simple HTTP endpoint. That worked for a handful of requests, but once we hit 100 concurrent users the nginx upstream kept returning 502s. The nginx timeout was 60 s, but our Python worker had a 30 s hard limit; if the LLM took 31 s we lost the connection and nginx saw a broken pipe. I finally traced it with curl -w and saw the 502 appear exactly 30 s after the request started.
 
@@ -227,7 +227,7 @@ The 25 s timeout was the first hard reverse decision we made. Changing the timeo
 
 ## Step 3 — handle edge cases and errors
 
-The first error we hit was “upstream request timeout” from nginx even though the Python worker finished in 24 s. The nginx default timeout is 60 s, but the ingress controller (AWS ALB Ingress Controller 2.6) sets a 30 s idle timeout. If the FastAPI worker streams the first chunk after 29 s, the ALB closes the connection. I fixed it by setting the ALB idle timeout in the Ingress annotation:
+The first error we hit was “upstream request timeout” from nginx even though the Python worker finished in 24 s. The nginx default timeout is 60 s, but the ingress controller (AWS ALB Ingress Controller 2.6) sets a 30 s idle timeout. If the FastAPI worker streams the first chunk after 29 s, the ALB closes the connection.
 
 ```yaml
 metadata:
@@ -386,20 +386,16 @@ If you only do one thing today, update the timeout in your worker template from 
 
 Then, open Backstage, go to the ai-feature-template, and run the smoke test. If it fails, the template will point you at the exact Argo CD sync error. That’s the fastest feedback loop you can get without writing code.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

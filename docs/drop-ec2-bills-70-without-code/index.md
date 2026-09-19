@@ -1,10 +1,10 @@
 # Drop EC2 bills 70% without code
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-In 2026 I switched a client’s Node 20 LTS backend from Elastic Beanstalk to raw EC2 because I needed a custom VPC with IPv6 and the Beanstalk IPv6 support was still in beta. The bill went from $180/month to $800/month in the first 30 days. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+In 2026 I switched a client’s Node 20 LTS backend from Elastic Beanstalk to raw EC2 because I needed a custom VPC with IPv6 and the Beanstalk IPv6 support was still in beta. The bill went from $180/month to $800/month in the first 30 days.
 
 Most cost-saving guides tell you to pick the cheapest instance type or run spot fleets. Those moves cut the bill by 30–40% but ignore the hidden levers: OS-level TCP tweaks, EBS volume type, and the fact that Amazon Linux 2026 still ships with the 2026-era `net.core.default_qdisc` set to `fq_codel` while the Linux kernel itself has moved on. That mismatch alone added 15–20% CPU overhead on every outbound HTTPS call.
 
@@ -17,9 +17,7 @@ If you’re still tuning connection pools or load-balancer timeouts while your E
 You only need an AWS account, an EC2 instance running Amazon Linux 2026 or Ubuntu 22.04 LTS, and SSH access. The changes are kernel-level, so they work whether your app is Node 20 LTS, Python 3.11, or Go 1.22.
 
 By the end you’ll have:
-- A single sysctl tweak that reduces TCP retransmits by ~30%.
-- A swap + zswap configuration that prevents the 30-second OOM kills that AWS Support calls “normal behavior”.
-- An EBS gp3 volume tuned to 3,000 IOPS instead of the default 1,000.
+- A single sysctl tweak that reduces TCP retransmits by ~30%. - A swap + zswap configuration that prevents the 30-second OOM kills that AWS Support calls “normal behavior”. - An EBS gp3 volume tuned to 3,000 IOPS instead of the default 1,000.
 
 Nothing here requires compiling a kernel or rebooting into a custom AMI. All commands run on a live instance.
 
@@ -488,20 +486,16 @@ def modify_volume(volume_id, iops, region):
 
 I applied these tools and tweaks to a **Node
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

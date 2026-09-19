@@ -1,12 +1,12 @@
 # Use feature flags to deploy AI models safely
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-In late 2026 I inherited a codebase that had just rolled out a new LLM-powered recommendation engine to 100% of users. The rollout took two weeks because every change to the prompt or model required a full regression suite, a 4-hour staging bake, and a 30-minute maintenance window. On Black Friday weekend we pushed a small fix to the ranking weights and the API started returning 503s at 2000 RPM within 90 seconds. The fix was a one-line typo in the prompt template. 
+In late 2026 I inherited a codebase that had just rolled out a new LLM-powered recommendation engine to 100% of users. The rollout took two weeks because every change to the prompt or model required a full regression suite, a 4-hour staging bake, and a 30-minute maintenance window. On Black Friday weekend we pushed a small fix to the ranking weights and the API started returning 503s at 2000 RPM within 90 seconds. The fix was a one-line typo in the prompt template.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. By 2026 every team I worked with had adopted feature flags for AI deployments. This is the pattern we converged on, with numbers, code, and the edge cases that burned us.
+By 2026 every team I worked with had adopted feature flags for AI deployments. This is the pattern we converged on, with numbers, code, and the edge cases that burned us.
 
 Feature flags became the backbone of safe AI rollouts because they give you:
 - Instant kill switches for bad model outputs
@@ -420,7 +420,7 @@ We default to the stable model (v1) if Flagsmith is unreachable. That one-line c
 
 2. Model inference timeouts.
 
-We set a 300 ms timeout in the model wrapper. If it exceeds, we return a cached fallback recommendation from Redis 7.2. 
+We set a 300 ms timeout in the model wrapper. If it exceeds, we return a cached fallback recommendation from Redis 7.2.
 
 ```python
 # app/models.py
@@ -625,28 +625,22 @@ Flip the feature flag to v1. The rollback is instant and doesn’t touch the mod
 
 ## Where to go from here
 
-1. Add a metric-gated promotion pipeline: promote only when error_rate_v2 < 1% AND latency_p95_v2 < 350 ms for 1 hour.
-2. Integrate with Argo Rollouts for blue-green deployments of the model containers while keeping flag control independent.
-3. Use OpenTelemetry traces to correlate flag evaluation, model inference, and downstream API calls — helps debug 504s when the model pod is overloaded.
+1. Add a metric-gated promotion pipeline: promote only when error_rate_v2 < 1% AND latency_p95_v2 < 350 ms for 1 hour. 2. Integrate with Argo Rollouts for blue-green deployments of the model containers while keeping flag control independent. 3. Use OpenTelemetry traces to correlate flag evaluation, model inference, and downstream API calls — helps debug 504s when the model pod is overloaded.
 
 Today, set the feature flag `recommendation_model` to 5% v2 for user IDs ending in “5” or “0”, then run the load test again and compare the p95 latency delta in Grafana. If the delta is under 100 ms, promote to 10% and continue the canary.
 
 Check your Grafana dashboard at http://localhost:3000/d/ai-features and confirm the new panel shows traffic split data within the next 5 minutes.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

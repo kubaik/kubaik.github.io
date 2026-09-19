@@ -1,12 +1,12 @@
 # Negotiate pay in 2026 with AI proof points
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
 In late 2026 I was reviewing our internal compensation model for the engineering team at a mid-size SaaS company. Every role description now had a disclaimer: “Tasks marked ✅ may be assisted by AI agents in 2026.” That single sentence changed everything—our compensation bands were frozen in 2026, our salary budgets had not kept pace with inflation, and now engineers were asking me, “If AI can write tests or draft SQL, why should my pay go up?”
 
-I spent three weeks in spreadsheets trying to split each job description into AI-susceptible vs. human-critical tasks. The first version of the model looked reasonable on paper, but when we ran it against real offers, we lost two senior engineers to competitors who framed compensation as “AI-proof” roles. I was surprised that the biggest pushback wasn’t from engineers—it was from finance, who insisted we couldn’t pay more for “AI-resistant” work without metrics to back it up.
+human-critical tasks. The first version of the model looked reasonable on paper, but when we ran it against real offers, we lost two senior engineers to competitors who framed compensation as “AI-proof” roles.
 
 This post is what I wish I’d had then: a repeatable process to gather data, reframe your role, and negotiate compensation that survives AI’s encroachment. It’s not about arguing that “AI can’t replace me.” It’s about proving what still requires human judgment, context, and trade-offs that LLMs can’t replicate.
 
@@ -14,11 +14,7 @@ This post is what I wish I’d had then: a repeatable process to gather data, re
 
 This tutorial assumes you already know your current job description and compensation number. You’ll need:
 
-- A copy of your most recent offer letter or internal band (salary + bonus + equity).
-- Access to internal job descriptions for the same role dated 2026–2026.
-- A Google Sheet or Notion page to collect metrics.
-- Node 20 LTS or Python 3.11 installed on your machine.
-- About 90 minutes of focused time.
+- A copy of your most recent offer letter or internal band (salary + bonus + equity). - Access to internal job descriptions for the same role dated 2026–2026. - A Google Sheet or Notion page to collect metrics. - Node 20 LTS or Python 3.11 installed on your machine. - About 90 minutes of focused time.
 
 You won’t write production-grade AI code. Instead, you’ll build a lightweight CLI tool that scrapes your Git history, counts AI-generated commits, and correlates that with your delivery metrics. The tool outputs a JSON report you can attach to your negotiation deck.
 
@@ -92,10 +88,7 @@ Gotcha: If you’re on macOS and you see `ImportError: cannot import name 'Itera
 
 The core trick is to turn Git history into evidence that you still do work AI can’t safely ship. We’ll:
 
-1. Pull every commit authored by you since 2026.
-2. Classify commits as AI-generated vs. human-authored using a lightweight heuristic.
-3. Join that with your delivery metrics (PR size, review time, incidents).
-4. Output a JSON report you can paste into a slide.
+1. Pull every commit authored by you since 2026. 2. Classify commits as AI-generated vs. human-authored using a lightweight heuristic. 3. Join that with your delivery metrics (PR size, review time, incidents). 4. Output a JSON report you can paste into a slide.
 
 Create `ai_comp_neg/analyzer.py`:
 
@@ -180,14 +173,11 @@ I ran this against my own repo and discovered that 32% of my 2026 commits were A
 
 ## Step 3 — handle edge cases and errors
 
-Edge case 1: Git history is incomplete because of force-pushes or squash merges.
-Solution: Use `git reflog` to reconstruct the true history before running the tool.
+Edge case 1: Git history is incomplete because of force-pushes or squash merges. Solution: Use `git reflog` to reconstruct the true history before running the tool.
 
-Edge case 2: Monorepos where one commit touches 50+ files across languages.
-Solution: Split the file list by language suffix and apply the heuristic per language.
+Edge case 2: Monorepos where one commit touches 50+ files across languages. Solution: Split the file list by language suffix and apply the heuristic per language.
 
-Edge case 3: You use GitHub Copilot CLI that auto-signs commits.
-Solution: Explicitly blacklist commits whose messages contain "Copilot" or "copilot".
+Edge case 3: You use GitHub Copilot CLI that auto-signs commits. Solution: Explicitly blacklist commits whose messages contain "Copilot" or "copilot".
 
 Add a robust runner in `ai_comp_neg/runner.py`:
 
@@ -319,20 +309,16 @@ poetry run python scripts/cli.py --repo /path/to/your/code --since 2024-01-01 > 
 
 Open `report.json` and check the `human_ratio` field. If it’s below 50%, spend the next 30 minutes writing a design doc that outlines one architectural decision you made in the last six months where AI would have produced unsafe or unmaintainable code. Attach that doc to your next compensation conversation—it’s the single artifact that moves the needle most in 2026 negotiations.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -6,8 +6,6 @@ Most designing multitenant guides assume a clean environment and a patient timel
 
 In 2026 we launched a B2B analytics platform with ~500 paying tenants. Our initial customer onboarding call asked for a single PostgreSQL 16.2 database to keep costs low. We went with **row-level security (RLS)**, the default recommendation in every tutorial written before 2026. RLS promised zero code changes when adding new tenants, automatic row filtering, and a single database to manage. We trusted the docs because they looked authoritative.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
-
 We chose PostgreSQL 16.2 on AWS RDS because it offered RLS out of the box and we could keep the instance at db.t4g.large ($0.112/hr in us-east-1 as of 2026). Our schema was simple: one `tenants` table and one `analytics_events` table. We added a `tenant_id` foreign key and enabled RLS with a policy that looked like this:
 
 ```sql
@@ -42,7 +40,7 @@ The router service used a connection pool (HikariCP 5.0.1) per tenant tier. We c
 | Medium | 10k–50k      | 8         | Shared db.t3.xlarge  | $0.296                  |
 | Large  | > 50k        | 16        | Dedicated db.r6g.large | $0.536               |
 
-We implemented a tenant router in 265 lines of Go 1.21. The router cached tenant tier and connection strings in Redis 7.2 with a 5-minute TTL. Cache misses triggered a synchronous lookup to the `tenants` table in PostgreSQL, adding ~3ms worst-case latency. We set Redis memory limit to 1GB and used `maxmemory-policy allkeys-lru` to keep the hottest tenants in memory. 
+We implemented a tenant router in 265 lines of Go 1.21. The router cached tenant tier and connection strings in Redis 7.2 with a 5-minute TTL. Cache misses triggered a synchronous lookup to the `tenants` table in PostgreSQL, adding ~3ms worst-case latency. We set Redis memory limit to 1GB and used `maxmemory-policy allkeys-lru` to keep the hottest tenants in memory.
 
 We also added a **circuit breaker** pattern for large tenants. If a tenant’s PostgreSQL instance returned 5 consecutive 5xx errors, the router marked it as unhealthy and routed subsequent requests to a read-only replica. Circuit breakers reduced outage blast radius from 30 minutes to 2 minutes.
 
@@ -79,21 +77,16 @@ We deployed the router as a Kubernetes Deployment (3 replicas, CPU request 250m)
 - Manual override via admin API
 
 **Migration strategy:**
-- Schema migrations for small/medium tenants: run during off-peak (02:00 UTC) using a `tenant-migrator` worker (Python 3.11 + Celery with 4 workers).
-- Large tenant migrations: schedule during maintenance window, use AWS DMS for zero-downtime migration.
+- Schema migrations for small/medium tenants: run during off-peak (02:00 UTC) using a `tenant-migrator` worker (Python 3.11 + Celery with 4 workers). - Large tenant migrations: schedule during maintenance window, use AWS DMS for zero-downtime migration.
 
 **Cost control:**
-- Small/medium tenants share a single PostgreSQL instance, reducing monthly infra cost from $4,200 (500 instances) to $340 (one db.t3.xlarge + one db.r6g.large).
-- We set AWS Budgets alerts at $400/month and $800/month to catch runaway costs.
+- Small/medium tenants share a single PostgreSQL instance, reducing monthly infra cost from $4,200 (500 instances) to $340 (one db.t3.xlarge + one db.r6g.large). - We set AWS Budgets alerts at $400/month and $800/month to catch runaway costs.
 
 **Observability:**
-- We instrumented every PostgreSQL connection with a `tenant_id` tag.
-- Prometheus metrics include: `postgres_connections_total`, `tenant_tier_distribution`, `router_latency_ms`, `circuit_breaker_state`.
-- Grafana dashboards show tenant tier distribution and router error rates by tier.
+- We instrumented every PostgreSQL connection with a `tenant_id` tag. - Prometheus metrics include: `postgres_connections_total`, `tenant_tier_distribution`, `router_latency_ms`, `circuit_breaker_state`. - Grafana dashboards show tenant tier distribution and router error rates by tier.
 
 **Security:**
-- Each tenant’s PostgreSQL role has minimal privileges (only `SELECT`, `INSERT` on its schemas).
-- We rotate credentials every 90 days using AWS Secrets Manager and a Lambda function.
+- Each tenant’s PostgreSQL role has minimal privileges (only `SELECT`, `INSERT` on its schemas). - We rotate credentials every 90 days using AWS Secrets Manager and a Lambda function.
 
 ## Results — the numbers before and after
 
@@ -126,11 +119,9 @@ Anecdotally, the router service itself added ~20ms of latency, but we mitigated 
 ## The broader lesson
 
 The lesson is simple: **scale-by-tenant is not a database feature; it’s an application pattern.** RLS, schema-per-tenant, and database-per-tenant are all valid strategies, but each optimizes for a different axis:
-- RLS optimizes for code simplicity and fast tenant onboarding.
-- Schema-per-tenant optimizes for cost and isolation at small scale.
-- Database-per-tenant optimizes for isolation and blast radius at the cost of operational complexity.
+- RLS optimizes for code simplicity and fast tenant onboarding. - Schema-per-tenant optimizes for cost and isolation at small scale. - Database-per-tenant optimizes for isolation and blast radius at the cost of operational complexity.
 
-The mistake most teams make is picking one strategy for all tenants. The real world is a power law: 80% of tenants are small, 15% are medium, and 5% are large. Optimize for the 80% while isolating the 5%. 
+The mistake most teams make is picking one strategy for all tenants. The real world is a power law: 80% of tenants are small, 15% are medium, and 5% are large. Optimize for the 80% while isolating the 5%.
 
 Treat tenant isolation like caching: start permissive and tighten the screws as load increases. Start with RLS or a single shared schema, measure overhead at 10x expected load, and tier up when metrics cross a threshold. The goal is to postpone complexity, not avoid it forever.
 
@@ -222,20 +213,16 @@ Measure P95 latency and CPU usage under load. If P95 latency exceeds 100ms or CP
 
 Open your `docker-compose.yml` (or Terraform root module) and find the PostgreSQL service definition. Change the `shared_preload_libraries` line to **remove `pg_row_security`** if it’s present. Rebuild and restart your local stack. Then run a load test with 10x your normal tenant load. Measure P99 latency and CPU before and after removing RLS. That single change will tell you if RLS is hurting you today.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

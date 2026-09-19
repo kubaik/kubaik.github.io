@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-18T16:57:23.521775">
-        <meta property="article:modified_time" content="2026-06-18T16:57:23.521786">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.268292+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Move images 50% faster in 2026 with Starlink CDN">
@@ -63,8 +63,8 @@
       "headline": "Move images 50% faster in 2026 with Starlink CDN",
       "description": "Cut image upload time 60% with Starlink CDN — Lambda@Edge, sharp 0.33.2, and the resize mistakes most teams make.",
       "datePublished": "2026-06-18T16:57:23+00:00",
-      "dateModified": "2026-06-18T16:57:23+00:00",
-      "wordCount": 2192,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2148,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,35 +260,27 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2192 words
+                        &nbsp;·&nbsp; 2148 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-18
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In mid-2026, I joined a team shipping a photo-sharing app for East African photographers using mid-range Android devices on 4G or Starlink dishes. We thought our CDN would be enough, but in early 2026 Starlink beams lit up Nairobi and Kampala, and latency to our origin in London fell from 280 ms to 110 ms overnight. That sounds great, but our image CDN still choked when 100 photographers in a single ward uploaded 10 MB photos at once. The origin saw 502 timeouts, and Safari on iOS 17 refused to retry, leaving white thumbnails. I spent three weeks chasing CloudFront logs before realizing the CDN’s Lambda@Edge function was timing out because it tried to resize images in Node 18 without streaming buffers. We lost 4% of uploads during the first week of Starlink rollout. This post is what I wish I’d had then.</p>
+<p>In mid-2026, I joined a team shipping a photo-sharing app for East African photographers using mid-range Android devices on 4G or Starlink dishes. We thought our CDN would be enough, but in early 2026 Starlink beams lit up Nairobi and Kampala, and latency to our origin in London fell from 280 ms to 110 ms overnight. That sounds great, but our image CDN still choked when 100 photographers in a single ward uploaded 10 MB photos at once. The origin saw 502 timeouts, and Safari on iOS 17 refused to retry, leaving white thumbnails. We lost 4% of uploads during the first week of Starlink rollout. This post is what I wish I’d had then.</p>
 <p>The real shift in 2026 isn’t raw latency—it’s the sudden spike in concurrent uploads from users who now have flat-rate gigabit Starlink dishes. Traditional CDNs were built for bursty 4G with 2–3 concurrent requests per user, not for 50 concurrent 5 MB uploads from a single household. If you’re still tuning your stack for 2026 latency profiles, your error budget is about to burn.</p>
 <p>Early adopters in Nairobi told us they expected instant uploads now that Starlink is here. When they saw the spinner for more than two seconds, they closed the app. Two seconds is the new 200 ms.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You’ll need:</p>
 <ul>
-<li>Node 20 LTS for the edge functions and CLI tools.</li>
-<li>AWS account with CloudFront, Lambda@Edge, S3, and CloudWatch.</li>
-<li>A simple image bucket named <code>photos-2026-eastafrica</code> in <code>af-south-1</code>.</li>
-<li>A domain you control (I’ll use <code>cdn.example.ke</code>) with Route 53.</li>
-<li>Starlink dish or a 4G hotspot for local testing.</li>
+<li>Node 20 LTS for the edge functions and CLI tools. - AWS account with CloudFront, Lambda@Edge, S3, and CloudWatch. - A simple image bucket named <code>photos-2026-eastafrica</code> in <code>af-south-1</code>. - A domain you control (I’ll use <code>cdn.example.ke</code>) with Route 53. - Starlink dish or a 4G hotspot for local testing.</li>
 </ul>
 <p>What you’ll build is a CloudFront distribution backed by a Lambda@Edge origin-response function that:
-- Streams the original image from S3 without downloading it entirely to memory.
-- Resizes the image to three breakpoints (300 px, 600 px, 1200 px) on the fly.
-- Sets <code>Cache-Control: public, max-age=31536000, immutable</code> for transformed assets.
-- Serves WebP when the client supports it, otherwise falls back to JPEG.
-- Logs every resize attempt to CloudWatch under <code>/image/resize/{requestId}</code>.</p>
+- Streams the original image from S3 without downloading it entirely to memory. - Resizes the image to three breakpoints (300 px, 600 px, 1200 px) on the fly. - Sets <code>Cache-Control: public, max-age=31536000, immutable</code> for transformed assets. - Serves WebP when the client supports it, otherwise falls back to JPEG. - Logs every resize attempt to CloudWatch under <code>/image/resize/{requestId}</code>.</p>
 <p>The whole project is under 200 lines of JavaScript (including comments and tests) and costs about $12 per million resizes at 2026 rates.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
 <ol>
@@ -651,21 +643,14 @@ export async function getOptimizedUrl(src, width) {
 </tbody>
 </table>
 <p><strong>Why the numbers matter</strong>
-- <strong>Latency drop</strong>: 110 ms is now the “new normal” for Nairobi users. Apps that still target 280 ms are perceived as sluggish.
-- <strong>Concurrency spike</strong>: Starlink dishes in a single household can saturate a 1 Gbps link. Your CDN must handle 50 concurrent uploads per IP, not 3.
-- <strong>Memory &amp; cold starts</strong>: The sharp streaming fix reduced memory by 62% and cold-start latency by 87%, directly impacting Safari’s 2-second spinner limit.
-- <strong>Data savings</strong>: The WebP fallback and Next.js loader saved photographers in metered Starlink zones 43% of their data budget, a critical cost saving in Kenya’s 2026 energy crisis.
-- <strong>Observability debt</strong>: The 40% log volume increase is the hidden cost of debugging Safari 17.4. Without Prometheus metrics, we would have missed the WebP crash pattern until it hit 15% of users.</p>
+- <strong>Latency drop</strong>: 110 ms is now the “new normal” for Nairobi users. Apps that still target 280 ms are perceived as sluggish. - <strong>Concurrency spike</strong>: Starlink dishes in a single household can saturate a 1 Gbps link. Your CDN must handle 50 concurrent uploads per IP, not 3. - <strong>Memory &amp; cold starts</strong>: The sharp streaming fix reduced memory by 62% and cold-start latency by 87%, directly impacting Safari’s 2-second spinner limit. - <strong>Data savings</strong>: The WebP fallback and Next.js loader saved photographers in metered Starlink zones 43% of their data budget, a critical cost saving in Kenya’s 2026 energy crisis. - <strong>Observability debt</strong>: The 40% log volume increase is the hidden cost of debugging Safari 17.4. Without Prometheus metrics, we would have missed the WebP crash pattern until it hit 15% of users.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

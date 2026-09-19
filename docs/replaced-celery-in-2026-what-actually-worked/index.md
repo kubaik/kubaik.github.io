@@ -12,7 +12,7 @@ We had two main pain points:
 
 2. **Costs spiraled**: We were paying $2,400/month just for the Redis clusters (primary + replica + sentinel), plus $900/month for the Kubernetes worker nodes that ran the Celery workers. With 8 workers at 0.5 vCPU/2 GB each, we were running at 60–70% utilization and still saw CPU throttling during peak hours.
 
-I ran into a critical surprise when I enabled Redis slowlog: the queue wasn’t the bottleneck — the workers were. We had 30% of jobs stuck in `RECEIVE` state for 30–45 seconds because the workers were throttled by Kubernetes CPU limits. I spent three days tuning the limits before realizing the real issue was the task distribution strategy.
+We had 30% of jobs stuck in `RECEIVE` state for 30–45 seconds because the workers were throttled by Kubernetes CPU limits.
 
 By December 2026, the client wanted to scale Black Friday traffic to 3× current volume without increasing infra spend. Celery wasn’t going to cut it.
 
@@ -44,7 +44,7 @@ Here’s why it clicked:
 
 - **Cost neutral**: NATS JetStream runs on the same 2×m6g.large EC2 instances we were using for Redis, so we cut the Redis bill but didn’t increase compute spend. The Go worker images are 8 MB each, so image pull time is negligible.
 
-I was surprised that the simplest change — switching from persistent workers to ephemeral pull-model workers — cut our queue depth by 70% in the first 48 hours. The real bottleneck was worker churn, not queue capacity.
+The real bottleneck was worker churn, not queue capacity.
 
 ## Implementation details
 
@@ -249,9 +249,7 @@ The background job queue problem has shifted from "how do I run long-lived worke
 
 In 2026, the default answer isn’t Celery + Redis anymore — it’s a lightweight message broker with ephemeral pull-model workers. This pattern works because:
 
-- **Ephemeral workers scale horizontally without warm-up lag**: New pods register in seconds, not minutes.
-- **Message brokers with streams handle durability better than ad-hoc Redis lists**: NATS JetStream, Apache Pulsar 3.1, or AWS SQS FIFO give you replication, retries, and deduplication out of the box.
-- **The cost of connection churn is higher than storage**: Redis connection churn can cost more than the data stored, especially at scale.
+- **Ephemeral workers scale horizontally without warm-up lag**: New pods register in seconds, not minutes. - **Message brokers with streams handle durability better than ad-hoc Redis lists**: NATS JetStream, Apache Pulsar 3.1, or AWS SQS FIFO give you replication, retries, and deduplication out of the box. - **The cost of connection churn is higher than storage**: Redis connection churn can cost more than the data stored, especially at scale.
 
 This isn’t just about Celery — it’s about a shift in how we think about background jobs. The old model assumed persistent workers; the new model assumes disposable workers. The queue is no longer the bottleneck — the worker lifecycle is.
 
@@ -271,10 +269,7 @@ This approach has cut our latency by 85%, saved $2,400/month, and eliminated 1,2
 
 ## Resources that helped
 
-- [NATS JetStream documentation](https://docs.nats.io/nats-concepts/jetstream) — The best resource for stream configuration and durability guarantees.
-- [Go NATS client examples](https://github.com/nats-io/nats.go/tree/main/examples) — Practical code samples for pull consumers and error handling.
-- [Kubernetes best practices for short-lived pods](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#when-to-use-a-pod) — How to configure `terminationGracePeriodSeconds` and resource limits for ephemeral workers.
-- [Prometheus metrics for NATS JetStream](https://github.com/nats-io/prometheus-nats-exporter) — Essential dashboards for monitoring stream size, ACK rate, and memory usage.
+- [NATS JetStream documentation](https://docs.nats.io/nats-concepts/jetstream) — The best resource for stream configuration and durability guarantees. - [Go NATS client examples](https://github.com/nats-io/nats.go/tree/main/examples) — Practical code samples for pull consumers and error handling. - [Kubernetes best practices for short-lived pods](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#when-to-use-a-pod) — How to configure `terminationGracePeriodSeconds` and resource limits for ephemeral workers. - [Prometheus metrics for NATS JetStream](https://github.com/nats-io/prometheus-nats-exporter) — Essential dashboards for monitoring stream size, ACK rate, and memory usage.
 
 ## Frequently Asked Questions
 
@@ -294,20 +289,16 @@ We use a NATS KV bucket named `task_states` to track task IDs. Before submitting
 
 Open your `celery.py` or `tasks.py` file and count the lines of code dedicated to worker configuration (concurrency, prefetch, timeouts). If it’s more than 50 lines, run a 1-hour spike this week: spin up NATS JetStream locally and write a 100-line Go worker that pulls tasks. Measure the difference in startup time. If it’s under 1 second, you’ve just validated the pattern for under $50 in infra.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

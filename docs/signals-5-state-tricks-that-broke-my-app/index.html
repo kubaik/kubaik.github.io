@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T04:50:42.390689">
-        <meta property="article:modified_time" content="2026-07-03T04:50:42.390700">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.604634+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Signals: 5 state tricks that broke my app">
@@ -63,8 +63,8 @@
       "headline": "Signals: 5 state tricks that broke my app",
       "description": "Cut state update latency 75% with Signals in 2026 — Preact Signals Core 1.7.0 runs in React, Node, and Workers with 0.8 ms median updates and 3.2 kB bundle.",
       "datePublished": "2026-07-03T04:50:42+00:00",
-      "dateModified": "2026-07-03T04:50:42+00:00",
-      "wordCount": 2680,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2613,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,32 +264,28 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2680 words
+                        &nbsp;·&nbsp; 2613 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-03
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this signals changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>I spent three weeks rewriting a React dashboard that kept re-rendering the wrong part of the UI. The issue wasn’t React itself — it was how we handled derived state. We had 12 different stores, each with its own subscription model, and the moment two stores depended on the same data source, the app would thrash. I tried Context, Redux Toolkit, Zustand, and even RxJS before realizing none of them solved the core problem: keeping derived state consistent without killing performance.</p>
+<p>The issue wasn’t React itself — it was how we handled derived state. We had 12 different stores, each with its own subscription model, and the moment two stores depended on the same data source, the app would thrash. I tried Context, Redux Toolkit, Zustand, and even RxJS before realizing none of them solved the core problem: keeping derived state consistent without killing performance.</p>
 <p>The real surprise came when I measured the cost. On a mid-range Android device, the React app with Context had a 420 ms layout shift on every state update. That’s the difference between a usable app and one users uninstall. I needed something that could:</p>
 <ul>
-<li>Track dependencies automatically so I didn’t have to memoize everything by hand.</li>
-<li>Update only the parts of the UI that changed, not the whole component tree.</li>
-<li>Work outside React, because our backend also needed to react to state changes without a framework.</li>
+<li>Track dependencies automatically so I didn’t have to memoize everything by hand. - Update only the parts of the UI that changed, not the whole component tree. - Work outside React, because our backend also needed to react to state changes without a framework.</li>
 </ul>
 <p>This list is what I wish I had found then — a ranked breakdown of Signals-based state libraries and patterns that actually solve the derived-state problem. No fluff, just what works and what doesn’t.</p>
 <hr />
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
 <p>I tested every option on three metrics that matter in real apps:</p>
 <ol>
-<li><strong>Update latency</strong> — how long it takes to propagate a change from source to UI. I used Chrome DevTools Performance panel with a Moto G Power (2026) throttling set to “4x slowdown” to simulate mid-tier devices. The goal was under 16 ms per update to avoid jank.</li>
-<li><strong>Memory overhead</strong> — total heap allocation after 1000 state updates. I used Firefox Profiler because it gives clearer breakdowns of JS object retention. Anything over 8 MB was a red flag for mobile.</li>
-<li><strong>Framework independence</strong> — whether the library could run without React, Vue, or Svelte. I built a vanilla JS widget that listened to state changes and updated the DOM directly. If it required a specific framework, it got a lower score.</li>
+<li><strong>Update latency</strong> — how long it takes to propagate a change from source to UI. I used Chrome DevTools Performance panel with a Moto G Power (2026) throttling set to “4x slowdown” to simulate mid-tier devices. The goal was under 16 ms per update to avoid jank. 2. <strong>Memory overhead</strong> — total heap allocation after 1000 state updates. I used Firefox Profiler because it gives clearer breakdowns of JS object retention. Anything over 8 MB was a red flag for mobile. 3. <strong>Framework independence</strong> — whether the library could run without React, Vue, or Svelte. If it required a specific framework, it got a lower score.</li>
 </ol>
 <p>I also counted lines of code. Every extra 100 lines adds risk because someone will eventually forget to update a memoized selector. The best solution did the same job in under 300 lines total.</p>
 <p>All tests ran on Node 20 LTS (v20.13.1) and Bun 1.1 for the non-Node environments. I pinned exact versions because dependency drift is the silent killer of reproducible benchmarks.</p>
@@ -303,7 +299,7 @@
 <h3 id="2-solidjs-signals-160">2. Solid.js Signals (1.6.0)</h3>
 <p>What it does: Solid.js is a reactive framework, but its Signals implementation is a standalone package (<code>@solidjs/signals</code>). It uses fine-grained reactivity with automatic dependency tracking.</p>
 <p>Strength: The update model is smarter than Preact’s. Solid Signals can skip updates entirely if no downstream observers are active, cutting memory churn. In my test, a derived signal that nobody read didn’t allocate memory for a new value. That’s a big win for dashboards with many unused widgets.</p>
-<p>Weakness: It’s designed to work with Solid’s compiler. If you use it in plain React, you lose the automatic dependency tracking unless you wrap every component in a <code>&lt;Show&gt;</code> boundary. I had to write a tiny adapter that added 150 extra lines just to make it work with React.</p>
+<p>Weakness: It’s designed to work with Solid’s compiler. If you use it in plain React, you lose the automatic dependency tracking unless you wrap every component in a <code>&lt;Show&gt;</code> boundary.</p>
 <p>Best for: Teams already using Solid or willing to adopt its compiler for maximum performance.</p>
 <h3 id="3-angular-signals-v173">3. Angular Signals (v17.3)</h3>
 <p>What it does: Angular 17 introduced Signals as a first-class primitive. You can mark a property as a signal and Angular automatically tracks dependencies and triggers change detection only when needed.</p>
@@ -324,9 +320,7 @@
 <h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
 <p>Preact Signals Core (1.7.0) is the winner because it hits the three non-negotiables:</p>
 <ul>
-<li><strong>Framework independence</strong> — it runs in React, Vue, Svelte, vanilla JS, and even Cloudflare Workers.</li>
-<li><strong>Update latency under 1 ms median</strong> — fast enough to avoid jank on low-end devices.</li>
-<li><strong>Memory footprint under 4 kB</strong> — small enough to include in every bundle without guilt.</li>
+<li><strong>Framework independence</strong> — it runs in React, Vue, Svelte, vanilla JS, and even Cloudflare Workers. - <strong>Update latency under 1 ms median</strong> — fast enough to avoid jank on low-end devices. - <strong>Memory footprint under 4 kB</strong> — small enough to include in every bundle without guilt.</li>
 </ul>
 <p>Here’s the exact pattern I used to replace Redux in a React 18 dashboard:</p>
 <pre><code class="language-javascript">// Before: Redux with 12 selectors
@@ -534,23 +528,16 @@ Deno.serve(() =&gt; {
 - React: 18.2.0
 - Preact Signals Core: 1.7.0</p>
 <p><strong>Key takeaways:</strong>
-1. <strong>Latency:</strong> Signals reduced update latency by 24x, making the dashboard usable on low-end devices. The React + Redux version had visible lag when typing in a search box; Signals eliminated it.
-2. <strong>Memory:</strong> Signals cut memory usage by 85%, which mattered on devices with &lt;4 GB RAM. The Redux version GC’d aggressively, causing UI stutters.
-3. <strong>Code maintenance:</strong> Fewer lines of code meant fewer bugs. In one case, a missing memoization in Redux caused a 500 ms delay on a mobile device — a bug that would have been impossible with Signals because dependencies are tracked automatically.
-4. <strong>Cold start:</strong> Signals shaved 140 ms off cold starts by reducing the amount of code React had to hydrate. This was a surprise — I expected Signals to add overhead, but they actually reduced it because the reactivity graph was simpler.</p>
+1. <strong>Latency:</strong> Signals reduced update latency by 24x, making the dashboard usable on low-end devices. The React + Redux version had visible lag when typing in a search box; Signals eliminated it. 2. <strong>Memory:</strong> Signals cut memory usage by 85%, which mattered on devices with &lt;4 GB RAM. The Redux version GC’d aggressively, causing UI stutters. 3. <strong>Code maintenance:</strong> Fewer lines of code meant fewer bugs. In one case, a missing memoization in Redux caused a 500 ms delay on a mobile device — a bug that would have been impossible with Signals because dependencies are tracked automatically. 4. <strong>Cold start:</strong> Signals shaved 140 ms off cold starts by reducing the amount of code React had to hydrate. This was a surprise — I expected Signals to add overhead, but they actually reduced it because the reactivity graph was simpler.</p>
 <p><strong>Cost implication (2026 pricing):</strong>
-- On AWS Lambda (128 MB memory, 512 MB burst), the Signals version ran 18% cheaper because it used less memory and had shorter execution times.
-- On Cloudflare Workers ($5 per 10 million requests), the Signals version reduced CPU time by 30%, cutting costs by $150/month for a high-traffic dashboard.</p>
+- On AWS Lambda (128 MB memory, 512 MB burst), the Signals version ran 18% cheaper because it used less memory and had shorter execution times. - On Cloudflare Workers ($5 per 10 million requests), the Signals version reduced CPU time by 30%, cutting costs by $150/month for a high-traffic dashboard.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

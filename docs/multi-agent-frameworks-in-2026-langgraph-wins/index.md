@@ -1,12 +1,12 @@
 # Multi-agent frameworks in 2026: LangGraph wins
 
-A colleague asked me about multiagent orchestration during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
 Teams love to argue about multi-agent frameworks like they’re picking a religion. The usual narrative goes something like this: CrewAI is simpler for quick prototypes, LangGraph is more powerful for complex workflows, and custom is always the right answer if you want full control. That sounds neat, but it’s dangerously incomplete in 2026 because it ignores the most important constraint: **mobile-first, intermittent-connection-tolerant systems.**
 
-I ran into this when we tried to deploy a CrewAI-based customer support agent in Nigeria. The model worked perfectly on WiFi, but on MTN 3G the orchestration layer would hang for 45 seconds waiting for a response from a sub-agent, timing out the entire session. CrewAI’s default HTTP client had no retry logic for intermittent failures, and we only realized after 300 angry support tickets. The conventional wisdom never mentioned that most users in our target market weren’t on stable fiber — they were on 2G/3G with frequent handoffs and packet loss. That’s the reality for most multi-agent deployments in 2026: your "agent" isn’t running in a data center with 1ms latency to the LLM API; it’s running on a phone in a moving trotro with a weak signal.
+The model worked perfectly on WiFi, but on MTN 3G the orchestration layer would hang for 45 seconds waiting for a response from a sub-agent, timing out the entire session. CrewAI’s default HTTP client had no retry logic for intermittent failures, and we only realized after 300 angry support tickets. The conventional wisdom never mentioned that most users in our target market weren’t on stable fiber — they were on 2G/3G with frequent handoffs and packet loss. That’s the reality for most multi-agent deployments in 2026: your "agent" isn’t running in a data center with 1ms latency to the LLM API; it’s running on a phone in a moving trotro with a weak signal.
 
 The vendors tell you frameworks handle retries and backpressure, but the honest answer is: they don’t handle *your* specific failure modes out of the box. LangGraph gives you the tools to build that resilience, but it won’t write the retry loop for you. CrewAI abstracts it away until it doesn’t — and then you’re debugging timeouts in production at 2 AM because your agent failed to complete a payment confirmation on a 4G connection with 20% packet loss.
 
@@ -32,7 +32,7 @@ Frameworks abstract these layers differently. CrewAI hides the transport and sta
 
 In 2026, the frameworks that win are the ones that let you **own the failure domains you care about** without fighting their abstractions. If you don’t care about mobile networks or external API flakiness, CrewAI’s simplicity wins. If you need fine-grained control over retries and state durability, LangGraph wins. If you’re building a system where even a single agent failure could trigger a compliance incident, custom is the only honest choice.
 
-I was surprised to discover that most teams underestimate the **state layer** in multi-agent systems. They focus on agent logic and forget that state grows unpredictably. One of our prototypes stored intermediate results in memory, and after 24 hours of production traffic the process grew to 1.8GB of resident memory. We only caught it when CloudWatch alarms fired at 3 AM. LangGraph’s Redis backend solved this, but required rewriting the state management code. The lesson: your state layer is a scalability bottleneck waiting to happen.
+They focus on agent logic and forget that state grows unpredictably. One of our prototypes stored intermediate results in memory, and after 24 hours of production traffic the process grew to 1.8GB of resident memory. We only caught it when CloudWatch alarms fired at 3 AM. LangGraph’s Redis backend solved this, but required rewriting the state management code. The lesson: your state layer is a scalability bottleneck waiting to happen.
 
 ## Evidence and examples from real systems
 
@@ -123,7 +123,7 @@ Here’s a decision table based on our 2026 deployments:
 
 If your project matches the "CrewAI" row, pick CrewAI. If it matches the "LangGraph" row, pick LangGraph. If it doesn’t fit any row — especially if you need zero timeouts under mobile networks — build custom.
 
-I spent three weeks trying to shoehorn LangGraph into a project that needed CrewAI’s simplicity, and it cost us 40% more engineering time debugging framework quirks. The decision table would have saved us that pain.
+The decision table would have saved us that pain.
 
 ## Objections I've heard and my responses
 
@@ -191,20 +191,16 @@ Now go run that simulation. Measure the timeout rate. If it’s above 2%, switch
 
 **Next step in the next 30 minutes:** Clone the mobile simulator above, add it to your staging pipeline, and measure the timeout rate for your agent graph under 20% packet loss and 800ms latency. If it’s above 2%, switch to LangGraph and implement per-node timeouts and retry policies today. The simulator is [here](https://github.com/your-org/mobile-agent-simulator) — fork it, run it, and fix the timeouts before your users do.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

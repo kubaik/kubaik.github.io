@@ -8,7 +8,7 @@ In late 2026 our small payments team moved from a single-tenant Postgres 15 inst
 
 The problem surfaced when the marketing team ran a Black-Friday-style campaign on a Monday morning. At 10:17 AM our API p99 latency jumped from 220 ms to 1.8 s and stayed there for 47 minutes. During that window we processed 12 % fewer transactions than the same hour the previous week and our error rate spiked to 4 % — double the usual 2 % — with 503 responses from the pool.
 
-I ran into this when I SSH’d into a pod and saw 720 Postgres connections open to the database. PgBouncer’s default max_client_conn was 100, so we had hit the connection ceiling and the pool started rejecting new clients. That 720 number was the first red flag: for a 4-core pod with 10 replicas, we expected at most 40 connections, not 720.
+PgBouncer’s default max_client_conn was 100, so we had hit the connection ceiling and the pool started rejecting new clients. That 720 number was the first red flag: for a 4-core pod with 10 replicas, we expected at most 40 connections, not 720.
 
 The real goal was to keep the database under 100 total connections while allowing the API to scale to 50 pods. We thought a pool would give us that buffer, but we hadn’t actually configured the pool size or the database limits to align.
 
@@ -16,12 +16,11 @@ The real goal was to keep the database under 100 total connections while allowin
 
 We started with the PgBouncer Helm chart’s default values for bitnami/prometheus-pgbouncer-exporter 0.10.0 running in Kubernetes 1.28. The chart set `max_client_conn=100`, `default_pool_size=20`, and `min_pool_size=5`. In our first test we spun up 10 API pods, each opening 20 connections. That immediately used 200 of the 100 allowed client slots, and the pool began rejecting connections even though the database itself only had 20 active queries.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — the `server_idle_timeout` was set to 30 minutes, so PgBouncer kept idle connections open long after the API had scaled down. On Black Friday the marketing campaign triggered a 10× traffic spike, our horizontal pod autoscaler spun up 50 replicas in seven minutes, each opening 20 connections, and the pool hit the wall before the database did.
+On Black Friday the marketing campaign triggered a 10× traffic spike, our horizontal pod autoscaler spun up 50 replicas in seven minutes, each opening 20 connections, and the pool hit the wall before the database did.
 
 We tried two quick fixes:
 
-1. Doubling `max_client_conn` to 200 via Helm values. This reduced the 503s for a few hours, but at 3 PM we hit another spike and saw the same pattern: 800+ connections again.
-2. Lowering `default_pool_size` to 5 to reduce the per-pod footprint. This made the pool reject legitimate requests because the pool ran out of connections faster under load.
+1. Doubling `max_client_conn` to 200 via Helm values. This reduced the 503s for a few hours, but at 3 PM we hit another spike and saw the same pattern: 800+ connections again. 2. Lowering `default_pool_size` to 5 to reduce the per-pod footprint. This made the pool reject legitimate requests because the pool ran out of connections faster under load.
 
 Both attempts ignored the real constraint: the database’s max_connections setting. Postgres 15 defaults to 100 max_connections, and we never changed it. When PgBouncer opened 720 connections, those were real Postgres backend processes, not just pool slots.
 
@@ -192,12 +191,7 @@ These alerts will fire before the pool runs out of slots, giving you time to sca
 
 ## Resources that helped
 
-- [PgBouncer 1.22 docs – Pool size tuning](https://www.pgpool.net/docs/latest/en/html/runtime-config-connection.html) – the authoritative guide to every knob we changed.
-- [AWS RDS PostgreSQL parameters – max_connections](https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html) – the recommended values for instance classes.
-- [SQLAlchemy 2.0 connection pooling guide](https://docs.sqlalchemy.org/en/20/core/pooling.html) – how we configured pool_size and max_overflow.
-- [Kubernetes Horizontal Pod Autoscaler best practices](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) – why we measured 48 pods instead of 50.
-- [Prometheus PgBouncer exporter queries](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-pgbouncer-exporter) – the metrics we exposed and alerted on.
-- [Terraform aws_db_parameter_group example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_parameter_group) – how we set max_connections via IaC.
+- [PgBouncer 1.22 docs – Pool size tuning](https://www.pgpool.net/docs/latest/en/html/runtime-config-connection.html) – the authoritative guide to every knob we changed. - [AWS RDS PostgreSQL parameters – max_connections](https://docs.aws.amazon.com/AmazonRDS/latest/PostgreSQLReleaseNotes/postgresql-extensions.html) – the recommended values for instance classes. - [SQLAlchemy 2.0 connection pooling guide](https://docs.sqlalchemy.org/en/20/core/pooling.html) – how we configured pool_size and max_overflow. - [Kubernetes Horizontal Pod Autoscaler best practices](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale-walkthrough/) – why we measured 48 pods instead of 50. - [Prometheus PgBouncer exporter queries](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-pgbouncer-exporter) – the metrics we exposed and alerted on. - [Terraform aws_db_parameter_group example](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_parameter_group) – how we set max_connections via IaC.
 
 ## Frequently Asked Questions
 
@@ -247,7 +241,6 @@ reserve_pool_size = 4
 ```
 
 Restart PgBouncer if needed. In the next five minutes, tail your API logs for connection errors. If you see 503s or pool timeouts, raise reserve_pool_size in 2-connection increments until errors stop. You should see latency return to baseline within one deploy cycle.
-
 
 ---
 

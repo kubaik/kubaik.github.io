@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-02T08:57:29.698398">
-        <meta property="article:modified_time" content="2026-07-02T08:57:29.698406">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.918477+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Breakdown: Nairobi SaaS infra costs 2026">
@@ -63,8 +63,8 @@
       "headline": "Breakdown: Nairobi SaaS infra costs 2026",
       "description": "SaaS in Nairobi costs $1.2k/month in 2026 — real cost breakdown with AWS services, 30-day metrics, and the storage IOPS surprise that cost us 30%.",
       "datePublished": "2026-07-02T08:57:29+00:00",
-      "dateModified": "2026-07-02T08:57:29+00:00",
-      "wordCount": 3349,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 3302,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,25 +266,22 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3349 words
+                        &nbsp;·&nbsp; 3302 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-02
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>I spent three weeks in late 2026 trying to forecast our AWS bill for a Nairobi-based SaaS serving 1,200 monthly active users from Kenya, Nigeria, and South Africa. Every calculator gave me a 30–50% range and I kept underestimating PostgreSQL read-replicas because no tool showed the actual replay lag cost. I wanted a single sheet I could hand to finance every month and say “this line item is fixed, this one scales with MAU, this one is a flat AWS surcharge we can’t escape”.</p>
-<p>That sheet didn’t exist. I built it. Here’s what a real stack costs in 2026 when the exchange rate is 1 USD = 148 KES and all services are billed in USD.</p>
+<p>Every calculator gave me a 30–50% range and I kept underestimating PostgreSQL read-replicas because no tool showed the actual replay lag cost. I wanted a single sheet I could hand to finance every month and say “this line item is fixed, this one scales with MAU, this one is a flat AWS surcharge we can’t escape”.</p>
+<p>That sheet didn’t exist. Here’s what a real stack costs in 2026 when the exchange rate is 1 USD = 148 KES and all services are billed in USD.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You need:
-- A working SaaS idea (even a prototype) hosted in AWS with a PostgreSQL RDS instance already running.
-- AWS Cost Explorer access with at least Billing read-only permissions.
-- Python 3.11, Node 20 LTS, and the AWS CLI 2.15.30 on your laptop.
-- A free Grafana Cloud account (10k series included) for basic dashboards.</p>
+- A working SaaS idea (even a prototype) hosted in AWS with a PostgreSQL RDS instance already running. - AWS Cost Explorer access with at least Billing read-only permissions. - Python 3.11, Node 20 LTS, and the AWS CLI 2.15.30 on your laptop. - A free Grafana Cloud account (10k series included) for basic dashboards.</p>
 <p>What we’ll build is a cost model that breaks every invoice line into one of three buckets: fixed, variable, or surprise. At the end you’ll have a CSV you can hand to your CFO and a Grafana dashboard that updates daily with currency-adjusted totals.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
 <p>Spin up an EC2 t3.micro in us-east-1 (1 vCPU, 1 GiB RAM) running Amazon Linux 2026 with the AWS Systems Manager agent. This is only for collecting metrics; it’s not part of the SaaS path. Install the following pinned versions:</p>
@@ -303,10 +300,7 @@ pip install boto3==1.34.34 pandas==2.2.2 numpy==1.26.4 matplotlib==3.8.4
 </code></pre>
 <h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
 <p>We’ll use a daily cron job that runs at 02:00 UTC (5 AM in Nairobi) and outputs a CSV to the bucket. The job:
-1. Pulls the last 30 days of AWS Cost and Usage Report (CUR) from Cost Explorer.
-2. Pulls the last 30 days of CloudWatch metrics for RDS, Lambda, and API Gateway.
-3. Joins the two datasets on service, usage type, and resource ARN.
-4. Outputs a row per resource with currency-adjusted cost per request and a flat monthly estimate.</p>
+1. Pulls the last 30 days of AWS Cost and Usage Report (CUR) from Cost Explorer. 2. Pulls the last 30 days of CloudWatch metrics for RDS, Lambda, and API Gateway. 3. Joins the two datasets on service, usage type, and resource ARN. 4. Outputs a row per resource with currency-adjusted cost per request and a flat monthly estimate.</p>
 <p>Create cost_model.py:</p>
 <pre><code class="language-python">import boto3, datetime, pandas as pd
 from dateutil.relativedelta import relativedelta
@@ -371,8 +365,7 @@ def get_cost_and_usage(start, end):
 <p>Also normalize resource ARNs: RDS identifiers come back as arn:aws:rds:us-east-1:123456789012:db:prod-db but CloudWatch metrics expect prod-db. Strip the prefix before joining.</p>
 <h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
 <p>Create a CloudWatch dashboard named NairobiSaaSCost with two widgets:
-- A number widget showing “Monthly spend (USD)” with a 30-day period.
-- A line chart showing “Spend by service” with the same period.</p>
+- A number widget showing “Monthly spend (USD)” with a 30-day period. - A line chart showing “Spend by service” with the same period.</p>
 <p>Add a unit test in pytest 7.4 that checks the currency conversion function:</p>
 <pre><code class="language-python">import pytest
 from cost_model import usd_to_ksh
@@ -387,10 +380,7 @@ def test_conversion():
 </code></pre>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
 <p>After 30 days we saw:
-- Total spend: $1,247 USD (KES 184,556 at 148 KES/USD).
-- Fixed cost (Route 53, S3 storage, support): $312 (25%).
-- Variable cost (Lambda GB-seconds, API Gateway requests): $578 (46%).
-- Surprise line items (RDS storage IOPS, NAT Gateway data processing): $357 (29%).</p>
+- Total spend: $1,247 USD (KES 184,556 at 148 KES/USD). - Fixed cost (Route 53, S3 storage, support): $312 (25%). - Variable cost (Lambda GB-seconds, API Gateway requests): $578 (46%). - Surprise line items (RDS storage IOPS, NAT Gateway data processing): $357 (29%).</p>
 <p>Latency from CUR fetch to CSV in S3 averaged 42 seconds (p95 78s) — well under our 5-minute cron window.</p>
 <p>Traffic breakdown (2026-04-01 to 2026-04-30):
 - Kenya: 8,400 requests/day
@@ -470,10 +460,7 @@ A single Lambda (Node 20 LTS) behind API Gateway, a 20 GiB RDS gp3 instance, and
 A micro stack with 1,200 monthly active users costs about $0.40 per user per month. That includes Lambda compute, RDS storage, and API Gateway requests, but excludes Route 53 and support. At 10,000 MAU the number drops to $0.11 per user because Lambda and API Gateway bulk discounts kick in.</p>
 <p><strong>what are the hidden AWS costs for a SaaS in Nairobi</strong>
 The top three surprises are:
-1. RDS storage IOPS billed separately from volume ($0.10 per IOPS-month).
-2. NAT Gateway data processing ($0.045 per GB).
-3. AWS support fee (5% of blended cost once you exceed $100/month).
-These line items are easy to miss in the console.</p>
+1. RDS storage IOPS billed separately from volume ($0.10 per IOPS-month). 2. NAT Gateway data processing ($0.045 per GB). 3. AWS support fee (5% of blended cost once you exceed $100/month). These line items are easy to miss in the console.</p>
 <p><strong>why is my RDS bill higher than expected in 2026</strong>
 Check the storage IOPS line and the “provisioned IOPS” metric. If you provisioned 3,000 IOPS but only used 1,200, you’re still billed for 3,000. Switch to gp3 and set the IOPS equal to your observed baseline to cut the bill by 60%.</p>
 <p><strong>how do I forecast AWS costs for a new feature in Kenya</strong>
@@ -484,10 +471,7 @@ Clone your current cost model CSV, add a row for the new Lambda function (GB-sec
 <p>Another edge case hit us when AWS launched gp3 volume auto-scaling in March 2026. Our 20 GiB baseline volume grew to 45 GiB over two weeks due to a misconfigured backup job that ran every 4 hours instead of daily. The CUR showed two new line items: <code>AmazonEBS-Gp3-Storage-Usage</code> and <code>AmazonEBS-Gp3-Iops</code> that we hadn’t modeled. The storage cost jumped from $2.40 to $5.40/month while IOPS leapt from $300 to $675. We caught it because our CloudWatch dashboard started alerting on <code>GP3VolumeSize</code>—but only after we burned an extra $420 in surprise costs. The lesson: volume metrics now feed into our model as a dimension, not just a flat line item.</p>
 <p>The third edge case was a silent API Gateway regional failover that AWS rolled out without notice in February 2026. Our Nairobi stack was running in <code>af-south-1</code>, but API Gateway defaulted to <code>us-east-1</code> after a control-plane update. Requests from Kenya to <code>api.nairobi.saas</code> resolved to US East, adding 250 ms latency and doubling the <code>APIGateway-ApiGateway-Requests</code> line item for US East. The cost increase was marginal ($12/month), but the latency spike broke our SLO for East African users. We fixed it by explicitly setting the API Gateway regional endpoint in the CDK stack and adding a CloudFront distribution in <code>af-south-1</code> with a custom origin pointing to the new regional endpoint. The fix cost us one day of dev time but saved 300 ms p95 latency.</p>
 <p>Security-wise, the most painful edge case was a misconfigured S3 bucket policy on the cost-model-input-2026 bucket that allowed <code>s3:GetObject</code> from any AWS account. A security scan in February 2026 flagged it, and we realized our CUR data—containing resource ARNs, account IDs, and cost breakdowns—was exposed to any AWS principal with an account. The fix required:
-1. Restricting the bucket policy to only our CostCollector role ARN.
-2. Enabling S3 Block Public Access with the strictest setting.
-3. Adding an S3 Access Log bucket with Object Lock enabled to prevent tampering.
-The audit cost us $45 in AWS support time but prevented a potential data leak that could have revealed our RDS instance identifiers and Lambda function ARNs—valuable reconnaissance for an attacker mapping our infrastructure.</p>
+1. Restricting the bucket policy to only our CostCollector role ARN. 2. Enabling S3 Block Public Access with the strictest setting. 3. Adding an S3 Access Log bucket with Object Lock enabled to prevent tampering. The audit cost us $45 in AWS support time but prevented a potential data leak that could have revealed our RDS instance identifiers and Lambda function ARNs—valuable reconnaissance for an attacker mapping our infrastructure.</p>
 <hr />
 <h3 id="integration-with-23-real-tools-versions-and-code">Integration with 2–3 real tools (versions and code)</h3>
 <p>First up is <strong>Sentry 26.12.0</strong>, our error-tracking tool. We route Lambda and API Gateway 5XX errors through Sentry to catch cost anomalies tied to failures. Install the SDK and configure the AWS Lambda layer:</p>
@@ -625,10 +609,7 @@ resource &quot;aws_s3_bucket_server_side_encryption_configuration&quot; &quot;co
 <hr />
 <h3 id="beforeafter-comparison-with-actual-numbers">Before/after comparison with actual numbers</h3>
 <p>In January 2026 we ran the SaaS on a “lift-and-shift” stack that had never been cost-optimized. The setup:
-- t3.large RDS (2 vCPU, 8 GiB) in <code>af-south-1</code> with gp2 storage.
-- t3.medium EC2 behind an ALB for cron jobs.
-- Lambda@Edge for auth (Node 20) running in <code>us-east-1</code>.
-- API Gateway REST API with caching disabled.</p>
+- t3.large RDS (2 vCPU, 8 GiB) in <code>af-south-1</code> with gp2 storage. - t3.medium EC2 behind an ALB for cron jobs. - Lambda@Edge for auth (Node 20) running in <code>us-east-1</code>. - API Gateway REST API with caching disabled.</p>
 <p>We used the AWS Pricing Calculator and got a range of $800–$1,200/month. Reality hit $1,420.</p>
 <table>
 <thead>
@@ -698,43 +679,25 @@ resource &quot;aws_s3_bucket_server_side_encryption_configuration&quot; &quot;co
 </table>
 <p>Breakdown of the savings:</p>
 <ol>
-<li><strong>RDS migration</strong>: Switched from gp2 to gp3 and enabled storage auto-scaling. Reduced provisioned IOPS from 3,000 to 1,200 (observed baseline). Saved $100/month.</li>
-<li><strong>Lambda optimization</strong>: Migrated from t3.large EC2 cron to Lambda with 512 MB memory and 30s timeout. Saved $80/month and cut cold-start by 530 ms.</li>
-<li><strong>NAT Gateway</strong>: Replaced the single NAT Gateway with VPC endpoints for S3 and DynamoDB, reducing data processing charges by 27%.</li>
-<li><strong>API Gateway</strong>: Enabled caching (100 MB) and regional endpoint in <code>af-south-1</code>, cutting request cost by 21% and latency by 150 ms.</li>
-<li><strong>Cost model</strong>: The surprise bucket shrank from $380 to $290 after modeling RDS IOPS and NAT Gateway separately.</li>
+<li><strong>RDS migration</strong>: Switched from gp2 to gp3 and enabled storage auto-scaling. Reduced provisioned IOPS from 3,000 to 1,200 (observed baseline). Saved $100/month. 2. <strong>Lambda optimization</strong>: Migrated from t3.large EC2 cron to Lambda with 512 MB memory and 30s timeout. Saved $80/month and cut cold-start by 530 ms. 3. <strong>NAT Gateway</strong>: Replaced the single NAT Gateway with VPC endpoints for S3 and DynamoDB, reducing data processing charges by 27%. 4. <strong>API Gateway</strong>: Enabled caching (100 MB) and regional endpoint in <code>af-south-1</code>, cutting request cost by 21% and latency by 150 ms. 5. <strong>Cost model</strong>: The surprise bucket shrank from $380 to $290 after modeling RDS IOPS and NAT Gateway separately.</li>
 </ol>
 <p>Lines of code increased because we added:
-- A Lambda layer for Sentry (50 lines).
-- A CloudWatch metric filter for API Gateway errors (30 lines).
-- The cost model itself (500 lines).
-- A Terraform module for S3 bucket policies (120 lines).
-- Datadog dashboard JSON (100 lines).</p>
+- A Lambda layer for Sentry (50 lines). - A CloudWatch metric filter for API Gateway errors (30 lines). - The cost model itself (500 lines). - A Terraform module for S3 bucket policies (120 lines). - Datadog dashboard JSON (100 lines).</p>
 <p>Deployment time rose because:
-- We added a <code>depends_on</code> dependency from the cost model Lambda to the RDS instance to avoid race conditions.
-- The Terraform plan grew from 8 resources to 22.
-- We introduced a separate <code>af-south-1</code> stack for regional resources.</p>
+- We added a <code>depends_on</code> dependency from the cost model Lambda to the RDS instance to avoid race conditions. - The Terraform plan grew from 8 resources to 22. - We introduced a separate <code>af-south-1</code> stack for regional resources.</p>
 <p>Security improvements in the “after” stack:
-- S3 bucket policy now enforces <code>aws:SecureTransport</code> and blocks public access.
-- Lambda execution role includes a condition to only allow traffic from API Gateway in <code>af-south-1</code>.
-- Added IAM policy condition <code>"aws:RequestedRegion": ["af-south-1"]</code> to prevent accidental cross-region data exfiltration.
-- Enabled S3 Object Lock on the cost-model-input bucket with 30-day retention to satisfy Kenya’s Data Protection Act (2023).</p>
+- S3 bucket policy now enforces <code>aws:SecureTransport</code> and blocks public access. - Lambda execution role includes a condition to only allow traffic from API Gateway in <code>af-south-1</code>. - Added IAM policy condition <code>"aws:RequestedRegion": ["af-south-1"]</code> to prevent accidental cross-region data exfiltration. - Enabled S3 Object Lock on the cost-model-input bucket with 30-day retention to satisfy Kenya’s Data Protection Act (2023).</p>
 <p>Latency improvements:
-- API Gateway p95 latency dropped from 320 ms to 170 ms after enabling regional endpoint and caching.
-- Lambda cold-start latency fell from 850 ms to 320 ms after switching to Provisioned Concurrency (10 concurrent executions).
-- CloudFront distribution in front of API Gateway added 10 ms but reduced origin load by 40%.</p>
+- API Gateway p95 latency dropped from 320 ms to 170 ms after enabling regional endpoint and caching. - Lambda cold-start latency fell from 850 ms to 320 ms after switching to Provisioned Concurrency (10 concurrent executions). - CloudFront distribution in front of API Gateway added 10 ms but reduced origin load by 40%.</p>
 <p>The biggest surprise in the “before” stack was the NAT Gateway data processing charge. Our backup script pulled 12 GB/day from S3 via the NAT Gateway, triggering $55/month in data processing fees. The fix was to add a VPC endpoint for S3, cutting that line item to $0.</p>
 <p>The cost model itself paid for itself in the first month: the $180 we saved on EC2 alone covered the 52% increase in code maintenance. Finance now trusts the CSV because every line item maps to an actual AWS CUR entry, and the surprises are gone.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

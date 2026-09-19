@@ -8,7 +8,7 @@ Most docs sell you on the idea that running agents 24/7 is the only way to keep 
 
 The docs gloss over the reality that AWS charges you for every second your container is running, even if it’s sleeping. Fargate’s pricing model is brutal: $0.04048 per vCPU per hour and $0.004445 per GB of memory per hour, whether the agent is processing requests or just idling. That’s $293.47 per month for a single 0.25 vCPU / 0.5 GB container running nonstop. Multiply that by four agents, and you’ve already burned $1,174 monthly before you’ve even processed a single request.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. The real cost isn’t just the compute; it’s the compounding pain of debugging memory leaks in long-running processes, the cognitive load of monitoring 24/7, and the sheer number of times you’ll wake up to a PagerDuty page because an agent silently crashed after 30 days of uptime.
+The real cost isn’t just the compute; it’s the compounding pain of debugging memory leaks in long-running processes, the cognitive load of monitoring 24/7, and the sheer number of times you’ll wake up to a PagerDuty page because an agent silently crashed after 30 days of uptime.
 
 The on-demand model flips the script. With AWS Lambda, you pay only for the time your code executes, rounded up to the nearest 1ms. For our agent logic, that meant an average execution time of 187ms per request and a cost of $0.00000021 per invocation. At 120k requests per day, that’s $25.20 monthly — less than 2.5% of the Fargate bill. The docs mention this, but they don’t scream it from the rooftops because it cuts into their narrative of ‘always-on is the only way to be reliable.’
 
@@ -28,7 +28,7 @@ Under the hood, the 24/7 model is simpler to reason about because you’re deali
 
 The on-demand model is more complex because it forces you to externalize state. You can’t rely on in-memory caches or persistent connections; every invocation starts fresh. This means you need to manage state in an external store like Redis or DynamoDB, and you need to handle retries and idempotency at the function level. The upside is that you’re only paying for the time your code is actually running.
 
-I was surprised to find that the boot time of a Lambda function is not the only latency cost. For our agent logic, the cold start added an average of 420ms to the first request after a period of inactivity. That’s not terrible, but it’s noticeable when your users expect sub-200ms responses. We mitigated this by using provisioned concurrency, which kept a fixed number of functions warm. The trade-off was a 3x increase in cost for those functions — from $25 monthly to $78 monthly — but it brought the cold start latency down to 80ms on average.
+For our agent logic, the cold start added an average of 420ms to the first request after a period of inactivity. That’s not terrible, but it’s noticeable when your users expect sub-200ms responses. We mitigated this by using provisioned concurrency, which kept a fixed number of functions warm. The trade-off was a 3x increase in cost for those functions — from $25 monthly to $78 monthly — but it brought the cold start latency down to 80ms on average.
 
 Another surprise was the cost of retries. In the 24/7 model, retries are handled by the process itself, so there’s no additional cost beyond the CPU cycles. In the on-demand model, every retry is a new invocation, and AWS charges you for each one. For a job with a high retry rate, this can quickly inflate your bill. We saw a 15% increase in cost when we enabled automatic retries for transient errors, pushing our monthly bill from $25 to $29.
 
@@ -280,7 +280,7 @@ Based on our experience, here are the tools and libraries that made the biggest 
 | Redis 7.2                  | External state store             | 7.2.0    | Low latency, high throughput                      |
 | PgBouncer                  | PostgreSQL connection pooling     | 1.21.0   | Reduced Lambda VPC latency                        |
 | backoff                    | Exponential backoff for retries  | 2.3.0    | Simplified retry logic                            |
-| Serverless Framework       | Deployment automation            | 3.38.1   | Made it easy to manage Lambda, API Gateway, etc.   |
+| Serverless Framework       | Deployment automation            | 3.38.1   | Made it easy to manage Lambda, API Gateway, etc. |
 | CloudWatch Alarms          | Monitoring and alerting          | N/A      | Caught errors and cost spikes early               |
 | AWS X-Ray                  | Distributed tracing              | N/A      | Identified latency bottlenecks                    |
 
@@ -340,20 +340,16 @@ The tools ecosystem is mature enough that you’re not fighting the framework. A
 
 Here’s the kicker: we didn’t even need to run all our agents on-demand. Some of them, like our real-time notification processor, needed to stay
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -1,10 +1,10 @@
 # Starlink 4G fallback: serve pages under 800ms
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-When Starlink lit up East Africa in March 2026, our logs showed a jump in 4G-only traffic from 3 % to 29 % in two weeks. That meant hundreds of thousands of new users on cheap Android phones, 700 ms–1.3 s RTT, and no fallback to fibre. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+When Starlink lit up East Africa in March 2026, our logs showed a jump in 4G-only traffic from 3 % to 29 % in two weeks. That meant hundreds of thousands of new users on cheap Android phones, 700 ms–1.3 s RTT, and no fallback to fibre.
 
 After we fixed that, we still had pages that worked fine on Wi-Fi but took 3–5 s on 4G. The culprit wasn’t the server; it was the client stack: 256 MB RAM phones, Chrome 120 on Android 11, and 3G-era TCP settings that never got updated. In one test run, Lighthouse scored 92 on desktop and 34 on 4G. The gap wasn’t the CDN; it was image decoding, JavaScript parse time, and a missing `save-data` hint that doubled the payload.
 
@@ -15,15 +15,12 @@ So, what changed when Starlink reached East Africa? The answer isn’t “Starli
 ## Prerequisites and what you'll build
 
 You’ll need Node 20 LTS, Next.js 15, and a Redis 7.2 cluster for edge caching. We’ll target an 800 ms Time to First Byte (TTFB) on a 1 Mbps, 280 ms RTT link. The build will produce two artefacts:
-1. A server-side rendered (SSR) page with streaming HTML.
-2. A lightweight client bundle (<120 kB gzipped) that loads only after the HTML is interactive.
+1. A server-side rendered (SSR) page with streaming HTML. 2. A lightweight client bundle (<120 kB gzipped) that loads only after the HTML is interactive.
 
 We’re not building a PWA; we’re building the thinnest slice that renders something useful on a 256 MB RAM device in Chrome 120. You can run this locally with `node --max-old-space-size=256 server.js`, but for realism use a 4G throttling profile in Chrome DevTools: 1.5 Mbps down / 0.75 Mbps up, 280 ms RTT, 10 % packet loss.
 
 Expected outcomes after the steps:
-- TTFB ≤ 800 ms on 4G with <2 Mbps bandwidth.
-- Lighthouse Performance ≥ 70 on Moto G Power (2026) with 256 MB RAM.
-- Bundle size ≤ 120 kB gzipped.
+- TTFB ≤ 800 ms on 4G with <2 Mbps bandwidth. - Lighthouse Performance ≥ 70 on Moto G Power (2026) with 256 MB RAM. - Bundle size ≤ 120 kB gzipped.
 
 ## Step 1 — set up the environment
 
@@ -95,9 +92,7 @@ curl -H 'Save-Data: on' http://localhost:3000/api/edge
 ## Step 2 — core implementation
 
 In `app/page.tsx`, we’ll split the page into three layers:
-1. Skeleton HTML (1.8 kB) streamed immediately.
-2. Critical CSS (10 kB) inlined.
-3. Client bundle (≤120 kB) lazy-loaded only after the skeleton is interactive.
+1. Skeleton HTML (1.8 kB) streamed immediately. 2. Critical CSS (10 kB) inlined. 3. Client bundle (≤120 kB) lazy-loaded only after the skeleton is interactive.
 
 ```typescript
 // app/page.tsx
@@ -383,12 +378,7 @@ We sample 1 % of page views to avoid blowing up the 256 MB devices.
 ## Real results from running this
 
 After rolling this out to 10 % of traffic in Kenya and Uganda, we saw:
-- Median TTFB improved from 1.2 s to 580 ms on 4G <2 Mbps links.
-- P95 TTFB stayed under 1.1 s even with 10 % packet loss.
-- Bundle size stayed at 102 kB gzipped; no regressions in 30 days.
-- Lighthouse Performance on Moto G Power (256 MB) went from 34 to 76.
-- AWS Lambda costs for edge SSR stayed flat because we reduced payload size by 65 %.
-- User engagement (time-on-page) increased 18 % in the first week.
+- Median TTFB improved from 1.2 s to 580 ms on 4G <2 Mbps links. - P95 TTFB stayed under 1.1 s even with 10 % packet loss. - Bundle size stayed at 102 kB gzipped; no regressions in 30 days. - Lighthouse Performance on Moto G Power (256 MB) went from 34 to 76. - AWS Lambda costs for edge SSR stayed flat because we reduced payload size by 65 %. - User engagement (time-on-page) increased 18 % in the first week.
 
 Anecdotally, support tickets about “the page is blank” dropped 42 % after we added the skeleton and offline fallback.
 
@@ -398,11 +388,7 @@ During an incident where a fibre cut took down our primary CDN, 4G users still s
 
 **What if I don’t use Next.js?**
 You can replicate the same pattern in Remix, Nuxt, or even plain Express. The key pieces are:
-- Streaming HTML (1–2 kB) immediately.
-- Critical CSS inlined.
-- Client bundle ≤120 kB gzipped, lazy-loaded.
-- Brotli-level 4 compression on edge.
-- Service worker caching the skeleton.
+- Streaming HTML (1–2 kB) immediately. - Critical CSS inlined. - Client bundle ≤120 kB gzipped, lazy-loaded. - Brotli-level 4 compression on edge. - Service worker caching the skeleton.
 
 In Express, you can use `compression` middleware with `level=4` and `res.setHeader('Cache-Control', 'public, s-maxage=60')`.
 
@@ -444,26 +430,20 @@ Use WebPageTest with the “Motorola G (gen 5) – Moto G Power” preset and th
 If you’re on a 4G-as-baseline stack today, the fastest win is to audit your largest client-side bundle. Run `npx bundlesize@0.18 --config=bundlesize.config.json` against your main entry file and cap it at 120 kB gzipped. Then strip out polyfills for anything below ES2020 and switch to Brotli-level 4. That single change usually cuts payload by 40 % and improves TTI by 300–800 ms on 4G.
 
 For the next 30 minutes:
-1. Measure your current bundle size with `npx bundlephobia@2.13 your-package`.
-2. Run Lighthouse on a 4G profile against your homepage.
-3. Open the Network tab and verify that the first HTML response is <2 kB and the largest JS file is ≤120 kB gzipped.
+1. Measure your current bundle size with `npx bundlephobia@2.13 your-package`. 2. Run Lighthouse on a 4G profile against your homepage. 3. Open the Network tab and verify that the first HTML response is <2 kB and the largest JS file is ≤120 kB gzipped.
 
 If any of those fail, the code snippets in Step 2 are copy-paste ready and will drop your TTFB under 800 ms on 4G.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

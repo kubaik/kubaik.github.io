@@ -8,7 +8,7 @@ In late 2026 we rolled out TLS 1.3 across our edge network for all customer traf
 
 We already ran TLS 1.3 with X25519 ECDH. Replacing the key exchange with a post-quantum variant meant swapping out the cipher suite list in Nginx and HAProxy configs. We expected this to be a five-line change: edit cipher string, reload, done. Reality hit fast.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout. The real surprise wasn’t the config—it was the latency spike. Our 95th-percentile TLS handshake time jumped from 18 ms to 112 ms once we enabled `kyber768_kyber768` and `x25519_kyber768` hybrid suites. That spike translated to visible API errors on mobile clients in Lagos and Bangalore where RTTs were already 120–180 ms. The business impact was clear: 0.4 % more 5xx responses and a support ticket titled *“Why is the app slow in Nigeria?”*
+The real surprise wasn’t the config—it was the latency spike. Our 95th-percentile TLS handshake time jumped from 18 ms to 112 ms once we enabled `kyber768_kyber768` and `x25519_kyber768` hybrid suites. That spike translated to visible API errors on mobile clients in Lagos and Bangalore where RTTs were already 120–180 ms. The business impact was clear: 0.4 % more 5xx responses and a support ticket titled *“Why is the app slow in Nigeria?”*
 
 We had to ship something that worked for tens of thousands of concurrent sessions, not just a curl loop in staging.
 
@@ -80,9 +80,7 @@ The security posture improved without sacrificing UX.
 
 We run Nginx 1.25.3 on Ubuntu 24.04 LTS with OpenSSL 3.0.13. The post-quantum KEM we targeted is Kyber768 from the 2026 NIST final selection (RFC 9180). We chose Kyber because:
 
-- Kyber768 gives ~192-bit security, matching AES-256.
-- The public key is 1184 bytes, ciphertext 1088 bytes—small enough for TLS.
-- OpenSSL 3.0+ includes it in the default provider.
+- Kyber768 gives ~192-bit security, matching AES-256. - The public key is 1184 bytes, ciphertext 1088 bytes—small enough for TLS. - OpenSSL 3.0+ includes it in the default provider.
 
 We built a custom Nginx module (`ngx_http_tls_pq_module`) that hooks into `SSL_CTX_set_tlsext_ticket_key_cb` to derive the ticket encryption key from Kyber768. The module is 287 lines of C and compiles in under 30 seconds on our build farm.
 
@@ -160,11 +158,7 @@ Budget for extra memory per worker: 4–8 MB. That’s cheaper than a failed com
 
 ## Resources that helped
 
-- Cloudflare’s *hybrid post-quantum TLS* write-up (2026-03) – practical deployment notes and code.
-- Open Quantum Safe project GitHub – daily builds of Kyber, Dilithium, and integration patches for Nginx/Apache.
-- RFC 9180 (Hybrid Post-Quantum Key Encapsulation Mechanism Combinations for Transport Layer Security) – the spec we implemented.
-- NIST IR 8309 (Status Report on Post-Quantum Cryptography, 2025 update) – the threat model and timeline.
-- `ngx_post_quantum` module source – the drop-in replacement we should have used from day one.
+- Cloudflare’s *hybrid post-quantum TLS* write-up (2026-03) – practical deployment notes and code. - Open Quantum Safe project GitHub – daily builds of Kyber, Dilithium, and integration patches for Nginx/Apache. - RFC 9180 (Hybrid Post-Quantum Key Encapsulation Mechanism Combinations for Transport Layer Security) – the spec we implemented. - NIST IR 8309 (Status Report on Post-Quantum Cryptography, 2025 update) – the threat model and timeline. - `ngx_post_quantum` module source – the drop-in replacement we should have used from day one.
 
 ## Frequently Asked Questions
 
@@ -173,38 +167,31 @@ Budget for extra memory per worker: 4–8 MB. That’s cheaper than a failed com
 
 Most mobile clients in 2026 still ship with TLS stacks that don’t recognize the new hybrid suites (e.g., older Android 12, iOS 15, and legacy Windows 10). When you enforce `X25519Kyber768Draft00` only, those clients fall back to server-preferred ordering and you lose forward secrecy. The result is higher 5xx rates and angry support tickets in Bangalore and Lagos where older devices are common. Test on real device farms before enforcing.
 
-
 **How do I know if my entropy pool is under pressure?**
 **What’s the fastest way to measure entropy exhaustion?**
 
 Run `cat /proc/sys/kernel/random/entropy_avail` under load. If it dips below 128, your system is starved. On AWS c7g.large we see dips to 42 during high TLS handshake bursts without post-quantum suites; with Kyber768 the dip is shallower (78) because Kyber uses deterministic RNG. If you see values under 64, expect TLS handshake timeouts and application-level retries.
-
 
 **What’s the certificate size impact of embedding Kyber public keys?**
 **How much bigger are my leaf certs?**
 
 A standard RSA-2048 certificate is ~1 kB. Adding a Kyber768 public key in an X.509 extension adds ~1.2 kB. With OCSP stapling and SCT lists, expect a leaf cert to grow from 1.8 kB to 3.2 kB. The TLS record size then hits the 16 kB default record size on some clients, causing fragmentation. The fix is to set `ssl_buffer_size 32768;` in Nginx. Without it, mobile clients on 3G networks see 5–10 % more retransmits.
 
-
 **Do I need to recompile my apps if I only change cipher suites at the edge?**
 **Will my Go/Python/Java apps break if the edge supports post-quantum?**
 
 No. TLS is negotiated at the transport layer. As long as your application uses a TLS stack that negotiates cipher suites dynamically (e.g., Go’s `crypto/tls`, Python’s `ssl`, Java’s `SSLEngine`), the app code doesn’t change. The only risk is if you hardcode cipher strings in your client config (e.g., `openssl s_client -cipher ...`). Update those to include the hybrid suites to validate the new handshake path.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

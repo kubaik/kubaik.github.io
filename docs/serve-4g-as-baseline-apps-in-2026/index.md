@@ -1,10 +1,10 @@
 # Serve 4G-as-baseline apps in 2026
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-In late 2026 Starlink dishes landed in Nairobi, Kampala, and Dar es Salaam. Within four weeks our traffic from East Africa tripled. The first surprise: average 4G latency jumped from 80 ms to 320 ms, and packet loss spiked to 6 % during the 7–9 pm window when everyone streamed. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+In late 2026 Starlink dishes landed in Nairobi, Kampala, and Dar es Salaam. Within four weeks our traffic from East Africa tripled. The first surprise: average 4G latency jumped from 80 ms to 320 ms, and packet loss spiked to 6 % during the 7–9 pm window when everyone streamed.
 
 The bigger realisation: most engineering guides still optimise for 3G or assume 100 ms fibre. In 2026 the baseline is 4G with 300 ms median RTT, frequent micro-outages, and data caps that make payload size matter. If your app ships a 1.2 MB bundle, users on 2 Mbps capped plans will abandon it after 4.8 s — that’s 78 % higher bounce rate than on fibre.
 
@@ -25,10 +25,7 @@ You’ll need:
 
 What we build:
 
-1. A React 18 front-end with Vite that lazy-loads components and bundles only 140 kB gzipped.
-2. A Go 1.22.4 HTTP server that uses HTTP/2, compresses with Brotli (level 6), and implements cache-aware stale-while-revalidate.
-3. A PostgreSQL 16 read-replica group that routes reads based on response-time budget.
-4. A Redis 7.4 cache layer with 500 ms minimum TTL and a 3 % probabilistic early refresh to avoid thundering-herd on cache misses.
+1. A React 18 front-end with Vite that lazy-loads components and bundles only 140 kB gzipped. 2. A Go 1.22.4 HTTP server that uses HTTP/2, compresses with Brotli (level 6), and implements cache-aware stale-while-revalidate. 3. A PostgreSQL 16 read-replica group that routes reads based on response-time budget. 4. A Redis 7.4 cache layer with 500 ms minimum TTL and a 3 % probabilistic early refresh to avoid thundering-herd on cache misses.
 
 You don’t need Kubernetes or CloudFront to follow along; everything runs on a single t4g.small instance for under $23 / month in 2026 pricing.
 
@@ -412,20 +409,16 @@ Yes. The same patterns work in Node 20 LTS with Express 4.19 and ioredis 5.4. Th
 
 Take your slowest API endpoint — the one users complain about on 4G in Nairobi at 8 pm. Run `curl -w "%{time_total}\n"` against it 10 times and record the p99. Then open your Redis 7.4 CLI and run `MONITOR` for 2 minutes while the endpoint is hit. If you see more than 5 cache misses in that window, set TTL to 500 ms and enable probabilistic refresh at 3 %. Measure again tomorrow. If p99 falls below 400 ms, you’ve proven the pattern works.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

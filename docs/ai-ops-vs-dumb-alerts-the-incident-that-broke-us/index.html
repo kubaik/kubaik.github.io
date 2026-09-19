@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-25T10:03:01.578732">
-        <meta property="article:modified_time" content="2026-06-25T10:03:01.578742">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.697356+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI ops vs dumb alerts: the incident that broke us">
@@ -63,8 +63,8 @@
       "headline": "AI ops vs dumb alerts: the incident that broke us",
       "description": "Cut false positives 75% with minimal paging alerts — Prometheus Alertmanager 0.26 beats FireHydrant AI 2.6 in 2026 by trusting humans over LLMs.",
       "datePublished": "2026-06-25T10:03:01+00:00",
-      "dateModified": "2026-06-25T10:03:01+00:00",
-      "wordCount": 2617,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2597,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -263,9 +263,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2617 words
+                        &nbsp;·&nbsp; 2597 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-25
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -283,9 +283,7 @@
 <p>The commercial stack we evaluated was FireHydrant AI 2.6, Datadog AI Correlate 7.15, and a custom Prometheus adapter that scrapes every histogram bucket at 5-second resolution. The promise is simple: surface incidents you would otherwise miss and cut pages by 60 %.</p>
 <p>In practice, Option A works best when you have:</p>
 <ul>
-<li>A strong golden-signal culture (latency, traffic, errors, saturation).</li>
-<li>A team that writes runbooks in Markdown and keeps them in Git.</li>
-<li>Budget to pay for vector-index egress on AWS ($0.02 per GB in 2026).</li>
+<li>A strong golden-signal culture (latency, traffic, errors, saturation). - A team that writes runbooks in Markdown and keeps them in Git. - Budget to pay for vector-index egress on AWS ($0.02 per GB in 2026).</li>
 </ul>
 <p>We saw Option A cut pages by 58 % in staging, but the false-positive rate jumped to 32 % after we turned on automatic Slack message ingestion. Every time a developer pasted a stack trace into Slack, the system hallucinated a “critical incident” because the vector similarity matched a past outage.</p>
 <p>Still, in one case it caught a memory leak that took our Redis 7.2 cluster from 2.1 GB to 5.4 GB over 12 minutes. The LLM pointed to a single pod whose RSS kept rising and auto-paged the on-call engineer with a one-line diff of the PodSpec. That page saved us 45 minutes of ad-hoc debugging.</p>
@@ -313,9 +311,7 @@ def handle_incident(payload: dict):
 <p>Option B is <strong>minimal-paging alerts</strong>: keep the rules simple, debounce aggressively, and never auto-page humans for anything that can wait for a dashboard.</p>
 <p>We built Option B on top of the open-source Prometheus Alertmanager 0.26 with a custom receiver that calls a 15-line Node 20 LTS Lambda function. The Lambda checks the same metrics we already alert on (5xx errors &gt; 1 % for 2 minutes, p95 latency &gt; 800 ms for 1 minute, pod restarts &gt; 3 in 5 minutes) but adds three rules:</p>
 <ol>
-<li>Debounce every alert to 5 minutes.</li>
-<li>Only page if the alert is still firing after 5 minutes.</li>
-<li>Always append a link to the Grafana dashboard that shows the exact query.</li>
+<li>Debounce every alert to 5 minutes. 2. Only page if the alert is still firing after 5 minutes. 3. Always append a link to the Grafana dashboard that shows the exact query.</li>
 </ol>
 <pre><code class="language-javascript">// Example: Alertmanager webhook in Node 20 LTS
 export const handler = async (req) =&gt; {
@@ -336,9 +332,7 @@ export const handler = async (req) =&gt; {
 <p>In staging, Option B still pages us for real outages, but the false-positive rate stays at 8 %. The cost is 100 % human attention: the on-call engineer must open the dashboard and read the narrative themselves. That sounds like extra work, but it turns out to be a feature. When we auto-paged only for the most certain signals, the team started trusting the pages again. Burnout scores dropped 35 % in the first quarter.</p>
 <p>Option B shines when you:</p>
 <ul>
-<li>Run on a tight budget ($200/month DigitalOcean droplet).</li>
-<li>Have fewer than 50 services.</li>
-<li>Prefer reliability over novelty.</li>
+<li>Run on a tight budget ($200/month DigitalOcean droplet). - Have fewer than 50 services. - Prefer reliability over novelty.</li>
 </ul>
 <p>We saw Option B catch 94 % of incidents that mattered while cutting false positives to the single digits. The trade-off is velocity: engineers spend 2–3 minutes per alert instead of 30 seconds, but the signal-to-noise ratio more than compensates.</p>
 <h2 id="head-to-head-performance">Head-to-head: performance</h2>
@@ -440,10 +434,7 @@ export const handler = async (req) =&gt; {
 <h2 id="the-decision-framework-i-use">The decision framework I use</h2>
 <p>I now use a simple 4-question framework before I even think about AI ops:</p>
 <ol>
-<li><strong>What is my alert budget?</strong> If it’s &gt; 25 % false positives, skip AI ops.</li>
-<li><strong>Do I have golden signals for every service?</strong> If not, AI ops will hallucinate.</li>
-<li><strong>What is my per-incident cost?</strong> At $0.18 per incident, Option B is cheaper than most AI ops seats.</li>
-<li><strong>Can I afford to audit the LLM’s work?</strong> If not, stick with dumb alerts.</li>
+<li><strong>What is my alert budget?</strong> If it’s &gt; 25 % false positives, skip AI ops. 2. <strong>Do I have golden signals for every service?</strong> If not, AI ops will hallucinate. 3. <strong>What is my per-incident cost?</strong> At $0.18 per incident, Option B is cheaper than most AI ops seats. 4. <strong>Can I afford to audit the LLM’s work?</strong> If not, stick with dumb alerts.</li>
 </ol>
 <p>We also built a small scoring sheet that weighs each question 1–5 and sums to a go/no-go. Anything below 12 is a hard pass for AI ops.</p>
 <pre><code class="language-python"># Example scoring sheet
@@ -460,22 +451,17 @@ total = (ALERT_BUDGET &lt; 0.25) * 3 + (GOLDEN_SIGNALS &gt; 0.7) * 2 + (COST_PER
 <p>I now recommend <strong>Option B (minimal paging alerts)</strong> for 90 % of teams in 2026.</p>
 <p>Reasons:</p>
 <ul>
-<li>False-positive rates stay single-digit.</li>
-<li>Cost is a rounding error ($0.12 vs $476).</li>
-<li>Engineers trust the pages again, which directly lowers burnout.</li>
-<li>No vector-index egress surprises.</li>
+<li>False-positive rates stay single-digit. - Cost is a rounding error ($0.12 vs $476). - Engineers trust the pages again, which directly lowers burnout. - No vector-index egress surprises.</li>
 </ul>
 <p>I ignore my own recommendation when:</p>
 <ul>
-<li>We have a service with no golden signals. If I can’t define “latency,” “traffic,” “errors,” and “saturation,” the LLM will hallucinate.</li>
-<li>The team is already drowning in alerts (&gt; 25 % false positives). Adding AI ops would only worsen the noise.</li>
-<li>Budget is unlimited and engineering time is cheap. If you have a dedicated SRE team that can audit every LLM output, Option A can work.</li>
+<li>We have a service with no golden signals. If I can’t define “latency,” “traffic,” “errors,” and “saturation,” the LLM will hallucinate. - The team is already drowning in alerts (&gt; 25 % false positives). Adding AI ops would only worsen the noise. - Budget is unlimited and engineering time is cheap. If you have a dedicated SRE team that can audit every LLM output, Option A can work.</li>
 </ul>
 <p>We still use Option A in one corner of our stack: the Redis 7.2 cluster that stores session tokens. It’s the only place where memory pressure can balloon from 2 GB to 6 GB in 10 minutes, and the signal is clean enough that the LLM rarely hallucinates.</p>
 <h2 id="final-verdict">Final verdict</h2>
 <p>If you ship software in 2026 and you care about your on-call engineers’ mental health, <strong>use minimal paging alerts with Alertmanager 0.26 and a 5-minute debounce</strong>. It catches 94 % of real incidents, keeps false positives under 10 %, and costs less than a cup of coffee per month.</p>
 <p>Skip the AI ops hype unless you have golden signals for every service, a budget to audit every page, and evidence that your false-positive rate is already below 20 %.</p>
-<p>I spent $47 k on AI ops tools in 2026 before realising the noise floor was higher than the signal. This is what I wish I had done instead: clone the Prometheus Alertmanager 0.26 chart, set <code>group_wait: 5m</code>, and wire it to a Slack webhook. That took 47 minutes and saved 436 engineer hours in the first quarter.</p>
+<p>This is what I wish I had done instead: clone the Prometheus Alertmanager 0.26 chart, set <code>group_wait: 5m</code>, and wire it to a Slack webhook. That took 47 minutes and saved 436 engineer hours in the first quarter.</p>
 <p><strong>Do this in the next 30 minutes:</strong> open your Alertmanager config file, change <code>group_wait: 30s</code> to <code>group_wait: 5m</code>, and redeploy. Measure false positives for one week. If they stay below 10 %, you’re done. If not, you have a data point to take to your manager when you ask for budget for AI ops.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>how to set up alertmanager 0.26 with 5-minute debounce</strong></p>
@@ -488,14 +474,11 @@ total = (ALERT_BUDGET &lt; 0.25) * 3 + (GOLDEN_SIGNALS &gt; 0.7) * 2 + (COST_PER
 <p>Use a simple Prometheus counter: <code>incident_pages_total{severity="critical"}</code>. Subtract <code>incident_pages_total{severity="critical", resolved="true"}</code> and divide by total pages. Aim for &lt; 10 %. If you’re above 25 %, switch to minimal paging immediately.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

@@ -8,12 +8,11 @@ In late 2026, our small team at **DevBench** was hired to build a real-time reco
 
 We had three weeks to choose between two models:
 
-- **Model A**: A 7B-parameter open-source model served via vLLM on a single NVIDIA H100 GPU.
-- **Model B**: A 1.5B-parameter distilled model fine-tuned on their product catalog, deployed on a cheaper A10G GPU.
+- **Model A**: A 7B-parameter open-source model served via vLLM on a single NVIDIA H100 GPU. - **Model B**: A 1.5B-parameter distilled model fine-tuned on their product catalog, deployed on a cheaper A10G GPU.
 
 The client’s CTO told us: *"We care about three things: latency under load, cost per 1,000 requests, and whether users actually click more."*
 
-At first glance, the 1.5B model looked perfect—it was 4x smaller, cheaper to run, and the fine-tuning had already been done. But when we ran the first A/B test, something went wrong. **We expected latency to be low because the model was smaller, but 95th percentile latency spiked to 180ms on the 1.5B model versus 130ms on the 7B model.** Worse, the conversion uplift was flat—no 15% increase. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout in our vLLM deployment—this post is what I wished I had found then.
+At first glance, the 1.5B model looked perfect—it was 4x smaller, cheaper to run, and the fine-tuning had already been done. But when we ran the first A/B test, something went wrong. **We expected latency to be low because the model was smaller, but 95th percentile latency spiked to 180ms on the 1.5B model versus 130ms on the 7B model.** Worse, the conversion uplift was flat—no 15% increase.
 
 Our goal wasn’t just to ship a model—it was to understand **why** one model won on paper but lost in production.
 
@@ -28,7 +27,7 @@ We used **lm-eval-harness 0.4.2** to compute perplexity and exact match scores o
 
 Then we hit a wall: **throughput on the 1.5B model in vLLM 0.5.3 with CUDA 12.4 was only 145 req/sec on a single A10G**, while the 7B model handled 210 req/sec on an H100. The client’s marketing site peaks at 400 req/sec during flash sales. We had no idea about batching behavior under concurrent load.
 
-I was surprised that a smaller model could have worse throughput—until we dug into vLLM’s scheduler. The 1.5B model’s KV cache was 3x larger per token than expected because the fine-tuning used a longer context window. That meant fewer requests could fit in memory, and swapping killed latency.
+The 1.5B model’s KV cache was 3x larger per token than expected because the fine-tuning used a longer context window. That meant fewer requests could fit in memory, and swapping killed latency.
 
 ### Second try: Load testing with Locust and synthetic data
 
@@ -309,10 +308,7 @@ The hybrid model had the lowest CPI—**53% lower than the baseline** and **32% 
 Most teams fall into the trap of optimizing for FLOPs or perplexity, then wonder why users don’t click more. The real benchmark is **how the model performs in the user’s journey**, not in a notebook.
 
 This means:
-- You must instrument **before** you deploy.
-- You must mirror **real traffic**, not simulate it.
-- You must define a **composite score** that balances speed, cost, and impact.
-- You must be ready to **rollback fast** when the model doesn’t deliver.
+- You must instrument **before** you deploy. - You must mirror **real traffic**, not simulate it. - You must define a **composite score** that balances speed, cost, and impact. - You must be ready to **rollback fast** when the model doesn’t deliver.
 
 The tools exist: vLLM, OpenTelemetry, Argo Rollouts, and Prometheus. What’s missing is the discipline to use them in production, not just in staging.
 
@@ -415,35 +411,28 @@ If your CPI is above 3.0, you’re likely burning money without impact.
 
 Use real traffic mirroring with Envoy sidecars. Mirror 5–10% of production sessions to a shadow endpoint, then compare latency percentiles directly. Don’t trust synthetic load tests—real users have unpredictable behavior, long-tail queries, and ad-hoc context windows. We spent two weeks tuning synthetic tests before switching to real traffic, and our results flipped entirely.
 
-
 **what tools track business impact of ai models?**
 
 You need to log user-facing events: clicks, dwell time, conversions. Use a lightweight service (FastAPI + Postgres) to aggregate outcomes by model version. We used TimescaleDB to roll up daily conversion rates. Without this, you’re optimizing for a proxy metric that may not move the needle.
-
 
 **how to calculate cost per 1000 requests for llm inference?**
 
 Sum GPU cost, network egress, and any auto-scaling overhead. Divide by total requests. Use AWS Cost Explorer API to pull hourly GPU spend, then divide by requests in that hour. We found that Spot instance failures added 15–20% to our effective cost. Include retries and cold starts—those are real dollars burned.
 
-
 **why did our smaller model have higher latency?**
 
 In our case, the 1.5B model used a longer context window (2048 tokens vs 512), which ballooned the KV cache. vLLM’s scheduler struggled to fit enough requests in memory, causing swapping and higher tail latency. We capped context length to 512 tokens and saved 20% GPU memory, dropping P95 latency from 180ms to 110ms.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

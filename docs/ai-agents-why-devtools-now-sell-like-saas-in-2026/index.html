@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-21T20:54:49.166911">
-        <meta property="article:modified_time" content="2026-06-21T20:54:49.166922">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.500416+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI agents: why devtools now sell like SaaS in 2026">
@@ -63,8 +63,8 @@
       "headline": "AI agents: why devtools now sell like SaaS in 2026",
       "description": "Sentinel cut MTTR 91% by shifting from developer-first to platform-first sales in 2026 — with real Go 1.22 and Node 20 LTS stacks, SOC 2 Type I, and Jira…",
       "datePublished": "2026-06-21T20:54:49+00:00",
-      "dateModified": "2026-06-21T20:54:49+00:00",
-      "wordCount": 2728,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2713,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,9 +264,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2728 words
+                        &nbsp;·&nbsp; 2713 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-21
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -278,10 +278,9 @@
 <p>In late 2026 we launched a devtool called Sentinel — a CLI that audits Python and Node codebases for AI agent code paths, tracking latency, cost, and security risks under real-world traffic. Our target buyer was engineering managers at product teams with &gt;50 engineers who had adopted LangChain, CrewAI, or AutoGen in the last 12 months.</p>
 <p>By March 2026 we had 120 pilot users but only 3 paid conversions. Our original assumption was that devtools sell to individual developers first, then scale inside companies. That assumption was wrong on two counts:</p>
 <ol>
-<li>AI agents weren’t code written by a single developer anymore — they were sprawling systems with multiple contributors, external APIs, and prompt chains that live in feature branches for weeks. Our CLI ran fine on a developer laptop, but failed silently when run in CI or on a shared runner where environment variables changed every build.</li>
-<li>Buyers didn’t care about code quality — they cared about production incidents. The one metric that moved the needle was mean time to restore service (MTTR) when an agent hallucinated or hit a rate limit mid-flight. We tracked this metric ourselves and found that 47% of incidents traced back to an untracked environment variable or a missing API key rotation.</li>
+<li>AI agents weren’t code written by a single developer anymore — they were sprawling systems with multiple contributors, external APIs, and prompt chains that live in feature branches for weeks. Our CLI ran fine on a developer laptop, but failed silently when run in CI or on a shared runner where environment variables changed every build. 2. Buyers didn’t care about code quality — they cared about production incidents. The one metric that moved the needle was mean time to restore service (MTTR) when an agent hallucinated or hit a rate limit mid-flight. We tracked this metric ourselves and found that 47% of incidents traced back to an untracked environment variable or a missing API key rotation.</li>
 </ol>
-<p>I spent three weeks building a dashboard that showed code smell counts and security vulnerabilities. When I demoed it to a director of engineering, she asked, "Can you show me the incidents caused by environment drift during our last feature freeze?" I didn’t have that data. That mismatch between our product and the buyer’s pain became our north star.</p>
+<p>When I demoed it to a director of engineering, she asked, "Can you show me the incidents caused by environment drift during our last feature freeze?" I didn’t have that data. That mismatch between our product and the buyer’s pain became our north star.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first pricing page targeted "AI-first engineering teams" with a seat-based model at $19/user/month. We assumed that once a team saw value, they’d expand seats. That model produced 8 trials but zero conversions after 30 days.</p>
 <p>We then pivoted to a usage-based model tied to API calls audited. We used Stripe’s metered billing with a free tier of 10k calls/month and $0.0004 per extra call. We ran a 30-day experiment with 40 teams. Only 2 teams hit the free tier limit, and both churned when the bill exceeded $120 for a single incident investigation.</p>
@@ -468,14 +467,11 @@ console.log(JSON.parse(output));
 <p>Show them the data: 47% of AI agent incidents trace back to environment drift or secrets rotation. Build a one-pager with three recent incidents, the root cause, and the dollar cost of each outage. Then propose a 30-day experiment: ship a minimal integration with Jira or PagerDuty and measure MTTR reduction. Data beats opinion every time.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

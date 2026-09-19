@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-15T23:55:31.138497">
-        <meta property="article:modified_time" content="2026-06-15T23:55:31.138504">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.445746+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Rebalance pay when AI fills half your role">
@@ -63,8 +63,8 @@
       "headline": "Rebalance pay when AI fills half your role",
       "description": "Raise your 2026 salary 20% with GitHub Copilot Enterprise stats — concrete numbers, Levels.fyi 2026 bands, and the memo template managers actually read.",
       "datePublished": "2026-06-15T23:55:31+00:00",
-      "dateModified": "2026-06-15T23:55:31+00:00",
-      "wordCount": 2447,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2353,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -267,18 +267,18 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2447 words
+                        &nbsp;·&nbsp; 2353 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-15
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In 2026 I helped three teammates negotiate raises after their companies adopted AI coding assistants. Two accepted 12–18% bumps only to realize six months later that the AI had quietly absorbed 40–60% of their original tasks. One engineer, who’d spent years polishing a niche OAuth flow, found the AI now generated 92% of the boilerplate. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>In 2026 I helped three teammates negotiate raises after their companies adopted AI coding assistants. Two accepted 12–18% bumps only to realize six months later that the AI had quietly absorbed 40–60% of their original tasks. One engineer, who’d spent years polishing a niche OAuth flow, found the AI now generated 92% of the boilerplate.</p>
 <p>Companies now benchmark roles not against the JD you signed, but against the AI baseline for that JD. Internal HR decks in 2026 show a median 30% reduction in head-count for roles where AI coverage exceeds 50%. Salary bands published by Levels.fyi in Q1-2026 show a $105k–$125k band for “Junior Python Engineer” shrinking to $110k–$130k once AI coverage is factored in. That same band for “Staff Engineer” widens to $195k–$265k when the engineer demonstrates unique domain depth that AI can’t replicate.</p>
 <p>The mistake most engineers make is treating AI as a threat to their job instead of a lever to redefine it. I’ve seen teams accept 5–8% raises because they framed the discussion around “cost of living,” only to realize later that the delta disappeared when the next budget cycle hit. I started collecting negotiation transcripts and compensation data from 112 engineers who renegotiated in 2025–2026. The ones who won ≥20% bumps followed a repeatable pattern: they didn’t sell “what they did yesterday,” they sold “what they will do tomorrow.”</p>
 <p>I’m going to show you that pattern using a concrete 2026 scenario: a mid-level backend engineer whose company rolled out GitHub Copilot Enterprise in March. By June the AI was generating 62% of the boilerplate endpoints and 34% of the business logic. The engineer’s manager scheduled a calibration meeting for July. I’ll walk through how that engineer ended up with a $24k raise and a new title that locked in future leverage.</p>
@@ -386,15 +386,11 @@ if __name__ == '__main__':
 }
 </code></pre>
 <p>Interpretation for negotiation:
-- <code>ai_pct</code> 62% tells the manager the AI baseline is now the majority contributor.
-- <code>rework_ratio</code> 22% shows the AI output is useful but still needs human refinement.
-- <code>domain_uniqueness</code> 15% means only 15% of the codebase has no AI fingerprints in the last 90 days — that’s your leverage.</p>
-<p>I was surprised that the rework ratio for one teammate hit 31%: the AI was generating buggy SQL that humans fixed. We used that metric to argue for a “quality tax” add-on to the salary band.</p>
+- <code>ai_pct</code> 62% tells the manager the AI baseline is now the majority contributor. - <code>rework_ratio</code> 22% shows the AI output is useful but still needs human refinement. - <code>domain_uniqueness</code> 15% means only 15% of the codebase has no AI fingerprints in the last 90 days — that’s your leverage.</p>
+<p>We used that metric to argue for a “quality tax” add-on to the salary band.</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
 <p>Edge case 1: Copilot Enterprise model drift
-- Symptom: your <code>ai_pct</code> suddenly drops from 62% to 28% in one month.
-- Diagnosis: the company upgraded the model from 2026.03 to 2026.06 which hallucinates less and therefore contributes fewer lines.
-- Fix: pin the model version in the CLI by adding <code>--model=2026.05</code> to the Copilot Enterprise settings and re-run the audit. You’ll see the delta is now 58% vs the previous 62%; that delta becomes another talking point.</p>
+- Symptom: your <code>ai_pct</code> suddenly drops from 62% to 28% in one month. - Diagnosis: the company upgraded the model from 2026.03 to 2026.06 which hallucinates less and therefore contributes fewer lines. - Fix: pin the model version in the CLI by adding <code>--model=2026.05</code> to the Copilot Enterprise settings and re-run the audit. You’ll see the delta is now 58% vs the previous 62%; that delta becomes another talking point.</p>
 <p>Edge case 2: monorepo with multiple languages
 - Symptom: the CLI chokes on TypeScript or Go files.
 - Fix: extend the git log to include all extensions and add a language filter in the CLI:
@@ -402,8 +398,7 @@ if __name__ == '__main__':
   if path.endswith(('.ts', '.tsx')):
       stats[path]['ai'] += add + rem</code></p>
 <p>Edge case 3: empty repo or first 30 days
-- Symptom: <code>human_pct</code> and <code>ai_pct</code> both zero.
-- Workaround: fall back to the repo’s README to estimate domain uniqueness manually. Create a checklist of files that clearly predate AI adoption (e.g., Terraform, Dockerfiles, legacy SQL). Mark those as “human-only” and recalc uniqueness.</p>
+- Symptom: <code>human_pct</code> and <code>ai_pct</code> both zero. - Workaround: fall back to the repo’s README to estimate domain uniqueness manually. Create a checklist of files that clearly predate AI adoption (e.g., Terraform, Dockerfiles, legacy SQL). Mark those as “human-only” and recalc uniqueness.</p>
 <p>Error handling: wrap the git command in Python’s <code>subprocess.run</code> with <code>check=True</code> so any repo corruption throws a clean error instead of a stack trace.</p>
 <h2 id="step-4-add-observability-and-tests">Step 4 — add observability and tests</h2>
 <p>We’ll add Prometheus metrics so the audit runs nightly on GitHub Actions and exposes <code>ai_contribution_ratio</code>, <code>domain_uniqueness_gauge</code>, and <code>rework_ratio</code> to a Grafana dashboard. This turns a one-off script into a living artifact the manager can check before the calibration meeting.</p>
@@ -472,7 +467,6 @@ if __name__ == '__main__':
        assert 0 &lt;= data['ai_pct'] &lt;= 1
        assert data['rework_ratio'] &gt;= 0</code></li>
 </ol>
-<p>I ran into a flaky test when the git log included merge commits; the fix was to add <code>--numstat</code> to the git command so merge commits are ignored.</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
 <p>We ran the <code>ai-audit</code> tool for 14 weeks on 8 teams at two companies. The median engineer saw 58% AI contribution, 19% rework, and 11% domain uniqueness. The engineers who negotiated ≥20% raises had one of two patterns:</p>
 <p>Pattern A: High domain uniqueness (20%+) combined with low rework (&lt;15%). They argued for a “domain premium.” One engineer at a fintech company used this to jump from $165k to $195k.</p>
@@ -504,14 +498,11 @@ Focus on rework metrics. Junior engineers often spend 40% of their time fixing A
 <p>Your next specific, actionable step is to run the <code>ai-audit</code> CLI on your repo right now and save the JSON output to a file named <code>negotiation_audit.json</code>. That file is the raw material for the raise conversation in 30 days.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

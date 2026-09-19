@@ -1,6 +1,6 @@
 # Spot instances: the retry logic trap 90% miss
 
-I spent longer than I should have on use spot before understanding what was actually happening. The edge cases only show up once real users hit the system. Here's the fuller picture, with the tradeoffs left in.
+The edge cases only show up once real users hit the system. Here's the fuller picture, with the tradeoffs left in.
 
 ## The gap between what the docs say and what production needs
 
@@ -24,16 +24,11 @@ The retry logic isn’t retry-at-all-costs. It’s a *state machine* that tags e
 
 Key concepts:
 
-- **Retry budget**: maximum number of retries per job, capped at 3 for most agent workloads. Beyond that, the job is escalated to on-demand or human review.
-- **Backoff tiers**: exponential backoff with jitter, but capped at 5 minutes to avoid killing user SLAs for downstream consumers.
-- **Checkpointing**: every 90 seconds, the agent persists progress to S3 with a versioned key (e.g., `s3://agent-checkpoints/job-1234/v3`). If the spot instance dies, the next instance resumes from the latest checkpoint, not the beginning.
-- **Heartbeat**: the agent sends a 15-second heartbeat to a Redis 7.2 cluster. If three consecutive heartbeats are missed, the coordinator assumes the instance is gone and triggers a replacement.
-- **Impact scoring**: each retry increments an *impact score* that weighs (a) downstream load, (b) data freshness, and (c) cost. When impact score > threshold, we escalate to on-demand immediately.
+- **Retry budget**: maximum number of retries per job, capped at 3 for most agent workloads. Beyond that, the job is escalated to on-demand or human review. - **Backoff tiers**: exponential backoff with jitter, but capped at 5 minutes to avoid killing user SLAs for downstream consumers. - **Checkpointing**: every 90 seconds, the agent persists progress to S3 with a versioned key (e.g., `s3://agent-checkpoints/job-1234/v3`). If the spot instance dies, the next instance resumes from the latest checkpoint, not the beginning. - **Heartbeat**: the agent sends a 15-second heartbeat to a Redis 7.2 cluster. If three consecutive heartbeats are missed, the coordinator assumes the instance is gone and triggers a replacement. - **Impact scoring**: each retry increments an *impact score* that weighs (a) downstream load, (b) data freshness, and (c) cost. When impact score > threshold, we escalate to on-demand immediately.
 
 The system uses two queues:
 
-1. **Primary queue**: SQS FIFO with 30-second visibility timeout. Jobs land here when accepted by the coordinator.
-2. **Retry queue**: DLQ with a 5-minute delay and a max receive count of 3. After the third receive, the job is moved to an *escalation queue* that drains to on-demand.
+1. **Primary queue**: SQS FIFO with 30-second visibility timeout. Jobs land here when accepted by the coordinator. 2. **Retry queue**: DLQ with a 5-minute delay and a max receive count of 3. After the third receive, the job is moved to an *escalation queue* that drains to on-demand.
 
 The coordinator is a single Node 20 LTS Lambda function that polls SQS every 2 seconds. It’s stateless by design; all state lives in Redis 7.2:
   - `agent:job:{jobId}` → `{status, retryCount, impactScore, checkpointKey}`
@@ -314,10 +309,7 @@ What surprised us: Redis 7.2’s `CLIENT PAUSE` command let us drain long-runnin
 
 Spot instances are the only cloud compute bargain left in 2026. But they’re not free money. The teams that succeed treat spots like a *time-limited CPU auction* with strict rules:
 
-1. **No poison pills**. If your retry logic can’t distinguish transient from permanent failures, stay on on-demand.
-2. **Checkpoint or bust**. Without checkpoints, you’re gambling on spot interruptions not happening. They will.
-3. **Budget for escalation**. The fallback path (on-demand) must be tested weekly. If it takes 20 minutes to spin up the first on-demand instance, your backlog will back up during a regional spot spike.
-4. **Measure impact, not just cost**. Retry storms can double your bill if your impact scoring is too aggressive. Watch your retry rate per job type weekly.
+1. **No poison pills**. If your retry logic can’t distinguish transient from permanent failures, stay on on-demand. 2. **Checkpoint or bust**. Without checkpoints, you’re gambling on spot interruptions not happening. They will. 3. **Budget for escalation**. The fallback path (on-demand) must be tested weekly. If it takes 20 minutes to spin up the first on-demand instance, your backlog will back up during a regional spot spike. 4. **Measure impact, not just cost**. Retry storms can double your bill if your impact scoring is too aggressive. Watch your retry rate per job type weekly.
 
 The biggest anti-pattern I’ve seen is teams that set the bid ceiling too close to on-demand price and then forget to tune it. Spot prices are noisy; your ceiling should be a conservative estimate, not a bet.
 
@@ -341,7 +333,6 @@ If you’re a small team with one engineer running agent workloads, start with o
 ## What to do next
 
 Open your agent queue configuration file and check the `visibility_timeout` setting. If it’s greater than 60 seconds for any workload, reduce it to 30 seconds and redeploy. Measure retry rates for the next 24 hours. If they rise above 15%, open the backoff tier table and halve the delay for that job type. Do it now—before the next spot spike hits.
-
 
 ---
 

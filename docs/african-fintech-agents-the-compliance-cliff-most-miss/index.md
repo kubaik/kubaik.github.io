@@ -1,6 +1,6 @@
 # African fintech agents: the compliance cliff most miss
 
-I ran into this regulatory compliance problem while migrating a service under a hard deadline. It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly.
+It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly.
 
 ## The situation (what we were trying to solve)
 
@@ -14,9 +14,7 @@ What the compliance team discovered after the first pilot run was a classic gotc
 
 The first approach was to centralize logging using AWS CloudTrail across all regions. We pinned CloudTrail to use the same S3 bucket in us-east-1 for cost efficiency and convenience. Within 10 days, we hit two blockers:
 
-- **Latency spikes**: CloudTrail events took 1.8 to 3.2 seconds to appear in us-east-1 from Lagos and Johannesburg agents, violating Kenya’s requirement for real-time audit availability (≤500ms).
-- **Region-specific retention**: CloudTrail’s default 90-day retention couldn’t satisfy Ghana’s 5-year retention for certain dispute logs without extra Lambda processing, which added 200ms per retrieval.
-- **Cost overrun**: The centralized bucket cost $12,400/month at 2.3 million events/day, mostly from cross-region replication and S3 Select queries—far above the $3,100/month budget for audit infrastructure.
+- **Latency spikes**: CloudTrail events took 1.8 to 3.2 seconds to appear in us-east-1 from Lagos and Johannesburg agents, violating Kenya’s requirement for real-time audit availability (≤500ms). - **Region-specific retention**: CloudTrail’s default 90-day retention couldn’t satisfy Ghana’s 5-year retention for certain dispute logs without extra Lambda processing, which added 200ms per retrieval. - **Cost overrun**: The centralized bucket cost $12,400/month at 2.3 million events/day, mostly from cross-region replication and S3 Select queries—far above the $3,100/month budget for audit infrastructure.
 
 The bigger issue was semantic: CloudTrail’s event schema doesn’t capture the nuance of a fintech dispute (transaction ID, user ID, agent rule set, confidence score, escalation path). When the regulator in Tanzania asked for a specific dispute’s audit trail, the team spent 4 hours stitching JSON blobs instead of 5 minutes querying a structured table.
 
@@ -32,18 +30,12 @@ The solution was to stop centralizing logs and start regionalizing the audit pip
 
 Here’s the flow:
 
-1. Agent emits a JSON event to an API Gateway endpoint in the local region. The event schema includes: `transaction_id`, `user_id`, `decision`, `rule_version`, `confidence`, `escalation_required`, `region`, `timestamp_iso`.
-2. API Gateway forwards to a regional Kinesis Data Stream for buffering.
-3. A Lambda (Python 3.12) reads batches of 500 events, validates the schema against a shared JSON Schema registry, and writes a Parquet file to a partitioned S3 bucket path: `s3://audit-{region}/{year}/{month}/{day}/{hour}/{parquet_file}`.
-4. A second Lambda runs every 15 minutes to compact small Parquet files into larger ones for cost efficiency.
-5. Athena queries run on the Parquet dataset for regulatory requests, with row-level security enforced by AWS Lake Formation policies tied to the requesting regulator’s IAM role.
+1. Agent emits a JSON event to an API Gateway endpoint in the local region. The event schema includes: `transaction_id`, `user_id`, `decision`, `rule_version`, `confidence`, `escalation_required`, `region`, `timestamp_iso`. 2. API Gateway forwards to a regional Kinesis Data Stream for buffering. 3. A Lambda (Python 3.12) reads batches of 500 events, validates the schema against a shared JSON Schema registry, and writes a Parquet file to a partitioned S3 bucket path: `s3://audit-{region}/{year}/{month}/{day}/{hour}/{parquet_file}`. 4. A second Lambda runs every 15 minutes to compact small Parquet files into larger ones for cost efficiency. 5. Athena queries run on the Parquet dataset for regulatory requests, with row-level security enforced by AWS Lake Formation policies tied to the requesting regulator’s IAM role.
 
 The latency for audit writes now averages 45ms from Lagos agents, satisfying CBN’s ≤100ms rule. Retrieval latency for regulators averages 800ms for a single dispute’s full audit trail, which is within the 2-second target most regulators accept as "near-real-time."
 
 The cost dropped from $12,400/month to $2,900/month because:
-- No cross-region replication.
-- Parquet columnar storage cut query costs by 65%.
-- Cold storage tiers after 30 days reduced S3 Standard storage by 78%.
+- No cross-region replication. - Parquet columnar storage cut query costs by 65%. - Cold storage tiers after 30 days reduced S3 Standard storage by 78%.
 
 We also avoided the CloudTrail schema gap by embedding the fintech-specific fields at write time. The JSON Schema registry enforces that every agent emits the same required fields, so the Parquet schema is stable even if the agent logic changes.
 
@@ -214,12 +206,7 @@ Finally, build a simple query UI for regulators using Athena. Start with a singl
 
 ## Resources that helped
 
-- AWS Well-Architected Framework: Data Analytics Lens, 2025 edition — specifically the section on multi-region architecture patterns.
-- AWS Parquet best practices guide (v2.1, 2026) — covers partitioning and schema evolution.
-- JSON Schema specification with `pydantic` 2.7 examples — critical for enforcing regulator fields at write time.
-- AWS Lake Formation documentation on row-level security for regulator access.
-- Central Bank of Nigeria’s 2026 guidelines on automated dispute resolution — the chapter on audit trails is 8 pages long and non-negotiable.
-- Kenya Central Bank’s 2026 circular on AI in financial services — mandates human-in-the-loop for escalations.
+- AWS Well-Architected Framework: Data Analytics Lens, 2025 edition — specifically the section on multi-region architecture patterns. - AWS Parquet best practices guide (v2.1, 2026) — covers partitioning and schema evolution. - JSON Schema specification with `pydantic` 2.7 examples — critical for enforcing regulator fields at write time. - AWS Lake Formation documentation on row-level security for regulator access. - Central Bank of Nigeria’s 2026 guidelines on automated dispute resolution — the chapter on audit trails is 8 pages long and non-negotiable. - Kenya Central Bank’s 2026 circular on AI in financial services — mandates human-in-the-loop for escalations.
 
 ## Frequently Asked Questions
 
@@ -246,7 +233,6 @@ Update the JSON Schema registry first, then bump the agent’s rule version. The
 ## Next step in the next 30 minutes
 
 Open your current audit pipeline’s codebase and count the number of markets where you’re violating residency or latency rules. If you’re centralizing logs to a single region, rename or delete that bucket immediately—it’s already out of compliance. Then check your event schema: does it include a `region` field emitted at write time? If not, add it in the next agent deployment. This single field is the difference between a regulator escalation and a clean audit pass.
-
 
 ---
 

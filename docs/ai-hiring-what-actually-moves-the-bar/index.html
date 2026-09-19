@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-28T19:56:57.049944">
-        <meta property="article:modified_time" content="2026-06-28T19:56:57.049952">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.600722+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI hiring: what actually moves the bar">
@@ -63,8 +63,8 @@
       "headline": "AI hiring: what actually moves the bar",
       "description": "Cut first-round review time 65% with AI resume ranking and live coding scoring — pgvector, pytest 7.4, and sentences-transformers 2.3.1 bring hidden…",
       "datePublished": "2026-06-28T19:56:57+00:00",
-      "dateModified": "2026-06-28T19:56:57+00:00",
-      "wordCount": 2865,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2838,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,9 +264,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2865 words
+                        &nbsp;·&nbsp; 2838 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-28
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -276,7 +276,7 @@
                 <p>The official documentation for changed hiring is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>In 2026, the average Kenyan fintech startup receives 400 engineering résumés for every backend role. Yet, after months of tweaking our ATS (we were on Greenhouse 2.13 with AI Resume Scoring enabled) we still saw first-round rejection rates hover at 68%. The docs promised that AI would surface the top 20% of candidates automatically. Reality? We were still manually reviewing 136 résumés per role just to keep the same signal-to-noise ratio.</p>
-<p>I spent three weeks tuning the resume parser weights on Named Entity Recognition for local universities (JKUAT, UoN, Strathmore) and NLP models fine-tuned on Swahili tech blogs. The model hit 89% precision on paper, but when we A/B tested it against our old keyword filter, the human reviewers still discarded 72% of the AI-suggested candidates because their GitHub repos were empty or contained only university assignments.</p>
+<p>The model hit 89% precision on paper, but when we A/B tested it against our old keyword filter, the human reviewers still discarded 72% of the AI-suggested candidates because their GitHub repos were empty or contained only university assignments.</p>
 <p>What surprised me was how brittle the model became when we added a single new source: bootcamp portfolios from Moringa School and Andela. The F1 score dropped from 0.89 to 0.71 overnight. The issue wasn’t the model per se; it was that the training data was tiny—only 8,000 labeled examples—and the bootcamp repos had a different distribution of commit sizes and README quality. Production needs signals that generalize across 15 different Kenyan engineering schools and 3 bootcamp providers, not just the ones that dominate US or European datasets.</p>
 <p>The lesson: AI in hiring is only as good as the distribution of your training data. If your training set is 90% Silicon-Valley-style portfolios with 1,000+ commits and a polished README, your model will silently penalize candidates who learned on the job or who trained in non-traditional programs. We ended up adding a manual override flag for bootcamp candidates and re-balanced the training set to 50% Kenyan examples. That brought the false-negative rate down from 22% to 9%.</p>
 <h2 id="how-ai-changed-what-hiring-managers-are-looking-for-in-engineering-interviews-actually-works-under-the-hood">How AI changed what hiring managers are looking for in engineering interviews actually works under the hood</h2>
@@ -307,9 +307,7 @@
 <h3 id="step-1-resume-parsing-with-structured-extraction">Step 1: Resume parsing with structured extraction</h3>
 <p>We replaced the simple keyword filter with a two-stage pipeline:</p>
 <ol>
-<li><strong>Document splitter</strong>: chunk the PDF/HTML résumé into sections (education, experience, projects) using Apache Tika 2.9.1.</li>
-<li><strong>Semantic encoder</strong>: embed each chunk with sentence-transformers/all-MiniLM-L6-v2 (sentence-transformers 2.3.1) and store in pgvector.</li>
-<li><strong>Query engine</strong>: when a new résumé arrives, compute its embedding, then retrieve the top 20 closest job descriptions from our historical hires (we stored 3,200 job descriptions as embeddings).</li>
+<li><strong>Document splitter</strong>: chunk the PDF/HTML résumé into sections (education, experience, projects) using Apache Tika 2.9.1. 2. <strong>Semantic encoder</strong>: embed each chunk with sentence-transformers/all-MiniLM-L6-v2 (sentence-transformers 2.3.1) and store in pgvector. 3. <strong>Query engine</strong>: when a new résumé arrives, compute its embedding, then retrieve the top 20 closest job descriptions from our historical hires (we stored 3,200 job descriptions as embeddings).</li>
 </ol>
 <p>Here’s the ingestion code:</p>
 <pre><code class="language-python">from sentence_transformers import SentenceTransformer
@@ -532,10 +530,7 @@ Scalability target: ≥ 2,000 TPS
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
 <p>AI-powered hiring is not a silver bullet. Skip it if:</p>
 <ul>
-<li>Your engineering stack is homogeneous (e.g., all monoliths in PHP with no observability) — the AI grader will have no meaningful benchmarks to compare against.</li>
-<li>You hire fewer than 10 engineers per year — the setup and tuning cost outweighs the benefit.</li>
-<li>Your job descriptions are vague or constantly changing — the model needs stable, well-documented targets.</li>
-<li>You don’t have the budget for 15–20 golden solutions to seed the system design grader — the model will hallucinate scores.</li>
+<li>Your engineering stack is homogeneous (e.g., all monoliths in PHP with no observability) — the AI grader will have no meaningful benchmarks to compare against. - You hire fewer than 10 engineers per year — the setup and tuning cost outweighs the benefit. - Your job descriptions are vague or constantly changing — the model needs stable, well-documented targets. - You don’t have the budget for 15–20 golden solutions to seed the system design grader — the model will hallucinate scores.</li>
 </ul>
 <p>We tried it on a mobile team hiring for Flutter roles, and the system design grader kept penalizing candidates who used Firebase instead of our preferred DynamoDB. The model was trained on backend-heavy golden solutions, so it assumed every system needed Redis and Prometheus. We had to manually override 60% of the scores until we curated Flutter-specific golden solutions.</p>
 <h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
@@ -573,14 +568,11 @@ Scalability target: ≥ 2,000 TPS
 <p>Stop if your golden solutions are fewer than 15 or if your job descriptions change frequently. The model needs stable, well-documented targets to score against. Also, if you hire fewer than 10 engineers per year, the setup and tuning cost outweighs the benefit.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

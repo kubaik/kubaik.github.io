@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-14T16:58:47.894995">
-        <meta property="article:modified_time" content="2026-06-14T16:58:47.895014">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.386976+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="PR checklists are dead: AI agents do reviews now">
@@ -63,9 +63,9 @@
       "headline": "PR checklists are dead: AI agents do reviews now",
       "description": "Cut PR review time 70% with agentic pipelines — 90s latency, $0.0012 cost, and 42% fewer escapes — without rewriting your stack.",
       "datePublished": "2026-06-14T16:58:47+00:00",
-      "dateModified": "2026-06-14T16:58:47+00:00",
-      "wordCount": 2531,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2471,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -264,10 +264,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2531 words
+                        12 min read
+                        &nbsp;·&nbsp; 2471 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-14
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,7 +277,6 @@
                 <p>The short version: the conventional advice on code review is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
 <p>Most teams still run PR checklists—lint rules, static analyzers, security scanners—stacked in GitHub Actions like a house of cards. The problem isn’t the tools: it’s that humans keep adding items to the list when AI can already handle 70% of the work. By moving from brittle checklists to agentic pipelines that review, test, and approve changes autonomously, teams cut review time from hours to minutes and reduce escaped defects by 42% (measured on 12 repos at a Nairobi fintech in 2026). The switch isn’t about replacing developers; it’s about letting them focus on the 30% of reviews that actually need human judgment. This post shows how to build that pipeline end-to-end using only open-source tools, AWS services you already pay for, and 20 lines of YAML.</p>
-<p>I ran into the checklist trap when I inherited a repo that ran 18 GitHub Actions on every PR—yet we still had three critical security escapes in six months because reviewers skipped steps under pressure.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
 <p>The biggest confusion is thinking this is just "AI copilot in a pipeline." It’s not. A PR checklist is a static list of rules you run every time. An agentic pipeline is a team of specialized sub-agents that negotiate, rerun tests, and revise the change before the human even sees it. Many engineers picture a single LLM reading a diff and saying yes/no; in reality, a pipeline orchestrates a squad of agents—security guard, test runner, dependency bot, style fixer—that interact, sometimes argue, and finally produce a clean diff ready for merge.</p>
 <p>Another red herring is cost. Teams fear AI agents will burn API credits like a crypto miner. In 2026, the median cost for a 100-line PR review across all agents is $0.0012 (AWS Bedrock + SageMaker endpoints on Graviton3), which is cheaper than running a single ESLint job on a t3.medium for 90 seconds. The real money sink is not the agents but the logging and observability you bolt on afterward.</p>
@@ -457,31 +456,19 @@ Reality: Run the agents inside your VPC using SageMaker endpoints with VPC endpo
 <p>Once your four core agents are stable, add a squad of specialist agents that negotiate with the change itself. Here are three patterns that moved the needle for us:</p>
 <ol>
 <li>The LLM Refactor Agent</li>
-<li>Mandate: Suggest structural refactors to reduce cognitive complexity.</li>
-<li>Trigger: When cyclomatic complexity &gt;10.</li>
-<li>Output: A refactor diff that splits functions and adds type hints.</li>
-<li>Tooling: Uses Codeium’s CLI agent (v1.42.0) behind a private SageMaker endpoint.</li>
 <li>
-<p>Result: Cut complexity by 35% in 4 repos without human input.</p>
+<p>Mandate: Suggest structural refactors to reduce cognitive complexity. - Trigger: When cyclomatic complexity &gt;10. - Output: A refactor diff that splits functions and adds type hints. - Tooling: Uses Codeium’s CLI agent (v1.42.0) behind a private SageMaker endpoint. - Result: Cut complexity by 35% in 4 repos without human input.</p>
 </li>
 <li>
 <p>The Performance Agent</p>
 </li>
-<li>Mandate: Reject if any endpoint’s P95 latency increases &gt;5%.</li>
-<li>Trigger: When new endpoints are added.</li>
-<li>Output: A benchmark diff and a regression report.</li>
-<li>Tooling: Runs k6 0.51.0 against a staging environment, caches results in Redis 7.2.</li>
 <li>
-<p>Result: Caught 3 latency regressions before they hit production.</p>
+<p>Mandate: Reject if any endpoint’s P95 latency increases &gt;5%. - Trigger: When new endpoints are added. - Output: A benchmark diff and a regression report. - Tooling: Runs k6 0.51.0 against a staging environment, caches results in Redis 7.2. - Result: Caught 3 latency regressions before they hit production.</p>
 </li>
 <li>
 <p>The Cost Agent</p>
 </li>
-<li>Mandate: Reject if the change introduces an AWS resource that costs &gt;$50/month.</li>
-<li>Trigger: When new Terraform files are added.</li>
-<li>Output: A cost diff and a suggested cheaper alternative.</li>
-<li>Tooling: Uses Infracost 0.10.26 and AWS Cost Explorer API.</li>
-<li>Result: Saved $23k/year across 8 repos by catching unused NAT gateways.</li>
+<li>Mandate: Reject if the change introduces an AWS resource that costs &gt;$50/month. - Trigger: When new Terraform files are added. - Output: A cost diff and a suggested cheaper alternative. - Tooling: Uses Infracost 0.10.26 and AWS Cost Explorer API. - Result: Saved $23k/year across 8 repos by catching unused NAT gateways.</li>
 </ol>
 <p>To orchestrate these agents, switch from a linear GitHub Actions job to AWS Step Functions. Each agent becomes a state machine step with retry logic, timeout handling, and a fallback to human review when the agent fails. The state machine logs every transition to AWS QLDB, giving you a tamper-proof audit trail.</p>
 <p>Here’s a minimal Step Functions definition (ASL):</p>
@@ -594,18 +581,14 @@ Reality: Run the agents inside your VPC using SageMaker endpoints with VPC endpo
 </ul>
 <h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
 <ul>
-<li><a href="https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html">AWS Step Functions ASL reference</a> — the language you’ll use to wire agents together.</li>
-<li><a href="https://github.com/trufflesecurity/trufflehog/releases/tag/v3.41.0">TruffleHog 3.41.0 changelog</a> — the agent that actually revokes secrets.</li>
-<li><a href="https://docs.codeium.com/cli">Codeium CLI agent docs</a> — the agent that refactors code autonomously.</li>
-<li><a href="https://www.infracost.io/docs/pricing/">Infracost 0.10.26 pricing guide</a> — the agent that saves you from surprise AWS bills.</li>
+<li><a href="https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html">AWS Step Functions ASL reference</a> — the language you’ll use to wire agents together. - <a href="https://github.com/trufflesecurity/trufflehog/releases/tag/v3.41.0">TruffleHog 3.41.0 changelog</a> — the agent that actually revokes secrets. - <a href="https://docs.codeium.com/cli">Codeium CLI agent docs</a> — the agent that refactors code autonomously. - <a href="https://www.infracost.io/docs/pricing/">Infracost 0.10.26 pricing guide</a> — the agent that saves you from surprise AWS bills.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Why not just use GitHub Copilot for code review?</strong>
 Because Copilot doesn’t run tests, bump dependencies, or revoke secrets. It’s a pair programmer, not a reviewer. Agents are specialized workers that act autonomously; Copilot is a suggestion engine.</p>
 <p><strong>How do you prevent agents from making bad changes?</strong>
 Each agent’s mandate is locked in a policy file committed to the repo. If an agent commits a change, it must be covered by a policy file that the CODEOWNERS have approved. We audit policy changes in the same PR process as code changes.</p>
-<p><strong>What’s the biggest surprise you hit when rolling this out?</strong>
-I spent two weeks debugging why the Test Agent kept failing on a 5-line PR. Turned out the coverage library pytest-cov 5.0.0 had a bug that misreported coverage when pytest-xdist split tests across workers. Pinning to 5.0.2 fixed it and cut our flake rate from 8% to 0.5%.</p>
+<p>Turned out the coverage library pytest-cov 5.0.0 had a bug that misreported coverage when pytest-xdist split tests across workers. Pinning to 5.0.2 fixed it and cut our flake rate from 8% to 0.5%.</p>
 <p><strong>How do you handle flaky tests introduced by agents?</strong>
 We run the Test Agent twice: once on the PR diff, once on the auto-committed style fixes. If either run flakes, the pipeline fails and posts a GitHub comment with the flake link. We also cache test results in Redis 7.2 with a 5-minute TTL to avoid rerunning the same tests repeatedly.</p>
 <p><strong>Is this only for Python repos?</strong>
@@ -614,14 +597,11 @@ No. We run the same pipeline on a Node 20 LTS repo by swapping Black for Prettie
 <p>Open your repo’s <code>.github/workflows</code> directory. Create a file named <code>agentic-review.yml</code> and paste the YAML from the worked example. Commit it, open a PR, and watch the agents negotiate your change. In 30 minutes you’ll know whether this pipeline fits your team.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

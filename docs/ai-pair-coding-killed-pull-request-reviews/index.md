@@ -6,11 +6,10 @@ Most pair programming guides assume a clean environment and a patient timeline. 
 
 In Q1 2026, our team at CloudNgage—a 28-person company building a multi-tenant SaaS for cloud cost governance—hit a wall we hadn’t seen coming. Pull request (PR) reviews were stalling and morale was slipping. We had 8 senior engineers, 4 mid-level, and 16 junior engineers distributed across Lagos, Manila, Montreal, and London. We shipped a new feature every 2 weeks, but the review queue behind each PR grew faster than we could assign reviewers. By February, the average PR sat unmerged for 7.2 days, with 3.4 review rounds per PR. Worse, reviewers were rejecting changes not for correctness, but because they didn’t understand the domain logic—especially in cost allocation algorithms where a misplaced decimal could cost a customer thousands per month.
 
-I ran into this when I approved a PR that changed how we rounded AWS Reserved Instance discounts. The reviewer who caught it later told me the AI-generated comment had changed from “this looks good” to “explain the rounding logic” after the third round. The AI pair programmer we’d rolled out to help junior devs had started to *own* the review conversation, not just assist it.
+The reviewer who caught it later told me the AI-generated comment had changed from “this looks good” to “explain the rounding logic” after the third round. The AI pair programmer we’d rolled out to help junior devs had started to *own* the review conversation, not just assist it.
 
 We had two goals:
-1. Cut review time by 50% without sacrificing quality.
-2. Clarify ownership: who’s responsible for the code—AI, reviewer, or author?
+1. Cut review time by 50% without sacrificing quality. 2. Clarify ownership: who’s responsible for the code—AI, reviewer, or author?
 
 We were optimizing for velocity and ownership clarity, not just correctness.
 
@@ -52,7 +51,7 @@ The AI’s role is now confined to *pre-review checks*: it scans for linting, de
 
 For anything involving domain logic—like how we allocate shared costs across teams—we force a human reviewer. We added a custom label `needs-domain-review` that triggers when the PR touches files like `cost_allocator.py` or `pricing_engine.js`. The AI can still leave *suggestions*, but they’re prefixed with `[AI suggestion]` and don’t block the PR.
 
-I was surprised that the biggest win wasn’t technical—it was social. By making ownership explicit (bot-assigned reviewer + clear AI scope), reviewers started treating PRs like real work again. Junior devs stopped feeling like they were playing a game of AI ping-pong and began owning their changes end-to-end.
+By making ownership explicit (bot-assigned reviewer + clear AI scope), reviewers started treating PRs like real work again. Junior devs stopped feeling like they were playing a game of AI ping-pong and began owning their changes end-to-end.
 
 ## Implementation details
 
@@ -135,9 +134,7 @@ We learned that AI is best used as a *force multiplier*, not a *gatekeeper*. Use
 
 Start by auditing your current PR review process. Run a two-week experiment where you:
 
-1. **Freeze AI comments** except for mechanical checks (linting, dependency scanning, obvious bugs).
-2. **Assign reviewers manually** for one week, then switch to a weighted rotation (like our `rotation-weight`, `impact-weight` model).
-3. **Measure** average merge time, review rounds, and reviewer sentiment (use a simple 1–5 poll).
+1. **Freeze AI comments** except for mechanical checks (linting, dependency scanning, obvious bugs). 2. **Assign reviewers manually** for one week, then switch to a weighted rotation (like our `rotation-weight`, `impact-weight` model). 3. **Measure** average merge time, review rounds, and reviewer sentiment (use a simple 1–5 poll).
 
 Here’s a quick script to get started. Save this as `audit-prs.sh` and run it against your repo’s PR history for the last 30 days:
 
@@ -162,10 +159,7 @@ After two weeks, compare the numbers. If your average merge time is still above 
 
 ## Resources that helped
 
-- [GitHub’s docs on code review best practices (2026 edition)](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-pull-requests/best-practices-for-pull-requests) — especially the section on reviewer rotation.
-- [Redis 7.2 performance tuning guide for rate limiting](https://redis.io/docs/management/optimization/benchmarks/) — we used this to tune our Redis cache for reviewer assignments.
-- [Jest 29.7.0 mocking guide for cost calculations](https://jestjs.io/docs/mock-functions) — our unit tests for cost logic now run in 800ms instead of 2.4s.
-- [ESLint v9.9.2 rule customization docs](https://eslint.org/docs/latest/use/configure/rules) — we wrote 12 custom rules to catch hardcoded AWS regions.
+- [GitHub’s docs on code review best practices (2026 edition)](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-pull-requests/best-practices-for-pull-requests) — especially the section on reviewer rotation. - [Redis 7.2 performance tuning guide for rate limiting](https://redis.io/docs/management/optimization/benchmarks/) — we used this to tune our Redis cache for reviewer assignments. - [Jest 29.7.0 mocking guide for cost calculations](https://jestjs.io/docs/mock-functions) — our unit tests for cost logic now run in 800ms instead of 2.4s. - [ESLint v9.9.2 rule customization docs](https://eslint.org/docs/latest/use/configure/rules) — we wrote 12 custom rules to catch hardcoded AWS regions.
 
 ## Frequently Asked Questions
 
@@ -189,25 +183,20 @@ We added a weekly Slack poll: “How confident do you feel about the PRs you rev
 
 Open your team’s PR queue right now. Pick the oldest open PR and check two things:
 
-1. Is there a human reviewer assigned?
-2. Are there more than 3 AI comments on it?
+1. Is there a human reviewer assigned? 2. Are there more than 3 AI comments on it?
 
 If the answer to either is yes, disable AI comments for that PR and manually assign a reviewer. Do this for 5 PRs in the next 30 minutes. That’s your first step toward reclaiming code ownership.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

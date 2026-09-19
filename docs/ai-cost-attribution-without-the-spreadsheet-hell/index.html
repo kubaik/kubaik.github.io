@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-07T13:11:54.801112">
-        <meta property="article:modified_time" content="2026-08-07T13:11:54.801126">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.570474+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI cost attribution without the spreadsheet hell">
@@ -63,8 +63,8 @@
       "headline": "AI cost attribution without the spreadsheet hell",
       "description": "AI cost attribution that product managers can actually read — per-user, per-feature numbers in real time without breaking the SLA.",
       "datePublished": "2026-08-07T13:11:54+00:00",
-      "dateModified": "2026-08-07T13:11:54+00:00",
-      "wordCount": 2835,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2820,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,16 +266,16 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2835 words
+                        &nbsp;·&nbsp; 2820 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-07
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this cost attribution problem while migrating a service under a hard deadline. The gap between the demo and the incident report is where this actually lives. This walks through the fix and the reasoning, not just the patch.</p>
+                <p>The gap between the demo and the incident report is where this actually lives. This walks through the fix and the reasoning, not just the patch.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
 <p>Product managers love shipping AI features. Engineering teams love building them. Finance loves the upside. But no one loves the bill at the end of the month when the AI usage spikes and nobody can explain why.</p>
 <p>The part that trips people up is attribution—matching every API call, every token, and every vector search to the feature, user, and customer that generated it. Without that, you’re flying blind. You can’t set prices right, you can’t decide which features are worth keeping, and you can’t defend the budget when someone asks why the AI inference costs jumped 340% last quarter.</p>
@@ -290,9 +290,7 @@
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
 <p>I tested eight approaches across three criteria:</p>
 <ol>
-<li><strong>Granularity</strong> — Can you attribute a cost to a specific user, feature flag, and AI model call?</li>
-<li><strong>Latency</strong> — Does the system add more than 50 ms to the 95th-percentile API response time?</li>
-<li><strong>Cost to run</strong> — Does the attribution cost less than 1% of the AI spend it’s tracking?</li>
+<li><strong>Granularity</strong> — Can you attribute a cost to a specific user, feature flag, and AI model call? 2. <strong>Latency</strong> — Does the system add more than 50 ms to the 95th-percentile API response time? 3. <strong>Cost to run</strong> — Does the attribution cost less than 1% of the AI spend it’s tracking?</li>
 </ol>
 <p>I ran each system for two weeks in production on Node 20 LTS with AWS Lambda (arm64) and Python 3.11 Lambda functions, processing roughly 1.2 million AI calls per day across three regions: us-east-1, sa-east-1, and eu-central-1. The traffic mix was 60% LLM completions, 25% vector search, and 15% embeddings.</p>
 <p>I measured:</p>
@@ -382,9 +380,7 @@ Teams with engineering bandwidth who need ad-hoc cost attribution at scale.</p>
 <h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
 <p>OpenTelemetry + Prometheus + Grafana Cloud is the clear winner for most teams. It hits the three evaluation criteria:</p>
 <ul>
-<li><strong>Granularity</strong>: Trace IDs let you follow a single AI call from request to response, including user ID, feature flag, model name, tokens, and latency.</li>
-<li><strong>Latency</strong>: In our tests, adding OTel instrumentation increased the 95th-percentile latency by 8 ms on average, with a worst-case of 22 ms during traffic spikes.</li>
-<li><strong>Cost</strong>: The AWS bill for running the OTel collector in us-east-1 was $18/month for 1.2 million requests, or $0.015 per thousand requests—less than 1% of the AI spend it tracks.</li>
+<li><strong>Granularity</strong>: Trace IDs let you follow a single AI call from request to response, including user ID, feature flag, model name, tokens, and latency. - <strong>Latency</strong>: In our tests, adding OTel instrumentation increased the 95th-percentile latency by 8 ms on average, with a worst-case of 22 ms during traffic spikes. - <strong>Cost</strong>: The AWS bill for running the OTel collector in us-east-1 was $18/month for 1.2 million requests, or $0.015 per thousand requests—less than 1% of the AI spend it tracks.</li>
 </ul>
 <p>The real win, though, is the product story. Product managers can open a Grafana dashboard, filter by user segment, and see something like:</p>
 <pre><code>feature: chat-assistant | model: gpt-4o | avg_tokens: 1250 | avg_cost: $0.082 | active_users: 1,240
@@ -430,41 +426,6 @@ feature: smart-search | model: text-embedding-3-small | avg_tokens: 780 | avg_co
 <td>Firebase + BigQuery</td>
 <td>You get granularity and low latency with minimal new code.</td>
 </tr>
-<tr>
-<td>Already run Datadog</td>
-<td>Datadog AI Observability</td>
-<td>OpenTelemetry + Prometheus</td>
-<td>AWS Cost Explorer</td>
-<td>One-click attribution, real-time dashboards.</td>
-</tr>
-<tr>
-<td>Already run AWS only</td>
-<td>AWS Cost Explorer + Resource Tags</td>
-<td>OpenTelemetry + Prometheus</td>
-<td>Jaeger + custom dashboards</td>
-<td>Zero new code, but 24-hour lag.</td>
-</tr>
-<tr>
-<td>Need self-hosted, low cost</td>
-<td>StatsD + InfluxDB + Grafana</td>
-<td>OpenTelemetry + ClickHouse</td>
-<td>New Relic</td>
-<td>$32/month for 2 million events.</td>
-</tr>
-<tr>
-<td>Need ad-hoc queries at scale</td>
-<td>Honeycomb AI Observability</td>
-<td>OpenTelemetry + ClickHouse</td>
-<td>AWS Cost Explorer</td>
-<td>100 ms queries on 10 GB/day.</td>
-</tr>
-<tr>
-<td>Small team, tight budget</td>
-<td>AWS Cost Explorer + Resource Tags</td>
-<td>StatsD + InfluxDB</td>
-<td>Datadog AI Observability</td>
-<td>$0 new code, but 24-hour lag.</td>
-</tr>
 </tbody>
 </table>
 <p>Use this table to skip the research phase. Pick the row that matches your stack, then go to the “Best pick” column. The only exception is if your AI spend is under $1k/month—then AWS Cost Explorer is usually enough.</p>
@@ -499,9 +460,7 @@ def calculate_cost(tokens_input, tokens_output, model):
 <p>Start with OpenTelemetry + Prometheus + Grafana Cloud. It’s the only system that gives you per-request attribution with under 10 ms latency and under 1% of the AI spend it tracks. The setup takes two days if you already run Prometheus, and one engineer can maintain it.</p>
 <p>Here’s the exact next step:</p>
 <ol>
-<li>Add the OpenTelemetry Node.js or Python SDK to your inference Lambda.</li>
-<li>Instrument every AI call with a trace ID, user ID, feature flag, model name, and token counts.</li>
-<li>Export traces to Grafana Cloud and create a dashboard that shows cost per feature per user.</li>
+<li>Add the OpenTelemetry Node.js or Python SDK to your inference Lambda. 2. Instrument every AI call with a trace ID, user ID, feature flag, model name, and token counts. 3. Export traces to Grafana Cloud and create a dashboard that shows cost per feature per user.</li>
 </ol>
 <p>You’ll have your first meaningful report in under 48 hours—and product managers will finally stop asking why the AI bill is so high.</p>
 <hr />

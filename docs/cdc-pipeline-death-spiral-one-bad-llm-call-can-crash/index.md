@@ -1,6 +1,6 @@
 # CDC pipeline death spiral: one bad LLM call can crash…
 
-I spent longer than I should have on building change before understanding what was actually happening. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in.
+Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in.
 
 ## Advanced edge cases you personally encountered
 
@@ -150,10 +150,7 @@ async def safe_summarize(text: str) -> str:
 ```
 
 Key details:
-- `max_num_batched_tokens=8192` limits the burst size to 8,192 tokens. This prevents one huge prompt from blocking the GPU.
-- `enforce_eager=True` forces vLLM to stream responses incrementally, avoiding buffering.
-- The `Semaphore(4)` limits concurrency to 4 parallel LLM calls.
-- Metrics track LLM call duration and output token count.
+- `max_num_batched_tokens=8192` limits the burst size to 8,192 tokens. This prevents one huge prompt from blocking the GPU. - `enforce_eager=True` forces vLLM to stream responses incrementally, avoiding buffering. - The `Semaphore(4)` limits concurrency to 4 parallel LLM calls. - Metrics track LLM call duration and output token count.
 
 We run this on an `inf2.4xlarge` instance in us-east-1 (4x AWS Inferentia2 chips). The cost is ~$1.20/hour, but the backpressure guarantees prevent CDC pipeline stalls.
 
@@ -191,10 +188,7 @@ value.converter: "org.apache.kafka.connect.json.JsonConverter"
 ```
 
 Key details:
-- `max.batch.size=1000` prevents one huge LLM response from stalling the sink.
-- `fetch.max.bytes=50MB` ensures no single poll exceeds 50MB.
-- `poll.interval.ms=100` ensures frequent polling even under load.
-- We run 4 tasks to parallelize processing.
+- `max.batch.size=1000` prevents one huge LLM response from stalling the sink. - `fetch.max.bytes=50MB` ensures no single poll exceeds 50MB. - `poll.interval.ms=100` ensures frequent polling even under load. - We run 4 tasks to parallelize processing.
 
 We deploy this on Kubernetes (EKS 1.28) using the Debezium Operator. The connector runs in a `debezium-connect:2.6.0` container with 2GB memory and 1 vCPU.
 
@@ -253,11 +247,7 @@ async def process_llm_response(data: dict):
 ```
 
 Key details:
-- The Lambda function is configured with 1.8GB memory (1 vCPU) and 30s timeout.
-- `Semaphore(4)` limits concurrency to 4 parallel LLM calls.
-- We use the `openai>=1.30.0` async client to avoid blocking the event loop.
-- Metrics are pushed to Prometheus Pushgateway for observability.
-- The function is triggered by MSK via a Lambda destination.
+- The Lambda function is configured with 1.8GB memory (1 vCPU) and 30s timeout. - `Semaphore(4)` limits concurrency to 4 parallel LLM calls. - We use the `openai>=1.30.0` async client to avoid blocking the event loop. - Metrics are pushed to Prometheus Pushgateway for observability. - The function is triggered by MSK via a Lambda destination.
 
 We deploy this using Terraform:
 
@@ -316,11 +306,7 @@ Let’s compare our CDC pipeline before and after adding backpressure mechanisms
 | **Lines of code changed** | 0 | No backpressure mechanisms |
 
 **What broke:**
-1. The LLM client buffered a 1.2MB response, blocking the Node.js event loop.
-2. The CDC service (Node.js) had no concurrency limit, so 100 concurrent LLM calls saturated the event loop.
-3. Debezium’s default `max.batch.size=20048` caused the sink to block on a huge batch.
-4. Postgres replication slot stalled because the CDC service stopped consuming.
-5. Kafka consumer lag spiked because the sink thread was blocked.
+1. The LLM client buffered a 1.2MB response, blocking the Node.js event loop. 2. The CDC service (Node.js) had no concurrency limit, so 100 concurrent LLM calls saturated the event loop. 3. Debezium’s default `max.batch.size=20048` caused the sink to block on a huge batch. 4. Postgres replication slot stalled because the CDC service stopped consuming. 5. Kafka consumer lag spiked because the sink thread was blocked.
 
 **Root cause:** No backpressure at any layer. The LLM burst propagated through the pipeline like a shockwave.
 
@@ -341,11 +327,7 @@ Let’s compare our CDC pipeline before and after adding backpressure mechanisms
 | **Lines of code changed** | 15 | Minimal change | Added semaphore + config tweaks |
 
 **What fixed it:**
-1. **vLLM:** Added `max_num_batched_tokens=8192` and `enforce_eager=True` to limit burst size and stream responses.
-2. **LLM client:** Added `Semaphore(4)` to limit concurrency and `max_tokens=2048` to cap response size.
-3. **Debezium:** Reduced `max.batch.size=1000` and `fetch.max.bytes=50MB` to prevent sink stalls.
-4. **Postgres:** Increased EBS GP3 burst IOPS to 5,000 to handle WAL spikes.
-5. **Lambda:** Increased reserved concurrency to 2,000 and bumped memory to 1.8GB.
+1. **vLLM:** Added `max_num_batched_tokens=8192` and `enforce_eager=True` to limit burst size and stream responses. 2. **LLM client:** Added `Semaphore(4)` to limit concurrency and `max_tokens=2048` to cap response size. 3. **Debezium:** Reduced `max.batch.size=1000` and `fetch.max.bytes=50MB` to prevent sink stalls. 4. **Postgres:** Increased EBS GP3 burst IOPS to 5,000 to handle WAL spikes. 5. **Lambda:** Increased reserved concurrency to 2,000 and bumped memory to 1.8GB.
 
 **Cost breakdown:**
 | Component | Before | After | Savings |
@@ -364,17 +346,10 @@ Let’s compare our CDC pipeline before and after adding backpressure mechanisms
 | Kafka sink lag | 5s | 50ms | 99% |
 
 **Observability improvements:**
-- Added `llm_call_duration_seconds` histogram to track LLM call duration.
-- Added `cdc_lag_seconds` histogram to track replication lag.
-- Added `kafka_consumer_lag` metric to monitor sink health.
-- Added `DebeziumSnapshotRunning` metric to catch snapshot stalls.
+- Added `llm_call_duration_seconds` histogram to track LLM call duration. - Added `cdc_lag_seconds` histogram to track replication lag. - Added `kafka_consumer_lag` metric to monitor sink health. - Added `DebeziumSnapshotRunning` metric to catch snapshot stalls.
 
 **Lines of code changed:**
-- **vLLM client:** 5 lines (added `max_num_batched_tokens` and `enforce_eager`).
-- **LLM client:** 3 lines (added `Semaphore` and `max_tokens`).
-- **Debezium config:** 2 lines (added `max.batch.size` and `fetch.max.bytes`).
-- **Lambda config:** 5 lines (added reserved concurrency and batch size).
-- **Total:** 15 lines of code changed.
+- **vLLM client:** 5 lines (added `max_num_batched_tokens` and `enforce_eager`). - **LLM client:** 3 lines (added `Semaphore` and `max_tokens`). - **Debezium config:** 2 lines (added `max.batch.size` and `fetch.max.bytes`). - **Lambda config:** 5 lines (added reserved concurrency and batch size). - **Total:** 15 lines of code changed.
 
 **Deployment timeline:**
 | Step | Time | Notes |
@@ -387,13 +362,9 @@ Let’s compare our CDC pipeline before and after adding backpressure mechanisms
 | **Total** | **40 min** | **Production fix deployed** |
 
 **Lessons learned:**
-1. **Backpressure must be applied at every layer.** One unconstrained component can break the entire pipeline.
-2. **Metrics are critical.** Without `llm_call_duration_seconds` and `cdc_lag_seconds`, we wouldn’t have caught the problem early.
-3. **Cost savings follow reliability.** By fixing the pipeline, we reduced cloud costs by 31%.
-4. **Minimal code changes can have maximal impact.** We fixed the problem with just 15 lines of code.
+1. **Backpressure must be applied at every layer.** One unconstrained component can break the entire pipeline. 2. **Metrics are critical.** Without `llm_call_duration_seconds` and `cdc_lag_seconds`, we wouldn’t have caught the problem early. 3. **Cost savings follow reliability.** By fixing the pipeline, we reduced cloud costs by 31%. 4. **Minimal code changes can have maximal impact.** We fixed the problem with just 15 lines of code.
 
 **Final thought:** In 2026, LLM pipelines are the new "noisy neighbor." Without backpressure, they’ll break your entire infrastructure. The fix isn’t in Postgres—it’s in the tools you use to call the LLM.
-
 
 ---
 

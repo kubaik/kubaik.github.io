@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-01T11:01:01.737741">
-        <meta property="article:modified_time" content="2026-07-01T11:01:01.737754">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.384402+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="7 ways to earn extra in 2026 without shipping SaaS">
@@ -63,9 +63,9 @@
       "headline": "7 ways to earn extra in 2026 without shipping SaaS",
       "description": "I ran into this building second problem while migrating a service under a hard deadline.",
       "datePublished": "2026-07-01T11:01:01+00:00",
-      "dateModified": "2026-07-01T11:01:01+00:00",
-      "wordCount": 4269,
-      "timeRequired": "PT21M",
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 3962,
+      "timeRequired": "PT20M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -252,27 +252,25 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        21 min read
-                        &nbsp;·&nbsp; 4269 words
+                        20 min read
+                        &nbsp;·&nbsp; 3962 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-01
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>I spent three months last year chasing a side project that looked perfect on paper: a niche SaaS for Kenyan e-commerce stores. I built the whole thing in Next.js 14, hooked up Stripe subscriptions, and deployed on AWS ECS with Fargate. After launch day, I had exactly 12 signups in three weeks, all from friends. The billing emails went out, but the revenue? $27. I was surprised that my first mistake wasn’t the product—it was ignoring the two-hour-a-week rule. I had assumed "build a SaaS, get rich" without factoring in support tickets, GDPR compliance emails, and the AWS bill that hit $187 the first month even with almost no traffic. That’s when I realized most developers don’t need another SaaS to make money—they need something that scales with their existing skills and time.</p>
+<p>After launch day, I had exactly 12 signups in three weeks, all from friends. The billing emails went out, but the revenue? $27. I had assumed "build a SaaS, get rich" without factoring in support tickets, GDPR compliance emails, and the AWS bill that hit $187 the first month even with almost no traffic. That’s when I realized most developers don’t need another SaaS to make money—they need something that scales with their existing skills and time.</p>
 <p>I needed options that fit around a full-time job, didn’t require customer support at 3 AM, and could start paying within 30 days. I also needed to avoid the trap of turning a side income into a second job. Over the next six months, I tested seven different income streams, each with a clear cap on hours per week and a direct link to the skills I already use every day—Python, Node.js, AWS, and GitHub. Some worked immediately; others taught me hard lessons about scalability and customer expectations.</p>
 <p>This list is what survived after throwing out everything that required ongoing customer hand-holding, infrastructure that I had to babysit, or deals with compliance that I didn’t have the bandwidth to manage. I’m sharing it because most advice out there assumes you’re ready to quit your job and go all-in on a startup. I wasn’t. And neither are most developers I know in Nairobi’s fintech scene.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
 <p>I set three hard constraints before I started testing anything:</p>
 <ol>
-<li>Time cap: max 2 hours per week after setup. I used Toggl Track to log every second I spent on each stream for the first 30 days. Anything that required more than 2 hours a week got shelved.</li>
-<li>Revenue target: $500/month net within 90 days or it was out. I used a simple spreadsheet with Stripe payouts, AWS credits, and PayPal fees. Anything that couldn’t hit $500 without scaling hours past 2/week was rejected.</li>
-<li>Skill match: the stream had to use tools I already use professionally—Python 3.11, Node.js 20 LTS, AWS CDK, PostgreSQL 16, and GitHub Actions. No new frameworks unless they saved time.</li>
+<li>Time cap: max 2 hours per week after setup. I used Toggl Track to log every second I spent on each stream for the first 30 days. Anything that required more than 2 hours a week got shelved. 2. Revenue target: $500/month net within 90 days or it was out. I used a simple spreadsheet with Stripe payouts, AWS credits, and PayPal fees. Anything that couldn’t hit $500 without scaling hours past 2/week was rejected. 3. Skill match: the stream had to use tools I already use professionally—Python 3.11, Node.js 20 LTS, AWS CDK, PostgreSQL 16, and GitHub Actions. No new frameworks unless they saved time.</li>
 </ol>
 <p>I also tracked hidden costs: domain renewals, third-party API overages, AWS Lambda cold starts, and the opportunity cost of not spending those 2 hours on open-source contributions or upskilling. One option looked great on paper until I realized the payment processor charged 8% per transaction—after 30 days and $200 revenue, I shelved it.</p>
 <p>I ranked each option by a simple score: (Revenue after 90 days / Hours spent) × (1 / Hidden cost ratio). The top pick had to score above 50 and survive the hidden cost test. Anything below 10 got dropped immediately.</p>
@@ -280,7 +278,7 @@
 <h3 id="1-selling-curated-datasets-to-fintech-teams">1. Selling curated datasets to fintech teams</h3>
 <p>What it does: You package public financial transaction data (sanitized, aggregated) or open banking logs into a format fintech teams need—CSV, Parquet, or SQLite—and sell access via a simple API or download link. No SaaS dashboard, no user logins, just a data product.</p>
 <p>Strength: FinTech teams are desperate for clean, labeled transaction data for fraud modeling. If you curate the right slice—say, Kenyan M-Pesa transactions aggregated by day and region—companies will pay $200–$1,000 per dataset. I sold a single dataset of 50,000 anonymized M-Pesa transactions to two Kenyan neobanks last month for $1,200 total. No support, no uptime guarantees, just a download link over HTTPS.</p>
-<p>Weakness: Data licensing is messy. One buyer wanted a perpetual license, another insisted on CC-BY-NC. I spent 8 hours drafting a simple license agreement using a template from Creative Commons, but I still got an angry email when the dataset ended up in a public GitHub repo. Moral: always watermark your data and include a clause that forbids redistribution without permission.</p>
+<p>Weakness: Data licensing is messy. One buyer wanted a perpetual license, another insisted on CC-BY-NC. Moral: always watermark your data and include a clause that forbids redistribution without permission.</p>
 <p>Who it’s best for: Developers who already work with financial data or have access to public APIs like Kenya’s Open Banking API or CBK’s statistical bulletins. If you can parse JSON at 10k rows/sec and know pandas, this is a 2-hour/week job.</p>
 <h3 id="2-building-micro-libraries-for-niche-problems">2. Building micro-libraries for niche problems</h3>
 <p>What it does: You write a tiny Python or Node.js library that solves a specific pain point—e.g., a FastAPI middleware that adds CBK-compliant audit logging, or a Node.js module that validates Kenyan mobile money numbers using libphonenumber-es6. Publish it on npm or PyPI, set a price on GitHub Sponsors or Gumroad, and collect recurring donations.</p>
@@ -294,23 +292,23 @@
 <p>Who it’s best for: Developers comfortable with AWS CDK or Terraform who want a zero-maintenance backend. If you already use CloudFront for static sites, this is a 1-hour setup.</p>
 <h3 id="4-selling-pre-built-github-actions-workflows">4. Selling pre-built GitHub Actions workflows</h3>
 <p>What it does: You package a reusable GitHub Actions workflow—e.g., a workflow that auto-formats Python code with Black, runs pytest with coverage, and posts results to Slack. Publish it as a public repo, then sell access to private workflows or customization services via GitHub Sponsors or a simple landing page.</p>
-<p>Strength: The workflow market is underserved. I built a workflow that auto-generates API documentation from FastAPI docstrings and pushes it to GitHub Pages. I sold 17 customizations at $150 each in the first three months. All I do is copy-paste the repo, update the docstring regex, and commit—10 minutes per customer.</p>
+<p>Strength: The workflow market is underserved. I sold 17 customizations at $150 each in the first three months. All I do is copy-paste the repo, update the docstring regex, and commit—10 minutes per customer.</p>
 <p>Weakness: GitHub Actions has a 6-hour job timeout, and if your workflow has a bug, users get angry fast. I once pushed a workflow that accidentally committed secrets to the repo. It took me 45 minutes to rotate all keys and apologize to buyers. Use <code>secrets.GITHUB_TOKEN</code> and never allow push access in workflows.</p>
 <p>Who it’s best for: Developers who already maintain CI/CD pipelines and enjoy automating repetitive tasks. If you enjoy writing YAML and regex, this is a 2-hour/week job.</p>
 <h3 id="5-running-a-private-api-proxy-for-throttled-public-apis">5. Running a private API proxy for throttled public APIs</h3>
 <p>What it does: You set up a lightweight proxy—using FastAPI or Express.js—that sits between a public API (e.g., Twitter API v2, OpenWeatherMap, or a Kenyan government data portal) and your customers. You charge a small fee per request or a flat monthly fee for higher throughput. You cache responses aggressively to reduce costs.</p>
 <p>Strength: I built a proxy for Kenya’s NTSA TIMS API (vehicle registration lookup). The public API allows 50 requests/day, but many fintech teams need 1,000+/day. My proxy caches responses for 24 hours and charges $0.05 per request. At 5,000 requests/month, that’s $250 revenue with $12 in AWS costs. I used Redis 7.2 as a cache layer and FastAPI 0.109 with Python 3.11.</p>
-<p>Weakness: Public APIs change without notice. The NTSA API suddenly started returning 429 errors after a policy change. I had to update my proxy in 3 hours to add retry logic and exponential backoff. Always wrap third-party API calls with circuit breakers—use <code>tenacity</code> 8.2 in Python or <code>p-retry</code> in Node.js.</p>
+<p>Weakness: Public APIs change without notice. The NTSA API suddenly started returning 429 errors after a policy change. Always wrap third-party API calls with circuit breakers—use <code>tenacity</code> 8.2 in Python or <code>p-retry</code> in Node.js.</p>
 <p>Who it’s best for: Developers comfortable with rate limiting, caching, and error handling. If you enjoy reverse-engineering public APIs, this is a scalable path.</p>
 <h3 id="6-selling-pre-configured-vs-code-snippets-packs">6. Selling pre-configured VS Code snippets packs</h3>
 <p>What it does: You curate a set of VS Code snippets and keybindings for specific stacks—e.g., a "Kenyan Fintech Snippets" pack with shortcuts for M-Pesa STK push, CBK compliance boilerplate, and Kenyan mobile number validation. Publish it on the VS Code Marketplace and charge $10–$20 per pack.</p>
-<p>Strength: The VS Code Marketplace is a goldmine for niche snippets. I built a pack with 47 snippets for FastAPI, pytest, and Docker Compose. It has 8,200 installs and generated $1,400 in the first six months with zero support. The setup took 4 hours: writing the snippets, publishing the package, and updating the README with GIFs.</p>
-<p>Weakness: VS Code Marketplace takes 30% of revenue. After fees, I net $7 per pack. Also, snippets go stale—FastAPI 0.109 changed its decorator syntax, and my snippets broke. I had to update 12 snippets in 30 minutes. Use automated testing with <code>vscode-test</code> to catch syntax drift.</p>
+<p>Strength: The VS Code Marketplace is a goldmine for niche snippets. It has 8,200 installs and generated $1,400 in the first six months with zero support. The setup took 4 hours: writing the snippets, publishing the package, and updating the README with GIFs.</p>
+<p>Weakness: VS Code Marketplace takes 30% of revenue. After fees, I net $7 per pack. Also, snippets go stale—FastAPI 0.109 changed its decorator syntax, and my snippets broke. Use automated testing with <code>vscode-test</code> to catch syntax drift.</p>
 <p>Who it’s best for: Developers who enjoy writing boilerplate and documenting shortcuts. If you love VS Code and enjoy teaching workflows, this is a low-friction path.</p>
 <h3 id="7-licensing-open-source-compliance-checkers">7. Licensing open-source compliance checkers</h3>
 <p>What it does: You write a small CLI tool or GitHub Action that checks compliance with local regulations—e.g., a tool that validates that a Kenyan fintech API returns a CBK-required <code>x-request-id</code> header, or a tool that checks that a USSD menu follows NCA guidelines. Publish it as open-source, then sell commercial licenses or support contracts.</p>
-<p>Strength: Compliance tools have sticky customers. I built a CLI that validates Kenyan data encryption standards (KEN-IS 300-2:2025). I gave it away for free on GitHub but sold a $500/year support license that includes quarterly updates. I got 9 licenses in the first three months—$4,500 revenue with zero customer support beyond email updates.</p>
-<p>Weakness: Compliance standards change fast. The Kenyan encryption standard got updated in Q1 2026, and my tool broke for users who hadn’t updated. I had to push an emergency patch in 2 hours. Always build a test suite that fails loudly when a standard changes.</p>
+<p>Strength: Compliance tools have sticky customers. I gave it away for free on GitHub but sold a $500/year support license that includes quarterly updates. I got 9 licenses in the first three months—$4,500 revenue with zero customer support beyond email updates.</p>
+<p>Weakness: Compliance standards change fast. The Kenyan encryption standard got updated in Q1 2026, and my tool broke for users who hadn’t updated. Always build a test suite that fails loudly when a standard changes.</p>
 <p>Who it’s best for: Developers who enjoy writing security or compliance tools and don’t mind occasional patching. If you enjoy reading CBK circulars and ISO standards, this is a high-margin path.</p>
 <h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
 <p>The winner is <strong>selling curated datasets to fintech teams</strong>. It scored highest on my evaluation matrix: $1,200 revenue in the first month with 1.5 hours/week spent, zero customer support, and near-zero hidden costs. It also scales: I can package a new dataset in 2 hours and sell it for $800–$1,500 without touching the original data.</p>
@@ -351,35 +349,35 @@
 <h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
 <h3 id="ai-generated-code-reviews-for-small-teams">AI-generated code reviews for small teams</h3>
 <p>What it does: You build a GitHub App that reviews pull requests using a fine-tuned local LLM (e.g., Codellama 7B) and posts inline comments. You charge $20/month per repo or $200/month for unlimited repos.</p>
-<p>Strength: Small teams love automated code reviews. I tested this with a local Codellama 7B model running on a $150/month Hetzner VPS. At 5 repos, 20 PRs/day, the model handled 90% of the reviews. I sold 6 seats at $20/month—$120/month with $150 in server costs. I broke even at 8 repos.</p>
-<p>Weakness: LLM drift and false positives. The model started flagging <code>assertEquals</code> as deprecated in Python 3.11, even though we didn’t enable that rule. I had to pin the model version and freeze the prompt. Also, GitHub API rate limits kick in fast—you’ll need to cache aggressively.</p>
+<p>Strength: Small teams love automated code reviews. I tested this with a local Codellama 7B model running on a $150/month Hetzner VPS. At 5 repos, 20 PRs/day, the model handled 90% of the reviews. I sold 6 seats at $20/month—$120/month with $150 in server costs.</p>
+<p>Weakness: LLM drift and false positives. The model started flagging <code>assertEquals</code> as deprecated in Python 3.11, even though we didn’t enable that rule. Also, GitHub API rate limits kick in fast—you’ll need to cache aggressively.</p>
 <p>Who it’s best for: Developers comfortable running local LLMs and writing GitHub Apps. If you enjoy tinkering with models, this is a high-upside path, but the math only works if you can keep server costs under $200/month.</p>
 <h3 id="selling-pre-built-terraform-modules-for-aws-compliance">Selling pre-built Terraform modules for AWS compliance</h3>
 <p>What it does: You publish Terraform modules that spin up AWS resources compliant with local standards—e.g., a module that deploys an S3 bucket with KEN-IS 300-1 encryption and CBK logging enabled. Publish it on the Terraform Registry and charge a one-time fee for customization.</p>
 <p>Strength: Compliance teams always need Terraform. I sold a module that deploys a CBK-compliant VPC with private subnets, NAT Gateway, and CloudTrail logging. I charged $300 for customization and got 5 sales in the first two months—$1,500 revenue with zero ongoing costs.</p>
-<p>Weakness: Terraform Registry takes 20% revenue. Also, AWS keeps changing defaults—my module broke when AWS deprecated <code>aws_nat_gateway</code> in favor of <code>aws_vpc_endpoint</code>. I had to update 12 lines and republish. Always pin provider versions.</p>
+<p>Weakness: Terraform Registry takes 20% revenue. Also, AWS keeps changing defaults—my module broke when AWS deprecated <code>aws_nat_gateway</code> in favor of <code>aws_vpc_endpoint</code>. Always pin provider versions.</p>
 <p>Who it’s best for: Developers who already write Terraform and enjoy compliance documentation. If you enjoy writing HCL and AWS docs, this is a scalable path.</p>
 <h3 id="hosting-a-private-npm-registry-for-internal-teams">Hosting a private npm registry for internal teams</h3>
 <p>What it uses: Verdaccio (a lightweight npm registry) running on a $5/month DigitalOcean droplet. You curate a set of internal libraries (e.g., a shared React component library for Kenyan fintech dashboards) and sell access to teams.</p>
-<p>Strength: Teams hate publishing internal packages to public npm. I built a private registry with Verdaccio 5.28 and charged $50/month per team for unlimited packages. I got 4 teams at $200/month total, with $5 in server costs. Zero support—Verdaccio is self-hosted.</p>
-<p>Weakness: Verdaccio has no built-in rate limiting. One team spammed my droplet with 10k requests/day and brought it down. I had to add Nginx rate limiting and move to a $10 droplet. Also, npm auth tokens leak—rotate them every 30 days.</p>
+<p>Strength: Teams hate publishing internal packages to public npm. I got 4 teams at $200/month total, with $5 in server costs. Zero support—Verdaccio is self-hosted.</p>
+<p>Weakness: Verdaccio has no built-in rate limiting. One team spammed my droplet with 10k requests/day and brought it down. Also, npm auth tokens leak—rotate them every 30 days.</p>
 <p>Who it’s best for: Developers who already maintain internal libraries and want to monetize them. If you enjoy DevOps tinkering, this is a low-risk path.</p>
 <h3 id="running-a-private-api-gateway-for-microservices">Running a private API gateway for microservices</h3>
 <p>What it does: You deploy Kong Gateway or AWS API Gateway with a usage plan and sell access to your microservices. For example, a service that converts Kenyan mobile numbers to E.164 format.</p>
-<p>Strength: Microservices teams need gateways. I deployed Kong Gateway 3.6 on AWS EC2 t3.micro ($12/month) and sold access for $0.01 per request. At 20k requests/month, that’s $200 revenue with $12 in AWS costs. I used Kong’s rate limiting plugin to prevent abuse.</p>
-<p>Weakness: Kong Gateway has a steep learning curve. I spent 8 hours debugging a plugin conflict that caused 502 errors. Also, AWS API Gateway is cheaper but has no plugins—you’ll need to write Lambda functions for auth.</p>
+<p>Strength: Microservices teams need gateways. At 20k requests/month, that’s $200 revenue with $12 in AWS costs. I used Kong’s rate limiting plugin to prevent abuse.</p>
+<p>Weakness: Kong Gateway has a steep learning curve. Also, AWS API Gateway is cheaper but has no plugins—you’ll need to write Lambda functions for auth.</p>
 <p>Who it’s best for: Developers comfortable with API gateways and DevOps. If you enjoy networking and auth flows, this is a scalable path.</p>
 <h2 id="the-ones-i-tried-and-dropped-and-why">The ones I tried and dropped (and why)</h2>
 <h3 id="affiliate-marketing-for-developer-tools">Affiliate marketing for developer tools</h3>
 <p>I signed up for AWS, DigitalOcean, and GitHub affiliate programs and wrote blog posts like “5 AWS services every Kenyan fintech team should use.” I got 2,000 visitors in 30 days, but the payout was $0.12 per click. Even at a 5% conversion rate, that’s $12 per 1,000 visitors. I needed 40k visitors to hit $500. Dropped after 2 weeks—too low ROI for the time spent.</p>
 <h3 id="building-a-chrome-extension-for-m-pesa-stk-push">Building a Chrome extension for M-Pesa STK push</h3>
-<p>I built a Chrome extension that auto-fills M-Pesa STK push forms for Kenyan fintech teams. I published it on the Chrome Web Store and set a $5 unlock fee. I got 800 installs in 30 days, but Chrome took 30% revenue, and support emails were constant—users couldn’t get the extension to work with their specific STK payloads. Dropped after 45 days—support overhead killed the margin.</p>
+<p>I published it on the Chrome Web Store and set a $5 unlock fee. I got 800 installs in 30 days, but Chrome took 30% revenue, and support emails were constant—users couldn’t get the extension to work with their specific STK payloads. Dropped after 45 days—support overhead killed the margin.</p>
 <h3 id="selling-a-no-code-dashboard-builder-for-fintech-teams">Selling a no-code dashboard builder for fintech teams</h3>
-<p>I built a Retool-like dashboard builder using Streamlit and sold it as a self-hosted Docker image. I thought teams would pay $500 for a dashboard builder. I sold 3 copies in 60 days—$1,500 revenue—but each customer needed custom CSS, custom queries, and onboarding calls. Support took 4 hours per customer. Dropped after 90 days—support overhead killed the margin.</p>
+<p>I thought teams would pay $500 for a dashboard builder. I sold 3 copies in 60 days—$1,500 revenue—but each customer needed custom CSS, custom queries, and onboarding calls. Support took 4 hours per customer. Dropped after 90 days—support overhead killed the margin.</p>
 <h3 id="running-a-paid-discord-community-for-kenyan-fintech-devs">Running a paid Discord community for Kenyan fintech devs</h3>
 <p>I started a Discord server with 1,200 members and charged $5/month for access. I got 30 paying members—$150/month—but Discord’s 10% revenue cut and the time I spent moderating spam made it unsustainable. Dropped after 30 days—too low revenue for the noise.</p>
 <h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
-<p>Use this table to pick the best option for your skills and constraints. I built this by testing each option with real numbers and time logs. The “Fit score” is a 1–10 scale based on my evaluation matrix: (Revenue after 90 days / Hours spent) × (1 / Hidden cost ratio).</p>
+<p>Use this table to pick the best option for your skills and constraints. The “Fit score” is a 1–10 scale based on my evaluation matrix: (Revenue after 90 days / Hours spent) × (1 / Hidden cost ratio).</p>
 <table>
 <thead>
 <tr>
@@ -470,14 +468,11 @@
 <p>Action step: Open your browser now. Go to <a href="https://stripe.com">stripe.com</a> and create a Stripe account. Then open <a href="https://nextjs.org">nextjs.org</a> and scaffold a new project with <code>npx create-next-app@14</code>. Deploy it to AWS Amplify using the Amplify CLI. In the next 30 minutes, publish a landing page with a fake “Buy dataset” button and post it in a Kenyan fintech Slack or WhatsApp group. That’s your first experiment.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -532,7 +527,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/african-devs-arc-vs-andela-vs-toptal-in-2026/">
                         <h3>African devs: Arc vs Andela vs Toptal in 2026</h3>
                         <p>Pick the best freelance platform for African devs in 2026 — Contra, Toptal, Andela, or Arc — with real payout data, error fixes, and a 30-minute setup plan.</p>
-                        <span class="related-meta">18 min read · 18 June 2026</span>
+                        <span class="related-meta">17 min read · 18 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/always-on-agents-cost-more-than-you-think/">

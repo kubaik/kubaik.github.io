@@ -8,7 +8,7 @@ In mid-2026 our 14-person team at Nairobi-based fintech startup Kwaba had just c
 
 We tried the usual: mandatory pair-programming rotations, strict lint rules, and even paid external reviewers. Reviews still piled up and morale dipped. Then our CTO—yes, the same one who once declared "TypeScript will save us"—slacked a link to GitHub Copilot Workspace (v1.12.4) and said, "Try this." Within two weeks 60 % of our open PRs had been created by the AI, not humans.
 
-I spent three days debugging a connection-pool timeout that turned out to be a single misconfigured idle-time value. What shocked me wasn’t the bug; it was how many reviewers approved the AI-generated diff without running it. Ownership had quietly shifted from humans to machines.
+What shocked me wasn’t the bug; it was how many reviewers approved the AI-generated diff without running it. Ownership had quietly shifted from humans to machines.
 
 ## What we tried first and why it didn’t work
 
@@ -24,14 +24,10 @@ We learned the hard way that AI doesn’t understand ownership semantics. It opt
 
 We stopped treating AI as a co-pilot and started treating it as a junior engineer with a 24-hour attention span and zero institutional memory. We created an explicit ownership contract:
 
-- **Human owns the invariant:** every business rule, every regulatory requirement, every customer promise must be encoded in a human-readable test.
-- **AI owns the scaffold:** boilerplate, scaffolding, and low-risk refactors can be AI-generated, but the diff must include a generated test stub.
-- **Review owns the delta:** every AI-generated diff is reviewed against the human’s invariant test suite, not against the original prompt.
+- **Human owns the invariant:** every business rule, every regulatory requirement, every customer promise must be encoded in a human-readable test. - **AI owns the scaffold:** boilerplate, scaffolding, and low-risk refactors can be AI-generated, but the diff must include a generated test stub. - **Review owns the delta:** every AI-generated diff is reviewed against the human’s invariant test suite, not against the original prompt.
 
 Concretely, we enforced three rules:
-1. Every AI-generated PR must include a human-written invariant test that fails on the old behavior and passes on the new behavior. We used pytest 7.4 for Python and Jest 29.7 for TypeScript.
-2. A human must manually trigger the invariant test suite before the diff can be merged. We integrated a GitHub Action called `invariant-guard` that runs in 780 ms on average.
-3. The AI is forbidden from modifying invariant tests. If it suggests a change, the PR is auto-rejected with a comment: "Invariant tests are human-owned; refactor the production code instead."
+1. Every AI-generated PR must include a human-written invariant test that fails on the old behavior and passes on the new behavior. We used pytest 7.4 for Python and Jest 29.7 for TypeScript. 2. A human must manually trigger the invariant test suite before the diff can be merged. We integrated a GitHub Action called `invariant-guard` that runs in 780 ms on average. 3. The AI is forbidden from modifying invariant tests. If it suggests a change, the PR is auto-rejected with a comment: "Invariant tests are human-owned; refactor the production code instead."
 
 We started with 12 invariant rules (Kenya tax rounding, Nigerian BVN regex, idempotency key length, etc.). Within four weeks we had 47 invariant rules covering 87 % of our attack surface. Review time dropped from 8.3 days to 1.9 days, and the number of escaped bugs halved.
 
@@ -140,28 +136,20 @@ Human review load shifted from syntactic correctness to semantic correctness. Ju
 
 ## What we'd do differently
 
-1. **Start smaller.** We tried to encode every business rule at once. Next time we’ll begin with the top 10 rules that account for 80 % of escaped bugs.
-2. **Avoid token bloat.** Q v0.9.7 produced verbose test stubs—sometimes 50 lines for a 3-line invariant. We switched to Anthropic’s shorter prompt templates and saved 30 % on token costs.
-3. **Human-in-the-loop for invariants.** Early on we let Q generate invariant tests. Half of them were wrong. Now humans write the invariant test first, then Q scaffolds the production code.
-4. **Cost tracking from day one.** We didn’t log token usage until month two. By December we had $1.4k in AI costs we couldn’t explain. Now we tag every PR with a `cost:ai_tokens` label and sum it weekly.
+1. **Start smaller.** We tried to encode every business rule at once. Next time we’ll begin with the top 10 rules that account for 80 % of escaped bugs. 2. **Avoid token bloat.** Q v0.9.7 produced verbose test stubs—sometimes 50 lines for a 3-line invariant. We switched to Anthropic’s shorter prompt templates and saved 30 % on token costs. 3. **Human-in-the-loop for invariants.** Early on we let Q generate invariant tests. Half of them were wrong. Now humans write the invariant test first, then Q scaffolds the production code. 4. **Cost tracking from day one.** We didn’t log token usage until month two. By December we had $1.4k in AI costs we couldn’t explain. Now we tag every PR with a `cost:ai_tokens` label and sum it weekly.
 
 ## The broader lesson
 
 AI pair programming doesn’t eliminate review responsibility—it reallocates it. The invariant becomes the new source of truth, not the diff. Humans stop reviewing code and start reviewing invariants. The shift is subtle but profound: ownership moves from the author of the diff to the author of the invariant.
 
 In practice this means:
-- The fastest way to scale AI pair programming is to invest in high-quality, machine-verifiable invariants.
-- The cheapest way to break AI pair programming is to let it touch invariant tests.
-- The most expensive mistake is assuming AI understands your domain. It doesn’t; it only understands the prompts you give it.
+- The fastest way to scale AI pair programming is to invest in high-quality, machine-verifiable invariants. - The cheapest way to break AI pair programming is to let it touch invariant tests. - The most expensive mistake is assuming AI understands your domain. It doesn’t; it only understands the prompts you give it.
 
 The lesson generalizes beyond AI: every automation tool eventually becomes the new bottleneck if you don’t encode the invariants it cannot see.
 
 ## How to apply this to your situation
 
-1. **Inventory your invariants.** Pick the five invariants that have caused the most production incidents in the last quarter. Write each as a pure function with a failing test.
-2. **Block AI from touching tests.** Add a `.gitattributes` entry to mark invariant files as `linguist-generated=false` so GitHub flags them as AI-generated and reviewers know they’re human-owned.
-3. **Instrument token cost.** Add a one-line script that logs every AI prompt and its token count to a daily CSV. Review it weekly for surprises.
-4. **Train the team on one invariant per day.** Use a 15-minute mob session. The goal isn’t to write perfect code; it’s to internalize that invariants are the new contract.
+1. **Inventory your invariants.** Pick the five invariants that have caused the most production incidents in the last quarter. Write each as a pure function with a failing test. 2. **Block AI from touching tests.** Add a `.gitattributes` entry to mark invariant files as `linguist-generated=false` so GitHub flags them as AI-generated and reviewers know they’re human-owned. 3. **Instrument token cost.** Add a one-line script that logs every AI prompt and its token count to a daily CSV. Review it weekly for surprises. 4. **Train the team on one invariant per day.** Use a 15-minute mob session. The goal isn’t to write perfect code; it’s to internalize that invariants are the new contract.
 
 ## Resources that helped
 
@@ -208,20 +196,16 @@ describe('Payment invariant', () => {
 
 Run the test. Watch it fail. That’s your first invariant. Commit it to main. You’ve just taken the first step toward AI pair programming that respects ownership instead of sabotaging it.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

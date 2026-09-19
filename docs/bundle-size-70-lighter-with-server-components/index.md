@@ -6,7 +6,7 @@ The official documentation for use server is good. What it doesn't cover is what
 
 Most teams start with Next.js 14 or React Server Components (RSC) because the docs claim “up to 90% smaller bundles.” I wanted to believe it. Then I tried shipping to a rural Uganda health clinic where the nurses’ phones max out at 3G and 300 MB of storage. Our React Native Web bundle was 4.2 MB unzipped. That’s 28 seconds to download on a good day. On a bad day, with power cuts and throttling, it was 90 seconds and a phone that refused to install.
 
-I ran into this when we replaced a Django admin dashboard with a Next.js frontend. The client’s bundle ballooned to 5.1 MB after adding Tailwind and a few third-party charts. We thought React Server Components would magically shrink it. It didn’t. Not until we stopped treating RSC as a feature toggle and started treating it like a deployment constraint.
+The client’s bundle ballooned to 5.1 MB after adding Tailwind and a few third-party charts. We thought React Server Components would magically shrink it. It didn’t. Not until we stopped treating RSC as a feature toggle and started treating it like a deployment constraint.
 
 The docs tell you to move logic to the server. That’s fine if your server is in the same AWS region as your users. But in Kigali or Lagos, latency matters more than server location. The real trick is not “move it to the server,” it’s “move the heavy parts to the server and keep the user flow on the client.”
 
@@ -20,16 +20,14 @@ Server Components run on the server and return plain data or lightweight UI snip
 
 Here’s the key insight: the client only pays for the serialized output, not the component source. In Next.js 14, a Server Component renders to a special format called the “React Server Component Payload” (RSC Payload). The browser receives this payload and hydrates only the parts that need interactivity.
 
-I spent two weeks on this before realising the payload isn’t just JSON—it’s a binary-like stream that includes component references and props. The client’s React runtime (React 18.3 with the new RSC implementation) resolves those references lazily. That’s why a 5.1 MB bundle can become 1.6 MB after moving heavy modules to Server Components.
+The client’s React runtime (React 18.3 with the new RSC implementation) resolves those references lazily. That’s why a 5.1 MB bundle can become 1.6 MB after moving heavy modules to Server Components.
 
 The real magic happens in the compiler. Next.js 14’s compiler strips out Server Component code from the client build. You don’t need to rewrite your app as a monolith. You can keep your client-side hooks, context, and reducers. Just mark the components that render heavy data or third-party modules with `'use server'` or the `'use client'` directive.
 
 What I didn’t expect was that the compiler also removes any dependency only referenced by a Server Component. If you import date-fns in a Server Component, the client bundle no longer includes it. That’s the hidden lever most docs miss.
 
 Here’s a quick mental model:
-- Client Components: interactive, client-side logic, hooks, state.
-- Server Components: data fetching, heavy dependencies, rendering logic.
-- Shared modules: utilities used by both, but compiled away from the client if only used in Server Components.
+- Client Components: interactive, client-side logic, hooks, state. - Server Components: data fetching, heavy dependencies, rendering logic. - Shared modules: utilities used by both, but compiled away from the client if only used in Server Components.
 
 The boundary isn’t just about where the code runs—it’s about what the client downloads. Move the heavy lifting to the server, and the client only pays for the rendered markup and minimal hydration code.
 
@@ -288,7 +286,7 @@ export default function DatePickerClient({ initialDate }) {
 | `@next/font` | 14.2.3 | Self-host fonts to avoid layout shift |
 | `react-server-dom-webpack` | 18.3.1 | Low-level RSC utilities if you need them |
 
-I was surprised that `@tanstack/react-query@5.40.0` works seamlessly with Server Components. You can fetch data in a Server Component and pass the result to a Client Component via props. The client doesn’t download the query logic because it only runs in the Server Component.
+You can fetch data in a Server Component and pass the result to a Client Component via props. The client doesn’t download the query logic because it only runs in the Server Component.
 
 We also use `@next/font@14.2.3` to self-host Inter and Fira Code. Without it, the browser would download Google Fonts, adding 300 KB and blocking rendering. Self-hosting cut our font load time from 1.2 s to 180 ms.
 
@@ -398,20 +396,16 @@ Use Next.js middleware to set auth cookies or headers, then read them in Server 
 
 You can’t. Move the code to a Client Component and pass the result as props. If you absolutely need a browser API, use a workaround like a hidden iframe or a service worker, but that’s a last resort. We tried using `document.cookie` in a Server Component and spent three days debugging before realizing it was impossible.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

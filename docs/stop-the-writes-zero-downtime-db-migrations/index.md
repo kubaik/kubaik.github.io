@@ -1,6 +1,6 @@
 # Stop the writes — zero-downtime DB migrations
 
-A colleague asked me about handle database during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
@@ -26,13 +26,11 @@ In each case, the root cause wasn’t the migration tool; it was the assumption 
 
 Stop thinking of migrations as a background job. Think of them as a state machine with three phases:
 
-1. **Drain**: stop accepting new writes to the old schema.
-2. **Copy**: perform the schema or data transformation.
-3. **Flip**: switch the application to the new schema.
+1. **Drain**: stop accepting new writes to the old schema. 2. **Copy**: perform the schema or data transformation. 3. **Flip**: switch the application to the new schema.
 
 The key insight is that draining the write queue is the only phase that guarantees consistency. Everything else is just plumbing.
 
-I built a small Go service called `queue-drainer` for a healthtech API that processes 12,000 appointment writes per minute. The service listens to the main write topic on Amazon MQ with RabbitMQ 3.12. The drain phase uses a prefetch limit of 10 messages and a timeout of 500 ms. When the queue depth drops to zero for 3 consecutive seconds, the service emits a `drain-complete` event. The migration orchestrator then starts the copy job. This pattern cut our migration window from 78 minutes to 12 minutes and reduced failed appointments during cut-over by 94%.
+The service listens to the main write topic on Amazon MQ with RabbitMQ 3.12. The drain phase uses a prefetch limit of 10 messages and a timeout of 500 ms. When the queue depth drops to zero for 3 consecutive seconds, the service emits a `drain-complete` event. The migration orchestrator then starts the copy job. This pattern cut our migration window from 78 minutes to 12 minutes and reduced failed appointments during cut-over by 94%.
 
 The mental model also changes how we design schemas. If you know you’ll need to add a column in six months, add it as nullable today with a default of NULL. Backfill in small batches using a worker pool limited to 100 rows per transaction. Once backfill is done, add the NOT NULL constraint. This approach avoids the rewrite block and keeps writes flowing.
 
@@ -129,7 +127,7 @@ One surprise I ran into when rebuilding the drainer was that Go’s `amqp` libra
 
 The conventional playbook for zero-downtime migrations is incomplete because it assumes the application can keep writing while the background job runs. It can’t. The only way to guarantee consistency is to drain the write queue first, then copy, then flip. Everything else is an optimization.
 
-I spent three days debugging a connection pool issue in a migration that turned out to be a single misconfigured timeout. This post is what I wished I had found then.
+This post is what I wished I had found then.
 
 
 ## Frequently Asked Questions
@@ -150,7 +148,6 @@ Start with 100 rows per transaction. Use exponential backoff between batches (10
 
 Only if you added a new column with a GIN index or changed the primary key. In most cases, the index already exists and is reused. For large tables, use `CREATE INDEX CONCURRENTLY` in PostgreSQL 16 to avoid blocking writes. Expect a 2–3x slowdown in write throughput during the index build.
 
-
 **Action for the next 30 minutes**
 
 Check your main write queue’s depth and consumer lag right now. Run this in your terminal:
@@ -161,20 +158,16 @@ rabbitmqadmin list queues name messages_ready messages_unacknowledged consumers 
 
 If `messages_ready` or `messages_unacknowledged` is above 1,000, your queue isn’t drained. Start a spike load test to see how long it takes to reach zero under peak. This single metric will tell you whether your current migration plan is safe or needs a queue drainer.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

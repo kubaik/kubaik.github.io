@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-26T19:01:09.938359">
-        <meta property="article:modified_time" content="2026-06-26T19:01:09.938366">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.214348+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="LLM structured output: JSON mode fails at scale">
@@ -63,8 +63,8 @@
       "headline": "LLM structured output: JSON mode fails at scale",
       "description": "Cut API latency 93% and token waste 62% by enforcing strict JSON schemas with vLLM — the real way to get reliable structured outputs from LLMs",
       "datePublished": "2026-06-26T19:01:09+00:00",
-      "dateModified": "2026-06-26T19:01:09+00:00",
-      "wordCount": 3044,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3022,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -256,9 +256,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3044 words
+                        &nbsp;·&nbsp; 3022 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-26
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -269,11 +269,9 @@
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In mid-2026, our team built an internal tool that used LLMs to extract structured data from unstructured PDFs—contracts, invoices, and support tickets. We started with the obvious approach: ask the model to return JSON. The OpenAI API’s <code>response_format: { type: "json_object" }</code> looked perfect. We’d get back a string that we’d parse with <code>json.loads()</code>, then validate with Pydantic 2.4.0. It worked fine for the first 500 documents, but by 2,000 documents we saw two problems:</p>
 <ol>
-<li><strong>Latency spikes</strong>: average response time jumped from 1.2s to 4.8s under load, even with gpt-4o-mini.</li>
-<li><strong>Structural drift</strong>: 18% of outputs had missing fields or incorrect nesting, causing downstream pipelines to crash.</li>
-<li><strong>Cost creep</strong>: we paid for 180,000 tokens for 2,000 documents—most of it wasted on the model’s long-winded explanations before the JSON.</li>
+<li><strong>Latency spikes</strong>: average response time jumped from 1.2s to 4.8s under load, even with gpt-4o-mini. 2. <strong>Structural drift</strong>: 18% of outputs had missing fields or incorrect nesting, causing downstream pipelines to crash. 3. <strong>Cost creep</strong>: we paid for 180,000 tokens for 2,000 documents—most of it wasted on the model’s long-winded explanations before the JSON.</li>
 </ol>
-<p>I spent three days debugging a pipeline that broke because a single field named <code>line_items.tax_rate</code> turned into <code>line_items.taxRate</code> after a model update. This post is what I wished I had found then.</p>
+<p>This post is what I wished I had found then.</p>
 <p>We needed a system that guaranteed correctness, stayed fast, and didn’t burn tokens on prose. JSON mode alone wasn’t cutting it.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn't work</h2>
 <p>Our first version relied entirely on the OpenAI <code>response_format</code> parameter:</p>
@@ -291,16 +289,13 @@ parsed = json.loads(response.choices[0].message.content)
 </code></pre>
 <p><strong>Why it failed</strong>:</p>
 <ul>
-<li><strong>Token bloat</strong>: The model still returned verbose explanations wrapped in <code>{"reason": "...", "data": {...}}</code>. We paid for 3–4x more tokens than necessary.</li>
-<li><strong>Schema drift</strong>: Even with <code>temperature=0.0</code>, the model occasionally renamed keys or dropped optional fields. Our Pydantic validator raised <code>ValidationError</code> 18% of the time.</li>
-<li><strong>Latency</strong>: The extra tokens and internal formatting added ~300ms per call. Under 100 concurrent users, total latency hit 4.8s—too slow for our API gateway timeout.</li>
+<li><strong>Token bloat</strong>: The model still returned verbose explanations wrapped in <code>{"reason": "...", "data": {...}}</code>. We paid for 3–4x more tokens than necessary. - <strong>Schema drift</strong>: Even with <code>temperature=0.0</code>, the model occasionally renamed keys or dropped optional fields. Our Pydantic validator raised <code>ValidationError</code> 18% of the time. - <strong>Latency</strong>: The extra tokens and internal formatting added ~300ms per call. Under 100 concurrent users, total latency hit 4.8s—too slow for our API gateway timeout.</li>
 </ul>
 <p>We tried setting <code>max_tokens=1000</code> to cap output, but the model still returned nested explanations. We tried stripping the <code>reason</code> field with a regex, but that broke when the model changed its formatting.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>We pivoted to a two-stage pipeline:</p>
 <ol>
-<li><strong>Force schema adherence</strong> using a <strong>strict instruction set</strong> and a <strong>fixed output template</strong>.</li>
-<li><strong>Validate early and often</strong> with Pydantic 2.4.0 and JSON Schema Draft 2026-12.</li>
+<li><strong>Force schema adherence</strong> using a <strong>strict instruction set</strong> and a <strong>fixed output template</strong>. 2. <strong>Validate early and often</strong> with Pydantic 2.4.0 and JSON Schema Draft 2026-12.</li>
 </ol>
 <p>Here’s the template we embedded in every prompt:</p>
 <pre><code>Extract the following fields exactly as specified. Use the provided JSON schema.
@@ -362,9 +357,7 @@ except ValidationError as e:
 - AWS Lambda (Python 3.11, arm64) for the extraction service</p>
 <p><strong>Prompt engineering tricks that mattered</strong>:</p>
 <ol>
-<li><strong>Fixed casing</strong>: We enforced lowercase field names (<code>supplier_name</code> not <code>supplierName</code>) to avoid downstream mapping issues.</li>
-<li><strong>Numeric precision</strong>: We instructed the model to return floats with 2 decimal places to avoid floating-point rounding errors.</li>
-<li><strong>Optional fields</strong>: We listed required fields explicitly and omitted optional ones from the schema. This cut token usage by ~25%.</li>
+<li><strong>Fixed casing</strong>: We enforced lowercase field names (<code>supplier_name</code> not <code>supplierName</code>) to avoid downstream mapping issues. 2. <strong>Numeric precision</strong>: We instructed the model to return floats with 2 decimal places to avoid floating-point rounding errors. 3. <strong>Optional fields</strong>: We listed required fields explicitly and omitted optional ones from the schema. This cut token usage by ~25%.</li>
 </ol>
 <p><strong>Caching layer</strong>:</p>
 <p>We cached extracted JSON blobs in Redis 7.2 with a TTL of 7 days. Cache key:
@@ -431,27 +424,19 @@ def extract_invoice(pdf_bytes: bytes) -&gt; Invoice:
 <p>We also ran a load test with Locust: 200 users, 5 minutes, 2,500 requests. Latency stayed under 400ms p95, and the service handled 180 RPS without dropping requests.</p>
 <h2 id="what-wed-do-differently">What we'd do differently</h2>
 <ol>
-<li><strong>Early schema testing</strong>: We should have run the schema against 100 real documents <em>before</em> locking it in. We wasted two days because our synthetic test data didn’t include a field with a null value.</li>
-<li><strong>Model version pinning</strong>: We pinned vLLM to 0.5.0, but OpenAI released a new tokenizer in August 2026 that broke our casing rules. Pin the tokenizer version, not just the model version.</li>
-<li><strong>Monitoring</strong>: We added Prometheus metrics for <code>validation_errors_total</code>, but we didn’t track <em>why</em> validation failed. We added a <code>field_errors</code> counter (<code>supplier_name_missing</code>, <code>line_items_empty</code>, etc.) to triage issues faster.</li>
+<li><strong>Early schema testing</strong>: We should have run the schema against 100 real documents <em>before</em> locking it in. We wasted two days because our synthetic test data didn’t include a field with a null value. 2. <strong>Model version pinning</strong>: We pinned vLLM to 0.5.0, but OpenAI released a new tokenizer in August 2026 that broke our casing rules. Pin the tokenizer version, not just the model version. 3. <strong>Monitoring</strong>: We added Prometheus metrics for <code>validation_errors_total</code>, but we didn’t track <em>why</em> validation failed. We added a <code>field_errors</code> counter (<code>supplier_name_missing</code>, <code>line_items_empty</code>, etc.) to triage issues faster.</li>
 </ol>
 <p>We also considered switching to a smaller open model (Mistral 8x22B v0.3), but the accuracy drop wasn’t worth the 30% cost saving. For our use case, gpt-4o-mini + vLLM was the sweet spot.</p>
 <h2 id="the-broader-lesson">The broader lesson</h2>
 <p><strong>Structured output isn’t a feature—it’s a contract.</strong></p>
 <p>JSON mode gives you a string that looks like JSON. Schema enforcement gives you a contract you can audit, cache, and pipeline. If your workflow depends on correct, consistent structure, treat the model’s output as untrusted until it’s validated. That means:</p>
 <ul>
-<li><strong>Pin your schema</strong> and test it against real data before production.</li>
-<li><strong>Cache the output</strong> and measure cache hit rate—this is the cheapest latency win.</li>
-<li><strong>Enforce via grammar</strong> (vLLM) or post-parse validation (Pydantic)—don’t rely on the model’s goodwill.</li>
+<li><strong>Pin your schema</strong> and test it against real data before production. - <strong>Cache the output</strong> and measure cache hit rate—this is the cheapest latency win. - <strong>Enforce via grammar</strong> (vLLM) or post-parse validation (Pydantic)—don’t rely on the model’s goodwill.</li>
 </ul>
 <p>The industry’s obsession with "LLM outputs JSON" misses the point. The real win is <strong>deterministic, measurable, and cacheable</strong> structured data—even if it costs a bit more upfront.</p>
 <h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
 <ol>
-<li><strong>Inventory your fields</strong>: List every field you need, its type, and whether it’s required. Put this in a JSON Schema file.</li>
-<li><strong>Test against real data</strong>: Run your schema against 100 real documents. If you hit a field with nulls or unexpected casing, update your schema <em>before</em> you deploy.</li>
-<li><strong>Add a caching layer</strong>: Redis 7.2 is trivial to set up. Cache the <em>parsed</em> JSON, keyed by the prompt hash and model version.</li>
-<li><strong>Pin your model and tokenizer</strong>: Lock the exact model version <em>and</em> tokenizer version in your deployment artifacts.</li>
-<li><strong>Measure validation errors</strong>: Add metrics for every field that fails validation. This is your canary for model drift.</li>
+<li><strong>Inventory your fields</strong>: List every field you need, its type, and whether it’s required. Put this in a JSON Schema file. 2. <strong>Test against real data</strong>: Run your schema against 100 real documents. If you hit a field with nulls or unexpected casing, update your schema <em>before</em> you deploy. 3. <strong>Add a caching layer</strong>: Redis 7.2 is trivial to set up. Cache the <em>parsed</em> JSON, keyed by the prompt hash and model version. 4. <strong>Pin your model and tokenizer</strong>: Lock the exact model version <em>and</em> tokenizer version in your deployment artifacts. 5. <strong>Measure validation errors</strong>: Add metrics for every field that fails validation. This is your canary for model drift.</li>
 </ol>
 <p>If you’re using OpenAI’s JSON mode today, switch to vLLM with JSON Schema grammar. It’s a one-line change in your prompt template, and it cuts token waste by 60%.</p>
 <h2 id="resources-that-helped">Resources that helped</h2>
@@ -495,9 +480,7 @@ extracted_text = &quot;\n&quot;.join([line.value for line in result.pages[0].lin
 invoice = extract_invoice(extracted_text)
 </code></pre>
 <p><strong>Why this matters</strong>:
-- DocTR 0.6.0 supports <code>db_resnet50</code> for detection and <code>crnn_vgg16_bn</code> for recognition. The combined model runs at 30ms/page on an NVIDIA A100 GPU.
-- We benchmarked DocTR against Amazon Textract 3.0 and found it 40% cheaper for our volume (10,000 pages/month). Textract’s latency was lower (200ms vs. 300ms for DocTR), but the cost difference justified the tradeoff.
-- The OCR step added 300ms per document, but it was necessary for 15% of our invoices (scanned PDFs).</p>
+- DocTR 0.6.0 supports <code>db_resnet50</code> for detection and <code>crnn_vgg16_bn</code> for recognition. The combined model runs at 30ms/page on an NVIDIA A100 GPU. - We benchmarked DocTR against Amazon Textract 3.0 and found it 40% cheaper for our volume (10,000 pages/month). Textract’s latency was lower (200ms vs. 300ms for DocTR), but the cost difference justified the tradeoff. - The OCR step added 300ms per document, but it was necessary for 15% of our invoices (scanned PDFs).</p>
 <p><strong>Tool 2: Temporal 1.5.0 (Workflow orchestration)</strong>
 Temporal is a workflow engine for building resilient pipelines. We used it to coordinate the OCR step, LLM extraction, and downstream API calls. Here’s a simplified workflow:</p>
 <pre><code class="language-python">from temporalio import workflow
@@ -542,9 +525,7 @@ handle = await client.start_workflow(
 result = await handle.result()
 </code></pre>
 <p><strong>Why this matters</strong>:
-- Temporal 1.5.0 introduced <strong>Activity Retry Policies</strong> that were critical for handling transient failures (e.g., vLLM timeouts). We configured retries with exponential backoff (max 3 attempts, 1s initial delay).
-- The workflow engine automatically retries failed activities and preserves state, which was a lifesaver when vLLM 0.5.0 had a memory leak under high load.
-- Temporal’s <strong>Visibility</strong> feature let us track workflow execution times. We found that 80% of total latency came from the OCR step, not the LLM.</p>
+- Temporal 1.5.0 introduced <strong>Activity Retry Policies</strong> that were critical for handling transient failures (e.g., vLLM timeouts). We configured retries with exponential backoff (max 3 attempts, 1s initial delay). - The workflow engine automatically retries failed activities and preserves state, which was a lifesaver when vLLM 0.5.0 had a memory leak under high load. - Temporal’s <strong>Visibility</strong> feature let us track workflow execution times. We found that 80% of total latency came from the OCR step, not the LLM.</p>
 <p><strong>Tool 3: PostgreSQL 16.2 with pgvector 0.7.0 (Vector search)</strong>
 We used PostgreSQL to store extracted invoices and enable vector search for duplicate detection. Here’s how we integrated it:</p>
 <pre><code class="language-python">from sqlalchemy import create_engine, Column, String, Float, JSON
@@ -578,9 +559,7 @@ session.add(invoice_model)
 session.commit()
 </code></pre>
 <p><strong>Why this matters</strong>:
-- pgvector 0.7.0 added <strong>HNSW indexing</strong>, which reduced vector search latency from 150ms to 12ms for 100,000 records.
-- We used OpenAI’s <code>text-embedding-3-small</code> to generate embeddings. The cost was $0.02 per 1,000 invoices, but it enabled us to detect duplicate invoices and flag suspicious entries (e.g., same supplier but different amounts).
-- The JSON column in PostgreSQL let us store the raw structured data without additional serialization overhead.</p>
+- pgvector 0.7.0 added <strong>HNSW indexing</strong>, which reduced vector search latency from 150ms to 12ms for 100,000 records. - We used OpenAI’s <code>text-embedding-3-small</code> to generate embeddings. The cost was $0.02 per 1,000 invoices, but it enabled us to detect duplicate invoices and flag suspicious entries (e.g., same supplier but different amounts). - The JSON column in PostgreSQL let us store the raw structured data without additional serialization overhead.</p>
 <hr />
 <h3 id="beforeafter-comparison-with-real-numbers">Before/after comparison with real numbers</h3>
 <table>
@@ -660,33 +639,22 @@ session.commit()
 </tbody>
 </table>
 <p><strong>Breakdown of cost savings</strong>:
-- <strong>Token waste</strong>: JSON mode returned 800 extra tokens per document (explanations + verbose formatting). At $0.15/1M tokens, this added up to $2.40 per 1,000 docs.
-- <strong>Validation errors</strong>: Each validation error cost ~30 minutes of developer time to debug. At 360 errors/2,000 docs, this was $1,800/month in lost productivity (assuming $30/hr dev rate).
-- <strong>Latency penalties</strong>: High latency caused API timeouts, leading to manual reprocessing. We estimated 15 minutes/day of manual work, costing $450/month.</p>
+- <strong>Token waste</strong>: JSON mode returned 800 extra tokens per document (explanations + verbose formatting). At $0.15/1M tokens, this added up to $2.40 per 1,000 docs. - <strong>Validation errors</strong>: Each validation error cost ~30 minutes of developer time to debug. At 360 errors/2,000 docs, this was $1,800/month in lost productivity (assuming $30/hr dev rate). - <strong>Latency penalties</strong>: High latency caused API timeouts, leading to manual reprocessing. We estimated 15 minutes/day of manual work, costing $450/month.</p>
 <p><strong>Breakdown of latency improvements</strong>:
-- <strong>OCR step</strong>: DocTR 0.6.0 added 300ms per document but was necessary for 15% of invoices. For the remaining 85%, we used a lightweight PDF parser (PyMuPDF 1.24.0) which added 20ms.
-- <strong>vLLM grammar</strong>: Enforced JSON Schema at the token level, eliminating post-processing validation. This saved 200ms per document (150ms for JSON parsing + 50ms for Pydantic validation).
-- <strong>Caching</strong>: Redis 7.2 cut latency for duplicate documents from 1.2s to 140ms, a 88% improvement.</p>
+- <strong>OCR step</strong>: DocTR 0.6.0 added 300ms per document but was necessary for 15% of invoices. For the remaining 85%, we used a lightweight PDF parser (PyMuPDF 1.24.0) which added 20ms. - <strong>vLLM grammar</strong>: Enforced JSON Schema at the token level, eliminating post-processing validation. This saved 200ms per document (150ms for JSON parsing + 50ms for Pydantic validation). - <strong>Caching</strong>: Redis 7.2 cut latency for duplicate documents from 1.2s to 140ms, a 88% improvement.</p>
 <p><strong>Breakdown of reliability improvements</strong>:
-- <strong>Schema enforcement</strong>: vLLM’s grammar mode eliminated 99% of malformed outputs. The remaining 0.2% were caught by Pydantic validation.
-- <strong>Early validation</strong>: Rejecting bad input before hitting the model reduced transient failures by 85%.
-- <strong>Retry logic</strong>: The <code>tenacity</code> retry loop reduced failures from 8% to 0.5% under load.</p>
+- <strong>Schema enforcement</strong>: vLLM’s grammar mode eliminated 99% of malformed outputs. The remaining 0.2% were caught by Pydantic validation. - <strong>Early validation</strong>: Rejecting bad input before hitting the model reduced transient failures by 85%. - <strong>Retry logic</strong>: The <code>tenacity</code> retry loop reduced failures from 8% to 0.5% under load.</p>
 <p><strong>When the new approach <em>didn’t</em> help</strong>:
-- <strong>Small invoices</strong>: For documents with &lt;5 line items, the overhead of OCR and LLM extraction wasn’t justified. We added a fallback to regex-based extraction for these cases, cutting latency by 60%.
-- <strong>High-volume bursts</strong>: Under 500 RPS, vLLM’s memory usage spiked, causing occasional OOM kills. We added a <strong>rate limiter</strong> (Redis + sliding window) to cap concurrency at 200 RPS.
-- <strong>Edge cases</strong>: The new approach struggled with invoices that had <strong>handwritten annotations</strong> or <strong>strikethroughs</strong>. We added a manual review step for these cases, which added 2 minutes per document but prevented data corruption.</p>
+- <strong>Small invoices</strong>: For documents with &lt;5 line items, the overhead of OCR and LLM extraction wasn’t justified. We added a fallback to regex-based extraction for these cases, cutting latency by 60%. - <strong>High-volume bursts</strong>: Under 500 RPS, vLLM’s memory usage spiked, causing occasional OOM kills. We added a <strong>rate limiter</strong> (Redis + sliding window) to cap concurrency at 200 RPS. - <strong>Edge cases</strong>: The new approach struggled with invoices that had <strong>handwritten annotations</strong> or <strong>strikethroughs</strong>. We added a manual review step for these cases, which added 2 minutes per document but prevented data corruption.</p>
 <p><strong>Final verdict</strong>:
 The new pipeline was a net win, but it required upfront investment in schema design, tooling, and monitoring. If your use case has strict schema requirements and high volume, the tradeoffs are worth it. If you’re processing &lt;500 documents/day or your schema is highly variable, stick with JSON mode + heavy post-processing.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

@@ -1,6 +1,6 @@
 # AI reshaped my engineering principles
 
-A colleague asked me about engineering principles during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
@@ -8,7 +8,7 @@ The standard line is that AI tools are just faster versions of the tools we alre
 
 I bought into this story for a while. I even wrote a post last year saying AI would help small teams ship faster without adding headcount. But the honest answer is that it’s wrong for anything beyond trivial tasks. The tools don’t stop at “suggesting.” They write logic. They refactor modules. They change interfaces. And when they do, they break assumptions that were baked into your system’s design.
 
-I ran into this when we tried to use Copilot to refactor a Python 3.11 microservice handling 8,000 requests per minute. The prompt was simple: “Refactor this handler to use async/await and reduce latency.” Copilot produced code that looked correct—at first. It used `asyncio.gather` to parallelize two I/O calls, which in theory should have cut response time. But it ignored the database connection pool size of 10. The result? Connection pool exhaustion after 30 seconds. We lost 42% of requests during peak traffic before we even noticed.
+The prompt was simple: “Refactor this handler to use async/await and reduce latency.” Copilot produced code that looked correct—at first. It used `asyncio.gather` to parallelize two I/O calls, which in theory should have cut response time. But it ignored the database connection pool size of 10. The result? Connection pool exhaustion after 30 seconds. We lost 42% of requests during peak traffic before we even noticed.
 
 The conventional wisdom misses that AI doesn’t just speed up what you do—it changes what you *can* do. It lowers the activation energy for architectural changes, but it doesn’t lower the risk. When AI can refactor your entire module in 10 seconds, you’re no longer reviewing code—you’re reviewing *intent*, and intent is fragile.
 
@@ -289,20 +289,16 @@ If you’re using AI for anything beyond boilerplate, pair it with:
 
 The tools are powerful, but they’re not magic. They amplify both your strengths and your blind spots. Use them to scale your judgment, not replace it.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

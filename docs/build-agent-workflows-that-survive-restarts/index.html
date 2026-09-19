@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-06T07:57:25.796672">
-        <meta property="article:modified_time" content="2026-07-06T07:57:25.796686">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.937599+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Build agent workflows that survive restarts">
@@ -63,8 +63,8 @@
       "headline": "Build agent workflows that survive restarts",
       "description": "Survive agent restarts, model changes, and network blips — durable workflows with Redis 7.2, FastAPI 0.109, and Python 3.11.",
       "datePublished": "2026-07-06T07:57:25+00:00",
-      "dateModified": "2026-07-06T07:57:25+00:00",
-      "wordCount": 2099,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2058,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -263,18 +263,18 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         10 min read
-                        &nbsp;·&nbsp; 2099 words
+                        &nbsp;·&nbsp; 2058 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-06
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>I spent three weeks building an agent that worked fine in tests but crashed every time the model API rate-limited us or the container restarted. One Tuesday, we rolled out a new model version and watched our agents brownout for 45 minutes because nobody accounted for schema drift. The worst part? The logs blamed the downstream service when the real culprit was our own workflow not persisting state between runs.</p>
+<p>One Tuesday, we rolled out a new model version and watched our agents brownout for 45 minutes because nobody accounted for schema drift. The worst part? The logs blamed the downstream service when the real culprit was our own workflow not persisting state between runs.</p>
 <p>Most agent frameworks sell durability as a checkbox: “just use durable queues.” Reality is messier. Restarts, model version bumps, network hiccups, and payload shape changes all conspire to break workflows that looked robust on paper. I went from “let’s ship this” to “how do we survive Tuesday?” in one afternoon.</p>
 <p>Durability isn’t glamorous until it’s the difference between a pager at 2 AM and a quiet night. If you’re building agents that call external APIs, this is the post I wish I’d had when my retry loop turned into a thundering herd and our AWS bill tripled overnight.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -406,9 +406,7 @@ async def get_task(task_id: str) -&gt; Task:
 <p>Model APIs lie about their schemas. I learned this the hard way when the new OpenAI API 2024-06-01 started returning an extra <code>reasoning_content</code> field that broke my structured output parser. The agent kept retrying forever because the validation error wasn’t caught until after the retry budget was exhausted.</p>
 <p>Here’s how to make the workflow survive schema drift:</p>
 <ol>
-<li>Use Pydantic’s <code>@model_validator</code> to strip unknown fields before serialization.</li>
-<li>Add a <code>fingerprint</code> field that hashes the expected schema so you can detect drift at runtime.</li>
-<li>Bump the task’s <code>attempt</code> only after we’re confident the output is valid.</li>
+<li>Use Pydantic’s <code>@model_validator</code> to strip unknown fields before serialization. 2. Add a <code>fingerprint</code> field that hashes the expected schema so you can detect drift at runtime. 3. Bump the task’s <code>attempt</code> only after we’re confident the output is valid.</li>
 </ol>
 <pre><code class="language-python"># app.py
 from pydantic import model_validator
@@ -579,14 +577,11 @@ def test_task_survives_restart():
 <p>Watch the test pass. That’s your 30-minute proof that the workflow can survive a restart. Once it works locally, deploy to a staging Lambda with 128MB memory and provisioned concurrency 1. Measure p95 latency and error rate for 10 minutes. If both are under 1.5s and 0.1%, you’re ready to ship to production.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

@@ -8,8 +8,6 @@ In 2026, every junior developer in Lagos, Nairobi, and Accra can drop a prompt i
 
 We needed a way to pick the 20 candidates who could actually build for mobile-first users on 2026-era networks: 4G+ with 200 ms RTT, 2 % packet loss, and data bundles that reset at midnight. Chrome on fibre is not the bar; a 2G fallback that still processes a Flutterwave webhook inside a 5-second timeout is.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
-
 ## What we tried first and why it didn’t work
 
 Our first filter was GitHub stars and commit frequency. We ran a simple SQL query on the public BigQuery GitHub snapshot (2026-01-15 snapshot, ~16 TB).
@@ -57,9 +55,7 @@ The model worked okay, but we didn’t account for candidates who wrote concise 
 
 We pivoted to **constraint-first filtering**. Instead of looking at GitHub stats or README quality, we simulated the environment our users actually run in: slow, intermittent mobile data connections. Our new filter had three gates:
 
-1. **Latency gate**: The candidate’s repo must serve a simple JSON endpoint under 1 second when throttled to 3G in Chrome DevTools.
-2. **Connection loss gate**: The endpoint must return a cached response within 3 seconds when the network is offline (simulated with DevTools offline mode).
-3. **Cost gate**: The candidate’s README must include an estimate of the monthly data cost for a typical user in Nairobi or Lagos (median bundle size 300 MB/month).
+1. **Latency gate**: The candidate’s repo must serve a simple JSON endpoint under 1 second when throttled to 3G in Chrome DevTools. 2. **Connection loss gate**: The endpoint must return a cached response within 3 seconds when the network is offline (simulated with DevTools offline mode). 3. **Cost gate**: The candidate’s README must include an estimate of the monthly data cost for a typical user in Nairobi or Lagos (median bundle size 300 MB/month).
 
 We built a lightweight CI-like GitHub Action that runs on every `push` to `main` and checks these gates. The action uses `cypress` 13.6 with `cypress-recorder` 1.2 to record a 3G throttle session and `puppeteer` 21.6 to measure latency. We set thresholds: p95 latency <1000 ms, p99 connection loss recovery <3000 ms.
 
@@ -92,9 +88,7 @@ We also added a **payment integration gate**: the repo must include either a wor
 
 Our final pipeline had three stages:
 
-1. **Filter**: GitHub Actions runs the constraint gate on every push. Repos that fail are labelled `constraint-fail` and excluded from the next stage.
-2. **Score**: For repos that pass the gate, we run a second job that scores the candidate’s code quality using `semgrep` 1.55 and `pylint` 3.1 for Python, `eslint` 8.57 for JavaScript, and `golangci-lint` 1.55 for Go. We give a bonus for TypeScript strict mode (`strict: true` in `tsconfig.json`) because it reduces production bugs under intermittent connections.
-3. **Rank**: We rank candidates by a weighted score: 50 % latency gate pass/fail, 30 % code quality score (0–100), 20 % README clarity (human review of the data-cost line).
+1. **Filter**: GitHub Actions runs the constraint gate on every push. Repos that fail are labelled `constraint-fail` and excluded from the next stage. 2. **Score**: For repos that pass the gate, we run a second job that scores the candidate’s code quality using `semgrep` 1.55 and `pylint` 3.1 for Python, `eslint` 8.57 for JavaScript, and `golangci-lint` 1.55 for Go. We give a bonus for TypeScript strict mode (`strict: true` in `tsconfig.json`) because it reduces production bugs under intermittent connections. 3. **Rank**: We rank candidates by a weighted score: 50 % latency gate pass/fail, 30 % code quality score (0–100), 20 % README clarity (human review of the data-cost line).
 
 We used `neon.tech` (PostgreSQL-compatible serverless) to store the results and expose a simple REST API. The API is rate-limited to 100 req/min to prevent abuse. We built a small Next.js dashboard in React 18.3 with `shadcn/ui` 0.8 to visualise the results. The dashboard shows a leaderboard of candidates, their latency p95, and their code quality score.
 
@@ -226,20 +220,16 @@ The constraint gate still applies. Measure the latency of your `/health` endpoin
 
 Make it part of your template, not an afterthought. Add a section titled "Data cost for users" and include a line like: "Estimated data: 250 MB/month (83 % under bundle)." If your app is fintech, add: "M-Pesa STK push: 0.5 MB per transaction." Candidates who fill this section naturally think about constraints; those who skip it often haven’t considered the environment their users live in.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

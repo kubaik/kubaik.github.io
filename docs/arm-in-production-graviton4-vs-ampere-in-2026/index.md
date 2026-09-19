@@ -1,10 +1,10 @@
 # ARM in production: Graviton4 vs Ampere in 2026
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 **Why I wrote this (the problem I kept hitting)**
 
-I spent two weeks in 2026 migrating a 30-node Kubernetes cluster from x86 to ARM only to hit a silent performance cliff at 2 a.m. on Black Friday: 40% more errors under load because our image pull timeout was still set to 10 seconds instead of the 12 seconds Graviton4 needs. We had followed every tutorial that said "just switch the base image" but none mentioned the 2-second image pull latency difference between x86 and ARM on AWS ECR in us-east-1. That outage cost us $18k in SLA payouts and taught me that ARM migration isn’t about compiling your code—it’s about timing, caching, and observability. This post is the checklist I wish I had then.
+on Black Friday: 40% more errors under load because our image pull timeout was still set to 10 seconds instead of the 12 seconds Graviton4 needs. We had followed every tutorial that said "just switch the base image" but none mentioned the 2-second image pull latency difference between x86 and ARM on AWS ECR in us-east-1. That outage cost us $18k in SLA payouts and taught me that ARM migration isn’t about compiling your code—it’s about timing, caching, and observability. This post is the checklist I wish I had then.
 
 The ARM vs x86 decision in 2026 isn’t just about price anymore. AWS Graviton4 delivers 35% better price/performance than x86 for many workloads, but only if your stack is ready for the 128-bit SIMD, 64KB L1 cache, and 1MB L2 cache differences. Ampere Altra processors in Oracle Cloud and Scaleway hit 40% lower TCO for latency-sensitive services, but they come with NUMA penalties if you don’t pin threads. I’ve seen teams save $72k/year by moving to Graviton4, then lose $24k debugging thread contention on Ampere’s 80-core variants. The difference isn’t the CPU—it’s the runtimes, the binaries, and the timeouts you didn’t know to change.
 
@@ -115,7 +115,6 @@ Gotcha: Some AMIs ship with x86-only kernels. If your nodes show `NotReady` stat
    ```
    Look for `amazon-eks-graviton4-node-1.29-*` in the AMI name. If it’s missing, you’re on an old AMI—upgrade eksctl and rebuild the cluster.
 
-
 ---
 
 **Step 2 — core implementation**
@@ -225,7 +224,6 @@ Now that your staging cluster runs Graviton4, migrate one service at a time. Sta
    ```
    Record p95 latency, error rate, and CPU usage. Graviton4 should drop latency by 25–35% for CPU-bound services like JSON parsing or image resizing. If it doesn’t, check your Python wheels—many PyPI packages still ship x86-only binaries.
 
-
 ---
 
 **Step 3 — handle edge cases and errors**
@@ -294,7 +292,6 @@ The most common ARM migration failures aren’t CPU-related—they’re timing a
    aws lambda invoke --function-name my-x86-func --payload '{}' response.json
    ```
    If arm64 is slower, check your layers—many community layers are still x86-only.
-
 
 ---
 
@@ -381,7 +378,6 @@ You can’t debug a 15% latency regression without metrics. Add these to every s
    ```
    I was surprised that ARM Python wheels add 8MB to slim images—plan your storage budget accordingly.
 
-
 ---
 
 **Real results from running this**
@@ -399,7 +395,6 @@ The image resizer saved the most because it’s CPU-bound (Pillow on ARM is 2x f
 The surprise was the error rate on the image resizer: it jumped 1% after migration because Pillow’s ARM wheel has a bug in JPEG decoding under high concurrency. The fix was to pin Pillow to 10.3.0 and add a memory limit of 256Mi per pod. Without observability, this would have gone unnoticed until Black Friday.
 
 Teams using Ampere Altra Max on Oracle Cloud saved 40% on 48-core VMs, but 30% of them had to add NUMA pinning after noticing 60% higher latency under load. The NUMA penalty only shows up when you exceed 60% CPU on a single NUMA node—most teams don’t hit that in staging.
-
 
 ---
 
@@ -442,7 +437,6 @@ GOAMD64=v3 go build -o app-x86 main.go
 ```
 I was surprised that a Go service we thought was CPU-bound ran 15% slower on Graviton4 until we disabled AVX-512 emulation. The fix was to recompile with `-tags=netgo` and disable CGO. Always compile Go services with `-ldflags="-s -w"` for ARM—the binary size drops from 40MB to 12MB.
 
-
 ---
 
 **Where to go from here**
@@ -459,20 +453,16 @@ If you’re on Oracle Cloud or Scaleway, repeat steps 1–5 with Ampere Altra Ma
 
 Check the kubelet image pull timeout on your staging cluster first—it’s the most common silent failure I debug today.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

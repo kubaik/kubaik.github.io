@@ -8,7 +8,7 @@ In 2026 every microservice is a state machine wrapped in HTTP, and every state t
 
 The difference isn’t academic. A 2026 Datadog report shows teams that default to async tool calls reduce 99th-percentile latency by 62% and cut cloud bills by 28% compared to teams that stick with synchronous calls. But async isn’t free: it adds complexity, requires message brokers, and turns every latency spike into a debugging rabbit hole. If you’re on-call tonight, the question you need answered is not ‘Which is better?’ but ‘Which breaks first under MY load, MY latency budget, and MY team’s expertise?’
 
-I spent three days on this before realising the real bottleneck wasn’t the tool call itself—it was the hidden assumption that the tool call would always return in time. That assumption is the first thing to measure, not to trust.
+That assumption is the first thing to measure, not to trust.
 
 ## Option A — how it works and where it shines
 
@@ -136,15 +136,9 @@ Tool choice compounds cost. Python 3.11 with synchronous calls is cheaper to run
 
 When a teammate pages me at 2 AM, I don’t debate philosophy—I run a 30-second checklist. If any answer is ‘yes’, I default to async. If all answers are ‘no’, synchronous is fine.
 
-1. Latency budget: Is the 99th percentile latency < 100 ms?
-2. Traffic growth: Has traffic grown > 20 % month-over-month for 3 months?
-3. Tool heterogeneity: Do we call > 3 different tools per request (Postgres, Redis, Stripe, OpenSearch, etc.)?
-4. Team size: Are we > 8 engineers?
-5. Compliance: Is the call part of a PCI or SOC2 flow requiring synchronous confirmation?
-6. On-call load: Do we page > 2 times per week for tool-timeouts?
-7. Budget: Can we afford $200+/month for extra observability tooling?
+1. Latency budget: Is the 99th percentile latency < 100 ms? 2. Traffic growth: Has traffic grown > 20 % month-over-month for 3 months? 3. Tool heterogeneity: Do we call > 3 different tools per request (Postgres, Redis, Stripe, OpenSearch, etc.)? 4. Team size: Are we > 8 engineers? 5. Compliance: Is the call part of a PCI or SOC2 flow requiring synchronous confirmation? 6. On-call load: Do we page > 2 times per week for tool-timeouts? 7. Budget: Can we afford $200+/month for extra observability tooling?
 
-If 4 or more answers are ‘yes’, async is the safe bet. If fewer than 2 are ‘yes’, synchronous will work fine. The middle ground (2–3 yes) is where most outages happen—teams pick async for performance but forget to tune the queue, or pick synchronous for simplicity but hit scaling limits. 
+If 4 or more answers are ‘yes’, async is the safe bet. If fewer than 2 are ‘yes’, synchronous will work fine. The middle ground (2–3 yes) is where most outages happen—teams pick async for performance but forget to tune the queue, or pick synchronous for simplicity but hit scaling limits.
 
 I once ignored this framework for a Jakarta identity service because the compliance requirement seemed non-negotiable. We used synchronous calls to an internal auth service, but traffic grew from 200 req/s to 1,200 req/s in three months. The auth service became the bottleneck; latency spiked to 2.1 s, and we failed PCI scans. The fix wasn’t more auth workers—it was moving the compliance-sensitive flows to async callbacks with synchronous fallbacks. Total rewrite took six weeks and cost $12k in engineering time.
 
@@ -170,20 +164,16 @@ For most teams building services in 2026, async is the right default. Start with
 
 **Action for the next 30 minutes:** Open your slowest endpoint in production and run `curl -w "%{time_total}\n"` against it 100 times from an EC2 instance in the same region. If the 99th percentile exceeds 100 ms, open your queue depth metric (Redis, SQS, or Kafka) and check if it’s > 80 % of your concurrency limit. If either condition is true, open your async migration ticket today.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

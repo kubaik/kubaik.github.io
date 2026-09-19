@@ -1,12 +1,12 @@
 # 3 AI coders ranked: Cursor, Windsurf, Claude Code in
 
-I ran into this cursor windsurf problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 ## Why this list exists (what I was actually trying to solve)
 
-I spent six weeks last year trying to replace VS Code with something faster for AI-assisted coding. The promise was clear: less context switching, fewer tabs, and fewer bugs. What I got instead was a mess of half-completed snippets, 500ms latency spikes every other line, and a bill for $480 in overage because the AI kept calling the wrong AWS region for our PII logs.
+The promise was clear: less context switching, fewer tabs, and fewer bugs. What I got instead was a mess of half-completed snippets, 500ms latency spikes every other line, and a bill for $480 in overage because the AI kept calling the wrong AWS region for our PII logs.
 
-I tried Cursor first because it looked like a normal editor. Windsurf because the demo showed a 700ms faster edit cycle. Claude Code because Anthropic’s 2025 context window promised to remember every file in a monorepo. None of them worked out of the box for our stack: Python 3.11, Node 20 LTS, Postgres 15 with row-level security, and Redis 7.2 for caching. Each tool promised 90% fewer reviews, but delivered 30% more merges and two rollbacks a week.
+Windsurf because the demo showed a 700ms faster edit cycle. Claude Code because Anthropic’s 2025 context window promised to remember every file in a monorepo. None of them worked out of the box for our stack: Python 3.11, Node 20 LTS, Postgres 15 with row-level security, and Redis 7.2 for caching. Each tool promised 90% fewer reviews, but delivered 30% more merges and two rollbacks a week.
 
 I was debugging a simple AWS Lambda timeout last month when Windsurf suggested a change that swapped our primary Postgres connection string with a read-only replica. The error message was buried in a 120-line diff. That’s when I decided to treat these tools like they were third-party services: measure, audit, and compare with real numbers.
 
@@ -14,10 +14,7 @@ I was debugging a simple AWS Lambda timeout last month when Windsurf suggested a
 
 I ran a three-week benchmark using our internal monorepo (12,800 Python files, 84 Node packages, 3.2 GB of test data). Each tool got its own branch to avoid bias. I measured four metrics:
 
-- **Latency per edit**: average time between keystroke and first AI suggestion, measured with `hyperfine --warmup 3` and Node’s `performance.now()` in the renderer process.
-- **Context retention**: how often it remembered imports or types across files, counted as a percentage of edits that didn’t require manual context resupply.
-- **Audit trail**: how many edits included a commit message or inline comment with the AI suggestion source. I used `git log --grep="cursor:` to filter.
-- **Cost**: monthly spend on API tokens and local GPU usage, logged via `nvidia-smi --query-gpu=power.draw --format=csv` and Anthropic’s usage dashboard.
+- **Latency per edit**: average time between keystroke and first AI suggestion, measured with `hyperfine --warmup 3` and Node’s `performance.now()` in the renderer process. - **Context retention**: how often it remembered imports or types across files, counted as a percentage of edits that didn’t require manual context resupply. - **Audit trail**: how many edits included a commit message or inline comment with the AI suggestion source. I used `git log --grep="cursor:` to filter. - **Cost**: monthly spend on API tokens and local GPU usage, logged via `nvidia-smi --query-gpu=power.draw --format=csv` and Anthropic’s usage dashboard.
 
 Here are the raw numbers after 150 hours of editing:
 
@@ -105,7 +102,7 @@ Avoid CodeWhisperer and Mistral-swapped Cursor if you have AWS or PII constraint
 
 **Why does Windsurf leak PII in API calls?**
 
-Windsurf’s default prompt template includes up to 1,000 lines of diff context and file paths. If a file path or diff line contains a user email or Redis connection string, Windsurf includes it in the API call. The fix is to add a custom prompt template that strips out PII using a regex like `s/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/<REDACTED>/gi`. I spent three hours debugging this when our compliance team flagged it.
+Windsurf’s default prompt template includes up to 1,000 lines of diff context and file paths. If a file path or diff line contains a user email or Redis connection string, Windsurf includes it in the API call. The fix is to add a custom prompt template that strips out PII using a regex like `s/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/<REDACTED>/gi`.
 
 **Can Cursor handle large monorepos without crashing?**
 
@@ -290,11 +287,7 @@ I ran a controlled experiment over two weeks (10 business days) to measure the i
 | Cold-start latency (12k files) | 1.2s                   | 1.1s             | -8%    |
 
 Key observations:
-1. **Latency dropped by 60%** because Windsurf’s local-first architecture avoids round-trips to GitHub Copilot’s API. The remaining 210ms includes the time to render the suggestion in the UI, which is now handled by a WebAssembly-based renderer.
-2. **Context retention improved by 23%** because Windsurf’s TypeScript language server indexes symbols across files more aggressively than Copilot’s GitHub-native approach.
-3. **Audit trail coverage increased by 29%** because Windsurf includes AI suggestion hashes in commit messages by default (via `"ai.includeSuggestionHash": true`).
-4. **Rollbacks dropped by 65%** because Windsurf’s diff viewer highlights AI changes, making it easier to spot errors before committing.
-5. **Token cost dropped by 35%** because Windsurf’s local language server handles most symbol lookups, reducing API calls to Anthropic.
+1. **Latency dropped by 60%** because Windsurf’s local-first architecture avoids round-trips to GitHub Copilot’s API. The remaining 210ms includes the time to render the suggestion in the UI, which is now handled by a WebAssembly-based renderer. 2. **Context retention improved by 23%** because Windsurf’s TypeScript language server indexes symbols across files more aggressively than Copilot’s GitHub-native approach. 3. **Audit trail coverage increased by 29%** because Windsurf includes AI suggestion hashes in commit messages by default (via `"ai.includeSuggestionHash": true`). 4. **Rollbacks dropped by 65%** because Windsurf’s diff viewer highlights AI changes, making it easier to spot errors before committing. 5. **Token cost dropped by 35%** because Windsurf’s local language server handles most symbol lookups, reducing API calls to Anthropic.
 
 The only regression was **cold-start latency for new repos**, which increased slightly from 1.2s to 1.1s (still within acceptable limits). The biggest win was the **PII risk score**, which dropped from 8 to 2 because Windsurf’s local architecture prevents prompt leakage by default.
 
@@ -314,20 +307,16 @@ Here’s a real example from our logs:
 
 The experiment confirmed that Windsurf isn’t just faster—it’s also safer and more auditable for teams with strict compliance requirements.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

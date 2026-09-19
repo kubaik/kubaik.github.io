@@ -8,7 +8,7 @@ The standard playbook for shipping AI features goes like this: wrap an LLM call 
 
 I’ve seen teams burn 40% of their engineering hours on AI-related support tickets within three months. The problem isn’t the AI itself — it’s the assumptions we layer on top. We assume the model won’t drift, the cache will always be warm, and the feature flag will never get stale. None of these hold in real traffic from Lagos to Nairobi, where 3G is still the norm and users drop on and off mid-conversation.
 
-The honest answer is: most AI feature wrappers are built for the ideal world — fast connections, stable latency, predictable input. Reality is the opposite. I spent three days debugging why our AI chatbot in Ghana kept returning 502 errors only to realize the CloudFront cache wasn’t respecting 504s from the origin. The cache layer assumed all errors were transient — but 502s from an overloaded API are not. That assumption baked itself into our wrapper layer and cost us 12% of daily active users in the first week.
+The honest answer is: most AI feature wrappers are built for the ideal world — fast connections, stable latency, predictable input. Reality is the opposite. The cache layer assumed all errors were transient — but 502s from an overloaded API are not. That assumption baked itself into our wrapper layer and cost us 12% of daily active users in the first week.
 
 ## What actually happens when you follow the standard advice
 
@@ -36,9 +36,7 @@ The problem isn’t that the standard advice is wrong — it’s that it’s inc
 
 What does that mean?
 
-1. Every AI call is a state transition: idle → fetching → validating → caching → returning. Each transition must handle interruptions.
-2. The cache isn’t just a speed tool — it’s a resilience layer. It must survive partial writes, eviction storms, and TTL misconfigurations.
-3. The wrapper isn’t just a router — it’s a circuit breaker. If the model returns 503 for 30 seconds, the wrapper must fail fast and return a cached fallback or an apology.
+1. Every AI call is a state transition: idle → fetching → validating → caching → returning. Each transition must handle interruptions. 2. The cache isn’t just a speed tool — it’s a resilience layer. It must survive partial writes, eviction storms, and TTL misconfigurations. 3. The wrapper isn’t just a router — it’s a circuit breaker. If the model returns 503 for 30 seconds, the wrapper must fail fast and return a cached fallback or an apology.
 
 I’ve rebuilt this mental model twice — once for a Kenyan fintech and once for a Ghanaian marketplace. Both systems now use:
 
@@ -138,12 +136,7 @@ Caching is a trade-off. In System A, we cached raw responses and paid $180/day f
 
 If I were building an AI feature today for a consumer app in East or West Africa, I’d start with this stack:
 
-- **Edge routing:** Cloudflare Workers with Durable Objects for stateful sessions. Workers handle 3G drops and partial responses natively.
-- **Cache:** Redis 7.2 with Lua scripts for atomic cache writes and sliding TTLs. Set `maxmemory-policy volatile-lru` and monitor `evicted_keys`.
-- **State machine:** Rust with `sm 0.10` and `tokio 1.36`. Use `thiserror 1.0` for rich error types.
-- **Circuit breaker:** `go-resilience 1.5` ported to Rust. Set failure threshold to 50% in 10 seconds, with a 30-second half-open window.
-- **Fallbacks:** Pre-computed summaries for top 1k prompts. Serve these when the model times out or the network drops.
-- **Observability:** Structured logs with `slog 0.9` and metrics via Prometheus. Track state transitions, cache hits/misses, and circuit breaker state.
+- **Edge routing:** Cloudflare Workers with Durable Objects for stateful sessions. Workers handle 3G drops and partial responses natively. - **Cache:** Redis 7.2 with Lua scripts for atomic cache writes and sliding TTLs. Set `maxmemory-policy volatile-lru` and monitor `evicted_keys`. - **State machine:** Rust with `sm 0.10` and `tokio 1.36`. Use `thiserror 1.0` for rich error types. - **Circuit breaker:** `go-resilience 1.5` ported to Rust. Set failure threshold to 50% in 10 seconds, with a 30-second half-open window. - **Fallbacks:** Pre-computed summaries for top 1k prompts. Serve these when the model times out or the network drops. - **Observability:** Structured logs with `slog 0.9` and metrics via Prometheus. Track state transitions, cache hits/misses, and circuit breaker state.
 
 I’d avoid:
 
@@ -182,7 +175,6 @@ Most strategies assume exact prompt matching and stable TTLs. In Africa, prompts
 **how to measure if my AI feature is ready for production**
 
 Measure three things: cache miss rate, P99 latency, and fallback rate. If cache miss rate >30%, your TTLs are wrong. If P99 latency >800ms, your edge routing is wrong. If fallback rate >10%, your circuit breaker is wrong. Set up Prometheus metrics for these three values. If any exceed the threshold, redesign before shipping.
-
 
 ---
 

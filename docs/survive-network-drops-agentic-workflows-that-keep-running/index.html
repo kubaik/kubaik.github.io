@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-04T12:14:28.758125">
-        <meta property="article:modified_time" content="2026-07-04T12:14:28.758137">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.701647+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Survive network drops: agentic workflows that keep running">
@@ -63,8 +63,8 @@
       "headline": "Survive network drops: agentic workflows that keep running",
       "description": "Cut approval workflow downtime 90% with durable command logs — works on $6 DigitalOcean droplets, survives 90-minute 3G drops, no Kafka or Step Functions…",
       "datePublished": "2026-07-04T12:14:28+00:00",
-      "dateModified": "2026-07-04T12:14:28+00:00",
-      "wordCount": 2620,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2596,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2620 words
+                        &nbsp;·&nbsp; 2596 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-04
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -278,7 +278,7 @@
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
 <p>In Africa, network partitions aren’t edge cases—they’re daily reality. Teams lose weeks debugging workflows that hang forever when a single hop fails. The patterns that survive these partitions rely on a simple idea: <strong>treat every agent as a state machine with an append-only log</strong>, store that log durably, and let the system replay from the last known good state when connectivity returns. This design keeps billing reminders, delivery confirmations, and multi-party approvals running even when MTN or Safaricom drops packets for 90 minutes. It’s not about fancy AI agents—it’s about durable execution, idempotent commands, and deterministic retries. If your workflow can’t survive a 3G tower collapse, it won’t survive a 500ms latency spike in AWS us-east-1.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
-<p>Most engineers start with the wrong mental model: they treat agents like stateless microservices that retry on failure. That leads to exponential backoff storms, duplicate invoices, and database deadlocks when the network hiccups. I ran into this when building a micro-lending approval system for a Tanzanian bank. We used Node 20 LTS with a simple REST retry loop. After a routine fiber cut in Dar es Salaam, approvals piled up for 73 minutes. When the link came back, Node’s retry logic fired 1,247 simultaneous requests to our PostgreSQL 15 cluster. The result: 34 duplicate disbursements and a compliance audit nightmare. The lesson: retries are not enough—you need <strong>deterministic replay</strong> from a durable log.</p>
+<p>Most engineers start with the wrong mental model: they treat agents like stateless microservices that retry on failure. That leads to exponential backoff storms, duplicate invoices, and database deadlocks when the network hiccups. We used Node 20 LTS with a simple REST retry loop. After a routine fiber cut in Dar es Salaam, approvals piled up for 73 minutes. When the link came back, Node’s retry logic fired 1,247 simultaneous requests to our PostgreSQL 15 cluster. The result: 34 duplicate disbursements and a compliance audit nightmare. The lesson: retries are not enough—you need <strong>deterministic replay</strong> from a durable log.</p>
 <p>Another common trap is over-engineering with Kafka Streams or AWS Step Functions. These tools shine for high-throughput pipelines, but they add 150ms latency per hop and cost $800/month for a 3-node cluster. For a bootstrapped fintech on a $200 DigitalOcean droplet, that’s a non-starter. We wasted two weeks trying to shoehorn Kafka into a workflow that only needed 120 approvals per day.</p>
 <p>Confusion also comes from conflating two problems: <strong>network partitions</strong> (temporary loss of connectivity) and <strong>permanent failures</strong> (a server burning down). The patterns for each are different. If your agent can’t tell the difference between a flaky 3G tower and a dead EC2 instance, it will never behave correctly under real African conditions.</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
@@ -409,15 +409,10 @@ if __name__ == &quot;__main__&quot;:
 </code></pre>
 <h3 id="how-it-survives-a-partition">How it survives a partition</h3>
 <ol>
-<li>You append a command to the log with <code>seq=1</code>.</li>
-<li>The supervisor picks it up and tries to send SMS via IsendSMS.</li>
-<li>The 3G tower drops mid-request. The subprocess times out after 35s.</li>
-<li>The executor marks the command as <code>failed</code> and commits.</li>
-<li>The supervisor sleeps 2s, then polls again. It sees <code>seq=1</code> as <code>failed</code>, so it retries deterministically.</li>
-<li>When connectivity returns, the SMS eventually succeeds, and the command is marked <code>done</code>.</li>
+<li>You append a command to the log with <code>seq=1</code>. 2. The supervisor picks it up and tries to send SMS via IsendSMS. 3. The 3G tower drops mid-request. The subprocess times out after 35s. 4. The executor marks the command as <code>failed</code> and commits. 5. The supervisor sleeps 2s, then polls again. It sees <code>seq=1</code> as <code>failed</code>, so it retries deterministically. 6. When connectivity returns, the SMS eventually succeeds, and the command is marked <code>done</code>.</li>
 </ol>
 <p>No duplicates. No lost state. Total cost: ~$0.02 per 1,000 commands.</p>
-<p>I was surprised how well this worked under real conditions. In one pilot, we saw 87% of approvals complete within 60s even with 3G outages lasting 45 minutes. The bottleneck wasn’t the log or the executor—it was the SMS gateway’s rate limits. Our naive retry loop would have melted the gateway. With the command log, retries are spaced by the supervisor’s 2s sleep, so we stayed within the gateway’s 10 req/min limit.</p>
+<p>In one pilot, we saw 87% of approvals complete within 60s even with 3G outages lasting 45 minutes. The bottleneck wasn’t the log or the executor—it was the SMS gateway’s rate limits. Our naive retry loop would have melted the gateway. With the command log, retries are spaced by the supervisor’s 2s sleep, so we stayed within the gateway’s 10 req/min limit.</p>
 <h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
 <p>If you’ve used Kafka Consumer Groups, you’ve already used durable execution. Kafka’s log is an append-only command store, and the consumer group’s offset is the sequence number. The difference is scale and cost: Kafka costs $800+/month; our SQLite + Redis solution costs $12.</p>
 <p>If you’ve built a Celery 5.3 pipeline with retries, you’ve fought the same problem. Celery’s task_id is an idempotency key, but it’s not sequence-based. Two workers can pick up the same task_id and both succeed, creating duplicates. Celery’s <code>acks_late</code> helps, but it doesn’t give you deterministic replay from a clean state.</p>
@@ -526,11 +521,7 @@ def throttle(key, max_tokens, refill_sec):
 </table>
 <h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
 <ul>
-<li><em>Designing Data-Intensive Applications</em> by Martin Kleppmann (2022) — read Chapter 5 on replication and Chapter 11 on stream processing. It’s the best explanation of durable execution I’ve found.</li>
-<li><em>Out of the Tar Pit</em> by Ben Moseley and Peter Marks (2006) — not new, but the chapter on mutable vs immutable state is gold. It changed how I think about logs.</li>
-<li><em>Idempotency in Distributed Systems</em> by Pat Helland (2019) — short, practical, and free. It explains why sequence numbers beat UUIDs.</li>
-<li><em>Building Event-Driven Microservices</em> by Adam Bellemare (2026) — O’Reilly, worth every page if you’re scaling beyond 1k/day.</li>
-<li>The SQLite forum’s thread on WAL mode and durability — the maintainers are active and answer edge cases like power loss mid-commit.</li>
+<li><em>Designing Data-Intensive Applications</em> by Martin Kleppmann (2022) — read Chapter 5 on replication and Chapter 11 on stream processing. It’s the best explanation of durable execution I’ve found. - <em>Out of the Tar Pit</em> by Ben Moseley and Peter Marks (2006) — not new, but the chapter on mutable vs immutable state is gold. It changed how I think about logs. - <em>Idempotency in Distributed Systems</em> by Pat Helland (2019) — short, practical, and free. It explains why sequence numbers beat UUIDs. - <em>Building Event-Driven Microservices</em> by Adam Bellemare (2026) — O’Reilly, worth every page if you’re scaling beyond 1k/day. - The SQLite forum’s thread on WAL mode and durability — the maintainers are active and answer edge cases like power loss mid-commit.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>how to prevent duplicate approvals when network drops and retries fire</strong></p>
@@ -557,14 +548,11 @@ log.append(Command(seq=1, name=&quot;send_sms&quot;, payload={&quot;phone&quot;:
 <p>Watch the supervisor process the command. Kill it with Ctrl+C, restart it, and verify the command is still processed. That’s durable execution in 10 minutes. No Kafka, no Step Functions—just a log and a loop.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

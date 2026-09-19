@@ -4,7 +4,7 @@ Most pair programming guides assume a clean environment and a patient timeline. 
 
 ## The situation (what we were trying to solve)
 
-In late 2026, our team at NairaPay had to double our engineering output in six months while keeping our 2026 on-call SLA at 99.9%. The product team wanted 8 new money-transfer flows, each with compliance checks, audit logs, and real-time fraud scoring. We were at 40 developers, and the hiring pipeline wasn’t keeping up. I was surprised that even after doubling our recruiter budget, we still had open reqs for mid-level backend engineers in Lagos and Manila. The CTO asked us to pilot an AI pair-programming tool to fill the gap. I ran the pilot myself on one flow—the P2P instant transfer between two wallets—and within a week it produced 1,200 lines of TypeScript with unit tests, all passing on the first run. That result felt too good to be true, so I dug in.
+In late 2026, our team at NairaPay had to double our engineering output in six months while keeping our 2026 on-call SLA at 99.9%. The product team wanted 8 new money-transfer flows, each with compliance checks, audit logs, and real-time fraud scoring. We were at 40 developers, and the hiring pipeline wasn’t keeping up. The CTO asked us to pilot an AI pair-programming tool to fill the gap. I ran the pilot myself on one flow—the P2P instant transfer between two wallets—and within a week it produced 1,200 lines of TypeScript with unit tests, all passing on the first run. That result felt too good to be true, so I dug in.
 
 We needed to know what happens to code ownership when an AI writes it. Does the AI become a co-author? Does the human reviewer still own the final artifact? Can we still sign off on security and compliance if the AI generated 80% of the lines? We decided to treat the AI like a junior engineer: it can write code, but the senior engineer is still the one who signs off, merges, and takes pager duty when it breaks at 2 a.m.
 
@@ -20,7 +20,7 @@ We started with GitHub Copilot Enterprise (v1.120) in June 2026. The marketing p
 
 3. **Cost creep**: We initially budgeted for $12 per developer per month, but by September we were at $48 per developer because we turned on the advanced code analysis and security scanning add-ons. That’s $1,920 a month for 40 developers—more than we spent on our CI minutes.
 
-I spent three days trying to tune Copilot’s settings to stop it from suggesting database queries. The prompt engineering docs were full of fluff about "intent" and "context." None of it worked. The model kept generating unsafe queries until we disabled Copilot for SQL files entirely. That was a hard lesson: you can’t patch culture with a config file.
+The prompt engineering docs were full of fluff about "intent" and "context." None of it worked. The model kept generating unsafe queries until we disabled Copilot for SQL files entirely. That was a hard lesson: you can’t patch culture with a config file.
 
 ## The approach that worked
 
@@ -77,9 +77,7 @@ We rolled out Cursor Rules in three phases. Phase one was a single squad: the P2
 ```
 
 **Phase two improvements:**
-- Added a custom linter (using AST from tree-sitter) to validate the `@owner` tag format.
-- Created a Slack bot that posts a digest of AI-generated PRs every Friday. The digest lists the PR, the human reviewer, and the AI’s contribution percentage. The bot flags PRs with >70% AI contribution so managers can spot training gaps.
-- Wrote a migration script in Python 3.11 that retroactively added `@owner` tags to 4,200 existing files. The script ran in 4 minutes and left a clean git history.
+- Added a custom linter (using AST from tree-sitter) to validate the `@owner` tag format. - Created a Slack bot that posts a digest of AI-generated PRs every Friday. The digest lists the PR, the human reviewer, and the AI’s contribution percentage. The bot flags PRs with >70% AI contribution so managers can spot training gaps. - Wrote a migration script in Python 3.11 that retroactively added `@owner` tags to 4,200 existing files. The script ran in 4 minutes and left a clean git history.
 
 **CI setup example (bandit.yml):**
 ```yaml
@@ -135,7 +133,7 @@ Latency wasn’t a problem for us—Cursor’s autocomplete and chat run locally
 
 5. **Budget for the Bandit scan.** The scan cost us 45 seconds per PR, but it saved us from a real security incident. We should have allocated extra CI minutes up front instead of retrofitting it.
 
-I was surprised that the biggest cultural shift wasn’t technical—it was the shift from "the AI is a tool" to "the AI is a junior engineer." Once we treated it like a person, the ownership model clicked. The AI doesn’t sign the compliance doc, the human does.
+The AI doesn’t sign the compliance doc, the human does.
 
 ## The broader lesson
 
@@ -197,20 +195,16 @@ Open your main repository in Cursor. Create a file called `.cursor/rules.json` a
 
 If your repo doesn’t have a `.cursor/rules.json`, create it now. If Cursor isn’t installed, install v0.31 for your IDE. This one file will force the ownership model into your workflow before you write another line of code.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

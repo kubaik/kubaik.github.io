@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-11T08:54:57.972223">
-        <meta property="article:modified_time" content="2026-08-11T08:54:57.972237">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.303640+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Observability agents lied to us">
@@ -63,8 +63,8 @@
       "headline": "Observability agents lied to us",
       "description": "Observability agents in production: the memory leaks, configuration drift, and hidden costs most teams miss.",
       "datePublished": "2026-08-11T08:54:57+00:00",
-      "dateModified": "2026-08-11T08:54:57+00:00",
-      "wordCount": 2699,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2683,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,16 +266,16 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2699 words
+                        &nbsp;·&nbsp; 2683 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-11
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on traditional observability before understanding what was actually happening. Most write-ups stop exactly where the interesting part starts. This post covers what comes after the happy path.</p>
+                <p>Most write-ups stop exactly where the interesting part starts. This post covers what comes after the happy path.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>The standard playbook says: <em>install an agent, expose metrics, collect traces, set up alerts, and you’re done.</em> This advice is everywhere—vendor docs, conference talks, even the CNCF TrailMap. But the honest answer is that this playbook is optimized for yesterday’s systems, not today’s. It misses the part that breaks first when you move from monoliths to distributed services: the cost and complexity of running agents in production.</p>
 <p>A 2026 survey of 500 SREs found that 68% ran into unexpected agent resource overhead after deploying their first production-grade agent suite (Prometheus 2.47 + Grafana Agent 0.38 + OpenTelemetry Collector 0.92). The failure mode wasn’t telemetry quality—it was the agents themselves. The exact error teams usually see is:</p>
@@ -295,25 +295,17 @@
 <h2 id="a-different-mental-model">A different mental model</h2>
 <p>The conventional model treats agents as <em>infrastructure</em>—something you set and forget. The alternative is to treat agents as <em>application code</em>. That means:</p>
 <ul>
-<li>Agents are versioned, tested, and deployed like any other microservice.</li>
-<li>Agents have their own resource budgets, SLOs, and error budgets.</li>
-<li>Agents are observable via their own telemetry, not just the telemetry they collect.</li>
+<li>Agents are versioned, tested, and deployed like any other microservice. - Agents have their own resource budgets, SLOs, and error budgets. - Agents are observable via their own telemetry, not just the telemetry they collect.</li>
 </ul>
 <p>In practice, this means:</p>
 <ol>
-<li>Pin agent versions (e.g., OpenTelemetry Collector 0.92 with a specific set of components).</li>
-<li>Set memory/CPU requests and limits based on load testing, not defaults.</li>
-<li>Run agents in a dedicated namespace with pod disruption budgets.</li>
-<li>Monitor the agents’ own metrics (e.g., <code>otelcol_process_runtime_heap_usage</code>, <code>otelcol_process_cpu_seconds</code>) alongside application metrics.</li>
-<li>Use separate scrape intervals for agent telemetry vs. application telemetry.</li>
+<li>Pin agent versions (e.g., OpenTelemetry Collector 0.92 with a specific set of components). 2. Set memory/CPU requests and limits based on load testing, not defaults. 3. Run agents in a dedicated namespace with pod disruption budgets. 4. Monitor the agents’ own metrics (e.g., <code>otelcol_process_runtime_heap_usage</code>, <code>otelcol_process_cpu_seconds</code>) alongside application metrics. 5. Use separate scrape intervals for agent telemetry vs. application telemetry.</li>
 </ol>
 <p>This mental model is harder to adopt because it requires treating agents as first-class citizens in your deployment pipeline. But the payoff is that you stop debugging why your telemetry pipeline is broken—because you’re already monitoring it.</p>
 <h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
 <p>Here’s a concrete example from a 2026 production incident at a fintech company. They deployed an OpenTelemetry Collector DaemonSet (otelcol 0.92) across 120 EKS nodes (m6g.2xlarge, 8 vCPUs, 32 GiB RAM). The collector’s default config enabled the k8sobjectsreceiver, which scrapes Kubernetes API objects at a 30-second interval. On a cluster with 5,000 pods, this caused:</p>
 <ul>
-<li>40% higher p95 latency for the Kubernetes API server (from 25ms to 35ms).</li>
-<li>15% increase in etcd latency (from 5ms to 5.8ms).</li>
-<li>Collector memory usage spiked to 1.2 GiB per pod, causing OOM kills.</li>
+<li>40% higher p95 latency for the Kubernetes API server (from 25ms to 35ms). - 15% increase in etcd latency (from 5ms to 5.8ms). - Collector memory usage spiked to 1.2 GiB per pod, causing OOM kills.</li>
 </ul>
 <p>The fix wasn’t to tune the collector—it was to disable the k8sobjectsreceiver and move to a centralized collector deployment with a service mesh exporter. The latency dropped back to baseline within 30 minutes.</p>
 <p>Another example: a gaming company (2026 revenue: $1.2B) ran into a cache stampede problem with their metrics pipeline. They used Prometheus 2.47 with a sidecar exporter per pod. During traffic spikes, the exporters’ scrape queues filled up, and Prometheus started dropping samples. The error message was:</p>
@@ -323,10 +315,7 @@
 <h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
 <p>Not every system needs to treat agents as first-class code. The conventional wisdom works fine when:</p>
 <ul>
-<li>You’re running fewer than 20 services.</li>
-<li>Your services are long-lived (no ephemeral pods).</li>
-<li>Your telemetry volume is low (&lt;10k metrics/s).</li>
-<li>You’re using managed services (e.g., Datadog Agent, New Relic Infrastructure) where the vendor handles scaling.</li>
+<li>You’re running fewer than 20 services. - Your services are long-lived (no ephemeral pods). - Your telemetry volume is low (&lt;10k metrics/s). - You’re using managed services (e.g., Datadog Agent, New Relic Infrastructure) where the vendor handles scaling.</li>
 </ul>
 <p>In these cases, the overhead of running agents is negligible, and the simplicity of the standard playbook outweighs the complexity of treating agents as code.</p>
 <p>For example, a small e-commerce site (2026 traffic: 5k requests/min) runs a single monolith on a t3.medium instance. They use the Datadog Agent (7.53) and see no issues. The agent uses 120 MiB RAM and 0.03 CPU. The overhead is 1% of the instance’s resources. In this case, the conventional wisdom is correct.</p>
@@ -386,9 +375,7 @@
 <p><strong>Objection 2: "Managed services solve this. Use Datadog/New Relic/OpenTelemetry SaaS."</strong></p>
 <p>Response: Managed services reduce operational overhead but don’t eliminate it. In 2026, Datadog’s container agent (7.53) still requires:</p>
 <ul>
-<li>A DaemonSet with hostNetwork: true (which breaks network policies on some clusters).</li>
-<li>A service account with cluster-admin permissions (a security risk).</li>
-<li>A dedicated API key per environment (key rotation overhead).</li>
+<li>A DaemonSet with hostNetwork: true (which breaks network policies on some clusters). - A service account with cluster-admin permissions (a security risk). - A dedicated API key per environment (key rotation overhead).</li>
 </ul>
 <p>The managed service abstracts the agent’s resource usage, but the configuration and permissions still need to be managed. The overhead isn’t gone—it’s just shifted to the vendor’s API limits and pricing model.</p>
 <p><strong>Objection 3: "The OpenTelemetry Collector is supposed to be composable. Just disable the exporters you don’t need."</strong></p>

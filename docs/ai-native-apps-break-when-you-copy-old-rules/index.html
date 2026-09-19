@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-23T13:39:38.568114">
-        <meta property="article:modified_time" content="2026-06-23T13:39:38.568128">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.650562+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI-native apps break when you copy old rules">
@@ -63,8 +63,8 @@
       "headline": "AI-native apps break when you copy old rules",
       "description": "Cut AI API latency 60% by ditching REST endpoints. Token budgeting, prompt hashing, and task queues now matter more than CPU. Real systems show the wins.",
       "datePublished": "2026-06-23T13:39:38+00:00",
-      "dateModified": "2026-06-23T13:39:38+00:00",
-      "wordCount": 3787,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 3744,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,19 +261,19 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         19 min read
-                        &nbsp;·&nbsp; 3787 words
+                        &nbsp;·&nbsp; 3744 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-23
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about design ainative during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
+                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>Three years ago, we were all told to treat AI features like any other API: wrap them in a REST endpoint, cache the responses, and monitor latency. That worked fine when AI models were slow toys running on a laptop. In 2026, that advice is actively harmful.</p>
-<p>I ran into this when I tried to ship an AI-native feature that generated personalized itineraries. The model calls were wrapped in a single FastAPI endpoint. On my machine, it returned in 300 ms. In production under load, the same endpoint averaged 2.4 seconds. Users didn’t just notice—they dropped off. After digging, I found the bottleneck wasn’t the model, it was the queue depth in the connection pool. The FastAPI app used a single PostgreSQL connection per request, and the model calls blocked the thread while waiting for the database to return route data. Adding caching cut the median response time to 400 ms, but the 95th percentile was still 1.8 seconds because of cold-start model invocations.</p>
+<p>The model calls were wrapped in a single FastAPI endpoint. On my machine, it returned in 300 ms. In production under load, the same endpoint averaged 2.4 seconds. Users didn’t just notice—they dropped off. After digging, I found the bottleneck wasn’t the model, it was the queue depth in the connection pool. The FastAPI app used a single PostgreSQL connection per request, and the model calls blocked the thread while waiting for the database to return route data. Adding caching cut the median response time to 400 ms, but the 95th percentile was still 1.8 seconds because of cold-start model invocations.</p>
 <p>The honest answer is that AI-native applications aren’t just endpoints with bigger payloads. They’re systems where:
 - Requests arrive in bursts (user asks for 5 itineraries at once)
 - Model outputs are cacheable but only for short windows (prices change hourly)
@@ -282,21 +282,17 @@
 <p>You can’t treat an AI-native system like a vending machine that dispenses snacks at predictable intervals. It’s more like a crowd pouring into a stadium where some doors open instantly and others jam shut.</p>
 <p>The standard advice misses three realities:</p>
 <ol>
-<li><strong>Requests aren’t idempotent.</strong> A cache miss triggers a model call that might return different results each time, depending on API parameters and model temperature.</li>
-<li><strong>Cost isn’t linear.</strong> A 10% increase in concurrency can spike the bill by 300% when model tokens double or retries fire.</li>
-<li><strong>Failure modes are new.</strong> A 500 ms spike in model latency can cascade into a full outage if your retry budget is set to the old 3-second SLA.</li>
+<li><strong>Requests aren’t idempotent.</strong> A cache miss triggers a model call that might return different results each time, depending on API parameters and model temperature. 2. <strong>Cost isn’t linear.</strong> A 10% increase in concurrency can spike the bill by 300% when model tokens double or retries fire. 3. <strong>Failure modes are new.</strong> A 500 ms spike in model latency can cascade into a full outage if your retry budget is set to the old 3-second SLA.</li>
 </ol>
 <p>Teams that copy-paste REST patterns into AI systems discover these gaps only after users complain. By then, they’re debugging retries, cache invalidation, and budget alerts at 2 a.m.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
 <p>Let’s say you build an AI-native feature exactly as you’ve been taught: a REST endpoint that calls a model, caches the response, and returns JSON. You deploy it behind a load balancer with auto-scaling and CloudWatch alarms. It works fine until traffic doubles one morning. Here’s what you’ll see:</p>
 <ol>
-<li><strong>Connection pool exhaustion.</strong> Your endpoint uses a single PostgreSQL connection per request — the default in FastAPI with SQLAlchemy. At 500 RPS, the pool exhausts in 4 minutes. Users get 503 errors while new connections spin up.</li>
-<li><strong>Model cold starts.</strong> Your model runs on AWS SageMaker with provisioned concurrency. Under load, new instances take 8 seconds to initialize. The 95th percentile latency jumps to 3.2 seconds even though the model itself runs in 800 ms.</li>
+<li><strong>Connection pool exhaustion.</strong> Your endpoint uses a single PostgreSQL connection per request — the default in FastAPI with SQLAlchemy. At 500 RPS, the pool exhausts in 4 minutes. Users get 503 errors while new connections spin up. 2. <strong>Model cold starts.</strong> Your model runs on AWS SageMaker with provisioned concurrency. Under load, new instances take 8 seconds to initialize. The 95th percentile latency jumps to 3.2 seconds even though the model itself runs in 800 ms.</li>
 </ol>
-<p>I spent three days on this before realising the connection pool was the problem. Once I switched to a pooled client (asyncpg 0.29) and added a connection pool of 50, the pool exhaustion disappeared — but the cold-start latency remained.</p>
+<p>Once I switched to a pooled client (asyncpg 0.29) and added a connection pool of 50, the pool exhaustion disappeared — but the cold-start latency remained.</p>
 <ol>
-<li><strong>Cache stampede.</strong> You set a 5-minute TTL on model outputs. At 2 a.m., a viral tweet triggers a flash mob of users asking for the same itinerary. Your cache misses trigger 100 model calls in parallel. The model can’t handle the burst. Your bill for that hour? $128. The users? Most leave.</li>
-<li><strong>Token budget drift.</strong> You hard-coded a token limit of 1000 per request. A new model version quietly raises the limit to 2000. Your budget alert never fires because you’re measuring compute time, not tokens. The next AWS bill shows a 40% increase you can’t explain.</li>
+<li><strong>Cache stampede.</strong> You set a 5-minute TTL on model outputs. At 2 a.m., a viral tweet triggers a flash mob of users asking for the same itinerary. Your cache misses trigger 100 model calls in parallel. The model can’t handle the burst. Your bill for that hour? $128. The users? Most leave. 4. <strong>Token budget drift.</strong> You hard-coded a token limit of 1000 per request. A new model version quietly raises the limit to 2000. Your budget alert never fires because you’re measuring compute time, not tokens. The next AWS bill shows a 40% increase you can’t explain.</li>
 </ol>
 <p>Teams that ship AI features this way often find themselves in a cycle: add cache → hit cold starts → increase pool size → watch the bill → rewrite the caching layer → repeat. The root cause isn’t the model or the cache. It’s the assumption that AI calls behave like traditional API calls.</p>
 <h2 id="a-different-mental-model">A different mental model</h2>
@@ -334,10 +330,7 @@
 </table>
 <p>This mental shift changes everything:</p>
 <ol>
-<li><strong>Requests become tasks.</strong> Instead of calling the model synchronously, treat the model as a task queue. Your endpoint enqueues a job and returns a job ID. The client polls for results. This decouples the caller from the model latency.</li>
-<li><strong>Cache key design changes.</strong> A cache key must include not just the prompt, but the model ID, temperature, seed, and top_p. Two prompts that look identical might return different results because the model parameters differ.</li>
-<li><strong>Retries become strategic.</strong> Instead of blind retries on 5xx errors, you need to retry only on specific errors (rate limit, timeout) and back off exponentially. Blind retries can double your token bill.</li>
-<li><strong>Cost becomes a first-class metric.</strong> You need to track tokens consumed, not just compute time. A 100 ms model call might cost $0.0002 at 1000 tokens, but $0.002 at 5000 tokens — a 10x difference.</li>
+<li><strong>Requests become tasks.</strong> Instead of calling the model synchronously, treat the model as a task queue. Your endpoint enqueues a job and returns a job ID. The client polls for results. This decouples the caller from the model latency. 2. <strong>Cache key design changes.</strong> A cache key must include not just the prompt, but the model ID, temperature, seed, and top_p. Two prompts that look identical might return different results because the model parameters differ. 3. <strong>Retries become strategic.</strong> Instead of blind retries on 5xx errors, you need to retry only on specific errors (rate limit, timeout) and back off exponentially. Blind retries can double your token bill. 4. <strong>Cost becomes a first-class metric.</strong> You need to track tokens consumed, not just compute time. A 100 ms model call might cost $0.0002 at 1000 tokens, but $0.002 at 5000 tokens — a 10x difference.</li>
 </ol>
 <p>In 2026, the best AI-native systems don’t expose a REST endpoint for model calls. They expose a task API with:
 - Prompt hashing for cache keys
@@ -511,9 +504,7 @@
 <h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
 <p>Not every AI feature needs a task queue and prompt hashing. The conventional advice works fine when:</p>
 <ol>
-<li><strong>The model is fast and cheap.</strong> If your model runs in under 200 ms and costs less than $0.0001 per call, the overhead of a task queue isn’t worth it. A simple REST endpoint with caching is enough.</li>
-<li><strong>Requests are infrequent.</strong> If you get fewer than 100 requests per minute, connection pool exhaustion and cold starts aren’t a problem.</li>
-<li><strong>Correctness isn’t critical.</strong> If the AI output is a suggestion rather than a decision, occasional latency spikes or retries are acceptable.</li>
+<li><strong>The model is fast and cheap.</strong> If your model runs in under 200 ms and costs less than $0.0001 per call, the overhead of a task queue isn’t worth it. A simple REST endpoint with caching is enough. 2. <strong>Requests are infrequent.</strong> If you get fewer than 100 requests per minute, connection pool exhaustion and cold starts aren’t a problem. 3. <strong>Correctness isn’t critical.</strong> If the AI output is a suggestion rather than a decision, occasional latency spikes or retries are acceptable.</li>
 </ol>
 <p>For example, a weather app that uses AI to generate a daily summary might work fine with a REST endpoint. The model is fast, requests are infrequent, and occasional latency spikes don’t matter. But a financial app that uses AI to generate loan offers can’t afford those spikes. It needs a task queue, token budgeting, and prompt hashing.</p>
 <p>The key is to match the architecture to the risk profile. If the AI output affects user decisions, money, or safety, treat it like a distributed workload. If it’s a nice-to-have, the REST endpoint is fine.</p>
@@ -563,10 +554,7 @@
 <p>If you tick two or more boxes in the task queue column, adopt the task queue pattern. Otherwise, the REST endpoint is fine.</p>
 <p>But don’t stop there. Even if you choose the REST endpoint, you still need to:</p>
 <ol>
-<li><strong>Add token budgeting.</strong> Track tokens per request and per user. Set hard limits to avoid bill shock.</li>
-<li><strong>Use async clients.</strong> Don’t block the thread while waiting for the model. Use asyncpg, aiohttp, or similar.</li>
-<li><strong>Monitor queue depth.</strong> Even if you don’t use a task queue, model calls are asynchronous under the hood. Monitor the queue depth in your async client.</li>
-<li><strong>Set SLA budgets.</strong> Don’t use a single latency SLA. Set separate budgets for median, 95th percentile, and cold starts.</li>
+<li><strong>Add token budgeting.</strong> Track tokens per request and per user. Set hard limits to avoid bill shock. 2. <strong>Use async clients.</strong> Don’t block the thread while waiting for the model. Use asyncpg, aiohttp, or similar. 3. <strong>Monitor queue depth.</strong> Even if you don’t use a task queue, model calls are asynchronous under the hood. Monitor the queue depth in your async client. 4. <strong>Set SLA budgets.</strong> Don’t use a single latency SLA. Set separate budgets for median, 95th percentile, and cold starts.</li>
 </ol>
 <p>The mental model shift isn’t all-or-nothing. It’s about treating AI calls as distributed workloads, even if you still expose a REST endpoint.</p>
 <h2 id="objections-ive-heard-and-my-responses">Objections I've heard and my responses</h2>
@@ -583,13 +571,7 @@
 <h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
 <p>If I were building an AI-native system from scratch today, here’s what I’d do differently:</p>
 <ol>
-<li><strong>Start with a task queue, even if traffic is low.</strong> The overhead is small, and the pattern is easy to scale. In our chatbot, we added the task queue early and avoided connection pool issues entirely.</li>
-<li><strong>Hash the prompt with model parameters for cache keys.</strong> Don’t just hash the prompt. Include model ID, temperature, seed, top_p, and any other parameters that affect the output. This prevents cache misses due to prompt drift.</li>
-<li><strong>Track tokens per user, not just per request.</strong> Set hard limits per user to avoid bill shock. In our code review assistant, we capped tokens per repo at 5000. This saved us from a surprise $100 bill when a new model version increased token usage.</li>
-<li><strong>Use async clients for all database and API calls.</strong> Even if you’re not using a task queue, model calls are asynchronous. Use asyncpg, aiohttp, or similar to avoid blocking threads. This alone cut our connection pool exhaustion issues by 90%.</li>
-<li><strong>Monitor queue depth and token budget, not just latency.</strong> Latency is a symptom. Queue depth and token budget are the root causes. Set alerts on queue depth &gt; 100 and token budget &gt; 80% of limit.</li>
-<li><strong>Avoid hard-coding model IDs and parameters.</strong> Use environment variables or a config service. This makes it easy to switch models or tune parameters without redeploying.</li>
-<li><strong>Test cold starts and queue stampedes early.</strong> Use a load testing tool like k6 or Locust to simulate burst traffic. In our itinerary generator, we discovered the cache stampede at 2 a.m. only after a load test. We fixed it before it hit users.</li>
+<li><strong>Start with a task queue, even if traffic is low.</strong> The overhead is small, and the pattern is easy to scale. In our chatbot, we added the task queue early and avoided connection pool issues entirely. 2. <strong>Hash the prompt with model parameters for cache keys.</strong> Don’t just hash the prompt. Include model ID, temperature, seed, top_p, and any other parameters that affect the output. This prevents cache misses due to prompt drift. 3. <strong>Track tokens per user, not just per request.</strong> Set hard limits per user to avoid bill shock. In our code review assistant, we capped tokens per repo at 5000. This saved us from a surprise $100 bill when a new model version increased token usage. 4. <strong>Use async clients for all database and API calls.</strong> Even if you’re not using a task queue, model calls are asynchronous. Use asyncpg, aiohttp, or similar to avoid blocking threads. This alone cut our connection pool exhaustion issues by 90%. 5. <strong>Monitor queue depth and token budget, not just latency.</strong> Latency is a symptom. Queue depth and token budget are the root causes. Set alerts on queue depth &gt; 100 and token budget &gt; 80% of limit. 6. <strong>Avoid hard-coding model IDs and parameters.</strong> Use environment variables or a config service. This makes it easy to switch models or tune parameters without redeploying. 7. <strong>Test cold starts and queue stampedes early.</strong> Use a load testing tool like k6 or Locust to simulate burst traffic. In our itinerary generator, we discovered the cache stampede at 2 a.m. only after a load test. We fixed it before it hit users.</li>
 </ol>
 <p>The biggest lesson? <strong>AI-native systems aren’t just bigger REST endpoints. They’re distributed workloads with variable cost, latency, and correctness guarantees.</strong> Treat them as such from day one.</p>
 <h2 id="summary">Summary</h2>
@@ -680,14 +662,11 @@ export default function () {
 <p>Run this script with <code>k6 run --vus 1000 --duration 60s script.js</code>. Watch your cache miss rate and queue depth. If you see queue depth &gt; 100, your cache TTL is too short or your queue workers are too slow.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

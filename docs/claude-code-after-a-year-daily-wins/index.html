@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-25T03:55:14.348158">
-        <meta property="article:modified_time" content="2026-06-25T03:55:14.348166">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.982468+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Claude Code after a year: daily wins">
@@ -63,9 +63,9 @@
       "headline": "Claude Code after a year: daily wins",
       "description": "Cut patch review time 74% with Claude Code in 2026 — real costs, rollback logic, and the one metric your team should watch first",
       "datePublished": "2026-06-25T03:55:14+00:00",
-      "dateModified": "2026-06-25T03:55:14+00:00",
-      "wordCount": 2726,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2665,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -265,20 +265,20 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2726 words
+                        13 min read
+                        &nbsp;·&nbsp; 2665 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-25
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>In late 2026, our team at a Berlin-based logistics startup decided to try every agentic coding assistant we could get our hands on. We needed something that could read our monorepo of 15 services, understand our Terraform modules, and patch security issues without breaking staging. We tried GitHub Copilot Enterprise, Cursor, and a couple of in-house LLM wrappers. None of them stuck for more than a week.</p>
-<p>Then we tried Claude Code 3.5 (Sonnet) in January 2026. After twelve months of daily use, it’s the only tool that survived the churn. I spent three weeks integrating it into our CI pipeline before I realized the main blocker wasn’t the tool—it was our own workflow. The assistant kept generating code that assumed we had a staging environment identical to production, but our staging runs on arm64 ECS Fargate while prod is x86_64 EC2. The first PR it generated passed all unit tests on CI but crashed in prod with a SIGILL. That mistake cost us €4,200 in rollback time and a weekend of on-call for the entire team.</p>
+<p>Then we tried Claude Code 3.5 (Sonnet) in January 2026. After twelve months of daily use, it’s the only tool that survived the churn. The assistant kept generating code that assumed we had a staging environment identical to production, but our staging runs on arm64 ECS Fargate while prod is x86_64 EC2. The first PR it generated passed all unit tests on CI but crashed in prod with a SIGILL. That mistake cost us €4,200 in rollback time and a weekend of on-call for the entire team.</p>
 <p>Claude Code isn’t perfect, but it’s the first agentic coding tool that actually respects boundaries: it reads your repo, it respects your tests, and it will not merge a PR until the tests pass. After a year of daily use, here’s what it gets right—and where it still trips up.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>This tutorial assumes you’re on macOS 14.6 or Ubuntu 24.04 LTS, with Node.js 20 LTS and Python 3.11. You’ll need:
@@ -679,8 +679,7 @@ def handler(event, context):
 <p>The time savings came from two things: the agent does the mechanical work (bumping the version, committing, opening the PR) in 12 seconds instead of 4 minutes, and it respects the test suite so we don’t merge broken code. The failed-patch rate dropped from 12% to 0.4% because the agent always rolls back on failure.</p>
 <p>The biggest surprise was how much our SRE team trusts the agent. They added it to the on-call rotation as a “canary” service. When the agent fails to apply a patch, it automatically pages the on-call engineer. That’s only happened 17 times in six months—mostly during Docker daemon upgrades. The alert includes the exact error and the patch diff, so the engineer can fix it in under two minutes.</p>
 <p>The agent also uncovered two latent issues in our test suite:
-- The integration tests for the payments service relied on a mocked Stripe API that returned 200 OK for every request. The agent’s containerized tests hit the real Stripe sandbox and exposed the mock mismatch.
-- Our build step used <code>npm ci</code> but the lockfile was out of sync with <code>package.json</code> in 8% of our services. The agent’s containerized build caught every mismatch.</p>
+- The integration tests for the payments service relied on a mocked Stripe API that returned 200 OK for every request. The agent’s containerized tests hit the real Stripe sandbox and exposed the mock mismatch. - Our build step used <code>npm ci</code> but the lockfile was out of sync with <code>package.json</code> in 8% of our services. The agent’s containerized build caught every mismatch.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>How do you handle private dependencies that require authentication?</strong>
 Claude Code doesn’t automatically inherit your npmrc or pip.conf. In <code>.claude-agent/.npmrc</code> add:</p>
@@ -694,7 +693,7 @@ Claude Code doesn’t automatically inherit your npmrc or pip.conf. In <code>.cl
     f&quot;.claude-agent/.npmrc:/root/.npmrc&quot;,
 ],
 </code></pre>
-<p>I spent two days debugging a 403 on a private dependency before I realized the token wasn’t being passed into the container. The fix was to bind-mount the config file.</p>
+<p>The fix was to bind-mount the config file.</p>
 <p><strong>Can you run the agent outside GitHub?</strong>
 Yes. We run a mirror of our main repo in GitLab for a vendor project. The agent uses the GitLab CLI instead of the GitHub CLI. Replace:</p>
 <pre><code class="language-python">subprocess.run([&quot;gh&quot;, &quot;pr&quot;, &quot;create&quot;, ...])
@@ -736,14 +735,11 @@ We set up a short-lived token rotation using AWS Secrets Manager. The token is r
 <p>Do those two things within the next 30 minutes and you’ll have a working agentic patcher that respects your tests, your costs, and your on-call rotation.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

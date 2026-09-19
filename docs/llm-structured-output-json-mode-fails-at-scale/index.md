@@ -6,11 +6,9 @@ Most structured outputs guides assume a clean environment and a patient timeline
 
 In mid-2026, our team built an internal tool that used LLMs to extract structured data from unstructured PDFs—contracts, invoices, and support tickets. We started with the obvious approach: ask the model to return JSON. The OpenAI API’s `response_format: { type: "json_object" }` looked perfect. We’d get back a string that we’d parse with `json.loads()`, then validate with Pydantic 2.4.0. It worked fine for the first 500 documents, but by 2,000 documents we saw two problems:
 
-1. **Latency spikes**: average response time jumped from 1.2s to 4.8s under load, even with gpt-4o-mini.
-2. **Structural drift**: 18% of outputs had missing fields or incorrect nesting, causing downstream pipelines to crash.
-3. **Cost creep**: we paid for 180,000 tokens for 2,000 documents—most of it wasted on the model’s long-winded explanations before the JSON.
+1. **Latency spikes**: average response time jumped from 1.2s to 4.8s under load, even with gpt-4o-mini. 2. **Structural drift**: 18% of outputs had missing fields or incorrect nesting, causing downstream pipelines to crash. 3. **Cost creep**: we paid for 180,000 tokens for 2,000 documents—most of it wasted on the model’s long-winded explanations before the JSON.
 
-I spent three days debugging a pipeline that broke because a single field named `line_items.tax_rate` turned into `line_items.taxRate` after a model update. This post is what I wished I had found then.
+This post is what I wished I had found then.
 
 We needed a system that guaranteed correctness, stayed fast, and didn’t burn tokens on prose. JSON mode alone wasn’t cutting it.
 
@@ -34,9 +32,7 @@ parsed = json.loads(response.choices[0].message.content)
 
 **Why it failed**:
 
-- **Token bloat**: The model still returned verbose explanations wrapped in `{"reason": "...", "data": {...}}`. We paid for 3–4x more tokens than necessary.
-- **Schema drift**: Even with `temperature=0.0`, the model occasionally renamed keys or dropped optional fields. Our Pydantic validator raised `ValidationError` 18% of the time.
-- **Latency**: The extra tokens and internal formatting added ~300ms per call. Under 100 concurrent users, total latency hit 4.8s—too slow for our API gateway timeout.
+- **Token bloat**: The model still returned verbose explanations wrapped in `{"reason": "...", "data": {...}}`. We paid for 3–4x more tokens than necessary. - **Schema drift**: Even with `temperature=0.0`, the model occasionally renamed keys or dropped optional fields. Our Pydantic validator raised `ValidationError` 18% of the time. - **Latency**: The extra tokens and internal formatting added ~300ms per call. Under 100 concurrent users, total latency hit 4.8s—too slow for our API gateway timeout.
 
 We tried setting `max_tokens=1000` to cap output, but the model still returned nested explanations. We tried stripping the `reason` field with a regex, but that broke when the model changed its formatting.
 
@@ -44,8 +40,7 @@ We tried setting `max_tokens=1000` to cap output, but the model still returned n
 
 We pivoted to a two-stage pipeline:
 
-1. **Force schema adherence** using a **strict instruction set** and a **fixed output template**.
-2. **Validate early and often** with Pydantic 2.4.0 and JSON Schema Draft 2026-12.
+1. **Force schema adherence** using a **strict instruction set** and a **fixed output template**. 2. **Validate early and often** with Pydantic 2.4.0 and JSON Schema Draft 2026-12.
 
 Here’s the template we embedded in every prompt:
 
@@ -116,9 +111,7 @@ We also **switched to a constrained decoding backend**: we used vLLM 0.5.0 with 
 
 **Prompt engineering tricks that mattered**:
 
-1. **Fixed casing**: We enforced lowercase field names (`supplier_name` not `supplierName`) to avoid downstream mapping issues.
-2. **Numeric precision**: We instructed the model to return floats with 2 decimal places to avoid floating-point rounding errors.
-3. **Optional fields**: We listed required fields explicitly and omitted optional ones from the schema. This cut token usage by ~25%.
+1. **Fixed casing**: We enforced lowercase field names (`supplier_name` not `supplierName`) to avoid downstream mapping issues. 2. **Numeric precision**: We instructed the model to return floats with 2 decimal places to avoid floating-point rounding errors. 3. **Optional fields**: We listed required fields explicitly and omitted optional ones from the schema. This cut token usage by ~25%.
 
 **Caching layer**:
 
@@ -162,9 +155,7 @@ We also ran a load test with Locust: 200 users, 5 minutes, 2,500 requests. Laten
 
 ## What we'd do differently
 
-1. **Early schema testing**: We should have run the schema against 100 real documents *before* locking it in. We wasted two days because our synthetic test data didn’t include a field with a null value.
-2. **Model version pinning**: We pinned vLLM to 0.5.0, but OpenAI released a new tokenizer in August 2026 that broke our casing rules. Pin the tokenizer version, not just the model version.
-3. **Monitoring**: We added Prometheus metrics for `validation_errors_total`, but we didn’t track *why* validation failed. We added a `field_errors` counter (`supplier_name_missing`, `line_items_empty`, etc.) to triage issues faster.
+1. **Early schema testing**: We should have run the schema against 100 real documents *before* locking it in. We wasted two days because our synthetic test data didn’t include a field with a null value. 2. **Model version pinning**: We pinned vLLM to 0.5.0, but OpenAI released a new tokenizer in August 2026 that broke our casing rules. Pin the tokenizer version, not just the model version. 3. **Monitoring**: We added Prometheus metrics for `validation_errors_total`, but we didn’t track *why* validation failed. We added a `field_errors` counter (`supplier_name_missing`, `line_items_empty`, etc.) to triage issues faster.
 
 We also considered switching to a smaller open model (Mistral 8x22B v0.3), but the accuracy drop wasn’t worth the 30% cost saving. For our use case, gpt-4o-mini + vLLM was the sweet spot.
 
@@ -174,19 +165,13 @@ We also considered switching to a smaller open model (Mistral 8x22B v0.3), but t
 
 JSON mode gives you a string that looks like JSON. Schema enforcement gives you a contract you can audit, cache, and pipeline. If your workflow depends on correct, consistent structure, treat the model’s output as untrusted until it’s validated. That means:
 
-- **Pin your schema** and test it against real data before production.
-- **Cache the output** and measure cache hit rate—this is the cheapest latency win.
-- **Enforce via grammar** (vLLM) or post-parse validation (Pydantic)—don’t rely on the model’s goodwill.
+- **Pin your schema** and test it against real data before production. - **Cache the output** and measure cache hit rate—this is the cheapest latency win. - **Enforce via grammar** (vLLM) or post-parse validation (Pydantic)—don’t rely on the model’s goodwill.
 
 The industry’s obsession with "LLM outputs JSON" misses the point. The real win is **deterministic, measurable, and cacheable** structured data—even if it costs a bit more upfront.
 
 ## How to apply this to your situation
 
-1. **Inventory your fields**: List every field you need, its type, and whether it’s required. Put this in a JSON Schema file.
-2. **Test against real data**: Run your schema against 100 real documents. If you hit a field with nulls or unexpected casing, update your schema *before* you deploy.
-3. **Add a caching layer**: Redis 7.2 is trivial to set up. Cache the *parsed* JSON, keyed by the prompt hash and model version.
-4. **Pin your model and tokenizer**: Lock the exact model version *and* tokenizer version in your deployment artifacts.
-5. **Measure validation errors**: Add metrics for every field that fails validation. This is your canary for model drift.
+1. **Inventory your fields**: List every field you need, its type, and whether it’s required. Put this in a JSON Schema file. 2. **Test against real data**: Run your schema against 100 real documents. If you hit a field with nulls or unexpected casing, update your schema *before* you deploy. 3. **Add a caching layer**: Redis 7.2 is trivial to set up. Cache the *parsed* JSON, keyed by the prompt hash and model version. 4. **Pin your model and tokenizer**: Lock the exact model version *and* tokenizer version in your deployment artifacts. 5. **Measure validation errors**: Add metrics for every field that fails validation. This is your canary for model drift.
 
 If you’re using OpenAI’s JSON mode today, switch to vLLM with JSON Schema grammar. It’s a one-line change in your prompt template, and it cuts token waste by 60%.
 
@@ -243,9 +228,7 @@ invoice = extract_invoice(extracted_text)
 ```
 
 **Why this matters**:
-- DocTR 0.6.0 supports `db_resnet50` for detection and `crnn_vgg16_bn` for recognition. The combined model runs at 30ms/page on an NVIDIA A100 GPU.
-- We benchmarked DocTR against Amazon Textract 3.0 and found it 40% cheaper for our volume (10,000 pages/month). Textract’s latency was lower (200ms vs. 300ms for DocTR), but the cost difference justified the tradeoff.
-- The OCR step added 300ms per document, but it was necessary for 15% of our invoices (scanned PDFs).
+- DocTR 0.6.0 supports `db_resnet50` for detection and `crnn_vgg16_bn` for recognition. The combined model runs at 30ms/page on an NVIDIA A100 GPU. - We benchmarked DocTR against Amazon Textract 3.0 and found it 40% cheaper for our volume (10,000 pages/month). Textract’s latency was lower (200ms vs. 300ms for DocTR), but the cost difference justified the tradeoff. - The OCR step added 300ms per document, but it was necessary for 15% of our invoices (scanned PDFs).
 
 **Tool 2: Temporal 1.5.0 (Workflow orchestration)**
 Temporal is a workflow engine for building resilient pipelines. We used it to coordinate the OCR step, LLM extraction, and downstream API calls. Here’s a simplified workflow:
@@ -294,9 +277,7 @@ result = await handle.result()
 ```
 
 **Why this matters**:
-- Temporal 1.5.0 introduced **Activity Retry Policies** that were critical for handling transient failures (e.g., vLLM timeouts). We configured retries with exponential backoff (max 3 attempts, 1s initial delay).
-- The workflow engine automatically retries failed activities and preserves state, which was a lifesaver when vLLM 0.5.0 had a memory leak under high load.
-- Temporal’s **Visibility** feature let us track workflow execution times. We found that 80% of total latency came from the OCR step, not the LLM.
+- Temporal 1.5.0 introduced **Activity Retry Policies** that were critical for handling transient failures (e.g., vLLM timeouts). We configured retries with exponential backoff (max 3 attempts, 1s initial delay). - The workflow engine automatically retries failed activities and preserves state, which was a lifesaver when vLLM 0.5.0 had a memory leak under high load. - Temporal’s **Visibility** feature let us track workflow execution times. We found that 80% of total latency came from the OCR step, not the LLM.
 
 **Tool 3: PostgreSQL 16.2 with pgvector 0.7.0 (Vector search)**
 We used PostgreSQL to store extracted invoices and enable vector search for duplicate detection. Here’s how we integrated it:
@@ -334,9 +315,7 @@ session.commit()
 ```
 
 **Why this matters**:
-- pgvector 0.7.0 added **HNSW indexing**, which reduced vector search latency from 150ms to 12ms for 100,000 records.
-- We used OpenAI’s `text-embedding-3-small` to generate embeddings. The cost was $0.02 per 1,000 invoices, but it enabled us to detect duplicate invoices and flag suspicious entries (e.g., same supplier but different amounts).
-- The JSON column in PostgreSQL let us store the raw structured data without additional serialization overhead.
+- pgvector 0.7.0 added **HNSW indexing**, which reduced vector search latency from 150ms to 12ms for 100,000 records. - We used OpenAI’s `text-embedding-3-small` to generate embeddings. The cost was $0.02 per 1,000 invoices, but it enabled us to detect duplicate invoices and flag suspicious entries (e.g., same supplier but different amounts). - The JSON column in PostgreSQL let us store the raw structured data without additional serialization overhead.
 
 ---
 
@@ -355,42 +334,30 @@ session.commit()
 | **Time to deploy**         | 3 days               | 1.5 days      | –50%           | Mostly spent on schema testing          |
 
 **Breakdown of cost savings**:
-- **Token waste**: JSON mode returned 800 extra tokens per document (explanations + verbose formatting). At $0.15/1M tokens, this added up to $2.40 per 1,000 docs.
-- **Validation errors**: Each validation error cost ~30 minutes of developer time to debug. At 360 errors/2,000 docs, this was $1,800/month in lost productivity (assuming $30/hr dev rate).
-- **Latency penalties**: High latency caused API timeouts, leading to manual reprocessing. We estimated 15 minutes/day of manual work, costing $450/month.
+- **Token waste**: JSON mode returned 800 extra tokens per document (explanations + verbose formatting). At $0.15/1M tokens, this added up to $2.40 per 1,000 docs. - **Validation errors**: Each validation error cost ~30 minutes of developer time to debug. At 360 errors/2,000 docs, this was $1,800/month in lost productivity (assuming $30/hr dev rate). - **Latency penalties**: High latency caused API timeouts, leading to manual reprocessing. We estimated 15 minutes/day of manual work, costing $450/month.
 
 **Breakdown of latency improvements**:
-- **OCR step**: DocTR 0.6.0 added 300ms per document but was necessary for 15% of invoices. For the remaining 85%, we used a lightweight PDF parser (PyMuPDF 1.24.0) which added 20ms.
-- **vLLM grammar**: Enforced JSON Schema at the token level, eliminating post-processing validation. This saved 200ms per document (150ms for JSON parsing + 50ms for Pydantic validation).
-- **Caching**: Redis 7.2 cut latency for duplicate documents from 1.2s to 140ms, a 88% improvement.
+- **OCR step**: DocTR 0.6.0 added 300ms per document but was necessary for 15% of invoices. For the remaining 85%, we used a lightweight PDF parser (PyMuPDF 1.24.0) which added 20ms. - **vLLM grammar**: Enforced JSON Schema at the token level, eliminating post-processing validation. This saved 200ms per document (150ms for JSON parsing + 50ms for Pydantic validation). - **Caching**: Redis 7.2 cut latency for duplicate documents from 1.2s to 140ms, a 88% improvement.
 
 **Breakdown of reliability improvements**:
-- **Schema enforcement**: vLLM’s grammar mode eliminated 99% of malformed outputs. The remaining 0.2% were caught by Pydantic validation.
-- **Early validation**: Rejecting bad input before hitting the model reduced transient failures by 85%.
-- **Retry logic**: The `tenacity` retry loop reduced failures from 8% to 0.5% under load.
+- **Schema enforcement**: vLLM’s grammar mode eliminated 99% of malformed outputs. The remaining 0.2% were caught by Pydantic validation. - **Early validation**: Rejecting bad input before hitting the model reduced transient failures by 85%. - **Retry logic**: The `tenacity` retry loop reduced failures from 8% to 0.5% under load.
 
 **When the new approach *didn’t* help**:
-- **Small invoices**: For documents with <5 line items, the overhead of OCR and LLM extraction wasn’t justified. We added a fallback to regex-based extraction for these cases, cutting latency by 60%.
-- **High-volume bursts**: Under 500 RPS, vLLM’s memory usage spiked, causing occasional OOM kills. We added a **rate limiter** (Redis + sliding window) to cap concurrency at 200 RPS.
-- **Edge cases**: The new approach struggled with invoices that had **handwritten annotations** or **strikethroughs**. We added a manual review step for these cases, which added 2 minutes per document but prevented data corruption.
+- **Small invoices**: For documents with <5 line items, the overhead of OCR and LLM extraction wasn’t justified. We added a fallback to regex-based extraction for these cases, cutting latency by 60%. - **High-volume bursts**: Under 500 RPS, vLLM’s memory usage spiked, causing occasional OOM kills. We added a **rate limiter** (Redis + sliding window) to cap concurrency at 200 RPS. - **Edge cases**: The new approach struggled with invoices that had **handwritten annotations** or **strikethroughs**. We added a manual review step for these cases, which added 2 minutes per document but prevented data corruption.
 
 **Final verdict**:
 The new pipeline was a net win, but it required upfront investment in schema design, tooling, and monitoring. If your use case has strict schema requirements and high volume, the tradeoffs are worth it. If you’re processing <500 documents/day or your schema is highly variable, stick with JSON mode + heavy post-processing.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

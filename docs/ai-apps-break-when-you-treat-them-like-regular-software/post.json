@@ -14,7 +14,7 @@
   "meta_description": "Cut API latency 75% with AI-native architecture — state machines, bounded staleness, and managed vector stores that most teams miss in 2026.",
   "featured_image": "/static/images/ai-apps-break-when-you-treat-them-like-regular-software.jpg",
   "created_at": "2026-06-27T18:14:00.551986",
-  "updated_at": "2026-09-15T08:37:12.468123+00:00",
+  "updated_at": "2026-09-19T08:27:13.508621+00:00",
   "seo_keywords": [
     "AiNativeArchitecture",
     "AiApplicationDesign",
@@ -40,5 +40,7 @@
   "reading_time_minutes": 21,
   "has_code": false,
   "has_table": true,
-  "prewritten_tweet": "Teams treat AI like regular code and wonder why it fails at scale.\n\nVector stores melt. Cache stampedes happen. Model drift goes undetected.\n\nhttps://kubaik.github.io/ai-apps-break-when-you-treat-them-like-regular-software\n\n#Crypto #AI #LLM #VectorDB\n\nAnyone hit a different failure mode? Reply below."
+  "prewritten_tweet": "Teams treat AI like regular code and wonder why it fails at scale.\n\nVector stores melt. Cache stampedes happen. Model drift goes undetected.\n\nhttps://kubaik.github.io/ai-apps-break-when-you-treat-them-like-regular-software\n\n#Crypto #AI #LLM #VectorDB\n\nAnyone hit a different failure mode? Reply below.",
+  "audit_improved_at": "2026-09-19T08:27:13.508621+00:00",
+  "audit_improve_reason": "Technical post with fewer than two code fences"
 }

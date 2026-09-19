@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-15T14:45:13.805761">
-        <meta property="article:modified_time" content="2026-06-15T14:45:13.805774">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.074810+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Found niche in 2026: SaaS that AI can’t copy">
@@ -63,8 +63,8 @@
       "headline": "Found niche in 2026: SaaS that AI can’t copy",
       "description": "SaaS niches that survive AI in 2026: regulatory compliance, audited logic, and human-in-the-loop workflows.",
       "datePublished": "2026-06-15T14:45:13+00:00",
-      "dateModified": "2026-06-15T14:45:13+00:00",
-      "wordCount": 2613,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2578,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,9 +266,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2613 words
+                        &nbsp;·&nbsp; 2578 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-15
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -279,11 +279,11 @@
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In 2026, the AI wave had already eaten half the niches I’d normally consider for a SaaS side project in Nairobi. Copywriters, basic accounting, even some customer-support bots were either free or cost pennies. I’d spent six months on a developer-tools-as-a-service idea—something around automated API stub generation—only to watch GitHub Copilot eat it alive within weeks of launch. Competitors with 10x funding pivoted to AI agents overnight. So I went back to the whiteboard and asked: what still pays when AI can write the code?</p>
 <p>After interviewing 42 local founders and running a 3-week $2,400 ad campaign in Kenya, Uganda, and Tanzania, the pattern that emerged was <strong>“local regulation complexity”</strong>. Every sector that faced heavy oversight—pharmaceutical wholesalers, SACCO micro-credit lenders, LPG gas distributors—was still using Excel, WhatsApp groups, and Google Forms. They needed compliance automation, not creative AI. So I set out to build a <strong>compliance-as-a-service</strong> platform for regulated SMEs in East Africa.</p>
-<p>I was surprised that none of the incumbents had moved into this space. When I dug deeper, I found out they were all waiting for “AI to automate the paperwork.” Turns out, AI hallucinates legal citations and regulatory deadlines, which is exactly what these businesses can’t afford. That was my first real mistake: assuming AI would displace everything. It doesn’t—it exposes the hardest parts of a problem first.</p>
+<p>When I dug deeper, I found out they were all waiting for “AI to automate the paperwork.” Turns out, AI hallucinates legal citations and regulatory deadlines, which is exactly what these businesses can’t afford. That was my first real mistake: assuming AI would displace everything. It doesn’t—it exposes the hardest parts of a problem first.</p>
 <p>By early 2026, the MVP had 12 paying customers across Kenya’s pharma and SACCO sectors, churning at 8% monthly. Revenue was $2,800 MRR with a 65% gross margin. But I knew if I stayed on the same path—generic “automate your paperwork”—AI would catch up in months. I needed a niche so narrow that a fine-tuned open-source LLM couldn’t replace it.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first attempt was a “Regulatory Alerts API” that ingested Kenya’s Pharmacy and Poisons Board PDFs, parsed them with LangChain and Llama 3.2 11B, and sent SMS alerts to pharmacies. We charged $49/month per pharmacy. The tech looked slick: Python 3.11, FastAPI, Redis 7.2 for caching, and AWS Lambda with arm64 for $0.0000166 per 100ms. We hit 95% uptime, but churn was brutal. Why?</p>
-<p>Because the pharmacies didn’t trust an API that hallucinated expiry dates. One customer, Pharmacity Kenya, got a fake alert saying their license expired in 3 days. Their compliance officer called the board—license was fine. They churned within a week. I spent three days debugging the prompt injection before realising the model was citing a 2026 gazette that had since been amended. No amount of prompt engineering fixed the fundamental issue: <strong>regulatory text is versioned, not continuous</strong>. A single outdated citation could cost a license.</p>
+<p>Because the pharmacies didn’t trust an API that hallucinated expiry dates. One customer, Pharmacity Kenya, got a fake alert saying their license expired in 3 days. Their compliance officer called the board—license was fine. They churned within a week. No amount of prompt engineering fixed the fundamental issue: <strong>regulatory text is versioned, not continuous</strong>. A single outdated citation could cost a license.</p>
 <p>We tried fine-tuning Falcon 7B on the 2026 Kenya Gazette PDFs, but the hallucination rate stayed at 12% on validation. Costs ballooned: 1,200 tokens per request at $0.07 per 1M tokens on Bedrock—$380/month in inference alone. We couldn’t pass that on to customers without doubling the price. After three failed pivots—chatbot, WhatsApp bot, email digest—we scrapped the AI layer entirely and rebuilt the core logic as deterministic rules.</p>
 <p>The lesson: AI is great for creativity, not for legal precision. When the cost of a mistake is a revoked license, trust must come from verifiable logic, not probabilistic output.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
@@ -364,10 +364,7 @@
 </table>
 <p>Key design choices:</p>
 <ul>
-<li><strong>No AI inference</strong>: We removed LangChain, Llama, and any probabilistic layer after the Textract step. Costs dropped from $380 to $167 for the same workload.</li>
-<li><strong>Git-backed diffs</strong>: Each regulation change is a Git commit. Customers can fork, audit, and merge changes in their own repo. This solved the trust gap completely.</li>
-<li><strong>Temporal workflows</strong>: Compliance jobs that span months (e.g., quarterly audits) are managed by Temporal. If the server crashes, workflows resume from last checkpoint. We’ve had zero data loss in 3 months.</li>
-<li><strong>Versioned deadlines</strong>: All deadlines are stored with a <code>valid_from</code> and <code>valid_to</code> timestamp. When a regulation is amended, old deadlines are archived—no more “expired in 3 days” hallucinations.</li>
+<li><strong>No AI inference</strong>: We removed LangChain, Llama, and any probabilistic layer after the Textract step. Costs dropped from $380 to $167 for the same workload. - <strong>Git-backed diffs</strong>: Each regulation change is a Git commit. Customers can fork, audit, and merge changes in their own repo. This solved the trust gap completely. - <strong>Temporal workflows</strong>: Compliance jobs that span months (e.g., quarterly audits) are managed by Temporal. If the server crashes, workflows resume from last checkpoint. We’ve had zero data loss in 3 months. - <strong>Versioned deadlines</strong>: All deadlines are stored with a <code>valid_from</code> and <code>valid_to</code> timestamp. When a regulation is amended, old deadlines are archived—no more “expired in 3 days” hallucinations.</li>
 </ul>
 <p>Code snippets that mattered:</p>
 <pre><code class="language-go">// regulation.go
@@ -538,14 +535,11 @@ Avoid any tool that adds latency without adding verifiability: LangChain, Llama-
 <p>Open your customer’s most recent compliance report or regulatory filing. Trace every step: where did the data come from? Who verified it? What would happen if it was wrong? If any step involves a human reading a PDF and typing a date, that’s your niche. Write that audit trail down in a README file. If you can’t explain it in 500 words, your niche isn’t narrow enough. Do this today—before you write a line of code.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

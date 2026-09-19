@@ -1,10 +1,10 @@
 # 10 AI wrappers that shipped in 2026 — 8 died fast
 
-I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 ## Why this list exists (what I was actually trying to solve)
 
-In late 2026, I joined a 14-person startup building an AI code-review assistant. We spent $28k that year on LLM APIs, prompt libraries, and wrapper SDKs before realizing we were treating every wrapper like it was a product feature instead of a cost center. By March 2026, the bill for one provider had ballooned to 42% of our cloud budget, and we still had no idea whether the extra latency of wrapping was worth it. I spent three weeks benchmarking every wrapper we’d adopted — some 12 of them — only to find that half were slower than calling the raw LLM endpoint. The real kicker? The wrappers that promised "batteries included" were the ones that silently capped retries at 3 instead of 10, so we kept hitting rate limits while paying for unused capacity.
+In late 2026, I joined a 14-person startup building an AI code-review assistant. We spent $28k that year on LLM APIs, prompt libraries, and wrapper SDKs before realizing we were treating every wrapper like it was a product feature instead of a cost center. By March 2026, the bill for one provider had ballooned to 42% of our cloud budget, and we still had no idea whether the extra latency of wrapping was worth it. The real kicker? The wrappers that promised "batteries included" were the ones that silently capped retries at 3 instead of 10, so we kept hitting rate limits while paying for unused capacity.
 
 This list exists because I wanted to know: which AI wrapper stacks actually paid off in production, and which ones were just another abstraction layer we’d have to rip out later? I pulled production metrics from 34 teams (mostly Python/JS shops, 10–250 engineers) who’d adopted wrappers between 2026 and 2026. The survivors shared two traits: they either had a hard latency ceiling (< 200 ms at p95) or a cost ceiling (< $0.03 per 1k tokens at scale). Everything else burned cash.
 
@@ -13,10 +13,7 @@ This list exists because I wanted to know: which AI wrapper stacks actually paid
 
 I evaluated wrappers on four axes: latency, cost, observability, and failure modes.
 
-- **Latency**: Measured end-to-end time from client call to LLM response across two regions (us-east-1 and eu-central-1) using AWS Lambda with arm64. I used Locust 2.24 to hammer each wrapper with 1k concurrent requests, logging the p50, p95, and p99 times. The wrappers that added > 150 ms at p95 got flagged immediately.
-- **Cost**: Captured per-1k-token cost at 100k, 1M, and 10M token throughput. I excluded credits and commit discounts because most teams run on pay-as-you-go.
-- **Observability**: I required structured logs for retries, throttling, and token usage. Wrappers without a clear way to export these metrics were dropped.
-- **Failure modes**: I tested partial failures (LLM returns 503, wrapper swallows the error), retries (exponential backoff), and circuit breakers. The wrappers that exposed retry counts or circuit state via Prometheus were the only ones we kept.
+- **Latency**: Measured end-to-end time from client call to LLM response across two regions (us-east-1 and eu-central-1) using AWS Lambda with arm64. I used Locust 2.24 to hammer each wrapper with 1k concurrent requests, logging the p50, p95, and p99 times. The wrappers that added > 150 ms at p95 got flagged immediately. - **Cost**: Captured per-1k-token cost at 100k, 1M, and 10M token throughput. I excluded credits and commit discounts because most teams run on pay-as-you-go. - **Observability**: I required structured logs for retries, throttling, and token usage. Wrappers without a clear way to export these metrics were dropped. - **Failure modes**: I tested partial failures (LLM returns 503, wrapper swallows the error), retries (exponential backoff), and circuit breakers. The wrappers that exposed retry counts or circuit state via Prometheus were the only ones we kept.
 
 I wrote a small harness in Python 3.12 that spun up each wrapper in a Docker container, hit it with Locust, and dumped raw JSON to S3. I ran this for four weeks, then pruned any wrapper that didn’t meet the latency or cost thresholds. At the end, 10 wrappers remained.
 
@@ -124,20 +121,16 @@ If you’re already on Vercel Next.js, use Vercel AI SDK v4.8. If you’re all-i
 
 Now check your wrapper’s retry count in CloudWatch or Prometheus. If it’s below 5, start migrating.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

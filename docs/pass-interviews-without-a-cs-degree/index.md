@@ -1,6 +1,6 @@
 # Pass interviews without a CS degree
 
-A colleague asked me about pass technical during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
@@ -14,7 +14,7 @@ If you’re self-taught, the interviewers aren’t asking whether you can implem
 
 ## What actually happens when you follow the standard advice
 
-I ran into this when I hired a self-taught developer in 2026 for a contract role. They had 120 solved LeetCode problems, a polished portfolio, and a Medium blog with 50k views. Their algorithm performance was impeccable. But when we asked them to debug a memory leak in a Python FastAPI service that used Redis for caching, they stared at the heap dump for twenty minutes before guessing that the Redis client might be the issue. It wasn’t. The leak was in a background task that held references to ORM objects. When we probed their understanding of garbage collection in Python, they admitted they had never touched garbage collection outside of toy examples.
+They had 120 solved LeetCode problems, a polished portfolio, and a Medium blog with 50k views. Their algorithm performance was impeccable. But when we asked them to debug a memory leak in a Python FastAPI service that used Redis for caching, they stared at the heap dump for twenty minutes before guessing that the Redis client might be the issue. It wasn’t. The leak was in a background task that held references to ORM objects. When we probed their understanding of garbage collection in Python, they admitted they had never touched garbage collection outside of toy examples.
 
 This isn’t rare. In a 2025 survey of 150 remote engineering teams, 68% said they reject candidates who ace algorithm screens but can’t debug production issues. The top reasons cited were inability to reason about latency, memory, and distributed state — exactly the skills that aren’t tested on LeetCode.
 
@@ -22,7 +22,7 @@ The standard advice also ignores the social layer of remote interviews. You’re
 
 Worse, the conventional wisdom pushes you toward a narrow set of technologies — React, Node.js, Python Flask — because they’re easy to showcase. But remote roles often require you to reason about infrastructure, databases, and observability tools you’ve never touched. The result is a mismatch: your interview performance looks strong, but your real-world readiness looks weak.
 
-Finally, the grind mentality burns people out. I spent three weeks in 2026 coaching a self-taught engineer who had quit their day job to prep for interviews. They burned through 300 LeetCode problems in two months, slept four hours a night, and still failed two onsites. The interviews weren’t about algorithms; they were about trade-offs in a system they’d never built. The advice that promised success set them up for burnout and rejection.
+Finally, the grind mentality burns people out. They burned through 300 LeetCode problems in two months, slept four hours a night, and still failed two onsites. The interviews weren’t about algorithms; they were about trade-offs in a system they’d never built. The advice that promised success set them up for burnout and rejection.
 
 ## A different mental model
 
@@ -30,13 +30,9 @@ Forget the idea that interviews are about testing raw coding ability. They’re 
 
 The better mental model is to treat interviews as system design conversations disguised as coding exercises. The interviewer wants to hear your thought process under constraints: latency budgets, cost ceilings, team size, and failure modes. They don’t expect perfection; they expect you to make reasonable trade-offs and defend them.
 
-This means you should prepare for interviews the way you’d prepare to debug a real system. You need to practice: 
+This means you should prepare for interviews the way you’d prepare to debug a real system. You need to practice:
 
-- Reading stack traces (not just writing code).
-- Estimating latency and memory use for common operations.
-- Choosing between caching strategies (Redis vs. in-memory vs. CDN) under load.
-- Explaining why a GraphQL resolver timed out and how you’d fix it.
-- Debugging a memory leak in a background job or a slow SQL query.
+- Reading stack traces (not just writing code). - Estimating latency and memory use for common operations. - Choosing between caching strategies (Redis vs. in-memory vs. CDN) under load. - Explaining why a GraphQL resolver timed out and how you’d fix it. - Debugging a memory leak in a background job or a slow SQL query.
 
 I learned this the hard way in 2025 when I interviewed a candidate who had built a SaaS product from scratch. Their live coding was rough, but when I showed them a slow SQL query in PostgreSQL 16 and asked how they’d optimize it, they walked me through query plans, index selection, and connection pooling in 90 seconds. They didn’t write perfect code, but they showed they could debug production systems. We hired them.
 
@@ -66,8 +62,7 @@ There are real scenarios where the standard advice works. If you’re applying t
 
 Here’s when the conventional wisdom shines:
 
-- **Early-stage startups with tiny codebases**: If the team is two people and the stack is React + Firebase, they’ll hire based on raw coding ability and cultural fit. Algorithm screens aren’t a luxury; they’re the only way to filter candidates quickly.
-- **Consulting firms that bill by the hour**: They need engineers who can write clean code fast. They don’t care about your ability to debug a memory leak; they care about whether you can deliver a polished feature in a week.
+- **Early-stage startups with tiny codebases**: If the team is two people and the stack is React + Firebase, they’ll hire based on raw coding ability and cultural fit. Algorithm screens aren’t a luxury; they’re the only way to filter candidates quickly. - **Consulting firms that bill by the hour**: They need engineers who can write clean code fast. They don’t care about your ability to debug a memory leak; they care about whether you can deliver a polished feature in a week.
 
 Even in these cases, though, you should pair algorithm practice with real-world debugging. I’ve seen consultants fail because they could write a perfect sorting algorithm but couldn’t debug a race condition in a Node.js event loop.
 
@@ -99,7 +94,7 @@ I don’t blame you. You’re juggling a job, a family, or both. But you don’t
 
 For algorithms, focus on the 50 most common patterns: binary search, sliding window, two pointers, union-find, BFS/DFS, and backtracking. Grind 50–100 problems, not 300. For systems, focus on debugging three real issues: a slow SQL query, a memory leak, and a cache stampede. You don’t need to know every tool; you need to know how to reason about them.
 
-I spent two weeks in 2026 coaching a candidate who had three months to prepare. They chose to focus on systems. They debugged a slow API using `EXPLAIN ANALYZE` in PostgreSQL 16, explained why a Redis cache stampede broke their app, and walked through a memory leak in a Node.js service. They passed three onsites and got three offers.\n
+They chose to focus on systems. They debugged a slow API using `EXPLAIN ANALYZE` in PostgreSQL 16, explained why a Redis cache stampede broke their app, and walked through a memory leak in a Node.js service. They passed three onsites and got three offers.\n
 **Objection 2: “But LeetCode is the only way to pass algorithm screens.”**
 
 Not all algorithm screens are LeetCode. I’ve seen teams use HackerRank, CodeSignal, or custom platforms. But even if they use LeetCode, you don’t need to grind 300 problems.
@@ -127,27 +122,17 @@ In 2025, a frontend candidate I interviewed had a polished portfolio and a GitHu
 If I were starting over as a self-taught engineer preparing for remote interviews, here’s exactly what I’d do:
 
 **Month 1: Systems fundamentals**
-- Build a small API with FastAPI or Node.js 20 LTS.
-- Add Redis 7.2 for caching and debug a cache stampede.
-- Write a slow SQL query and optimize it using `EXPLAIN ANALYZE`.
-- Write a background job that leaks memory and debug it using `py-spy` or Chrome DevTools.
-- Practice explaining each issue out loud, as if I were in an interview.
+- Build a small API with FastAPI or Node.js 20 LTS. - Add Redis 7.2 for caching and debug a cache stampede. - Write a slow SQL query and optimize it using `EXPLAIN ANALYZE`. - Write a background job that leaks memory and debug it using `py-spy` or Chrome DevTools. - Practice explaining each issue out loud, as if I were in an interview.
 
 **Month 2: Algorithms with constraints**
-- Grind 50–100 LeetCode problems, but solve them under time limits and explain trade-offs out loud.
-- Focus on the 50 most common patterns: binary search, sliding window, two pointers, union-find, BFS/DFS, backtracking.
-- Use a tool like CodeSignal to practice live coding under pressure.
+- Grind 50–100 LeetCode problems, but solve them under time limits and explain trade-offs out loud. - Focus on the 50 most common patterns: binary search, sliding window, two pointers, union-find, BFS/DFS, backtracking. - Use a tool like CodeSignal to practice live coding under pressure.
 
 **Month 3: Mock interviews and real systems**
-- Run 10–15 mock interviews with peers or platforms like Pramp.
-- Pick one system you’ve built and write a post-mortem. Explain the trade-offs, the failure modes, and the fixes.
-- Apply to 3–5 roles that match your prep, not the roles you think you should target.
+- Run 10–15 mock interviews with peers or platforms like Pramp. - Pick one system you’ve built and write a post-mortem. Explain the trade-offs, the failure modes, and the fixes. - Apply to 3–5 roles that match your prep, not the roles you think you should target.
 
 I made three mistakes when I started:
 
-1. I assumed interviews were about writing clean code, not reasoning about systems.
-2. I spent too much time on LeetCode and not enough on debugging real issues.
-3. I didn’t practice explaining my thought process out loud under pressure.
+1. I assumed interviews were about writing clean code, not reasoning about systems. 2. 3. I didn’t practice explaining my thought process out loud under pressure.
 
 If I’d done the above instead, I’d have saved months of prep and passed more interviews on the first try.
 
@@ -155,11 +140,11 @@ If I’d done the above instead, I’d have saved months of prep and passed more
 
 Remote technical interviews aren’t about testing raw coding ability. They’re auditions for trust: can you debug a production issue, explain it, and not break the system again? The conventional wisdom trains you for algorithm screens, but the interviews that decide hires are about systems, trade-offs, and failure modes.
 
-I spent three weeks debugging a cache stampede that cost a client $24k in one day. The fix wasn’t clever code; it was a pragmatic trade-off between cost and latency. If you can reason about systems like that, you’ll pass interviews even if your LeetCode score isn’t perfect.
+The fix wasn’t clever code; it was a pragmatic trade-off between cost and latency. If you can reason about systems like that, you’ll pass interviews even if your LeetCode score isn’t perfect.
 
 The honest answer is that you don’t need a CS degree to pass remote interviews. You need to practice debugging real systems, estimating latency and memory, and explaining trade-offs under constraints. Pair that with algorithm practice focused on the 50 most common patterns, and you’ll outperform candidates who memorized Big-O but can’t read a heap dump.
 
-If you take one thing from this post, let it be this: interviews reward depth over breadth. You don’t need to know every tool; you need to know a few tools deeply enough to reason about them under pressure. 
+If you take one thing from this post, let it be this: interviews reward depth over breadth. You don’t need to know every tool; you need to know a few tools deeply enough to reason about them under pressure.
 
 Now, pick one system you’ve built — even a toy one — and debug a slow query, leak, or cache stampede. Explain your thought process out loud as if you were in an interview. Do it today. That’s your next step.
 
@@ -182,20 +167,16 @@ Yes. A slow React app is often a backend problem. But even if it’s not, you’
 
 Interviewers don’t expect perfection. They expect you to make reasonable trade-offs and defend them. Start with the constraints: latency budget, cost ceiling, team size. Then list two or three options. For each, explain the pros, cons, and risks. Example: “We could cache the response in Redis, but that adds memory cost and cache invalidation complexity. We could denormalize the data in PostgreSQL, but that increases write load. Given our 100ms latency budget and $500/month cloud bill, I’d choose Redis with a 5-minute TTL and a background worker to warm the cache.” That’s enough to demonstrate reasoning under constraints.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

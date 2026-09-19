@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-19T22:46:53.104581">
-        <meta property="article:modified_time" content="2026-06-19T22:46:53.104593">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.551367+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI codebase? Guardrails over guardrails">
@@ -63,9 +63,9 @@
       "headline": "AI codebase? Guardrails over guardrails",
       "description": "Cut false-positive alerts 30% with SonarQube 10.4 vs GitHub Advanced Security — connection pool crashes, XPath rules, and the $81 monthly price tag most teams…",
       "datePublished": "2026-06-19T22:46:53+00:00",
-      "dateModified": "2026-06-19T22:46:53+00:00",
-      "wordCount": 2902,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2884,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,10 +260,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2902 words
+                        14 min read
+                        &nbsp;·&nbsp; 2884 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-19
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -273,7 +273,7 @@
                 <p>I've seen the same maintain codebase mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
 <p>In Q4 2026, our team shipped a new citizen-services portal for a West African ministry. By March 2026, 42% of the Python 3.11 codebase had AI-generated commits. Not because we let the model loose on prod, but because product owners kept pasting prompts into the chat and committing the result without a second pair of eyes. We learned the hard way that AI code is like fertilizer: a little boosts growth, but too much burns the field.</p>
-<p>I spent three days debugging a connection-pool crash that turned out to be a single mis-indented retry decorator. The stack trace never mentioned the decorator because the AI had inserted it at 2 a.m. when our guardrails were still half-baked. This post is what I wished I’d had then: a blunt, tool-by-tool comparison of two ways to keep an AI-heavy codebase from eating itself alive.</p>
+<p>The stack trace never mentioned the decorator because the AI had inserted it at 2 a.m. when our guardrails were still half-baked. This post is what I wished I’d had then: a blunt, tool-by-tool comparison of two ways to keep an AI-heavy codebase from eating itself alive.</p>
 <p>The stakes are real. In a 2026 survey of 120 sub-Saharan dev teams, repos with &gt;30% AI-generated code averaged 37% more hotfixes per month than their peers. The same teams reported 2.1× longer review times for AI patches, which sounds like a good thing until you realize the reviews catch only 43% of the nonsense (historical 2026 data from GitClear showed 61% for human patches).</p>
 <p>We tried two guardrail stacks side-by-side on the same repo: <strong>GitHub Advanced Security + CodeQL</strong> (Option A) and <strong>SonarQube Community + custom pre-commit hooks</strong> (Option B). Both promise to tame AI code, but they do it with wildly different trade-offs in performance, cost, and developer morale. The table below shows what changed when we turned the dial from 0% AI to 42% AI inside a 45 kLOC Django 4.2 monolith running on t3.medium instances.</p>
 <table>
@@ -468,26 +468,14 @@
 <h2 id="the-decision-framework-i-use">The decision framework I use</h2>
 <p>I give teams a one-page questionnaire before we pick a stack. The first three questions decide 80% of the outcome:</p>
 <ol>
-<li>Do you run on GitHub Cloud?</li>
-<li>Yes → GHAS is the only realistic option.</li>
 <li>
-<p>No → skip GHAS.</p>
+<p>Do you run on GitHub Cloud? - Yes → GHAS is the only realistic option. - No → skip GHAS.</p>
 </li>
 <li>
-<p>Do you need air-gapped or on-prem deployment?</p>
-</li>
-<li>Yes → SonarQube Community is mandatory.</li>
-<li>
-<p>No → either works.</p>
+<p>Do you need air-gapped or on-prem deployment? - Yes → SonarQube Community is mandatory. - No → either works.</p>
 </li>
 <li>
-<p>How many seats?</p>
-</li>
-<li>≤25 → GHAS is cheaper and faster to adopt.</li>
-<li>
-<blockquote>
-<p>25 → run the TCO model; SonarQube usually wins.</p>
-</blockquote>
+<p>How many seats? - ≤25 → GHAS is cheaper and faster to adopt. - &gt;25 → run the TCO model; SonarQube usually wins.</p>
 </li>
 </ol>
 <p>After those, we look at custom-rule depth. If you expect to write &gt;30 custom rules within six months, SonarQube’s XPath tooling is worth the setup pain. Otherwise, GHAS’s curated ruleset is sufficient.</p>
@@ -532,13 +520,9 @@
 <p>We applied this framework to a new NGO project in Kenya. They were on GitHub Cloud with 30 seats and expected heavy custom rules for Swahili locale handling. The model predicted $1 800 savings over 12 months by choosing SonarQube Community, so we went with it. Six weeks in, they’ve added 33 XPath rules and cut false positives to 9%.</p>
 <h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
 <p>Choose <strong>SonarQube Community + custom pre-commit hooks</strong> if:
-- You run on-prem or in an air-gapped environment (GitHub Advanced Security won’t work).
-- Your team expects to write &gt;25 custom rules in the first six months.
-- You have the DevOps bandwidth to tune JVM heap and Postgres.</p>
+- You run on-prem or in an air-gapped environment (GitHub Advanced Security won’t work). - Your team expects to write &gt;25 custom rules in the first six months. - You have the DevOps bandwidth to tune JVM heap and Postgres.</p>
 <p>Choose <strong>GitHub Advanced Security + CodeQL</strong> if:
-- You’re already on GitHub Cloud and don’t want infra overhead.
-- Your team size is ≤25, so the seat cost doesn’t explode.
-- You value one-click fixes and curated rules over custom XPath.</p>
+- You’re already on GitHub Cloud and don’t want infra overhead. - Your team size is ≤25, so the seat cost doesn’t explode. - You value one-click fixes and curated rules over custom XPath.</p>
 <p>I still regret the week we wasted trying to shoehorn SonarQube into a repo that clearly needed GHAS. The team spent 12 engineer-days on Docker configs, only to rip it out when we realized the custom XPath engine couldn’t parse our Django ORM macros. The lesson: don’t fight the tool’s strengths. CodeQL is built for GitHub; SonarQube is built for custom depth. Use each where it’s strongest.</p>
 <h2 id="final-verdict">Final verdict</h2>
 <p>After four months running both stacks on the same codebase, the numbers don’t lie: <strong>SonarQube Community is the better long-term guardrail for AI-heavy codebases</strong>. It catches more nonsense (miss rate 8% vs 12%), costs one-third as much at scale, and gives you control over the rules that actually matter to your team. GHAS is simpler and faster to roll out, but it turns into a tax once the false-positive fire hose starts.</p>
@@ -589,14 +573,11 @@ on: [push, pull_request]
 <p>Then paste the 7-line CodeQL job from Option A. Commit it to a feature branch and watch your first AI-patch alert appear in the PR. If it catches something useful within an hour, you’ve made the right choice. If you see only noise, the SonarQube route is still open.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

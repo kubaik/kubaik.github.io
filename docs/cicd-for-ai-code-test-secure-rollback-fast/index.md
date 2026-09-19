@@ -6,8 +6,6 @@ After reviewing a lot of code that touches claude gpt5, I keep seeing the same p
 
 Back in 2025, our team at the Ministry of Water and Irrigation in Kenya shipped a Python 3.11 Flask app that generated irrigation schedules using OpenWeatherMap and local soil data. We relied on GitHub Actions for CI/CD and AWS EC2 t3.small instances for staging and production. Everything looked good until we merged a PR that added a new LLM prompt template. The AI generated a schedule that suggested pumping water at midnight during peak tariff hours, which would have cost the county an extra $1,200 per month.
 
-I spent three days debugging the connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
-
 At the same time, security scans flagged a new vulnerability in the prompt injection library every time the model updated its weights. We needed a way to gate AI-generated code changes before they reached production without slowing down the team’s velocity. That’s when we started building the pipeline you’ll see in this post: lightweight, reproducible, and designed to fail fast when AI models drift or prompts drift.
 
 This isn’t about fancy MLOps tooling. It’s about the 90% of teams shipping AI features without a dedicated ML engineer, no GPUs in CI, and no budget for a model registry. If your CI budget is under $50/month and your fastest runner is Ubuntu 22.04 with 2 vCPUs, this post is for you.
@@ -15,17 +13,10 @@ This isn’t about fancy MLOps tooling. It’s about the 90% of teams shipping A
 ## Prerequisites and what you'll build
 
 You’ll need:
-- A GitHub repo with a Python 3.11 project using pip-tools 7.4 for deterministic dependency locking (we pin every transitive dependency to avoid surprise updates that break AI-generated code).
-- A Dockerfile that builds in under 90 seconds on a GitHub-hosted runner (we use `python:3.11-slim` with multi-stage builds to keep the final image under 120 MB).
-- An AWS account with an IAM user that has programmatic access and a t3.small EC2 instance running Ubuntu 24.04 (you’ll SSH in once to verify the rollback script).
-- A free OpenWeatherMap API key for a demo weather endpoint.
-- GitHub CLI installed locally (for tagging releases quickly).
+- A GitHub repo with a Python 3.11 project using pip-tools 7.4 for deterministic dependency locking (we pin every transitive dependency to avoid surprise updates that break AI-generated code). - A Dockerfile that builds in under 90 seconds on a GitHub-hosted runner (we use `python:3.11-slim` with multi-stage builds to keep the final image under 120 MB). - An AWS account with an IAM user that has programmatic access and a t3.small EC2 instance running Ubuntu 24.04 (you’ll SSH in once to verify the rollback script). - A free OpenWeatherMap API key for a demo weather endpoint. - GitHub CLI installed locally (for tagging releases quickly).
 
 What you’ll build:
-1. A GitHub Actions workflow that runs on every push to main.
-2. A fast static analyzer that flags prompt injection patterns using a custom regex set tuned for 2026 LLM prompt attacks (think SSRF via JSON schema injection).
-3. A smoke test that curls your API endpoint within 150 ms using curl 8.6 with `--max-time 1`.
-4. A blue-green rollback script that switches between two identical EC2 instances using AWS CLI 2.17 and a simple systemd service restart.
+1. A GitHub Actions workflow that runs on every push to main. 2. A fast static analyzer that flags prompt injection patterns using a custom regex set tuned for 2026 LLM prompt attacks (think SSRF via JSON schema injection). 3. A smoke test that curls your API endpoint within 150 ms using curl 8.6 with `--max-time 1`. 4. A blue-green rollback script that switches between two identical EC2 instances using AWS CLI 2.17 and a simple systemd service restart.
 
 Total lines of YAML + Python in the final workflow: 112. Total cost to run the workflow 100 times/month: $3.40 (GitHub Actions minutes + EC2 t3.small cost for 5 minutes of staging validation).
 
@@ -186,10 +177,7 @@ jobs:
           retention-days: 7
 ```
 
-Why this order?
-- Static analysis runs before any build step to prevent wasting minutes on a broken image.
-- The prompt injection scan is custom: we use Semgrep’s auto-config plus a tiny Python script to fail the job if any HIGH severity findings exist. In 2026, most teams still rely on generic SAST tools; this narrows the scan to the specific attack vectors that matter for AI prompts (JSON schema injection, SSRF via prompt, etc.).
-- Smoke testing the built image catches Dockerfile typos and missing dependencies early. We use curl 8.6 with `--max-time 1` to keep the test under 150 ms; anything slower should be a red flag.
+Why this order? - Static analysis runs before any build step to prevent wasting minutes on a broken image. - The prompt injection scan is custom: we use Semgrep’s auto-config plus a tiny Python script to fail the job if any HIGH severity findings exist. In 2026, most teams still rely on generic SAST tools; this narrows the scan to the specific attack vectors that matter for AI prompts (JSON schema injection, SSRF via prompt, etc.). - Smoke testing the built image catches Dockerfile typos and missing dependencies early. We use curl 8.6 with `--max-time 1` to keep the test under 150 ms; anything slower should be a red flag.
 
 Deploy script `deploy.sh`:
 ```bash
@@ -277,7 +265,7 @@ def after_request(response):
        PY
    ```
 
-   We’ve seen error rates spike from 2% to 12% when the LLM produces malformed JSON that the prompt template fails to handle. The metric check catches it before the rollout.
+We’ve seen error rates spike from 2% to 12% when the LLM produces malformed JSON that the prompt template fails to handle. The metric check catches it before the rollout.
 
 2. Rollback on failure
    Add a GitHub Actions reusable workflow `.github/workflows/rollback.yml`:
@@ -302,7 +290,7 @@ def after_request(response):
              aws ec2 create-tags --resources $(aws ec2 describe-instances --filters "Name=tag:Name,Values=ai-demo-green" --query 'Reservations[0].Instances[0].InstanceId' --output text) --tags Key=Name,Value=ai-demo-old
    ```
 
-   Gotcha: The rollback job runs even if the failure is transient (network hiccup). To avoid flapping, we added a 5-minute cooldown in the workflow_run trigger using GitHub’s `concurrency` group.
+Gotcha: The rollback job runs even if the failure is transient (network hiccup). To avoid flapping, we added a 5-minute cooldown in the workflow_run trigger using GitHub’s `concurrency` group.
 
 3. Dependency drift
    We pin every transitive dependency using `pip-compile --generate-hashes` and store the lockfile in Git. If a dependency updates and breaks the AI prompt template, the CI fails immediately because the hash no longer matches. In practice, this has saved us from surprise updates to `requests` or `urllib3` that changed redirect behavior, breaking our weather fetch.
@@ -383,11 +371,7 @@ Gotcha: The first time we ran the prompt injection tests, they passed locally bu
 ## Real results from running this
 
 We ran this pipeline on a real irrigation-scheduling project for 8 weeks in 2026. Key metrics:
-- **Pipeline duration**: 4 minutes 12 seconds (down from 7 minutes 45 seconds before optimizations). Savings came from caching Docker layers and parallelizing lint + tests.
-- **Rollback frequency**: 4 times in 8 weeks. All rollbacks completed in under 90 seconds. The longest delay was due to the EC2 instance cold start after a blue-green switch.
-- **Cost to run**: $3.40/month for CI minutes + $8/month for Prometheus + $18/month for staging EC2 instance. Total $29.40/month for a production-grade pipeline.
-- **Error rate reduction**: From 8% to 1.2% after adding the Prometheus error rate threshold check. The remaining errors are due to upstream API rate limits, not our code.
-- **Prompt injection detections**: 7 HIGH severity findings in 8 weeks, all caught by Semgrep + custom script. The worst one was a SSRF via JSON schema injection in a custom prompt template.
+- **Pipeline duration**: 4 minutes 12 seconds (down from 7 minutes 45 seconds before optimizations). Savings came from caching Docker layers and parallelizing lint + tests. - **Rollback frequency**: 4 times in 8 weeks. All rollbacks completed in under 90 seconds. The longest delay was due to the EC2 instance cold start after a blue-green switch. - **Cost to run**: $3.40/month for CI minutes + $8/month for Prometheus + $18/month for staging EC2 instance. Total $29.40/month for a production-grade pipeline. - **Error rate reduction**: From 8% to 1.2% after adding the Prometheus error rate threshold check. The remaining errors are due to upstream API rate limits, not our code. - **Prompt injection detections**: 7 HIGH severity findings in 8 weeks, all caught by Semgrep + custom script. The worst one was a SSRF via JSON schema injection in a custom prompt template.
 
 What surprised me most was how often the AI model produced JSON that was technically valid but semantically wrong — like a temperature value of -273°C. The unit tests we added for unit conversion caught these before they reached users.
 
@@ -428,20 +412,16 @@ If you’ve reached this point, you already have a working pipeline. Now do this
 
 If you hit any snags, the gotcha we covered earlier about `aws ecr get-login-password` is the most common blocker. Fix the IAM policy and retry. You now have a pipeline that tests, secures, and rolls back AI-generated code faster than most teams with $10k/month cloud budgets.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

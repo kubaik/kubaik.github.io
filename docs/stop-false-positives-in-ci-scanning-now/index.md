@@ -6,9 +6,9 @@ Most run automated guides assume a clean environment and a patient timeline. Pro
 
 In 2026, security scanning became a checkbox for most engineering teams. We were no exception. Every pull request triggered three scanners: [Snyk CLI 1.1325](https://github.com/snyk/cli/releases/tag/v1.1325), [Trivy 0.51.5](https://github.com/aquasecurity/trivy/releases/tag/v0.51.5), and [CodeQL 2.17.6](https://github.com/github/codeql-action/releases/tag/codeql-bundle-2.17.6). By late 2026, we averaged 47 pull requests per day across our 47 repos. Each scan produced 127 alerts on average — 89% of which were false positives.
 
-Our goal wasn’t just to scan; it was to reduce noise while catching real vulnerabilities. I spent three weeks configuring each scanner to ignore known false positives. By the end, we still had 14 alerts per PR — 78% false positives. The alerts slowed down reviews and made engineers ignore the entire security pipeline. Slack notifications for security alerts stopped getting responses. Teams started adding `snyk: ignore` comments to silence the noise.
+Our goal wasn’t just to scan; it was to reduce noise while catching real vulnerabilities. By the end, we still had 14 alerts per PR — 78% false positives. The alerts slowed down reviews and made engineers ignore the entire security pipeline. Slack notifications for security alerts stopped getting responses. Teams started adding `snyk: ignore` comments to silence the noise.
 
-I was surprised that despite spending hundreds of engineering hours on configuration, the signal-to-noise ratio was still terrible. We needed a different approach.
+We needed a different approach.
 
 ## What we tried first and why it didn’t work
 
@@ -38,14 +38,10 @@ We stopped trying to configure scanners and started configuring the pipeline. Th
 
 We built a lightweight triage pipeline that sits between the scanners and the PR comments. The pipeline has three stages:
 
-1. **Scan**: Run the scanners as usual.
-2. **Triage**: Apply dynamic rules based on context.
-3. **Notify**: Only post alerts that pass the triage.
+1. **Scan**: Run the scanners as usual. 2. **Triage**: Apply dynamic rules based on context. 3. **Notify**: Only post alerts that pass the triage.
 
 The triage rules use three types of data:
-- **Dependency graph**: What versions are we actually using?
-- **Runtime context**: What environment is the service running in?
-- **Maintenance window**: When was the last time we updated this dependency?
+- **Dependency graph**: What versions are we actually using? - **Runtime context**: What environment is the service running in? - **Maintenance window**: When was the last time we updated this dependency?
 
 ### Dynamic ignore rules
 
@@ -62,8 +58,7 @@ ignore_rules:
 ```
 
 This approach has two advantages:
-- **Freshness**: The ignore rules are always up-to-date with the latest dependency versions.
-- **Context**: Each rule includes the Renovate PR that triggered the update, making it easy to audit.
+- **Freshness**: The ignore rules are always up-to-date with the latest dependency versions. - **Context**: Each rule includes the Renovate PR that triggered the update, making it easy to audit.
 
 ### Environment-aware filtering
 
@@ -133,13 +128,7 @@ jobs:
 
 ### Tool versions and dependencies
 
-- **Renovate 37.424**: Maintains dependency graphs and creates update PRs.
-- **Snyk CLI 1.1325**: Scans for vulnerabilities in dependencies and containers.
-- **Trivy 0.51.5**: Scans container images for vulnerabilities.
-- **CodeQL 2.17.6**: Static analysis for code-level vulnerabilities.
-- **GitHub Actions**: Runs the CI pipeline.
-- **triagesec/security-triage-action@v1.3.2**: Custom action for filtering alerts.
-- **Python 3.11**: Runs the maintenance filter.
+- **Renovate 37.424**: Maintains dependency graphs and creates update PRs. - **Snyk CLI 1.1325**: Scans for vulnerabilities in dependencies and containers. - **Trivy 0.51.5**: Scans container images for vulnerabilities. - **CodeQL 2.17.6**: Static analysis for code-level vulnerabilities. - **GitHub Actions**: Runs the CI pipeline. - **triagesec/security-triage-action@v1.3.2**: Custom action for filtering alerts. - **Python 3.11**: Runs the maintenance filter.
 
 ### Configuration files
 
@@ -157,19 +146,12 @@ security/
 
 ### Setup process
 
-1. **Install Renovate**: Add Renovate to each repo to maintain dependency graphs.
-2. **Define context**: Create `security-context.yml` for each service.
-3. **Set up triage rules**: Create `triage-rules.yml` with dynamic ignore rules.
-4. **Add GitHub Actions**: Commit the triage workflow to each repo.
-5. **Test**: Run the pipeline on a sample PR and verify the filtering works.
+1. **Install Renovate**: Add Renovate to each repo to maintain dependency graphs. 2. **Define context**: Create `security-context.yml` for each service. 3. **Set up triage rules**: Create `triage-rules.yml` with dynamic ignore rules. 4. **Add GitHub Actions**: Commit the triage workflow to each repo. 5. **Test**: Run the pipeline on a sample PR and verify the filtering works.
 
 ### Maintenance
 
 The system requires minimal maintenance:
-- **Renovate**: Automatically updates dependency graphs and creates update PRs.
-- **Triage rules**: Updated automatically when Renovate creates update PRs.
-- **Context files**: Updated when service environments change.
-- **Maintenance filter**: No maintenance needed once configured.
+- **Renovate**: Automatically updates dependency graphs and creates update PRs. - **Triage rules**: Updated automatically when Renovate creates update PRs. - **Context files**: Updated when service environments change. - **Maintenance filter**: No maintenance needed once configured.
 
 ### Cost
 
@@ -232,7 +214,7 @@ For one week, collect every alert generated by the scanner. Don’t filter anyth
 
 ### Step 3: Build a simple triage script
 
-Write a script that filters alerts based on a single rule. Start with environment filtering if you have multiple environments, or maintenance-window filtering if you have old dependencies. Don’t try to build the perfect pipeline on day one. 
+Write a script that filters alerts based on a single rule. Start with environment filtering if you have multiple environments, or maintenance-window filtering if you have old dependencies. Don’t try to build the perfect pipeline on day one.
 
 ```python
 # simple_triage.py
@@ -266,42 +248,28 @@ Write a `SECURITY.md` file in each repo explaining how the triage pipeline works
 
 ## Resources that helped
 
-- [Renovate documentation](https://docs.renovatebot.com/): Essential for maintaining dependency graphs and creating update PRs.
-- [GitHub Actions documentation](https://docs.github.com/en/actions): How to integrate custom actions into your pipeline.
-- [Snyk CLI documentation](https://docs.snyk.io/snyk-cli): Details on scanning and ignore rules.
-- [Trivy documentation](https://aquasecurity.github.io/trivy/): Container scanning best practices.
-- [CodeQL documentation](https://codeql.github.com/docs/): Static analysis setup and configuration.
-- [OWASP Dependency-Track](https://dependencytrack.org/): A tool for aggregating and analyzing vulnerability data across multiple repos.
-- [Semantic Versioning](https://semver.org/): Understanding how version numbers affect vulnerability matching.
-- [GitHub Security Advisories](https://docs.github.com/en/code-security/security-advisories): Official advisories for vulnerabilities in GitHub repos.
+- [Renovate documentation](https://docs.renovatebot.com/): Essential for maintaining dependency graphs and creating update PRs. - [GitHub Actions documentation](https://docs.github.com/en/actions): How to integrate custom actions into your pipeline. - [Snyk CLI documentation](https://docs.snyk.io/snyk-cli): Details on scanning and ignore rules. - [Trivy documentation](https://aquasecurity.github.io/trivy/): Container scanning best practices. - [CodeQL documentation](https://codeql.github.com/docs/): Static analysis setup and configuration. - [OWASP Dependency-Track](https://dependencytrack.org/): A tool for aggregating and analyzing vulnerability data across multiple repos. - [Semantic Versioning](https://semver.org/): Understanding how version numbers affect vulnerability matching. - [GitHub Security Advisories](https://docs.github.com/en/code-security/security-advisories): Official advisories for vulnerabilities in GitHub repos.
 
 ## Frequently Asked Questions
 
 ### How do I handle false negatives with this approach?
 
 False negatives are a real risk when filtering alerts. We mitigate this by:
-1. **Critical-only filtering**: We only filter medium and low alerts. Critical alerts always fire.
-2. **Maintenance-window exceptions**: If a dependency hasn’t been updated in 90 days, we only filter medium and low alerts. Critical alerts still fire.
-3. **Periodic audits**: Every 3 months, we audit filtered alerts to ensure no real vulnerabilities were missed. We use OWASP Dependency-Track to aggregate data across repos and spot patterns.
-4. **Manual review**: We require manual review for any alert that’s filtered. The reviewer must document why the alert was filtered and when it should be re-evaluated.
+1. **Critical-only filtering**: We only filter medium and low alerts. Critical alerts always fire. 2. **Maintenance-window exceptions**: If a dependency hasn’t been updated in 90 days, we only filter medium and low alerts. Critical alerts still fire. 3. **Periodic audits**: Every 3 months, we audit filtered alerts to ensure no real vulnerabilities were missed. We use OWASP Dependency-Track to aggregate data across repos and spot patterns. 4. **Manual review**: We require manual review for any alert that’s filtered. The reviewer must document why the alert was filtered and when it should be re-evaluated.
 
 This approach has worked for us so far. We’ve caught real vulnerabilities that our old system missed, while significantly reducing noise.
 
 ### Can I use this approach with tools other than Snyk, Trivy, and CodeQL?
 
 Yes. The core principle is to filter alerts based on dynamic context, not static rules. You can apply this to:
-- **Dependency scanning**: Use Renovate to track dependency versions and filter alerts based on version updates.
-- **Container scanning**: Use runtime context to filter alerts. For example, ignore vulnerabilities in base images that aren’t used in production.
-- **Static analysis**: Use code context to filter alerts. For example, ignore alerts in test files that aren’t deployed.
+- **Dependency scanning**: Use Renovate to track dependency versions and filter alerts based on version updates. - **Container scanning**: Use runtime context to filter alerts. For example, ignore vulnerabilities in base images that aren’t used in production. - **Static analysis**: Use code context to filter alerts. For example, ignore alerts in test files that aren’t deployed.
 
 The key is to build a triage layer that sits between the scanner and the PR comments. The triage layer should use data that changes with your codebase, not data that’s frozen in time.
 
 ### What if my team doesn’t use Renovate?
 
 Renovate is helpful but not required. You can build dynamic ignore rules manually by:
-1. **Tracking updates**: Use GitHub’s dependency graph to see when dependencies are updated.
-2. **Creating ignore rules**: When a dependency is updated, create an ignore rule for the old version.
-3. **Using Renovate later**: Once you start using Renovate, the ignore rules can be automated.
+1. **Tracking updates**: Use GitHub’s dependency graph to see when dependencies are updated. 2. **Creating ignore rules**: When a dependency is updated, create an ignore rule for the old version. 3. **Using Renovate later**: Once you start using Renovate, the ignore rules can be automated.
 
 We didn’t use Renovate for the first 6 months of building this pipeline. We manually tracked updates in a spreadsheet. It was tedious but worked. Once we added Renovate, the manual process became automated.
 
@@ -316,29 +284,22 @@ Finally, emphasize the reduction in missed real vulnerabilities. We caught a cri
 ### How do I handle alerts for vulnerabilities with no known fix?
 
 Vulnerabilities with no known fix are tricky. We handle them by:
-1. **Risk assessment**: Evaluate the exploitability of the vulnerability in our environment.
-2. **Mitigation**: Apply runtime mitigations if possible (e.g., WAF rules, network policies).
-3. **Documentation**: Add a comment in the triage rules explaining the situation and the plan.
-4. **Tracking**: Create a ticket to track the vulnerability and follow up regularly.
+1. **Risk assessment**: Evaluate the exploitability of the vulnerability in our environment. 2. **Mitigation**: Apply runtime mitigations if possible (e.g., WAF rules, network policies). 3. **Documentation**: Add a comment in the triage rules explaining the situation and the plan. 4. **Tracking**: Create a ticket to track the vulnerability and follow up regularly.
 
 For example, we had a vulnerability in `axios@1.6.2` with no known fix at the time. We documented the risk, added a WAF rule to block the exploit path, and tracked it in our backlog. The vulnerability was fixed in `axios@1.6.3`, which we updated to in our next Renovate run.
 
 This approach ensures we don’t lose track of vulnerabilities while reducing alert fatigue for the rest of the pipeline.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -1,10 +1,10 @@
 # 7 ways to earn extra in 2026 without shipping SaaS
 
-I ran into this building second problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 ## Why this list exists (what I was actually trying to solve)
 
-I spent three months last year chasing a side project that looked perfect on paper: a niche SaaS for Kenyan e-commerce stores. I built the whole thing in Next.js 14, hooked up Stripe subscriptions, and deployed on AWS ECS with Fargate. After launch day, I had exactly 12 signups in three weeks, all from friends. The billing emails went out, but the revenue? $27. I was surprised that my first mistake wasn’t the product—it was ignoring the two-hour-a-week rule. I had assumed "build a SaaS, get rich" without factoring in support tickets, GDPR compliance emails, and the AWS bill that hit $187 the first month even with almost no traffic. That’s when I realized most developers don’t need another SaaS to make money—they need something that scales with their existing skills and time.
+After launch day, I had exactly 12 signups in three weeks, all from friends. The billing emails went out, but the revenue? $27. I had assumed "build a SaaS, get rich" without factoring in support tickets, GDPR compliance emails, and the AWS bill that hit $187 the first month even with almost no traffic. That’s when I realized most developers don’t need another SaaS to make money—they need something that scales with their existing skills and time.
 
 I needed options that fit around a full-time job, didn’t require customer support at 3 AM, and could start paying within 30 days. I also needed to avoid the trap of turning a side income into a second job. Over the next six months, I tested seven different income streams, each with a clear cap on hours per week and a direct link to the skills I already use every day—Python, Node.js, AWS, and GitHub. Some worked immediately; others taught me hard lessons about scalability and customer expectations.
 
@@ -15,9 +15,7 @@ This list is what survived after throwing out everything that required ongoing c
 
 I set three hard constraints before I started testing anything:
 
-1. Time cap: max 2 hours per week after setup. I used Toggl Track to log every second I spent on each stream for the first 30 days. Anything that required more than 2 hours a week got shelved.
-2. Revenue target: $500/month net within 90 days or it was out. I used a simple spreadsheet with Stripe payouts, AWS credits, and PayPal fees. Anything that couldn’t hit $500 without scaling hours past 2/week was rejected.
-3. Skill match: the stream had to use tools I already use professionally—Python 3.11, Node.js 20 LTS, AWS CDK, PostgreSQL 16, and GitHub Actions. No new frameworks unless they saved time.
+1. Time cap: max 2 hours per week after setup. I used Toggl Track to log every second I spent on each stream for the first 30 days. Anything that required more than 2 hours a week got shelved. 2. Revenue target: $500/month net within 90 days or it was out. I used a simple spreadsheet with Stripe payouts, AWS credits, and PayPal fees. Anything that couldn’t hit $500 without scaling hours past 2/week was rejected. 3. Skill match: the stream had to use tools I already use professionally—Python 3.11, Node.js 20 LTS, AWS CDK, PostgreSQL 16, and GitHub Actions. No new frameworks unless they saved time.
 
 I also tracked hidden costs: domain renewals, third-party API overages, AWS Lambda cold starts, and the opportunity cost of not spending those 2 hours on open-source contributions or upskilling. One option looked great on paper until I realized the payment processor charged 8% per transaction—after 30 days and $200 revenue, I shelved it.
 
@@ -32,7 +30,7 @@ What it does: You package public financial transaction data (sanitized, aggregat
 
 Strength: FinTech teams are desperate for clean, labeled transaction data for fraud modeling. If you curate the right slice—say, Kenyan M-Pesa transactions aggregated by day and region—companies will pay $200–$1,000 per dataset. I sold a single dataset of 50,000 anonymized M-Pesa transactions to two Kenyan neobanks last month for $1,200 total. No support, no uptime guarantees, just a download link over HTTPS.
 
-Weakness: Data licensing is messy. One buyer wanted a perpetual license, another insisted on CC-BY-NC. I spent 8 hours drafting a simple license agreement using a template from Creative Commons, but I still got an angry email when the dataset ended up in a public GitHub repo. Moral: always watermark your data and include a clause that forbids redistribution without permission.
+Weakness: Data licensing is messy. One buyer wanted a perpetual license, another insisted on CC-BY-NC. Moral: always watermark your data and include a clause that forbids redistribution without permission.
 
 Who it’s best for: Developers who already work with financial data or have access to public APIs like Kenya’s Open Banking API or CBK’s statistical bulletins. If you can parse JSON at 10k rows/sec and know pandas, this is a 2-hour/week job.
 
@@ -63,7 +61,7 @@ Who it’s best for: Developers comfortable with AWS CDK or Terraform who want a
 
 What it does: You package a reusable GitHub Actions workflow—e.g., a workflow that auto-formats Python code with Black, runs pytest with coverage, and posts results to Slack. Publish it as a public repo, then sell access to private workflows or customization services via GitHub Sponsors or a simple landing page.
 
-Strength: The workflow market is underserved. I built a workflow that auto-generates API documentation from FastAPI docstrings and pushes it to GitHub Pages. I sold 17 customizations at $150 each in the first three months. All I do is copy-paste the repo, update the docstring regex, and commit—10 minutes per customer.
+Strength: The workflow market is underserved. I sold 17 customizations at $150 each in the first three months. All I do is copy-paste the repo, update the docstring regex, and commit—10 minutes per customer.
 
 Weakness: GitHub Actions has a 6-hour job timeout, and if your workflow has a bug, users get angry fast. I once pushed a workflow that accidentally committed secrets to the repo. It took me 45 minutes to rotate all keys and apologize to buyers. Use `secrets.GITHUB_TOKEN` and never allow push access in workflows.
 
@@ -76,7 +74,7 @@ What it does: You set up a lightweight proxy—using FastAPI or Express.js—tha
 
 Strength: I built a proxy for Kenya’s NTSA TIMS API (vehicle registration lookup). The public API allows 50 requests/day, but many fintech teams need 1,000+/day. My proxy caches responses for 24 hours and charges $0.05 per request. At 5,000 requests/month, that’s $250 revenue with $12 in AWS costs. I used Redis 7.2 as a cache layer and FastAPI 0.109 with Python 3.11.
 
-Weakness: Public APIs change without notice. The NTSA API suddenly started returning 429 errors after a policy change. I had to update my proxy in 3 hours to add retry logic and exponential backoff. Always wrap third-party API calls with circuit breakers—use `tenacity` 8.2 in Python or `p-retry` in Node.js.
+Weakness: Public APIs change without notice. The NTSA API suddenly started returning 429 errors after a policy change. Always wrap third-party API calls with circuit breakers—use `tenacity` 8.2 in Python or `p-retry` in Node.js.
 
 Who it’s best for: Developers comfortable with rate limiting, caching, and error handling. If you enjoy reverse-engineering public APIs, this is a scalable path.
 
@@ -85,9 +83,9 @@ Who it’s best for: Developers comfortable with rate limiting, caching, and err
 
 What it does: You curate a set of VS Code snippets and keybindings for specific stacks—e.g., a "Kenyan Fintech Snippets" pack with shortcuts for M-Pesa STK push, CBK compliance boilerplate, and Kenyan mobile number validation. Publish it on the VS Code Marketplace and charge $10–$20 per pack.
 
-Strength: The VS Code Marketplace is a goldmine for niche snippets. I built a pack with 47 snippets for FastAPI, pytest, and Docker Compose. It has 8,200 installs and generated $1,400 in the first six months with zero support. The setup took 4 hours: writing the snippets, publishing the package, and updating the README with GIFs.
+Strength: The VS Code Marketplace is a goldmine for niche snippets. It has 8,200 installs and generated $1,400 in the first six months with zero support. The setup took 4 hours: writing the snippets, publishing the package, and updating the README with GIFs.
 
-Weakness: VS Code Marketplace takes 30% of revenue. After fees, I net $7 per pack. Also, snippets go stale—FastAPI 0.109 changed its decorator syntax, and my snippets broke. I had to update 12 snippets in 30 minutes. Use automated testing with `vscode-test` to catch syntax drift.
+Weakness: VS Code Marketplace takes 30% of revenue. After fees, I net $7 per pack. Also, snippets go stale—FastAPI 0.109 changed its decorator syntax, and my snippets broke. Use automated testing with `vscode-test` to catch syntax drift.
 
 Who it’s best for: Developers who enjoy writing boilerplate and documenting shortcuts. If you love VS Code and enjoy teaching workflows, this is a low-friction path.
 
@@ -96,13 +94,11 @@ Who it’s best for: Developers who enjoy writing boilerplate and documenting sh
 
 What it does: You write a small CLI tool or GitHub Action that checks compliance with local regulations—e.g., a tool that validates that a Kenyan fintech API returns a CBK-required `x-request-id` header, or a tool that checks that a USSD menu follows NCA guidelines. Publish it as open-source, then sell commercial licenses or support contracts.
 
-Strength: Compliance tools have sticky customers. I built a CLI that validates Kenyan data encryption standards (KEN-IS 300-2:2025). I gave it away for free on GitHub but sold a $500/year support license that includes quarterly updates. I got 9 licenses in the first three months—$4,500 revenue with zero customer support beyond email updates.
+Strength: Compliance tools have sticky customers. I gave it away for free on GitHub but sold a $500/year support license that includes quarterly updates. I got 9 licenses in the first three months—$4,500 revenue with zero customer support beyond email updates.
 
-Weakness: Compliance standards change fast. The Kenyan encryption standard got updated in Q1 2026, and my tool broke for users who hadn’t updated. I had to push an emergency patch in 2 hours. Always build a test suite that fails loudly when a standard changes.
+Weakness: Compliance standards change fast. The Kenyan encryption standard got updated in Q1 2026, and my tool broke for users who hadn’t updated. Always build a test suite that fails loudly when a standard changes.
 
 Who it’s best for: Developers who enjoy writing security or compliance tools and don’t mind occasional patching. If you enjoy reading CBK circulars and ISO standards, this is a high-margin path.
-
-
 
 ## The top pick and why it won
 
@@ -131,9 +127,9 @@ The hardest part was licensing. I started with a simple “for personal use only
 
 What it does: You build a GitHub App that reviews pull requests using a fine-tuned local LLM (e.g., Codellama 7B) and posts inline comments. You charge $20/month per repo or $200/month for unlimited repos.
 
-Strength: Small teams love automated code reviews. I tested this with a local Codellama 7B model running on a $150/month Hetzner VPS. At 5 repos, 20 PRs/day, the model handled 90% of the reviews. I sold 6 seats at $20/month—$120/month with $150 in server costs. I broke even at 8 repos.
+Strength: Small teams love automated code reviews. I tested this with a local Codellama 7B model running on a $150/month Hetzner VPS. At 5 repos, 20 PRs/day, the model handled 90% of the reviews. I sold 6 seats at $20/month—$120/month with $150 in server costs.
 
-Weakness: LLM drift and false positives. The model started flagging `assertEquals` as deprecated in Python 3.11, even though we didn’t enable that rule. I had to pin the model version and freeze the prompt. Also, GitHub API rate limits kick in fast—you’ll need to cache aggressively.
+Weakness: LLM drift and false positives. The model started flagging `assertEquals` as deprecated in Python 3.11, even though we didn’t enable that rule. Also, GitHub API rate limits kick in fast—you’ll need to cache aggressively.
 
 Who it’s best for: Developers comfortable running local LLMs and writing GitHub Apps. If you enjoy tinkering with models, this is a high-upside path, but the math only works if you can keep server costs under $200/month.
 
@@ -144,7 +140,7 @@ What it does: You publish Terraform modules that spin up AWS resources compliant
 
 Strength: Compliance teams always need Terraform. I sold a module that deploys a CBK-compliant VPC with private subnets, NAT Gateway, and CloudTrail logging. I charged $300 for customization and got 5 sales in the first two months—$1,500 revenue with zero ongoing costs.
 
-Weakness: Terraform Registry takes 20% revenue. Also, AWS keeps changing defaults—my module broke when AWS deprecated `aws_nat_gateway` in favor of `aws_vpc_endpoint`. I had to update 12 lines and republish. Always pin provider versions.
+Weakness: Terraform Registry takes 20% revenue. Also, AWS keeps changing defaults—my module broke when AWS deprecated `aws_nat_gateway` in favor of `aws_vpc_endpoint`. Always pin provider versions.
 
 Who it’s best for: Developers who already write Terraform and enjoy compliance documentation. If you enjoy writing HCL and AWS docs, this is a scalable path.
 
@@ -153,9 +149,9 @@ Who it’s best for: Developers who already write Terraform and enjoy compliance
 
 What it uses: Verdaccio (a lightweight npm registry) running on a $5/month DigitalOcean droplet. You curate a set of internal libraries (e.g., a shared React component library for Kenyan fintech dashboards) and sell access to teams.
 
-Strength: Teams hate publishing internal packages to public npm. I built a private registry with Verdaccio 5.28 and charged $50/month per team for unlimited packages. I got 4 teams at $200/month total, with $5 in server costs. Zero support—Verdaccio is self-hosted.
+Strength: Teams hate publishing internal packages to public npm. I got 4 teams at $200/month total, with $5 in server costs. Zero support—Verdaccio is self-hosted.
 
-Weakness: Verdaccio has no built-in rate limiting. One team spammed my droplet with 10k requests/day and brought it down. I had to add Nginx rate limiting and move to a $10 droplet. Also, npm auth tokens leak—rotate them every 30 days.
+Weakness: Verdaccio has no built-in rate limiting. One team spammed my droplet with 10k requests/day and brought it down. Also, npm auth tokens leak—rotate them every 30 days.
 
 Who it’s best for: Developers who already maintain internal libraries and want to monetize them. If you enjoy DevOps tinkering, this is a low-risk path.
 
@@ -164,9 +160,9 @@ Who it’s best for: Developers who already maintain internal libraries and want
 
 What it does: You deploy Kong Gateway or AWS API Gateway with a usage plan and sell access to your microservices. For example, a service that converts Kenyan mobile numbers to E.164 format.
 
-Strength: Microservices teams need gateways. I deployed Kong Gateway 3.6 on AWS EC2 t3.micro ($12/month) and sold access for $0.01 per request. At 20k requests/month, that’s $200 revenue with $12 in AWS costs. I used Kong’s rate limiting plugin to prevent abuse.
+Strength: Microservices teams need gateways. At 20k requests/month, that’s $200 revenue with $12 in AWS costs. I used Kong’s rate limiting plugin to prevent abuse.
 
-Weakness: Kong Gateway has a steep learning curve. I spent 8 hours debugging a plugin conflict that caused 502 errors. Also, AWS API Gateway is cheaper but has no plugins—you’ll need to write Lambda functions for auth.
+Weakness: Kong Gateway has a steep learning curve. Also, AWS API Gateway is cheaper but has no plugins—you’ll need to write Lambda functions for auth.
 
 Who it’s best for: Developers comfortable with API gateways and DevOps. If you enjoy networking and auth flows, this is a scalable path.
 
@@ -179,11 +175,11 @@ I signed up for AWS, DigitalOcean, and GitHub affiliate programs and wrote blog 
 
 ### Building a Chrome extension for M-Pesa STK push
 
-I built a Chrome extension that auto-fills M-Pesa STK push forms for Kenyan fintech teams. I published it on the Chrome Web Store and set a $5 unlock fee. I got 800 installs in 30 days, but Chrome took 30% revenue, and support emails were constant—users couldn’t get the extension to work with their specific STK payloads. Dropped after 45 days—support overhead killed the margin.
+I published it on the Chrome Web Store and set a $5 unlock fee. I got 800 installs in 30 days, but Chrome took 30% revenue, and support emails were constant—users couldn’t get the extension to work with their specific STK payloads. Dropped after 45 days—support overhead killed the margin.
 
 ### Selling a no-code dashboard builder for fintech teams
 
-I built a Retool-like dashboard builder using Streamlit and sold it as a self-hosted Docker image. I thought teams would pay $500 for a dashboard builder. I sold 3 copies in 60 days—$1,500 revenue—but each customer needed custom CSS, custom queries, and onboarding calls. Support took 4 hours per customer. Dropped after 90 days—support overhead killed the margin.
+I thought teams would pay $500 for a dashboard builder. I sold 3 copies in 60 days—$1,500 revenue—but each customer needed custom CSS, custom queries, and onboarding calls. Support took 4 hours per customer. Dropped after 90 days—support overhead killed the margin.
 
 ### Running a paid Discord community for Kenyan fintech devs
 
@@ -192,7 +188,7 @@ I started a Discord server with 1,200 members and charged $5/month for access. I
 
 ## How to choose based on your situation
 
-Use this table to pick the best option for your skills and constraints. I built this by testing each option with real numbers and time logs. The “Fit score” is a 1–10 scale based on my evaluation matrix: (Revenue after 90 days / Hours spent) × (1 / Hidden cost ratio).
+Use this table to pick the best option for your skills and constraints. The “Fit score” is a 1–10 scale based on my evaluation matrix: (Revenue after 90 days / Hours spent) × (1 / Hidden cost ratio).
 
 | Option | Fit score (1–10) | Hours/week after setup | Revenue needed to hit $500/month | Skills needed | Hidden cost risk |
 |---|---|---|---|---|---|
@@ -215,21 +211,17 @@ Also consider your tolerance for hidden costs. If you’re on a tight budget, av
 
 Start with a simple “single-company, single-region” license. Use a template from Creative Commons or TLDRLegal. Watermark your CSV with the buyer’s company name as a header row. Also, add a clause that forbids redistribution without written permission. If you’re aggregating public data, cite the source and add a disclaimer: “This dataset is derived from public sources and is not endorsed by the original publisher.” I got an angry email when I didn’t watermark a dataset—once I added watermarking, disputes dropped to zero.
 
-
 **What’s the fastest way to validate demand before building?**
 
 Post a landing page with a fake “Buy now” button using Stripe Checkout v2. Drive traffic via Twitter/X or LinkedIn ads targeting fintech teams in Kenya. If you get 10 clicks and 3 inquiries, demand is real. I did this for a M-Pesa transaction dataset and got 7 inquiries before I built anything. The landing page took 45 minutes to set up with Next.js 14 and Stripe.
-
 
 **How do I price a micro-library?**
 
 Look at similar libraries on npm or PyPI. If there’s nothing comparable, price at $5/month for GitHub Sponsors or $20 one-time for a personal license. If you have traction, raise the price. My `kenya-momo-validator` started at $3/month—after 500 downloads, I raised it to $5/month and lost 12 sponsors, but the revenue doubled. Use GitHub Sponsors’ “custom amount” option to test price sensitivity.
 
-
 **What’s the biggest mistake teams make when running an API proxy?**
 
 They forget to cache responses. The NTSA TIMS API charges $0.01 per request—if you cache for 24 hours, you save 99% of the cost. Also, don’t expose your API key in client-side JavaScript. Use a server-side proxy with environment variables. I once hardcoded an API key in a Next.js page—it got leaked in 2 hours. Use AWS Secrets Manager or GitHub Environments.
-
 
 **How do I avoid LLM drift in automated code reviews?**
 
@@ -246,20 +238,16 @@ The key is to treat this like a product experiment, not a startup. If it works, 
 
 Action step: Open your browser now. Go to [stripe.com](https://stripe.com) and create a Stripe account. Then open [nextjs.org](https://nextjs.org) and scaffold a new project with `npx create-next-app@14`. Deploy it to AWS Amplify using the Amplify CLI. In the next 30 minutes, publish a landing page with a fake “Buy dataset” button and post it in a Kenyan fintech Slack or WhatsApp group. That’s your first experiment.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

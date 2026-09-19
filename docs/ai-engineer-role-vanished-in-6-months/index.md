@@ -10,15 +10,13 @@ We started the year chasing what every other Southeast Asian startup chased: an 
 
 The AI team’s first task was to replace a rule-based scoring system with an LLM that could read product titles and descriptions in Vietnamese, Tagalog, and Indonesian. The goal: improve conversion lift by ≥5% within 90 days. We hired three AI Engineers from top Vietnamese and Indonesian bootcamps. Their average salary was 280 million VND/month ($11.5k) each.
 
-I ran into my first surprise in February. The AI Engineers wanted to use LangChain 0.2.8 to chain together Vietnamese text classification, agentic retrieval, and a final LLM summarizer. I said yes because it was the hot thing. Two weeks later, our latency spiked to 2.3 seconds p95 and our bill jumped to $5.1k/month. The culprit: LangChain’s synchronous blocking calls. Every LLM call blocked the FastAPI thread pool, and our four t4g.medium instances melted under 300 concurrent users.
+The AI Engineers wanted to use LangChain 0.2.8 to chain together Vietnamese text classification, agentic retrieval, and a final LLM summarizer. I said yes because it was the hot thing. Two weeks later, our latency spiked to 2.3 seconds p95 and our bill jumped to $5.1k/month. The culprit: LangChain’s synchronous blocking calls. Every LLM call blocked the FastAPI thread pool, and our four t4g.medium instances melted under 300 concurrent users.
 
 ## What we tried first and why it didn’t work
 
 Our first fix was vertical scaling. We moved from t4g.medium to m7g.2xlarge instances (8 vCPUs, 32 GB RAM) and doubled our instance count to eight. The bill jumped to $8.9k/month and latency dropped to 1.1 seconds p95. Still above our 200 ms target.
 
 The AI Engineers then insisted on using Redis 7.2 with a local vector store (FAISS 1.8) for fast retrieval. They built a Python microservice in Flask that exposed an `/infer` endpoint. We deployed it behind an ALB with a 10-second timeout. The service worked fine in staging, but in production the first cold start took 8 seconds because `faiss-cpu` needed to load a 2 GB index from S3 on every pod restart. We saw `ImportError: libfaiss.so not found` errors every time a pod rescheduled. We fixed it with a 512 MB RAMdisk and a preload script, but the latency variance stayed high.
-
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
 
 By March, our AI Engineers had built three separate microservices: one for classification, one for retrieval, and one for generation. Each service had its own Redis connection pool, its own rate limiter (using RedisCell 0.1.2), and its own Prometheus metrics exporter. Our observability bill tripled to $400/month, and the infra team started complaining about the 17 new containers we were scheduling.
 
@@ -101,8 +99,7 @@ async def recommend(product_title: str):
 
 Our CI pipeline ran two jobs:
 
-1. **Prompt validation**: Every merge to `main` triggered a synthetic test. We replayed 500 product titles against the new prompt and measured conversion lift. Lift had to be ≥1% to pass. We used `pydantic` 2.7.1 to validate JSON outputs.
-2. **Cost guardrail**: A nightly job queried AWS Cost Explorer and alerted if daily AI spend exceeded $150. The alert was a Slack message to `#ops-alerts`.
+1. **Prompt validation**: Every merge to `main` triggered a synthetic test. We replayed 500 product titles against the new prompt and measured conversion lift. Lift had to be ≥1% to pass. We used `pydantic` 2.7.1 to validate JSON outputs. 2. **Cost guardrail**: A nightly job queried AWS Cost Explorer and alerted if daily AI spend exceeded $150. The alert was a Slack message to `#ops-alerts`.
 
 | Tool | Version | Purpose | Monthly cost |
 |---|---|---|---|
@@ -129,34 +126,23 @@ The team’s velocity on non-AI features doubled. We shipped a new product catal
 
 ## What we’d do differently
 
-1. **No dedicated AI team.** The moment we isolated AI into a separate pod, we created a cost center instead of a feature. Next time, we’d embed AI engineers inside product squads from day one.
-2. **Skip FAISS and vector stores.** Our retrieval needs were simple: keyword matching on product titles. A Redis full-text index with `FT.SEARCH` would have sufficed and saved us three months of tuning.
-3. **Measure lift before scaling.** We should have A/B tested the LLM feature against a static rule-based system for 30 days before committing to Bedrock. Our 5% lift target was arbitrary; we didn’t know the uplift ceiling.
-4. **Cost guardrails baked in.** We added the Cost Explorer alert only after we blew past our budget. A pre-commit hook that blocks merges if the PR adds >$50/month in new LLM spend would have saved us $3k.
+1. **No dedicated AI team.** The moment we isolated AI into a separate pod, we created a cost center instead of a feature. Next time, we’d embed AI engineers inside product squads from day one. 2. **Skip FAISS and vector stores.** Our retrieval needs were simple: keyword matching on product titles. A Redis full-text index with `FT.SEARCH` would have sufficed and saved us three months of tuning. 3. **Measure lift before scaling.** We should have A/B tested the LLM feature against a static rule-based system for 30 days before committing to Bedrock. Our 5% lift target was arbitrary; we didn’t know the uplift ceiling. 4. **Cost guardrails baked in.** We added the Cost Explorer alert only after we blew past our budget. A pre-commit hook that blocks merges if the PR adds >$50/month in new LLM spend would have saved us $3k.
 
 ## The broader lesson
 
 The ‘AI Engineer’ role was a temporary construct born of the 2026 hype cycle. In 2026, the role collapsed because:
 
-- **Inference commoditized.** AWS Bedrock, Google Vertex AI, and Azure AI Inference dropped the cost of LLM calls below the salary of a single engineer. Running your own `vllm` cluster for inference is now a niche optimization for teams with >500k daily inference calls.
-- **Prompt engineering is product work.** Writing good prompts is like writing good SQL: it’s part of the product, not a separate discipline. In 2026, product engineers write prompts and data engineers write fine-tuning scripts.
-- **Cost discipline beats velocity.** Startups in Southeast Asia cannot afford a $17k/month AI burn while chasing a 5% lift. The teams that won in 2026 were the ones that treated AI like any other dependency: measure ROI, set guardrails, and fold it back into the product.
+- **Inference commoditized.** AWS Bedrock, Google Vertex AI, and Azure AI Inference dropped the cost of LLM calls below the salary of a single engineer. Running your own `vllm` cluster for inference is now a niche optimization for teams with >500k daily inference calls. - **Prompt engineering is product work.** Writing good prompts is like writing good SQL: it’s part of the product, not a separate discipline. In 2026, product engineers write prompts and data engineers write fine-tuning scripts. - **Cost discipline beats velocity.** Startups in Southeast Asia cannot afford a $17k/month AI burn while chasing a 5% lift. The teams that won in 2026 were the ones that treated AI like any other dependency: measure ROI, set guardrails, and fold it back into the product.
 
 The principle is simple: **AI is infrastructure, not a team.**
 
 ## How to apply this to your situation
 
-1. **Audit your AI spend.** Run `aws ce get-cost-and-usage --time-period 2026-05-01/2026-06-01 --granularity MONTHLY --metrics BlendedCost` and filter by service `bedrock` or `sagemaker`. If it’s >1% of ARR, you’re at risk.
-2. **Delete the `/ai` microservice.** Move every AI endpoint into your main API. Use async/await and Redis for caching. Keep the prompt in your repo, not in a separate repo.
-3. **Set a lift threshold.** Before you call an LLM, define the metric you’re optimizing (CTR, conversion, retention). Set a minimum lift: 3% for most consumer apps, 1% for B2B. If you can’t hit it with a simple prompt, don’t scale.
-4. **Embed AI engineers in product squads.** Let them write prompts and SQL, not infrastructure. The infra work is already done by AWS Bedrock and Redis.
+1. **Audit your AI spend.** Run `aws ce get-cost-and-usage --time-period 2026-05-01/2026-06-01 --granularity MONTHLY --metrics BlendedCost` and filter by service `bedrock` or `sagemaker`. If it’s >1% of ARR, you’re at risk. 2. **Delete the `/ai` microservice.** Move every AI endpoint into your main API. Use async/await and Redis for caching. Keep the prompt in your repo, not in a separate repo. 3. **Set a lift threshold.** Before you call an LLM, define the metric you’re optimizing (CTR, conversion, retention). Set a minimum lift: 3% for most consumer apps, 1% for B2B. If you can’t hit it with a simple prompt, don’t scale. 4. **Embed AI engineers in product squads.** Let them write prompts and SQL, not infrastructure. The infra work is already done by AWS Bedrock and Redis.
 
 ## Resources that helped
 
-- [AWS Bedrock pricing calculator 2026-06](https://calculator.aws/#/addService/Bedrock) — used to sanity-check our token spend.
-- [Redis 7.2 FT.SEARCH tutorial](https://redis.io/docs/interact/search-and-query/) — saved us from deploying FAISS.
-- [Litellm prompt validation guide](https://docs.litellm.ai/docs/prompt_validation) — helped us catch regressions before they hit production.
-- [FastAPI async best practices](https://fastapi.tiangolo.com/async/) — kept our endpoint performant under load.
+- [AWS Bedrock pricing calculator 2026-06](https://calculator.aws/#/addService/Bedrock) — used to sanity-check our token spend. - [Redis 7.2 FT.SEARCH tutorial](https://redis.io/docs/interact/search-and-query/) — saved us from deploying FAISS. - [Litellm prompt validation guide](https://docs.litellm.ai/docs/prompt_validation) — helped us catch regressions before they hit production. - [FastAPI async best practices](https://fastapi.tiangolo.com/async/) — kept our endpoint performant under load.
 
 ## Frequently Asked Questions
 
@@ -177,9 +163,7 @@ Output format: JSON.
 ```
 The model’s output was already better than our rule-based system. Adding retrieval or summarization layers diluted the signal. Keep it simple: start with a single prompt, measure lift, then iterate.
 
-
 Start by running the AWS Cost Explorer query above. If your AI spend is >1% of ARR, open the Bedrock pricing calculator and model your token usage for 30 days. Adjust your prompt or model choice until the cost drops below the threshold.
-
 
 ---
 

@@ -8,7 +8,7 @@ In 2026, the AI wave had already eaten half the niches I’d normally consider f
 
 After interviewing 42 local founders and running a 3-week $2,400 ad campaign in Kenya, Uganda, and Tanzania, the pattern that emerged was **“local regulation complexity”**. Every sector that faced heavy oversight—pharmaceutical wholesalers, SACCO micro-credit lenders, LPG gas distributors—was still using Excel, WhatsApp groups, and Google Forms. They needed compliance automation, not creative AI. So I set out to build a **compliance-as-a-service** platform for regulated SMEs in East Africa.
 
-I was surprised that none of the incumbents had moved into this space. When I dug deeper, I found out they were all waiting for “AI to automate the paperwork.” Turns out, AI hallucinates legal citations and regulatory deadlines, which is exactly what these businesses can’t afford. That was my first real mistake: assuming AI would displace everything. It doesn’t—it exposes the hardest parts of a problem first.
+When I dug deeper, I found out they were all waiting for “AI to automate the paperwork.” Turns out, AI hallucinates legal citations and regulatory deadlines, which is exactly what these businesses can’t afford. That was my first real mistake: assuming AI would displace everything. It doesn’t—it exposes the hardest parts of a problem first.
 
 By early 2026, the MVP had 12 paying customers across Kenya’s pharma and SACCO sectors, churning at 8% monthly. Revenue was $2,800 MRR with a 65% gross margin. But I knew if I stayed on the same path—generic “automate your paperwork”—AI would catch up in months. I needed a niche so narrow that a fine-tuned open-source LLM couldn’t replace it.
 
@@ -17,7 +17,7 @@ By early 2026, the MVP had 12 paying customers across Kenya’s pharma and SACCO
 
 Our first attempt was a “Regulatory Alerts API” that ingested Kenya’s Pharmacy and Poisons Board PDFs, parsed them with LangChain and Llama 3.2 11B, and sent SMS alerts to pharmacies. We charged $49/month per pharmacy. The tech looked slick: Python 3.11, FastAPI, Redis 7.2 for caching, and AWS Lambda with arm64 for $0.0000166 per 100ms. We hit 95% uptime, but churn was brutal. Why?
 
-Because the pharmacies didn’t trust an API that hallucinated expiry dates. One customer, Pharmacity Kenya, got a fake alert saying their license expired in 3 days. Their compliance officer called the board—license was fine. They churned within a week. I spent three days debugging the prompt injection before realising the model was citing a 2026 gazette that had since been amended. No amount of prompt engineering fixed the fundamental issue: **regulatory text is versioned, not continuous**. A single outdated citation could cost a license.
+Because the pharmacies didn’t trust an API that hallucinated expiry dates. One customer, Pharmacity Kenya, got a fake alert saying their license expired in 3 days. Their compliance officer called the board—license was fine. They churned within a week. No amount of prompt engineering fixed the fundamental issue: **regulatory text is versioned, not continuous**. A single outdated citation could cost a license.
 
 We tried fine-tuning Falcon 7B on the 2026 Kenya Gazette PDFs, but the hallucination rate stayed at 12% on validation. Costs ballooned: 1,200 tokens per request at $0.07 per 1M tokens on Bedrock—$380/month in inference alone. We couldn’t pass that on to customers without doubling the price. After three failed pivots—chatbot, WhatsApp bot, email digest—we scrapped the AI layer entirely and rebuilt the core logic as deterministic rules.
 
@@ -52,10 +52,7 @@ Here’s the stack we ended up with and why each piece matters:
 
 Key design choices:
 
-- **No AI inference**: We removed LangChain, Llama, and any probabilistic layer after the Textract step. Costs dropped from $380 to $167 for the same workload.
-- **Git-backed diffs**: Each regulation change is a Git commit. Customers can fork, audit, and merge changes in their own repo. This solved the trust gap completely.
-- **Temporal workflows**: Compliance jobs that span months (e.g., quarterly audits) are managed by Temporal. If the server crashes, workflows resume from last checkpoint. We’ve had zero data loss in 3 months.
-- **Versioned deadlines**: All deadlines are stored with a `valid_from` and `valid_to` timestamp. When a regulation is amended, old deadlines are archived—no more “expired in 3 days” hallucinations.
+- **No AI inference**: We removed LangChain, Llama, and any probabilistic layer after the Textract step. Costs dropped from $380 to $167 for the same workload. - **Git-backed diffs**: Each regulation change is a Git commit. Customers can fork, audit, and merge changes in their own repo. This solved the trust gap completely. - **Temporal workflows**: Compliance jobs that span months (e.g., quarterly audits) are managed by Temporal. If the server crashes, workflows resume from last checkpoint. We’ve had zero data loss in 3 months. - **Versioned deadlines**: All deadlines are stored with a `valid_from` and `valid_to` timestamp. When a regulation is amended, old deadlines are archived—no more “expired in 3 days” hallucinations.
 
 Code snippets that mattered:
 
@@ -192,18 +189,14 @@ That’s the real moat: **verifiable, auditable, human-supervised logic**.
 **How do I know if my niche is AI-proof?**
 Look at the cost of a mistake. If a single error can cost a customer a license, fine, or legal liability, AI is not the right tool. That’s why pharmaceutical wholesalers, SACCOs, and LPG distributors are still safe niches in 2026. Start by asking: “What’s the worst that happens if this system is wrong?” If the answer is anything worse than a typo in a chatbot, you’re in the clear.
 
-
 **Can I still use AI for part of the workflow?**
 Yes—but keep it in a sandbox. Use AI to parse unstructured data (PDFs, images, audio), but always have a human review the output before it becomes actionable. For example, use Llama 3.2 to extract clauses from a gazette, then store the result in a Git repo for human approval. Never let AI emit a deadline or a fine.
-
 
 **What’s the smallest regulated vertical I can target?**
 The smaller the better. Look for sectors with fewer than 1,000 licensed businesses in your region. In Kenya, that’s SACCOs (≈800), LPG distributors (≈1,200), or pharmaceutical wholesalers (≈400). Start with one sector, build the audit trail, then expand vertically before broadening horizontally.
 
-
 **How do I price a compliance SaaS in 2026?**
 Charge per regulation, not per user or per company. A SACCO might have 5 employees but 12 regulations to track. If you charge $29/month per regulation, the SACCO pays $348/month. Compare that to the $12,000 fine they risk if they miss a renewal. The math is obvious.
-
 
 **What tools should I avoid?**
 Avoid any tool that adds latency without adding verifiability: LangChain, Llama-index, and most prompt frameworks. They’re great for creative tasks, but they hallucinate legal text. Also avoid building your own Git UI—use GitHub or GitLab directly. The less custom code you write, the fewer bugs you’ll ship.
@@ -213,20 +206,16 @@ Avoid any tool that adds latency without adding verifiability: LangChain, Llama-
 
 Open your customer’s most recent compliance report or regulatory filing. Trace every step: where did the data come from? Who verified it? What would happen if it was wrong? If any step involves a human reading a PDF and typing a date, that’s your niche. Write that audit trail down in a README file. If you can’t explain it in 500 words, your niche isn’t narrow enough. Do this today—before you write a line of code.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

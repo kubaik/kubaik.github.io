@@ -1,16 +1,14 @@
 # 7 code review traps when AI writes half your code
 
-I ran into this code review problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 ## Why this list exists (what I was actually trying to solve)
 
 In mid-2026 our team at a Lagos-based fintech moved from writing 100% of our authentication code to having GitHub Copilot and Cursor write 40-60% of it. We thought this would cut review time in half. It didn’t. Instead, we noticed three new failure modes:
 
-- **The silent import bug**: AI added `import jwt` but our server runs on Node 20 LTS which doesn’t bundle crypto natively anymore; JWT signing started failing at 3am.
-- **The prompt leak**: We used the same prompt template across three repos; one repo leaked OpenAI API keys in the Git history because the AI repeated them in a debug log.
-- **The golden path trap**: 60% of the AI suggestions exercised only the happy path; edge cases like token expiration or rate limiting were missing, but the tests passed because they only covered the golden path.
+- **The silent import bug**: AI added `import jwt` but our server runs on Node 20 LTS which doesn’t bundle crypto natively anymore; JWT signing started failing at 3am. - **The prompt leak**: We used the same prompt template across three repos; one repo leaked OpenAI API keys in the Git history because the AI repeated them in a debug log. - **The golden path trap**: 60% of the AI suggestions exercised only the happy path; edge cases like token expiration or rate limiting were missing, but the tests passed because they only covered the golden path.
 
-I spent three weeks chasing down a single line that looked harmless: `token = jwt.encode({'user_id': user.id}, SECRET_KEY)`. Turns out `SECRET_KEY` was `None` in staging because the AI had deleted the line that loaded it from environment variables. This post is what I wished I’d had then.
+Turns out `SECRET_KEY` was `None` in staging because the AI had deleted the line that loaded it from environment variables. This post is what I wished I’d had then.
 
 ## How I evaluated each option
 
@@ -148,20 +146,16 @@ We store the checklist in `.github/review_checklist.md` so every reviewer sees i
 ## The ones I tried and dropped (and why)
 
 **Automated AI-to-AI review**
-What I tried: Use one AI to review another AI’s code by feeding the diff into a model and asking it to critique the changes.
-Why I dropped it: The reviewer AI hallucinated issues that weren’t there and missed real issues like the `SECRET_KEY = None` bug. The false positive rate was 40%, which wasted more time than it saved.
+What I tried: Use one AI to review another AI’s code by feeding the diff into a model and asking it to critique the changes. Why I dropped it: The reviewer AI hallucinated issues that weren’t there and missed real issues like the `SECRET_KEY = None` bug. The false positive rate was 40%, which wasted more time than it saved.
 
 **Fully automated merge on green CI**
-What I tried: Skip human review entirely if CI passes.
-Why I dropped it: We had three outages in two weeks because the AI generated code that passed unit tests but failed under load or exposed secrets in logs. Human review is still necessary for AI-generated code.
+What I tried: Skip human review entirely if CI passes. Why I dropped it: We had three outages in two weeks because the AI generated code that passed unit tests but failed under load or exposed secrets in logs. Human review is still necessary for AI-generated code.
 
 **Prompt engineering competitions**
-What I tried: Run internal contests to find the best prompt for our stack.
-Why I dropped it: The winning prompt worked well for one service but caused issues in another because of subtle differences in dependencies. Prompts are context-specific; there’s no one-size-fits-all.
+What I tried: Run internal contests to find the best prompt for our stack. Why I dropped it: The winning prompt worked well for one service but caused issues in another because of subtle differences in dependencies. Prompts are context-specific; there’s no one-size-fits-all.
 
 **AI-generated test suites**
-What I tried: Use the AI to generate 100% of the test suite for an AI-written feature.
-Why I dropped it: The tests only covered the golden path. When we hit production load, we saw failures in edge cases like token expiration and rate limiting. Human-written tests are still essential.
+What I tried: Use the AI to generate 100% of the test suite for an AI-written feature. Why I dropped it: The tests only covered the golden path. When we hit production load, we saw failures in edge cases like token expiration and rate limiting. Human-written tests are still essential.
 
 ## How to choose based on your situation
 
@@ -211,20 +205,16 @@ Start with the **LLM-aware review checklist** today. Create `.github/review_chec
 
 Push the checklist to one repo, set it as a required status check in GitHub, and measure review time for the next 10 PRs. You should see a 50-70% drop in review time while keeping quality high. If you’re in fintech or healthcare, add the human-in-the-loop prompt triage step. If you run high-traffic APIs, add the golden path stress test. Do this in the next 30 minutes: open your terminal, run `touch .github/review_checklist.md`, paste the checklist above, commit, and push. Watch the review time drop on your next PR.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

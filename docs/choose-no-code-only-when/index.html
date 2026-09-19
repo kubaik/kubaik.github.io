@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T04:30:23.126966">
-        <meta property="article:modified_time" content="2026-09-18T16:07:44.146724+00:00">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.967381+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Choose no-code only when">
@@ -63,7 +63,7 @@
       "headline": "Choose no-code only when",
       "description": "Choose no-code vs custom code in 2026 with this decision framework: latency SLOs, export limits, GDPR, and real cost data. Save weeks of rewrite pain.",
       "datePublished": "2026-06-09T04:30:23+00:00",
-      "dateModified": "2026-09-18T16:07:44+00:00",
+      "dateModified": "2026-09-19T08:27:13+00:00",
       "wordCount": 1981,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
@@ -245,7 +245,7 @@
                         10 min read
                         &nbsp;·&nbsp; 1981 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-18
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -268,10 +268,8 @@
 <p>Think of the decision as a product lifetime curve:</p>
 <ul>
 <li><strong>Months 1–3</strong>: No-code wins if you can answer “yes” to all three:</li>
-<li>The feature is disposable (e.g., a conference RSVP page that disappears after the event).</li>
-<li>You can export raw data via the platform’s API or one-click download.</li>
 <li>
-<p>You have no unusual compliance or performance demands.</p>
+<p>The feature is disposable (e.g., a conference RSVP page that disappears after the event). - You can export raw data via the platform’s API or one-click download. - You have no unusual compliance or performance demands.</p>
 </li>
 <li>
 <p><strong>Months 4–6</strong>: The curve crosses. Hidden costs appear: export limits, custom logic limits, and support tickets that take 48 hours to resolve because the vendor’s SLA is “best effort.”</p>
@@ -279,9 +277,7 @@
 <li>
 <p><strong>Months 6+ or 10k+ users</strong>: Custom code wins if any of the following is true:</p>
 </li>
-<li>You need sub-second response times under load (e.g., ticketing at 15k concurrent users).</li>
-<li>You must keep PII in a specific region to satisfy GDPR or CCPA.</li>
-<li>You’re running promotions that change daily—custom code lets you A/B test without hitting rate limits.</li>
+<li>You need sub-second response times under load (e.g., ticketing at 15k concurrent users). - You must keep PII in a specific region to satisfy GDPR or CCPA. - You’re running promotions that change daily—custom code lets you A/B test without hitting rate limits.</li>
 </ul>
 <p>Visualize it like a race between two runners: no-code starts fast but hits a wall at ~10k rows, while custom code is slower to line up but never slows down. The inflection point is the moment you would have to rewrite anyway.</p>
 <h2 id="a-concrete-worked-example">A concrete worked example</h2>
@@ -293,8 +289,7 @@
 <h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
 <p>If you’ve ever tuned a database connection pool in PostgreSQL 16, you’ve felt the same tension: do I tweak the pool size or switch to RDS Serverless? The decision framework is identical.</p>
 <ul>
-<li>Connection pooling is no-code for data access: it hides complexity but caps throughput.</li>
-<li>Switching to RDS Serverless is custom code: you gain control but lose the managed safety net.</li>
+<li>Connection pooling is no-code for data access: it hides complexity but caps throughput. - Switching to RDS Serverless is custom code: you gain control but lose the managed safety net.</li>
 </ul>
 <p>Another analogy: think of no-code like a shared e-scooter. It gets you from A to B in 5 minutes, but if you need to carry groceries or go uphill, you’re stuck. Custom code is the cargo bike—slower to strap on the kids, but it does the job once you’re committed.</p>
 <h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
@@ -362,18 +357,11 @@
 </table>
 <p>Advanced heuristics:</p>
 <ul>
-<li><strong>Compliance first</strong>: If the domain touches PII or financial data and you need to pin the database to eu-central-1, skip no-code unless the vendor offers a compliant tier (Retool Cloud EU and Airtable EU do).</li>
-<li><strong>Latency SLOs</strong>: If the domain must respond in &lt;200 ms at 95th percentile under 10k concurrent users, custom code or a managed service with tuning knobs (Supabase, PlanetScale) is mandatory.</li>
-<li><strong>Data gravity</strong>: Once you have 1 GB+ of user-generated content in a no-code tool, exporting becomes painful. Switch before you hit 500 MB.</li>
+<li><strong>Compliance first</strong>: If the domain touches PII or financial data and you need to pin the database to eu-central-1, skip no-code unless the vendor offers a compliant tier (Retool Cloud EU and Airtable EU do). - <strong>Latency SLOs</strong>: If the domain must respond in &lt;200 ms at 95th percentile under 10k concurrent users, custom code or a managed service with tuning knobs (Supabase, PlanetScale) is mandatory. - <strong>Data gravity</strong>: Once you have 1 GB+ of user-generated content in a no-code tool, exporting becomes painful. Switch before you hit 500 MB.</li>
 </ul>
 <h2 id="quick-reference">Quick reference</h2>
 <ul>
-<li><strong>Build in &lt;2 weeks and disposable?</strong> → No-code (Webflow, Softr, Airtable).</li>
-<li><strong>Need to A/B test daily logic?</strong> → Custom code (Next.js 14, Django, Supabase).</li>
-<li><strong>&gt;10k users or &lt;200 ms SLO?</strong> → Custom code or managed service with tuning knobs.</li>
-<li><strong>PII or strict residency?</strong> → Custom code or EU-only no-code vendor.</li>
-<li><strong>Can export raw data with one click?</strong> → No-code.</li>
-<li><strong>Export needs parsing or rate-limited?</strong> → Plan to rebuild.</li>
+<li><strong>Build in &lt;2 weeks and disposable?</strong> → No-code (Webflow, Softr, Airtable). - <strong>Need to A/B test daily logic?</strong> → Custom code (Next.js 14, Django, Supabase). - <strong>&gt;10k users or &lt;200 ms SLO?</strong> → Custom code or managed service with tuning knobs. - <strong>PII or strict residency?</strong> → Custom code or EU-only no-code vendor. - <strong>Can export raw data with one click?</strong> → No-code. - <strong>Export needs parsing or rate-limited?</strong> → Plan to rebuild.</li>
 </ul>
 <p>Cost snapshot (2026, EU region):</p>
 <table>

@@ -1,6 +1,6 @@
 # Micro-SaaS niches eaten by AI in 2026
 
-A colleague asked me about microsaas 2026 during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
@@ -8,7 +8,7 @@ The line most founders still hear in 2026 is: *pick an underserved niche, build 
 
 That experience forced me to question the entire premise. The conventional wisdom assumes niches remain stable long enough to monetize, and that AI tools only help distribution—not become the competition. In 2026, both assumptions are often wrong. AI doesn’t just optimize workflows; it commoditizes entire categories by embedding solutions into platforms. The real question isn’t *can you build a micro-SaaS?* but *can you build one that survives AI commoditization?*
 
-I ran into this when we tried pivoting to a more complex feature—auto-generating game trailers from gameplay footage. It worked surprisingly well with GPT-4o and Stable Video Diffusion in early 2026. But by October, Nvidia released their own AI video generator, integrated into GeForce Experience. Users stopped paying us. Our MRR dropped from $12,000 to $3,400 in three months. The niche wasn’t gone; it had just been absorbed by a platform giant with zero marginal cost.
+It worked surprisingly well with GPT-4o and Stable Video Diffusion in early 2026. But by October, Nvidia released their own AI video generator, integrated into GeForce Experience. Users stopped paying us. Our MRR dropped from $12,000 to $3,400 in three months. The niche wasn’t gone; it had just been absorbed by a platform giant with zero marginal cost.
 
 This isn’t isolated. I’ve seen similar fates for AI tools that automated Shopify product descriptions, Notion page templates, and even Figma design components. The pattern is consistent: AI turns pain points into platform features, and micro-SaaS products get crushed when the platform decides to own the problem. The conventional wisdom misses this asymmetry—platforms can integrate AI at zero cost and zero friction, while micro-SaaS teams still need support, billing, and customer success.
 
@@ -114,9 +114,7 @@ There’s no one-size-fits-all answer, but here’s a framework I use when evalu
 ### Step 1: Map the platform timeline
 
 For any problem, ask: *When will a major platform integrate this?* Use this heuristic:
-- **0–6 months**: If the problem is a core feature of a platform (e.g., Shopify adding AI product descriptions, Notion adding AI templates), avoid it.
-- **6–18 months**: If the problem is adjacent to a core feature (e.g., AI for color grading in Adobe, AI for captions in YouTube), expect integration.
-- **18+ months**: If the problem requires domain expertise, legal risk, or integration with legacy systems, platforms may never touch it.
+- **0–6 months**: If the problem is a core feature of a platform (e.g., Shopify adding AI product descriptions, Notion adding AI templates), avoid it. - **6–18 months**: If the problem is adjacent to a core feature (e.g., AI for color grading in Adobe, AI for captions in YouTube), expect integration. - **18+ months**: If the problem requires domain expertise, legal risk, or integration with legacy systems, platforms may never touch it.
 
 For example, I passed on a tool to auto-generate LinkedIn posts using AI. LinkedIn added AI post generation in March 2026. Timeline: 3 months. Avoid.
 
@@ -171,9 +169,7 @@ Pivoting sounds easy, but it’s often impossible. When Adobe Firefly killed our
 ### Objection 3: "Big platforms don’t care about small niches. I’m safe."
 
 That’s true for some niches, but not all. Platforms care about niches that affect their core metrics. For example:
-- Shopify cares about conversion rate—so they’ll add AI features that improve it, even if it commoditizes a micro-SaaS in the process.
-- Adobe cares about Creative Cloud retention—so they’ll add AI features that keep users inside their ecosystem.
-- Google cares about user engagement—so they’ll add AI Overviews to keep users on search.
+- Shopify cares about conversion rate—so they’ll add AI features that improve it, even if it commoditizes a micro-SaaS in the process. - Adobe cares about Creative Cloud retention—so they’ll add AI features that keep users inside their ecosystem. - Google cares about user engagement—so they’ll add AI Overviews to keep users on search.
 
 If your niche affects a platform’s KPI, expect integration.
 
@@ -232,7 +228,6 @@ Instead of building another AI wrapper, I’d focus on integrating with obscure,
 
 The market is fragmented, but the need is real. And platforms won’t touch it.
 
-
 ---
 
 ## Summary
@@ -245,12 +240,9 @@ The key insight is this: AI doesn’t just help micro-SaaS—it *destroys* micro
 
 If you’re launching a micro-SaaS today, ask yourself:
 
-- Can a platform integrate this in under 18 months?
-- Does it manage legal or regulatory risk?
-- Does it require integration with systems platforms ignore?
+- Can a platform integrate this in under 18 months? - Does it manage legal or regulatory risk? - Does it require integration with systems platforms ignore?
 
 If the answer to any of those is yes, you’re in a safe niche. If not, expect commoditization.
-
 
 ---
 
@@ -268,7 +260,6 @@ Only if you add something unique beyond the model. Building a chatbot that wraps
 **What’s the biggest mistake founders make when choosing a niche in 2026?**
 They assume the problem is underserved because they personally feel the pain. But in 2026, the pain is often temporary—platforms integrate solutions fast. The real underserved niches are those where the solution requires expertise, legal risk, or legacy integration. Founders should also avoid niches where the primary growth channel is SEO or social media—both are dead for AI-driven products.
 
-
 ---
 
 | Niche type | Example | AI commoditization risk | Survival strategy |
@@ -282,20 +273,16 @@ They assume the problem is underserved because they personally feel the pain. Bu
 | Medical AI assistants | Radiology report generation | Low | Partner with clinics, not platforms |
 | IoT predictive maintenance | Factory equipment monitoring | Low | Focus on hardware integration |
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

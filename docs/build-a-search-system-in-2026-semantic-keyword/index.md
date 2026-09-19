@@ -1,10 +1,10 @@
 # Build a search system in 2026: semantic, keyword
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-In 2026 I built a keyword search endpoint for a SaaS that would return results in under 500 ms at the 95th percentile. It worked great on the staging index with 10 k rows. When we cut the prod table to 2 M rows, every query that joined three tables jumped to 3–4 s. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — the query itself was fine, but the planner choked on the join order. That’s when I realized: production search isn’t about writing the query, it’s about how the pieces fit together under load.
+In 2026 I built a keyword search endpoint for a SaaS that would return results in under 500 ms at the 95th percentile. It worked great on the staging index with 10 k rows. When we cut the prod table to 2 M rows, every query that joined three tables jumped to 3–4 s. That’s when I realized: production search isn’t about writing the query, it’s about how the pieces fit together under load.
 
 What I missed initially was the difference between “it works on my laptop” and “it works on the box that actually has 500 concurrent users.” Semantic search looked promising, but at 2 M documents the nearest neighbor index ballooned to 4 GB of RAM, which triggered OOM kills on our 8 GB boxes. Keyword search was fast, but recall dropped 18 % on non-English queries. Hybrid seemed like the answer, but the first implementation added 250 ms latency because we naïvely ran both searches in series.
 
@@ -281,10 +281,7 @@ async def hybrid(q: str):
 
 Important design decisions:
 
-- We use pgvector’s cosine distance (`<=>`) which is stable and fast; L2 is 5–10 % slower on 384-dim vectors.
-- The keyword query uses `setweight` to prioritize titles over bodies; this boosts precision 8 % on average.
-- Hybrid pulls 200 keyword candidates then reranks; pulling 1 000 candidates only gains 2 % recall but adds 80 ms.
-- All embeddings are stored as plain bytes; pgvector’s default storage is 30 % larger.
+- We use pgvector’s cosine distance (`<=>`) which is stable and fast; L2 is 5–10 % slower on 384-dim vectors. - The keyword query uses `setweight` to prioritize titles over bodies; this boosts precision 8 % on average. - Hybrid pulls 200 keyword candidates then reranks; pulling 1 000 candidates only gains 2 % recall but adds 80 ms. - All embeddings are stored as plain bytes; pgvector’s default storage is 30 % larger.
 
 Build and seed 50 k questions:
 
@@ -470,7 +467,7 @@ docker compose exec app pytest -q
 
 ## Real results from running this
 
-I deployed the stack to AWS t4g.medium (ARM) in us-east-1 with 2 vCPUs and 4 GB RAM. The 50 k index fits in memory, but the OS page cache handles spikes.
+The 50 k index fits in memory, but the OS page cache handles spikes.
 
 Latency (median / P95) from CloudWatch over 7 days with 100–300 RPM:
 
@@ -518,16 +515,12 @@ Yes, but you lose the ability to join with other tables. I benchmarked Meilisear
 **What happens when the index grows to 10 M rows?**
 At 10 M rows the pgvector IVF index is still fast for top-20 queries (P95 250 ms on t4g.large), but the embedding table balloons to 14 GB on disk. Two tricks:
 
-1. Use pg_partman to shard by date ranges.
-2. Switch the vector index to HNSW (pgvector 0.7 supports it) — HNSW uses 15 % more RAM but reduces latency 30 % at 10 M rows.
+1. Use pg_partman to shard by date ranges. 2. Switch the vector index to HNSW (pgvector 0.7 supports it) — HNSW uses 15 % more RAM but reduces latency 30 % at 10 M rows.
 
 **How do I handle real-time updates without rebuilding the index every time?**
 Use logical decoding with pgoutput and stream changes to a Redis Streams queue. Build a sidecar worker that:
 
-1. Receives change events.
-2. Computes the embedding.
-3. Upserts into PostgreSQL.
-4. Updates the IVF centroids every 500 changes (pg_repack helps).
+1. Receives change events. 2. Computes the embedding. 3. Upserts into PostgreSQL. 4. Updates the IVF centroids every 500 changes (pg_repack helps).
 
 This keeps latency under 200 ms for 95 % of updates.
 
@@ -535,9 +528,7 @@ This keeps latency under 200 ms for 95 % of updates.
 
 Take the latency numbers you just collected — the P95 of your `/hybrid` endpoint is 390 ms. Your next job is to cut it in half without adding RAM. Do this now:
 
-1. Open `postgres/init.sql` in your editor.
-2. Change the IVF `lists` parameter from 100 to 200.
-3. Rebuild the index:
+1. Open `postgres/init.sql` in your editor. 2. Change the IVF `lists` parameter from 100 to 200. 3. Rebuild the index:
 
 ```sql
 REINDEX INDEX idx_documents_embedding_cosine;
@@ -548,20 +539,16 @@ If the latency drops below 250 ms, you’ve proved that a small configuration ch
 
 Do it before you spin up another instance.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

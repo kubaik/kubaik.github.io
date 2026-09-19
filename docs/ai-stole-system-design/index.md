@@ -4,7 +4,7 @@ After reviewing a lot of code that touches system design, I keep seeing the same
 
 ## The error and why it's confusing
 
-If you’ve interviewed in 2026, you’ve probably seen this: a candidate’s system design doc reads like a vendor whitepaper, full of buzzwords like “multi-agent orchestration,” “embedding cache,” and “vectorized state machines.” Yet when you dig in, the candidate can’t explain how sharding actually works or why they picked DynamoDB over MongoDB. I ran into this when a senior backend candidate in Medellín walked me through a “real-time LLM inference pipeline” that hit 99th-percentile latency of 12 ms. I asked how they’d shard the embedding cache. They paused, then said, “Isn’t it automatically handled by the vector database?” That’s when I realized the interview had been outsourced to an AI assistant.
+If you’ve interviewed in 2026, you’ve probably seen this: a candidate’s system design doc reads like a vendor whitepaper, full of buzzwords like “multi-agent orchestration,” “embedding cache,” and “vectorized state machines.” Yet when you dig in, the candidate can’t explain how sharding actually works or why they picked DynamoDB over MongoDB. I asked how they’d shard the embedding cache. They paused, then said, “Isn’t it automatically handled by the vector database?” That’s when I realized the interview had been outsourced to an AI assistant.
 
 The surface symptom is slick-looking diagrams and confident-sounding prose, but the real issue is that candidates are using AI to generate system designs verbatim from 2026 blog posts. The result? Every interviewer has a story about a candidate who quoted exact latency numbers (e.g., “Redis Cluster supports 1M ops/sec”) without understanding how replication lag affects that number in practice.
 
@@ -14,7 +14,7 @@ AI assistants like Cursor, GitHub Copilot Enterprise, and Amazon Q Developer hav
 
 The deeper cause is that system design interviews still rely on the candidate’s ability to explain trade-offs in real time. AI can’t simulate the pressure of explaining why you’d choose S3 over EFS when the interviewer says, “Assume a 10 TB dataset with 100 MB/s write throughput and 5 ms read latency.” Candidates who rely on AI output hit a wall when asked to justify constraints, estimate cost, or describe failure modes.
 
-I was surprised that even experienced engineers fell for it. One candidate in Bogotá delivered a flawless design for a “global CDN with edge workers” but couldn’t explain how their edge cache invalidation policy would behave during a regional outage. When I probed, they admitted they’d used Cursor’s “Generate system design” feature and pasted the result. The tool had invented a fictional CDN provider called “CloudFront Edge Plus” that doesn’t exist.
+One candidate in Bogotá delivered a flawless design for a “global CDN with edge workers” but couldn’t explain how their edge cache invalidation policy would behave during a regional outage. When I probed, they admitted they’d used Cursor’s “Generate system design” feature and pasted the result. The tool had invented a fictional CDN provider called “CloudFront Edge Plus” that doesn’t exist.
 
 ## Fix 1 — the most common cause
 
@@ -52,9 +52,7 @@ I used this in a Medellín interview where a candidate confidently said, “I’
 
 Prevent this by changing the interview format entirely. Replace the static design doc with a live coding exercise on a real cluster. For example:
 
-- Spin up a 3-node Redis Cluster on your laptop using Docker Compose.
-- Give the candidate a failing test: a GET request returns stale data after a write.
-- Ask them to debug and fix it in 20 minutes while explaining their reasoning.
+- Spin up a 3-node Redis Cluster on your laptop using Docker Compose. - Give the candidate a failing test: a GET request returns stale data after a write. - Ask them to debug and fix it in 20 minutes while explaining their reasoning.
 
 This works because AI assistants can’t fix a real system in real time. The candidate must understand replication lag, quorum, and eviction policies to proceed.
 
@@ -62,18 +60,13 @@ I implemented this at a fintech in Mexico City. We saw a 40% drop in false posit
 
 ## Related errors you might hit next
 
-- **Over-reliance on AI-generated Terraform**: Candidates paste Terraform modules from Copilot without understanding IAM policies. The symptom is a module that fails to deploy due to missing permissions.
-- **Misquoted latency numbers**: Candidates quote Redis 7.2’s 1M ops/sec as 10M ops/sec after reading a 2026 blog post. The symptom is an architecture that over-provisions by 3x.
-- **Vendor-locked diagrams**: Candidates draw diagrams using only AWS icons and services, then can’t explain how the same system would work on GCP. The symptom is a blank stare when asked about equivalent Azure services.
-- **Over-engineered microservices**: Candidates propose a service per endpoint after prompting Copilot with “microservices best practices.” The symptom is a design with 12 services for a CRUD app.
+- **Over-reliance on AI-generated Terraform**: Candidates paste Terraform modules from Copilot without understanding IAM policies. The symptom is a module that fails to deploy due to missing permissions. - **Misquoted latency numbers**: Candidates quote Redis 7.2’s 1M ops/sec as 10M ops/sec after reading a 2026 blog post. The symptom is an architecture that over-provisions by 3x. - **Vendor-locked diagrams**: Candidates draw diagrams using only AWS icons and services, then can’t explain how the same system would work on GCP. The symptom is a blank stare when asked about equivalent Azure services. - **Over-engineered microservices**: Candidates propose a service per endpoint after prompting Copilot with “microservices best practices.” The symptom is a design with 12 services for a CRUD app.
 
 ## When none of these work: escalation path
 
 If the candidate still passes the design round but fails the live coding round, escalate to a system design deep dive. Ask them to:
 
-1. Pick a past production outage they debugged.
-2. Walk you through their thought process in real time.
-3. Draw the system topology as they explain it.
+1. Pick a past production outage they debugged. 2. Walk you through their thought process in real time. 3. Draw the system topology as they explain it.
 
 If they can’t reconstruct their own work from memory, they didn’t build it. I escalated a candidate in Lima this way. They’d presented a flawless design for a “real-time fraud detection system,” but couldn’t explain how their Kafka topic partitions were sized. Turns out they’d copied the design from a 2026 conference talk. Escalation saved us a bad hire.
 
@@ -112,20 +105,16 @@ System design interviews in 2026 are broken by AI assistants that can pass them 
 
 Your next step in the next 30 minutes: open your last system design interview rubric and replace the “design quality” section with a 20-minute live debugging exercise on a 3-node Redis Cluster. Spin it up with Docker Compose using Redis 7.2, then write a failing test that returns stale data after a write. That’s your new baseline for authenticity.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

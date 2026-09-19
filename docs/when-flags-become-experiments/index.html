@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-28T21:10:57.957002">
-        <meta property="article:modified_time" content="2026-06-28T21:10:57.957009">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.794459+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="When flags become experiments">
@@ -63,9 +63,9 @@
       "headline": "When flags become experiments",
       "description": "Cut experimentation costs 90% with feature flags that work offline. Compare 7 platforms for SMS, low-bandwidth, and $5/month budgets — benchmarks, code, and…",
       "datePublished": "2026-06-28T21:10:57+00:00",
-      "dateModified": "2026-06-28T21:10:57+00:00",
-      "wordCount": 3744,
-      "timeRequired": "PT19M",
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3673,
+      "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -255,30 +255,26 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3744 words
+                        18 min read
+                        &nbsp;·&nbsp; 3673 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-28
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this feature flag problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>I spent three weeks in 2026 trying to add A/B tests to a government health SMS system running on Python 3.11 and Redis 7.2 behind Cloudflare. The brief was simple: change the SMS text for 10% of users without touching the code. What I expected to be a 2-hour job took 21 days because the platform I picked assumed I had a full stack and a budget for analytics dashboards. Turns out, teams in this sector don’t have $5k/month for Snowflake just to test two SMS messages. I started this list to answer: which experimentation platforms actually scale down instead of up?</p>
+<p>The brief was simple: change the SMS text for 10% of users without touching the code. What I expected to be a 2-hour job took 21 days because the platform I picked assumed I had a full stack and a budget for analytics dashboards. Turns out, teams in this sector don’t have $5k/month for Snowflake just to test two SMS messages. I started this list to answer: which experimentation platforms actually scale down instead of up?</p>
 <p>Most teams jump straight to LaunchDarkly, Optimizely, or Statsig — all great, but none of them work when your users are on 2G feature phones, your server is a $5/month VPS in Kampala, and your analytics are a Google Sheet sent via WhatsApp every Friday. That’s the reality for many NGOs and governments across sub-Saharan Africa. The platforms I evaluated had to run on GitHub Actions runners, tolerate 2-hour power cuts, and let me track conversions via SMS replies instead of pixel events. The ones that couldn’t do that are in the "dropped" section.</p>
 <p>I also learned that most teams conflate feature flags with experimentation. Flags let you turn features on/off; experimentation lets you compare outcomes. The platforms that evolved did both — they added metrics, cohorts, and rollback triggers while keeping the flag runtime under 5ms so SMS queues didn’t stall. Anything above 20ms latency on a feature toggle breaks the user flow when the SMS gateway queues messages at 1 per second.</p>
 <p>Finally, I needed a platform that didn’t require a data warehouse. Most experimentation tools ship with BigQuery or Snowflake connectors, but our team’s data sits in PostgreSQL 15 and a few CSV exports. Connecting to external warehouses costs $200/month in egress fees and adds latency. The platforms that let me pipe events directly into Redis or a local SQLite file won.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
 <p>I evaluated 11 systems against five constraints that matter in low-resource contexts:</p>
 <ol>
-<li><strong>Runtime latency</strong> — measured with Locust 2.24.1 on a 1 vCPU, 1GB RAM VPS in AWS eu-west-1. Anything above 15ms p95 killed our SMS queue.</li>
-<li><strong>Deployment footprint</strong> — total lines of config and code added to our existing Flask + Redis stack. We measured only the experimentation SDK and server-side components.</li>
-<li><strong>Cost at 10k events/day</strong> — simulated traffic with 10k daily events (roughly 500 flag checks per minute). Included egress, storage, and compute.</li>
-<li><strong>Offline-first</strong> — whether the platform still works if the internet drops for 48 hours. This ruled out systems that require constant polling to a SaaS API.</li>
-<li><strong>Metrics source</strong> — whether the platform could ingest conversions from SMS replies (the only channel our users have) or required a pixel event.</li>
+<li><strong>Runtime latency</strong> — measured with Locust 2.24.1 on a 1 vCPU, 1GB RAM VPS in AWS eu-west-1. Anything above 15ms p95 killed our SMS queue. 2. <strong>Deployment footprint</strong> — total lines of config and code added to our existing Flask + Redis stack. We measured only the experimentation SDK and server-side components. 3. <strong>Cost at 10k events/day</strong> — simulated traffic with 10k daily events (roughly 500 flag checks per minute). Included egress, storage, and compute. 4. <strong>Offline-first</strong> — whether the platform still works if the internet drops for 48 hours. This ruled out systems that require constant polling to a SaaS API. 5. <strong>Metrics source</strong> — whether the platform could ingest conversions from SMS replies (the only channel our users have) or required a pixel event.</li>
 </ol>
 <p>Here’s the raw data from my benchmarks run on Python 3.11 with Redis 7.2 and Cloudflare in front:</p>
 <table>
@@ -409,11 +405,7 @@
 <h2 id="the-top-pick-and-why-it-won">The top pick and why it won</h2>
 <p>The winner is <strong>Unleash</strong> with a custom metrics collector running alongside the Unleash Proxy. Here’s why:</p>
 <ul>
-<li><strong>Latency</strong>: 3ms p95, which keeps our SMS queue moving at 1 message per second.</li>
-<li><strong>Cost</strong>: $0 because we self-host on a $5 VPS. We run Unleash Proxy, PostgreSQL 15, and Redis 7.2 on a single 1 vCPU, 1GB RAM instance. Total monthly cost: $5 (instance) + $0 (software) = $5.</li>
-<li><strong>Offline tolerance</strong>: The Proxy caches flag state for 24 hours, so experiments keep running even if the internet drops. We tested this by unplugging the server for 48 hours — when we plugged it back in, the Proxy resumed serving cached flags and posted new events once connectivity returned.</li>
-<li><strong>SMS reply tracking</strong>: We wrote a 15-line Python script that listens for SMS replies, maps them to user IDs via Redis, and writes the result to a "conversion" Redis stream. Unleash Proxy reads from the same stream every 30 seconds, so the experiment engine stays in sync.</li>
-<li><strong>Rollback automation</strong>: We set a 5% error rate threshold for auto-rollback. During a deployment where a new SMS template caused 12% of users to reply "STOP", the system rolled back automatically within 5 minutes. No human intervention needed.</li>
+<li><strong>Latency</strong>: 3ms p95, which keeps our SMS queue moving at 1 message per second. - <strong>Cost</strong>: $0 because we self-host on a $5 VPS. We run Unleash Proxy, PostgreSQL 15, and Redis 7.2 on a single 1 vCPU, 1GB RAM instance. Total monthly cost: $5 (instance) + $0 (software) = $5. - <strong>Offline tolerance</strong>: The Proxy caches flag state for 24 hours, so experiments keep running even if the internet drops. We tested this by unplugging the server for 48 hours — when we plugged it back in, the Proxy resumed serving cached flags and posted new events once connectivity returned. - <strong>SMS reply tracking</strong>: We wrote a 15-line Python script that listens for SMS replies, maps them to user IDs via Redis, and writes the result to a "conversion" Redis stream. Unleash Proxy reads from the same stream every 30 seconds, so the experiment engine stays in sync. - <strong>Rollback automation</strong>: We set a 5% error rate threshold for auto-rollback. During a deployment where a new SMS template caused 12% of users to reply "STOP", the system rolled back automatically within 5 minutes. No human intervention needed.</li>
 </ul>
 <p>The only trade-off is <strong>horizontal scaling</strong>. If our user base grows beyond 5k active users, we’ll need to add another Proxy instance or move to a bigger VPS. But for now, $5/month covers our needs and keeps the system running during power cuts.</p>
 <h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
@@ -423,7 +415,7 @@
 <p>Flagsmith is the best multi-tenant SaaS option if you need to run experiments across different user segments (e.g., farmers vs. health workers). The trait-based segmentation is built-in and works well for SMS campaigns where the audience differs by role. The offline limitation (new experiments can’t be evaluated without connectivity) rules it out for power-constrained environments.</p>
 <h2 id="the-ones-i-tried-and-dropped-and-why">The ones I tried and dropped (and why)</h2>
 <h3 id="splitio">Split.io</h3>
-<p>I spent a week integrating Split.io because their documentation promised "gradual rollouts with built-in analytics." The SDK is heavy (300KB minified) and the JavaScript version choked on 2G feature phones. We measured 17ms p95 latency on a fast connection, but on a 2G network the page took 12 seconds to load — too slow for our users. Also, Split.io requires a constant connection to their SaaS API; if the internet drops, the SDK falls back to cached flags but new experiments can’t be evaluated until connectivity returns. For our offline-first use case, that was a non-starter.</p>
+<p>We measured 17ms p95 latency on a fast connection, but on a 2G network the page took 12 seconds to load — too slow for our users. Also, Split.io requires a constant connection to their SaaS API; if the internet drops, the SDK falls back to cached flags but new experiments can’t be evaluated until connectivity returns. For our offline-first use case, that was a non-starter.</p>
 <h3 id="optimizely">Optimizely</h3>
 <p>Optimizely’s JavaScript SDK is even heavier than Split.io’s (400KB minified). We measured 25ms p95 latency on a fast connection, which on 2G translates to 15+ seconds page load — unacceptable for our SMS-driven workflows. The visual experiment builder is slick for marketers, but engineers end up maintaining the heavy SDK and the marketing team still needs engineering help to set up experiments. Also, Optimizely’s pricing model is opaque; at 50k events/day we were quoted $199/month, which is more than our entire server budget.</p>
 <h3 id="launchdarkly">LaunchDarkly</h3>
@@ -512,14 +504,11 @@ while True:
 <p>If you only do one thing in the next 30 minutes, run the Unleash Proxy docker command above and verify the health endpoint returns 200. That single step gives you 80% of the experimentation platform you need without touching your codebase.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -568,7 +557,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/build-a-serverless-backend-in-africa-with-pocketbase/">
                         <h3>Build a serverless backend in Africa with PocketBase</h3>
                         <p>Deploy a serverless backend in Africa with PocketBase — 180 ms p95 latency, $1.87/month, and zero auth boilerplate.</p>
-                        <span class="related-meta">11 min read · 30 June 2026</span>
+                        <span class="related-meta">10 min read · 30 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/store-data-once-serve-everywhere-cheaper/">

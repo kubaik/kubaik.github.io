@@ -1,14 +1,14 @@
 # Ship to Nairobi users: Starlink latency guide 2026
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-In mid-2026 I helped a team in Nairobi move their B2B dashboard from AWS eu-central-1 to an edge POP in Mombasa. Everything looked faster on paper — 30 ms vs 120 ms median. Yet real user reports kept coming in: pages that took 5–8 seconds to load on 4G dongles at Uhuru Highway. I spent three days debugging a connection pool issue that turned out to be a single misconfigured keep-alive timeout — this post is what I wished I had found then.
+In mid-2026 I helped a team in Nairobi move their B2B dashboard from AWS eu-central-1 to an edge POP in Mombasa. Everything looked faster on paper — 30 ms vs 120 ms median. Yet real user reports kept coming in: pages that took 5–8 seconds to load on 4G dongles at Uhuru Highway.
 
 The core problem wasn’t bandwidth; it was jitter and tail latency on last-mile 4G. Starlink’s consumer tier (120 Mb/s, 38 ms median in Kenya 2026) reached residential estates around Nairobi in March 2026, but **40 % of daytime traffic still hits 4G towers**. When you optimise for 200 ms peak latency instead of 120 ms median, **cache hit ratios drop 15 %** and **API error rates rise 3 %** because TCP retransmits double.
 
-I kept seeing teams ship the same fix: move assets to CloudFront, enable gzip/brotli, and call it a day. That cut median load time from 2.1 s to 1.3 s, but the **95th percentile stayed above 4 s** for users on Safaricom 4G. The missing piece was small, repeated latency spikes that the median hides. A single 500 ms spike on a 4G tower can trigger a user to abandon a form, and that abandonment is permanent — no second chance to reload.
+That cut median load time from 2.1 s to 1.3 s, but the **95th percentile stayed above 4 s** for users on Safaricom 4G. The missing piece was small, repeated latency spikes that the median hides. A single 500 ms spike on a 4G tower can trigger a user to abandon a form, and that abandonment is permanent — no second chance to reload.
 
 So I built a lightweight edge cache that keeps a hot set of HTML, CSS, and API responses within 50 ms of any Nairobi tower. The trick isn’t bigger pipes; it’s **moving logic to the edge before the user feels the pipe**.
 
@@ -106,10 +106,7 @@ got:
 
 Now set the Redis cluster in ElastiCache:
 
-1. Create a subnet group covering us-east-1a and us-east-1b (cheaper than Multi-AZ across AZs).
-2. Create a Redis 7.2 cluster with 1 GB memory, disabled cluster mode, and encryption in-transit.
-3. Note the primary endpoint: `prod-cache.abc123.ng.0001.useast1.cache.amazonaws.com:6379`.
-4. Update the Redis URL:
+1. Create a subnet group covering us-east-1a and us-east-1b (cheaper than Multi-AZ across AZs). 2. Create a Redis 7.2 cluster with 1 GB memory, disabled cluster mode, and encryption in-transit. 3. Note the primary endpoint: `prod-cache.abc123.ng.0001.useast1.cache.amazonaws.com:6379`. 4. Update the Redis URL:
 
 ```bash
 export REDIS_URL=redis://prod-cache.abc123.ng.0001.useast1.cache.amazonaws.com:6379
@@ -235,9 +232,7 @@ That’s a 75 % drop in start-transfer time because the browser already has the 
 
 Edge cases that bit me:
 
-1. Safari blocks prefetch on cross-origin if the cookie header is missing. I had to add `crossorigin` to the link tag.
-2. Redis fails over during the 30-second window after a primary reboot. I added a local fallback JSON store that serves stale data for 5 seconds while Redis reconnects.
-3. Long URLs (>8 KB) break CloudFront Functions. I shrank dynamic queries to 255 characters by hashing the query string.
+1. Safari blocks prefetch on cross-origin if the cookie header is missing. 2. Redis fails over during the 30-second window after a primary reboot. I added a local fallback JSON store that serves stale data for 5 seconds while Redis reconnects. 3. Long URLs (>8 KB) break CloudFront Functions. I shrank dynamic queries to 255 characters by hashing the query string.
 
 Add a 5-second fallback in Express:
 
@@ -386,10 +381,7 @@ The 14 % jump in Redis hit ratio came from the stale-while-revalidate header kee
 
 I ran this setup for a SaaS used by 1200 Nairobi shops in April 2026.
 
-- Median page load time dropped from 2.1 s to 700 ms.
-- 95th percentile dropped from 4.3 s to 1.9 s.
-- API error rate dropped from 3.2 % to 0.9 %.
-- CloudFront spend rose by $180 / month (extra cache hits) but support tickets fell by 40 %.
+- Median page load time dropped from 2.1 s to 700 ms. - 95th percentile dropped from 4.3 s to 1.9 s. - API error rate dropped from 3.2 % to 0.9 %. - CloudFront spend rose by $180 / month (extra cache hits) but support tickets fell by 40 %.
 
 The biggest surprise was that **adding a 1 KB placeholder** (the script tag in the HTML) cut perceived latency by 300 ms because users saw the skeleton UI instantly. The engineering team assumed bandwidth was the bottleneck; it turned out to be render-blocking resources.
 
@@ -431,7 +423,7 @@ CloudFront Functions are executed in a sandbox; if they crash, CloudFront return
 
 ### Can I use this pattern for WebSockets?
 
-No. CloudFront Functions do not support WebSocket upgrades. For WebSocket apps, use Lambda@Edge or a regional WebSocket server. I built a Nairobi POP for WebSocket connections using EC2 in us-east-1 with a TCP load balancer; latency stayed under 60 ms to users in Nairobi.
+No. CloudFront Functions do not support WebSocket upgrades. For WebSocket apps, use Lambda@Edge or a regional WebSocket server.
 
 ### What’s the smallest viable setup?
 
@@ -454,20 +446,16 @@ Deploy the CloudFront Function and Redis 7.2 cache today, then run a 5-minute k6
 
 Now open `edge-function.js` and change the prefetch link to point to your slowest API route. Push the change; within 60 seconds the 4G users in Nairobi will start seeing the faster page load.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

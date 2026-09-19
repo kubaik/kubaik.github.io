@@ -6,11 +6,11 @@ Most run automated guides assume a clean environment and a patient timeline. Pro
 
 Security scanning in CI feels like a fire hose: you turn it on, and within minutes you’re drowning in 300 alerts per PR. In late 2026 we moved to trunk-based development with 15 repos and adopted an “every commit gets scanned” policy. By March 2026 our average PR had 87 SonarQube findings, 22 Snyk issues, 14 Trivy vulns, and 7 GitHub Dependabot PRs. Worse, 94% were false positives: dead dependencies, dev-only packages in test containers, and dev servers accidentally exposed in Dockerfiles.
 
-Our SLO for PR merge time is 45 minutes, but security gates were adding 22 minutes on average. Engineers started gaming the system—commenting out checks or disabling rules to hit the SLO, which defeated the purpose. I ran into this when a junior engineer disabled the `sql-injection` rule in SonarQube because it was flagging our ORM’s named parameter syntax. We needed a way to keep scanning but stop the noise.
+Our SLO for PR merge time is 45 minutes, but security gates were adding 22 minutes on average. Engineers started gaming the system—commenting out checks or disabling rules to hit the SLO, which defeated the purpose. We needed a way to keep scanning but stop the noise.
 
 The real problem wasn’t the tools; it was the signal-to-noise ratio. SonarQube 10.5, Snyk CLI 1.1400, Trivy 0.48, GitHub Advanced Security with CodeQL 2.17—each tool is excellent, but none understood our context. We had 4,200 open-source dependencies, mostly transitive, and our services run on Node.js 20 LTS and Python 3.11. The scan that took 3m 12s in CI cost us $1.42 per PR in GitHub Actions minutes, which added up to $8k/month across repos.
 
-I was surprised that the biggest source of false positives wasn’t the scanners themselves—it was our own assumptions. We assumed every dev server port should be flagged, but our internal API gateway exposes health checks on `:8080/health` deliberately. The scanners didn’t know that.
+We assumed every dev server port should be flagged, but our internal API gateway exposes health checks on `:8080/health` deliberately. The scanners didn’t know that.
 
 
 ## What we tried first and why it didn’t work
@@ -30,9 +30,7 @@ Finally, we tried a single unified scan using a custom GitHub Action that ran So
 
 We pivoted from “scan everything and ignore noise” to “scan only what matters and prove it matters.” The core idea is to classify every alert into one of three buckets before it reaches the PR:
 
-- Noise: alerts we’ll never fix (dev-only code, test scaffolding, internal tooling).
-- Actionable: alerts we will fix within 30 days.
-- Policy: alerts we’ll block the merge on.
+- Noise: alerts we’ll never fix (dev-only code, test scaffolding, internal tooling). - Actionable: alerts we will fix within 30 days. - Policy: alerts we’ll block the merge on.
 
 To do this we built a **policy-as-code** layer on top of the scanners. Instead of configuring each tool separately, we write a single YAML file (`security-policy.yml`) that defines what to scan, when to scan, and what to do with each finding. The policy layer runs in CI and uses a small Python service we call `policy-gate` (Python 3.11, FastAPI 0.111) to filter and classify findings based on the PR diff and repo context.
 
@@ -75,9 +73,7 @@ This solved the “context drift” problem. We no longer had to maintain hundre
 
 The `policy-gate` service is a small FastAPI app that runs in a GitHub Action. It takes three inputs:
 
-1. The PR diff (JSON from GitHub API).
-2. The scanner results (JSON from each tool).
-3. The `security-policy.yml` file from the repo.
+1. The PR diff (JSON from GitHub API). 2. The scanner results (JSON from each tool). 3. The `security-policy.yml` file from the repo.
 
 It outputs a single JSON artifact with filtered findings and an exit code:
 
@@ -171,8 +167,7 @@ We also cache scanner results per branch to avoid re-scanning unchanged files. T
 
 The 85% drop in findings per PR came from two places:
 
-1. **Conditional filtering** removed 89 alerts per PR on average.
-2. **Unified policy file** replaced 118 lines of tool-specific config with 50 lines of policy, which reduced global false positives by 21 alerts per PR.
+1. **Conditional filtering** removed 89 alerts per PR on average. 2. **Unified policy file** replaced 118 lines of tool-specific config with 50 lines of policy, which reduced global false positives by 21 alerts per PR.
 
 The 73% drop in PR merge time was a side effect of fewer findings and a faster pipeline. The security gate now runs in 1m 10s, down from 3m 12s, because we only scan files touched by the PR (thanks to Trivy’s `--security-checks vuln` flag and Snyk’s `--file` target).
 
@@ -232,40 +227,32 @@ The mistake most teams make is treating scanners as point solutions. They config
 
 If a finding is genuine (e.g., a high-severity CVE in a dev-only package), mark it as `require_review` in the policy. This creates a ticket in your internal system (Linear, Jira) with the correct priority. The PR can still merge, but the issue is tracked and fixed in the next sprint. We used to block merges on every finding, which created a culture of disabling rules. Now we only block on `block` actions.
 
-
 **Can I use this approach with multiple programming languages?**
 
 Yes. The policy file is language-agnostic; it filters by file paths and PR diff, not by language. Our monorepo has Node.js, Python, Go, and Rust services, and the same `security-policy.yml` handles all of them. The scanners are language-specific (e.g., `npm-audit` for JS, `pip-audit` for Python), but the policy layer doesn’t care.
-
 
 **What about secrets scanning?**
 
 Secrets scanning (e.g., GitHub Secret Scanning, TruffleHog) produces fewer false positives because a leaked secret is almost always a real issue. We still run secrets scanning per-PR, but we don’t apply the same context-aware filtering. If a secret is found, the PR is blocked regardless of the file path. We do, however, exclude the `.github/` folder from secrets scanning because it contains tokens for GitHub Actions.
 
-
 **How do I migrate from global exclusions to policy-as-code?**
 
 Start by listing every exclusion you currently have (SonarQube, Snyk, Dependabot). For each one, ask: “Is this exclusion always valid, or only when specific files change?” If it’s always valid (e.g., “ignore all findings in `node_modules/`”), move it to a repo-level rule. If it’s conditional (e.g., “ignore port 8080 only in Dockerfiles”), add a condition in the policy file. Commit the new policy file and remove the old exclusions one by one. We did this over a weekend and saw a 30% drop in findings immediately.
-
 
 **What’s the biggest mistake teams make when adopting this?**
 
 They try to solve everything in one PR. They move from 130 findings to 20 in a single commit, which breaks the build for weeks while engineers fix every alert. Instead, aim for a 30% reduction in the first week, then iterate. Our first policy file only had 8 rules and cut findings by 40%. We added rules over months, not days.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

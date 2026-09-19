@@ -1,12 +1,10 @@
 # Vibe code: works great, fails forever
 
-I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 ## Why this list exists (what I was actually trying to solve)
 
 In 2026 I joined a seed-stage startup as the first backend hire. The CTO told me to ‘just bang out the auth service’ so they could demo to investors. I wrote 300 lines of Python with FastAPI in one night using cursor rules, got it deployed on Fly.io, and the demo went great. Six months later the ‘temporary’ auth service was costing us $4,200 a month in Fly.io credits and every deployment rolled back because the connection pool exhausted the 4 vCPUs we had set to save pennies. Worse, the CFO couldn’t get a clean financial report because the service emitted 12 different log formats depending on which endpoint you hit.
-
-I spent three days debugging a connection-pool exhaustion issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
 
 The mistakes weren’t clever: I used `uvicorn` without `--workers`, I left `SQLALCHEMY_POOL_RECYCLE=3600` at the default 30 seconds, and I stored session tokens in plain Redis strings instead of using Hash fields. None of those choices broke the demo, but every one of them broke the thing we had to actually run.
 
@@ -16,10 +14,7 @@ This list ranks the reasons why vibe-coded MVPs fail when you have to maintain t
 
 I measured every failure mode against four hard numbers I’ve collected over the past two years:
 
-- **Latency p99** measured with Locust running against a staging copy of the real traffic shape (median 1200 QPS, 10 ms median, 80 ms p95).
-- **Cost per 10k requests** on AWS t4g.small (arm64) and Fly.io shared-cpu-1x instances.
-- **Lines of code** that had to change when a requirement flipped from ‘just works’ to ‘audit-ready’.
-- **Time-to-first-production-fix** — how long it took a newly hired engineer to make a change without breaking something else.
+- **Latency p99** measured with Locust running against a staging copy of the real traffic shape (median 1200 QPS, 10 ms median, 80 ms p95). - **Cost per 10k requests** on AWS t4g.small (arm64) and Fly.io shared-cpu-1x instances. - **Lines of code** that had to change when a requirement flipped from ‘just works’ to ‘audit-ready’. - **Time-to-first-production-fix** — how long it took a newly hired engineer to make a change without breaking something else.
 
 Every option in this list produced at least one of the above data points; most produced all four. I also kept a running log of the exact error messages teams hit so we wouldn’t have to search Slack history three months later.
 
@@ -143,7 +138,7 @@ When the payment provider rejects 12 % of requests due to duplicate IDs, you hav
    In 2026 Fly.io’s shared-cpu instances expose a cgroup memory limit of 384 MB. My demo service, which started at 220 MB RSS, would creep to 390 MB after three hours of 1200 QPS traffic. The culprit was a single `asyncio.gather` that spawned 18 background tasks for every request, each leaking 2 MB of `aiohttp` connection objects. The fix required adding `aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=5))` and a 60-second `asyncio.sleep(0)` in the background task to force GC. Without the sleep, Python’s GC wouldn’t run often enough to reclaim memory before the next spike. I measured the leak with `flyctl metrics` and a custom Prometheus scrape target because Fly.io’s native dashboard only updates every 60 seconds.
 
 2. **Redis Hash vs String race condition in multi-instance Fly.io deployment**
-   I stored session tokens as plain Redis strings (`SET session:<token> <user_id>`) because it was one line. After scaling to three Fly.io instances, 12 % of requests started returning 401 even though the token was valid. The issue was a race between `SET` and `GET` when two instances tried to write the same session simultaneously, causing one instance to overwrite the other’s TTL. The fix was migrating to Redis Hash fields with `HSET sessions:<token> user_id <user_id> expires_at <epoch>` and using `EVAL` for atomic TTL updates. The migration added 140 lines of code and required a 3 a.m. deploy because the Redis cluster was running on Fly.io’s shared 256 MB plan, which only supports Lua scripts up to 1 MB. I had to split the script into two chunks and use `EVALSHA` with a SHA-1 hash computed at runtime.
+   I stored session tokens as plain Redis strings (`SET session:<token> <user_id>`) because it was one line. After scaling to three Fly.io instances, 12 % of requests started returning 401 even though the token was valid. The issue was a race between `SET` and `GET` when two instances tried to write the same session simultaneously, causing one instance to overwrite the other’s TTL. The fix was migrating to Redis Hash fields with `HSET sessions:<token> user_id <user_id> expires_at <epoch>` and using `EVAL` for atomic TTL updates. The migration added 140 lines of code and required a 3 a.m. deploy because the Redis cluster was running on Fly.io’s shared 256 MB plan, which only supports Lua scripts up to 1 MB.
 
 3. **JWT exp claim desync under daylight saving time transitions**
    I set the JWT `exp` claim to 24 hours (`exp = iat + 86400`). In 2026, daylight saving time changes in the US caused the token to expire one hour early in regions that spring forward. The issue surfaced when the Europe-based support team couldn’t log in for 45 minutes because their local time was one hour ahead of UTC. The fix required using `exp = iat + timedelta(days=1)` and adding a 5-minute grace period on the server side. The change required updating every JWT generation endpoint and adding a test case that mocks `datetime.now(tz=timezone.utc)` with `pytz` to simulate the transition. The test alone added 89 lines of code because I had to mock the entire `datetime` module to avoid flaky tests during the transition.
@@ -263,20 +258,16 @@ The biggest win was reducing the Fly.io bill by 80 %, which paid for the entire 
 
 The code size increase from 300 to 1,240 lines wasn’t just bloat—it was the cost of adding proper error handling, structured logging, contract tests, and modular architecture. The ROI was immediate: the new engineer hired in month 7 could make a change to the tax reporting endpoint without touching the auth logic, which was impossible with the single-file architecture. The $850/month cost was sustainable for a seed-stage startup, whereas the $4,200/month bill was a existential risk when the runway was only 12 months.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

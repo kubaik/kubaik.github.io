@@ -8,11 +8,9 @@ In 2026, our team at Aura built a platform that generates Terraform modules and 
 
 The core challenge was three-fold:
 
-1. **Volume mismatch**: Humans can review maybe 40 PRs per day at best; our agent was already producing 50–60.
-2. **Cross-domain expertise**: The agent writes Python lambdas, Dockerfiles, GitHub Actions, and Terraform HCL in one PR. No single reviewer covers all of it.
-3. **Fast feedback loop**: Waiting for a human review killed the agent’s productivity. We measured that each 15-minute delay added ~$180 in idle compute while the agent waited for approval.
+1. **Volume mismatch**: Humans can review maybe 40 PRs per day at best; our agent was already producing 50–60. 2. **Cross-domain expertise**: The agent writes Python lambdas, Dockerfiles, GitHub Actions, and Terraform HCL in one PR. No single reviewer covers all of it. 3. **Fast feedback loop**: Waiting for a human review killed the agent’s productivity. We measured that each 15-minute delay added ~$180 in idle compute while the agent waited for approval.
 
-I ran into this when I approved a PR that looked fine locally but broke our staging environment because the agent had added a Terraform `depends_on` that referenced a resource that didn’t exist in the new account layout. The rollback took 45 minutes and delayed a customer release. This post is what I wish I had built then.
+The rollback took 45 minutes and delayed a customer release. This post is what I wish I had built then.
 
 By February 2026 we had 125 repositories and 2,400 active agent runs per week. Our SRE team estimated that without automation we would have needed 7 additional senior reviewers just to stay at 2026 quality levels. That would have cost ~$850k annually in salaries plus onboarding time.
 
@@ -31,19 +29,13 @@ Finally, we tried a GitHub-only bot that posted a checklist of manual review ite
 We stopped trying to make humans do what machines do better. Instead we built a three-stage gate that automates the 80% that machines can handle and escalates only the 20% that need human judgment.
 
 **Stage 1 – Static safety net**
-- Run a curated set of linters and static analyzers on every PR within 15 seconds of creation.
-- Fail fast: if any stage returns a non-zero exit code, the PR is marked as blocked with a link to the exact rule that failed and the rationale in context.
-- We use `checkov 3.2.117` for IaC, `bandit 1.7.8` for Python, `eslint 8.57.0` for JavaScript, and `yamllint 1.35.1` for YAML. All pinned to exact versions to avoid drift.
+- Run a curated set of linters and static analyzers on every PR within 15 seconds of creation. - Fail fast: if any stage returns a non-zero exit code, the PR is marked as blocked with a link to the exact rule that failed and the rationale in context. - We use `checkov 3.2.117` for IaC, `bandit 1.7.8` for Python, `eslint 8.57.0` for JavaScript, and `yamllint 1.35.1` for YAML. All pinned to exact versions to avoid drift.
 
 **Stage 2 – Deterministic testing**
-- Spin up an ephemeral environment for every PR using AWS CDK with Node.js 20 LTS and Python 3.11.
-- Run the generated Terraform plan against a mocked AWS account in an isolated VPC.
-- Execute the CI workflow steps (lint, unit tests, build) inside Docker containers to ensure parity with the real pipeline.
-- The entire stage runs in 2–3 minutes on average, costing about $0.04 per PR.
+- Spin up an ephemeral environment for every PR using AWS CDK with Node.js 20 LTS and Python 3.11. - Run the generated Terraform plan against a mocked AWS account in an isolated VPC. - Execute the CI workflow steps (lint, unit tests, build) inside Docker containers to ensure parity with the real pipeline. - The entire stage runs in 2–3 minutes on average, costing about $0.04 per PR.
 
 **Stage 3 – Human escalation only for unknowns**
-- After the deterministic gates pass, we apply a simple heuristic: if the PR touches a file that has ever caused a production incident in the past 90 days, we route it to a human reviewer. Otherwise it auto-merges.
-- We track the heuristic in a single YAML file (`risk_map.yaml`) that maps file patterns to reviewer groups. A simple regex like `"**/terraform/modules/network/**"` is enough to catch the VPC CIDR drift we saw earlier.
+- After the deterministic gates pass, we apply a simple heuristic: if the PR touches a file that has ever caused a production incident in the past 90 days, we route it to a human reviewer. Otherwise it auto-merges. - We track the heuristic in a single YAML file (`risk_map.yaml`) that maps file patterns to reviewer groups. A simple regex like `"**/terraform/modules/network/**"` is enough to catch the VPC CIDR drift we saw earlier.
 
 The key insight was to invert the usual order. Instead of “let the human decide,” we let the machine decide when to involve a human. This reduced our human review load by 89% while keeping the error rate at 1.2%—below our 2026 baseline.
 
@@ -53,9 +45,7 @@ Here’s how we wired it together. We built a GitHub App called `review-bot` in 
 
 The Lambda function has three handlers:
 
-1. `onPullRequest`: triggered when a PR is opened or updated. It schedules Stage 1 and Stage 2 jobs in AWS Step Functions.
-2. `onCheckRun`: listens to the check runs created by the Step Functions and posts the result as a GitHub check suite.
-3. `onRiskMapUpdate`: watches for changes to `risk_map.yaml` and reloads the cache without a redeploy.
+1. `onPullRequest`: triggered when a PR is opened or updated. It schedules Stage 1 and Stage 2 jobs in AWS Step Functions. 2. `onCheckRun`: listens to the check runs created by the Step Functions and posts the result as a GitHub check suite. 3. `onRiskMapUpdate`: watches for changes to `risk_map.yaml` and reloads the cache without a redeploy.
 
 We use DynamoDB as a cache for the risk map so the Lambda doesn’t need to hit GitHub every time. The cache has a TTL of 5 minutes, which is short enough to catch updates but long enough to handle bursts.
 
@@ -355,15 +345,9 @@ if __name__ == "__main__":
 | **On-call pager incidents**| 12/month                        | 2/month                  | 83% ↓       |
 
 **Notes on the numbers**:
-- **Human review load**: Calculated by dividing total PRs by reviewers’ capacity (40 PRs/day/reviewer). We saved 7 reviewers, or ~$850k/year in salaries.
-- **Cycle time**: Measured from PR creation to merge. The 4m includes Stage 1 (15s), Stage 2 (2–3m), and Stage 3 (3m 12s median for escalation).
-- **Error rate**: Defined as any regression that requires a rollback or hotfix within 7 days of merge. We reduced rollbacks from 3/month to 0.5/month.
-- **Cost per PR**: Includes Lambda invocations, CDK deployments, ephemeral account setup, and Terraform plan checks. The $0.04/PR is offset by the cost savings from reduced human reviews and rollbacks.
-- **Rollback time**: Measured from incident detection to full recovery. The 8m includes alerting, diagnosis, and rollback steps.
-- **Deployment frequency**: Agent-generated PRs increased from 40% to 75% of total PRs after the system stabilized.
+- **Human review load**: Calculated by dividing total PRs by reviewers’ capacity (40 PRs/day/reviewer). We saved 7 reviewers, or ~$850k/year in salaries. - **Cycle time**: Measured from PR creation to merge. The 4m includes Stage 1 (15s), Stage 2 (2–3m), and Stage 3 (3m 12s median for escalation). - **Error rate**: Defined as any regression that requires a rollback or hotfix within 7 days of merge. We reduced rollbacks from 3/month to 0.5/month. - **Cost per PR**: Includes Lambda invocations, CDK deployments, ephemeral account setup, and Terraform plan checks. The $0.04/PR is offset by the cost savings from reduced human reviews and rollbacks. - **Rollback time**: Measured from incident detection to full recovery. The 8m includes alerting, diagnosis, and rollback steps. - **Deployment frequency**: Agent-generated PRs increased from 40% to 75% of total PRs after the system stabilized.
 
 **Key takeaway**: The three-stage gate didn’t just reduce errors—it unlocked a 100% increase in deployment velocity while cutting on-call incidents by 83%. The $0.04/PR cost is negligible compared to the $850k/year saved in reviewer salaries and the revenue gained from faster feature delivery. The system is now self-sustaining: the agent generates more PRs, which are reviewed faster, which in turn allows the agent to generate even more PRs.
-
 
 ---
 

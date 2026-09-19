@@ -8,7 +8,7 @@ Legacy codebases aren’t just old code — they’re codebases that have outliv
 
 Documentation is either missing, wrong, or written for a different stack. Pull requests rot for weeks because reviewers assume the legacy system is a black box they can’t touch. I’ve seen teams rewrite entire modules only to discover the new version broke something subtle — like the nightly batch job that relied on a side effect in the old code.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout in a legacy Java service using Apache Commons Pool 2.6.0. The logs said nothing. The metrics dashboard showed nothing. Only when I dumped the pool state with VisualVM did I see 200 threads stuck holding connections, each waiting on a timeout that never fired. When I fixed the `maxWaitMillis` from `-1` (infinite wait) to `5000`, the latency dropped from 8.2s to 2.1s on p95. That taught me: legacy code doesn’t just break — it hides.
+The logs said nothing. The metrics dashboard showed nothing. Only when I dumped the pool state with VisualVM did I see 200 threads stuck holding connections, each waiting on a timeout that never fired. When I fixed the `maxWaitMillis` from `-1` (infinite wait) to `5000`, the latency dropped from 8.2s to 2.1s on p95. That taught me: legacy code doesn’t just break — it hides.
 
 Most teams try to solve this with more meetings, more documentation, more code reviews. But meetings don’t run the batch job at 3 AM. Documentation doesn’t catch the typo in `endpoit` that’s been there since 2018. And code reviews can’t prevent the next engineer from copy-pasting a 2016 Stack Overflow snippet into a critical path.
 
@@ -83,9 +83,7 @@ public void generateDailyReport() {
 
 It also pointed out that the report relied on `GROUP BY DATE(start)` in a MySQL 5.7 database — which uses the server’s timezone unless explicitly set to UTC. The AI suggested:
 
-- Add `TimeZone.setDefault(TimeZone.getTimeZone("UTC"))` at app startup.
-- Replace `java.util.Date` with `java.time.ZonedDateTime` in new code.
-- Add a migration script to backfill UTC timestamps for old records.
+- Add `TimeZone.setDefault(TimeZone.getTimeZone("UTC"))` at app startup. - Replace `java.util.Date` with `java.time.ZonedDateTime` in new code. - Add a migration script to backfill UTC timestamps for old records.
 
 After applying these changes, the midnight report no longer skipped an hour during DST transitions. The p99 latency of the report generation increased from 1.8s to 2.3s due to the timezone conversion overhead — but that was acceptable compared to the risk of missing transactions.
 
@@ -101,9 +99,7 @@ But the real bug was hidden: the base salary was stored as a string in the datab
 
 The AI, when given the full codebase context, suggested:
 
-- Use `decimal.Decimal` for monetary calculations.
-- Add a migration to convert salary strings to `DECIMAL(15,2)` in PostgreSQL 15.
-- Add a unit test:
+- Use `decimal.Decimal` for monetary calculations. - Add a migration to convert salary strings to `DECIMAL(15,2)` in PostgreSQL 15. - Add a unit test:
 
 ```python
 def test_bonus_calculation():
@@ -359,42 +355,32 @@ I tracked three legacy systems I worked on in 2026–2026. Here’s the raw data
 ### Breakdown of savings
 
 **System A (FinTech):**
-- The biggest win was eliminating the `SimpleDateFormat` timezone bug. The AI flagged it in 2 minutes; I fixed it in 15. Before: 3 failed deployments due to timezones. After: zero.
-- I used `klrb 0.4.0` to refactor the `PaymentProcessor.retryFailedTransactions()` method. The new version had 60% fewer lines and ran 39% faster. The PR was reviewed in 3 days instead of 14.
+- The biggest win was eliminating the `SimpleDateFormat` timezone bug. The AI flagged it in 2 minutes; I fixed it in 15. Before: 3 failed deployments due to timezones. After: zero. - I used `klrb 0.4.0` to refactor the `PaymentProcessor.retryFailedTransactions()` method. The new version had 60% fewer lines and ran 39% faster. The PR was reviewed in 3 days instead of 14.
 
 **System B (E-commerce):**
-- The floating-point payroll bug was caught by `mistralai:mistral-7b-instruct-v0.2` analyzing Python 2.7 code. The AI suggested using `decimal.Decimal` — a change I had dismissed for months.
-- After refactoring the `calculateBonus()` function, the payroll report passed audit with zero discrepancies. The PR review time dropped from 21 to 5 days because the AI generated the tests.
+- The floating-point payroll bug was caught by `mistralai:mistral-7b-instruct-v0.2` analyzing Python 2.7 code. The AI suggested using `decimal.Decimal` — a change I had dismissed for months. - After refactoring the `calculateBonus()` function, the payroll report passed audit with zero discrepancies. The PR review time dropped from 21 to 5 days because the AI generated the tests.
 
 **System C (ERP):**
-- This was the worst: no tests, no docs, and a spaghetti PHP codebase. The AI helped me map the `InvoiceGenerator` class’s call graph using `tree-sitter` and `llama3:8b-instruct`.
-- I used `klrb` to generate a test suite for the top 5 most-used functions. Before: no tests. After: 87% line coverage on refactored code.
-- The biggest surprise: the AI pointed out that the cron job at `0 3 * * *` relied on `/tmp/file.lock`, which fails on Kubernetes. We moved it to a shared volume, reducing MTTR from 4 days to 12 hours.
+- This was the worst: no tests, no docs, and a spaghetti PHP codebase. The AI helped me map the `InvoiceGenerator` class’s call graph using `tree-sitter` and `llama3:8b-instruct`. - I used `klrb` to generate a test suite for the top 5 most-used functions. Before: no tests. After: 87% line coverage on refactored code. - The biggest surprise: the AI pointed out that the cron job at `0 3 * * *` relied on `/tmp/file.lock`, which fails on Kubernetes. We moved it to a shared volume, reducing MTTR from 4 days to 12 hours.
 
 ### What the numbers don’t show
 
-- **Trust**: Before, engineers avoided touching System C. After, junior devs merged PRs with confidence.
-- **Onboarding time**: New hires now get a 30-minute AI-generated tour of the system instead of 3 days of reading dead docs.
-- **Sleep**: I didn’t get paged at 3 AM for timezone bugs anymore.
+- **Trust**: Before, engineers avoided touching System C. After, junior devs merged PRs with confidence. - **Onboarding time**: New hires now get a 30-minute AI-generated tour of the system instead of 3 days of reading dead docs. - **Sleep**: I didn’t get paged at 3 AM for timezone bugs anymore.
 
 ### The real ROI
 
 The AI didn’t replace me — but it made me 4–5x more effective on legacy systems. In 2026, the best engineers aren’t the ones who write the cleanest new code. They’re the ones who can **navigate the mess** without burning out. And that, finally, is something AI can help with.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-19T20:47:43.902749">
-        <meta property="article:modified_time" content="2026-09-18T13:04:42.757125+00:00">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.770112+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Vibe coding: MVP gem, prod albatross">
@@ -63,7 +63,7 @@
       "headline": "Vibe coding: MVP gem, prod albatross",
       "description": "Cut long-term debugging time 70% by swapping vibe coding for typed, tested, linted code from day one — with concrete benchmarks, error rates, and a 5-minute…",
       "datePublished": "2026-06-19T20:47:43+00:00",
-      "dateModified": "2026-09-18T13:04:42+00:00",
+      "dateModified": "2026-09-19T08:27:14+00:00",
       "wordCount": 3503,
       "timeRequired": "PT18M",
       "articleSection": "Technology",
@@ -268,7 +268,7 @@
                         18 min read
                         &nbsp;·&nbsp; 3503 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-18
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -284,11 +284,7 @@
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
 <p>I used a simple but brutal test: could I hand the code to someone else three months later and have them ship a feature without me? If the answer was no, it didn’t make the list. That means I measured things like:</p>
 <ul>
-<li><strong>Comment density</strong>: Not lines of comments, but the ratio of insightful comments to noise. If your comments just restate the code, they’re worse than useless — they’re misleading.</li>
-<li><strong>Test coverage vs. test meaning</strong>: I care about tests that catch real regressions, not tests that assert 1 + 1 = 2.</li>
-<li><strong>Error rate under load</strong>: I spun up each approach behind a proxy with 500 RPS for 24 hours and measured how often it errored out. Redis 7.2 with default eviction, for example, failed every 47 minutes when memory spiked — because the eviction policy was set to ‘volatile-lru’ and half the keys had no TTL.</li>
-<li><strong>Time to fix a real bug</strong>: I injected a real bug (a misconfigured timeout in Node 20 LTS) and measured how long it took to find and fix. The winner fixed it in 5 minutes. The worst took three days.</li>
-<li><strong>Onboarding time</strong>: I timed how long it took a mid-level developer to understand the architecture from scratch. Anything over 30 minutes got flagged as “high cognitive overhead.”</li>
+<li><strong>Comment density</strong>: Not lines of comments, but the ratio of insightful comments to noise. If your comments just restate the code, they’re worse than useless — they’re misleading. - <strong>Test coverage vs. test meaning</strong>: I care about tests that catch real regressions, not tests that assert 1 + 1 = 2. - <strong>Error rate under load</strong>: I spun up each approach behind a proxy with 500 RPS for 24 hours and measured how often it errored out. Redis 7.2 with default eviction, for example, failed every 47 minutes when memory spiked — because the eviction policy was set to ‘volatile-lru’ and half the keys had no TTL. - <strong>Time to fix a real bug</strong>: I injected a real bug (a misconfigured timeout in Node 20 LTS) and measured how long it took to find and fix. The winner fixed it in 5 minutes. The worst took three days. - <strong>Onboarding time</strong>: I timed how long it took a mid-level developer to understand the architecture from scratch. Anything over 30 minutes got flagged as “high cognitive overhead.”</li>
 </ul>
 <p>I also measured things that sound boring but aren’t: how often environment variables were misconfigured, how easy it was to deploy to AWS Lambda with arm64, and how many times the build broke because of a missing dev dependency. The tools that survived this process aren’t the flashiest — they’re the ones that didn’t make me want to quit.</p>
 <h2 id="why-vibe-coding-works-for-mvps-and-fails-for-anything-you-need-to-maintain-the-full-ranked-list">Why vibe coding works for MVPs and fails for anything you need to maintain — the full ranked list</h2>
@@ -511,17 +507,11 @@ describe('withTimeout', () =&gt; {
 </table>
 <h3 id="when-to-stick-with-vibe-coding">When to stick with vibe coding</h3>
 <ul>
-<li>You’re the only user.</li>
-<li>The code will be thrown away in &lt; 3 months.</li>
-<li>You’re exploring a problem domain and don’t know what the shape of the solution is yet.</li>
-<li>You’re willing to rewrite the whole thing when it breaks.</li>
+<li>You’re the only user. - The code will be thrown away in &lt; 3 months. - You’re exploring a problem domain and don’t know what the shape of the solution is yet. - You’re willing to rewrite the whole thing when it breaks.</li>
 </ul>
 <h3 id="when-to-drop-vibe-coding">When to drop vibe coding</h3>
 <ul>
-<li>You have users who depend on the system.</li>
-<li>The code will live longer than three months.</li>
-<li>More than one person will touch the code.</li>
-<li>You need to run it in production.</li>
+<li>You have users who depend on the system. - The code will live longer than three months. - More than one person will touch the code. - You need to run it in production.</li>
 </ul>
 <p>I’ve seen teams try to “scale up” a vibe-coded MVP. It never ends well. The code breaks under load, the tests are flaky, and the onboarding time is measured in days, not minutes. The only way out is a rewrite — and rewrites are expensive.</p>
 <h2 id="frequently-asked-questions">Frequently asked questions</h2>
@@ -532,11 +522,7 @@ describe('withTimeout', () =&gt; {
 <h3 id="whats-the-fastest-way-to-migrate-a-vibe-coded-codebase-to-something-maintainable">What’s the fastest way to migrate a vibe-coded codebase to something maintainable?</h3>
 <p>Start with TypeScript (for frontend/backend) or Go (for backend services). Add Jest/pytest for tests, ESLint/Go fmt for linting, and strict mode/type checking. Do this incrementally:</p>
 <ol>
-<li>Pick one file or module.</li>
-<li>Add TypeScript/Go types.</li>
-<li>Add tests for the happy path.</li>
-<li>Run the tests in CI.</li>
-<li>Repeat for the next file.</li>
+<li>Pick one file or module. 2. Add TypeScript/Go types. 3. Add tests for the happy path. 4. Run the tests in CI. 5. Repeat for the next file.</li>
 </ol>
 <p>This is called “incremental adoption.” It’s slower than a full rewrite, but it’s safer and you can ship features while you migrate.</p>
 <h3 id="why-does-vibe-coding-feel-so-good-at-first">Why does vibe coding feel so good at first?</h3>

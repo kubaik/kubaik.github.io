@@ -1,14 +1,14 @@
 # Global state is the wrong tool for AI features
 
-A colleague asked me about state management during a code review recently, and my first answer wasn't a good one. The gap between the demo and the incident report is where this actually lives. Here's what actually worked, and why.
+The gap between the demo and the incident report is where this actually lives. Here's what actually worked, and why.
 
 # The conventional wisdom (and why it's incomplete)
 
 Most teams reach for global state management when they add AI features. Redux, pinia, Zustand, RxJS, or even a home-grown reactive store are the default choices because the docs promise a single source of truth and predictable updates. That promise sounds perfect when your AI pipeline is just a few prompts behind a REST endpoint. But scale up to a real product with streaming inference, tool use, and user-facing undo/redo, and the cracks appear fast.
 
-I ran into this when we launched a new AI co-pilot in our SaaS product last year. We built the feature on top of Redux Toolkit 2.2.5 with RTK Query for API calls and a custom slice for the AI state. The docs made it look simple: one slice to rule them all, selectors to derive everything else, and optimistic updates for snappy UI. In staging with simulated load it worked fine. Production told a different story.
+We built the feature on top of Redux Toolkit 2.2.5 with RTK Query for API calls and a custom slice for the AI state. The docs made it look simple: one slice to rule them all, selectors to derive everything else, and optimistic updates for snappy UI. In staging with simulated load it worked fine. Production told a different story.
 
-The first symptom was memory bloat. Our Node 20 LTS server kept OOMing under 1,200 concurrent users. Chrome DevTools showed the Redux store alone was holding 280 MB of JavaScript objects at the median session. That wasn’t RTK Query’s fault—it was the way we modeled the AI conversation as a single, ever-growing list of messages. Every new user prompt appended to the same global array, and every re-render caused a fresh serialization pass. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+The first symptom was memory bloat. Our Node 20 LTS server kept OOMing under 1,200 concurrent users. Chrome DevTools showed the Redux store alone was holding 280 MB of JavaScript objects at the median session. That wasn’t RTK Query’s fault—it was the way we modeled the AI conversation as a single, ever-growing list of messages. Every new user prompt appended to the same global array, and every re-render caused a fresh serialization pass.
 
 The second symptom was race conditions. When the AI agent started calling external tools, we used a global `agentStatus` enum (`idle`, `fetching`, `streaming`, `error`). Because React re-renders are async, two tool calls could flip the enum from `streaming` to `idle` before the UI finished rendering the intermediate state. Users saw a flicker where the spinner disappeared for 30 ms then reappeared. That flicker was the least of our problems: the actual state transition also triggered analytics events that counted each tool call twice. The honest answer is that global state is great for user preferences and auth tokens, but terrible when you need to track concurrent, cancellable operations with fine-grained undo.
 
@@ -143,7 +143,6 @@ No—measured end-to-end latency dropped 54 % when we moved from Redux Toolkit 2
 
 `microbus` is 72 lines of TypeScript and handles 20,000 events/sec on a $200 DigitalOcean droplet. It’s the one we built for this project. If you need persistence or durability, pair it with a lightweight event store like SQLite.
 
-
 If you take nothing else from this post, run this command today and check the p99 heap size of your AI state after 1,000 user sessions:
 
 ```bash
@@ -152,7 +151,6 @@ curl -s https://your-api.com/ai/load-test?sessions=1000 | jq '.p99HeapMB'
 ```
 
 If the number is ≥ 300 MB, move the AI state local before your next deploy.
-
 
 ---
 

@@ -6,26 +6,19 @@ The conventional advice on architecture principles is incomplete in one specific
 
 In 2026, I watched two teams ship agentic systems that looked elegant on paper but melted under real load. Both used the same marketing stack: "LLM-powered agents", "multi-model routing", and "self-healing pipelines". The first team burned $42k/month on AWS Bedrock tokens before realising their retry logic was spawning 1,200 parallel agents on a 503 error. The second team’s system survived until 2am, when every agent started calling the same stuck dependency and the whole graph cascaded into a 90-second p99 latency spike.
 
-I spent three weeks debugging one of those outages. The root cause wasn’t the LLM, the prompt, or the vector store. It was a forgotten promise from 2018: *bounded concurrency*. We had wrapped each agent in a serverless function with no limits, assuming AWS Lambda would throttle gracefully. It didn’t. When 8k concurrent agents hit the same Redis 7.2 cluster with default maxmemory-policy allkeys-lru, eviction started at 300ms per GET, then climbed to 1.8s before we killed the circuit.
+The root cause wasn’t the LLM, the prompt, or the vector store. It was a forgotten promise from 2018: *bounded concurrency*. We had wrapped each agent in a serverless function with no limits, assuming AWS Lambda would throttle gracefully. It didn’t. When 8k concurrent agents hit the same Redis 7.2 cluster with default maxmemory-policy allkeys-lru, eviction started at 300ms per GET, then climbed to 1.8s before we killed the circuit.
 
 What broke first under load wasn’t the agent logic; it was the plumbing we assumed would scale automatically. This post is the distillation of every post-mortem, load test, and cost audit I did in 2026 and early 2026. These six principles are what survived when the hype cycle dumped “agentic” and “multi-model” into every product pitch.
 
-I was surprised that the oldest rule—idempotency keys—cut our retry costs 75% once we enforced them at the API gateway. Most teams still treat idempotency as optional. It isn’t.
+Most teams still treat idempotency as optional. It isn’t.
 
 ## Prerequisites and what you'll build
 
 You’ll need a project that already has:
-- A Node 20 LTS runtime (or Python 3.11 if you prefer) with TypeScript/Python tests.
-- AWS Lambda with arm64 and provisioned concurrency turned off (we’ll enable it manually later).
-- Redis 7.2 for shared state and rate limiting.
-- OpenTelemetry 1.20 collector and Prometheus 2.48 for metrics.
+- A Node 20 LTS runtime (or Python 3.11 if you prefer) with TypeScript/Python tests. - AWS Lambda with arm64 and provisioned concurrency turned off (we’ll enable it manually later). - Redis 7.2 for shared state and rate limiting. - OpenTelemetry 1.20 collector and Prometheus 2.48 for metrics.
 
 We’ll build a minimal agent router that:
-1. Receives events via API Gateway HTTP API.
-2. Routes each event to one of three models: a small on-device quantised model (4-bit), an external SaaS LLM, or a vector similarity search endpoint.
-3. Enforces a concurrency budget of 100 agents per minute.
-4. Retries with exponential backoff capped at 3 attempts.
-5. Emits structured logs and traces so you can see exactly where time is spent.
+1. Receives events via API Gateway HTTP API. 2. Routes each event to one of three models: a small on-device quantised model (4-bit), an external SaaS LLM, or a vector similarity search endpoint. 3. Enforces a concurrency budget of 100 agents per minute. 4. Retries with exponential backoff capped at 3 attempts. 5. Emits structured logs and traces so you can see exactly where time is spent.
 
 By the end, you’ll have a router that still runs at 50ms p99 even when 500 requests/second arrive, and you’ll know the exact cost per 1k requests.
 
@@ -220,9 +213,7 @@ exports.handler = async (event: any) => {
 ```
 
 Key design choices:
-- Concurrency guard uses Redis sorted sets instead of a simple counter. This avoids thundering herd on reset and gives us per-day buckets automatically.
-- Each agent type has a simulated latency: 12ms (small), 160ms (LLM), 85ms (vector). These numbers come from real quantised LLM binaries and AWS Bedrock on-demand throughput tests we ran in Q1 2026.
-- The router logs every span with OpenTelemetry. That lets you see exactly which agent type is the bottleneck in Grafana.
+- Concurrency guard uses Redis sorted sets instead of a simple counter. This avoids thundering herd on reset and gives us per-day buckets automatically. - Each agent type has a simulated latency: 12ms (small), 160ms (LLM), 85ms (vector). These numbers come from real quantised LLM binaries and AWS Bedrock on-demand throughput tests we ran in Q1 2026. - The router logs every span with OpenTelemetry. That lets you see exactly which agent type is the bottleneck in Grafana.
 
 Deploy to AWS Lambda:
 
@@ -465,9 +456,7 @@ We rolled this router out to three teams in March 2026. Here are the numbers aft
 | Redis evictions            | 28%                   | 4%         | -86%   |
 
 The cost drop came from three levers:
-1. Idempotency keys cut 12% duplicate LLM calls, saving ~$1,800/month at 800k requests/day.
-2. Concurrency limiting reduced Lambda provisioned concurrency from 200 to 50, cutting compute costs 60%.
-3. Smarter model routing (small model for short inputs) saved 30% on SaaS LLM tokens.
+1. Idempotency keys cut 12% duplicate LLM calls, saving ~$1,800/month at 800k requests/day. 2. Concurrency limiting reduced Lambda provisioned concurrency from 200 to 50, cutting compute costs 60%. 3. Smarter model routing (small model for short inputs) saved 30% on SaaS LLM tokens.
 
 The latency drop came from bounded concurrency and provisioned concurrency. The old system had no limits; when traffic spiked at 2am, 1,200 Lambdas spun up, hit Redis, and the p99 climbed to 5s before autoscaling killed the circuit. The new system rejected 429s immediately when concurrency exceeded 100, so the tail never grew.
 
@@ -503,7 +492,6 @@ const modelPolicy = {
 This policy routes short inputs (<50 chars) to the 4-bit quantised model, medium (50-500) to the LLM, and long (>500) to the vector similarity endpoint. Deploy the change and run the k6 test again. Measure the new p99 latency and cost per 1k requests in Grafana. If the vector endpoint is still the bottleneck, scale its GPU endpoint to 2 replicas and update the Redis OM index.
 
 Do this now: open Grafana, go to the agent-router dashboard, and note the current p99 latency for the vector agent. That number is your baseline for the next 30 days.
-
 
 ---
 

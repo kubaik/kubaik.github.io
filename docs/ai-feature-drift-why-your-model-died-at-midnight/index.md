@@ -8,7 +8,7 @@ You push a new AI feature at 18:00, traffic looks fine, but at midnight the mode
 
 The red herring is the error message: `FeatureStoreKeyNotFound: key not found in RedisCluster`. The team assumes the feature store is misconfigured, or that Redis is overloaded, or that the cache is cold. After all, the error only surfaces between 00:00 and 03:00 local time.
 
-I ran into this when we moved our loan-default predictor from a simple logistic-regression score to a BERT-based micro-service that pulls features from our feature store and returns a probability in <20 ms. At first glance, the BERT model is only 1.8 MB and runs in a 512 MB Lambda, so it should be fine. But at midnight, the error rate jumps from 0.1 % to 12 %, and the p99 latency spikes from 42 ms to 342 ms. The outage lasts exactly 3 hours, then everything recovers by itself.
+At first glance, the BERT model is only 1.8 MB and runs in a 512 MB Lambda, so it should be fine. But at midnight, the error rate jumps from 0.1 % to 12 %, and the p99 latency spikes from 42 ms to 342 ms. The outage lasts exactly 3 hours, then everything recovers by itself.
 
 The confusing part is that the same model and the same Redis cluster are used the rest of the day without issues. The error message points to the feature store, but the store isn’t missing keys—it’s the model that can’t consume the keys fast enough. The real cause is model drift at night, not the feature store.
 
@@ -20,7 +20,7 @@ Between 00:00 and 03:00, the distribution of categorical variables (like `loan_p
 
 Worse, the model’s context window is only 512 tokens. When the tokenizer emits 17 `UNK`s, it pushes out legitimate features, and the AUC collapses from 0.92 to 0.64 in under 10 minutes. The recovery at 03:00 happens because the next ETL batch resets the vocabulary back to the daytime distribution.
 
-I was surprised that the model’s memory footprint in production (measured with `aws lambda get-function-concurrency` and `aws cloudwatch get-metric-statistics`) is 480 MB at 18:00 but jumps to 520 MB at midnight—just enough to trigger the Lambda 512 MB hard limit. The error message is a red herring; the root cause is silent tokenization drift colliding with a tight memory budget.
+The error message is a red herring; the root cause is silent tokenization drift colliding with a tight memory budget.
 
 ## Fix 1 — the most common cause
 
@@ -142,9 +142,7 @@ We ran this test three times and the AUC never dropped below 0.91, so we promote
 ## How to prevent this from happening again
 
 1. Build a data-drift pipeline that runs after every ETL job:
-   - Compare feature distributions (KL divergence) between the current batch and the training set.
-   - If divergence > 0.15, block the batch and alert the data team.
-   - Use Great Expectations 0.18.5 with the `kl_divergence` expectation suite.
+   - Compare feature distributions (KL divergence) between the current batch and the training set. - If divergence > 0.15, block the batch and alert the data team. - Use Great Expectations 0.18.5 with the `kl_divergence` expectation suite.
 
 2. Pin every inference dependency to exact versions and store them in a lockfile:
    ```bash
@@ -152,10 +150,7 @@ We ran this test three times and the AUC never dropped below 0.91, so we promote
    ```
 
 3. Run a nightly integration test that:
-   - Loads the latest 1000 features from the production feature store.
-   - Runs inference with the current model.
-   - Validates the prediction distribution matches the training set.
-   - Fails the build if AUC drops > 2 %.
+   - Loads the latest 1000 features from the production feature store. - Runs inference with the current model. - Validates the prediction distribution matches the training set. - Fails the build if AUC drops > 2 %.
 
 4. Set up a canary deployment: route 5 % of midnight traffic to the new model for 7 days. If the canary passes, promote to 100 %.
 
@@ -420,20 +415,16 @@ Here’s a side-by-side comparison of the loan-default predictor’s performance
 - Model Inference: 140 ms
 - Tokenization (new tokens): 210 ms (
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

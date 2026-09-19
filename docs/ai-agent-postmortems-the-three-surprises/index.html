@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-24T11:53:53.748750">
-        <meta property="article:modified_time" content="2026-09-16T09:55:28.971021+00:00">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.481886+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI agent postmortems: the three surprises">
@@ -63,7 +63,7 @@
       "headline": "AI agent postmortems: the three surprises",
       "description": "Catch AI agent failures 60 % faster with shadowing vs logging — real QPS, cost, and alert-latency numbers from Brazilian, Colombian, and Mexican production…",
       "datePublished": "2026-06-24T11:53:53+00:00",
-      "dateModified": "2026-09-16T09:55:28+00:00",
+      "dateModified": "2026-09-19T08:27:13+00:00",
       "wordCount": 2753,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
@@ -268,7 +268,7 @@
                         14 min read
                         &nbsp;·&nbsp; 2753 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-16
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -429,16 +429,14 @@
 <p>I evaluate every AI agent project against four questions:</p>
 <ol>
 <li><strong>What is the blast radius of a semantic error?</strong></li>
-<li>If the agent approves a fraudulent payment, how much money is at risk? In the Brazilian neobank, each false positive cost $240 in manual review and chargeback fees. The blast radius was high, so we chose shadowing.</li>
 <li>
-<p>If the agent summarizes a support ticket, the blast radius is lower. We chose SSL.</p>
+<p>If the agent approves a fraudulent payment, how much money is at risk? In the Brazilian neobank, each false positive cost $240 in manual review and chargeback fees. The blast radius was high, so we chose shadowing. - If the agent summarizes a support ticket, the blast radius is lower. We chose SSL.</p>
 </li>
 <li>
 <p><strong>How fast does the agent drift?</strong></p>
 </li>
-<li>If the agent’s behavior changes weekly (e.g., new product SKUs), drift is fast. Shadowing catches changes within seconds.</li>
 <li>
-<p>If the agent’s behavior changes monthly (e.g., seasonal fraud patterns), drift is slow. SSL is enough.</p>
+<p>If the agent’s behavior changes weekly (e.g., new product SKUs), drift is fast. Shadowing catches changes within seconds. - If the agent’s behavior changes monthly (e.g., seasonal fraud patterns), drift is slow. SSL is enough.</p>
 </li>
 <li>
 <p><strong>What is the cost of a false positive vs. false negative?</strong></p>

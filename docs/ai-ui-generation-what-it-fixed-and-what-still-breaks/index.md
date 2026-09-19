@@ -10,7 +10,7 @@ AI UI generation tools like v0 by Vercel, Figma AI, and Locofy can cut frontend 
 
 Most developers hear “AI UI generation” and picture Skynet for design. That’s not it. Think of it as a junior developer who can write 500 lines of React in 30 seconds—except it won’t debug why the button is grey in Firefox. The confusion starts with the word “AI.” It’s not general intelligence; it’s a constrained autocomplete on steroids. It knows React patterns, Tailwind classes, and common Accessibility ARIA roles, but it doesn’t know your product’s bespoke authentication flow or your finance team’s weird date-range picker.
 
-I ran into this when our AI-generated checkout page worked perfectly in Chrome, but failed silently in Safari’s private mode. The tool generated code that assumed every browser allowed the same CORS headers. Safari private mode blocks all storage, which broke our auth token persistence. The tool didn’t warn us—it’s not trained on Safari’s quirks. That’s why teams assume AI can do everything, or nothing. Neither is true.
+The tool generated code that assumed every browser allowed the same CORS headers. Safari private mode blocks all storage, which broke our auth token persistence. The tool didn’t warn us—it’s not trained on Safari’s quirks. That’s why teams assume AI can do everything, or nothing. Neither is true.
 
 ## The mental model that makes it click
 
@@ -192,11 +192,7 @@ v0 will generate a modal with basic ARIA, but you’ll still need to test with a
 
 ## Further reading worth your time
 
-- [Vercel v0 docs: 2026 edition](https://v0.dev/docs) — The official docs are surprisingly good at showing what the tool can and can’t do.
-- [Locofy 2026 roadmap](https://locofy.ai/blog/roadmap-2026) — Their blog explains how they handle design-to-code fidelity.
-- [Figma AI limitations (2026)](https://www.figma.com/blog/ai-limitations) — Figma’s engineers wrote about where their AI stumbles.
-- [Tailwind 4 release notes](https://tailwindcss.com/blog/tailwindcss-v4) — The new JIT engine makes AI-generated Tailwind code faster to render.
-- [React 19 new features](https://react.dev/blog/2026/react-19) — The new React compiler can optimize AI-generated code better.
+- [Vercel v0 docs: 2026 edition](https://v0.dev/docs) — The official docs are surprisingly good at showing what the tool can and can’t do. - [Locofy 2026 roadmap](https://locofy.ai/blog/roadmap-2026) — Their blog explains how they handle design-to-code fidelity. - [Figma AI limitations (2026)](https://www.figma.com/blog/ai-limitations) — Figma’s engineers wrote about where their AI stumbles. - [Tailwind 4 release notes](https://tailwindcss.com/blog/tailwindcss-v4) — The new JIT engine makes AI-generated Tailwind code faster to render. - [React 19 new features](https://react.dev/blog/2026/react-19) — The new React compiler can optimize AI-generated code better.
 
 ## Frequently Asked Questions
 
@@ -458,13 +454,13 @@ export function RegistrationForm() {
   const [step, setStep] = useState(1);
   const { register, handleSubmit, formState: { errors }, watch } = useForm<FormValues>();
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
+const onSubmit: SubmitHandler<FormValues> = (data) => {
     console.log(data);
   };
 
-  const password = watch('password');
+const password = watch('password');
 
-  return (
+return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-md mx-auto p-6">
       {/* Step 1: Email */}
       {step === 1 && (
@@ -491,7 +487,7 @@ export function RegistrationForm() {
         </div>
       )}
 
-      {/* Step 2: Password */}
+{/* Step 2: Password */}
       {step === 2 && (
         <div className="space-y-4">
           <div>
@@ -506,20 +502,16 @@ export function RegistrationForm() {
             />
             {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>}
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

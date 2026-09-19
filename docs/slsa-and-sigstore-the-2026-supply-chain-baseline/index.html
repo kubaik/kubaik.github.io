@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-17T23:00:37.412051">
-        <meta property="article:modified_time" content="2026-06-17T23:00:37.412065">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.619792+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="SLSA and Sigstore: the 2026 supply chain baseline">
@@ -63,8 +63,8 @@
       "headline": "SLSA and Sigstore: the 2026 supply chain baseline",
       "description": "Cut supply chain audit failures 100% with SLSA level 3 and Sigstore—step-by-step implementation, real 2026 numbers, and the exact GitHub Actions workflow we…",
       "datePublished": "2026-06-17T23:00:37+00:00",
-      "dateModified": "2026-06-17T23:00:37+00:00",
-      "wordCount": 3617,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3586,
       "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -252,9 +252,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         18 min read
-                        &nbsp;·&nbsp; 3617 words
+                        &nbsp;·&nbsp; 3586 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-17
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -265,10 +265,9 @@
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In late 2026 we shipped a new payments service that processed 12 M transactions/month for a UK fintech client. The repo had 18 direct dependencies, 64 transitive, and every build pushed a 300 MB container image to AWS ECR. One Friday at 17:42 a dependency alert fired: a high-severity CVE in <code>libcurl</code> with a public exploit. We spun up a hot-patch, rebuilt, and rolled out in 45 minutes. The fix was trivial—bump curl from 8.6.0 to 8.6.1—but the process scared us. Two things stood out:</p>
 <ol>
-<li>We had no way to prove <em>who</em> signed off on the original curl build or <em>how</em> it was assembled.</li>
-<li>The 45-minute SLA was only achievable because we had a single maintainer with sudo rights; a larger team would have taken hours to coordinate signatures and approvals.</li>
+<li>We had no way to prove <em>who</em> signed off on the original curl build or <em>how</em> it was assembled. 2. The 45-minute SLA was only achievable because we had a single maintainer with sudo rights; a larger team would have taken hours to coordinate signatures and approvals.</li>
 </ol>
-<p>I spent three days tracing the provenance of that container image only to find a trail of half-baked attestations, unsigned SBOMs, and a Jenkinsfile that recorded nothing about the build environment. This post is what I wished I had found then.</p>
+<p>This post is what I wished I had found then.</p>
 <p>By 2026 every serious buyer in Europe and the Gulf now expects two artifacts with every release: an SLSA provenance statement and a Sigstore bundle. The fintech client’s next audit flagged us for missing both. We were forced to either buy an enterprise plan from a vendor or DIY. We chose DIY, and along the way we broke a lot of things—this is the story of what worked, what didn’t, and why SLSA level 3 and Sigstore are now table stakes.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first instinct was to bolt on a commercial SCA tool. We spun up Snyk’s container plan and let it scan every image. It found 47 CVEs in 10 minutes, but the output was raw JSON without any proof that the scan itself was trustworthy. When the fintech client asked for an auditable attestation, the Snyk CLI could only produce a PDF or a static JSON file—nothing cryptographically verifiable. We tried exporting CycloneDX SBOMs, but the signatures were stored in Snyk’s SaaS blob storage, not in our Git repo. When we asked for the signing key, Snyk’s support told us we could <em>request</em> a scan but not <em>control</em> the signing key. That violated our internal policy: we must own every root of trust.</p>
@@ -285,17 +284,11 @@
 <p>We had three false starts, zero passing audits, and a repo that couldn’t even prove who built the code. I remember staring at the Jenkins console log at 02:47 on a Tuesday, thinking: <em>This should not be this hard.</em></p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>After six weeks of frustration we sat down with the fintech client’s security team and asked a simple question: <em>What does an auditor actually look for when they see a container image?</em> The answer was surprisingly narrow:
-- A verifiable link between source commit and final image (provenance).
-- A signature that ties that provenance to an identity (Sigstore).
-- A policy that enforces the signature before deployment (in-toto + OPA).</p>
+- A verifiable link between source commit and final image (provenance). - A signature that ties that provenance to an identity (Sigstore). - A policy that enforces the signature before deployment (in-toto + OPA).</p>
 <p>That lit three clear constraints:
-1. Provenance must be produced by the build pipeline itself, not by a post-build scanner.
-2. Signature must be stored where the registry can verify it on pull (Cosign + OCI artifact).
-3. Policy must be evaluated at admission time (Kyverno + SLSA scorecard).</p>
+1. Provenance must be produced by the build pipeline itself, not by a post-build scanner. 2. Signature must be stored where the registry can verify it on pull (Cosign + OCI artifact). 3. Policy must be evaluated at admission time (Kyverno + SLSA scorecard).</p>
 <p>We rebuilt the pipeline around three components: 
-- <strong>SLSA-github-generator</strong> v1.10.0 (official Google repo) for provenance.
-- <strong>Sigstore Cosign</strong> v2.2.1 for signing and verification.
-- <strong>Kyverno</strong> v1.11.2 for policy admission.</p>
+- <strong>SLSA-github-generator</strong> v1.10.0 (official Google repo) for provenance. - <strong>Sigstore Cosign</strong> v2.2.1 for signing and verification. - <strong>Kyverno</strong> v1.11.2 for policy admission.</p>
 <p>The generator is a GitHub Action that runs on every push to main. It uses a pinned Docker-in-Docker runner (docker:24.0.7-dind) to build the container, then runs <code>slsa-verifier</code> to produce an in-toto statement. The statement includes:
 - materials: git commit SHA, builder image digest, workflow run ID
 - recipe: build steps, environment variables (filtered), dependencies list
@@ -375,10 +368,7 @@ jobs:
 
 </code></pre>
 <p>Key details:
-- The builder image is pinned to a specific SHA (<code>sha256:7c3a7c7d...</code>). We rotate every 30 days via Dependabot.
-- <code>slsa-verifier</code> runs inside the generator container, not on the host runner, to prevent host-level tampering.
-- Cosign uses the GitHub OIDC token to mint a short-lived identity; no long-lived secrets are stored anywhere.
-- The provenance file is stored as a GitHub artifact <em>and</em> attached to the OCI image as an attachment. Both can be used for verification; the artifact is useful for auditors who don’t trust the registry.</p>
+- The builder image is pinned to a specific SHA (<code>sha256:7c3a7c7d...</code>). We rotate every 30 days via Dependabot. - <code>slsa-verifier</code> runs inside the generator container, not on the host runner, to prevent host-level tampering. - Cosign uses the GitHub OIDC token to mint a short-lived identity; no long-lived secrets are stored anywhere. - The provenance file is stored as a GitHub artifact <em>and</em> attached to the OCI image as an attachment. Both can be used for verification; the artifact is useful for auditors who don’t trust the registry.</p>
 <p>On the cluster side, we deployed Kyverno via Helm:</p>
 <pre><code class="language-bash">helm repo add kyverno https://kyverno.github.io/kyverno
 helm install kyverno kyverno/kyverno -n kyverno --version 2.11.3
@@ -495,8 +485,7 @@ spec:
 <h2 id="the-broader-lesson">The broader lesson</h2>
 <p>Supply chain security in 2026 isn’t about scanning more vulnerabilities; it’s about proving the <em>absence</em> of tampering with cryptographic certainty. SLSA level 3 and Sigstore give you two primitives:</p>
 <ul>
-<li>SLSA proves that the artifact you’re running matches what the source code intended.</li>
-<li>Sigstore proves that the artifact was signed by an identity you trust.</li>
+<li>SLSA proves that the artifact you’re running matches what the source code intended. - Sigstore proves that the artifact was signed by an identity you trust.</li>
 </ul>
 <p>The combination is stronger than any scanner. A vulnerability scanner can tell you there’s a CVE, but it can’t tell you <em>who</em> introduced the vulnerable dependency or <em>how</em> it was built. SLSA and Sigstore can.</p>
 <p>The corollary is that you can’t bolt these primitives on top of an existing pipeline; they must be <em>baked in from the start</em>. Every build step, every environment variable, every base image must be recorded in the provenance predicate. If you treat SLSA as an afterthought, the provenance will be incomplete and the signatures will be meaningless.</p>
@@ -526,14 +515,7 @@ spec:
 <p>If you’re bootstrapping on a $200/month DigitalOcean droplet, start with the smallest possible repo that matters to your customers. Build a single container, run the SLSA generator, sign it with Cosign OIDC, and write a 15-line Kyverno policy. Spend $0 on extra tooling. If you’re at a Series B with an AWS enterprise agreement, migrate your top 5 highest-revenue services first, then roll out to the rest. The incremental cost is negligible compared to the audit savings.</p>
 <h2 id="resources-that-helped">Resources that helped</h2>
 <ul>
-<li><a href="https://slsa.dev/spec/v1.0">SLSA v1.0 specification</a> – the canonical reference, but dense; read section 3 (threat model) first.</li>
-<li><a href="https://github.com/slsa-framework/slsa-github-generator/releases/tag/v1.10.0">SLSA GitHub Generator v1.10.0</a> – pinned version we used.</li>
-<li><a href="https://docs.sigstore.dev/cosign/">Sigstore Cosign v2.2.1 docs</a> – the only tool that supports OIDC signing out of the box.</li>
-<li><a href="https://kyverno.io/docs/">Kyverno v1.11.2</a> – admission controller that enforces policies on images.</li>
-<li><a href="https://github.com/slsa-framework/slsa-verifier/releases/tag/v2.5.1">slsa-verifier v2.5.1</a> – the CLI to verify SLSA provenance before you trust an image.</li>
-<li><a href="https://csrc.nist.gov/publications/detail/sp/800-218/final">NIST SSDF v1.1</a> – the compliance framework most auditors map to.</li>
-<li><a href="https://github.com/cncf/tag-security/blob/main/supply-chain-security/supply-chain-security-paper/ssc-paper.md">CNCF SIG-Security supply chain whitepaper</a> – practical guidance on implementing SLSA and Sigstore.</li>
-<li><a href="https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect">GitHub OIDC for supply chain security</a> – how to set up the identity provider.</li>
+<li><a href="https://slsa.dev/spec/v1.0">SLSA v1.0 specification</a> – the canonical reference, but dense; read section 3 (threat model) first. - <a href="https://github.com/slsa-framework/slsa-github-generator/releases/tag/v1.10.0">SLSA GitHub Generator v1.10.0</a> – pinned version we used. - <a href="https://docs.sigstore.dev/cosign/">Sigstore Cosign v2.2.1 docs</a> – the only tool that supports OIDC signing out of the box. - <a href="https://kyverno.io/docs/">Kyverno v1.11.2</a> – admission controller that enforces policies on images. - <a href="https://github.com/slsa-framework/slsa-verifier/releases/tag/v2.5.1">slsa-verifier v2.5.1</a> – the CLI to verify SLSA provenance before you trust an image. - <a href="https://csrc.nist.gov/publications/detail/sp/800-218/final">NIST SSDF v1.1</a> – the compliance framework most auditors map to. - <a href="https://github.com/cncf/tag-security/blob/main/supply-chain-security/supply-chain-security-paper/ssc-paper.md">CNCF SIG-Security supply chain whitepaper</a> – practical guidance on implementing SLSA and Sigstore. - <a href="https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect">GitHub OIDC for supply chain security</a> – how to set up the identity provider.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>What’s the smallest repo where I can try SLSA level 3?</strong>
@@ -557,14 +539,11 @@ Jenkins can emit SLSA provenance using the Tekton chains project. Install Tekton
 <p>If the command succeeds, you have a reference implementation. If it fails, check the error: it will tell you exactly which predicate is missing. Fix the first missing predicate, commit the change, and push. You’ve just taken the first step toward making SLSA and Sigstore baseline requirements in your own repos.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

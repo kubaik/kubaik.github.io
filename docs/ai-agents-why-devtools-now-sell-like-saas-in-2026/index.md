@@ -8,10 +8,9 @@ In late 2026 we launched a devtool called Sentinel — a CLI that audits Python 
 
 By March 2026 we had 120 pilot users but only 3 paid conversions. Our original assumption was that devtools sell to individual developers first, then scale inside companies. That assumption was wrong on two counts:
 
-1. AI agents weren’t code written by a single developer anymore — they were sprawling systems with multiple contributors, external APIs, and prompt chains that live in feature branches for weeks. Our CLI ran fine on a developer laptop, but failed silently when run in CI or on a shared runner where environment variables changed every build.
-2. Buyers didn’t care about code quality — they cared about production incidents. The one metric that moved the needle was mean time to restore service (MTTR) when an agent hallucinated or hit a rate limit mid-flight. We tracked this metric ourselves and found that 47% of incidents traced back to an untracked environment variable or a missing API key rotation.
+1. AI agents weren’t code written by a single developer anymore — they were sprawling systems with multiple contributors, external APIs, and prompt chains that live in feature branches for weeks. Our CLI ran fine on a developer laptop, but failed silently when run in CI or on a shared runner where environment variables changed every build. 2. Buyers didn’t care about code quality — they cared about production incidents. The one metric that moved the needle was mean time to restore service (MTTR) when an agent hallucinated or hit a rate limit mid-flight. We tracked this metric ourselves and found that 47% of incidents traced back to an untracked environment variable or a missing API key rotation.
 
-I spent three weeks building a dashboard that showed code smell counts and security vulnerabilities. When I demoed it to a director of engineering, she asked, "Can you show me the incidents caused by environment drift during our last feature freeze?" I didn’t have that data. That mismatch between our product and the buyer’s pain became our north star.
+When I demoed it to a director of engineering, she asked, "Can you show me the incidents caused by environment drift during our last feature freeze?" I didn’t have that data. That mismatch between our product and the buyer’s pain became our north star.
 
 ## What we tried first and why it didn’t work
 
@@ -212,40 +211,32 @@ If you do nothing else, run the replay tool experiment. Take 30 minutes to write
 
 Enterprise-ready in 2026 means three things: first, it runs in your CI/CD pipeline and runtime environment, not just on a developer laptop. Second, it integrates with your incident management stack (Jira, PagerDuty, Datadog) without requiring a new dashboard. Third, it meets SOC 2 Type II and offers SSO with your identity provider. Tools that ship only as VS Code extensions or local CLIs won’t make the cut.
 
-
 **how do i measure roi for an ai devtool**
 
 Measure the reduction in mean time to restore service (MTTR) for AI agent incidents. Pick a recent incident, replay the logs in a sandbox, and calculate how long it would have taken to restore service if your tool had caught the drift or misconfiguration earlier. Convert that time saved into dollars using your team’s fully loaded cost per engineer-hour. Most platform teams see ROI in 3–6 months at $10k–$20k/year pricing.
-
 
 **what’s the fastest way to validate demand before building**
 
 Build a replay tool that ingests production agent logs, replays them in a sandbox, and outputs a 3-slide deck showing incidents prevented. Prospects don’t trust marketing copy; they want proof in their own environment. This takes 30–40 hours and shortens the sales cycle by 2–4 weeks.
 
-
 **can i sell a devtool to developers if it’s not enterprise-ready**
 
 Yes, but you’ll attract tire-kickers who churn when the bill exceeds $50. In 2026, developer-first devtools still work for hobbyists and indie makers, but they don’t scale to serious revenue. If you want to build a business, target platform teams with enterprise-grade features and pricing.
-
 
 **how do i convince my team to pivot from developer-first to platform-first**
 
 Show them the data: 47% of AI agent incidents trace back to environment drift or secrets rotation. Build a one-pager with three recent incidents, the root cause, and the dollar cost of each outage. Then propose a 30-day experiment: ship a minimal integration with Jira or PagerDuty and measure MTTR reduction. Data beats opinion every time.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

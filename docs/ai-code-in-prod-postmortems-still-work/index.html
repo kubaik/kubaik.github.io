@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-21T14:01:05.993241">
-        <meta property="article:modified_time" content="2026-07-21T14:01:05.993254">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.536090+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI code in prod? Postmortems still work">
@@ -63,8 +63,8 @@
       "headline": "AI code in prod? Postmortems still work",
       "description": "AI code in prod is a dependency that changes under you — capture its prompt, snapshot, and runtime assumptions to cut incident time 78% and false positives 83%.",
       "datePublished": "2026-07-21T14:01:05+00:00",
-      "dateModified": "2026-07-21T14:01:05+00:00",
-      "wordCount": 3015,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2986,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,9 +264,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3015 words
+                        &nbsp;·&nbsp; 2986 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-21
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -279,7 +279,6 @@
 <p>Docs tell you to look at stack traces and logs. In AI code, the stack trace shows the last hand-written function, not the 500-line generated wall that sits underneath it. The logs show 200 ms wall time, but the new async chain added 7.8 seconds of idle time waiting for I/O that the model assumed would be cached. The model’s confidence interval was “probably fast,” not “will not melt prod.”</p>
 <p>The real gap is that AI-generated code hides its own complexity. It doesn’t just add new code; it rewrites the assumptions your monitoring stack was built on. You’re not debugging a function anymore; you’re debugging a mental model that the model wrote for itself. If your postmortem template still says “check CPU, memory, and latency,” you’re missing the part where the model decided to retry every failed request with exponential backoff—even though your retry budget was already at 3.</p>
 <p>Most teams don’t notice the gap until they hit a page at 3 a.m. and spend hours staring at a flame graph that points to a single line of generated code buried under 400 others. By then, the AI has already moved on to the next PR and won’t remember why it did it.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <h2 id="how-building-postmortems-that-actually-improve-things-when-half-the-code-is-ai-generated-actually-works-under-the-hood">How Building postmortems that actually improve things when half the code is AI-generated actually works under the hood</h2>
 <p>The postmortem needs to treat the AI layer like a black-box dependency that can change behavior between commits. Any assumption you made about “how the AI writes code” is now a variable in your incident timeline.</p>
 <p>Start by capturing the diff of the AI-generated file itself, not just the diff of the hand-written layer. Tools like <code>git diff -- function-context=50</code> won’t show you the 300-line monster the model inserted because it hid it behind a single import. Instead, use <code>git show --stat</code> on the commit hash that introduced the AI change and grep for files that were created or grew by more than 200 lines. That’s your first clue.</p>

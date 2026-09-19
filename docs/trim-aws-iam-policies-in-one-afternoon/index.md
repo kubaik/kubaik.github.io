@@ -72,7 +72,7 @@ We attach the new policy to the Lambda’s execution role, deploy via AWS SAM (v
 
 Cost check: before the change, the Lambda ran 1.2M times/month with an average duration of 1.8 s. After, it still runs 1.2M times but the memory profile is unchanged, so the cost delta is effectively zero. The real savings came from incident response tickets: we went from 3 permission-related PagerDuty alerts per month to 0.
 
-I spent three days debugging a Lambda that couldn’t write to CloudWatch because its execution role lacked `logs:CreateLogGroup`. The fix was a single policy line, but the root cause was a tutorial that told me to copy-paste the `AWSLambdaBasicExecutionRole` without trimming the implied wildcard. The worked example above is what I wished I’d had that week.
+The fix was a single policy line, but the root cause was a tutorial that told me to copy-paste the `AWSLambdaBasicExecutionRole` without trimming the implied wildcard. The worked example above is what I wished I’d had that week.
 
 ## How this connects to things you already know
 
@@ -363,20 +363,16 @@ rule "aws_iam_role_policy" {
 
 **Developer experience**: We ran a survey of 23 developers after the rollout. 87% said they spent less time debugging permission errors, and 74% said they felt more confident deploying changes. The top quote: “I no longer have to ask for `s3:*` and hold my breath during the deploy.”
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

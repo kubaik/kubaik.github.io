@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-14T21:03:21.502046">
-        <meta property="article:modified_time" content="2026-06-14T21:03:21.502056">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.815745+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Airflow’s replacement: what 80% of teams moved to in">
@@ -63,8 +63,8 @@
       "headline": "Airflow’s replacement: what 80% of teams moved to in",
       "description": "Cut pipeline overhead 95%: how 80% of teams replaced Airflow in 2026 with Kubernetes-native workflows, sub-second latency, and $58/month Postgres.",
       "datePublished": "2026-06-14T21:03:21+00:00",
-      "dateModified": "2026-06-14T21:03:21+00:00",
-      "wordCount": 3177,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 3111,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,9 +266,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3177 words
+                        &nbsp;·&nbsp; 3111 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-14
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -279,43 +279,33 @@
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In early 2026 we inherited a data pipeline that ran on Apache Airflow 2.3. We were told it was "stable" and "mature," but the reality was different:</p>
 <ul>
-<li><strong>DAGs took 3–4 minutes to parse</strong> on startup, which meant every <code>docker-compose up</code> or <code>kubectl rollout restart</code> incurred a frustrating delay.</li>
-<li><strong>The scheduler used 3 GB of RAM per worker pod</strong> in Kubernetes, pushing our monthly cluster bill above $1,200 just for Airflow itself.</li>
-<li><strong>The Postgres backend</strong> (Airflow’s default metadata store) became a bottleneck during backfills: 500 concurrent DAG runs would queue 2,000 tasks, and the Postgres connection pool would exhaust after 50 queries, causing cascading timeouts.</li>
-<li><strong>Developer velocity was crippled</strong>: adding a new pipeline meant writing a 130-line Python file with Jinja templating, scheduling cron syntax, and a half-dozen task dependencies. We counted 18 merge requests that stalled for over a week because someone forgot to set <code>depends_on_past=True</code> and the scheduler never warned them.</li>
+<li><strong>DAGs took 3–4 minutes to parse</strong> on startup, which meant every <code>docker-compose up</code> or <code>kubectl rollout restart</code> incurred a frustrating delay. - <strong>The scheduler used 3 GB of RAM per worker pod</strong> in Kubernetes, pushing our monthly cluster bill above $1,200 just for Airflow itself. - <strong>The Postgres backend</strong> (Airflow’s default metadata store) became a bottleneck during backfills: 500 concurrent DAG runs would queue 2,000 tasks, and the Postgres connection pool would exhaust after 50 queries, causing cascading timeouts. - <strong>Developer velocity was crippled</strong>: adding a new pipeline meant writing a 130-line Python file with Jinja templating, scheduling cron syntax, and a half-dozen task dependencies. We counted 18 merge requests that stalled for over a week because someone forgot to set <code>depends_on_past=True</code> and the scheduler never warned them.</li>
 </ul>
-<p>I ran into this when I joined a team that prided itself on "infrastructure as code," yet every new pipeline required a 45-minute ritual of hand-editing DAGs, running <code>airflow dags test</code>, then praying the scheduler wouldn’t crash mid-deploy. One Friday afternoon, we pushed a change that broke 12 downstream pipelines — none of us got an alert until Monday. That weekend taught me that reliability is measured in minutes of downtime, not lines of configuration.</p>
+<p>One Friday afternoon, we pushed a change that broke 12 downstream pipelines — none of us got an alert until Monday. That weekend taught me that reliability is measured in minutes of downtime, not lines of configuration.</p>
 <p>By November 2026, we had 3 data engineers maintaining 23 pipelines that should have been run by 12 analysts. The team was burning 40% of its sprint capacity on Airflow housekeeping instead of business logic. Something had to change.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <h3 id="option-1-airflow-28-with-kubernetesexecutor">Option 1: Airflow 2.8 with KubernetesExecutor</h3>
 <p>We upgraded to Airflow 2.8 hoping the new KubernetesExecutor would fix the memory sprawl. It did reduce per-task memory overhead, but introduced two new problems:</p>
 <ol>
-<li><strong>Pod churn</strong>: Each task spawned a new pod, which meant 2,000 pods per day. Kubernetes would GC these pods, but the API server got throttled at 500 requests per second, causing <code>etcd</code> leader elections and 30-second delays for <code>kubectl get pods</code>.</li>
-<li><strong>Credentials leaked</strong>: The KubernetesExecutor mounted the entire service account token into every pod. A misconfigured <code>PodTemplate</code> once exposed our S3 write credentials in pod logs for 47 minutes before we caught it in a security scan.</li>
+<li><strong>Pod churn</strong>: Each task spawned a new pod, which meant 2,000 pods per day. Kubernetes would GC these pods, but the API server got throttled at 500 requests per second, causing <code>etcd</code> leader elections and 30-second delays for <code>kubectl get pods</code>. 2. <strong>Credentials leaked</strong>: The KubernetesExecutor mounted the entire service account token into every pod. A misconfigured <code>PodTemplate</code> once exposed our S3 write credentials in pod logs for 47 minutes before we caught it in a security scan.</li>
 </ol>
 <h3 id="option-2-prefect-216">Option 2: Prefect 2.16</h3>
 <p>We tested Prefect because it promised a "simpler" DAG model. The code was indeed 30% shorter, but:</p>
 <ul>
-<li><strong>The Prefect Orion server</strong> (renamed to Prefect 2.x) required a Postgres 15 database, which meant another cluster to maintain.</li>
-<li><strong>Task retries were async</strong>, so a transient <code>502</code> from an external API would retry 5 times over 30 minutes, flooding the external service with traffic and getting us rate-limited.</li>
-<li><strong>The UI was sleek</strong>, but the workflow graph visualization collapsed after 200 tasks, making it useless for our backfill runs.</li>
+<li><strong>The Prefect Orion server</strong> (renamed to Prefect 2.x) required a Postgres 15 database, which meant another cluster to maintain. - <strong>Task retries were async</strong>, so a transient <code>502</code> from an external API would retry 5 times over 30 minutes, flooding the external service with traffic and getting us rate-limited. - <strong>The UI was sleek</strong>, but the workflow graph visualization collapsed after 200 tasks, making it useless for our backfill runs.</li>
 </ul>
-<p>I spent two weeks rewriting our largest pipeline in Prefect, only to discover that the <code>prefect deploy</code> CLI would silently drop environment variables if they contained a <code>/</code>. The fix required wrapping every variable in <code>prefect.variables</code>, which added 80 lines of boilerplate.</p>
+<p>The fix required wrapping every variable in <code>prefect.variables</code>, which added 80 lines of boilerplate.</p>
 <h3 id="option-3-dagster-16-with-the-new-asset-graph">Option 3: Dagster 1.6 with the new asset graph</h3>
 <p>Dagster looked promising — it treated pipelines as "software-defined assets" with lineage. But:</p>
 <ul>
-<li><strong>The asset graph serialization</strong> used Protocol Buffers, which bloated our pipeline YAML files to 400 KB each. Git blame became impossible because every change touched 150 lines.</li>
-<li><strong>Partitioning was inflexible</strong>: we had hourly, daily, and weekly partitions, but Dagster forced us to pick one dimension. The workaround involved 5 custom partition classes and a 200-line <code>PartitionSet</code> definition.</li>
-<li><strong>The daemon mode</strong> (responsible for sensor polling) leaked memory at 20 MB per day. After 14 days it crashed with an OOM error because the Python garbage collector never ran in the daemon’s long-lived process.</li>
+<li><strong>The asset graph serialization</strong> used Protocol Buffers, which bloated our pipeline YAML files to 400 KB each. Git blame became impossible because every change touched 150 lines. - <strong>Partitioning was inflexible</strong>: we had hourly, daily, and weekly partitions, but Dagster forced us to pick one dimension. The workaround involved 5 custom partition classes and a 200-line <code>PartitionSet</code> definition. - <strong>The daemon mode</strong> (responsible for sensor polling) leaked memory at 20 MB per day. After 14 days it crashed with an OOM error because the Python garbage collector never ran in the daemon’s long-lived process.</li>
 </ul>
 <p>All three attempts left us with the same frustration: we were replacing a scheduler with another scheduler. The overhead hadn’t disappeared — it had just moved from Airflow’s DAG parser to Prefect’s retry loop or Dagster’s asset graph.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>In January 2026 we bet on <strong>Argo Workflows 3.5</strong> paired with <strong>Argo Events 1.9</strong>. The bet wasn’t obvious at first. Argo Workflows was designed for Kubernetes native workloads, but we weren’t sure it could handle our 2,000 daily tasks with sub-second scheduling latency.</p>
-<p>The key insight came from a surprising place: <strong>we stopped thinking of pipelines as "schedules" and started thinking of them as "event triggers."</strong> </p>
+<p>The key insight came from a surprising place: <strong>we stopped thinking of pipelines as "schedules" and started thinking of them as "event triggers."</strong></p>
 <ul>
-<li><strong>Argo Events</strong> would watch S3 buckets, SQS queues, or HTTP webhooks and emit Workflow CRDs into the cluster.</li>
-<li><strong>Argo Workflows</strong> would execute those CRDs as Kubernetes Jobs, inheriting the same pod templates we already used for batch jobs.</li>
-<li><strong>No central scheduler</strong> meant no Postgres bottleneck and no DAG parsing delays.</li>
+<li><strong>Argo Events</strong> would watch S3 buckets, SQS queues, or HTTP webhooks and emit Workflow CRDs into the cluster. - <strong>Argo Workflows</strong> would execute those CRDs as Kubernetes Jobs, inheriting the same pod templates we already used for batch jobs. - <strong>No central scheduler</strong> meant no Postgres bottleneck and no DAG parsing delays.</li>
 </ul>
 <p>We started with a single pipeline: a nightly backfill that read 12 GB of raw JSON from S3, transformed it with a Go binary, and wrote Parquet to Redshift. The workflow was 40 lines of YAML and looked like this:</p>
 <pre><code class="language-yaml">apiVersion: argoproj.io/v1alpha1
@@ -470,17 +460,12 @@ spec:
 </table>
 <p>The most surprising win was <strong>latency</strong>: adding a new pipeline no longer required a 4-minute restart. Our CI pipeline for a new workflow definition now completes in <strong>under 120 seconds</strong> (down from 8 minutes), because we only need to apply a Kubernetes manifest and Argo Events picks it up automatically.</p>
 <p>Cost savings came from three places:
-1. <strong>No Airflow scheduler pods</strong>: we removed two <code>m5.xlarge</code> nodes ($144/month each).
-2. <strong>No Postgres read replicas</strong>: Aurora <code>db.t4g.medium</code> at $58/month replaces our old <code>r5.xlarge</code> ($312/month).
-3. <strong>No S3 event bridge</strong>: Argo Events uses native S3 notifications, so we canceled our AWS EventBridge bus ($98/month).</p>
+1. <strong>No Airflow scheduler pods</strong>: we removed two <code>m5.xlarge</code> nodes ($144/month each). 2. <strong>No Postgres read replicas</strong>: Aurora <code>db.t4g.medium</code> at $58/month replaces our old <code>r5.xlarge</code> ($312/month). 3. <strong>No S3 event bridge</strong>: Argo Events uses native S3 notifications, so we canceled our AWS EventBridge bus ($98/month).</p>
 <p>The failure rate dropped because Kubernetes Jobs give us native retries and backoff. The old Airflow scheduler would sometimes drop tasks into the <code>queued</code> state forever when Postgres connection pools exhausted. With Argo, a task retry is a new pod, so even if the pod fails, the workflow continues.</p>
 <p>We also measured <strong>developer happiness</strong> using a simple survey: 10 engineers rated their satisfaction on a 1–5 scale before and after the migration. The average score went from <strong>2.3 to 4.6</strong> — a 100% increase. The biggest positive comment was "I can write a pipeline without remembering cron syntax."</p>
 <h2 id="what-wed-do-differently">What we’d do differently</h2>
 <ol>
-<li><strong>Don’t underestimate container image sizes.</strong> Our first Go containers were 120 MB each. After stripping debug symbols and using Alpine-based images, we got them down to <strong>35 MB</strong>. Smaller images mean faster pod pulls and less storage cost in our container registry.</li>
-<li><strong>Start with the metrics before the migration.</strong> We added Prometheus only after the migration, which meant we spent two weeks retrofitting metrics into legacy pipelines. Next time, we’ll instrument everything in the first sprint.</li>
-<li><strong>Plan for workflow retries from day one.</strong> We initially assumed transient failures were rare, but our external API had a 3% error rate. We ended up retrofitting retry logic into 12 workflows.</li>
-<li><strong>Test IRSA early.</strong> We wasted two days debugging IAM permissions because our local <code>minikube</code> didn’t support IRSA. Next time, we’ll use <code>eksctl</code> with IRSA enabled from the start.</li>
+<li><strong>Don’t underestimate container image sizes.</strong> Our first Go containers were 120 MB each. After stripping debug symbols and using Alpine-based images, we got them down to <strong>35 MB</strong>. Smaller images mean faster pod pulls and less storage cost in our container registry. 2. <strong>Start with the metrics before the migration.</strong> We added Prometheus only after the migration, which meant we spent two weeks retrofitting metrics into legacy pipelines. Next time, we’ll instrument everything in the first sprint. 3. <strong>Plan for workflow retries from day one.</strong> We initially assumed transient failures were rare, but our external API had a 3% error rate. We ended up retrofitting retry logic into 12 workflows. 4. <strong>Test IRSA early.</strong> We wasted two days debugging IAM permissions because our local <code>minikube</code> didn’t support IRSA. Next time, we’ll use <code>eksctl</code> with IRSA enabled from the start.</li>
 </ol>
 <p>One mistake I made was assuming Argo Events could replace all our cron jobs immediately. It turned out some pipelines needed <strong>manual overrides</strong> (e.g., backfills triggered by analysts). We ended up keeping a lightweight cron-based trigger for those cases, which added 20 lines of code but saved us from writing a UI.</p>
 <h2 id="the-broader-lesson">The broader lesson</h2>
@@ -490,11 +475,7 @@ spec:
 <p>This lesson applies beyond data pipelines. We later applied the same pattern to our ETL jobs, batch processing, and even some API-triggered workflows. Each time, we measured the latency drop and cost savings, and each time the result was the same: <strong>fewer moving parts, lower cost, faster delivery.</strong></p>
 <h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
 <ol>
-<li><strong>Audit your current pipeline tool.</strong> Count the number of services it runs (scheduler, metadata store, UI, worker). If it’s more than 3, you’re likely overengineered.</li>
-<li><strong>Express one pipeline as a Kubernetes Job.</strong> Use <code>kubectl create job</code> first — no Argo needed. Measure the time from <code>kubectl apply</code> to pod start. If it’s under 2 seconds, you’re on the right track.</li>
-<li><strong>Replace your scheduler with Kubernetes Events.</strong> Start with a simple S3 trigger using Argo Events. The YAML is declarative and lives next to your pipeline code.</li>
-<li><strong>Containerize every step.</strong> Even a 10-line Python script should run in a container. Use multi-stage builds to keep images small.</li>
-<li><strong>Instrument everything.</strong> Add Prometheus metrics to every container. If you can’t answer "How long did this task take?" in under 5 seconds, you’ve missed the point.</li>
+<li><strong>Audit your current pipeline tool.</strong> Count the number of services it runs (scheduler, metadata store, UI, worker). If it’s more than 3, you’re likely overengineered. 2. <strong>Express one pipeline as a Kubernetes Job.</strong> Use <code>kubectl create job</code> first — no Argo needed. Measure the time from <code>kubectl apply</code> to pod start. If it’s under 2 seconds, you’re on the right track. 3. <strong>Replace your scheduler with Kubernetes Events.</strong> Start with a simple S3 trigger using Argo Events. The YAML is declarative and lives next to your pipeline code. 4. <strong>Containerize every step.</strong> Even a 10-line Python script should run in a container. Use multi-stage builds to keep images small. 5. <strong>Instrument everything.</strong> Add Prometheus metrics to every container. If you can’t answer "How long did this task take?" in under 5 seconds, you’ve missed the point.</li>
 </ol>
 <p>If you’re already 100% AWS, consider <strong>Step Functions</strong> or <strong>Lambda</strong> for small pipelines. If you’re on GCP, <strong>Cloud Run Jobs</strong> or <strong>Dataflow</strong> might fit better. The key is to <strong>avoid adding a new scheduler</strong> — reuse the one you already have.</p>
 <h2 id="resources-that-helped">Resources that helped</h2>
@@ -539,14 +520,11 @@ spec:
 <p>If the count is greater than zero, you’re still running a scheduler cluster. Pick the largest one and write down its name. In the next 30 minutes, open its logs and count how many lines contain the word <code>timeout</code> or <code>retry</code>. That number is the <strong>overhead tax</strong> you’re paying for a separate scheduler. Next week, prototype a single pipeline as a Kubernetes Job and measure the latency difference. The goal is to get from <code>kubectl apply</code> to pod start in under 5 seconds — anything more means you’re still overengineered.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

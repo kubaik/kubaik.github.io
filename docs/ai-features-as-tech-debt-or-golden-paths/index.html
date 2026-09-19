@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-17T02:53:25.164323">
-        <meta property="article:modified_time" content="2026-09-18T03:55:16.829986+00:00">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.589257+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI features as tech debt or golden paths">
@@ -63,7 +63,7 @@
       "headline": "AI features as tech debt or golden paths",
       "description": "AI features built with standard wrappers often become maintenance nightmares in Africa.",
       "datePublished": "2026-07-17T02:53:25+00:00",
-      "dateModified": "2026-09-18T03:55:16+00:00",
+      "dateModified": "2026-09-19T08:27:13+00:00",
       "wordCount": 2638,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
@@ -267,7 +267,7 @@
                         13 min read
                         &nbsp;·&nbsp; 2638 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-18
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -299,9 +299,7 @@
 <p>The problem isn’t that the standard advice is wrong — it’s that it’s incomplete. It assumes a world where traffic is predictable, models don’t drift, and users tolerate 500ms latency. In most African markets, none of that is true. The correct mental model is: <strong>AI features are state machines that run on unreliable networks.</strong></p>
 <p>What does that mean?</p>
 <ol>
-<li>Every AI call is a state transition: idle → fetching → validating → caching → returning. Each transition must handle interruptions.</li>
-<li>The cache isn’t just a speed tool — it’s a resilience layer. It must survive partial writes, eviction storms, and TTL misconfigurations.</li>
-<li>The wrapper isn’t just a router — it’s a circuit breaker. If the model returns 503 for 30 seconds, the wrapper must fail fast and return a cached fallback or an apology.</li>
+<li>Every AI call is a state transition: idle → fetching → validating → caching → returning. Each transition must handle interruptions. 2. The cache isn’t just a speed tool — it’s a resilience layer. It must survive partial writes, eviction storms, and TTL misconfigurations. 3. The wrapper isn’t just a router — it’s a circuit breaker. If the model returns 503 for 30 seconds, the wrapper must fail fast and return a cached fallback or an apology.</li>
 </ol>
 <p>I’ve rebuilt this mental model twice — once for a Kenyan fintech and once for a Ghanaian marketplace. Both systems now use:</p>
 <ul>
@@ -409,12 +407,7 @@
 <h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
 <p>If I were building an AI feature today for a consumer app in East or West Africa, I’d start with this stack:</p>
 <ul>
-<li><strong>Edge routing:</strong> Cloudflare Workers with Durable Objects for stateful sessions. Workers handle 3G drops and partial responses natively.</li>
-<li><strong>Cache:</strong> Redis 7.2 with Lua scripts for atomic cache writes and sliding TTLs. Set <code>maxmemory-policy volatile-lru</code> and monitor <code>evicted_keys</code>.</li>
-<li><strong>State machine:</strong> Rust with <code>sm 0.10</code> and <code>tokio 1.36</code>. Use <code>thiserror 1.0</code> for rich error types.</li>
-<li><strong>Circuit breaker:</strong> <code>go-resilience 1.5</code> ported to Rust. Set failure threshold to 50% in 10 seconds, with a 30-second half-open window.</li>
-<li><strong>Fallbacks:</strong> Pre-computed summaries for top 1k prompts. Serve these when the model times out or the network drops.</li>
-<li><strong>Observability:</strong> Structured logs with <code>slog 0.9</code> and metrics via Prometheus. Track state transitions, cache hits/misses, and circuit breaker state.</li>
+<li><strong>Edge routing:</strong> Cloudflare Workers with Durable Objects for stateful sessions. Workers handle 3G drops and partial responses natively. - <strong>Cache:</strong> Redis 7.2 with Lua scripts for atomic cache writes and sliding TTLs. Set <code>maxmemory-policy volatile-lru</code> and monitor <code>evicted_keys</code>. - <strong>State machine:</strong> Rust with <code>sm 0.10</code> and <code>tokio 1.36</code>. Use <code>thiserror 1.0</code> for rich error types. - <strong>Circuit breaker:</strong> <code>go-resilience 1.5</code> ported to Rust. Set failure threshold to 50% in 10 seconds, with a 30-second half-open window. - <strong>Fallbacks:</strong> Pre-computed summaries for top 1k prompts. Serve these when the model times out or the network drops. - <strong>Observability:</strong> Structured logs with <code>slog 0.9</code> and metrics via Prometheus. Track state transitions, cache hits/misses, and circuit breaker state.</li>
 </ul>
 <p>I’d avoid:</p>
 <ul>

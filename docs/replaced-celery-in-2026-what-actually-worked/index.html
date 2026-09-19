@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-11T05:08:10.105324">
-        <meta property="article:modified_time" content="2026-06-11T05:08:10.105333">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.508079+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Replaced Celery in 2026: what actually worked">
@@ -63,8 +63,8 @@
       "headline": "Replaced Celery in 2026: what actually worked",
       "description": "Replaced Celery in 2026 and cut API latency 85% with NATS JetStream + Go workers — $2,400/month Redis savings, 3× Black Friday traffic handled without errors",
       "datePublished": "2026-06-11T05:08:10+00:00",
-      "dateModified": "2026-06-11T05:08:10+00:00",
-      "wordCount": 2368,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2303,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2368 words
+                        &nbsp;·&nbsp; 2303 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-11
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -286,7 +286,7 @@
 <p><strong>Costs spiraled</strong>: We were paying $2,400/month just for the Redis clusters (primary + replica + sentinel), plus $900/month for the Kubernetes worker nodes that ran the Celery workers. With 8 workers at 0.5 vCPU/2 GB each, we were running at 60–70% utilization and still saw CPU throttling during peak hours.</p>
 </li>
 </ol>
-<p>I ran into a critical surprise when I enabled Redis slowlog: the queue wasn’t the bottleneck — the workers were. We had 30% of jobs stuck in <code>RECEIVE</code> state for 30–45 seconds because the workers were throttled by Kubernetes CPU limits. I spent three days tuning the limits before realizing the real issue was the task distribution strategy.</p>
+<p>We had 30% of jobs stuck in <code>RECEIVE</code> state for 30–45 seconds because the workers were throttled by Kubernetes CPU limits.</p>
 <p>By December 2026, the client wanted to scale Black Friday traffic to 3× current volume without increasing infra spend. Celery wasn’t going to cut it.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first attempt was to upgrade to Celery 5.3.3 with Redis 7.2 and enable the new prefetch multiplier. That reduced the number of stuck jobs, but the latency spikes remained.</p>
@@ -320,7 +320,7 @@
 <p><strong>Cost neutral</strong>: NATS JetStream runs on the same 2×m6g.large EC2 instances we were using for Redis, so we cut the Redis bill but didn’t increase compute spend. The Go worker images are 8 MB each, so image pull time is negligible.</p>
 </li>
 </ul>
-<p>I was surprised that the simplest change — switching from persistent workers to ephemeral pull-model workers — cut our queue depth by 70% in the first 48 hours. The real bottleneck was worker churn, not queue capacity.</p>
+<p>The real bottleneck was worker churn, not queue capacity.</p>
 <h2 id="implementation-details">Implementation details</h2>
 <p>We built a thin Python wrapper around the Go worker binary that exposes a simple <code>submit_task</code> function. The wrapper uses <code>httpx 0.27</code> for async HTTP calls and <code>pydantic 2.7</code> for task schema validation.</p>
 <p>**Task submission (Python 3.11, FastAPI 0.111):</p>
@@ -558,9 +558,7 @@ spec:
 <p>The background job queue problem has shifted from "how do I run long-lived workers reliably" to "how do I distribute work without managing worker churn".</p>
 <p>In 2026, the default answer isn’t Celery + Redis anymore — it’s a lightweight message broker with ephemeral pull-model workers. This pattern works because:</p>
 <ul>
-<li><strong>Ephemeral workers scale horizontally without warm-up lag</strong>: New pods register in seconds, not minutes.</li>
-<li><strong>Message brokers with streams handle durability better than ad-hoc Redis lists</strong>: NATS JetStream, Apache Pulsar 3.1, or AWS SQS FIFO give you replication, retries, and deduplication out of the box.</li>
-<li><strong>The cost of connection churn is higher than storage</strong>: Redis connection churn can cost more than the data stored, especially at scale.</li>
+<li><strong>Ephemeral workers scale horizontally without warm-up lag</strong>: New pods register in seconds, not minutes. - <strong>Message brokers with streams handle durability better than ad-hoc Redis lists</strong>: NATS JetStream, Apache Pulsar 3.1, or AWS SQS FIFO give you replication, retries, and deduplication out of the box. - <strong>The cost of connection churn is higher than storage</strong>: Redis connection churn can cost more than the data stored, especially at scale.</li>
 </ul>
 <p>This isn’t just about Celery — it’s about a shift in how we think about background jobs. The old model assumed persistent workers; the new model assumes disposable workers. The queue is no longer the bottleneck — the worker lifecycle is.</p>
 <p>If you’re still running Celery in 2026, ask yourself: how much time do you spend debugging worker heartbeats versus shipping features?</p>
@@ -572,10 +570,7 @@ spec:
 <p>This approach has cut our latency by 85%, saved $2,400/month, and eliminated 1,200 lines of Celery code. The pattern scales from 500 jobs/day to 50,000 jobs/day without a single worker heartbeat to debug.</p>
 <h2 id="resources-that-helped">Resources that helped</h2>
 <ul>
-<li><a href="https://docs.nats.io/nats-concepts/jetstream">NATS JetStream documentation</a> — The best resource for stream configuration and durability guarantees.</li>
-<li><a href="https://github.com/nats-io/nats.go/tree/main/examples">Go NATS client examples</a> — Practical code samples for pull consumers and error handling.</li>
-<li><a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#when-to-use-a-pod">Kubernetes best practices for short-lived pods</a> — How to configure <code>terminationGracePeriodSeconds</code> and resource limits for ephemeral workers.</li>
-<li><a href="https://github.com/nats-io/prometheus-nats-exporter">Prometheus metrics for NATS JetStream</a> — Essential dashboards for monitoring stream size, ACK rate, and memory usage.</li>
+<li><a href="https://docs.nats.io/nats-concepts/jetstream">NATS JetStream documentation</a> — The best resource for stream configuration and durability guarantees. - <a href="https://github.com/nats-io/nats.go/tree/main/examples">Go NATS client examples</a> — Practical code samples for pull consumers and error handling. - <a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#when-to-use-a-pod">Kubernetes best practices for short-lived pods</a> — How to configure <code>terminationGracePeriodSeconds</code> and resource limits for ephemeral workers. - <a href="https://github.com/nats-io/prometheus-nats-exporter">Prometheus metrics for NATS JetStream</a> — Essential dashboards for monitoring stream size, ACK rate, and memory usage.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Why not use RQ (Redis Queue) instead of Celery in 2026?</strong>
@@ -590,14 +585,11 @@ We use a NATS KV bucket named <code>task_states</code> to track task IDs. Before
 <p>Open your <code>celery.py</code> or <code>tasks.py</code> file and count the lines of code dedicated to worker configuration (concurrency, prefetch, timeouts). If it’s more than 50 lines, run a 1-hour spike this week: spin up NATS JetStream locally and write a 100-line Go worker that pulls tasks. Measure the difference in startup time. If it’s under 1 second, you’ve just validated the pattern for under $50 in infra.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

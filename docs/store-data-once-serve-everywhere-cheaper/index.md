@@ -6,8 +6,6 @@ The official documentation for design multiregion is good. What it doesn't cover
 
 Last year, my team launched a health-data API serving clinics in Nigeria, Kenya, and South Africa. The docs from every cloud provider promised multi-region setups with “a single click” and “no extra cost.” Reality hit when the CFO asked why the AWS bill jumped from $8,200 to $22,400 overnight. Turns out, the “single click” only replicated the compute, not the data—so every API call pulled a full patient record from Ohio, adding 240 ms of latency for Johannesburg users and inflating the egress bill.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
-
 Most multi-region guides focus on DNS or load-balancing tiers: Route 53 latency routing, Global Accelerator, CloudFront with Lambda@Edge. Those are necessary, but they ignore the hidden cost driver: data gravity. Once you move 10 GB of patient records into each region, you either pay for replication traffic or accept stale reads. The docs rarely mention that replicating 1 TB of SQL tables across three regions on AWS Aurora Global Database costs about $0.02 per GB per month in cross-region transfer plus $0.01 per million Aurora IO requests. Do the math: 1 TB × 3 regions × $0.02 = $60 per month just for keeping the data in sync, before you even serve a single request.
 
 The second surprise was the hidden egress. In AWS, cross-region data transfer within the same account is billed at $0.01–$0.02 per GB depending on direction. If 40% of your traffic is read-heavy queries from a single region to the other two, you can burn another $120–$240 per month on egress alone with only 10,000 daily active users. The marketing slide deck never shows that line item.
@@ -77,9 +75,7 @@ async def get_user(user_id: str, x_region: str = Header("X-Region", "us-east-1")
 ```
 
 Key points:
-- Single source of truth in us-east-1.
-- Redis 7.2 Cluster handles the cache keys per region using the `x_region` header.
-- We set a 30-second TTL and rely on cache invalidation for writes.
+- Single source of truth in us-east-1. - Redis 7.2 Cluster handles the cache keys per region using the `x_region` header. - We set a 30-second TTL and rely on cache invalidation for writes.
 
 ### 2. Cache invalidation on write
 
@@ -244,32 +240,25 @@ Open your API’s slowest endpoint. Measure the p99 latency from three regions (
 **How do I handle cache stampede when thousands of users request the same stale key?**
 Use a lock per key. In Redis 7.2, you can set `SET key value NX PX 30000` to acquire a 30-second lock. If the lock exists, return the stale value with `stale-while-revalidate=60`. This keeps the stampede off the origin while you refresh the cache in the background. We used this during a viral news cycle when 5,000 users loaded the same user profile in 60 seconds—zero origin overload.
 
-
 **What’s the maximum TTL I can set without violating health-data compliance?**
 Check your local regulations. HIPAA in the US allows 30 days for most records, but some African jurisdictions require deletion within 24 hours. A safe default is 5 minutes for cached user profiles and 1 hour for aggregated dashboards. Always add a `Cache-Control: no-store` header for PHI endpoints and log every cache miss for audit.
-
 
 **How do I test cache invalidation across regions without hitting production?**
 Use a feature branch with a dedicated Redis 7.2 Cluster and a synthetic user. In GitHub Actions, run `pytest tests/test_cache_invalidation.py -k "test_update_user_invalidates_all_regions"` which spins up three Lambda environments and verifies the keys are deleted in all regions. The test runs in 32 seconds and costs $0.08 in AWS fees.
 
-
 **Can I use this approach with DynamoDB Global Tables?**
 No. DynamoDB Global Tables replicate every write across regions with eventual consistency, so the cache becomes redundant. You pay for the replication traffic anyway. If you must use DynamoDB, skip caching and tune your DAX cluster for read performance. We tried this in a pilot and ended up with 180 ms p99 in Nairobi—worse than our PostgreSQL + Redis setup.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

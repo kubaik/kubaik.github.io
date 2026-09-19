@@ -1,10 +1,10 @@
 # Zero-downtime Postgres schema changes in 2026
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-In 2026, I joined a team running a 2.3 TB PostgreSQL 15 cluster on AWS RDS for PostgreSQL with about 400 GB of WAL generated daily. Our biggest pain point wasn’t queries or application code—it was schema changes. Every `ALTER TABLE ADD COLUMN` or index creation blocked writes for 5 to 15 minutes during peak hours. I spent two weeks debugging a connection pool issue that turned out to be unrelated, only to realize the root cause was the outdated pattern we’d been using: direct `ALTER TABLE` statements in production.
+In 2026, I joined a team running a 2.3 TB PostgreSQL 15 cluster on AWS RDS for PostgreSQL with about 400 GB of WAL generated daily. Our biggest pain point wasn’t queries or application code—it was schema changes. Every `ALTER TABLE ADD COLUMN` or index creation blocked writes for 5 to 15 minutes during peak hours.
 
 The outdated pattern we inherited was simple: run `ALTER TABLE` on the master, wait for it to finish, then let the replicas catch up. This worked fine in 2018 when our database was 50 GB, but by 2026 it had become a ticking time bomb. In 2026, we measured that even a small `ADD COLUMN` with a default value took 7 minutes on the primary, during which all writes were paused. Clients saw 500 ms spikes in latency, and our error rate jumped from 0.3% to 2.1% during these windows. Worse, some `ALTER` operations failed midway, leaving the database in an inconsistent state that required manual recovery.
 
@@ -538,20 +538,16 @@ SELECT * FROM repack.status;
 
 If it completes in under 2 minutes with no errors, you’re ready to scale this to production. Next, document your rollback plan for your largest table and schedule a dry run during off-peak hours. The key is to practice before you need it—schema changes always come at the worst time.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

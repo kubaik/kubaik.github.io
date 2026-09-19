@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-26T00:03:12.747859">
-        <meta property="article:modified_time" content="2026-06-26T00:03:12.747871">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.513305+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Row-level security for SaaS in 2026: the surprise cost">
@@ -63,8 +63,8 @@
       "headline": "Row-level security for SaaS in 2026: the surprise cost",
       "description": "Cut SaaS infra cost 75% by tiering tenants: RLS for small, schema-per-tenant for medium, dedicated DB for large.",
       "datePublished": "2026-06-26T00:03:12+00:00",
-      "dateModified": "2026-06-26T00:03:12+00:00",
-      "wordCount": 2464,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2435,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,9 +266,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2464 words
+                        &nbsp;·&nbsp; 2435 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-26
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -278,7 +278,6 @@
                 <p>Most designing multitenant guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In 2026 we launched a B2B analytics platform with ~500 paying tenants. Our initial customer onboarding call asked for a single PostgreSQL 16.2 database to keep costs low. We went with <strong>row-level security (RLS)</strong>, the default recommendation in every tutorial written before 2026. RLS promised zero code changes when adding new tenants, automatic row filtering, and a single database to manage. We trusted the docs because they looked authoritative.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <p>We chose PostgreSQL 16.2 on AWS RDS because it offered RLS out of the box and we could keep the instance at db.t4g.large ($0.112/hr in us-east-1 as of 2026). Our schema was simple: one <code>tenants</code> table and one <code>analytics_events</code> table. We added a <code>tenant_id</code> foreign key and enabled RLS with a policy that looked like this:</p>
 <pre><code class="language-sql">ALTER TABLE analytics_events ENABLE ROW LEVEL SECURITY;
 CREATE POLICY tenant_isolation_policy ON analytics_events
@@ -328,7 +327,7 @@ CREATE POLICY tenant_isolation_policy ON analytics_events
 </tr>
 </tbody>
 </table>
-<p>We implemented a tenant router in 265 lines of Go 1.21. The router cached tenant tier and connection strings in Redis 7.2 with a 5-minute TTL. Cache misses triggered a synchronous lookup to the <code>tenants</code> table in PostgreSQL, adding ~3ms worst-case latency. We set Redis memory limit to 1GB and used <code>maxmemory-policy allkeys-lru</code> to keep the hottest tenants in memory. </p>
+<p>We implemented a tenant router in 265 lines of Go 1.21. The router cached tenant tier and connection strings in Redis 7.2 with a 5-minute TTL. Cache misses triggered a synchronous lookup to the <code>tenants</code> table in PostgreSQL, adding ~3ms worst-case latency. We set Redis memory limit to 1GB and used <code>maxmemory-policy allkeys-lru</code> to keep the hottest tenants in memory.</p>
 <p>We also added a <strong>circuit breaker</strong> pattern for large tenants. If a tenant’s PostgreSQL instance returned 5 consecutive 5xx errors, the router marked it as unhealthy and routed subsequent requests to a read-only replica. Circuit breakers reduced outage blast radius from 30 minutes to 2 minutes.</p>
 <p>Here is the Go router code snippet that picks the backend:</p>
 <pre><code class="language-go">// tenant-router/main.go
@@ -357,18 +356,13 @@ func pickBackend(tenantTier string) (*pgxpool.Pool, error) {
 - When events &gt; 50k/day → tier up to "large"
 - Manual override via admin API</p>
 <p><strong>Migration strategy:</strong>
-- Schema migrations for small/medium tenants: run during off-peak (02:00 UTC) using a <code>tenant-migrator</code> worker (Python 3.11 + Celery with 4 workers).
-- Large tenant migrations: schedule during maintenance window, use AWS DMS for zero-downtime migration.</p>
+- Schema migrations for small/medium tenants: run during off-peak (02:00 UTC) using a <code>tenant-migrator</code> worker (Python 3.11 + Celery with 4 workers). - Large tenant migrations: schedule during maintenance window, use AWS DMS for zero-downtime migration.</p>
 <p><strong>Cost control:</strong>
-- Small/medium tenants share a single PostgreSQL instance, reducing monthly infra cost from $4,200 (500 instances) to $340 (one db.t3.xlarge + one db.r6g.large).
-- We set AWS Budgets alerts at $400/month and $800/month to catch runaway costs.</p>
+- Small/medium tenants share a single PostgreSQL instance, reducing monthly infra cost from $4,200 (500 instances) to $340 (one db.t3.xlarge + one db.r6g.large). - We set AWS Budgets alerts at $400/month and $800/month to catch runaway costs.</p>
 <p><strong>Observability:</strong>
-- We instrumented every PostgreSQL connection with a <code>tenant_id</code> tag.
-- Prometheus metrics include: <code>postgres_connections_total</code>, <code>tenant_tier_distribution</code>, <code>router_latency_ms</code>, <code>circuit_breaker_state</code>.
-- Grafana dashboards show tenant tier distribution and router error rates by tier.</p>
+- We instrumented every PostgreSQL connection with a <code>tenant_id</code> tag. - Prometheus metrics include: <code>postgres_connections_total</code>, <code>tenant_tier_distribution</code>, <code>router_latency_ms</code>, <code>circuit_breaker_state</code>. - Grafana dashboards show tenant tier distribution and router error rates by tier.</p>
 <p><strong>Security:</strong>
-- Each tenant’s PostgreSQL role has minimal privileges (only <code>SELECT</code>, <code>INSERT</code> on its schemas).
-- We rotate credentials every 90 days using AWS Secrets Manager and a Lambda function.</p>
+- Each tenant’s PostgreSQL role has minimal privileges (only <code>SELECT</code>, <code>INSERT</code> on its schemas). - We rotate credentials every 90 days using AWS Secrets Manager and a Lambda function.</p>
 <h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
 <table>
 <thead>
@@ -446,10 +440,8 @@ func pickBackend(tenantTier string) (*pgxpool.Pool, error) {
 </ol>
 <h2 id="the-broader-lesson">The broader lesson</h2>
 <p>The lesson is simple: <strong>scale-by-tenant is not a database feature; it’s an application pattern.</strong> RLS, schema-per-tenant, and database-per-tenant are all valid strategies, but each optimizes for a different axis:
-- RLS optimizes for code simplicity and fast tenant onboarding.
-- Schema-per-tenant optimizes for cost and isolation at small scale.
-- Database-per-tenant optimizes for isolation and blast radius at the cost of operational complexity.</p>
-<p>The mistake most teams make is picking one strategy for all tenants. The real world is a power law: 80% of tenants are small, 15% are medium, and 5% are large. Optimize for the 80% while isolating the 5%. </p>
+- RLS optimizes for code simplicity and fast tenant onboarding. - Schema-per-tenant optimizes for cost and isolation at small scale. - Database-per-tenant optimizes for isolation and blast radius at the cost of operational complexity.</p>
+<p>The mistake most teams make is picking one strategy for all tenants. The real world is a power law: 80% of tenants are small, 15% are medium, and 5% are large. Optimize for the 80% while isolating the 5%.</p>
 <p>Treat tenant isolation like caching: start permissive and tighten the screws as load increases. Start with RLS or a single shared schema, measure overhead at 10x expected load, and tier up when metrics cross a threshold. The goal is to postpone complexity, not avoid it forever.</p>
 <h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
 <ol>
@@ -533,14 +525,11 @@ async def route_by_tenant(request: Request, call_next):
 <p>Open your <code>docker-compose.yml</code> (or Terraform root module) and find the PostgreSQL service definition. Change the <code>shared_preload_libraries</code> line to <strong>remove <code>pg_row_security</code></strong> if it’s present. Rebuild and restart your local stack. Then run a load test with 10x your normal tenant load. Measure P99 latency and CPU before and after removing RLS. That single change will tell you if RLS is hurting you today.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

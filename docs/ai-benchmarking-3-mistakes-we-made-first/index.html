@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-26T13:42:14.997517">
-        <meta property="article:modified_time" content="2026-06-26T13:42:14.997525">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.521359+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI benchmarking: 3 mistakes we made first">
@@ -63,9 +63,9 @@
       "headline": "AI benchmarking: 3 mistakes we made first",
       "description": "Cut AI inference cost 32% without hurting conversions — real latency benchmarks, CPI scoring, and the shadow-traffic mistake most teams make.",
       "datePublished": "2026-06-26T13:42:14+00:00",
-      "dateModified": "2026-06-26T13:42:14+00:00",
-      "wordCount": 2718,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2671,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -263,10 +263,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2718 words
+                        13 min read
+                        &nbsp;·&nbsp; 2671 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-26
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -278,18 +278,17 @@
 <p>In late 2026, our small team at <strong>DevBench</strong> was hired to build a real-time recommendation engine for a Colombian e-commerce platform serving 120,000 daily active users. The client wanted to replace a decade-old collaborative filtering system with a modern transformer-based model. The catch: they didn’t want to lose their existing revenue-per-session of $0.37, and marketing had already promised a 15% increase in conversions.</p>
 <p>We had three weeks to choose between two models:</p>
 <ul>
-<li><strong>Model A</strong>: A 7B-parameter open-source model served via vLLM on a single NVIDIA H100 GPU.</li>
-<li><strong>Model B</strong>: A 1.5B-parameter distilled model fine-tuned on their product catalog, deployed on a cheaper A10G GPU.</li>
+<li><strong>Model A</strong>: A 7B-parameter open-source model served via vLLM on a single NVIDIA H100 GPU. - <strong>Model B</strong>: A 1.5B-parameter distilled model fine-tuned on their product catalog, deployed on a cheaper A10G GPU.</li>
 </ul>
 <p>The client’s CTO told us: <em>"We care about three things: latency under load, cost per 1,000 requests, and whether users actually click more."</em></p>
-<p>At first glance, the 1.5B model looked perfect—it was 4x smaller, cheaper to run, and the fine-tuning had already been done. But when we ran the first A/B test, something went wrong. <strong>We expected latency to be low because the model was smaller, but 95th percentile latency spiked to 180ms on the 1.5B model versus 130ms on the 7B model.</strong> Worse, the conversion uplift was flat—no 15% increase. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout in our vLLM deployment—this post is what I wished I had found then.</p>
+<p>At first glance, the 1.5B model looked perfect—it was 4x smaller, cheaper to run, and the fine-tuning had already been done. But when we ran the first A/B test, something went wrong. <strong>We expected latency to be low because the model was smaller, but 95th percentile latency spiked to 180ms on the 1.5B model versus 130ms on the 7B model.</strong> Worse, the conversion uplift was flat—no 15% increase.</p>
 <p>Our goal wasn’t just to ship a model—it was to understand <strong>why</strong> one model won on paper but lost in production.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>We started with the standard playbook: benchmark the model in isolation, then simulate real traffic.</p>
 <h3 id="first-try-local-gpu-benchmarking-with-lm-eval-harness">First try: Local GPU benchmarking with <code>lm-eval-harness</code></h3>
 <p>We used <strong>lm-eval-harness 0.4.2</strong> to compute perplexity and exact match scores on a 5,000-row test set. The distilled 1.5B model scored 14.8 perplexity vs. 12.1 for the 7B model. We celebrated—until we pushed it to staging.</p>
 <p>Then we hit a wall: <strong>throughput on the 1.5B model in vLLM 0.5.3 with CUDA 12.4 was only 145 req/sec on a single A10G</strong>, while the 7B model handled 210 req/sec on an H100. The client’s marketing site peaks at 400 req/sec during flash sales. We had no idea about batching behavior under concurrent load.</p>
-<p>I was surprised that a smaller model could have worse throughput—until we dug into vLLM’s scheduler. The 1.5B model’s KV cache was 3x larger per token than expected because the fine-tuning used a longer context window. That meant fewer requests could fit in memory, and swapping killed latency.</p>
+<p>The 1.5B model’s KV cache was 3x larger per token than expected because the fine-tuning used a longer context window. That meant fewer requests could fit in memory, and swapping killed latency.</p>
 <h3 id="second-try-load-testing-with-locust-and-synthetic-data">Second try: Load testing with Locust and synthetic data</h3>
 <p>We wrote a 150-line Locust script in Python 3.11 that generated fake user sessions based on real clickstream data. We used <strong>Redis 7.2</strong> as a simple request cache and <strong>Prometheus 2.50</strong> to scrape vLLM metrics. The test ramped from 50 to 400 users over 10 minutes.</p>
 <p>We measured:
@@ -626,10 +625,7 @@ func mirrorTraffic(ctx context.Context, prodReader *kafka.Reader, shadowWriter *
 <p><strong>Benchmarking AI models in production isn’t about model cards or synthetic benchmarks—it’s about wiring the model into real user flows and measuring what matters: user behavior and business outcomes.</strong></p>
 <p>Most teams fall into the trap of optimizing for FLOPs or perplexity, then wonder why users don’t click more. The real benchmark is <strong>how the model performs in the user’s journey</strong>, not in a notebook.</p>
 <p>This means:
-- You must instrument <strong>before</strong> you deploy.
-- You must mirror <strong>real traffic</strong>, not simulate it.
-- You must define a <strong>composite score</strong> that balances speed, cost, and impact.
-- You must be ready to <strong>rollback fast</strong> when the model doesn’t deliver.</p>
+- You must instrument <strong>before</strong> you deploy. - You must mirror <strong>real traffic</strong>, not simulate it. - You must define a <strong>composite score</strong> that balances speed, cost, and impact. - You must be ready to <strong>rollback fast</strong> when the model doesn’t deliver.</p>
 <p>The tools exist: vLLM, OpenTelemetry, Argo Rollouts, and Prometheus. What’s missing is the discipline to use them in production, not just in staging.</p>
 <h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
 <p>Here’s a 30-minute action plan to apply this today.</p>
@@ -705,14 +701,11 @@ print(f&quot;CPI: {cpi:.2f}&quot;)
 <p>In our case, the 1.5B model used a longer context window (2048 tokens vs 512), which ballooned the KV cache. vLLM’s scheduler struggled to fit enough requests in memory, causing swapping and higher tail latency. We capped context length to 512 tokens and saved 20% GPU memory, dropping P95 latency from 180ms to 110ms.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

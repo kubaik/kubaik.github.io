@@ -6,7 +6,7 @@ Most building developer guides assume a clean environment and a patient timeline
 
 We launched a CLI tool called `dbgateway` in early 2026 to help teams debug API latency spikes on mobile networks in Nigeria and Ghana. It intercepts HTTP traffic, logs timings per hop, and surfaces connection anomalies typical of 3G networks. By Q3 2026, we had 400 free users and 12 paying teams. That’s when our sales cycle collapsed.
 
-I ran into this when a mid-sized fintech in Lagos wanted to buy 200 licenses. They asked for a demo on their staging environment. Our sales engineer gave them a recorded video walkthrough. The deal died in procurement because the CTO wanted to see the tool *actually* catching a real latency spike on their API — not a simulation. We lost 4 weeks.
+They asked for a demo on their staging environment. Our sales engineer gave them a recorded video walkthrough. The deal died in procurement because the CTO wanted to see the tool *actually* catching a real latency spike on their API — not a simulation. We lost 4 weeks.
 
 The problem wasn’t the product. It was the sales process. AI agents changed buyer behavior overnight. Teams stopped trusting slides and wanted to *see* the tool solving their exact problem in their environment before signing a PO. We had to rebuild our funnel from a brochure into a live sandbox.
 
@@ -18,7 +18,7 @@ We set out to redesign our sales cycle around live, self-service environments. O
 
 First, we recorded more demo videos. We added timestamps, captions, and a “try it yourself” link. We thought engineers would forward the videos to decision-makers. That failed.
 
-I spent two weeks editing a 9-minute video showing `dbgateway` catching a 400ms spike on a Flutterwave webhook. We sent it to a CTO in Nairobi. Two days later, the deal stalled. Their procurement team asked: “Can you run this on our staging cluster? We need to see the exact same headers and payloads.” The video doesn’t run in their cluster. It can’t.
+We sent it to a CTO in Nairobi. Two days later, the deal stalled. Their procurement team asked: “Can you run this on our staging cluster? We need to see the exact same headers and payloads.” The video doesn’t run in their cluster. It can’t.
 
 Next, we built a free trial environment. We deployed a sandbox with a mock mobile network simulator, a sample API, and a dashboard showing latency breakdowns. We gave users 7 days. That reduced churn in free users, but didn’t convert more paid deals.
 
@@ -223,7 +223,7 @@ Here’s a side-by-side comparison of a Debug Session with a fintech in Lagos. T
 | Lines of config            | N/A                         | 12 lines (GatewayConfig CRD)| **No code changes**       |
 | Deployment time            | N/A                         | 2 minutes (Terraform)       | **Fully automated**       |
 | Support tickets raised      | 2 (false positives)         | 0                           | **Zero false positives**  |
-| Deal closed?               | N/A                         | Yes (150 licenses)          | **100% conversion**       |
+| Deal closed? | N/A                         | Yes (150 licenses)          | **100% conversion**       |
 
 ### Cost breakdown (48-hour session)
 - **AWS EKS**: $12.40 (2 nodes, 48 hours)
@@ -248,20 +248,16 @@ The Debug Session model reduced our sales cycle from 6 weeks to **5 days** for t
 
 This is what “good enough for Chrome on fibre” looks like in 2026. For mobile-first, intermittent-connection-tolerant tools, the bar is higher: **it must work where your users suffer**.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

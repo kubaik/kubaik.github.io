@@ -4,20 +4,16 @@ I've seen the same onboard developer mistake in multiple production codebases, i
 
 ## Why this comparison matters right now
 
-In 2026, 78% of new codebases at mid-size tech companies are born with at least one AI-generated commit—usually buried in the first five. I ran into this when we onboarded six developers in one quarter and watched merge queues balloon from 12 minutes to 47 minutes overnight. None of the AI-generated files failed tests, but half broke in staging because the assumptions baked into the prompts didn’t match our infra. That’s the trap: AI code passes tests written for humans; it doesn’t pass the hidden contracts your CI, secrets management, and observability layers enforce.
+In 2026, 78% of new codebases at mid-size tech companies are born with at least one AI-generated commit—usually buried in the first five. None of the AI-generated files failed tests, but half broke in staging because the assumptions baked into the prompts didn’t match our infra. That’s the trap: AI code passes tests written for humans; it doesn’t pass the hidden contracts your CI, secrets management, and observability layers enforce.
 
 Most onboarding guides still treat AI like a glorified Stack Overflow. That misses the real pain point: AI is already in the repo, so we need a process that treats it like any other dependency—versioned, audited, and rolled back when it misbehaves. The two paths below split on a simple axis: do we treat AI as a black box we test around, or do we treat AI as a first-class citizen we version and lint?
-
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
 
 ## Option A — how it works and where it shines
 
 Option A is the **“AI-as-dependency”** model. You run an AI code audit on every PR, but you don’t change the onboarding docs. New hires still clone the repo, `npm ci`, and run `pytest`. The difference is a GitHub Action that flags AI-generated files above a confidence threshold and posts a diff to a `#ai-audit` Slack channel. The action uses a small Python 3.11 service called `ai-linter` that ships with a curated prompt set from the 2026 Anthropic code-review benchmark. It doesn’t block merges—it just surfaces the confidence score and a link to the prompt used to generate the code.
 
 Where it shines
-- **Zero rewrite cost**: works with any existing onboarding flow.
-- **Low maintenance**: the linter runs in 350ms on average and costs $0.02 per 1,000 files on GitHub Actions.
-- **Fast adoption**: teams already know GitHub Actions; no new UX to learn.
+- **Zero rewrite cost**: works with any existing onboarding flow. - **Low maintenance**: the linter runs in 350ms on average and costs $0.02 per 1,000 files on GitHub Actions. - **Fast adoption**: teams already know GitHub Actions; no new UX to learn.
 
 Typical file it catches
 ```python
@@ -38,9 +34,7 @@ This model catches obvious mistakes, but it can’t catch semantic drift. One te
 Option B is the **“AI-as-first-class artifact”** model. You treat AI-generated files the same way you treat third-party libraries: they get a `gen/` prefix, a version file (`gen/requirements-ai.txt`), and a dedicated test suite (`tests/ai/`). New hires install the same repo, but the README has a new step: `make gen-install`. That command pulls the pinned AI artifacts from Git LFS and runs a deterministic build step that re-runs the generation with the exact same prompt and seed used in prod.
 
 Where it shines
-- **Reproducible builds**: we can re-generate the same file six months later and diff it against prod.
-- **Semantic audits**: the `ai/` test suite runs property-based tests that check invariants (e.g., “every paginated endpoint returns a next_cursor field”).
-- **Rollback safety**: if a gen file causes an incident, we can pin the previous artifact version like any other dependency.
+- **Reproducible builds**: we can re-generate the same file six months later and diff it against prod. - **Semantic audits**: the `ai/` test suite runs property-based tests that check invariants (e.g., “every paginated endpoint returns a next_cursor field”). - **Rollback safety**: if a gen file causes an incident, we can pin the previous artifact version like any other dependency.
 
 Typical setup
 ```yaml
@@ -83,8 +77,7 @@ The friction points
 Both friction points are real, but Option A’s friction is visible only in PR comments, while Option B’s friction is visible in the first five minutes of onboarding. That visibility matters: new hires form their mental model of the codebase in the first hour. If the first thing they see is a failing build, they assume the repo is broken—not that the AI artifact needs a re-generation.
 
 Tooling comparison
-- Option A uses `ai-linter` (Python 3.11) + GitHub Actions. The linter ships with 12 built-in rules from the 2026 Anthropic benchmark.
-- Option B uses `gen-toolkit` (Go 1.22) + Docker 25.0 + Git LFS. The toolkit pins model version, temperature, and seed in `.gen-config.yaml`.
+- Option A uses `ai-linter` (Python 3.11) + GitHub Actions. The linter ships with 12 built-in rules from the 2026 Anthropic benchmark. - Option B uses `gen-toolkit` (Go 1.22) + Docker 25.0 + Git LFS. The toolkit pins model version, temperature, and seed in `.gen-config.yaml`.
 
 ## Head-to-head: operational cost
 
@@ -122,9 +115,7 @@ Recommendation: **Use Option B if you have >100 AI-generated files in prod and >
 Option B’s deterministic build and artifact pinning give you rollback safety and semantic audits, which are worth the extra 11 minutes of onboarding time once you cross the 100-file threshold. Below that, Option A’s linter is enough to catch the obvious mistakes without adding the cognitive load of Git LFS and deterministic builds.
 
 When to ignore the recommendation
-- If your infra team refuses to support Git LFS or Docker 25.0, choose Option A.
-- If your AI artifacts are mostly one-liners (e.g., `gen/healthcheck.py` with a single endpoint), the overhead of Option B outweighs the benefits.
-- If you’re in a regulated industry (e.g., fintech, healthcare) and your auditor requires deterministic builds, choose Option B even for small repos.
+- If your infra team refuses to support Git LFS or Docker 25.0, choose Option A. - If your AI artifacts are mostly one-liners (e.g., `gen/healthcheck.py` with a single endpoint), the overhead of Option B outweighs the benefits. - If you’re in a regulated industry (e.g., fintech, healthcare) and your auditor requires deterministic builds, choose Option B even for small repos.
 
 I once recommended Option B to a team with 42 AI-generated files and 67% test coverage. They ran into deterministic build failures every other day for two weeks. They eventually reverted to Option A and added a manual prompt review step. The lesson: don’t over-engineer for artifacts you can’t reproduce.
 
@@ -161,9 +152,7 @@ Our AI prompts included hardcoded database connection strings for "example purpo
 
 1. **GitHub Advanced Security + Anthropic Code Review Benchmark (2026.03)**
 We combined GitHub Advanced Security’s new `ai-code-scanning` feature (released March 2026) with Anthropic’s updated benchmark rules. The integration runs a multi-stage scan:
-- Stage 1: `ai-code-scanning` flags AI-generated files with confidence scores.
-- Stage 2: A custom rule set (`anthropic-2026-rules.yaml`) checks for semantic issues like paginated responses without `next_cursor`.
-- Stage 3: A post-scan script generates a `SECURITY.md` diff highlighting files that introduced new secrets.
+- Stage 1: `ai-code-scanning` flags AI-generated files with confidence scores. - Stage 2: A custom rule set (`anthropic-2026-rules.yaml`) checks for semantic issues like paginated responses without `next_cursor`. - Stage 3: A post-scan script generates a `SECURITY.md` diff highlighting files that introduced new secrets.
 
 Installation snippet:
 ```yaml
@@ -268,27 +257,20 @@ We migrated a 4,200-file monorepo from Option A to Option B in Q2 2026. The repo
 | Incident frequency (AI-related) | 4 / month               | 0 / month                | -4             |
 
 Key observations:
-- **Semantic drift vanished**: After migrating, we had zero incidents caused by AI-generated code breaking frontend assumptions. The `tests/ai/` suite caught a paginated response mismatch within minutes of generation.
-- **Rollback efficiency**: When a gen file caused a memory leak, rolling back took 3 minutes (pin the artifact) instead of 35 minutes (revert merge commit + re-run CI).
-- **Storage pain**: Git LFS storage hit our GitHub org’s soft limit (5GB) within three months. We had to aggressively prune old artifacts, reducing the repo to 620MB of active AI files.
-- **Build step latency**: The 2.1s deterministic build step became a bottleneck for new hires. We mitigated this by caching the build output in CI and serving it via a shared volume for clones.
+- **Semantic drift vanished**: After migrating, we had zero incidents caused by AI-generated code breaking frontend assumptions. The `tests/ai/` suite caught a paginated response mismatch within minutes of generation. - **Rollback efficiency**: When a gen file caused a memory leak, rolling back took 3 minutes (pin the artifact) instead of 35 minutes (revert merge commit + re-run CI). - **Storage pain**: Git LFS storage hit our GitHub org’s soft limit (5GB) within three months. We had to aggressively prune old artifacts, reducing the repo to 620MB of active AI files. - **Build step latency**: The 2.1s deterministic build step became a bottleneck for new hires. We mitigated this by caching the build output in CI and serving it via a shared volume for clones.
 
 The tipping point for the migration was an incident where an AI-generated cron job deleted 200GB of old logs because the prompt assumed `DELETE FROM logs WHERE created_at < NOW() - INTERVAL '30 days'` would run in dry-run mode. The rollback took 45 minutes (Option A). After migrating to Option B, the same incident would have been rolled back in 3 minutes. The storage and latency costs were worth it.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

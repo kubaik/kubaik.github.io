@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-02T17:15:04.501281">
-        <meta property="article:modified_time" content="2026-07-02T17:15:04.501293">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.642976+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI memory systems: context that survives sessions">
@@ -63,8 +63,8 @@
       "headline": "AI memory systems: context that survives sessions",
       "description": "Fix AI agent memory loss across sessions in 2026 — 60% of teams hit this after moving from demo to prod.",
       "datePublished": "2026-07-02T17:15:04+00:00",
-      "dateModified": "2026-07-02T17:15:04+00:00",
-      "wordCount": 3690,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 3650,
       "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,9 +261,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         18 min read
-                        &nbsp;·&nbsp; 3690 words
+                        &nbsp;·&nbsp; 3650 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-02
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -274,7 +274,7 @@
 <h1 id="ai-memory-systems-context-that-survives-sessions">AI memory systems: context that survives sessions</h1>
 <p>The error and why it's confusing</p>
 <p>You boot up your AI agent, ask it a question, get a reasonable answer, then shut it down. Later, you ask the same agent the same question and get a completely different answer. No error is thrown. No log shows a failure. Just silent, inconsistent behavior that makes the agent feel flaky and unreliable.</p>
-<p>I ran into this when we moved from a simple in-memory cache to a proper vector store for long-term memory. The agent started returning different answers for the same prompt within minutes, not days. We spent a week chasing non-existent bugs in the LLM layer before realizing the memory layer wasn’t persisting state correctly. The confusion comes from how we frame "memory" in AI systems. We expect persistence — like a database — but most tutorials treat memory as a temporary variable. When the agent restarts, the context is gone unless you explicitly save and restore it.</p>
+<p>The agent started returning different answers for the same prompt within minutes, not days. We spent a week chasing non-existent bugs in the LLM layer before realizing the memory layer wasn’t persisting state correctly. The confusion comes from how we frame "memory" in AI systems. We expect persistence — like a database — but most tutorials treat memory as a temporary variable. When the agent restarts, the context is gone unless you explicitly save and restore it.</p>
 <p>The surface symptom is inconsistent responses, but the real problem is state loss across sessions. The agent isn’t broken; it’s just not saving its own brain when it shuts down. You’ll see this with agents using local files, Redis, or even cloud vector stores if the connection string changes or the session token expires. The worst part? It often works fine during development when the agent never truly restarts, so the bug only appears in production.</p>
 <p>This isn’t just a toy problem. In 2026, agents handle real user workflows — scheduling, compliance checks, data analysis — and users expect continuity. If your agent forgets the user’s name or their last action after a restart, they’ll stop trusting it. And once trust is broken, it’s hard to rebuild.</p>
 <p>What's actually causing it (the real reason, not the surface symptom)</p>
@@ -368,7 +368,7 @@ def save_memory(session_id, content):
 <p>Fix 3 — the environment-specific cause</p>
 <p>Symptom pattern: memory works in dev but fails in staging/production; no logs show errors; agent restarts cause data loss.</p>
 <p>The environment-specific cause is usually ephemeral storage or misconfigured volumes. In Kubernetes, <code>/tmp</code> is not persistent. If your agent saves memory to a local file in <code>/tmp/agent_memory.json</code>, it vanishes on pod restart. Similarly, in serverless (AWS Lambda, Google Cloud Functions), the <code>/tmp</code> directory is cleared between invocations.</p>
-<p>I was surprised when a staging agent worked fine for days, then after a rolling deploy, it lost all memory. The issue was that the StatefulSet used an emptyDir volume for <code>/tmp</code>, but the agent wrote to <code>/app/tmp</code> — which was ephemeral. The pod logs showed no errors because the file system behaved as expected — just not persistently.</p>
+<p>The issue was that the StatefulSet used an emptyDir volume for <code>/tmp</code>, but the agent wrote to <code>/app/tmp</code> — which was ephemeral. The pod logs showed no errors because the file system behaved as expected — just not persistently.</p>
 <p>To fix this, use a persistent volume claim (PVC) for memory storage. In Kubernetes, that looks like:</p>
 <pre><code class="language-yaml">apiVersion: apps/v1
 kind: StatefulSet
@@ -532,9 +532,7 @@ async def verify_memory_persistence():
 <p>Without this, your task will lose memory on every restart.</p>
 <p>Finally, document your memory layer’s assumptions. Write a short README in your repo that answers:
 - Where is memory stored? (Redis, EFS, S3, etc.)
-- What’s the session ID format?
-- How long do credentials last?
-- What happens if storage fails?</p>
+- What’s the session ID format? - How long do credentials last? - What happens if storage fails?</p>
 <p>This prevents future engineers from assuming <code>/tmp</code> is safe or that Redis is always available.</p>
 <p>Related errors you might hit next</p>
 <p>After fixing the core memory persistence bug, you may encounter these related issues:</p>
@@ -631,14 +629,11 @@ client = Client(
 <p>Change your session ID to be deterministic. Instead of generating a new UUID every time the agent starts, use <code>f"{user_id}_{conversation_id}"</code>. Then, ensure every memory write includes this session ID as a filter. In Redis, that means your key becomes <code>agent:memory:{user_id}_{conversation_id}:{action_id}</code>. This single change will make memory persist across restarts if your storage layer is correct. If you’re using a vector store, add the session ID as a metadata field and filter on it. No new services, no config changes — just fix the session scoping.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

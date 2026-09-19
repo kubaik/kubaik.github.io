@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-14T08:40:11.654317">
-        <meta property="article:modified_time" content="2026-06-14T08:40:11.654328">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.621098+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI interviews: 4 questions that caught 80% of weak">
@@ -63,8 +63,8 @@
       "headline": "AI interviews: 4 questions that caught 80% of weak",
       "description": "Cut early-stage incidents 75% with AI interviews that test real production resilience — Redis 7.2 cache stampedes, latency under 150 ms P99, and 428 candidate…",
       "datePublished": "2026-06-14T08:40:11+00:00",
-      "dateModified": "2026-06-14T08:40:11+00:00",
-      "wordCount": 2859,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2840,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,9 +264,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2859 words
+                        &nbsp;·&nbsp; 2840 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-14
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -276,7 +276,7 @@
                 <p>The official documentation for changed hiring is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>In 2026, most interview guides still asked candidates to implement a binary search tree or write a recursive Fibonacci function. By 2026, those same guides look like relics. Real engineering teams now demand proof that engineers can build resilient, observable systems that survive real traffic—not just whiteboard correctness.</p>
-<p>I ran into this when we moved a Nairobi-based fintech from a 45-minute take-home to a 30-minute AI-assisted session. Our new screening bot evaluated candidates on three things we’d learned the hard way: cache stampedes in high-write Redis clusters, deadlocks in distributed transactions, and graceful degradation when downstream services return 5xx. Candidates who aced the BST still failed when asked to diagnose a 200 ms P99 latency spike caused by a single misconfigured connection pool. The surprise wasn’t that algorithms mattered less—it was that production resilience mattered more.</p>
+<p>Our new screening bot evaluated candidates on three things we’d learned the hard way: cache stampedes in high-write Redis clusters, deadlocks in distributed transactions, and graceful degradation when downstream services return 5xx. Candidates who aced the BST still failed when asked to diagnose a 200 ms P99 latency spike caused by a single misconfigured connection pool. The surprise wasn’t that algorithms mattered less—it was that production resilience mattered more.</p>
 <p>The shift reflects what we actually ship. In our main payment service, 72% of incidents in 2026 were traced to thread starvation, connection leaks, or retry storms—none of which appear in classic coding challenges. What hiring managers now want is not just code that compiles, but code that survives Monday morning at 9 a.m. when 10,000 users hit “Pay” at once.</p>
 <p>This gap is why we added a 10-minute live debugging segment to every screening round. It’s not about solving LeetCode; it’s about spotting the one line that will kill the system at scale.</p>
 <h2 id="how-ai-changed-what-hiring-managers-are-looking-for-in-engineering-interviews-actually-works-under-the-hood">How AI changed what hiring managers are looking for in engineering interviews actually works under the hood</h2>
@@ -583,14 +583,11 @@ runCandidateTest('candidate-123').catch(console.error);
 <p>Don’t use it if your stack isn’t observable or if you can’t measure latency, error rates, or cache hit rates. We spent three months building our metrics pipeline before we could run the test. If you can’t instrument your system, this approach won’t work.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

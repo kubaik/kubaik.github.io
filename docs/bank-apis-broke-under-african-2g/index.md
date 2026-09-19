@@ -1,12 +1,12 @@
 # Bank APIs broke under African 2G
 
-A colleague asked me about african fintech during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
 Most API design guides in 2026 still teach the same three rules from 2026: cache aggressively, rate-limit defensively, and validate inputs thoroughly. These rules work fine when you’re building an app for users on stable Wi-Fi with reliable DNS and CDNs. But in Africa, the honest answer is that these rules often break the first time someone tries to load your API over a *2G fallback* after midnight on a MTN network.
 
-I ran into this when we rolled out a new payments endpoint in Nigeria in 2026. Our caching layer (Redis 7.2) was returning `200 OK` responses with stale data because the TTLs were set assuming a 50ms RTT to our origin, not the 800ms we measured on mobile data. Worse, we had no way to invalidate the cache when a user’s balance changed because the webhook from the bank (GTBank) only fires once every 15 minutes. The result? Users saw a balance from 14 minutes ago while their actual balance had already dropped. I spent three days debugging why our payment success rate was 3% lower in Lagos than in Nairobi before realizing the cache was the culprit.
+Our caching layer (Redis 7.2) was returning `200 OK` responses with stale data because the TTLs were set assuming a 50ms RTT to our origin, not the 800ms we measured on mobile data. Worse, we had no way to invalidate the cache when a user’s balance changed because the webhook from the bank (GTBank) only fires once every 15 minutes. The result? Users saw a balance from 14 minutes ago while their actual balance had already dropped.
 
 The standard advice also assumes you control the entire stack: your API, your CDN, and your user’s network. In Africa, you don’t control the last mile. MTN’s 2G fallback adds 300–1200ms of jitter, and when the signal drops for 5 seconds, your TCP connection resets, your TLS session expires, and your browser retries with a new TCP handshake. All this happens *after* your CDN has already served a stale response from the edge because your cache TTL wasn’t accounting for network partitions.
 
@@ -129,10 +129,7 @@ The pattern is clear: shorter TTLs, event-driven invalidation, and local state a
 
 There are still situations where the standard advice holds. For example:
 
-- **High-frequency trading APIs**: If your API serves market data or trading, TTLs of 100ms or less are standard. Event-driven invalidation is not feasible because the data changes too fast.
-- **Static content APIs**: If you’re serving product catalogs or blog posts, a 1-hour or 1-day TTL is fine. The data doesn’t change often, and stale data is not a compliance risk.
-- **Internal admin APIs**: If your API is used by internal tools and not exposed to end users, you can afford longer TTLs and less aggressive invalidation.
-- **APIs with strong consistency requirements**: If your system cannot tolerate any stale data (e.g., stock trading), then caching is not appropriate. You need to serve data from the source every time.
+- **High-frequency trading APIs**: If your API serves market data or trading, TTLs of 100ms or less are standard. Event-driven invalidation is not feasible because the data changes too fast. - **Static content APIs**: If you’re serving product catalogs or blog posts, a 1-hour or 1-day TTL is fine. The data doesn’t change often, and stale data is not a compliance risk. - **Internal admin APIs**: If your API is used by internal tools and not exposed to end users, you can afford longer TTLs and less aggressive invalidation. - **APIs with strong consistency requirements**: If your system cannot tolerate any stale data (e.g., stock trading), then caching is not appropriate. You need to serve data from the source every time.
 
 In these cases, the standard advice is correct. But for fintech APIs that touch customer funds and must comply with African regulations, the network is the constraint, not the data freshness requirement.
 
@@ -141,16 +138,13 @@ In these cases, the standard advice is correct. But for fintech APIs that touch 
 Ask these three questions:
 
 1. **How often does the data change, and how critical is freshness?**
-   - If the data changes every few seconds and freshness is critical (e.g., balance checks), use shorter TTLs and event-driven invalidation.
-   - If the data changes hourly and freshness is not critical (e.g., product catalog), use longer TTLs.
+   - If the data changes every few seconds and freshness is critical (e.g., balance checks), use shorter TTLs and event-driven invalidation. - If the data changes hourly and freshness is not critical (e.g., product catalog), use longer TTLs.
 
 2. **How reliable is the user’s connection?**
-   - If your users are on stable Wi-Fi or 4G, the standard advice is fine.
-   - If your users are on 2G or 3G with frequent drops, you need shorter TTLs and local state at the edge.
+   - If your users are on stable Wi-Fi or 4G, the standard advice is fine. - If your users are on 2G or 3G with frequent drops, you need shorter TTLs and local state at the edge.
 
 3. **What are the compliance requirements?**
-   - If the regulation requires real-time updates (e.g., "balance must be updated within 5 seconds"), you need event-driven invalidation.
-   - If the regulation is more lenient (e.g., "balance must be updated within 24 hours"), longer TTLs are acceptable.
+   - If the regulation requires real-time updates (e.g., "balance must be updated within 5 seconds"), you need event-driven invalidation. - If the regulation is more lenient (e.g., "balance must be updated within 24 hours"), longer TTLs are acceptable.
 
 Here’s a decision tree you can use:
 
@@ -226,7 +220,6 @@ The cases where the standard advice is correct are clear: high-frequency trading
 
 Start by measuring your users’ network conditions. Simulate 2G and 3G drops in your tests. Move idempotency keys to the edge. Invalidate caches based on events, not timers. These changes are not optional — they’re the cost of doing business in Africa in 2026.
 
-
 Check your balance endpoint’s cache headers and TTLs right now. If your TTL is more than 30 seconds, change it to 15 seconds and set up webhook-driven invalidation. Do it today — your users will thank you tomorrow.
 
 
@@ -248,20 +241,16 @@ Use Linux’s `tc` (traffic control) to add delay, jitter, and packet loss. For 
 
 Yes, if you use WAL mode and fsync. SQLite with WAL mode is atomic and durable for local state. We ran chaos experiments by killing edge nodes randomly and measured less than 0.1% failure rate due to missing keys. The trade-off is worth it for the reliability gain.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

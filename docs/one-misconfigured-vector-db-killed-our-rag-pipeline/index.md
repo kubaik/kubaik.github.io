@@ -6,7 +6,7 @@ I've hit the same our beautiful mistake in more than one production codebase ove
 
 I was on call over a public holiday weekend when the error rate for our RAG pipeline climbed from 0.5% to 42% in under 10 minutes. The pipeline had been stable for weeks, handling 1.2k requests per minute with P99 latencies under 600ms. No code changes, no traffic spike — just a single misconfigured index in our vector database that caused every similarity search to return a 500 error.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. This failure mode is specific to RAG systems that rely on vector databases like [Pinecone 2026.04](https://docs.pinecone.io/docs/2026-release-notes) or [Weaviate 1.24](https://weaviate.io/blog/weaviate-1-24), but the root cause applies to any system using external vector search.
+This failure mode is specific to RAG systems that rely on vector databases like [Pinecone 2026.04](https://docs.pinecone.io/docs/2026-release-notes) or [Weaviate 1.24](https://weaviate.io/blog/weaviate-1-24), but the root cause applies to any system using external vector search.
 
 The key insight I missed for too long: vector databases don’t just store embeddings; they’re compute-heavy services that can silently fail under load when their own resource limits are exceeded. Most tutorials show how to build a RAG pipeline, but none cover what happens when the vector DB starts returning 5xx errors because its indexing or query queues are saturated.
 
@@ -394,9 +394,7 @@ kubectl apply -f canary.yaml
 
 This ensures that any regression in the RAG pipeline is caught before it affects 100% of users. It’s the difference between a 3am page and a 3am deployment that rolls back automatically.
 
-
 Check your Prometheus metrics for the `rag_requests_total` counter and verify that your error rate is below 1% at all times. If it’s not, fix the misconfiguration before it becomes a 3am incident.
-
 
 ---
 

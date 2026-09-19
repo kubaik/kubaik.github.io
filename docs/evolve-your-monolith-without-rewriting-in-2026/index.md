@@ -1,6 +1,6 @@
 # Evolve your monolith without rewriting in 2026
 
-I ran into this golden paths problem while migrating a service under a hard deadline. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke.
+The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke.
 
 ## Why I wrote this (the problem I kept hitting)
 
@@ -449,7 +449,7 @@ Comparison table: boring vs clever
 | p99 latency (100k rps) | 420 ms                    | 1.2 s                            |
 | Time to add a new API  | 15 minutes                | 4 hours                          |
 | Non-tech explanation   | 90 seconds                | 20 minutes + whiteboard drawing  |
-| Hard to reverse?       | No                        | Yes (service mesh, 15 packages) |
+| Hard to reverse? | No                        | Yes (service mesh, 15 packages) |
 | Cost (AWS t4g.small)   | $48/month                 | $120/month                       |
 
 The clever split often includes Kafka, gRPC, OpenTelemetry, and four new services. That’s the golden handcuff: once you have four services, you can’t explain them to clients anymore, and you can’t change the queue technology without rewriting the consumer.
@@ -483,7 +483,6 @@ async def health():
 Run `curl http://localhost:8000/health` and fix any connection errors immediately. This single endpoint will save you 2–3 hours of debugging during your first deploy when the security group blocks Redis.
 
 Do this now—before you touch Docker, before you write a single test—and you’ll know the paved road is still passable.
-
 
 ---
 

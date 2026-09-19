@@ -1,10 +1,10 @@
 # Skip M-Pesa: build one API for 3 African markets
 
-A colleague asked me about build payment during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
-Most people will tell you to integrate with each local provider: M-Pesa in Kenya, Flutterwave in Nigeria, and MTN Mobile Money in Ghana. That’s three APIs, three UAT cycles, three support matrices, and three upgrade timelines. The honest answer is that that approach works—until it doesn’t. I ran into this when we tried to launch a subscription product in Nigeria. The team spent six weeks wiring up Flutterwave’s webhooks, only to discover that their idempotency keys reset every 24 hours. One week later our first refund timed out because the refund endpoint wasn’t idempotent. We rebuilt the integration, but the real cost wasn’t the engineering hours; it was the support overhead every time Flutterwave released a breaking change in their changelog. Multiply that by three countries and you’re signing up for a maintenance tax that never goes away.
+Most people will tell you to integrate with each local provider: M-Pesa in Kenya, Flutterwave in Nigeria, and MTN Mobile Money in Ghana. That’s three APIs, three UAT cycles, three support matrices, and three upgrade timelines. The honest answer is that that approach works—until it doesn’t. The team spent six weeks wiring up Flutterwave’s webhooks, only to discover that their idempotency keys reset every 24 hours. One week later our first refund timed out because the refund endpoint wasn’t idempotent. We rebuilt the integration, but the real cost wasn’t the engineering hours; it was the support overhead every time Flutterwave released a breaking change in their changelog. Multiply that by three countries and you’re signing up for a maintenance tax that never goes away.
 
 The conventional wisdom tells you to abstract the providers behind a single interface: ProviderA charges, ProviderB reverses, ProviderC refunds. That abstraction is seductive because it feels DRY, but it backfires when every provider starts adding custom fields that your abstraction didn’t anticipate. I’ve seen teams burn three sprints refactoring the abstraction after discovering that MTN Mobile Money’s reversal response includes a `reason_code` field that isn’t in the spec. The abstraction becomes a leaky abstraction faster than you can say “PCI-DSS.”
 
@@ -12,7 +12,7 @@ There’s also the compliance tail: each country has its own regulator, its own 
 
 ## What actually happens when you follow the standard advice
 
-I spent two weeks on this before realising the real pain wasn’t the API calls—it was the reconciliation loop. Flutterwave’s settlement files arrive as CSV dumps at 02:00 local time, M-Pesa sends JSON via SFTP at 03:30, and MTN’s files are XML over HTTPS with a 30-minute delay tolerance. Your reconciliation job has to merge three time zones, three encodings, and three rate schemas while still closing the books by 09:00. If any file is late or malformed, your CFO sends Slack messages at 07:00 asking why the cash position is off by 200k KES.
+Flutterwave’s settlement files arrive as CSV dumps at 02:00 local time, M-Pesa sends JSON via SFTP at 03:30, and MTN’s files are XML over HTTPS with a 30-minute delay tolerance. Your reconciliation job has to merge three time zones, three encodings, and three rate schemas while still closing the books by 09:00. If any file is late or malformed, your CFO sends Slack messages at 07:00 asking why the cash position is off by 200k KES.
 
 The idempotency guarantees also collapse under load. Flutterwave’s docs say idempotency keys are valid for 24 hours, but their sandbox starts rejecting keys after 12 hours if the request volume crosses 1000 TPS. We only found out when our retry loop started failing during a Black Friday campaign. The failure looked like a race condition in our code, but the root cause was a provider-side rate limit on idempotency keys. That insight came from reading the changelog buried in a GitHub issue, not the official docs.
 
@@ -26,7 +26,7 @@ Instead of integrating with each provider, integrate with a single payments orch
 
 The orchestrator approach works because it centralises the reconciliation problem. A single webhook endpoint receives status updates from all three providers, and the orchestrator’s reconciliation engine merges the files into one ledger. You still have to handle idempotency, but you’re now doing it against a single API contract rather than three. The adapter layer becomes responsible for translating the orchestrator’s generic status codes into provider-specific ones, so your business logic never branches by country.
 
-I was surprised that the orchestrator’s sandbox doesn’t always match the provider’s sandbox. For example, DPO Pay’s sandbox returns 200 OK for every request, while the live endpoint enforces stricter validations. The orchestrator hides that difference behind a feature flag, but the flag isn’t documented—you discover it when your first production refund fails because the sandbox didn’t validate a field that the live endpoint expects. Always test idempotency and validation in the sandbox before you go live.
+For example, DPO Pay’s sandbox returns 200 OK for every request, while the live endpoint enforces stricter validations. The orchestrator hides that difference behind a feature flag, but the flag isn’t documented—you discover it when your first production refund fails because the sandbox didn’t validate a field that the live endpoint expects. Always test idempotency and validation in the sandbox before you go live.
 
 Another insight: the orchestrator’s webhook schema is versioned, but the provider-specific schemas aren’t. If you rely on the orchestrator’s webhook and ignore the provider’s native webhook, you reduce your blast radius when a provider releases a breaking change. We saw this when Flutterwave changed their reversal response format in April 2026; our adapter caught the change before the orchestrator’s reconciliation engine did, and we patched the adapter in under two hours without touching the core payment flow.
 
@@ -146,20 +146,16 @@ var (
 ```
 Commit the file and push it to main. You’ll have real data on reconciliation errors within 24 hours.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

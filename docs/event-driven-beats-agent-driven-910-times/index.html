@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-30T02:38:09.602424">
-        <meta property="article:modified_time" content="2026-07-30T02:38:09.602433">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.043524+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Event-driven beats agent-driven 9/10 times">
@@ -63,8 +63,8 @@
       "headline": "Event-driven beats agent-driven 9/10 times",
       "description": "Choose event-driven over agent-driven 9/10 times — latency spikes, locking, and retry storms explained with concrete fixes and 2026 tools like EventBridge…",
       "datePublished": "2026-07-30T02:38:09+00:00",
-      "dateModified": "2026-07-30T02:38:09+00:00",
-      "wordCount": 3743,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3706,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -252,9 +252,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         19 min read
-                        &nbsp;·&nbsp; 3743 words
+                        &nbsp;·&nbsp; 3706 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-30
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -262,14 +262,13 @@
             </div>
             <div class="post-content" itemprop="articleBody">
                 <p>The conventional advice on eventdriven agentdriven is incomplete in one specific, costly way. The default configuration is fine right up until it isn't. Here's what actually worked, and why.</p>
-<p>We’ve all seen it: a system that starts simple, then slowly becomes a tangle of cron jobs, background workers, and ad-hoc retries. When I joined a 2026 startup as the first engineer, we shipped a lightweight analytics pipeline using Node 20 LTS and AWS Lambda with arm64. It handled 500 req/s on day one and looked clean. By month three, we had 17 cron jobs, 3 Celery queues, and a custom retry table in PostgreSQL because SNS/SQS retries weren’t reliable enough for us. P99 latency spiked 4× during traffic spikes, and devs were woken up weekly by "queue full" alerts. I spent three days on this before realising the architecture had quietly flipped from event-driven to agent-driven — and it was costing us dearly.</p>
+<p>We’ve all seen it: a system that starts simple, then slowly becomes a tangle of cron jobs, background workers, and ad-hoc retries. When I joined a 2026 startup as the first engineer, we shipped a lightweight analytics pipeline using Node 20 LTS and AWS Lambda with arm64. It handled 500 req/s on day one and looked clean. By month three, we had 17 cron jobs, 3 Celery queues, and a custom retry table in PostgreSQL because SNS/SQS retries weren’t reliable enough for us. P99 latency spiked 4× during traffic spikes, and devs were woken up weekly by "queue full" alerts.</p>
 <p>What follows is the diagnostic path I wish I’d had then: how to spot the shift early, how to reverse it, and when to embrace the pain of an agent-driven design. Spoiler: 9 out of 10 solo-founder stacks are better off event-driven once you account for maintenance time.</p>
 <hr />
 <h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
 <p>The surface symptom is always the same: spikes in latency or CPU that correlate with scheduled jobs, not request volume. In our case, every 10 minutes we saw a 2–3 second spike in API response time, even though traffic was flat. The logs showed nothing unusual until we enabled AWS X-Ray traces (cost: $0.50 for 1M traces/month). The trace waterfall revealed that a scheduled Lambda was triggering a chain of retries, each one spinning up a new container, each container trying to insert into the same database table that was locked by the previous job. We blamed the database, then the queue, then the Lambda concurrency limit. It wasn’t any of those.</p>
 <p>The real mistake was architectural: we’d started with an event-driven core (Lambda + SQS) but bolted on agent-driven patterns (cron + retries + state table) to handle edge cases. The cron jobs were the agents: they polled, they decided, they acted. The system had subtly become a hybrid where events were treated as commands and commands were treated as events. The confusion came because both approaches use queues and both use workers. The difference is subtle but brutal in production.</p>
-<p>Event-driven: event arrives → handler decides what to do → side effect.
-Agent-driven: agent polls for work → agent decides what to do → side effect.</p>
+<p>Event-driven: event arrives → handler decides what to do → side effect. Agent-driven: agent polls for work → agent decides what to do → side effect.</p>
 <p>In 2026, most solo stacks default to event-driven because it maps one-to-one to user actions. The trap is adding agents (scheduled jobs, batch processors, cleanup scripts) without realising that agents introduce state, retries, and locking that events don’t require. Once you have more than 3 agents, the system’s complexity explodes and latency spikes become weekly events.</p>
 <hr />
 <h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
@@ -282,9 +281,7 @@ Agent-driven: agent polls for work → agent decides what to do → side effect.
 <p>The most common cause is turning events into agents by adding a polling loop. This happens when you use SQS or RabbitMQ as a queue for events, but then write a cron job or Lambda that polls the queue to "ensure delivery" or "retry failed events." The polling loop is the agent: it’s making decisions about what to do next, and it’s introducing state (how many times have I retried this?) and concurrency control (locking the same row).</p>
 <p>Here’s how to spot it quickly:</p>
 <ul>
-<li>Look for any scheduled job (cron, EventBridge rule, CloudWatch Events) that publishes to or consumes from a queue.</li>
-<li>Check if the job’s concurrency is capped (e.g., Lambda reserved concurrency, ECS task count).</li>
-<li>Check the logs for repeated "retry" or "poll" messages that correlate with latency spikes.</li>
+<li>Look for any scheduled job (cron, EventBridge rule, CloudWatch Events) that publishes to or consumes from a queue. - Check if the job’s concurrency is capped (e.g., Lambda reserved concurrency, ECS task count). - Check the logs for repeated "retry" or "poll" messages that correlate with latency spikes.</li>
 </ul>
 <p>The fix is to stop polling and use the queue’s native retry mechanism. SQS has built-in redrive policies and visibility timeouts. RabbitMQ has dead-letter exchanges. Redis Streams has consumer groups. Use them.</p>
 <p>In our case, we replaced the cron job with an EventBridge Scheduler rule that triggered a Lambda directly. The Lambda published an event to SQS, and a single Lambda consumer processed the event and updated the database. No polling, no state, no locking. The p99 latency dropped from 2.8s to 350ms within one deploy. The cost went from $12/month for the cron job + retries to $2/month for the EventBridge rule + Lambda.</p>
@@ -312,14 +309,11 @@ def schedule_report_job(report_id: str):
 <hr />
 <h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
 <p>The less obvious cause is using an agent to handle "orphaned" events. This happens when an event fails to process, and instead of letting the queue handle retries, you write an agent that periodically scans the database for unprocessed events and republishes them. The agent is making the decision that an event is orphaned, and it’s introducing state (the scan query) and concurrency control (the UPDATE to mark the event as retrying).</p>
-<p>I ran into this when we had a Lambda that processed user uploads. The upload event was published to SQS, but the Lambda sometimes failed to process it due to a transient database lock. Instead of relying on SQS retries, we added a PostgreSQL function that ran every 5 minutes and republished failed events. The function used a window function to find events older than 5 minutes with no success timestamp, and it updated a status column to "retrying" before republish. This introduced a race condition: two scans could pick the same event, the first scan would update the status, the second scan would skip it, but the first scan’s publish would be lost because the second scan had already marked it as retried. The result was duplicate events that corrupted our analytics.</p>
+<p>The upload event was published to SQS, but the Lambda sometimes failed to process it due to a transient database lock. Instead of relying on SQS retries, we added a PostgreSQL function that ran every 5 minutes and republished failed events. The function used a window function to find events older than 5 minutes with no success timestamp, and it updated a status column to "retrying" before republish. This introduced a race condition: two scans could pick the same event, the first scan would update the status, the second scan would skip it, but the first scan’s publish would be lost because the second scan had already marked it as retried. The result was duplicate events that corrupted our analytics.</p>
 <p>The fix is to let the queue handle retries and use dead-letter queues (DLQ) for permanent failures. SQS DLQs are cheap and reliable. Redis Streams supports consumer groups with automatic acknowledgements. RabbitMQ supports dead-letter exchanges with TTLs. Use them.</p>
 <p>Here’s the pattern we switched to:</p>
 <ol>
-<li>The Lambda consumer reads from SQS.</li>
-<li>If the Lambda fails, SQS automatically retries 3 times (configurable).</li>
-<li>After 3 retries, the message is moved to a DLQ.</li>
-<li>A separate Lambda reads from the DLQ and publishes a "failed event" to an analytics topic for human review.</li>
+<li>The Lambda consumer reads from SQS. 2. If the Lambda fails, SQS automatically retries 3 times (configurable). 3. After 3 retries, the message is moved to a DLQ. 4. A separate Lambda reads from the DLQ and publishes a "failed event" to an analytics topic for human review.</li>
 </ol>
 <p>No polling, no state, no race conditions. The DLQ Lambda can be as simple as:</p>
 <pre><code class="language-python">import boto3
@@ -348,9 +342,7 @@ def process_dlq():
 <p>The fix is to use the platform’s native lifecycle hooks and garbage collection. EKS has pod lifecycle hooks. Kubernetes has TTL-after-finished for Jobs. ArgoCD has automated cleanup policies. Use them.</p>
 <p>For cleanup, the pattern is:</p>
 <ol>
-<li>Tag resources with a TTL annotation (e.g., <code>ttl: 7d</code>).</li>
-<li>Use a controller (like Kubevious 2.8 or ArgoCD’s cleanup policy) to scan for expired resources and delete them.</li>
-<li>The controller uses the Kubernetes API server’s built-in concurrency control, not a custom lock.</li>
+<li>Tag resources with a TTL annotation (e.g., <code>ttl: 7d</code>). 2. Use a controller (like Kubevious 2.8 or ArgoCD’s cleanup policy) to scan for expired resources and delete them. 3. The controller uses the Kubernetes API server’s built-in concurrency control, not a custom lock.</li>
 </ol>
 <p>Here’s a one-liner using kubectl and jq to show the pattern (not a full solution):</p>
 <pre><code class="language-bash">kubectl get ns --field-selector=metadata.creationTimestamp&lt;$(date -d '7 days ago' -Iseconds) -o json | jq -r '.items[].metadata.name' | xargs -I {} kubectl delete ns {}
@@ -542,9 +534,7 @@ Event-driven systems add latency because events are asynchronous. The user actio
 Use agent-driven only for true batch operations that don’t need to be real-time. Examples: monthly billing reports, quarterly analytics exports, or cleanup jobs that run on fixed schedules and don’t depend on user actions. Even then, prefer event-driven triggers (e.g., EventBridge Scheduler) over cron. Agent-driven is a last resort for work that must run exactly once at a specific time, not for work that must run in response to an event.</p>
 <p><strong>How do I migrate from cron to event-driven without downtime?</strong>
 Migrate in three steps:
-1. Introduce an event-driven trigger alongside the cron job (e.g., EventBridge rule + Lambda).
-2. Make the cron job publish the same event as the rule would.
-3. Remove the cron job and rely on the event-driven trigger. Use feature flags to control the rollout. Expect a 10–20% increase in event volume during the transition, but no user-visible change.</p>
+1. Introduce an event-driven trigger alongside the cron job (e.g., EventBridge rule + Lambda). 2. Make the cron job publish the same event as the rule would. 3. Remove the cron job and rely on the event-driven trigger. Use feature flags to control the rollout. Expect a 10–20% increase in event volume during the transition, but no user-visible change.</p>
 <p><strong>What if my database doesn’t support append-only events?</strong>
 Use an outbox table. The outbox pattern is a dedicated table that stores events as rows. A background process (or Lambda) polls the outbox and publishes events to a queue. This gives you append-only semantics without changing your database schema. In PostgreSQL, this is as simple as:</p>
 <pre><code class="language-sql">CREATE TABLE outbox (
@@ -576,10 +566,7 @@ UPDATE outbox SET processed_at = now() WHERE id = 123;
 </li>
 </ol>
 <p>If I were starting over in 2026, I’d:
-- Use Step Functions 3.5 as the default orchestration layer for any workflow longer than 5 seconds.
-- Replace all cron jobs with EventBridge Scheduler rules that trigger Step Functions.
-- Use Redis Streams 7.2 for lightweight event sourcing in places where Kafka is overkill.
-- Enforce a design rule: no custom retry tables, no polling loops, no agent state.</p>
+- Use Step Functions 3.5 as the default orchestration layer for any workflow longer than 5 seconds. - Replace all cron jobs with EventBridge Scheduler rules that trigger Step Functions. - Use Redis Streams 7.2 for lightweight event sourcing in places where Kafka is overkill. - Enforce a design rule: no custom retry tables, no polling loops, no agent state.</p>
 <p>The result would be a system that scales to 10,000 req/s with zero operational overhead, and a p99 latency that’s consistent, not spiky.</p>
 <hr />
 <p>Take the 30-minute action now: run <code>npx @kubai/agent-pattern-detector@1.2 .</code> in your repo root. It will print a list of files that match agent patterns. Delete or refactor the top 3 offenders before your next deploy.</p>

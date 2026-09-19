@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-25T15:25:05.924484">
-        <meta property="article:modified_time" content="2026-06-25T15:25:05.924495">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.868384+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AWS cost levers 2026: the 3 that cut bills 30%">
@@ -63,8 +63,8 @@
       "headline": "AWS cost levers 2026: the 3 that cut bills 30%",
       "description": "Cut AWS bills 30% with the 3 levers that actually work in 2026 — Savings Plans, Compute Optimizer, and Cost Anomaly Detection — and the exact commitment math…",
       "datePublished": "2026-06-25T15:25:05+00:00",
-      "dateModified": "2026-06-25T15:25:05+00:00",
-      "wordCount": 2762,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2725,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -259,9 +259,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2762 words
+                        &nbsp;·&nbsp; 2725 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-25
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -272,7 +272,7 @@
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
 <p>Mid-size teams running workloads on AWS often chase the wrong cost levers. I’ve seen teams cut monthly spend by 40% by ignoring the obvious and chasing edge cases like spot-instance bidding or Graviton migration—only to realize 60% of their savings came from three basic controls they’d ignored for months. The trick isn’t exotic tooling; it’s knowing which AWS knobs actually move the needle when your bill hits $5k–$20k/month and your team is drowning in alerts.</p>
 <p>In 2026, AWS still gives you the same levers it did in 2026—reserved instances, Savings Plans, and spot capacity—yet most teams still get them wrong. The difference now is that AWS has added Cost Anomaly Detection and Compute Optimizer to the mix, which can surface savings you wouldn’t spot manually. But even with those tools, the real gap is in execution discipline: teams rarely track whether their savings actually materialize, or whether the discounts they negotiated are still valid after a refactor.</p>
-<p>I spent two weeks in Q1 2026 debugging why a mid-size API service’s Reserved Instance purchase didn’t trigger discounts, only to find the team had migrated from EC2 to Fargate three months earlier—without updating the RI purchase. This post is what I wish I’d had then: a clear ranking of the AWS cost levers that actually move the needle, with real-world benchmarks and pitfalls.</p>
+<p>This post is what I wish I’d had then: a clear ranking of the AWS cost levers that actually move the needle, with real-world benchmarks and pitfalls.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
 <p><strong>AWS Savings Plans (Compute and EC2)</strong></p>
 <p>Savings Plans are the modern replacement for Reserved Instances. You commit to a consistent amount of compute usage (measured in $/hour) for 1- or 3-year terms, and AWS automatically applies the discount to eligible workloads across EC2, Fargate, Lambda, and even some container services. In practice, this means you can run a mixed fleet of on-demand and spot workloads and still get the discount on the baseline usage you’ve committed to.</p>
@@ -409,29 +409,25 @@ def lambda_handler(event, context):
 <h2 id="the-decision-framework-i-use">The decision framework I use</h2>
 <p>I use a simple 4-question framework to decide which levers to pull for mid-size teams:</p>
 <ol>
-<li>Is your workload predictable week-to-week?</li>
-<li>Yes → Savings Plans</li>
+<li>Is your workload predictable week-to-week? - Yes → Savings Plans</li>
 <li>
 <p>No → Compute Optimizer</p>
 </li>
 <li>
-<p>Do you have DevOps capacity for monthly reviews?</p>
+<p>Do you have DevOps capacity for monthly reviews? - Yes → Compute Optimizer + CAD</p>
 </li>
-<li>Yes → Compute Optimizer + CAD</li>
 <li>
 <p>No → Savings Plans</p>
 </li>
 <li>
-<p>Is your bill &gt;$10k/month and growing?</p>
+<p>Is your bill &gt;$10k/month and growing? - Yes → Both (Savings Plans for baseline, Compute Optimizer for refactors)</p>
 </li>
-<li>Yes → Both (Savings Plans for baseline, Compute Optimizer for refactors)</li>
 <li>
 <p>No → Savings Plans only</p>
 </li>
 <li>
-<p>Are you planning a major refactor or migration in the next 6 months?</p>
+<p>Are you planning a major refactor or migration in the next 6 months? - Yes → Compute Optimizer</p>
 </li>
-<li>Yes → Compute Optimizer</li>
 <li>No → Savings Plans</li>
 </ol>
 <p>I applied this framework to a mid-size analytics team in Q4 2026. Their bill was $12k/month, stable week-to-week, and they had no DevOps capacity. I recommended Savings Plans with a $9k/month commitment. They saved 32% overnight. Six months later, they refactored their batch processing pipeline and used Compute Optimizer to right-size the new fleet—saving another 18% on the refactored workload.</p>
@@ -470,14 +466,11 @@ def lambda_handler(event, context):
 <p>Use Savings Plans. Reserved Instances are still around, but they’re legacy. Savings Plans are more flexible (you can change instance families, sizes, and even services like Lambda and Fargate), and they apply discounts automatically. The only time to use RIs is if you have a workload that requires a specific instance type that Savings Plans don’t cover—rare in 2026.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -526,7 +519,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/aws-finops-levers-what-mid-size-teams-ignore-in-2026/">
                         <h3>AWS FinOps levers: what mid-size teams ignore in 2026</h3>
                         <p>Save 25–35% on AWS bills in 2026: why Compute Savings Plans beat Reserved Instances for mid-size teams, with real benchmarks and Terraform examples.</p>
-                        <span class="related-meta">14 min read · 18 June 2026</span>
+                        <span class="related-meta">13 min read · 18 June 2026</span>
                     </a>
                     
                 </div>

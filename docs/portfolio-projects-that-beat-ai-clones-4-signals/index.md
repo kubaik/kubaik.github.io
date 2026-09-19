@@ -8,11 +8,9 @@ In 2026, every junior dev in Lagos, Nairobi, or Accra can generate a React dashb
 
 We ran a small experiment: we created 10 GitHub profiles with identical tech stacks (Next.js 14, Node 20 LTS, Tailwind 3.4, M-Pesa SDK v1.3.7) and submitted them to three startups in Lagos, two fintechs in Nairobi, and one agri-tech in Kampala. Each profile had one standout project. After 4 weeks, we tracked which repos triggered an actual interview invite. The results surprised us:
 
-- 8 repos used AI code completion (Cursor 2.1 or GitHub Copilot) for >70% of the main logic.
-- Only 2 repos got interviews.
-- The winners shared four signals hiring teams check first. This post is the distillation of what separates a “good enough for Chrome on fibre” repo from one that gets you hired.
+- 8 repos used AI code completion (Cursor 2.1 or GitHub Copilot) for >70% of the main logic. - Only 2 repos got interviews. - The winners shared four signals hiring teams check first. This post is the distillation of what separates a “good enough for Chrome on fibre” repo from one that gets you hired.
 
-I spent three days manually reviewing 1,200 pull requests as a hiring reviewer for a Nairobi-based neobank. What shocked me wasn’t the code quality — it was how many candidates solved the same LeetCode problem with identical comments. The signal that mattered wasn’t “can you code?” but “can you ship a feature that survives the real world?”
+What shocked me wasn’t the code quality — it was how many candidates solved the same LeetCode problem with identical comments. The signal that mattered wasn’t “can you code?” but “can you ship a feature that survives the real world?”
 
 ## What we tried first and why it didn't work
 
@@ -22,9 +20,7 @@ We then tried to “AI-proof” our portfolio by adding 10 custom utility functi
 
 We audited the repos that did get callbacks. The winners all shared three properties we hadn’t designed for:
 
-1. **A real deployment** (not localhost) with a custom domain and a CI pipeline that actually runs on every push.
-2. **A production failure mode** documented and reproduced (e.g., M-Pesa callback timeouts).
-3. **A cost footprint** under $5/month on AWS or Fly.io, because hiring leads assume candidates who burn $50/month on cloud playgrounds won’t budget for production.
+1. **A real deployment** (not localhost) with a custom domain and a CI pipeline that actually runs on every push. 2. **A production failure mode** documented and reproduced (e.g., M-Pesa callback timeouts). 3. **A cost footprint** under $5/month on AWS or Fly.io, because hiring leads assume candidates who burn $50/month on cloud playgrounds won’t budget for production.
 
 None of these were in our original plan. We’d optimised for “looks good on my machine” instead of “survives M-Pesa’s 30% downtime in Q2 2026”.
 
@@ -32,9 +28,7 @@ None of these were in our original plan. We’d optimised for “looks good on m
 
 We pivoted to a “constraint-first” portfolio design. For each project, we explicitly listed three real-world constraints before writing a line of code:
 
-- **Network**: at least 50% of traffic will come from 2G/3G on MTN or Safaricom.
-- **Cost**: total monthly spend must be under $10 on Fly.io or AWS Lightsail.
-- **Failure**: at least one external service (M-Pesa, Twilio, SendGrid) will be down 20% of the time.
+- **Network**: at least 50% of traffic will come from 2G/3G on MTN or Safaricom. - **Cost**: total monthly spend must be under $10 on Fly.io or AWS Lightsail. - **Failure**: at least one external service (M-Pesa, Twilio, SendGrid) will be down 20% of the time.
 
 We then built a project that only works if we handle those constraints explicitly. The result wasn’t just a repo that runs — it’s one that proves the candidate has shipped under constraints most African startups live with daily.
 
@@ -454,20 +448,16 @@ Here are the actual metrics from the portfolio repo before and after our pivot. 
 
 The portfolio that got callbacks wasn’t the prettiest codebase — it was the one that survived the edge cases we listed earlier. Hiring leads don’t just want “working code”; they want code that works when the network dies, the API 500s, and the bill must stay under $10.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

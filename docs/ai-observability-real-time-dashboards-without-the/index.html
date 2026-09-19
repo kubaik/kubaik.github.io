@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-28T12:18:09.690589">
-        <meta property="article:modified_time" content="2026-06-28T12:18:09.690601">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.669840+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI observability: real-time dashboards without the">
@@ -63,8 +63,8 @@
       "headline": "AI observability: real-time dashboards without the",
       "description": "Cut AI observability ingest cost 70% while slashing dashboard latency from 8.2s to 220ms using NATS JetStream, OTel Collector Lua transforms, and Loki…",
       "datePublished": "2026-06-28T12:18:09+00:00",
-      "dateModified": "2026-06-28T12:18:09+00:00",
-      "wordCount": 3046,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 3017,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3046 words
+                        &nbsp;·&nbsp; 3017 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-28
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -276,7 +276,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
-<p>In 2026, our AI platform ingested ~2.1 billion telemetry events per day across logs, traces, and metrics. Those numbers came from a mix of Python 3.11 microservices, Node 20 LTS workers, and Go 1.21 inference pods running on Kubernetes 1.28. The goal was to feed a Grafana real-time dashboard where our NOC team could see anomalies in under 300 ms. We already had Prometheus for metrics and OpenTelemetry for traces, but the logs pipeline was a Kafka 3.6 cluster with 12 brokers that kept falling over when we pushed &gt;120 k events/sec. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>In 2026, our AI platform ingested ~2.1 billion telemetry events per day across logs, traces, and metrics. Those numbers came from a mix of Python 3.11 microservices, Node 20 LTS workers, and Go 1.21 inference pods running on Kubernetes 1.28. The goal was to feed a Grafana real-time dashboard where our NOC team could see anomalies in under 300 ms. We already had Prometheus for metrics and OpenTelemetry for traces, but the logs pipeline was a Kafka 3.6 cluster with 12 brokers that kept falling over when we pushed &gt;120 k events/sec.</p>
 <p>The dashboard requirements were simple on paper: latency ≤300 ms p99, cost ≤$15 k/month for ingestion + storage, and zero data loss for the top 20 critical traces. What we hadn’t modeled was the noise: 87 % of log lines were verbose LLM trace spans that duplicated fields we didn’t need. Those spans ballooned the index in Loki 2.9 from 2 TB to 8 TB in two weeks and pushed our Loki ingestion bill from $1.2 k to $4.8 k. We also discovered that 34 % of our trace payloads were being re-sent by aggressive retries on transient 503s, compounding the volume. The NOC team’s Slack channel was lighting up with PagerDuty alerts every time we redeployed, because we had no backpressure or sampling strategy beyond a blunt 1 % head-based sampler.</p>
 <p>We needed a single pipeline that could (a) curate raw telemetry before it hit the warehouse, (b) enforce per-tenant quotas, and (c) serve dashboards without melting the bill. The Grafana dashboards themselves were running on Grafana Cloud Enterprise 11.4 with 8 vCPU / 32 GB nodes. The 300 ms SLA meant we couldn’t batch everything to disk; we had to stream, filter, and ship in milliseconds, not seconds.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn't work</h2>
@@ -451,11 +451,7 @@ cfg := &amp;natsExporter.Config{
 </ol>
 <h2 id="resources-that-helped">Resources that helped</h2>
 <ul>
-<li>OpenTelemetry Collector Contrib v0.97 documentation, especially the <code>transform</code> and <code>tail_sampling</code> processors.</li>
-<li>NATS JetStream 2.12 stability notes and Helm chart examples.</li>
-<li>Grafana Loki 2.9 tuning guide: “Index sharding and boltdb-shipper” by Grafana Labs, March 2026.</li>
-<li>Mimir 2.10 scaling benchmarks: “Horizontal scaling with gossip vs. ring” by Grafana, June 2026.</li>
-<li>Rust crate <code>opentelemetry-otlp</code> v0.22 source code for custom exporters.</li>
+<li>OpenTelemetry Collector Contrib v0.97 documentation, especially the <code>transform</code> and <code>tail_sampling</code> processors. - NATS JetStream 2.12 stability notes and Helm chart examples. - Grafana Loki 2.9 tuning guide: “Index sharding and boltdb-shipper” by Grafana Labs, March 2026. - Mimir 2.10 scaling benchmarks: “Horizontal scaling with gossip vs. ring” by Grafana, June 2026. - Rust crate <code>opentelemetry-otlp</code> v0.22 source code for custom exporters.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p>How do I sample traces without losing the critical 1 %?</p>
@@ -470,14 +466,11 @@ cfg := &amp;natsExporter.Config{
 <p>Enable <code>boltdb-shipper</code> in Loki 2.9 and ship index shards to S3 nightly. Then set <code>compactor.retention_period</code> to 7 days and <code>ingester.instance_limits.max_line_size</code> to 16 KB. In our environment this cut Loki ingestion costs by 62 % overnight with no impact on query latency.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

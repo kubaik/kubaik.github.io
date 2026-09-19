@@ -1,6 +1,6 @@
 # Senior role projects: 3 real paths
 
-A colleague asked me about portfolio projects during a code review recently, and my first answer wasn't a good one. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in.
+Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in.
 
 ## Why I wrote this (the problem I kept hitting)
 
@@ -519,7 +519,6 @@ Pick one project and deploy it to a $5 VPS in Lagos using Docker Compose. Add a 
 Do this today: open `src/plugins/tenant.ts` and add a comment explaining why you chose RLS over application-level filtering. Commit it, push to GitHub, and add the repo link to your portfolio. Hiring teams want to see the thinking, not just the code.
 
 That’s the real differentiator in 2026.
-
 
 ---
 

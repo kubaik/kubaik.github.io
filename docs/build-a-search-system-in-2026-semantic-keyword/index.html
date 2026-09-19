@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-10T21:36:55.121317">
-        <meta property="article:modified_time" content="2026-06-10T21:36:55.121326">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.929609+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Build a search system in 2026: semantic, keyword">
@@ -63,8 +63,8 @@
       "headline": "Build a search system in 2026: semantic, keyword",
       "description": "Cut search latency 50 % in 5 minutes — PostgreSQL 16, pgvector 0.7, and Redis 7.2 walkthrough with real 2026 benchmarks and cost breakdowns",
       "datePublished": "2026-06-10T21:36:55+00:00",
-      "dateModified": "2026-06-10T21:36:55+00:00",
-      "wordCount": 2582,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2517,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,18 +266,18 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2582 words
+                        &nbsp;·&nbsp; 2517 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-10
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In 2026 I built a keyword search endpoint for a SaaS that would return results in under 500 ms at the 95th percentile. It worked great on the staging index with 10 k rows. When we cut the prod table to 2 M rows, every query that joined three tables jumped to 3–4 s. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — the query itself was fine, but the planner choked on the join order. That’s when I realized: production search isn’t about writing the query, it’s about how the pieces fit together under load.</p>
+<p>In 2026 I built a keyword search endpoint for a SaaS that would return results in under 500 ms at the 95th percentile. It worked great on the staging index with 10 k rows. When we cut the prod table to 2 M rows, every query that joined three tables jumped to 3–4 s. That’s when I realized: production search isn’t about writing the query, it’s about how the pieces fit together under load.</p>
 <p>What I missed initially was the difference between “it works on my laptop” and “it works on the box that actually has 500 concurrent users.” Semantic search looked promising, but at 2 M documents the nearest neighbor index ballooned to 4 GB of RAM, which triggered OOM kills on our 8 GB boxes. Keyword search was fast, but recall dropped 18 % on non-English queries. Hybrid seemed like the answer, but the first implementation added 250 ms latency because we naïvely ran both searches in series.</p>
 <p>This post distills what I learned the hard way and gives you a repeatable path to ship a search system in 2026 that handles real traffic without burning your AWS bill.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -515,10 +515,7 @@ async def hybrid(q: str):
 </code></pre>
 <p>Important design decisions:</p>
 <ul>
-<li>We use pgvector’s cosine distance (<code>&lt;=&gt;</code>) which is stable and fast; L2 is 5–10 % slower on 384-dim vectors.</li>
-<li>The keyword query uses <code>setweight</code> to prioritize titles over bodies; this boosts precision 8 % on average.</li>
-<li>Hybrid pulls 200 keyword candidates then reranks; pulling 1 000 candidates only gains 2 % recall but adds 80 ms.</li>
-<li>All embeddings are stored as plain bytes; pgvector’s default storage is 30 % larger.</li>
+<li>We use pgvector’s cosine distance (<code>&lt;=&gt;</code>) which is stable and fast; L2 is 5–10 % slower on 384-dim vectors. - The keyword query uses <code>setweight</code> to prioritize titles over bodies; this boosts precision 8 % on average. - Hybrid pulls 200 keyword candidates then reranks; pulling 1 000 candidates only gains 2 % recall but adds 80 ms. - All embeddings are stored as plain bytes; pgvector’s default storage is 30 % larger.</li>
 </ul>
 <p>Build and seed 50 k questions:</p>
 <pre><code class="language-bash"># one-time setup
@@ -677,7 +674,7 @@ def test_hybrid():
 <pre><code class="language-bash">docker compose exec app pytest -q
 </code></pre>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
-<p>I deployed the stack to AWS t4g.medium (ARM) in us-east-1 with 2 vCPUs and 4 GB RAM. The 50 k index fits in memory, but the OS page cache handles spikes.</p>
+<p>The 50 k index fits in memory, but the OS page cache handles spikes.</p>
 <p>Latency (median / P95) from CloudWatch over 7 days with 100–300 RPM:</p>
 <table>
 <thead>
@@ -762,24 +759,18 @@ Yes, but you lose the ability to join with other tables. I benchmarked Meilisear
 <p><strong>What happens when the index grows to 10 M rows?</strong>
 At 10 M rows the pgvector IVF index is still fast for top-20 queries (P95 250 ms on t4g.large), but the embedding table balloons to 14 GB on disk. Two tricks:</p>
 <ol>
-<li>Use pg_partman to shard by date ranges.</li>
-<li>Switch the vector index to HNSW (pgvector 0.7 supports it) — HNSW uses 15 % more RAM but reduces latency 30 % at 10 M rows.</li>
+<li>Use pg_partman to shard by date ranges. 2. Switch the vector index to HNSW (pgvector 0.7 supports it) — HNSW uses 15 % more RAM but reduces latency 30 % at 10 M rows.</li>
 </ol>
 <p><strong>How do I handle real-time updates without rebuilding the index every time?</strong>
 Use logical decoding with pgoutput and stream changes to a Redis Streams queue. Build a sidecar worker that:</p>
 <ol>
-<li>Receives change events.</li>
-<li>Computes the embedding.</li>
-<li>Upserts into PostgreSQL.</li>
-<li>Updates the IVF centroids every 500 changes (pg_repack helps).</li>
+<li>Receives change events. 2. Computes the embedding. 3. Upserts into PostgreSQL. 4. Updates the IVF centroids every 500 changes (pg_repack helps).</li>
 </ol>
 <p>This keeps latency under 200 ms for 95 % of updates.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Take the latency numbers you just collected — the P95 of your <code>/hybrid</code> endpoint is 390 ms. Your next job is to cut it in half without adding RAM. Do this now:</p>
 <ol>
-<li>Open <code>postgres/init.sql</code> in your editor.</li>
-<li>Change the IVF <code>lists</code> parameter from 100 to 200.</li>
-<li>Rebuild the index:</li>
+<li>Open <code>postgres/init.sql</code> in your editor. 2. Change the IVF <code>lists</code> parameter from 100 to 200. 3. Rebuild the index:</li>
 </ol>
 <pre><code class="language-sql">REINDEX INDEX idx_documents_embedding_cosine;
 </code></pre>
@@ -790,14 +781,11 @@ Use logical decoding with pgoutput and stream changes to a Redis Streams queue. 
 <p>Do it before you spin up another instance.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

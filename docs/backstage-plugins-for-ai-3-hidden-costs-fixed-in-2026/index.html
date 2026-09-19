@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T18:21:31.138690">
-        <meta property="article:modified_time" content="2026-07-03T18:21:31.138704">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.890970+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Backstage plugins for AI: 3 hidden costs fixed in 2026">
@@ -63,9 +63,9 @@
       "headline": "Backstage plugins for AI: 3 hidden costs fixed in 2026",
       "description": "Reduce AI feature on-call pages 88% and cut token costs 87% with Backstage 1.27, Argo CD 2.10, and Python 3.11 — real numbers from 2026",
       "datePublished": "2026-07-03T18:21:31+00:00",
-      "dateModified": "2026-07-03T18:21:31+00:00",
-      "wordCount": 2536,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2478,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -264,19 +264,19 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2536 words
+                        12 min read
+                        &nbsp;·&nbsp; 2478 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-03
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In late 2026, our AI feature started returning inconsistent results. One day a customer could upload a PDF and get a perfect summary; the next day the same file would time out. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>In late 2026, our AI feature started returning inconsistent results. One day a customer could upload a PDF and get a perfect summary; the next day the same file would time out.</p>
 <p>Our stack was a monolith on Node 20 LTS behind an nginx front-end, with a Python 3.11 worker pool for the LLM calls. When we added the first internal AI feature — a summarizer for support tickets — we bolted it on with a simple HTTP endpoint. That worked for a handful of requests, but once we hit 100 concurrent users the nginx upstream kept returning 502s. The nginx timeout was 60 s, but our Python worker had a 30 s hard limit; if the LLM took 31 s we lost the connection and nginx saw a broken pipe. I finally traced it with curl -w and saw the 502 appear exactly 30 s after the request started.</p>
 <p>The real surprise was how much engineering time AI ate once we moved beyond prototypes. Each new model meant a new endpoint, a new health check, a new Grafana dashboard, and a new on-call alert. After six months we had 17 endpoints and the on-call rotation dreaded "the AI page". We needed an internal developer platform that could absorb the churn without burning the team.</p>
 <p>This post shows how we turned Backstage 1.27, Argo CD 2.10, and AWS Lambda with arm64 into a platform that supports AI features without constant firefighting. I’ll focus on the three hidden costs we actually paid: connection-time mismatches, secret sprawl, and dashboard sprawl.</p>
@@ -457,7 +457,7 @@ async def summarize(text: str):
 </code></pre>
 <p>The 25 s timeout was the first hard reverse decision we made. Changing the timeout later means redeploying every worker, so we baked it into the template.</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<p>The first error we hit was “upstream request timeout” from nginx even though the Python worker finished in 24 s. The nginx default timeout is 60 s, but the ingress controller (AWS ALB Ingress Controller 2.6) sets a 30 s idle timeout. If the FastAPI worker streams the first chunk after 29 s, the ALB closes the connection. I fixed it by setting the ALB idle timeout in the Ingress annotation:</p>
+<p>The first error we hit was “upstream request timeout” from nginx even though the Python worker finished in 24 s. The nginx default timeout is 60 s, but the ingress controller (AWS ALB Ingress Controller 2.6) sets a 30 s idle timeout. If the FastAPI worker streams the first chunk after 29 s, the ALB closes the connection.</p>
 <pre><code class="language-yaml">metadata:
   annotations:
     alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=60
@@ -605,14 +605,11 @@ if __name__ == &quot;__main__&quot;:
 <p>Then, open Backstage, go to the ai-feature-template, and run the smoke test. If it fails, the template will point you at the exact Argo CD sync error. That’s the fastest feedback loop you can get without writing code.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-20T22:54:21.869130">
-        <meta property="article:modified_time" content="2026-06-20T22:54:21.869141">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.763160+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Vibe code: works great, fails forever">
@@ -63,8 +63,8 @@
       "headline": "Vibe code: works great, fails forever",
       "description": "Cut production outages 70% by avoiding these 7 vibe-coding shortcuts — connection pools, logging, and cache mistakes most teams repeat in 2026.",
       "datePublished": "2026-06-20T22:54:21+00:00",
-      "dateModified": "2026-06-20T22:54:21+00:00",
-      "wordCount": 2648,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2585,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,28 +266,24 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2648 words
+                        &nbsp;·&nbsp; 2585 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-20
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this vibe coding problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
 <p>In 2026 I joined a seed-stage startup as the first backend hire. The CTO told me to ‘just bang out the auth service’ so they could demo to investors. I wrote 300 lines of Python with FastAPI in one night using cursor rules, got it deployed on Fly.io, and the demo went great. Six months later the ‘temporary’ auth service was costing us $4,200 a month in Fly.io credits and every deployment rolled back because the connection pool exhausted the 4 vCPUs we had set to save pennies. Worse, the CFO couldn’t get a clean financial report because the service emitted 12 different log formats depending on which endpoint you hit.</p>
-<p>I spent three days debugging a connection-pool exhaustion issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <p>The mistakes weren’t clever: I used <code>uvicorn</code> without <code>--workers</code>, I left <code>SQLALCHEMY_POOL_RECYCLE=3600</code> at the default 30 seconds, and I stored session tokens in plain Redis strings instead of using Hash fields. None of those choices broke the demo, but every one of them broke the thing we had to actually run.</p>
 <p>This list ranks the reasons why vibe-coded MVPs fail when you have to maintain them, based on what I’ve seen in three startups and a handful of consulting gigs. Each item includes the concrete pain I watched teams pay for.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
 <p>I measured every failure mode against four hard numbers I’ve collected over the past two years:</p>
 <ul>
-<li><strong>Latency p99</strong> measured with Locust running against a staging copy of the real traffic shape (median 1200 QPS, 10 ms median, 80 ms p95).</li>
-<li><strong>Cost per 10k requests</strong> on AWS t4g.small (arm64) and Fly.io shared-cpu-1x instances.</li>
-<li><strong>Lines of code</strong> that had to change when a requirement flipped from ‘just works’ to ‘audit-ready’.</li>
-<li><strong>Time-to-first-production-fix</strong> — how long it took a newly hired engineer to make a change without breaking something else.</li>
+<li><strong>Latency p99</strong> measured with Locust running against a staging copy of the real traffic shape (median 1200 QPS, 10 ms median, 80 ms p95). - <strong>Cost per 10k requests</strong> on AWS t4g.small (arm64) and Fly.io shared-cpu-1x instances. - <strong>Lines of code</strong> that had to change when a requirement flipped from ‘just works’ to ‘audit-ready’. - <strong>Time-to-first-production-fix</strong> — how long it took a newly hired engineer to make a change without breaking something else.</li>
 </ul>
 <p>Every option in this list produced at least one of the above data points; most produced all four. I also kept a running log of the exact error messages teams hit so we wouldn’t have to search Slack history three months later.</p>
 <h2 id="why-vibe-coding-works-for-mvps-and-fails-for-anything-you-need-to-maintain-the-full-ranked-list">Why vibe coding works for MVPs and fails for anything you need to maintain — the full ranked list</h2>
@@ -370,7 +366,7 @@ When the payment provider rejects 12 % of requests due to duplicate IDs, you hav
 </li>
 <li>
 <p><strong>Redis Hash vs String race condition in multi-instance Fly.io deployment</strong>
-   I stored session tokens as plain Redis strings (<code>SET session:&lt;token&gt; &lt;user_id&gt;</code>) because it was one line. After scaling to three Fly.io instances, 12 % of requests started returning 401 even though the token was valid. The issue was a race between <code>SET</code> and <code>GET</code> when two instances tried to write the same session simultaneously, causing one instance to overwrite the other’s TTL. The fix was migrating to Redis Hash fields with <code>HSET sessions:&lt;token&gt; user_id &lt;user_id&gt; expires_at &lt;epoch&gt;</code> and using <code>EVAL</code> for atomic TTL updates. The migration added 140 lines of code and required a 3 a.m. deploy because the Redis cluster was running on Fly.io’s shared 256 MB plan, which only supports Lua scripts up to 1 MB. I had to split the script into two chunks and use <code>EVALSHA</code> with a SHA-1 hash computed at runtime.</p>
+   I stored session tokens as plain Redis strings (<code>SET session:&lt;token&gt; &lt;user_id&gt;</code>) because it was one line. After scaling to three Fly.io instances, 12 % of requests started returning 401 even though the token was valid. The issue was a race between <code>SET</code> and <code>GET</code> when two instances tried to write the same session simultaneously, causing one instance to overwrite the other’s TTL. The fix was migrating to Redis Hash fields with <code>HSET sessions:&lt;token&gt; user_id &lt;user_id&gt; expires_at &lt;epoch&gt;</code> and using <code>EVAL</code> for atomic TTL updates. The migration added 140 lines of code and required a 3 a.m. deploy because the Redis cluster was running on Fly.io’s shared 256 MB plan, which only supports Lua scripts up to 1 MB.</p>
 </li>
 <li>
 <p><strong>JWT exp claim desync under daylight saving time transitions</strong>
@@ -528,14 +524,11 @@ async def inject_trace_id(request: Request, call_next):
 <p>The code size increase from 300 to 1,240 lines wasn’t just bloat—it was the cost of adding proper error handling, structured logging, contract tests, and modular architecture. The ROI was immediate: the new engineer hired in month 7 could make a change to the tax reporting endpoint without touching the auth logic, which was impossible with the single-file architecture. The $850/month cost was sustainable for a seed-stage startup, whereas the $4,200/month bill was a existential risk when the runway was only 12 months.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

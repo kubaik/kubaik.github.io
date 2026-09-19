@@ -1,6 +1,6 @@
 # Portfolio projects that hire remote senior devs
 
-A colleague asked me about portfolio projects during a code review recently, and my first answer wasn't a good one. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in.
+Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in.
 
 ## Why I wrote this (the problem I kept hitting)
 
@@ -702,7 +702,6 @@ Results:
 - Error rate: 0.3% (mostly Redis timeouts on cold starts)
 
 Without Redis, p95 spikes to 450ms under 200 concurrent users — a common failure mode in unoptimized portfolios.
-
 
 ---
 

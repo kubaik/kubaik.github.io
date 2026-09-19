@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-02T13:29:42.126639">
-        <meta property="article:modified_time" content="2026-08-02T13:29:42.126649">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.962623+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="CDC pipeline death spiral: one bad LLM call can crash…">
@@ -63,8 +63,8 @@
       "headline": "CDC pipeline death spiral: one bad LLM call can crash…",
       "description": "CDC pipeline crashes when LLM bursts hit — Postgres replication slot errors, 3 concrete fixes, vLLM 0.4.2 and Python semaphore patterns, plus the one…",
       "datePublished": "2026-08-02T13:29:42+00:00",
-      "dateModified": "2026-08-02T13:29:42+00:00",
-      "wordCount": 2479,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2463,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,16 +265,16 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2479 words
+                        &nbsp;·&nbsp; 2463 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-02
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on building change before understanding what was actually happening. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in.</p>
+                <p>Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in.</p>
 <h2 id="advanced-edge-cases-you-personally-encountered">Advanced edge cases you personally encountered</h2>
 <p>Let’s talk about the edge cases that broke our CDC pipeline in ways no blog post warned us about.</p>
 <p><strong>Case 1: The vLLM streaming buffer explosion</strong>
@@ -393,10 +393,7 @@ async def safe_summarize(text: str) -&gt; str:
         return await summarize(text)
 </code></pre>
 <p>Key details:
-- <code>max_num_batched_tokens=8192</code> limits the burst size to 8,192 tokens. This prevents one huge prompt from blocking the GPU.
-- <code>enforce_eager=True</code> forces vLLM to stream responses incrementally, avoiding buffering.
-- The <code>Semaphore(4)</code> limits concurrency to 4 parallel LLM calls.
-- Metrics track LLM call duration and output token count.</p>
+- <code>max_num_batched_tokens=8192</code> limits the burst size to 8,192 tokens. This prevents one huge prompt from blocking the GPU. - <code>enforce_eager=True</code> forces vLLM to stream responses incrementally, avoiding buffering. - The <code>Semaphore(4)</code> limits concurrency to 4 parallel LLM calls. - Metrics track LLM call duration and output token count.</p>
 <p>We run this on an <code>inf2.4xlarge</code> instance in us-east-1 (4x AWS Inferentia2 chips). The cost is ~$1.20/hour, but the backpressure guarantees prevent CDC pipeline stalls.</p>
 <hr />
 <h3 id="2-debezium-260-cdc-with-backpressure">2. Debezium 2.6.0 (CDC with backpressure)</h3>
@@ -428,10 +425,7 @@ key.converter: &quot;org.apache.kafka.connect.json.JsonConverter&quot;
 value.converter: &quot;org.apache.kafka.connect.json.JsonConverter&quot;
 </code></pre>
 <p>Key details:
-- <code>max.batch.size=1000</code> prevents one huge LLM response from stalling the sink.
-- <code>fetch.max.bytes=50MB</code> ensures no single poll exceeds 50MB.
-- <code>poll.interval.ms=100</code> ensures frequent polling even under load.
-- We run 4 tasks to parallelize processing.</p>
+- <code>max.batch.size=1000</code> prevents one huge LLM response from stalling the sink. - <code>fetch.max.bytes=50MB</code> ensures no single poll exceeds 50MB. - <code>poll.interval.ms=100</code> ensures frequent polling even under load. - We run 4 tasks to parallelize processing.</p>
 <p>We deploy this on Kubernetes (EKS 1.28) using the Debezium Operator. The connector runs in a <code>debezium-connect:2.6.0</code> container with 2GB memory and 1 vCPU.</p>
 <hr />
 <h3 id="3-aws-lambda-python-312-for-cdc-processing">3. AWS Lambda (Python 3.12) for CDC processing</h3>
@@ -484,11 +478,7 @@ async def process_llm_response(data: dict):
             return response.choices[0].message.content
 </code></pre>
 <p>Key details:
-- The Lambda function is configured with 1.8GB memory (1 vCPU) and 30s timeout.
-- <code>Semaphore(4)</code> limits concurrency to 4 parallel LLM calls.
-- We use the <code>openai&gt;=1.30.0</code> async client to avoid blocking the event loop.
-- Metrics are pushed to Prometheus Pushgateway for observability.
-- The function is triggered by MSK via a Lambda destination.</p>
+- The Lambda function is configured with 1.8GB memory (1 vCPU) and 30s timeout. - <code>Semaphore(4)</code> limits concurrency to 4 parallel LLM calls. - We use the <code>openai&gt;=1.30.0</code> async client to avoid blocking the event loop. - Metrics are pushed to Prometheus Pushgateway for observability. - The function is triggered by MSK via a Lambda destination.</p>
 <p>We deploy this using Terraform:</p>
 <pre><code class="language-hcl"># main.tf
 resource &quot;aws_lambda_function&quot; &quot;cdc_processor&quot; {
@@ -579,11 +569,7 @@ resource &quot;aws_lambda_event_source_mapping&quot; &quot;msk_trigger&quot; {
 </tbody>
 </table>
 <p><strong>What broke:</strong>
-1. The LLM client buffered a 1.2MB response, blocking the Node.js event loop.
-2. The CDC service (Node.js) had no concurrency limit, so 100 concurrent LLM calls saturated the event loop.
-3. Debezium’s default <code>max.batch.size=20048</code> caused the sink to block on a huge batch.
-4. Postgres replication slot stalled because the CDC service stopped consuming.
-5. Kafka consumer lag spiked because the sink thread was blocked.</p>
+1. The LLM client buffered a 1.2MB response, blocking the Node.js event loop. 2. The CDC service (Node.js) had no concurrency limit, so 100 concurrent LLM calls saturated the event loop. 3. Debezium’s default <code>max.batch.size=20048</code> caused the sink to block on a huge batch. 4. Postgres replication slot stalled because the CDC service stopped consuming. 5. Kafka consumer lag spiked because the sink thread was blocked.</p>
 <p><strong>Root cause:</strong> No backpressure at any layer. The LLM burst propagated through the pipeline like a shockwave.</p>
 <hr />
 <h3 id="after-backpressure-mechanisms-in-place">After: Backpressure mechanisms in place</h3>
@@ -654,11 +640,7 @@ resource &quot;aws_lambda_event_source_mapping&quot; &quot;msk_trigger&quot; {
 </tbody>
 </table>
 <p><strong>What fixed it:</strong>
-1. <strong>vLLM:</strong> Added <code>max_num_batched_tokens=8192</code> and <code>enforce_eager=True</code> to limit burst size and stream responses.
-2. <strong>LLM client:</strong> Added <code>Semaphore(4)</code> to limit concurrency and <code>max_tokens=2048</code> to cap response size.
-3. <strong>Debezium:</strong> Reduced <code>max.batch.size=1000</code> and <code>fetch.max.bytes=50MB</code> to prevent sink stalls.
-4. <strong>Postgres:</strong> Increased EBS GP3 burst IOPS to 5,000 to handle WAL spikes.
-5. <strong>Lambda:</strong> Increased reserved concurrency to 2,000 and bumped memory to 1.8GB.</p>
+1. <strong>vLLM:</strong> Added <code>max_num_batched_tokens=8192</code> and <code>enforce_eager=True</code> to limit burst size and stream responses. 2. <strong>LLM client:</strong> Added <code>Semaphore(4)</code> to limit concurrency and <code>max_tokens=2048</code> to cap response size. 3. <strong>Debezium:</strong> Reduced <code>max.batch.size=1000</code> and <code>fetch.max.bytes=50MB</code> to prevent sink stalls. 4. <strong>Postgres:</strong> Increased EBS GP3 burst IOPS to 5,000 to handle WAL spikes. 5. <strong>Lambda:</strong> Increased reserved concurrency to 2,000 and bumped memory to 1.8GB.</p>
 <p><strong>Cost breakdown:</strong>
 | Component | Before | After | Savings |
 |-----------|--------|-------|---------|
@@ -674,16 +656,9 @@ resource &quot;aws_lambda_event_source_mapping&quot; &quot;msk_trigger&quot; {
 | Postgres replication lag | 3,200ms | 150ms | 95% |
 | Kafka sink lag | 5s | 50ms | 99% |</p>
 <p><strong>Observability improvements:</strong>
-- Added <code>llm_call_duration_seconds</code> histogram to track LLM call duration.
-- Added <code>cdc_lag_seconds</code> histogram to track replication lag.
-- Added <code>kafka_consumer_lag</code> metric to monitor sink health.
-- Added <code>DebeziumSnapshotRunning</code> metric to catch snapshot stalls.</p>
+- Added <code>llm_call_duration_seconds</code> histogram to track LLM call duration. - Added <code>cdc_lag_seconds</code> histogram to track replication lag. - Added <code>kafka_consumer_lag</code> metric to monitor sink health. - Added <code>DebeziumSnapshotRunning</code> metric to catch snapshot stalls.</p>
 <p><strong>Lines of code changed:</strong>
-- <strong>vLLM client:</strong> 5 lines (added <code>max_num_batched_tokens</code> and <code>enforce_eager</code>).
-- <strong>LLM client:</strong> 3 lines (added <code>Semaphore</code> and <code>max_tokens</code>).
-- <strong>Debezium config:</strong> 2 lines (added <code>max.batch.size</code> and <code>fetch.max.bytes</code>).
-- <strong>Lambda config:</strong> 5 lines (added reserved concurrency and batch size).
-- <strong>Total:</strong> 15 lines of code changed.</p>
+- <strong>vLLM client:</strong> 5 lines (added <code>max_num_batched_tokens</code> and <code>enforce_eager</code>). - <strong>LLM client:</strong> 3 lines (added <code>Semaphore</code> and <code>max_tokens</code>). - <strong>Debezium config:</strong> 2 lines (added <code>max.batch.size</code> and <code>fetch.max.bytes</code>). - <strong>Lambda config:</strong> 5 lines (added reserved concurrency and batch size). - <strong>Total:</strong> 15 lines of code changed.</p>
 <p><strong>Deployment timeline:</strong>
 | Step | Time | Notes |
 |------|------|-------|
@@ -694,10 +669,7 @@ resource &quot;aws_lambda_event_source_mapping&quot; &quot;msk_trigger&quot; {
 | Update Lambda config | 5 min | Deployed to production |
 | <strong>Total</strong> | <strong>40 min</strong> | <strong>Production fix deployed</strong> |</p>
 <p><strong>Lessons learned:</strong>
-1. <strong>Backpressure must be applied at every layer.</strong> One unconstrained component can break the entire pipeline.
-2. <strong>Metrics are critical.</strong> Without <code>llm_call_duration_seconds</code> and <code>cdc_lag_seconds</code>, we wouldn’t have caught the problem early.
-3. <strong>Cost savings follow reliability.</strong> By fixing the pipeline, we reduced cloud costs by 31%.
-4. <strong>Minimal code changes can have maximal impact.</strong> We fixed the problem with just 15 lines of code.</p>
+1. <strong>Backpressure must be applied at every layer.</strong> One unconstrained component can break the entire pipeline. 2. <strong>Metrics are critical.</strong> Without <code>llm_call_duration_seconds</code> and <code>cdc_lag_seconds</code>, we wouldn’t have caught the problem early. 3. <strong>Cost savings follow reliability.</strong> By fixing the pipeline, we reduced cloud costs by 31%. 4. <strong>Minimal code changes can have maximal impact.</strong> We fixed the problem with just 15 lines of code.</p>
 <p><strong>Final thought:</strong> In 2026, LLM pipelines are the new "noisy neighbor." Without backpressure, they’ll break your entire infrastructure. The fix isn’t in Postgres—it’s in the tools you use to call the LLM.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>

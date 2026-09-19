@@ -6,17 +6,13 @@ Most api security guides assume a clean environment and a patient timeline. Prod
 
 In early 2026 our SaaS platform saw API call volume double every six weeks. The traffic spike wasn’t organic: it came from distributed scraper bots that mimicked mobile clients and from a new breed of “credential-stuffing as a service” tools that rotated IPs every 30 seconds. Our existing WAF rules (AWS WAF v2.8) were tuned for volumetric DDoS and SQLi, so they let these slow, credential-based attacks slip through with only 40 % detection accuracy on login endpoints.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
-
 We needed to cut the noise without adding latency to legitimate calls. The business constraint was blunt: stay under 250 ms 95th-percentile latency on every endpoint or risk churn from impatient mobile users in Manila and Lagos who abandoned flows after 4 seconds.
 
 ## What we tried first and why it didn’t work
 
 First, we bolted on Cloudflare Bot Management (v2026.2) with the strictest “JS challenge” setting. In staging it looked perfect: 99 % bot blocking at 80 ms average overhead. When we rolled it to production behind our CloudFront distribution we saw a different picture:
 
-- Legitimate mobile SDK traffic jumped from 120 ms to 280 ms on login endpoints because Cloudflare’s JavaScript challenge added an extra round trip.
-- Brazilian and Nigerian users on 3G faced 1.4–1.8 s spikes during challenges, killing conversion.
-- The managed bot score rules had 15 % false positives on automated testing bots we used internally.
+- Legitimate mobile SDK traffic jumped from 120 ms to 280 ms on login endpoints because Cloudflare’s JavaScript challenge added an extra round trip. - Brazilian and Nigerian users on 3G faced 1.4–1.8 s spikes during challenges, killing conversion. - The managed bot score rules had 15 % false positives on automated testing bots we used internally.
 
 Next, we threw AWS Shield Advanced at the problem. It stopped the volumetric part of the traffic but didn’t help with credential stuffing or API scraping. More importantly, Shield cost $18 k per month by the time we turned on all the advanced protections — more than our entire AWS bill for compute.
 
@@ -26,9 +22,7 @@ Finally, we added Redis 7.2 in front of the auth service for request throttling.
 
 We combined three layers that play to each other’s strengths rather than piling one heavyweight filter on top of another:
 
-1. **Client-side integrity tokens** to separate real human-operated clients from headless scripts.
-2. **Adaptive rate limiting** that adjusts per user cohort instead of per IP.
-3. **Behavioral fingerprinting** at the CDN edge to spot anomalous sequences without executing JavaScript challenges.
+1. **Client-side integrity tokens** to separate real human-operated clients from headless scripts. 2. **Adaptive rate limiting** that adjusts per user cohort instead of per IP. 3. **Behavioral fingerprinting** at the CDN edge to spot anomalous sequences without executing JavaScript challenges.
 
 The key insight was to move the cheap, stateless checks to the edge and keep the stateful, expensive checks in the API layer. We used CloudFront Functions (Node.js 20) for the first two layers because they run in <1 ms and don’t require a Lambda@Edge warm-up penalty.
 
@@ -177,9 +171,7 @@ If you see flat lines of 429 responses across many IPs, you have a distributed c
 
 Next, pick the cheapest filter that solves 80 % of the noise:
 
-- For scraper-heavy traffic: Akamai Bot Manager (behavioral rules only) or Fastly’s edge compute.
-- For credential stuffing: CloudFront Function + CIT tokens, then Redis adaptive limiter.
-- For volumetric junk: AWS Shield Advanced only if you have >100 Gbps traffic.
+- For scraper-heavy traffic: Akamai Bot Manager (behavioral rules only) or Fastly’s edge compute. - For credential stuffing: CloudFront Function + CIT tokens, then Redis adaptive limiter. - For volumetric junk: AWS Shield Advanced only if you have >100 Gbps traffic.
 
 Finally, enforce a strict “no JavaScript challenges for mobile apps” policy. Our Brazilian users on 3G saved 400 ms per login when we dropped the JS challenge—conversion uplift paid for the Akamai bill in 12 days.
 
@@ -213,20 +205,16 @@ Most WAF rules in 2026 are still tuned for volumetric DDoS or SQL injection. Cre
 
 Open your CloudFront distribution today and enable real-time logs. Then run the CloudWatch Logs Insights query above on your highest-traffic endpoint. In 15 minutes you’ll have the data to decide whether you need behavioral bot rules, client integrity tokens, or adaptive rate limiting first.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

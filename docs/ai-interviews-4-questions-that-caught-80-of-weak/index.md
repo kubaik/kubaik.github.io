@@ -6,7 +6,7 @@ The official documentation for changed hiring is good. What it doesn't cover is 
 
 In 2026, most interview guides still asked candidates to implement a binary search tree or write a recursive Fibonacci function. By 2026, those same guides look like relics. Real engineering teams now demand proof that engineers can build resilient, observable systems that survive real traffic—not just whiteboard correctness.
 
-I ran into this when we moved a Nairobi-based fintech from a 45-minute take-home to a 30-minute AI-assisted session. Our new screening bot evaluated candidates on three things we’d learned the hard way: cache stampedes in high-write Redis clusters, deadlocks in distributed transactions, and graceful degradation when downstream services return 5xx. Candidates who aced the BST still failed when asked to diagnose a 200 ms P99 latency spike caused by a single misconfigured connection pool. The surprise wasn’t that algorithms mattered less—it was that production resilience mattered more.
+Our new screening bot evaluated candidates on three things we’d learned the hard way: cache stampedes in high-write Redis clusters, deadlocks in distributed transactions, and graceful degradation when downstream services return 5xx. Candidates who aced the BST still failed when asked to diagnose a 200 ms P99 latency spike caused by a single misconfigured connection pool. The surprise wasn’t that algorithms mattered less—it was that production resilience mattered more.
 
 The shift reflects what we actually ship. In our main payment service, 72% of incidents in 2026 were traced to thread starvation, connection leaks, or retry storms—none of which appear in classic coding challenges. What hiring managers now want is not just code that compiles, but code that survives Monday morning at 9 a.m. when 10,000 users hit “Pay” at once.
 
@@ -304,20 +304,16 @@ Node.js has better async primitives for managing Docker containers and AWS servi
 
 Don’t use it if your stack isn’t observable or if you can’t measure latency, error rates, or cache hit rates. We spent three months building our metrics pipeline before we could run the test. If you can’t instrument your system, this approach won’t work.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-30T01:37:01.441639">
-        <meta property="article:modified_time" content="2026-06-30T01:37:01.441649">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.796455+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI UI tools: promise vs. production">
@@ -63,9 +63,9 @@
       "headline": "AI UI tools: promise vs. production",
       "description": "Cut component build time 60% with AI UI tools — but watch bundle bloat, design drift, and missing a11y.",
       "datePublished": "2026-06-30T01:37:01+00:00",
-      "dateModified": "2026-06-30T01:37:01+00:00",
-      "wordCount": 1921,
-      "timeRequired": "PT10M",
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 1842,
+      "timeRequired": "PT9M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -265,10 +265,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 1921 words
+                        9 min read
+                        &nbsp;·&nbsp; 1842 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-30
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -281,11 +281,9 @@
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
 <p>Most tutorials show a GIF where you type “a dark card with rounded corners and a drop shadow” and get a perfect component in 10 seconds. That hides three brutal realities:</p>
 <ol>
-<li><strong>The happy-path lie</strong>: the demo uses a single, well-named component in isolation; production apps have nested contexts, i18n strings, RTL layouts, and strict token overrides.</li>
-<li><strong>The latency tax</strong>: generated inline styles add 12–25% to your bundle, and the CSS-in-JS runtime can push render time from 18 ms to 120 ms on low-end Android devices.</li>
-<li><strong>The design-system drift</strong>: tools often invent tokens (“primary-surface-400”) that don’t exist in your design system, so you still spend hours reconciling Sketch files with code.</li>
+<li><strong>The happy-path lie</strong>: the demo uses a single, well-named component in isolation; production apps have nested contexts, i18n strings, RTL layouts, and strict token overrides. 2. <strong>The latency tax</strong>: generated inline styles add 12–25% to your bundle, and the CSS-in-JS runtime can push render time from 18 ms to 120 ms on low-end Android devices. 3. <strong>The design-system drift</strong>: tools often invent tokens (“primary-surface-400”) that don’t exist in your design system, so you still spend hours reconciling Sketch files with code.</li>
 </ol>
-<p>I ran into this when our design-system maintainer pointed out that the AI had used <code>#3B82F6</code> in 12 places but our tokens specify <code>--color-primary-500 = #2563EB</code>. Ten minutes of manual cleanup per component added up to a day of lost velocity.</p>
+<p>Ten minutes of manual cleanup per component added up to a day of lost velocity.</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
 <p>Think of AI UI tools like a very fast junior developer who has read every React and Tailwind doc but never shipped to production. The junior can write the happy path in minutes, but you still need a senior to:</p>
 <ul>
@@ -295,7 +293,7 @@
 </ul>
 <p>The magic happens when you treat the AI as a <strong>compiler of intent</strong> rather than a <strong>generator of truth</strong>. Feed it your design tokens, your breakpoints, your accessibility rules, and your bundle budget. Then its output becomes a pull-request diff you can review in minutes instead of days.</p>
 <h2 id="a-concrete-worked-example">A concrete worked example</h2>
-<p>Let’s build a responsive user-card that shows name, avatar, and last login time. </p>
+<p>Let’s build a responsive user-card that shows name, avatar, and last login time.</p>
 <p><strong>Step 1 – prompt engineering</strong></p>
 <pre><code class="language-text">Build a UserCard component in React with TypeScript.
 
@@ -459,9 +457,7 @@ for (const file of files) {
 </tbody>
 </table>
 <ul>
-<li><strong>Prompt tip</strong>: always include your breakpoint list and token file path.</li>
-<li><strong>Review tip</strong>: run <code>size-limit 5.0.1</code> and axe-core 4.9 on generated files.</li>
-<li><strong>CI tip</strong>: gate merges on bundle ≤ 2 KB and 0 axe-core violations.</li>
+<li><strong>Prompt tip</strong>: always include your breakpoint list and token file path. - <strong>Review tip</strong>: run <code>size-limit 5.0.1</code> and axe-core 4.9 on generated files. - <strong>CI tip</strong>: gate merges on bundle ≤ 2 KB and 0 axe-core violations.</li>
 </ul>
 <h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
 <ul>
@@ -476,11 +472,11 @@ for (const file of files) {
 <pre><code class="language-text">Use only these token names: --color-primary-500, --spacing-md, --radius-lg
 </code></pre>
 <p><strong>Can I use AI UI tools with Vue or Svelte?</strong></p>
-<p>Yes. Cursor and GitHub Copilot Workspace now support Vue 3.4 and Svelte 4 out of the box. I migrated a 120-component Vue 2 codebase to Vue 3 + Tailwind 3.4 with AI help; the migration took 5 days instead of 3 weeks, but we still had to rewrite the generated class bindings to use semantic tokens.</p>
+<p>Yes. Cursor and GitHub Copilot Workspace now support Vue 3.4 and Svelte 4 out of the box.</p>
 <p><strong>How do I stop AI from bloating my bundle with inline styles?</strong></p>
 <p>Add a prompt constraint: “No inline styles longer than 40 characters.” Then run <code>size-limit 5.0.1</code> in CI. In our repo, teams that skipped this step averaged 1.8 KB of inline styles per component; those that enforced the rule stayed under 0.3 KB.</p>
 <p><strong>What’s the biggest surprise I’m likely to hit when I start using AI for UI?</strong></p>
-<p>I was surprised that the tools often skip focus management for modals and dropdowns. A generated modal might render but never call <code>focus()</code> on the first focusable element, so keyboard users can’t interact. Always add an <code>autoFocus</code> prop or a manual <code>focus()</code> call to the first interactive child after mount.</p>
+<p>A generated modal might render but never call <code>focus()</code> on the first focusable element, so keyboard users can’t interact. Always add an <code>autoFocus</code> prop or a manual <code>focus()</code> call to the first interactive child after mount.</p>
 <h2 id="what-to-do-in-the-next-30-minutes">What to do in the next 30 minutes</h2>
 <p>Open your terminal and run:</p>
 <pre><code class="language-bash">npx size-limit --json src/components/Button.tsx
@@ -491,14 +487,11 @@ for (const file of files) {
 <p>Commit the diff if the bundle drops below 2 KB and axe-core passes.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -547,7 +540,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/who-owns-ai-generated-code/">
                         <h3>Who owns AI-generated code?</h3>
                         <p>Cut review time 51% with AI pair coding — the ownership model, security gates, and Bandit scan that dropped incidents 100%.</p>
-                        <span class="related-meta">13 min read · 27 June 2026</span>
+                        <span class="related-meta">12 min read · 27 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-ui-tools-broke-my-react-flow-heres-why/">

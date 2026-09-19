@@ -6,19 +6,17 @@ Most pick saas guides assume a clean environment and a patient timeline. Product
 
 In January 2026 we had a 12-person fintech team shipping a B2B spend-analytics dashboard. Revenue was growing 15% month-on-month, but our churn was stuck at 8%. The usual fixes—better UI, faster exports—only moved the needle 1-2%. Then the CEO got back from a fintech conference where every vendor was pitching "AI-powered spend insights." We panicked: if everyone can say the same thing, how do we not become a feature inside someone else’s AI wrapper?
 
-I spent three days benchmarking every open-source LLM that claimed to do spend categorisation. The best one (Mistral 7B Instruct v0.3) hit 68% accuracy on our test set—good enough to put us out of business if a competitor shipped it tomorrow. The real kicker? The model’s licence allowed commercial use, so any mid-size dev shop could spin up a cheaper, worse version of our product overnight.
+The best one (Mistral 7B Instruct v0.3) hit 68% accuracy on our test set—good enough to put us out of business if a competitor shipped it tomorrow. The real kicker? The model’s licence allowed commercial use, so any mid-size dev shop could spin up a cheaper, worse version of our product overnight.
 
 We needed a niche that met three brutal filters:
-1. Too narrow for a general-purpose LLM to replace.
-2. Too vertically specific for a horizontal AI tool to commoditise.
-3. Large enough to justify a six-figure ARR for a 12-person team.
+1. Too narrow for a general-purpose LLM to replace. 2. Too vertically specific for a horizontal AI tool to commoditise. 3. Large enough to justify a six-figure ARR for a 12-person team.
 
 We started with a spreadsheet of 54 possible niches. After two weeks of customer calls and model benchmarks, we narrowed it to three:
 - **Compliance-as-a-Service for Kenyan SACCOs** (regulatory reporting, very niche)
 - **Predictive cash-flow for Kenyan micro-franchises** (Excel still dominates)
 - **Vendor master data cleanup for Kenyan mid-market manufacturers** (nobody does this well)
 
-I was surprised that the last one won. It wasn’t the biggest market, but it scored highest on defensibility: manufacturers change vendors every 18 months on average, and the data rot is painful. A human still has to phone the supplier, verify the bank details, and reconcile the TIN. No LLM can reliably do that without human-in-the-loop.
+It wasn’t the biggest market, but it scored highest on defensibility: manufacturers change vendors every 18 months on average, and the data rot is painful. A human still has to phone the supplier, verify the bank details, and reconcile the TIN. No LLM can reliably do that without human-in-the-loop.
 
 ## What we tried first and why it didn't work
 
@@ -26,7 +24,7 @@ Our first attempt was to double down on AI: we shipped a "smart categorisation" 
 
 What broke first was the TAT. Our analysts needed 2 minutes per transaction to flag anomalies. The LLM took 7 seconds per call—good enough until we hit a rate limit on AWS Bedrock. We switched to self-hosted vLLM on a single g5.xlarge (4x A10G GPUs). Latency dropped to 2.1 seconds, but the bill jumped to $1,200 for the same volume. Ouch.
 
-Then the accuracy cliff hit. For transactions below 1,000 KES, the model hallucinated GL codes 14% of the time. Our SLA was 99.5% accuracy. We tried prompt engineering, RAG with our 12 months of historical data, even fine-tuning on a 500-transaction labelled set. The best we could get was 92%—still 7.5 percentage points short. I had to roll back the feature after 10 days of production smoke tests.
+Then the accuracy cliff hit. For transactions below 1,000 KES, the model hallucinated GL codes 14% of the time. Our SLA was 99.5% accuracy. We tried prompt engineering, RAG with our 12 months of historical data, even fine-tuning on a 500-transaction labelled set. The best we could get was 92%—still 7.5 percentage points short.
 
 We also tried a horizontal AI wrapper play: turning our dashboard into a microservice that any ERP could call for "AI-powered spend analytics." We built a REST endpoint in FastAPI 0.111 and priced it at $0.05 per 1000 calls. The first two pilot customers loved the POC, but when we doubled the price to cover infra, one customer said, "We can build this ourselves with a 4-hour prompt." They did—using Google Vertex AI’s new Spend Categorisation model that launched in April 2026. It was free for the first 100k calls per month.
 
@@ -35,29 +33,20 @@ We also tried a horizontal AI wrapper play: turning our dashboard into a microse
 We pivoted to a sliver niche: **vendor master data cleanup for Kenyan manufacturers with 50–500 employees**. The wedge was simple: every ERP has a vendor table full of stale bank accounts, missing TINs, and duplicate suppliers. The pain is acute right before audit season, so we timed our campaign for Q2 and Q4.
 
 We built a lightweight SaaS that:
-- Ingests the customer’s vendor CSV or XLSX via S3 signed URLs (using AWS SDK for JavaScript v3.507).
-- Runs a deterministic matching engine (not an LLM) that flags duplicates, missing TINs, and mismatched bank details.
-- Returns a clean CSV plus an audit-ready discrepancy report in under 5 minutes for a 5,000-row file.
+- Ingests the customer’s vendor CSV or XLSX via S3 signed URLs (using AWS SDK for JavaScript v3.507). - Runs a deterministic matching engine (not an LLM) that flags duplicates, missing TINs, and mismatched bank details. - Returns a clean CSV plus an audit-ready discrepancy report in under 5 minutes for a 5,000-row file.
 
 The defensibility came from two things no LLM can replicate easily:
-1. **Regulatory tailwind**: The Kenyan Revenue Authority now requires TINs on every invoice. Missing TINs mean disallowed expenses.
-2. **Human workflow**: When we flag a bank detail mismatch, the customer still has to phone the supplier to confirm. We automate the reminder loop but not the actual verification—so the job can’t be compressed into a single LLM call.
+1. **Regulatory tailwind**: The Kenyan Revenue Authority now requires TINs on every invoice. Missing TINs mean disallowed expenses. 2. **Human workflow**: When we flag a bank detail mismatch, the customer still has to phone the supplier to confirm. We automate the reminder loop but not the actual verification—so the job can’t be compressed into a single LLM call.
 
 We priced it at $49 per 1,000 vendor rows cleaned, with a $99/month minimum. The first 10 customers were manufacturers with ERPNext or Odoo running on DigitalOcean. We onboarded them in under 2 hours by sharing a Google Colab notebook that ran our Python 3.11 script with pandas 2.2.2 and openpyxl 3.1.2.
 
 ## Implementation details
 
 The stack was deliberately boring:
-- **Frontend**: Next.js 14.2 (app router) with Tailwind, hosted on Vercel. We used the App Router because the marketing site doubled as the customer portal—SSR for SEO, RSC for data-heavy pages.
-- **Backend**: FastAPI 0.111 on AWS ECS Fargate (1 vCPU, 2 GB RAM) behind an ALB. We chose ECS because we didn’t want to manage Kubernetes in 2026—ECS with Fargate gives us 99.95% uptime and 10-second deployments.
-- **Storage**: PostgreSQL 16 on AWS RDS with read replicas in Mombasa AZ for DR. We sharded by customer ID to keep queries under 50 ms.
-- **File processing**: Celery 5.3 on Redis 7.2 (cluster mode) with 3 workers. We used Redis for task queues because it’s 3x cheaper than SQS for our throughput (1,200 tasks/hour).
-- **AI? None.** We did use a simple regex-based extractor for TINs and bank codes, but no LLM. The regexes were built with `pyjanitor` 0.24 and `pydantic` 2.7 to ensure type safety.
+- **Frontend**: Next.js 14.2 (app router) with Tailwind, hosted on Vercel. We used the App Router because the marketing site doubled as the customer portal—SSR for SEO, RSC for data-heavy pages. - **Backend**: FastAPI 0.111 on AWS ECS Fargate (1 vCPU, 2 GB RAM) behind an ALB. We chose ECS because we didn’t want to manage Kubernetes in 2026—ECS with Fargate gives us 99.95% uptime and 10-second deployments. - **Storage**: PostgreSQL 16 on AWS RDS with read replicas in Mombasa AZ for DR. We sharded by customer ID to keep queries under 50 ms. - **File processing**: Celery 5.3 on Redis 7.2 (cluster mode) with 3 workers. We used Redis for task queues because it’s 3x cheaper than SQS for our throughput (1,200 tasks/hour). - **AI? None.** We did use a simple regex-based extractor for TINs and bank codes, but no LLM. The regexes were built with `pyjanitor` 0.24 and `pydantic` 2.7 to ensure type safety.
 
 The matching engine was a deterministic algorithm that:
-1. Normalised names (lowercase, strip accents, remove Ltd/LLC).
-2. Compared KRA TIN regexes (Kenyan TIN is 11 digits starting with 1).
-3. Checked bank details against the CBK registry via a nightly CSV dump we download from their site.
+1. Normalised names (lowercase, strip accents, remove Ltd/LLC). 2. Compared KRA TIN regexes (Kenyan TIN is 11 digits starting with 1). 3. Checked bank details against the CBK registry via a nightly CSV dump we download from their site.
 
 Here’s the core matching function:
 
@@ -176,12 +165,7 @@ Lastly, **billing by row count is fragile**. We switched to per-organisation pri
 
 ## Resources that helped
 
-- **Kenya Revenue Authority API docs** (2026 refresh) – Used for TIN validation and CBK registry sync.
-- **FastAPI 0.111** – The framework we chose for its async support and OpenAPI autogen.
-- **Celery 5.3 + Redis 7.2** – For task queues; Redis cluster mode kept us under 150 ms p95.
-- **pyjanitor 0.24** – For data cleaning pipelines; it cut our pandas boilerplate by 40%.
-- **Vercel Next.js 14.2** – For the portal and marketing site; the App Router simplified SSR.
-- **DigitalOcean $200/month credits** – We used DO for staging and backups; cheaper than AWS for low traffic.
+- **Kenya Revenue Authority API docs** (2026 refresh) – Used for TIN validation and CBK registry sync. - **FastAPI 0.111** – The framework we chose for its async support and OpenAPI autogen. - **Celery 5.3 + Redis 7.2** – For task queues; Redis cluster mode kept us under 150 ms p95. - **pyjanitor 0.24** – For data cleaning pipelines; it cut our pandas boilerplate by 40%. - **Vercel Next.js 14.2** – For the portal and marketing site; the App Router simplified SSR. - **DigitalOcean $200/month credits** – We used DO for staging and backups; cheaper than AWS for low traffic.
 
 ## Frequently Asked Questions
 
@@ -201,20 +185,16 @@ For a team under 15 people, AWS ECS Fargate is the safest bet. It gives you mult
 
 Open your spreadsheet of possible niches. Pick the one with the most human steps left in the workflow. Then, for the top three candidates, write a 3-line customer pitch: "We help [role] at [company type] do [outcome] by [human step], so they avoid [regulatory penalty/fine/embarrassment]." Share it with three people who aren’t your co-workers. If two of them say "I’d pay for that tomorrow," you’ve found your wedge.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

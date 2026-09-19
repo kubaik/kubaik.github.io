@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-25T08:39:15.607832">
-        <meta property="article:modified_time" content="2026-06-25T08:39:15.607840">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.681550+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Store data once, serve everywhere: cheaper">
@@ -63,8 +63,8 @@
       "headline": "Store data once, serve everywhere: cheaper",
       "description": "Cut cross-region egress 70% with edge caching — real latency, cost, and failure modes from a 2026 health-data backend serving Nigeria, Kenya, and South Africa.",
       "datePublished": "2026-06-25T08:39:15+00:00",
-      "dateModified": "2026-06-25T08:39:15+00:00",
-      "wordCount": 3378,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3349,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,9 +266,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3378 words
+                        &nbsp;·&nbsp; 3349 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-25
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -278,7 +278,6 @@
                 <p>The official documentation for design multiregion is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>Last year, my team launched a health-data API serving clinics in Nigeria, Kenya, and South Africa. The docs from every cloud provider promised multi-region setups with “a single click” and “no extra cost.” Reality hit when the CFO asked why the AWS bill jumped from $8,200 to $22,400 overnight. Turns out, the “single click” only replicated the compute, not the data—so every API call pulled a full patient record from Ohio, adding 240 ms of latency for Johannesburg users and inflating the egress bill.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <p>Most multi-region guides focus on DNS or load-balancing tiers: Route 53 latency routing, Global Accelerator, CloudFront with Lambda@Edge. Those are necessary, but they ignore the hidden cost driver: data gravity. Once you move 10 GB of patient records into each region, you either pay for replication traffic or accept stale reads. The docs rarely mention that replicating 1 TB of SQL tables across three regions on AWS Aurora Global Database costs about $0.02 per GB per month in cross-region transfer plus $0.01 per million Aurora IO requests. Do the math: 1 TB × 3 regions × $0.02 = $60 per month just for keeping the data in sync, before you even serve a single request.</p>
 <p>The second surprise was the hidden egress. In AWS, cross-region data transfer within the same account is billed at $0.01–$0.02 per GB depending on direction. If 40% of your traffic is read-heavy queries from a single region to the other two, you can burn another $120–$240 per month on egress alone with only 10,000 daily active users. The marketing slide deck never shows that line item.</p>
 <p>So the real problem isn’t spinning up VMs or containers in multiple AZs—it’s keeping the data warm, cheap, and consistent without turning your cloud bill into a three-digit horror story.</p>
@@ -332,9 +331,7 @@ async def get_user(user_id: str, x_region: str = Header(&quot;X-Region&quot;, &q
     return {&quot;user_id&quot;: user_id, &quot;data&quot;: row[1], &quot;latency_ms&quot;: round(latency, 2), &quot;source&quot;: &quot;origin&quot;}
 </code></pre>
 <p>Key points:
-- Single source of truth in us-east-1.
-- Redis 7.2 Cluster handles the cache keys per region using the <code>x_region</code> header.
-- We set a 30-second TTL and rely on cache invalidation for writes.</p>
+- Single source of truth in us-east-1. - Redis 7.2 Cluster handles the cache keys per region using the <code>x_region</code> header. - We set a 30-second TTL and rely on cache invalidation for writes.</p>
 <h3 id="2-cache-invalidation-on-write">2. Cache invalidation on write</h3>
 <pre><code class="language-python">@app.post(&quot;/user/{user_id}&quot;)
 async def update_user(user_id: str, payload: dict, x_region: str = Header(&quot;X-Region&quot;, &quot;us-east-1&quot;)):
@@ -536,14 +533,11 @@ Use a feature branch with a dedicated Redis 7.2 Cluster and a synthetic user. In
 No. DynamoDB Global Tables replicate every write across regions with eventual consistency, so the cache becomes redundant. You pay for the replication traffic anyway. If you must use DynamoDB, skip caching and tune your DAX cluster for read performance. We tried this in a pilot and ended up with 180 ms p99 in Nairobi—worse than our PostgreSQL + Redis setup.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

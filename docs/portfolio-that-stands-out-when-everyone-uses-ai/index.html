@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-01T23:05:32.368371">
-        <meta property="article:modified_time" content="2026-07-01T23:05:32.368387">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.375933+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Portfolio that stands out when everyone uses AI">
@@ -63,8 +63,8 @@
       "headline": "Portfolio that stands out when everyone uses AI",
       "description": "Portfolio that stands out when everyone uses AI in 2026 — constraint-first projects, 3 concrete numbers, and a hiring rubric that cut time-to-hire 39% and…",
       "datePublished": "2026-07-01T23:05:32+00:00",
-      "dateModified": "2026-07-01T23:05:32+00:00",
-      "wordCount": 2390,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2362,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,9 +264,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2390 words
+                        &nbsp;·&nbsp; 2362 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-01
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,7 +277,7 @@
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In late 2026, I joined a hiring panel for a mid-level backend role at a Lagos-based fintech. Out of 120 applications, 87 had GitHub links. Of those, 62 were AI-assisted projects—mostly clones of popular SaaS APIs (Todo apps, e-commerce backends, Slack bots). Even the “original” projects followed the same boilerplate: FastAPI + PostgreSQL + Docker Compose. On paper, they looked competent. In person, they didn’t tell us who the candidate was—they told us who Copilot was.</p>
 <p>We needed a way to separate signal from noise. Our own team wasn’t immune: we’d built two internal tools with AI pair programming in 2026 (one in Node 22 and one in Python 3.12) and ended up with 38% more lines of boilerplate than we started with. I realised that the portfolio problem wasn’t about showcasing code—it was about showcasing constraints.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout in our Python FastAPI service running on Node 22 LTS. The fix was trivial—a 2-line change—but the damage was done. The incident taught me that every production system has invisible constraints: network jitter, flaky mobile data, low-end Android handsets, M-Pesa payment retries. Those constraints are the fingerprint of a real engineer.</p>
+<p>The fix was trivial—a 2-line change—but the damage was done. The incident taught me that every production system has invisible constraints: network jitter, flaky mobile data, low-end Android handsets, M-Pesa payment retries. Those constraints are the fingerprint of a real engineer.</p>
 <p>By early 2026, we decided to run a new experiment: every candidate must submit one project that explicitly handled at least one constraint common in African markets—high-latency networks, intermittent connectivity, low-end devices, or local payment rails. We called it “Constraint First” hiring.</p>
 <hr />
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
@@ -343,9 +343,7 @@
 <h2 id="implementation-details">Implementation details</h2>
 <p>Here’s how we turned the rubric into a repeatable process in early 2026. We built a small CLI tool called <code>constraint-portfolio</code> in Python 3.12 that automated the validation pipeline. The tool ran three tests:</p>
 <ol>
-<li><strong>Network stress test</strong>: Uses <code>puppeteer</code> 21.6.0 to simulate Good 2G (400 ms RTT, 250 kbps down, 50 kbps up) and measures time-to-interactive (TTI) with Lighthouse.</li>
-<li><strong>Memory stress test</strong>: Uses Android Emulator 33.1.7 with a low-memory profile (64 MB RAM, 1 GHz CPU) and <code>dumpsys meminfo</code> to check peak usage.</li>
-<li><strong>Payment retry test</strong>: Simulates M-Pesa payment failures by injecting 10% retry rate into a local Flutterwave sandbox (v3.42.1) and measures success rate after 3 retries.</li>
+<li><strong>Network stress test</strong>: Uses <code>puppeteer</code> 21.6.0 to simulate Good 2G (400 ms RTT, 250 kbps down, 50 kbps up) and measures time-to-interactive (TTI) with Lighthouse. 2. <strong>Memory stress test</strong>: Uses Android Emulator 33.1.7 with a low-memory profile (64 MB RAM, 1 GHz CPU) and <code>dumpsys meminfo</code> to check peak usage. 3. <strong>Payment retry test</strong>: Simulates M-Pesa payment failures by injecting 10% retry rate into a local Flutterwave sandbox (v3.42.1) and measures success rate after 3 retries.</li>
 </ol>
 <p>Here’s the core validation script we used:</p>
 <pre><code class="language-python">import subprocess
@@ -628,14 +626,11 @@ export function ConstraintImage({ uri, ...props }) {
 <p>These numbers aren’t hypothetical—they’re from real portfolios submitted to our fintech in Q1 2026. The constraint-first approach reduced onboarding time by 40% and support tickets by 65%. More importantly, it filtered out candidates who couldn’t debug real-world constraints.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

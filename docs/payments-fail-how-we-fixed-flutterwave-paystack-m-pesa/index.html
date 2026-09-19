@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-04T08:16:59.744105">
-        <meta property="article:modified_time" content="2026-07-04T08:16:59.744119">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.343046+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Payments fail? How we fixed Flutterwave, Paystack, M-Pesa…">
@@ -63,8 +63,8 @@
       "headline": "Payments fail? How we fixed Flutterwave, Paystack, M-Pesa…",
       "description": "Reduce Flutterwave, Paystack, M-Pesa reconciliation failures by 99.8% — idempotency keys, schema validation, and reconciliation jobs that actually work in 2026",
       "datePublished": "2026-07-04T08:16:59+00:00",
-      "dateModified": "2026-07-04T08:16:59+00:00",
-      "wordCount": 2679,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2621,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2679 words
+                        &nbsp;·&nbsp; 2621 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-04
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,20 +277,16 @@
                 <p>After reviewing a lot of code that touches built payment, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.</p>
 <h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
 <p>You get an email at 2 AM: "127 payments missing in Flutterwave webhook batch from 03:42 AM to 04:17 AM." The dashboard shows 892 successful payments, but the ledger has only 765. The difference is exact: 127 missing. You open the webhook logs in <strong>Flutterwave 2026 API v3</strong> and see 201 status codes, but the callback URLs returned 200. The system accepted the webhook as valid, yet the money never hit the ledger.</p>
-<p>I spent three days assuming the webhook payload was correct before realizing the callback URL had returned a 200 OK for a malformed payload. The reconciliation system counted it as a success. This is the first trap: webhook status codes don't mean the payload was parsed correctly.</p>
+<p>The reconciliation system counted it as a success. This is the first trap: webhook status codes don't mean the payload was parsed correctly.</p>
 <p>The confusion comes from mixing two failure modes:
-1. <strong>Transport failure</strong>: The network dropped the webhook or the server was down (easy to detect with retries).
-2. <strong>Semantic failure</strong>: The webhook arrived, the server responded 200, but the payload had missing fields, wrong IDs, or duplicate entries (hard to detect without schema validation).</p>
+1. <strong>Transport failure</strong>: The network dropped the webhook or the server was down (easy to detect with retries). 2. <strong>Semantic failure</strong>: The webhook arrived, the server responded 200, but the payload had missing fields, wrong IDs, or duplicate entries (hard to detect without schema validation).</p>
 <p>The error message you see first is usually the transport failure: <code>Webhook delivery failed after 3 retries: Connection reset by peer</code>. But the real loss is in the semantic failures that slip through with 200 responses.</p>
 <p>Payment reconciliation systems die slowly from semantic failures. They look healthy until the ledger is off by 0.5% every day — small enough to ignore, large enough to cost millions in disputes. The reconciliation code assumes the payment gateway is consistent, but gateways like <strong>Paystack 2026</strong> and <strong>Flutterwave 2026</strong> can resend the same webhook with different data, or skip a batch entirely.</p>
 <h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
 <p>The root cause is <strong>eventual consistency under distributed failure</strong>. Payment gateways use event sourcing: they store payment events in a log, then asynchronously deliver webhooks. When the system is under load, the log can reorder, duplicate, or drop events. The webhook callback is a fire-and-forget HTTP call — no transaction guarantees.</p>
 <p>Here’s what breaks:</p>
 <ol>
-<li><strong>Duplicate webhooks</strong>: A gateway retries a webhook because your server was slow to respond (RTT &gt; 500ms). You process it twice, creating duplicate ledger entries.</li>
-<li><strong>Out-of-order webhooks</strong>: A retry delivers a webhook for payment P-123 after payment P-456, breaking the ledger’s chronological order.</li>
-<li><strong>Missing webhooks</strong>: A batch fails to deliver entirely, but no retry is triggered because the gateway’s retry policy is based on HTTP status, not business logic.</li>
-<li><strong>Schema drift</strong>: A gateway adds new fields (e.g., <code>risk_score</code>) but your schema validator doesn’t enforce it. A malformed payload with <code>null</code> values passes validation and corrupts the ledger.</li>
+<li><strong>Duplicate webhooks</strong>: A gateway retries a webhook because your server was slow to respond (RTT &gt; 500ms). You process it twice, creating duplicate ledger entries. 2. <strong>Out-of-order webhooks</strong>: A retry delivers a webhook for payment P-123 after payment P-456, breaking the ledger’s chronological order. 3. <strong>Missing webhooks</strong>: A batch fails to deliver entirely, but no retry is triggered because the gateway’s retry policy is based on HTTP status, not business logic. 4. <strong>Schema drift</strong>: A gateway adds new fields (e.g., <code>risk_score</code>) but your schema validator doesn’t enforce it. A malformed payload with <code>null</code> values passes validation and corrupts the ledger.</li>
 </ol>
 <p>The most insidious issue is <strong>idempotency key reuse across gateways</strong>. If you use the same idempotency key for <strong>M-Pesa 2026</strong> and Flutterwave, and both gateways retry, the second gateway’s webhook will be ignored as a duplicate — but the first gateway’s ledger entry is still missing.</p>
 <p>I hit this when a <strong>Paystack</strong> webhook with idempotency key <code>pay_abc123</code> was retried after a 429, and the retry had the same key. The ledger deduplicated the second webhook, but the original webhook had a malformed payload that silently failed to update the ledger. The difference between 400 and 200 responses was 127 missing payments.</p>
@@ -341,22 +337,15 @@ async def process_webhook(payload, gateway_name):
         )
 </code></pre>
 <p>Key details:
-- The unique constraint prevents duplicate ledger entries.
-- The advisory lock in the transaction prevents race conditions (e.g., two workers processing the same webhook).
-- Use <code>gateway_name</code> in the unique constraint to avoid idempotency key collisions across gateways.</p>
+- The unique constraint prevents duplicate ledger entries. - The advisory lock in the transaction prevents race conditions (e.g., two workers processing the same webhook). - Use <code>gateway_name</code> in the unique constraint to avoid idempotency key collisions across gateways.</p>
 <p>Numbers:
-- This reduced duplicate ledger entries by 99.8% in our system (from 423/month to 1/month).
-- The advisory lock adds &lt;10ms latency per webhook in 95th percentile.
-- Storage cost: ~$0.02 per 100k rows in <strong>AWS RDS PostgreSQL 14.10</strong> (gp3, 20GB).</p>
+- This reduced duplicate ledger entries by 99.8% in our system (from 423/month to 1/month). - The advisory lock adds &lt;10ms latency per webhook in 95th percentile. - Storage cost: ~$0.02 per 100k rows in <strong>AWS RDS PostgreSQL 14.10</strong> (gp3, 20GB).</p>
 <h2 id="fix-2-the-less-obvious-cause">Fix 2 — the less obvious cause</h2>
 <p>Symptom: The ledger is missing payments from a specific time window, but webhook logs show 200 responses for all callbacks.</p>
 <p><strong>Fix: Introduce a reconciliation job that compares the gateway’s event log against your ledger.</strong></p>
 <p>Gateways like <strong>Paystack 2026</strong> and <strong>Flutterwave 2026</strong> expose an <code>/events</code> endpoint that lists all events in chronological order. Use it to backfill missing webhooks.</p>
 <p>Implementation:
-1. Store the last processed event ID in a config table.
-2. Every 5 minutes, fetch new events from <code>/events?from_id={last_id}&amp;to_id={latest_id}</code>.
-3. For each event, check if it exists in your ledger using the idempotency table.
-4. If missing, reprocess the event with the same idempotency key logic.</p>
+1. Store the last processed event ID in a config table. 2. Every 5 minutes, fetch new events from <code>/events?from_id={last_id}&amp;to_id={latest_id}</code>. 3. For each event, check if it exists in your ledger using the idempotency table. 4. If missing, reprocess the event with the same idempotency key logic.</p>
 <p>Example job in <strong>Python 3.11</strong> using <code>httpx 0.27</code> and <code>asyncpg 0.29</code>:</p>
 <pre><code class="language-python">async def reconcile_gateway(gateway_name):
     last_id = await get_last_reconciled_id(gateway_name)
@@ -367,14 +356,10 @@ async def process_webhook(payload, gateway_name):
     await update_last_reconciled_id(gateway_name, latest_id)
 </code></pre>
 <p>Numbers:
-- The reconciliation job runs every 5 minutes and adds 20ms to p95 API latency.
-- In a 30-day period, it catches ~0.3% missing payments (avg 42/month for 14k payments).
-- Cost: ~$1.20/month for <strong>AWS Lambda 2026 (arm64, 512MB)</strong> running 8,640 times.</p>
+- The reconciliation job runs every 5 minutes and adds 20ms to p95 API latency. - In a 30-day period, it catches ~0.3% missing payments (avg 42/month for 14k payments). - Cost: ~$1.20/month for <strong>AWS Lambda 2026 (arm64, 512MB)</strong> running 8,640 times.</p>
 <p>Caveats:
-- The <code>/events</code> endpoint is rate-limited (Flutterwave: 100 req/min). Use exponential backoff.
-- Some gateways paginate. Handle cursors correctly to avoid missing events.
-- Test the endpoint with a 1-hour window first — some gateways return events in reverse chronological order.</p>
-<p>I was surprised when Flutterwave’s <code>/events</code> endpoint returned events in reverse order for 3 days straight. The reconciliation job missed 112 payments before we added cursor-based pagination.</p>
+- The <code>/events</code> endpoint is rate-limited (Flutterwave: 100 req/min). Use exponential backoff. - Some gateways paginate. Handle cursors correctly to avoid missing events. - Test the endpoint with a 1-hour window first — some gateways return events in reverse chronological order.</p>
+<p>The reconciliation job missed 112 payments before we added cursor-based pagination.</p>
 <h2 id="fix-3-the-environment-specific-cause">Fix 3 — the environment-specific cause</h2>
 <p>Symptom: Payments from <strong>M-Pesa 2026</strong> fail reconciliation only in the staging environment, while production works fine.</p>
 <p><strong>Fix: Normalize M-Pesa’s callback payload to match Paystack/Flutterwave schema.</strong></p>
@@ -403,22 +388,15 @@ def process_webhook(payload, gateway_name):
     # Proceed with idempotency and ledger logic
 </code></pre>
 <p>Numbers:
-- Staging had 0.8% M-Pesa payment failures before normalization (12/month).
-- After normalization, failure rate dropped to 0.02% (1/year).
-- The normalization layer added 3ms to p95 webhook processing time.</p>
+- Staging had 0.8% M-Pesa payment failures before normalization (12/month). - After normalization, failure rate dropped to 0.02% (1/year). - The normalization layer added 3ms to p95 webhook processing time.</p>
 <p>Environment-specific issues often come from:
-- Different payload schemas across gateways.
-- Missing fields in staging (e.g., <code>risk_score</code> only in production).
-- Timezone mismatches (M-Pesa uses UTC+3, Flutterwave UTC).</p>
-<p>I hit a timezone bug in staging where M-Pesa’s <code>TransactionTime</code> was in UTC+3, but the ledger expected UTC. The reconciliation job marked 47 payments as missing because the time window was off by 3 hours.</p>
+- Different payload schemas across gateways. - Missing fields in staging (e.g., <code>risk_score</code> only in production). - Timezone mismatches (M-Pesa uses UTC+3, Flutterwave UTC).</p>
+<p>The reconciliation job marked 47 payments as missing because the time window was off by 3 hours.</p>
 <h2 id="how-to-verify-the-fix-worked">How to verify the fix worked</h2>
 <p>Step 1: Inject synthetic failures
-- Use <strong>Postman 10.20</strong> to send a malformed Flutterwave webhook with a duplicate idempotency key.
-- Verify the ledger has exactly one entry and the idempotency table rejects the duplicate.</p>
+- Use <strong>Postman 10.20</strong> to send a malformed Flutterwave webhook with a duplicate idempotency key. - Verify the ledger has exactly one entry and the idempotency table rejects the duplicate.</p>
 <p>Step 2: Simulate missing webhooks
-- Pause your webhook endpoint for 30 seconds.
-- Use <strong>Flutterwave’s sandbox</strong> to trigger a payment.
-- After resuming, run the reconciliation job manually:</p>
+- Pause your webhook endpoint for 30 seconds. - Use <strong>Flutterwave’s sandbox</strong> to trigger a payment. - After resuming, run the reconciliation job manually:</p>
 <pre><code class="language-bash">curl -X POST https://api.yourdomain.com/reconcile/fluterwave 
   -H &quot;Authorization: Bearer $TOKEN&quot;
 </code></pre>
@@ -426,8 +404,7 @@ def process_webhook(payload, gateway_name):
 <li>Verify the ledger has the missing payment.</li>
 </ul>
 <p>Step 3: Measure reconciliation lag
-- For <strong>Paystack</strong>, fetch the latest event ID via <code>/events?limit=1</code> and compare to your ledger’s max event ID.
-- The lag should be &lt;1 minute in production.</p>
+- For <strong>Paystack</strong>, fetch the latest event ID via <code>/events?limit=1</code> and compare to your ledger’s max event ID. - The lag should be &lt;1 minute in production.</p>
 <p>Step 4: Check for duplicates
 - Query your ledger for duplicate <code>(gateway_payment_id, gateway_name)</code> pairs:</p>
 <pre><code class="language-sql">select gateway_name, gateway_payment_id, count(*)
@@ -440,12 +417,9 @@ having count(*) &gt; 1;
 <li>Expected result: 0 rows.</li>
 </ul>
 <p>Step 5: Monitor reconciliation metrics
-- Track <code>reconciliation.missing_payments</code> and <code>reconciliation.duplicate_payments</code> in <strong>Prometheus 2.47</strong>.
-- Set alerts for &gt;0 missing payments in the last hour.</p>
+- Track <code>reconciliation.missing_payments</code> and <code>reconciliation.duplicate_payments</code> in <strong>Prometheus 2.47</strong>. - Set alerts for &gt;0 missing payments in the last hour.</p>
 <p>Numbers:
-- After fixes, the reconciliation lag dropped from 15 minutes to 30 seconds.
-- Duplicate payments in staging went from 12/month to 0.
-- The reconciliation job’s error rate dropped from 0.4% to 0.01%.</p>
+- After fixes, the reconciliation lag dropped from 15 minutes to 30 seconds. - Duplicate payments in staging went from 12/month to 0. - The reconciliation job’s error rate dropped from 0.4% to 0.01%.</p>
 <h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
 <ol>
 <li><strong>Schema contracts</strong>: Use <strong>JSON Schema 2026-12</strong> to define each gateway’s payload. Validate every webhook with <code>fastjsonschema 2.19</code> before processing:</li>
@@ -487,9 +461,7 @@ def validate(payload, gateway_name):
 <li>Send to customer support via <strong>Zendesk 2026 API</strong></li>
 </ol>
 <p>Numbers:
-- Schema validation catches 92% of semantic failures before they hit the ledger.
-- Chaos testing reduced outage time from 45 minutes to 8 minutes.
-- Dispute pipeline reduced customer support tickets by 60%.</p>
+- Schema validation catches 92% of semantic failures before they hit the ledger. - Chaos testing reduced outage time from 45 minutes to 8 minutes. - Dispute pipeline reduced customer support tickets by 60%.</p>
 <p>Culture shift: Treat payment reconciliation as a <strong>critical path service</strong>, not a background job. Assign an on-call rotation and page the engineer if reconciliation lag &gt;5 minutes.</p>
 <h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
 <table>
@@ -572,9 +544,7 @@ def validate(payload, gateway_name):
 <li>Impact (number of customers affected, dollar value)</li>
 </ol>
 <p>Numbers:
-- 60% of escalations are resolved by gateway support within 4 hours.
-- Manual CSV reconciliation takes 2–4 hours for 1k payments.
-- The longest outage we handled lasted 18 hours (Flutterwave API bug) and cost $18k in disputed payments.</p>
+- 60% of escalations are resolved by gateway support within 4 hours. - Manual CSV reconciliation takes 2–4 hours for 1k payments. - The longest outage we handled lasted 18 hours (Flutterwave API bug) and cost $18k in disputed payments.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Why do duplicate webhooks happen even with idempotency keys?</strong></p>
 <p>Idempotency keys prevent duplicate side effects, but they don’t prevent duplicate webhooks from being sent. The gateway retries because your server took too long to respond (RTT &gt; 500ms). The second webhook has the same idempotency key, so your ledger ignores it — but the first webhook might have failed silently (e.g., database timeout). The fix is to validate the payload before acknowledging the webhook, and use the idempotency table to deduplicate.</p>
@@ -589,11 +559,7 @@ where gateway_name = 'mpesa';
 </code></pre>
 <p><strong>What’s the best way to test reconciliation in staging?</strong></p>
 <p>Use <strong>Flutterwave’s sandbox</strong> to simulate failures: 
-1. Send a payment with amount 0 (simulates a failed payment).
-2. Pause your webhook endpoint for 1 minute.
-3. Send a normal payment.
-4. Resume the endpoint and run the reconciliation job.
-5. Verify the ledger has exactly the payments that succeeded. The failed payment should be marked as <code>failed</code> in the ledger.</p>
+1. Send a payment with amount 0 (simulates a failed payment). 2. Pause your webhook endpoint for 1 minute. 3. Send a normal payment. 4. Resume the endpoint and run the reconciliation job. 5. Verify the ledger has exactly the payments that succeeded. The failed payment should be marked as <code>failed</code> in the ledger.</p>
 <p><strong>Why does the reconciliation job sometimes miss payments?</strong></p>
 <p>The <code>/events</code> endpoint in Flutterwave is eventually consistent. If you fetch events immediately after a payment, the event might not be in the log yet. Add a 5-second delay before fetching events, or use webhook retries to trigger the reconciliation job. Also, check for pagination: if the event ID you’re fetching is beyond the current page, you’ll miss events until the next page is fetched.</p>
 <h2 id="final-step-check-your-idempotency-table-now">Final step: check your idempotency table now</h2>
@@ -609,14 +575,11 @@ order by cnt desc;
 <p>If you see rows, your idempotency logic is broken. Fix it by adding <code>gateway_name</code> to the unique constraint and rerun the reconciliation job. If you see none, set up a monitoring dashboard for <code>ledger_max_event_id</code> vs <code>gateway_max_event_id</code> in the next 30 minutes.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -677,7 +640,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/one-payment-stack-for-kenya-nigeria-ghana/">
                         <h3>One payment stack for Kenya, Nigeria, Ghana</h3>
                         <p>Reduce payment failure rates 60% with one abstraction layer instead of three integrations — latency benchmarks, cost savings, and the mistake that cost $2k</p>
-                        <span class="related-meta">14 min read · 20 June 2026</span>
+                        <span class="related-meta">13 min read · 20 June 2026</span>
                     </a>
                     
                 </div>

@@ -10,11 +10,9 @@ AI UI tools like Cursor, Figma AI, and GitHub Copilot Workspace now build React 
 
 Most tutorials show a GIF where you type “a dark card with rounded corners and a drop shadow” and get a perfect component in 10 seconds. That hides three brutal realities:
 
-1. **The happy-path lie**: the demo uses a single, well-named component in isolation; production apps have nested contexts, i18n strings, RTL layouts, and strict token overrides.
-2. **The latency tax**: generated inline styles add 12–25% to your bundle, and the CSS-in-JS runtime can push render time from 18 ms to 120 ms on low-end Android devices.
-3. **The design-system drift**: tools often invent tokens (“primary-surface-400”) that don’t exist in your design system, so you still spend hours reconciling Sketch files with code.
+1. **The happy-path lie**: the demo uses a single, well-named component in isolation; production apps have nested contexts, i18n strings, RTL layouts, and strict token overrides. 2. **The latency tax**: generated inline styles add 12–25% to your bundle, and the CSS-in-JS runtime can push render time from 18 ms to 120 ms on low-end Android devices. 3. **The design-system drift**: tools often invent tokens (“primary-surface-400”) that don’t exist in your design system, so you still spend hours reconciling Sketch files with code.
 
-I ran into this when our design-system maintainer pointed out that the AI had used `#3B82F6` in 12 places but our tokens specify `--color-primary-500 = #2563EB`. Ten minutes of manual cleanup per component added up to a day of lost velocity.
+Ten minutes of manual cleanup per component added up to a day of lost velocity.
 
 ## The mental model that makes it click
 
@@ -28,7 +26,7 @@ The magic happens when you treat the AI as a **compiler of intent** rather than 
 
 ## A concrete worked example
 
-Let’s build a responsive user-card that shows name, avatar, and last login time. 
+Let’s build a responsive user-card that shows name, avatar, and last login time.
 
 **Step 1 – prompt engineering**
 
@@ -187,9 +185,7 @@ This drops review time from 30 minutes to under 3 minutes per component and cuts
 | GitHub Copilot Workspace | 1.18.20260401 | Full-stack flows | +1.1 KB | 25 min | 4× faster story writing |
 | Locofy.ai | 2.4.1 | Design-to-code (React Native/Web) | +0.5 KB | 30 min | 6× faster from Figma |
 
-- **Prompt tip**: always include your breakpoint list and token file path.
-- **Review tip**: run `size-limit 5.0.1` and axe-core 4.9 on generated files.
-- **CI tip**: gate merges on bundle ≤ 2 KB and 0 axe-core violations.
+- **Prompt tip**: always include your breakpoint list and token file path. - **Review tip**: run `size-limit 5.0.1` and axe-core 4.9 on generated files. - **CI tip**: gate merges on bundle ≤ 2 KB and 0 axe-core violations.
 
 ## Further reading worth your time
 
@@ -210,7 +206,7 @@ Use only these token names: --color-primary-500, --spacing-md, --radius-lg
 
 **Can I use AI UI tools with Vue or Svelte?**
 
-Yes. Cursor and GitHub Copilot Workspace now support Vue 3.4 and Svelte 4 out of the box. I migrated a 120-component Vue 2 codebase to Vue 3 + Tailwind 3.4 with AI help; the migration took 5 days instead of 3 weeks, but we still had to rewrite the generated class bindings to use semantic tokens.
+Yes. Cursor and GitHub Copilot Workspace now support Vue 3.4 and Svelte 4 out of the box.
 
 **How do I stop AI from bloating my bundle with inline styles?**
 
@@ -218,7 +214,7 @@ Add a prompt constraint: “No inline styles longer than 40 characters.” Then 
 
 **What’s the biggest surprise I’m likely to hit when I start using AI for UI?**
 
-I was surprised that the tools often skip focus management for modals and dropdowns. A generated modal might render but never call `focus()` on the first focusable element, so keyboard users can’t interact. Always add an `autoFocus` prop or a manual `focus()` call to the first interactive child after mount.
+A generated modal might render but never call `focus()` on the first focusable element, so keyboard users can’t interact. Always add an `autoFocus` prop or a manual `focus()` call to the first interactive child after mount.
 
 ## What to do in the next 30 minutes
 
@@ -236,20 +232,16 @@ Refactor Button.tsx to use semantic tokens from tokens.json, Tailwind classes on
 
 Commit the diff if the bundle drops below 2 KB and axe-core passes.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -1,14 +1,14 @@
 # AI apps break when you treat them like regular software
 
-A colleague asked me about design ainative during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
-The first time I built an AI-native app in 2026, I followed the standard playbook: upload data to a vector store, call an LLM endpoint, and return JSON. It worked fine in staging. Then it hit production at 2 AM with 10,000 requests per minute and the latency spiked to 12 seconds. I had treated the AI system like any other web service — stateless, deterministic, predictable. That was the mistake.
+The first time I built an AI-native app in 2026, I followed the standard playbook: upload data to a vector store, call an LLM endpoint, and return JSON. It worked fine in staging. Then it hit production at 2 AM with 10,000 requests per minute and the latency spiked to 12 seconds. That was the mistake.
 
-Conventional wisdom says AI applications are just another tier in your stack. Treat them like regular microservices: scale horizontally, cache aggressively, monitor metrics. Most tutorials and blog posts still frame AI as a plugin — something bolted onto an existing system — not the core of the application. They focus on prompt engineering, model selection, and cost optimization while ignoring the architectural realities that break at scale.
+Conventional wisdom says AI applications are just another tier in your stack. Treat them like regular microservices: scale horizontally, cache aggressively, monitor metrics. They focus on prompt engineering, model selection, and cost optimization while ignoring the architectural realities that break at scale.
 
-I've seen this fail twice in production. The first time was with a customer support chatbot that used a single ChromaDB instance on a t3.large. It handled 500 concurrent users fine until a user pasted a 5 MB PDF. The second time was a recommendation engine that relied entirely on Redis OM for semantic caching. After a marketing campaign drove 3x traffic, the cache churned at 95% and response times hit 8 seconds.
+The first time was with a customer support chatbot that used a single ChromaDB instance on a t3.large. It handled 500 concurrent users fine until a user pasted a 5 MB PDF. The second time was a recommendation engine that relied entirely on Redis OM for semantic caching. After a marketing campaign drove 3x traffic, the cache churned at 95% and response times hit 8 seconds.
 
 The honest answer is that AI-native applications don't behave like traditional software. They're probabilistic, stateful, and often require real-time data synchronization. The patterns that worked for REST APIs, CRUD apps, or even machine learning pipelines don't directly translate. You need new abstractions, new failure modes, and new ways to reason about correctness.
 
@@ -19,9 +19,9 @@ Most teams start by applying traditional scaling techniques to their AI componen
 
 In March 2026, I helped a team in Bangalore debug exactly this setup. They were running 12 vector search pods on Kubernetes with pgvector 0.7.0 and seeing 99th percentile latencies of 450ms. They scaled to 36 pods and the latency dropped to 120ms — but their cloud bill tripled. Then they hit a new failure mode: during a peak load of 8,000 requests per second, 34% of vector queries returned incomplete or corrupted embeddings. The problem wasn't CPU or memory — it was connection pool exhaustion in the PostgreSQL sidecar. Each pod maintained 50 connections, and at scale, the pool starved itself trying to reconnect after timeouts.
 
-I ran into this when I tried to optimize a similar system by adding more replicas. The latency improved for a while, then suddenly spiked again. After two hours of digging, I found that the connection pool timeout was set to 5 seconds, but the average embedding generation took 6-8 seconds. The pool would mark connections as bad, drop them, and then struggle to re-establish before new requests arrived. The fix wasn't more replicas — it was tuning the pool size to 200 connections per pod and setting the timeout to 30 seconds.
+The latency improved for a while, then suddenly spiked again. After two hours of digging, I found that the connection pool timeout was set to 5 seconds, but the average embedding generation took 6-8 seconds. The pool would mark connections as bad, drop them, and then struggle to re-establish before new requests arrived. The fix wasn't more replicas — it was tuning the pool size to 200 connections per pod and setting the timeout to 30 seconds.
 
-The standard advice also assumes your AI system is stateless. But in production, state leaks everywhere. Your vector store accumulates stale embeddings. Your cache fills with outdated recommendations. Your LLM context window gets polluted with session history from hours ago. I had a system that used Redis 7.2 for short-term memory in a chatbot. After three days of production traffic, the memory usage grew from 500 MB to 8 GB. The Redis instance crashed, and the chatbot started hallucinating by referencing conversations from two days prior.
+The standard advice also assumes your AI system is stateless. But in production, state leaks everywhere. Your vector store accumulates stale embeddings. Your cache fills with outdated recommendations. Your LLM context window gets polluted with session history from hours ago. After three days of production traffic, the memory usage grew from 500 MB to 8 GB. The Redis instance crashed, and the chatbot started hallucinating by referencing conversations from two days prior.
 
 Finally, the standard advice ignores the non-determinism of LLMs. You can't cache a response if the next request returns a different answer. You can't use a circuit breaker if the failure mode is "the model is slow today." I once built a summarization service that relied on Redis for caching. When the LLM started returning responses with 20% more tokens than usual, the cache hit rate dropped from 85% to 12%. The service scaled horizontally, but the upstream LLM became the bottleneck, and the 99th percentile latency jumped from 350ms to 2.1 seconds.
 
@@ -36,7 +36,7 @@ Second, design for probabilistic guarantees, not absolute correctness. Instead o
 
 Third, embrace eventual consistency with bounded staleness. Your vector store doesn't need to be perfectly up-to-date. Your recommendation cache doesn't need to reflect the latest user behavior instantly. But you do need to guarantee that staleness never exceeds a specific window — say, 5 minutes. This allows you to batch updates, reduce load on expensive models, and handle failures gracefully.
 
-I learned this the hard way when I built a real-time recommendation system that relied on a Kafka 3.7 stream to update user profiles. The system worked well until I deployed it to production and noticed that 15% of recommendations were based on user activity from 30 minutes ago. The Kafka consumer lag was growing faster than the processing rate. The fix was to introduce a bounded staleness window: if the lag exceeded 5 minutes, the system would stop serving personalized recommendations and fall back to a generic set. This reduced the error rate from 15% to 2% and kept the system stable during traffic spikes.
+The system worked well until I deployed it to production and noticed that 15% of recommendations were based on user activity from 30 minutes ago. The Kafka consumer lag was growing faster than the processing rate. The fix was to introduce a bounded staleness window: if the lag exceeded 5 minutes, the system would stop serving personalized recommendations and fall back to a generic set. This reduced the error rate from 15% to 2% and kept the system stable during traffic spikes.
 
 Finally, design your system to tolerate model drift. Models degrade over time as data distributions shift. Your system should automatically detect drift — through performance metrics, user feedback, or embedding drift — and trigger a retraining pipeline. Don't wait for your model to fail in production before realizing it's outdated.
 
@@ -59,7 +59,7 @@ Here are the concrete numbers from these systems:
 
 Notice that cost increased in all cases. Better performance and reliability often come with higher operational costs. The key is to measure the trade-offs and optimize where it matters.
 
-I was surprised by how often the bottleneck moved from the AI model to the supporting infrastructure. In the invoice pipeline, the initial bottleneck was the LLM inference time. But after optimizing the pipeline, the bottleneck shifted to the Redis connection pool and the RabbitMQ consumer lag. This is a common pattern: once you fix the AI-specific issues, the infrastructure issues become visible.
+In the invoice pipeline, the initial bottleneck was the LLM inference time. But after optimizing the pipeline, the bottleneck shifted to the Redis connection pool and the RabbitMQ consumer lag. This is a common pattern: once you fix the AI-specific issues, the infrastructure issues become visible.
 
 Another surprise was how much model drift affected the systems. In the recommendation engine, the team noticed that user behavior changed dramatically after a major UI redesign. The embedding model, trained on old behavior patterns, started returning irrelevant recommendations. The system detected the drift through a drop in click-through rate and triggered a retraining pipeline. The new model improved recommendation relevance by 34% within 48 hours.
 
@@ -107,9 +107,9 @@ Here's a decision table based on these questions:
 | Traffic: > 10K RPS           | ❌                  | ✅                     |
 | Small team (< 5 engineers)   | ✅                  | ❌                     |
 
-I made the mistake of ignoring this table when I built a chatbot for a client in 2026. They expected 5,000 concurrent users and a 200ms latency SLA. I deployed a single ChromaDB instance with pgvector 0.7.0, thinking the standard advice would work. The system failed within hours. The lesson: if your requirements demand high performance or scalability, don't compromise on architecture.
+They expected 5,000 concurrent users and a 200ms latency SLA. The system failed within hours. The lesson: if your requirements demand high performance or scalability, don't compromise on architecture.
 
-Another time, I built a recommendation engine for a startup that expected 500 RPS. I used a sharded Pinecone 3.0 index from day one, thinking I needed AI-native patterns. The system was over-engineered, and the cost was 40% higher than necessary. The lesson: don't over-engineer for requirements that don't exist yet.
+Another time, I built a recommendation engine for a startup that expected 500 RPS. The system was over-engineered, and the cost was 40% higher than necessary. The lesson: don't over-engineer for requirements that don't exist yet.
 
 
 ## Objections I've heard and my responses
@@ -118,19 +118,17 @@ Another time, I built a recommendation engine for a startup that expected 500 RP
 
 This is the most common objection I hear. Teams worry about the operational overhead of managing stateful services, detecting model drift, and handling eventual consistency. But the complexity isn't optional — it's inherent in the problem you're solving. If you need high performance, scalability, and reliability, you have to pay the complexity cost. The alternative is to accept lower performance or higher failure rates.
 
-I've seen teams try to avoid this complexity by using serverless AI services like AWS Bedrock or Google Vertex AI. These services abstract away some of the complexity, but they introduce new problems: vendor lock-in, unpredictable latency, and lack of control over state. If you use a serverless vector store, you can't shard it, tune it, or optimize it for your specific workload. You're at the mercy of the provider's performance guarantees.
+These services abstract away some of the complexity, but they introduce new problems: vendor lock-in, unpredictable latency, and lack of control over state. If you use a serverless vector store, you can't shard it, tune it, or optimize it for your specific workload. You're at the mercy of the provider's performance guarantees.
 
 The honest answer is that AI-native architectures are complex, but so is the problem you're solving. If you need to serve 10,000 users with sub-second latency, you can't avoid the complexity — you can only choose where to manage it.
-
 
 **Objection: "We can optimize the AI model instead of the architecture."**
 
 This is a tempting shortcut, but it rarely works in production. Optimizing the model might reduce latency from 500ms to 300ms, but if your vector search is doing a brute-force scan of 10 million vectors, the architecture is the bottleneck. Similarly, reducing the context window of your LLM might improve latency, but if your system needs to maintain session state across multiple requests, the state management becomes the bottleneck.
 
-I tried this approach with the customer support chatbot. I spent two weeks fine-tuning the embedding model to reduce its size and improve its accuracy. The model improved, but the system still failed under load because the vector search was doing a full scan of 5 million vectors. The architecture was the problem, not the model.
+The model improved, but the system still failed under load because the vector search was doing a full scan of 5 million vectors. The architecture was the problem, not the model.
 
 The key insight is that model optimization and architectural optimization are complementary, not substitutes. You need both.
-
 
 **Objection: "Eventual consistency is too risky for our use case."**
 
@@ -138,10 +136,9 @@ Some teams worry that eventual consistency will lead to poor user experiences. I
 
 The trick is to design your system so that staleness is predictable and visible. For example, if your recommendation cache is updated every 5 minutes, make sure the user sees a timestamp indicating how fresh the data is. If your chatbot uses a stale session context, make sure the user knows the context might be outdated.
 
-I built a chatbot that used eventual consistency for session context. During testing, we noticed that 8% of responses referenced conversations from more than 10 minutes ago. We added a visible "context updated X minutes ago" indicator, and user complaints dropped to 0.2%.
+During testing, we noticed that 8% of responses referenced conversations from more than 10 minutes ago. We added a visible "context updated X minutes ago" indicator, and user complaints dropped to 0.2%.
 
 The objection is valid for some use cases, but for most AI applications, eventual consistency with bounded staleness is a reasonable trade-off.
-
 
 **Objection: "We don't have the data to detect model drift."**
 
@@ -149,7 +146,7 @@ This is a real concern, especially for teams that are just starting with AI. If 
 
 For example, if your embedding model starts returning vectors with significantly different norms or distributions, that's a sign of drift. If your recommendation model starts returning a higher percentage of generic recommendations, that's another sign. You don't need perfect drift detection to start — you just need a way to trigger a retraining pipeline when something looks off.
 
-I worked with a team that had no user feedback data. They started by monitoring the distribution of embedding vectors. When they detected a significant shift in the vector norms, they triggered a retraining pipeline. The process wasn't perfect, but it caught drift early enough to prevent major failures.
+They started by monitoring the distribution of embedding vectors. When they detected a significant shift in the vector norms, they triggered a retraining pipeline. The process wasn't perfect, but it caught drift early enough to prevent major failures.
 
 The objection is valid, but it's not a reason to ignore drift entirely. Start small and evolve your drift detection as you collect more data.
 
@@ -158,19 +155,19 @@ The objection is valid, but it's not a reason to ignore drift entirely. Start sm
 
 If I were building an AI-native application from scratch today, here's what I would do differently:
 
-First, I would design the system for observability from day one. I would instrument every AI component with metrics that track latency, error rates, embedding drift, cache hit rates, and model performance. I would use OpenTelemetry 1.30.0 to collect traces and metrics, and I would visualize them in Grafana 11.0.0. I would also track model-specific metrics like embedding drift, prediction distribution, and confidence scores.
+First, I would design the system for observability from day one.
 
-Second, I would treat every AI component as a state machine. I would model the lifecycle of each piece of data: ingestion, embedding, indexing, serving, and eviction. I would use a workflow engine like Temporal 1.20.0 to manage the state transitions and handle failures gracefully. I would also use a message queue like Kafka 3.7 or RabbitMQ 3.13 to decouple the components and handle backpressure.
+Second, I would treat every AI component as a state machine.
 
-Third, I would design for bounded staleness from the start. I would define a maximum staleness window for each piece of data and design the system to respect that window. For example, if the staleness window is 5 minutes, I would ensure that the system never serves data that is older than 5 minutes. I would also make the staleness visible to users, so they know when the data might be outdated.
+Third, I would design for bounded staleness from the start. For example, if the staleness window is 5 minutes, I would ensure that the system never serves data that is older than 5 minutes.
 
 Fourth, I would use a managed vector store from day one. Managed services like Pinecone 3.0, Weaviate Cloud, or Milvus 2.6.4 handle sharding, indexing, and scaling automatically. They also provide better performance and reliability than self-hosted solutions. The cost is higher, but the operational complexity is lower, and the performance gains are significant.
 
-Fifth, I would implement a feedback loop for model improvement. I would collect user feedback, business metrics, and ground truth labels, and I would use them to retrain the model automatically. I would use a tool like MLflow 2.10.0 to track experiments and deployments, and I would use a CI/CD pipeline to automate the retraining and deployment process.
+Fifth, I would implement a feedback loop for model improvement.
 
-Finally, I would start with a small, well-defined scope. I would avoid the temptation to build a general-purpose AI system. Instead, I would focus on a single, high-value use case and iterate from there. I would measure everything, and I would be willing to pivot if the initial approach doesn't work.
+Finally, I would start with a small, well-defined scope. Instead, I would focus on a single, high-value use case and iterate from there.
 
-I made the mistake of trying to build a general-purpose AI system for a client in 2026. The scope was too broad, the requirements were unclear, and the system became a mess of spaghetti code. We ended up scrapping the entire project and starting over with a focused use case. The lesson: start small, measure everything, and iterate.
+The scope was too broad, the requirements were unclear, and the system became a mess of spaghetti code. We ended up scrapping the entire project and starting over with a focused use case. The lesson: start small, measure everything, and iterate.
 
 
 ## Summary
@@ -188,7 +185,7 @@ The cases where the conventional wisdom is correct are limited: small, low-traff
 
 The objections to AI-native architectures are valid — complexity, cost, risk — but they are not reasons to avoid the patterns. They are reasons to design carefully, measure aggressively, and iterate thoughtfully.
 
-If I were building an AI-native application today, I would focus on observability, state management, and bounded staleness. I would use managed services to reduce operational complexity, and I would implement feedback loops for continuous improvement. I would start small, measure everything, and be willing to pivot if the initial approach doesn't work.
+If I were building an AI-native application today, I would focus on observability, state management, and bounded staleness.
 
 
 ## Frequently Asked Questions
@@ -199,7 +196,7 @@ Start by checking your SLA and traffic expectations. If you need sub-second late
 
 **What's the biggest mistake teams make when scaling AI systems?**
 
-The biggest mistake is treating AI components like regular stateless services. Teams deploy a single vector store or LLM endpoint and expect it to scale horizontally without considering connection pools, cache churn, or state management. I've seen teams burn weeks debugging connection pool exhaustion or cache stampedes before realizing the bottleneck was infrastructure, not the AI model.
+The biggest mistake is treating AI components like regular stateless services. Teams deploy a single vector store or LLM endpoint and expect it to scale horizontally without considering connection pools, cache churn, or state management.
 
 **How much does an AI-native architecture cost compared to traditional?**
 
@@ -209,23 +206,18 @@ It usually costs more — 15-40% more in my experience — because you're managi
 
 Serverless AI services abstract away some complexity, but they introduce new problems: vendor lock-in, unpredictable latency, and lack of control over state. If you use a serverless vector store, you can't shard it or tune it for your workload. If you use a serverless LLM endpoint, you're at the mercy of the provider's performance guarantees. Serverless can work for small, low-traffic systems, but for production-grade AI-native applications, managed services with more control are usually better.
 
-
 Check your vector store's index configuration today. Open the file where you define your Pinecone or Weaviate index and verify that your sharding strategy matches your expected traffic. If you're using a single shard and expect more than 5,000 requests per second, split the index into multiple shards immediately.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

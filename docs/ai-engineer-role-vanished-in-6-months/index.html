@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-11T13:09:04.827422">
-        <meta property="article:modified_time" content="2026-07-11T13:09:04.827433">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.575492+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI Engineer role vanished in 6 months">
@@ -63,8 +63,8 @@
       "headline": "AI Engineer role vanished in 6 months",
       "description": "Cut AI infra costs 76% and eliminated AI Engineer roles in 6 months — here’s how we did it with AWS Bedrock, Redis 7.2, and prompt validation",
       "datePublished": "2026-07-11T13:09:04+00:00",
-      "dateModified": "2026-07-11T13:09:04+00:00",
-      "wordCount": 2214,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2177,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2214 words
+                        &nbsp;·&nbsp; 2177 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-11
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -279,11 +279,10 @@
 <p>In January 2026, our 30-person startup had three full-time AI Engineers. Their job titles read: ‘Fine-tune LLMs’, ‘Build autonomous agents’, and ‘ML infra for real-time inference’. The board had given them a 9-month runway to prove ROI on the $1.2M we’d raised in Series A. By June 2026, the roles were gone and the work had been redistributed. Here’s how it happened.</p>
 <p>We started the year chasing what every other Southeast Asian startup chased: an AI moat. Our product was a B2B recommendation engine for e-commerce sellers in Vietnam, Indonesia, and the Philippines. We’d already scaled to 2.1 million daily active users with a single Python 3.11 + FastAPI service running on four AWS t4g.medium instances in ap-southeast-1. Our baseline latency was 180 ms p95 and we were burning $2.4k/month on AWS compute—cheap for our ARR at the time.</p>
 <p>The AI team’s first task was to replace a rule-based scoring system with an LLM that could read product titles and descriptions in Vietnamese, Tagalog, and Indonesian. The goal: improve conversion lift by ≥5% within 90 days. We hired three AI Engineers from top Vietnamese and Indonesian bootcamps. Their average salary was 280 million VND/month ($11.5k) each.</p>
-<p>I ran into my first surprise in February. The AI Engineers wanted to use LangChain 0.2.8 to chain together Vietnamese text classification, agentic retrieval, and a final LLM summarizer. I said yes because it was the hot thing. Two weeks later, our latency spiked to 2.3 seconds p95 and our bill jumped to $5.1k/month. The culprit: LangChain’s synchronous blocking calls. Every LLM call blocked the FastAPI thread pool, and our four t4g.medium instances melted under 300 concurrent users.</p>
+<p>The AI Engineers wanted to use LangChain 0.2.8 to chain together Vietnamese text classification, agentic retrieval, and a final LLM summarizer. I said yes because it was the hot thing. Two weeks later, our latency spiked to 2.3 seconds p95 and our bill jumped to $5.1k/month. The culprit: LangChain’s synchronous blocking calls. Every LLM call blocked the FastAPI thread pool, and our four t4g.medium instances melted under 300 concurrent users.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first fix was vertical scaling. We moved from t4g.medium to m7g.2xlarge instances (8 vCPUs, 32 GB RAM) and doubled our instance count to eight. The bill jumped to $8.9k/month and latency dropped to 1.1 seconds p95. Still above our 200 ms target.</p>
 <p>The AI Engineers then insisted on using Redis 7.2 with a local vector store (FAISS 1.8) for fast retrieval. They built a Python microservice in Flask that exposed an <code>/infer</code> endpoint. We deployed it behind an ALB with a 10-second timeout. The service worked fine in staging, but in production the first cold start took 8 seconds because <code>faiss-cpu</code> needed to load a 2 GB index from S3 on every pod restart. We saw <code>ImportError: libfaiss.so not found</code> errors every time a pod rescheduled. We fixed it with a 512 MB RAMdisk and a preload script, but the latency variance stayed high.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <p>By March, our AI Engineers had built three separate microservices: one for classification, one for retrieval, and one for generation. Each service had its own Redis connection pool, its own rate limiter (using RedisCell 0.1.2), and its own Prometheus metrics exporter. Our observability bill tripled to $400/month, and the infra team started complaining about the 17 new containers we were scheduling.</p>
 <p>The final straw came when our Vietnamese LLM provider hiked prices by 30%. Our cost per 1,000 tokens jumped from $0.006 to $0.0078. At 1.2 million tokens/day, that added $936/month. The board asked for a cost audit. The audit showed we were paying $17k/month in AI infra for a feature that hadn’t moved the needle: our conversion lift was only 2.3%, below our 5% target.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
@@ -353,8 +352,7 @@ async def recommend(product_title: str):
 </code></pre>
 <p>Our CI pipeline ran two jobs:</p>
 <ol>
-<li><strong>Prompt validation</strong>: Every merge to <code>main</code> triggered a synthetic test. We replayed 500 product titles against the new prompt and measured conversion lift. Lift had to be ≥1% to pass. We used <code>pydantic</code> 2.7.1 to validate JSON outputs.</li>
-<li><strong>Cost guardrail</strong>: A nightly job queried AWS Cost Explorer and alerted if daily AI spend exceeded $150. The alert was a Slack message to <code>#ops-alerts</code>.</li>
+<li><strong>Prompt validation</strong>: Every merge to <code>main</code> triggered a synthetic test. We replayed 500 product titles against the new prompt and measured conversion lift. Lift had to be ≥1% to pass. We used <code>pydantic</code> 2.7.1 to validate JSON outputs. 2. <strong>Cost guardrail</strong>: A nightly job queried AWS Cost Explorer and alerted if daily AI spend exceeded $150. The alert was a Slack message to <code>#ops-alerts</code>.</li>
 </ol>
 <table>
 <thead>
@@ -451,32 +449,21 @@ async def recommend(product_title: str):
 <p>The team’s velocity on non-AI features doubled. We shipped a new product catalog importer in 3 weeks instead of 6. Our NPS among Vietnamese sellers rose from 38 to 52.</p>
 <h2 id="what-wed-do-differently">What we’d do differently</h2>
 <ol>
-<li><strong>No dedicated AI team.</strong> The moment we isolated AI into a separate pod, we created a cost center instead of a feature. Next time, we’d embed AI engineers inside product squads from day one.</li>
-<li><strong>Skip FAISS and vector stores.</strong> Our retrieval needs were simple: keyword matching on product titles. A Redis full-text index with <code>FT.SEARCH</code> would have sufficed and saved us three months of tuning.</li>
-<li><strong>Measure lift before scaling.</strong> We should have A/B tested the LLM feature against a static rule-based system for 30 days before committing to Bedrock. Our 5% lift target was arbitrary; we didn’t know the uplift ceiling.</li>
-<li><strong>Cost guardrails baked in.</strong> We added the Cost Explorer alert only after we blew past our budget. A pre-commit hook that blocks merges if the PR adds &gt;$50/month in new LLM spend would have saved us $3k.</li>
+<li><strong>No dedicated AI team.</strong> The moment we isolated AI into a separate pod, we created a cost center instead of a feature. Next time, we’d embed AI engineers inside product squads from day one. 2. <strong>Skip FAISS and vector stores.</strong> Our retrieval needs were simple: keyword matching on product titles. A Redis full-text index with <code>FT.SEARCH</code> would have sufficed and saved us three months of tuning. 3. <strong>Measure lift before scaling.</strong> We should have A/B tested the LLM feature against a static rule-based system for 30 days before committing to Bedrock. Our 5% lift target was arbitrary; we didn’t know the uplift ceiling. 4. <strong>Cost guardrails baked in.</strong> We added the Cost Explorer alert only after we blew past our budget. A pre-commit hook that blocks merges if the PR adds &gt;$50/month in new LLM spend would have saved us $3k.</li>
 </ol>
 <h2 id="the-broader-lesson">The broader lesson</h2>
 <p>The ‘AI Engineer’ role was a temporary construct born of the 2026 hype cycle. In 2026, the role collapsed because:</p>
 <ul>
-<li><strong>Inference commoditized.</strong> AWS Bedrock, Google Vertex AI, and Azure AI Inference dropped the cost of LLM calls below the salary of a single engineer. Running your own <code>vllm</code> cluster for inference is now a niche optimization for teams with &gt;500k daily inference calls.</li>
-<li><strong>Prompt engineering is product work.</strong> Writing good prompts is like writing good SQL: it’s part of the product, not a separate discipline. In 2026, product engineers write prompts and data engineers write fine-tuning scripts.</li>
-<li><strong>Cost discipline beats velocity.</strong> Startups in Southeast Asia cannot afford a $17k/month AI burn while chasing a 5% lift. The teams that won in 2026 were the ones that treated AI like any other dependency: measure ROI, set guardrails, and fold it back into the product.</li>
+<li><strong>Inference commoditized.</strong> AWS Bedrock, Google Vertex AI, and Azure AI Inference dropped the cost of LLM calls below the salary of a single engineer. Running your own <code>vllm</code> cluster for inference is now a niche optimization for teams with &gt;500k daily inference calls. - <strong>Prompt engineering is product work.</strong> Writing good prompts is like writing good SQL: it’s part of the product, not a separate discipline. In 2026, product engineers write prompts and data engineers write fine-tuning scripts. - <strong>Cost discipline beats velocity.</strong> Startups in Southeast Asia cannot afford a $17k/month AI burn while chasing a 5% lift. The teams that won in 2026 were the ones that treated AI like any other dependency: measure ROI, set guardrails, and fold it back into the product.</li>
 </ul>
 <p>The principle is simple: <strong>AI is infrastructure, not a team.</strong></p>
 <h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
 <ol>
-<li><strong>Audit your AI spend.</strong> Run <code>aws ce get-cost-and-usage --time-period 2026-05-01/2026-06-01 --granularity MONTHLY --metrics BlendedCost</code> and filter by service <code>bedrock</code> or <code>sagemaker</code>. If it’s &gt;1% of ARR, you’re at risk.</li>
-<li><strong>Delete the <code>/ai</code> microservice.</strong> Move every AI endpoint into your main API. Use async/await and Redis for caching. Keep the prompt in your repo, not in a separate repo.</li>
-<li><strong>Set a lift threshold.</strong> Before you call an LLM, define the metric you’re optimizing (CTR, conversion, retention). Set a minimum lift: 3% for most consumer apps, 1% for B2B. If you can’t hit it with a simple prompt, don’t scale.</li>
-<li><strong>Embed AI engineers in product squads.</strong> Let them write prompts and SQL, not infrastructure. The infra work is already done by AWS Bedrock and Redis.</li>
+<li><strong>Audit your AI spend.</strong> Run <code>aws ce get-cost-and-usage --time-period 2026-05-01/2026-06-01 --granularity MONTHLY --metrics BlendedCost</code> and filter by service <code>bedrock</code> or <code>sagemaker</code>. If it’s &gt;1% of ARR, you’re at risk. 2. <strong>Delete the <code>/ai</code> microservice.</strong> Move every AI endpoint into your main API. Use async/await and Redis for caching. Keep the prompt in your repo, not in a separate repo. 3. <strong>Set a lift threshold.</strong> Before you call an LLM, define the metric you’re optimizing (CTR, conversion, retention). Set a minimum lift: 3% for most consumer apps, 1% for B2B. If you can’t hit it with a simple prompt, don’t scale. 4. <strong>Embed AI engineers in product squads.</strong> Let them write prompts and SQL, not infrastructure. The infra work is already done by AWS Bedrock and Redis.</li>
 </ol>
 <h2 id="resources-that-helped">Resources that helped</h2>
 <ul>
-<li><a href="https://calculator.aws/#/addService/Bedrock">AWS Bedrock pricing calculator 2026-06</a> — used to sanity-check our token spend.</li>
-<li><a href="https://redis.io/docs/interact/search-and-query/">Redis 7.2 FT.SEARCH tutorial</a> — saved us from deploying FAISS.</li>
-<li><a href="https://docs.litellm.ai/docs/prompt_validation">Litellm prompt validation guide</a> — helped us catch regressions before they hit production.</li>
-<li><a href="https://fastapi.tiangolo.com/async/">FastAPI async best practices</a> — kept our endpoint performant under load.</li>
+<li><a href="https://calculator.aws/#/addService/Bedrock">AWS Bedrock pricing calculator 2026-06</a> — used to sanity-check our token spend. - <a href="https://redis.io/docs/interact/search-and-query/">Redis 7.2 FT.SEARCH tutorial</a> — saved us from deploying FAISS. - <a href="https://docs.litellm.ai/docs/prompt_validation">Litellm prompt validation guide</a> — helped us catch regressions before they hit production. - <a href="https://fastapi.tiangolo.com/async/">FastAPI async best practices</a> — kept our endpoint performant under load.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>What’s the best way to cache LLM responses in 2026?</strong>

@@ -1,12 +1,12 @@
 # Why I picked Playwright and Vitest in 2026
 
-I ran into this test frontend problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 ## Why this list exists (what I was actually trying to solve)
 
 The project was a Next.js 14 dashboard with real-time WebSocket updates, a heavy D3 charting library, and a GraphQL backend served by Node.js 20 LTS. The team had 5 full-stack engineers, zero QA specialists, and a CI budget capped at $200/month on GitHub Actions. We needed a test stack that could catch race conditions in the WebSocket logic without melting the CI wallet.
 
-I ran into the first surprise when our existing Cypress suite—written for a React 16 app in 2026—started failing silently on React 18 StrictMode double-mounts. The tests would pass locally but crash in CI because Cypress retries selectors in a way that breaks when components unmount and remount. I spent three days on this before realising the suite wasn’t testing the real behaviour; it was testing the mock behaviour.
+The tests would pass locally but crash in CI because Cypress retries selectors in a way that breaks when components unmount and remount.
 
 By 2026 most teams have moved beyond the “just Jest + happy-dom” phase. Vitest is now the default for unit tests in the React ecosystem, and Playwright has eaten most of Cypress’s market share for E2E. The big question was which tools to standardise on, and how to wire them together without turning the build into a Times Square billboard of red error boxes.
 
@@ -14,9 +14,7 @@ By 2026 most teams have moved beyond the “just Jest + happy-dom” phase. Vite
 ## How I evaluated each option
 
 I set three hard gates:
-1. No flakey tests in the last 90 days.
-2. CI total cost ≤ $200/month for 3000 runs.
-3. A new hire can run the suite after 30 minutes of onboarding.
+1. No flakey tests in the last 90 days. 2. CI total cost ≤ $200/month for 3000 runs. 3. A new hire can run the suite after 30 minutes of onboarding.
 
 I measured these against the actual codebase in a branch called `test-rewrite-2026`. I instrumented every run with Playwright’s trace viewer and Vitest’s coverage reports. The baseline was a Cypress 13 suite with 127 tests that took 6m42s and cost $198/month on GitHub Actions with 4 vCPUs and 16 GB RAM. The same machine ran a mixed Vitest + Playwright suite in 4m18s and cost $124/month.
 
@@ -28,46 +26,25 @@ I also timed how long it took to debug a real failure. For a race condition in t
 Listed in the order that actually matters when the build is red at 02:14 and you need to know which tool to blame.
 
 1. Playwright for E2E and component tests
-   What it does: A Node.js library that runs Chromium, Firefox, and WebKit in parallel via a single API. It records videos, traces, and screenshots on every failure and auto-detects flaky tests.
-   Strength: The trace viewer is the only tool that has ever shown me the exact millisecond when a WebSocket reconnect raced with a React state update. Debugging time dropped from 45 minutes to 7 minutes on a 2026 bug that kept resurfacing.
-   Weakness: The API surface is larger than Cypress’s, so newcomers write brittle selectors for the first week. I burned 1.5 hours fixing a test that relied on a class name that React 18 keeps changing.
-   Best for: Teams shipping React, Next.js, or Vue apps that need cross-browser parity and fast CI feedback.
+   What it does: A Node.js library that runs Chromium, Firefox, and WebKit in parallel via a single API. It records videos, traces, and screenshots on every failure and auto-detects flaky tests. Strength: The trace viewer is the only tool that has ever shown me the exact millisecond when a WebSocket reconnect raced with a React state update. Debugging time dropped from 45 minutes to 7 minutes on a 2026 bug that kept resurfacing. Weakness: The API surface is larger than Cypress’s, so newcomers write brittle selectors for the first week. I burned 1.5 hours fixing a test that relied on a class name that React 18 keeps changing. Best for: Teams shipping React, Next.js, or Vue apps that need cross-browser parity and fast CI feedback.
 
 2. Vitest for unit and integration tests
-   What it does: A Vite-native test runner that reuses your vite.config.ts and supports Jest compatibility layer. It spins up a real DOM in a worker thread, so tests run in 20-30% of the time of Jest + jsdom.
-   Strength: The watch mode is instant; I can edit a component and rerun only the related tests in under 2 seconds. On a repo with 270 unit tests, the suite went from 12.4 s (Jest) to 3.8 s (Vitest).
-   Weakness: Mocking globals like localStorage or WebSocket requires a tiny adapter you have to write yourself; the ecosystem docs assume you already know how to stub fetch and timers.
-   Best for: Projects using Vite or esbuild where speed and DX matter more than legacy Jest plugins.
+   What it does: A Vite-native test runner that reuses your vite.config.ts and supports Jest compatibility layer. It spins up a real DOM in a worker thread, so tests run in 20-30% of the time of Jest + jsdom. Strength: The watch mode is instant; I can edit a component and rerun only the related tests in under 2 seconds. On a repo with 270 unit tests, the suite went from 12.4 s (Jest) to 3.8 s (Vitest). Weakness: Mocking globals like localStorage or WebSocket requires a tiny adapter you have to write yourself; the ecosystem docs assume you already know how to stub fetch and timers. Best for: Projects using Vite or esbuild where speed and DX matter more than legacy Jest plugins.
 
 3. MSW (Mock Service Worker) for API mocking
-   What it does: Intercepts fetch/XHR calls at the network level and returns canned responses. No server required.
-   Strength: One MSW setup handles every test file; I don’t rewrite mocks when the API schema changes. A 2026 update added GraphQL support that actually works with subscriptions.
-   Weakness: If you forget to reset handlers between tests, state leaks and you get flaky tests. Took me two days to realise why one component test kept failing only on CI.
-   Best for: GraphQL-heavy frontends or REST clients where you want deterministic tests without a mock server.
+   What it does: Intercepts fetch/XHR calls at the network level and returns canned responses. No server required. Strength: One MSW setup handles every test file; I don’t rewrite mocks when the API schema changes. A 2026 update added GraphQL support that actually works with subscriptions. Weakness: If you forget to reset handlers between tests, state leaks and you get flaky tests. Took me two days to realise why one component test kept failing only on CI. Best for: GraphQL-heavy frontends or REST clients where you want deterministic tests without a mock server.
 
 4. Testing Library for accessibility-first assertions
-   What it does: A family of libraries that encourage queries by role, label, and text instead of implementation details.
-   Strength: The `findByRole` queries wait automatically, so I don’t sprinkle `waitFor` everywhere. In a Next.js modal component, the test went from 3 flaky retries to 0.
-   Weakness: The docs still assume you’re using React Testing Library; if you write your own wrapper around `@testing-library/dom`, the helpers are thin.
-   Best for: Teams that treat a11y as a first-class requirement and want tests that break when markup changes.
+   What it does: A family of libraries that encourage queries by role, label, and text instead of implementation details. Strength: The `findByRole` queries wait automatically, so I don’t sprinkle `waitFor` everywhere. In a Next.js modal component, the test went from 3 flaky retries to 0. Weakness: The docs still assume you’re using React Testing Library; if you write your own wrapper around `@testing-library/dom`, the helpers are thin. Best for: Teams that treat a11y as a first-class requirement and want tests that break when markup changes.
 
 5. Playwright Test Runner for component tests
-   What it does: Lets you mount a single React component in an isolated iframe and run assertions on it without a full browser.
-   Strength: You reuse the same selectors and fixtures from E2E tests, so there’s no context switch. On a D3 chart component, component tests ran in 280 ms versus 2.1 s for a full E2E test.
-   Weakness: The iframe introduces subtle timing differences; a `setTimeout` that works in Jest fails here because the iframe clock isn’t the host clock.
-   Best for: Heavy SVG/Canvas components where full E2E is overkill but shallow renders miss race conditions.
+   What it does: Lets you mount a single React component in an isolated iframe and run assertions on it without a full browser. Strength: You reuse the same selectors and fixtures from E2E tests, so there’s no context switch. On a D3 chart component, component tests ran in 280 ms versus 2.1 s for a full E2E test. Weakness: The iframe introduces subtle timing differences; a `setTimeout` that works in Jest fails here because the iframe clock isn’t the host clock. Best for: Heavy SVG/Canvas components where full E2E is overkill but shallow renders miss race conditions.
 
 6. Storybook + Chromatic for visual regression
-   What it does: Renders Storybook stories in the cloud and compares screenshots on every commit.
-   Strength: The diff view highlights exactly which pixels changed; no more squinting at two 4K screenshots.
-   Weakness: The free tier caps at 5000 snapshots/month; beyond that it’s $29/month. For us, that meant moving snapshots to a CI step instead of per-story.
-   Best for: Design systems or marketing sites where pixel-perfect still matters.
+   What it does: Renders Storybook stories in the cloud and compares screenshots on every commit. Strength: The diff view highlights exactly which pixels changed; no more squinting at two 4K screenshots. Weakness: The free tier caps at 5000 snapshots/month; beyond that it’s $29/month. For us, that meant moving snapshots to a CI step instead of per-story. Best for: Design systems or marketing sites where pixel-perfect still matters.
 
 7. Cypress for legacy suites only
-   What it does: A JavaScript E2E runner with a GUI and automatic wait/retry logic.
-   Strength: If your team already knows it, migration pain is high but not zero.
-   Weakness: The retry strategy breaks on React 18 StrictMode, and the bundled Electron version lags behind Chromium by 6 months. I had to pin Cypress 13 to avoid a 404 on a Chrome patch.
-   Best for: Teams stuck on React 16 or IE11 who can’t afford a rewrite yet.
+   What it does: A JavaScript E2E runner with a GUI and automatic wait/retry logic. Strength: If your team already knows it, migration pain is high but not zero. Weakness: The retry strategy breaks on React 18 StrictMode, and the bundled Electron version lags behind Chromium by 6 months. Best for: Teams stuck on React 16 or IE11 who can’t afford a rewrite yet.
 
 
 ## The top pick and why it won
@@ -75,9 +52,7 @@ Listed in the order that actually matters when the build is red at 02:14 and you
 Playwright won because it’s the only tool that gave me a single artifact—a trace—that contains every DOM snapshot, network request, and console log for the exact moment a test failed. In 2026 most teams run three or more test runners; Playwright is the only one that can cover E2E, component, and API tests without context switching.
 
 The numbers speak for themselves:
-- 37 % faster CI runs (4m18s vs 6m42s baseline).
-- 38 % cheaper on GitHub Actions (124 USD vs 198 USD).
-- 85 % fewer flaky tests after enabling the auto-flake detection in Playwright 1.46.
+- 37 % faster CI runs (4m18s vs 6m42s baseline). - 38 % cheaper on GitHub Actions (124 USD vs 198 USD). - 85 % fewer flaky tests after enabling the auto-flake detection in Playwright 1.46.
 
 I replaced the old Cypress suite with 118 Playwright tests (E2E + component) and 270 Vitest unit tests. The total line count dropped from 4,238 to 3,142 because we stopped duplicating selectors across suites. The trace viewer alone saved me 15 hours of debugging race conditions that Jest + Cypress never caught.
 
@@ -126,7 +101,7 @@ Use this table to decide which tools to bet on. Fill in your own numbers where t
 
 If your team ships a design system, add Storybook + Chromatic even if the budget is tight; the diff view alone pays for itself in design debt reduction.
 
-I was surprised that the smallest teams—1–3 engineers—often benefit the most from Playwright’s auto-flake detection. A solo founder I mentored cut her debugging time from 2 hours to 12 minutes on a sticky Safari scroll bug that only reproduced on iOS 17.
+A solo founder I mentored cut her debugging time from 2 hours to 12 minutes on a sticky Safari scroll bug that only reproduced on iOS 17.
 
 
 ## Frequently asked questions
@@ -162,20 +137,16 @@ This gives you a working suite in under 30 minutes with no rewrites. The trace v
 
 Do it now. Your future self will thank you when the build turns red at 02:14 and you actually know why.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

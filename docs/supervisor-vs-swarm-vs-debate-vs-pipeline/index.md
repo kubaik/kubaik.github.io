@@ -4,18 +4,11 @@ Most multiagent orchestration guides assume a clean environment and a patient ti
 
 ## The gap between what the docs say and what production needs
 
-I spent three weeks tuning a multi-agent system that worked fine in the tutorial and exploded in staging — the difference wasn’t the model quality; it was the orchestration layer.
-
 Most docs show a toy example with two agents passing a JSON blob between each other. Then the same code hits production and suddenly you’re debugging:
-- Why did AgentB hang after AgentA sent 4,231 messages?
-- Why does the supervisor’s health check return 200 when half the swarm is down?
-- How did 132 CPU cores disappear into the void after a single retry loop?
+- Why did AgentB hang after AgentA sent 4,231 messages? - Why does the supervisor’s health check return 200 when half the swarm is down? - How did 132 CPU cores disappear into the void after a single retry loop?
 
-The gap isn’t about scaling — it’s about **recovery**.
-A multi-agent system that survives production needs three things the tutorials skip:
-1. A deterministic way to restart failed agents without cascading retries.
-2. A circuit breaker that actually stops the supervisor from spamming the message broker.
-3. A way to replay the conversation when the downstream service times out, not just retry the last call.
+The gap isn’t about scaling — it’s about **recovery**. A multi-agent system that survives production needs three things the tutorials skip:
+1. A deterministic way to restart failed agents without cascading retries. 2. A circuit breaker that actually stops the supervisor from spamming the message broker. 3. A way to replay the conversation when the downstream service times out, not just retry the last call.
 
 I learned this the hard way when a single `TimeoutError` from an external API triggered 8,000 retries in 90 seconds, melting the supervisor’s CPU. The retry queue grew faster than the supervisor could process it; the supervisor itself became the denial-of-service vector.
 
@@ -86,7 +79,7 @@ In practice, this means each pipeline stage has:
 - a retry policy (3 retries, exponential backoff)
 - a dead-letter queue for items that fail all retries
 
-I built a 5-stage pipeline processing 10,000 requests per second. The first stage (agent A) handled validation, the second (agent B) enriched the data, the third (agent C) ran business logic, the fourth (agent D) wrote to a database, and the fifth (agent E) sent a webhook.
+The first stage (agent A) handled validation, the second (agent B) enriched the data, the third (agent C) ran business logic, the fourth (agent D) wrote to a database, and the fifth (agent E) sent a webhook.
 
 The failure mode I didn’t anticipate was **stage D blocking stage C**. Agent C would send 10,000 enriched items to agent D, but agent D’s database writes slowed to 50 items/second. Agent C’s queue grew to 8,000 items, and its memory usage ballooned. The supervisor (yes, even pipelines need supervisors) didn’t notice because agent C’s health check was still returning 200.
 
@@ -198,9 +191,7 @@ func (s *Supervisor) restartAgent(ctx context.Context, agentID string) {
 ```
 
 Key lessons:
-- Use Redis for **shared state** — don’t trust in-memory maps in a multi-agent system.
-- Restart counts are **persistent** — they survive agent crashes.
-- Blacklist durations are **short** — 1 hour is long enough to cool down, short enough to recover quickly.
+- Use Redis for **shared state** — don’t trust in-memory maps in a multi-agent system. - Restart counts are **persistent** — they survive agent crashes. - Blacklist durations are **short** — 1 hour is long enough to cool down, short enough to recover quickly.
 
 ### Swarm in Node 20 LTS with NATS 2.10
 
@@ -446,9 +437,7 @@ func (s *Supervisor) checkHealth(ctx context.Context, agentID string) bool {
 | Grafana                | 10.2    | Visualizing pipeline backpressure | Real-time dashboards                       |
 
 Avoid:
-- **Apache Kafka** for multi-agent orchestration — it’s overkill for most patterns and adds 50–200 ms of latency.
-- **gRPC** for inter-agent communication — JSON over NATS is simpler and faster for most use cases.
-- **Custom message brokers** — Redis and NATS cover 90% of needs.
+- **Apache Kafka** for multi-agent orchestration — it’s overkill for most patterns and adds 50–200 ms of latency. - **gRPC** for inter-agent communication — JSON over NATS is simpler and faster for most use cases. - **Custom message brokers** — Redis and NATS cover 90% of needs.
 
 ## When this approach is the wrong choice
 
@@ -485,7 +474,6 @@ I’ve run all four patterns in production for 18 months. Here’s what surprise
 4. **The pipeline pattern is the most predictable** — backpressure works, and it’s easy to tune. The only surprise was how quickly queue depth metrics became your most important health check.
 
 The biggest mistake I made was **assuming agents were stateless**. In reality, agents accumulate state (file handles, open connections, memory
-
 
 ---
 

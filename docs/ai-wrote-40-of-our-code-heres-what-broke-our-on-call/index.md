@@ -6,7 +6,7 @@ Most changed our guides assume a clean environment and a patient timeline. Produ
 
 In early 2026, our team at a Nairobi-based civic tech NGO was running a citizen reporting platform with two paid engineers and one sysadmin. We had no dedicated devops, no SRE, and a budget that capped at $500/month for cloud services. Our on-call rotation was brutal: we were getting woken up 3–5 times a week for false positives, flaky tests, or alerts that didn’t match the actual error. PagerDuty logs showed 68% of pages were for issues that resolved themselves within 10 minutes — mostly spurious health check timeouts or race conditions in our Python 3.11 backend using FastAPI 0.109.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. By October 2025, we’d silently introduced an AI coding assistant into our workflow. At first, it was just for the boring parts: docstrings, test scaffolding, and filling in obvious API endpoints. But within two months, 40% of the new code we shipped had been written or heavily edited by AI — mostly GitHub Copilot Enterprise with a custom fine-tuned model built on 1,200 commits of our own codebase.
+By October 2025, we’d silently introduced an AI coding assistant into our workflow. At first, it was just for the boring parts: docstrings, test scaffolding, and filling in obvious API endpoints. But within two months, 40% of the new code we shipped had been written or heavily edited by AI — mostly GitHub Copilot Enterprise with a custom fine-tuned model built on 1,200 commits of our own codebase.
 
 The problem wasn’t the volume. It was the quality. Our AI-generated code introduced subtle bugs that only surfaced under load or during edge-case traffic patterns. We started seeing a 3.2x increase in alerts for 5xx errors during peak hours (7–9 PM local time), even though our request volume hadn’t changed. Our SLOs were slipping: user-facing latency for the critical `/report` endpoint jumped from 420ms to 1.1s during peak traffic, and we were violating our 99.5% uptime SLO by 0.3% on average each week.
 
@@ -200,28 +200,16 @@ AI is a tool, not a replacement for process. The teams that succeed with AI are 
 If you’re running a small team with limited resources and you’re using AI to write 20–50% of your code, here’s your 30-day plan to fix your on-call:
 
 **Week 1: Instrument symptoms, not errors**
-1. Pick one critical user journey (e.g., submitting a report, logging in, making a payment).
-2. Add a simple metric to track whether that journey succeeded or failed. Use OpenTelemetry 1.33 if you can, or a counter in Prometheus if you can’t.
-3. Set up a single alert that fires when the failure rate exceeds 1% over 5 minutes.
-4. Deploy this change and watch your alerts for a week. You’ll be shocked at how many false positives you’re currently getting.
+1. Pick one critical user journey (e.g., submitting a report, logging in, making a payment). 2. Add a simple metric to track whether that journey succeeded or failed. Use OpenTelemetry 1.33 if you can, or a counter in Prometheus if you can’t. 3. Set up a single alert that fires when the failure rate exceeds 1% over 5 minutes. 4. Deploy this change and watch your alerts for a week. You’ll be shocked at how many false positives you’re currently getting.
 
 **Week 2: Add static analysis to every PR**
-1. Pick one security scanner (Bandit for Python, ESLint for JavaScript, Semgrep for everything).
-2. Add it as a GitHub Action or GitLab CI job that runs on every pull request.
-3. Start with the default ruleset — don’t customize it yet.
-4. Track how many issues it catches over two weeks. You’ll likely see 3–5 real issues per 10 PRs.
+1. Pick one security scanner (Bandit for Python, ESLint for JavaScript, Semgrep for everything). 2. Add it as a GitHub Action or GitLab CI job that runs on every pull request. 3. Start with the default ruleset — don’t customize it yet. 4. Track how many issues it catches over two weeks. You’ll likely see 3–5 real issues per 10 PRs.
 
 **Week 3: Build a synthetic load test**
-1. Pick one critical endpoint (e.g., `/submit`).
-2. Write a simple k6 script that replays real user traffic. Start with 10–20 requests per minute.
-3. Run this script after every deployment and post the results to a Slack channel.
-4. If any test fails, automatically roll back the deployment.
+1. Pick one critical endpoint (e.g., `/submit`). 2. Write a simple k6 script that replays real user traffic. Start with 10–20 requests per minute. 3. Run this script after every deployment and post the results to a Slack channel. 4. If any test fails, automatically roll back the deployment.
 
 **Week 4: Introduce a symptom-free metric**
-1. Pick one user-facing metric (e.g., successful report submissions).
-2. Track the percentage of user sessions that complete without encountering a symptom (failed submission, timeout, error page).
-3. Set a target (e.g., 95% symptom-free).
-4. Review your on-call incidents for the past month and see how many would have been caught by this metric.
+1. Pick one user-facing metric (e.g., successful report submissions). 2. Track the percentage of user sessions that complete without encountering a symptom (failed submission, timeout, error page). 3. Set a target (e.g., 95% symptom-free). 4. Review your on-call incidents for the past month and see how many would have been caught by this metric.
 
 **Tools to use**
 - Static analysis: Bandit 1.7.7 (Python), ESLint 9.3 (JavaScript), Semgrep 1.70 (multi-language)
@@ -238,12 +226,7 @@ If you’re running a small team with limited resources and you’re using AI to
 
 ## Resources that helped
 
-- [Honeycomb’s guide to symptom-based alerting](https://www.honeycomb.io/blog/symptom-based-alerting/) — This is the best practical guide I’ve found to building alerting around user impact, not technical errors.
-- [k6’s traffic replay guide](https://k6.io/docs/examples/data-upload-traffic-replay/) — How to build a script that replays real user traffic patterns.
-- [Bandit’s documentation](https://bandit.readthedocs.io/) — Start with the default ruleset, then customize.
-- [Prometheus Operator](https://prometheus-operator.dev/) — If you’re self-hosting Prometheus, this makes it 10x easier to manage.
-- [Honeycomb’s reliability metrics guide](https://www.honeycomb.io/blog/reliability-metrics/) — How to measure what actually matters to users.
-- [GitHub’s guide to AI code review](https://github.com/readme/guides/ai-code-review) — Practical tips for reviewing AI-generated code.
+- [Honeycomb’s guide to symptom-based alerting](https://www.honeycomb.io/blog/symptom-based-alerting/) — This is the best practical guide I’ve found to building alerting around user impact, not technical errors. - [k6’s traffic replay guide](https://k6.io/docs/examples/data-upload-traffic-replay/) — How to build a script that replays real user traffic patterns. - [Bandit’s documentation](https://bandit.readthedocs.io/) — Start with the default ruleset, then customize. - [Prometheus Operator](https://prometheus-operator.dev/) — If you’re self-hosting Prometheus, this makes it 10x easier to manage. - [Honeycomb’s reliability metrics guide](https://www.honeycomb.io/blog/reliability-metrics/) — How to measure what actually matters to users. - [GitHub’s guide to AI code review](https://github.com/readme/guides/ai-code-review) — Practical tips for reviewing AI-generated code.
 
 ## Frequently Asked Questions
 
@@ -266,20 +249,16 @@ Track three metrics: pages per week, mean time to resolve, and team happiness. P
 
 Open your PagerDuty or Opsgenie dashboard right now. Count how many of your current alerts are firing for symptoms (e.g., "user can’t submit a report") versus technical errors (e.g., "HTTP 500"). If more than 50% are technical errors, your alerting is too noisy. Pick the noisiest alert and rewrite it to fire only when a user is actually impacted. Do this for one alert today — it’ll take 15 minutes and will immediately reduce your false positives.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

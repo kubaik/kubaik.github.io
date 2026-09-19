@@ -1,14 +1,12 @@
 # AI rollouts live or die by flags
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
 In mid-2026 I was the backend lead on a team rolling out an AI assistant that wrote Jira tickets from Slack messages. We had Prometheus, Grafana, and a fancy vector database. We were good—until we weren’t.
 
 The first time we pushed a model tweak to production, 14% of users got hallucinations for 47 minutes because we’d forgotten to turn off the old model in one region. That incident cost us a customer and two engineering weeks of incident review.
-
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
 
 Feature flags weren’t the shiny part of the stack, but they became the only thing that let us ship AI without blowing up production every week. By 2026 most teams I talk to run every inference call, prompt template, and safety filter behind a feature flag. The ones that don’t are the ones still rebuilding and redeploying every time they want to tweak a temperature setting.
 
@@ -512,20 +510,16 @@ Next, create a flag called `ai-safety-filter-v1` and set it to 1% of your user b
 
 Your immediate next step: Open your CDK stack file and change the billing mode to PROVISIONED. Deploy it now to cut costs.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

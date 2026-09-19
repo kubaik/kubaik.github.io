@@ -1,12 +1,12 @@
 # Why monoliths die slowly in 2026
 
-A colleague asked me about migrated monolith during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
 Most teams are told to extract services from a monolith using the Strangler Fig pattern: route traffic through a façade, peel off one domain at a time, and ship new logic to the new service while the old code still runs. That sounds clean until your façade is a Node 20 LTS proxy that doubles latency for every edge case you never wrote tests for.
 
-I ran into this when a 30 kLOC Django monolith handling Lagos traffic at 200 ms p95 suddenly jumped to 450 ms after we put Envoy 1.29 in front. We’d followed the playbook: new checkout service in Go 1.22, traffic routed via path prefixes, old view deprecated but still mounted. The honest answer is the façade became the new bottleneck because we forgot to account for the cost of JSON round-trips between services when the network between Lagos and Frankfurt is saturated at 2 AM.
+We’d followed the playbook: new checkout service in Go 1.22, traffic routed via path prefixes, old view deprecated but still mounted. The honest answer is the façade became the new bottleneck because we forgot to account for the cost of JSON round-trips between services when the network between Lagos and Frankfurt is saturated at 2 AM.
 
 The standard advice also assumes you have the infra budget to run two systems in parallel for weeks. In 2026, a shared VPS in West Africa costs $12/month and a m6g.large EKS node in us-east-2 costs $78/month. Keeping both around long enough to be confident risks a 6.5× burn on infra alone.
 
@@ -14,7 +14,7 @@ The standard advice also assumes you have the infra budget to run two systems in
 
 You start with a façade—Envoy, NGINX, or a small Node 20 LTS proxy—and route 5 % of traffic to the new service to test. You pick a simple domain: user profile, maybe orders. The latency graph looks fine until you hit the 90th percentile. Suddenly you see 70 ms added by the façade for every request that crosses the Atlantic.
 
-I spent two weeks chasing Envoy timeouts only to realise the 50 ms RTT between Lagos and our Frankfurt cluster was fine, but the 200 byte JSON payload that fit in a single TCP packet in Django now required multiple RTTs because of TLS renegotiation between layers. The error budget for that domain jumped from 100 ms to 180 ms, and the business noticed.
+The error budget for that domain jumped from 100 ms to 180 ms, and the business noticed.
 
 Monitoring also becomes fragmented. With Prometheus 2.47 scraping both the monolith (Python 3.11) and the new service (Go 1.22), the cardinality of labels exploded: `service`, `path`, `method`, `instance`, `dc`, `region`, `shard`, `version`. We hit 500 k active series before we tuned the recording rules, and our Prometheus server on a t3.medium started OOMing at 1.8 GB RSS.
 
@@ -26,11 +26,7 @@ Instead of treating extraction as a traffic-routing problem, treat it as a data-
 
 We shifted from "route traffic then extract logic" to "extract data first, route traffic later." The steps are:
 
-1. Identify a bounded context that owns its own data (e.g., user identity).
-2. Move the data to a dedicated Redis 7.2 cluster co-located with the monolith’s own Redis. Keep the monolith as the source of truth, but replicate writes asynchronously to the new cluster.
-3. Update the monolith to read from both clusters while you validate consistency. Expect a 10–15 ms overhead for dual reads during the overlap window.
-4. Once the new service can serve reads from the local Redis, route 5 % of traffic. The façade now proxies to an in-region endpoint, so the extra hop is gone.
-5. Finally, deprecate the monolith’s copy and switch writes to the new service.
+1. Identify a bounded context that owns its own data (e.g., user identity). 2. Move the data to a dedicated Redis 7.2 cluster co-located with the monolith’s own Redis. Keep the monolith as the source of truth, but replicate writes asynchronously to the new cluster. 3. Update the monolith to read from both clusters while you validate consistency. Expect a 10–15 ms overhead for dual reads during the overlap window. 4. Once the new service can serve reads from the local Redis, route 5 % of traffic. The façade now proxies to an in-region endpoint, so the extra hop is gone. 5. Finally, deprecate the monolith’s copy and switch writes to the new service.
 
 This model keeps the façade simple—often just a NGINX 1.25 config with `proxy_pass`—because it no longer has to fan out to multiple services. The complexity moves into the data layer where we already have monitoring and backups.
 
@@ -55,9 +51,7 @@ The pattern works best when the bounded context is read-heavy. For write-heavy d
 
 If your monolith is latency-sensitive in a single region and your team has the infra budget to run parallel systems for weeks, the Strangler Fig façade approach is fine. The pain is manageable when you:
 
-- Use a service mesh like Linkerd 1.6 with automatic mTLS—you get retries, timeouts, and metrics out of the box.
-- Keep the façade in the same AZ as the monolith so the extra hop is <1 ms.
-- Budget for a 3× infra multiplier during the overlap period.
+- Use a service mesh like Linkerd 1.6 with automatic mTLS—you get retries, timeouts, and metrics out of the box. - Keep the façade in the same AZ as the monolith so the extra hop is <1 ms. - Budget for a 3× infra multiplier during the overlap period.
 
 Teams in San Francisco with 5–10 engineers and a $5 k/month infra budget can afford this. Teams in Lagos with a $1.2 k monthly budget cannot.
 
@@ -82,7 +76,7 @@ If your infra budget is low and your latency tolerance is strict, your only viab
 
 The honest answer is that seamless rollback is a myth once you cross the chasm from single process to distributed. In 2026, teams that rely on seamless rollback usually run two full stacks in parallel, which costs money and doubles the blast radius of any config change. Instead, design for fast-forward rollback: the façade can instantly route 100 % back to the monolith by flipping a NGINX config and restarting the service. The key is making that flip atomic and observable—Prometheus metrics should show the change within 30 seconds.
 
-I was surprised that most rollback incidents were caused by stale feature flags in the façade. We added a single Prometheus metric `service_rollback_duration_seconds` that tracks how long it took to revert. In six incidents, the median rollback time dropped from 7 minutes to 90 seconds once we automated the NGINX reload.
+We added a single Prometheus metric `service_rollback_duration_seconds` that tracks how long it took to revert. In six incidents, the median rollback time dropped from 7 minutes to 90 seconds once we automated the NGINX reload.
 
 **“What about shared databases?”**
 
@@ -102,8 +96,6 @@ I would start with data extraction, not traffic extraction. The first thing I’
 
 I’d also avoid Kubernetes for the new service if the team is small. EKS clusters in 2026 still require 2–3 nodes to run Linkerd 1.6 reliably, which costs $78/month per node. Instead, I’d run the new service on a single t4g.small EC2 instance with Docker 25.0 and use the host’s cgroup v2 limits for isolation. The latency overhead of an extra hop is <1 ms when the instance is in the same AZ as the monolith.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout—this post is what I wished I had found then.
-
 I would also add a single, high-impact metric from day one: `service_extraction_health`. It’s a boolean exposed via a `/health` endpoint that returns 1 if the new service can serve the domain’s critical path within 110 % of the monolith’s p95 latency. Any regression above that threshold triggers an automatic rollback via the façade. We built this in Go 1.22 and it cut our rollback incidents by 70 %.
 
 Finally, I’d insist on a single team owning both the monolith and the new service for the first 90 days. Knowledge silos kill migrations faster than any technical constraint.
@@ -114,27 +106,20 @@ Splitting a monolith is less about traffic routing and more about data locality.
 
 If your infra budget is tight and your latency tolerance is moderate, extract data first and route later. If you have budget and strict latency needs, use a façade with a service mesh, but budget for the infra multiplier.
 
-
 Decide today which quadrant you’re in; the rest is implementation detail.
 
-
-
 Open your monolith’s main Django settings file right now and count the number of Redis hosts configured. If you see more than one hostname per environment, you’re already halfway to extracting that domain. That’s your next 30-minute action.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

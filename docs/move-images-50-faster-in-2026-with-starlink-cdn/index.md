@@ -1,10 +1,10 @@
 # Move images 50% faster in 2026 with Starlink CDN
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-In mid-2026, I joined a team shipping a photo-sharing app for East African photographers using mid-range Android devices on 4G or Starlink dishes. We thought our CDN would be enough, but in early 2026 Starlink beams lit up Nairobi and Kampala, and latency to our origin in London fell from 280 ms to 110 ms overnight. That sounds great, but our image CDN still choked when 100 photographers in a single ward uploaded 10 MB photos at once. The origin saw 502 timeouts, and Safari on iOS 17 refused to retry, leaving white thumbnails. I spent three weeks chasing CloudFront logs before realizing the CDN’s Lambda@Edge function was timing out because it tried to resize images in Node 18 without streaming buffers. We lost 4% of uploads during the first week of Starlink rollout. This post is what I wish I’d had then.
+In mid-2026, I joined a team shipping a photo-sharing app for East African photographers using mid-range Android devices on 4G or Starlink dishes. We thought our CDN would be enough, but in early 2026 Starlink beams lit up Nairobi and Kampala, and latency to our origin in London fell from 280 ms to 110 ms overnight. That sounds great, but our image CDN still choked when 100 photographers in a single ward uploaded 10 MB photos at once. The origin saw 502 timeouts, and Safari on iOS 17 refused to retry, leaving white thumbnails. We lost 4% of uploads during the first week of Starlink rollout. This post is what I wish I’d had then.
 
 The real shift in 2026 isn’t raw latency—it’s the sudden spike in concurrent uploads from users who now have flat-rate gigabit Starlink dishes. Traditional CDNs were built for bursty 4G with 2–3 concurrent requests per user, not for 50 concurrent 5 MB uploads from a single household. If you’re still tuning your stack for 2026 latency profiles, your error budget is about to burn.
 
@@ -14,18 +14,10 @@ Early adopters in Nairobi told us they expected instant uploads now that Starlin
 
 You’ll need:
 
-- Node 20 LTS for the edge functions and CLI tools.
-- AWS account with CloudFront, Lambda@Edge, S3, and CloudWatch.
-- A simple image bucket named `photos-2026-eastafrica` in `af-south-1`.
-- A domain you control (I’ll use `cdn.example.ke`) with Route 53.
-- Starlink dish or a 4G hotspot for local testing.
+- Node 20 LTS for the edge functions and CLI tools. - AWS account with CloudFront, Lambda@Edge, S3, and CloudWatch. - A simple image bucket named `photos-2026-eastafrica` in `af-south-1`. - A domain you control (I’ll use `cdn.example.ke`) with Route 53. - Starlink dish or a 4G hotspot for local testing.
 
 What you’ll build is a CloudFront distribution backed by a Lambda@Edge origin-response function that:
-- Streams the original image from S3 without downloading it entirely to memory.
-- Resizes the image to three breakpoints (300 px, 600 px, 1200 px) on the fly.
-- Sets `Cache-Control: public, max-age=31536000, immutable` for transformed assets.
-- Serves WebP when the client supports it, otherwise falls back to JPEG.
-- Logs every resize attempt to CloudWatch under `/image/resize/{requestId}`.
+- Streams the original image from S3 without downloading it entirely to memory. - Resizes the image to three breakpoints (300 px, 600 px, 1200 px) on the fly. - Sets `Cache-Control: public, max-age=31536000, immutable` for transformed assets. - Serves WebP when the client supports it, otherwise falls back to JPEG. - Logs every resize attempt to CloudWatch under `/image/resize/{requestId}`.
 
 The whole project is under 200 lines of JavaScript (including comments and tests) and costs about $12 per million resizes at 2026 rates.
 
@@ -334,26 +326,18 @@ This reduced data usage by 40% for Starlink users in Kenya Power’s 2026 tariff
 | *Increase due to Prometheus metrics and debug logs for Safari 17.4 issues. |
 
 **Why the numbers matter**
-- **Latency drop**: 110 ms is now the “new normal” for Nairobi users. Apps that still target 280 ms are perceived as sluggish.
-- **Concurrency spike**: Starlink dishes in a single household can saturate a 1 Gbps link. Your CDN must handle 50 concurrent uploads per IP, not 3.
-- **Memory & cold starts**: The sharp streaming fix reduced memory by 62% and cold-start latency by 87%, directly impacting Safari’s 2-second spinner limit.
-- **Data savings**: The WebP fallback and Next.js loader saved photographers in metered Starlink zones 43% of their data budget, a critical cost saving in Kenya’s 2026 energy crisis.
-- **Observability debt**: The 40% log volume increase is the hidden cost of debugging Safari 17.4. Without Prometheus metrics, we would have missed the WebP crash pattern until it hit 15% of users.
-
+- **Latency drop**: 110 ms is now the “new normal” for Nairobi users. Apps that still target 280 ms are perceived as sluggish. - **Concurrency spike**: Starlink dishes in a single household can saturate a 1 Gbps link. Your CDN must handle 50 concurrent uploads per IP, not 3. - **Memory & cold starts**: The sharp streaming fix reduced memory by 62% and cold-start latency by 87%, directly impacting Safari’s 2-second spinner limit. - **Data savings**: The WebP fallback and Next.js loader saved photographers in metered Starlink zones 43% of their data budget, a critical cost saving in Kenya’s 2026 energy crisis. - **Observability debt**: The 40% log volume increase is the hidden cost of debugging Safari 17.4. Without Prometheus metrics, we would have missed the WebP crash pattern until it hit 15% of users.
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

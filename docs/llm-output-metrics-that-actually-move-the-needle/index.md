@@ -6,13 +6,10 @@ The official documentation for evaluating llm is good. What it doesn't cover is 
 
 Almost every LLM tutorial you read starts with perplexity or ROUGE scores. Those metrics are great in research papers, but in production they tell you nothing about whether your system is actually saving money or making users happier.
 
-I ran into this the hard way in 2026 when we shipped a new summarization service for a Nairobi fintech app. The marketing team loved the demo because the model sounded fluent in Swahili and English. Six weeks later the support tickets piled up: users complained summaries were leaving out loan amounts and repayment dates. Our ROUGE-L score hadn’t moved — it only cares about n-gram overlap, not facts. That’s when I learned that production LLM quality needs a completely different yardstick.
+The marketing team loved the demo because the model sounded fluent in Swahili and English. Six weeks later the support tickets piled up: users complained summaries were leaving out loan amounts and repayment dates. Our ROUGE-L score hadn’t moved — it only cares about n-gram overlap, not facts. That’s when I learned that production LLM quality needs a completely different yardstick.
 
 What actually matters at scale is:
-1. **Fact accuracy** – not fluency.
-2. **Latency at p95** – because users abandon if the page hangs longer than 2 seconds.
-3. **Cost per 1000 requests** – because the model API bill can explode overnight.
-4. **User retention** – if summaries are wrong, users stop using the feature.
+1. **Fact accuracy** – not fluency. 2. **Latency at p95** – because users abandon if the page hangs longer than 2 seconds. 3. **Cost per 1000 requests** – because the model API bill can explode overnight. 4. **User retention** – if summaries are wrong, users stop using the feature.
 
 Most teams never measure these four things until it’s too late. They trust the docs and stop there. Don’t be that team.
 
@@ -21,17 +18,13 @@ Most teams never measure these four things until it’s too late. They trust the
 LLM quality is not a single number. It’s a layered system:
 
 Layer 1 – **Token-level quality**
-- Perplexity, ROUGE, BLEU: useful only for model selection, not for runtime decisions.
-- Embedding similarity (e.g., cosine similarity between prompt and response embeddings with `sentence-transformers 3.0.1`) can catch semantic drift early.
+- Perplexity, ROUGE, BLEU: useful only for model selection, not for runtime decisions. - Embedding similarity (e.g., cosine similarity between prompt and response embeddings with `sentence-transformers 3.0.1`) can catch semantic drift early.
 
 Layer 2 – **Structured correctness**
-- For finance or healthcare, build an extractor that pulls out entities (dates, amounts, IDs) and validate them against a schema.
-- Use `spaCy 3.8` with custom rules or `Pydantic 2.9` validators to map raw text to a structured object.
+- For finance or healthcare, build an extractor that pulls out entities (dates, amounts, IDs) and validate them against a schema. - Use `spaCy 3.8` with custom rules or `Pydantic 2.9` validators to map raw text to a structured object.
 
 Layer 3 – **User impact**
-- **Latency p95**: measure from client call to first byte returned. Anything above 2000 ms in Nairobi is noticeable.
-- **Cost per 1000 requests**: if your prompt is 10k tokens and the model costs $0.03 per 1000 tokens, you’re already at $0.30 per call — scale that to 100k daily calls and you’re looking at a $30k monthly bill.
-- **User retention delta**: compare feature adoption 7 days before and after the new model. A drop of 7% in retention usually means wrong answers.
+- **Latency p95**: measure from client call to first byte returned. Anything above 2000 ms in Nairobi is noticeable. - **Cost per 1000 requests**: if your prompt is 10k tokens and the model costs $0.03 per 1000 tokens, you’re already at $0.30 per call — scale that to 100k daily calls and you’re looking at a $30k monthly bill. - **User retention delta**: compare feature adoption 7 days before and after the new model. A drop of 7% in retention usually means wrong answers.
 
 Under the hood, most teams build a feedback loop that writes these metrics to CloudWatch (or Prometheus) every minute. We use AWS Lambda with arm64, Python 3.12, and `boto3 1.34`. The lambda pulls the last 1000 responses from DynamoDB, runs validators, and pushes metrics to CloudWatch Metrics. Real-time dashboards in Grafana show p95 latency, cost per 1000, and error counts. That’s the stack that moves the needle.
 
@@ -254,20 +247,16 @@ At least 1000 weekly events per model version. With fewer events, noise dominate
 
 Only when the fact accuracy drops below 95% or the retention delta falls below 0%. We retrained once in 90 days. Frequent retraining introduces drift and increases cost; our monitoring caught issues before they became critical.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

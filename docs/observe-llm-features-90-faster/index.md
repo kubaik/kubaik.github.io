@@ -1,10 +1,10 @@
 # Observe LLM features 90% faster…
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-In 2026 we shipped a government chatbot that answered questions about land titles across five states in Nigeria. By mid-2026 the team had added summarisation, entity extraction, and a “rephrase for clarity” button. The problem wasn’t the new features—it was the noise. Every user message now produced a 15-token system prompt, a 50-token user message, another 40-token assistant reply, plus 20 tokens of metadata we’d started logging for “future observability.” Multiply that by 23 k requests per day and we were drowning in 3.2 million extra tokens a week—roughly 18 GB of plain text logs. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout. The observability pipeline itself had become the bottleneck.
+In 2026 we shipped a government chatbot that answered questions about land titles across five states in Nigeria. By mid-2026 the team had added summarisation, entity extraction, and a “rephrase for clarity” button. The problem wasn’t the new features—it was the noise. Every user message now produced a 15-token system prompt, a 50-token user message, another 40-token assistant reply, plus 20 tokens of metadata we’d started logging for “future observability.” Multiply that by 23 k requests per day and we were drowning in 3.2 million extra tokens a week—roughly 18 GB of plain text logs. The observability pipeline itself had become the bottleneck.
 
 The real question wasn’t “does the feature work?” but “does the feature matter to the user?”. Token-level tracing gave us megabytes of noise for every byte of signal. We needed a way to see the user-facing outcome without wading through every intermediate token.
 
@@ -22,14 +22,12 @@ You’ll need:
 - Node 20 LTS (only for the optional React dashboard)
 
 What you’ll build in this tutorial:
-- A FastAPI service that wraps any LLM endpoint and adds structured logging at the prompt/response boundary (not token-by-token).
-- A 34-line Prometheus exporter that surfaces four key metrics:
+- A FastAPI service that wraps any LLM endpoint and adds structured logging at the prompt/response boundary (not token-by-token). - A 34-line Prometheus exporter that surfaces four key metrics:
   - `llm_feature_duration_seconds` (histogram)
   - `llm_feature_success_total` (counter)
   - `llm_feature_user_feedback` (gauge)
   - `llm_feature_cost_cents` (counter)
-- A Redis-backed feature flag that toggles the new feature on/off per user segment.
-- A 120-line Python script that backfills historical data so you can compare before/after metrics without losing history.
+- A Redis-backed feature flag that toggles the new feature on/off per user segment. - A 120-line Python script that backfills historical data so you can compare before/after metrics without losing history.
 
 We’ll avoid tracing every token. Instead, we’ll log one structured event per user interaction that contains:
 - user_id
@@ -233,9 +231,7 @@ if __name__ == "__main__":
 ```
 
 Key decisions:
-- We expose a single POST per feature so you can reuse the same wrapper for summarisation, entity extraction, etc.
-- The wrapper adds 5–10 ms of overhead—negligible compared to the 400–800 ms LLM latency.
-- We multiply token count by $0.000002/token (a 2026 estimate for Llama 3 on-demand on a single A100) to get a rough cost. This lets us compare feature value vs. compute cost even before we negotiate enterprise rates.
+- We expose a single POST per feature so you can reuse the same wrapper for summarisation, entity extraction, etc. - The wrapper adds 5–10 ms of overhead—negligible compared to the 400–800 ms LLM latency. - We multiply token count by $0.000002/token (a 2026 estimate for Llama 3 on-demand on a single A100) to get a rough cost. This lets us compare feature value vs. compute cost even before we negotiate enterprise rates.
 
 ## Step 3 — handle edge cases and errors
 
@@ -359,25 +355,18 @@ The wrapper also let us A/B test summarisation models without touching the front
 
 **Frequently Asked Questions**
 
-how do i measure llm feature adoption without user ids?
-Only collect user_id if your privacy policy allows it. If you can’t, use a hashed uuid derived from the session token. Omit it entirely if you must, but then you lose the ability to segment feedback by cohort. In our Nigerian land-title chatbot we collected the first 6 digits of the phone number hash (after user consent) so we could see north vs south usage differences without storing raw PII.
+how do i measure llm feature adoption without user ids? Only collect user_id if your privacy policy allows it. If you can’t, use a hashed uuid derived from the session token. Omit it entirely if you must, but then you lose the ability to segment feedback by cohort. In our Nigerian land-title chatbot we collected the first 6 digits of the phone number hash (after user consent) so we could see north vs south usage differences without storing raw PII.
 
-what if my llm endpoint doesn’t return token usage?
-Log the input token count from your client and the output length from the response. Multiply by your best estimate of cost per token. We once used a 3rd-party proxy that only returned the response text; we added a tiny regex to count words and multiplied by 0.0000015 to approximate cost. It was off by 12 % but still gave us a directional signal.
+what if my llm endpoint doesn’t return token usage? Log the input token count from your client and the output length from the response. Multiply by your best estimate of cost per token. We once used a 3rd-party proxy that only returned the response text; we added a tiny regex to count words and multiplied by 0.0000015 to approximate cost. It was off by 12 % but still gave us a directional signal.
 
-how do i run this on aws lambda with no budget?
-Package the wrapper in a Docker image (45 MB) and deploy to Lambda with 1 vCPU and 1 GB memory. Use the Lambda Powertools metrics emitter instead of Prometheus exporter; it pushes to CloudWatch at no extra cost. Cold starts add ~300 ms, so keep the image small and avoid heavy dependencies. We trimmed the Docker image from 180 MB to 45 MB by multi-stage building and removing dev tools.
+how do i run this on aws lambda with no budget? Package the wrapper in a Docker image (45 MB) and deploy to Lambda with 1 vCPU and 1 GB memory. Use the Lambda Powertools metrics emitter instead of Prometheus exporter; it pushes to CloudWatch at no extra cost. Cold starts add ~300 ms, so keep the image small and avoid heavy dependencies. We trimmed the Docker image from 180 MB to 45 MB by multi-stage building and removing dev tools.
 
-when should i switch from redis feature flags to a proper flag service?
-Switch when you need rule-based targeting (e.g., enable summarise only for users with >5 messages/week) or when your feature flags exceed 1000 keys and Redis memory usage passes 500 MB. At that point migrate to LaunchDarkly or Flagsmith; the migration is a one-line change in your wrapper—just swap the Redis client for their SDK.
+when should i switch from redis feature flags to a proper flag service? Switch when you need rule-based targeting (e.g., enable summarise only for users with >5 messages/week) or when your feature flags exceed 1000 keys and Redis memory usage passes 500 MB. At that point migrate to LaunchDarkly or Flagsmith; the migration is a one-line change in your wrapper—just swap the Redis client for their SDK.
 
 ## Where to go from here
 
 In the next 30 minutes:
-1. Create `.env` with your actual Redis and LLM endpoint URLs.
-2. Run `docker compose up -d`.
-3. Deploy `main.py` to a t3.medium instance or Lambda.
-4. Hit `/feature/summarise` with a single test payload and verify the Prometheus metrics appear on `/metrics`.
+1. Create `.env` with your actual Redis and LLM endpoint URLs. 2. Run `docker compose up -d`. 3. Deploy `main.py` to a t3.medium instance or Lambda. 4. Hit `/feature/summarise` with a single test payload and verify the Prometheus metrics appear on `/metrics`.
 
 Once that’s green, flip the Redis flag for 1 % of your users and watch the new metrics roll in. You’ll know within hours whether the feature is worth scaling—or killing.
 
@@ -467,8 +456,7 @@ Below are three real integrations we shipped in 2026, each adding observability 
 
 We used Grafana Cloud’s free tier (10 k series, 50 GB logs) to visualize metrics and correlate them with logs.
 
-1. Update `prometheus.yml` to scrape `/metrics` from the wrapper every 15 s.
-2. Add Loki scrape config for JSON logs from the wrapper (FastAPI’s default JSON logging):
+1. Update `prometheus.yml` to scrape `/metrics` from the wrapper every 15 s. 2. Add Loki scrape config for JSON logs from the wrapper (FastAPI’s default JSON logging):
 
 ```yaml
 # prometheus.yml (add to scrape_configs)
@@ -637,20 +625,16 @@ trace.get_tracer_provider().add_span_processor(span_processor)
    - Traces: `resource.name="feature:summarise"`
    - Service map showing latency between the wrapper, Redis, and LLM endpoint
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

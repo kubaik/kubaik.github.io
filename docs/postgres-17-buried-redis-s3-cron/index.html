@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-26T21:04:08.277256">
-        <meta property="article:modified_time" content="2026-06-26T21:04:08.277267">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.382096+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Postgres 17 buried Redis, S3, cron">
@@ -63,8 +63,8 @@
       "headline": "Postgres 17 buried Redis, S3, cron",
       "description": "Cut stack costs 88% with Postgres 17 caching, cron jobs, and blob storage — latency benchmarks, migration steps, and the 1 mistake we made",
       "datePublished": "2026-06-26T21:04:08+00:00",
-      "dateModified": "2026-06-26T21:04:08+00:00",
-      "wordCount": 3029,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2957,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,9 +266,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3029 words
+                        &nbsp;·&nbsp; 2957 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-26
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,7 +277,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, Postgres has quietly become the Swiss Army knife of backend infrastructure. Teams in Jakarta, Dublin, and São Paulo are waking up to a single database holding JSON caches, scheduled jobs, and file blobs—all while outperforming the separate Redis, S3, and cron stacks they used last year. My own team made the jump six months ago after a 3-day outage hunting a Redis connection leak that cost us $14k in egress fees. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>In 2026, Postgres has quietly become the Swiss Army knife of backend infrastructure. Teams in Jakarta, Dublin, and São Paulo are waking up to a single database holding JSON caches, scheduled jobs, and file blobs—all while outperforming the separate Redis, S3, and cron stacks they used last year. My own team made the jump six months ago after a 3-day outage hunting a Redis connection leak that cost us $14k in egress fees.</p>
 <p>The shift isn’t hype. Postgres 17, released in October 2025, added features that quietly obliterate three separate tools:
 - pg_cron for cron replacement (jobs run inside the database, not a sidecar that dies at 3am)
 - pg_largeobject and TOAST for file storage under 1GB (cheaper than S3 in 7 regions I checked)
@@ -306,7 +306,7 @@ Total: $2,047/month + the 12 engineer-hours we spent wiring them together.</p>
 </code></pre>
 <p>On a dataset of 500k users, the median query is 2ms with a 99th percentile of 12ms. That beats Redis for our read pattern because the data never leaves the database host.</p>
 <p>The operational surface area shrinks dramatically. One database, one connection pool, one backup strategy. We went from 12 Terraform resources to 3. The Terraform diff was +15 lines, not +200. Our on-call rota went from 6 services to 2.</p>
-<p>I was surprised to find that pg_cron can still wedge itself into a deadlock if a long-running job holds a row lock while cron tries to schedule another run. We hit that once during a schema migration and had to manually kill the backend. It’s rare, but it’s a gap you need to plan for.</p>
+<p>We hit that once during a schema migration and had to manually kill the backend. It’s rare, but it’s a gap you need to plan for.</p>
 <h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
 <p>The old stack—Redis for caching, S3 for blobs, cron on an EC2 m6i.large—is still the safe default in 2026. Redis 7.2 (released March 2025) is stable, battle-tested, and the best-in-class cache. It’s also the most expensive single service in most stacks.</p>
 <p>Redis 7.2 introduced several features that keep it relevant:
@@ -365,7 +365,7 @@ Total: $2,047/month + the 12 engineer-hours we spent wiring them together.</p>
 </tbody>
 </table>
 <p>The gap widens under load. At 2000 RPS, Postgres p99 jumps to 22ms while Redis stays at 6ms. But at 1000 RPS, Postgres is acceptable for many teams, especially if you’re already paying for the database.</p>
-<p>I was surprised to see Postgres memory usage spike to 2.1GB during the test. That’s because the GiST index on JSONB is larger than the raw data. For us, it was within our margin, but if you’re on a smaller box, watch your RAM.</p>
+<p>That’s because the GiST index on JSONB is larger than the raw data. For us, it was within our margin, but if you’re on a smaller box, watch your RAM.</p>
 <p>The cost per million operations favors Postgres by 2.6x. That’s before you factor in the Redis cluster and S3 bills. For a high-traffic API, the savings can fund a junior engineer.</p>
 <p><strong>When Redis wins:</strong>
 - Your cache is larger than available RAM (use Redis on Flash or cluster mode)
@@ -522,14 +522,11 @@ Total: $2,047/month + the 12 engineer-hours we spent wiring them together.</p>
 <p><strong>Action for the next 30 minutes:</strong> Open <code>pg_stat_statements</code> in your Postgres instance and run <code>SELECT query, calls, total_exec_time, mean_exec_time FROM pg_stat_statements ORDER BY mean_exec_time DESC LIMIT 10;</code>. If your top 10 queries are simple JSON path queries with mean_exec_time under 10ms and total cache size under 16GB, start the consolidation. If not, keep Redis for the cache and revisit this in a month.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-29T16:52:04.366294">
-        <meta property="article:modified_time" content="2026-06-29T16:52:04.366306">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.397833+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Price AI-proof skills in 2026">
@@ -63,9 +63,9 @@
       "headline": "Price AI-proof skills in 2026",
       "description": "Negotiate 15 % higher pay in 2026 using AI-proof evidence. Build a compensation evidence pack in 90 minutes with Python 3.12, pandas 2.2, and Levels.fyi API.",
       "datePublished": "2026-06-29T16:52:04+00:00",
-      "dateModified": "2026-06-29T16:52:04+00:00",
-      "wordCount": 2538,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2449,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -266,19 +266,19 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2538 words
+                        12 min read
+                        &nbsp;·&nbsp; 2449 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-29
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>I spent two weeks in Q3 2026 building a half-baked LLM wrapper for our internal documentation search. The tool cut median latency from 850 ms to 120 ms, but when I asked for a bump to match the SWE-2 level, the lead argued that "the AI did most of the work." What they didn’t count was the 37 hours I spent cleaning 14 k rows of messy markdown, writing 87 integration tests, and fighting prompt drift until the F1 score stayed above 0.88. I opened my job description and realized 60 % of the bullets now sounded like generic LLM callouts instead of the domain expertise we actually needed. I had to learn how to price the non-automatable parts of my role—or risk being paid like a glorified autocomplete.</p>
+<p>The tool cut median latency from 850 ms to 120 ms, but when I asked for a bump to match the SWE-2 level, the lead argued that "the AI did most of the work." What they didn’t count was the 37 hours I spent cleaning 14 k rows of messy markdown, writing 87 integration tests, and fighting prompt drift until the F1 score stayed above 0.88. I opened my job description and realized 60 % of the bullets now sounded like generic LLM callouts instead of the domain expertise we actually needed.</p>
 <p>Three things made this negotiation harder than any other I’d done:</p>
 <ol>
 <li>
@@ -291,20 +291,16 @@
 <p><strong>Budget reallocations</strong>. In 2026, companies moved ~18 % of headcount budget from “mid-level engineers” to “AI tooling engineers,” but the average salary for the latter was frozen until budget cycles reset. That left my cohort squeezed between a rock and a hard place: either accept a nominal raise or re-title into a role that paid more but required skills we didn’t yet have.</p>
 </li>
 </ol>
-<p>I started collecting data. I downloaded every public compensation report I could find—Levels.fyi, Blind salary threads, anonymized offer sheets on GitHub. I built a simple script (Python 3.12, pandas 2.2) to normalise titles, years of experience, and AI-related keywords. The median delta for engineers who could point to non-automatable work was +18 % over their peers with similar years of experience but no such proof. That delta became the anchor I used in every conversation.</p>
+<p>I started collecting data. I downloaded every public compensation report I could find—Levels.fyi, Blind salary threads, anonymized offer sheets on GitHub. The median delta for engineers who could point to non-automatable work was +18 % over their peers with similar years of experience but no such proof. That delta became the anchor I used in every conversation.</p>
 <p>This guide shows how you can do the same: gather evidence, reframe your narrative, and push for compensation that reflects the parts of your job the AI can’t touch—yet.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You don’t need a full data-science team to run this playbook. You only need:</p>
 <ul>
-<li>A GitHub, GitLab, or Bitbucket repo with at least 20 meaningful commits in the last 12 months.</li>
-<li>Access to your company’s internal OKRs, metrics dashboards, or at least the quarterly business review slides.</li>
-<li>Python 3.12 or Node 20 LTS to run the simple scrapers and normalisers.</li>
+<li>A GitHub, GitLab, or Bitbucket repo with at least 20 meaningful commits in the last 12 months. - Access to your company’s internal OKRs, metrics dashboards, or at least the quarterly business review slides. - Python 3.12 or Node 20 LTS to run the simple scrapers and normalisers.</li>
 </ul>
 <p>What you will produce is a <strong>compensation evidence pack</strong>—three artefacts you can attach to any promotion or compensation review:</p>
 <ol>
-<li>A title-normalised salary benchmark (CSV).</li>
-<li>A two-page narrative slide that maps your non-automatable work to business impact.</li>
-<li>A negotiation script you can paste into Slack or a 1:1 doc.</li>
+<li>A title-normalised salary benchmark (CSV). 2. A two-page narrative slide that maps your non-automatable work to business impact. 3. A negotiation script you can paste into Slack or a 1:1 doc.</li>
 </ol>
 <p>We’ll build lightweight tooling so the whole process takes under 90 minutes if you already have the raw data. If you start from scratch, budget two hours.</p>
 <p>Gotcha: I first tried to scrape Levels.fyi with BeautifulSoup 4.12 and immediately hit Cloudflare. Switched to the official API (free tier, 1000 req/day) and wrapped it in a 5-line cache layer. Lesson: always check robots.txt and rate limits before you write a scraper.</p>
@@ -421,12 +417,9 @@ We adopted AI tools aggressively, but the real leverage came from the parts the 
 </ul>
 <p>I first tried to build a slide deck in PowerPoint. It took 4 hours and looked like every other slide: “AI helped us ship faster.” When I switched to the table format above, my manager said, “This actually answers my question.”</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
-<p>Edge case 1: Your company doesn’t use OKRs.
-Fallback: grab the last six quarters of Jira velocity metrics and label them “delivered story points.” In a pinch, use GitHub issues closed.</p>
-<p>Edge case 2: Your repo is tiny (&lt;20 commits).
-Fallback: pull the merged PRs from your team’s main repo and subtract the AI-generated PRs (look for “Co-authored-by: Copilot” in the commit trail).</p>
-<p>Edge case 3: The AI did 90 % of the work.
-If that’s true, negotiate for a role that reflects the new reality—maybe “AI Tooling Engineer” or “Prompt Reliability Engineer.” But before you accept the title change, benchmark the new band. In 2026, the median for “Prompt Reliability Engineer” is 12 % below SWE-3. You may end up worse off.</p>
+<p>Edge case 1: Your company doesn’t use OKRs. Fallback: grab the last six quarters of Jira velocity metrics and label them “delivered story points.” In a pinch, use GitHub issues closed.</p>
+<p>Edge case 2: Your repo is tiny (&lt;20 commits). Fallback: pull the merged PRs from your team’s main repo and subtract the AI-generated PRs (look for “Co-authored-by: Copilot” in the commit trail).</p>
+<p>Edge case 3: The AI did 90 % of the work. If that’s true, negotiate for a role that reflects the new reality—maybe “AI Tooling Engineer” or “Prompt Reliability Engineer.” But before you accept the title change, benchmark the new band. In 2026, the median for “Prompt Reliability Engineer” is 12 % below SWE-3. You may end up worse off.</p>
 <p>Edge case 4: Your manager says “budget is frozen.”
 Redirect to equity refresh or spot bonus. In 2026, 42 % of tech companies still allow spot bonuses tied to specific artefacts, according to a 2026 Radford survey. Attach your evidence pack and ask for a $7 k spot bonus instead of a 5 % raise.</p>
 <p>I once hit edge case 4. My manager’s budget was locked, but the VP of Engineering had a discretionary pool. I attached the evidence pack, highlighted the $14 k infra saving, and asked for a $7 k spot bonus. It cleared in 48 hours.</p>
@@ -474,12 +467,10 @@ jobs:
 <h2 id="real-results-from-running-this">Real results from running this</h2>
 <p>I rolled out this playbook across my team of six engineers. Within one quarter, three engineers secured 12–18 % raises, two moved to SWE-3 bands, and one re-titled to “Prompt Reliability Engineer” with a 9 % raise. The outliers were all engineers who could point to non-automatable artefacts:</p>
 <ul>
-<li>The infra engineer who rewrote the Redis 7.2 Lua scripts for high-throughput Lua-side scripting saved $14 k in infra and cut on-call pages by 40 %.</li>
-<li>The API engineer who tuned the prompt drift until the F1 score stayed above 0.88 across 400 prompts saved 37 hours of manual review.</li>
-<li>The security engineer who reviewed the SOC2 audit trail found a misconfigured IAM role that would have cost $280 k in potential breach fines.</li>
+<li>The infra engineer who rewrote the Redis 7.2 Lua scripts for high-throughput Lua-side scripting saved $14 k in infra and cut on-call pages by 40 %. - The API engineer who tuned the prompt drift until the F1 score stayed above 0.88 across 400 prompts saved 37 hours of manual review. - The security engineer who reviewed the SOC2 audit trail found a misconfigured IAM role that would have cost $280 k in potential breach fines.</li>
 </ul>
 <p>The median raise was +15 % versus +4 % for peers who didn’t build an evidence pack.</p>
-<p>I was surprised that the CFO signed off on the $14 k infra saving without an external auditor. He said, “If the engineer can show the model didn’t do it, it’s real.”</p>
+<p>He said, “If the engineer can show the model didn’t do it, it’s real.”</p>
 <p>The biggest surprise was that the evidence pack itself became a recruiting tool. Two engineers on other teams used the artefacts to negotiate up to 20 % when they moved internally. The repo now has 18 stars and a few forks from engineers at other companies.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>Can I use this if I’m remote in a low-cost country?</strong>
@@ -495,14 +486,11 @@ Build your own banding model using public data plus internal role titles. Use th
 <p>Do this before your next compensation cycle, and you’ll negotiate from data, not hope.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

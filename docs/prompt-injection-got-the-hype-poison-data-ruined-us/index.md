@@ -18,15 +18,13 @@ Next, we added runtime isolation using AWS Bedrock with guardrails, isolating ea
 
 The standard advice also pushes for extensive logging: every prompt, every response, every filter decision. We implemented this using OpenSearch 2.12 with a 30-day retention policy. By March 2026, our logs grew to 2.4TB/day, and querying for anomalies became prohibitively slow. We had to downsample logs and lose granularity, which meant we missed subtle poisoning patterns until it was too late.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. The real lesson wasn’t about the filter or the sandbox. It was that we optimized for the wrong threat model.
+The real lesson wasn’t about the filter or the sandbox. It was that we optimized for the wrong threat model.
 
 ## A different mental model
 
 Instead of treating LLMs as glorified chatbots with extra injection risks, treat them as data processors with their own supply chains. The pipeline has three critical stages:
 
-1. **Data ingestion**: The raw inputs that train or fine-tune models. These can be poisoned at the source—malicious users, compromised third-party datasets, or mislabeled internal logs.
-2. **Model training**: The actual learning process. If the training data is biased or poisoned, the model’s behavior drifts.
-3. **Inference and feedback**: How the model is used and how its outputs are consumed. This is where prompt injection lives, but it’s the last stage, not the first.
+1. **Data ingestion**: The raw inputs that train or fine-tune models. These can be poisoned at the source—malicious users, compromised third-party datasets, or mislabeled internal logs. 2. **Model training**: The actual learning process. If the training data is biased or poisoned, the model’s behavior drifts. 3. **Inference and feedback**: How the model is used and how its outputs are consumed. This is where prompt injection lives, but it’s the last stage, not the first.
 
 Most teams focus on stage 3 because it’s the most visible. But in our environment, stage 1 was the weak link. A single mislabeled dataset in our fine-tuning pipeline caused the model to suppress PII warnings across 8,200 queries. The prompt never changed—the data did.
 
@@ -75,9 +73,7 @@ We initially rated prompt injection as the highest risk, but in practice, data p
 
 Despite the contrarian take, prompt injection is still a real risk in specific scenarios:
 
-- **Public-facing chatbots**: If your LLM is exposed to the internet with no authentication, prompt injection is a genuine threat. I’ve seen attackers use indirect prompts to exfiltrate data by crafting questions that force the model to reveal sensitive information.
-- **Multi-tenant systems with weak isolation**: If you’re running a shared inference service without user-level sandboxing, prompt injection can lead to lateral movement. We saw this in a prototype where a single malicious user could disrupt other users’ sessions.
-- **Legacy integrations**: If your LLM is plugged into older APIs with weak authentication, prompt injection can be used to trigger unintended actions. This is rare in 2026, but it still happens in enterprise environments.
+- **Public-facing chatbots**: If your LLM is exposed to the internet with no authentication, prompt injection is a genuine threat. I’ve seen attackers use indirect prompts to exfiltrate data by crafting questions that force the model to reveal sensitive information. - **Multi-tenant systems with weak isolation**: If you’re running a shared inference service without user-level sandboxing, prompt injection can lead to lateral movement. We saw this in a prototype where a single malicious user could disrupt other users’ sessions. - **Legacy integrations**: If your LLM is plugged into older APIs with weak authentication, prompt injection can be used to trigger unintended actions. This is rare in 2026, but it still happens in enterprise environments.
 
 In these cases, the standard advice—sanitize inputs, add runtime guards, isolate sessions—is valuable. But for most teams, these scenarios are edge cases. The bigger threat is poisoned data, and the conventional wisdom doesn’t prepare you for that.
 
@@ -86,12 +82,10 @@ In these cases, the standard advice—sanitize inputs, add runtime guards, isola
 Ask three questions:
 
 1. **Who controls the data pipeline?**
-   - If users or third parties upload data that trains or fine-tunes your models, you’re at risk of data poisoning. This is the most common scenario in 2026.
-   - If your data pipeline is internal and tightly controlled, prompt injection is a bigger risk.
+   - If users or third parties upload data that trains or fine-tunes your models, you’re at risk of data poisoning. This is the most common scenario in 2026. - If your data pipeline is internal and tightly controlled, prompt injection is a bigger risk.
 
 2. **How much do you rely on fine-tuning?**
-   - If you fine-tune models regularly, you’re exposed to model drift and supply chain attacks. These risks compound over time.
-   - If you only use pre-trained models, you’re exposed to supply chain attacks (poisoned checkpoints) but not fine-tuning risks.
+   - If you fine-tune models regularly, you’re exposed to model drift and supply chain attacks. These risks compound over time. - If you only use pre-trained models, you’re exposed to supply chain attacks (poisoned checkpoints) but not fine-tuning risks.
 
 3. **What’s your blast radius?**
    - If your model serves a small, trusted user base, prompt injection is the only real risk. If your model serves thousands of users, data poisoning is the bigger threat.
@@ -131,9 +125,7 @@ True, but the checklist is biased toward web risks. OWASP’s LLM Top 10 focuses
 
 We started with the model and added data controls later. That was backwards. Today, I’d build a data integrity pipeline first:
 
-- **Input validation**: Reject or quarantine user-uploaded data that doesn’t meet strict schema and label quality requirements. Use tools like Amazon SageMaker Ground Truth Plus 3.0 for labeling.
-- **Label quality scoring**: Score labels for consistency and detect drift using tools like cleanlab 2.6.0. Flag low-quality labels for review.
-- **Dataset versioning**: Use tools like DVC 3.0 or Weights & Biases Artifacts to version datasets and track changes. This makes it easier to roll back poisoned datasets.
+- **Input validation**: Reject or quarantine user-uploaded data that doesn’t meet strict schema and label quality requirements. Use tools like Amazon SageMaker Ground Truth Plus 3.0 for labeling. - **Label quality scoring**: Score labels for consistency and detect drift using tools like cleanlab 2.6.0. Flag low-quality labels for review. - **Dataset versioning**: Use tools like DVC 3.0 or Weights & Biases Artifacts to version datasets and track changes. This makes it easier to roll back poisoned datasets.
 
 We lost 18 days debugging our poisoning incident because we didn’t have dataset versioning. Today, I’d refuse to train on any dataset without versioning.
 
@@ -180,9 +172,7 @@ We set up alerts for drift scores above 0.15 (KL divergence) or 0.2 (feature dri
 
 We fine-tuned models in shared staging environments. Today, I’d sandbox fine-tuning:
 
-- Use AWS SageMaker with VPC endpoints and no internet access during training.
-- Enforce least-privilege IAM roles for training jobs.
-- Rotate model weights and checkpoints after each training run.
+- Use AWS SageMaker with VPC endpoints and no internet access during training. - Enforce least-privilege IAM roles for training jobs. - Rotate model weights and checkpoints after each training run.
 
 This prevents supply chain attacks and accidental poisoning.
 
@@ -190,9 +180,7 @@ This prevents supply chain attacks and accidental poisoning.
 
 We red-teamed our inference pipeline but not our data pipeline. Today, I’d run exercises like:
 
-- Poison a small percentage of the training data and see if the model learns the bias.
-- Craft labels that suppress certain topics and check if the model adopts the suppression.
-- Inject malicious documents into the vector store and verify that retrieval doesn’t pull them into responses.
+- Poison a small percentage of the training data and see if the model learns the bias. - Craft labels that suppress certain topics and check if the model adopts the suppression. - Inject malicious documents into the vector store and verify that retrieval doesn’t pull them into responses.
 
 This is the only way to catch subtle poisoning.
 
@@ -230,7 +218,6 @@ The frequency depends on your data velocity and model sensitivity. In our enviro
 ### What’s the cheapest way to add dataset versioning?
 
 The cheapest way is to use DVC 3.0 with a remote storage backend like S3 or GCS. DVC tracks dataset versions, diffs changes, and integrates with Git. It’s open source and adds minimal overhead. We use DVC 3.0 with S3 storage, and it costs us less than $5/month for our 2TB dataset. The key is to version not just the dataset files but also the metadata, labels, and preprocessing scripts. Without versioning, debugging poisoning incidents is painful—versioning makes it manageable.
-
 
 ---
 

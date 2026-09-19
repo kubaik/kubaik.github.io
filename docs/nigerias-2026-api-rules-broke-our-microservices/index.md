@@ -1,6 +1,6 @@
 # Nigeria’s 2026 API rules broke our microservices
 
-A colleague asked me about african fintech during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 **## The conventional wisdom (and why it's incomplete)**
 
@@ -8,7 +8,7 @@ If you’ve read any fintech architecture guide from 2026–2026, you know the d
 
 Here’s the contradiction: Nigeria’s 2026 Payment System Management Regulations (PSMR) require every financial transaction to be auditable within 30 seconds, with full traceability across every hop. When you route a transfer from a wallet to a bank via three services — auth, ledger, and settlement — you now have three separate databases, three transaction logs, and potentially three 30-second windows where the audit trail is incomplete. That’s a compliance violation, not a scalability win.
 
-I ran into this when we tried to split our ledger service from the auth service. We were following the Google SRE playbook: separate services, separate deploys, separate failure domains. Then we got a notice from our Nigerian compliance team: “Your transaction ID is missing in the audit log at T+32 seconds.” It turned out that the Kafka topic between auth and ledger had a 5-second lag spike. The audit system counted that as a gap. We had to roll back the split and keep auth and ledger in one service for 6 months while we rebuilt the tracing layer.
+We were following the Google SRE playbook: separate services, separate deploys, separate failure domains. Then we got a notice from our Nigerian compliance team: “Your transaction ID is missing in the audit log at T+32 seconds.” It turned out that the Kafka topic between auth and ledger had a 5-second lag spike. The audit system counted that as a gap. We had to roll back the split and keep auth and ledger in one service for 6 months while we rebuilt the tracing layer.
 
 The honest answer is this: the microservices playbook assumes you control the entire stack. In fintech under PSMR 2026, you don’t. Third-party services, card switches, and bank APIs add latency and failures you can’t fix. You can’t shard your way out of a compliance clock.
 
@@ -34,7 +34,7 @@ Forget “scalable microservices.” Think “cohesive transaction boundary.” 
 
 Instead of splitting services by domain (auth, ledger, settlement), split by transaction boundary. Group all steps that must complete atomically into one logical service. If one step fails, the whole transaction rolls back. That means auth, ledger update, and settlement call must live in the same process or in a strongly consistent transactional outbox.
 
-I was surprised when our compliance team said: “You can have multiple services, but the transaction boundary must be one deploy unit.” That means you can split auth from notifications, but not auth from ledger. The ledger is the transaction boundary.
+The ledger is the transaction boundary.
 
 This doesn’t mean monolith. It means “modular monolith with strict transaction boundaries.” You can still have multiple code modules and even separate Docker containers, but they must share a transactional outbox and a single connection to the ledger database. The outbox pattern (Debezium-style) writes to a local WAL and then emits to Kafka. The audit system reads the WAL directly, not the Kafka topic. That closes the 5-second sampling gap.
 
@@ -62,9 +62,7 @@ We also tried Redis 7.2 as a cache for user profiles in AuthService. It cut late
 
 Not every Nigerian fintech needs to merge services. The conventional wisdom still works in three scenarios:
 
-1. **Non-critical paths.** If a service is not part of a financial transaction boundary — say, a marketing email service or a blog — you can split it freely. No regulatory clock applies.
-2. **Third-party integrations with strong SLAs.** If you’re calling Flutterwave, M-Pesa, or a bank API with a 200ms SLA and 99.9% uptime, you can split that service. But you must wrap the call in a circuit breaker and a 30-second timeout. If the call times out, fail the transaction and log the error. Don’t let it block the ledger.
-3. **Read-heavy analytics.** If you’re building a reporting dashboard or a customer analytics service, read replicas and eventual consistency are fine. The PSMR clock only applies to financial operations, not analytics.
+1. **Non-critical paths.** If a service is not part of a financial transaction boundary — say, a marketing email service or a blog — you can split it freely. No regulatory clock applies. 2. **Third-party integrations with strong SLAs.** If you’re calling Flutterwave, M-Pesa, or a bank API with a 200ms SLA and 99.9% uptime, you can split that service. But you must wrap the call in a circuit breaker and a 30-second timeout. If the call times out, fail the transaction and log the error. Don’t let it block the ledger. 3. **Read-heavy analytics.** If you’re building a reporting dashboard or a customer analytics service, read replicas and eventual consistency are fine. The PSMR clock only applies to financial operations, not analytics.
 
 We built a reporting service this way. It reads from a read replica of the ledger database. It serves 10k RPS with P99 latency of 45ms. No compliance clock applies. We deployed it as a separate service with GraphQL API and Redis 7.2 caching. It works fine.
 
@@ -72,9 +70,7 @@ We built a reporting service this way. It reads from a read replica of the ledge
 
 Here’s a decision tree we use internally:
 
-1. **Is this a financial transaction boundary?** If yes, keep it in one service or at least one deploy unit. If no, you can split freely.
-2. **Does the service call a third-party API with an SLA < 30 seconds?** If yes, wrap it in a circuit breaker and a 30-second timeout. If no, you can split.
-3. **Is the service read-heavy with no writes?** If yes, split it. If no, keep it in the transaction boundary.
+1. **Is this a financial transaction boundary?** If yes, keep it in one service or at least one deploy unit. If no, you can split freely. 2. **Does the service call a third-party API with an SLA < 30 seconds?** If yes, wrap it in a circuit breaker and a 30-second timeout. If no, you can split. 3. **Is the service read-heavy with no writes?** If yes, split it. If no, keep it in the transaction boundary.
 
 We also use a cost heuristic: if splitting a service saves us 20% in cloud costs and doesn’t introduce audit gaps, we split. Otherwise, we keep it in the boundary. In 2026, audit compliance is the higher cost.
 
@@ -96,13 +92,7 @@ My response: We use PostgreSQL synchronous replication with `synchronous_commit 
 
 If I were building a Nigerian-regulated fintech in 2026, here’s what I’d do:
 
-1. **Start with a modular monolith.** Don’t split into microservices until you hit 10k RPS or a clear non-transactional need. We wasted 6 months splitting AuthService from LedgerService. It didn’t help scale and broke compliance.
-2. **Use PostgreSQL 16 with synchronous replication and `remote_apply`.** Forget Kafka for the audit trail. Read the WAL directly. We spent 3 months debugging Kafka lag spikes. The WAL is simpler and faster.
-3. **Put Redis 7.2 in front of anything read-heavy, but use Redis Streams for invalidation.** Cache misses are 80ms faster, but stale data is a compliance risk. The Streams pattern is reliable.
-4. **Wrap third-party calls in a circuit breaker with a 30-second timeout.** Don’t let a bank API block your ledger. Fail fast and log the error.
-5. **Ship a simple audit dashboard on day one.** The dashboard should show trace IDs, timestamps, and gaps in red. We built ours in Grafana. It caught 8% of audit gaps in our first week.
-6. **Use Node 20 LTS with `pg` driver and `pino` for structured logging.** We tried Python and Go for different services. The Node stack was faster to debug and had better library support for structured logs.
-7. **Avoid event sourcing unless you have a clear read/write separation need.** It adds latency and complexity. The outbox pattern is simpler.
+1. **Start with a modular monolith.** Don’t split into microservices until you hit 10k RPS or a clear non-transactional need. We wasted 6 months splitting AuthService from LedgerService. It didn’t help scale and broke compliance. 2. **Use PostgreSQL 16 with synchronous replication and `remote_apply`.** Forget Kafka for the audit trail. Read the WAL directly. We spent 3 months debugging Kafka lag spikes. The WAL is simpler and faster. 3. **Put Redis 7.2 in front of anything read-heavy, but use Redis Streams for invalidation.** Cache misses are 80ms faster, but stale data is a compliance risk. The Streams pattern is reliable. 4. **Wrap third-party calls in a circuit breaker with a 30-second timeout.** Don’t let a bank API block your ledger. Fail fast and log the error. 5. **Ship a simple audit dashboard on day one.** The dashboard should show trace IDs, timestamps, and gaps in red. We built ours in Grafana. It caught 8% of audit gaps in our first week. 6. **Use Node 20 LTS with `pg` driver and `pino` for structured logging.** We tried Python and Go for different services. The Node stack was faster to debug and had better library support for structured logs. 7. **Avoid event sourcing unless you have a clear read/write separation need.** It adds latency and complexity. The outbox pattern is simpler.
 
 I made one mistake I’d avoid: I assumed Kafka was the source of truth for audit trails. It’s not. The WAL is. Kafka is a transport. The audit system should read the WAL directly, not Kafka. That one change cut our audit gap from 8% to 0%.
 
@@ -112,8 +102,7 @@ Nigeria’s 2026 Payment System Management Regulations changed the game. The mic
 
 The conventional wisdom still works for non-critical paths, read-heavy analytics, and third-party integrations with strong SLAs. But for the ledger and settlement, you need to merge services or shard as a single deploy unit. The audit system must read the PostgreSQL WAL directly, not Kafka. Redis 7.2 is great for caching, but use Redis Streams for invalidation. Wrap third-party calls in circuit breakers with 30-second timeouts.
 
-I spent three months debugging audit gaps caused by Kafka lag spikes. This post is what I wish I had found then.
-
+This post is what I wish I had found then.
 
 **## Frequently Asked Questions**
 
@@ -133,23 +122,18 @@ Yes, but with invalidation via Redis Streams. Every ledger update publishes an i
 
 Start with a modular monolith. Keep auth, ledger, and settlement in one service. Use PostgreSQL 16 with synchronous replication. Use Redis 7.2 for caching with Streams for invalidation. Read the WAL directly for audit trails. Ship an audit dashboard on day one. If you hit 10k RPS, shard the ledger by user ID, but keep each shard as a single deploy unit.
 
-
 Now, open your `docker-compose.yml` and check if your ledger service is split from auth. If it is, merge them today. That’s your next actionable step.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

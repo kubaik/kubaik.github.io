@@ -13,7 +13,7 @@ Command failed: docker build --platform linux/amd64 -t myapp:latest .
 
 That message tells you nothing about the root cause. Docker isn’t installed on the runner? Wrong runner image? Missing Docker Desktop on a Mac runner? In 2026, this error masks a deeper mismatch: the AI assistant assumed a Linux AMD64 runner with Docker preinstalled, but the team actually uses GitHub-hosted macOS runners with Colima instead of Docker Desktop.
 
-I ran into this when a candidate’s repo worked perfectly on their M3 Mac with Docker Desktop, but failed in CI on macOS runners that use Colima. I spent two days debugging a non-existent networking issue before realizing the Docker socket path was different (`unix:///Users/runner/.colima/docker.sock` vs `/var/run/docker.sock`). This post is what I wished I had found then.
+This post is what I wished I had found then.
 
 The real problem isn’t Docker missing—it’s environment drift between local, CI, and prod. AI assistants optimize for the happy path: Ubuntu 22.04, Docker 25.0, and arm64. Real teams run heterogeneous runners, legacy kernels, and custom socket paths. The error message is a red herring; the failure is in the gap between the assistant’s assumptions and the team’s reality.
 
@@ -30,7 +30,7 @@ The error `exec: "docker": executable file not found in $PATH` is just the tip. 
 
 Another hidden cause is the `DOCKER_HOST` environment variable. If the runner sets `DOCKER_HOST=unix:///run/podman/podman.sock`, but the Dockerfile assumes `docker build`, the command fails silently because the shell can’t find `docker` in `$PATH` even though a container runtime exists.
 
-I was surprised that even top-tier candidates submitted systems that hardcoded `/var/run/docker.sock` and relied on Docker Desktop being installed. One candidate’s system worked locally but failed in CI because their Dockerfile used `USER node` and the CI runner ran as root—causing permission errors on `/var/run/docker.sock`. The assistant never considered that the team’s CI runner runs as a non-root user.
+One candidate’s system worked locally but failed in CI because their Dockerfile used `USER node` and the CI runner ran as root—causing permission errors on `/var/run/docker.sock`. The assistant never considered that the team’s CI runner runs as a non-root user.
 
 The final layer is tool version drift. Docker 25.0 changed default build behavior in 2026, and many teams pinned to Docker 24.0 or Podman 4.9. AI assistants default to the latest version, which can break builds when the team’s runner lags behind.
 
@@ -38,8 +38,7 @@ The final layer is tool version drift. Docker 25.0 changed default build behavio
 
 The most common cause is assuming Docker is installed and available at `/var/run/docker.sock`. The fix is to remove Docker-specific assumptions from the CI workflow and runtime. Use a container runtime-agnostic approach:
 
-1. Replace `docker build` with `docker buildx build` or `podman build` in the workflow.
-2. Use `container` in GitHub Actions instead of `docker`:
+1. Replace `docker build` with `docker buildx build` or `podman build` in the workflow. 2. Use `container` in GitHub Actions instead of `docker`:
 
 ```yaml
 jobs:
@@ -72,7 +71,7 @@ $RUNTIME run --rm -it myapp:latest
 
 The key insight: don’t assume a runtime exists. Use a container runtime image in CI to guarantee availability, and make your scripts runtime-agnostic in prod.
 
-I fixed a system where the candidate’s Dockerfile used `USER node` but the CI runner ran as root. The build succeeded locally because Docker Desktop runs as root, but failed in CI because the runner’s user couldn’t access `/var/run/docker.sock`. The fix was to add `USER node` to the Dockerfile and ensure the CI runner runs as a non-root user with access to the socket.
+The build succeeded locally because Docker Desktop runs as root, but failed in CI because the runner’s user couldn’t access `/var/run/docker.sock`. The fix was to add `USER node` to the Dockerfile and ensure the CI runner runs as a non-root user with access to the socket.
 
 Another common oversight: the candidate’s system used `docker-compose` v2, but the team’s CI used Compose v1. In 2026, Compose v1 is deprecated, but many teams still rely on it. The fix is to pin Compose version explicitly:
 
@@ -118,7 +117,7 @@ The fix is to avoid privileged mode in CI. Use user namespaces or `--userns=keep
 - run: docker run --rm --userns=keep-id myapp:latest
 ```
 
-I fixed a system where the candidate’s system used `--privileged` to run a GPU workload in CI. The build failed because the runner didn’t allow privileged mode. The fix was to switch to `--gpus all` with NVIDIA Container Toolkit, which doesn’t require privileged mode:
+The build failed because the runner didn’t allow privileged mode. The fix was to switch to `--gpus all` with NVIDIA Container Toolkit, which doesn’t require privileged mode:
 
 ```yaml
 - run: docker run --rm --gpus all myapp:latest
@@ -189,7 +188,7 @@ Or, if you can’t modify the image, run the container with `--security-opt labe
 - run: docker run --rm --security-opt label=disable myapp:latest
 ```
 
-I fixed a system where the candidate’s system used bind mounts in a SELinux environment. The build failed because the volume path wasn’t labeled correctly. The fix was to add `chcon` to the Dockerfile and ensure the CI runner runs with `securityContext.privileged: false` and `securityContext.seLinuxOptions.level: "s0"`.
+The build failed because the volume path wasn’t labeled correctly. The fix was to add `chcon` to the Dockerfile and ensure the CI runner runs with `securityContext.privileged: false` and `securityContext.seLinuxOptions.level: "s0"`.
 
 Another environment-specific issue is custom socket paths in Colima or Podman. The symptom is that `docker build` fails in CI with:
 
@@ -548,26 +547,22 @@ The systems that pass interviews are the ones that:
 - Validate their environment before building
 - Document their assumptions explicitly
 
-I was surprised that even senior candidates submitted systems that hardcoded `/var/run/docker.sock` and relied on Docker Desktop. One system worked locally but failed in CI because the Dockerfile used `USER node` and the CI runner ran as root. The assistant never considered that the team’s CI uses Podman with a non-root user.
+One system worked locally but failed in CI because the Dockerfile used `USER node` and the CI runner ran as root. The assistant never considered that the team’s CI uses Podman with a non-root user.
 
 The solution isn’t to avoid AI assistants—it’s to make them aware of the target environment. Add environment validation to your candidate submission process. Require candidates to run `validate-env.sh` and attach the output to their PR. This catches environment drift early and prevents wasted cycles in CI.
 
 Finally, stop trusting Dockerfiles that work locally. In 2026, the only environments you can trust are the ones you validate in CI. Use container runtime images in CI, pin tool versions, and enforce runtime-agnostic patterns. The systems that survive the interview process are the
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

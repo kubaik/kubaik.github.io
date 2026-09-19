@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-11T13:28:35.352118">
-        <meta property="article:modified_time" content="2026-07-11T13:28:35.352128">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.142015+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Kill noisy alerts: the triage system that restored sleep">
@@ -63,8 +63,8 @@
       "headline": "Kill noisy alerts: the triage system that restored sleep",
       "description": "Cut false alerts 68% with a four-layer triage system that labels spikes, drifts, noise, and failures before waking anyone — Prometheus 2.51, TimescaleDB 2.13…",
       "datePublished": "2026-07-11T13:28:35+00:00",
-      "dateModified": "2026-07-11T13:28:35+00:00",
-      "wordCount": 3387,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3362,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,9 +264,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3387 words
+                        &nbsp;·&nbsp; 3362 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-11
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -279,15 +279,12 @@
 <p>Most alerting systems drown teams in noise because they treat every anomaly as an incident, not a symptom. We replaced that with a four-layer triage system that cuts false positives 68% by labeling every alert as either a spike, a drift, a noise, or a failure before waking anyone. In 2026 it caught 182 real incidents while firing only 62 alerts—down from 192 false alarms the month before—and the on-call rotation went from 3-hour pages to 6-hour stretches without interruption. The system runs on Prometheus 2.51, uses SLO burn-rate math from Google’s CRE book, and stores labels in TimescaleDB 2.13. The key insight: if you can’t quantify the risk of an alert, you can’t suppress the noise.</p>
 <h3 id="why-this-concept-confuses-people">Why this concept confuses people</h3>
 <p>Teams start with good intentions: “We’ll alert on anything that moves.” Within weeks they see 50–70 alerts per day, most of them harmless fluctuations or upstream noise. The confusion isn’t technical—it’s psychological. Humans over-index on the last bad thing that happened and under-index on the probability that it will happen again. Teams also conflate “coverage” with “safety”: more alerts feel safer until the cognitive load buries the real signals.</p>
-<p>I ran into this when a single upstream outage in Jakarta triggered 47 separate alerts across five dashboards—every team assumed someone else would handle it. By the time we traced the root cause, 23 pages had already fired and three engineers were awake at 3 a.m., none of whom owned the upstream service.</p>
+<p>By the time we traced the root cause, 23 pages had already fired and three engineers were awake at 3 a.m., none of whom owned the upstream service.</p>
 <p>The root mistake is treating every metric breach as a page. A metric breach is just data; only when the breach crosses a defined risk threshold should it become an alert.</p>
 <h3 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h3>
 <p>Think of alerts like a triage nurse in an ER. The nurse doesn’t page the surgeon for every elevated temperature; she checks the trend, the patient’s history, and the protocol. Our system does the same with four classes:</p>
 <ol>
-<li><strong>Spike</strong> – sudden jump &gt; 3× baseline, but returns within 5 minutes. Often upstream DNS, CDN, or cache stampede.</li>
-<li><strong>Drift</strong> – gradual shift over 30 minutes, still within SLO but directionally bad. Usually a config change or slow memory leak.</li>
-<li><strong>Noise</strong> – outlier that violates a rule but has no downstream impact. Classic example: 99th percentile latency on a non-critical endpoint.</li>
-<li><strong>Failure</strong> – sustained breach that will burn SLO in 5 minutes or already has. Wake the surgeon immediately.</li>
+<li><strong>Spike</strong> – sudden jump &gt; 3× baseline, but returns within 5 minutes. Often upstream DNS, CDN, or cache stampede. 2. <strong>Drift</strong> – gradual shift over 30 minutes, still within SLO but directionally bad. Usually a config change or slow memory leak. 3. <strong>Noise</strong> – outlier that violates a rule but has no downstream impact. Classic example: 99th percentile latency on a non-critical endpoint. 4. <strong>Failure</strong> – sustained breach that will burn SLO in 5 minutes or already has. Wake the surgeon immediately.</li>
 </ol>
 <p>Each class maps to a response: suppress, log, page, or wake. The labels are stored in TimescaleDB so dashboards can color-code incidents without creating more pages.</p>
 <h3 id="a-concrete-worked-example">A concrete worked example</h3>
@@ -295,18 +292,13 @@
 <pre><code>redis_cpu_user_seconds_total{cache_cluster=&quot;sgp-cache-01&quot;,quantile=&quot;0.99&quot;} 4.2 1678901234
 </code></pre>
 <p>Step 1 – classify the shape
-- It spiked, it didn’t drift, it recovered quickly → <strong>Spike</strong>.
-- The downstream p99 latency on our API actually improved (cache hit rate went from 82% to 94%).</p>
+- It spiked, it didn’t drift, it recovered quickly → <strong>Spike</strong>. - The downstream p99 latency on our API actually improved (cache hit rate went from 82% to 94%).</p>
 <p>Step 2 – check historical probability
-- We run a daily job that computes 30-day percentiles per cache cluster.
-- The 99th percentile for sgp-cache-01 is normally 1.1 CPU seconds; 4.2 is 3.8×.
-- Historical frequency: once every 11 days, usually during a Java garbage collection spike.</p>
+- We run a daily job that computes 30-day percentiles per cache cluster. - The 99th percentile for sgp-cache-01 is normally 1.1 CPU seconds; 4.2 is 3.8×. - Historical frequency: once every 11 days, usually during a Java garbage collection spike.</p>
 <p>Step 3 – apply burn-rate filters
-- SLO for API p99 is 150 ms; actual during incident was 138 ms (within SLO).
-- Burn-rate = (150 – 138) / 5 min = 2.4 ms/min → way below 10 ms/min critical threshold.</p>
+- SLO for API p99 is 150 ms; actual during incident was 138 ms (within SLO). - Burn-rate = (150 – 138) / 5 min = 2.4 ms/min → way below 10 ms/min critical threshold.</p>
 <p>Step 4 – label and suppress
-- Prometheus alert rule adds label <code>severity="spike"</code> and sets <code>repeat_interval="0"</code> (no page).
-- TimescaleDB inserts <code>(ts, service, severity, upstream_source, downstream_impact)</code> so Grafana can display it as a yellow dot instead of a red square.</p>
+- Prometheus alert rule adds label <code>severity="spike"</code> and sets <code>repeat_interval="0"</code> (no page). - TimescaleDB inserts <code>(ts, service, severity, upstream_source, downstream_impact)</code> so Grafana can display it as a yellow dot instead of a red square.</p>
 <p>Result: no page, no Slack ping, engineers slept. The next morning the on-call lead saw the spike in the “Spike” bucket, added a Grafana annotation “GC spike, infra team aware,” and closed it.</p>
 <h3 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h3>
 <p>If you’ve ever used <strong>AWS CloudWatch composite alarms</strong>, you’ve already touched triage: composite alarms let you combine multiple metrics before deciding to page. The difference is granularity—composite alarms still treat every breach as a potential page; our system first labels the breach so you can decide whether to page.</p>
@@ -764,7 +756,7 @@ please contact me and I'll review and correct it.</p>
                     <a class="related-card" href="/audit-logs-ship-them-fast-keep-them-forever/">
                         <h3>Audit logs: ship them fast, keep them forever</h3>
                         <p>Cut AWS S3 audit log costs 78% while keeping regulators happy — hot/warm/cold tiering, SHA-256 tamper detection, and Node 20 LTS examples.</p>
-                        <span class="related-meta">15 min read · 6 July 2026</span>
+                        <span class="related-meta">14 min read · 6 July 2026</span>
                     </a>
                     
                 </div>

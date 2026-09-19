@@ -4,7 +4,7 @@ I've seen the same changing infrastructure mistake in multiple production codeba
 
 ## The situation (what we were trying to solve)
 
-In 2026, our AI platform ingested ~2.1 billion telemetry events per day across logs, traces, and metrics. Those numbers came from a mix of Python 3.11 microservices, Node 20 LTS workers, and Go 1.21 inference pods running on Kubernetes 1.28. The goal was to feed a Grafana real-time dashboard where our NOC team could see anomalies in under 300 ms. We already had Prometheus for metrics and OpenTelemetry for traces, but the logs pipeline was a Kafka 3.6 cluster with 12 brokers that kept falling over when we pushed >120 k events/sec. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+In 2026, our AI platform ingested ~2.1 billion telemetry events per day across logs, traces, and metrics. Those numbers came from a mix of Python 3.11 microservices, Node 20 LTS workers, and Go 1.21 inference pods running on Kubernetes 1.28. The goal was to feed a Grafana real-time dashboard where our NOC team could see anomalies in under 300 ms. We already had Prometheus for metrics and OpenTelemetry for traces, but the logs pipeline was a Kafka 3.6 cluster with 12 brokers that kept falling over when we pushed >120 k events/sec.
 
 The dashboard requirements were simple on paper: latency ≤300 ms p99, cost ≤$15 k/month for ingestion + storage, and zero data loss for the top 20 critical traces. What we hadn’t modeled was the noise: 87 % of log lines were verbose LLM trace spans that duplicated fields we didn’t need. Those spans ballooned the index in Loki 2.9 from 2 TB to 8 TB in two weeks and pushed our Loki ingestion bill from $1.2 k to $4.8 k. We also discovered that 34 % of our trace payloads were being re-sent by aggressive retries on transient 503s, compounding the volume. The NOC team’s Slack channel was lighting up with PagerDuty alerts every time we redeployed, because we had no backpressure or sampling strategy beyond a blunt 1 % head-based sampler.
 
@@ -162,11 +162,7 @@ Compliance isn’t optional either. In 2026, GDPR and Schrems II mean you must k
 
 ## Resources that helped
 
-- OpenTelemetry Collector Contrib v0.97 documentation, especially the `transform` and `tail_sampling` processors.
-- NATS JetStream 2.12 stability notes and Helm chart examples.
-- Grafana Loki 2.9 tuning guide: “Index sharding and boltdb-shipper” by Grafana Labs, March 2026.
-- Mimir 2.10 scaling benchmarks: “Horizontal scaling with gossip vs. ring” by Grafana, June 2026.
-- Rust crate `opentelemetry-otlp` v0.22 source code for custom exporters.
+- OpenTelemetry Collector Contrib v0.97 documentation, especially the `transform` and `tail_sampling` processors. - NATS JetStream 2.12 stability notes and Helm chart examples. - Grafana Loki 2.9 tuning guide: “Index sharding and boltdb-shipper” by Grafana Labs, March 2026. - Mimir 2.10 scaling benchmarks: “Horizontal scaling with gossip vs. ring” by Grafana, June 2026. - Rust crate `opentelemetry-otlp` v0.22 source code for custom exporters.
 
 ## Frequently Asked Questions
 
@@ -190,20 +186,16 @@ What’s the fastest way to cut Loki costs tomorrow morning?
 
 Enable `boltdb-shipper` in Loki 2.9 and ship index shards to S3 nightly. Then set `compactor.retention_period` to 7 days and `ingester.instance_limits.max_line_size` to 16 KB. In our environment this cut Loki ingestion costs by 62 % overnight with no impact on query latency.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

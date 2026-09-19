@@ -6,8 +6,6 @@ The short version: the conventional advice on code review is incomplete. It work
 
 Most teams still run PR checklists—lint rules, static analyzers, security scanners—stacked in GitHub Actions like a house of cards. The problem isn’t the tools: it’s that humans keep adding items to the list when AI can already handle 70% of the work. By moving from brittle checklists to agentic pipelines that review, test, and approve changes autonomously, teams cut review time from hours to minutes and reduce escaped defects by 42% (measured on 12 repos at a Nairobi fintech in 2026). The switch isn’t about replacing developers; it’s about letting them focus on the 30% of reviews that actually need human judgment. This post shows how to build that pipeline end-to-end using only open-source tools, AWS services you already pay for, and 20 lines of YAML.
 
-I ran into the checklist trap when I inherited a repo that ran 18 GitHub Actions on every PR—yet we still had three critical security escapes in six months because reviewers skipped steps under pressure.
-
 ## Why this concept confuses people
 
 The biggest confusion is thinking this is just "AI copilot in a pipeline." It’s not. A PR checklist is a static list of rules you run every time. An agentic pipeline is a team of specialized sub-agents that negotiate, rerun tests, and revise the change before the human even sees it. Many engineers picture a single LLM reading a diff and saying yes/no; in reality, a pipeline orchestrates a squad of agents—security guard, test runner, dependency bot, style fixer—that interact, sometimes argue, and finally produce a clean diff ready for merge.
@@ -195,25 +193,13 @@ Reality: Run the agents inside your VPC using SageMaker endpoints with VPC endpo
 Once your four core agents are stable, add a squad of specialist agents that negotiate with the change itself. Here are three patterns that moved the needle for us:
 
 1. The LLM Refactor Agent
-   - Mandate: Suggest structural refactors to reduce cognitive complexity.
-   - Trigger: When cyclomatic complexity >10.
-   - Output: A refactor diff that splits functions and adds type hints.
-   - Tooling: Uses Codeium’s CLI agent (v1.42.0) behind a private SageMaker endpoint.
-   - Result: Cut complexity by 35% in 4 repos without human input.
+   - Mandate: Suggest structural refactors to reduce cognitive complexity. - Trigger: When cyclomatic complexity >10. - Output: A refactor diff that splits functions and adds type hints. - Tooling: Uses Codeium’s CLI agent (v1.42.0) behind a private SageMaker endpoint. - Result: Cut complexity by 35% in 4 repos without human input.
 
 2. The Performance Agent
-   - Mandate: Reject if any endpoint’s P95 latency increases >5%.
-   - Trigger: When new endpoints are added.
-   - Output: A benchmark diff and a regression report.
-   - Tooling: Runs k6 0.51.0 against a staging environment, caches results in Redis 7.2.
-   - Result: Caught 3 latency regressions before they hit production.
+   - Mandate: Reject if any endpoint’s P95 latency increases >5%. - Trigger: When new endpoints are added. - Output: A benchmark diff and a regression report. - Tooling: Runs k6 0.51.0 against a staging environment, caches results in Redis 7.2. - Result: Caught 3 latency regressions before they hit production.
 
 3. The Cost Agent
-   - Mandate: Reject if the change introduces an AWS resource that costs >$50/month.
-   - Trigger: When new Terraform files are added.
-   - Output: A cost diff and a suggested cheaper alternative.
-   - Tooling: Uses Infracost 0.10.26 and AWS Cost Explorer API.
-   - Result: Saved $23k/year across 8 repos by catching unused NAT gateways.
+   - Mandate: Reject if the change introduces an AWS resource that costs >$50/month. - Trigger: When new Terraform files are added. - Output: A cost diff and a suggested cheaper alternative. - Tooling: Uses Infracost 0.10.26 and AWS Cost Explorer API. - Result: Saved $23k/year across 8 repos by catching unused NAT gateways.
 
 To orchestrate these agents, switch from a linear GitHub Actions job to AWS Step Functions. Each agent becomes a state machine step with retry logic, timeout handling, and a fallback to human review when the agent fails. The state machine logs every transition to AWS QLDB, giving you a tamper-proof audit trail.
 
@@ -279,10 +265,7 @@ Cost of the Step Functions state machine: $0.000023 per execution (2026 pricing)
 
 ## Further reading worth your time
 
-- [AWS Step Functions ASL reference](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html) — the language you’ll use to wire agents together.
-- [TruffleHog 3.41.0 changelog](https://github.com/trufflesecurity/trufflehog/releases/tag/v3.41.0) — the agent that actually revokes secrets.
-- [Codeium CLI agent docs](https://docs.codeium.com/cli) — the agent that refactors code autonomously.
-- [Infracost 0.10.26 pricing guide](https://www.infracost.io/docs/pricing/) — the agent that saves you from surprise AWS bills.
+- [AWS Step Functions ASL reference](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html) — the language you’ll use to wire agents together. - [TruffleHog 3.41.0 changelog](https://github.com/trufflesecurity/trufflehog/releases/tag/v3.41.0) — the agent that actually revokes secrets. - [Codeium CLI agent docs](https://docs.codeium.com/cli) — the agent that refactors code autonomously. - [Infracost 0.10.26 pricing guide](https://www.infracost.io/docs/pricing/) — the agent that saves you from surprise AWS bills.
 
 ## Frequently Asked Questions
 
@@ -292,8 +275,7 @@ Because Copilot doesn’t run tests, bump dependencies, or revoke secrets. It’
 **How do you prevent agents from making bad changes?**
 Each agent’s mandate is locked in a policy file committed to the repo. If an agent commits a change, it must be covered by a policy file that the CODEOWNERS have approved. We audit policy changes in the same PR process as code changes.
 
-**What’s the biggest surprise you hit when rolling this out?**
-I spent two weeks debugging why the Test Agent kept failing on a 5-line PR. Turned out the coverage library pytest-cov 5.0.0 had a bug that misreported coverage when pytest-xdist split tests across workers. Pinning to 5.0.2 fixed it and cut our flake rate from 8% to 0.5%.
+Turned out the coverage library pytest-cov 5.0.0 had a bug that misreported coverage when pytest-xdist split tests across workers. Pinning to 5.0.2 fixed it and cut our flake rate from 8% to 0.5%.
 
 **How do you handle flaky tests introduced by agents?**
 We run the Test Agent twice: once on the PR diff, once on the auto-committed style fixes. If either run flakes, the pipeline fails and posts a GitHub comment with the flake link. We also cache test results in Redis 7.2 with a 5-minute TTL to avoid rerunning the same tests repeatedly.
@@ -305,20 +287,16 @@ No. We run the same pipeline on a Node 20 LTS repo by swapping Black for Prettie
 
 Open your repo’s `.github/workflows` directory. Create a file named `agentic-review.yml` and paste the YAML from the worked example. Commit it, open a PR, and watch the agents negotiate your change. In 30 minutes you’ll know whether this pipeline fits your team.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

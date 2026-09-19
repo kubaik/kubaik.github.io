@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-30T16:20:40.244257">
-        <meta property="article:modified_time" content="2026-08-30T16:20:40.244270">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.642021+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Spot instances: the retry logic trap 90% miss">
@@ -63,8 +63,8 @@
       "headline": "Spot instances: the retry logic trap 90% miss",
       "description": "Spot instances cut AWS costs 69% for agent workloads in 2026 — but only if your retry logic doesn’t double the bill.",
       "datePublished": "2026-08-30T16:20:40+00:00",
-      "dateModified": "2026-08-30T16:20:40+00:00",
-      "wordCount": 3259,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3243,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,16 +260,16 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3259 words
+                        &nbsp;·&nbsp; 3243 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-30
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on use spot before understanding what was actually happening. The edge cases only show up once real users hit the system. Here's the fuller picture, with the tradeoffs left in.</p>
+                <p>The edge cases only show up once real users hit the system. Here's the fuller picture, with the tradeoffs left in.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>Most teams read the AWS Spot Instance docs and think: <em>‘cheaper compute—great!’</em> They spin up a fleet, set a max price, and assume the worst that can happen is a 2-minute warning before reclaim. That’s the happy path. Production laughs at that path.</p>
 <p>The trap appears when your workloads aren’t stateless lambdas, but stateful agents that run for minutes or hours—ETL pipelines, model training loops, PDF render farms, or background video transcoders. These agents aren’t front-end APIs; they’re batch workers with side effects. The AWS Spot Instance docs barely mention them. The retry logic section is 3 bullet points long. The part that trips people up is <strong>the assumption that transient failures are the same as permanent failures</strong>, and that’s what this post actually covers.</p>
@@ -282,16 +282,11 @@
 <p>The retry logic isn’t retry-at-all-costs. It’s a <em>state machine</em> that tags each job with a retry budget and a backoff schedule derived from the job’s historical run time distribution.</p>
 <p>Key concepts:</p>
 <ul>
-<li><strong>Retry budget</strong>: maximum number of retries per job, capped at 3 for most agent workloads. Beyond that, the job is escalated to on-demand or human review.</li>
-<li><strong>Backoff tiers</strong>: exponential backoff with jitter, but capped at 5 minutes to avoid killing user SLAs for downstream consumers.</li>
-<li><strong>Checkpointing</strong>: every 90 seconds, the agent persists progress to S3 with a versioned key (e.g., <code>s3://agent-checkpoints/job-1234/v3</code>). If the spot instance dies, the next instance resumes from the latest checkpoint, not the beginning.</li>
-<li><strong>Heartbeat</strong>: the agent sends a 15-second heartbeat to a Redis 7.2 cluster. If three consecutive heartbeats are missed, the coordinator assumes the instance is gone and triggers a replacement.</li>
-<li><strong>Impact scoring</strong>: each retry increments an <em>impact score</em> that weighs (a) downstream load, (b) data freshness, and (c) cost. When impact score &gt; threshold, we escalate to on-demand immediately.</li>
+<li><strong>Retry budget</strong>: maximum number of retries per job, capped at 3 for most agent workloads. Beyond that, the job is escalated to on-demand or human review. - <strong>Backoff tiers</strong>: exponential backoff with jitter, but capped at 5 minutes to avoid killing user SLAs for downstream consumers. - <strong>Checkpointing</strong>: every 90 seconds, the agent persists progress to S3 with a versioned key (e.g., <code>s3://agent-checkpoints/job-1234/v3</code>). If the spot instance dies, the next instance resumes from the latest checkpoint, not the beginning. - <strong>Heartbeat</strong>: the agent sends a 15-second heartbeat to a Redis 7.2 cluster. If three consecutive heartbeats are missed, the coordinator assumes the instance is gone and triggers a replacement. - <strong>Impact scoring</strong>: each retry increments an <em>impact score</em> that weighs (a) downstream load, (b) data freshness, and (c) cost. When impact score &gt; threshold, we escalate to on-demand immediately.</li>
 </ul>
 <p>The system uses two queues:</p>
 <ol>
-<li><strong>Primary queue</strong>: SQS FIFO with 30-second visibility timeout. Jobs land here when accepted by the coordinator.</li>
-<li><strong>Retry queue</strong>: DLQ with a 5-minute delay and a max receive count of 3. After the third receive, the job is moved to an <em>escalation queue</em> that drains to on-demand.</li>
+<li><strong>Primary queue</strong>: SQS FIFO with 30-second visibility timeout. Jobs land here when accepted by the coordinator. 2. <strong>Retry queue</strong>: DLQ with a 5-minute delay and a max receive count of 3. After the third receive, the job is moved to an <em>escalation queue</em> that drains to on-demand.</li>
 </ol>
 <p>The coordinator is a single Node 20 LTS Lambda function that polls SQS every 2 seconds. It’s stateless by design; all state lives in Redis 7.2:
   - <code>agent:job:{jobId}</code> → <code>{status, retryCount, impactScore, checkpointKey}</code>
@@ -632,10 +627,7 @@ Cost savings: <strong>69%</strong></p>
 <h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
 <p>Spot instances are the only cloud compute bargain left in 2026. But they’re not free money. The teams that succeed treat spots like a <em>time-limited CPU auction</em> with strict rules:</p>
 <ol>
-<li><strong>No poison pills</strong>. If your retry logic can’t distinguish transient from permanent failures, stay on on-demand.</li>
-<li><strong>Checkpoint or bust</strong>. Without checkpoints, you’re gambling on spot interruptions not happening. They will.</li>
-<li><strong>Budget for escalation</strong>. The fallback path (on-demand) must be tested weekly. If it takes 20 minutes to spin up the first on-demand instance, your backlog will back up during a regional spot spike.</li>
-<li><strong>Measure impact, not just cost</strong>. Retry storms can double your bill if your impact scoring is too aggressive. Watch your retry rate per job type weekly.</li>
+<li><strong>No poison pills</strong>. If your retry logic can’t distinguish transient from permanent failures, stay on on-demand. 2. <strong>Checkpoint or bust</strong>. Without checkpoints, you’re gambling on spot interruptions not happening. They will. 3. <strong>Budget for escalation</strong>. The fallback path (on-demand) must be tested weekly. If it takes 20 minutes to spin up the first on-demand instance, your backlog will back up during a regional spot spike. 4. <strong>Measure impact, not just cost</strong>. Retry storms can double your bill if your impact scoring is too aggressive. Watch your retry rate per job type weekly.</li>
 </ol>
 <p>The biggest anti-pattern I’ve seen is teams that set the bid ceiling too close to on-demand price and then forget to tune it. Spot prices are noisy; your ceiling should be a conservative estimate, not a bet.</p>
 <p>If you’re a small team with one engineer running agent workloads, start with on-demand. The operational overhead of spot fleets with smart retries is roughly 4 hours/week of debugging. That’s more than most bootstrapped teams can afford.</p>

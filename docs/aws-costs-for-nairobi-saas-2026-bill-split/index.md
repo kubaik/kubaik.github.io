@@ -1,12 +1,12 @@
 # AWS costs for Nairobi SaaS: 2026 bill split
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-I spent two weeks in mid-2026 tracking down why a simple CSV export endpoint in our Nairobi SaaS was eating 40 % of our AWS bill. The surprise wasn’t the compute charge — it was the $480/month RDS snapshot storage for a table that hadn’t been queried in 90 days.
+The surprise wasn’t the compute charge — it was the $480/month RDS snapshot storage for a table that hadn’t been queried in 90 days.
 
-I had built the stack the way every tutorial told me: PostgreSQL on RDS, EC2 behind an ALB, S3 for files. Costs looked fine until the bill tripled when we added 200 users in Kampala and Kigali. The finance team asked for a breakdown by region, product area, and line item. I didn’t have one. I had to rebuild the cost-explorer queries from scratch because the default Cost and Usage Report skipped the EFS mount I’d forgotten about.
+I had built the stack the way every tutorial told me: PostgreSQL on RDS, EC2 behind an ALB, S3 for files. Costs looked fine until the bill tripled when we added 200 users in Kampala and Kigali. The finance team asked for a breakdown by region, product area, and line item. I didn’t have one.
 
 That week I learned that Nairobi bandwidth egress is still 5× more expensive than us-east-1 for inter-region traffic, and that CloudFront doesn’t cache POST requests by default, so every download link we generated in Kenya triggered a Lambda@Edge call. This post is the bill split I wish I’d had before launch day.
 
@@ -404,20 +404,16 @@ Pick one of these concrete next steps and do it in the next 30 minutes:
 
 Do one of these now; the bill won’t fix itself.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-24T19:23:32.299442">
-        <meta property="article:modified_time" content="2026-06-24T19:23:32.299455">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.823250+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Why your AI portfolio bombs in Nigeria">
@@ -63,8 +63,8 @@
       "headline": "Why your AI portfolio bombs in Nigeria",
       "description": "Cut hiring noise 73% with constraint-first filtering — latency under 1s on 3G, recovery under 3s offline, and data cost lines in READMEs.",
       "datePublished": "2026-06-24T19:23:32+00:00",
-      "dateModified": "2026-06-24T19:23:32+00:00",
-      "wordCount": 2623,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2594,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,9 +266,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2623 words
+                        &nbsp;·&nbsp; 2594 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-24
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -279,7 +279,6 @@
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In 2026, every junior developer in Lagos, Nairobi, and Accra can drop a prompt into Cursor or GitHub Copilot and have a half-decent SaaS repo in GitHub. I saw 600+ pull requests for a fintech role that were 90 % boilerplate Next.js 14 dashboards, Tailwind landing pages, and one M-Pesa payment button copied from Flutterwave docs. The hiring bar had dropped from "show us code" to "show us something that compiles."</p>
 <p>We needed a way to pick the 20 candidates who could actually build for mobile-first users on 2026-era networks: 4G+ with 200 ms RTT, 2 % packet loss, and data bundles that reset at midnight. Chrome on fibre is not the bar; a 2G fallback that still processes a Flutterwave webhook inside a 5-second timeout is.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first filter was GitHub stars and commit frequency. We ran a simple SQL query on the public BigQuery GitHub snapshot (2026-01-15 snapshot, ~16 TB).</p>
 <pre><code class="language-sql">SELECT COUNT(*) AS commits
@@ -315,9 +314,7 @@ def score_readme(readme_text):
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>We pivoted to <strong>constraint-first filtering</strong>. Instead of looking at GitHub stats or README quality, we simulated the environment our users actually run in: slow, intermittent mobile data connections. Our new filter had three gates:</p>
 <ol>
-<li><strong>Latency gate</strong>: The candidate’s repo must serve a simple JSON endpoint under 1 second when throttled to 3G in Chrome DevTools.</li>
-<li><strong>Connection loss gate</strong>: The endpoint must return a cached response within 3 seconds when the network is offline (simulated with DevTools offline mode).</li>
-<li><strong>Cost gate</strong>: The candidate’s README must include an estimate of the monthly data cost for a typical user in Nairobi or Lagos (median bundle size 300 MB/month).</li>
+<li><strong>Latency gate</strong>: The candidate’s repo must serve a simple JSON endpoint under 1 second when throttled to 3G in Chrome DevTools. 2. <strong>Connection loss gate</strong>: The endpoint must return a cached response within 3 seconds when the network is offline (simulated with DevTools offline mode). 3. <strong>Cost gate</strong>: The candidate’s README must include an estimate of the monthly data cost for a typical user in Nairobi or Lagos (median bundle size 300 MB/month).</li>
 </ol>
 <p>We built a lightweight CI-like GitHub Action that runs on every <code>push</code> to <code>main</code> and checks these gates. The action uses <code>cypress</code> 13.6 with <code>cypress-recorder</code> 1.2 to record a 3G throttle session and <code>puppeteer</code> 21.6 to measure latency. We set thresholds: p95 latency &lt;1000 ms, p99 connection loss recovery &lt;3000 ms.</p>
 <pre><code class="language-yaml"># .github/workflows/constraint-gate.yml
@@ -344,9 +341,7 @@ jobs:
 <h2 id="implementation-details">Implementation details</h2>
 <p>Our final pipeline had three stages:</p>
 <ol>
-<li><strong>Filter</strong>: GitHub Actions runs the constraint gate on every push. Repos that fail are labelled <code>constraint-fail</code> and excluded from the next stage.</li>
-<li><strong>Score</strong>: For repos that pass the gate, we run a second job that scores the candidate’s code quality using <code>semgrep</code> 1.55 and <code>pylint</code> 3.1 for Python, <code>eslint</code> 8.57 for JavaScript, and <code>golangci-lint</code> 1.55 for Go. We give a bonus for TypeScript strict mode (<code>strict: true</code> in <code>tsconfig.json</code>) because it reduces production bugs under intermittent connections.</li>
-<li><strong>Rank</strong>: We rank candidates by a weighted score: 50 % latency gate pass/fail, 30 % code quality score (0–100), 20 % README clarity (human review of the data-cost line).</li>
+<li><strong>Filter</strong>: GitHub Actions runs the constraint gate on every push. Repos that fail are labelled <code>constraint-fail</code> and excluded from the next stage. 2. <strong>Score</strong>: For repos that pass the gate, we run a second job that scores the candidate’s code quality using <code>semgrep</code> 1.55 and <code>pylint</code> 3.1 for Python, <code>eslint</code> 8.57 for JavaScript, and <code>golangci-lint</code> 1.55 for Go. We give a bonus for TypeScript strict mode (<code>strict: true</code> in <code>tsconfig.json</code>) because it reduces production bugs under intermittent connections. 3. <strong>Rank</strong>: We rank candidates by a weighted score: 50 % latency gate pass/fail, 30 % code quality score (0–100), 20 % README clarity (human review of the data-cost line).</li>
 </ol>
 <p>We used <code>neon.tech</code> (PostgreSQL-compatible serverless) to store the results and expose a simple REST API. The API is rate-limited to 100 req/min to prevent abuse. We built a small Next.js dashboard in React 18.3 with <code>shadcn/ui</code> 0.8 to visualise the results. The dashboard shows a leaderboard of candidates, their latency p95, and their code quality score.</p>
 <pre><code class="language-javascript">// components/CandidateCard.jsx
@@ -506,14 +501,11 @@ export function CandidateCard({ candidate }) {
 <p>Make it part of your template, not an afterthought. Add a section titled "Data cost for users" and include a line like: "Estimated data: 250 MB/month (83 % under bundle)." If your app is fintech, add: "M-Pesa STK push: 0.5 MB per transaction." Candidates who fill this section naturally think about constraints; those who skip it often haven’t considered the environment their users live in.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

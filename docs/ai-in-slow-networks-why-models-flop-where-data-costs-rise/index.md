@@ -18,19 +18,14 @@ Another confusion: people think smaller models always help. A distilled 0.5 B pa
 
 Think of an AI system as a three-layer cake:
 
-1. **Compute layer**: where the model lives (cloud VM, edge GPU, browser WASM).
-2. **Transport layer**: the HTTP/3, gRPC, or WebSocket link that moves tensors or tokens.
-3. **Cache layer**: where you store partial results so you don’t recompute or retransmit.
+1. **Compute layer**: where the model lives (cloud VM, edge GPU, browser WASM). 2. **Transport layer**: the HTTP/3, gRPC, or WebSocket link that moves tensors or tokens. 3. **Cache layer**: where you store partial results so you don’t recompute or retransmit.
 
 In markets with high data costs and latency, the transport layer is the chokepoint. Your goal is to minimize the number of round-trips and the size of each round-trip. The cake metaphor helps because it forces you to ask: which layer can I offload, compress, or cache?
 
 A useful analogy is a matatu route in Nairobi. The matatu (model) can be big and fast, but if the road (transport) is potholed and tolls (data costs) are high, passengers (users) won’t ride. You can’t make the road smoother overnight, so you either put smaller matatus on the route or pre-book seats (cache) so people don’t wait.
 
 Concretely, the mental model is:
-- **Minimize hops**: merge requests, use edge functions, stream partial outputs.
-- **Minimize payload**: quantize to int8/float16, use efficient serialization like MessagePack or Protocol Buffers with gzip, avoid JSON overhead.
-- **Cache aggressively**: use Redis 7.2 with LFU eviction, set TTLs based on user behavior, not model freshness.
-- **Push to edge**: run lightweight inference in the browser with Pyodide 0.25 or ONNX Runtime Web; fall back to server only when cache misses.
+- **Minimize hops**: merge requests, use edge functions, stream partial outputs. - **Minimize payload**: quantize to int8/float16, use efficient serialization like MessagePack or Protocol Buffers with gzip, avoid JSON overhead. - **Cache aggressively**: use Redis 7.2 with LFU eviction, set TTLs based on user behavior, not model freshness. - **Push to edge**: run lightweight inference in the browser with Pyodide 0.25 or ONNX Runtime Web; fall back to server only when cache misses.
 
 ## A concrete worked example
 
@@ -80,22 +75,15 @@ Let’s walk through a real feature: a voice-based balance inquiry for a Kenyan 
 5. **Fallback**: If browser inference fails, route to a Lambda@Edge function with 128 MB memory and 2 vCPU; median latency 1.7 s.
 
 Results after one month in production:
-- Data usage per inquiry: 0.25 USD → 0.03 USD (−88%).
-- Median latency: 6.8 s → 1.6 s.
-- Session length: 42 s → 138 s.
-- Conversion: 12.1% → 28.7%.
-- Cost per 1,000 inquiries: 250 USD → 30 USD.
+- Data usage per inquiry: 0.25 USD → 0.03 USD (−88%). - Median latency: 6.8 s → 1.6 s. - Session length: 42 s → 138 s. - Conversion: 12.1% → 28.7%. - Cost per 1,000 inquiries: 250 USD → 30 USD.
 
-I was surprised that browser-based inference cut data to zero for most users; we had assumed server-side would always be more accurate. The surprise came from Whisper small-int8 matching Whisper large-v3 on Kenyan-accented Swahili when quantized and run on a 2026 Android device.
+The surprise came from Whisper small-int8 matching Whisper large-v3 on Kenyan-accented Swahili when quantized and run on a 2026 Android device.
 
 ## How this connects to things you already know
 
 If you’ve ever tuned a web app for mobile users, you already know the playbook: lazy-load images, use service workers, CDN assets, reduce third-party scripts. AI systems are just web apps with heavier payloads. The same principles apply:
 
-- **Critical rendering path** → critical inference path: stream tokens as they’re ready instead of waiting for the whole response.
-- **Responsive images** → responsive models: serve distilled or quantized models based on device capabilities.
-- **Cache headers** → TTLs: set cache lifetimes based on data volatility, not model version.
-- **Code splitting** → model splitting: split large models into smaller heads that can be cached separately.
+- **Critical rendering path** → critical inference path: stream tokens as they’re ready instead of waiting for the whole response. - **Responsive images** → responsive models: serve distilled or quantized models based on device capabilities. - **Cache headers** → TTLs: set cache lifetimes based on data volatility, not model version. - **Code splitting** → model splitting: split large models into smaller heads that can be cached separately.
 
 One difference: AI systems often assume statelessness, but in high-latency networks, stateful caching is the cheapest way to save compute. A 2026 study across 14 African markets showed that caching the top-10 most frequent user queries reduced total compute cost by 63% without any loss in accuracy.
 
@@ -103,20 +91,15 @@ Another overlap: observability. In low-coverage areas, your logs won’t tell th
 
 ## Common misconceptions, corrected
 
-1. **Myth**: Smaller models always mean faster response.
-   **Reality**: A 0.1 B model can run locally, but if your serialization still uses JSON + base64, the payload can balloon. We shrank a model from 1.5 B to 0.1 B params, but response size went from 720 bytes to 2.1 KB because we switched from protobuf to JSON. Latency increased from 800 ms to 1.2 s.
+1. **Myth**: Smaller models always mean faster response. **Reality**: A 0.1 B model can run locally, but if your serialization still uses JSON + base64, the payload can balloon. We shrank a model from 1.5 B to 0.1 B params, but response size went from 720 bytes to 2.1 KB because we switched from protobuf to JSON. Latency increased from 800 ms to 1.2 s.
 
-2. **Myth**: Edge inference is only for toy demos.
-   **Reality**: ONNX Runtime Web on a 2026 Samsung A10 (4 cores, 2 GB RAM) runs Whisper small-int8 at 1.8 tokens/s, fast enough to transcribe a 5 s phrase in 2.8 s. That’s acceptable for a USSD flow where the user is already waiting for the USSD menu to load.
+2. **Myth**: Edge inference is only for toy demos. **Reality**: ONNX Runtime Web on a 2026 Samsung A10 (4 cores, 2 GB RAM) runs Whisper small-int8 at 1.8 tokens/s, fast enough to transcribe a 5 s phrase in 2.8 s. That’s acceptable for a USSD flow where the user is already waiting for the USSD menu to load.
 
-3. **Myth**: Caching hurts model freshness.
-   **Reality**: In production, 80–90% of user queries are repeats of the same intent. We cache translations and balance lookups with a 5-minute sliding window. Cache misses trigger model inference, but 94% of requests hit the cache. Freshness matters only for the 6% of edge cases.
+3. **Myth**: Caching hurts model freshness. **Reality**: In production, 80–90% of user queries are repeats of the same intent. We cache translations and balance lookups with a 5-minute sliding window. Cache misses trigger model inference, but 94% of requests hit the cache. Freshness matters only for the 6% of edge cases.
 
-4. **Myth**: You need a GPU for good ASR accuracy.
-   **Reality**: In our Kenyan user study, Whisper small-int8 on CPU matched Whisper large-v3 on GPU for 92% of utterances when the audio was clean. For noisy environments (matatu background), accuracy dropped only 3%, still within the bank’s 95% threshold.
+4. **Myth**: You need a GPU for good ASR accuracy. **Reality**: In our Kenyan user study, Whisper small-int8 on CPU matched Whisper large-v3 on GPU for 92% of utterances when the audio was clean. For noisy environments (matatu background), accuracy dropped only 3%, still within the bank’s 95% threshold.
 
-5. **Myth**: High data costs are a user problem, not an engineering problem.
-   **Reality**: In Kenya, 71% of users on low-data plans will abandon a feature after two failed loads. That’s lost revenue and brand trust. Engineering for cost is engineering for retention.
+5. **Myth**: High data costs are a user problem, not an engineering problem. **Reality**: In Kenya, 71% of users on low-data plans will abandon a feature after two failed loads. That’s lost revenue and brand trust. Engineering for cost is engineering for retention.
 
 ## The advanced version (once the basics are solid)
 
@@ -176,30 +159,22 @@ Only if the same embedding is reused for multiple queries. In our case, 80% of u
 
 ## Further reading worth your time
 
-- [ONNX Runtime 1.16 release notes](https://github.com/microsoft/onnxruntime/releases/tag/v1.16.0) – covers int8 quantization and WebAssembly support.
-- [Pyodide 0.25 benchmarks](https://pyodide.org/en/stable/usage/performance.html) – performance on mobile CPUs.
-- [Cloudflare’s 2026 Mobile Performance report](https://blog.cloudflare.com/mobile-performance-2026) – latency and data cost benchmarks across Africa.
-- [DistilBERT 66 M model card](https://huggingface.co/distilbert-base-uncased) – lightweight intent classifier.
-- [Redis 7.2 LFU tuning guide](https://redis.io/docs/management/eviction/) – how to set maxmemory-policy and LFU decay time.
+- [ONNX Runtime 1.16 release notes](https://github.com/microsoft/onnxruntime/releases/tag/v1.16.0) – covers int8 quantization and WebAssembly support. - [Pyodide 0.25 benchmarks](https://pyodide.org/en/stable/usage/performance.html) – performance on mobile CPUs. - [Cloudflare’s 2026 Mobile Performance report](https://blog.cloudflare.com/mobile-performance-2026) – latency and data cost benchmarks across Africa. - [DistilBERT 66 M model card](https://huggingface.co/distilbert-base-uncased) – lightweight intent classifier. - [Redis 7.2 LFU tuning guide](https://redis.io/docs/management/eviction/) – how to set maxmemory-policy and LFU decay time.
 
 ## One thing you can do today
 
 Open your slowest AI endpoint in Chrome DevTools, switch to the Network tab, and simulate 3G (F12 → Network → Throttling → Add → 3G). Note the total bytes transferred and the median load time. If either exceeds 500 KB or 4 s, switch the response serialization to MessagePack + gzip and deploy to Lambda@Edge with streaming. Measure again. You’ll likely see payload drop by 70% and latency by 50% on first load.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -6,7 +6,7 @@ Most building developer guides assume a clean environment and a patient timeline
 
 We launched a developer tool in early 2026 — a CLI that automatically generates OpenAPI specs from traffic samples. It plugged into CI/CD and promised to cut months off API documentation work. The tool was technically solid: written in Go, used eBPF for low-overhead traffic sniffing, and ran in a Docker container. By mid-2025 we had 1,200 GitHub stars and 40 paying teams, mostly in fintech and logistics. Revenue was growing, but the sales cycle felt broken. Deals that used to close in 2 weeks now stretched to 8–10 weeks. And the worst part? We were losing to AI-native competitors that didn’t even have a product yet — they just had a slick demo that would "generate your OpenAPI in 30 seconds" using an LLM.
 
-I spent three weeks watching our trial-to-paid conversion drop from 22% to 8% without changing the product. The only thing that changed was the noise: every devtool founder in 2026 was selling against AI-generated demos. Our demo video starred a human engineer running commands — theirs starred a synthetic voiceover with a spinning 3D logo. The friction wasn’t technical; it was psychological. Teams didn’t trust a Go binary to solve their API documentation problem anymore. They expected a generative AI experience — even if the output was worse.
+The only thing that changed was the noise: every devtool founder in 2026 was selling against AI-generated demos. Our demo video starred a human engineer running commands — theirs starred a synthetic voiceover with a spinning 3D logo. The friction wasn’t technical; it was psychological. Teams didn’t trust a Go binary to solve their API documentation problem anymore. They expected a generative AI experience — even if the output was worse.
 
 We had to rebuild the sales cycle around this expectation shift. It wasn’t about selling a CLI anymore; it was about selling trust in a world where AI promised instant results. Our ICP (ideal customer profile) hadn’t changed — still API-first startups with 5–50 engineers — but the way they evaluated tools had. They wanted to see the AI workflow in action, not a 5-minute tutorial on Go flags. And they didn’t want to talk to a human until they were ready to sign.
 
@@ -136,20 +136,16 @@ The spec is generated nightly from M-Pesa’s sandbox API and includes all requi
 | **Uptime in Nigeria (MTN + Glo)** | 92.3% (timeout issues) | 99.8% (exponential backoff + circuit breaker) |
 | **Carbon footprint per spec** | 12g CO₂ (Go binary on t3.medium) | 0.3g CO₂ (Lambda arm64) |
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-08T14:23:50.999349">
-        <meta property="article:modified_time" content="2026-07-08T14:23:50.999356">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.309859+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Observe LLM features 90% faster…">
@@ -63,8 +63,8 @@
       "headline": "Observe LLM features 90% faster…",
       "description": "Cut LLM observability noise 93% with this wrapper — Prometheus metrics, Redis flags, and a 140-line FastAPI service that works on t3.medium.",
       "datePublished": "2026-07-08T14:23:50+00:00",
-      "dateModified": "2026-07-08T14:23:50+00:00",
-      "wordCount": 3348,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3314,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,18 +264,18 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3348 words
+                        &nbsp;·&nbsp; 3314 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-08
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In 2026 we shipped a government chatbot that answered questions about land titles across five states in Nigeria. By mid-2026 the team had added summarisation, entity extraction, and a “rephrase for clarity” button. The problem wasn’t the new features—it was the noise. Every user message now produced a 15-token system prompt, a 50-token user message, another 40-token assistant reply, plus 20 tokens of metadata we’d started logging for “future observability.” Multiply that by 23 k requests per day and we were drowning in 3.2 million extra tokens a week—roughly 18 GB of plain text logs. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout. The observability pipeline itself had become the bottleneck.</p>
+<p>In 2026 we shipped a government chatbot that answered questions about land titles across five states in Nigeria. By mid-2026 the team had added summarisation, entity extraction, and a “rephrase for clarity” button. The problem wasn’t the new features—it was the noise. Every user message now produced a 15-token system prompt, a 50-token user message, another 40-token assistant reply, plus 20 tokens of metadata we’d started logging for “future observability.” Multiply that by 23 k requests per day and we were drowning in 3.2 million extra tokens a week—roughly 18 GB of plain text logs. The observability pipeline itself had become the bottleneck.</p>
 <p>The real question wasn’t “does the feature work?” but “does the feature matter to the user?”. Token-level tracing gave us megabytes of noise for every byte of signal. We needed a way to see the user-facing outcome without wading through every intermediate token.</p>
 <p>This post is the result. It shows how we built a lightweight observability layer that surfaces only the metrics that actually drive decisions. No vendor lock-in, no extra SaaS bill, and it works on a t3.medium instance.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -288,14 +288,12 @@
 - A running LLM endpoint (we used Llama 3 8B on a single A100 GPU)
 - Node 20 LTS (only for the optional React dashboard)</p>
 <p>What you’ll build in this tutorial:
-- A FastAPI service that wraps any LLM endpoint and adds structured logging at the prompt/response boundary (not token-by-token).
-- A 34-line Prometheus exporter that surfaces four key metrics:
+- A FastAPI service that wraps any LLM endpoint and adds structured logging at the prompt/response boundary (not token-by-token). - A 34-line Prometheus exporter that surfaces four key metrics:
   - <code>llm_feature_duration_seconds</code> (histogram)
   - <code>llm_feature_success_total</code> (counter)
   - <code>llm_feature_user_feedback</code> (gauge)
   - <code>llm_feature_cost_cents</code> (counter)
-- A Redis-backed feature flag that toggles the new feature on/off per user segment.
-- A 120-line Python script that backfills historical data so you can compare before/after metrics without losing history.</p>
+- A Redis-backed feature flag that toggles the new feature on/off per user segment. - A 120-line Python script that backfills historical data so you can compare before/after metrics without losing history.</p>
 <p>We’ll avoid tracing every token. Instead, we’ll log one structured event per user interaction that contains:
 - user_id
 - feature_name (e.g., "summarise", "extract_entities")
@@ -478,9 +476,7 @@ if __name__ == &quot;__main__&quot;:
     uvicorn.run(app, host=&quot;0.0.0.0&quot;, port=8000)
 </code></pre>
 <p>Key decisions:
-- We expose a single POST per feature so you can reuse the same wrapper for summarisation, entity extraction, etc.
-- The wrapper adds 5–10 ms of overhead—negligible compared to the 400–800 ms LLM latency.
-- We multiply token count by $0.000002/token (a 2026 estimate for Llama 3 on-demand on a single A100) to get a rough cost. This lets us compare feature value vs. compute cost even before we negotiate enterprise rates.</p>
+- We expose a single POST per feature so you can reuse the same wrapper for summarisation, entity extraction, etc. - The wrapper adds 5–10 ms of overhead—negligible compared to the 400–800 ms LLM latency. - We multiply token count by $0.000002/token (a 2026 estimate for Llama 3 on-demand on a single A100) to get a rough cost. This lets us compare feature value vs. compute cost even before we negotiate enterprise rates.</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
 <p>Three edge cases broke us in production:</p>
 <ol>
@@ -611,20 +607,13 @@ scrape_configs:
 <p>The wrapper also let us A/B test summarisation models without touching the frontend. We ran <code>llama3-8b-v1</code> vs. <code>mistral-7b-instruct-v0.3</code> on the same prompts; the Mistral model cut latency 28 % and cost 19 % less while keeping the same user score.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>Frequently Asked Questions</strong></p>
-<p>how do i measure llm feature adoption without user ids?
-Only collect user_id if your privacy policy allows it. If you can’t, use a hashed uuid derived from the session token. Omit it entirely if you must, but then you lose the ability to segment feedback by cohort. In our Nigerian land-title chatbot we collected the first 6 digits of the phone number hash (after user consent) so we could see north vs south usage differences without storing raw PII.</p>
-<p>what if my llm endpoint doesn’t return token usage?
-Log the input token count from your client and the output length from the response. Multiply by your best estimate of cost per token. We once used a 3rd-party proxy that only returned the response text; we added a tiny regex to count words and multiplied by 0.0000015 to approximate cost. It was off by 12 % but still gave us a directional signal.</p>
-<p>how do i run this on aws lambda with no budget?
-Package the wrapper in a Docker image (45 MB) and deploy to Lambda with 1 vCPU and 1 GB memory. Use the Lambda Powertools metrics emitter instead of Prometheus exporter; it pushes to CloudWatch at no extra cost. Cold starts add ~300 ms, so keep the image small and avoid heavy dependencies. We trimmed the Docker image from 180 MB to 45 MB by multi-stage building and removing dev tools.</p>
-<p>when should i switch from redis feature flags to a proper flag service?
-Switch when you need rule-based targeting (e.g., enable summarise only for users with &gt;5 messages/week) or when your feature flags exceed 1000 keys and Redis memory usage passes 500 MB. At that point migrate to LaunchDarkly or Flagsmith; the migration is a one-line change in your wrapper—just swap the Redis client for their SDK.</p>
+<p>how do i measure llm feature adoption without user ids? Only collect user_id if your privacy policy allows it. If you can’t, use a hashed uuid derived from the session token. Omit it entirely if you must, but then you lose the ability to segment feedback by cohort. In our Nigerian land-title chatbot we collected the first 6 digits of the phone number hash (after user consent) so we could see north vs south usage differences without storing raw PII.</p>
+<p>what if my llm endpoint doesn’t return token usage? Log the input token count from your client and the output length from the response. Multiply by your best estimate of cost per token. We once used a 3rd-party proxy that only returned the response text; we added a tiny regex to count words and multiplied by 0.0000015 to approximate cost. It was off by 12 % but still gave us a directional signal.</p>
+<p>how do i run this on aws lambda with no budget? Package the wrapper in a Docker image (45 MB) and deploy to Lambda with 1 vCPU and 1 GB memory. Use the Lambda Powertools metrics emitter instead of Prometheus exporter; it pushes to CloudWatch at no extra cost. Cold starts add ~300 ms, so keep the image small and avoid heavy dependencies. We trimmed the Docker image from 180 MB to 45 MB by multi-stage building and removing dev tools.</p>
+<p>when should i switch from redis feature flags to a proper flag service? Switch when you need rule-based targeting (e.g., enable summarise only for users with &gt;5 messages/week) or when your feature flags exceed 1000 keys and Redis memory usage passes 500 MB. At that point migrate to LaunchDarkly or Flagsmith; the migration is a one-line change in your wrapper—just swap the Redis client for their SDK.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>In the next 30 minutes:
-1. Create <code>.env</code> with your actual Redis and LLM endpoint URLs.
-2. Run <code>docker compose up -d</code>.
-3. Deploy <code>main.py</code> to a t3.medium instance or Lambda.
-4. Hit <code>/feature/summarise</code> with a single test payload and verify the Prometheus metrics appear on <code>/metrics</code>.</p>
+1. Create <code>.env</code> with your actual Redis and LLM endpoint URLs. 2. Run <code>docker compose up -d</code>. 3. Deploy <code>main.py</code> to a t3.medium instance or Lambda. 4. Hit <code>/feature/summarise</code> with a single test payload and verify the Prometheus metrics appear on <code>/metrics</code>.</p>
 <p>Once that’s green, flip the Redis flag for 1 % of your users and watch the new metrics roll in. You’ll know within hours whether the feature is worth scaling—or killing.</p>
 <hr />
 <h3 id="1-advanced-edge-cases-i-personally-encountered">1. Advanced Edge Cases I Personally Encountered</h3>
@@ -684,8 +673,7 @@ async def health():
 <p><strong>Integration 1: Grafana Cloud with Prometheus &amp; Loki (Free Tier)</strong></p>
 <p>We used Grafana Cloud’s free tier (10 k series, 50 GB logs) to visualize metrics and correlate them with logs.</p>
 <ol>
-<li>Update <code>prometheus.yml</code> to scrape <code>/metrics</code> from the wrapper every 15 s.</li>
-<li>Add Loki scrape config for JSON logs from the wrapper (FastAPI’s default JSON logging):</li>
+<li>Update <code>prometheus.yml</code> to scrape <code>/metrics</code> from the wrapper every 15 s. 2. Add Loki scrape config for JSON logs from the wrapper (FastAPI’s default JSON logging):</li>
 </ol>
 <pre><code class="language-yaml"># prometheus.yml (add to scrape_configs)
   - job_name: 'llm-wrapper-logs'
@@ -844,14 +832,11 @@ trace.get_tracer_provider().add_span_processor(span_processor)
 </ol>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

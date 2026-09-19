@@ -1,12 +1,12 @@
 # 9 AI wrapper plays that worked in 2026
 
-I ran into this wrapper businesses problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 ## Why this list exists (what I was actually trying to solve)
 
 In early 2026 I joined a small team building a developer productivity tool. We thought wrapping an LLM around an existing CLI and selling it as SaaS would be an easy win. The market looked hungry: every company with a CLI was shopping for an "AI co-pilot" slide deck. We raised a seed round on that promise.
 
-I spent three weeks wiring a Next.js dashboard on top of a Python CLI using LangChain’s 0.1.x tooling. We launched a private beta in March 2026. By June our churn rate hit 42% and our per-user ARR plateaued at $18. The magic was gone faster than the VC slide deck could cool. Worse, we learned that most of our users weren’t paying for the AI; they just wanted faster access to the underlying CLI. That’s when I realized we had built a wrapper around a wrapper and called it a product.
+We launched a private beta in March 2026. By June our churn rate hit 42% and our per-user ARR plateaued at $18. The magic was gone faster than the VC slide deck could cool. Worse, we learned that most of our users weren’t paying for the AI; they just wanted faster access to the underlying CLI. That’s when I realized we had built a wrapper around a wrapper and called it a product.
 
 This post is what I wish we had read before we started. It ranks the AI wrapper business models that survived 2026-2026, explains why 84% of the ones I studied died, and gives concrete signals to pick the right path for your niche.
 
@@ -87,7 +87,7 @@ Best for: SaaS companies whose docs are their moat and whose users complain abou
 
 **Multi-model gateway (abstraction layer)**
 
-I built a 1,200-line Python router in January 2026 that routed every prompt to the cheapest model available: Mistral 8x22B, Llama 3.1 405B, or Cohere Command R+ depending on price. At first glance the gross margin looked great: 78% on a $0.001 per token routed fee.
+At first glance the gross margin looked great: 78% on a $0.001 per token routed fee.
 
 Reality hit when I saw the support tickets. Users expected consistent behavior across models. A prompt that returned JSON from Mistral would return markdown from Llama. Debugging took 4 hours per ticket. By March churn hit 38% and I shut it down.
 
@@ -254,20 +254,16 @@ response = query_engine.query("How to authenticate with the API?")
 | **Internal agent orchestrator** (cron replacement) | 18 cron jobs (500 lines Python) | 2 agent graphs (120 lines YAML) | -76% lines, +87% gross margin |
 | **Doc RAG wrapper** (API docs) | Users search docs (2 min, 5 clicks) | Users ask “?ask How to auth” (8 sec, 1 click) | -94% time, $299/site/quarter |
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

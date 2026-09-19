@@ -2,7 +2,7 @@
 
 After reviewing a lot of code that touches system design, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.
 
-**System design interviews in 2026 aren’t about whiteboards anymore — they’re about how well your AI assistant drafts the whiteboard.** The moment you realize that, everything changes. I ran into this when a client in Colombia asked me to review a system design doc their AI assistant (a fine-tuned Llama 3.2 11B running on Groq’s 2026 LPU stack) had generated overnight. The doc looked flawless — until I tried to deploy it. Latency spiked to 850ms on a 500ms SLA, and the Terraform script it wrote referenced AWS services that don’t exist in us-east-2. That’s when I noticed the pattern: AI assistants optimize for *completeness*, not *context*. This post is what I wished I had found before that review.
+**System design interviews in 2026 aren’t about whiteboards anymore — they’re about how well your AI assistant drafts the whiteboard.** The moment you realize that, everything changes. The doc looked flawless — until I tried to deploy it. Latency spiked to 850ms on a 500ms SLA, and the Terraform script it wrote referenced AWS services that don’t exist in us-east-2. That’s when I noticed the pattern: AI assistants optimize for *completeness*, not *context*. This post is what I wished I had found before that review.
 
 The shift isn’t just about automation. It’s about how AI has rewritten the expectations of system design interviews. In 2026, candidates are expected to *critique* AI-generated designs, not just draw them. Teams now benchmark candidates on their ability to spot edge cases in AI drafts — things like cache stampede risks, misconfigured retry storms, or Kubernetes operator logic that ignores multi-AZ constraints. If you’re still preparing for whiteboard-only interviews, you’re already behind.
 
@@ -361,7 +361,7 @@ If the AI-generated design is fundamentally flawed, fall back to a manual design
 3. Simulate peak-hour traffic with timezone awareness
 4. Simulate cost spikes under load
 
-I had to fall back to a manual design for a client in Colombia. The AI-generated design for a fraud detection system used a single DynamoDB table with 60 RCUs. In staging, it throttled at 1000 TPS. The manual design used DynamoDB on-demand capacity and a regional cache. The result was stable performance at 5000 TPS with no throttling.
+The AI-generated design for a fraud detection system used a single DynamoDB table with 60 RCUs. In staging, it throttled at 1000 TPS. The manual design used DynamoDB on-demand capacity and a regional cache. The result was stable performance at 5000 TPS with no throttling.
 
 ---
 
@@ -376,7 +376,6 @@ Always cap max backoff at 5 seconds to avoid runaway delays.
 Always include a rate limiter matching downstream capacity.
 ```
 This reduces retry storms by up to 94% during partial outages.
-
 
 **What’s the safest sharding strategy for multi-region systems in 2026?**
 
@@ -393,7 +392,6 @@ def shard_transaction(transaction_id: str) -> str:
 ```
 This ensures shards are region-specific and avoids cross-region conflicts. Pair it with Aurora Global Database or DynamoDB Global Tables for consistency.
 
-
 **Why do my AI-generated cron jobs fail in production?**
 
 Most AI-generated cron jobs assume UTC, but production systems run in local timezones. Shift your cron jobs to local time and account for timezone differences. For example, in EventBridge Scheduler:
@@ -407,7 +405,6 @@ utc_time = local_time.astimezone(pytz.UTC)
 ```
 This avoids running batch jobs during peak hours and reduces latency spikes.
 
-
 **What’s the minimum staging environment I need to catch AI design flaws?**
 
 At minimum, staging should mirror production in:
@@ -417,25 +414,20 @@ At minimum, staging should mirror production in:
 - Cost constraints (monitor hourly cost spikes)
 A Kind cluster or Docker Compose won’t cut it — you need real AWS resources to catch regional latency, EBS volume throttling, and DynamoDB cost explosions.
 
-
 ---
 
 Right
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

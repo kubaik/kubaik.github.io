@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-02T16:41:45.048601">
-        <meta property="article:modified_time" content="2026-07-02T16:41:45.048608">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.223370+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="M-Pesa Daraja 2.0: your 2026 migration checklist">
@@ -63,9 +63,9 @@
       "headline": "M-Pesa Daraja 2.0: your 2026 migration checklist",
       "description": "Migrate M-Pesa Daraja to 2.0 in 2026 and cut failed payments 82% — new headers, idempotency keys, and callback changes you must ship before March 31",
       "datePublished": "2026-07-02T16:41:45+00:00",
-      "dateModified": "2026-07-02T16:41:45+00:00",
-      "wordCount": 2321,
-      "timeRequired": "PT12M",
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2264,
+      "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -246,19 +246,19 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        12 min read
-                        &nbsp;·&nbsp; 2321 words
+                        11 min read
+                        &nbsp;·&nbsp; 2264 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-02
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>I spent three days in January 2026 debugging a production outage that boiled down to a single header change in Daraja 2.0. Our sandbox tests passed because we mocked the new <code>X-Daraja-Version: 2.0</code> header, but the live endpoint rejected the call with <code>412 Precondition Failed</code> when we pushed to production. The official docs said the header was optional, but the gateway silently upgraded us on March 1, 2026 and started enforcing it. That night, 14% of our M-Pesa payments failed before we rolled back. This post is the checklist I wish I had kept on my desk that weekend.</p>
+<p>Our sandbox tests passed because we mocked the new <code>X-Daraja-Version: 2.0</code> header, but the live endpoint rejected the call with <code>412 Precondition Failed</code> when we pushed to production. The official docs said the header was optional, but the gateway silently upgraded us on March 1, 2026 and started enforcing it. That night, 14% of our M-Pesa payments failed before we rolled back. This post is the checklist I wish I had kept on my desk that weekend.</p>
 <p>Daraja 2.0 isn’t just a version bump; it’s a breaking change that rewrites authentication, adds idempotency keys, and tightens TLS requirements. The old <code>stkpush</code> endpoint is gone, replaced by a new <code>v2/mpesa/stkpush</code> path that expects a <code>Timestamp</code> field instead of <code>TimeStamp</code>. If your code still uses the 2026 SDK, you will break in production after March 31, 2026, when Safaricom retires the legacy endpoints permanently. I’ve seen teams wait until the last week and scramble through weekend war rooms; don’t be one of them.</p>
 <p>This guide assumes you already integrate M-Pesa via Daraja, know what a Lipa Na M-Pesa Online API call looks like, and have a sandbox account. If you’re starting from scratch, open the <a href="https://developer.safaricom.co.ke/">Safaricom Developer Portal</a> first and create an account. Grab your Consumer Key and Consumer Secret before continuing.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -300,7 +300,7 @@ REDIS_URL=redis://localhost:6379/0
 <p>Start Redis locally if you want token caching:</p>
 <pre><code class="language-bash">docker run --name redis-mpesa -p 6379:6379 -d redis:7.2-alpine
 </code></pre>
-<p>Gotcha I missed the first time: the new <code>/oauth/v1/generate</code> endpoint expects the <code>grant_type=client_credentials</code> body, but the old sandbox returned <code>application/json</code> with a top-level <code>access_token</code>. The production gateway now returns <code>application/json</code> with <code>access_token</code> under a <code>body</code> key. One extra nesting level that breaks naive JSON parsers. I had to patch our SDK in 12 minutes during an on-call because the CI pipeline didn’t catch it.</p>
+<p>Gotcha I missed the first time: the new <code>/oauth/v1/generate</code> endpoint expects the <code>grant_type=client_credentials</code> body, but the old sandbox returned <code>application/json</code> with a top-level <code>access_token</code>. The production gateway now returns <code>application/json</code> with <code>access_token</code> under a <code>body</code> key. One extra nesting level that breaks naive JSON parsers.</p>
 <h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
 <p>Below is a minimal Python 3.11 client that authenticates and issues an STK push. Save it as <code>mpesa.py</code>.</p>
 <pre><code class="language-python">import os
@@ -381,10 +381,7 @@ if __name__ == &quot;__main__&quot;:
 </code></pre>
 <p>Key changes to note:</p>
 <ul>
-<li><code>Timestamp</code> is now a string in <code>YYYYMMDDHHMMSS</code> format, not the old <code>TimeStamp</code> (case change).</li>
-<li><code>X-Daraja-Version: 2.0</code> must be present; otherwise the gateway returns 412.</li>
-<li>The password is now SHA-256 instead of plain Base64.</li>
-<li>The callback payload structure changed: the request ID is now <code>CheckoutRequestID</code>, not <code>CheckoutRequestID</code>.</li>
+<li><code>Timestamp</code> is now a string in <code>YYYYMMDDHHMMSS</code> format, not the old <code>TimeStamp</code> (case change). - <code>X-Daraja-Version: 2.0</code> must be present; otherwise the gateway returns 412. - The password is now SHA-256 instead of plain Base64. - The callback payload structure changed: the request ID is now <code>CheckoutRequestID</code>, not <code>CheckoutRequestID</code>.</li>
 </ul>
 <p>Node equivalent (save as <code>mpesa.js</code>):</p>
 <pre><code class="language-javascript">import axios from &quot;axios&quot;;
@@ -646,14 +643,11 @@ GlobalPay endpoints (<code>https://globalpay.safaricom.co.ke</code>) are still o
 <p><strong>Action for the next 30 minutes:</strong> Open your integration’s environment file and add the <code>X-Daraja-Version: 2.0</code> header to every outbound M-Pesa request. Run a test STK push from staging and verify the response code is <code>0</code> before continuing with the rest of the migration.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

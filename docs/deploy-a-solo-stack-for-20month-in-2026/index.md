@@ -1,22 +1,20 @@
 # Deploy a solo stack for $20/month in 2026
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-Building something alone is hard enough, but when you add the expectation that it must scale to thousands of users on day one, every decision feels like a mortgage. I learned this the hard way when I launched a small API in 2026 using the "just AWS Lambda and DynamoDB" stack. The bill for the first month was $89 — and that was with only 200 users. I spent three days debugging cold starts and connection pool timeouts before realizing the problem wasn’t my code — it was the invisible cost of "serverless" when you’re not Netflix.
+Building something alone is hard enough, but when you add the expectation that it must scale to thousands of users on day one, every decision feels like a mortgage. I learned this the hard way when I launched a small API in 2026 using the "just AWS Lambda and DynamoDB" stack. The bill for the first month was $89 — and that was with only 200 users.
 
 By 2026, the hype had moved on to AI agents and vector databases, but the real cost of shipping software hadn’t changed. Developers still pay for over-provisioned databases, unused CI minutes, and monitoring tools that charge by the alert. This pipeline is for people who want to deploy something real, not something that looks real in a demo.
 
-I built this to prove that a solo project could run in production without burning $100/month. The result: a full deployment pipeline, observability, and backups — all for under $20/month, including domain and email. This is how I did it.
+The result: a full deployment pipeline, observability, and backups — all for under $20/month, including domain and email. This is how I did it.
 
 ## Prerequisites and what you'll build
 
 You need three things to follow along:
 
-1. A GitHub account and a repo with a working application (Node, Python, or Go — doesn’t matter). I used a small FastAPI service, but the pipeline is tool-agnostic.
-2. A personal AWS account with billing alerts enabled. You’re going to deploy real infrastructure, so set a $100 limit in AWS Budgets. I once forgot and woke up to a $400 bill from an open RDS instance. That’s a mistake you only make once.
-3. A domain you can point to AWS Route 53. I bought kubai.dev for $12/year. If you don’t have one, buy it now — DNS is the first thing users notice when your site is down.
+1. A GitHub account and a repo with a working application (Node, Python, or Go — doesn’t matter). I used a small FastAPI service, but the pipeline is tool-agnostic. 2. A personal AWS account with billing alerts enabled. You’re going to deploy real infrastructure, so set a $100 limit in AWS Budgets. I once forgot and woke up to a $400 bill from an open RDS instance. That’s a mistake you only make once. 3. A domain you can point to AWS Route 53. I bought kubai.dev for $12/year. If you don’t have one, buy it now — DNS is the first thing users notice when your site is down.
 
 What you’ll build:
 
@@ -110,10 +108,9 @@ def read_root():
 ```
 
 Key details:
-- `pool_pre_ping=True`: Checks if the connection is alive before use — critical for serverless.
-- `pool_recycle=300`: Drops connections older than 5 minutes to avoid PostgreSQL’s idle timeout.
+- `pool_pre_ping=True`: Checks if the connection is alive before use — critical for serverless. - `pool_recycle=300`: Drops connections older than 5 minutes to avoid PostgreSQL’s idle timeout.
 
-I spent two weeks debugging a "too many connections" error because I forgot to set `pool_recycle`. The error message was `psycopg2.OperationalError: connection already closed`.
+The error message was `psycopg2.OperationalError: connection already closed`.
 
 Finally, set up your GitHub repository secrets. Go to Settings → Secrets → Actions → New repository secret. Add:
 
@@ -541,7 +538,7 @@ The biggest surprise? The RDS instance never went above 10% CPU. I expected it t
 Yes. Host your frontend on Vercel, Netlify, or Cloudflare Pages. Point API calls to your Lambda API Gateway endpoint. I did this for a React frontend. The cost was $0 because Vercel’s free tier covers frontend hosting. The only cost was the API calls — $0.40 for 80k requests.
 
 **What if I need WebSockets?**
-Don’t. For a solo project, WebSockets are overkill. Use Server-Sent Events (SSE) or long polling over HTTP. I built a chat feature using SSE and it worked fine. The cost was the same as REST API calls.
+Don’t. For a solo project, WebSockets are overkill. Use Server-Sent Events (SSE) or long polling over HTTP. The cost was the same as REST API calls.
 
 **How do I handle secrets rotation?**
 Rotate the DB password using AWS Secrets Manager. Set up a rotation schedule every 90 days. Use the `aws rds generate-db-auth-token` for temporary credentials if you want to avoid storing passwords at all. I didn’t do this because the project is small, but it’s a good practice.
@@ -560,20 +557,16 @@ Here’s a comparison of CI/CD tools as of 2026:
 | Tool            | Free Plan Limits       | Cost for 1 project (private) |
 |-----------------|------------------------|----------------
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

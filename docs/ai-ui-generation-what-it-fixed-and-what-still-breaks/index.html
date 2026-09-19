@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T06:48:30.376782">
-        <meta property="article:modified_time" content="2026-07-03T06:48:30.376795">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.784721+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI UI generation: what it fixed and what still breaks">
@@ -63,8 +63,8 @@
       "headline": "AI UI generation: what it fixed and what still breaks",
       "description": "Cut frontend work 40–60% with AI UI generation tools — real wins, hidden Safari CORS bugs, and the exact prompts that paid off in 2026.",
       "datePublished": "2026-07-03T06:48:30+00:00",
-      "dateModified": "2026-07-03T06:48:30+00:00",
-      "wordCount": 3490,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 3470,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -252,9 +252,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3490 words
+                        &nbsp;·&nbsp; 3470 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-03
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -266,7 +266,7 @@
 <p>AI UI generation tools like v0 by Vercel, Figma AI, and Locofy can cut frontend work by 40–60% when used right, but they’re not magic. They excel at producing a first pass of React components, Tailwind markup, and basic state logic, but they can’t architect a responsive layout for a dashboard with 12 different roles, nor can they debug a race condition at 3 AM. My team moved from 500 lines of hand-written React to 200 lines using v0 in one sprint—until we hit a bug where our AI-generated form silently dropped every submission from Safari users. The tool didn’t know Safari’s stricter CORS policy. That’s the gap: AI can speed up the mechanical parts, but it can’t anticipate the invisible constraints of production.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
 <p>Most developers hear “AI UI generation” and picture Skynet for design. That’s not it. Think of it as a junior developer who can write 500 lines of React in 30 seconds—except it won’t debug why the button is grey in Firefox. The confusion starts with the word “AI.” It’s not general intelligence; it’s a constrained autocomplete on steroids. It knows React patterns, Tailwind classes, and common Accessibility ARIA roles, but it doesn’t know your product’s bespoke authentication flow or your finance team’s weird date-range picker.</p>
-<p>I ran into this when our AI-generated checkout page worked perfectly in Chrome, but failed silently in Safari’s private mode. The tool generated code that assumed every browser allowed the same CORS headers. Safari private mode blocks all storage, which broke our auth token persistence. The tool didn’t warn us—it’s not trained on Safari’s quirks. That’s why teams assume AI can do everything, or nothing. Neither is true.</p>
+<p>The tool generated code that assumed every browser allowed the same CORS headers. Safari private mode blocks all storage, which broke our auth token persistence. The tool didn’t warn us—it’s not trained on Safari’s quirks. That’s why teams assume AI can do everything, or nothing. Neither is true.</p>
 <h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
 <p>Imagine your frontend as a tree. The trunk is the architecture: routing, state management, auth. The branches are components. The leaves are pixel-perfect visuals and micro-interactions. AI UI tools are great at growing leaves and some small branches, but they struggle with the trunk and the branches that connect to legacy systems.</p>
 <p>Think of the tool as an intern who can:
@@ -440,11 +440,7 @@ describe('LoginForm', () =&gt; {
 </table>
 <h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
 <ul>
-<li><a href="https://v0.dev/docs">Vercel v0 docs: 2026 edition</a> — The official docs are surprisingly good at showing what the tool can and can’t do.</li>
-<li><a href="https://locofy.ai/blog/roadmap-2026">Locofy 2026 roadmap</a> — Their blog explains how they handle design-to-code fidelity.</li>
-<li><a href="https://www.figma.com/blog/ai-limitations">Figma AI limitations (2026)</a> — Figma’s engineers wrote about where their AI stumbles.</li>
-<li><a href="https://tailwindcss.com/blog/tailwindcss-v4">Tailwind 4 release notes</a> — The new JIT engine makes AI-generated Tailwind code faster to render.</li>
-<li><a href="https://react.dev/blog/2026/react-19">React 19 new features</a> — The new React compiler can optimize AI-generated code better.</li>
+<li><a href="https://v0.dev/docs">Vercel v0 docs: 2026 edition</a> — The official docs are surprisingly good at showing what the tool can and can’t do. - <a href="https://locofy.ai/blog/roadmap-2026">Locofy 2026 roadmap</a> — Their blog explains how they handle design-to-code fidelity. - <a href="https://www.figma.com/blog/ai-limitations">Figma AI limitations (2026)</a> — Figma’s engineers wrote about where their AI stumbles. - <a href="https://tailwindcss.com/blog/tailwindcss-v4">Tailwind 4 release notes</a> — The new JIT engine makes AI-generated Tailwind code faster to render. - <a href="https://react.dev/blog/2026/react-19">React 19 new features</a> — The new React compiler can optimize AI-generated code better.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Why does my AI-generated React component fail in Safari?</strong></p>
@@ -711,31 +707,27 @@ import { useForm, SubmitHandler } from 'react-hook-form';</p>
           </button>
         </div>
       )}</p>
-<pre><code>  {/* Step 2: Password */}
-  {step === 2 &amp;&amp; (
-    &lt;div className="space-y-4"&gt;
-      &lt;div&gt;
-        &lt;label htmlFor="password" className="block text-sm font-medium text-neutral-700"&gt;
-          Password
-        &lt;/label&gt;
-        &lt;input
-          id="password"
-          type="password"
-          {...register('password', { required: 'Password is required', minLength: { value: 8, message: 'Minimum 8 characters' } })}
-          className="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm p-2 border"
-        /&gt;
-        {errors.password &amp;&amp; &lt;p className="mt-1 text-sm text-red-600"&gt;{errors.password.message}&lt;/p&gt;}
-</code></pre>
+<p>{/<em> Step 2: Password </em>/}
+      {step === 2 &amp;&amp; (
+        <div className="space-y-4">
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-neutral-700">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              {...register('password', { required: 'Password is required', minLength: { value: 8, message: 'Minimum 8 characters' } })}
+              className="mt-1 block w-full rounded-md border-neutral-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm p-2 border"
+            />
+            {errors.password &amp;&amp; <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>}</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -790,7 +782,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ai-ui-tools-promise-vs-production/">
                         <h3>AI UI tools: promise vs. production</h3>
                         <p>Cut component build time 60% with AI UI tools — but watch bundle bloat, design drift, and missing a11y.</p>
-                        <span class="related-meta">10 min read · 30 June 2026</span>
+                        <span class="related-meta">9 min read · 30 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-ui-tools-broke-my-react-flow-heres-why/">

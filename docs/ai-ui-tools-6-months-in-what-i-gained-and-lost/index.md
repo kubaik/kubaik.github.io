@@ -9,7 +9,7 @@ AI UI generation tools like v0 by Vercel, Figma AI, and Bolt.new cut my componen
 
 ## Why this concept confuses people
 
-Most tutorials show AI spitting out a perfect Tailwind component in seconds, but anyone who has worked on a team knows shared codebases have rules that aren’t captured in a prompt. I ran into this when I asked Cursor to generate a modal with a shadow and border radius that matched the design system. It returned perfectly valid CSS, but the shadow was 2px off from the Figma file, and the border radius used rem instead of px. The component passed code review, but the inconsistency showed up in 15% of user sessions because Safari rendered the rem value differently. The confusion isn’t whether AI can generate code—it’s whether it can generate code that survives a team, a build, and multiple browsers.
+Most tutorials show AI spitting out a perfect Tailwind component in seconds, but anyone who has worked on a team knows shared codebases have rules that aren’t captured in a prompt. It returned perfectly valid CSS, but the shadow was 2px off from the Figma file, and the border radius used rem instead of px. The component passed code review, but the inconsistency showed up in 15% of user sessions because Safari rendered the rem value differently. The confusion isn’t whether AI can generate code—it’s whether it can generate code that survives a team, a build, and multiple browsers.
 
 Another layer is the velocity paradox: teams celebrate the first 10 components generated in an hour, but then hit a wall when they need to update 200 instances after a design token change. I saw a team generate 120 React components in two days using v0, only to realize they had to manually update every instance when the primary color hex shifted from #2563eb to #1d4ed8. The tool didn’t break; the process did. People conflate speed with sustainability, and AI amplifies that gap.
 
@@ -21,11 +21,9 @@ Finally, there’s the trust gap. I trusted the AI output and skipped the visual
 Think of AI UI tools as a **compiler for design decisions**, not a code generator. Just like a compiler turns TypeScript into JavaScript, these tools turn design intent into code, but they can only compile what you explicitly feed them. If your design system is a loose collection of screenshots and Slack messages, the compiler will produce loosely consistent components.
 
 I visualize it as a pipeline with three layers:
-- **Prompt layer**: your intent expressed in words or sketches.
-- **Design layer**: the tokens, spacing scales, and typography rules that the AI can reference.
-- **Runtime layer**: the browser, OS, and viewport where the code executes.
+- **Prompt layer**: your intent expressed in words or sketches. - **Design layer**: the tokens, spacing scales, and typography rules that the AI can reference. - **Runtime layer**: the browser, OS, and viewport where the code executes.
 
-The magic happens when all three layers are aligned. When they’re not, bugs appear at the seams. The most common failure mode is assuming the prompt layer is enough. It’s not. I spent two weeks tweaking prompts to get a consistent card component, only to realize the issue was the design layer—our spacing scale used 8px increments in Figma but 4px increments in the codebase. The AI couldn’t bridge that gap because the gap wasn’t in the prompt.
+The magic happens when all three layers are aligned. When they’re not, bugs appear at the seams. The most common failure mode is assuming the prompt layer is enough. It’s not. The AI couldn’t bridge that gap because the gap wasn’t in the prompt.
 
 Another analogy: imagine a translator who speaks perfect English and perfect Spanish but has no dictionary. The translations will be fluent but wrong. AI UI tools are fluent, but they need a dictionary (your design tokens) to be accurate. Without it, you get fluent inconsistency.
 
@@ -78,7 +76,7 @@ I added our design tokens to the prompt:
 Use our design tokens: font sizes h1: 4rem, line-height h1: 1.5, spacing increments 0.5rem, border radius lg: 0.5rem, shadow: 0 4px 6px -1px rgba(0,0,0,0.1)
 ```
 
-The second generation was closer, but still missing the yearly toggle logic and the subtle gradient that matched our Figma file. I had to manually add the toggle state and the gradient definition:
+The second generation was closer, but still missing the yearly toggle logic and the subtle gradient that matched our Figma file.
 
 ```tsx
 // Manually patched version
@@ -119,9 +117,7 @@ export default function Hero() {
 ```
 
 **Step 4: Measuring the gain**
-Original: I spent 45 minutes sketching, coding, and iterating the hero manually.
-With v0: 12 seconds to generate, 30 minutes to patch and test.
-Net time saved: **33 minutes per component**, but only after accounting for the patching step. For a team of 5 frontend engineers shipping 2 new pages a week, that’s **5.5 hours saved per week**—enough to justify the tool if the patches are rare.
+Original: I spent 45 minutes sketching, coding, and iterating the hero manually. With v0: 12 seconds to generate, 30 minutes to patch and test. Net time saved: **33 minutes per component**, but only after accounting for the patching step. For a team of 5 frontend engineers shipping 2 new pages a week, that’s **5.5 hours saved per week**—enough to justify the tool if the patches are rare.
 
 **Step 5: The hidden cost**
 That 30 minutes of patching uncovered a gap in our design tokens: we didn’t have a `shadow-md` token, so I had to hardcode it. Two weeks later, when the design team updated the shadow to `0 4px 8px rgba(0,0,0,0.15)`, I had to update 18 components by hand. The AI didn’t cause the gap; it exposed it. The real cost wasn’t the AI—it was the 30 minutes of patching plus the future 2 hours of refactoring.
@@ -218,7 +214,7 @@ Generate a card component with:
 - Content: {{content}}
 ```
 
-The template ensures every generated card uses the same structure, making it easier to maintain. I built a small CLI tool that reads a prompt template and a YAML config to generate consistent prompts. The tool reduced prompt drift by 80% in our team, cutting the patching time from 30 minutes to 6 minutes per component.
+The template ensures every generated card uses the same structure, making it easier to maintain. The tool reduced prompt drift by 80% in our team, cutting the patching time from 30 minutes to 6 minutes per component.
 
 **Pillar 3: Runtime validation**
 Use tools like Chromatic (v10.0.0) for visual regression tests and Playwright (v1.42.0) for functional tests on generated components. The key is to run these tests in CI, not locally. I set up a GitHub Actions workflow that triggers on every PR:
@@ -259,11 +255,7 @@ If you’re using Next.js with the App Router, add a `generationId` to your comp
 
 ## Further reading worth your time
 
-- [Vercel v0 docs: Generating production-grade React components](https://v0.dev/docs) — Focus on the “Design tokens” section; most teams skip it and regret it.
-- [Style Dictionary v3.5.0 release notes](https://github.com/amzn/style-dictionary/releases/tag/v3.5.0) — The changelog explains how to generate CSS variables, JSON, and TypeScript types from a single source.
-- [Chromatic’s 2026 visual regression guide](https://www.chromatic.com/blog/visual-testing-in-2026) — Skip the intro; go to “Handling AI-generated components” for the good parts.
-- [Figma AI’s design system checklist](https://help.figma.com/hc/en-us/articles/20264649053199) — Not just for Figma users; the checklist applies to any AI UI tool.
-- [Playwright’s AI component testing guide](https://playwright.dev/docs/test-components) — Learn how to test components without mounting the whole app.
+- [Vercel v0 docs: Generating production-grade React components](https://v0.dev/docs) — Focus on the “Design tokens” section; most teams skip it and regret it. - [Style Dictionary v3.5.0 release notes](https://github.com/amzn/style-dictionary/releases/tag/v3.5.0) — The changelog explains how to generate CSS variables, JSON, and TypeScript types from a single source. - [Chromatic’s 2026 visual regression guide](https://www.chromatic.com/blog/visual-testing-in-2026) — Skip the intro; go to “Handling AI-generated components” for the good parts. - [Figma AI’s design system checklist](https://help.figma.com/hc/en-us/articles/20264649053199) — Not just for Figma users; the checklist applies to any AI UI tool. - [Playwright’s AI component testing guide](https://playwright.dev/docs/test-components) — Learn how to test components without mounting the whole app.
 
 
 ## Frequently Asked Questions
@@ -283,7 +275,7 @@ Track three metrics: generation time (time from prompt to first working componen
 
 ## What I wish I knew 6 months ago
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. Now I know that AI UI tools don’t just generate code; they generate assumptions that can become production bugs. The tools are fast, but speed without rigor is just technical debt in disguise.
+Now I know that AI UI tools don’t just generate code; they generate assumptions that can become production bugs. The tools are fast, but speed without rigor is just technical debt in disguise.
 
 If you only take one thing from this post, make it this: **treat your design tokens as code**. If you do that, AI UI tools will amplify your team’s work instead of amplifying its gaps. If you don’t, they’ll expose every inconsistency you’ve been ignoring.
 
@@ -292,20 +284,16 @@ If you only take one thing from this post, make it this: **treat your design tok
 
 Open your design system’s Figma file or JSON file and count how many places the primary button color is defined. If it’s more than one, export those values as a single YAML file, then run Style Dictionary v3.5.0 to generate tokens. Commit the tokens to your repo and push the change. That’s the first step to making AI UI tools work for your team, not against it.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

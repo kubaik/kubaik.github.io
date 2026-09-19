@@ -8,13 +8,13 @@ In early 2026, Google promoted Interaction to Next Paint (INP) from an experimen
 
 The portal served static health content (disease alerts, vaccination schedules) to clinics across rural Kenya. Users were on 3G or edge networks, devices ranged from $50 Android Go phones to feature phones with 256MB RAM. We already used CloudFront for CDN, but INP was still terrible because most interactions were handled client-side with vanilla JavaScript.
 
-I spent three days profiling the portal on a feature phone and realized the biggest drag wasn’t the CDN or the backend — it was the client-side event loop. Every time a user tapped a link or opened a menu, we queued 3–4 tasks that took 150–200ms each. That added up to 600ms before the browser could paint the next frame, tripping the INP threshold.
+Every time a user tapped a link or opened a menu, we queued 3–4 tasks that took 150–200ms each. That added up to 600ms before the browser could paint the next frame, tripping the INP threshold.
 
 ## What we tried first and why it didn’t work
 
 We tried bundling all JavaScript with esbuild 0.23 and inlining critical scripts. That cut total JS size from 180KB to 90KB, but INP stayed at 480ms. The problem wasn’t payload size — it was task scheduling. Even a 90KB bundle still queued multiple microtask and macrotask callbacks on every interaction.
 
-Next, we tried deferring all third-party scripts (Google Analytics, Hotjar) with `defer` and `async`. That shaved 40ms off INP, but we were still at 440ms. I was surprised to find Hotjar’s inline script was adding a 200ms idle callback even when it wasn’t enabled in our environment.
+Next, we tried deferring all third-party scripts (Google Analytics, Hotjar) with `defer` and `async`. That shaved 40ms off INP, but we were still at 440ms.
 
 We also tried upgrading to React 18.3 with concurrent features, but the portal didn’t use React — it was vanilla JS with a sprinkle of Alpine.js 3.12 for interactivity. React wouldn’t have helped anyway; the bottleneck was event handler scheduling, not rendering.
 
@@ -26,8 +26,7 @@ We stopped optimizing payloads and started optimizing the event loop. The key in
 
 We broke every user interaction into two phases:
 
-1. **Input phase** (0–50ms): Register the interaction and schedule a high-priority task to queue the next phase.
-2. **Render phase** (50–200ms): Defer all heavy work (data fetching, DOM updates) to idle periods or offload to Web Workers.
+1. **Input phase** (0–50ms): Register the interaction and schedule a high-priority task to queue the next phase. 2. **Render phase** (50–200ms): Defer all heavy work (data fetching, DOM updates) to idle periods or offload to Web Workers.
 
 We used the Page Visibility API and requestIdleCallback to split work and avoid blocking the main thread. We also switched Alpine.js 3.12’s event handlers to use `passive: true` to remove scroll-blocking delays.
 
@@ -179,11 +178,7 @@ This is a lesson I learned the hard way: optimizing for metrics like LCP or TTI 
 
 ## Resources that helped
 
-- [Chrome’s INP debugging guide (2026 update)](https://developer.chrome.com/docs/web-vitals/inp) — Shows how to measure INP with real user monitoring.
-- [Comlink 4.1 docs](https://github.com/GoogleChromeLabs/comlink) — Simplifies Worker communication.
-- [Alpine.js 3.12 reactivity internals](https://github.com/alpinejs/alpine/blob/v3.12/src/reactivity.js) — Helped us patch reactivity deferral.
-- [CloudFront cache policy calculator](https://awscdk.io/packages/@aws-cdk/aws-cloudfront-origins.14.0.html#cache-policy) — Used to set stale-while-revalidate policies.
-- [Web Vitals JavaScript library 4.2](https://github.com/GoogleChrome/web-vitals) — Gave us accurate INP measurements in production.
+- [Chrome’s INP debugging guide (2026 update)](https://developer.chrome.com/docs/web-vitals/inp) — Shows how to measure INP with real user monitoring. - [Comlink 4.1 docs](https://github.com/GoogleChromeLabs/comlink) — Simplifies Worker communication. - [Alpine.js 3.12 reactivity internals](https://github.com/alpinejs/alpine/blob/v3.12/src/reactivity.js) — Helped us patch reactivity deferral. - [CloudFront cache policy calculator](https://awscdk.io/packages/@aws-cdk/aws-cloudfront-origins.14.0.html#cache-policy) — Used to set stale-while-revalidate policies. - [Web Vitals JavaScript library 4.2](https://github.com/GoogleChrome/web-vitals) — Gave us accurate INP measurements in production.
 
 ## Frequently Asked Questions
 
@@ -321,20 +316,16 @@ The biggest unexpected benefit was SEO. Google Search Console showed a 12% incre
 
 The project also changed our team’s culture. We now profile INP on real devices before writing any code, and we’ve banned third-party scripts from critical paths unless they’re wrapped in iframes or lazy-loaded. The lesson wasn’t just technical—it was about prioritizing real user constraints over synthetic metrics.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

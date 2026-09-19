@@ -304,11 +304,7 @@ Run the Go router on a small VM or Kubernetes pod with resource limits of 256MB 
 
 We’ve run this setup in production for 6 months handling ~1.2M daily inferences across two models: `embedding-v3` and `classifier-v1`. Here are the key metrics:
 
-- **p95 latency**: 60ms (local GPU) vs. 140ms (cloud SageMaker in us-east-1) vs. 220ms (cloud SageMaker in eu-central-1). The local GPU is 2.3x faster than the fastest cloud endpoint because of GPU acceleration and zero serialization overhead.
-- **Cold start impact**: Pre-warming reduced cold start latency from 420ms to 120ms for SageMaker endpoints. The Lambda pre-warm runs every 5 minutes, costing ~$0.20/month per endpoint.
-- **Router overhead**: The Go router adds 0.4ms per request on average, including JSON parsing, config lookup, and health checks. Without caching the config in memory, it added 12ms per request, which was unacceptable.
-- **Cost per 1M inferences**: Local GPU costs $0.04 per 1K inferences (using a T4 GPU on GCP), while SageMaker costs $0.12 per 1K inferences. For high-volume workloads, local inference is 3x cheaper, but the cloud endpoint is easier to scale.
-- **Error rate**: The router handles failures gracefully. When a cloud endpoint fails, the router falls back to the next available endpoint with a 0.5% error rate due to misconfigured health checks or regional outages. Without the fallback, the error rate would be 3.2%.
+- **p95 latency**: 60ms (local GPU) vs. 140ms (cloud SageMaker in us-east-1) vs. 220ms (cloud SageMaker in eu-central-1). The local GPU is 2.3x faster than the fastest cloud endpoint because of GPU acceleration and zero serialization overhead. - **Cold start impact**: Pre-warming reduced cold start latency from 420ms to 120ms for SageMaker endpoints. The Lambda pre-warm runs every 5 minutes, costing ~$0.20/month per endpoint. - **Router overhead**: The Go router adds 0.4ms per request on average, including JSON parsing, config lookup, and health checks. Without caching the config in memory, it added 12ms per request, which was unacceptable. - **Cost per 1M inferences**: Local GPU costs $0.04 per 1K inferences (using a T4 GPU on GCP), while SageMaker costs $0.12 per 1K inferences. For high-volume workloads, local inference is 3x cheaper, but the cloud endpoint is easier to scale. - **Error rate**: The router handles failures gracefully. When a cloud endpoint fails, the router falls back to the next available endpoint with a 0.5% error rate due to misconfigured health checks or regional outages. Without the fallback, the error rate would be 3.2%.
 
 The most surprising metric was how much regional latency varied. `eu-central-1` SageMaker endpoints were 30% faster for European users than `us-east-1`, even though `us-east-1` is the default region for our AWS account. We updated the router to use a regional latency probe and dynamically select the closest region, which reduced latency by 28% for European traffic.
 
@@ -355,7 +351,7 @@ Here’s a curated list of tools and versions that work well in this setup:
 | Docker | 25.0.3 | Containerization | Ensures consistent runtime environment |
 | Redis | 7.2 | Caching model responses | Reduces inference calls by 40% for repeated inputs |
 
-I was surprised by how much Redis helped. We added a 5-minute TTL cache for the `embedding-v3` model, which reduced inference calls by 40% for repeated inputs. The cache key is `embedding_v3:{sha256(text)}`, and the value is the embedding vector. The cache is stored in Redis running on a `cache.t3.micro` instance, which costs $12/month. The latency improvement was dramatic: 95% of cached requests return in under 2ms, compared to 60ms for local inference.
+We added a 5-minute TTL cache for the `embedding-v3` model, which reduced inference calls by 40% for repeated inputs. The cache key is `embedding_v3:{sha256(text)}`, and the value is the embedding vector. The cache is stored in Redis running on a `cache.t3.micro` instance, which costs $12/month. The latency improvement was dramatic: 95% of cached requests return in under 2ms, compared to 60ms for local inference.
 
 Another tool worth mentioning is `locust` 2.20.0 for load testing. We used it to simulate 10K RPS and found that the Go router could handle the load with 0.4ms overhead, but the local model server became the bottleneck at 2K RPS. The fix was to add more Gunicorn workers and increase the local server’s memory limit.
 
@@ -364,17 +360,11 @@ Another tool worth mentioning is `locust` 2.20.0 for load testing. We used it to
 
 This routing pattern works best when:
 
-- Your models are either local (GPU-accelerated) or cloud-hosted (SageMaker, Vertex AI).
-- You can tolerate 50–200ms latency for cloud endpoints.
-- You don’t need complex load balancing (e.g., least connections, weighted routing).
-- Your traffic volume is high enough to justify the complexity of local inference but low enough that you don’t need to scale the router itself.
+- Your models are either local (GPU-accelerated) or cloud-hosted (SageMaker, Vertex AI). - You can tolerate 50–200ms latency for cloud endpoints. - You don’t need complex load balancing (e.g., least connections, weighted routing). - Your traffic volume is high enough to justify the complexity of local inference but low enough that you don’t need to scale the router itself.
 
 It’s the wrong choice when:
 
-- You need sub-10ms latency for all requests. In that case, you’ll need a fully local setup with no cloud fallback.
-- You have thousands of models and need dynamic load balancing. The config file approach doesn’t scale well beyond ~100 models.
-- You’re running in a serverless environment (e.g., AWS Lambda) where the router itself becomes a bottleneck. In that case, use API Gateway with Lambda integrations instead.
-- Your models require persistent state (e.g., streaming models or stateful inference). The router assumes stateless endpoints.
+- You need sub-10ms latency for all requests. In that case, you’ll need a fully local setup with no cloud fallback. - You have thousands of models and need dynamic load balancing. The config file approach doesn’t scale well beyond ~100 models. - You’re running in a serverless environment (e.g., AWS Lambda) where the router itself becomes a bottleneck. In that case, use API Gateway with Lambda integrations instead. - Your models require persistent state (e.g., streaming models or stateful inference). The router assumes stateless endpoints.
 
 We tried this pattern in a serverless environment and hit a wall: the Go router couldn’t handle the cold starts of Lambda functions, and the overhead of invoking a Lambda for every request added 50ms. We switched to a Lambda function that embeds the routing logic and handles inference directly, which simplified the stack but lost the separation of concerns.
 
@@ -424,7 +414,6 @@ Not directly. The Go router can’t run as a Lambda function because Lambda adds
 **How do I handle regional quotas for cloud endpoints?**
 
 Add a quota check in the router that fails fast if the regional quota is exceeded, with a fallback to
-
 
 ---
 

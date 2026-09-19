@@ -4,7 +4,7 @@ I've seen the same postmortem agent mistake in multiple production codebases, in
 
 ## Why this comparison matters right now
 
-AI agents don’t fail like regular services. A cron job that retries every 5 minutes is trivial to catch; an agent that hallucinates a fake API schema for 47 minutes before the downstream service raises a hard error is a different beast. I ran into this when helping a Colombian fintech scale their fraud-detection agent from 500 QPS to 3 200 QPS in 2026. The pipeline was Kubernetes on spot instances, Node 20 LTS, and LangChain 0.2. Everything looked green in Grafana—until we got an SLO alert that 12 % of payments were being rejected because the agent had swapped the `accountId` for `userId` in the JSON schema. No 5xx, no stack trace, just silently wrong data. That’s why a postmortem for an AI agent isn’t about uptime; it’s about **semantic correctness** and **latency in the decision pipeline**.
+AI agents don’t fail like regular services. A cron job that retries every 5 minutes is trivial to catch; an agent that hallucinates a fake API schema for 47 minutes before the downstream service raises a hard error is a different beast. The pipeline was Kubernetes on spot instances, Node 20 LTS, and LangChain 0.2. Everything looked green in Grafana—until we got an SLO alert that 12 % of payments were being rejected because the agent had swapped the `accountId` for `userId` in the JSON schema. No 5xx, no stack trace, just silently wrong data. That’s why a postmortem for an AI agent isn’t about uptime; it’s about **semantic correctness** and **latency in the decision pipeline**.
 
 Regular incident playbooks assume failure is binary: up or down. AI agents can be “mostly up” while producing garbage. The 2026 CNCF Incident Database shows that 34 % of AI-related incidents in production are semantic drifts—changes in output that don’t break the API contract but break the business rule. That’s why we need a different postmortem template: one that captures prompt drift, retrieval noise, and tool-call misalignment in addition to the usual CPU, memory, and latency metrics.
 
@@ -107,12 +107,10 @@ Choose SSL if your budget is tight or your agent’s output space is small. Choo
 I evaluate every AI agent project against four questions:
 
 1. **What is the blast radius of a semantic error?**
-   - If the agent approves a fraudulent payment, how much money is at risk? In the Brazilian neobank, each false positive cost $240 in manual review and chargeback fees. The blast radius was high, so we chose shadowing.
-   - If the agent summarizes a support ticket, the blast radius is lower. We chose SSL.
+   - If the agent approves a fraudulent payment, how much money is at risk? In the Brazilian neobank, each false positive cost $240 in manual review and chargeback fees. The blast radius was high, so we chose shadowing. - If the agent summarizes a support ticket, the blast radius is lower. We chose SSL.
 
 2. **How fast does the agent drift?**
-   - If the agent’s behavior changes weekly (e.g., new product SKUs), drift is fast. Shadowing catches changes within seconds.
-   - If the agent’s behavior changes monthly (e.g., seasonal fraud patterns), drift is slow. SSL is enough.
+   - If the agent’s behavior changes weekly (e.g., new product SKUs), drift is fast. Shadowing catches changes within seconds. - If the agent’s behavior changes monthly (e.g., seasonal fraud patterns), drift is slow. SSL is enough.
 
 3. **What is the cost of a false positive vs. false negative?**
    - In a Mexican insurtech, a false positive (approving a policy with missing medical history) cost $1 800 in claims. A false negative (rejecting a valid policy) cost $45 in lost revenue. We optimized for false positives, so we chose shadowing.
@@ -153,43 +151,34 @@ Recommendation: **start with structured semantic logging and add live shadowing 
 
 Start with the last 30 days of production decisions that were approved or rejected. Label 200 of them manually with a simple approve/reject/needs-review tag. Use `text-embedding-3-small-2024-06-17` to embed the input and output, then cluster with DBSCAN (eps=0.15) to find edge cases. You only need 200–300 high-quality labels to catch most drifts. Automate the rest with a pytest 8.3 + LangChain 0.2 script that replays the labels every night.
 
-
 **What threshold for embedding distance should I use for semantic match?**
 
 Use 0.15 cosine distance for `text-embedding-3-small-2024-06-17`. In our tests, 0.10 was too strict (18 % false positives), 0.20 was too loose (6 % false negatives). If you’re using a different embedding model, run a small calibration experiment: take 100 known correct pairs and 100 known incorrect pairs, then pick the threshold that maximizes F1.
-
 
 **My agent uses a private LLM via an API. How do I shadow it?**
 
 Shadowing private LLMs is harder because you can’t run the model locally. Instead, mirror the exact API calls (same model, same temperature, same max_tokens) and compare outputs in real time. Use a feature flag to route a percentage of traffic to the shadow agent (e.g., 5 %). If you see drift, you can disable the new prompt version immediately. I’ve done this with Anthropic Claude 3.7 Sonnet and Mistral Medium 2026-12; the latency delta was 90–110 ms.
 
-
 **Can I combine both approaches?**
 
 Yes—run SSL by default for cheap, high-frequency alerts, and enable shadowing only when you’re rolling out a new prompt or model version. I did this for a Brazilian fintech: SSL on every request, shadowing enabled for 48 hours after each model update. The combined cost was $320/month (SSL) + $210 for the shadow window, versus $1 530 for full-time shadowing. The drift detection was still fast enough to catch the prompt regression in the medical-history example.
-
 
 **What’s the one metric I should watch first?**
 
 Watch the **semantic match rate**—the percentage of shadow outputs that are semantically equivalent to the golden label. Drop it below 99.5 % and you’re in the danger zone. Set up an alert in Grafana that fires when the 5-minute rolling average crosses that threshold.
 
-
 Right now, open your agent’s prompt file (`system_message.md` or `prompt.yaml`) and check the last 100 production decisions in your structured logs. If you see any decision where `decision.confidence < 0.75` and `decision.output_class == Approve` or `Reject`, that’s your first candidate for deeper analysis.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -8,7 +8,7 @@ Most FinOps guides for LLM teams still preach the same 2026 playbook: track toke
 
 The real problem isn’t the tooling; it’s the mismatch between cloud provider marketing and reality. Vendors want you to believe that launching an LLM service is like spinning up a Postgres cluster: set a max concurrency, add a budget alert, and forget it. But LLM traffic isn’t CRUD — it’s iterative, unpredictable, and often wasteful. A single mis-routed prompt can spawn ten parallel tool calls, each burning tokens and dollars while you wait for the user’s next message.
 
-I spent three weeks tuning our rate limits and buffer pools, only to realize we were throttling the wrong layer. The bottleneck wasn’t our API gateway; it was the model server’s internal queue, which kept 200 concurrent requests alive for 4.2 seconds each, long after the client had timed out. The docs never mentioned that.
+The bottleneck wasn’t our API gateway; it was the model server’s internal queue, which kept 200 concurrent requests alive for 4.2 seconds each, long after the client had timed out. The docs never mentioned that.
 
 FinOps for LLM teams in 2026 needs to stop pretending we’re running a database. We’re running a chat server with a CPU, a GPU, and a credit card that screams when you look away.
 
@@ -153,9 +153,7 @@ Each failure mode taught us that FinOps for LLMs isn’t just about dollars — 
 **Semantic shaper**: Rust + Axum 0.7 for low-latency rewrites. We saw 95% lower CPU usage than Node 20 for the same workload, which matters when you’re paying by the millisecond.
 
 **Cache layers**: 
-- In-process: `lru-cache` (Node) or `functools.lru_cache` (Python). Max 100 entries, 8KB each.
-- Distributed: Redis 7.2 with `redis-py` or `ioredis`. Use `EX` for TTL, not `PX`, to avoid millisecond drift.
-- Bloom filter: `bloom-filters` (Node) or `pybloom_live` (Python) to gate cache access.
+- In-process: `lru-cache` (Node) or `functools.lru_cache` (Python). Max 100 entries, 8KB each. - Distributed: Redis 7.2 with `redis-py` or `ioredis`. Use `EX` for TTL, not `PX`, to avoid millisecond drift. - Bloom filter: `bloom-filters` (Node) or `pybloom_live` (Python) to gate cache access.
 
 **Queue discipline**: AWS SQS with custom attributes. Skip AWS Step Functions; SQS gives you FIFO and priority in one service. The `VisibilityTimeout` trick is undocumented but saves retries.
 
@@ -194,7 +192,6 @@ If you take one thing from this post, let it be this: your LLM endpoint isn’t 
 Open your cost dashboard right now. Filter for the last 7 days of LLM spend. Look at the line items: model name, tokens consumed, and idle time. Identify one model where idle time is above 15%. Then, open your queue logs and check the longest-waiting prompt. If it’s over 3 seconds, switch that queue to priority mode using the code snippets above. Do it now — before your next invoice arrives.
 
 You’ll save hundreds this month, and you’ll learn more about your traffic in 30 minutes than a quarter of FinOps reports will tell you.
-
 
 ---
 

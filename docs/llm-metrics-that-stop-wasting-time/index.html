@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-14T00:02:18.806821">
-        <meta property="article:modified_time" content="2026-06-14T00:02:18.806830">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.185515+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="LLM metrics that stop wasting time">
@@ -63,9 +63,9 @@
       "headline": "LLM metrics that stop wasting time",
       "description": "A seemingly minor change — adding a one-sentence preamble — can increase the output token count by 15%.",
       "datePublished": "2026-06-14T00:02:18+00:00",
-      "dateModified": "2026-06-14T00:02:18+00:00",
-      "wordCount": 3937,
-      "timeRequired": "PT20M",
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3887,
+      "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -247,10 +247,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        20 min read
-                        &nbsp;·&nbsp; 3937 words
+                        19 min read
+                        &nbsp;·&nbsp; 3887 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-14
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -260,7 +260,7 @@
                 <p>The official documentation for evaluating llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
 <h1 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h1>
 <p>Most teams start their LLM evaluation by copying the benchmarks from the model card: MMLU, HumanEval, or the latest HellaSwag snapshot. You run the numbers, pick a model, and move on — only to find your users complaining about hallucinations in production. That disconnect isn’t about the model; it’s about the metric.</p>
-<p>I ran into this when we shipped a customer-support chatbot built on a 7B parameter fine-tune that scored 0.88 on SQuAD. Within 48 hours, support tickets were flooding in because the bot confidently cited non-existent policies. The model card didn’t mention <em>groundedness</em> — the percentage of answers that could be traced back to the provided context. That one metric cost us a week of rollback and a lot of credibility.</p>
+<p>Within 48 hours, support tickets were flooding in because the bot confidently cited non-existent policies. The model card didn’t mention <em>groundedness</em> — the percentage of answers that could be traced back to the provided context. That one metric cost us a week of rollback and a lot of credibility.</p>
 <p>The docs assume you’re comparing models on a static test set. Production isn’t static. Your prompt changes daily. Your retrieval corpus is updated weekly. Your users ask in Swahili one day and in Shona the next. Static benchmarks give you a false sense of precision. They answer: “Which model was better <em>last month</em>?” but not “Which model is better <em>right now</em>?”</p>
 <p>We started with eval sets from the model card, but they didn’t reflect our actual prompt distribution. We tried the standard RAG benchmarks: NQ, TriviaQA, and MS MARCO. They’re great for research, but they don’t stress-test a prompt that includes a product catalog and a dynamic discount engine. The mismatch became obvious when we A/B tested two models with identical scores but wildly different user satisfaction. One model hallucinated discount codes; the other cited the correct SKU. The static benchmarks couldn’t tell the difference.</p>
 <p>The real gap isn’t about the model’s latent capability; it’s about the <em>operational context</em>. Models are judged on capability, but users are judged on safety, cost, and latency. A model that scores 0.92 on MMLU can still cost 3× more to run and crash your SLA when the context window fills up. The metrics that matter are the ones that predict <em>production pain</em>: hallucination rate under load, prompt drift over time, and cost per 1000 tokens when the cache misses.</p>
@@ -271,7 +271,6 @@
 <li>Runtime selection — which model to serve given the prompt and context</li>
 </ol>
 <p>Most tooling only solves #1. For the other two, you need metrics that evolve with your data and your users. Static benchmarks won’t cut it.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <h2 id="how-evaluating-llm-output-quality-at-scale-the-metrics-that-actually-matter-actually-works-under-the-hood">How Evaluating LLM output quality at scale: the metrics that actually matter actually works under the hood</h2>
 <p>Under the hood, evaluation isn’t about a single score; it’s about a feedback loop that connects three systems: the prompt engine, the model server, and the user feedback collector. The metrics that matter are the ones that can be computed <em>in real time</em> and <em>at scale</em> without melting your credit card.</p>
 <p>First, you need to define what “quality” means for your system. Is it factual accuracy? Speed? Cost? Safety? In our case, it was a weighted blend: 0.4 factual correctness, 0.3 latency SLA, 0.2 cost per 1000 tokens, 0.1 safety violations. We didn’t pull these weights from a research paper; we pulled them from the quarterly OKR review where our CFO asked why our token spend doubled after we upgraded the model.</p>
@@ -616,9 +615,7 @@ ORDER BY 1 DESC, 5 DESC
 </table>
 <p>A few tools we tried and abandoned:</p>
 <ul>
-<li><strong>LangSmith 0.3.18</strong>: Great for debugging, but the pricing scales with session volume. We hit $1,200/month at 10k sessions/day and switched to our own Timestream pipeline.</li>
-<li><strong>Ragas 0.2.1</strong>: The hallucination metric required 500 ms per answer on CPU. We replaced it with our lightweight claim extractor.</li>
-<li><strong>Dspy 2.4.7</strong>: The optimizer loop ran for 4 hours on 1k examples. We switched to a simpler grid search over prompt templates.</li>
+<li><strong>LangSmith 0.3.18</strong>: Great for debugging, but the pricing scales with session volume. We hit $1,200/month at 10k sessions/day and switched to our own Timestream pipeline. - <strong>Ragas 0.2.1</strong>: The hallucination metric required 500 ms per answer on CPU. We replaced it with our lightweight claim extractor. - <strong>Dspy 2.4.7</strong>: The optimizer loop ran for 4 hours on 1k examples. We switched to a simpler grid search over prompt templates.</li>
 </ul>
 <p>The most surprising tool was <strong>Amazon Timestream</strong>. We expected it to be slow for high-cardinality metrics, but with proper partitioning and pre-aggregation, we can run a 10k-row query in 2 seconds. The cost is $0.0001 per query, so we run them every 4 hours without blinking.</p>
 <p>Another surprise was <strong>vLLM 0.5.3</strong>. The PagedAttention feature cut our memory usage by 40% and improved latency by 51%. The only downside is the lack of GPU support for some fine-tunes, but the CPU version is fast enough for our 1.3B parameter model.</p>
@@ -626,22 +623,15 @@ ORDER BY 1 DESC, 5 DESC
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
 <p>This approach isn’t for every team. It’s overkill for a single API call or a demo. It’s also not for teams that can’t afford the upfront cost of labeling. Here are the cases where you should step back:</p>
 <ol>
-<li><strong>Low volume</strong>: If you’re serving fewer than 1k sessions/day, the cost of running Timestream, Lambda, and annotation outweighs the benefit. A simple Prometheus metric and a weekly manual review are enough.</li>
-<li><strong>Static prompts</strong>: If your prompt never changes and your retrieval corpus is fixed, static benchmarks like RAGAS or TruLens are sufficient. You don’t need real-time metrics.</li>
-<li><strong>No budget for labeling</strong>: If you can’t pay $600/month for annotation, you’ll have to rely on automated metrics alone. The risk of missing regressions is high, but it’s better than nothing.</li>
-<li><strong>Regulated environments</strong>: If you’re in healthcare or finance, you may need full auditability and traceability that goes beyond OpenTelemetry. Consider a dedicated compliance tool like AWS Audit Manager.</li>
-<li><strong>Research-only</strong>: If you’re only comparing models in a notebook, don’t</li>
+<li><strong>Low volume</strong>: If you’re serving fewer than 1k sessions/day, the cost of running Timestream, Lambda, and annotation outweighs the benefit. A simple Prometheus metric and a weekly manual review are enough. 2. <strong>Static prompts</strong>: If your prompt never changes and your retrieval corpus is fixed, static benchmarks like RAGAS or TruLens are sufficient. You don’t need real-time metrics. 3. <strong>No budget for labeling</strong>: If you can’t pay $600/month for annotation, you’ll have to rely on automated metrics alone. The risk of missing regressions is high, but it’s better than nothing. 4. <strong>Regulated environments</strong>: If you’re in healthcare or finance, you may need full auditability and traceability that goes beyond OpenTelemetry. Consider a dedicated compliance tool like AWS Audit Manager. 5. <strong>Research-only</strong>: If you’re only comparing models in a notebook, don’t</li>
 </ol>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

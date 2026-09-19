@@ -6,12 +6,11 @@ Most build portfolio guides assume a clean environment and a patient timeline. P
 
 In 2026, the Nigerian tech hiring market is flooded with candidates who have identical GitHub profiles: a Next.js dashboard powered by Vercel’s AI SDK, a Python Flask backend that calls LangChain for summarization, and a README that says “Full-stack AI app with Next.js + TypeScript.” These projects run fine on a local machine with fibre, but they collapse under the constraints of West African users: 2G/3G fallbacks, MTN or Airtel data that drops every 90 seconds, and payment flows that must integrate M-Pesa or Flutterwave without failing. Hiring managers don’t want another AI wrapper; they want engineers who can ship under real constraints.
 
-I ran into this when I reviewed 47 portfolios for an engineering lead role at a fintech in Lagos. Every candidate had a LangChain project that generated a 500-word summary from YouTube transcripts. The summaries were technically correct, but none of the apps tolerated 3G drops. When I throttled the connection to 2G, every single one failed: connection timeouts, missing WebSocket frames, or Flutterwave payment callbacks that never fired. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+Every candidate had a LangChain project that generated a 500-word summary from YouTube transcripts. The summaries were technically correct, but none of the apps tolerated 3G drops. When I throttled the connection to 2G, every single one failed: connection timeouts, missing WebSocket frames, or Flutterwave payment callbacks that never fired.
 
 Hiring teams in 2026 are looking for two signals:
 
-1. You can build something that works when the network doesn’t.
-2. You know how to instrument and measure performance under those conditions.
+1. You can build something that works when the network doesn’t. 2. You know how to instrument and measure performance under those conditions.
 
 If your portfolio only runs on fibre with zero error handling, you’re invisible.
 
@@ -44,18 +43,11 @@ We built a simple expense tracker: users can add an expense, categorise it, and 
 
 The key design decisions:
 
-1. **No AI summarisation**: No LLM calls. Just CRUD + payments.
-2. **Retry logic tuned for 2G**: We used `p-retry@7.0.0` with a base delay of 1000 ms, max 15 retries, and jitter. This kept error rates under 5% even on 2G drops.
-3. **Cold-start mitigation**: We pre-warm Lambda functions with CloudWatch Events every 5 minutes. Cold starts dropped from 1200 ms to 300 ms.
-4. **Instrumentation first**: Every API call emits OpenTelemetry traces. We used `opentelemetry-sdk@1.22.0`, `opentelemetry-exporter-otlp-http@0.43.0`, and Grafana Cloud for dashboards. The repo includes a `metrics/` folder with a `docker-compose.yml` to run Prometheus and Grafana locally.
-5. **Payment fallback**: If Flutterwave fails, we retry with M-Pesa. If both fail, we queue the payment via SQS and notify the user via WhatsApp Webhook (yes, WhatsApp, because SMS is unreliable in Nigeria).
+1. **No AI summarisation**: No LLM calls. Just CRUD + payments. 2. **Retry logic tuned for 2G**: We used `p-retry@7.0.0` with a base delay of 1000 ms, max 15 retries, and jitter. This kept error rates under 5% even on 2G drops. 3. **Cold-start mitigation**: We pre-warm Lambda functions with CloudWatch Events every 5 minutes. Cold starts dropped from 1200 ms to 300 ms. 4. **Instrumentation first**: Every API call emits OpenTelemetry traces. We used `opentelemetry-sdk@1.22.0`, `opentelemetry-exporter-otlp-http@0.43.0`, and Grafana Cloud for dashboards. The repo includes a `metrics/` folder with a `docker-compose.yml` to run Prometheus and Grafana locally. 5. **Payment fallback**: If Flutterwave fails, we retry with M-Pesa. If both fail, we queue the payment via SQS and notify the user via WhatsApp Webhook (yes, WhatsApp, because SMS is unreliable in Nigeria).
 
 We called the project **“PesaTrack”** and put it on GitHub with a README that shows:
 
-- A 1-minute video of the app running on 3G (using Chrome DevTools throttling to 3G, CPU 4x slowdown).
-- A latency table for each endpoint under 2G, 3G, and fibre.
-- A cost breakdown: $2.30/month for AWS Lambda, DynamoDB, and SQS.
-- A threat model: how we handle USSD timeouts, callback failures, and duplicate payments.
+- A 1-minute video of the app running on 3G (using Chrome DevTools throttling to 3G, CPU 4x slowdown). - A latency table for each endpoint under 2G, 3G, and fibre. - A cost breakdown: $2.30/month for AWS Lambda, DynamoDB, and SQS. - A threat model: how we handle USSD timeouts, callback failures, and duplicate payments.
 
 The portfolio repo has 357 stars, 42 forks, and 18 open issues — none of them bugs. Hiring managers noticed because the repo shows a real constraint solved, not another AI wrapper.
 
@@ -76,11 +68,7 @@ Here’s the stack we ended up with:
 
 We deployed to AWS using CDK with `@aws-cdk/aws-lambda-nodejs@2.122.0` and `@aws-cdk/aws-dynamodb@2.122.0`. The CDK stack includes:
 
-- A DynamoDB table with on-demand capacity.
-- Two Lambda functions: one for CRUD, one for payments.
-- SQS queue for failed payments.
-- CloudWatch Alarms for error rates > 5%.
-- A custom domain with ACM certificate for HTTPS.
+- A DynamoDB table with on-demand capacity. - Two Lambda functions: one for CRUD, one for payments. - SQS queue for failed payments. - CloudWatch Alarms for error rates > 5%. - A custom domain with ACM certificate for HTTPS.
 
 The payment retry logic is in `src/payments/flw.ts`:
 
@@ -232,11 +220,7 @@ The hiring market in 2026 isn’t about who uses the most AI tools; it’s about
 
 The principle is: **build for the worst-case environment first, then optimise for the best.**
 
-- Start with 2G/3G constraints.
-- Instrument every interaction.
-- Measure latency and error rates under load.
-- Document the infra cost.
-- Ship a portfolio that looks boring but solves a real constraint.
+- Start with 2G/3G constraints. - Instrument every interaction. - Measure latency and error rates under load. - Document the infra cost. - Ship a portfolio that looks boring but solves a real constraint.
 
 If your project doesn’t have a 2G throttling test in the README, it’s invisible. If it doesn’t have a cost breakdown, hiring managers won’t trust you with production budgets.
 
@@ -264,15 +248,7 @@ Here’s a starter template you can fork: [github.com/kubai/porto-2026](https://
 
 ## Resources that helped
 
-- [OpenTelemetry JavaScript SDK 1.22.0 docs](https://opentelemetry.io/docs/instrumentation/js/) – The definitive guide to instrumenting Node.js apps.
-- [AWS Lambda with Node 20 LTS performance report](https://aws.amazon.com/blogs/compute/introducing-node-js-20-runtime-for-aws-lambda/) – Cold start benchmarks.
-- [p-retry 7.0.0 README](https://github.com/sindresorhus/p-retry) – The retry logic we used for 2G drops.
-- [SvelteKit 2.5 docs](https://kit.svelte.dev/docs) – Why we chose SvelteKit over Next.js.
-- [CDK 2.122.0 workshop](https://cdkworkshop.com/) – Learn AWS CDK in 2 hours.
-- [Grafana Cloud free tier](https://grafana.com/products/cloud/) – Host your metrics for free.
-- [M-Pesa Daraja API docs](https://developer.safaricom.co.ke/) – The official API docs for M-Pesa integrations.
-- [Flutterwave API docs](https://developer.flutterwave.com/docs) – The official API docs for Flutterwave integrations.
-- [AWS Pricing Calculator](https://calculator.aws.amazon.com/) – Estimate Lambda and DynamoDB costs.
+- [OpenTelemetry JavaScript SDK 1.22.0 docs](https://opentelemetry.io/docs/instrumentation/js/) – The definitive guide to instrumenting Node.js apps. - [AWS Lambda with Node 20 LTS performance report](https://aws.amazon.com/blogs/compute/introducing-node-js-20-runtime-for-aws-lambda/) – Cold start benchmarks. - [p-retry 7.0.0 README](https://github.com/sindresorhus/p-retry) – The retry logic we used for 2G drops. - [SvelteKit 2.5 docs](https://kit.svelte.dev/docs) – Why we chose SvelteKit over Next.js. - [CDK 2.122.0 workshop](https://cdkworkshop.com/) – Learn AWS CDK in 2 hours. - [Grafana Cloud free tier](https://grafana.com/products/cloud/) – Host your metrics for free. - [M-Pesa Daraja API docs](https://developer.safaricom.co.ke/) – The official API docs for M-Pesa integrations. - [Flutterwave API docs](https://developer.flutterwave.com/docs) – The official API docs for Flutterwave integrations. - [AWS Pricing Calculator](https://calculator.aws.amazon.com/) – Estimate Lambda and DynamoDB costs.
 
 ## Frequently Asked Questions
 
@@ -292,20 +268,16 @@ No. Next.js adds 200 ms of latency due to SSR. Hiring managers care about perfor
 
 Fork [github.com/kubai/porto-2026](https://github.com/kubai/porto-2026), replace the payment keys with sandbox keys from Flutterwave and M-Pesa, and deploy to AWS using CDK. You’ll have a portfolio in under 2 hours that hiring managers notice.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

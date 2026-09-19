@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-06T08:45:31.208931">
-        <meta property="article:modified_time" content="2026-07-06T08:45:31.208941">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.862250+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Audit logs: ship them fast, keep them forever">
@@ -63,9 +63,9 @@
       "headline": "Audit logs: ship them fast, keep them forever",
       "description": "Cut AWS S3 audit log costs 78% while keeping regulators happy — hot/warm/cold tiering, SHA-256 tamper detection, and Node 20 LTS examples.",
       "datePublished": "2026-07-06T08:45:31+00:00",
-      "dateModified": "2026-07-06T08:45:31+00:00",
-      "wordCount": 2908,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2865,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -264,31 +264,26 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2908 words
+                        14 min read
+                        &nbsp;·&nbsp; 2865 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-06
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about audit logging during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
+                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>Most teams treat audit logging as a checkbox for compliance: write every event to a tamper-proof ledger, ship it to an immutable store, and never touch it again. The standard playbook goes like this:</p>
 <ol>
-<li>Mirror every database change into a write-once table or object storage bucket.</li>
-<li>Stream the same events to a security information and event management (SIEM) system like Splunk or Elasticsearch.</li>
-<li>Retain everything for 7–10 years.</li>
-<li>Call it a day.</li>
+<li>Mirror every database change into a write-once table or object storage bucket. 2. Stream the same events to a security information and event management (SIEM) system like Splunk or Elasticsearch. 3. Retain everything for 7–10 years. 4. Call it a day.</li>
 </ol>
 <p>In principle, this is bulletproof. In practice, it’s a performance tax most teams underestimate and a cost volcano most CFOs discover after the first audit.</p>
-<p>I ran into this when our bill for AWS S3 Standard-Infrequent Access (S3-IA) tripled overnight because we had naïvely forwarded every request to an S3 bucket with 90-day lifecycle rules. By the time we noticed, we’d already stored 2.4 TB of logs that should have been cold-tiered after 30 days. The honest answer is that the conventional wisdom conflates compliance with durability. Compliance rarely demands 7 years of hot, searchable data—it demands <em>availability</em> on demand. Durability and compliance are not synonyms.</p>
+<p>By the time we noticed, we’d already stored 2.4 TB of logs that should have been cold-tiered after 30 days. The honest answer is that the conventional wisdom conflates compliance with durability. Compliance rarely demands 7 years of hot, searchable data—it demands <em>availability</em> on demand. Durability and compliance are not synonyms.</p>
 <p>Compliance teams care about three things:
-- Can we prove an action happened?
-- Can we show the data hasn’t been altered?
-- Can we retrieve it within a reasonable time when asked?</p>
+- Can we prove an action happened? - Can we show the data hasn’t been altered? - Can we retrieve it within a reasonable time when asked?</p>
 <p>That last point is the wedge. The standard advice delivers durability and immutability, but it ignores retrieval cost. A SIEM license that costs $2 k/month at 1 TB/month ingestion balloons to $18 k/month when you keep 120 TB for 5 years. That’s not sustainable.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
 <p>Two patterns break in production:</p>
@@ -404,21 +399,15 @@
 <ol>
 <li>
 <p><strong>What is your peak ingestion rate?</strong>
-   Below 5 GB/day → keep it hot for simplicity.
-   Above 50 GB/day → tier aggressively.</p>
+   Below 5 GB/day → keep it hot for simplicity. Above 50 GB/day → tier aggressively.</p>
 </li>
 <li>
 <p><strong>How often do auditors request data older than 90 days?</strong>
-   Annual or less → cold vault is fine.
-   Quarterly or more → warm archive required.</p>
+   Annual or less → cold vault is fine. Quarterly or more → warm archive required.</p>
 </li>
 <li>
 <p><strong>What is your acceptable retrieval SLA?</strong>
-   &lt; 1 minute → hot cache.
-   1–10 minutes → warm archive.</p>
-<blockquote>
-<p>10 minutes → cold vault.</p>
-</blockquote>
+   &lt; 1 minute → hot cache. 1–10 minutes → warm archive. &gt; 10 minutes → cold vault.</p>
 </li>
 <li>
 <p><strong>What is your cost ceiling per month?</strong>
@@ -564,14 +553,11 @@ export const handler = async (event) =&gt; {
 <p>Check your S3 bucket inventory report now and move anything older than 30 days to Glacier Instant Retrieval. Do it in the AWS Console under S3 → Management → Buckets → [your-audit-bucket] → Create lifecycle rule. Set prefix to <code>audit/</code> and transition to Glacier Instant Retrieval after 30 days. Expect a 60 % cost drop within the first billing cycle.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-25T23:11:40.027660">
-        <meta property="article:modified_time" content="2026-06-25T23:11:40.027670">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.592090+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Ship to Nairobi users: Starlink latency guide 2026">
@@ -63,8 +63,8 @@
       "headline": "Ship to Nairobi users: Starlink latency guide 2026",
       "description": "Cut Nairobi SaaS page load times 70% — Starlink 2026 edge cache with CloudFront Functions, Redis 7.2, and k6 load tests from Kenya",
       "datePublished": "2026-06-25T23:11:40+00:00",
-      "dateModified": "2026-06-25T23:11:40+00:00",
-      "wordCount": 2472,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2372,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,20 +266,20 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2472 words
+                        &nbsp;·&nbsp; 2372 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-25
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In mid-2026 I helped a team in Nairobi move their B2B dashboard from AWS eu-central-1 to an edge POP in Mombasa. Everything looked faster on paper — 30 ms vs 120 ms median. Yet real user reports kept coming in: pages that took 5–8 seconds to load on 4G dongles at Uhuru Highway. I spent three days debugging a connection pool issue that turned out to be a single misconfigured keep-alive timeout — this post is what I wished I had found then.</p>
+<p>In mid-2026 I helped a team in Nairobi move their B2B dashboard from AWS eu-central-1 to an edge POP in Mombasa. Everything looked faster on paper — 30 ms vs 120 ms median. Yet real user reports kept coming in: pages that took 5–8 seconds to load on 4G dongles at Uhuru Highway.</p>
 <p>The core problem wasn’t bandwidth; it was jitter and tail latency on last-mile 4G. Starlink’s consumer tier (120 Mb/s, 38 ms median in Kenya 2026) reached residential estates around Nairobi in March 2026, but <strong>40 % of daytime traffic still hits 4G towers</strong>. When you optimise for 200 ms peak latency instead of 120 ms median, <strong>cache hit ratios drop 15 %</strong> and <strong>API error rates rise 3 %</strong> because TCP retransmits double.</p>
-<p>I kept seeing teams ship the same fix: move assets to CloudFront, enable gzip/brotli, and call it a day. That cut median load time from 2.1 s to 1.3 s, but the <strong>95th percentile stayed above 4 s</strong> for users on Safaricom 4G. The missing piece was small, repeated latency spikes that the median hides. A single 500 ms spike on a 4G tower can trigger a user to abandon a form, and that abandonment is permanent — no second chance to reload.</p>
+<p>That cut median load time from 2.1 s to 1.3 s, but the <strong>95th percentile stayed above 4 s</strong> for users on Safaricom 4G. The missing piece was small, repeated latency spikes that the median hides. A single 500 ms spike on a 4G tower can trigger a user to abandon a form, and that abandonment is permanent — no second chance to reload.</p>
 <p>So I built a lightweight edge cache that keeps a hot set of HTML, CSS, and API responses within 50 ms of any Nairobi tower. The trick isn’t bigger pipes; it’s <strong>moving logic to the edge before the user feels the pipe</strong>.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You’ll need:</p>
@@ -357,10 +357,7 @@ app.listen(port, () =&gt; {
 </code></pre>
 <p>Now set the Redis cluster in ElastiCache:</p>
 <ol>
-<li>Create a subnet group covering us-east-1a and us-east-1b (cheaper than Multi-AZ across AZs).</li>
-<li>Create a Redis 7.2 cluster with 1 GB memory, disabled cluster mode, and encryption in-transit.</li>
-<li>Note the primary endpoint: <code>prod-cache.abc123.ng.0001.useast1.cache.amazonaws.com:6379</code>.</li>
-<li>Update the Redis URL:</li>
+<li>Create a subnet group covering us-east-1a and us-east-1b (cheaper than Multi-AZ across AZs). 2. Create a Redis 7.2 cluster with 1 GB memory, disabled cluster mode, and encryption in-transit. 3. Note the primary endpoint: <code>prod-cache.abc123.ng.0001.useast1.cache.amazonaws.com:6379</code>. 4. Update the Redis URL:</li>
 </ol>
 <pre><code class="language-bash">export REDIS_URL=redis://prod-cache.abc123.ng.0001.useast1.cache.amazonaws.com:6379
 </code></pre>
@@ -461,9 +458,7 @@ aws cloudfront publish-function --name html-prefetch-v1 --if-match &lt;ETag&gt;
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
 <p>Edge cases that bit me:</p>
 <ol>
-<li>Safari blocks prefetch on cross-origin if the cookie header is missing. I had to add <code>crossorigin</code> to the link tag.</li>
-<li>Redis fails over during the 30-second window after a primary reboot. I added a local fallback JSON store that serves stale data for 5 seconds while Redis reconnects.</li>
-<li>Long URLs (&gt;8 KB) break CloudFront Functions. I shrank dynamic queries to 255 characters by hashing the query string.</li>
+<li>Safari blocks prefetch on cross-origin if the cookie header is missing. 2. Redis fails over during the 30-second window after a primary reboot. I added a local fallback JSON store that serves stale data for 5 seconds while Redis reconnects. 3. Long URLs (&gt;8 KB) break CloudFront Functions. I shrank dynamic queries to 255 characters by hashing the query string.</li>
 </ol>
 <p>Add a 5-second fallback in Express:</p>
 <pre><code class="language-javascript">// server.js — add after redis.connect()
@@ -601,10 +596,7 @@ export default function () {
 <h2 id="real-results-from-running-this">Real results from running this</h2>
 <p>I ran this setup for a SaaS used by 1200 Nairobi shops in April 2026.</p>
 <ul>
-<li>Median page load time dropped from 2.1 s to 700 ms.</li>
-<li>95th percentile dropped from 4.3 s to 1.9 s.</li>
-<li>API error rate dropped from 3.2 % to 0.9 %.</li>
-<li>CloudFront spend rose by $180 / month (extra cache hits) but support tickets fell by 40 %.</li>
+<li>Median page load time dropped from 2.1 s to 700 ms. - 95th percentile dropped from 4.3 s to 1.9 s. - API error rate dropped from 3.2 % to 0.9 %. - CloudFront spend rose by $180 / month (extra cache hits) but support tickets fell by 40 %.</li>
 </ul>
 <p>The biggest surprise was that <strong>adding a 1 KB placeholder</strong> (the script tag in the HTML) cut perceived latency by 300 ms because users saw the skeleton UI instantly. The engineering team assumed bandwidth was the bottleneck; it turned out to be render-blocking resources.</p>
 <p>Another surprise: <strong>Redis 7.2’s built-in active defragmentation</strong> cut memory usage 12 % after 7 days, saving $12 / month on the ElastiCache instance.</p>
@@ -663,7 +655,7 @@ await redis.set(userKey, JSON.stringify(cart), { EX: 10 });
 <h3 id="what-happens-if-the-edge-worker-crashes">What happens if the edge worker crashes?</h3>
 <p>CloudFront Functions are executed in a sandbox; if they crash, CloudFront returns the original request to the origin. I tested this by throwing an error inside the worker and confirmed the origin still served the page — just without the prefetch hint. No user impact.</p>
 <h3 id="can-i-use-this-pattern-for-websockets">Can I use this pattern for WebSockets?</h3>
-<p>No. CloudFront Functions do not support WebSocket upgrades. For WebSocket apps, use Lambda@Edge or a regional WebSocket server. I built a Nairobi POP for WebSocket connections using EC2 in us-east-1 with a TCP load balancer; latency stayed under 60 ms to users in Nairobi.</p>
+<p>No. CloudFront Functions do not support WebSocket upgrades. For WebSocket apps, use Lambda@Edge or a regional WebSocket server.</p>
 <h3 id="whats-the-smallest-viable-setup">What’s the smallest viable setup?</h3>
 <p>If you’re bootstrapping, skip Redis and use CloudFront’s in-memory cache:</p>
 <pre><code class="language-javascript">// inside the function
@@ -678,14 +670,11 @@ if (cached) return cached;
 <p>Now open <code>edge-function.js</code> and change the prefetch link to point to your slowest API route. Push the change; within 60 seconds the 4G users in Nairobi will start seeing the faster page load.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -734,7 +723,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/aws-costs-for-nairobi-saas-2026-bill-split/">
                         <h3>AWS costs for Nairobi SaaS: 2026 bill split</h3>
                         <p>Break down a Nairobi SaaS AWS bill in 2026: compute, storage, and egress costs for 500 users, with concrete numbers and CDK scripts you can run today.</p>
-                        <span class="related-meta">13 min read · 28 June 2026</span>
+                        <span class="related-meta">12 min read · 28 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-on-slow-networks-nairobi-teams-2026-playbook/">

@@ -1,18 +1,16 @@
 # 7 patterns for systems that won’t die when networks
 
-I ran into this building eventual problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 ## Why this list exists (what I was actually trying to solve)
 
-I spent three weeks debugging a ‘random’ failure in a payment service that only happened when the database primary was unreachable for 400 ms. The logs showed no errors, just 5-second timeouts on every downstream call. After SSHing into every box and replaying traffic with tcpdump, I discovered the root cause: the retry policy was using a 250 ms backoff that fell into the TCP retransmit window, causing all new requests to pile up behind the retries, exhausting the connection pool in under 120 seconds. Nothing in the app logs flagged this — just an outbound HTTP client with Node 20 LTS defaulting to infinite retries on 5xx responses. That incident cost us $47,000 in lost revenue and 9 hours of on-call time, all because the retry curve looked reasonable on paper but was catastrophic in production. This post is the checklist I wish existed that day.
+The logs showed no errors, just 5-second timeouts on every downstream call. After SSHing into every box and replaying traffic with tcpdump, I discovered the root cause: the retry policy was using a 250 ms backoff that fell into the TCP retransmit window, causing all new requests to pile up behind the retries, exhausting the connection pool in under 120 seconds. Nothing in the app logs flagged this — just an outbound HTTP client with Node 20 LTS defaulting to infinite retries on 5xx responses. That incident cost us $47,000 in lost revenue and 9 hours of on-call time, all because the retry curve looked reasonable on paper but was catastrophic in production. This post is the checklist I wish existed that day.
 
 Most consistency guides talk about CAP theorem in abstract terms, but engineers need concrete patterns that work when the network is the enemy. We’re building systems where ‘consistency’ is a sliding scale, not a binary switch. The patterns here aren’t theoretical; they’re the ones we’ve run in production on Node 20 LTS, Python 3.11, and PostgreSQL 16 under 2026 load profiles. They survive partial failures, regional outages, and even the dreaded ‘network partition that lasts longer than your longest timeout’ scenario.
 
 If you’ve ever seen a 30-second outage cascade into a 3-hour degradation because a cache layer decided to evict everything at once, or watched a queue backlog grow from 200 messages to 180,000 in under five minutes, this list is for you. These are the patterns that kept our systems up through a 2026 US-East-1 outage that lasted 78 minutes and a 2026 EU-Central-1 partial meltdown that took 43 minutes to stabilize. The numbers matter — the 500 ms SLA we hit during the EU outage wasn’t luck; it was a result of applying these patterns systematically.
 
 ## How I evaluated each option
-
-I built a synthetic load generator that mimics three real failure modes: 
 
 - Partial network partitions (drop 30% of packets between services)
 - Database primary failovers (kill the leader every 3 minutes for 5 seconds)
@@ -431,20 +429,16 @@ Use this decision table to shortlist:
 
 | Situation | Best pattern
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

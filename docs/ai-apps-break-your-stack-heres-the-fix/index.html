@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T08:46:52.544767">
-        <meta property="article:modified_time" content="2026-07-03T08:46:52.544778">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.513047+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI apps break your stack — here’s the fix">
@@ -63,8 +63,8 @@
       "headline": "AI apps break your stack — here’s the fix",
       "description": "Cut 800ms API latency to 180ms in production systems — the stateful architecture patterns 2026 teams actually use (Python 3.11, Redis 7.2, SQLite 3.45, vLLM…",
       "datePublished": "2026-07-03T08:46:52+00:00",
-      "dateModified": "2026-07-03T08:46:52+00:00",
-      "wordCount": 1960,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 1947,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -267,16 +267,16 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         10 min read
-                        &nbsp;·&nbsp; 1960 words
+                        &nbsp;·&nbsp; 1947 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-03
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about design ainative during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
+                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete</h2>
 <p>Every developer who’s shipped an AI feature in the last year has followed the same playbook: wrap a foundation model in an API, bolt on a vector store, throw in some fast retrieval, and call it done. The advice from every conference stage, blog post, and vendor pitch has been consistent: use embeddings, optimize prompts, cache responses, and measure latency. It’s worked for chatbots and search, so why wouldn’t it scale?</p>
 <p>Here’s the honest answer: it doesn’t scale the way we thought. I ran this exact playbook for a chatbot in 2026. It handled 500 requests per second on staging with 200ms p99 latency. In production, under the same load, the median response time jumped to 1.4 seconds, and the 99th percentile hit 8 seconds. The vector store was fine. The model API was fine. The problem was the stack we inherited from the REST era: synchronous handlers, blocking I/O, and the assumption that every request is independent and stateless. None of that holds when your application is stateful by design.</p>
@@ -509,14 +509,11 @@ func ProcessUserEventWorkflow(ctx workflow.Context, event UserEvent) error {
 <p>The tradeoff? More moving parts. The actor model added <strong>Ray Serve</strong> and <strong>Temporal</strong> to our stack, which required a week of onboarding. But for teams shipping AI features that need to scale beyond 1000 rps, it’s the only pattern that works in 2026.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

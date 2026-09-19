@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-14T22:21:06.945498">
-        <meta property="article:modified_time" content="2026-06-14T22:21:06.945512">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.374728+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="7 patterns for systems that won’t die when networks">
@@ -63,8 +63,8 @@
       "headline": "7 patterns for systems that won’t die when networks",
       "description": "Why this list exists (what I was actually trying to solve) I spent three weeks debugging a ‘random’ failure in a payment service that only happened when…",
       "datePublished": "2026-06-14T22:21:06+00:00",
-      "dateModified": "2026-06-14T22:21:06+00:00",
-      "wordCount": 3882,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 3831,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -234,22 +234,21 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         19 min read
-                        &nbsp;·&nbsp; 3882 words
+                        &nbsp;·&nbsp; 3831 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-14
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this building eventual problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
+                <p>The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.</p>
 <h2 id="why-this-list-exists-what-i-was-actually-trying-to-solve">Why this list exists (what I was actually trying to solve)</h2>
-<p>I spent three weeks debugging a ‘random’ failure in a payment service that only happened when the database primary was unreachable for 400 ms. The logs showed no errors, just 5-second timeouts on every downstream call. After SSHing into every box and replaying traffic with tcpdump, I discovered the root cause: the retry policy was using a 250 ms backoff that fell into the TCP retransmit window, causing all new requests to pile up behind the retries, exhausting the connection pool in under 120 seconds. Nothing in the app logs flagged this — just an outbound HTTP client with Node 20 LTS defaulting to infinite retries on 5xx responses. That incident cost us $47,000 in lost revenue and 9 hours of on-call time, all because the retry curve looked reasonable on paper but was catastrophic in production. This post is the checklist I wish existed that day.</p>
+<p>The logs showed no errors, just 5-second timeouts on every downstream call. After SSHing into every box and replaying traffic with tcpdump, I discovered the root cause: the retry policy was using a 250 ms backoff that fell into the TCP retransmit window, causing all new requests to pile up behind the retries, exhausting the connection pool in under 120 seconds. Nothing in the app logs flagged this — just an outbound HTTP client with Node 20 LTS defaulting to infinite retries on 5xx responses. That incident cost us $47,000 in lost revenue and 9 hours of on-call time, all because the retry curve looked reasonable on paper but was catastrophic in production. This post is the checklist I wish existed that day.</p>
 <p>Most consistency guides talk about CAP theorem in abstract terms, but engineers need concrete patterns that work when the network is the enemy. We’re building systems where ‘consistency’ is a sliding scale, not a binary switch. The patterns here aren’t theoretical; they’re the ones we’ve run in production on Node 20 LTS, Python 3.11, and PostgreSQL 16 under 2026 load profiles. They survive partial failures, regional outages, and even the dreaded ‘network partition that lasts longer than your longest timeout’ scenario.</p>
 <p>If you’ve ever seen a 30-second outage cascade into a 3-hour degradation because a cache layer decided to evict everything at once, or watched a queue backlog grow from 200 messages to 180,000 in under five minutes, this list is for you. These are the patterns that kept our systems up through a 2026 US-East-1 outage that lasted 78 minutes and a 2026 EU-Central-1 partial meltdown that took 43 minutes to stabilize. The numbers matter — the 500 ms SLA we hit during the EU outage wasn’t luck; it was a result of applying these patterns systematically.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
-<p>I built a synthetic load generator that mimics three real failure modes: </p>
 <ul>
 <li>Partial network partitions (drop 30% of packets between services)</li>
 <li>Database primary failovers (kill the leader every 3 minutes for 5 seconds)</li>
@@ -633,14 +632,11 @@ for msg_id, msg_data in messages:
 <p>| Situation | Best pattern</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

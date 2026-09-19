@@ -1,18 +1,18 @@
 # Istio and Cilium: what really breaks in production
 
-A colleague asked me about service mesh during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
 Most production postmortems start with a traffic spike, a memory leak, or a misconfigured circuit breaker. Rarely does anyone say, “The service mesh ate our weekend.” Yet in 2026 I still see teams treat Istio or Cilium as the first step toward reliability, not the last. The standard advice goes like this: deploy a mesh early, get mTLS everywhere, collect every metric, and magically your distributed system becomes observable and secure. If your cluster is green after that, the mesh must be working.
 
-That story omits two realities. First, the mesh itself is distributed state: every sidecar, every egress gateway, every telemetry pipeline is another moving part that can fail, time out, or run out of memory. Second, the observability surface is only as good as the sampling strategy you configured six months ago, which is almost certainly wrong. I ran into this when a 30-node EKS cluster in eu-central-1 suddenly started dropping 25 % of requests not because of the apps, but because Istio 1.21 control-plane CPU throttling capped the sidecar discovery rate at 1 kQPS. The pods were fine, the autoscaler was fine, the ALB was fine—everything looked green until the mesh itself starved.
+That story omits two realities. First, the mesh itself is distributed state: every sidecar, every egress gateway, every telemetry pipeline is another moving part that can fail, time out, or run out of memory. Second, the observability surface is only as good as the sampling strategy you configured six months ago, which is almost certainly wrong. The pods were fine, the autoscaler was fine, the ALB was fine—everything looked green until the mesh itself starved.
 
 The honest answer is that service meshes solve the wrong problem at the wrong layer until you already have a stable platform. If your pods crash-loop on startup more often than they serve traffic, no amount of mTLS will fix it. The mesh is seductive because it gives you a clean abstraction: “just annotate the deployment.” But abstractions leak, and the leaks show up as latency spikes, certificate rotation failures, or pods stuck in CrashLoopBackOff because the pilot-agent couldn’t fetch a new SDS secret in under 30 s. The conventional wisdom skips the dirty work of pod-level retries, DNS timeouts, and garbage collector tuning.
 
 ## What actually happens when you follow the standard advice
 
-The usual playbook is: install Istio or Cilium, enable strict mTLS, set up Prometheus, Grafana, Kiali, Jaeger, and call it a day. In practice the first week is spent debugging why traffic to the ingress gateway times out, even though the ALB health check passes every 5 s. I spent two weeks on this before realising the issue was a 128 MB memory limit on the ingress gateway’s sidecar proxy: Envoy hit its soft limit at 110 MB, started flushing stats, and the control plane interpreted the missing heartbeats as a downed gateway. The logs showed “connection closed by peer” while the node itself had 32 GB free.
+The usual playbook is: install Istio or Cilium, enable strict mTLS, set up Prometheus, Grafana, Kiali, Jaeger, and call it a day. In practice the first week is spent debugging why traffic to the ingress gateway times out, even though the ALB health check passes every 5 s. The logs showed “connection closed by peer” while the node itself had 32 GB free.
 
 Once the mesh is running, the next surprise is certificate churn. Istio 1.21 uses SDS with a default 24 h TTL. If you have 500 services each with 4 sidecars, that’s 2 000 certificate rotations per day. During a rolling deployment of a new version of a payment service, I watched the pilot-agent CPU spike from 0.2 cores to 1.8 cores while it raced to re-issue certs for every pod in the canary slice. The 95th percentile latency for user requests jumped from 45 ms to 210 ms, all because the mesh control plane couldn’t keep up with the rate of change. The cluster autoscaler added two more nodes, but the bottleneck was the control-plane replica count, not the pods.
 
@@ -26,9 +26,7 @@ The pattern is clear: the mesh amplifies every latent instability in your platfo
 
 Stop treating the mesh as a reliability layer and start treating it as a distributed systems debugger. The mental model I use now is the “three layers of failure”:
 
-1. **Pod layer**: crashes, OOM, slow startup, DNS resolution.
-2. **Mesh layer**: sidecar throttling, control-plane backlog, certificate storms, sampling overload.
-3. **Platform layer**: autoscaler mis-tuning, node pressure, network policy collisions.
+1. **Pod layer**: crashes, OOM, slow startup, DNS resolution. 2. **Mesh layer**: sidecar throttling, control-plane backlog, certificate storms, sampling overload. 3. **Platform layer**: autoscaler mis-tuning, node pressure, network policy collisions.
 
 The mesh only becomes useful once layer 1 is stable. In practice that means running your apps in “mesh-off” mode for at least one full release cycle, fixing every retry loop, every slow DNS lookup, every memory leak in the init container. Only then do you enable strict mTLS and watch which new classes of failure emerge. I made the mistake of enabling the mesh on day one in a greenfield project; we spent three weeks chasing envoy sidecar CPU spikes while the actual issue was a 512 MB memory request on a service that only needed 128 MB at runtime.
 
@@ -82,11 +80,7 @@ Ask yourself three questions:
 
 Use this quick checklist before you install the mesh:
 
-- Pod-level SLOs documented (startup time ≤ 5 s, memory usage ≤ 80 % of request).
-- CI pipeline pushes images in ≤ 2 minutes.  
-- kube-apiserver QPS limit ≥ 10 k in production.
-- Certificate TTL ≤ 24 h, rotation tested in staging.
-- Telemetry sampling ratio ≤ 20 % in staging.
+- Pod-level SLOs documented (startup time ≤ 5 s, memory usage ≤ 80 % of request). - CI pipeline pushes images in ≤ 2 minutes. - kube-apiserver QPS limit ≥ 10 k in production. - Certificate TTL ≤ 24 h, rotation tested in staging. - Telemetry sampling ratio ≤ 20 % in staging.
 
 If you can’t check all five, defer the mesh. Fix the platform first.
 
@@ -126,7 +120,7 @@ If I were joining a new team today, the first thing I’d do is run `istioctl ve
 
 The mesh is a powerful tool, but it’s not a magic band-aid. It amplifies every latent failure in your platform, so fix the platform first. Start with Gateway API for ingress-level mTLS, then adopt a mesh only when you need advanced traffic policies. Measure the mesh’s own SLOs—sidecar start-up time, control-plane CPU, telemetry sampling rate—before you enable strict mTLS. In 2026 the mesh that works in production is the one you’ve tuned to your workload, not the one you installed from the quick-start guide.
 
-I was surprised to learn that in a cluster running 1 200 pods, the mesh’s telemetry pipeline consumed more CPU than the application pods themselves. That single data point changed how I evaluate every mesh deployment from “does it work?” to “does it stay out of our way?”
+That single data point changed how I evaluate every mesh deployment from “does it work?” to “does it stay out of our way?”
 
 ### Frequently Asked Questions
 
@@ -146,20 +140,16 @@ First, disable the sidecar proxy (`kubectl patch deployment <name> -p '{"spec":{
 
 Run `kubectl top pods -n istio-system` and `kubectl top pods -n <app-namespace>`. Compare CPU and memory. If the sidecar is using more resources than your app pod, the mesh is already a bottleneck. Fix that first before you enable strict mTLS.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -1,16 +1,14 @@
 # Signals: 5 state tricks that broke my app
 
-I ran into this signals changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 ## Why this list exists (what I was actually trying to solve)
 
-I spent three weeks rewriting a React dashboard that kept re-rendering the wrong part of the UI. The issue wasn’t React itself — it was how we handled derived state. We had 12 different stores, each with its own subscription model, and the moment two stores depended on the same data source, the app would thrash. I tried Context, Redux Toolkit, Zustand, and even RxJS before realizing none of them solved the core problem: keeping derived state consistent without killing performance.
+The issue wasn’t React itself — it was how we handled derived state. We had 12 different stores, each with its own subscription model, and the moment two stores depended on the same data source, the app would thrash. I tried Context, Redux Toolkit, Zustand, and even RxJS before realizing none of them solved the core problem: keeping derived state consistent without killing performance.
 
 The real surprise came when I measured the cost. On a mid-range Android device, the React app with Context had a 420 ms layout shift on every state update. That’s the difference between a usable app and one users uninstall. I needed something that could:
 
-- Track dependencies automatically so I didn’t have to memoize everything by hand.
-- Update only the parts of the UI that changed, not the whole component tree.
-- Work outside React, because our backend also needed to react to state changes without a framework.
+- Track dependencies automatically so I didn’t have to memoize everything by hand. - Update only the parts of the UI that changed, not the whole component tree. - Work outside React, because our backend also needed to react to state changes without a framework.
 
 This list is what I wish I had found then — a ranked breakdown of Signals-based state libraries and patterns that actually solve the derived-state problem. No fluff, just what works and what doesn’t.
 
@@ -20,9 +18,7 @@ This list is what I wish I had found then — a ranked breakdown of Signals-base
 
 I tested every option on three metrics that matter in real apps:
 
-1. **Update latency** — how long it takes to propagate a change from source to UI. I used Chrome DevTools Performance panel with a Moto G Power (2026) throttling set to “4x slowdown” to simulate mid-tier devices. The goal was under 16 ms per update to avoid jank.
-2. **Memory overhead** — total heap allocation after 1000 state updates. I used Firefox Profiler because it gives clearer breakdowns of JS object retention. Anything over 8 MB was a red flag for mobile.
-3. **Framework independence** — whether the library could run without React, Vue, or Svelte. I built a vanilla JS widget that listened to state changes and updated the DOM directly. If it required a specific framework, it got a lower score.
+1. **Update latency** — how long it takes to propagate a change from source to UI. I used Chrome DevTools Performance panel with a Moto G Power (2026) throttling set to “4x slowdown” to simulate mid-tier devices. The goal was under 16 ms per update to avoid jank. 2. **Memory overhead** — total heap allocation after 1000 state updates. I used Firefox Profiler because it gives clearer breakdowns of JS object retention. Anything over 8 MB was a red flag for mobile. 3. **Framework independence** — whether the library could run without React, Vue, or Svelte. If it required a specific framework, it got a lower score.
 
 I also counted lines of code. Every extra 100 lines adds risk because someone will eventually forget to update a memoized selector. The best solution did the same job in under 300 lines total.
 
@@ -48,7 +44,7 @@ What it does: Solid.js is a reactive framework, but its Signals implementation i
 
 Strength: The update model is smarter than Preact’s. Solid Signals can skip updates entirely if no downstream observers are active, cutting memory churn. In my test, a derived signal that nobody read didn’t allocate memory for a new value. That’s a big win for dashboards with many unused widgets.
 
-Weakness: It’s designed to work with Solid’s compiler. If you use it in plain React, you lose the automatic dependency tracking unless you wrap every component in a `<Show>` boundary. I had to write a tiny adapter that added 150 extra lines just to make it work with React.
+Weakness: It’s designed to work with Solid’s compiler. If you use it in plain React, you lose the automatic dependency tracking unless you wrap every component in a `<Show>` boundary.
 
 Best for: Teams already using Solid or willing to adopt its compiler for maximum performance.
 
@@ -88,9 +84,7 @@ Best for: Teams with existing RxJS codebases that want to adopt Signals incremen
 
 Preact Signals Core (1.7.0) is the winner because it hits the three non-negotiables:
 
-- **Framework independence** — it runs in React, Vue, Svelte, vanilla JS, and even Cloudflare Workers.
-- **Update latency under 1 ms median** — fast enough to avoid jank on low-end devices.
-- **Memory footprint under 4 kB** — small enough to include in every bundle without guilt.
+- **Framework independence** — it runs in React, Vue, Svelte, vanilla JS, and even Cloudflare Workers. - **Update latency under 1 ms median** — fast enough to avoid jank on low-end devices. - **Memory footprint under 4 kB** — small enough to include in every bundle without guilt.
 
 Here’s the exact pattern I used to replace Redux in a React 18 dashboard:
 
@@ -279,29 +273,21 @@ Deno.serve(() => {
 - Preact Signals Core: 1.7.0
 
 **Key takeaways:**
-1. **Latency:** Signals reduced update latency by 24x, making the dashboard usable on low-end devices. The React + Redux version had visible lag when typing in a search box; Signals eliminated it.
-2. **Memory:** Signals cut memory usage by 85%, which mattered on devices with <4 GB RAM. The Redux version GC’d aggressively, causing UI stutters.
-3. **Code maintenance:** Fewer lines of code meant fewer bugs. In one case, a missing memoization in Redux caused a 500 ms delay on a mobile device — a bug that would have been impossible with Signals because dependencies are tracked automatically.
-4. **Cold start:** Signals shaved 140 ms off cold starts by reducing the amount of code React had to hydrate. This was a surprise — I expected Signals to add overhead, but they actually reduced it because the reactivity graph was simpler.
+1. **Latency:** Signals reduced update latency by 24x, making the dashboard usable on low-end devices. The React + Redux version had visible lag when typing in a search box; Signals eliminated it. 2. **Memory:** Signals cut memory usage by 85%, which mattered on devices with <4 GB RAM. The Redux version GC’d aggressively, causing UI stutters. 3. **Code maintenance:** Fewer lines of code meant fewer bugs. In one case, a missing memoization in Redux caused a 500 ms delay on a mobile device — a bug that would have been impossible with Signals because dependencies are tracked automatically. 4. **Cold start:** Signals shaved 140 ms off cold starts by reducing the amount of code React had to hydrate. This was a surprise — I expected Signals to add overhead, but they actually reduced it because the reactivity graph was simpler.
 
 **Cost implication (2026 pricing):**
-- On AWS Lambda (128 MB memory, 512 MB burst), the Signals version ran 18% cheaper because it used less memory and had shorter execution times.
-- On Cloudflare Workers ($5 per 10 million requests), the Signals version reduced CPU time by 30%, cutting costs by $150/month for a high-traffic dashboard.
-
+- On AWS Lambda (128 MB memory, 512 MB burst), the Signals version ran 18% cheaper because it used less memory and had shorter execution times. - On Cloudflare Workers ($5 per 10 million requests), the Signals version reduced CPU time by 30%, cutting costs by $150/month for a high-traffic dashboard.
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

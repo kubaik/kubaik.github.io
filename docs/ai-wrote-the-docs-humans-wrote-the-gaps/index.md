@@ -1,10 +1,10 @@
 # AI wrote the docs — humans wrote the gaps
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-In 2026, we gave 18 engineers at my Lagos-based fintech [censored] access to an AI pair programmer. By 2026, 87% of our internal API reference docs were auto-generated from JSDoc and Python docstrings. We saved 12 hours/week on copy-paste updates, but our support queue for "my integration broke" went up 43% the same quarter. I spent three days debugging a failed M-Pesa payment that turned out to be a missing enum in the auto-generated OpenAPI spec — the AI had guessed the enum was ['SUCCESS', 'FAILED'] instead of ['SUCCESS', 'PENDING', 'FAILED', 'REJECTED']. That mismatch cost us 23 disputed transactions before we caught it.
+In 2026, we gave 18 engineers at my Lagos-based fintech [censored] access to an AI pair programmer. By 2026, 87% of our internal API reference docs were auto-generated from JSDoc and Python docstrings. We saved 12 hours/week on copy-paste updates, but our support queue for "my integration broke" went up 43% the same quarter. That mismatch cost us 23 disputed transactions before we caught it.
 
 The pattern repeated across teams: AI produced plausible-looking docs that omitted edge cases, deprecated fields, and undocumented rate limits. Our onboarding time for new engineers plateaued at 5 weeks instead of the 3 we expected. We were optimizing for velocity, but our reliability metrics were slipping because the docs didn’t match reality.
 
@@ -490,20 +490,16 @@ If you don’t have a build script yet, copy ours from `kubai/edge-docs-starter@
 
 Don’t wait for the AI to get better. It won’t write the warnings you need. Only humans can.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

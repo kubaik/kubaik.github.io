@@ -6,7 +6,7 @@ The official documentation for changed hiring is good. What it doesn't cover is 
 
 In 2026, the average Kenyan fintech startup receives 400 engineering résumés for every backend role. Yet, after months of tweaking our ATS (we were on Greenhouse 2.13 with AI Resume Scoring enabled) we still saw first-round rejection rates hover at 68%. The docs promised that AI would surface the top 20% of candidates automatically. Reality? We were still manually reviewing 136 résumés per role just to keep the same signal-to-noise ratio.
 
-I spent three weeks tuning the resume parser weights on Named Entity Recognition for local universities (JKUAT, UoN, Strathmore) and NLP models fine-tuned on Swahili tech blogs. The model hit 89% precision on paper, but when we A/B tested it against our old keyword filter, the human reviewers still discarded 72% of the AI-suggested candidates because their GitHub repos were empty or contained only university assignments.
+The model hit 89% precision on paper, but when we A/B tested it against our old keyword filter, the human reviewers still discarded 72% of the AI-suggested candidates because their GitHub repos were empty or contained only university assignments.
 
 What surprised me was how brittle the model became when we added a single new source: bootcamp portfolios from Moringa School and Andela. The F1 score dropped from 0.89 to 0.71 overnight. The issue wasn’t the model per se; it was that the training data was tiny—only 8,000 labeled examples—and the bootcamp repos had a different distribution of commit sizes and README quality. Production needs signals that generalize across 15 different Kenyan engineering schools and 3 bootcamp providers, not just the ones that dominate US or European datasets.
 
@@ -49,9 +49,7 @@ Here’s how we wired the pipeline end-to-end in our fintech stack. We used Pyth
 
 We replaced the simple keyword filter with a two-stage pipeline:
 
-1. **Document splitter**: chunk the PDF/HTML résumé into sections (education, experience, projects) using Apache Tika 2.9.1.
-2. **Semantic encoder**: embed each chunk with sentence-transformers/all-MiniLM-L6-v2 (sentence-transformers 2.3.1) and store in pgvector.
-3. **Query engine**: when a new résumé arrives, compute its embedding, then retrieve the top 20 closest job descriptions from our historical hires (we stored 3,200 job descriptions as embeddings).
+1. **Document splitter**: chunk the PDF/HTML résumé into sections (education, experience, projects) using Apache Tika 2.9.1. 2. **Semantic encoder**: embed each chunk with sentence-transformers/all-MiniLM-L6-v2 (sentence-transformers 2.3.1) and store in pgvector. 3. **Query engine**: when a new résumé arrives, compute its embedding, then retrieve the top 20 closest job descriptions from our historical hires (we stored 3,200 job descriptions as embeddings).
 
 Here’s the ingestion code:
 
@@ -207,10 +205,7 @@ We stored the scoring results in Redis 7.2 with a 5-minute TTL. When 50 candidat
 
 AI-powered hiring is not a silver bullet. Skip it if:
 
-- Your engineering stack is homogeneous (e.g., all monoliths in PHP with no observability) — the AI grader will have no meaningful benchmarks to compare against.
-- You hire fewer than 10 engineers per year — the setup and tuning cost outweighs the benefit.
-- Your job descriptions are vague or constantly changing — the model needs stable, well-documented targets.
-- You don’t have the budget for 15–20 golden solutions to seed the system design grader — the model will hallucinate scores.
+- Your engineering stack is homogeneous (e.g., all monoliths in PHP with no observability) — the AI grader will have no meaningful benchmarks to compare against. - You hire fewer than 10 engineers per year — the setup and tuning cost outweighs the benefit. - Your job descriptions are vague or constantly changing — the model needs stable, well-documented targets. - You don’t have the budget for 15–20 golden solutions to seed the system design grader — the model will hallucinate scores.
 
 We tried it on a mobile team hiring for Flutter roles, and the system design grader kept penalizing candidates who used Firebase instead of our preferred DynamoDB. The model was trained on backend-heavy golden solutions, so it assumed every system needed Redis and Prometheus. We had to manually override 60% of the scores until we curated Flutter-specific golden solutions.
 
@@ -262,20 +257,16 @@ The model exposes hidden requirements. For example, our scoring engine started f
 
 Stop if your golden solutions are fewer than 15 or if your job descriptions change frequently. The model needs stable, well-documented targets to score against. Also, if you hire fewer than 10 engineers per year, the setup and tuning cost outweighs the benefit.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

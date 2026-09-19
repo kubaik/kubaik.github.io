@@ -6,7 +6,7 @@ Most building developer guides assume a clean environment and a patient timeline
 
 We launched a developer tool in 2026 that scraped GitHub APIs to build dependency graphs for security teams. By early 2026, the product had 1,200 GitHub orgs running it, but revenue growth stalled at $22k MRR. The pipeline looked healthy: 300 inbound leads per month, 25% demo conversion, 8% free-to-paid. Yet the average sales cycle stretched to 14 weeks, and win rates on enterprise deals (ACV > $50k) were flat at 14%. Something was wrong with how we sold to developers.
 
-I spent three weeks shadowing sales calls before realizing the gap wasn’t product fit — it was timing. Prospects weren’t objecting to the value; they were stuck in a loop of internal approvals that assumed every dev tool purchase needed an ROI spreadsheet, a security review, and a 5-year TCO model. I saw one prospect email their CFO: *“I’ll send you a 20-tab spreadsheet proving this saves 0.3 FTE per team.”* That’s not a developer talking — that’s a finance team preparing for battle.
+Prospects weren’t objecting to the value; they were stuck in a loop of internal approvals that assumed every dev tool purchase needed an ROI spreadsheet, a security review, and a 5-year TCO model. I saw one prospect email their CFO: *“I’ll send you a 20-tab spreadsheet proving this saves 0.3 FTE per team.”* That’s not a developer talking — that’s a finance team preparing for battle.
 
 The problem wasn’t the product. It was the assumption that buying dev tools still worked like it did in 2026: long cycles, committee decisions, and a focus on cost avoidance. But by 2026, AI had changed how engineering leaders allocated budget. They were no longer asking *“How much does this cost?”* They were asking *“Can I try it in prod tomorrow?”*
 
@@ -38,11 +38,7 @@ We noticed that every time a prospect said *“We need to see how this works in 
 
 So we built **Instant Value**, a one-week accelerated onboarding program. Here’s how it worked:
 
-1. **Week 0**: Prospect signs up, connects GitHub, and sees a live dependency graph in under 5 minutes.
-2. **Day 1**: We send a Slack bot that posts a vulnerability report directly to their #security channel within 30 minutes of setup. This is the “aha” moment — not a demo, not a spreadsheet, but real data flowing into their workspace.
-3. **Day 3**: We schedule a 15-minute retro where the dev team sees the report live and decides whether to act. We don’t talk about features; we talk about outcomes.
-4. **Day 5**: If the report shows real risk, we invite them to a paid plan with a 30-day rolling window and a single invoice at the end. No upfront commitment. No long-term contract.
-5. **Day 7**: If they don’t see value, they walk away with the report and a 30-day free extension to keep using the tool while they evaluate alternatives.
+1. **Week 0**: Prospect signs up, connects GitHub, and sees a live dependency graph in under 5 minutes. 2. **Day 1**: We send a Slack bot that posts a vulnerability report directly to their #security channel within 30 minutes of setup. This is the “aha” moment — not a demo, not a spreadsheet, but real data flowing into their workspace. 3. **Day 3**: We schedule a 15-minute retro where the dev team sees the report live and decides whether to act. We don’t talk about features; we talk about outcomes. 4. **Day 5**: If the report shows real risk, we invite them to a paid plan with a 30-day rolling window and a single invoice at the end. No upfront commitment. No long-term contract. 5. **Day 7**: If they don’t see value, they walk away with the report and a 30-day free extension to keep using the tool while they evaluate alternatives.
 
 The key wasn’t the tool — it was the *time constraint* and the *immediate output* delivered into their workspace. We weren’t selling software; we were selling a **proof of impact in 7 days**.
 
@@ -144,7 +140,7 @@ The cost per pilot dropped because we eliminated the CSM, security review, and c
 
 We also saw a cultural shift inside our support team. Before Instant Value, support spent 40% of their time answering questions about pricing and contracts. After, they spent 15% of their time helping users interpret vulnerability reports. They went from contract negotiators to technical advisors.
 
-I was surprised by how much the Slack integration mattered. One prospect told us: *“I didn’t even know we had a vulnerability in the repo until the bot posted it. That changed everything.”* It wasn’t the tool that closed the deal — it was the moment the tool delivered value in their workspace.
+One prospect told us: *“I didn’t even know we had a vulnerability in the repo until the bot posted it. That changed everything.”* It wasn’t the tool that closed the deal — it was the moment the tool delivered value in their workspace.
 
 
 ## What we’d do differently
@@ -196,18 +192,12 @@ If you can’t show value in a week, you’re not selling a dev tool — you’r
 5. **Measure the new cycle.**
    Track the time from signup to first artifact, first upgrade, and first renewal. If the cycle is still longer than 14 days, you haven’t delivered value fast enough.
 
-
 If you only do one thing today: **Check your onboarding flow.** Time how long it takes from signup to the first meaningful output in your user’s workspace. If it’s more than 24 hours, you’re still selling like it’s 2026.
 
 
 ## Resources that helped
 
-- **Trivy 0.51**: Used for vulnerability scanning in the onboarding flow. Fast, accurate, and easy to containerize.
-- **Slack Block Kit**: For building interactive messages without a full UI.
-- **AWS EventBridge**: To trigger scans on Git push events instead of cron.
-- **Stripe Billing**: For rolling invoices and metered usage.
-- **Snowplow 2.7**: For event tracking and correlation analysis.
-- **Looker Studio**: To build dashboards that connect signup events to upgrades.
+- **Trivy 0.51**: Used for vulnerability scanning in the onboarding flow. Fast, accurate, and easy to containerize. - **Slack Block Kit**: For building interactive messages without a full UI. - **AWS EventBridge**: To trigger scans on Git push events instead of cron. - **Stripe Billing**: For rolling invoices and metered usage. - **Snowplow 2.7**: For event tracking and correlation analysis. - **Looker Studio**: To build dashboards that connect signup events to upgrades.
 
 We also relied on the GitHub GraphQL API v4.17 and the Bitbucket REST API 2.0 for multi-provider support.
 
@@ -218,40 +208,32 @@ We also relied on the GitHub GraphQL API v4.17 and the Bitbucket REST API 2.0 fo
 
 We limit the program to one repo per GitHub org and cap the scan frequency at 1 scan per 6 hours. We also use Redis 7.2 to rate-limit API calls and flag suspicious behavior. In 6 months, we’ve had zero abuse cases — the program is opt-in, and users see immediate value, so they don’t game the system.
 
-
 **What if the vulnerability report shows no issues? Does the program still work?**
 
 Yes. We still post a report, but it says *“No critical vulnerabilities found in the last 7 days.”* That message reinforces trust and shows the tool is working. We’ve seen users upgrade even when the report is clean, because they want continuous monitoring going forward.
-
 
 **How do you handle data privacy for repos hosted on-prem or in private clouds?**
 
 We never store code. We only store dependency metadata (package names, versions, licenses) and vulnerability reports. All data is encrypted at rest with AWS KMS and in transit with TLS 1.3. We also support air-gapped scans via a CLI tool that users can run behind their firewall. The onboarding bot runs in their workspace, not ours.
 
-
 **Do customers still need a sales call after Instant Value?**
 
 About 30% of enterprise prospects still want a call to negotiate pricing or discuss enterprise features. But the call is now a conversation about value, not a demo. We use the vulnerability report as the agenda: *“Here’s what we found. Here’s what it means. Here’s how much it costs to fix.”* The call is shorter, more focused, and less about product features.
-
 
 **What’s the biggest mistake teams make when adopting this model?**
 
 They try to automate everything at once. They build a full dashboard, a mobile app, and a Slack bot all in one sprint. That delays the artifact delivery and increases complexity. Start with the artifact: one report, one bot, one channel. Everything else can come later.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

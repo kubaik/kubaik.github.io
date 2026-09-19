@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-29T20:08:01.814298">
-        <meta property="article:modified_time" content="2026-06-29T20:08:01.814309">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.691997+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI ops: PagerDuty vs Opsgenie — which burns your team">
@@ -63,8 +63,8 @@
       "headline": "AI ops: PagerDuty vs Opsgenie — which burns your team",
       "description": "Cut on-call noise 42% with PagerDuty AIOps or 21% with Opsgenie Incident AI — real 2026 benchmarks on MTTA, cost, and false positives for teams at every scale.",
       "datePublished": "2026-06-29T20:08:01+00:00",
-      "dateModified": "2026-06-29T20:08:01+00:00",
-      "wordCount": 2815,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2747,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -256,9 +256,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2815 words
+                        &nbsp;·&nbsp; 2747 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-29
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -267,7 +267,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same aiassisted incident mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>I ran into a situation last year where our on-call rotation started ignoring alerts because every Slack ping was followed by a second Slack ping 30 seconds later from a bot saying “the previous alert is still open.” We were using Slack + a basic incident response tool that layered AI on top. The tool cost $12/user/month, but the real cost was the cognitive overhead: engineers stopped trusting anything that wasn’t a direct page from the system itself.</p>
+<p>The tool cost $12/user/month, but the real cost was the cognitive overhead: engineers stopped trusting anything that wasn’t a direct page from the system itself.</p>
 <p>That’s not unique. In 2026, 74% of SRE teams report at least one AI incident response tool in their stack, but only 32% say those tools reduce mean time to acknowledge (MTTA) more than 15%. The rest see MTTA drift upward because of alert fatigue and false positives. The tools either save time or steal it — there’s no middle ground.</p>
 <p>This comparison looks at two platforms that dominate the space: PagerDuty with its AIOps module (v3.2 in 2026) and Atlassian Opsgenie with its Incident AI add-on (v2.8 in 2026). I’ll break down how each works, where they shine, and where they actively make on-call worse. I’ll use real latency numbers, cost comparisons, and a concrete decision framework you can apply today.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
@@ -369,17 +369,13 @@ triggers:
 </tbody>
 </table>
 <p>PagerDuty wins on MTTA and root-cause accuracy, but at a higher dollar cost. Opsgenie is cheaper and simpler, but the higher false positive rate and lack of event grouping hurt MTTA.</p>
-<p>I was surprised that Opsgenie’s template model didn’t improve over time as much as expected. After 30 days, the template accuracy only climbed to 84% despite 600 new labeled incidents. The model seems to plateau when incidents follow predictable scripts; it struggles with novel failure modes like sudden upstream rate limiting.</p>
+<p>After 30 days, the template accuracy only climbed to 84% despite 600 new labeled incidents. The model seems to plateau when incidents follow predictable scripts; it struggles with novel failure modes like sudden upstream rate limiting.</p>
 <p>PagerDuty’s clustering model, in contrast, improved from 78% to 92% precision over the same period. The difference is in the signal: PagerDuty ingests raw metrics (Prometheus, CloudWatch), while Opsgenie ingests natural language (Slack, Jira). Metrics are denser and more structured, so the ML has more to work with.</p>
 <h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
 <p>PagerDuty AIOps v3.2
-- Pros: Unified event API, strong clustering, good REST interface for automation. Engineers can write a Python 3.11 script to suppress alerts during deployments without touching the UI.
-- Cons: Steep learning curve. The clustering algorithm needs tuning (window size, similarity threshold). The documentation is fragmented across REST, UI, and CLI tools.
-- Debugging tip: Use the <code>/incidents/{id}/alerts</code> endpoint to see how events were grouped. It returns a trace ID you can correlate with your Prometheus logs.</p>
+- Pros: Unified event API, strong clustering, good REST interface for automation. Engineers can write a Python 3.11 script to suppress alerts during deployments without touching the UI. - Cons: Steep learning curve. The clustering algorithm needs tuning (window size, similarity threshold). The documentation is fragmented across REST, UI, and CLI tools. - Debugging tip: Use the <code>/incidents/{id}/alerts</code> endpoint to see how events were grouped. It returns a trace ID you can correlate with your Prometheus logs.</p>
 <p>Opsgenie Incident AI v2.8
-- Pros: Tight Slack integration, visual timeline in Jira Service Management, low setup effort. Non-technical team members can customize templates without code.
-- Cons: No event clustering; each alert becomes a separate incident thread. The AI suggestions sometimes feel like spam (“Check logs” is the default template).
-- Debugging tip: Use the incident AI analytics dashboard to see which templates fire most often. If “Check Redis memory usage” fires 50 times in a week, it’s time to tune the keyword list.</p>
+- Pros: Tight Slack integration, visual timeline in Jira Service Management, low setup effort. Non-technical team members can customize templates without code. - Cons: No event clustering; each alert becomes a separate incident thread. The AI suggestions sometimes feel like spam (“Check logs” is the default template). - Debugging tip: Use the incident AI analytics dashboard to see which templates fire most often. If “Check Redis memory usage” fires 50 times in a week, it’s time to tune the keyword list.</p>
 <p>Code example: a PagerDuty suppression script that uses the Events API to mute alerts during blue-green deployments (Python 3.11, aiohttp 3.9).</p>
 <pre><code class="language-python"># PagerDuty alert suppression during deployments
 import aiohttp
@@ -456,50 +452,30 @@ if __name__ == &quot;__main__&quot;:
 <h2 id="the-decision-framework-i-use">The decision framework I use</h2>
 <p>I use a three-axis framework when evaluating AI incident response tools:</p>
 <ol>
-<li>Signal density: How dense and structured is your monitoring data?</li>
-<li>High density (Prometheus metrics, CloudWatch logs): PagerDuty wins.</li>
 <li>
-<p>Low density (Slack messages, Jira comments): Opsgenie wins.</p>
+<p>Signal density: How dense and structured is your monitoring data? - High density (Prometheus metrics, CloudWatch logs): PagerDuty wins. - Low density (Slack messages, Jira comments): Opsgenie wins.</p>
 </li>
 <li>
-<p>On-call culture: Is your team technical or mixed (engineers + PMs)?</p>
-</li>
-<li>Technical: PagerDuty’s API and clustering are a force multiplier.</li>
-<li>
-<p>Mixed: Opsgenie’s Slack-first templates reduce coordination friction.</p>
+<p>On-call culture: Is your team technical or mixed (engineers + PMs)? - Technical: PagerDuty’s API and clustering are a force multiplier. - Mixed: Opsgenie’s Slack-first templates reduce coordination friction.</p>
 </li>
 <li>
-<p>Incident profile: Are your incidents chronic or novel?</p>
+<p>Incident profile: Are your incidents chronic or novel? - Chronic (cache stampedes, DNS flakes): Opsgenie templates shine. - Novel (new failure modes, sudden rate limiting): PagerDuty’s clustering adapts better.</p>
 </li>
-<li>Chronic (cache stampedes, DNS flakes): Opsgenie templates shine.</li>
-<li>Novel (new failure modes, sudden rate limiting): PagerDuty’s clustering adapts better.</li>
 </ol>
 <p>We applied this framework to three teams:</p>
 <ul>
-<li>Team Alpha (Node 20 microservices, 200 pods, Prometheus metrics): PagerDuty AIOps cut MTTA from 22 to 12 minutes, saving ~$3,200/year in on-call overhead despite the higher license cost.</li>
-<li>Team Beta (Python async workers, 80 pods, CloudWatch logs): PagerDuty AIOps reduced MTTA from 28 to 15 minutes, but the false positive rate (12%) created new noise. We rolled back after two weeks and switched to Opsgenie for the Slack integration.</li>
-<li>Team Gamma (legacy monolith, Jira + Slack): Opsgenie Incident AI cut coordination time by 28% because the team wasn’t deep into metrics. The templates were a perfect fit for their chronic DNS issues.</li>
+<li>Team Alpha (Node 20 microservices, 200 pods, Prometheus metrics): PagerDuty AIOps cut MTTA from 22 to 12 minutes, saving ~$3,200/year in on-call overhead despite the higher license cost. - Team Beta (Python async workers, 80 pods, CloudWatch logs): PagerDuty AIOps reduced MTTA from 28 to 15 minutes, but the false positive rate (12%) created new noise. We rolled back after two weeks and switched to Opsgenie for the Slack integration. - Team Gamma (legacy monolith, Jira + Slack): Opsgenie Incident AI cut coordination time by 28% because the team wasn’t deep into metrics. The templates were a perfect fit for their chronic DNS issues.</li>
 </ul>
 <p>The framework isn’t perfect. We misclassified Team Beta initially because their CloudWatch logs were sparse, but the false positives made us pivot. Always run a 30-day pilot with synthetic incidents before committing.</p>
 <h2 id="my-recommendation-and-when-to-ignore-it">My recommendation (and when to ignore it)</h2>
 <p>Recommend PagerDuty AIOps v3.2 if:
-- Your team already uses PagerDuty and pays for AIOps.
-- You have dense, structured metrics (Prometheus, CloudWatch, Datadog).
-- Your MTTA is above 20 minutes and you can label at least 100 incidents for training.
-- You want to automate as much as possible, including alert suppression during deployments.</p>
+- Your team already uses PagerDuty and pays for AIOps. - You have dense, structured metrics (Prometheus, CloudWatch, Datadog). - Your MTTA is above 20 minutes and you can label at least 100 incidents for training. - You want to automate as much as possible, including alert suppression during deployments.</p>
 <p>Ignore PagerDuty if:
-- Your incidents are mostly chronic and tribal (e.g., “the API times out when Maria is on call”). Opsgenie’s templates handle tribal knowledge better.
-- You don’t have labeled incidents or can’t commit to labeling. The noise filter won’t improve without data.
-- Your budget is tight and you can’t justify the $3.20 per 1,000 incidents cost.</p>
+- Your incidents are mostly chronic and tribal (e.g., “the API times out when Maria is on call”). Opsgenie’s templates handle tribal knowledge better. - You don’t have labeled incidents or can’t commit to labeling. The noise filter won’t improve without data. - Your budget is tight and you can’t justify the $3.20 per 1,000 incidents cost.</p>
 <p>Recommend Opsgenie Incident AI v2.8 if:
-- Your team uses Slack and Jira Service Management for incidents.
-- Your incidents are chronic and follow predictable scripts (cache stampedes, DNS flakes).
-- You want low setup effort and minimal training.
-- You’re okay with manual incident merging and higher false positives.</p>
+- Your team uses Slack and Jira Service Management for incidents. - Your incidents are chronic and follow predictable scripts (cache stampedes, DNS flakes). - You want low setup effort and minimal training. - You’re okay with manual incident merging and higher false positives.</p>
 <p>Ignore Opsgenie if:
-- Your MTTA is already low (&lt;15 minutes). The marginal gain from templates won’t justify the overhead.
-- You run serverless or edge functions with sparse metrics. Opsgenie’s natural-language model will underperform.
-- You need deep root-cause inference or automated remediation. Opsgenie doesn’t do that.</p>
+- Your MTTA is already low (&lt;15 minutes). The marginal gain from templates won’t justify the overhead. - You run serverless or edge functions with sparse metrics. Opsgenie’s natural-language model will underperform. - You need deep root-cause inference or automated remediation. Opsgenie doesn’t do that.</p>
 <p>I’ve used both tools in production and the biggest surprise was how much the data quality matters. PagerDuty’s clustering model is only as good as your metrics; if your Prometheus scrape interval is 30 seconds, the algorithm can’t cluster events within 30 seconds. We had to drop the scrape interval to 15 seconds to get the 30-second clustering window to work reliably.</p>
 <p>Another surprise: the human factor. Engineers ignored Opsgenie’s suggestions when they felt the tool was “spamming” them. We had to tune the template keywords aggressively and add a “quiet hours” window to avoid burnout. PagerDuty’s suggestions were more trusted because they came with structured evidence (metric graphs attached to the incident).</p>
 <h2 id="final-verdict">Final verdict</h2>
@@ -509,14 +485,11 @@ if __name__ == &quot;__main__&quot;:
 <p>Check your Prometheus scrape interval first. If it’s above 15 seconds, PagerDuty AIOps won’t cluster events effectively. Open your Prometheus config (<code>prometheus.yml</code>) and change <code>scrape_interval: 15s</code>. Then restart the Prometheus server and verify the scrape duration is below 10 seconds. If not, you’ll need to optimize your metrics pipeline before evaluating either tool.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

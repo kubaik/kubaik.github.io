@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-04T02:48:40.082786">
-        <meta property="article:modified_time" content="2026-08-04T02:48:40.082798">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.361390+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Platform teams in 2026: why your devs hate your golden path">
@@ -63,8 +63,8 @@
       "headline": "Platform teams in 2026: why your devs hate your golden path",
       "description": "Platform teams in 2026: why your devs hate your golden path — how contracts beat rigid paths, with AWS EKS metrics, Linkerd 2.14, and infra cost savings",
       "datePublished": "2026-08-04T02:48:40+00:00",
-      "dateModified": "2026-08-04T02:48:40+00:00",
-      "wordCount": 2579,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2545,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2579 words
+                        &nbsp;·&nbsp; 2545 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-04
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -278,7 +278,6 @@
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In late 2026, our org had 24 autonomous teams shipping services on AWS. Each team ran its own CI/CD, built its own Docker images, and provisioned its own infra via Terraform. The result was predictable: 40% of deployments failed at least once, rollbacks took 23 minutes on average, and the SRE on-call rotation was a rotating disaster because nobody knew what was actually running where. We thought a platform team could fix this.</p>
 <p>We built a golden path: a single CI pipeline, a shared EKS cluster with Argo CD for GitOps, and a set of Terraform modules that teams could consume like an internal SDK. The promise was simple: ship faster, fail less, and stop worrying about infra. By Q1 2026, 22 out of 24 teams had migrated. Our production incidents dropped from 18 to 7 per week, and mean time to recovery (MTTR) fell from 23 minutes to 8 minutes. Success, right?</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout in the shared EKS cluster — this post is what I wished I had found then.</p>
 <p>But the real story is what happened next. Teams started complaining that the golden path was too slow, too opinionated, and too far from their actual needs. Our platform adoption survey in March 2026 showed that 60% of teams were using the platform only for deployment, not for testing, monitoring, or chaos engineering. We had optimized for deployment velocity, but ignored the rest of the lifecycle. Worse, teams that tried to extend the platform often broke it for everyone else, leading to cascading failures. The golden path had become a bottleneck, not a productivity engine.</p>
 <p>The core tension was visible in our internal Slack: teams asked for more flexibility, while platform maintainers pushed for standardization. We had traded 23-minute rollbacks for 2-hour wait times in platform reviews. Our internal developer experience score, measured by the DX team every quarter, dropped from 7.2 to 4.5 on a 10-point scale. Something had to change.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn't work</h2>
@@ -294,9 +293,7 @@
 <h3 id="contracts-in-practice">Contracts in practice</h3>
 <p>We defined three contracts:</p>
 <ol>
-<li><strong>Health contract</strong>: A <code>/health</code> endpoint that returns <code>{ "status": "ok" }</code> within 500ms. No exceptions.</li>
-<li><strong>Metrics contract</strong>: A <code>/metrics</code> endpoint that exposes Prometheus metrics, including request latency, error rate, and pod resource usage. We used the Prometheus client library for Python 3.11 and Node 20 LTS.</li>
-<li><strong>Retry contract</strong>: Services must implement exponential backoff with jitter. We enforced this via Linkerd’s retry policy, which caps retries at 5 and adds 100ms jitter.</li>
+<li><strong>Health contract</strong>: A <code>/health</code> endpoint that returns <code>{ "status": "ok" }</code> within 500ms. No exceptions. 2. <strong>Metrics contract</strong>: A <code>/metrics</code> endpoint that exposes Prometheus metrics, including request latency, error rate, and pod resource usage. We used the Prometheus client library for Python 3.11 and Node 20 LTS. 3. <strong>Retry contract</strong>: Services must implement exponential backoff with jitter. We enforced this via Linkerd’s retry policy, which caps retries at 5 and adds 100ms jitter.</li>
 </ol>
 <p>Here’s a minimal Python 3.11 example:</p>
 <pre><code class="language-python">from flask import Flask
@@ -486,11 +483,7 @@ done
 <p>Finally, audit your infra bill. Look for duplicate resources, over-provisioned clusters, and orphaned volumes. A 2026 AWS cost optimization report found that 42% of AWS bills are inflated by 15-30% due to unused resources. Use a tool like AWS Cost Explorer to identify anomalies, and then work with teams to optimize their stacks.</p>
 <h2 id="resources-that-helped">Resources that helped</h2>
 <ul>
-<li><a href="https://linkerd.io/2.14/">Linkerd 2.14 documentation</a> – The service mesh we used to enforce contracts at runtime.</li>
-<li><a href="https://prometheus.io/docs/instrumenting/clientlibs/">Prometheus client libraries</a> – For Python 3.11 and Node 20 LTS.</li>
-<li><a href="https://aws.amazon.com/aws-cost-management/aws-cost-explorer/">AWS Cost Explorer</a> – To track and optimize infra spend.</li>
-<li><a href="https://kubernetes.io/blog/2026/04/08/kubernetes-best-practices-community-stats/">Kubernetes Best Practices</a> – For pod resource requests and limits.</li>
-<li><a href="https://github.com/kubernetes/community/blob/master/sig-contributor-experience/resources/dx-survey.md">Internal DX survey template</a> – A simple survey to measure developer experience.</li>
+<li><a href="https://linkerd.io/2.14/">Linkerd 2.14 documentation</a> – The service mesh we used to enforce contracts at runtime. - <a href="https://prometheus.io/docs/instrumenting/clientlibs/">Prometheus client libraries</a> – For Python 3.11 and Node 20 LTS. - <a href="https://aws.amazon.com/aws-cost-management/aws-cost-explorer/">AWS Cost Explorer</a> – To track and optimize infra spend. - <a href="https://kubernetes.io/blog/2026/04/08/kubernetes-best-practices-community-stats/">Kubernetes Best Practices</a> – For pod resource requests and limits. - <a href="https://github.com/kubernetes/community/blob/master/sig-contributor-experience/resources/dx-survey.md">Internal DX survey template</a> – A simple survey to measure developer experience.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>What’s the difference between a golden path and a platform contract?</strong>

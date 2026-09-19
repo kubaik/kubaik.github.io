@@ -6,7 +6,7 @@ I've seen the same maintain codebase mistake in multiple production codebases, i
 
 In Q4 2026, our team shipped a new citizen-services portal for a West African ministry. By March 2026, 42% of the Python 3.11 codebase had AI-generated commits. Not because we let the model loose on prod, but because product owners kept pasting prompts into the chat and committing the result without a second pair of eyes. We learned the hard way that AI code is like fertilizer: a little boosts growth, but too much burns the field.
 
-I spent three days debugging a connection-pool crash that turned out to be a single mis-indented retry decorator. The stack trace never mentioned the decorator because the AI had inserted it at 2 a.m. when our guardrails were still half-baked. This post is what I wished I’d had then: a blunt, tool-by-tool comparison of two ways to keep an AI-heavy codebase from eating itself alive.
+The stack trace never mentioned the decorator because the AI had inserted it at 2 a.m. when our guardrails were still half-baked. This post is what I wished I’d had then: a blunt, tool-by-tool comparison of two ways to keep an AI-heavy codebase from eating itself alive.
 
 The stakes are real. In a 2026 survey of 120 sub-Saharan dev teams, repos with >30% AI-generated code averaged 37% more hotfixes per month than their peers. The same teams reported 2.1× longer review times for AI patches, which sounds like a good thing until you realize the reviews catch only 43% of the nonsense (historical 2026 data from GitClear showed 61% for human patches).
 
@@ -136,17 +136,11 @@ One surprise: GitHub’s runner minutes jumped 52% after we enabled CodeQL becau
 
 I give teams a one-page questionnaire before we pick a stack. The first three questions decide 80% of the outcome:
 
-1. Do you run on GitHub Cloud?
-   - Yes → GHAS is the only realistic option.
-   - No → skip GHAS.
+1. Do you run on GitHub Cloud? - Yes → GHAS is the only realistic option. - No → skip GHAS.
 
-2. Do you need air-gapped or on-prem deployment?
-   - Yes → SonarQube Community is mandatory.
-   - No → either works.
+2. Do you need air-gapped or on-prem deployment? - Yes → SonarQube Community is mandatory. - No → either works.
 
-3. How many seats?
-   - ≤25 → GHAS is cheaper and faster to adopt.
-   - >25 → run the TCO model; SonarQube usually wins.
+3. How many seats? - ≤25 → GHAS is cheaper and faster to adopt. - >25 → run the TCO model; SonarQube usually wins.
 
 After those, we look at custom-rule depth. If you expect to write >30 custom rules within six months, SonarQube’s XPath tooling is worth the setup pain. Otherwise, GHAS’s curated ruleset is sufficient.
 
@@ -167,14 +161,10 @@ We applied this framework to a new NGO project in Kenya. They were on GitHub Clo
 ## My recommendation (and when to ignore it)
 
 Choose **SonarQube Community + custom pre-commit hooks** if:
-- You run on-prem or in an air-gapped environment (GitHub Advanced Security won’t work).
-- Your team expects to write >25 custom rules in the first six months.
-- You have the DevOps bandwidth to tune JVM heap and Postgres.
+- You run on-prem or in an air-gapped environment (GitHub Advanced Security won’t work). - Your team expects to write >25 custom rules in the first six months. - You have the DevOps bandwidth to tune JVM heap and Postgres.
 
 Choose **GitHub Advanced Security + CodeQL** if:
-- You’re already on GitHub Cloud and don’t want infra overhead.
-- Your team size is ≤25, so the seat cost doesn’t explode.
-- You value one-click fixes and curated rules over custom XPath.
+- You’re already on GitHub Cloud and don’t want infra overhead. - Your team size is ≤25, so the seat cost doesn’t explode. - You value one-click fixes and curated rules over custom XPath.
 
 I still regret the week we wasted trying to shoehorn SonarQube into a repo that clearly needed GHAS. The team spent 12 engineer-days on Docker configs, only to rip it out when we realized the custom XPath engine couldn’t parse our Django ORM macros. The lesson: don’t fight the tool’s strengths. CodeQL is built for GitHub; SonarQube is built for custom depth. Use each where it’s strongest.
 
@@ -239,7 +229,6 @@ jobs:
 
 The `if` key prevents the job from running on the `legacy` branch while keeping the workflow file intact for future merges.
 
-
 Take 10 minutes right now. Open `.github/workflows/ci.yml` (or your equivalent) and add this at the top of the file:
 
 ```yaml
@@ -249,20 +238,16 @@ on: [push, pull_request]
 
 Then paste the 7-line CodeQL job from Option A. Commit it to a feature branch and watch your first AI-patch alert appear in the PR. If it catches something useful within an hour, you’ve made the right choice. If you see only noise, the SonarQube route is still open.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

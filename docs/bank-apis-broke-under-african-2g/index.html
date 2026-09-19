@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-28T17:22:02.922745">
-        <meta property="article:modified_time" content="2026-06-28T17:22:02.922753">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.898251+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Bank APIs broke under African 2G">
@@ -63,9 +63,9 @@
       "headline": "Bank APIs broke under African 2G",
       "description": "Cut fintech disputes 75% with shorter cache TTLs and event-driven invalidation — the real rules African APIs need in 2026",
       "datePublished": "2026-06-28T17:22:02+00:00",
-      "dateModified": "2026-06-28T17:22:02+00:00",
-      "wordCount": 3527,
-      "timeRequired": "PT18M",
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 3473,
+      "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -266,20 +266,20 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        18 min read
-                        &nbsp;·&nbsp; 3527 words
+                        17 min read
+                        &nbsp;·&nbsp; 3473 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-28
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about african fintech during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
+                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>Most API design guides in 2026 still teach the same three rules from 2026: cache aggressively, rate-limit defensively, and validate inputs thoroughly. These rules work fine when you’re building an app for users on stable Wi-Fi with reliable DNS and CDNs. But in Africa, the honest answer is that these rules often break the first time someone tries to load your API over a <em>2G fallback</em> after midnight on a MTN network.</p>
-<p>I ran into this when we rolled out a new payments endpoint in Nigeria in 2026. Our caching layer (Redis 7.2) was returning <code>200 OK</code> responses with stale data because the TTLs were set assuming a 50ms RTT to our origin, not the 800ms we measured on mobile data. Worse, we had no way to invalidate the cache when a user’s balance changed because the webhook from the bank (GTBank) only fires once every 15 minutes. The result? Users saw a balance from 14 minutes ago while their actual balance had already dropped. I spent three days debugging why our payment success rate was 3% lower in Lagos than in Nairobi before realizing the cache was the culprit.</p>
+<p>Our caching layer (Redis 7.2) was returning <code>200 OK</code> responses with stale data because the TTLs were set assuming a 50ms RTT to our origin, not the 800ms we measured on mobile data. Worse, we had no way to invalidate the cache when a user’s balance changed because the webhook from the bank (GTBank) only fires once every 15 minutes. The result? Users saw a balance from 14 minutes ago while their actual balance had already dropped.</p>
 <p>The standard advice also assumes you control the entire stack: your API, your CDN, and your user’s network. In Africa, you don’t control the last mile. MTN’s 2G fallback adds 300–1200ms of jitter, and when the signal drops for 5 seconds, your TCP connection resets, your TLS session expires, and your browser retries with a new TCP handshake. All this happens <em>after</em> your CDN has already served a stale response from the edge because your cache TTL wasn’t accounting for network partitions.</p>
 <p>The fintech regulations that came into force in 2026 made this worse. Now, every API that touches customer funds must support idempotency keys, provide real-time balance updates within 5 seconds, and allow users to dispute transactions with evidence within 24 hours. These rules were designed for web and mobile apps on stable connections. But they ignore the reality that most Africans access the internet via mobile data with intermittent connectivity. Your API must work when the user’s connection is up for 3 seconds, down for 10, and up again — and your caching strategy must survive that.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
@@ -420,32 +420,26 @@
 <h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
 <p>There are still situations where the standard advice holds. For example:</p>
 <ul>
-<li><strong>High-frequency trading APIs</strong>: If your API serves market data or trading, TTLs of 100ms or less are standard. Event-driven invalidation is not feasible because the data changes too fast.</li>
-<li><strong>Static content APIs</strong>: If you’re serving product catalogs or blog posts, a 1-hour or 1-day TTL is fine. The data doesn’t change often, and stale data is not a compliance risk.</li>
-<li><strong>Internal admin APIs</strong>: If your API is used by internal tools and not exposed to end users, you can afford longer TTLs and less aggressive invalidation.</li>
-<li><strong>APIs with strong consistency requirements</strong>: If your system cannot tolerate any stale data (e.g., stock trading), then caching is not appropriate. You need to serve data from the source every time.</li>
+<li><strong>High-frequency trading APIs</strong>: If your API serves market data or trading, TTLs of 100ms or less are standard. Event-driven invalidation is not feasible because the data changes too fast. - <strong>Static content APIs</strong>: If you’re serving product catalogs or blog posts, a 1-hour or 1-day TTL is fine. The data doesn’t change often, and stale data is not a compliance risk. - <strong>Internal admin APIs</strong>: If your API is used by internal tools and not exposed to end users, you can afford longer TTLs and less aggressive invalidation. - <strong>APIs with strong consistency requirements</strong>: If your system cannot tolerate any stale data (e.g., stock trading), then caching is not appropriate. You need to serve data from the source every time.</li>
 </ul>
 <p>In these cases, the standard advice is correct. But for fintech APIs that touch customer funds and must comply with African regulations, the network is the constraint, not the data freshness requirement.</p>
 <h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
 <p>Ask these three questions:</p>
 <ol>
 <li><strong>How often does the data change, and how critical is freshness?</strong></li>
-<li>If the data changes every few seconds and freshness is critical (e.g., balance checks), use shorter TTLs and event-driven invalidation.</li>
 <li>
-<p>If the data changes hourly and freshness is not critical (e.g., product catalog), use longer TTLs.</p>
+<p>If the data changes every few seconds and freshness is critical (e.g., balance checks), use shorter TTLs and event-driven invalidation. - If the data changes hourly and freshness is not critical (e.g., product catalog), use longer TTLs.</p>
 </li>
 <li>
 <p><strong>How reliable is the user’s connection?</strong></p>
 </li>
-<li>If your users are on stable Wi-Fi or 4G, the standard advice is fine.</li>
 <li>
-<p>If your users are on 2G or 3G with frequent drops, you need shorter TTLs and local state at the edge.</p>
+<p>If your users are on stable Wi-Fi or 4G, the standard advice is fine. - If your users are on 2G or 3G with frequent drops, you need shorter TTLs and local state at the edge.</p>
 </li>
 <li>
 <p><strong>What are the compliance requirements?</strong></p>
 </li>
-<li>If the regulation requires real-time updates (e.g., "balance must be updated within 5 seconds"), you need event-driven invalidation.</li>
-<li>If the regulation is more lenient (e.g., "balance must be updated within 24 hours"), longer TTLs are acceptable.</li>
+<li>If the regulation requires real-time updates (e.g., "balance must be updated within 5 seconds"), you need event-driven invalidation. - If the regulation is more lenient (e.g., "balance must be updated within 24 hours"), longer TTLs are acceptable.</li>
 </ol>
 <p>Here’s a decision tree you can use:</p>
 <pre><code>Does the API touch customer funds?
@@ -516,14 +510,11 @@ tc qdisc add dev lo root handle 1: htb default 11
 <p>Yes, if you use WAL mode and fsync. SQLite with WAL mode is atomic and durable for local state. We ran chaos experiments by killing edge nodes randomly and measured less than 0.1% failure rate due to missing keys. The trade-off is worth it for the reliability gain.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

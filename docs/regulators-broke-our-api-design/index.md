@@ -1,6 +1,6 @@
 # Regulators broke our API design
 
-A colleague asked me about african fintech during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete
 
@@ -8,7 +8,7 @@ The standard advice in 2026 is that African fintech APIs should follow global be
 
 The problem is that this stack assumes a reliable, low-latency, high-bandwidth network. In 2026, the median mobile network in Nigeria is 12 Mbps with 2.3% packet loss, and Ghana’s mobile data costs $2.40 per GB. East Africa’s fixed-line internet is still patchy outside major cities. When you build for Chrome on fibre, you’re not building for the users who actually move money on your platform.
 
-I ran into this when we tried to launch a new savings product in northern Kenya. We built our API in Node 20 LTS with Express 4.18, served JSON over HTTP/2, and expected users to connect via 4G. On our first pilot day, we saw 38% of requests fail with 504 timeouts. Not because the code was wrong, but because the network was. Users on Safaricom 3G had to wait 8–12 seconds for a single savings confirmation, and the browser or app would retry blindly, creating more load. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+We built our API in Node 20 LTS with Express 4.18, served JSON over HTTP/2, and expected users to connect via 4G. On our first pilot day, we saw 38% of requests fail with 504 timeouts. Not because the code was wrong, but because the network was. Users on Safaricom 3G had to wait 8–12 seconds for a single savings confirmation, and the browser or app would retry blindly, creating more load.
 
 The honest answer is that global best practices are a starting point, not a destination. They work fine if your users are on uncapped fibre in Lagos’s high-rise districts or in Nairobi’s Westlands. But they fall apart when your primary traffic comes from a matatu on the Nairobi-Mombasa highway or a boda-boda rider stopping to charge their phone. Regulators in 2026 didn’t change the rules to make our lives harder — they just made the edge conditions visible.
 
@@ -22,7 +22,7 @@ Follow the REST+JSON+OAuth2 playbook and you’ll hit three predictable failure 
 
 3. **Webhook unreliability**: Webhooks are the standard for async events. But in 2026, most African servers still use IPv4 with CGNAT. That means outbound TCP connections from your webhook endpoint to the customer’s server often fail with SYN-ACK timeouts. We saw 14% of webhook deliveries fail in the first hour during a pilot in Rwanda. The customer’s server was up, but the path between us and them was broken. Most webhook libraries don’t handle this gracefully — they retry blindly, creating noise in logs and false alerts.
 
-I was surprised that even AWS Lambda with arm64 in us-east-1 couldn’t save us here. We moved our core API to Lambda with Node 20 LTS and API Gateway HTTP API, expecting 50–100 ms p99 latency. Instead, we saw 220 ms p99 from Nairobi to us-east-1. Users on Safaricom 3G saw 800 ms–2 seconds. The cloud is global, but the network isn’t.
+We moved our core API to Lambda with Node 20 LTS and API Gateway HTTP API, expecting 50–100 ms p99 latency. Instead, we saw 220 ms p99 from Nairobi to us-east-1. Users on Safaricom 3G saw 800 ms–2 seconds. The cloud is global, but the network isn’t.
 
 ## A different mental model
 
@@ -32,10 +32,7 @@ Regulations in 2026 didn’t invent new constraints. They just forced us to ackn
 
 This means:
 
-- **Assume the network is hostile.** Treat every request as if it might be dropped, delayed, or corrupted. Use idempotency keys, short timeouts, and binary formats to reduce payload size and processing time.
-- **Prefer streaming over polling.** Users on 3G hate polling. They want to know immediately if their payment succeeded. Instead of polling /status every 5 seconds, use Server-Sent Events (SSE) or WebTransport to push updates. We cut mobile data usage by 42% in Kenya by switching from polling to SSE for transaction updates.
-- **Make your API work offline-first.** Allow users to queue requests when offline and sync when back online. This isn’t about fancy offline PWA magic — it’s about handling the reality that users lose connectivity mid-transaction. In Nigeria, we saw 7% of M-Pesa top-ups fail because the user lost signal before the confirmation. An offline queue would have saved those.
-- **Use binary protocols for heavy payloads.** JSON is human-readable but inefficient. For large payloads (e.g., bulk transfers), use Protocol Buffers or FlatBuffers. In our Ghana pilot, switching from JSON to Protobuf cut payload size from 1.8 KB to 420 bytes and reduced transfer time from 28 ms to 9 ms on 3G.
+- **Assume the network is hostile.** Treat every request as if it might be dropped, delayed, or corrupted. Use idempotency keys, short timeouts, and binary formats to reduce payload size and processing time. - **Prefer streaming over polling.** Users on 3G hate polling. They want to know immediately if their payment succeeded. Instead of polling /status every 5 seconds, use Server-Sent Events (SSE) or WebTransport to push updates. We cut mobile data usage by 42% in Kenya by switching from polling to SSE for transaction updates. - **Make your API work offline-first.** Allow users to queue requests when offline and sync when back online. This isn’t about fancy offline PWA magic — it’s about handling the reality that users lose connectivity mid-transaction. In Nigeria, we saw 7% of M-Pesa top-ups fail because the user lost signal before the confirmation. An offline queue would have saved those. - **Use binary protocols for heavy payloads.** JSON is human-readable but inefficient. For large payloads (e.g., bulk transfers), use Protocol Buffers or FlatBuffers. In our Ghana pilot, switching from JSON to Protobuf cut payload size from 1.8 KB to 420 bytes and reduced transfer time from 28 ms to 9 ms on 3G.
 
 This isn’t about inventing new tech. It’s about using the right tool for the job. In 2026, the job is to move money reliably on unreliable networks, not to build the prettiest REST API.
 
@@ -115,10 +112,7 @@ We used Kotlin 1.9 and FlatBuffers 24.3.0. The biggest surprise was that gzip wa
 
 Not every system needs to be rebuilt for African networks. The conventional REST+JSON+OAuth2 stack works fine in these cases:
 
-1. **Internal admin dashboards** used by staff on uncapped fibre or Wi-Fi. The users are not paying per byte, and the network is reliable.
-2. **APIs for fintech partners in Europe or North America** who are on fibre. Their users are not your primary audience.
-3. **GraphQL APIs for web apps** where the frontend is on the same network as the backend (e.g., same AWS region). The latency is low, and the payload is small.
-4. **User-facing APIs for users in major cities** (Lagos, Nairobi, Accra) on 4G or better. The network is reliable enough that the overhead of binary protocols or offline queues isn’t justified.
+1. **Internal admin dashboards** used by staff on uncapped fibre or Wi-Fi. The users are not paying per byte, and the network is reliable. 2. **APIs for fintech partners in Europe or North America** who are on fibre. Their users are not your primary audience. 3. **GraphQL APIs for web apps** where the frontend is on the same network as the backend (e.g., same AWS region). The latency is low, and the payload is small. 4. **User-facing APIs for users in major cities** (Lagos, Nairobi, Accra) on 4G or better. The network is reliable enough that the overhead of binary protocols or offline queues isn’t justified.
 
 In these cases, the standard advice is correct. But if your users are on 3G, on the move, or paying per MB, you need to optimize differently.
 
@@ -127,30 +121,23 @@ In these cases, the standard advice is correct. But if your users are on 3G, on 
 Here’s a simple decision tree we use when evaluating new features:
 
 1. **Who are your users?**
-   - If >50% are on 3G or worse, or paying per MB, lean toward binary protocols, streaming, and offline-first.
-   - If >50% are on 4G+ or fibre, REST+JSON+webhooks is fine.
+   - If >50% are on 3G or worse, or paying per MB, lean toward binary protocols, streaming, and offline-first. - If >50% are on 4G+ or fibre, REST+JSON+webhooks is fine.
 
 2. **What’s the payload size?**
-   - If average payload >1 KB, consider Protobuf/FlatBuffers + compression.
-   - If payload <500 bytes, JSON is fine.
+   - If average payload >1 KB, consider Protobuf/FlatBuffers + compression. - If payload <500 bytes, JSON is fine.
 
 3. **How critical is latency?**
-   - If sub-500 ms latency matters (e.g., USSD, mobile POS), use binary + streaming.
-   - If latency >1s is acceptable (e.g., admin dashboards), REST+JSON is fine.
+   - If sub-500 ms latency matters (e.g., USSD, mobile POS), use binary + streaming. - If latency >1s is acceptable (e.g., admin dashboards), REST+JSON is fine.
 
 4. **How reliable is the network path?**
-   - If your backend is in us-east-1 and users are in Nairobi, assume the path is unreliable. Use SSE or offline queues.
-   - If your backend is in af-south-1 and users are in Cape Town, the path is more reliable.
+   - If your backend is in us-east-1 and users are in Nairobi, assume the path is unreliable. Use SSE or offline queues. - If your backend is in af-south-1 and users are in Cape Town, the path is more reliable.
 
 5. **What’s the cost of failure?**
-   - If a failed request costs $0.01 (e.g., a balance check), retry aggressively.
-   - If a failed request costs $100 (e.g., a payout), use idempotency keys, offline queues, and manual recovery flows.
+   - If a failed request costs $0.01 (e.g., a balance check), retry aggressively. - If a failed request costs $100 (e.g., a payout), use idempotency keys, offline queues, and manual recovery flows.
 
 Here’s a quick checklist to run in the next 10 minutes:
 
-- Measure your median and p99 latency from your primary user regions to your backend.
-- Check your top 5 API endpoints for average payload size.
-- Review your error logs for timeout-related failures and webhook delivery issues.
+- Measure your median and p99 latency from your primary user regions to your backend. - Check your top 5 API endpoints for average payload size. - Review your error logs for timeout-related failures and webhook delivery issues.
 
 If you see >5% timeout failures or >10% webhook delivery issues, you’re in the “optimize” zone. If not, you’re in the “standard stack” zone.
 
@@ -184,38 +171,25 @@ Regulations in 2026 don’t require binary protocols or offline queues. But they
 If I were building a new fintech API in 2026, here’s what I’d do differently:
 
 1. **Start with offline-first.**
-   - Use a local queue (SQLite, PouchDB, or AsyncStorage) to store requests when offline.
-   - Sync when back online using exponential backoff and jitter.
-   - This isn’t optional for users on the move.
+   - Use a local queue (SQLite, PouchDB, or AsyncStorage) to store requests when offline. - Sync when back online using exponential backoff and jitter. - This isn’t optional for users on the move.
 
 2. **Use binary protocols for heavy payloads.**
-   - For bulk transfers, use FlatBuffers or Protobuf.
-   - For real-time updates, use WebTransport or SSE.
-   - Avoid JSON for payloads >500 bytes.
+   - For bulk transfers, use FlatBuffers or Protobuf. - For real-time updates, use WebTransport or SSE. - Avoid JSON for payloads >500 bytes.
 
 3. **Set aggressive timeouts and jitter.**
-   - Default timeout: 3s for mobile, 1s for web.
-   - Client-side retries: 0–2s jitter, max 3 retries.
-   - Server-side: 5s timeout for async endpoints.
+   - Default timeout: 3s for mobile, 1s for web. - Client-side retries: 0–2s jitter, max 3 retries. - Server-side: 5s timeout for async endpoints.
 
 4. **Use idempotency keys everywhere.**
-   - For all mutation endpoints (payouts, transfers, top-ups).
-   - Store keys in Redis 7.2 with TTL 24h.
-   - This prevents duplicates from retries and network splits.
+   - For all mutation endpoints (payouts, transfers, top-ups). - Store keys in Redis 7.2 with TTL 24h. - This prevents duplicates from retries and network splits.
 
 5. **Measure network conditions per region.**
-   - Use synthetic monitoring from user regions to detect latency spikes.
-   - Alert on >2s p99 latency or >5% packet loss.
+   - Use synthetic monitoring from user regions to detect latency spikes. - Alert on >2s p99 latency or >5% packet loss.
 
 6. **Cache aggressively.**
-   - Use Redis 7.2 for local caching with TTL 5s–60s.
-   - Cache user profiles, product catalogs, and static data.
-   - This cuts payload size and reduces load on your backend.
+   - Use Redis 7.2 for local caching with TTL 5s–60s. - Cache user profiles, product catalogs, and static data. - This cuts payload size and reduces load on your backend.
 
 7. **Avoid webhooks for critical events.**
-   - Use SSE or WebTransport for push notifications.
-   - For async events, use a message queue (Redis Streams, NATS, or Kafka).
-   - This cuts delivery failures from 14% to <2%.
+   - Use SSE or WebTransport for push notifications. - For async events, use a message queue (Redis Streams, NATS, or Kafka). - This cuts delivery failures from 14% to <2%.
 
 We built a new API in 2026 using these principles. The first version took 6 weeks. The old REST API took 12 weeks. The new API had 3% fewer failed transactions and 42% lower mobile data usage. Users rated it as “faster” even though the backend was the same. That’s the power of optimizing for the edge.
 
@@ -234,7 +208,7 @@ The stack that works in 2026 is:
 
 This isn’t about inventing new tech. It’s about using the right tool for the job. In 2026, the job is to move money reliably on unreliable networks — not to build the prettiest REST API.
 
-The biggest mistake I see teams make is assuming that adding more CDN points or throwing more servers at the problem will fix it. It won’t. The fix is in the protocol, the payload, and the retry strategy. 
+The biggest mistake I see teams make is assuming that adding more CDN points or throwing more servers at the problem will fix it. It won’t. The fix is in the protocol, the payload, and the retry strategy.
 
 
 ## Frequently Asked Questions
@@ -255,24 +229,18 @@ Use a local queue with SQLite or AsyncStorage. When offline, queue the request. 
 
 Assuming that adding more CDN points or throwing more servers at the problem will fix it. In Nigeria, we added CloudFront to our REST API. It cut latency by 40 ms from Nairobi to our backend, but the last 200 ms (the user’s 3G link) still dominated. The CDN didn’t fix the timeout cascade or the payload bloat. We still needed to redesign the API.
 
-
-
 Open your API’s top 3 endpoints. Measure their median payload size, p99 latency from your primary user regions, and error rate. If any endpoint has >1 KB payload, >2s p99 latency, or >5% errors, switch to a binary protocol and add a local cache. Do this today and you’ll see results in a week."
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

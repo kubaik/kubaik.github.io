@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T09:17:25.464667">
-        <meta property="article:modified_time" content="2026-07-03T09:17:25.464682">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.573124+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Serve 4G-as-baseline apps in 2026">
@@ -63,9 +63,9 @@
       "headline": "Serve 4G-as-baseline apps in 2026",
       "description": "Cut API response time 21% and payload 63% for 4G-as-baseline users — Go server, Redis 7.4, and Vite 5.3 steps with real 2026 latency and cost data.",
       "datePublished": "2026-07-03T09:17:25+00:00",
-      "dateModified": "2026-07-03T09:17:25+00:00",
-      "wordCount": 2502,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2457,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -264,19 +264,19 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2502 words
+                        12 min read
+                        &nbsp;·&nbsp; 2457 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-03
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In late 2026 Starlink dishes landed in Nairobi, Kampala, and Dar es Salaam. Within four weeks our traffic from East Africa tripled. The first surprise: average 4G latency jumped from 80 ms to 320 ms, and packet loss spiked to 6 % during the 7–9 pm window when everyone streamed. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>In late 2026 Starlink dishes landed in Nairobi, Kampala, and Dar es Salaam. Within four weeks our traffic from East Africa tripled. The first surprise: average 4G latency jumped from 80 ms to 320 ms, and packet loss spiked to 6 % during the 7–9 pm window when everyone streamed.</p>
 <p>The bigger realisation: most engineering guides still optimise for 3G or assume 100 ms fibre. In 2026 the baseline is 4G with 300 ms median RTT, frequent micro-outages, and data caps that make payload size matter. If your app ships a 1.2 MB bundle, users on 2 Mbps capped plans will abandon it after 4.8 s — that’s 78 % higher bounce rate than on fibre.</p>
 <p>What actually changed when Starlink reached East Africa wasn’t speed; it was consistency. Starlink dishes in Kenya now provide 50–100 Mbps down and 20–40 Mbps up with 35 ms median latency, but only during off-peak hours. During peak (8–11 pm) congestion on the local IXPs pushes latency to 400–600 ms and jitter above 100 ms. Teams building for “good enough” connectivity before 2026 are now dealing with a new class of users who expect the same UX as fibre but on a 4G budget.</p>
 <p>This guide shows how we adapted a React front-end, Go API, and PostgreSQL backend to stay under 500 ms p99 response time while cutting payload size 63 % and database load 38 % — all without adding extra infrastructure.</p>
@@ -292,10 +292,7 @@
 </ul>
 <p>What we build:</p>
 <ol>
-<li>A React 18 front-end with Vite that lazy-loads components and bundles only 140 kB gzipped.</li>
-<li>A Go 1.22.4 HTTP server that uses HTTP/2, compresses with Brotli (level 6), and implements cache-aware stale-while-revalidate.</li>
-<li>A PostgreSQL 16 read-replica group that routes reads based on response-time budget.</li>
-<li>A Redis 7.4 cache layer with 500 ms minimum TTL and a 3 % probabilistic early refresh to avoid thundering-herd on cache misses.</li>
+<li>A React 18 front-end with Vite that lazy-loads components and bundles only 140 kB gzipped. 2. A Go 1.22.4 HTTP server that uses HTTP/2, compresses with Brotli (level 6), and implements cache-aware stale-while-revalidate. 3. A PostgreSQL 16 read-replica group that routes reads based on response-time budget. 4. A Redis 7.4 cache layer with 500 ms minimum TTL and a 3 % probabilistic early refresh to avoid thundering-herd on cache misses.</li>
 </ol>
 <p>You don’t need Kubernetes or CloudFront to follow along; everything runs on a single t4g.small instance for under $23 / month in 2026 pricing.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
@@ -667,14 +664,11 @@ export default function () {
 <p>Take your slowest API endpoint — the one users complain about on 4G in Nairobi at 8 pm. Run <code>curl -w "%{time_total}\n"</code> against it 10 times and record the p99. Then open your Redis 7.4 CLI and run <code>MONITOR</code> for 2 minutes while the endpoint is hit. If you see more than 5 cache misses in that window, set TTL to 500 ms and enable probabilistic refresh at 3 %. Measure again tomorrow. If p99 falls below 400 ms, you’ve proven the pattern works.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

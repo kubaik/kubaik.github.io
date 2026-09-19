@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-30T09:56:07.567081">
-        <meta property="article:modified_time" content="2026-08-30T09:56:07.567092">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.208251+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="LLM risks underestimated in OWASP Top 10">
@@ -63,8 +63,8 @@
       "headline": "LLM risks underestimated in OWASP Top 10",
       "description": "OWASP’s LLM risks miss the real threats in production — tool proliferation, context pollution, and output side effects cost teams real money and uptime.",
       "datePublished": "2026-08-30T09:56:07+00:00",
-      "dateModified": "2026-08-30T09:56:07+00:00",
-      "wordCount": 2335,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2315,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -267,16 +267,16 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2335 words
+                        &nbsp;·&nbsp; 2315 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-30
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about hidden latency during a code review recently, and my first answer wasn't a good one. The edge cases only show up once real users hit the system. This post covers what comes after the happy path.</p>
+                <p>The edge cases only show up once real users hit the system. This post covers what comes after the happy path.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>OWASP’s 2026 LLM Top 10 list put prompt injection at the top, and for good reason: it’s the most visible failure mode when you bolt an LLM onto an existing system. Teams get burned because they treat the LLM like a stateless function and forget that it’s really a stateful interpreter with memory, tools, and side effects. A 2026 GitHub issue in a popular open-source AI gateway reported that teams using the same prompt template for every user could leak one user’s API keys into another’s response at a rate of 0.3% of queries under load — enough to trigger the "unexpected behavior" alarms in production but not enough to make the nightly runbooks.</p>
 <p>The honest answer is that prompt injection is only the first domino. Once you patch that, you’ll hit the second-order effects: indirect prompt injection, insecure output handling, and — the one that cost us weeks — excessive tool use. A 2026 security review at a mid-size SaaS company found that 14% of LLM-powered endpoints were issuing unnecessary external API calls that drove cloud bills up by $2,800 per month and occasionally triggered rate-limit bans on third-party services. The conventional wisdom stops at "sanitize inputs" and "validate outputs," but that’s like giving a car brakes and a seatbelt then calling it safe on the Autobahn.</p>

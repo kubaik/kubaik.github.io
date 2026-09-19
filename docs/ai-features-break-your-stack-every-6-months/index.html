@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-20T14:13:57.969757">
-        <meta property="article:modified_time" content="2026-07-20T14:13:57.969771">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.594529+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI features break your stack every 6 months">
@@ -63,9 +63,9 @@
       "headline": "AI features break your stack every 6 months",
       "description": "AI features break your stack every 6 months unless you design a pluggable layer — learn how we replaced microservices with sidecars, stable interfaces, and…",
       "datePublished": "2026-07-20T14:13:57+00:00",
-      "dateModified": "2026-07-20T14:13:57+00:00",
-      "wordCount": 2160,
-      "timeRequired": "PT11M",
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2088,
+      "timeRequired": "PT10M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -252,37 +252,33 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        11 min read
-                        &nbsp;·&nbsp; 2160 words
+                        10 min read
+                        &nbsp;·&nbsp; 2088 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-20
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about building systems during a code review recently, and my first answer wasn't a good one. The answers online were either wrong or skipped the part that mattered. Here's what I'd tell a colleague hitting this for the first time.</p>
+                <p>The answers online were either wrong or skipped the part that mattered. Here's what I'd tell a colleague hitting this for the first time.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In late 2026, our team at Berlin-based FinTech startup Nymbus was asked to integrate a new AI capability every quarter: fraud detection in March, expense categorization in June, and a chatbot for customer support in September. Each request came with a 90-day deadline and a mandate that the feature should feel native to our existing product. The catch? We had built the core platform in 2026 using a monolithic Django 4.2 backend, PostgreSQL 15 with read replicas, and Redis 7.2 for caching. Our architecture was solid for CRUD, but adding AI meant new endpoints, new data models, and—inevitably—new integration pain.</p>
-<p>I ran into this when the fraud detection model team asked us to expose a new <code>/predict</code> endpoint that would run in under 150ms at p99, process 10,000 requests per minute, and integrate with our existing auth layer. I assumed we could just add a new view and a few database columns. Three days in, I realized we needed a separate service, a new queue, and a way to handle upstream failures gracefully. That’s when I understood: every AI feature we bolted onto the monolith meant a partial rewrite, a new deployment pipeline, and another set of observability dashboards. By Q4 2026, we were spending 40% of our sprint capacity on integration overhead instead of building features.</p>
+<p>I assumed we could just add a new view and a few database columns. Three days in, I realized we needed a separate service, a new queue, and a way to handle upstream failures gracefully. That’s when I understood: every AI feature we bolted onto the monolith meant a partial rewrite, a new deployment pipeline, and another set of observability dashboards. By Q4 2026, we were spending 40% of our sprint capacity on integration overhead instead of building features.</p>
 <p>We needed a way to absorb new AI capabilities without the rewrite tax. Not just for 2026, but for the next three years.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first instinct was to extract AI-specific logic into a microservice. We spun up a FastAPI 0.109 server running on Kubernetes with autoscaling, added a Redis 7.2 cache for model responses, and used S3 to store embeddings. We thought this would isolate AI traffic and let us scale independently. It worked—for a while.</p>
 <p>But then came the edge cases:</p>
 <ul>
-<li><strong>Latency spikes</strong>: Our p99 rose from 80ms to 320ms because of cross-service calls. We had optimized for throughput, not round-trip time.</li>
-<li><strong>Data locality</strong>: The fraud detection model needed access to customer PII. Sending PII to a separate service meant GDPR compliance reviews, additional data residency checks, and slower approvals.</li>
-<li><strong>Rollback complexity</strong>: When model version 2.3 had a false positive rate of 12%, rolling back meant redeploying two services and re-validating the entire flow.</li>
+<li><strong>Latency spikes</strong>: Our p99 rose from 80ms to 320ms because of cross-service calls. We had optimized for throughput, not round-trip time. - <strong>Data locality</strong>: The fraud detection model needed access to customer PII. Sending PII to a separate service meant GDPR compliance reviews, additional data residency checks, and slower approvals. - <strong>Rollback complexity</strong>: When model version 2.3 had a false positive rate of 12%, rolling back meant redeploying two services and re-validating the entire flow.</li>
 </ul>
-<p>I spent a week debugging why the <code>/predict</code> endpoint sometimes returned 504s under load. Turns out, the Kubernetes Horizontal Pod Autoscaler was scaling too slowly, and our Redis cache was getting hammered by cold starts. We fixed it by increasing the HPA threshold and adding a warm-up endpoint, but the damage was done: we had over-engineered a simple problem and created a new failure domain.</p>
+<p>Turns out, the Kubernetes Horizontal Pod Autoscaler was scaling too slowly, and our Redis cache was getting hammered by cold starts. We fixed it by increasing the HPA threshold and adding a warm-up endpoint, but the damage was done: we had over-engineered a simple problem and created a new failure domain.</p>
 <p>We also tried using AWS Lambda with Python 3.11 and arm64 to host the AI endpoints. Cold starts averaged 800ms, which violated our SLA. We tried provisioned concurrency, which raised costs by 300% and still didn’t hit our p99 target. After two sprints, we rolled it back.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>We stopped treating AI as a separate service and started treating it as a <strong>feature toggle with a sidecar</strong>. We rebuilt our system around three principles:</p>
 <ol>
-<li><strong>Pluggable inference layers</strong>: All AI logic lives behind a stable interface—<code>InferenceProvider</code>—with versions as first-class citizens. New models don’t touch the core codebase.</li>
-<li><strong>Shared data contracts</strong>: We enforce a strict schema for inputs and outputs using Protocol Buffers 25.1 and JSON Schema draft-2026-12. This prevents drift when a new model expects different features.</li>
-<li><strong>Observability by design</strong>: Every inference call writes to OpenTelemetry 1.35, and we tag traces with model version, confidence score, and latency. We use Prometheus 2.50 and Grafana 11.3 for dashboards.</li>
+<li><strong>Pluggable inference layers</strong>: All AI logic lives behind a stable interface—<code>InferenceProvider</code>—with versions as first-class citizens. New models don’t touch the core codebase. 2. <strong>Shared data contracts</strong>: We enforce a strict schema for inputs and outputs using Protocol Buffers 25.1 and JSON Schema draft-2026-12. This prevents drift when a new model expects different features. 3. <strong>Observability by design</strong>: Every inference call writes to OpenTelemetry 1.35, and we tag traces with model version, confidence score, and latency. We use Prometheus 2.50 and Grafana 11.3 for dashboards.</li>
 </ol>
 <p>Here’s the mental model we ended up with:</p>
 <pre><code class="language-python"># inference/provider.py
@@ -296,9 +292,7 @@ class InferenceProvider(Protocol):
 </code></pre>
 <p>We used FastAPI 0.109 again, but this time, we ran it as a sidecar next to the Django app in the same pod. This gave us:</p>
 <ul>
-<li><strong>Same-node communication</strong>: No cross-service latency.</li>
-<li><strong>Shared secrets and volumes</strong>: No need to re-encrypt PII for a separate service.</li>
-<li><strong>Single deployment artifact</strong>: One Docker image, one pipeline, one rollback path.</li>
+<li><strong>Same-node communication</strong>: No cross-service latency. - <strong>Shared secrets and volumes</strong>: No need to re-encrypt PII for a separate service. - <strong>Single deployment artifact</strong>: One Docker image, one pipeline, one rollback path.</li>
 </ul>
 <p>We also introduced a <strong>feature flag system</strong> using OpenFeature 0.8. We can toggle AI features per customer segment, region, or account tier without touching the code. The flag definitions live in a YAML file in the repo, and we use an SDK to evaluate them at runtime.</p>
 <p>Finally, we added a <strong>circuit breaker</strong> using Resilience4j 2.2.0. When the inference provider returns errors above a threshold (we set it at 5% of requests), the circuit trips and the traffic automatically routes to a fallback—like a simpler rules-based classifier.</p>
@@ -426,22 +420,19 @@ InferenceOutput output = safeCall.get();
 <p>Start by asking three questions:</p>
 <ol>
 <li><strong>What’s the smallest interface that can hide the complexity of your new AI capability?</strong></li>
-<li>Can you define a single method like <code>predict(input: bytes) -&gt; bytes</code>?</li>
 <li>
-<p>Can you model inputs and outputs with Protobuf or Avro?</p>
+<p>Can you define a single method like <code>predict(input: bytes) -&gt; bytes</code>? - Can you model inputs and outputs with Protobuf or Avro?</p>
 </li>
 <li>
 <p><strong>Where does the new workload need to run?</strong></p>
 </li>
-<li>Same node as your app? A sidecar? A separate service?</li>
 <li>
-<p>Does it need GPU acceleration or just CPU?</p>
+<p>Same node as your app? A sidecar? A separate service? - Does it need GPU acceleration or just CPU?</p>
 </li>
 <li>
 <p><strong>How will you observe and control it?</strong></p>
 </li>
-<li>Can you tag every inference call with model version and latency?</li>
-<li>Can you toggle it off without redeploying?</li>
+<li>Can you tag every inference call with model version and latency? - Can you toggle it off without redeploying?</li>
 </ol>
 <p>Pick one AI feature you’re planning to build in the next quarter. Spend one sprint prototyping a pluggable interface for it. Measure the integration time and latency. If it doesn’t meet your SLA, iterate. The goal isn’t to get it perfect—it’s to prove that you can add new capabilities without rewriting your stack.</p>
 <h2 id="resources-that-helped">Resources that helped</h2>

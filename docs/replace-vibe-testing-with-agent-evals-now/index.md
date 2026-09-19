@@ -4,7 +4,7 @@ I've hit the same evaluationdriven development mistake in more than one producti
 
 ## The gap between what the docs say and what production needs
 
-Most teams still validate AI agents by eyeballing outputs, calling it “vibe testing.” A 2026 survey of 380 engineering teams found 64% rely on manual spot-checks for agent correctness, even when the agents handle customer orders, financial reports, or security alerts. I ran into this myself when a new customer-facing agent auto-replied with pricing in euros instead of the user’s local currency. The bug sat in production for four hours because no automated test caught it; the only signal we had was a Slack thread from a confused support agent.
+Most teams still validate AI agents by eyeballing outputs, calling it “vibe testing.” A 2026 survey of 380 engineering teams found 64% rely on manual spot-checks for agent correctness, even when the agents handle customer orders, financial reports, or security alerts. The bug sat in production for four hours because no automated test caught it; the only signal we had was a Slack thread from a confused support agent.
 
 The docs promise “easy evaluation with LLM-as-a-judge,” but that glosses over the hard parts: how to generate consistent, reproducible test cases at scale, how to detect regressions without polling the production agent every 5 minutes, and how to keep the evaluation honest when the agent’s own outputs feed back into its training loop. Production needs something stricter than vibe testing—something that runs in CI, fails the build on regressions, and gives you a clear metric to optimise.
 
@@ -28,7 +28,7 @@ The EDD loop has four moving parts that most blog posts omit.
 
 The loop runs nightly against the main branch and on every pull request. When a regression appears, the team gets a diff of the failing scenarios, the agent’s outputs, and the evaluator’s rationale—no Slack thread required.
 
-I was surprised how often the evaluator’s rationale was more useful than the agent’s own trace. Last month our agent started summarising long documents with hallucinated names of executives. The rule checks passed because the summary plainly contained the right keywords, but the LLM judge flagged the inconsistency. Without that second layer, we would have shipped the bug.
+Last month our agent started summarising long documents with hallucinated names of executives. The rule checks passed because the summary plainly contained the right keywords, but the LLM judge flagged the inconsistency. Without that second layer, we would have shipped the bug.
 
 ## Step-by-step implementation with real code
 
@@ -262,7 +262,6 @@ Update golden scenarios when your product changes in a way that materially affec
 
 **Why does the evaluator sometimes disagree with human judgment?**
 The LLM judge is trained on general language patterns, not your specific domain. In one case our agent returned “Your order #12345 has been shipped” but the judge penalised it for not including a tracking link. We fixed it by adding a rule check for tracking URLs and lowering the LLM judge’s weight for that scenario. Always keep a human review step for the top 5% of edge cases; in 2026 no judge is perfect for every domain.
-
 
 ---
 

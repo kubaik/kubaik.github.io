@@ -1,10 +1,8 @@
 # Survive 90s DB failover without melting
 
-I ran into this building eventual problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 We built a shopping cart service in 2026 that handled 12,000 orders per minute at peak on Black Friday. On Cyber Monday, the primary PostgreSQL RDS instance failed over to the standby. The failover took 78 seconds. During those 78 seconds, the cart service wrote 3,240 orphaned line items in the inventory table that never had corresponding orders. That’s 3,240 lost stock units and 87 angry customers who put items in their cart but couldn’t check out. We had eventual consistency patterns in place, but they weren’t designed for cascading failures. The patterns I list below are what we rebuilt after that outage — each one proven to keep systems up when the database goes down.
-
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
 
 ## Why this list exists (what I was actually trying to solve)
 
@@ -16,10 +14,7 @@ Eventual consistency isn’t optional for us; it’s the price of staying online
 
 I measured each pattern with four metrics that matter in 2026:
 
-1. **Recovery time objective (RTO)** — how fast the system returns to normal after a database outage. We used a synthetic failover trigger in our Aurora cluster that simulates a primary instance reboot. The RTO includes detection, leadership election, and traffic redirection.
-2. **Data loss window** — the maximum amount of uncommitted data we’re willing to lose on a failover. We set the bar at 1 second of writes for the cart service.
-3. **Operational overhead** — the number of extra services, dashboards, and alerts we have to maintain. We counted lines of configuration in our Terraform modules and the number of new CloudWatch alarms.
-4. **Incremental cost** — the AWS bill delta per million requests when the pattern is active versus disabled. We used AWS Cost Explorer with a 30-day baseline and applied each pattern for a week.
+1. **Recovery time objective (RTO)** — how fast the system returns to normal after a database outage. We used a synthetic failover trigger in our Aurora cluster that simulates a primary instance reboot. The RTO includes detection, leadership election, and traffic redirection. 2. **Data loss window** — the maximum amount of uncommitted data we’re willing to lose on a failover. We set the bar at 1 second of writes for the cart service. 3. **Operational overhead** — the number of extra services, dashboards, and alerts we have to maintain. We counted lines of configuration in our Terraform modules and the number of new CloudWatch alarms. 4. **Incremental cost** — the AWS bill delta per million requests when the pattern is active versus disabled. We used AWS Cost Explorer with a 30-day baseline and applied each pattern for a week.
 
 We benchmarked every pattern on a staging cluster that mirrored production traffic with Gatling scripts replaying 10,000 requests per minute. Each run lasted 15 minutes of steady load, then we triggered an Aurora failover and recorded the results. The table below shows the raw numbers we collected in July 2026.
 
@@ -239,12 +234,9 @@ We dropped it because DynamoDB DAX is not designed for durability. It’s a cach
 
 Use the decision tree below to pick the pattern that fits your constraints. Answer the questions in order — the first “yes” path gives you the pattern.
 
-Can you tolerate 100 ms of data loss?
-- Yes → Use client-side buffering with SQLite (RTO 0.3 s)
-- No → Can you run Kafka?
-  - Yes → Use Debezium + Kafka (RTO 12 s, data loss 2 ms)
-  - No → Can you use DynamoDB Streams?
-    - Yes → Use outbox pattern with DynamoDB Streams (RTO 4 s)
+Can you tolerate 100 ms of data loss? - Yes → Use client-side buffering with SQLite (RTO 0.3 s)
+- No → Can you run Kafka? - Yes → Use Debezium + Kafka (RTO 12 s, data loss 2 ms)
+  - No → Can you use DynamoDB Streams? - Yes → Use outbox pattern with DynamoDB Streams (RTO 4 s)
     - No → Use saga orchestration with Step Functions (RTO 30 s, zero data loss)
 
 The tree above is how we onboard new services today. We also weigh the cost delta against our budget. For a service with 1 million requests per day, $0.12 per million is trivial; for a service with 100 million requests per day, $0.78 per million adds up fast.
@@ -282,29 +274,22 @@ If you only implement one pattern from this list, implement **client-side buffer
 
 Here’s what to do in the next 30 minutes:
 
-1. Create a new Terraform module that provisions a 1 GB gp3 EBS volume and mounts it as `/data` in your pod.
-2. Add a seed SQLite file with the schema you need. Include `PRAGMA journal_mode = WAL;` in your schema.
-3. Change your write path to write to SQLite first, then return success to the user.
-4. Deploy to staging and run a 5-minute failover test.
+1. Create a new Terraform module that provisions a 1 GB gp3 EBS volume and mounts it as `/data` in your pod. 2. Add a seed SQLite file with the schema you need. Include `PRAGMA journal_mode = WAL;` in your schema. 3. Change your write path to write to SQLite first, then return success to the user. 4. Deploy to staging and run a 5-minute failover test.
 
 That’s it. You’ll know within an hour whether the pattern fits your load and data loss tolerance. If it does, roll it out to production next week. If it doesn’t, you’ll have concrete numbers to justify the next pattern on the list.
 
 No fancy frameworks, no Kafka clusters, no multi-day migrations — just a 5 MB SQLite file and a 10-line change to your write path. That’s how you keep systems up when the database fails.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

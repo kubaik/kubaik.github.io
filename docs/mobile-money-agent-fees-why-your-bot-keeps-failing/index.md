@@ -1,6 +1,6 @@
 # Mobile money agent fees: why your bot keeps failing
 
-I ran into this cost reliability problem while migrating a service under a hard deadline. It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly.
+It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly.
 
 ## The error and why it's confusing
 
@@ -158,10 +158,7 @@ Teams that run this test in CI catch session contract mismatches before deploy. 
 
 ## Related errors you might hit next
 
-- **ERR_SESSION_INVALID**: The provider explicitly invalidated the session; usually paired with a `session_id` expiry. Fix: use explicit session IDs and refresh them after expiry.
-- **ERR_RATE_LIMIT**: Provider throttled due to too many requests per session. Fix: reduce concurrency or batch requests.
-- **ERR_INVALID_SIGNATURE**: Wrong HMAC signature, often because the agent reused a stale session key. Fix: regenerate signature per request.
-- **ERR_TIMEOUT**: TCP-level timeout before HTTP response. Fix: increase client timeout and add circuit breaker.
+- **ERR_SESSION_INVALID**: The provider explicitly invalidated the session; usually paired with a `session_id` expiry. Fix: use explicit session IDs and refresh them after expiry. - **ERR_RATE_LIMIT**: Provider throttled due to too many requests per session. Fix: reduce concurrency or batch requests. - **ERR_INVALID_SIGNATURE**: Wrong HMAC signature, often because the agent reused a stale session key. Fix: regenerate signature per request. - **ERR_TIMEOUT**: TCP-level timeout before HTTP response. Fix: increase client timeout and add circuit breaker.
 
 ## When none of these work: escalation path
 
@@ -179,11 +176,9 @@ Most providers in 2026 have dedicated merchant support Slack channels for API is
 
 Locally, your agent’s TCP connection is short-lived and the provider sees each request as a fresh session. In production, your agent reuses the same TCP socket for multiple requests, which the provider treats as a single session with a 90-second idle timeout. The NAT Gateway or load balancer in your cloud environment keeps the socket alive longer than 90 seconds, so the provider times out the session while the socket is still open.
 
-
 **How can I reduce latency after switching to per-request clients?**
 
 Use HTTP/2 or HTTP/3 where the provider supports it, or enable connection pooling only for non-USSD endpoints (e.g., balance inquiries) that don’t require fresh sessions. In Python, you can use `httpx.HTTPTransport(http2=True)` if the provider supports HTTP/2. A 2026 benchmark from a Lagos fintech showed a 40% latency drop when switching from HTTP/1.1 to HTTP/2 for balance checks while keeping per-request clients for USSD payments.
-
 
 **Is there a way to share sessions safely across async workers?**
 
@@ -206,7 +201,6 @@ async function sendWithSharedSession(payload) {
 ```
 
 This pattern reduces latency spikes from TLS handshakes but requires careful error handling for session expiry.
-
 
 **What’s the safest way to retry failed payments without burning money?**
 
@@ -235,7 +229,6 @@ for attempt in range(3):
 ```
 
 This policy caps cost burn and respects the provider’s session contract.
-
 
 ---
 

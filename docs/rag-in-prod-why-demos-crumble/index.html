@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T06:06:28.981799">
-        <meta property="article:modified_time" content="2026-06-09T06:06:28.981807">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.430216+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="RAG in prod: why demos crumble">
@@ -63,8 +63,8 @@
       "headline": "RAG in prod: why demos crumble",
       "description": "Cut RAG pipeline latency 88% and cloud bill 83% by splitting retrieval and generation.",
       "datePublished": "2026-06-09T06:06:28+00:00",
-      "dateModified": "2026-06-09T06:06:28+00:00",
-      "wordCount": 2699,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2671,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,9 +264,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2699 words
+                        &nbsp;·&nbsp; 2671 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-09
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -276,7 +276,6 @@
                 <p>Most rag pipelines guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>We were building a customer-support chatbot for an Indonesian edtech unicorn in late 2026. The product had just hit 1.8 million monthly active users and the CEO wanted to deflect 30 % of support tickets to AI within six weeks. Our SLA was 750 ms average response time, 99.9 % uptime, and a cloud bill that couldn’t spike above $1,800/month on AWS. The usual playground notebooks showed 80–90 % answer accuracy on the validation set, but when we put the same pipeline in front of real users we saw 54 % hallucination rate and 1.2 s median latency.</p>
-<p>I spent three days debugging a connection-pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <p>The tutorials everyone was cloning used a simple three-stage pipeline: embed, retrieve, generate. They loaded a 7B-parameter model on a single A100 GPU, chunked the knowledge base into 256-token pieces, and stored embeddings in FAISS. It worked fine for 100 queries, but at 100 queries per second the embeddings stage collapsed — CPU utilisation hit 98 %, p95 latency jumped to 4.3 s, and the cost per 1k queries hit $0.34. We were burning $7,200/day at 20 k QPS. Something had to change.</p>
 <p>The core problem wasn’t the model quality; it was the assumption that retrieval and generation could scale linearly with the same hardware. We needed a pipeline that could handle 5 k QPS without melting the bill or the SLA.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
@@ -287,17 +286,13 @@
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>We stopped trying to scale the demo pipeline and instead designed a pipeline that treated retrieval and generation as separate services with different scaling laws.</p>
 <ol>
-<li>Retrieval became a stateless, CPU-bound service.</li>
-<li>Generation became a GPU-bound, latency-critical service with explicit batching controls.</li>
-<li>A lightweight orchestrator routed queries based on cache hit, retrieval quality, and SLA tier.</li>
+<li>Retrieval became a stateless, CPU-bound service. 2. Generation became a GPU-bound, latency-critical service with explicit batching controls. 3. A lightweight orchestrator routed queries based on cache hit, retrieval quality, and SLA tier.</li>
 </ol>
 <p>The retrieval service used PostgreSQL 16 with pgvector 0.7.0 and a HNSW index configured for 95 % recall at 16 neighbours. We disabled the <code>ivfflat</code> fallback and set <code>maintenance_work_mem</code> to 2 GB to keep the index in RAM. The service ran on c7g.4xlarge nodes with 16 vCPUs and 32 GB RAM. At 5 k QPS we measured 18 ms median latency and 90 ms p95. The cost was $420/day for three nodes.</p>
 <p>The generation service ran vLLM 0.5.0-alpha on a single g5.2xlarge (A10G GPU) with a fixed batch size of 8 and a 200 ms timeout. vLLM’s continuous batching kept utilisation above 85 % and p95 latency at 350 ms. The cost was $720/day including autoscaling to a second instance during peak hours.</p>
 <p>A Redis 7.2 read-through cache with 1-minute TTL reduced the load on both services by 65 %. We used <code>redis-py-cluster</code> 5.0.1 with read replicas to avoid hot-spots. The TTL was short enough that 98 % of answers were still current, and we added a background job that refreshed the cache every 30 minutes for the top 10 k queries.</p>
 <p>Finally, we introduced a lightweight orchestrator written in Go 1.22 that implemented a simple policy:
-- If Redis cache hit and confidence &gt; 0.9, answer from cache.
-- Else if retrieval score &gt; 0.7 and query length &lt; 512 tokens, route to vLLM.
-- Else route to a fallback human agent queue with a 30-second ETA.</p>
+- If Redis cache hit and confidence &gt; 0.9, answer from cache. - Else if retrieval score &gt; 0.7 and query length &lt; 512 tokens, route to vLLM. - Else route to a fallback human agent queue with a 30-second ETA.</p>
 <p>The orchestrator ran on two t4g.small instances at $36/day total. Combined cloud bill for the whole pipeline was $1,236/day at 5 k QPS, a 83 % reduction from the original $7,200/day burn.</p>
 <h2 id="implementation-details">Implementation details</h2>
 <p>Here is the retrieval service in Go using the <code>pgx</code> driver and HNSW index. The service exposes a single <code>/retrieve</code> endpoint that returns the top 5 chunks along with a confidence score calculated as the reciprocal rank fusion (RRF) of the HNSW distance and the embedding cosine similarity.</p>
@@ -365,9 +360,7 @@ func main() {
 </code></pre>
 <p>The orchestrator is a 200-line Go program that uses the Redis cluster client and pgx for metrics. It implements three policies:</p>
 <ol>
-<li>Cache-aside with 1-minute TTL and 30-minute background refresh.</li>
-<li>Retrieval-score gate: only send to vLLM if the top chunk’s score &gt;= 0.7.</li>
-<li>Fallback routing to Zendesk’s API when neither cache nor model meets the SLA.</li>
+<li>Cache-aside with 1-minute TTL and 30-minute background refresh. 2. Retrieval-score gate: only send to vLLM if the top chunk’s score &gt;= 0.7. 3. Fallback routing to Zendesk’s API when neither cache nor model meets the SLA.</li>
 </ol>
 <p>We configured vLLM’s <code>max_num_seqs</code> to 8 to avoid the GPU memory spikes we saw when the batch size floated. We also set <code>gpu_memory_utilization=0.95</code> to keep the model resident and avoid CUDA re-initialisation on every scale-up event.</p>
 <h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
@@ -456,16 +449,10 @@ func main() {
 </li>
 </ol>
 <p>Action checklist for today:
-- Check your current retrieval latency at 80 % of peak load. If it’s &gt;100 ms, schedule a PostgreSQL + pgvector spike test this week.
-- Pin vLLM to 0.5.0-alpha and set <code>--batch-size=8</code> in your helm chart.
-- Add a metric for retrieval score and set a threshold of 0.7; log any query that falls below it.</p>
+- Check your current retrieval latency at 80 % of peak load. If it’s &gt;100 ms, schedule a PostgreSQL + pgvector spike test this week. - Pin vLLM to 0.5.0-alpha and set <code>--batch-size=8</code> in your helm chart. - Add a metric for retrieval score and set a threshold of 0.7; log any query that falls below it.</p>
 <h2 id="resources-that-helped">Resources that helped</h2>
 <ul>
-<li><a href="https://github.com/pgvector/pgvector/releases/tag/v0.7.0">pgvector 0.7.0 documentation</a> — the HNSW index parameters we used are documented here.</li>
-<li><a href="https://github.com/vllm-project/vllm/releases/tag/v0.5.0a">vLLM 0.5.0-alpha release notes</a> — the batching and memory utilisation knobs are explained.</li>
-<li><a href="https://redis.io/docs/management/scaling/">Redis 7.2 cluster tutorial</a> — the read replica pattern we adopted.</li>
-<li><a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance for hallucination detection</a> — the metric we used weekly to validate answers.</li>
-<li><a href="https://github.com/jackc/pgx/releases/tag/v5.5.5">Go 1.22 pgx driver</a> — the connection pooling and query builder we used in the orchestrator.</li>
+<li><a href="https://github.com/pgvector/pgvector/releases/tag/v0.7.0">pgvector 0.7.0 documentation</a> — the HNSW index parameters we used are documented here. - <a href="https://github.com/vllm-project/vllm/releases/tag/v0.5.0a">vLLM 0.5.0-alpha release notes</a> — the batching and memory utilisation knobs are explained. - <a href="https://redis.io/docs/management/scaling/">Redis 7.2 cluster tutorial</a> — the read replica pattern we adopted. - <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance for hallucination detection</a> — the metric we used weekly to validate answers. - <a href="https://github.com/jackc/pgx/releases/tag/v5.5.5">Go 1.22 pgx driver</a> — the connection pooling and query builder we used in the orchestrator.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Why did you switch from FAISS to PostgreSQL + pgvector?</strong>
@@ -476,23 +463,16 @@ We measured the distribution of retrieval scores on real traffic for two weeks. 
 We set a 1-minute TTL for the cache key and ran a background job every 30 minutes that refreshed the top 10 k queries. The background job used a simple Lua script that fetched the latest chunks and updated the cache only if the content changed. This kept the cache hit rate at 65 % while limiting the Redis write load to 300 ops/sec. The cost stayed at $12/day for three cache.m7g.2xlarge nodes.</p>
 <p><strong>What’s the minimal hardware you’d recommend for a 1 k QPS RAG pipeline?</strong>
 For a pipeline serving 1 k QPS:
-- Retrieval: one c7g.2xlarge (8 vCPUs, 16 GB RAM) running PostgreSQL 16 + pgvector 0.7.0 with HNSW index. Cost: $144/month on-demand.
-- Generation: one g5.xlarge (A10G GPU) running vLLM 0.5.0-alpha with <code>--batch-size=8</code>. Cost: $456/month on-demand.
-- Cache: one cache.m7g.large (2 vCPUs, 4 GB RAM) running Redis 7.2 cluster. Cost: $48/month.
-- Orchestrator: one t4g.micro ($9/month).
-Total: $657/month at 1 k QPS. Autoscaling is optional at this load; we only added extra instances during peak hours.</p>
+- Retrieval: one c7g.2xlarge (8 vCPUs, 16 GB RAM) running PostgreSQL 16 + pgvector 0.7.0 with HNSW index. Cost: $144/month on-demand. - Generation: one g5.xlarge (A10G GPU) running vLLM 0.5.0-alpha with <code>--batch-size=8</code>. Cost: $456/month on-demand. - Cache: one cache.m7g.large (2 vCPUs, 4 GB RAM) running Redis 7.2 cluster. Cost: $48/month. - Orchestrator: one t4g.micro ($9/month). Total: $657/month at 1 k QPS. Autoscaling is optional at this load; we only added extra instances during peak hours.</p>
 <p><strong>What’s the one metric you wish you had instrumented earlier?</strong>
 The retrieval-score distribution. We only added a histogram after we saw the hallucination spike. Had we measured it weekly from day one, we would have caught the relevance drop when new curriculum versions were published and adjusted the gate threshold proactively instead of reactively.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

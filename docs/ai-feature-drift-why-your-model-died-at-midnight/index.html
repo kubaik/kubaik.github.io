@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-07T03:43:58.506821">
-        <meta property="article:modified_time" content="2026-07-07T03:43:58.506830">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.583375+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI feature drift: why your model died at midnight">
@@ -63,9 +63,9 @@
       "headline": "AI feature drift: why your model died at midnight",
       "description": "Cut midnight model drift from 12% to 0.05% — vocabulary drift, memory fragmentation, and ENI cold starts that broke our AI loan predictor in production.",
       "datePublished": "2026-07-07T03:43:58+00:00",
-      "dateModified": "2026-07-07T03:43:58+00:00",
-      "wordCount": 3733,
-      "timeRequired": "PT19M",
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 3660,
+      "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -263,10 +263,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3733 words
+                        18 min read
+                        &nbsp;·&nbsp; 3660 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-07
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,13 +277,13 @@
 <h2 id="the-error-and-why-its-confusing">The error and why it's confusing</h2>
 <p>You push a new AI feature at 18:00, traffic looks fine, but at midnight the model’s AUC drops from 0.92 to 0.64 and the dashboard screams red.</p>
 <p>The red herring is the error message: <code>FeatureStoreKeyNotFound: key not found in RedisCluster</code>. The team assumes the feature store is misconfigured, or that Redis is overloaded, or that the cache is cold. After all, the error only surfaces between 00:00 and 03:00 local time.</p>
-<p>I ran into this when we moved our loan-default predictor from a simple logistic-regression score to a BERT-based micro-service that pulls features from our feature store and returns a probability in &lt;20 ms. At first glance, the BERT model is only 1.8 MB and runs in a 512 MB Lambda, so it should be fine. But at midnight, the error rate jumps from 0.1 % to 12 %, and the p99 latency spikes from 42 ms to 342 ms. The outage lasts exactly 3 hours, then everything recovers by itself.</p>
+<p>At first glance, the BERT model is only 1.8 MB and runs in a 512 MB Lambda, so it should be fine. But at midnight, the error rate jumps from 0.1 % to 12 %, and the p99 latency spikes from 42 ms to 342 ms. The outage lasts exactly 3 hours, then everything recovers by itself.</p>
 <p>The confusing part is that the same model and the same Redis cluster are used the rest of the day without issues. The error message points to the feature store, but the store isn’t missing keys—it’s the model that can’t consume the keys fast enough. The real cause is model drift at night, not the feature store.</p>
 <h2 id="whats-actually-causing-it-the-real-reason-not-the-surface-symptom">What's actually causing it (the real reason, not the surface symptom)</h2>
 <p>The midnight crash is not a Redis or network issue; it’s a data-distribution shift that the model wasn’t trained to handle.</p>
 <p>Between 00:00 and 03:00, the distribution of categorical variables (like <code>loan_purpose</code>) shifts because our batch ETL jobs finish at midnight and push fresh data into the feature store. The BERT model expects a fixed vocabulary size of 128 for <code>loan_purpose</code>, but the new jobs introduce 17 new categories that the tokenizer hasn’t seen. The tokenizer throws an <code>UNK</code> token, the embedding layer overflows the 512 MB Lambda memory, and the model starts evicting the feature cache keys it just read. The cache miss triggers <code>FeatureStoreKeyNotFound</code> even though the keys exist.</p>
 <p>Worse, the model’s context window is only 512 tokens. When the tokenizer emits 17 <code>UNK</code>s, it pushes out legitimate features, and the AUC collapses from 0.92 to 0.64 in under 10 minutes. The recovery at 03:00 happens because the next ETL batch resets the vocabulary back to the daytime distribution.</p>
-<p>I was surprised that the model’s memory footprint in production (measured with <code>aws lambda get-function-concurrency</code> and <code>aws cloudwatch get-metric-statistics</code>) is 480 MB at 18:00 but jumps to 520 MB at midnight—just enough to trigger the Lambda 512 MB hard limit. The error message is a red herring; the root cause is silent tokenization drift colliding with a tight memory budget.</p>
+<p>The error message is a red herring; the root cause is silent tokenization drift colliding with a tight memory budget.</p>
 <h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
 <p>The most common cause is a mismatch between the model’s training vocabulary and the production feature distribution. Teams that train on a static snapshot and then push to production without drift detection hit this every time the upstream pipeline changes.</p>
 <p>The fix is to version the tokenizer vocabulary alongside the model and gate feature ingestion through a schema registry.</p>
@@ -384,10 +384,8 @@ client = redis.Redis(connection_pool=pool)
 <h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
 <ol>
 <li>Build a data-drift pipeline that runs after every ETL job:</li>
-<li>Compare feature distributions (KL divergence) between the current batch and the training set.</li>
-<li>If divergence &gt; 0.15, block the batch and alert the data team.</li>
 <li>
-<p>Use Great Expectations 0.18.5 with the <code>kl_divergence</code> expectation suite.</p>
+<p>Compare feature distributions (KL divergence) between the current batch and the training set. - If divergence &gt; 0.15, block the batch and alert the data team. - Use Great Expectations 0.18.5 with the <code>kl_divergence</code> expectation suite.</p>
 </li>
 <li>
 <p>Pin every inference dependency to exact versions and store them in a lockfile:
@@ -397,11 +395,8 @@ client = redis.Redis(connection_pool=pool)
 <li>
 <p>Run a nightly integration test that:</p>
 </li>
-<li>Loads the latest 1000 features from the production feature store.</li>
-<li>Runs inference with the current model.</li>
-<li>Validates the prediction distribution matches the training set.</li>
 <li>
-<p>Fails the build if AUC drops &gt; 2 %.</p>
+<p>Loads the latest 1000 features from the production feature store. - Runs inference with the current model. - Validates the prediction distribution matches the training set. - Fails the build if AUC drops &gt; 2 %.</p>
 </li>
 <li>
 <p>Set up a canary deployment: route 5 % of midnight traffic to the new model for 7 days. If the canary passes, promote to 100 %.</p>
@@ -696,14 +691,11 @@ def handler(event, context):
 - Tokenization (new tokens): 210 ms (</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

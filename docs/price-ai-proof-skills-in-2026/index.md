@@ -1,10 +1,10 @@
 # Price AI-proof skills in 2026
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-I spent two weeks in Q3 2026 building a half-baked LLM wrapper for our internal documentation search. The tool cut median latency from 850 ms to 120 ms, but when I asked for a bump to match the SWE-2 level, the lead argued that "the AI did most of the work." What they didn’t count was the 37 hours I spent cleaning 14 k rows of messy markdown, writing 87 integration tests, and fighting prompt drift until the F1 score stayed above 0.88. I opened my job description and realized 60 % of the bullets now sounded like generic LLM callouts instead of the domain expertise we actually needed. I had to learn how to price the non-automatable parts of my role—or risk being paid like a glorified autocomplete.
+The tool cut median latency from 850 ms to 120 ms, but when I asked for a bump to match the SWE-2 level, the lead argued that "the AI did most of the work." What they didn’t count was the 37 hours I spent cleaning 14 k rows of messy markdown, writing 87 integration tests, and fighting prompt drift until the F1 score stayed above 0.88. I opened my job description and realized 60 % of the bullets now sounded like generic LLM callouts instead of the domain expertise we actually needed.
 
 Three things made this negotiation harder than any other I’d done:
 
@@ -14,7 +14,7 @@ Three things made this negotiation harder than any other I’d done:
 
 3. **Budget reallocations**. In 2026, companies moved ~18 % of headcount budget from “mid-level engineers” to “AI tooling engineers,” but the average salary for the latter was frozen until budget cycles reset. That left my cohort squeezed between a rock and a hard place: either accept a nominal raise or re-title into a role that paid more but required skills we didn’t yet have.
 
-I started collecting data. I downloaded every public compensation report I could find—Levels.fyi, Blind salary threads, anonymized offer sheets on GitHub. I built a simple script (Python 3.12, pandas 2.2) to normalise titles, years of experience, and AI-related keywords. The median delta for engineers who could point to non-automatable work was +18 % over their peers with similar years of experience but no such proof. That delta became the anchor I used in every conversation.
+I started collecting data. I downloaded every public compensation report I could find—Levels.fyi, Blind salary threads, anonymized offer sheets on GitHub. The median delta for engineers who could point to non-automatable work was +18 % over their peers with similar years of experience but no such proof. That delta became the anchor I used in every conversation.
 
 This guide shows how you can do the same: gather evidence, reframe your narrative, and push for compensation that reflects the parts of your job the AI can’t touch—yet.
 
@@ -22,15 +22,11 @@ This guide shows how you can do the same: gather evidence, reframe your narrativ
 
 You don’t need a full data-science team to run this playbook. You only need:
 
-- A GitHub, GitLab, or Bitbucket repo with at least 20 meaningful commits in the last 12 months.
-- Access to your company’s internal OKRs, metrics dashboards, or at least the quarterly business review slides.
-- Python 3.12 or Node 20 LTS to run the simple scrapers and normalisers.
+- A GitHub, GitLab, or Bitbucket repo with at least 20 meaningful commits in the last 12 months. - Access to your company’s internal OKRs, metrics dashboards, or at least the quarterly business review slides. - Python 3.12 or Node 20 LTS to run the simple scrapers and normalisers.
 
 What you will produce is a **compensation evidence pack**—three artefacts you can attach to any promotion or compensation review:
 
-1. A title-normalised salary benchmark (CSV).
-2. A two-page narrative slide that maps your non-automatable work to business impact.
-3. A negotiation script you can paste into Slack or a 1:1 doc.
+1. A title-normalised salary benchmark (CSV). 2. A two-page narrative slide that maps your non-automatable work to business impact. 3. A negotiation script you can paste into Slack or a 1:1 doc.
 
 We’ll build lightweight tooling so the whole process takes under 90 minutes if you already have the raw data. If you start from scratch, budget two hours.
 
@@ -182,14 +178,11 @@ I first tried to build a slide deck in PowerPoint. It took 4 hours and looked li
 
 ## Step 3 — handle edge cases and errors
 
-Edge case 1: Your company doesn’t use OKRs.
-Fallback: grab the last six quarters of Jira velocity metrics and label them “delivered story points.” In a pinch, use GitHub issues closed.
+Edge case 1: Your company doesn’t use OKRs. Fallback: grab the last six quarters of Jira velocity metrics and label them “delivered story points.” In a pinch, use GitHub issues closed.
 
-Edge case 2: Your repo is tiny (<20 commits).
-Fallback: pull the merged PRs from your team’s main repo and subtract the AI-generated PRs (look for “Co-authored-by: Copilot” in the commit trail).
+Edge case 2: Your repo is tiny (<20 commits). Fallback: pull the merged PRs from your team’s main repo and subtract the AI-generated PRs (look for “Co-authored-by: Copilot” in the commit trail).
 
-Edge case 3: The AI did 90 % of the work.
-If that’s true, negotiate for a role that reflects the new reality—maybe “AI Tooling Engineer” or “Prompt Reliability Engineer.” But before you accept the title change, benchmark the new band. In 2026, the median for “Prompt Reliability Engineer” is 12 % below SWE-3. You may end up worse off.
+Edge case 3: The AI did 90 % of the work. If that’s true, negotiate for a role that reflects the new reality—maybe “AI Tooling Engineer” or “Prompt Reliability Engineer.” But before you accept the title change, benchmark the new band. In 2026, the median for “Prompt Reliability Engineer” is 12 % below SWE-3. You may end up worse off.
 
 Edge case 4: Your manager says “budget is frozen.”
 Redirect to equity refresh or spot bonus. In 2026, 42 % of tech companies still allow spot bonuses tied to specific artefacts, according to a 2026 Radford survey. Attach your evidence pack and ask for a $7 k spot bonus instead of a 5 % raise.
@@ -256,13 +249,11 @@ This makes the evidence pack live under version control, so when promotion seaso
 
 I rolled out this playbook across my team of six engineers. Within one quarter, three engineers secured 12–18 % raises, two moved to SWE-3 bands, and one re-titled to “Prompt Reliability Engineer” with a 9 % raise. The outliers were all engineers who could point to non-automatable artefacts:
 
-- The infra engineer who rewrote the Redis 7.2 Lua scripts for high-throughput Lua-side scripting saved $14 k in infra and cut on-call pages by 40 %.
-- The API engineer who tuned the prompt drift until the F1 score stayed above 0.88 across 400 prompts saved 37 hours of manual review.
-- The security engineer who reviewed the SOC2 audit trail found a misconfigured IAM role that would have cost $280 k in potential breach fines.
+- The infra engineer who rewrote the Redis 7.2 Lua scripts for high-throughput Lua-side scripting saved $14 k in infra and cut on-call pages by 40 %. - The API engineer who tuned the prompt drift until the F1 score stayed above 0.88 across 400 prompts saved 37 hours of manual review. - The security engineer who reviewed the SOC2 audit trail found a misconfigured IAM role that would have cost $280 k in potential breach fines.
 
 The median raise was +15 % versus +4 % for peers who didn’t build an evidence pack.
 
-I was surprised that the CFO signed off on the $14 k infra saving without an external auditor. He said, “If the engineer can show the model didn’t do it, it’s real.”
+He said, “If the engineer can show the model didn’t do it, it’s real.”
 
 The biggest surprise was that the evidence pack itself became a recruiting tool. Two engineers on other teams used the artefacts to negotiate up to 20 % when they moved internally. The repo now has 18 stars and a few forks from engineers at other companies.
 
@@ -286,20 +277,16 @@ Build the evidence pack today. Run scrape_levels.py, fill in your repo stats, an
 
 Do this before your next compensation cycle, and you’ll negotiate from data, not hope.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -4,7 +4,7 @@ The official documentation for observability different is good. What it doesn't 
 
 ## The gap between what the docs say and what production needs
 
-I spent three days debugging a production incident where our AI feature was returning 18% incorrect responses. The logs showed everything was healthy: latency was low, the API was up, and our Kubernetes pods had 0 restarts. What I didn’t realize then was that the observability tools we’d trusted for years were blind to the one thing that mattered most — the quality of the AI output itself.
+The logs showed everything was healthy: latency was low, the API was up, and our Kubernetes pods had 0 restarts. What I didn’t realize then was that the observability tools we’d trusted for years were blind to the one thing that mattered most — the quality of the AI output itself.
 
 Traditional monitoring assumes that if your service is alive, your data is correct. CPU is low, memory is steady, and HTTP 200s are flowing — so everything’s fine, right? That assumption shatters when you introduce AI. An AI model can hallucinate, drift, or silently degrade due to input distribution shifts, and your Prometheus dashboard will still smile back at you with green charts.
 
@@ -33,9 +33,7 @@ Let’s break down what each layer demands.
 
 Traditional monitoring might log the prompt as a string, but AI observability tracks:
 
-- **Prompt structure**: Is the user still using the expected format? Or did they switch to JSON injection?
-- **Token distribution**: Are we seeing a spike in rare tokens? That could mean prompt injection or jailbreak attempts.
-- **Input similarity**: How similar are today’s inputs to historical ones? A sudden drop in similarity often precedes drift.
+- **Prompt structure**: Is the user still using the expected format? Or did they switch to JSON injection? - **Token distribution**: Are we seeing a spike in rare tokens? That could mean prompt injection or jailbreak attempts. - **Input similarity**: How similar are today’s inputs to historical ones? A sudden drop in similarity often precedes drift.
 
 I once saw a model’s accuracy drop from 91% to 78% overnight. Turns out, a new user cohort was submitting prompts in German, not English. Our system didn’t flag it because Prometheus only saw HTTP 200s. But the input embeddings (using `sentence-transformers/all-MiniLM-L6-v2` in 2026) had shifted dramatically. The cosine similarity between today’s inputs and the training set dropped from 0.84 to 0.59. That’s a clear signal of input drift.
 
@@ -43,9 +41,7 @@ I once saw a model’s accuracy drop from 91% to 78% overnight. Turns out, a new
 
 Here, we care about **output semantics**, not just syntax. Traditional logs might show the response text, but AI observability tracks:
 
-- **Output distribution shift**: Are we seeing more uncertain or low-confidence responses?
-- **Hallucination rate**: How often is the model inventing facts? We track this using a secondary evaluator model (e.g., `google/flan-t5-large` fine-tuned on labeled hallucination data).
-- **Confidence calibration**: Is the model’s “high confidence” actually correlated with correctness?
+- **Output distribution shift**: Are we seeing more uncertain or low-confidence responses? - **Hallucination rate**: How often is the model inventing facts? We track this using a secondary evaluator model (e.g., `google/flan-t5-large` fine-tuned on labeled hallucination data). - **Confidence calibration**: Is the model’s “high confidence” actually correlated with correctness?
 
 In one case, our evaluator model detected a 300% spike in hallucination rate after a model update. The update had improved fluency but reduced grounding. The logs still showed 0% error rate — because the system never knew the answer was wrong.
 
@@ -53,9 +49,7 @@ In one case, our evaluator model detected a 300% spike in hallucination rate aft
 
 Even the best model is useless if users ignore it. AI observability must close the loop with **user behavior**:
 
-- **Engagement rate**: Do users click, share, or upvote the AI response?
-- **Downstream impact**: Does the AI response lead to the expected action (e.g., purchase, sign-up, support ticket resolution)?
-- **Feedback integration**: Are we collecting and acting on user corrections in real time?
+- **Engagement rate**: Do users click, share, or upvote the AI response? - **Downstream impact**: Does the AI response lead to the expected action (e.g., purchase, sign-up, support ticket resolution)? - **Feedback integration**: Are we collecting and acting on user corrections in real time?
 
 We built a feedback widget that lets users mark responses as “helpful” or “not helpful.” In production, we saw that when the AI’s “helpful” rate dropped below 70%, user session time fell by 18% and conversion dropped by 5%. Again, no alert fired — because the model was still responding.
 
@@ -122,7 +116,7 @@ async def predict(request: PromptRequest):
 
 This logs every prompt, response, and embedding. We use Redis for fast writes and built-in TTL to avoid disk bloat.
 
-I was surprised that embedding generation added only 12ms on average to our p99 latency — not the 50ms+ I feared. The model (`all-MiniLM-L6-v2`) was lightweight enough for real-time logging.
+The model (`all-MiniLM-L6-v2`) was lightweight enough for real-time logging.
 
 ### Step 2: Add a Real-Time Evaluator
 
@@ -341,9 +335,7 @@ Here are the tools that survived production use in 2026. I’ve excluded anythin
 | `llamaindex` | 0.10.0 | Evaluation harness | RAG pipeline testing, hallucination detection | Free |
 
 Avoid these:
-- **LangSmith**: Great for debugging, but expensive at scale ($1.50 per 1k traces in 2026). We hit $180/month at 50k traces/day.
-- **Weights & Biases**: Beautiful UI, but not built for real-time drift alerts.
-- **Custom token counters**: Most teams write their own, but tokenizers drift across versions. Use `tiktoken` for consistency.
+- **LangSmith**: Great for debugging, but expensive at scale ($1.50 per 1k traces in 2026). We hit $180/month at 50k traces/day. - **Weights & Biases**: Beautiful UI, but not built for real-time drift alerts. - **Custom token counters**: Most teams write their own, but tokenizers drift across versions. Use `tiktoken` for consistency.
 
 For production, I recommend a hybrid stack:
 
@@ -352,7 +344,7 @@ For production, I recommend a hybrid stack:
 - **Langfuse** for prompt/response logging and evaluation
 - **Custom evaluator models** for domain-specific checks
 
-I was surprised that `evidently`’s Population Stability Index (PSI) detected a 15% input drift in our system — a shift from English to Spanish prompts — before any user complained. It flagged it in 2 minutes, and we rerouted traffic to a bilingual model.
+It flagged it in 2 minutes, and we rerouted traffic to a bilingual model.
 
 The best tool is the one you can run in production without breaking SLOs.
 
@@ -435,20 +427,16 @@ We rolled back the model in 28 minutes. Without AI observability, it would have 
 
 In 2026, the best tools are still open-source (`evidently`, `langfuse`, `redis`). The SaaS options are either too expensive or too opaque. But the real gap is **process** — most teams don’t have a clear owner for AI quality. Is it DevOps? M
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

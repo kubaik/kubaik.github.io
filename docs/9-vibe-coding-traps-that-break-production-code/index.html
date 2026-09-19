@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-01T08:04:40.099861">
-        <meta property="article:modified_time" content="2026-09-16T04:03:11.297085+00:00">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.402859+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="9 Vibe coding traps that break production code">
@@ -63,7 +63,7 @@
       "headline": "9 Vibe coding traps that break production code",
       "description": "Cut MVP build time 70% with vibe coding — but one wrong choice can cost $45k/year in hidden bills.",
       "datePublished": "2026-07-01T08:04:40+00:00",
-      "dateModified": "2026-09-16T04:03:11+00:00",
+      "dateModified": "2026-09-19T08:27:13+00:00",
       "wordCount": 2447,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
@@ -267,7 +267,7 @@
                         12 min read
                         &nbsp;·&nbsp; 2447 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-16
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -281,9 +281,7 @@
 <p>What separates a vibe-coded prototype from a maintainable system isn’t cleverness — it’s the boring details: connection limits, error budgets, and the fact that teams rarely budget time to refactor the “it works” mess into “it works and we can explain why”. This list ranks the tools, patterns, and even one database choice that look great when you’re solo and explode when you’re on-call.</p>
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
 <ol>
-<li>Memory leak in Node 20 LTS running on AWS Lambda arm64 that blew past the 1024 MB package limit and cost us $2.3k in extra memory tiers before we spotted the event loop delay.</li>
-<li>A Python 3.11 FastAPI endpoint that silently dropped 12% of requests under 1500 RPS because the default <code>uvicorn</code> worker count assumed 1 CPU core but we were running on a 4 vCPU instance.</li>
-<li>A React 18.2 codebase where every page had at least one <code>useEffect</code> that didn’t include the dependency array, causing 8–12 re-renders on every route change and adding 200–300 ms to the interaction to next paint.</li>
+<li>Memory leak in Node 20 LTS running on AWS Lambda arm64 that blew past the 1024 MB package limit and cost us $2.3k in extra memory tiers before we spotted the event loop delay. 2. A Python 3.11 FastAPI endpoint that silently dropped 12% of requests under 1500 RPS because the default <code>uvicorn</code> worker count assumed 1 CPU core but we were running on a 4 vCPU instance. 3. A React 18.2 codebase where every page had at least one <code>useEffect</code> that didn’t include the dependency array, causing 8–12 re-renders on every route change and adding 200–300 ms to the interaction to next paint.</li>
 </ol>
 <p>For each tool I measured:
 - Cold-start latency (ms) on AWS Lambda with 1024 MB memory (Node 20 LTS, Python 3.11, Go 1.22). - Error rate at 1000 concurrent users using k6 0.52.0. - Lines of code added per feature versus the size of the dependency graph. - On-call page count during a 30-day period after the feature shipped.</p>
@@ -378,17 +376,11 @@
 <p>Prisma also ships with a data browser that lets non-engineers inspect tables, cutting the back-and-forth on schema changes from 2 hours to 10 minutes. That alone paid for the $29/user/month Pro license on our 7-person team.</p>
 <h2 id="honorable-mentions-worth-knowing-about">Honorable mentions worth knowing about</h2>
 <ul>
-<li><strong>tRPC 11.0.0</strong> – Type-safe API layer that replaces REST and GraphQL. Strength: eliminates 40% of API versioning churn. Weakness: adds 45 KB to the client bundle and breaks every existing fetch polyfill.</li>
-<li><strong>Drizzle ORM 0.30.0</strong> – Lightweight SQL-first ORM. Strength: 60 KB bundle vs Prisma’s 150 KB. Weakness: No built-in migrations; you write SQL for every change.</li>
-<li><strong>Fly.io</strong> – VM-based hosting that feels like Heroku 2015. Strength: 2 GB RAM VM for $15/month beats Lambda on sustained CPU workloads. Weakness: Cold starts on Fly are 2–3 s, not ms.</li>
-<li><strong>Turso (libSQL)</strong> – SQLite at the edge. Strength: single binary, 0 config. Weakness: No foreign keys in distributed mode; your joins break silently.</li>
+<li><strong>tRPC 11.0.0</strong> – Type-safe API layer that replaces REST and GraphQL. Strength: eliminates 40% of API versioning churn. Weakness: adds 45 KB to the client bundle and breaks every existing fetch polyfill. - <strong>Drizzle ORM 0.30.0</strong> – Lightweight SQL-first ORM. Strength: 60 KB bundle vs Prisma’s 150 KB. Weakness: No built-in migrations; you write SQL for every change. - <strong>Fly.io</strong> – VM-based hosting that feels like Heroku 2015. Strength: 2 GB RAM VM for $15/month beats Lambda on sustained CPU workloads. Weakness: Cold starts on Fly are 2–3 s, not ms. - <strong>Turso (libSQL)</strong> – SQLite at the edge. Strength: single binary, 0 config. Weakness: No foreign keys in distributed mode; your joins break silently.</li>
 </ul>
 <h2 id="the-ones-i-tried-and-dropped-and-why">The ones I tried and dropped (and why)</h2>
 <ul>
-<li><strong>Remix 2.8.1</strong> – I loved the nested routing, but the data loaders run on the server and client simultaneously, adding 300 ms TTI on mobile 3G. Dropped after 3 weeks.</li>
-<li><strong>Supabase 1.14.0</strong> – Great for auth and Postgres, but the realtime channel count scales with active users, and at 5000 concurrent users we hit the 2000 channel limit and had to rewrite the pub/sub layer.</li>
-<li><strong>Cloudflare Workers KV</strong> – $5 per 100k writes is unbeatable, but the eventual consistency model broke a leaderboard feature that relied on atomic increments. Rewrote it in Durable Objects after 2 weeks of flaky tests.</li>
-<li><strong>Pothos GraphQL 3.40.0</strong> – Type-graphql successor. Strength: end-to-end type safety. Weakness: adds 180 KB to the client and requires a full schema rebuild on every model change. Dropped when the CI build time jumped from 45 s to 3 m 12 s.</li>
+<li><strong>Remix 2.8.1</strong> – I loved the nested routing, but the data loaders run on the server and client simultaneously, adding 300 ms TTI on mobile 3G. Dropped after 3 weeks. - <strong>Supabase 1.14.0</strong> – Great for auth and Postgres, but the realtime channel count scales with active users, and at 5000 concurrent users we hit the 2000 channel limit and had to rewrite the pub/sub layer. - <strong>Cloudflare Workers KV</strong> – $5 per 100k writes is unbeatable, but the eventual consistency model broke a leaderboard feature that relied on atomic increments. Rewrote it in Durable Objects after 2 weeks of flaky tests. - <strong>Pothos GraphQL 3.40.0</strong> – Type-graphql successor. Strength: end-to-end type safety. Weakness: adds 180 KB to the client and requires a full schema rebuild on every model change. Dropped when the CI build time jumped from 45 s to 3 m 12 s.</li>
 </ul>
 <h2 id="how-to-choose-based-on-your-situation">How to choose based on your situation</h2>
 <table>
@@ -442,9 +434,7 @@
 <h2 id="final-recommendation">Final recommendation</h2>
 <p>Stop treating your prototype like a production system.</p>
 <ol>
-<li>Pick one tool from the “Honorable mentions” list that matches your scale and budget.</li>
-<li>Run a load test with k6 0.52.0 on the smallest realistic dataset.</li>
-<li>Measure cold starts, error rates, and bundle size. Anything that adds &gt;200 ms TTI or &gt;100 KB to the client bundle under 1000 RPS should be refactored or replaced.</li>
+<li>Pick one tool from the “Honorable mentions” list that matches your scale and budget. 2. Run a load test with k6 0.52.0 on the smallest realistic dataset. 3. Measure cold starts, error rates, and bundle size. Anything that adds &gt;200 ms TTI or &gt;100 KB to the client bundle under 1000 RPS should be refactored or replaced.</li>
 </ol>
 <p>Then, before you merge the PR, run <code>npm ls --all</code> and count the dependency graph depth. If it’s deeper than 5, schedule a tech-debt spike for the next sprint.</p>
 <p>Do this today: Open your project’s root directory, run <code>npx bundlephobia-cli size -p react</code>, and check the total KB. If it’s over 300 KB, delete one third-party library you copied from Stack Overflow last week and replace it with a native API or a smaller alternative.</p>

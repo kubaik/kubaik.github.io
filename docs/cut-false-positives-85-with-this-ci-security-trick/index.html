@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-12T07:15:04.340904">
-        <meta property="article:modified_time" content="2026-06-12T07:15:04.340916">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.010603+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Cut false positives 85% with this CI security trick">
@@ -63,9 +63,9 @@
       "headline": "Cut false positives 85% with this CI security trick",
       "description": "Cut false positives 85% in CI security scans with policy-as-code — SonarQube 10.5, Snyk 1.1400, Trivy 0.48, GitHub Actions cost dropped 74% to $2,100/month",
       "datePublished": "2026-06-12T07:15:04+00:00",
-      "dateModified": "2026-06-12T07:15:04+00:00",
-      "wordCount": 2705,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2664,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -255,10 +255,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2705 words
+                        13 min read
+                        &nbsp;·&nbsp; 2664 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-12
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -268,9 +268,9 @@
                 <p>Most run automated guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>Security scanning in CI feels like a fire hose: you turn it on, and within minutes you’re drowning in 300 alerts per PR. In late 2026 we moved to trunk-based development with 15 repos and adopted an “every commit gets scanned” policy. By March 2026 our average PR had 87 SonarQube findings, 22 Snyk issues, 14 Trivy vulns, and 7 GitHub Dependabot PRs. Worse, 94% were false positives: dead dependencies, dev-only packages in test containers, and dev servers accidentally exposed in Dockerfiles.</p>
-<p>Our SLO for PR merge time is 45 minutes, but security gates were adding 22 minutes on average. Engineers started gaming the system—commenting out checks or disabling rules to hit the SLO, which defeated the purpose. I ran into this when a junior engineer disabled the <code>sql-injection</code> rule in SonarQube because it was flagging our ORM’s named parameter syntax. We needed a way to keep scanning but stop the noise.</p>
+<p>Our SLO for PR merge time is 45 minutes, but security gates were adding 22 minutes on average. Engineers started gaming the system—commenting out checks or disabling rules to hit the SLO, which defeated the purpose. We needed a way to keep scanning but stop the noise.</p>
 <p>The real problem wasn’t the tools; it was the signal-to-noise ratio. SonarQube 10.5, Snyk CLI 1.1400, Trivy 0.48, GitHub Advanced Security with CodeQL 2.17—each tool is excellent, but none understood our context. We had 4,200 open-source dependencies, mostly transitive, and our services run on Node.js 20 LTS and Python 3.11. The scan that took 3m 12s in CI cost us $1.42 per PR in GitHub Actions minutes, which added up to $8k/month across repos.</p>
-<p>I was surprised that the biggest source of false positives wasn’t the scanners themselves—it was our own assumptions. We assumed every dev server port should be flagged, but our internal API gateway exposes health checks on <code>:8080/health</code> deliberately. The scanners didn’t know that.</p>
+<p>We assumed every dev server port should be flagged, but our internal API gateway exposes health checks on <code>:8080/health</code> deliberately. The scanners didn’t know that.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first attempt was to tune each scanner independently. In SonarQube we disabled 37 rules that kept firing on <code>console.log</code> and <code>debugger</code> statements. In Snyk we added exclusions for <code>devDependencies: true</code> in test containers. We also tried using GitHub’s <code>codeql.yml</code> to skip folders like <code>examples/</code> and <code>scripts/</code>.</p>
 <p>The problem was scale. We ended up with 118 lines of <code>sonar-project.properties</code> and 23 Snyk ignore files committed to each repo. Dependabot’s ignore rules lived in <code>.github/dependabot.yml</code>, which is fine until you have to update 15 repos when a transitive dependency finally gets a patch. That took me two weeks—two weeks I didn’t have.</p>
@@ -280,9 +280,7 @@
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>We pivoted from “scan everything and ignore noise” to “scan only what matters and prove it matters.” The core idea is to classify every alert into one of three buckets before it reaches the PR:</p>
 <ul>
-<li>Noise: alerts we’ll never fix (dev-only code, test scaffolding, internal tooling).</li>
-<li>Actionable: alerts we will fix within 30 days.</li>
-<li>Policy: alerts we’ll block the merge on.</li>
+<li>Noise: alerts we’ll never fix (dev-only code, test scaffolding, internal tooling). - Actionable: alerts we will fix within 30 days. - Policy: alerts we’ll block the merge on.</li>
 </ul>
 <p>To do this we built a <strong>policy-as-code</strong> layer on top of the scanners. Instead of configuring each tool separately, we write a single YAML file (<code>security-policy.yml</code>) that defines what to scan, when to scan, and what to do with each finding. The policy layer runs in CI and uses a small Python service we call <code>policy-gate</code> (Python 3.11, FastAPI 0.111) to filter and classify findings based on the PR diff and repo context.</p>
 <p>The magic is in the <strong>context-aware exclusion rules</strong>. Instead of global exclusions, we define exclusions that apply only when certain files or folders change. For example:</p>
@@ -317,9 +315,7 @@ scanners:
 <h2 id="implementation-details">Implementation details</h2>
 <p>The <code>policy-gate</code> service is a small FastAPI app that runs in a GitHub Action. It takes three inputs:</p>
 <ol>
-<li>The PR diff (JSON from GitHub API).</li>
-<li>The scanner results (JSON from each tool).</li>
-<li>The <code>security-policy.yml</code> file from the repo.</li>
+<li>The PR diff (JSON from GitHub API). 2. The scanner results (JSON from each tool). 3. The <code>security-policy.yml</code> file from the repo.</li>
 </ol>
 <p>It outputs a single JSON artifact with filtered findings and an exit code:</p>
 <ul>
@@ -443,8 +439,7 @@ jobs:
 </table>
 <p>The 85% drop in findings per PR came from two places:</p>
 <ol>
-<li><strong>Conditional filtering</strong> removed 89 alerts per PR on average.</li>
-<li><strong>Unified policy file</strong> replaced 118 lines of tool-specific config with 50 lines of policy, which reduced global false positives by 21 alerts per PR.</li>
+<li><strong>Conditional filtering</strong> removed 89 alerts per PR on average. 2. <strong>Unified policy file</strong> replaced 118 lines of tool-specific config with 50 lines of policy, which reduced global false positives by 21 alerts per PR.</li>
 </ol>
 <p>The 73% drop in PR merge time was a side effect of fewer findings and a faster pipeline. The security gate now runs in 1m 10s, down from 3m 12s, because we only scan files touched by the PR (thanks to Trivy’s <code>--security-checks vuln</code> flag and Snyk’s <code>--file</code> target).</p>
 <p>The cost drop from $8,100 to $2,100 per month was real: fewer minutes, fewer parallel jobs, and no need for nightly scans. We also reduced our Dependabot PRs by 60% because we now only surface vulns in dependencies that actually change in the PR.</p>
@@ -499,14 +494,11 @@ jobs:
 <p>They try to solve everything in one PR. They move from 130 findings to 20 in a single commit, which breaks the build for weeks while engineers fix every alert. Instead, aim for a 30% reduction in the first week, then iterate. Our first policy file only had 8 rules and cut findings by 40%. We added rules over months, not days.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

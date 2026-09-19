@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-25T21:25:57.740240">
-        <meta property="article:modified_time" content="2026-06-25T21:25:57.740248">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.663626+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI observability isn’t monitoring — here’s why">
@@ -63,9 +63,9 @@
       "headline": "AI observability isn’t monitoring — here’s why",
       "description": "The gap between what the docs say and what production needs I spent three days debugging a production incident where our AI feature was returning 18%…",
       "datePublished": "2026-06-25T21:25:57+00:00",
-      "dateModified": "2026-06-25T21:25:57+00:00",
-      "wordCount": 3731,
-      "timeRequired": "PT19M",
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 3663,
+      "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -242,10 +242,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3731 words
+                        18 min read
+                        &nbsp;·&nbsp; 3663 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-25
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -254,7 +254,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The official documentation for observability different is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>I spent three days debugging a production incident where our AI feature was returning 18% incorrect responses. The logs showed everything was healthy: latency was low, the API was up, and our Kubernetes pods had 0 restarts. What I didn’t realize then was that the observability tools we’d trusted for years were blind to the one thing that mattered most — the quality of the AI output itself.</p>
+<p>The logs showed everything was healthy: latency was low, the API was up, and our Kubernetes pods had 0 restarts. What I didn’t realize then was that the observability tools we’d trusted for years were blind to the one thing that mattered most — the quality of the AI output itself.</p>
 <p>Traditional monitoring assumes that if your service is alive, your data is correct. CPU is low, memory is steady, and HTTP 200s are flowing — so everything’s fine, right? That assumption shatters when you introduce AI. An AI model can hallucinate, drift, or silently degrade due to input distribution shifts, and your Prometheus dashboard will still smile back at you with green charts.</p>
 <p>The core difference is causal. Traditional monitoring answers: <em>Is the system running?</em> AI observability answers: <em>Is the system doing what it’s supposed to do?</em> The latter requires validating output semantics, not just system health. I first ran into this when a customer reported that our recommendation engine was pushing irrelevant products. Our p99 latency was 85ms, error rate 0.1%, and CPU utilization was 45% — all within SLO. But 22% of users clicked “not interested” within 5 seconds of seeing the recommendation. The system was healthy; the AI was not.</p>
 <p>Another surprise: traditional monitoring treats failures as binary — up or down. AI systems fail gradually. A model’s accuracy might drop from 92% to 80% over weeks due to data drift. Your logs won’t show red flags until users complain. I learned this the hard way when our chatbot’s “answer correctness” metric, measured via user feedback widgets, dropped from 89% to 75% over a month. No alerts fired because the model was still responding — just wrong.</p>
@@ -272,25 +272,19 @@
 <h3 id="input-layer-detecting-prompt-drift-and-injection">Input Layer: Detecting Prompt Drift and Injection</h3>
 <p>Traditional monitoring might log the prompt as a string, but AI observability tracks:</p>
 <ul>
-<li><strong>Prompt structure</strong>: Is the user still using the expected format? Or did they switch to JSON injection?</li>
-<li><strong>Token distribution</strong>: Are we seeing a spike in rare tokens? That could mean prompt injection or jailbreak attempts.</li>
-<li><strong>Input similarity</strong>: How similar are today’s inputs to historical ones? A sudden drop in similarity often precedes drift.</li>
+<li><strong>Prompt structure</strong>: Is the user still using the expected format? Or did they switch to JSON injection? - <strong>Token distribution</strong>: Are we seeing a spike in rare tokens? That could mean prompt injection or jailbreak attempts. - <strong>Input similarity</strong>: How similar are today’s inputs to historical ones? A sudden drop in similarity often precedes drift.</li>
 </ul>
 <p>I once saw a model’s accuracy drop from 91% to 78% overnight. Turns out, a new user cohort was submitting prompts in German, not English. Our system didn’t flag it because Prometheus only saw HTTP 200s. But the input embeddings (using <code>sentence-transformers/all-MiniLM-L6-v2</code> in 2026) had shifted dramatically. The cosine similarity between today’s inputs and the training set dropped from 0.84 to 0.59. That’s a clear signal of input drift.</p>
 <h3 id="model-layer-tracking-output-drift-and-hallucination">Model Layer: Tracking Output Drift and Hallucination</h3>
 <p>Here, we care about <strong>output semantics</strong>, not just syntax. Traditional logs might show the response text, but AI observability tracks:</p>
 <ul>
-<li><strong>Output distribution shift</strong>: Are we seeing more uncertain or low-confidence responses?</li>
-<li><strong>Hallucination rate</strong>: How often is the model inventing facts? We track this using a secondary evaluator model (e.g., <code>google/flan-t5-large</code> fine-tuned on labeled hallucination data).</li>
-<li><strong>Confidence calibration</strong>: Is the model’s “high confidence” actually correlated with correctness?</li>
+<li><strong>Output distribution shift</strong>: Are we seeing more uncertain or low-confidence responses? - <strong>Hallucination rate</strong>: How often is the model inventing facts? We track this using a secondary evaluator model (e.g., <code>google/flan-t5-large</code> fine-tuned on labeled hallucination data). - <strong>Confidence calibration</strong>: Is the model’s “high confidence” actually correlated with correctness?</li>
 </ul>
 <p>In one case, our evaluator model detected a 300% spike in hallucination rate after a model update. The update had improved fluency but reduced grounding. The logs still showed 0% error rate — because the system never knew the answer was wrong.</p>
 <h3 id="output-layer-measuring-user-impact">Output Layer: Measuring User Impact</h3>
 <p>Even the best model is useless if users ignore it. AI observability must close the loop with <strong>user behavior</strong>:</p>
 <ul>
-<li><strong>Engagement rate</strong>: Do users click, share, or upvote the AI response?</li>
-<li><strong>Downstream impact</strong>: Does the AI response lead to the expected action (e.g., purchase, sign-up, support ticket resolution)?</li>
-<li><strong>Feedback integration</strong>: Are we collecting and acting on user corrections in real time?</li>
+<li><strong>Engagement rate</strong>: Do users click, share, or upvote the AI response? - <strong>Downstream impact</strong>: Does the AI response lead to the expected action (e.g., purchase, sign-up, support ticket resolution)? - <strong>Feedback integration</strong>: Are we collecting and acting on user corrections in real time?</li>
 </ul>
 <p>We built a feedback widget that lets users mark responses as “helpful” or “not helpful.” In production, we saw that when the AI’s “helpful” rate dropped below 70%, user session time fell by 18% and conversion dropped by 5%. Again, no alert fired — because the model was still responding.</p>
 <p>Under the hood, this requires <strong>real-time evaluation pipelines</strong> that:</p>
@@ -346,7 +340,7 @@ async def predict(request: PromptRequest):
     return {&quot;response&quot;: response_text}
 </code></pre>
 <p>This logs every prompt, response, and embedding. We use Redis for fast writes and built-in TTL to avoid disk bloat.</p>
-<p>I was surprised that embedding generation added only 12ms on average to our p99 latency — not the 50ms+ I feared. The model (<code>all-MiniLM-L6-v2</code>) was lightweight enough for real-time logging.</p>
+<p>The model (<code>all-MiniLM-L6-v2</code>) was lightweight enough for real-time logging.</p>
 <h3 id="step-2-add-a-real-time-evaluator">Step 2: Add a Real-Time Evaluator</h3>
 <p>We’ll sample 5% of requests and send them to a secondary evaluator model. In production, this runs in a sidecar container.</p>
 <pre><code class="language-python">from transformers import pipeline
@@ -592,9 +586,7 @@ async def post_feedback(feedback: dict):
 </tbody>
 </table>
 <p>Avoid these:
-- <strong>LangSmith</strong>: Great for debugging, but expensive at scale ($1.50 per 1k traces in 2026). We hit $180/month at 50k traces/day.
-- <strong>Weights &amp; Biases</strong>: Beautiful UI, but not built for real-time drift alerts.
-- <strong>Custom token counters</strong>: Most teams write their own, but tokenizers drift across versions. Use <code>tiktoken</code> for consistency.</p>
+- <strong>LangSmith</strong>: Great for debugging, but expensive at scale ($1.50 per 1k traces in 2026). We hit $180/month at 50k traces/day. - <strong>Weights &amp; Biases</strong>: Beautiful UI, but not built for real-time drift alerts. - <strong>Custom token counters</strong>: Most teams write their own, but tokenizers drift across versions. Use <code>tiktoken</code> for consistency.</p>
 <p>For production, I recommend a hybrid stack:</p>
 <ul>
 <li><strong>Redis</strong> for real-time metrics and alerts</li>
@@ -602,7 +594,7 @@ async def post_feedback(feedback: dict):
 <li><strong>Langfuse</strong> for prompt/response logging and evaluation</li>
 <li><strong>Custom evaluator models</strong> for domain-specific checks</li>
 </ul>
-<p>I was surprised that <code>evidently</code>’s Population Stability Index (PSI) detected a 15% input drift in our system — a shift from English to Spanish prompts — before any user complained. It flagged it in 2 minutes, and we rerouted traffic to a bilingual model.</p>
+<p>It flagged it in 2 minutes, and we rerouted traffic to a bilingual model.</p>
 <p>The best tool is the one you can run in production without breaking SLOs.</p>
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
 <p>AI observability isn’t a silver bullet. It adds complexity, latency, and cost. Here are the cases where traditional monitoring is enough — or where AI observability is overkill.</p>
@@ -661,14 +653,11 @@ async def post_feedback(feedback: dict):
 <p>In 2026, the best tools are still open-source (<code>evidently</code>, <code>langfuse</code>, <code>redis</code>). The SaaS options are either too expensive or too opaque. But the real gap is <strong>process</strong> — most teams don’t have a clear owner for AI quality. Is it DevOps? M</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

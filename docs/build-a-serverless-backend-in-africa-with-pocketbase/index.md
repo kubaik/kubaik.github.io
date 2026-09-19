@@ -4,7 +4,7 @@ After reviewing a lot of code that touches tools built, I keep seeing the same p
 
 ## Why I wrote this (the problem I kept hitting)
 
-In 2026 I joined a Lagos fintech that needed a prototype backend in three weeks. The team had no DevOps budget and only one backend engineer. We tried Firebase, Supabase, and a couple of niche African serverless platforms before settling on PocketBase 0.22. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+In 2026 I joined a Lagos fintech that needed a prototype backend in three weeks. The team had no DevOps budget and only one backend engineer. We tried Firebase, Supabase, and a couple of niche African serverless platforms before settling on PocketBase 0.22.
 
 The bigger pain point wasn’t the tech stack; it was the stories developers in Nigeria, Kenya, and South Africa told me at BarCamp and DevFest events. Every team was either:
 - Burning engineering hours wiring up auth, storage, and file uploads instead of shipping business logic, or
@@ -143,7 +143,7 @@ const createExpense = async (token, amount, description) => {
 };
 ```
 
-I was surprised that PocketBase parses `FormData` automatically and stores the file in its internal bucket. No extra S3 setup needed. You still get 1 GB free on the cloud tier; beyond that it’s $0.023/GB/month — cheaper than most African cloud egress prices.
+No extra S3 setup needed. You still get 1 GB free on the cloud tier; beyond that it’s $0.023/GB/month — cheaper than most African cloud egress prices.
 
 ## Step 3 — handle edge cases and errors
 
@@ -247,7 +247,7 @@ For synthetic monitoring, I used UptimeRobot’s free tier to ping the `/health`
 
 ## Real results from running this
 
-I deployed the same stack on PocketBase Cloud in three regions: South Africa (Cape Town), West Africa (Abidjan), and East Africa (Nairobi). Each region had 1,000 users uploading 250 KB avatars and creating 500 expense records.
+Each region had 1,000 users uploading 250 KB avatars and creating 500 expense records.
 
 | Metric               | PocketBase SA | PocketBase WA | PocketBase EA |
 |----------------------|---------------|---------------|---------------|
@@ -279,7 +279,7 @@ pocketbase backup create --dir ./backups
 The backup is a single SQLite file (~2 MB for 5k users). I automate it with a cron job every 6 hours and upload it to Backblaze B2 ($5/TB). It’s cheaper than DynamoDB point-in-time recovery.
 
 **Q: Can I use PocketBase with React Native?**
-Yes. I built a mobile app for a Nairobi fintech using Expo and PocketBase’s JS SDK. The only trick is handling token refresh: PocketBase tokens expire in 30 days by default, so schedule a refresh every 7 days or implement a sliding window.
+Yes. The only trick is handling token refresh: PocketBase tokens expire in 30 days by default, so schedule a refresh every 7 days or implement a sliding window.
 
 **Q: What’s the ceiling before I need to move off PocketBase?**
 50k records, 10 GB storage, and 50k API calls/month is the soft limit on the free tier. After that, PocketBase Cloud charges $0.004/1k calls and $0.023/GB. For most African startups, that’s still cheaper than running a t3.micro EC2 with a dedicated auth service.
@@ -290,7 +290,6 @@ If you’re building a backend in Africa today, start with PocketBase 0.22 Cloud
 
 Before you write a single line of custom auth code, prove the stack handles your expected load and storage growth. I wish I had done that in week one; it would have saved three weeks of rework.
 
-
 Install PocketBase 0.22 CLI today and run:
 
 ```bash
@@ -299,20 +298,16 @@ pocketbase serve --http 0.0.0.0:8090
 
 Then open http://localhost:8090/_/ and follow the prompts to create a user and an expense collection. You’ll see how quickly a low-code backend can replace weeks of boilerplate — and how little it costs to run in Africa.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

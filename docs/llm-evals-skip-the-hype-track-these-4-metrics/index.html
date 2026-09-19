@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-22T01:49:01.376460">
-        <meta property="article:modified_time" content="2026-06-22T01:49:01.376471">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.177957+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="LLM evals: skip the hype, track these 4 metrics">
@@ -63,9 +63,9 @@
       "headline": "LLM evals: skip the hype, track these 4 metrics",
       "description": "Cut hallucinations 74% and latency 52% using 4 production metrics — not BLEU or perplexity. Real code, real AWS services, real ROI.",
       "datePublished": "2026-06-22T01:49:01+00:00",
-      "dateModified": "2026-06-22T01:49:01+00:00",
-      "wordCount": 2904,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2894,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -264,10 +264,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2904 words
+                        14 min read
+                        &nbsp;·&nbsp; 2894 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-22
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -283,8 +283,7 @@
 - a ground-truth alignment test that uses your actual business data,
 then you’re optimizing for noise, not signal.</p>
 <p>Teams that skip this step usually fall into one of two traps:
-1. Over-indexing on automatic metrics (BLEU, ROUGE, BERTScore) that correlate weakly with user satisfaction (historical correlation study from 2024 showed 0.31 for BERTScore vs. human preference).
-2. Running expensive human evaluations monthly instead of continuous lightweight checks that alert within minutes.</p>
+1. Over-indexing on automatic metrics (BLEU, ROUGE, BERTScore) that correlate weakly with user satisfaction (historical correlation study from 2024 showed 0.31 for BERTScore vs. human preference). 2. Running expensive human evaluations monthly instead of continuous lightweight checks that alert within minutes.</p>
 <p>The gap isn’t between good and bad metrics — it’s between <strong>metrics that tell you something useful now</strong> and metrics that tell you something interesting in a month.</p>
 <h2 id="how-evaluating-llm-output-quality-at-scale-the-metrics-that-actually-matter-actually-works-under-the-hood">How Evaluating LLM output quality at scale: the metrics that actually matter actually works under the hood</h2>
 <p>At the core, production LLM evaluation is a <strong>feedback loop</strong>: generate candidate outputs, score them with cheap automated checks, and feed the winners back into fine-tuning or prompt iteration. The magic happens in the scoring layer, where you trade statistical rigor for speed and cost. Here’s the stack we ended up with after two redesigns:</p>
@@ -331,9 +330,7 @@ then you’re optimizing for noise, not signal.</p>
 </table>
 <p>The key insight is to <strong>avoid human annotation during the automated loop</strong>. Instead, we use three classes of checks:</p>
 <ol>
-<li><strong>Deterministic validators</strong>: regex for IDs, Kenyan mobile-money formats, currency symbols. These are O(1) and catch 68% of the errors our users actually complain about.</li>
-<li><strong>Statistical validators</strong>: embedding similarity against a ground-truth corpus of 12k approved loan terms. We use <code>text-embedding-3-large</code> with cosine threshold 0.87. This catches another 22% of misalignments, especially subtle ones like interest rate formatting.</li>
-<li><strong>Policy validators</strong>: a lightweight JSON schema that encodes Kenyan Central Bank rules. If the assistant returns a repayment schedule that violates the usury cap, it fails immediately — no human needed.</li>
+<li><strong>Deterministic validators</strong>: regex for IDs, Kenyan mobile-money formats, currency symbols. These are O(1) and catch 68% of the errors our users actually complain about. 2. <strong>Statistical validators</strong>: embedding similarity against a ground-truth corpus of 12k approved loan terms. We use <code>text-embedding-3-large</code> with cosine threshold 0.87. This catches another 22% of misalignments, especially subtle ones like interest rate formatting. 3. <strong>Policy validators</strong>: a lightweight JSON schema that encodes Kenyan Central Bank rules. If the assistant returns a repayment schedule that violates the usury cap, it fails immediately — no human needed.</li>
 </ol>
 <p>The fourth class, <strong>user impact</strong>, is measured via A/B rollouts with a 1% traffic split and a 24-hour dwell-time window. We watch for:
 - success rate (loan application completion)
@@ -615,15 +612,11 @@ def train_lora(train_data: list[dict], output_dir: str):
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
 <p>This pipeline is <strong>not</strong> for every use case. Skip it if:</p>
 <ol>
-<li><strong>Your users are internal and low-volume</strong> (fewer than 1k requests/day). A simple prompt template and manual review are faster and cheaper.</li>
-<li><strong>Your LLM is a research prototype</strong> with no business SLA. Academic metrics (perplexity, BLEU) are sufficient.</li>
-<li><strong>Your model changes daily</strong> (e.g., during rapid experimentation). The overhead of maintaining validators and scorers outweighs the benefit.</li>
-<li><strong>You lack ground truth data</strong> for scoring. If you can’t define what a “correct” response looks like, automated scoring is meaningless.</li>
-<li><strong>Regulatory requirements demand human sign-off</strong> (e.g., medical diagnosis). In that case, build a human-in-the-loop loop with clear escalation paths.</li>
+<li><strong>Your users are internal and low-volume</strong> (fewer than 1k requests/day). A simple prompt template and manual review are faster and cheaper. 2. <strong>Your LLM is a research prototype</strong> with no business SLA. Academic metrics (perplexity, BLEU) are sufficient. 3. <strong>Your model changes daily</strong> (e.g., during rapid experimentation). The overhead of maintaining validators and scorers outweighs the benefit. 4. <strong>You lack ground truth data</strong> for scoring. If you can’t define what a “correct” response looks like, automated scoring is meaningless. 5. <strong>Regulatory requirements demand human sign-off</strong> (e.g., medical diagnosis). In that case, build a human-in-the-loop loop with clear escalation paths.</li>
 </ol>
 <p>We tried this approach for a customer-support chatbot that handled 800 requests/day. The scorer cost $180/month, but the chatbot’s accuracy was already 94% from prompt engineering. The evaluation loop added no user-visible improvement and increased latency by 120 ms. We ripped it out after 3 weeks.</p>
 <h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
-<p>I was surprised by how <strong>brittle</strong> the scoring layer is. A single misplaced parenthesis in a regex can cause a 5% jump in false negatives. We now treat scorers like production code: they live in the same repo as the prompt, have 100% test coverage, and are reviewed in pull requests. The second surprise: <strong>users don’t care about your metrics</strong>. They care about their task completion time and accuracy. Our highest user-satisfaction scores came from reducing the average loan-approval time from 3.2 minutes to 1.1 minutes — not from improving semantic_score from 0.89 to 0.93.</p>
+<p>A single misplaced parenthesis in a regex can cause a 5% jump in false negatives. We now treat scorers like production code: they live in the same repo as the prompt, have 100% test coverage, and are reviewed in pull requests. The second surprise: <strong>users don’t care about your metrics</strong>. They care about their task completion time and accuracy. Our highest user-satisfaction scores came from reducing the average loan-approval time from 3.2 minutes to 1.1 minutes — not from improving semantic_score from 0.89 to 0.93.</p>
 <p>The biggest win wasn’t technical — it was <strong>process</strong>. Before this loop, our prompt changes went through a 2-week manual review by three people. Now, we merge a prompt change, run the canary for 15 minutes, and ship if the metrics are green. That cut our prompt iteration cycle from 14 days to 2 hours. The cost? We had to hire one extra engineer to maintain the scorer infrastructure. Worth it.</p>
 <p>The lesson: <strong>evaluation isn’t a one-time checklist — it’s a product you ship every day.</strong> If you treat it like a side project, it will fail. If you treat it like core infrastructure, it pays off.</p>
 <h2 id="what-to-do-next">What to do next</h2>
@@ -644,14 +637,11 @@ Aim for p95 &lt; 500 ms for interactive use cases. If your scorer adds &gt; 200 
 Pin your scorer model versions and run semantic diffing between old and new scorers. We use LangSmith’s <code>compare_traces</code> feature. If the semantic_score delta exceeds 0.1, we pause the canary and trigger a human review. This caught a prompt change that would have doubled hallucination rates last quarter.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

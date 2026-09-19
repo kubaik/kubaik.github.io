@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-12T09:48:02.503208">
-        <meta property="article:modified_time" content="2026-07-12T09:48:02.503219">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.744608+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Trim LLM bills: 3 FinOps moves that work">
@@ -63,8 +63,8 @@
       "headline": "Trim LLM bills: 3 FinOps moves that work",
       "description": "Cut LLM bill 34% with 3 levers most teams ignore: semantic shaping, two-layer caching, and priority queues.",
       "datePublished": "2026-07-12T09:48:02+00:00",
-      "dateModified": "2026-07-12T09:48:02+00:00",
-      "wordCount": 2442,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2422,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,9 +266,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2442 words
+                        &nbsp;·&nbsp; 2422 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-12
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -279,7 +279,7 @@
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>Most FinOps guides for LLM teams still preach the same 2026 playbook: track tokens, set budget alerts, and pray. That’s fine for a weekend prototype, but it crumbles when you run 500 production endpoints on 2026 hardware. I learned this the hard way when our monthly AI bill jumped from $7,200 to $18,400 in a single sprint. The docs promised cost controls, but the only dial they gave us was “turn off the model” — which also turned off our product.</p>
 <p>The real problem isn’t the tooling; it’s the mismatch between cloud provider marketing and reality. Vendors want you to believe that launching an LLM service is like spinning up a Postgres cluster: set a max concurrency, add a budget alert, and forget it. But LLM traffic isn’t CRUD — it’s iterative, unpredictable, and often wasteful. A single mis-routed prompt can spawn ten parallel tool calls, each burning tokens and dollars while you wait for the user’s next message.</p>
-<p>I spent three weeks tuning our rate limits and buffer pools, only to realize we were throttling the wrong layer. The bottleneck wasn’t our API gateway; it was the model server’s internal queue, which kept 200 concurrent requests alive for 4.2 seconds each, long after the client had timed out. The docs never mentioned that.</p>
+<p>The bottleneck wasn’t our API gateway; it was the model server’s internal queue, which kept 200 concurrent requests alive for 4.2 seconds each, long after the client had timed out. The docs never mentioned that.</p>
 <p>FinOps for LLM teams in 2026 needs to stop pretending we’re running a database. We’re running a chat server with a CPU, a GPU, and a credit card that screams when you look away.</p>
 <h2 id="how-finops-for-llm-heavy-teams-the-levers-that-actually-move-the-needle-in-2026-actually-works-under-the-hood">How FinOps for LLM-heavy teams: the levers that actually move the needle in 2026 actually works under the hood</h2>
 <p>Three levers actually move the needle in production today: request shaping, cache placement, and queue discipline. Everything else is noise.</p>
@@ -424,9 +424,7 @@ def poll_queue():
 <h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
 <p><strong>Semantic shaper</strong>: Rust + Axum 0.7 for low-latency rewrites. We saw 95% lower CPU usage than Node 20 for the same workload, which matters when you’re paying by the millisecond.</p>
 <p><strong>Cache layers</strong>: 
-- In-process: <code>lru-cache</code> (Node) or <code>functools.lru_cache</code> (Python). Max 100 entries, 8KB each.
-- Distributed: Redis 7.2 with <code>redis-py</code> or <code>ioredis</code>. Use <code>EX</code> for TTL, not <code>PX</code>, to avoid millisecond drift.
-- Bloom filter: <code>bloom-filters</code> (Node) or <code>pybloom_live</code> (Python) to gate cache access.</p>
+- In-process: <code>lru-cache</code> (Node) or <code>functools.lru_cache</code> (Python). Max 100 entries, 8KB each. - Distributed: Redis 7.2 with <code>redis-py</code> or <code>ioredis</code>. Use <code>EX</code> for TTL, not <code>PX</code>, to avoid millisecond drift. - Bloom filter: <code>bloom-filters</code> (Node) or <code>pybloom_live</code> (Python) to gate cache access.</p>
 <p><strong>Queue discipline</strong>: AWS SQS with custom attributes. Skip AWS Step Functions; SQS gives you FIFO and priority in one service. The <code>VisibilityTimeout</code> trick is undocumented but saves retries.</p>
 <p><strong>Token counting</strong>: <code>tiktoken</code> (Python) or <code>js-tiktoken</code> (Node). The encodings are model-specific: use <code>cl100k_base</code> for GPT-4, <code>o200k_base</code> for Claude 3.5.</p>
 <p><strong>Monitoring</strong>: Prometheus + Grafana for GPU idle time, token waste, and cache hit rate. Add a custom metric: <code>llm_queue_starvation_seconds</code> to catch long waits.</p>

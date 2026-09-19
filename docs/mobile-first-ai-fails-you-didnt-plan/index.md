@@ -1,6 +1,6 @@
 # Mobile-first AI fails you didn’t plan…
 
-I spent longer than I should have on prompt tool before understanding what was actually happening. The default configuration is fine right up until it isn't. Here's what actually worked, and why.
+The default configuration is fine right up until it isn't. Here's what actually worked, and why.
 
 ## The one-paragraph version (read this first)
 
@@ -10,9 +10,7 @@ Global AI best practices assume fast, cheap internet and powerful GPUs on every 
 
 Most AI tutorials still start with a Jupyter notebook that trains a 7B parameter model on an A100 in 30 minutes, then expects the same model to run in a browser tab with WebAssembly and 100 ms latency. That mismatch hides three realities teams only learn after launch:
 
-1. Latency compounds across every hop. A 100 ms API call inside AWS us-east-1 becomes 320 ms in Nairobi CBD on Safaricom 4G and 850 ms on Equitel’s legacy network.
-2. Payload size matters more than model size. A 500 kB JSON response from an embedding API can cost a user $0.90 per request when data is $1.80/GB.
-3. On-device models often fail silently. A 2 GB LLM shipped by an OEM may crash after two inference steps because the vendor’s RAM throttling cuts the process to 512 MB.
+1. Latency compounds across every hop. A 100 ms API call inside AWS us-east-1 becomes 320 ms in Nairobi CBD on Safaricom 4G and 850 ms on Equitel’s legacy network. 2. Payload size matters more than model size. A 500 kB JSON response from an embedding API can cost a user $0.90 per request when data is $1.80/GB. 3. On-device models often fail silently. A 2 GB LLM shipped by an OEM may crash after two inference steps because the vendor’s RAM throttling cuts the process to 512 MB.
 
 Teams that optimize only for model accuracy miss the fact that users abandon flows after three seconds. In a 2026 field study across Nairobi, Lagos, and Dar es Salaam, 48% of users dropped out when the first meaningful paint took over 2.5 s, irrespective of the model’s perplexity score.
 
@@ -20,8 +18,7 @@ Teams that optimize only for model accuracy miss the fact that users abandon flo
 
 Think of the network and the device as two serial bottlenecks, not one. Every AI feature has to pass through both, and the slowest step defines the ceiling.
 
-- Network bottleneck: Radio access, middle-mile latency, packet loss.
-- Device bottleneck: RAM, CPU, thermal throttling, storage I/O.
+- Network bottleneck: Radio access, middle-mile latency, packet loss. - Device bottleneck: RAM, CPU, thermal throttling, storage I/O.
 
 In a mobile-first market, the network is usually the tighter constraint. A 256 kB model running locally might still need to fetch a 128 kB vocabulary file, and that 128 kB costs the user $0.23 on a typical Kenyan data bundle. The device bottleneck only shows up when the model runs at all; most users never get that far.
 
@@ -51,8 +48,7 @@ Response size: 487 kB
 
 Step 2: Translate that latency into user cost.
 
-- 487 kB payload at $1.80/GB = $0.000877 per request.
-- 1.423 s latency at 200 KB/s effective throughput = ~285 KB of data in flight.
+- 487 kB payload at $1.80/GB = $0.000877 per request. - 1.423 s latency at 200 KB/s effective throughput = ~285 KB of data in flight.
 
 Step 3: Quantize the model to int8 and compress the vocabulary.
 
@@ -108,9 +104,7 @@ Cost per request drops from $0.000877 to $0.000281, and latency drops from 1.423
 
 If you’ve tuned a Django REST API for high traffic, you already know connection pooling and gzip. The same knobs apply, but the cost of a missed optimization is 10× higher in mobile-first markets because every extra KB costs real money and every extra ms loses real users.
 
-- Gzip compression: A 500 kB JSON blob compresses to ~160 kB (68% savings).
-- HTTP/2 and multiplexing: One TLS handshake serves all requests, saving ~200 ms on each new connection.
-- Lambda snapStart: Cuts cold starts from ~600 ms to ~100 ms on ARM64.
+- Gzip compression: A 500 kB JSON blob compresses to ~160 kB (68% savings). - HTTP/2 and multiplexing: One TLS handshake serves all requests, saving ~200 ms on each new connection. - Lambda snapStart: Cuts cold starts from ~600 ms to ~100 ms on ARM64.
 
 The difference is that in a desktop-first world, gzip alone is a nice-to-have; in mobile-first, it’s the difference between a user staying on the flow and churning.
 
@@ -233,16 +227,13 @@ Use telemetry to decide which chunks to cache. If you see 80% of users asking fo
 
 The remaining latency is usually the device’s JavaScript engine and the browser’s garbage collection. On low-end Android Go devices, the V8 engine can take 300–400 ms to parse a 156 kB response, and the garbage collector can pause for another 200 ms. Use lightweight frameworks like Preact or Svelte, and avoid large React component trees. Measure with Lighthouse’s “Total Blocking Time” metric; anything over 300 ms on a low-end device is a red flag.
 
-
 **What’s the smallest model size that still gives useful accuracy for Swahili?**
 
 A distilled version of `sentence-transformers/all-mpnet-base-v2` quantized to int8 with a 32 k token vocabulary still hits 0.82 cosine similarity on the STSB Swahili benchmark while weighing 128 MB. Anything smaller (64 MB or 32 MB) drops to 0.71, which users notice in side-by-side comparisons. The 0.82 model is the smallest practical choice for most fintech use cases in East Africa.
 
-
 **How do I detect when a user is on a high-latency network?**
 
 Use the browser’s `navigator.connection` API (effectiveConnectionType) and `navigator.onLine`. If `effectiveConnectionType` is "2g" or "slow-2g" and `navigator.onLine` is true, switch to the distilled model and disable non-critical features. In 2026, 14% of Kenyan users still fall into this bucket on Equitel’s legacy network.
-
 
 **Should I ship the tokenizer with the app or fetch it on demand?**
 
@@ -250,13 +241,7 @@ Ship the tokenizer with the app if the app size budget allows (under 50 MB). Fet
 
 ## Further reading worth your time
 
-- [WebAssembly for AI: ONNX Runtime 1.18 and the WASM backend](https://onnxruntime.ai/docs/execution-providers/WebAssembly-EP.html) – Benchmarks show 2× faster inference on low-end devices when you compile to WASM instead of running Python in the browser.
-- [AWS Lambda SnapStart for Python 3.12](https://aws.amazon.com/blogs/compute/introducing-lambda-snapstart-for-python/) – The original announcement with cold start numbers and ARM64 deltas.
-- [Sentence Transformers quantization guide (v3.0)](https://sbert.net/docs/hub/sentence_transformers/quantization.html) – Covers int8 and int4, tokenizer pruning, and vocabulary chunking.
-- [Google’s Android Go performance checklist](https://developer.android.com/guide/practices/android-go) – Lists the exact CPU, RAM, and storage constraints for low-end devices sold in Kenya in 2026.
-- [CloudFront cache hit ratio tuning](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cache-hit-ratio.html) – Explains how to set TTLs for API responses to avoid stale data in mobile networks with spotty connectivity.
-- [ONNX Runtime Web GPU backend](https://onnxruntime.ai/docs/execution-providers/WebGPU-EP.html) – If you’re targeting high-end Android devices with WebGPU support, this backend gives 3× speedup over CPU for small models (< 256 MB).
-
+- [WebAssembly for AI: ONNX Runtime 1.18 and the WASM backend](https://onnxruntime.ai/docs/execution-providers/WebAssembly-EP.html) – Benchmarks show 2× faster inference on low-end devices when you compile to WASM instead of running Python in the browser. - [AWS Lambda SnapStart for Python 3.12](https://aws.amazon.com/blogs/compute/introducing-lambda-snapstart-for-python/) – The original announcement with cold start numbers and ARM64 deltas. - [Sentence Transformers quantization guide (v3.0)](https://sbert.net/docs/hub/sentence_transformers/quantization.html) – Covers int8 and int4, tokenizer pruning, and vocabulary chunking. - [Google’s Android Go performance checklist](https://developer.android.com/guide/practices/android-go) – Lists the exact CPU, RAM, and storage constraints for low-end devices sold in Kenya in 2026. - [CloudFront cache hit ratio tuning](https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/cache-hit-ratio.html) – Explains how to set TTLs for API responses to avoid stale data in mobile networks with spotty connectivity. - [ONNX Runtime Web GPU backend](https://onnxruntime.ai/docs/execution-providers/WebGPU-EP.html) – If you’re targeting high-end Android devices with WebGPU support, this backend gives 3× speedup over CPU for small models (< 256 MB).
 
 ---
 

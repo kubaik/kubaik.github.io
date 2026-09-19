@@ -6,7 +6,7 @@ I've hit the same building fintech mistake in more than one production codebase 
 
 You’ve built a feature that works perfectly in Lagos and Nairobi, then suddenly fails in Accra or Dakar. The symptoms look random: a 5xx error on 3% of calls, a timeout that only happens at 2pm local time, or a payment that succeeds on the sandbox but fails in production. You check the logs, the code, the network — nothing stands out. The most frustrating part? The same endpoint returns success in one country and failure in another, with no obvious pattern.
 
-I ran into this when shipping a new mobile-money refund flow. In Nigeria it worked every time, but in Ghana 8 out of 10 refunds timed out after 30 seconds. The error message in the logs was generic: `upstream request timeout`. No stack trace, no cause. We assumed it was a network issue until we reproduced it on a local server with 10ms latency to the payment provider. Even then, the refund succeeded in Lagos but failed in Accra — same code, same provider, same payload.
+In Nigeria it worked every time, but in Ghana 8 out of 10 refunds timed out after 30 seconds. The error message in the logs was generic: `upstream request timeout`. No stack trace, no cause. We assumed it was a network issue until we reproduced it on a local server with 10ms latency to the payment provider. Even then, the refund succeeded in Lagos but failed in Accra — same code, same provider, same payload.
 
 This isn’t just a Ghana problem. Across Kenya, Nigeria, Ghana, and Senegal, subtle differences in telecoms, banking APIs, and regulatory expectations break fintech features that look identical on the surface. The confusion comes from assuming that a successful sandbox test in one market means the integration is production-ready everywhere.
 
@@ -70,7 +70,7 @@ async function requestRefund(payload, market) {
 
 The numbers tell the story: before this change, Ghana refunds failed 3.2% of the time with `upstream request timeout`. After deploying the per-market timeout, the failure rate dropped to 0.1%. The cost? One config file and 15 lines of code.
 
-I spent two weeks blaming the Ghanaian telecoms provider before realising the timeout was too aggressive for their network. This fix took 45 minutes to implement and deploy.
+This fix took 45 minutes to implement and deploy.
 
 ## Fix 2 — the less obvious cause
 
@@ -305,7 +305,6 @@ curl -X POST https://api.example.com/refunds \\
   -H "X-Market: GH" \\
   -H "X-Carrier: mtn-gh" \\
   -d '{"amount": 1000, "reference": "REF1234567890\
-
 
 ---
 

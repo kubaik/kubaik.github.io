@@ -1,6 +1,6 @@
 # Replace managed services with Postgres 17
 
-A colleague asked me about replaced three during a code review recently, and my first answer wasn't a good one. It's the kind of problem that's easy to reproduce and hard to explain. This walks through the fix and the reasoning, not just the patch.
+It's the kind of problem that's easy to reproduce and hard to explain. This walks through the fix and the reasoning, not just the patch.
 
 ## The conventional wisdom (and why it's incomplete)
 
@@ -44,26 +44,13 @@ The trade-off is that you give up managed service UIs and autoscaling. In return
 I’ve seen three startups in Indonesia and Vietnam run this stack for six months with zero managed Redis, Elasticsearch, or cron services. Here’s what happened:
 
 **Startup A (marketplace, 800k DAU, Jakarta)**
-- Replaced Redis 7.2 with Postgres 17 IMCS for product listings cache.
-- Replaced Elasticsearch 8.12 with pg_search BM25 index for search.
-- Replaced cron + Step Functions with pg_cron 1.6 for retry logic.
-- Hardware: AWS m7g.2xlarge (8 vCPU, 32GB RAM, 1TB gp3).
-- Cost: $416/month vs $3,200/month for the managed stack.
-- Latency: p95 search queries dropped from 420ms to 180ms after pg_search index tuning. Cache hit rate stayed above 94% even during flash sales.
+- Replaced Redis 7.2 with Postgres 17 IMCS for product listings cache. - Replaced Elasticsearch 8.12 with pg_search BM25 index for search. - Replaced cron + Step Functions with pg_cron 1.6 for retry logic. - Hardware: AWS m7g.2xlarge (8 vCPU, 32GB RAM, 1TB gp3). - Cost: $416/month vs $3,200/month for the managed stack. - Latency: p95 search queries dropped from 420ms to 180ms after pg_search index tuning. Cache hit rate stayed above 94% even during flash sales.
 
 **Startup B (gig platform, 1.2M DAU, Ho Chi Minh City)**
-- Used pg_search for both user profiles and gig listings.
-- Kept pg_cron for retrying failed payouts; retries now run in <50ms instead of 1.2s because the data is local.
-- Hardware: same m7g.2xlarge.
-- Cost: $416/month vs $2,800/month for the managed stack.
-- Failure mode: A misconfigured pg_search index caused a full table scan during a peak hour. The query took 8 seconds to return, but the database didn’t fall over because it’s the only system under load. The team caught it in 90 seconds via pg_stat_statements.
+- Used pg_search for both user profiles and gig listings. - Kept pg_cron for retrying failed payouts; retries now run in <50ms instead of 1.2s because the data is local. - Hardware: same m7g.2xlarge. - Cost: $416/month vs $2,800/month for the managed stack. - Failure mode: A misconfigured pg_search index caused a full table scan during a peak hour. The query took 8 seconds to return, but the database didn’t fall over because it’s the only system under load. The team caught it in 90 seconds via pg_stat_statements.
 
 **Startup C (social app, 300k DAU, Manila)**
-- Used Postgres 17 IMCS for session cache and pg_search for feed search.
-- Kept Redis only for leaderboard in-memory writes; everything else moved to Postgres.
-- Hardware: m6i.large (2 vCPU, 8GB RAM, 500GB gp3).
-- Cost: $186/month vs $1,800/month.
-- Latency: p99 feed load time dropped from 340ms to 160ms after IMCS tuning.
+- Used Postgres 17 IMCS for session cache and pg_search for feed search. - Kept Redis only for leaderboard in-memory writes; everything else moved to Postgres. - Hardware: m6i.large (2 vCPU, 8GB RAM, 500GB gp3). - Cost: $186/month vs $1,800/month. - Latency: p99 feed load time dropped from 340ms to 160ms after IMCS tuning.
 
 The pattern is consistent: one box, one stack, one backup policy. The managed services add latency (cross-AZ calls), cost (per-request pricing), and operational overhead (separate dashboards). The Postgres extension stack removes all three.
 
@@ -74,9 +61,7 @@ This approach isn’t for everyone. If you’re already at 5M DAU with a dedicat
 
 The extension stack also breaks down when:
 
-- Your dataset exceeds 500GB. Postgres 17 IMCS keeps hot rows in RAM, but if your working set is larger than memory, you’ll need a separate cache layer.
-- You need real-time synonym expansion or complex NLP. pg_search BM25 is good for product search, but not for chat summarization or semantic search.
-- Your team is allergic to SQL. If your engineers live in MongoDB or DynamoDB, forcing them to write SQL for search queries will slow down product velocity.
+- Your dataset exceeds 500GB. Postgres 17 IMCS keeps hot rows in RAM, but if your working set is larger than memory, you’ll need a separate cache layer. - You need real-time synonym expansion or complex NLP. pg_search BM25 is good for product search, but not for chat summarization or semantic search. - Your team is allergic to SQL. If your engineers live in MongoDB or DynamoDB, forcing them to write SQL for search queries will slow down product velocity.
 
 Even in those cases, you can run the extension stack as a first layer and offload to dedicated services only when you hit the limits. The key is to start simple and add complexity only when you have to.
 
@@ -86,17 +71,13 @@ Even in those cases, you can run the extension stack as a first layer and offloa
 Ask three questions:
 
 1. **How many managed services do you run today?**
-   - 0–1: Keep it simple. The extension stack will save time and money.
-   - 2–3: Run a six-week experiment. Move one service at a time and measure latency, cost, and on-call pages. If the experiment fails, roll back.
-   - 4+: You probably need a dedicated DevOps hire before you consolidate.
+   - 0–1: Keep it simple. The extension stack will save time and money. - 2–3: Run a six-week experiment. Move one service at a time and measure latency, cost, and on-call pages. If the experiment fails, roll back. - 4+: You probably need a dedicated DevOps hire before you consolidate.
 
 2. **What’s your on-call rotation?**
-   - If you’re paging an engineer at least once a week for cache or search issues, consolidation will reduce pages.
-   - If your on-call is quiet, the managed stack is fine.
+   - If you’re paging an engineer at least once a week for cache or search issues, consolidation will reduce pages. - If your on-call is quiet, the managed stack is fine.
 
 3. **What’s your hardware budget?**
-   - If you’re already spending $2k/month on managed services, consolidating to one m7g.2xlarge saves ~$1.6k/month.
-   - If you’re on a $500/month budget, the extension stack might not leave enough headroom for backups and monitoring.
+   - If you’re already spending $2k/month on managed services, consolidating to one m7g.2xlarge saves ~$1.6k/month. - If you’re on a $500/month budget, the extension stack might not leave enough headroom for backups and monitoring.
 
 Use the table below to decide:
 
@@ -176,7 +157,6 @@ ORDER BY mean_exec_time DESC
 LIMIT 10;
 ```
 If any query is above 300ms, check if it’s a search, cache miss, or retry loop. If it is, install pg_search, pg_cron, and PgBouncer 1.21 and rerun the query. You’ll likely see a 30–60% latency drop in the first iteration.
-
 
 ---
 

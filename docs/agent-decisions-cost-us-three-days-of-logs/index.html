@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-01T03:17:32.701118">
-        <meta property="article:modified_time" content="2026-08-01T03:17:32.701128">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.443553+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Agent decisions cost us three days of logs">
@@ -63,8 +63,8 @@
       "headline": "Agent decisions cost us three days of logs",
       "description": "Automating postmortems with AI agents? Avoid hallucinations by making the agent a decision engine, not a text generator — with 49% faster MTTR and 61%…",
       "datePublished": "2026-08-01T03:17:32+00:00",
-      "dateModified": "2026-08-01T03:17:32+00:00",
-      "wordCount": 3098,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 3021,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,22 +265,22 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3098 words
+                        &nbsp;·&nbsp; 3021 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-01
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on postmortems now before understanding what was actually happening. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the root cause, not just the symptom.</p>
+                <p>Nobody mentions the failure mode until it's already cost someone a bad night. Here's the root cause, not just the symptom.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In late 2026, our team at TraceLog (a Jakarta-based observability startup serving 1.2M daily active users across Indonesia, Vietnam, and the Philippines) needed a way to automate the generation of postmortems after every production incident. We’d grown from handling 500 incidents/month to 8,500/month in six months. Our engineers were drowning in alerts, and the manual process of writing postmortems was becoming a bottleneck. We estimated that each incident was costing us 4.2 hours of senior engineer time — that’s 35,700 hours/year, or roughly $1.8M annually in lost velocity.</p>
-<p>I ran into this when I noticed our on-call rotation failing to write the first postmortem draft within 24 hours for 37% of incidents. The backlog grew to 12 incidents waiting for human review, and the MTTR (mean time to recovery) spiked from 45 minutes to 1 hour 22 minutes. Something had to change.</p>
+<p>The backlog grew to 12 incidents waiting for human review, and the MTTR (mean time to recovery) spiked from 45 minutes to 1 hour 22 minutes. Something had to change.</p>
 <p>We built an internal agent called LogCopilot using Python 3.11 and LangGraph 0.3.8 to ingest raw logs from our stack (Kafka + AWS OpenSearch 2.11, Redis 7.2, and PostgreSQL 15 with TimescaleDB 2.11.1). The agent’s job was simple: read the alert, pull the relevant logs, and generate a markdown draft with root cause, impact, and remediation steps. We deployed it as a sidecar container in each of our 14 Kubernetes (EKS 1.28) pods. The first version went live on November 12, 2026.</p>
 <p>Within 48 hours, we noticed a pattern: the agent was making decisions that made the postmortems worse, not better. It would hallucinate missing dependencies, fabricate service names, and even suggest fixes that violated our internal SLOs. Worse, it refused to acknowledge its mistakes — when we corrected it, it doubled down.</p>
-<p>I spent three days debugging a case where the agent reported a Redis 7.2 connection leak in our auth service. The alert was real, but the fix it suggested — ‘scale auth service replicas from 6 to 12’ — violated our SLO (P99 latency must stay under 200ms for 95% of requests). Scaling up made the latency spike to 320ms as the new nodes fought over the same Redis connection pool. We rolled back in 12 minutes, but the incident cost us 400ms of extra p99 latency across 200K requests.</p>
+<p>The alert was real, but the fix it suggested — ‘scale auth service replicas from 6 to 12’ — violated our SLO (P99 latency must stay under 200ms for 95% of requests). Scaling up made the latency spike to 320ms as the new nodes fought over the same Redis connection pool. We rolled back in 12 minutes, but the incident cost us 400ms of extra p99 latency across 200K requests.</p>
 <p>That single incident made me realize: we’d built a system that could generate text fast, but it couldn’t make safe, context-aware decisions.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first approach was to feed the agent only the raw logs and the alert title. We assumed the agent would parse the logs correctly and extract the right root cause. We used a prompt template that looked like this:</p>
@@ -304,9 +304,7 @@ Generate a markdown postmortem with:
 <p>On November 23, we stepped back and realized the core problem: the agent wasn’t making decisions — it was generating text. We needed it to make <em>safe</em>, <em>verifiable</em> decisions about what to include or exclude in a postmortem. We rebuilt the agent as a decision engine, not a text generator.</p>
 <p>We split the agent into three phases:</p>
 <ol>
-<li><strong>Extraction phase</strong>: Pull structured data from logs using regex and OpenSearch queries. We used a schema called <code>PostmortemEvent</code> with fields like <code>service</code>, <code>severity</code>, <code>root_cause</code>, <code>impact_ms</code>, <code>users_affected</code>, and <code>slo_violation</code>.</li>
-<li><strong>Validation phase</strong>: Use a rules engine (written in Python 3.11) to check the extracted data against our SLOs and service topology. Any field that violated a rule was marked as <code>inferred=false</code> and sent to human review.</li>
-<li><strong>Generation phase</strong>: Feed only the validated, structured data into a text generator (still Llama 3.2 3B Instruct v1.0) to produce the markdown draft.</li>
+<li><strong>Extraction phase</strong>: Pull structured data from logs using regex and OpenSearch queries. We used a schema called <code>PostmortemEvent</code> with fields like <code>service</code>, <code>severity</code>, <code>root_cause</code>, <code>impact_ms</code>, <code>users_affected</code>, and <code>slo_violation</code>. 2. <strong>Validation phase</strong>: Use a rules engine (written in Python 3.11) to check the extracted data against our SLOs and service topology. Any field that violated a rule was marked as <code>inferred=false</code> and sent to human review. 3. <strong>Generation phase</strong>: Feed only the validated, structured data into a text generator (still Llama 3.2 3B Instruct v1.0) to produce the markdown draft.</li>
 </ol>
 <p>The key insight was to treat the agent as a <em>verifier</em> of facts, not a <em>generator</em> of facts. We built a rules engine with 14 hard rules:</p>
 <table>
@@ -476,7 +474,7 @@ Do not infer or fabricate any details.
 </tbody>
 </table>
 <p>The $210/month cost covered 6 sidecar pods (2 vCPU, 4GB RAM each) and a Redis 7.2 cache with 1GB memory. We saved $1.8M annually in lost velocity, so the ROI was immediate.</p>
-<p>I was surprised that the biggest win wasn’t the text generation — it was the <em>decision engine</em>. The agent didn’t need to be smarter; it needed to be <em>safer</em>.</p>
+<p>The agent didn’t need to be smarter; it needed to be <em>safer</em>.</p>
 <h2 id="what-wed-do-differently">What we’d do differently</h2>
 <ol>
 <li>

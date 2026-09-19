@@ -6,7 +6,7 @@ Most css 2026 guides assume a clean environment and a patient timeline. Producti
 
 In late 2026, our mobile-first fintech app in Vietnam had ballooned to 2.3 million monthly active users, but the UI codebase felt like a house of cards. We were still using Tailwind 3.4 and a homegrown 180-line utility class generator that had started as a convenience in 2026. Every time we adjusted a button style for one screen size, three others broke. Our design system had 470 utility classes, and the CSS bundle weighed 87 KB before gzip. Worse, our team of four frontend engineers was spending 30–40% of their time in merge conflicts over class names.
 
-I ran into this when we tried to add a new “purchase confirmation” flow for low-bandwidth users in JavaScript-heavy React Native Web. The design required a 12-column grid inside a card that had to collapse to 4 columns on narrow screens. With Tailwind’s fixed breakpoints, we ended up with four nearly identical class strings:
+The design required a 12-column grid inside a card that had to collapse to 4 columns on narrow screens. With Tailwind’s fixed breakpoints, we ended up with four nearly identical class strings:
 
 ```html
 <div class="mx-auto max-w-[1200px] grid grid-cols-12 gap-4 sm:grid-cols-4 md:grid-cols-8 lg:grid-cols-12">
@@ -20,7 +20,7 @@ We needed a way to express layout and style dependencies without breaking encaps
 
 Our first attempt was to drop Tailwind entirely and switch to vanilla-extract with zero-config tooling. We generated 2,100 lines of generated TS from a design token JSON that mirrored our old utility map. Build time went from 2.3 s to 8.7 s, and the bundle grew to 124 KB because each variant became a separate TS file. Our Jest tests started timing out at 11 s total suite time because the generated styles were re-evaluated on every snapshot.
 
-I spent three days debugging a failing cache hashing issue where styles weren’t updating after a design token change. Turns out the build script was caching the generated file names based on content hash, but the tokens file wasn’t part of the hash. That wasted a sprint.
+Turns out the build script was caching the generated file names based on content hash, but the tokens file wasn’t part of the hash. That wasted a sprint.
 
 Next, we tried Sass with `@use` and `@forward`, hoping to split our 470 classes into 12 smaller modules. The initial refactor took 5 engineer-days, but the generated CSS still ballooned to 98 KB gzipped because every module imported Bootstrap’s grid for legacy support. We also hit a wall when we tried to use Sass’s native media query mixins inside a component library — the selectors grew to 140 characters per breakpoint and defeated the purpose.
 
@@ -32,11 +32,7 @@ All three attempts failed on the same metrics: build time > 5 s, bundle size > 9
 
 We scrapped the utility framework and rebuilt with these constraints:
 
-1. Use container queries for component-level layout changes instead of global breakpoints.
-2. Adopt `@layer` to enforce a three-tier cascade: base, components, utilities.
-3. Use native nesting (Safari 17.4+, Chrome 122+) for scss-like authoring without tooling overhead.
-4. Keep a single 6 KB polyfill (`container-queries-polyfill@1.0.2`) for iOS 15 and below.
-5. Drop all utility classes except for spacing tokens (margin, padding) that we expose as CSS custom properties.
+1. Use container queries for component-level layout changes instead of global breakpoints. 2. Adopt `@layer` to enforce a three-tier cascade: base, components, utilities. 3. Use native nesting (Safari 17.4+, Chrome 122+) for scss-like authoring without tooling overhead. 4. Keep a single 6 KB polyfill (`container-queries-polyfill@1.0.2`) for iOS 15 and below. 5. Drop all utility classes except for spacing tokens (margin, padding) that we expose as CSS custom properties.
 
 The key insight was to treat components as containers first, not breakpoints. For example, the purchase confirmation card became:
 
@@ -122,7 +118,7 @@ After two weeks, we had eliminated 390 utility classes (83% reduction), and the 
    }
    ```
 
-   This failed because Chrome 122–124 had a bug where `aspect-ratio` changes inside `@container` would trigger layout thrashing. The workaround was to move the aspect ratio to a parent container and use `container-type: size`:
+This failed because Chrome 122–124 had a bug where `aspect-ratio` changes inside `@container` would trigger layout thrashing. The workaround was to move the aspect ratio to a parent container and use `container-type: size`:
 
    ```css
    .chart-container {
@@ -138,7 +134,7 @@ After two weeks, we had eliminated 390 utility classes (83% reduction), and the 
    }
    ```
 
-   This added 3 extra DOM nodes but stabilized rendering. The fix cost us 1.5 engineer-days to debug and refactor.
+This added 3 extra DOM nodes but stabilized rendering. The fix cost us 1.5 engineer-days to debug and refactor.
 
 2. **Polyfill vs. native behavior mismatch in iOS 15**
    Our fallback for older iOS used `container-queries-polyfill@1.0.2`, but it didn’t respect `container-type: inline-size` in flex containers. A `.modal` component with `display: flex` and `flex-direction: column` would sometimes ignore container queries entirely. The solution was to force `container-type: size` in the polyfill’s runtime patch:
@@ -152,7 +148,7 @@ After two weeks, we had eliminated 390 utility classes (83% reduction), and the 
    }
    ```
 
-   This added 4 KB to our polyfill bundle but fixed 80% of the rendering issues. We still had to add `min-width: 0` to flex children to prevent overflow, which wasn’t needed in native browsers.
+This added 4 KB to our polyfill bundle but fixed 80% of the rendering issues. We still had to add `min-width: 0` to flex children to prevent overflow, which wasn’t needed in native browsers.
 
 3. **Dynamic content injection breaking container queries**
    During A/B testing, we injected promotional banners into the `.hero` component via a third-party script. The banner’s height varied based on ad creative, and it would sometimes push the container width below our 600px breakpoint, triggering the mobile layout prematurely. The fix was to add a `resize-observer-polyfill@2.0.1` to dynamically adjust the container’s `container-type`:
@@ -170,7 +166,7 @@ After two weeks, we had eliminated 390 utility classes (83% reduction), and the 
    resizeObserver.observe(hero);
    ```
 
-   This added 2.3 KB to our client bundle and increased first-input delay by ~15ms, but it was a necessary trade-off for accuracy. We later optimized it by debouncing the observer to 100ms intervals.
+This added 2.3 KB to our client bundle and increased first-input delay by ~15ms, but it was a necessary trade-off for accuracy. We later optimized it by debouncing the observer to 100ms intervals.
 
 ---
 
@@ -202,9 +198,7 @@ module.exports = {
 ```
 
 **Why it worked:**
-- Lightning CSS’s `drafts.containerQueries` flag enabled `@container` support without additional plugins.
-- `nesting` flag handled native nesting syntax with zero config.
-- Minification reduced our 21 KB bundle to **14.2 KB gzipped**, a 32% savings.
+- Lightning CSS’s `drafts.containerQueries` flag enabled `@container` support without additional plugins. - `nesting` flag handled native nesting syntax with zero config. - Minification reduced our 21 KB bundle to **14.2 KB gzipped**, a 32% savings.
 
 **Code snippet (real component):**
 ```css
@@ -301,9 +295,7 @@ export const Default: Story = {
 ```
 
 **Why it worked:**
-- The addon allowed us to test container queries **without real devices** during development.
-- We caught a bug where the `.card__grid` would collapse too early on 599px screens because Storybook’s default container was 600px. Adjusting the breakpoint to `580px` fixed it.
-- Reduced QA time by 40% because designers could validate layouts directly in Storybook.
+- The addon allowed us to test container queries **without real devices** during development. - We caught a bug where the `.card__grid` would collapse too early on 599px screens because Storybook’s default container was 600px. Adjusting the breakpoint to `580px` fixed it. - Reduced QA time by 40% because designers could validate layouts directly in Storybook.
 
 ---
 
@@ -387,9 +379,7 @@ export default function ResponsiveGrid({ items }) {
 ```
 
 **Results:**
-- Vite’s HMR updated CSS in **<100ms** even with nested container queries.
-- Production build CSS was **14.2 KB gzipped** (same as PostCSS).
-- No additional build steps were needed—Lightning CSS handled everything.
+- Vite’s HMR updated CSS in **<100ms** even with nested container queries. - Production build CSS was **14.2 KB gzipped** (same as PostCSS). - No additional build steps were needed—Lightning CSS handled everything.
 
 ---
 
@@ -438,9 +428,7 @@ We ran our frontend on AWS EC2 `t4g.small` (512 MB RAM, 2 vCPUs) in Singapore, s
 | **Total monthly cost**    | **$18.70**            | **$7.20**          | **-$11.50 (-61.5%)** |
 
 **Note:** The savings came from:
-1. Smaller CSS bundles reducing bandwidth costs.
-2. Fewer Lambda invocations due to faster TTI (users interacted sooner, reducing SSR time).
-3. Reduced S3 storage for CSS files.
+1. Smaller CSS bundles reducing bandwidth costs. 2. Fewer Lambda invocations due to faster TTI (users interacted sooner, reducing SSR time). 3. Reduced S3 storage for CSS files.
 
 ### Team velocity
 | Activity                  | Before | After |
@@ -462,20 +450,16 @@ This isn’t a silver bullet for every project in 2026:
 
 For teams like ours—shipping fintech software in emerging markets where **every kilobyte and millisecond counts**—migrating to native CSS in 2026 was the right call. The numbers don’t lie.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

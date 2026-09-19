@@ -1,6 +1,6 @@
 # LLM risks underestimated in OWASP Top 10
 
-A colleague asked me about hidden latency during a code review recently, and my first answer wasn't a good one. The edge cases only show up once real users hit the system. This post covers what comes after the happy path.
+The edge cases only show up once real users hit the system. This post covers what comes after the happy path.
 
 ## The conventional wisdom (and why it's incomplete)
 
@@ -193,7 +193,6 @@ The **latency increase** of 140 ms at p95 was noticeable but acceptable for our 
 The **tool call violations** metric shows a clear improvement: from 89% caught by regex filters to 99.8% caught by the combined safety stack. The remaining 0.2% of violations slipped through due to obfuscated tool names (e.g., `wrt_fle` instead of `write_file`), which we mitigated by adding a fuzzy-matching layer to Guardrails.
 
 In summary, the advanced mitigations added complexity and latency but delivered measurable improvements in security, cost, and operational efficiency. The OWASP checklist is a necessary starting point, but it’s not sufficient for production-grade LLM systems. The real work begins after the checklist is done.
-
 
 ---
 

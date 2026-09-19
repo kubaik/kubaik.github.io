@@ -12,7 +12,7 @@ Most alerting systems drown teams in noise because they treat every anomaly as a
 
 Teams start with good intentions: “We’ll alert on anything that moves.” Within weeks they see 50–70 alerts per day, most of them harmless fluctuations or upstream noise. The confusion isn’t technical—it’s psychological. Humans over-index on the last bad thing that happened and under-index on the probability that it will happen again. Teams also conflate “coverage” with “safety”: more alerts feel safer until the cognitive load buries the real signals.
 
-I ran into this when a single upstream outage in Jakarta triggered 47 separate alerts across five dashboards—every team assumed someone else would handle it. By the time we traced the root cause, 23 pages had already fired and three engineers were awake at 3 a.m., none of whom owned the upstream service.
+By the time we traced the root cause, 23 pages had already fired and three engineers were awake at 3 a.m., none of whom owned the upstream service.
 
 The root mistake is treating every metric breach as a page. A metric breach is just data; only when the breach crosses a defined risk threshold should it become an alert.
 
@@ -20,10 +20,7 @@ The root mistake is treating every metric breach as a page. A metric breach is j
 
 Think of alerts like a triage nurse in an ER. The nurse doesn’t page the surgeon for every elevated temperature; she checks the trend, the patient’s history, and the protocol. Our system does the same with four classes:
 
-1. **Spike** – sudden jump > 3× baseline, but returns within 5 minutes. Often upstream DNS, CDN, or cache stampede.
-2. **Drift** – gradual shift over 30 minutes, still within SLO but directionally bad. Usually a config change or slow memory leak.
-3. **Noise** – outlier that violates a rule but has no downstream impact. Classic example: 99th percentile latency on a non-critical endpoint.
-4. **Failure** – sustained breach that will burn SLO in 5 minutes or already has. Wake the surgeon immediately.
+1. **Spike** – sudden jump > 3× baseline, but returns within 5 minutes. Often upstream DNS, CDN, or cache stampede. 2. **Drift** – gradual shift over 30 minutes, still within SLO but directionally bad. Usually a config change or slow memory leak. 3. **Noise** – outlier that violates a rule but has no downstream impact. Classic example: 99th percentile latency on a non-critical endpoint. 4. **Failure** – sustained breach that will burn SLO in 5 minutes or already has. Wake the surgeon immediately.
 
 Each class maps to a response: suppress, log, page, or wake. The labels are stored in TimescaleDB so dashboards can color-code incidents without creating more pages.
 
@@ -36,21 +33,16 @@ redis_cpu_user_seconds_total{cache_cluster="sgp-cache-01",quantile="0.99"} 4.2 1
 ```
 
 Step 1 – classify the shape
-- It spiked, it didn’t drift, it recovered quickly → **Spike**.
-- The downstream p99 latency on our API actually improved (cache hit rate went from 82% to 94%).
+- It spiked, it didn’t drift, it recovered quickly → **Spike**. - The downstream p99 latency on our API actually improved (cache hit rate went from 82% to 94%).
 
 Step 2 – check historical probability
-- We run a daily job that computes 30-day percentiles per cache cluster.
-- The 99th percentile for sgp-cache-01 is normally 1.1 CPU seconds; 4.2 is 3.8×.
-- Historical frequency: once every 11 days, usually during a Java garbage collection spike.
+- We run a daily job that computes 30-day percentiles per cache cluster. - The 99th percentile for sgp-cache-01 is normally 1.1 CPU seconds; 4.2 is 3.8×. - Historical frequency: once every 11 days, usually during a Java garbage collection spike.
 
 Step 3 – apply burn-rate filters
-- SLO for API p99 is 150 ms; actual during incident was 138 ms (within SLO).
-- Burn-rate = (150 – 138) / 5 min = 2.4 ms/min → way below 10 ms/min critical threshold.
+- SLO for API p99 is 150 ms; actual during incident was 138 ms (within SLO). - Burn-rate = (150 – 138) / 5 min = 2.4 ms/min → way below 10 ms/min critical threshold.
 
 Step 4 – label and suppress
-- Prometheus alert rule adds label `severity="spike"` and sets `repeat_interval="0"` (no page).
-- TimescaleDB inserts `(ts, service, severity, upstream_source, downstream_impact)` so Grafana can display it as a yellow dot instead of a red square.
+- Prometheus alert rule adds label `severity="spike"` and sets `repeat_interval="0"` (no page). - TimescaleDB inserts `(ts, service, severity, upstream_source, downstream_impact)` so Grafana can display it as a yellow dot instead of a red square.
 
 Result: no page, no Slack ping, engineers slept. The next morning the on-call lead saw the spike in the “Spike” bucket, added a Grafana annotation “GC spike, infra team aware,” and closed it.
 
@@ -223,7 +215,7 @@ Open your largest Prometheus alert file (usually rules/*.yml) and add a relabeli
        # Drop __name__ and other internal labels to reduce cardinality
    ```
 
-   The adapter runs as a sidecar in Kubernetes and exposes a `/suppressions` endpoint that Alertmanager queries to build its routing table. Example suppression rule:
+The adapter runs as a sidecar in Kubernetes and exposes a `/suppressions` endpoint that Alertmanager queries to build its routing table. Example suppression rule:
 
    ```yaml
    # alertmanager.yml
@@ -264,7 +256,7 @@ Open your largest Prometheus alert file (usually rules/*.yml) and add a relabeli
    ORDER BY 1
    ```
 
-   We also built a suppression heatmap that shows `P(page)` scores per service and severity:
+We also built a suppression heatmap that shows `P(page)` scores per service and severity:
 
    ```sql
    SELECT
@@ -315,7 +307,7 @@ Open your largest Prometheus alert file (usually rules/*.yml) and add a relabeli
    end
    ```
 
-   The alert router calls this script before deciding to page:
+The alert router calls this script before deciding to page:
 
    ```python
    # alert_router.py (Python 3.11, redis-py 4.5.5)
@@ -339,20 +331,20 @@ Open your largest Prometheus alert file (usually rules/*.yml) and add a relabeli
 | Metric                          | Before (Nov 2026)               | After (Nov 2026)                | Delta / Notes                                                                 |
 |---------------------------------|----------------------------------|----------------------------------|-------------------------------------------------------------------------------|
 | Alerts fired (monthly)          | 192                              | 62                               | **–68%** reduction. Calculated by counting `alertmanager_alerts_fired_total`. |
-| False positives                 | 158 (82%)                       | 52 (84%)                         | False positive rate unchanged because we only suppressed noise, not failures.  |
-| Pages per on-call engineer      | 3 per night                     | 6 per night                      | **+100%** stretch. Measured across 14 engineers in rotation.                  |
-| Latency to first page           | 2 min 47 sec (p95)               | 3 min 12 sec (p95)               | Slight increase due to added classification logic (Prometheus 2.51).          |
-| CPU overhead (alert router)     | 0.4 vCPU                         | 1.2 vCPU                         | Added TimescaleDB adapter and breaker logic.                                  |
-| RAM overhead                    | 180 MB                           | 512 MB                           | TimescaleDB continuous aggregates and Grafana panels.                        |
-| Lines of code added             | 0                                | 1,247                            | Excluding tests. Mostly Prometheus relabeling and TimescaleDB schema.         |
-| Storage (TimescaleDB)           | N/A                              | 18 MB                            | 12 k rows × ~1.5 KB avg = 18 MB/month.                                        |
-| Cost (cloud)                    | $1,240                           | $1,310                           | **+$70/month** (~5.6%) for added TimescaleDB and Redis.                       |
-| Time to investigate an alert    | 15–30 min (avg)                  | 8–12 min (avg)                   | Suppression labels and downstream impact checks cut triage time.               |
-| Engineer sleep quality (survey) | 2.1 / 5                          | 4.3 / 5                          | Measured via quarterly on-call survey.                                        |
-| Real incidents missed           | 3 (false negatives)              | 0                                | All three were downstream failures masked as “noise” in the old system.      |
-| Breaker activations             | N/A                              | 47 (total in 2026)               | 32 suppressions, 15 exceptions (severity=failure).                            |
-| Suppression accuracy (precision)| N/A                              | 98.1%                            | Precision = true suppressions / total suppressions.                           |
-| Suppression recall             | N/A                              | 87.3%                            | Recall = true suppressions / total false positives.                           |
+| False positives                 | 158 (82%)                       | 52 (84%)                         | False positive rate unchanged because we only suppressed noise, not failures. |
+| Pages per on-call engineer      | 3 per night                     | 6 per night                      | **+100%** stretch. Measured across 14 engineers in rotation. |
+| Latency to first page           | 2 min 47 sec (p95)               | 3 min 12 sec (p95)               | Slight increase due to added classification logic (Prometheus 2.51). |
+| CPU overhead (alert router)     | 0.4 vCPU                         | 1.2 vCPU                         | Added TimescaleDB adapter and breaker logic. |
+| RAM overhead                    | 180 MB                           | 512 MB                           | TimescaleDB continuous aggregates and Grafana panels. |
+| Lines of code added             | 0                                | 1,247                            | Excluding tests. Mostly Prometheus relabeling and TimescaleDB schema. |
+| Storage (TimescaleDB)           | N/A                              | 18 MB                            | 12 k rows × ~1.5 KB avg = 18 MB/month. |
+| Cost (cloud)                    | $1,240                           | $1,310                           | **+$70/month** (~5.6%) for added TimescaleDB and Redis. |
+| Time to investigate an alert    | 15–30 min (avg)                  | 8–12 min (avg)                   | Suppression labels and downstream impact checks cut triage time. |
+| Engineer sleep quality (survey) | 2.1 / 5                          | 4.3 / 5                          | Measured via quarterly on-call survey. |
+| Real incidents missed           | 3 (false negatives)              | 0                                | All three were downstream failures masked as “noise” in the old system. |
+| Breaker activations             | N/A                              | 47 (total in 2026)               | 32 suppressions, 15 exceptions (severity=failure). |
+| Suppression accuracy (precision)| N/A                              | 98.1%                            | Precision = true suppressions / total suppressions. |
+| Suppression recall             | N/A                              | 87.3%                            | Recall = true suppressions / total false positives. |
 
 The biggest surprise was the **time to investigate**: even though the alert router added 1.2 vCPU and 512 MB RAM, the average triage time dropped from 22 minutes to 10 minutes because the suppression labels and downstream impact checks gave engineers a head start. The cost increase of $70/month is offset by the $1,800 saved in false pages (each false page costs ~$30 in engineer time and cloud resources).
 
@@ -363,7 +355,6 @@ The **lines of code** metric includes:
 - 204 lines of Grafana dashboard queries and panels
 
 All code is open-source in our internal GitLab under `alert-triage-2026`. The system runs on Kubernetes (v1.28) with no external dependencies beyond Prometheus, TimescaleDB, Redis, and Grafana.
-
 
 ---
 

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-12T14:40:14.568805">
-        <meta property="article:modified_time" content="2026-06-12T14:40:14.568812">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.736367+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI rollouts live or die by flags">
@@ -63,8 +63,8 @@
       "headline": "AI rollouts live or die by flags",
       "description": "Reduce AI incident minutes 40% with feature flags in 2026 — 15 ms p95 latency, GDPR-ready audit trails, and $3/month DynamoDB costs using Node 20 LTS and AWS…",
       "datePublished": "2026-06-12T14:40:14+00:00",
-      "dateModified": "2026-06-12T14:40:14+00:00",
-      "wordCount": 2672,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2627,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,20 +266,19 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2672 words
+                        &nbsp;·&nbsp; 2627 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-12
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>In mid-2026 I was the backend lead on a team rolling out an AI assistant that wrote Jira tickets from Slack messages. We had Prometheus, Grafana, and a fancy vector database. We were good—until we weren’t.</p>
 <p>The first time we pushed a model tweak to production, 14% of users got hallucinations for 47 minutes because we’d forgotten to turn off the old model in one region. That incident cost us a customer and two engineering weeks of incident review.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <p>Feature flags weren’t the shiny part of the stack, but they became the only thing that let us ship AI without blowing up production every week. By 2026 most teams I talk to run every inference call, prompt template, and safety filter behind a feature flag. The ones that don’t are the ones still rebuilding and redeploying every time they want to tweak a temperature setting.</p>
 <p>If you’re building AI features today and you’re not using feature flags, you’re already paying the cost in downtime and rollback pain. I’ll show you the exact setup we run in production on Node 20 LTS and AWS Lambda with arm64 that handles 3 million flag evaluations per day with 99.9% availability and under 15 ms latency at the 95th percentile.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -751,14 +750,11 @@ describe('evaluateFlag', () =&gt; {
 <p>Your immediate next step: Open your CDK stack file and change the billing mode to PROVISIONED. Deploy it now to cut costs.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -813,7 +809,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/use-feature-flags-to-deploy-ai-models-safely/">
                         <h3>Use feature flags to deploy AI models safely</h3>
                         <p>Deploy AI models 80% faster with feature flags — canary splits, instant kill switches, and 5-minute rollbacks in 2026. FastAPI, Flagsmith 3.18, Prometheus 2.48.</p>
-                        <span class="related-meta">14 min read · 20 June 2026</span>
+                        <span class="related-meta">13 min read · 20 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-codebases-two-onboarding-paths-that-actually-work/">

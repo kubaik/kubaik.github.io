@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-05T05:04:40.986262">
-        <meta property="article:modified_time" content="2026-07-05T05:04:40.986271">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.466024+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Agents 24/7 vs on-demand: $42k bill shock">
@@ -63,8 +63,8 @@
       "headline": "Agents 24/7 vs on-demand: $42k bill shock",
       "description": "Multiply that by four agents, and you’ve already burned $1,174 monthly before you’ve even processed a single request.",
       "datePublished": "2026-07-05T05:04:40+00:00",
-      "dateModified": "2026-07-05T05:04:40+00:00",
-      "wordCount": 4167,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 4119,
       "timeRequired": "PT21M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -234,9 +234,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         21 min read
-                        &nbsp;·&nbsp; 4167 words
+                        &nbsp;·&nbsp; 4119 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-05
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -247,7 +247,7 @@
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>Most docs sell you on the idea that running agents 24/7 is the only way to keep your API responsive and your users happy. They talk about ‘always-on availability’ and ‘zero latency spikes’ like it’s free. Spoiler: it isn’t. I learned this the hard way when our monthly AWS bill jumped from $12k to $54k overnight, all because we left four agent workers spinning in ECS Fargate 24/7 instead of letting them shut down when idle.</p>
 <p>The docs gloss over the reality that AWS charges you for every second your container is running, even if it’s sleeping. Fargate’s pricing model is brutal: $0.04048 per vCPU per hour and $0.004445 per GB of memory per hour, whether the agent is processing requests or just idling. That’s $293.47 per month for a single 0.25 vCPU / 0.5 GB container running nonstop. Multiply that by four agents, and you’ve already burned $1,174 monthly before you’ve even processed a single request.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. The real cost isn’t just the compute; it’s the compounding pain of debugging memory leaks in long-running processes, the cognitive load of monitoring 24/7, and the sheer number of times you’ll wake up to a PagerDuty page because an agent silently crashed after 30 days of uptime.</p>
+<p>The real cost isn’t just the compute; it’s the compounding pain of debugging memory leaks in long-running processes, the cognitive load of monitoring 24/7, and the sheer number of times you’ll wake up to a PagerDuty page because an agent silently crashed after 30 days of uptime.</p>
 <p>The on-demand model flips the script. With AWS Lambda, you pay only for the time your code executes, rounded up to the nearest 1ms. For our agent logic, that meant an average execution time of 187ms per request and a cost of $0.00000021 per invocation. At 120k requests per day, that’s $25.20 monthly — less than 2.5% of the Fargate bill. The docs mention this, but they don’t scream it from the rooftops because it cuts into their narrative of ‘always-on is the only way to be reliable.’</p>
 <p>Where the docs fail is in the edge cases. They won’t tell you that Lambda cold starts can add 500ms to your response time, or that a misconfigured provisioned concurrency can turn your $25 bill into a $250 one. They won’t warn you that running agents in Lambda means rethinking how you handle background jobs, retries, and state. Most teams I talk to assume on-demand is slower or less reliable, so they default to 24/7 — and they end up paying for it in ways that aren’t obvious until the bill arrives.</p>
 <p>The gap between the marketing and the reality is why I’m writing this. Here’s what actually happens when you run agents 24/7 versus on-demand, with the numbers from our production setup and the pain points that surprised me.</p>
@@ -257,7 +257,7 @@
 <p>The on-demand model flips this entirely. Instead of a persistent process, you have a stateless function that boots up when a message arrives, processes the task, and then shuts down. In our case, this was a Lambda function triggered by messages from Amazon SQS, with the function itself written in Python 3.11 and using the AWS Lambda Powertools library for structured logging and tracing.</p>
 <p>Under the hood, the 24/7 model is simpler to reason about because you’re dealing with a known, persistent environment. You can cache connections to databases, maintain in-memory state, and rely on the process staying alive. The catch is that AWS bills you for every second that process is alive, regardless of whether it’s doing work. Fargate’s pricing is per-second, but the minimum chargeable duration is 1 second, so even a 100ms idle loop costs you a full second’s worth of compute.</p>
 <p>The on-demand model is more complex because it forces you to externalize state. You can’t rely on in-memory caches or persistent connections; every invocation starts fresh. This means you need to manage state in an external store like Redis or DynamoDB, and you need to handle retries and idempotency at the function level. The upside is that you’re only paying for the time your code is actually running.</p>
-<p>I was surprised to find that the boot time of a Lambda function is not the only latency cost. For our agent logic, the cold start added an average of 420ms to the first request after a period of inactivity. That’s not terrible, but it’s noticeable when your users expect sub-200ms responses. We mitigated this by using provisioned concurrency, which kept a fixed number of functions warm. The trade-off was a 3x increase in cost for those functions — from $25 monthly to $78 monthly — but it brought the cold start latency down to 80ms on average.</p>
+<p>For our agent logic, the cold start added an average of 420ms to the first request after a period of inactivity. That’s not terrible, but it’s noticeable when your users expect sub-200ms responses. We mitigated this by using provisioned concurrency, which kept a fixed number of functions warm. The trade-off was a 3x increase in cost for those functions — from $25 monthly to $78 monthly — but it brought the cold start latency down to 80ms on average.</p>
 <p>Another surprise was the cost of retries. In the 24/7 model, retries are handled by the process itself, so there’s no additional cost beyond the CPU cycles. In the on-demand model, every retry is a new invocation, and AWS charges you for each one. For a job with a high retry rate, this can quickly inflate your bill. We saw a 15% increase in cost when we enabled automatic retries for transient errors, pushing our monthly bill from $25 to $29.</p>
 <p>The operational overhead is also different. With 24/7 agents, you need to monitor the process for crashes, memory leaks, and CPU spikes. You need to set up alarms for high latency and configure auto-restarts. With on-demand, you’re monitoring invocations, error rates, and duration — but you’re also dealing with the unpredictability of cold starts and the need to tune provisioned concurrency.</p>
 <p>Here’s a quick breakdown of the underlying mechanics:</p>
@@ -644,14 +644,11 @@ def lambda_handler(event: SQSEvent, context: LambdaContext) -&gt; None:
 <p>Here’s the kicker: we didn’t even need to run all our agents on-demand. Some of them, like our real-time notification processor, needed to stay</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

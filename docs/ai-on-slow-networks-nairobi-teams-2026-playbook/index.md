@@ -1,6 +1,6 @@
 # AI on slow networks: Nairobi teams' 2026 playbook
 
-I ran into this nairobibased teams problem while migrating a service under a hard deadline. The edge cases only show up once real users hit the system. This walks through the fix and the reasoning, not just the patch.
+The edge cases only show up once real users hit the system. This walks through the fix and the reasoning, not just the patch.
 
 ## The one-paragraph version (read this first)
 
@@ -11,9 +11,7 @@ Teams in Nairobi routinely ship AI features that feel snappy to users even when 
 
 Most engineers start with a simple mental model: shorter latency equals better user experience. They measure their API end-to-end time with curl or Postman, see 400 ms, and immediately blame the network. The confusion compounds when they compare this to AWS Bedrock’s 150 ms average latency and conclude that Nairobi teams cannot compete on AI features at all. Two additional factors are routinely overlooked:
 
-1. **Perceived latency vs. actual latency** — Users don’t wait for the full round trip; they wait for the first token and the final UI update. A 400 ms API can still feel instant if the client renders progressive results.
-2. **Cacheable vs. non-cacheable traffic** — In many AI applications, 60–80 % of requests are identical or near-identical; caching turns those into 10–30 ms responses.
-3. **Edge topology** — A request from a user in Mombasa to AWS in Ireland crosses multiple undersea cables and regional IXPs, adding 80–120 ms before the model even starts. A worker deployed on Cloudflare’s edge in Nairobi can cut that pre-processing delay to 5–10 ms.
+1. **Perceived latency vs. actual latency** — Users don’t wait for the full round trip; they wait for the first token and the final UI update. A 400 ms API can still feel instant if the client renders progressive results. 2. **Cacheable vs. non-cacheable traffic** — In many AI applications, 60–80 % of requests are identical or near-identical; caching turns those into 10–30 ms responses. 3. **Edge topology** — A request from a user in Mombasa to AWS in Ireland crosses multiple undersea cables and regional IXPs, adding 80–120 ms before the model even starts. A worker deployed on Cloudflare’s edge in Nairobi can cut that pre-processing delay to 5–10 ms.
 
 Teams that focus only on raw latency miss these three dimensions, so they either over-provision expensive cloud APIs or give up on AI features entirely. The more interesting failure mode is when they cache everything indiscriminately and wake up to a 70 % cache-hit ratio on stale or incorrect results.
 
@@ -22,15 +20,11 @@ Teams that focus only on raw latency miss these three dimensions, so they either
 
 Think of an AI feature as a three-stage pipeline:
 
-1. **Input** (user types a prompt or uploads a file).
-2. **Compute** (tokenization, embedding, model inference).
-3. **Output** (return tokens, generate UI, update state).
+1. **Input** (user types a prompt or uploads a file). 2. **Compute** (tokenization, embedding, model inference). 3. **Output** (return tokens, generate UI, update state).
 
 Each stage has a latency budget you can shrink independently.
 
-- **Input and Output** are mostly UI and network; shrink them with edge deployment and client-side rendering.
-- **Compute** is where most teams focus, but it’s also the hardest to optimize without more GPUs or better models.
-- The **hidden lever** is the *gap* between compute calls: most AI features repeat the same or similar compute over and over. Cache the results of that compute, and the perceived latency collapses to the time it takes to read from cache plus a few milliseconds to validate freshness.
+- **Input and Output** are mostly UI and network; shrink them with edge deployment and client-side rendering. - **Compute** is where most teams focus, but it’s also the hardest to optimize without more GPUs or better models. - The **hidden lever** is the *gap* between compute calls: most AI features repeat the same or similar compute over and over. Cache the results of that compute, and the perceived latency collapses to the time it takes to read from cache plus a few milliseconds to validate freshness.
 
 A useful analogy is a coffee shop. During peak hours, the shop pre-brews the most popular drinks and keeps them on the warmer; customers get their coffee in 20 seconds instead of 4 minutes. The barista (the model) still has to make fresh batches for rare orders, but 70 % of customers never wait for the barista at all. Nairobi teams are running the same playbook, just with Redis instead of a coffee warmer.
 
@@ -191,9 +185,7 @@ maxmemory-policy allkeys-lfu
 
 ### Observability: the three numbers that matter
 
-1. **Cache hit ratio** — Target >= 80 % for most AI features. Below 60 % means the cache keys are too specific or the TTLs are wrong.
-2. **P95 latency of cache misses** — Should be < 250 ms. If it’s higher, the compute pipeline is the bottleneck, not the cache.
-3. **Stampede events per day** — If > 5 in a day, enable probabilistic early eviction or a lock per key with a jittered backoff.
+1. **Cache hit ratio** — Target >= 80 % for most AI features. Below 60 % means the cache keys are too specific or the TTLs are wrong. 2. **P95 latency of cache misses** — Should be < 250 ms. If it’s higher, the compute pipeline is the bottleneck, not the cache. 3. **Stampede events per day** — If > 5 in a day, enable probabilistic early eviction or a lock per key with a jittered backoff.
 
 
 ## Quick reference
@@ -229,10 +221,7 @@ Not natively. Workers support JavaScript/TypeScript and WASM modules. To run Pyt
 
 ## Further reading worth your time
 
-- Redis 7.2 release notes: [redis.io/docs/release-notes/7.2](https://redis.io/docs/release-notes/7.2) — pay special attention to LFU eviction and active defragmentation.
-- Cloudflare Workers AI documentation: [developers.cloudflare.com/workers-ai](https://developers.cloudflare.com/workers-ai) — covers WASM, vector search, and caching patterns.
-- Pinecone’s 2026 vector search benchmarks: [pinecone.io/blog/2026-vector-benchmarks](https://www.pinecone.io/blog/2026-vector-benchmarks) — shows how to tune index freshness vs. latency.
-- Cohere embeddings v3 latency metrics: [cohere.com/docs/embeddings/v3](https://docs.cohere.com/docs/embeddings-v3) — use these to size your compute budget.
+- Redis 7.2 release notes: [redis.io/docs/release-notes/7.2](https://redis.io/docs/release-notes/7.2) — pay special attention to LFU eviction and active defragmentation. - Cloudflare Workers AI documentation: [developers.cloudflare.com/workers-ai](https://developers.cloudflare.com/workers-ai) — covers WASM, vector search, and caching patterns. - Pinecone’s 2026 vector search benchmarks: [pinecone.io/blog/2026-vector-benchmarks](https://www.pinecone.io/blog/2026-vector-benchmarks) — shows how to tune index freshness vs. latency. - Cohere embeddings v3 latency metrics: [cohere.com/docs/embeddings/v3](https://docs.cohere.com/docs/embeddings-v3) — use these to size your compute budget.
 
 
 ## The next step you can do in the next 30 minutes
@@ -256,7 +245,6 @@ redis-cli GET "ai:autocomplete:how do i deploy redis on flyio"
 ```
 
 If the key exists and the value is recent, your cache is already working. If not, set a TTL of 300 and watch the hit ratio climb over the next hour.
-
 
 ---
 

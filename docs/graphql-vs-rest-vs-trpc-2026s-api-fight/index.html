@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T19:36:20.025671">
-        <meta property="article:modified_time" content="2026-09-18T11:32:39.200182+00:00">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.092216+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="GraphQL vs REST vs tRPC: 2026’s API fight">
@@ -63,7 +63,7 @@
       "headline": "GraphQL vs REST vs tRPC: 2026’s API fight",
       "description": "Cut API design debates with data — REST vs GraphQL vs tRPC in 2026 with concrete benchmarks, cost figures, and the exact mistake I made shipping GraphQL for…",
       "datePublished": "2026-06-09T19:36:20+00:00",
-      "dateModified": "2026-09-18T11:32:39+00:00",
+      "dateModified": "2026-09-19T08:27:14+00:00",
       "wordCount": 2328,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
@@ -264,7 +264,7 @@
                         12 min read
                         &nbsp;·&nbsp; 2328 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-18
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -280,9 +280,7 @@
 <p>Under the hood, GraphQL uses a schema-first design enforced by tools like GraphQL Yoga 3.4.2 and Apollo Server 4.10.0. You define types, queries, and mutations in SDL, then bind resolvers that fetch data. The resolver model is elegant until it isn’t: a resolver can return a Promise, throw, or even stall. In production with Node 20 LTS, I’ve seen average resolver latency jump from 12ms in staging to 280ms in AWS Fargate when a downstream MySQL 8.0 connection saturated its pool. The fix wasn’t code; it was enforcing DataLoader pattern usage and adding connection limits at the schema boundary.</p>
 <p>Where GraphQL shines in 2026:</p>
 <ul>
-<li><strong>Frontend autonomy</strong>: Clients iterate without backend deploys. At a SaaS I advise, the mobile team cut their release cycle from 2 weeks to 48 hours by switching to a shared GraphQL endpoint and using persisted queries with Apollo Client 3.11.</li>
-<li><strong>Over-fetching elimination</strong>: A dashboard widget that once pulled 870KB of JSON now pulls 14KB. That’s a 98% payload reduction for that particular query path.</li>
-<li><strong>Tooling ecosystem</strong>: GraphQL Code Generator 0.26.0 produces TypeScript types from your schema and client hooks. It’s not magic, but it saves 5 hours per week per developer when your schema has 400+ types.</li>
+<li><strong>Frontend autonomy</strong>: Clients iterate without backend deploys. At a SaaS I advise, the mobile team cut their release cycle from 2 weeks to 48 hours by switching to a shared GraphQL endpoint and using persisted queries with Apollo Client 3.11. - <strong>Over-fetching elimination</strong>: A dashboard widget that once pulled 870KB of JSON now pulls 14KB. That’s a 98% payload reduction for that particular query path. - <strong>Tooling ecosystem</strong>: GraphQL Code Generator 0.26.0 produces TypeScript types from your schema and client hooks. It’s not magic, but it saves 5 hours per week per developer when your schema has 400+ types.</li>
 </ul>
 <p>Weaknesses are baked into the model. Query depth limits bite teams that let clients nest too deep. A client once sent a query 18 levels deep; the gateway rejected it with a 400 error that looked like a bug. The fix was a depth limiter middleware that capped at 7. Depth limits aren’t optional anymore.</p>
 <h2 id="option-b-rest-how-it-works-and-where-it-shines">Option B — REST: how it works and where it shines</h2>
@@ -290,10 +288,7 @@
 <p>The OpenAPI 3.1 spec is now the de facto contract language. Tools like Redocly CLI 1.22.0 validate schemas against AWS API Gateway and Azure API Management. The key insight: REST’s simplicity is its strength. A GET /orders?status=paid&amp;limit=50 returns exactly what the client asked for, every time. There’s no query planner to optimize away, no depth limit to tune.</p>
 <p>Where REST shines in 2026:</p>
 <ul>
-<li><strong>Caching</strong>: HTTP caching with Varnish 7.2 or Cloudflare CDN cuts repeat request latency from 150ms to 5ms for idempotent GETs. That’s a 97% latency drop for cached reads.</li>
-<li><strong>Debuggability</strong>: curl and Postman work out of the box. A teammate once debugged a 502 from an internal service by pasting a curl command into Slack. It took 12 minutes, not 90.</li>
-<li><strong>Tooling stability</strong>: REST clients like Insomnia 2026.2.2 and Paw 4.5 are mature. GraphQL tooling changes monthly; REST tooling ossifies slowly.</li>
-<li><strong>Security</strong>: Rate limiting is simpler. A REST endpoint can use a token bucket with Redis 7.2 and return 429 responses without writing a custom directive.</li>
+<li><strong>Caching</strong>: HTTP caching with Varnish 7.2 or Cloudflare CDN cuts repeat request latency from 150ms to 5ms for idempotent GETs. That’s a 97% latency drop for cached reads. - <strong>Debuggability</strong>: curl and Postman work out of the box. A teammate once debugged a 502 from an internal service by pasting a curl command into Slack. It took 12 minutes, not 90. - <strong>Tooling stability</strong>: REST clients like Insomnia 2026.2.2 and Paw 4.5 are mature. GraphQL tooling changes monthly; REST tooling ossifies slowly. - <strong>Security</strong>: Rate limiting is simpler. A REST endpoint can use a token bucket with Redis 7.2 and return 429 responses without writing a custom directive.</li>
 </ul>
 <p>The trade-off is verbosity. A simple CRUD resource in REST can require 5 endpoints. A GraphQL type with the same fields compiles to one query and one mutation. But verbosity buys predictability.</p>
 <h2 id="head-to-head-performance">Head-to-head: performance</h2>

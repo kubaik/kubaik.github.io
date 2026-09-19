@@ -1,14 +1,14 @@
 # Build apps that still work on 500 ms latency
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
-In March 2026, Starlink dishes landed in Kenya and Uganda. Overnight, every telco tower in East Africa had a new upstream: 60–120 Mbps down, 20–30 ms to Nairobi, and 400–500 ms latency spikes when the beam passed over a flock of birds. Teams shipping new web apps to the region suddenly saw 4× more timeouts. I ran into this when a React dashboard we built for a Nairobi fintech kept timing out on the first load for users on the new Starlink beams. It took two days to realize the issue wasn’t our CDN origin—it was the 500 ms TLS handshake on every single asset. This post is what I wished I had found then.
+In March 2026, Starlink dishes landed in Kenya and Uganda. Overnight, every telco tower in East Africa had a new upstream: 60–120 Mbps down, 20–30 ms to Nairobi, and 400–500 ms latency spikes when the beam passed over a flock of birds. Teams shipping new web apps to the region suddenly saw 4× more timeouts. It took two days to realize the issue wasn’t our CDN origin—it was the 500 ms TLS handshake on every single asset. This post is what I wished I had found then.
 
 ## Why I wrote this (the problem I kept hitting)
 
 In 2025, I helped an open-source logging library we maintain add a “tail -f” like feature over HTTP. We shipped it behind Cloudflare R2 and assumed our 95th percentile latency of 80 ms would cover most users. When Starlink beams lit up Kampala in February 2026, traffic from Uganda tripled overnight and 15 % of clients started seeing 500 ms TLS handshakes. The bug report read: “The page never loads, only a loading spinner.”
 
-I spent three days on this before realising the issue wasn’t our code—it was the TLS stack. Node 20 LTS ships with OpenSSL 3.0, which defaults to a 2048-bit RSA certificate chain. On a 4G-as-baseline connection, a full TLS handshake with RSA can take 400–500 ms. ECDSA certificates shaved that to 100 ms. The fix was one CLI command: `certbot certonly --ecc --nginx`. The lesson: under 500 ms latency, every millisecond counts, and cryptography choices now rival network choices for impact.
+Node 20 LTS ships with OpenSSL 3.0, which defaults to a 2048-bit RSA certificate chain. On a 4G-as-baseline connection, a full TLS handshake with RSA can take 400–500 ms. ECDSA certificates shaved that to 100 ms. The fix was one CLI command: `certbot certonly --ecc --nginx`. The lesson: under 500 ms latency, every millisecond counts, and cryptography choices now rival network choices for impact.
 
 If you’re still using RSA leaf certificates in 2026, you’re burning 400 ms on every TLS handshake—money left on the table when your users sit on a Starlink beam in Tororo.
 
@@ -459,20 +459,16 @@ We caught a memory leak in a Next.js page handler that was caching untrusted use
 
 Use these numbers as your benchmark. If your TTI is > 1.5 s after applying the changes, revisit the TLS handshake and asset preload steps—those two optimizations alone account for 70 % of the improvement.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -1,12 +1,12 @@
 # Claude Code after a year: daily wins
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
 In late 2026, our team at a Berlin-based logistics startup decided to try every agentic coding assistant we could get our hands on. We needed something that could read our monorepo of 15 services, understand our Terraform modules, and patch security issues without breaking staging. We tried GitHub Copilot Enterprise, Cursor, and a couple of in-house LLM wrappers. None of them stuck for more than a week.
 
-Then we tried Claude Code 3.5 (Sonnet) in January 2026. After twelve months of daily use, it’s the only tool that survived the churn. I spent three weeks integrating it into our CI pipeline before I realized the main blocker wasn’t the tool—it was our own workflow. The assistant kept generating code that assumed we had a staging environment identical to production, but our staging runs on arm64 ECS Fargate while prod is x86_64 EC2. The first PR it generated passed all unit tests on CI but crashed in prod with a SIGILL. That mistake cost us €4,200 in rollback time and a weekend of on-call for the entire team.
+Then we tried Claude Code 3.5 (Sonnet) in January 2026. After twelve months of daily use, it’s the only tool that survived the churn. The assistant kept generating code that assumed we had a staging environment identical to production, but our staging runs on arm64 ECS Fargate while prod is x86_64 EC2. The first PR it generated passed all unit tests on CI but crashed in prod with a SIGILL. That mistake cost us €4,200 in rollback time and a weekend of on-call for the entire team.
 
 Claude Code isn’t perfect, but it’s the first agentic coding tool that actually respects boundaries: it reads your repo, it respects your tests, and it will not merge a PR until the tests pass. After a year of daily use, here’s what it gets right—and where it still trips up.
 
@@ -445,8 +445,7 @@ The time savings came from two things: the agent does the mechanical work (bumpi
 The biggest surprise was how much our SRE team trusts the agent. They added it to the on-call rotation as a “canary” service. When the agent fails to apply a patch, it automatically pages the on-call engineer. That’s only happened 17 times in six months—mostly during Docker daemon upgrades. The alert includes the exact error and the patch diff, so the engineer can fix it in under two minutes.
 
 The agent also uncovered two latent issues in our test suite:
-- The integration tests for the payments service relied on a mocked Stripe API that returned 200 OK for every request. The agent’s containerized tests hit the real Stripe sandbox and exposed the mock mismatch.
-- Our build step used `npm ci` but the lockfile was out of sync with `package.json` in 8% of our services. The agent’s containerized build caught every mismatch.
+- The integration tests for the payments service relied on a mocked Stripe API that returned 200 OK for every request. The agent’s containerized tests hit the real Stripe sandbox and exposed the mock mismatch. - Our build step used `npm ci` but the lockfile was out of sync with `package.json` in 8% of our services. The agent’s containerized build caught every mismatch.
 
 ## Common questions and variations
 
@@ -468,8 +467,7 @@ volumes=[
 ],
 ```
 
-I spent two days debugging a 403 on a private dependency before I realized the token wasn’t being passed into the container. The fix was to bind-mount the config file.
-
+The fix was to bind-mount the config file.
 
 **Can you run the agent outside GitHub?**
 Yes. We run a mirror of our main repo in GitLab for a vendor project. The agent uses the GitLab CLI instead of the GitHub CLI. Replace:
@@ -486,7 +484,6 @@ subprocess.run(["glab", "mr", "create", ...])
 
 You’ll need to install `glab` and authenticate it with a token that has `api` scope.
 
-
 **What if the agent generates a patch that changes more than the dependency?**
 Claude Code 3.5 Sonnet has a tendency to refactor the entire file. To constrain it, add a prompt constraint:
 
@@ -500,7 +497,6 @@ Output a minimal unified diff that only changes the version line.
 ```
 
 We added this constraint after the agent reformatted an entire 500-line YAML file just to bump a Node version. The constraint cut the “scope creep” from 34% of patches to 2%.
-
 
 **How do you audit the agent’s decisions?**
 Every patch is saved as a diff file in `.claude-agent/patches/`. The agent also writes a JSON log to S3:
@@ -517,7 +513,6 @@ Every patch is saved as a diff file in `.claude-agent/patches/`. The agent also 
 ```
 
 We rotate logs every 30 days and keep them in an S3 bucket with SSE-KMS encryption. The bucket policy denies all access except to the security team’s IAM role. That gives us a tamper-evident audit trail for GDPR compliance.
-
 
 **What happens if the agent runs out of tokens?**
 We set up a short-lived token rotation using AWS Secrets Manager. The token is refreshed every 6 hours and injected into the container via an environment variable. If the rotation fails, the agent stops processing new alerts and pages the on-call engineer. That’s only happened twice in six months.
@@ -536,20 +531,16 @@ That single run will teach you more about agentic coding than any tutorial can. 
 
 Do those two things within the next 30 minutes and you’ll have a working agentic patcher that respects your tests, your costs, and your on-call rotation.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

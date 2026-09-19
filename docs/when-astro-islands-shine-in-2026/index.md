@@ -6,7 +6,7 @@ Most islands architecture guides assume a clean environment and a patient timeli
 
 In mid-2026, our team at Naiwa Labs launched a developer-focused documentation site for a new API product. By February 2026, we had 12,000 monthly active users spread across Africa, Europe, and Asia, and our page load times were averaging 2.4 seconds on a 4G connection in Lagos. That wasn’t terrible, but it wasn’t good enough for our target users—senior engineers who compare every site against the performance of Stripe’s docs or the Next.js examples repository. We knew that anything slower than 1.5 seconds would feel sluggish on a low-end Android device, and our analytics showed that 42% of our traffic was coming from mobile users in India and Nigeria using Chrome on devices with 1GB RAM.
 
-I spent three days profiling the site with Lighthouse and discovered that 78% of the latency came from JavaScript execution—despite using React 18 and Next.js 14 with static exports. The main bundle was 290 KB minified, and the critical path wasn’t even rendering the hero section until 1.8 seconds in. We had already tried optimizing images with Cloudinary, lazy loading, and code splitting, but the JavaScript itself was the bottleneck. The tree-shaking in Next.js wasn’t aggressive enough for our component library, which included a 25 KB date-picker component that was being loaded on every page, even the API reference.
+The main bundle was 290 KB minified, and the critical path wasn’t even rendering the hero section until 1.8 seconds in. We had already tried optimizing images with Cloudinary, lazy loading, and code splitting, but the JavaScript itself was the bottleneck. The tree-shaking in Next.js wasn’t aggressive enough for our component library, which included a 25 KB date-picker component that was being loaded on every page, even the API reference.
 
 Our backend API was already on AWS Lambda with ARM64 using Node 20 LTS and returning JSON responses in an average of 120 ms. The network wasn’t the issue. The problem was the client-side JavaScript runtime. We needed a way to deliver interactive components without shipping the entire React runtime to every visitor.
 
@@ -157,24 +157,13 @@ Then, convert those components to Astro islands. Start with `client:idle` for co
 Finally, remove React—or any framework—from components that don’t need it. If a component is just a button with a click handler, use vanilla JavaScript or a lightweight library like Alpine.js. The goal is to keep the static parts of your site as small and fast as possible.
 
 Here’s a checklist you can follow today:
-1. Run Lighthouse on your top 3 pages. Note TTI and total JS.
-2. List the interactive components on those pages. Are they all needed immediately?
-3. Pick the largest component and rewrite it as an Astro island with `client:idle`.
-4. Measure again. If TTI improves by at least 30%, expand the pattern to other components.
+1. Run Lighthouse on your top 3 pages. Note TTI and total JS. 2. List the interactive components on those pages. Are they all needed immediately? 3. Pick the largest component and rewrite it as an Astro island with `client:idle`. 4. Measure again. If TTI improves by at least 30%, expand the pattern to other components.
 
 If you’re already using Next.js or Remix, consider migrating the static parts to Astro while keeping the interactive parts as islands. Astro’s compatibility with React and other frameworks makes this a low-risk migration.
 
 ## Resources that helped
 
-- [Astro 5.0 Islands Docs](https://docs.astro.build/en/concepts/islands/) — The official guide to Astro’s islands architecture.
-- [Partytown: Run Third-Party Scripts in a Web Worker](https://partytown.builder.io/) — Offload heavy scripts to a Web Worker.
-- [React Day Picker 8.10.1](https://react-day-picker.js.org/) — A date-picker library optimized for React islands.
-- [Preact 10.19](https://preactjs.com/) — A smaller alternative to React for islands.
-- [Tailwind CSS 4.0](https://tailwindcss.com/) — Utility-first CSS with minimal bundle impact.
-- [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) — Automate performance budgets in CI.
-- [SpeedCurve](https://www.speedcurve.com/) — Real-user monitoring for performance.
-- [Web Components: The Good, The Bad, and The Ugly](https://developers.google.com/web/fundamentals/web-components) — A Google guide to writing framework-free components.
-- [Why We Switched from Next.js to Astro](https://www.epicweb.dev/why-we-switched-from-nextjs-to-astro) — A case study from Epic Web that inspired our migration.
+- [Astro 5.0 Islands Docs](https://docs.astro.build/en/concepts/islands/) — The official guide to Astro’s islands architecture. - [Partytown: Run Third-Party Scripts in a Web Worker](https://partytown.builder.io/) — Offload heavy scripts to a Web Worker. - [React Day Picker 8.10.1](https://react-day-picker.js.org/) — A date-picker library optimized for React islands. - [Preact 10.19](https://preactjs.com/) — A smaller alternative to React for islands. - [Tailwind CSS 4.0](https://tailwindcss.com/) — Utility-first CSS with minimal bundle impact. - [Lighthouse CI](https://github.com/GoogleChrome/lighthouse-ci) — Automate performance budgets in CI. - [SpeedCurve](https://www.speedcurve.com/) — Real-user monitoring for performance. - [Web Components: The Good, The Bad, and The Ugly](https://developers.google.com/web/fundamentals/web-components) — A Google guide to writing framework-free components. - [Why We Switched from Next.js to Astro](https://www.epicweb.dev/why-we-switched-from-nextjs-to-astro) — A case study from Epic Web that inspired our migration.
 
 ## Frequently Asked Questions
 
@@ -198,20 +187,16 @@ For pages that need dynamic data, Astro can be slower than Next.js because it’
 
 Open your site’s Lighthouse report in Chrome DevTools and check the Time to Interactive for your homepage. If it’s above 1.5 seconds, open `src/pages/index.astro` (or your equivalent) and add `client:idle` to the largest interactive component. Re-run Lighthouse and measure the improvement. Do this for your top 3 pages within the next 30 minutes and you’ll have your first data point on whether islands can help your site.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

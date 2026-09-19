@@ -8,7 +8,7 @@ In late 2026, I joined a hiring panel for a mid-level backend role at a Lagos-ba
 
 We needed a way to separate signal from noise. Our own team wasn’t immune: we’d built two internal tools with AI pair programming in 2026 (one in Node 22 and one in Python 3.12) and ended up with 38% more lines of boilerplate than we started with. I realised that the portfolio problem wasn’t about showcasing code—it was about showcasing constraints.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout in our Python FastAPI service running on Node 22 LTS. The fix was trivial—a 2-line change—but the damage was done. The incident taught me that every production system has invisible constraints: network jitter, flaky mobile data, low-end Android handsets, M-Pesa payment retries. Those constraints are the fingerprint of a real engineer.
+The fix was trivial—a 2-line change—but the damage was done. The incident taught me that every production system has invisible constraints: network jitter, flaky mobile data, low-end Android handsets, M-Pesa payment retries. Those constraints are the fingerprint of a real engineer.
 
 By early 2026, we decided to run a new experiment: every candidate must submit one project that explicitly handled at least one constraint common in African markets—high-latency networks, intermittent connectivity, low-end devices, or local payment rails. We called it “Constraint First” hiring.
 
@@ -62,9 +62,7 @@ That project became our hiring template.
 
 Here’s how we turned the rubric into a repeatable process in early 2026. We built a small CLI tool called `constraint-portfolio` in Python 3.12 that automated the validation pipeline. The tool ran three tests:
 
-1. **Network stress test**: Uses `puppeteer` 21.6.0 to simulate Good 2G (400 ms RTT, 250 kbps down, 50 kbps up) and measures time-to-interactive (TTI) with Lighthouse.
-2. **Memory stress test**: Uses Android Emulator 33.1.7 with a low-memory profile (64 MB RAM, 1 GHz CPU) and `dumpsys meminfo` to check peak usage.
-3. **Payment retry test**: Simulates M-Pesa payment failures by injecting 10% retry rate into a local Flutterwave sandbox (v3.42.1) and measures success rate after 3 retries.
+1. **Network stress test**: Uses `puppeteer` 21.6.0 to simulate Good 2G (400 ms RTT, 250 kbps down, 50 kbps up) and measures time-to-interactive (TTI) with Lighthouse. 2. **Memory stress test**: Uses Android Emulator 33.1.7 with a low-memory profile (64 MB RAM, 1 GHz CPU) and `dumpsys meminfo` to check peak usage. 3. **Payment retry test**: Simulates M-Pesa payment failures by injecting 10% retry rate into a local Flutterwave sandbox (v3.42.1) and measures success rate after 3 retries.
 
 Here’s the core validation script we used:
 
@@ -306,20 +304,16 @@ Here’s a side-by-side comparison of a candidate’s portfolio from 2026 (AI-sc
 
 These numbers aren’t hypothetical—they’re from real portfolios submitted to our fintech in Q1 2026. The constraint-first approach reduced onboarding time by 40% and support tickets by 65%. More importantly, it filtered out candidates who couldn’t debug real-world constraints.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

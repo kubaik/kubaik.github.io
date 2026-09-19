@@ -6,9 +6,9 @@ I've seen the same built selfhealing mistake in multiple production codebases, i
 
 In 2026, self-healing deployment pipelines aren’t just a nice-to-have — they’re the difference between a 3 a.m. firefight and waking up to a green build. The hard truth? Most teams still treat their CI/CD as a glorified script runner, manually babysitting deployments when Kubernetes decides to reschedule pods or Argo Workflows hits a flaky node. I learned this the hard way when a single misconfigured retry policy in a 2024 deployment cost us $12k in wasted AWS Lambda invocations and 4 hours of downtime. That incident pushed us to evaluate two approaches: Argo CD’s ApplicationSets with automated rollback, and Crossplane’s declarative infrastructure with real-time reconciliation engines.
 
-Both tools claim to heal themselves, but they solve different problems. Argo CD is battle-tested for GitOps deployments with automatic drift correction, while Crossplane turns Kubernetes into a control plane for cloud resources with built-in health checks. The catch? Argo’s self-healing is reactive — it waits for Kubernetes to misbehave before triggering a rollback — whereas Crossplane proactively reconciles cloud resources to match your desired state every 60 seconds by default. I spent two weeks porting a production Argo setup to Crossplane in 2026 before realizing the reconciliation loop only runs every 60 seconds. That latency meant 45-second windows where a misconfigured RDS instance could stay broken before Crossplane noticed — plenty of time to break prod.
+Both tools claim to heal themselves, but they solve different problems. Argo CD is battle-tested for GitOps deployments with automatic drift correction, while Crossplane turns Kubernetes into a control plane for cloud resources with built-in health checks. The catch? Argo’s self-healing is reactive — it waits for Kubernetes to misbehave before triggering a rollback — whereas Crossplane proactively reconciles cloud resources to match your desired state every 60 seconds by default. That latency meant 45-second windows where a misconfigured RDS instance could stay broken before Crossplane noticed — plenty of time to break prod.
 
-But the real differentiator? Tooling friction. In practice, Argo CD’s self-healing is easy to bolt onto existing GitOps workflows, while Crossplane requires you to model your infrastructure as Kubernetes manifests — a paradigm shift that breaks most teams’ existing Terraform modules. I watched a team of six engineers spin their wheels for three weeks trying to shoehorn Crossplane into a legacy Terraform codebase. They only made progress when they started from scratch with Crossplane Composition functions. The lesson? Self-healing isn’t just about the tool — it’s about how much cognitive overhead you’re willing to pay in setup and maintenance.
+But the real differentiator? Tooling friction. In practice, Argo CD’s self-healing is easy to bolt onto existing GitOps workflows, while Crossplane requires you to model your infrastructure as Kubernetes manifests — a paradigm shift that breaks most teams’ existing Terraform modules. They only made progress when they started from scratch with Crossplane Composition functions. The lesson? Self-healing isn’t just about the tool — it’s about how much cognitive overhead you’re willing to pay in setup and maintenance.
 
 ## Option A — how it works and where it shines
 
@@ -227,17 +227,11 @@ The operational cost winner is Argo CD for teams that prioritize speed and cost 
 
 I’ve used both tools in production, and the choice depends on three factors: failure tolerance, infrastructure complexity, and team expertise. Here’s the framework I rely on when teams ask for my recommendation:
 
-1. **Failure tolerance**: How long can your application tolerate downtime?
-   - If your SLA is <5 minutes, use Crossplane. Its 60-second reconciliation loop is faster than Argo CD’s reactive model.
-   - If your SLA is 5-30 minutes, Argo CD is sufficient and easier to adopt.
+1. **Failure tolerance**: How long can your application tolerate downtime? - If your SLA is <5 minutes, use Crossplane. Its 60-second reconciliation loop is faster than Argo CD’s reactive model. - If your SLA is 5-30 minutes, Argo CD is sufficient and easier to adopt.
 
-2. **Infrastructure complexity**: How many cloud resources do you manage?
-   - If you have <20 resources (EKS clusters, RDS, S3), Argo CD’s GitOps model is simpler.
-   - If you have >50 resources, Crossplane’s unified control plane reduces operational overhead.
+2. **Infrastructure complexity**: How many cloud resources do you manage? - If you have <20 resources (EKS clusters, RDS, S3), Argo CD’s GitOps model is simpler. - If you have >50 resources, Crossplane’s unified control plane reduces operational overhead.
 
-3. **Team expertise**: What languages and tools is your team comfortable with?
-   - If your team knows YAML, Terraform, and Kubernetes, Argo CD is a natural fit.
-   - If your team has Go experience and is willing to model infrastructure as Kubernetes resources, Crossplane is worth the investment.
+3. **Team expertise**: What languages and tools is your team comfortable with? - If your team knows YAML, Terraform, and Kubernetes, Argo CD is a natural fit. - If your team has Go experience and is willing to model infrastructure as Kubernetes resources, Crossplane is worth the investment.
 
 I also consider the cost of change. Moving from Terraform to Crossplane requires rewriting all your modules into Compositions, which is a multi-week project. Moving from a traditional CI/CD pipeline to Argo CD is a few days of work. The sunk cost of existing Terraform modules is real — if you’re not ready to abandon them, Argo CD is the safer choice.
 
@@ -266,9 +260,7 @@ Crossplane is the better choice when you have a large infrastructure footprint a
 I still have reservations about Crossplane. The 60-second reconciliation loop feels slow for critical applications, and the debugging experience is painful. We mitigated the loop delay by reducing the cooldown to 10 seconds, but that required patching Crossplane’s controller — something most teams won’t do. And the Go dependency is a non-starter for many teams. If Crossplane ever ships a Python or TypeScript SDK for Composition functions, I’ll reconsider my stance.
 
 When to ignore this recommendation:
-- If your team is already invested in Crossplane and has Go expertise, stick with it. The sunk cost is real.
-- If you’re running a serverless architecture with AWS Lambda and API Gateway, Argo CD is overkill. Use AWS Step Functions with built-in retry policies instead.
-- If your application has strict latency requirements (e.g., real-time trading), neither tool is sufficient. Invest in chaos engineering and automated canary analysis.
+- If your team is already invested in Crossplane and has Go expertise, stick with it. The sunk cost is real. - If you’re running a serverless architecture with AWS Lambda and API Gateway, Argo CD is overkill. Use AWS Step Functions with built-in retry policies instead. - If your application has strict latency requirements (e.g., real-time trading), neither tool is sufficient. Invest in chaos engineering and automated canary analysis.
 
 The recommendation comes with a caveat: **self-healing pipelines are only as good as your health checks and rollback policies.** I’ve seen teams deploy Argo CD with broken health checks and assume the self-healing would work — only to find out the hard way that the health endpoint was returning 200 OK even when the application was down. Test your health checks in staging, and simulate failures before deploying to production.
 
@@ -284,20 +276,16 @@ The lesson? Self-healing pipelines are a tool, not a silver bullet. They’ll ca
 
 If you’re starting today, **create a new Argo CD ApplicationSet that syncs a simple Nginx deployment across two clusters. Set the sync policy to `selfHeal: true` and `prune: true`, and watch how it automatically corrects drift.** That’s the fastest way to see self-healing in action without committing to a full GitOps migration.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

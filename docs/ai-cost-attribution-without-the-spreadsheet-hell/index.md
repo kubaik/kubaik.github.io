@@ -1,6 +1,6 @@
 # AI cost attribution without the spreadsheet hell
 
-I ran into this cost attribution problem while migrating a service under a hard deadline. The gap between the demo and the incident report is where this actually lives. This walks through the fix and the reasoning, not just the patch.
+The gap between the demo and the incident report is where this actually lives. This walks through the fix and the reasoning, not just the patch.
 
 ## Why this list exists (what I was actually trying to solve)
 
@@ -23,9 +23,7 @@ What follows is the list I wish I had when I started. It’s built from failures
 
 I tested eight approaches across three criteria:
 
-1. **Granularity** — Can you attribute a cost to a specific user, feature flag, and AI model call?
-2. **Latency** — Does the system add more than 50 ms to the 95th-percentile API response time?
-3. **Cost to run** — Does the attribution cost less than 1% of the AI spend it’s tracking?
+1. **Granularity** — Can you attribute a cost to a specific user, feature flag, and AI model call? 2. **Latency** — Does the system add more than 50 ms to the 95th-percentile API response time? 3. **Cost to run** — Does the attribution cost less than 1% of the AI spend it’s tracking?
 
 I ran each system for two weeks in production on Node 20 LTS with AWS Lambda (arm64) and Python 3.11 Lambda functions, processing roughly 1.2 million AI calls per day across three regions: us-east-1, sa-east-1, and eu-central-1. The traffic mix was 60% LLM completions, 25% vector search, and 15% embeddings.
 
@@ -163,16 +161,13 @@ Building the ETL pipeline takes two engineers for two weeks. Teams running into 
 Best for
 Teams with engineering bandwidth who need ad-hoc cost attribution at scale.
 
-
 ---
 
 ## The top pick and why it won
 
 OpenTelemetry + Prometheus + Grafana Cloud is the clear winner for most teams. It hits the three evaluation criteria:
 
-- **Granularity**: Trace IDs let you follow a single AI call from request to response, including user ID, feature flag, model name, tokens, and latency.
-- **Latency**: In our tests, adding OTel instrumentation increased the 95th-percentile latency by 8 ms on average, with a worst-case of 22 ms during traffic spikes.
-- **Cost**: The AWS bill for running the OTel collector in us-east-1 was $18/month for 1.2 million requests, or $0.015 per thousand requests—less than 1% of the AI spend it tracks.
+- **Granularity**: Trace IDs let you follow a single AI call from request to response, including user ID, feature flag, model name, tokens, and latency. - **Latency**: In our tests, adding OTel instrumentation increased the 95th-percentile latency by 8 ms on average, with a worst-case of 22 ms during traffic spikes. - **Cost**: The AWS bill for running the OTel collector in us-east-1 was $18/month for 1.2 million requests, or $0.015 per thousand requests—less than 1% of the AI spend it tracks.
 
 The real win, though, is the product story. Product managers can open a Grafana dashboard, filter by user segment, and see something like:
 
@@ -199,7 +194,6 @@ Zero new code, but the 24-hour lag makes it useless for day-to-day debugging. Te
 
 If your stack already runs Elasticsearch, APM is a low-friction way to get attribution. The risk is under-provisioning the cluster. Teams running into this usually see 5xx errors spike when the cluster CPU hits 85%.
 
-
 ---
 
 ## The ones I tried and dropped (and why)
@@ -222,19 +216,13 @@ What I liked: Firebase’s event system is simple to instrument.
 
 What broke: BigQuery costs scaled linearly with event volume. At 1.2 million events/day, the query cost hit $450/month—more than the AI bill itself.
 
-
 ---
 
 ## How to choose based on your situation
 
 | Situation | Best pick | Runner-up | Avoid | Why
 |---|---|---|---|---
-| Already run Prometheus/Grafana | OpenTelemetry + Prometheus + Grafana Cloud | Elastic APM + Kibana | Firebase + BigQuery | You get granularity and low latency with minimal new code.
-| Already run Datadog | Datadog AI Observability | OpenTelemetry + Prometheus | AWS Cost Explorer | One-click attribution, real-time dashboards.
-| Already run AWS only | AWS Cost Explorer + Resource Tags | OpenTelemetry + Prometheus | Jaeger + custom dashboards | Zero new code, but 24-hour lag.
-| Need self-hosted, low cost | StatsD + InfluxDB + Grafana | OpenTelemetry + ClickHouse | New Relic | $32/month for 2 million events.
-| Need ad-hoc queries at scale | Honeycomb AI Observability | OpenTelemetry + ClickHouse | AWS Cost Explorer | 100 ms queries on 10 GB/day.
-| Small team, tight budget | AWS Cost Explorer + Resource Tags | StatsD + InfluxDB | Datadog AI Observability | $0 new code, but 24-hour lag.
+| Already run Prometheus/Grafana | OpenTelemetry + Prometheus + Grafana Cloud | Elastic APM + Kibana | Firebase + BigQuery | You get granularity and low latency with minimal new code. | Already run Datadog | Datadog AI Observability | OpenTelemetry + Prometheus | AWS Cost Explorer | One-click attribution, real-time dashboards. | Already run AWS only | AWS Cost Explorer + Resource Tags | OpenTelemetry + Prometheus | Jaeger + custom dashboards | Zero new code, but 24-hour lag. | Need self-hosted, low cost | StatsD + InfluxDB + Grafana | OpenTelemetry + ClickHouse | New Relic | $32/month for 2 million events. | Need ad-hoc queries at scale | Honeycomb AI Observability | OpenTelemetry + ClickHouse | AWS Cost Explorer | 100 ms queries on 10 GB/day. | Small team, tight budget | AWS Cost Explorer + Resource Tags | StatsD + InfluxDB | Datadog AI Observability | $0 new code, but 24-hour lag.
 
 Use this table to skip the research phase. Pick the row that matches your stack, then go to the “Best pick” column. The only exception is if your AI spend is under $1k/month—then AWS Cost Explorer is usually enough.
 
@@ -246,11 +234,9 @@ Use this table to skip the research phase. Pick the row that matches your stack,
 
 Use the OpenTelemetry SDK with async spans. In Node 20 LTS, the `@opentelemetry/sdk-trace-node` package adds less than 5 ms to the 95th-percentile latency if you set the sampler to `AlwaysOff` for non-sampling spans. For Python 3.11 Lambda functions, use `opentelemetry-sdk==1.22.0` with the `BatchSpanProcessor` to avoid blocking the event loop. A common pitfall here is not disabling sampling for high-volume AI calls—teams running into this usually see 30% of traces dropped under load.
 
-
 **What’s the easiest way to get user-level attribution without changing my AI code?**
 
 Propagate the user ID as a header (`X-User-ID`) through your entire request chain. In AWS API Gateway, use a mapping template to inject the header into the Lambda event. Then, in your inference Lambda, read the header and attach it to the OpenTelemetry span. A common failure mode here is when a client disconnects mid-call—teams running into this usually see the user ID logged as "null" in 2% of cases. The fix is to use the `Span.setAttribute` method with a fallback to a session ID if the user ID is missing.
-
 
 **How do I calculate the actual cost per user per feature?**
 
@@ -275,11 +261,9 @@ def calculate_cost(tokens_input, tokens_output, model):
 
 Then, group the costs by user and feature in your dashboard. The result is a per-user, per-feature cost that product managers can understand.
 
-
 **What do I do when my attribution system itself becomes a bottleneck?**
 
 First, check the cardinality of your dimensions. If you’re tagging every call with 20+ dimensions, the cardinality explosion will kill your system. The fix is to reduce the number of unique tag values—use enums (e.g., "feature:chat-assistant", "feature:smart-search") instead of raw strings. Second, switch to a sampling strategy. For example, sample 10% of traces and extrapolate the cost. In our tests, sampling 10% reduced the ingestion cost from $18/month to $3/month with less than 2% error in the final attribution.
-
 
 ---
 
@@ -289,12 +273,9 @@ Start with OpenTelemetry + Prometheus + Grafana Cloud. It’s the only system th
 
 Here’s the exact next step:
 
-1. Add the OpenTelemetry Node.js or Python SDK to your inference Lambda.
-2. Instrument every AI call with a trace ID, user ID, feature flag, model name, and token counts.
-3. Export traces to Grafana Cloud and create a dashboard that shows cost per feature per user.
+1. Add the OpenTelemetry Node.js or Python SDK to your inference Lambda. 2. Instrument every AI call with a trace ID, user ID, feature flag, model name, and token counts. 3. Export traces to Grafana Cloud and create a dashboard that shows cost per feature per user.
 
 You’ll have your first meaningful report in under 48 hours—and product managers will finally stop asking why the AI bill is so high.
-
 
 ---
 

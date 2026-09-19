@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-26T11:39:00.782771">
-        <meta property="article:modified_time" content="2026-09-18T11:32:39.571207+00:00">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.114989+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="HTMX stack swap: 5 things I gained, 3 I lost">
@@ -63,7 +63,7 @@
       "headline": "HTMX stack swap: 5 things I gained, 3 I lost",
       "description": "HTMX 2.0 cut our frontend bundle from 245 KiB to 8 KiB and dropped AWS fees 48% — here’s the real trade-off we made and what we gained by swapping React for…",
       "datePublished": "2026-06-26T11:39:00+00:00",
-      "dateModified": "2026-09-18T11:32:39+00:00",
+      "dateModified": "2026-09-19T08:27:14+00:00",
       "wordCount": 2811,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
@@ -265,7 +265,7 @@
                         14 min read
                         &nbsp;·&nbsp; 2811 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-18
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -280,10 +280,7 @@
 <h2 id="how-i-evaluated-each-option">How I evaluated each option</h2>
 <p>I tested each candidate against four concrete metrics:</p>
 <ol>
-<li><strong>Lines of code</strong> added to the backend to support the feature.</li>
-<li><strong>Client-side JavaScript bundle size</strong> after minification and gzip.</li>
-<li><strong>Median server response time</strong> under load of 100 concurrent users (locust 2.18).</li>
-<li><strong>Total AWS monthly cost</strong> for the frontend tier (EC2 t4g.small, CloudFront, ALB).</li>
+<li><strong>Lines of code</strong> added to the backend to support the feature. 2. <strong>Client-side JavaScript bundle size</strong> after minification and gzip. 3. <strong>Median server response time</strong> under load of 100 concurrent users (locust 2.18). 4. <strong>Total AWS monthly cost</strong> for the frontend tier (EC2 t4g.small, CloudFront, ALB).</li>
 </ol>
 <p>I ran each test three times on identical EC2 instances (Graviton 4, 2 vCPU, 4 GB RAM) in us-east-1. Load was synthetic GET requests for the table and POST for updates, 50/50 mix, 60-second ramp-up, 30-second steady state.</p>
 <p>Here are the raw numbers from the last run:</p>
@@ -516,7 +513,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/why-i-picked-playwright-and-vitest-in-2026/">
                         <h3>Why I picked Playwright and Vitest in 2026</h3>
                         <p>Cut frontend test time 37% and CI cost 38% with Playwright 1.46 and Vitest 1.6 — the real migration guide teams need in 2026</p>
-                        <span class="related-meta">12 min read · 3 July 2026</span>
+                        <span class="related-meta">11 min read · 3 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/build-apps-that-still-work-on-500-ms-latency/">

@@ -1,6 +1,6 @@
 # AI tools rewrote my engineering rules
 
-A colleague asked me about engineering principles during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
@@ -8,7 +8,7 @@ In 2026, most teams still treat AI as a productivity multiplier. The advice goes
 
 I bought it—until I didn’t.
 
-I ran a side project in early 2026 where I used Copilot X to generate all my tests. It wrote 800 unit tests in a weekend. Impressive? Sure. Until I realized 60% of them were either redundant or wrong. The copilot suggested `assertEquals(true, true)` in 147 different ways. Worse, it created brittle mocks that broke on every minor refactor. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout—this post is what I wished I had found then.
+I ran a side project in early 2026 where I used Copilot X to generate all my tests. It wrote 800 unit tests in a weekend. Impressive? Sure. Until I realized 60% of them were either redundant or wrong. The copilot suggested `assertEquals(true, true)` in 147 different ways. Worse, it created brittle mocks that broke on every minor refactor.
 
 The problem isn’t that AI tools are bad. It’s that the conventional wisdom ignores the **second-order effects** of automation: cognitive load shifts from writing code to **auditing** it, and the tools optimize for **surface-level velocity** while subtly degrading system resilience. We’ve taken a tool designed to assist human judgment and assumed it could replace human judgment in design, testing, and architecture.
 
@@ -104,10 +104,7 @@ Now the endpoint handles 5000+ requests per minute without breaking a sweat.
 ### Audit for invariants, not style
 AI-generated code often looks clean but violates domain invariants. I now audit for:
 
-- **Consistent error handling**: Are all endpoints returning the same error format?
-- **Input validation**: Are all inputs sanitized?
-- **Resource limits**: Are there timeouts, retries, and circuit breakers?
-- **Observability**: Are all endpoints instrumented with tracing?
+- **Consistent error handling**: Are all endpoints returning the same error format? - **Input validation**: Are all inputs sanitized? - **Resource limits**: Are there timeouts, retries, and circuit breakers? - **Observability**: Are all endpoints instrumented with tracing?
 
 I built a simple linter in Python 3.11 that flags violations:
 ```python
@@ -275,20 +272,17 @@ My response: They will, but the gap between "good enough" and "correct" won’t 
 
 I tried waiting. My side project grew to 10k lines of AI-generated code before I realized 40% was either wrong or fragile. Refactoring it took six weeks. The lesson: **don’t let AI write code you’re not prepared to maintain.**
 
-
 **Objection 2: "Manual review is enough—why change principles?"
 
 Manual review catches style issues, but it’s terrible at catching **invariants**. A human reviewer might miss that an AI-generated endpoint lacks rate limiting or has a missing timeout. Principles like "audit for invariants" force you to codify what matters, not just what looks clean.
 
 I audited a PR that passed review but failed in production because the generated SQL used `LIMIT 1000` in a paginated endpoint. The reviewer didn’t catch it because the code looked fine. The invariant linter did.
 
-
 **Objection 3: "This slows us down—we need velocity."
 
 Velocity without resilience is a house of cards. I’ve seen teams ship features fast only to spend weeks in firefighting mode. The real question is: **What’s the cost of velocity today vs. the cost of resilience tomorrow?**
 
 In one case, a client’s AI-accelerated API shipped in 2 weeks. It took 6 weeks to stabilize. If they’d built resilience in from day one, they’d have saved 4 weeks and avoided customer churn.
-
 
 **Objection 4: "We don’t have time to refactor AI-generated code."
 
@@ -310,7 +304,6 @@ If I were building a new system in 2026 with AI tools, here’s what I’d do:
 5. **Educate the team**: Run a workshop on AI-generated code risks. Show examples of what can go wrong and how to catch it.
 
 6. **Use AI for documentation and prototyping**: Let it handle low-risk tasks while humans focus on high-risk ones.
-
 
 Here’s a concrete example of what I’d do differently: I’d use Copilot X to generate a basic FastAPI scaffold, then immediately replace the database layer with a well-tested ORM and add timeouts, circuit breakers, and rate limiting. I’d also add a property-based testing suite to catch edge cases the AI missed.
 
@@ -335,7 +328,6 @@ The tools aren’t the problem. The mental model is.
 
 Start with property-based testing. Tools like `hypothesis` (Python) or `fast-check` (JavaScript) generate random inputs and check invariants. For example, test that a generated user endpoint never returns `null` for a valid user ID. Combine this with fuzz testing for I/O boundaries (e.g., timeouts, network failures). In one system, this caught 14 edge cases the AI missed.
 
-
 **What’s the minimum set of invariants every system should enforce?**
 
 For any API or service:
@@ -347,11 +339,9 @@ For any API or service:
 
 I’ve seen systems violate these invariants in AI-generated code and cause outages within hours.
 
-
 **Is it worth using AI for testing?**
 
 Only if you treat it as a starting point, not a final solution. AI can generate tests quickly, but 60-70% are often redundant or wrong. Use it to bootstrap, then refactor with property-based or mutation testing. In my experience, the effort saved in writing boilerplate is offset by the time spent fixing AI-generated tests.
-
 
 **How do I convince my team to slow down and audit AI-generated code?**
 
@@ -378,20 +368,16 @@ rg "async def" src/ | rg -v "timeout|Timeout"
 
 If any of these return results, you’ve found your first edge case. Fix it now—before it becomes a production incident.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

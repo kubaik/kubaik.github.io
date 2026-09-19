@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-19T06:58:57.859019">
-        <meta property="article:modified_time" content="2026-08-19T06:58:57.859032">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.047795+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Evolve your monolith without rewriting in 2026">
@@ -63,8 +63,8 @@
       "headline": "Evolve your monolith without rewriting in 2026",
       "description": "Evolve a FastAPI monolith without rewriting — keep the paved road evolvable with Redis 7.2 and SQLAlchemy 2.0.",
       "datePublished": "2026-08-19T06:58:57+00:00",
-      "dateModified": "2026-08-19T06:58:57+00:00",
-      "wordCount": 2465,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2450,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,16 +264,16 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2465 words
+                        &nbsp;·&nbsp; 2450 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-19
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this golden paths problem while migrating a service under a hard deadline. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke.</p>
+                <p>The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>Solo founders ship fast, but the first "golden path" you pave often hardens into a golden handcuff. In 2026 the average solo-founder codebase is 4.7 years old, and the founder has rewritten it 1.2 times already—not because the tech stack was bad, but because the original golden path became a cage.</p>
 <p>The most common trap is the one-file backend: a single Python 3.11 FastAPI app with 2 400 lines of synchronous routes, 3 SQLAlchemy models per endpoint, and a 400-line <code>main.py</code> that grew over three years. Teams running into this usually see the same symptoms: a p99 latency spike from 120 ms to 2.1 s after deploy because the one-file ORM session is not thread-safe, a 45-minute redeploy that blocks releases, and a non-technical co-founder who can’t read the codebase but has to explain it to clients.</p>

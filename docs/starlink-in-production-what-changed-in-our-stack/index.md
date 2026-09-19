@@ -1,6 +1,6 @@
 # Starlink in production: what changed in our stack
 
-A colleague asked me about changed our during a code review recently, and my first answer wasn't a good one. It works in the simple case and breaks in a specific way under load. Here's the root cause, not just the symptom.
+It works in the simple case and breaks in a specific way under load. Here's the root cause, not just the symptom.
 
 ## Why I wrote this (the problem I kept hitting)
 
@@ -421,7 +421,6 @@ This revealed that 18 % of latency spikes during the Tuesday window were due to 
 | **Time to switch to Starlink** | 4 minutes (manual) | 15 seconds (automated) |
 | **Disk I/O wait on Raspberry Pi 5** | 25 % | 8 % (SD card optimized) |
 | **Synthetic test execution time (CI)** | 42 seconds | 8 seconds |
-
 
 ---
 

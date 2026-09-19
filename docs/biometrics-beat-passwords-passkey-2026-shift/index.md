@@ -6,7 +6,7 @@ Most passkeys changed guides assume a clean environment and a patient timeline. 
 
 In early 2026, our Jakarta-based social commerce app had 1.2 million monthly active users, but 42% of new signups never completed their first purchase. The bottleneck wasn’t the checkout flow—it was the login screen. Every week we’d see 18,000 users abandon onboarding because they couldn’t remember a password or didn’t want to install an authenticator app. Our existing setup used email magic links with 10-minute expiry tokens. Users loved the convenience, but we were burning $1,400/month on SES sends alone and still fielding 300 support tickets weekly about "I didn’t get the email."
 
-I ran into this when I pulled the weekly failed-login report and noticed something weird: 68% of the failures happened within the first minute after the magic link was sent. The email was delivered, but the user had already closed the tab. We needed something faster than email and simpler than TOTP. Passkeys looked promising, but our CTO was skeptical—"Biometrics for users who share devices? In Southeast Asia? Let’s see the numbers."
+The email was delivered, but the user had already closed the tab. We needed something faster than email and simpler than TOTP. Passkeys looked promising, but our CTO was skeptical—"Biometrics for users who share devices? In Southeast Asia? Let’s see the numbers."
 
 Historically, passwordless options like WebAuthn existed since 2018, but adoption was slow outside enterprise. By 2026, Apple, Google, and Microsoft had baked passkey sync into iOS 17, Android 15, and Windows 11, making platform-level storage viable. The FIDO Alliance’s 2026 whitepaper showed passkey login times averaging 450ms versus 2.1s for email magic links—a 78% speedup. We decided to pilot passkeys on our Android and iOS apps first, targeting the 60% of users who already had biometric setup enabled.
 
@@ -156,9 +156,7 @@ Finally, security isn’t just about preventing breaches—it’s about reducing
 
 Start by asking three questions:
 
-1. **What’s your login failure rate?** If it’s below 5%, passkeys might not move the needle. If it’s above 20%, passkeys could cut failures by 50% or more.
-2. **What’s your user device mix?** Check Google Analytics or your analytics provider for OS and browser distribution. If 80% of users are on iOS 17+ or Android 15+, passkeys are viable. If half are on Safari 15 (no WebAuthn support), plan a long tail of fallbacks.
-3. **What’s your email volume cost?** If you’re sending more than 1M emails/month for auth, passkeys could cut that by 80% or more. Calculate the SES/SendGrid/Gmail cost for your monthly volume.
+1. **What’s your login failure rate?** If it’s below 5%, passkeys might not move the needle. If it’s above 20%, passkeys could cut failures by 50% or more. 2. **What’s your user device mix?** Check Google Analytics or your analytics provider for OS and browser distribution. If 80% of users are on iOS 17+ or Android 15+, passkeys are viable. If half are on Safari 15 (no WebAuthn support), plan a long tail of fallbacks. 3. **What’s your email volume cost?** If you’re sending more than 1M emails/month for auth, passkeys could cut that by 80% or more. Calculate the SES/SendGrid/Gmail cost for your monthly volume.
 
 Here’s a 30-minute checklist to validate passkeys for your app:
 
@@ -174,26 +172,19 @@ Here’s a 30-minute checklist to validate passkeys for your app:
    - Use [Can I Use: Passkeys](https://caniuse.com/passkeys) to verify support on your target devices.
 
 2. **Set up a minimal flow**
-   - Use [SimpleWebAuthn](https://simplewebauthn.dev/) or [Auth0 Passkey SDK](https://github.com/auth0/auth0-passkey-sdk) for the heavy lifting.
-   - Implement registration and login endpoints with 30-minute TTL for challenges.
-   - Add a fallback to email magic links.
+   - Use [SimpleWebAuthn](https://simplewebauthn.dev/) or [Auth0 Passkey SDK](https://github.com/auth0/auth0-passkey-sdk) for the heavy lifting. - Implement registration and login endpoints with 30-minute TTL for challenges. - Add a fallback to email magic links.
 
 3. **Measure adoption**
-   - Track the number of users who complete passkey registration vs. those who fall back to email.
-   - Monitor latency and error rates by platform.
+   - Track the number of users who complete passkey registration vs. those who fall back to email. - Monitor latency and error rates by platform.
 
 4. **Estimate cost savings**
-   - Multiply your monthly email volume by your SES/SendGrid cost per email.
-   - Add your auth backend CPU usage before and after passkeys.
+   - Multiply your monthly email volume by your SES/SendGrid cost per email. - Add your auth backend CPU usage before and after passkeys.
 
 5. **A/B test**
-   - Roll out passkeys to 10% of new users first. Measure failed logins and support tickets.
-   - If the metrics improve, increase the rollout to 50%, then 100%.
+   - Roll out passkeys to 10% of new users first. Measure failed logins and support tickets. - If the metrics improve, increase the rollout to 50%, then 100%.
 
 Avoid these pitfalls:
-- Don’t require passkeys for new signups. Start with returning users.
-- Don’t store passkeys only on the device. Keep a backup public key on your backend.
-- Don’t ignore older devices. Test on Android 13 and iPadOS 16.4 before launch.
+- Don’t require passkeys for new signups. Start with returning users. - Don’t store passkeys only on the device. Keep a backup public key on your backend. - Don’t ignore older devices. Test on Android 13 and iPadOS 16.4 before launch.
 
 If you’re on AWS, here’s a Terraform snippet to add Redis caching for passkey verification:
 
@@ -214,14 +205,7 @@ Deploy this in a staging environment, then benchmark the latency impact. In our 
 
 ## Resources that helped
 
-- [SimpleWebAuthn GitHub](https://github.com/MasterKale/SimpleWebAuthn) — The library we used for frontend and backend. Version 9.0.0 added TypeScript-first APIs and better error handling.
-- [FIDO Alliance Passkey Guide](https://fidoalliance.org/passkeys/) — The definitive spec for passkeys. Their 2026 whitepaper includes adoption benchmarks across regions.
-- [Auth0 Passkey SDK](https://github.com/auth0/auth0-passkey-sdk) — If you’re on Auth0, this simplifies integration. We used it briefly before switching to SimpleWebAuthn.
-- [Can I Use: Passkeys](https://caniuse.com/passkeys) — Check platform support before writing code.
-- [BrowserStack Device Lab](https://www.browserstack.com/) — Test on real devices without buying them all. We used their open-source plan for 10 devices.
-- [OpenTelemetry Passkey Example](https://github.com/open-telemetry/opentelemetry-js/tree/main/examples/passkeys) — How to instrument passkey flows for observability.
-- [Redis 7.2 Documentation](https://redis.io/docs/) — Specifically the `EX` (expire) and pub/sub features we used for cache invalidation.
-- [OWASP Passkeys Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Passkeys_Cheat_Sheet.html) — Security best practices for passkey storage and verification.
+- [SimpleWebAuthn GitHub](https://github.com/MasterKale/SimpleWebAuthn) — The library we used for frontend and backend. Version 9.0.0 added TypeScript-first APIs and better error handling. - [FIDO Alliance Passkey Guide](https://fidoalliance.org/passkeys/) — The definitive spec for passkeys. Their 2026 whitepaper includes adoption benchmarks across regions. - [Auth0 Passkey SDK](https://github.com/auth0/auth0-passkey-sdk) — If you’re on Auth0, this simplifies integration. We used it briefly before switching to SimpleWebAuthn. - [Can I Use: Passkeys](https://caniuse.com/passkeys) — Check platform support before writing code. - [BrowserStack Device Lab](https://www.browserstack.com/) — Test on real devices without buying them all. We used their open-source plan for 10 devices. - [OpenTelemetry Passkey Example](https://github.com/open-telemetry/opentelemetry-js/tree/main/examples/passkeys) — How to instrument passkey flows for observability. - [Redis 7.2 Documentation](https://redis.io/docs/) — Specifically the `EX` (expire) and pub/sub features we used for cache invalidation. - [OWASP Passkeys Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Passkeys_Cheat_Sheet.html) — Security best practices for passkey storage and verification.
 
 ## Frequently Asked Questions
 
@@ -253,20 +237,16 @@ If passkeys are supported, add a "Sign in with passkey" button next to your emai
 
 That’s it. No new infrastructure, no big rewrite—just a 30-minute experiment to see if passkeys move the needle for your users.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

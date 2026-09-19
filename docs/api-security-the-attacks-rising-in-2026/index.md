@@ -6,11 +6,9 @@ Most api security guides assume a clean environment and a patient timeline. Prod
 
 In 2026, our API gateway at a B2B SaaS startup started getting hit with a new kind of abuse: tokens that looked valid but were actually expired, requests that bypassed rate limits by rotating through hundreds of IPs, and payloads that exploited nested JSON parsing limits to trigger OOM kills on our Node 20 LTS pods. We thought our Auth0 integration was solid — after all, we rotated secrets every 90 days, used RS256, and enforced scope checks in middleware. Then we saw the first real incident: a customer’s service account token leaked into a public GitHub repo, and within 12 hours, someone used it to call our `/v2/export` endpoint 18,000 times, racking up a $3,400 bill on our AWS bill before CloudTrail alerted us.
 
-I spent three days tracking down why our WAF wasn’t blocking it — only to realize we’d configured the rule to match `Authorization: Bearer .+` but not check expiration. The token was expired, but the pattern still matched. That mistake cost us more than money; it cost trust. After that, we started tracking attack patterns weekly, not monthly. By mid-2026, we were seeing three new patterns climb the charts:
+The token was expired, but the pattern still matched. That mistake cost us more than money; it cost trust. After that, we started tracking attack patterns weekly, not monthly. By mid-2026, we were seeing three new patterns climb the charts:
 
-- **OAuth token recycling**: attackers reuse expired tokens with slight header mutations (algorithm downgrades from RS256 to HS256, kid header swaps) to bypass simple string-matching rules.
-- **Dynamic IP rotation**: requests come from 50+ IPs per minute, each with a unique user-agent, but all hitting the same rate-limited endpoint with slightly different payloads to test for parsing quirks.
-- **JSON nesting bombs**: payloads with 10,000+ nested levels, exploiting Node 20’s default JSON parser stack depth of 10,000, causing silent OOM kills on pods with 1GiB memory limits.
+- **OAuth token recycling**: attackers reuse expired tokens with slight header mutations (algorithm downgrades from RS256 to HS256, kid header swaps) to bypass simple string-matching rules. - **Dynamic IP rotation**: requests come from 50+ IPs per minute, each with a unique user-agent, but all hitting the same rate-limited endpoint with slightly different payloads to test for parsing quirks. - **JSON nesting bombs**: payloads with 10,000+ nested levels, exploiting Node 20’s default JSON parser stack depth of 10,000, causing silent OOM kills on pods with 1GiB memory limits.
 
 We needed a way to detect and block these patterns without rewriting every endpoint. Our stack: Node 20 LTS on ECS Fargate, AWS API Gateway with WAF v2, Redis 7.2 for rate limiting, and Auth0 for token validation. We also used OpenTelemetry 1.32 for tracing and AWS CloudTrail for audit logs. We weren’t ready to migrate to WASM filters or custom Envoy extensions — we needed something we could ship in days, not weeks.
 
@@ -76,9 +74,7 @@ Each fix introduced a new problem: latency, cost, or false positives. We needed 
 
 We shifted from trying to block everything at the edge to a layered defense with three principles:
 
-1. **Token validation at the auth layer, not at the edge** — validate tokens once, cache the result for 5 minutes, and reject expired or malformed tokens before they hit the WAF.
-2. **Dynamic rate limiting using sliding windows and entropy detection** — not just per-IP, but per-token, per-user-agent, and per-payload hash. Block on entropy spikes (e.g., 50 requests with unique user-agents in 10 seconds).
-3. **Defense in depth for JSON parsing** — use a streaming JSON parser (like `safe-json-parse`) for large payloads, enforce schema limits, and isolate high-risk endpoints in separate pods with memory limits of 512MiB.
+1. **Token validation at the auth layer, not at the edge** — validate tokens once, cache the result for 5 minutes, and reject expired or malformed tokens before they hit the WAF. 2. **Dynamic rate limiting using sliding windows and entropy detection** — not just per-IP, but per-token, per-user-agent, and per-payload hash. Block on entropy spikes (e.g., 50 requests with unique user-agents in 10 seconds). 3. **Defense in depth for JSON parsing** — use a streaming JSON parser (like `safe-json-parse`) for large payloads, enforce schema limits, and isolate high-risk endpoints in separate pods with memory limits of 512MiB.
 
 We built this in three phases:
 
@@ -260,9 +256,7 @@ The patterns we saw rising are all variations on a theme: **abuse of statelessne
 
 The solution is to reintroduce state in a cheap way:
 
-- **Cache token metadata** so you can check expiration and algorithm without decoding every request.
-- **Use entropy and context** (user-agent, payload hash) to detect rotation, not just volume.
-- **Enforce schema and depth limits** at the parser level, not after the fact.
+- **Cache token metadata** so you can check expiration and algorithm without decoding every request. - **Use entropy and context** (user-agent, payload hash) to detect rotation, not just volume. - **Enforce schema and depth limits** at the parser level, not after the fact.
 
 This isn’t just about security — it’s about performance and cost too. Every millisecond you spend validating tokens at the edge is a millisecond of latency and a dollar of Lambda@Edge bills. Every OOM kill from a nested JSON payload is a pod restart and a customer complaint.
 
@@ -291,14 +285,7 @@ If you only do one thing today, check your WAF logs for `401` and `403` errors. 
 
 ## Resources that helped
 
-- [AWS WAF v2 documentation](https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html) — especially the rate-based rules and custom response pages.
-- [jose library 4.2](https://github.com/panva/jose) — for JWT validation with caching.
-- [Redis 7.2 sorted sets guide](https://redis.io/docs/data-types/sorted-sets/) — for sliding window rate limiting.
-- [ajv 8.17](https://ajv.js.org/) — for schema validation with depth limits.
-- [OpenTelemetry 1.32](https://opentelemetry.io/docs/instrumentation/js/) — for instrumenting Node 20 LTS apps.
-- [AWS Fargate memory limits](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html) — for setting pod-level memory constraints.
-- [Terraform 1.6 AWS provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) — for managing infrastructure as code.
-- [Grafana Cloud free tier](https://grafana.com/products/cloud/) — for dashboards and alerts.
+- [AWS WAF v2 documentation](https://docs.aws.amazon.com/waf/latest/developerguide/waf-chapter.html) — especially the rate-based rules and custom response pages. - [jose library 4.2](https://github.com/panva/jose) — for JWT validation with caching. - [Redis 7.2 sorted sets guide](https://redis.io/docs/data-types/sorted-sets/) — for sliding window rate limiting. - [ajv 8.17](https://ajv.js.org/) — for schema validation with depth limits. - [OpenTelemetry 1.32](https://opentelemetry.io/docs/instrumentation/js/) — for instrumenting Node 20 LTS apps. - [AWS Fargate memory limits](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task-cpu-memory-error.html) — for setting pod-level memory constraints. - [Terraform 1.6 AWS provider](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) — for managing infrastructure as code. - [Grafana Cloud free tier](https://grafana.com/products/cloud/) — for dashboards and alerts.
 
 ## Frequently Asked Questions
 
@@ -314,20 +301,16 @@ Node’s default JSON parser can be tricked into OOM kills by deeply nested payl
 **how much does it cost to run this in AWS?**
 Moving token validation from Lambda@Edge to a regional Lambda function cut our edge costs from $890/month to $45/month. Redis 7.2 runs on a cache.t4g.micro instance ($15/month) instead of a cache.r6g.large ($180/month). The total AWS bill for the API layer dropped from $3,400/month to $2,100/month. The biggest cost is still the Fargate pods, but memory limits reduced OOM restarts, which cut CPU costs too.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

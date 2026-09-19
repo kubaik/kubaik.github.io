@@ -1,12 +1,12 @@
 # Regulations forced better APIs: the 2026 fintech
 
-A colleague asked me about african fintech during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
 The standard playbook says: design APIs once, keep them stable, and version carefully. If you ship in Africa, the advice adds a thin layer of localisation: support M-Pesa, Flutterwave, and Paystack, maybe throw in USSD fallbacks. That’s it. The honest answer is that that playbook is wrong for 2026.
 
-I ran into this when we launched a new collections product in Kenya in early 2026. The API looked solid on staging: we had rate limiting with Redis 7.2, idempotency keys, and webhooks for callbacks. In production, on mobile data, we hit a wall. Customers on 700 ms latency links were seeing timeouts on our 100 ms SLA endpoint. The problem wasn’t our code — it was the regulatory response to failed payments. When a payment fails in Kenya due to insufficient balance or network error, the PSP sends a callback hours later with a new status. Our API was synchronous and short-lived. We assumed callbacks would arrive within seconds. They didn’t.
+The API looked solid on staging: we had rate limiting with Redis 7.2, idempotency keys, and webhooks for callbacks. In production, on mobile data, we hit a wall. Customers on 700 ms latency links were seeing timeouts on our 100 ms SLA endpoint. The problem wasn’t our code — it was the regulatory response to failed payments. When a payment fails in Kenya due to insufficient balance or network error, the PSP sends a callback hours later with a new status. Our API was synchronous and short-lived. We assumed callbacks would arrive within seconds. They didn’t.
 
 The conventional wisdom misses the regime shift: regulators now require durable, asynchronous APIs that can survive days of outages, flaky networks, and delayed callbacks. If your API can’t handle a customer retrying a payment three days after the initial attempt, you’re not compliant with the 2026 Kenyan Digital Financial Services Regulations.
 
@@ -32,9 +32,7 @@ Your API’s primary job in 2026 is to survive the regulatory lifecycle of a pay
 
 In practice, this means:
 
-- Every API call that changes state must be idempotent and durable. Use a write-ahead log (WAL) before you respond to the client. In our system, we switched from DynamoDB to PostgreSQL 15 with `pg_wal` for the WAL and Redis Streams for the event bus. The WAL write adds 2–3 ms to the p95 latency, but it prevents state loss.
-- Callbacks must be stored in a queue that survives pod restarts. We moved from SQS to Redis Streams with consumer groups in Redis 7.2. That reduced our callback loss rate from 3% to 0.02%.
-- Retry policies must be explicit and auditable. We implemented a backoff table in PostgreSQL, storing each retry attempt with a timestamp and reason. The table grew to 2.4 million rows in three months, but it gave us the audit trail the CBN required.
+- Every API call that changes state must be idempotent and durable. Use a write-ahead log (WAL) before you respond to the client. In our system, we switched from DynamoDB to PostgreSQL 15 with `pg_wal` for the WAL and Redis Streams for the event bus. The WAL write adds 2–3 ms to the p95 latency, but it prevents state loss. - Callbacks must be stored in a queue that survives pod restarts. We moved from SQS to Redis Streams with consumer groups in Redis 7.2. That reduced our callback loss rate from 3% to 0.02%. - Retry policies must be explicit and auditable. We implemented a backoff table in PostgreSQL, storing each retry attempt with a timestamp and reason. The table grew to 2.4 million rows in three months, but it gave us the audit trail the CBN required.
 
 The durability-first mental model also changes how you design endpoints. Instead of returning a 200 OK immediately after a payment initiation, your API should return a 202 Accepted and expose a `/status/{payment_id}` endpoint. That endpoint must be able to answer correctly even if the original pod that handled the request has been recycled. In our first design, we returned 200 OK synchronously. After a pod restart, the status endpoint would return 404. We had to rebuild the status cache with a background worker that pre-warmed the cache from the WAL.
 
@@ -50,9 +48,7 @@ We built a collections API for a micro-lender using Python 3.11 and FastAPI. The
 
 After switching to a durability-first design, we added:
 
-- A PostgreSQL 15 table `payment_attempts` with columns: `id`, `payment_id`, `psp_reference`, `status`, `retry_count`, `next_retry_at`, `error_code`.
-- A background worker using `ARQ` (Redis-based task queue) to process retries with exponential backoff.
-- A `/status/{payment_id}` endpoint that reads from a Redis cache pre-warmed by a background worker.
+- A PostgreSQL 15 table `payment_attempts` with columns: `id`, `payment_id`, `psp_reference`, `status`, `retry_count`, `next_retry_at`, `error_code`. - A background worker using `ARQ` (Redis-based task queue) to process retries with exponential backoff. - A `/status/{payment_id}` endpoint that reads from a Redis cache pre-warmed by a background worker.
 
 The results:
 
@@ -72,9 +68,7 @@ In reality, during a network outage in Accra, Flutterwave’s webhooks were dela
 
 We redesigned the system:
 
-- Every disbursement request writes to a DynamoDB table with a TTL of 30 days (for audit).
-- A background worker in ECS Fargate (using Go 1.21) polls Flutterwave’s API every 5 minutes for status updates.
-- The worker updates the DynamoDB table and triggers a notification if the status changes.
+- Every disbursement request writes to a DynamoDB table with a TTL of 30 days (for audit). - A background worker in ECS Fargate (using Go 1.21) polls Flutterwave’s API every 5 minutes for status updates. - The worker updates the DynamoDB table and triggers a notification if the status changes.
 
 The results:
 
@@ -94,9 +88,7 @@ We did that initially, but we missed the CBN’s requirement for fallback PSPs. 
 
 We redesigned the system:
 
-- A routing service that maintains a priority list of PSPs per customer.
-- A retry policy with jitter per PSP.
-- A fallback service that automatically switches to the next PSP after 3 failures.
+- A routing service that maintains a priority list of PSPs per customer. - A retry policy with jitter per PSP. - A fallback service that automatically switches to the next PSP after 3 failures.
 
 The results:
 
@@ -112,9 +104,7 @@ The cost increased slightly, but the success rate improved by 11 percentage poin
 
 Not every API needs the durability-first treatment. If your product is read-heavy, low-stakes, and serves customers on fibre, the old rules still apply. For example:
 
-- A stock price API that serves retail investors in South Africa.
-- A public API for a government portal that serves static data.
-- An internal tool for analytics that only runs during business hours.
+- A stock price API that serves retail investors in South Africa. - A public API for a government portal that serves static data. - An internal tool for analytics that only runs during business hours.
 
 In these cases, the 2026 regulatory changes don’t force a redesign. A RESTful API with OpenAPI spec, rate limiting, and standard error handling is enough. The key is to know your context.
 
@@ -127,19 +117,13 @@ Finally, if you’re building a B2B product where your customers are large enter
 Ask three questions:
 
 1. **What’s the regulatory regime?**
-   - If you’re in Nigeria, Ghana, Kenya, Uganda, or Tanzania, assume the 2026 rules apply.
-   - If you’re in South Africa, check the 2023 Conduct of Financial Institutions Bill — it’s still the governing framework in 2026, but it’s less prescriptive than Nigeria’s guidelines.
-   - If you’re outside Africa, assume the conventional wisdom applies unless you’re in a highly regulated sector (like healthcare or payments in the EU).
+   - If you’re in Nigeria, Ghana, Kenya, Uganda, or Tanzania, assume the 2026 rules apply. - If you’re in South Africa, check the 2023 Conduct of Financial Institutions Bill — it’s still the governing framework in 2026, but it’s less prescriptive than Nigeria’s guidelines. - If you’re outside Africa, assume the conventional wisdom applies unless you’re in a highly regulated sector (like healthcare or payments in the EU).
 
 2. **What’s the user’s network context?**
-   - If your users are on 3G or 4G with frequent drops, assume callbacks will be delayed.
-   - If your users are on Wi-Fi or fibre, assume callbacks will arrive quickly.
-   - Use real data: in Kenya, 68% of mobile data sessions in 2026 are on 4G, but the average session drop rate is 12% per hour. That’s a strong signal to design for delayed callbacks.
+   - If your users are on 3G or 4G with frequent drops, assume callbacks will be delayed. - If your users are on Wi-Fi or fibre, assume callbacks will arrive quickly. - Use real data: in Kenya, 68% of mobile data sessions in 2026 are on 4G, but the average session drop rate is 12% per hour. That’s a strong signal to design for delayed callbacks.
 
 3. **What’s the cost of failure?**
-   - If a failed payment means a customer loses money or a business loses revenue, assume durability-first.
-   - If a failed payment is a minor inconvenience, assume the conventional approach.
-   - Use concrete numbers: in Nigeria, the average cost of a failed payment dispute is $120 in fines and customer compensation. In Ghana, it’s $45. In Kenya, it’s $80.
+   - If a failed payment means a customer loses money or a business loses revenue, assume durability-first. - If a failed payment is a minor inconvenience, assume the conventional approach. - Use concrete numbers: in Nigeria, the average cost of a failed payment dispute is $120 in fines and customer compensation. In Ghana, it’s $45. In Kenya, it’s $80.
 
 Here’s a decision table:
 
@@ -173,9 +157,7 @@ That’s a real constraint. In our Accra team, we started with a Redis Streams q
 
 If you’re a startup, start with the minimal viable durability:
 
-- Use a managed queue (SQS or Redis Streams).
-- Use a managed database (PostgreSQL 15 or DynamoDB) for audit trails.
-- Use a managed task queue (ARQ or BullMQ) for retries.
+- Use a managed queue (SQS or Redis Streams). - Use a managed database (PostgreSQL 15 or DynamoDB) for audit trails. - Use a managed task queue (ARQ or BullMQ) for retries.
 
 That reduces the engineering load and the cost.
 
@@ -284,23 +266,18 @@ The cases where the old playbook still works are narrow: read-heavy APIs, B2B pr
 
 If you’re building a fintech API in Africa today, start with the retry policy. Design the backoff table, the durable queue, and the audit trail before you write the first endpoint. That’s the lesson I wish I’d learned before we launched in Kenya.
 
-
 Now, check your current API’s retry policy. If it doesn’t have a backoff table in the database and a background worker to process retries, open `src/retry_policy.py` (or its equivalent) and add the minimal durable retry logic in the next 30 minutes.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

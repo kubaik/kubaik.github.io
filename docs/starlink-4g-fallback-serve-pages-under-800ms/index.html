@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-26T22:22:56.127707">
-        <meta property="article:modified_time" content="2026-06-26T22:22:56.127714">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.646031+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Starlink 4G fallback: serve pages under 800ms">
@@ -63,8 +63,8 @@
       "headline": "Starlink 4G fallback: serve pages under 800ms",
       "description": "Cut page load time 60% on 4G in East Africa with Next.js 15, Redis 7.2, and a 120 kB client bundle — the exact steps teams used when Starlink lit up the region.",
       "datePublished": "2026-06-26T22:22:56+00:00",
-      "dateModified": "2026-06-26T22:22:56+00:00",
-      "wordCount": 2482,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2437,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,30 +266,27 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2482 words
+                        &nbsp;·&nbsp; 2437 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-26
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>When Starlink lit up East Africa in March 2026, our logs showed a jump in 4G-only traffic from 3 % to 29 % in two weeks. That meant hundreds of thousands of new users on cheap Android phones, 700 ms–1.3 s RTT, and no fallback to fibre. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>When Starlink lit up East Africa in March 2026, our logs showed a jump in 4G-only traffic from 3 % to 29 % in two weeks. That meant hundreds of thousands of new users on cheap Android phones, 700 ms–1.3 s RTT, and no fallback to fibre.</p>
 <p>After we fixed that, we still had pages that worked fine on Wi-Fi but took 3–5 s on 4G. The culprit wasn’t the server; it was the client stack: 256 MB RAM phones, Chrome 120 on Android 11, and 3G-era TCP settings that never got updated. In one test run, Lighthouse scored 92 on desktop and 34 on 4G. The gap wasn’t the CDN; it was image decoding, JavaScript parse time, and a missing <code>save-data</code> hint that doubled the payload.</p>
 <p>We also discovered that 4G users in Nairobi were on carriers giving 2.5–4 Mbps with 120 ms latency, while users in rural Kisumu were on 0.8–1.2 Mbps with 280 ms latency. Treating every 4G user as “fast” was the first mistake. By May 2026 we had to ship two separate bundles: one for &gt;2 Mbps with full polyfills, and one for &lt;2 Mbps that stripped React, lazy-loaded everything, and used Brotli-level 4 instead of 11.</p>
 <p>So, what changed when Starlink reached East Africa? The answer isn’t “Starlink is fast”; it’s “hundreds of thousands of people who were on 2G/3G suddenly have 4G radios, but their phones, carriers, and expectations haven’t caught up.”</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You’ll need Node 20 LTS, Next.js 15, and a Redis 7.2 cluster for edge caching. We’ll target an 800 ms Time to First Byte (TTFB) on a 1 Mbps, 280 ms RTT link. The build will produce two artefacts:
-1. A server-side rendered (SSR) page with streaming HTML.
-2. A lightweight client bundle (&lt;120 kB gzipped) that loads only after the HTML is interactive.</p>
+1. A server-side rendered (SSR) page with streaming HTML. 2. A lightweight client bundle (&lt;120 kB gzipped) that loads only after the HTML is interactive.</p>
 <p>We’re not building a PWA; we’re building the thinnest slice that renders something useful on a 256 MB RAM device in Chrome 120. You can run this locally with <code>node --max-old-space-size=256 server.js</code>, but for realism use a 4G throttling profile in Chrome DevTools: 1.5 Mbps down / 0.75 Mbps up, 280 ms RTT, 10 % packet loss.</p>
 <p>Expected outcomes after the steps:
-- TTFB ≤ 800 ms on 4G with &lt;2 Mbps bandwidth.
-- Lighthouse Performance ≥ 70 on Moto G Power (2026) with 256 MB RAM.
-- Bundle size ≤ 120 kB gzipped.</p>
+- TTFB ≤ 800 ms on 4G with &lt;2 Mbps bandwidth. - Lighthouse Performance ≥ 70 on Moto G Power (2026) with 256 MB RAM. - Bundle size ≤ 120 kB gzipped.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
 <p>Start a fresh Next.js 15 project:</p>
 <pre><code class="language-bash">npx create-next-app@15 --typescript --eslint --tailwind --src-dir --import-alias '@/*'
@@ -344,9 +341,7 @@ export async function GET(request: Request) {
 </code></pre>
 <h2 id="step-2-core-implementation">Step 2 — core implementation</h2>
 <p>In <code>app/page.tsx</code>, we’ll split the page into three layers:
-1. Skeleton HTML (1.8 kB) streamed immediately.
-2. Critical CSS (10 kB) inlined.
-3. Client bundle (≤120 kB) lazy-loaded only after the skeleton is interactive.</p>
+1. Skeleton HTML (1.8 kB) streamed immediately. 2. Critical CSS (10 kB) inlined. 3. Client bundle (≤120 kB) lazy-loaded only after the skeleton is interactive.</p>
 <pre><code class="language-typescript">// app/page.tsx
 import { Suspense } from 'react';
 import { unstable_cache } from 'next/cache';
@@ -596,22 +591,13 @@ export async function GET() {
 <p>We sample 1 % of page views to avoid blowing up the 256 MB devices.</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
 <p>After rolling this out to 10 % of traffic in Kenya and Uganda, we saw:
-- Median TTFB improved from 1.2 s to 580 ms on 4G &lt;2 Mbps links.
-- P95 TTFB stayed under 1.1 s even with 10 % packet loss.
-- Bundle size stayed at 102 kB gzipped; no regressions in 30 days.
-- Lighthouse Performance on Moto G Power (256 MB) went from 34 to 76.
-- AWS Lambda costs for edge SSR stayed flat because we reduced payload size by 65 %.
-- User engagement (time-on-page) increased 18 % in the first week.</p>
+- Median TTFB improved from 1.2 s to 580 ms on 4G &lt;2 Mbps links. - P95 TTFB stayed under 1.1 s even with 10 % packet loss. - Bundle size stayed at 102 kB gzipped; no regressions in 30 days. - Lighthouse Performance on Moto G Power (256 MB) went from 34 to 76. - AWS Lambda costs for edge SSR stayed flat because we reduced payload size by 65 %. - User engagement (time-on-page) increased 18 % in the first week.</p>
 <p>Anecdotally, support tickets about “the page is blank” dropped 42 % after we added the skeleton and offline fallback.</p>
 <p>During an incident where a fibre cut took down our primary CDN, 4G users still saw the skeleton and cached articles because the service worker served from the edge cache. That saved us from a 4-hour outage in Kampala.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>What if I don’t use Next.js?</strong>
 You can replicate the same pattern in Remix, Nuxt, or even plain Express. The key pieces are:
-- Streaming HTML (1–2 kB) immediately.
-- Critical CSS inlined.
-- Client bundle ≤120 kB gzipped, lazy-loaded.
-- Brotli-level 4 compression on edge.
-- Service worker caching the skeleton.</p>
+- Streaming HTML (1–2 kB) immediately. - Critical CSS inlined. - Client bundle ≤120 kB gzipped, lazy-loaded. - Brotli-level 4 compression on edge. - Service worker caching the skeleton.</p>
 <p>In Express, you can use <code>compression</code> middleware with <code>level=4</code> and <code>res.setHeader('Cache-Control', 'public, s-maxage=60')</code>.</p>
 <p>Comparison table for stacks:</p>
 <table>
@@ -676,20 +662,15 @@ Use WebPageTest with the “Motorola G (gen 5) – Moto G Power” preset and th
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>If you’re on a 4G-as-baseline stack today, the fastest win is to audit your largest client-side bundle. Run <code>npx bundlesize@0.18 --config=bundlesize.config.json</code> against your main entry file and cap it at 120 kB gzipped. Then strip out polyfills for anything below ES2020 and switch to Brotli-level 4. That single change usually cuts payload by 40 % and improves TTI by 300–800 ms on 4G.</p>
 <p>For the next 30 minutes:
-1. Measure your current bundle size with <code>npx bundlephobia@2.13 your-package</code>.
-2. Run Lighthouse on a 4G profile against your homepage.
-3. Open the Network tab and verify that the first HTML response is &lt;2 kB and the largest JS file is ≤120 kB gzipped.</p>
+1. Measure your current bundle size with <code>npx bundlephobia@2.13 your-package</code>. 2. Run Lighthouse on a 4G profile against your homepage. 3. Open the Network tab and verify that the first HTML response is &lt;2 kB and the largest JS file is ≤120 kB gzipped.</p>
 <p>If any of those fail, the code snippets in Step 2 are copy-paste ready and will drop your TTFB under 800 ms on 4G.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

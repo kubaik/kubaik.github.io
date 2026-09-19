@@ -6,7 +6,7 @@ Most building mobile guides assume a clean environment and a patient timeline. P
 
 Our product lets informal retailers in Lagos reconcile their daily mobile-money floats against their bank balances. We’re talking about 300 transactions a day, often under 1 USD each, with payment providers like MTN MoMo and Airtel Money. The catch: the providers’ webhooks arrive 1–4 hours late, and their CSV exports can be 12 hours stale. Add in failed callbacks, duplicate notifications, and the occasional 502 from the provider’s API, and you’ve got a reconciliation engine that either marks everything as pending forever or blows up your inbox with false discrepancies.
 
-I ran into this when a customer in Yaba, Lagos, called to say their float showed 2,450 Naira but their MTN dashboard showed 2,400 Naira. The provider had sent a webhook at 02:17 AM that our retry loop never picked up because the signature header was missing a trailing newline. That one newline cost us two support tickets and a weekend of manual reconciliations.
+The provider had sent a webhook at 02:17 AM that our retry loop never picked up because the signature header was missing a trailing newline. That one newline cost us two support tickets and a weekend of manual reconciliations.
 
 By late 2026 the stack looked like this: a Python 3.12 FastAPI service on Hetzner Cloud CX31 (2 vCPU, 4 GB RAM) talking to MTN’s MoMo v2.2 API and to the retailer’s bank via Plaid’s Nigeria sandbox. We used Redis 7.2 for rate-limiting and job queues, PostgreSQL 15 for the ledger, and a cron job that pulled the CSV every hour. The reconciliation job was a simple left-join between the MoMo webhook table and the bank transactions table, followed by a diff. What could go wrong?
 
@@ -33,8 +33,7 @@ Postgres 15 on a 10 GB shared NVMe did 8,000 seq scans per second, but in our ca
 
 Finally we tried a classic Lambda architecture: batch CSV downloads every hour plus a streaming path for webhooks that used Redis Streams. The streaming path used Node 22.6 with BullMQ 5.2 to deduplicate and backfill gaps. That introduced two new failure modes:
 
-1. **Clock skew between the two paths.** A webhook arriving at 09:58:59 would be processed before the 10:00:00 CSV, but the CSV might contain the same transaction with a different `transaction_id`. The left join produced two rows for the same money.
-2. **Redis Streams memory bloat.** Each message carried the full transaction payload (≈ 4 KB). After 24 hours at 300 messages/second we hit Redis’s maxmemory policy and lost events when eviction started.
+1. **Clock skew between the two paths.** A webhook arriving at 09:58:59 would be processed before the 10:00:00 CSV, but the CSV might contain the same transaction with a different `transaction_id`. The left join produced two rows for the same money. 2. **Redis Streams memory bloat.** Each message carried the full transaction payload (≈ 4 KB). After 24 hours at 300 messages/second we hit Redis’s maxmemory policy and lost events when eviction started.
 
 We rolled it back after three days of on-call pages.
 
@@ -42,9 +41,7 @@ We rolled it back after three days of on-call pages.
 
 We pivoted to a **time-windowed reconciliation** model with an explicit tolerance band. The rules are:
 
-1. Any transaction inside the tolerance band (we chose ±1 hour) is considered reconciled, even if the webhook arrived late.
-2. Transactions outside the band trigger manual review via Slack bot.
-3. We keep two source-of-truth tables: `raw_transactions` (append-only) and `reconciled_balances` (overwrite).
+1. Any transaction inside the tolerance band (we chose ±1 hour) is considered reconciled, even if the webhook arrived late. 2. Transactions outside the band trigger manual review via Slack bot. 3. We keep two source-of-truth tables: `raw_transactions` (append-only) and `reconciled_balances` (overwrite).
 
 The key insight was **not to fight the provider’s latency**, but to make it visible and bounded. We introduced a new column `expected_settlement_time` on every transaction, computed as `created_at + 90 minutes` (MTN’s SLA) with a 30-minute buffer for MTN’s “up to 2 hours” claim. Any transaction that settles outside that window is flagged, regardless of the webhook timing.
 
@@ -160,8 +157,7 @@ The test suite runs in 32 seconds on a GitHub Actions Ubuntu runner. It caught a
 The biggest win was **zero false positives**. Before, we’d see a retailer’s balance jump by 50 Naira because a duplicate webhook hit twice. After, duplicates are ignored by the composite key, and late webhooks are either inside the tolerance band (auto-reconciled) or outside (flagged for review).
 
 The P95 latency drop from 8 minutes to 2 minutes came from two moves:
-1. Dropping the event-sourcing window function that did a full table scan.
-2. Switching the bank balance lookup from a correlated subquery to a BRIN index on the latest snapshot.
+1. Dropping the event-sourcing window function that did a full table scan. 2. Switching the bank balance lookup from a correlated subquery to a BRIN index on the latest snapshot.
 
 CPU usage fell because the old code was spinning on a busy retry loop; the new code spends most of its time sleeping between jobs.
 
@@ -203,11 +199,7 @@ If you’re on a tight budget, skip the Redis Streams and BullMQ entirely. A sin
 
 ## Resources that helped
 
-- [MTN MoMo API v2.2 docs (2026-03-15 snapshot)](https://developer.mtn.ng/docs/momo-api-v2-2/) – The only place that documents the `expected_settlement_time` field.
-- [PostgreSQL 15 BRIN indexes](https://www.postgresql.org/docs/15/brin-intro.html) – Saved us from a full table scan on 6 million rows.
-- [pytest-timeout 2.2](https://pypi.org/project/pytest-timeout/2.2.0/) – Caught our CSV backfill hanging on network stalls.
-- [asyncpg 0.30](https://magicstack.github.io/asyncpg/current/) – The fastest PostgreSQL driver for Python; we saw 3x lower latency than psycopg3.
-- [Redis 7.2 sorted sets for retries](https://redis.io/docs/data-types/sorted-sets/) – The only queue primitive that lets us cap memory usage without losing messages.
+- [MTN MoMo API v2.2 docs (2026-03-15 snapshot)](https://developer.mtn.ng/docs/momo-api-v2-2/) – The only place that documents the `expected_settlement_time` field. - [PostgreSQL 15 BRIN indexes](https://www.postgresql.org/docs/15/brin-intro.html) – Saved us from a full table scan on 6 million rows. - [pytest-timeout 2.2](https://pypi.org/project/pytest-timeout/2.2.0/) – Caught our CSV backfill hanging on network stalls. - [asyncpg 0.30](https://magicstack.github.io/asyncpg/current/) – The fastest PostgreSQL driver for Python; we saw 3x lower latency than psycopg3. - [Redis 7.2 sorted sets for retries](https://redis.io/docs/data-types/sorted-sets/) – The only queue primitive that lets us cap memory usage without losing messages.
 
 ## Frequently Asked Questions
 
@@ -227,20 +219,16 @@ Postgres advisory locks. We acquire a lock on `pg_advisory_lock(12345)` at the s
 
 Open `reconcile.py` in your editor and add a new function called `compute_tolerance_band()` that measures the 95th percentile of `webhook_received_at - created_at` for each provider over the last 7 days. Run it locally and set your tolerance to that value plus 30 minutes. Commit the number to your README under “Provider latency assumptions.” That takes 15 minutes and prevents half the false discrepancies you’ll see next month.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

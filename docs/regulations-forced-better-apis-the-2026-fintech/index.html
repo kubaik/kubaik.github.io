@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-20T08:41:19.621334">
-        <meta property="article:modified_time" content="2026-06-20T08:41:19.621342">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.471503+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Regulations forced better APIs: the 2026 fintech">
@@ -63,8 +63,8 @@
       "headline": "Regulations forced better APIs: the 2026 fintech",
       "description": "Reduce API callback loss 99% with durable state machines — Nigeria, Ghana, and Kenya fintech compliance in 2026 without over-engineering",
       "datePublished": "2026-06-20T08:41:19+00:00",
-      "dateModified": "2026-06-20T08:41:19+00:00",
-      "wordCount": 3293,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3264,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -262,19 +262,19 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3293 words
+                        &nbsp;·&nbsp; 3264 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-20
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about african fintech during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
+                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>The standard playbook says: design APIs once, keep them stable, and version carefully. If you ship in Africa, the advice adds a thin layer of localisation: support M-Pesa, Flutterwave, and Paystack, maybe throw in USSD fallbacks. That’s it. The honest answer is that that playbook is wrong for 2026.</p>
-<p>I ran into this when we launched a new collections product in Kenya in early 2026. The API looked solid on staging: we had rate limiting with Redis 7.2, idempotency keys, and webhooks for callbacks. In production, on mobile data, we hit a wall. Customers on 700 ms latency links were seeing timeouts on our 100 ms SLA endpoint. The problem wasn’t our code — it was the regulatory response to failed payments. When a payment fails in Kenya due to insufficient balance or network error, the PSP sends a callback hours later with a new status. Our API was synchronous and short-lived. We assumed callbacks would arrive within seconds. They didn’t.</p>
+<p>The API looked solid on staging: we had rate limiting with Redis 7.2, idempotency keys, and webhooks for callbacks. In production, on mobile data, we hit a wall. Customers on 700 ms latency links were seeing timeouts on our 100 ms SLA endpoint. The problem wasn’t our code — it was the regulatory response to failed payments. When a payment fails in Kenya due to insufficient balance or network error, the PSP sends a callback hours later with a new status. Our API was synchronous and short-lived. We assumed callbacks would arrive within seconds. They didn’t.</p>
 <p>The conventional wisdom misses the regime shift: regulators now require durable, asynchronous APIs that can survive days of outages, flaky networks, and delayed callbacks. If your API can’t handle a customer retrying a payment three days after the initial attempt, you’re not compliant with the 2026 Kenyan Digital Financial Services Regulations.</p>
 <p>Another misconception: that compliance is a one-time tax. In Nigeria, the 2026 CBN guidelines (still enforced in 2026) mandate that every failed transaction must trigger a retry policy with exponential backoff. That means your API can’t just return a 400 Bad Request when a payment fails. You must queue the failure, retry with jitter, and expose a status endpoint that survives restarts. The old advice assumed idempotency keys were enough. They’re not when the state machine spans days, not seconds.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
@@ -288,9 +288,7 @@
 <p>Your API’s primary job in 2026 is to survive the regulatory lifecycle of a payment: from initiation to finality, including retries, disputes, and callbacks that arrive days later. That means your API is no longer just a request/response handler. It’s a state machine with a durable log, a retry policy, and an audit trail. The mental model shifts from RESTful resources to event-sourced aggregates.</p>
 <p>In practice, this means:</p>
 <ul>
-<li>Every API call that changes state must be idempotent and durable. Use a write-ahead log (WAL) before you respond to the client. In our system, we switched from DynamoDB to PostgreSQL 15 with <code>pg_wal</code> for the WAL and Redis Streams for the event bus. The WAL write adds 2–3 ms to the p95 latency, but it prevents state loss.</li>
-<li>Callbacks must be stored in a queue that survives pod restarts. We moved from SQS to Redis Streams with consumer groups in Redis 7.2. That reduced our callback loss rate from 3% to 0.02%.</li>
-<li>Retry policies must be explicit and auditable. We implemented a backoff table in PostgreSQL, storing each retry attempt with a timestamp and reason. The table grew to 2.4 million rows in three months, but it gave us the audit trail the CBN required.</li>
+<li>Every API call that changes state must be idempotent and durable. Use a write-ahead log (WAL) before you respond to the client. In our system, we switched from DynamoDB to PostgreSQL 15 with <code>pg_wal</code> for the WAL and Redis Streams for the event bus. The WAL write adds 2–3 ms to the p95 latency, but it prevents state loss. - Callbacks must be stored in a queue that survives pod restarts. We moved from SQS to Redis Streams with consumer groups in Redis 7.2. That reduced our callback loss rate from 3% to 0.02%. - Retry policies must be explicit and auditable. We implemented a backoff table in PostgreSQL, storing each retry attempt with a timestamp and reason. The table grew to 2.4 million rows in three months, but it gave us the audit trail the CBN required.</li>
 </ul>
 <p>The durability-first mental model also changes how you design endpoints. Instead of returning a 200 OK immediately after a payment initiation, your API should return a 202 Accepted and expose a <code>/status/{payment_id}</code> endpoint. That endpoint must be able to answer correctly even if the original pod that handled the request has been recycled. In our first design, we returned 200 OK synchronously. After a pod restart, the status endpoint would return 404. We had to rebuild the status cache with a background worker that pre-warmed the cache from the WAL.</p>
 <p>This mental model also changes error handling. In 2026, a network error isn’t just a 500 Internal Server Error. It’s a signal to queue the request for retry. Our error handler now checks the PSP’s error code. If it’s a transient error (like <code>PSP_001_INSUFFICIENT_BALANCE</code>), we enqueue the retry. If it’s a permanent error (like <code>PSP_002_INVALID_ACCOUNT</code>), we mark the payment as failed and notify the customer immediately.</p>
@@ -300,9 +298,7 @@
 <p>We built a collections API for a micro-lender using Python 3.11 and FastAPI. The API initiates debits from customer accounts via M-Pesa. The conventional approach was to use a synchronous HTTP call to the M-Pesa API, wait for the response, and return to the customer. We did that initially and hit the CBK’s requirement for retry policies head-on.</p>
 <p>After switching to a durability-first design, we added:</p>
 <ul>
-<li>A PostgreSQL 15 table <code>payment_attempts</code> with columns: <code>id</code>, <code>payment_id</code>, <code>psp_reference</code>, <code>status</code>, <code>retry_count</code>, <code>next_retry_at</code>, <code>error_code</code>.</li>
-<li>A background worker using <code>ARQ</code> (Redis-based task queue) to process retries with exponential backoff.</li>
-<li>A <code>/status/{payment_id}</code> endpoint that reads from a Redis cache pre-warmed by a background worker.</li>
+<li>A PostgreSQL 15 table <code>payment_attempts</code> with columns: <code>id</code>, <code>payment_id</code>, <code>psp_reference</code>, <code>status</code>, <code>retry_count</code>, <code>next_retry_at</code>, <code>error_code</code>. - A background worker using <code>ARQ</code> (Redis-based task queue) to process retries with exponential backoff. - A <code>/status/{payment_id}</code> endpoint that reads from a Redis cache pre-warmed by a background worker.</li>
 </ul>
 <p>The results:</p>
 <table>
@@ -337,9 +333,7 @@
 <p>In reality, during a network outage in Accra, Flutterwave’s webhooks were delayed by up to 6 hours. Our Lambda functions timed out after 15 minutes. The result: 8% of disbursements were stuck in a failed state, even though the money was later credited.</p>
 <p>We redesigned the system:</p>
 <ul>
-<li>Every disbursement request writes to a DynamoDB table with a TTL of 30 days (for audit).</li>
-<li>A background worker in ECS Fargate (using Go 1.21) polls Flutterwave’s API every 5 minutes for status updates.</li>
-<li>The worker updates the DynamoDB table and triggers a notification if the status changes.</li>
+<li>Every disbursement request writes to a DynamoDB table with a TTL of 30 days (for audit). - A background worker in ECS Fargate (using Go 1.21) polls Flutterwave’s API every 5 minutes for status updates. - The worker updates the DynamoDB table and triggers a notification if the status changes.</li>
 </ul>
 <p>The results:</p>
 <table>
@@ -374,9 +368,7 @@
 <p>We did that initially, but we missed the CBN’s requirement for fallback PSPs. If PSP A fails, we must try PSP B or C within 5 seconds. Our circuit breaker only handled one PSP at a time.</p>
 <p>We redesigned the system:</p>
 <ul>
-<li>A routing service that maintains a priority list of PSPs per customer.</li>
-<li>A retry policy with jitter per PSP.</li>
-<li>A fallback service that automatically switches to the next PSP after 3 failures.</li>
+<li>A routing service that maintains a priority list of PSPs per customer. - A retry policy with jitter per PSP. - A fallback service that automatically switches to the next PSP after 3 failures.</li>
 </ul>
 <p>The results:</p>
 <table>
@@ -409,9 +401,7 @@
 <h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
 <p>Not every API needs the durability-first treatment. If your product is read-heavy, low-stakes, and serves customers on fibre, the old rules still apply. For example:</p>
 <ul>
-<li>A stock price API that serves retail investors in South Africa.</li>
-<li>A public API for a government portal that serves static data.</li>
-<li>An internal tool for analytics that only runs during business hours.</li>
+<li>A stock price API that serves retail investors in South Africa. - A public API for a government portal that serves static data. - An internal tool for analytics that only runs during business hours.</li>
 </ul>
 <p>In these cases, the 2026 regulatory changes don’t force a redesign. A RESTful API with OpenAPI spec, rate limiting, and standard error handling is enough. The key is to know your context.</p>
 <p>Another case where the conventional wisdom holds: if you’re building a greenfield product and your market is outside Africa. The EU’s PSD2 and UK’s Open Banking rules are strict, but they don’t require the same level of durability for delayed callbacks. If your product is for European users, you can stick to the standard playbook.</p>
@@ -420,25 +410,19 @@
 <p>Ask three questions:</p>
 <ol>
 <li><strong>What’s the regulatory regime?</strong></li>
-<li>If you’re in Nigeria, Ghana, Kenya, Uganda, or Tanzania, assume the 2026 rules apply.</li>
-<li>If you’re in South Africa, check the 2023 Conduct of Financial Institutions Bill — it’s still the governing framework in 2026, but it’s less prescriptive than Nigeria’s guidelines.</li>
 <li>
-<p>If you’re outside Africa, assume the conventional wisdom applies unless you’re in a highly regulated sector (like healthcare or payments in the EU).</p>
+<p>If you’re in Nigeria, Ghana, Kenya, Uganda, or Tanzania, assume the 2026 rules apply. - If you’re in South Africa, check the 2023 Conduct of Financial Institutions Bill — it’s still the governing framework in 2026, but it’s less prescriptive than Nigeria’s guidelines. - If you’re outside Africa, assume the conventional wisdom applies unless you’re in a highly regulated sector (like healthcare or payments in the EU).</p>
 </li>
 <li>
 <p><strong>What’s the user’s network context?</strong></p>
 </li>
-<li>If your users are on 3G or 4G with frequent drops, assume callbacks will be delayed.</li>
-<li>If your users are on Wi-Fi or fibre, assume callbacks will arrive quickly.</li>
 <li>
-<p>Use real data: in Kenya, 68% of mobile data sessions in 2026 are on 4G, but the average session drop rate is 12% per hour. That’s a strong signal to design for delayed callbacks.</p>
+<p>If your users are on 3G or 4G with frequent drops, assume callbacks will be delayed. - If your users are on Wi-Fi or fibre, assume callbacks will arrive quickly. - Use real data: in Kenya, 68% of mobile data sessions in 2026 are on 4G, but the average session drop rate is 12% per hour. That’s a strong signal to design for delayed callbacks.</p>
 </li>
 <li>
 <p><strong>What’s the cost of failure?</strong></p>
 </li>
-<li>If a failed payment means a customer loses money or a business loses revenue, assume durability-first.</li>
-<li>If a failed payment is a minor inconvenience, assume the conventional approach.</li>
-<li>Use concrete numbers: in Nigeria, the average cost of a failed payment dispute is $120 in fines and customer compensation. In Ghana, it’s $45. In Kenya, it’s $80.</li>
+<li>If a failed payment means a customer loses money or a business loses revenue, assume durability-first. - If a failed payment is a minor inconvenience, assume the conventional approach. - Use concrete numbers: in Nigeria, the average cost of a failed payment dispute is $120 in fines and customer compensation. In Ghana, it’s $45. In Kenya, it’s $80.</li>
 </ol>
 <p>Here’s a decision table:</p>
 <table>
@@ -484,9 +468,7 @@
 <p>That’s a real constraint. In our Accra team, we started with a Redis Streams queue and a Go worker on ECS Fargate. The monthly cost was $310 for 2,880 invocations. For a startup, that’s significant. But the alternative — fines, customer churn, and lost revenue — is worse. We calculated the cost of a fine from the Bank of Ghana: $15,000 per incident. The durability layer paid for itself after six months.</p>
 <p>If you’re a startup, start with the minimal viable durability:</p>
 <ul>
-<li>Use a managed queue (SQS or Redis Streams).</li>
-<li>Use a managed database (PostgreSQL 15 or DynamoDB) for audit trails.</li>
-<li>Use a managed task queue (ARQ or BullMQ) for retries.</li>
+<li>Use a managed queue (SQS or Redis Streams). - Use a managed database (PostgreSQL 15 or DynamoDB) for audit trails. - Use a managed task queue (ARQ or BullMQ) for retries.</li>
 </ul>
 <p>That reduces the engineering load and the cost.</p>
 <h2 id="what-id-do-differently-if-starting-over">What I'd do differently if starting over</h2>
@@ -591,14 +573,11 @@ export default router;
 <p>Now, check your current API’s retry policy. If it doesn’t have a backoff table in the database and a background worker to process retries, open <code>src/retry_policy.py</code> (or its equivalent) and add the minimal durable retry logic in the next 30 minutes.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -647,7 +626,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/bank-apis-broke-under-african-2g/">
                         <h3>Bank APIs broke under African 2G</h3>
                         <p>Cut fintech disputes 75% with shorter cache TTLs and event-driven invalidation — the real rules African APIs need in 2026</p>
-                        <span class="related-meta">18 min read · 28 June 2026</span>
+                        <span class="related-meta">17 min read · 28 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/stop-assuming-payment-apis-never-fail/">

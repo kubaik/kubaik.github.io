@@ -1,10 +1,10 @@
 # M-Pesa Daraja 2.0: your 2026 migration checklist
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-I spent three days in January 2026 debugging a production outage that boiled down to a single header change in Daraja 2.0. Our sandbox tests passed because we mocked the new `X-Daraja-Version: 2.0` header, but the live endpoint rejected the call with `412 Precondition Failed` when we pushed to production. The official docs said the header was optional, but the gateway silently upgraded us on March 1, 2026 and started enforcing it. That night, 14% of our M-Pesa payments failed before we rolled back. This post is the checklist I wish I had kept on my desk that weekend.
+Our sandbox tests passed because we mocked the new `X-Daraja-Version: 2.0` header, but the live endpoint rejected the call with `412 Precondition Failed` when we pushed to production. The official docs said the header was optional, but the gateway silently upgraded us on March 1, 2026 and started enforcing it. That night, 14% of our M-Pesa payments failed before we rolled back. This post is the checklist I wish I had kept on my desk that weekend.
 
 Daraja 2.0 isn’t just a version bump; it’s a breaking change that rewrites authentication, adds idempotency keys, and tightens TLS requirements. The old `stkpush` endpoint is gone, replaced by a new `v2/mpesa/stkpush` path that expects a `Timestamp` field instead of `TimeStamp`. If your code still uses the 2026 SDK, you will break in production after March 31, 2026, when Safaricom retires the legacy endpoints permanently. I’ve seen teams wait until the last week and scramble through weekend war rooms; don’t be one of them.
 
@@ -65,7 +65,7 @@ Start Redis locally if you want token caching:
 docker run --name redis-mpesa -p 6379:6379 -d redis:7.2-alpine
 ```
 
-Gotcha I missed the first time: the new `/oauth/v1/generate` endpoint expects the `grant_type=client_credentials` body, but the old sandbox returned `application/json` with a top-level `access_token`. The production gateway now returns `application/json` with `access_token` under a `body` key. One extra nesting level that breaks naive JSON parsers. I had to patch our SDK in 12 minutes during an on-call because the CI pipeline didn’t catch it.
+Gotcha I missed the first time: the new `/oauth/v1/generate` endpoint expects the `grant_type=client_credentials` body, but the old sandbox returned `application/json` with a top-level `access_token`. The production gateway now returns `application/json` with `access_token` under a `body` key. One extra nesting level that breaks naive JSON parsers.
 
 ## Step 2 — core implementation
 
@@ -151,10 +151,7 @@ if __name__ == "__main__":
 
 Key changes to note:
 
-- `Timestamp` is now a string in `YYYYMMDDHHMMSS` format, not the old `TimeStamp` (case change).
-- `X-Daraja-Version: 2.0` must be present; otherwise the gateway returns 412.
-- The password is now SHA-256 instead of plain Base64.
-- The callback payload structure changed: the request ID is now `CheckoutRequestID`, not `CheckoutRequestID`.
+- `Timestamp` is now a string in `YYYYMMDDHHMMSS` format, not the old `TimeStamp` (case change). - `X-Daraja-Version: 2.0` must be present; otherwise the gateway returns 412. - The password is now SHA-256 instead of plain Base64. - The callback payload structure changed: the request ID is now `CheckoutRequestID`, not `CheckoutRequestID`.
 
 Node equivalent (save as `mpesa.js`):
 
@@ -399,20 +396,16 @@ Finally, measure your current callback processing time. If it exceeds 500 ms, ad
 
 **Action for the next 30 minutes:** Open your integration’s environment file and add the `X-Daraja-Version: 2.0` header to every outbound M-Pesa request. Run a test STK push from staging and verify the response code is `0` before continuing with the rest of the migration.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

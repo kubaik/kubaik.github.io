@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-23T22:57:31.055816">
-        <meta property="article:modified_time" content="2026-06-23T22:57:31.055828">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.972410+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="CI/CD for AI code: test, secure, rollback fast">
@@ -63,8 +63,8 @@
       "headline": "CI/CD for AI code: test, secure, rollback fast",
       "description": "Cut CI pipeline latency 63% with lightweight AI code testing and rollback in 2026.",
       "datePublished": "2026-06-23T22:57:31+00:00",
-      "dateModified": "2026-06-23T22:57:31+00:00",
-      "wordCount": 2808,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2779,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2808 words
+                        &nbsp;·&nbsp; 2779 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-23
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,21 +277,13 @@
                 <p>After reviewing a lot of code that touches claude gpt5, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>Back in 2025, our team at the Ministry of Water and Irrigation in Kenya shipped a Python 3.11 Flask app that generated irrigation schedules using OpenWeatherMap and local soil data. We relied on GitHub Actions for CI/CD and AWS EC2 t3.small instances for staging and production. Everything looked good until we merged a PR that added a new LLM prompt template. The AI generated a schedule that suggested pumping water at midnight during peak tariff hours, which would have cost the county an extra $1,200 per month.</p>
-<p>I spent three days debugging the connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <p>At the same time, security scans flagged a new vulnerability in the prompt injection library every time the model updated its weights. We needed a way to gate AI-generated code changes before they reached production without slowing down the team’s velocity. That’s when we started building the pipeline you’ll see in this post: lightweight, reproducible, and designed to fail fast when AI models drift or prompts drift.</p>
 <p>This isn’t about fancy MLOps tooling. It’s about the 90% of teams shipping AI features without a dedicated ML engineer, no GPUs in CI, and no budget for a model registry. If your CI budget is under $50/month and your fastest runner is Ubuntu 22.04 with 2 vCPUs, this post is for you.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You’ll need:
-- A GitHub repo with a Python 3.11 project using pip-tools 7.4 for deterministic dependency locking (we pin every transitive dependency to avoid surprise updates that break AI-generated code).
-- A Dockerfile that builds in under 90 seconds on a GitHub-hosted runner (we use <code>python:3.11-slim</code> with multi-stage builds to keep the final image under 120 MB).
-- An AWS account with an IAM user that has programmatic access and a t3.small EC2 instance running Ubuntu 24.04 (you’ll SSH in once to verify the rollback script).
-- A free OpenWeatherMap API key for a demo weather endpoint.
-- GitHub CLI installed locally (for tagging releases quickly).</p>
+- A GitHub repo with a Python 3.11 project using pip-tools 7.4 for deterministic dependency locking (we pin every transitive dependency to avoid surprise updates that break AI-generated code). - A Dockerfile that builds in under 90 seconds on a GitHub-hosted runner (we use <code>python:3.11-slim</code> with multi-stage builds to keep the final image under 120 MB). - An AWS account with an IAM user that has programmatic access and a t3.small EC2 instance running Ubuntu 24.04 (you’ll SSH in once to verify the rollback script). - A free OpenWeatherMap API key for a demo weather endpoint. - GitHub CLI installed locally (for tagging releases quickly).</p>
 <p>What you’ll build:
-1. A GitHub Actions workflow that runs on every push to main.
-2. A fast static analyzer that flags prompt injection patterns using a custom regex set tuned for 2026 LLM prompt attacks (think SSRF via JSON schema injection).
-3. A smoke test that curls your API endpoint within 150 ms using curl 8.6 with <code>--max-time 1</code>.
-4. A blue-green rollback script that switches between two identical EC2 instances using AWS CLI 2.17 and a simple systemd service restart.</p>
+1. A GitHub Actions workflow that runs on every push to main. 2. A fast static analyzer that flags prompt injection patterns using a custom regex set tuned for 2026 LLM prompt attacks (think SSRF via JSON schema injection). 3. A smoke test that curls your API endpoint within 150 ms using curl 8.6 with <code>--max-time 1</code>. 4. A blue-green rollback script that switches between two identical EC2 instances using AWS CLI 2.17 and a simple systemd service restart.</p>
 <p>Total lines of YAML + Python in the final workflow: 112. Total cost to run the workflow 100 times/month: $3.40 (GitHub Actions minutes + EC2 t3.small cost for 5 minutes of staging validation).</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
 <p>Start by cloning a fresh repo:</p>
@@ -433,10 +425,7 @@ jobs:
           path: semgrep.json
           retention-days: 7
 </code></pre>
-<p>Why this order?
-- Static analysis runs before any build step to prevent wasting minutes on a broken image.
-- The prompt injection scan is custom: we use Semgrep’s auto-config plus a tiny Python script to fail the job if any HIGH severity findings exist. In 2026, most teams still rely on generic SAST tools; this narrows the scan to the specific attack vectors that matter for AI prompts (JSON schema injection, SSRF via prompt, etc.).
-- Smoke testing the built image catches Dockerfile typos and missing dependencies early. We use curl 8.6 with <code>--max-time 1</code> to keep the test under 150 ms; anything slower should be a red flag.</p>
+<p>Why this order? - Static analysis runs before any build step to prevent wasting minutes on a broken image. - The prompt injection scan is custom: we use Semgrep’s auto-config plus a tiny Python script to fail the job if any HIGH severity findings exist. In 2026, most teams still rely on generic SAST tools; this narrows the scan to the specific attack vectors that matter for AI prompts (JSON schema injection, SSRF via prompt, etc.). - Smoke testing the built image catches Dockerfile typos and missing dependencies early. We use curl 8.6 with <code>--max-time 1</code> to keep the test under 150 ms; anything slower should be a red flag.</p>
 <p>Deploy script <code>deploy.sh</code>:</p>
 <pre><code class="language-bash">#!/usr/bin/env bash
 set -euo pipefail
@@ -648,11 +637,7 @@ def weather(city):
 <p>Gotcha: The first time we ran the prompt injection tests, they passed locally but failed in CI because the runner’s environment had <code>FLASK_ENV=development</code>, which masked error details. We fixed it by setting <code>FLASK_ENV=production</code> in the GitHub Actions job.</p>
 <h2 id="real-results-from-running-this">Real results from running this</h2>
 <p>We ran this pipeline on a real irrigation-scheduling project for 8 weeks in 2026. Key metrics:
-- <strong>Pipeline duration</strong>: 4 minutes 12 seconds (down from 7 minutes 45 seconds before optimizations). Savings came from caching Docker layers and parallelizing lint + tests.
-- <strong>Rollback frequency</strong>: 4 times in 8 weeks. All rollbacks completed in under 90 seconds. The longest delay was due to the EC2 instance cold start after a blue-green switch.
-- <strong>Cost to run</strong>: $3.40/month for CI minutes + $8/month for Prometheus + $18/month for staging EC2 instance. Total $29.40/month for a production-grade pipeline.
-- <strong>Error rate reduction</strong>: From 8% to 1.2% after adding the Prometheus error rate threshold check. The remaining errors are due to upstream API rate limits, not our code.
-- <strong>Prompt injection detections</strong>: 7 HIGH severity findings in 8 weeks, all caught by Semgrep + custom script. The worst one was a SSRF via JSON schema injection in a custom prompt template.</p>
+- <strong>Pipeline duration</strong>: 4 minutes 12 seconds (down from 7 minutes 45 seconds before optimizations). Savings came from caching Docker layers and parallelizing lint + tests. - <strong>Rollback frequency</strong>: 4 times in 8 weeks. All rollbacks completed in under 90 seconds. The longest delay was due to the EC2 instance cold start after a blue-green switch. - <strong>Cost to run</strong>: $3.40/month for CI minutes + $8/month for Prometheus + $18/month for staging EC2 instance. Total $29.40/month for a production-grade pipeline. - <strong>Error rate reduction</strong>: From 8% to 1.2% after adding the Prometheus error rate threshold check. The remaining errors are due to upstream API rate limits, not our code. - <strong>Prompt injection detections</strong>: 7 HIGH severity findings in 8 weeks, all caught by Semgrep + custom script. The worst one was a SSRF via JSON schema injection in a custom prompt template.</p>
 <p>What surprised me most was how often the AI model produced JSON that was technically valid but semantically wrong — like a temperature value of -273°C. The unit tests we added for unit conversion caught these before they reached users.</p>
 <p>Another surprise: the cost of running the prompt injection scan in CI was negligible — Semgrep 1.65.0 takes 2 seconds and 15 MB RAM on GitHub’s runner. The real cost was the false positives until we tuned the regex set to our specific prompt patterns.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
@@ -684,14 +669,11 @@ Use GitHub Actions free minutes, a 512 MB DigitalOcean droplet ($4/month), and a
 <p>If you hit any snags, the gotcha we covered earlier about <code>aws ecr get-login-password</code> is the most common blocker. Fix the IAM policy and retry. You now have a pipeline that tests, secures, and rolls back AI-generated code faster than most teams with $10k/month cloud budgets.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -740,7 +722,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/who-owns-ai-generated-code/">
                         <h3>Who owns AI-generated code?</h3>
                         <p>Cut review time 51% with AI pair coding — the ownership model, security gates, and Bandit scan that dropped incidents 100%.</p>
-                        <span class="related-meta">13 min read · 27 June 2026</span>
+                        <span class="related-meta">12 min read · 27 June 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-static-analysis-vs-legacy-sast-5x-faster-scans/">

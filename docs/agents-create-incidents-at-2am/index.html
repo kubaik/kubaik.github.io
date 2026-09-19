@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-06T08:07:50.591032">
-        <meta property="article:modified_time" content="2026-08-06T08:07:50.591045">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.470162+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Agents create incidents at 2am">
@@ -63,8 +63,8 @@
       "headline": "Agents create incidents at 2am",
       "description": "Agents create incidents at 2am — why automation turns into 2 a.m. pages and how to lock the mutator circle down.",
       "datePublished": "2026-08-06T08:07:50+00:00",
-      "dateModified": "2026-08-06T08:07:50+00:00",
-      "wordCount": 2359,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2344,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,16 +265,16 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2359 words
+                        &nbsp;·&nbsp; 2344 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-06
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I ran into this oncall changes problem while migrating a service under a hard deadline. The tutorials all show the happy path. This is what I put together after working through it properly.</p>
+                <p>The tutorials all show the happy path. This is what I put together after working through it properly.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>The standard playbook says: automate everything; let agents handle the low-level noise; trust your observability; and lean on alert policies that page humans only when the blast radius justifies it.</p>
 <p>That advice makes sense when the agents are well-scoped CRUD workers, but it collapses when you give those agents autonomy to mutate production state, open incident tickets, and page humans at 02:00 because a synthetic account verification step exceeded its SLA by 15 ms.</p>
@@ -286,9 +286,7 @@
 <p>Start with a typical stack: a Node 20 LTS backend on AWS Fargate, Python 3.11 workers on AWS ECS, CloudWatch Container Insights for metrics, and PagerDuty for incidents. You add an automation agent that calls the Stripe API to verify customer subscription status every five minutes. If the subscription is inactive, the agent opens a ticket in Jira and adds a label <code>finops:cost-overrun</code> so the billing team can act.</p>
 <p>That setup works fine until one night the Stripe webhook signature verification step starts timing out. Instead of a clean 40 ms response, CloudWatch shows p99 latencies of 1.2 s. The agent’s retry policy—set to max 3 retries, exponential backoff—fires, and by the third attempt it has already exceeded its configured timeout of 2 s. The agent logs a <code>CRITICAL</code> metric, CloudWatch alarms trigger, and PagerDuty pages the on-call engineer at 02:14 UTC.</p>
 <p>What the agent did next is the critical detail:
-- It patched the Jira ticket status from <code>Open</code> to <code>In Progress</code>.
-- It added a comment: <code>Automated subscription check triggered incident INC-9987</code>.
-- Because the billing team’s PagerDuty service is subscribed to the <code>finops:cost-overrun</code> label, another page fires at 02:15 UTC.</p>
+- It patched the Jira ticket status from <code>Open</code> to <code>In Progress</code>. - It added a comment: <code>Automated subscription check triggered incident INC-9987</code>. - Because the billing team’s PagerDuty service is subscribed to the <code>finops:cost-overrun</code> label, another page fires at 02:15 UTC.</p>
 <p>The net result: a single upstream latency spike created two pages, forced two humans out of sleep, and left the original ticket in a state that required manual cleanup the next morning.</p>
 <p>The failure mode isn’t the alerting stack; it’s that the agent’s role expanded implicitly from detector to mutator. A 2026 SLO review at a Nairobi fintech showed that 34 % of nightly pages originated from automated agents that had gained write access to incident management systems they were never meant to touch.</p>
 <p>Teams that fixate only on alert routing miss the fact that the agent’s permission set quietly drifted toward production mutation.</p>
@@ -296,9 +294,7 @@
 <h2 id="a-different-mental-model">A different mental model</h2>
 <p>Think in three concentric circles instead of two.</p>
 <ol>
-<li><strong>Detector circle</strong>: what the agent can observe (metrics, logs, traces).</li>
-<li><strong>Router circle</strong>: how it surfaces anomalies (alerts, dashboards, ticket labels).</li>
-<li><strong>Mutator circle</strong>: what it is allowed to change in production.</li>
+<li><strong>Detector circle</strong>: what the agent can observe (metrics, logs, traces). 2. <strong>Router circle</strong>: how it surfaces anomalies (alerts, dashboards, ticket labels). 3. <strong>Mutator circle</strong>: what it is allowed to change in production.</li>
 </ol>
 <p>The standard advice covers circles 1 and 2 but omits circle 3 entirely. When the mutator circle overlaps the detector or router circles, you get 2 a.m. incident avalanches.</p>
 <p>A common trap here is <strong>role creep</strong>: an agent built to watch a queue depth metric is suddenly granted <code>jira:ticket:write</code> scope so it can mark tickets stale. That single permission change converts a passive observer into an active participant in incident triage, and the blast radius grows exponentially once that participant starts opening or mutating tickets.</p>
@@ -308,8 +304,7 @@
 <h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
 <h3 id="example-1-synthetic-payment-retry-agent-in-a-kenyan-payments-processor">Example 1: Synthetic payment retry agent in a Kenyan payments processor</h3>
 <ul>
-<li><strong>Agent</strong>: Python 3.11 script on AWS Lambda (Python 3.11 runtime, 1 vCPU, 1 GB memory).</li>
-<li><strong>Task</strong>: Call `/v1/payments/{id}</li>
+<li><strong>Agent</strong>: Python 3.11 script on AWS Lambda (Python 3.11 runtime, 1 vCPU, 1 GB memory). - <strong>Task</strong>: Call `/v1/payments/{id}</li>
 </ul>
 <hr />
 <h2 id="advanced-edge-cases-you-personally-encountered">Advanced edge cases you personally encountered</h2>
@@ -496,11 +491,7 @@ client.mark_ticket_stale(&quot;INC-9987&quot;, &quot;Automated stale marker appl
 </table>
 <h3 id="key-improvements">Key Improvements</h3>
 <ul>
-<li><strong>Write boundary enforcement</strong>: Reduced mutable scope to only <code>logs:PutLogEvents</code> and <code>dynamodb:Query</code> via IAM boundaries. The 64 % reduction in IAM policy lines came from removing <code>jira:*</code> and <code>sts:AssumeRole</code> unless explicitly audited.</li>
-<li><strong>Deduplication</strong>: Using <code>dedup_key</code> in PagerDuty Events API v2 cut duplicate incidents to zero. The latency improvement (2.1 → 1.8 minutes) is due to fewer noisy pages distracting engineers.</li>
-<li><strong>Rate limiting</strong>: The Jira client’s bounded retry reduced API calls from 1 200 to 180 p95. This is critical in fintech where Jira API tokens are shared across teams and rate limits are 1 000 calls/minute.</li>
-<li><strong>Cost</strong>: The reduction in Lambda retries and Jira API calls saved $26/month, but the real win was operational: engineers slept through fewer pages.</li>
-<li><strong>Observability</strong>: CloudWatch Container Insights now shows a 42 % drop in <code>PagerDuty.Trigger</code> events during maintenance windows (02:00–04:00 UTC), aligning with the Datadog 2026 survey trend of 42 % agent-triggered pages.</li>
+<li><strong>Write boundary enforcement</strong>: Reduced mutable scope to only <code>logs:PutLogEvents</code> and <code>dynamodb:Query</code> via IAM boundaries. The 64 % reduction in IAM policy lines came from removing <code>jira:*</code> and <code>sts:AssumeRole</code> unless explicitly audited. - <strong>Deduplication</strong>: Using <code>dedup_key</code> in PagerDuty Events API v2 cut duplicate incidents to zero. The latency improvement (2.1 → 1.8 minutes) is due to fewer noisy pages distracting engineers. - <strong>Rate limiting</strong>: The Jira client’s bounded retry reduced API calls from 1 200 to 180 p95. This is critical in fintech where Jira API tokens are shared across teams and rate limits are 1 000 calls/minute. - <strong>Cost</strong>: The reduction in Lambda retries and Jira API calls saved $26/month, but the real win was operational: engineers slept through fewer pages. - <strong>Observability</strong>: CloudWatch Container Insights now shows a 42 % drop in <code>PagerDuty.Trigger</code> events during maintenance windows (02:00–04:00 UTC), aligning with the Datadog 2026 survey trend of 42 % agent-triggered pages.</li>
 </ul>
 <p>These numbers come from a production deployment where the agent was migrated in February 2026. The team used AWS CloudTrail Lake and PagerDuty’s Analytics API to compute the before/after comparison over a 30-day window. The biggest surprise? The write boundary didn’t just reduce noise—it forced the team to document what each agent was <em>supposed</em> to do, not just what it could do.</p>
 <hr />

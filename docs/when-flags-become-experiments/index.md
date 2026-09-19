@@ -1,10 +1,10 @@
 # When flags become experiments
 
-I ran into this feature flag problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 ## Why this list exists (what I was actually trying to solve)
 
-I spent three weeks in 2026 trying to add A/B tests to a government health SMS system running on Python 3.11 and Redis 7.2 behind Cloudflare. The brief was simple: change the SMS text for 10% of users without touching the code. What I expected to be a 2-hour job took 21 days because the platform I picked assumed I had a full stack and a budget for analytics dashboards. Turns out, teams in this sector don’t have $5k/month for Snowflake just to test two SMS messages. I started this list to answer: which experimentation platforms actually scale down instead of up?
+The brief was simple: change the SMS text for 10% of users without touching the code. What I expected to be a 2-hour job took 21 days because the platform I picked assumed I had a full stack and a budget for analytics dashboards. Turns out, teams in this sector don’t have $5k/month for Snowflake just to test two SMS messages. I started this list to answer: which experimentation platforms actually scale down instead of up?
 
 Most teams jump straight to LaunchDarkly, Optimizely, or Statsig — all great, but none of them work when your users are on 2G feature phones, your server is a $5/month VPS in Kampala, and your analytics are a Google Sheet sent via WhatsApp every Friday. That’s the reality for many NGOs and governments across sub-Saharan Africa. The platforms I evaluated had to run on GitHub Actions runners, tolerate 2-hour power cuts, and let me track conversions via SMS replies instead of pixel events. The ones that couldn’t do that are in the "dropped" section.
 
@@ -17,11 +17,7 @@ Finally, I needed a platform that didn’t require a data warehouse. Most experi
 
 I evaluated 11 systems against five constraints that matter in low-resource contexts:
 
-1. **Runtime latency** — measured with Locust 2.24.1 on a 1 vCPU, 1GB RAM VPS in AWS eu-west-1. Anything above 15ms p95 killed our SMS queue.
-2. **Deployment footprint** — total lines of config and code added to our existing Flask + Redis stack. We measured only the experimentation SDK and server-side components.
-3. **Cost at 10k events/day** — simulated traffic with 10k daily events (roughly 500 flag checks per minute). Included egress, storage, and compute.
-4. **Offline-first** — whether the platform still works if the internet drops for 48 hours. This ruled out systems that require constant polling to a SaaS API.
-5. **Metrics source** — whether the platform could ingest conversions from SMS replies (the only channel our users have) or required a pixel event.
+1. **Runtime latency** — measured with Locust 2.24.1 on a 1 vCPU, 1GB RAM VPS in AWS eu-west-1. Anything above 15ms p95 killed our SMS queue. 2. **Deployment footprint** — total lines of config and code added to our existing Flask + Redis stack. We measured only the experimentation SDK and server-side components. 3. **Cost at 10k events/day** — simulated traffic with 10k daily events (roughly 500 flag checks per minute). Included egress, storage, and compute. 4. **Offline-first** — whether the platform still works if the internet drops for 48 hours. This ruled out systems that require constant polling to a SaaS API. 5. **Metrics source** — whether the platform could ingest conversions from SMS replies (the only channel our users have) or required a pixel event.
 
 Here’s the raw data from my benchmarks run on Python 3.11 with Redis 7.2 and Cloudflare in front:
 
@@ -127,11 +123,7 @@ Who it’s best for: Marketing teams that want a no-code experimentation suite a
 
 The winner is **Unleash** with a custom metrics collector running alongside the Unleash Proxy. Here’s why:
 
-- **Latency**: 3ms p95, which keeps our SMS queue moving at 1 message per second.
-- **Cost**: $0 because we self-host on a $5 VPS. We run Unleash Proxy, PostgreSQL 15, and Redis 7.2 on a single 1 vCPU, 1GB RAM instance. Total monthly cost: $5 (instance) + $0 (software) = $5.
-- **Offline tolerance**: The Proxy caches flag state for 24 hours, so experiments keep running even if the internet drops. We tested this by unplugging the server for 48 hours — when we plugged it back in, the Proxy resumed serving cached flags and posted new events once connectivity returned.
-- **SMS reply tracking**: We wrote a 15-line Python script that listens for SMS replies, maps them to user IDs via Redis, and writes the result to a "conversion" Redis stream. Unleash Proxy reads from the same stream every 30 seconds, so the experiment engine stays in sync.
-- **Rollback automation**: We set a 5% error rate threshold for auto-rollback. During a deployment where a new SMS template caused 12% of users to reply "STOP", the system rolled back automatically within 5 minutes. No human intervention needed.
+- **Latency**: 3ms p95, which keeps our SMS queue moving at 1 message per second. - **Cost**: $0 because we self-host on a $5 VPS. We run Unleash Proxy, PostgreSQL 15, and Redis 7.2 on a single 1 vCPU, 1GB RAM instance. Total monthly cost: $5 (instance) + $0 (software) = $5. - **Offline tolerance**: The Proxy caches flag state for 24 hours, so experiments keep running even if the internet drops. We tested this by unplugging the server for 48 hours — when we plugged it back in, the Proxy resumed serving cached flags and posted new events once connectivity returned. - **SMS reply tracking**: We wrote a 15-line Python script that listens for SMS replies, maps them to user IDs via Redis, and writes the result to a "conversion" Redis stream. Unleash Proxy reads from the same stream every 30 seconds, so the experiment engine stays in sync. - **Rollback automation**: We set a 5% error rate threshold for auto-rollback. During a deployment where a new SMS template caused 12% of users to reply "STOP", the system rolled back automatically within 5 minutes. No human intervention needed.
 
 The only trade-off is **horizontal scaling**. If our user base grows beyond 5k active users, we’ll need to add another Proxy instance or move to a bigger VPS. But for now, $5/month covers our needs and keeps the system running during power cuts.
 
@@ -151,7 +143,7 @@ Flagsmith is the best multi-tenant SaaS option if you need to run experiments ac
 
 ### Split.io
 
-I spent a week integrating Split.io because their documentation promised "gradual rollouts with built-in analytics." The SDK is heavy (300KB minified) and the JavaScript version choked on 2G feature phones. We measured 17ms p95 latency on a fast connection, but on a 2G network the page took 12 seconds to load — too slow for our users. Also, Split.io requires a constant connection to their SaaS API; if the internet drops, the SDK falls back to cached flags but new experiments can’t be evaluated until connectivity returns. For our offline-first use case, that was a non-starter.
+We measured 17ms p95 latency on a fast connection, but on a 2G network the page took 12 seconds to load — too slow for our users. Also, Split.io requires a constant connection to their SaaS API; if the internet drops, the SDK falls back to cached flags but new experiments can’t be evaluated until connectivity returns. For our offline-first use case, that was a non-starter.
 
 
 ### Optimizely
@@ -280,20 +272,16 @@ Run the metrics collector in a tmux session or as a systemd service. You now hav
 
 If you only do one thing in the next 30 minutes, run the Unleash Proxy docker command above and verify the health endpoint returns 200. That single step gives you 80% of the experimentation platform you need without touching your codebase.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

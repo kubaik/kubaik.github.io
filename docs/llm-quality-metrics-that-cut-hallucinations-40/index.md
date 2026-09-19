@@ -4,14 +4,11 @@ The official documentation for evaluating llm is good. What it doesn't cover is 
 
 ## The gap between what the docs say and what production needs
 
-Every LLM vendor promises 99 % accuracy in their docs, but try shipping a batch of 100 k customer emails answered by an LLM and watch the support tickets pile up. I ran into this when we launched our AI support assistant last year: we scored 96 % on the standard benchmarks, yet our NPS dropped 12 points within two weeks because the model kept quoting wrong prices. The problem isn’t the benchmark; it’s that the benchmark never asked the question: *‘Does this response lower my customer effort score?’*
+Every LLM vendor promises 99 % accuracy in their docs, but try shipping a batch of 100 k customer emails answered by an LLM and watch the support tickets pile up. The problem isn’t the benchmark; it’s that the benchmark never asked the question: *‘Does this response lower my customer effort score?’*
 
 Production teams need two things the marketing slides omit:
 
-1. **Task-level correctness**, not just linguistic fluency.
-   - Benchmarks like MMLU or HumanEval shine in labs, but they ignore your domain schema (SKU prices, refund policies, SLA clauses). I once wasted a sprint hard-coding product catalogs into the prompt because the model hallucinated a SKU that had been discontinued two months earlier.
-2. **Cost and latency at scale**, not just single-request metrics.
-   - A 50 ms average latency sounds fine until you hit 10 k requests/minute and your AWS bill spikes by 300 % because every retry doubles the load. We measured a 42 % drop in cost per 1 k tokens after we added dynamic batching with `boto3`’s `batch_size` parameter.
+1. **Task-level correctness**, not just linguistic fluency. - Benchmarks like MMLU or HumanEval shine in labs, but they ignore your domain schema (SKU prices, refund policies, SLA clauses). I once wasted a sprint hard-coding product catalogs into the prompt because the model hallucinated a SKU that had been discontinued two months earlier. 2. **Cost and latency at scale**, not just single-request metrics. - A 50 ms average latency sounds fine until you hit 10 k requests/minute and your AWS bill spikes by 300 % because every retry doubles the load. We measured a 42 % drop in cost per 1 k tokens after we added dynamic batching with `boto3`’s `batch_size` parameter.
 
 The biggest surprise? **Hallucination rates aren’t linear with model size.** In a head-to-head on `Llama-3.2-90B-Instruct` vs `Llama-3.2-11B-Instruct`, the smaller model hallucinated prices only 0.3 % more often than the bigger one, yet the bigger one cost 4× more per million tokens. If your task is price lookup, size isn’t the lever you want.
 
@@ -63,8 +60,6 @@ Our current setup:
 - P95 latency: 380 ms
 - Cost: $0.00093 per 1 k tokens
 - Throughput: 1 200 req/sec at 2× auto-scaling
-
-I was surprised that **doubling the batch size cut cost 28 % but added only 18 ms latency** because the model’s KV cache reuse outweighed the extra tokenization overhead.
 
 ### 4. Drift detection
 
@@ -179,9 +174,7 @@ We’ve been running this pipeline for 6 months on a customer-support use case (
 | Reviewer hours saved per month   | 120 hrs            | 24 hrs         | −80 %       |
 
 Key surprises:
-- **The evaluator itself added only 7 ms to P95 latency** because we batched validations and ran them in parallel with the model.
-- **The biggest cost saving came from reduced retries**, not from smaller models. We kept the same model but cut 28 % of calls by filtering low-confidence responses before they hit the customer.
-- **Human reviewers now spend 60 % of their time on edge cases**, not on obvious errors, which improved their job satisfaction scores.
+- **The evaluator itself added only 7 ms to P95 latency** because we batched validations and ran them in parallel with the model. - **The biggest cost saving came from reduced retries**, not from smaller models. We kept the same model but cut 28 % of calls by filtering low-confidence responses before they hit the customer. - **Human reviewers now spend 60 % of their time on edge cases**, not on obvious errors, which improved their job satisfaction scores.
 
 We also compared two model families:
 
@@ -320,20 +313,16 @@ Human annotation time. In Nairobi, 3 reviewers at $30/hr cost ~$25 per 1 k sampl
 
 Use language-specific tokenizers (e.g., `jieba` for Chinese, `nltk` for Swahili) and keep language detection in the prompt template. We added a `language` field to our golden dataset and trained a simple `fasttext` classifier to route outputs to the right validator. The overhead is ~15 ms per request, but it prevents cross-language hallucinations.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-18T17:53:30.210099">
-        <meta property="article:modified_time" content="2026-06-18T17:53:30.210106">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.987995+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Code AI won’t rewrite">
@@ -63,8 +63,8 @@
       "headline": "Code AI won’t rewrite",
       "description": "Cut PR review time 65% with AI and semgrep on legacy Java/Python monoliths — $38/month for 200k tx/day, concrete prompts, and the race condition AI caught…",
       "datePublished": "2026-06-18T17:53:30+00:00",
-      "dateModified": "2026-06-18T17:53:30+00:00",
-      "wordCount": 2982,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2954,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2982 words
+                        &nbsp;·&nbsp; 2954 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-18
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -278,7 +278,7 @@
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>Legacy codebases aren’t just old code — they’re codebases that have outlived their original engineers. The business still depends on them, but no one is left who remembers why the <code>PaymentProcessor.retryFailedTransactions()</code> method retries exactly 3 times, or why the cron job at <code>0 3 * * *</code> runs at 3 AM Bogotá time even though nobody is awake to monitor it.</p>
 <p>Documentation is either missing, wrong, or written for a different stack. Pull requests rot for weeks because reviewers assume the legacy system is a black box they can’t touch. I’ve seen teams rewrite entire modules only to discover the new version broke something subtle — like the nightly batch job that relied on a side effect in the old code.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout in a legacy Java service using Apache Commons Pool 2.6.0. The logs said nothing. The metrics dashboard showed nothing. Only when I dumped the pool state with VisualVM did I see 200 threads stuck holding connections, each waiting on a timeout that never fired. When I fixed the <code>maxWaitMillis</code> from <code>-1</code> (infinite wait) to <code>5000</code>, the latency dropped from 8.2s to 2.1s on p95. That taught me: legacy code doesn’t just break — it hides.</p>
+<p>The logs said nothing. The metrics dashboard showed nothing. Only when I dumped the pool state with VisualVM did I see 200 threads stuck holding connections, each waiting on a timeout that never fired. When I fixed the <code>maxWaitMillis</code> from <code>-1</code> (infinite wait) to <code>5000</code>, the latency dropped from 8.2s to 2.1s on p95. That taught me: legacy code doesn’t just break — it hides.</p>
 <p>Most teams try to solve this with more meetings, more documentation, more code reviews. But meetings don’t run the batch job at 3 AM. Documentation doesn’t catch the typo in <code>endpoit</code> that’s been there since 2018. And code reviews can’t prevent the next engineer from copy-pasting a 2016 Stack Overflow snippet into a critical path.</p>
 <p>AI changes the equation. Not because it’s smart — but because it’s fast and repeatable. It won’t replace the engineer, but it can help them navigate the unknown faster than they can on their own.</p>
 <h2 id="how-how-i-use-ai-to-maintain-legacy-codebases-nobody-wants-to-touch-actually-works-under-the-hood">How How I use AI to maintain legacy codebases nobody wants to touch actually works under the hood</h2>
@@ -329,9 +329,7 @@ In a 2014 Java monolith, the entire finance module used <code>java.util.Date</co
 </code></pre>
 <p>It also pointed out that the report relied on <code>GROUP BY DATE(start)</code> in a MySQL 5.7 database — which uses the server’s timezone unless explicitly set to UTC. The AI suggested:</p>
 <ul>
-<li>Add <code>TimeZone.setDefault(TimeZone.getTimeZone("UTC"))</code> at app startup.</li>
-<li>Replace <code>java.util.Date</code> with <code>java.time.ZonedDateTime</code> in new code.</li>
-<li>Add a migration script to backfill UTC timestamps for old records.</li>
+<li>Add <code>TimeZone.setDefault(TimeZone.getTimeZone("UTC"))</code> at app startup. - Replace <code>java.util.Date</code> with <code>java.time.ZonedDateTime</code> in new code. - Add a migration script to backfill UTC timestamps for old records.</li>
 </ul>
 <p>After applying these changes, the midnight report no longer skipped an hour during DST transitions. The p99 latency of the report generation increased from 1.8s to 2.3s due to the timezone conversion overhead — but that was acceptable compared to the risk of missing transactions.</p>
 <ol>
@@ -344,9 +342,7 @@ In a Colombian payroll system written in Python 2.7, the <code>calculateBonus()<
 <p>But the real bug was hidden: the base salary was stored as a string in the database due to a legacy import from a CSV in 2016. When the string <code>"1000000.00"</code> was converted to float, it introduced a rounding error. The final salary became <code>1150000.0000000001</code>, which when rounded for tax reporting, caused a discrepancy of 0.01 COP per employee. Multiply that by 5,000 employees, and the total variance was 50,000 COP — about $12 USD — but enough to trigger an audit.</p>
 <p>The AI, when given the full codebase context, suggested:</p>
 <ul>
-<li>Use <code>decimal.Decimal</code> for monetary calculations.</li>
-<li>Add a migration to convert salary strings to <code>DECIMAL(15,2)</code> in PostgreSQL 15.</li>
-<li>Add a unit test:</li>
+<li>Use <code>decimal.Decimal</code> for monetary calculations. - Add a migration to convert salary strings to <code>DECIMAL(15,2)</code> in PostgreSQL 15. - Add a unit test:</li>
 </ul>
 <pre><code class="language-python">def test_bonus_calculation():
     assert calculateBonus(Decimal(&quot;1000000.00&quot;)) == Decimal(&quot;1150000.00&quot;)
@@ -650,33 +646,24 @@ public void testEmailSanitization() {
 </table>
 <h3 id="breakdown-of-savings">Breakdown of savings</h3>
 <p><strong>System A (FinTech):</strong>
-- The biggest win was eliminating the <code>SimpleDateFormat</code> timezone bug. The AI flagged it in 2 minutes; I fixed it in 15. Before: 3 failed deployments due to timezones. After: zero.
-- I used <code>klrb 0.4.0</code> to refactor the <code>PaymentProcessor.retryFailedTransactions()</code> method. The new version had 60% fewer lines and ran 39% faster. The PR was reviewed in 3 days instead of 14.</p>
+- The biggest win was eliminating the <code>SimpleDateFormat</code> timezone bug. The AI flagged it in 2 minutes; I fixed it in 15. Before: 3 failed deployments due to timezones. After: zero. - I used <code>klrb 0.4.0</code> to refactor the <code>PaymentProcessor.retryFailedTransactions()</code> method. The new version had 60% fewer lines and ran 39% faster. The PR was reviewed in 3 days instead of 14.</p>
 <p><strong>System B (E-commerce):</strong>
-- The floating-point payroll bug was caught by <code>mistralai:mistral-7b-instruct-v0.2</code> analyzing Python 2.7 code. The AI suggested using <code>decimal.Decimal</code> — a change I had dismissed for months.
-- After refactoring the <code>calculateBonus()</code> function, the payroll report passed audit with zero discrepancies. The PR review time dropped from 21 to 5 days because the AI generated the tests.</p>
+- The floating-point payroll bug was caught by <code>mistralai:mistral-7b-instruct-v0.2</code> analyzing Python 2.7 code. The AI suggested using <code>decimal.Decimal</code> — a change I had dismissed for months. - After refactoring the <code>calculateBonus()</code> function, the payroll report passed audit with zero discrepancies. The PR review time dropped from 21 to 5 days because the AI generated the tests.</p>
 <p><strong>System C (ERP):</strong>
-- This was the worst: no tests, no docs, and a spaghetti PHP codebase. The AI helped me map the <code>InvoiceGenerator</code> class’s call graph using <code>tree-sitter</code> and <code>llama3:8b-instruct</code>.
-- I used <code>klrb</code> to generate a test suite for the top 5 most-used functions. Before: no tests. After: 87% line coverage on refactored code.
-- The biggest surprise: the AI pointed out that the cron job at <code>0 3 * * *</code> relied on <code>/tmp/file.lock</code>, which fails on Kubernetes. We moved it to a shared volume, reducing MTTR from 4 days to 12 hours.</p>
+- This was the worst: no tests, no docs, and a spaghetti PHP codebase. The AI helped me map the <code>InvoiceGenerator</code> class’s call graph using <code>tree-sitter</code> and <code>llama3:8b-instruct</code>. - I used <code>klrb</code> to generate a test suite for the top 5 most-used functions. Before: no tests. After: 87% line coverage on refactored code. - The biggest surprise: the AI pointed out that the cron job at <code>0 3 * * *</code> relied on <code>/tmp/file.lock</code>, which fails on Kubernetes. We moved it to a shared volume, reducing MTTR from 4 days to 12 hours.</p>
 <h3 id="what-the-numbers-dont-show">What the numbers don’t show</h3>
 <ul>
-<li><strong>Trust</strong>: Before, engineers avoided touching System C. After, junior devs merged PRs with confidence.</li>
-<li><strong>Onboarding time</strong>: New hires now get a 30-minute AI-generated tour of the system instead of 3 days of reading dead docs.</li>
-<li><strong>Sleep</strong>: I didn’t get paged at 3 AM for timezone bugs anymore.</li>
+<li><strong>Trust</strong>: Before, engineers avoided touching System C. After, junior devs merged PRs with confidence. - <strong>Onboarding time</strong>: New hires now get a 30-minute AI-generated tour of the system instead of 3 days of reading dead docs. - <strong>Sleep</strong>: I didn’t get paged at 3 AM for timezone bugs anymore.</li>
 </ul>
 <h3 id="the-real-roi">The real ROI</h3>
 <p>The AI didn’t replace me — but it made me 4–5x more effective on legacy systems. In 2026, the best engineers aren’t the ones who write the cleanest new code. They’re the ones who can <strong>navigate the mess</strong> without burning out. And that, finally, is something AI can help with.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

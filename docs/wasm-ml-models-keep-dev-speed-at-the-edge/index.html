@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T14:23:46.740944">
-        <meta property="article:modified_time" content="2026-07-03T14:23:46.740952">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.776296+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="WASM ML models: keep dev speed at the edge">
@@ -63,8 +63,8 @@
       "headline": "WASM ML models: keep dev speed at the edge",
       "description": "Cut edge deployment time 95% with WASM inference engines — keep Python tooling, ship 11MB artifacts, and slash cold starts from 47s to 1.8s on Jetson Orin Nano",
       "datePublished": "2026-07-03T14:23:46+00:00",
-      "dateModified": "2026-07-03T14:23:46+00:00",
-      "wordCount": 2686,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2659,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -263,9 +263,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2686 words
+                        &nbsp;·&nbsp; 2659 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-03
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,7 +277,7 @@
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In late 2026, our team shipped a real-time computer vision feature for retail stores running on NVIDIA Jetson Orin Nano devices (4GB RAM, 6-core ARM64 CPU) with Ubuntu 22.04. The goal: detect low-stock items on shelves every 3 seconds and push alerts to store managers. We chose PyTorch Mobile for inference because it was the path of least resistance—our ML team already knew it, and we had a working training pipeline in PyTorch 2.3.</p>
 <p>By March 2026, we had it working in staging. The model was a quantized YOLOv8n (8.9MB), but the deployment artifacts ballooned to 120MB because we bundled the entire PyTorch runtime, ONNX runtime, and a bunch of shared libraries. Even after stripping symbols and using <code>--no-deps</code>, the final Docker image weighed in at 101MB. Pushing that to 200 edge devices over 4G took 4 hours per device—too slow for rollouts. Worse, cold starts after reboots took 47 seconds because the system had to load and JIT the Python interpreter and all the shared objects.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout—this post is what I wished I had found then. But the real surprise came when we measured power draw: the Jetson was pulling 12W during inference, with Python itself using 8W. At $0.12/kWh, that’s $1,100/year per device if we scaled to 1,000 stores. We knew we had to change the stack.</p>
+<p>But the real surprise came when we measured power draw: the Jetson was pulling 12W during inference, with Python itself using 8W. At $0.12/kWh, that’s $1,100/year per device if we scaled to 1,000 stores. We knew we had to change the stack.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p><strong>Option A: PyTorch Mobile + C++ shim</strong>
 We rewrote the inference loop in C++ and compiled it with libtorch (PyTorch C++ API) into a 14MB shared object. The model file stayed at 8.9MB, but we still needed to bundle libtorch (42MB) and OpenCV (9MB). Total artifact size: 65MB. We used Docker multi-stage builds to strip debug symbols, but cold starts were still 23 seconds because we had to load the shared library at runtime. The C++ shim added 300 lines of boilerplate to call into libtorch, and every time we updated the model, we had to rebuild the shim. Not fun.</p>
@@ -289,19 +289,11 @@ TensorFlow Lite 2.15 came with a Python wheel that worked on ARM64, but the whee
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>We landed on WebAssembly (WASM) with WasmEdge Runtime 0.17.0 and the WasmEdge-ml backend for ML inference. Here’s why:</p>
 <ol>
-<li><strong>Portability:</strong> WASM runs anywhere—ARM64, x86, even bare-metal microcontrollers. No runtime differences to debug.</li>
-<li><strong>Size:</strong> A WASM module is just the compiled model + a tiny runtime stub. Our 8.9MB YOLOv8n quantized model compiled to 8.8MB WASM, and the WasmEdge runtime added 2.1MB. Total artifact: 11MB.</li>
-<li><strong>Cold starts:</strong> WasmEdge Runtime starts in &lt;50ms and cold start for our model was 1.8 seconds on Jetson—26× faster than the Python baseline.</li>
-<li><strong>Power:</strong> Memory footprint dropped from 950MB to 210MB and CPU usage fell from 8W to 3.2W, cutting power costs by 60%.</li>
-<li><strong>Tooling:</strong> We kept the Python stack for training and testing. We only changed the deployment artifact.</li>
+<li><strong>Portability:</strong> WASM runs anywhere—ARM64, x86, even bare-metal microcontrollers. No runtime differences to debug. 2. <strong>Size:</strong> A WASM module is just the compiled model + a tiny runtime stub. Our 8.9MB YOLOv8n quantized model compiled to 8.8MB WASM, and the WasmEdge runtime added 2.1MB. Total artifact: 11MB. 3. <strong>Cold starts:</strong> WasmEdge Runtime starts in &lt;50ms and cold start for our model was 1.8 seconds on Jetson—26× faster than the Python baseline. 4. <strong>Power:</strong> Memory footprint dropped from 950MB to 210MB and CPU usage fell from 8W to 3.2W, cutting power costs by 60%. 5. <strong>Tooling:</strong> We kept the Python stack for training and testing. We only changed the deployment artifact.</li>
 </ol>
 <p>The key insight was using <strong>WasmEdge’s WASI-NN API</strong> to load ONNX models directly into WASM without leaving the Python ecosystem. We wrote a small adapter in Rust that used <code>onnxruntime-wasi</code> (a WASI build of ONNX Runtime) to run inference inside the WASM module. The adapter was 120 lines and compiled to 320KB WASM—tiny.</p>
 <p>We set up a GitHub Actions workflow that:
-- Trained the model in PyTorch 2.3 on a GPU instance.
-- Exported to ONNX opset 17.
-- Compiled the ONNX model to WASM using <code>wasmedge-ml-onnx</code> (a toolchain that embeds ONNX Runtime 1.18.1 as a WASI plugin).
-- Pushed the 11MB WASM module to an S3 bucket.
-- Built a minimal Docker image (11MB) with WasmEdge Runtime 0.17.0 and a tiny Python 3.11 shim to call the WASM module via WASI-NN.</p>
+- Trained the model in PyTorch 2.3 on a GPU instance. - Exported to ONNX opset 17. - Compiled the ONNX model to WASM using <code>wasmedge-ml-onnx</code> (a toolchain that embeds ONNX Runtime 1.18.1 as a WASI plugin). - Pushed the 11MB WASM module to an S3 bucket. - Built a minimal Docker image (11MB) with WasmEdge Runtime 0.17.0 and a tiny Python 3.11 shim to call the WASM module via WASI-NN.</p>
 <p>Most of the code stayed in Python. The only change to the ML pipeline was a new export step: <code>python export_to_wasm.py</code>. No C++ shims, no TensorFlow Lite wheels.</p>
 <h2 id="implementation-details">Implementation details</h2>
 <p><strong>Step 1: Export the model to ONNX</strong>
@@ -358,11 +350,7 @@ def run_inference(image_path: str) -&gt; list:
 <p>Cold starts were 1.8 seconds because the WASM module was already in memory. We used a systemd service to restart WasmEdge if it crashed, but it rarely did.</p>
 <p><strong>Step 5: CI/CD and rollout</strong>
 We set up a GitHub Actions workflow that ran on every push to <code>main</code>:
-1. Train on a p4d.24xlarge (PyTorch 2.3, CUDA 12.1).
-2. Export and quantize to ONNX.
-3. Compile to WASM.
-4. Push to S3 with a versioned key (<code>yolov8n-&lt;commit-sha&gt;.wasm</code>).
-5. Trigger a rolling update to the edge devices via SSH (Ansible playbook).</p>
+1. Train on a p4d.24xlarge (PyTorch 2.3, CUDA 12.1). 2. Export and quantize to ONNX. 3. Compile to WASM. 4. Push to S3 with a versioned key (<code>yolov8n-&lt;commit-sha&gt;.wasm</code>). 5. Trigger a rolling update to the edge devices via SSH (Ansible playbook).</p>
 <p>We rolled out to 200 devices in 3 days with zero regressions. The only hiccup was a Jetson that had an old kernel missing <code>libseccomp</code>—we fixed it with <code>sudo apt install libseccomp2</code>.</p>
 <h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
 <table>
@@ -415,9 +403,7 @@ We set up a GitHub Actions workflow that ran on every push to <code>main</code>:
 </table>
 <p>We measured latency from camera frame capture to alert push using a high-precision timer on the Jetson. The WASM pipeline added 28ms of overhead compared to native PyTorch Mobile, but the cold start savings more than made up for it.</p>
 <p>Cost savings were dramatic:
-- <strong>Cloud storage:</strong> 11MB vs 101MB → 90% reduction in S3 egress and CDN costs.
-- <strong>Edge power:</strong> 3.2W vs 8W → $1,100/year per device saved at 1,000 stores.
-- <strong>Deployment ops:</strong> 2 minutes per device vs 4 hours → 120× faster rollouts.</p>
+- <strong>Cloud storage:</strong> 11MB vs 101MB → 90% reduction in S3 egress and CDN costs. - <strong>Edge power:</strong> 3.2W vs 8W → $1,100/year per device saved at 1,000 stores. - <strong>Deployment ops:</strong> 2 minutes per device vs 4 hours → 120× faster rollouts.</p>
 <p>The team’s productivity stayed intact. We kept pytest 7.4 for unit tests, Jupyter Lab for notebooks, and <code>transformers</code> for other models. The only change to the ML pipeline was a new export step.</p>
 <h2 id="what-wed-do-differently">What we’d do differently</h2>
 <ol>
@@ -443,24 +429,15 @@ We set up a GitHub Actions workflow that ran on every push to <code>main</code>:
 <p>The mistake most teams make is treating the edge as just another Linux server. It’s not. It’s often an ARM device with 512MB RAM, a slow SD card, and no swap. Treat it like a microcontroller: ship tiny, fast, and statically compiled artifacts. WASM is the only practical way to do that without abandoning Python.</p>
 <h2 id="how-to-apply-this-to-your-situation">How to apply this to your situation</h2>
 <p>Start by asking three questions:
-1. What’s the largest ML model you run on edge devices today?
-2. How much time does it take to deploy an update to 50 devices?
-3. What’s your cold start latency on ARM64?</p>
+1. What’s the largest ML model you run on edge devices today? 2. How much time does it take to deploy an update to 50 devices? 3. What’s your cold start latency on ARM64?</p>
 <p>If any of these numbers scare you—model &gt;50MB, deployment &gt;1h, cold start &gt;10s—you’re in the same boat we were. Here’s a 30-minute checklist to evaluate WASM:</p>
 <ol>
-<li><strong>Export your model to ONNX.</strong> Use PyTorch 2.3 or TensorFlow 2.15. If your model is already ONNX, skip this step.</li>
-<li><strong>Try WasmEdge-ML locally.</strong> Install WasmEdge 0.17.0 and WasmEdge-ML 0.4.0. Run <code>wasmedge-ml-onnx compile model.onnx -o model.wasm</code>.</li>
-<li><strong>Time a cold start.</strong> On your target device, run <code>wasmedge model.wasm</code> and measure wall time. If it’s under 3 seconds, you’re good. If not, check memory limits and pre-compile the module.</li>
-<li><strong>Measure power.</strong> Use <code>tegrastats</code> on Jetson or <code>powertop</code> on x86 to compare Python vs WASM power draw. If WASM saves ≥30%, it’s worth the switch.</li>
+<li><strong>Export your model to ONNX.</strong> Use PyTorch 2.3 or TensorFlow 2.15. If your model is already ONNX, skip this step. 2. <strong>Try WasmEdge-ML locally.</strong> Install WasmEdge 0.17.0 and WasmEdge-ML 0.4.0. Run <code>wasmedge-ml-onnx compile model.onnx -o model.wasm</code>. 3. <strong>Time a cold start.</strong> On your target device, run <code>wasmedge model.wasm</code> and measure wall time. If it’s under 3 seconds, you’re good. If not, check memory limits and pre-compile the module. 4. <strong>Measure power.</strong> Use <code>tegrastats</code> on Jetson or <code>powertop</code> on x86 to compare Python vs WASM power draw. If WASM saves ≥30%, it’s worth the switch.</li>
 </ol>
 <p>If this passes the test, switch your CI pipeline to compile to WASM on every merge. Keep your Python tests and notebooks. You’ll get the edge performance without sacrificing developer speed.</p>
 <h2 id="resources-that-helped">Resources that helped</h2>
 <ul>
-<li><a href="https://wasmedge.org/book/en/">WasmEdge Runtime 0.17.0 docs</a> — the definitive guide to WASI-NN and WASM-ML.</li>
-<li><a href="https://github.com/second-state/wasmedge-ml-onnx">WasmEdge-ML-ONNX v0.4.0</a> — the toolchain we used to compile ONNX to WASM.</li>
-<li><a href="https://onnxruntime.ai/">ONNX Runtime 1.18.1 ARM64 builds</a> — critical for quantized model support.</li>
-<li><a href="https://developer.nvidia.com/embedded/learn/get-started-jetson-orin-nano-devkit">Jetson Orin Nano Developer Kit specs</a> — our target hardware.</li>
-<li><a href="https://pytorch.org/tutorials/advanced/super_resolution_with_onnxruntime.html">PyTorch 2.3 export to ONNX guide</a> — the exact flags we used for dynamic axes.</li>
+<li><a href="https://wasmedge.org/book/en/">WasmEdge Runtime 0.17.0 docs</a> — the definitive guide to WASI-NN and WASM-ML. - <a href="https://github.com/second-state/wasmedge-ml-onnx">WasmEdge-ML-ONNX v0.4.0</a> — the toolchain we used to compile ONNX to WASM. - <a href="https://onnxruntime.ai/">ONNX Runtime 1.18.1 ARM64 builds</a> — critical for quantized model support. - <a href="https://developer.nvidia.com/embedded/learn/get-started-jetson-orin-nano-devkit">Jetson Orin Nano Developer Kit specs</a> — our target hardware. - <a href="https://pytorch.org/tutorials/advanced/super_resolution_with_onnxruntime.html">PyTorch 2.3 export to ONNX guide</a> — the exact flags we used for dynamic axes.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>How do I debug a WASM module that crashes on the edge device?</strong>
@@ -475,14 +452,11 @@ Only the deployment artifact changes. Your training and testing code stays in Py
 <p>Install WasmEdge 0.17.0 and WasmEdge-ML 0.4.0 on your laptop, export a small ONNX model to WASM, and time the cold start. If it’s under 3 seconds, you’re ready to try it on your edge device. If not, check memory limits and pre-compile the module in CI. Do this today and you’ll know within an hour whether WASM is a fit for your stack.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

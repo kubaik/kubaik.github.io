@@ -163,5 +163,10 @@
     "removed_at": "2026-09-18T11:25:18.709087+00:00",
     "reason": "Fabricated auth-incident stats",
     "source": "content_audit_verdicts"
+  },
+  "hit-5k-mrr-without-a-marketing-team": {
+    "removed_at": "2026-09-19T08:27:14.108620+00:00",
+    "reason": "demoted from improve: Improve strip left 1772 words (< 1800)",
+    "source": "content_audit_verdicts"
   }
 }

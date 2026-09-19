@@ -1,10 +1,8 @@
 # HTMX stack swap: 5 things I gained, 3 I lost
 
-I ran into this htmx changed problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 ## Why this list exists (what I was actually trying to solve)
-
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
 
 It started with a Slack ping from a colleague in São Paulo: “prod API is timing out at 1000 BPS but the staging cluster handles 5000 BPS on the same hardware.” Node 20 LTS on Kubernetes 1.28, PostgreSQL 15 on AWS RDS i3.2xlarge. Same code, same container image, different outcomes. The only difference was the frontend. Staging used Next.js with client-side data fetching; prod used a classic server-rendered Django + Alpine stack that had been living on borrowed time for two years.
 
@@ -15,12 +13,9 @@ I needed a way to keep the backend simple, avoid heavy JavaScript tooling, and s
 
 ## How I evaluated each option
 
-I built a minimal reproduction: a dashboard with a table of 200 rows that could sort, paginate, and update in place. I tested each candidate against four concrete metrics:
+I tested each candidate against four concrete metrics:
 
-1. **Lines of code** added to the backend to support the feature.
-2. **Client-side JavaScript bundle size** after minification and gzip.
-3. **Median server response time** under load of 100 concurrent users (locust 2.18).
-4. **Total AWS monthly cost** for the frontend tier (EC2 t4g.small, CloudFront, ALB).
+1. **Lines of code** added to the backend to support the feature. 2. **Client-side JavaScript bundle size** after minification and gzip. 3. **Median server response time** under load of 100 concurrent users (locust 2.18). 4. **Total AWS monthly cost** for the frontend tier (EC2 t4g.small, CloudFront, ALB).
 
 I ran each test three times on identical EC2 instances (Graviton 4, 2 vCPU, 4 GB RAM) in us-east-1. Load was synthetic GET requests for the table and POST for updates, 50/50 mix, 60-second ramp-up, 30-second steady state.
 
@@ -50,7 +45,6 @@ Weakness: You lose client-side state management. Anything that needs to live in 
 
 Best for: Teams that want to keep backend complexity low and avoid heavy frontend tooling. Works especially well for internal tools, admin panels, and content-driven sites where SEO matters.
 
-
 2
 
 ### Stimulus 3 + Django REST
@@ -62,7 +56,6 @@ Strength: You keep JSON APIs for data but avoid React’s virtual DOM overhead. 
 Weakness: You still need to write JSON endpoints and handle serialization. Over time the backend grows: 85 backend lines became 150 after we added API throttling, CORS, and validation.
 
 Best for: Teams comfortable with TypeScript but tired of React’s build system and hydration costs.
-
 
 3
 
@@ -76,7 +69,6 @@ Weakness: The build pipeline is still Node-heavy. We had to maintain Node 20 LTS
 
 Best for: Teams that already live in the React ecosystem and can enforce strict code-splitting rules.
 
-
 4
 
 ### Micro-frontends with Module Federation (webpack 5.89)
@@ -88,7 +80,6 @@ Strength: You can upgrade or rewrite one slice without touching the others. Grea
 Weakness: The orchestration layer is complex. We ended up with 280 backend lines just to glue the fragments together, plus a custom webpack config that broke twice a month. The bundle ballooned to 310 KiB because every fragment brought its own dependencies.
 
 Best for: Large organizations with multiple teams and slow release cycles.
-
 
 5
 
@@ -153,8 +144,6 @@ Weakness: The ecosystem is still React-dominated. We struggled to find a good da
 
 Best for: Greenfield projects where the team is willing to adopt Svelte and live with ecosystem gaps.
 
-
-
 ## The ones I tried and dropped (and why)
 
 ### 1. Remix 2
@@ -175,8 +164,6 @@ Qwik serializes component trees to HTML and resumes them on the client. Bundle w
 ### 4. Fresh 1.6 (Deno edge runtime)
 
 Fresh is a Deno-native framework that pre-renders pages at the edge. Bundle was 8 KiB, latency 140 ms. We loved the no-build step and the tiny footprint. We dropped it because Deno 1.42 still lacks mature PostgreSQL drivers and our team wasn’t ready to migrate off Django.
-
-
 
 ## How to choose based on your situation
 
@@ -199,21 +186,17 @@ If your biggest pain is latency, choose HTMX. If your biggest pain is team skill
 
 I already knew Django 4.2 well and the team had production experience with it. FastAPI would have been a toss-up: similar performance, but our internal tooling (Celery, Django REST Framework) saved us from writing boilerplate. The critical number was backend lines of code: Django templates + HTMX attributes gave us 45 lines; a FastAPI + Jinja2 equivalent would have been 55 lines. The gap wasn’t large enough to justify a framework switch mid-project.
 
-
 **How do you handle real-time updates with HTMX?**
 
 We use Server-Sent Events (SSE) with Django Channels 4.0. The endpoint returns a text/event-stream that pushes HTML fragments. Clients subscribe with `hx-sse="connect:/updates/"`. The latency is 80 ms end-to-end for small fragments. We avoid WebSockets because we don’t need bidirectional communication for our use case; SSE is simpler to debug and scales to thousands of connections on a single EC2 instance.
-
 
 **What did you lose when you dropped React?**
 
 We lost the ability to write reusable component libraries (Storybook, design tokens). We also lost the React DevTools timeline, which was useful for debugging performance hotspots. In return we gained deterministic server rendering (no hydration mismatches), zero client-side memory leaks from leaked subscriptions, and a 69% reduction in AWS costs for the frontend tier. The trade-off was worth it for our internal tools, but I wouldn’t make the same call for a public-facing marketing site where pixel-perfect animations matter.
 
-
 **Can HTMX scale to 10k users on a single EC2 instance?**
 
 In our load test, an EC2 t4g.small (2 vCPU, 4 GB RAM) served 1.8 k RPS with HTMX 2.0, Django 4.2, and Redis 7.2 for fragment caching. The bottleneck was CPU, not memory. We hit 90% CPU at 1.8 k RPS; scaling out horizontally with an ALB added 120 ms latency per hop. If you need 10k RPS, you’ll need to scale to three instances and Redis Cluster, or move to AWS ECS Fargate. The key is to cache HTML fragments aggressively: we set a 5-minute TTL and a 30-second cache stampede guard.
-
 
 **What’s the biggest HTMX mistake you made?**
 
@@ -226,20 +209,16 @@ If you’re a backend-heavy team tired of Node sprawl and want to keep your stac
 
 The next step is to take one page in your app and rewrite it with HTMX. Create a new template that returns HTML fragments. Add the `hx-get` attribute to a button, point it at your endpoint, and swap the table row or form. Measure the latency drop and the bundle size. If it feels good, duplicate the pattern. In 30 minutes you’ll know whether HTMX fits your workflow — and whether it’s time to delete that 245 KiB JavaScript bundle for good.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

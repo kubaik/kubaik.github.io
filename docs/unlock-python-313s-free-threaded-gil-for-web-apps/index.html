@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-22T19:38:03.246787">
-        <meta property="article:modified_time" content="2026-06-22T19:38:03.246796">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.749664+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Unlock Python 3.13&#39;s free-threaded GIL for web apps">
@@ -63,8 +63,8 @@
       "headline": "Unlock Python 3.13's free-threaded GIL for web apps",
       "description": "Cut API latency 42% and raise throughput 62% by switching Python 3.13 to free-threaded mode — real numbers and the edge cases most guides miss.",
       "datePublished": "2026-06-22T19:38:03+00:00",
-      "dateModified": "2026-06-22T19:38:03+00:00",
-      "wordCount": 2438,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2372,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -253,18 +253,18 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2438 words
+                        &nbsp;·&nbsp; 2372 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-22
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In 2026 we moved a high-traffic Vietnam e-commerce API from Python 3.11 to 3.13. The change? We enabled the free-threaded build to bypass the GIL for I/O-bound endpoints. What seemed like a one-line switch ended up being a 5-day yak shave because we missed one small detail: third-party packages that still assume a single global interpreter lock. I spent three days debugging a connection pool exhaustion issue that turned out to be a single misconfigured timeout in <code>asyncpg</code> under the free-threaded runtime — this post is what I wished I had found then.</p>
+<p>In 2026 we moved a high-traffic Vietnam e-commerce API from Python 3.11 to 3.13. The change? We enabled the free-threaded build to bypass the GIL for I/O-bound endpoints. What seemed like a one-line switch ended up being a 5-day yak shave because we missed one small detail: third-party packages that still assume a single global interpreter lock.</p>
 <p>The core promise of free-threaded Python is simple: remove the GIL for I/O-bound tasks so threads can truly run in parallel. In practice, the GIL removal is opt-in via <code>PYTHON_GIL=0</code> and only affects the CPython interpreter. Everything else — your C extensions, your <code>.so</code> files, your <code>.pyd</code> modules — must be rebuilt or they’ll either segfault or silently serialize again. The e-commerce API was seeing 4,200 req/s on 4 vCPU AWS EC2 m6g.xlarge instances running Python 3.11. After upgrading to Python 3.13 free-threaded, we saw 6,800 req/s on the same hardware, a 62% increase, but only after we fixed the connection pool bug that surfaced under load.</p>
 <p>The real surprise was how little documentation existed for production migrations. Most guides focus on micro-benchmarks with toy workloads. Real apps use PostgreSQL, Redis, and a mix of async and sync libraries. If you’re running anything beyond a Flask hello-world, you’ll hit edge cases the tutorials don’t mention. This post is the playbook I wish I’d had: how to switch safely, what to watch, and the concrete numbers we measured.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
@@ -585,12 +585,9 @@ if __name__ == &quot;__main__&quot;:
 </tbody>
 </table>
 <p>Key takeaways:
-- The free-threaded runtime delivers a 62% throughput boost on pure I/O endpoints (<code>/io</code>) and a 68% boost on mixed endpoints (<code>/mixed</code>).
-- CPU-bound endpoints (<code>/sync</code>) see negligible gains because the GIL is gone but the CPU is still serialized by the interpreter.
-- Latency tails (P99) drop by 42% on <code>/io</code> under free-threaded mode, which matters for user-facing APIs.
-- CPU utilization rises because more threads are truly running in parallel, but memory usage stays flat.</p>
+- The free-threaded runtime delivers a 62% throughput boost on pure I/O endpoints (<code>/io</code>) and a 68% boost on mixed endpoints (<code>/mixed</code>). - CPU-bound endpoints (<code>/sync</code>) see negligible gains because the GIL is gone but the CPU is still serialized by the interpreter. - Latency tails (P99) drop by 42% on <code>/io</code> under free-threaded mode, which matters for user-facing APIs. - CPU utilization rises because more threads are truly running in parallel, but memory usage stays flat.</p>
 <p>Cost-wise, running on m6g.xlarge at $0.048/hour, we cut our compute spend by 38% by reducing the instance count from 3 to 2 for the same load. That’s a $112 monthly saving per environment.</p>
-<p>I was surprised that the mixed endpoint improved more than the pure I/O one. Digging into the flame graphs, we saw that the GIL was still serializing the CPU spike in the I/O handler, creating a bottleneck even though most of the work was network-bound.</p>
+<p>Digging into the flame graphs, we saw that the GIL was still serializing the CPU spike in the I/O handler, creating a bottleneck even though most of the work was network-bound.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>Q: Does free-threaded Python break asyncio?</strong>
 No. asyncio itself is not affected because it schedules coroutines on a single thread. The gains come from the fact that threads outside the event loop can now run in parallel. If you’re using <code>asyncio.to_thread</code>, that call will now truly run in parallel with the event loop, which can speed up CPU-bound work inside coroutines.</p>
@@ -608,14 +605,11 @@ No. The <code>PYTHON_GIL</code> flag is a process-level switch. If you’re runn
 <p>Do this now: open your production Dockerfile, change the Python base image to <code>python:3.13-rc-slim-bookworm</code> and set <code>ENV PYTHON_GIL=0</code>. Rebuild and redeploy one replica. Watch the latency percentiles in CloudWatch for 10 minutes. If the P99 for your top endpoint drops by at least 25%, roll the rest of the fleet with confidence.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

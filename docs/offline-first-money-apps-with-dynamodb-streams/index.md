@@ -1,6 +1,6 @@
 # Offline-first money apps with DynamoDB Streams
 
-I ran into this offlinefirst eventual problem while migrating a service under a hard deadline. The tutorials all show the happy path. This post covers what comes after the happy path.
+The tutorials all show the happy path. This post covers what comes after the happy path.
 
 ## Why I wrote this (the problem I kept hitting)
 
@@ -461,12 +461,9 @@ Yes, but you lose the single-table design and ordering guarantees. You’d need 
 
 Compare your current offline wallet implementation against the guarantees this post outlines. Open your wallet service file and check three things right now:
 
-- Is the balance check done with a conditional write or a separate GET + write? If it’s a separate GET, replace it with a single conditional UpdateItem in a TransactWriteItems call.
-- Are you using a durable queue with at-least-once semantics? If not, switch to DynamoDB Streams + Lambda.
-- Is the retry policy adding jitter? If not, add a 0–200 ms random delay to every retry loop in the agent SDK.
+- Is the balance check done with a conditional write or a separate GET + write? If it’s a separate GET, replace it with a single conditional UpdateItem in a TransactWriteItems call. - Are you using a durable queue with at-least-once semantics? If not, switch to DynamoDB Streams + Lambda. - Is the retry policy adding jitter? If not, add a 0–200 ms random delay to every retry loop in the agent SDK.
 
 If any of these is missing, merge the three-line diff from the code snippets above into your repo today. The change takes 15 minutes and avoids the most common money errors teams see in production.
-
 
 ---
 

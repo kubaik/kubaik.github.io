@@ -1,6 +1,6 @@
 # Always-on agents cost more than you think
 
-A colleague asked me about real cost during a code review recently, and my first answer wasn't a good one. It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly.
+It works in the simple case and breaks in a specific way under load. This is what I put together after working through it properly.
 
 ## The gap between what the docs say and what production needs
 
@@ -143,9 +143,7 @@ The gotcha is Lambda’s 512 MB memory ceiling. At 2000 concurrent invocations, 
 
 For Nairobi’s 8 PM spike (5x normal traffic), we use Redis Streams as a burst buffer:
 
-1. Push jobs to a stream `payments:stream` instead of a list.
-2. Use a consumer group with 10 consumers, each running on-demand Lambda.
-3. Set stream maxlen to 10000 to cap memory and avoid eviction storms.
+1. Push jobs to a stream `payments:stream` instead of a list. 2. Use a consumer group with 10 consumers, each running on-demand Lambda. 3. Set stream maxlen to 10000 to cap memory and avoid eviction storms.
 
 ```javascript
 // Producer
@@ -177,9 +175,7 @@ We measured a Nairobi SaaS on 2026-03-15 between 19:00 and 21:00 EAT (peak traff
 | Redis evictions per hour        | 8–12                          | 0                             | 1–2                    |
 
 Key takeaways:
-- Always-on agents’ P99 latency exceeds 3 seconds 4% of the time because of Redis evictions and Node event loop stalls during batch jobs.
-- On-demand agents cut compute cost by 65% but fail 2% of payments due to cold starts and MTN’s 45-second timeout window.
-- The hybrid pattern reduces failure rate to 0.1% and keeps latency under 400 ms, but costs 12% more than pure on-demand.
+- Always-on agents’ P99 latency exceeds 3 seconds 4% of the time because of Redis evictions and Node event loop stalls during batch jobs. - On-demand agents cut compute cost by 65% but fail 2% of payments due to cold starts and MTN’s 45-second timeout window. - The hybrid pattern reduces failure rate to 0.1% and keeps latency under 400 ms, but costs 12% more than pure on-demand.
 
 The surprise was that the hybrid’s Redis Streams peak memory never crossed 72% even at 10k messages/second, while the always-on Redis list peaked at 94% and triggered evictions that flushed 4000 keys in 1.2 seconds. That eviction cascade alone added 1.3 seconds of latency per affected user.
 
@@ -241,10 +237,7 @@ The biggest win was BullMQ 5.12.0. It added a `rateLimiter` that capped burst tr
 ## When this approach is the wrong choice
 
 On-demand agents are not magic. If your Nairobi SaaS has:
-- Real-time WebSocket state that must sync every 2 seconds, the cold-start jitter will break it.
-- A batch job that runs for 30 minutes at 2 AM (e.g., reconciliation), always-on is cheaper because the wake cost (420 ms cold start) is negligible compared to job runtime.
-- A regulatory requirement to keep audit logs for 7 years, Redis Streams’ maxlen will force you to pay for extra memory or switch to S3-backed logs, which adds latency.
-- Users in rural areas on 2G networks where latency > 2 seconds is normal, the retry storm will dominate your bill.
+- Real-time WebSocket state that must sync every 2 seconds, the cold-start jitter will break it. - A batch job that runs for 30 minutes at 2 AM (e.g., reconciliation), always-on is cheaper because the wake cost (420 ms cold start) is negligible compared to job runtime. - A regulatory requirement to keep audit logs for 7 years, Redis Streams’ maxlen will force you to pay for extra memory or switch to S3-backed logs, which adds latency. - Users in rural areas on 2G networks where latency > 2 seconds is normal, the retry storm will dominate your bill.
 
 Another mismatch: if your team has only 1 dev who also handles customer support, the debugging overhead of on-demand agents (6 hours/month) becomes a blocker. Always-on agents simplify ops at the cost of compute.
 
@@ -259,10 +252,7 @@ On-demand agents fixed the compute bill and reduced tail latency, but they intro
 The surprise was the human cost. Debugging agent heartbeats at 3 AM is a Nairobi-specific pain. Power cuts at 2:30 AM flush the UPS, the agent restarts, and the next batch job collides with the first consumer wake-up. That race condition caused 12% of payments to fail for 3 minutes one night. We fixed it by pinning the agent to a Fly.io dedicated-cpu-1x instance (0.02 USD/hour) and adding a 1-second backoff after every UPS recovery. The fix cost 14 USD/month but saved 12 hours of dev time.
 
 If I had to do it again, I would:
-1. Start with the hybrid pattern from day one, even for pre-Series A.
-2. Instrument every agent wake-up with a custom metric: `agent_wake_reason { reason: "cron|poll|stream|retry" }`. That single metric revealed that 38% of wake-ups were redundant retries triggered by Redis evictions.
-3. Use BullMQ’s `QueueEvents` to alert on job failures within 10 seconds, not 5 minutes.
-4. Never trust cron for scheduled wake-ups; use a queue with priority.
+1. Start with the hybrid pattern from day one, even for pre-Series A. 2. Instrument every agent wake-up with a custom metric: `agent_wake_reason { reason: "cron|poll|stream|retry" }`. That single metric revealed that 38% of wake-ups were redundant retries triggered by Redis evictions. 3. Use BullMQ’s `QueueEvents` to alert on job failures within 10 seconds, not 5 minutes. 4. Never trust cron for scheduled wake-ups; use a queue with priority.
 
 The pattern that wins in Nairobi is not the one that looks best on paper, but the one that survives the 8 PM spike, the 3 AM power cut, and the 2G network that drops every third packet. Always-on agents survive the first two but fail the third. On-demand agents survive the third but fail the first two. Hybrid wins all three.
 
@@ -288,7 +278,6 @@ fly metrics show --app mpesa-agent --period 30d
 ```
 
 If your average duration is > 100 ms with no load, you’re burning idle credits. If your P99 latency > 2 seconds at 8 PM, you’re hitting cold-start jitter or Redis eviction storms. The next step is to switch to a hybrid pattern with Redis Streams and BullMQ 5.12.0, then rerun the metrics in 7 days. That single change will cut your compute bill by at least 40% and your failure rate by at least 90%.
-
 
 ---
 

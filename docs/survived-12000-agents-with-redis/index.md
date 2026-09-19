@@ -4,7 +4,7 @@ database state looks simple until it has to survive real traffic. The gap betwee
 
 ## Why I wrote this (the problem I kept hitting)
 
-I built a multi-agent system in 2026 that handled 12,000 concurrent agent sessions on a single t4g.medium EC2 instance. The agents were cheap — under $0.04 per hour each — but they hammered our PostgreSQL 16.1 cluster with 450 queries per second. The first thing I tried was a simple in-memory cache in Python, but it fell over after 1,200 agents because the process memory ballooned to 2.8 GB and the kernel killed it for using too much RAM. That’s when I started digging into Redis as a shared cache layer, which worked better but introduced a new set of problems: connection storms, cache stampedes, and eviction policies that dropped the wrong keys during hot cache periods.
+The agents were cheap — under $0.04 per hour each — but they hammered our PostgreSQL 16.1 cluster with 450 queries per second. The first thing I tried was a simple in-memory cache in Python, but it fell over after 1,200 agents because the process memory ballooned to 2.8 GB and the kernel killed it for using too much RAM. That’s when I started digging into Redis as a shared cache layer, which worked better but introduced a new set of problems: connection storms, cache stampedes, and eviction policies that dropped the wrong keys during hot cache periods.
 
 What actually survived the load wasn’t the most obvious choice (like a simple `SET/GET` pattern) but a set of patterns that treated Redis as a *stateful control plane* rather than just a key-value store. The patterns I’m going to show you survived 24-hour agent marathons with p99 latencies under 45 ms and a Redis memory footprint that never exceeded 400 MB, even though the data set was 2.1 GB. I’ve open-sourced the core implementation so you can see exactly what I mean — it’s called `agent-cache` and it’s on GitHub.
 
@@ -471,7 +471,7 @@ The cost savings came from two places:
 1. PostgreSQL CPU dropped 70%, so we downgraded from a db.t4g.large ($0.17/hr) to a db.t4g.small ($0.06/hr)
 2. We switched from a c6g.xlarge EC2 ($0.096/hr) to a c6g.medium ($0.048/hr) because the agents no longer hammered the API
 
-I was surprised that the biggest win wasn’t Redis itself but the PostgreSQL read replica. The replica handles 85% of the read load, which freed up the primary for writes. Without it, we’d still be at 95 ms p99.
+The replica handles 85% of the read load, which freed up the primary for writes. Without it, we’d still be at 95 ms p99.
 
 The patterns also survived a Redis failover in 2026. We ran Redis in cluster mode with 3 nodes, and when one node failed, the cluster rebalanced in 12 seconds. The agents never noticed — p99 stayed at 42 ms. That’s the real test: not just surviving load, but surviving infrastructure changes.
 
@@ -500,7 +500,6 @@ echo "Cache hit ratio: $(redis-cli info stats | grep -oP 'keyspace_hits:\K\d+') 
 ```
 
 If your hit ratio is below 70%, the pattern in this post will give you a 30–50% drop in p99 latency and a 60–80% drop in database load. Start with the Python implementation, add the Prometheus metrics, and measure before and after. That’s the only way to know if this pattern is worth the complexity.
-
 
 ---
 

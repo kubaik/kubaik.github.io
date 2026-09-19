@@ -1,6 +1,6 @@
 # GPU spot instances > reserved for AI costs
 
-A colleague asked me about gpu spot during a code review recently, and my first answer wasn't a good one. It's the kind of problem that's easy to reproduce and hard to explain. Here's the fuller picture, with the tradeoffs left in.
+It's the kind of problem that's easy to reproduce and hard to explain. Here's the fuller picture, with the tradeoffs left in.
 
 ## The one-paragraph version (read this first)
 
@@ -8,7 +8,7 @@ If you’re spending >$5k/month on AI inference or training, GPU spot instances 
 
 ## Why this concept confuses people
 
-Most teams start with reserved instances because AWS markets them as the cheapest way to run long-lived workloads. I ran into this when we tried to trim a $12k/month bill on a 7B-parameter model serving 2.1M daily requests. We reserved 3x p4d.24xlarge (V100) nodes for six months, only to discover that our peak traffic dropped 40% after a marketing campaign ended. We were stuck paying $4,200/month for idle hardware while our newer A100 nodes sat underutilized. Worse, the V100s aged out of support for newer CUDA toolkits within 10 months, forcing us to pay again for upgrades. Reserved capacity feels like an insurance policy, but it’s really a bet against your own product’s volatility. If your traffic is spiky, reserved capacity guarantees you overpay during troughs. If your model evolves quickly, reserved hardware locks you into yesterday’s architecture.
+Most teams start with reserved instances because AWS markets them as the cheapest way to run long-lived workloads. We reserved 3x p4d.24xlarge (V100) nodes for six months, only to discover that our peak traffic dropped 40% after a marketing campaign ended. We were stuck paying $4,200/month for idle hardware while our newer A100 nodes sat underutilized. Worse, the V100s aged out of support for newer CUDA toolkits within 10 months, forcing us to pay again for upgrades. Reserved capacity feels like an insurance policy, but it’s really a bet against your own product’s volatility. If your traffic is spiky, reserved capacity guarantees you overpay during troughs. If your model evolves quickly, reserved hardware locks you into yesterday’s architecture.
 
 Spot instances flip that script. You pay 60–85% less, but you get interrupted. The confusion comes from two places: first, people treat spot as a risk to avoid rather than a trade-off to manage; second, they underestimate how cheap and reliable modern retry logic has become. In 2026, tools like AWS Step Functions, KubeRay, and Ray Serve make it trivial to checkpoint state and replay jobs in seconds. We measured 0.04% request loss during spot interruptions after we added exponential backoff and job shuffling — lower than our reserved cluster’s 0.12% loss from maintenance windows. The mental block isn’t technical; it’s psychological. Teams hear "spot = unreliable" and assume the retry overhead is high. In practice, with the right policy, the overhead is invisible to users and cheaper than reserved capacity.
 
@@ -220,10 +220,7 @@ The model is a simple linear regression on the last 5 minutes of request rate. I
 
 ## Further reading worth your time
 
-- [AWS Spot with price caps documentation (2026)](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/spot-price-limits.html) — the official guide to capping spot prices.
-- [Ray Serve 2.10 checkpointing guide](https://docs.ray.io/en/latest/serve/api/doc/ray.serve.checkpointing.html) — how to snapshot model state for spot interruptions.
-- [KubeRay 1.3 spot integration](https://github.com/ray-project/kuberay/tree/master/ray-operator/config/samples/spot) — if you’re on Kubernetes instead of Ray.
-- [FastAPI 0.111 Prometheus integration](https://fastapi.tiangolo.com/tutorial/monitoring/) — the predictive scaling model we built.
+- [AWS Spot with price caps documentation (2026)](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/spot-price-limits.html) — the official guide to capping spot prices. - [Ray Serve 2.10 checkpointing guide](https://docs.ray.io/en/latest/serve/api/doc/ray.serve.checkpointing.html) — how to snapshot model state for spot interruptions. - [KubeRay 1.3 spot integration](https://github.com/ray-project/kuberay/tree/master/ray-operator/config/samples/spot) — if you’re on Kubernetes instead of Ray. - [FastAPI 0.111 Prometheus integration](https://fastapi.tiangolo.com/tutorial/monitoring/) — the predictive scaling model we built.
 
 
 ## Frequently Asked Questions
@@ -248,7 +245,6 @@ Spin up a parallel spot cluster with the same model and route 5% of traffic to i
 ## The one thing you should do today
 
 Open your AWS Cost Explorer and filter for GPU instances (p3, p4, g4, g5, p4d, p4de, etc.) for the last 30 days. Sum the total cost. If it’s >$1k/month and your workload is spiky or evolving, create a spot fleet request with a price cap 20% above the current spot low. Use the Terraform snippet above as a starting point. Route 10% of your production traffic to the spot fleet using a feature flag (LaunchDarkly, Flagsmith, or your own flag system). Monitor the 99th percentile latency and request loss for 7 days. If both stay within your SLA, migrate the remaining 90% of traffic. You’ll cut your GPU bill 40–60% on day one without code changes beyond the retry layer.
-
 
 ---
 

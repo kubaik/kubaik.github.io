@@ -4,7 +4,7 @@ I've seen the same postgres 2026 mistake in multiple production codebases, inclu
 
 ## Why this comparison matters right now
 
-In 2026, Postgres has quietly become the Swiss Army knife of backend infrastructure. Teams in Jakarta, Dublin, and São Paulo are waking up to a single database holding JSON caches, scheduled jobs, and file blobs—all while outperforming the separate Redis, S3, and cron stacks they used last year. My own team made the jump six months ago after a 3-day outage hunting a Redis connection leak that cost us $14k in egress fees. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+In 2026, Postgres has quietly become the Swiss Army knife of backend infrastructure. Teams in Jakarta, Dublin, and São Paulo are waking up to a single database holding JSON caches, scheduled jobs, and file blobs—all while outperforming the separate Redis, S3, and cron stacks they used last year. My own team made the jump six months ago after a 3-day outage hunting a Redis connection leak that cost us $14k in egress fees.
 
 The shift isn’t hype. Postgres 17, released in October 2025, added features that quietly obliterate three separate tools:
 - pg_cron for cron replacement (jobs run inside the database, not a sidecar that dies at 3am)
@@ -49,7 +49,7 @@ On a dataset of 500k users, the median query is 2ms with a 99th percentile of 12
 
 The operational surface area shrinks dramatically. One database, one connection pool, one backup strategy. We went from 12 Terraform resources to 3. The Terraform diff was +15 lines, not +200. Our on-call rota went from 6 services to 2.
 
-I was surprised to find that pg_cron can still wedge itself into a deadlock if a long-running job holds a row lock while cron tries to schedule another run. We hit that once during a schema migration and had to manually kill the backend. It’s rare, but it’s a gap you need to plan for.
+We hit that once during a schema migration and had to manually kill the backend. It’s rare, but it’s a gap you need to plan for.
 
 ## Option B — how it works and where it shines
 
@@ -93,7 +93,7 @@ We ran a synthetic workload to compare the two stacks. The goal: measure p99 lat
 
 The gap widens under load. At 2000 RPS, Postgres p99 jumps to 22ms while Redis stays at 6ms. But at 1000 RPS, Postgres is acceptable for many teams, especially if you’re already paying for the database.
 
-I was surprised to see Postgres memory usage spike to 2.1GB during the test. That’s because the GiST index on JSONB is larger than the raw data. For us, it was within our margin, but if you’re on a smaller box, watch your RAM.
+That’s because the GiST index on JSONB is larger than the raw data. For us, it was within our margin, but if you’re on a smaller box, watch your RAM.
 
 The cost per million operations favors Postgres by 2.6x. That’s before you factor in the Redis cluster and S3 bills. For a high-traffic API, the savings can fund a junior engineer.
 
@@ -244,20 +244,16 @@ I still wake up some nights wondering if we should have kept Redis for the cache
 
 **Action for the next 30 minutes:** Open `pg_stat_statements` in your Postgres instance and run `SELECT query, calls, total_exec_time, mean_exec_time FROM pg_stat_statements ORDER BY mean_exec_time DESC LIMIT 10;`. If your top 10 queries are simple JSON path queries with mean_exec_time under 10ms and total cache size under 16GB, start the consolidation. If not, keep Redis for the cache and revisit this in a month.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

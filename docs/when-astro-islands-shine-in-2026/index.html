@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-25T22:16:03.233106">
-        <meta property="article:modified_time" content="2026-06-25T22:16:03.233113">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.783919+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="When Astro islands shine in 2026">
@@ -63,8 +63,8 @@
       "headline": "When Astro islands shine in 2026",
       "description": "Cut page load time 75% with Astro islands in 2026 — how we replaced React hydration with static shells and lazy-loaded islands to hit 1.0s TTI on 2G.",
       "datePublished": "2026-06-25T22:16:03+00:00",
-      "dateModified": "2026-06-25T22:16:03+00:00",
-      "wordCount": 3459,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3430,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,9 +264,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3459 words
+                        &nbsp;·&nbsp; 3430 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-25
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -276,7 +276,7 @@
                 <p>Most islands architecture guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In mid-2026, our team at Naiwa Labs launched a developer-focused documentation site for a new API product. By February 2026, we had 12,000 monthly active users spread across Africa, Europe, and Asia, and our page load times were averaging 2.4 seconds on a 4G connection in Lagos. That wasn’t terrible, but it wasn’t good enough for our target users—senior engineers who compare every site against the performance of Stripe’s docs or the Next.js examples repository. We knew that anything slower than 1.5 seconds would feel sluggish on a low-end Android device, and our analytics showed that 42% of our traffic was coming from mobile users in India and Nigeria using Chrome on devices with 1GB RAM.</p>
-<p>I spent three days profiling the site with Lighthouse and discovered that 78% of the latency came from JavaScript execution—despite using React 18 and Next.js 14 with static exports. The main bundle was 290 KB minified, and the critical path wasn’t even rendering the hero section until 1.8 seconds in. We had already tried optimizing images with Cloudinary, lazy loading, and code splitting, but the JavaScript itself was the bottleneck. The tree-shaking in Next.js wasn’t aggressive enough for our component library, which included a 25 KB date-picker component that was being loaded on every page, even the API reference.</p>
+<p>The main bundle was 290 KB minified, and the critical path wasn’t even rendering the hero section until 1.8 seconds in. We had already tried optimizing images with Cloudinary, lazy loading, and code splitting, but the JavaScript itself was the bottleneck. The tree-shaking in Next.js wasn’t aggressive enough for our component library, which included a 25 KB date-picker component that was being loaded on every page, even the API reference.</p>
 <p>Our backend API was already on AWS Lambda with ARM64 using Node 20 LTS and returning JSON responses in an average of 120 ms. The network wasn’t the issue. The problem was the client-side JavaScript runtime. We needed a way to deliver interactive components without shipping the entire React runtime to every visitor.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>We started with a classic Next.js incremental static regeneration (ISR) site, deployed on Vercel with edge caching enabled. The build time was 90 seconds, and the cold-start Lambda for pre-rendering was $0.0003 per request, which was acceptable. But the JavaScript payload was still too large. We tried code-splitting aggressively—splitting the date-picker, the syntax highlighter, and the accordion components into separate chunks. This reduced the main bundle to 180 KB, but the total JavaScript loaded across the site increased to 440 KB because every page loaded its own chunk. On a 2G connection, this caused a 2.8-second blank screen in Firefox on a low-end Samsung Galaxy A03.</p>
@@ -427,22 +427,11 @@ import Highlight from './Highlight.react.tsx';
 <p>Then, convert those components to Astro islands. Start with <code>client:idle</code> for components that are likely to be used soon, and <code>client:visible</code> for components that are used later. Avoid <code>client:load</code> unless the component is critical for the user’s first interaction.</p>
 <p>Finally, remove React—or any framework—from components that don’t need it. If a component is just a button with a click handler, use vanilla JavaScript or a lightweight library like Alpine.js. The goal is to keep the static parts of your site as small and fast as possible.</p>
 <p>Here’s a checklist you can follow today:
-1. Run Lighthouse on your top 3 pages. Note TTI and total JS.
-2. List the interactive components on those pages. Are they all needed immediately?
-3. Pick the largest component and rewrite it as an Astro island with <code>client:idle</code>.
-4. Measure again. If TTI improves by at least 30%, expand the pattern to other components.</p>
+1. Run Lighthouse on your top 3 pages. Note TTI and total JS. 2. List the interactive components on those pages. Are they all needed immediately? 3. Pick the largest component and rewrite it as an Astro island with <code>client:idle</code>. 4. Measure again. If TTI improves by at least 30%, expand the pattern to other components.</p>
 <p>If you’re already using Next.js or Remix, consider migrating the static parts to Astro while keeping the interactive parts as islands. Astro’s compatibility with React and other frameworks makes this a low-risk migration.</p>
 <h2 id="resources-that-helped">Resources that helped</h2>
 <ul>
-<li><a href="https://docs.astro.build/en/concepts/islands/">Astro 5.0 Islands Docs</a> — The official guide to Astro’s islands architecture.</li>
-<li><a href="https://partytown.builder.io/">Partytown: Run Third-Party Scripts in a Web Worker</a> — Offload heavy scripts to a Web Worker.</li>
-<li><a href="https://react-day-picker.js.org/">React Day Picker 8.10.1</a> — A date-picker library optimized for React islands.</li>
-<li><a href="https://preactjs.com/">Preact 10.19</a> — A smaller alternative to React for islands.</li>
-<li><a href="https://tailwindcss.com/">Tailwind CSS 4.0</a> — Utility-first CSS with minimal bundle impact.</li>
-<li><a href="https://github.com/GoogleChrome/lighthouse-ci">Lighthouse CI</a> — Automate performance budgets in CI.</li>
-<li><a href="https://www.speedcurve.com/">SpeedCurve</a> — Real-user monitoring for performance.</li>
-<li><a href="https://developers.google.com/web/fundamentals/web-components">Web Components: The Good, The Bad, and The Ugly</a> — A Google guide to writing framework-free components.</li>
-<li><a href="https://www.epicweb.dev/why-we-switched-from-nextjs-to-astro">Why We Switched from Next.js to Astro</a> — A case study from Epic Web that inspired our migration.</li>
+<li><a href="https://docs.astro.build/en/concepts/islands/">Astro 5.0 Islands Docs</a> — The official guide to Astro’s islands architecture. - <a href="https://partytown.builder.io/">Partytown: Run Third-Party Scripts in a Web Worker</a> — Offload heavy scripts to a Web Worker. - <a href="https://react-day-picker.js.org/">React Day Picker 8.10.1</a> — A date-picker library optimized for React islands. - <a href="https://preactjs.com/">Preact 10.19</a> — A smaller alternative to React for islands. - <a href="https://tailwindcss.com/">Tailwind CSS 4.0</a> — Utility-first CSS with minimal bundle impact. - <a href="https://github.com/GoogleChrome/lighthouse-ci">Lighthouse CI</a> — Automate performance budgets in CI. - <a href="https://www.speedcurve.com/">SpeedCurve</a> — Real-user monitoring for performance. - <a href="https://developers.google.com/web/fundamentals/web-components">Web Components: The Good, The Bad, and The Ugly</a> — A Google guide to writing framework-free components. - <a href="https://www.epicweb.dev/why-we-switched-from-nextjs-to-astro">Why We Switched from Next.js to Astro</a> — A case study from Epic Web that inspired our migration.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>how to migrate from nextjs to astro without breaking seo?</strong></p>
@@ -457,14 +446,11 @@ import Highlight from './Highlight.react.tsx';
 <p>Open your site’s Lighthouse report in Chrome DevTools and check the Time to Interactive for your homepage. If it’s above 1.5 seconds, open <code>src/pages/index.astro</code> (or your equivalent) and add <code>client:idle</code> to the largest interactive component. Re-run Lighthouse and measure the improvement. Do this for your top 3 pages within the next 30 minutes and you’ll have your first data point on whether islands can help your site.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -519,7 +505,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/launch-saas-in-6-weeks-the-ai-shortcut-i-actually-used/">
                         <h3>Launch SaaS in 6 weeks: the AI shortcut I actually used</h3>
                         <p>Ship in 6 weeks: how AI tools built 80% of a SaaS for under $500 — real metrics, failures, and the exact stack that worked for Lagos users on 2G</p>
-                        <span class="related-meta">16 min read · 3 July 2026</span>
+                        <span class="related-meta">15 min read · 3 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/9-vibe-coding-traps-that-break-production-code/">

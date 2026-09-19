@@ -10,11 +10,9 @@ Running an API from 50 edge locations isn’t scaling horizontally—it’s scal
 
 Most developers are taught to scale by adding more instances in one region. We know how to shard, how to keep a single source of truth, and how to debug a single cloud bill. Edge-native turns that upside down: every POP is both a cache and a source of truth, and the network is now part of your data layer. That’s why teams get stuck on three questions:
 
-1. **Where is my data?** It might be in Singapore, but only if the last write went there. Otherwise it’s stale in São Paulo.
-2. **Why is my bill 3× higher?** Edge functions cost 10× more per invocation than regional lambdas, and replication writes add up.
-3. **How do I debug a race condition that only happens in Tokyo at 3 AM?**
+1. **Where is my data?** It might be in Singapore, but only if the last write went there. Otherwise it’s stale in São Paulo. 2. **Why is my bill 3× higher?** Edge functions cost 10× more per invocation than regional lambdas, and replication writes add up. 3. **How do I debug a race condition that only happens in Tokyo at 3 AM?**
 
-I spent two weeks chasing a 400 ms latency spike that turned out to be a single POP in Mumbai with a mis-configured TCP buffer. The logs looked fine; the metrics didn’t even show the POP. Only after I pulled raw packet captures from Cloudflare’s tcpdump endpoint did the picture emerge.
+The logs looked fine; the metrics didn’t even show the POP. Only after I pulled raw packet captures from Cloudflare’s tcpdump endpoint did the picture emerge.
 
 The confusion isn’t technical—it’s a shift from “scale up” to “scale out, everywhere.”
 
@@ -22,8 +20,7 @@ The confusion isn’t technical—it’s a shift from “scale up” to “scale
 
 Think of the edge as a giant, globally distributed CDN with compute attached. Every POP is a mini data-center that can run your API, but it’s not always in sync with the others. The key abstraction is **eventual consistency with bounded staleness**.
 
-- **Reads** can be served from the nearest POP, but they might be reading stale data.
-- **Writes** fan out to every POP, but only after the write is durable in the origin.
+- **Reads** can be served from the nearest POP, but they might be reading stale data. - **Writes** fan out to every POP, but only after the write is durable in the origin.
 
 In practice, you choose one of three patterns:
 
@@ -100,9 +97,7 @@ vegeta attack -rate 100 -duration 30s -targets targets.txt | vegeta report
 
 The P95 latency was 480 ms, but the P99 in Mumbai was 2.1 s. Digging into the logs, I saw:
 
-- 30 % of requests hitting Mumbai were reading a stale value.
-- The leader in IAD had written the increment, but the replication lag to Mumbai was 1.8 s.
-- The FOR UPDATE lock in Postgres blocked the leader’s vacuum process, causing autovacuum to throttle writes.
+- 30 % of requests hitting Mumbai were reading a stale value. - The leader in IAD had written the increment, but the replication lag to Mumbai was 1.8 s. - The FOR UPDATE lock in Postgres blocked the leader’s vacuum process, causing autovacuum to throttle writes.
 
 The fix was to switch to a Raft-based leader in IAD and let every POP read from it while caching locally with a 2 s TTL. The staleness became bounded, and the P99 in Mumbai dropped to 650 ms.
 
@@ -133,7 +128,7 @@ I once assumed I could reuse my regional Redis Cluster and just put a Cloudflare
    You can’t. POPs have limited CPU, memory, and disk. A 1 vCPU 512 MB Workers instance is not the same as a t3.medium EC2 instance. I once tried to run a full-text search index in a Workers instance—it OOM’d in 30 seconds.
 
 4. **“Debugging is the same everywhere.”**
-   It isn’t. Cloudflare’s tcpdump endpoint, Fly.io’s host metrics, and AWS’s X-Ray for Lambda@Edge all have different quirks. I spent a week trying to correlate a 400 ms spike in Mumbai using only CloudWatch—turns out the issue was a mis-configured TCP buffer in the Mumbai POP’s kernel.
+   It isn’t. Cloudflare’s tcpdump endpoint, Fly.io’s host metrics, and AWS’s X-Ray for Lambda@Edge all have different quirks.
 
 5. **“You can use a single database everywhere.”**
    You can, but it becomes a bottleneck. PostgreSQL 16 with logical replication can fan out writes to 50 POPs, but the leader will saturate its network link at ~10 k writes/sec. For higher throughput, you need sharding or a multi-master setup like CockroachDB 23.1.
@@ -195,22 +190,11 @@ I cut our bill by 42 % by switching from fan-out-everywhere to fan-out-to-5-clos
 
 ## Quick reference
 
-- **Latency:** P95 200–500 ms, P99 500–1000 ms (bounded staleness 2 s).
-- **Cost:** $0.05–$0.20 per 1k requests for Workers, $0.02–$0.10 for Lambda@Edge. Replication writes add $0.01–$0.05 per KB.
-- **Throughput:** 1k–10k writes/sec per leader. Shard if you need more.
-- **Staleness:** Choose 100 ms (CRDTs), 500 ms (leader-based), or 2 s (cache with TTL).
-- **Debugging:** Start with the home region’s leader. If it’s slow, drill down into the POP with the highest latency.
-- **Tools:** Cloudflare Workers 4.0, Fly.io Postgres 16, AWS Lambda@Edge 2026, Redis 7.2 (as cache only), PostgreSQL 16 (as source of truth).
-- **Pattern:** Leader-based writes + read-through cache with TTL.
-- **Fallback:** If a POP is down, route to the next closest POP. Failover should take < 500 ms.
+- **Latency:** P95 200–500 ms, P99 500–1000 ms (bounded staleness 2 s). - **Cost:** $0.05–$0.20 per 1k requests for Workers, $0.02–$0.10 for Lambda@Edge. Replication writes add $0.01–$0.05 per KB. - **Throughput:** 1k–10k writes/sec per leader. Shard if you need more. - **Staleness:** Choose 100 ms (CRDTs), 500 ms (leader-based), or 2 s (cache with TTL). - **Debugging:** Start with the home region’s leader. If it’s slow, drill down into the POP with the highest latency. - **Tools:** Cloudflare Workers 4.0, Fly.io Postgres 16, AWS Lambda@Edge 2026, Redis 7.2 (as cache only), PostgreSQL 16 (as source of truth). - **Pattern:** Leader-based writes + read-through cache with TTL. - **Fallback:** If a POP is down, route to the next closest POP. Failover should take < 500 ms.
 
 ## Further reading worth your time
 
-- Cloudflare’s [Durable Objects 2026 design doc](https://blog.cloudflare.com/durable-objects-2026) — how they solved stateful edge compute.
-- Fly.io’s [Postgres multi-region guide](https://fly.io/docs/postgres/) — how to shard and replicate.
-- AWS’s [Lambda@Edge SnapStart](https://aws.amazon.com/blogs/compute/introducing-lambda-snapstart/) — how they cut cold starts.
-- CockroachDB’s [Global consistency without consensus](https://www.cockroachlabs.com/blog/global-consistency-without-consensus/) — the theory behind multi-region transactions.
-- Redis 7.2’s [Active Replication](https://redis.io/docs/management/replication/) — how Redis handles edge replicas.
+- Cloudflare’s [Durable Objects 2026 design doc](https://blog.cloudflare.com/durable-objects-2026) — how they solved stateful edge compute. - Fly.io’s [Postgres multi-region guide](https://fly.io/docs/postgres/) — how to shard and replicate. - AWS’s [Lambda@Edge SnapStart](https://aws.amazon.com/blogs/compute/introducing-lambda-snapstart/) — how they cut cold starts. - CockroachDB’s [Global consistency without consensus](https://www.cockroachlabs.com/blog/global-consistency-without-consensus/) — the theory behind multi-region transactions. - Redis 7.2’s [Active Replication](https://redis.io/docs/management/replication/) — how Redis handles edge replicas.
 
 ## Frequently Asked Questions
 
@@ -238,20 +222,16 @@ They assume they can reuse their single-region mental model. They treat every PO
 
 Open your API’s read path. Add a 1-second TTL cache using Redis 7.2 in the same POP. Measure the latency drop and the bill impact. If the latency drops by more than 50 % and the bill stays flat, you’ve just taken your first step toward an edge-native backend.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

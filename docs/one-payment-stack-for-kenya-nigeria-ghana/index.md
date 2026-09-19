@@ -1,12 +1,12 @@
 # One payment stack for Kenya, Nigeria, Ghana
 
-A colleague asked me about build payment during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
 Most guides will tell you to build three separate integrations: one for M-Pesa in Kenya, one for Flutterwave or Paystack in Nigeria, and one for MTN Mobile Money or Vodafone Cash in Ghana. That’s what we did at my last startup. We spun up three separate repos, three separate webhooks, three separate reconciliation jobs, and three separate support docs. It scaled to about 500 transactions per day before we noticed that every new feature required 3x the work. The honest answer is that three integrations look fine on paper but collapse under the weight of real user behavior.
 
-I ran into this when a single Nigerian user tried to pay with both a card and a bank transfer in the same session. Our stack treated the two payment methods as separate integrations, so we double-charged them. The user refunded instantly and posted on Twitter. It cost us $2,000 in chargebacks and two days of on-call. The conventional wisdom assumes each country has one dominant provider and ignores the fact that users switch providers mid-session because of network failures or balance checks.
+Our stack treated the two payment methods as separate integrations, so we double-charged them. The user refunded instantly and posted on Twitter. It cost us $2,000 in chargebacks and two days of on-call. The conventional wisdom assumes each country has one dominant provider and ignores the fact that users switch providers mid-session because of network failures or balance checks.
 
 The standard advice also assumes that the underlying APIs are stable. In 2026, all three countries still have daily API outages from at least one provider. When M-Pesa’s sandbox went down for 47 minutes on a Thursday, our Kenya-specific integration retried every 30 seconds for 20 minutes before we noticed. Meanwhile, our Nigeria and Ghana integrations were humming along fine. Three separate stacks meant three separate alerting systems and three separate on-call rotations — a coordination nightmare.
 
@@ -76,10 +76,7 @@ Use the 80/20 rule. If 80% of your transactions come from one country, start wit
 
 Calculate the abstraction ROI with real numbers. Use your last 30 days of payment data:
 
-1. Compute your current infra cost per 1,000 transactions for each country.
-2. Estimate the engineering time to build the abstraction (2–4 weeks for a small team).
-3. Multiply the engineering time by your fully-loaded cost (e.g., $120/hour).
-4. Compare the abstraction’s one-time cost to the monthly infra savings.
+1. Compute your current infra cost per 1,000 transactions for each country. 2. Estimate the engineering time to build the abstraction (2–4 weeks for a small team). 3. Multiply the engineering time by your fully-loaded cost (e.g., $120/hour). 4. Compare the abstraction’s one-time cost to the monthly infra savings.
 
 We did this calculation at our B2B fintech and found the abstraction would pay for itself in 45 days. The engineering time was 200 hours at $120/hour ($24,000), and the infra savings were $18,000/month. Anything that pays for itself in under 6 months is worth doing.
 
@@ -119,14 +116,11 @@ The abstraction isn’t free, but neither is the status quo. I’ve seen teams b
 **Why not just use Stripe for all three countries?**
 Stripe supports Kenya and Nigeria but not Ghana in 2026. Even if Stripe adds Ghana next quarter, you’ll still need a fallback for edge cases like USSD failures or compliance requirements that Stripe can’t meet. Stripe is a great abstraction layer for the providers it supports, but it’s not a replacement for a custom abstraction when you need multi-country fallbacks.
 
-
 **How do you handle currency conversion between providers?**
 Our abstraction converts currencies at the boundary. When a Kenyan user tries to pay in GHS, the abstraction converts GHS to KES using a real-time forex API (we use Fixer.io’s 2026 tier) and stores the original currency in `PaymentAttempt.original_currency`. That way, reconciliation shows both the local currency and the converted amount. We’ve seen conversion errors as low as 0.04% with 5-minute forex updates.
 
-
 **What if a provider changes their API contract?**
 The abstraction forces provider changes into one place: the adapter. When Flutterwave changed their webhook signature in 2026, we updated the Flutterwave adapter in 30 minutes and rolled it out without touching the rest of the system. The abstraction’s tests caught the change immediately because the synthetic monitor failed. Without the abstraction, we would have had to update three separate webhook handlers.
-
 
 **How do you debug a payment that failed in the abstraction layer?**
 Every adapter writes a structured log with a `trace_id` that ties the payment attempt to the confirmation. The synthetic monitor also writes traces, so you can follow the entire lifecycle in Jaeger or Zipkin. We added a `/debug/payment/{id}` endpoint that returns the raw adapter logs, the score table entry at the time of the attempt, and the circuit breaker state. That single endpoint cut our mean time to resolution from 45 minutes to 7 minutes.
@@ -139,20 +133,16 @@ python -m payment_gateway.synthetic_monitor --count 10 --countries KE NG GH
 
 That command will simulate 10 payments across all three countries and print the latency and error rate for each provider. If any provider’s error rate exceeds 3%, the command exits with a non-zero code so you can alert on it. Do this right now; it will take 3 minutes and tell you immediately whether your abstraction layer is viable.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

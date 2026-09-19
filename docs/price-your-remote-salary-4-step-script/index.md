@@ -1,14 +1,14 @@
 # Price your remote salary: 4-step script
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
 Three years ago I took my first fully-remote job from Bogotá to a U.S. fintech in Austin. My monthly budget in Colombia was $1,200; their offer was $1,900 gross. I said yes. Six months later I was onboarding to the U.S. 401(k) and realized I had just priced myself 8 % below the local market for mid-level engineers in Texas. I had no idea how to translate cost-of-living or local salary bands into a number that felt fair to both sides.
 
-I ran into this when I tried to move to a higher-paying offer and the recruiter gave me a range in USD with no breakdown. I spent three days collecting Cost-of-Living (COL) indices, local salary bands for Austin and Bogotá, and exchange-rate risk curves before I could even draft a counter. The worst part was that every public source I found either quoted U.S. numbers in isolation or lumped Latin America into a single bucket. I needed a repeatable way to turn “I live in X city with Y expenses” into “I need Z USD to cover my costs and still save 20 %”.
+The worst part was that every public source I found either quoted U.S. numbers in isolation or lumped Latin America into a single bucket. I needed a repeatable way to turn “I live in X city with Y expenses” into “I need Z USD to cover my costs and still save 20 %”.
 
-I was surprised that even sophisticated HR tools like RemoteOK or We Work Remotely don’t expose a calculator that lets you input your city and desired savings rate and spits out a defensible USD figure. Most articles stop at “use cost-of-living multipliers” without giving you the raw data or the exact math so you can defend your number in Slack.
+Most articles stop at “use cost-of-living multipliers” without giving you the raw data or the exact math so you can defend your number in Slack.
 
 This post is the calculator I wish existed. It combines:
 - Local salary bands for 12 Latin American cities (median + 75th percentile)
@@ -21,9 +21,7 @@ If you’re in Colombia, Argentina, Mexico, Brazil, or Peru and you’re negotia
 ## Prerequisites and what you'll build
 
 You don’t need to be a spreadsheet ninja or a Python expert to follow this. You only need:
-- One of the following: Google Sheets, Excel 365, or Python 3.11 on any OS.
-- 15 minutes to plug in your numbers.
-- A willingness to treat salary negotiation like a technical spec: inputs, constants, and outputs.
+- One of the following: Google Sheets, Excel 365, or Python 3.11 on any OS. - 15 minutes to plug in your numbers. - A willingness to treat salary negotiation like a technical spec: inputs, constants, and outputs.
 
 What you will build is a defensible USD number in one of three forms:
 1. A single target salary (e.g., $95,000 USD gross)
@@ -112,9 +110,7 @@ python calculator.py --city "Medellin" --role "Senior Backend Engineer" --saving
 ```
 
 Inside `calculator.py`:
-1. `salary_bands_2026.csv` is loaded as a pandas DataFrame.
-2. The Numbeo COL index is fetched via `col_index.py` and cached for 24 h with `requests-cache`.
-3. The script computes:
+1. `salary_bands_2026.csv` is loaded as a pandas DataFrame. 2. The Numbeo COL index is fetched via `col_index.py` and cached for 24 h with `requests-cache`. 3. The script computes:
    - local_net = p75 * (1 + savings)
    - local_gross = local_net / (1 - tax_rate)
    - usd_gross = local_gross / usd_local_spot * (1 + ex_vol)
@@ -199,9 +195,7 @@ Add a simple Google Apps Script that emails you if the COL index changes by more
 
 I used this sheet for three job changes in 2026–2026:
 
-1. Bogotá → Austin fintech (W2): Asked $105k → Accepted $110k (4.8 % above ask).
-2. Medellín → Canadian SaaS (W2): Asked $95k CAD → Accepted $98k CAD (3.2 % above ask).
-3. Lima → U.S. e-commerce (1099): Asked $12,500/mo → Accepted $13,200/mo (5.6 % above ask, but after self-employment tax it’s only $11,200 real). I turned it down and waited for a W2 offer.
+1. Bogotá → Austin fintech (W2): Asked $105k → Accepted $110k (4.8 % above ask). 2. Medellín → Canadian SaaS (W2): Asked $95k CAD → Accepted $98k CAD (3.2 % above ask). 3. Lima → U.S. e-commerce (1099): Asked $12,500/mo → Accepted $13,200/mo (5.6 % above ask, but after self-employment tax it’s only $11,200 real). I turned it down and waited for a W2 offer.
 
 In every case the client accepted within two rounds of counter-offers. The key was having a single defensible number backed by a public data source and a local COL profile. No client challenged the methodology; they only haggled on the percentage above the ask.
 
@@ -242,20 +236,16 @@ Before you hit send, run one sanity check: divide your ask by the U.S. median ($
 
 Do the math today, export the number, and attach it to your next counter-offer. The single most effective move is to send a hard USD ask instead of a vague “market rate” reply.
 
-
 ---
 
 ### About this article
 
-**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** [Kubai Kevin](/about/) — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

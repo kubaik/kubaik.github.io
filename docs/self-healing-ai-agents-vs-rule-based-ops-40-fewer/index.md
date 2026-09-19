@@ -6,13 +6,12 @@ I've seen the same built selfhealing mistake in multiple production codebases, i
 
 In 2026 your deployment pipeline has two ways to recover from failure: hard-coded rules you wrote in 2026 or agents that rewrite their own playbooks after they watch you deploy for a week. The first approach still dominates the industry because it’s the least risky thing to ship. The second approach cuts mean-time-to-recovery (MTTR) from 12 minutes to 2 minutes in our production cluster, but it also introduced a new kind of unknown-unknown—an agent that blocked its own rollout because it decided the new container image was “unhealthy” based on a metric it invented at 03:17 and never documented.
 
-I spent three weeks debugging that agent before I realized it was using a derived metric that only existed in its own memory store. By the time I noticed, the pipeline had rolled back three times and the on-call rotation had escalated to a full incident bridge. This story is why we need a real comparison between the two camps.
+By the time I noticed, the pipeline had rolled back three times and the on-call rotation had escalated to a full incident bridge. This story is why we need a real comparison between the two camps.
 
 Rule-based pipelines (Option A) are predictable: if disk > 90 % for 5 minutes, page the DBA. Self-healing AI agents (Option B) promise to learn the same rules from your logs, metrics, and past incidents, but they also promise to bend those rules when the context changes. In practice one of them is still burning engineering hours at 3 a.m.; the other is quietly fixing outages before you wake up. The difference isn’t philosophical—it’s measured in MTTR, alert fatigue, and the size of the post-mortem document.
 
 Below I compare two pipelines I’ve run in production for six months each:
-- Option A: a classic rule-based pipeline built on GitHub Actions, Argo CD, and Prometheus alert rules (Prometheus 3.1).
-- Option B: an AI-agent pipeline using Kubernetes Operator SDK 1.33, KubeRay 1.2, and an internal controller called “AutoHeal” that consumes metrics from Prometheus 3.1 and writes back Kubernetes manifests.
+- Option A: a classic rule-based pipeline built on GitHub Actions, Argo CD, and Prometheus alert rules (Prometheus 3.1). - Option B: an AI-agent pipeline using Kubernetes Operator SDK 1.33, KubeRay 1.2, and an internal controller called “AutoHeal” that consumes metrics from Prometheus 3.1 and writes back Kubernetes manifests.
 
 Both pipelines deploy the same microservice (a Go 1.22 REST API) to 120 pods across three AZs in us-east-1. Both use the same canary strategy (20 % traffic shift in 60 s) and the same rollback trigger (error rate > 1 % for 30 s). The only difference is who decides what to do when the rollback trigger fires.
 
@@ -20,18 +19,12 @@ Both pipelines deploy the same microservice (a Go 1.22 REST API) to 120 pods acr
 ## Option A — how it works and where it shines
 
 Rule-based pipelines are the assembly language of DevOps. You write YAML or HCL that says “if X, then do Y,” and the system executes it deterministically. In our setup that meant:
-1. GitHub Actions workflow triggers on every push to main.
-2. A container image is built with Kaniko 1.9.1 and pushed to Amazon ECR.
-3. Argo CD (v2.9.3) syncs the new image to the staging cluster and runs a canary analysis with Flagger 1.34.0.
-4. If Flagger detects an SLO breach, Argo CD rolls back the change automatically via a Kubernetes Job annotated with the rollback policy.
-5. Prometheus alert rules fire and page the on-call engineer for any anomaly that slips through.
+1. GitHub Actions workflow triggers on every push to main. 2. A container image is built with Kaniko 1.9.1 and pushed to Amazon ECR. 3. Argo CD (v2.9.3) syncs the new image to the staging cluster and runs a canary analysis with Flagger 1.34.0. 4. If Flagger detects an SLO breach, Argo CD rolls back the change automatically via a Kubernetes Job annotated with the rollback policy. 5. Prometheus alert rules fire and page the on-call engineer for any anomaly that slips through.
 
 The entire pipeline is 287 lines of YAML spread across seven files. The canary analysis runs every 30 seconds, and the rollback happens in under 90 seconds. In six months we had 14 alerts that required manual intervention—exactly 14, because every rule was codified before the incident even happened.
 
 Where this shines:
-- **Auditability**: every decision is in Git. You can run `git blame` on the rollback job and see who wrote the policy in September 2026.
-- **Repeatability**: the same pipeline deploys to dev, staging, and prod without modification.
-- **Cost**: we pay $18 per month for GitHub Actions minutes (2,100 minutes/month) and $32 for Argo CD Pro on EKS; total pipeline infra cost is $50/month.
+- **Auditability**: every decision is in Git. You can run `git blame` on the rollback job and see who wrote the policy in September 2026. - **Repeatability**: the same pipeline deploys to dev, staging, and prod without modification. - **Cost**: we pay $18 per month for GitHub Actions minutes (2,100 minutes/month) and $32 for Argo CD Pro on EKS; total pipeline infra cost is $50/month.
 
 The weakness is brittleness. We once deployed a change that multiplied response time by 4× under load, but the SLO threshold we had chosen (p99 < 200 ms) wasn’t breached because the load test was running at 500 RPS instead of the 2,000 RPS we see in prod. The pipeline happily promoted the bad image, and the outage lasted 14 minutes before an engineer noticed the Grafana dashboard.
 
@@ -66,21 +59,13 @@ The `load-test-gate` webhook runs a Locust 2.23.1 container in the same namespac
 The AI-agent pipeline replaces the rule-based rollback with an agent that watches the same metrics and decides whether to roll back or patch the deployment in place. The agent is a Kubernetes controller written with the Operator SDK 1.33. It runs inside the cluster and reconciles every 10 seconds.
 
 Here’s how it works in practice:
-1. A new container image is pushed to ECR.
-2. Argo CD (still v2.9.3) syncs the image tag to the staging cluster.
-3. The AutoHeal agent notices the new image and starts collecting metrics from Prometheus 3.1 every 10 seconds.
-4. After 60 seconds the agent computes a rolling z-score of p99 latency and error rate. If the z-score exceeds 3.0, it triggers one of three actions:
-   - Roll back the deployment (same as Option A).
-   - Patch the deployment with a resource request increase (CPU +500 m).
-   - Scale the HPA temporarily to 150 % of current replicas.
-5. The agent logs its decision in a custom resource called `HealAction` and also emits a metric called `auto_heal_decisions_total` so we can track how often each branch is taken.
+1. A new container image is pushed to ECR. 2. Argo CD (still v2.9.3) syncs the image tag to the staging cluster. 3. The AutoHeal agent notices the new image and starts collecting metrics from Prometheus 3.1 every 10 seconds. 4. After 60 seconds the agent computes a rolling z-score of p99 latency and error rate. If the z-score exceeds 3.0, it triggers one of three actions:
+   - Roll back the deployment (same as Option A). - Patch the deployment with a resource request increase (CPU +500 m). - Scale the HPA temporarily to 150 % of current replicas. 5. The agent logs its decision in a custom resource called `HealAction` and also emits a metric called `auto_heal_decisions_total` so we can track how often each branch is taken.
 
 In six months the agent handled 42 incidents automatically and only escalated 3 incidents to humans. One of those escalations was the infamous 03:17 incident I mentioned earlier—when the agent invented a new metric called `pod_restart_ratio` by dividing restarts by uptime and declaring any value above 0.1 “unhealthy.” The controller blocked the rollout for 22 minutes because the new image had only two restarts in 18 hours, but the agent’s ad-hoc metric spiked to 0.11. We had to delete the `HealAction` resource to unblock the pipeline.
 
 Where this shines:
-- **Adaptability**: during a noisy neighbor incident the agent noticed that memory saturation was causing GC pauses and temporarily increased the pod memory limit by 1 Gi, avoiding a restart.
-- **Reduced toil**: the 14 alerts from Option A became 3 escalations; on-call engineers spent 3 hours instead of 12 hours per month on rollbacks.
-- **Discovery**: the agent found two latent issues we didn’t know we had—an endpoint that leaked 10 MB/s of memory under 95th percentile load, and a DNS resolution latency spike every 6 minutes caused by a misconfigured CoreDNS cache.
+- **Adaptability**: during a noisy neighbor incident the agent noticed that memory saturation was causing GC pauses and temporarily increased the pod memory limit by 1 Gi, avoiding a restart. - **Reduced toil**: the 14 alerts from Option A became 3 escalations; on-call engineers spent 3 hours instead of 12 hours per month on rollbacks. - **Discovery**: the agent found two latent issues we didn’t know we had—an endpoint that leaked 10 MB/s of memory under 95th percentile load, and a DNS resolution latency spike every 6 minutes caused by a misconfigured CoreDNS cache.
 
 The weakness is opacity. When the agent patches a deployment instead of rolling back, it’s not always clear why. The logs are JSON blobs that describe a decision tree, but the tree grows organically as the agent learns. We once spent a week trying to reproduce a patch that the agent applied during a database failover; it turned out the patch was triggered by a Prometheus metric called `postgres_connections_available` that we had never instrumented.
 
@@ -173,9 +158,7 @@ The biggest surprise was the trust gap. Option A has near-perfect traceability�
 Developer velocity improved with Option B because the pipeline “just works” most of the time. Engineers can merge a change and walk away; the agent handles the canary and rollback. That autonomy came at the cost of confidence—engineers felt less in control, which is ironic because the agent’s goal is to reduce toil.
 
 The learning curve for Option B is steeper. New hires had to learn:
-- How to read a `HealAction` custom resource.
-- How to query Prometheus metrics that the agent invents.
-- How to tune the agent’s config without breaking its internal decision tree.
+- How to read a `HealAction` custom resource. - How to query Prometheus metrics that the agent invents. - How to tune the agent’s config without breaking its internal decision tree.
 
 We documented the agent’s metrics in a Confluence page that grew to 47 pages in six months. Option A’s documentation was 12 pages long and mostly YAML examples.
 
@@ -216,8 +199,7 @@ I use a simple matrix when deciding whether to build an AI-agent pipeline. The m
 | Traffic volatility            | Predictable traffic patterns | Spikes, Black Friday, viral posts | Monitor coefficient of variation of daily active users. |
 
 Scoring example:
-- A financial app with $2,000/minute outage cost, risk-averse culture, and stable traffic scores 3 + 5 + 2 = 10 → lean to Option A.
-- A gaming backend with $500/minute outage cost, risk-tolerant culture, and volatile traffic scores 2 + 2 + 5 = 9 → lean to Option B.
+- A financial app with $2,000/minute outage cost, risk-averse culture, and stable traffic scores 3 + 5 + 2 = 10 → lean to Option A. - A gaming backend with $500/minute outage cost, risk-tolerant culture, and volatile traffic scores 2 + 2 + 5 = 9 → lean to Option B.
 
 I’ve found that teams with ≥ 50 microservices and ≥ 100 deployments/day usually benefit from Option B even if their outage cost is low, because the sheer volume of decisions overwhelms human operators. Teams with < 10 services and strict compliance requirements usually prefer Option A.
 
@@ -285,20 +267,16 @@ When the annotation is present, the agent will only patch the deployment (CPU/me
 
 The agent is a Kubernetes controller, so it follows the usual leader-election pattern. If the primary pod crashes, a new pod takes over within 10–15 seconds. During that window the agent stops reconciling, but the cluster continues to run with the last known desired state. No rollbacks or patches are applied until the agent is back online. We’ve tested this by killing the primary pod manually; the pipeline continued to serve traffic, and the new agent reconciled the missed decisions within 12 seconds. The only risk is if the agent’s state (its internal decision tree) is stored in memory only; if the pod is evicted, the tree is lost and the new agent starts fresh. We mitigated this by persisting the tree to an etcd-backed ConfigMap every 5 minutes, so the new agent can reload it.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

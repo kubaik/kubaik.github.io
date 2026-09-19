@@ -12,8 +12,6 @@ The real gap is that AI-generated code hides its own complexity. It doesn’t ju
 
 Most teams don’t notice the gap until they hit a page at 3 a.m. and spend hours staring at a flame graph that points to a single line of generated code buried under 400 others. By then, the AI has already moved on to the next PR and won’t remember why it did it.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
-
 ## How Building postmortems that actually improve things when half the code is AI-generated actually works under the hood
 
 The postmortem needs to treat the AI layer like a black-box dependency that can change behavior between commits. Any assumption you made about “how the AI writes code” is now a variable in your incident timeline.
@@ -215,7 +213,6 @@ If you don’t have Git access, you can’t use this pipeline. Treat the AI as a
 How do I know if my AI code is complex enough for this pipeline?
 
 If your AI code makes architectural decisions (retry policies, connection pools, cache eviction, or batch sizes), it’s complex enough. If it’s just simple wrappers or API clients, you don’t need this. Start with the pipeline and remove it later if it feels like overkill. The overhead is low once it’s set up.
-
 
 ---
 

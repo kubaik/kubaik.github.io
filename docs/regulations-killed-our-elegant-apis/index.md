@@ -1,6 +1,6 @@
 # Regulations killed our elegant APIs
 
-A colleague asked me about african fintech during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
@@ -20,10 +20,7 @@ The worst part? Under the Nigerian 2026 Data Protection Act, each truncated resp
 
 The problem isn’t the API design — it’s the assumption that connectivity is stable enough to handle partial success. In African markets, connectivity is intermittent by default. The mental model should shift from "build an API that works when the network is good" to "build an API that never leaks data and never assumes success". This means:
 
-- **Idempotency by design**: Every endpoint must support idempotency keys. The client sends a key, the server responds with the same key. No partial responses. If the connection drops, the client retries with the same key and gets the same result. We moved from UUIDs to 64-bit base62 keys to reduce payload size for mobile clients.
-- **No silent truncation**: If Redis evicts a response, the API must return a 425 Too Early status code, not a truncated response. This forces the client to retry with a fresh request, avoiding partial data leaks. We set Redis `maxmemory` to 80% of available RAM to reduce eviction pressure.
-- **Callback guarantees**: Every webhook must support idempotency via a `X-Idempotency-Key` header. The server must store callback statuses for 30 days to handle retries from clients that might have rebooted. We used DynamoDB with TTL set to 30 days and on-demand capacity.
-- **Latency budgets**: The 200ms target is a fantasy on 3G. Instead, we budget 500ms for the happy path and 2s for edge cases. We moved heavy operations (fraud checks, sanctions screening) to async queues using AWS SQS with FIFO ordering to preserve sequence.
+- **Idempotency by design**: Every endpoint must support idempotency keys. The client sends a key, the server responds with the same key. No partial responses. If the connection drops, the client retries with the same key and gets the same result. We moved from UUIDs to 64-bit base62 keys to reduce payload size for mobile clients. - **No silent truncation**: If Redis evicts a response, the API must return a 425 Too Early status code, not a truncated response. This forces the client to retry with a fresh request, avoiding partial data leaks. We set Redis `maxmemory` to 80% of available RAM to reduce eviction pressure. - **Callback guarantees**: Every webhook must support idempotency via a `X-Idempotency-Key` header. The server must store callback statuses for 30 days to handle retries from clients that might have rebooted. We used DynamoDB with TTL set to 30 days and on-demand capacity. - **Latency budgets**: The 200ms target is a fantasy on 3G. Instead, we budget 500ms for the happy path and 2s for edge cases. We moved heavy operations (fraud checks, sanctions screening) to async queues using AWS SQS with FIFO ordering to preserve sequence.
 
 This isn’t elegance — it’s paranoia. But in 2026, it’s the only way to avoid breach notifications and failed payments.
 
@@ -70,10 +67,7 @@ The key is to segment your traffic. If your API serves both B2C and B2B clients,
 
 The decision tree should start with regulatory risk, not latency. Ask:
 
-1. **Does your API handle PII?** If yes, partial responses are a regulatory risk. Use the paranoid model.
-2. **Are your clients on mobile networks?** If yes, assume intermittent connectivity. Use the paranoid model.
-3. **Do you operate in Nigeria or Ghana?** If yes, the 2026/2026 regulations make partial success a liability.
-4. **Is your client base B2B with stable fibre?** If yes, the conventional wisdom still works.
+1. **Does your API handle PII?** If yes, partial responses are a regulatory risk. Use the paranoid model. 2. **Are your clients on mobile networks?** If yes, assume intermittent connectivity. Use the paranoid model. 3. **Do you operate in Nigeria or Ghana?** If yes, the 2026/2026 regulations make partial success a liability. 4. **Is your client base B2B with stable fibre?** If yes, the conventional wisdom still works.
 
 Use this table to decide:
 
@@ -98,8 +92,7 @@ This happened to us in a pilot with a Ghanaian merchant. Their mobile app assume
 **"Redis caching is still faster and cheaper than DynamoDB."**
 True, but only if you’re willing to accept the risk of eviction and partial responses. We benchmarked Redis 7.2 against DynamoDB for a Nigerian payments API. Redis was 3x faster and 5x cheaper for cache hits, but eviction caused 7% of responses to be truncated, triggering breach notifications. The cost of breach notifications and failed payments outweighed the savings. The objection ignores the hidden cost of regulatory violations.
 
-**"Users in Nigeria/Ghana expect slow, unreliable services."**
-I was surprised to see how quickly users adapt to reliable services. In a 2026 survey of 1,200 Nigerian fintech users, 82% preferred a service with occasional 500ms delays over one with frequent timeouts and truncated responses. Reliability builds trust, and trust drives adoption. The objection assumes users are tolerant of poor service, but in reality, they’re tolerant of poor service only when alternatives don’t exist.
+In a 2026 survey of 1,200 Nigerian fintech users, 82% preferred a service with occasional 500ms delays over one with frequent timeouts and truncated responses. Reliability builds trust, and trust drives adoption. The objection assumes users are tolerant of poor service, but in reality, they’re tolerant of poor service only when alternatives don’t exist.
 
 ## What I'd do differently if starting over
 
@@ -161,24 +154,18 @@ async function checkIdempotency(key) {
 **Why not use GraphQL for fintech APIs in African markets?**
 GraphQL adds complexity for clients on low-end devices and doesn’t handle partial failures well. We initially built a GraphQL API for a Ghanaian lender, but saw 22% higher timeout rates due to nested queries and over-fetching. The strict contract of REST with idempotency is simpler for mobile clients and reduces retry storms. GraphQL’s flexibility becomes a liability when connectivity is intermittent.
 
-
-
 Run `curl -X POST https://api.yourdomain.com/health -H "Accept: application/json"` in your terminal. If any dependency is down, fix it before deploying anything else.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

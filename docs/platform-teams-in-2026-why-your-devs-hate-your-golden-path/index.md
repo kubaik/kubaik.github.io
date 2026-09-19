@@ -8,8 +8,6 @@ In late 2026, our org had 24 autonomous teams shipping services on AWS. Each tea
 
 We built a golden path: a single CI pipeline, a shared EKS cluster with Argo CD for GitOps, and a set of Terraform modules that teams could consume like an internal SDK. The promise was simple: ship faster, fail less, and stop worrying about infra. By Q1 2026, 22 out of 24 teams had migrated. Our production incidents dropped from 18 to 7 per week, and mean time to recovery (MTTR) fell from 23 minutes to 8 minutes. Success, right?
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout in the shared EKS cluster — this post is what I wished I had found then.
-
 But the real story is what happened next. Teams started complaining that the golden path was too slow, too opinionated, and too far from their actual needs. Our platform adoption survey in March 2026 showed that 60% of teams were using the platform only for deployment, not for testing, monitoring, or chaos engineering. We had optimized for deployment velocity, but ignored the rest of the lifecycle. Worse, teams that tried to extend the platform often broke it for everyone else, leading to cascading failures. The golden path had become a bottleneck, not a productivity engine.
 
 The core tension was visible in our internal Slack: teams asked for more flexibility, while platform maintainers pushed for standardization. We had traded 23-minute rollbacks for 2-hour wait times in platform reviews. Our internal developer experience score, measured by the DX team every quarter, dropped from 7.2 to 4.5 on a 10-point scale. Something had to change.
@@ -41,9 +39,7 @@ This model reduced our infra bill by 18% in six months, and our internal DX scor
 
 We defined three contracts:
 
-1. **Health contract**: A `/health` endpoint that returns `{ "status": "ok" }` within 500ms. No exceptions.
-2. **Metrics contract**: A `/metrics` endpoint that exposes Prometheus metrics, including request latency, error rate, and pod resource usage. We used the Prometheus client library for Python 3.11 and Node 20 LTS.
-3. **Retry contract**: Services must implement exponential backoff with jitter. We enforced this via Linkerd’s retry policy, which caps retries at 5 and adds 100ms jitter.
+1. **Health contract**: A `/health` endpoint that returns `{ "status": "ok" }` within 500ms. No exceptions. 2. **Metrics contract**: A `/metrics` endpoint that exposes Prometheus metrics, including request latency, error rate, and pod resource usage. We used the Prometheus client library for Python 3.11 and Node 20 LTS. 3. **Retry contract**: Services must implement exponential backoff with jitter. We enforced this via Linkerd’s retry policy, which caps retries at 5 and adds 100ms jitter.
 
 Here’s a minimal Python 3.11 example:
 
@@ -223,11 +219,7 @@ Finally, audit your infra bill. Look for duplicate resources, over-provisioned c
 
 ## Resources that helped
 
-- [Linkerd 2.14 documentation](https://linkerd.io/2.14/) – The service mesh we used to enforce contracts at runtime.
-- [Prometheus client libraries](https://prometheus.io/docs/instrumenting/clientlibs/) – For Python 3.11 and Node 20 LTS.
-- [AWS Cost Explorer](https://aws.amazon.com/aws-cost-management/aws-cost-explorer/) – To track and optimize infra spend.
-- [Kubernetes Best Practices](https://kubernetes.io/blog/2026/04/08/kubernetes-best-practices-community-stats/) – For pod resource requests and limits.
-- [Internal DX survey template](https://github.com/kubernetes/community/blob/master/sig-contributor-experience/resources/dx-survey.md) – A simple survey to measure developer experience.
+- [Linkerd 2.14 documentation](https://linkerd.io/2.14/) – The service mesh we used to enforce contracts at runtime. - [Prometheus client libraries](https://prometheus.io/docs/instrumenting/clientlibs/) – For Python 3.11 and Node 20 LTS. - [AWS Cost Explorer](https://aws.amazon.com/aws-cost-management/aws-cost-explorer/) – To track and optimize infra spend. - [Kubernetes Best Practices](https://kubernetes.io/blog/2026/04/08/kubernetes-best-practices-community-stats/) – For pod resource requests and limits. - [Internal DX survey template](https://github.com/kubernetes/community/blob/master/sig-contributor-experience/resources/dx-survey.md) – A simple survey to measure developer experience.
 
 
 ## Frequently Asked Questions
@@ -244,9 +236,7 @@ We use runtime enforcement via Linkerd’s retry policy and Prometheus scraping.
 **What if a team refuses to meet the contract?**
 We haven’t had a team refuse, but if one did, we’d work with them to understand their concerns. Often, the issue is a misunderstanding of the contract or a lack of tooling. If they still refuse, we’d escalate to leadership. But in practice, teams want to meet the contract — they just need help doing it.
 
-
 I’d spent two weeks arguing with the platform team about why my service couldn’t use a custom admission controller — until I realized the real issue wasn’t the controller, but the lack of a clear contract. The moment we defined the contract, the problem disappeared.
-
 
 ---
 

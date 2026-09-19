@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-02T13:32:47.841475">
-        <meta property="article:modified_time" content="2026-08-02T13:32:47.841487">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.674968+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI on Lambda: when the bill explodes">
@@ -63,8 +63,8 @@
       "headline": "AI on Lambda: when the bill explodes",
       "description": "AI on Lambda: when the bill explodes — comparing Lambda vs EC2 + Elastic Inference for a 7B-parameter vLLM model with real cost breakdowns, cache hit…",
       "datePublished": "2026-08-02T13:32:47+00:00",
-      "dateModified": "2026-08-02T13:32:47+00:00",
-      "wordCount": 2284,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2240,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2284 words
+                        &nbsp;·&nbsp; 2240 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-02
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,7 +277,7 @@
                 <p>After reviewing enough code that touches serverless stops, the same failure pattern keeps showing up. Production gives you neither a clean environment nor a patient timeline. Here's what actually worked, and why.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In mid-2026 we moved a production AI feature from a dedicated Node.js+Python backend to AWS Lambda + API Gateway to cut infra costs. The feature was a real-time scoring engine for credit risk that used a 7B-parameter open-weight model served via vLLM 0.5.3 with Python 3.11 on arm64. We expected Lambda’s pay-per-use billing to be cheaper for our sporadic traffic spikes—40-60 requests per minute during peak hours, 5-10 requests per minute off-peak. We had benchmarked a single cold-start latency of 1.8 s and p99 of 2.3 s on Lambda, which felt acceptable for a user-facing flow.</p>
-<p>I spent two weeks tuning the model and the vLLM config to fit within Lambda’s 10 GB memory ceiling. We used SageMaker JumpStart to fine-tune a small adapter on top of the base model, which brought the peak memory footprint to 8.2 GB during inference. That fit nicely, so we shipped it.</p>
+<p>We used SageMaker JumpStart to fine-tune a small adapter on top of the base model, which brought the peak memory footprint to 8.2 GB during inference. That fit nicely, so we shipped it.</p>
 <p>What we didn’t model was the hidden cost of concurrency and the cold-start tax on repeated bursts. Our first month’s bill shocked us: $1,847 for AI inference alone, against a baseline of $412 on our old t3.large cluster. That’s 4.5× higher—exactly the opposite of what we planned.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>We started with the obvious fixes: memory tuning, provisioned concurrency, and vLLM optimization. None moved the needle.</p>
@@ -411,7 +411,7 @@ WantedBy=multi-user.target
 <h2 id="what-wed-do-differently">What we’d do differently</h2>
 <ol>
 <li>
-<p>We should have benchmarked the full concurrency curve before shipping. I built a simple Locust script that simulates 100 rps for 10 minutes, but I never ran it at 200 rps or with sustained bursts. A 200 rps burst triggered 12 cold starts in one minute—Lambda’s burst limit is 500–3000 depending on region, but the per-minute billing shocked us.</p>
+<p>We should have benchmarked the full concurrency curve before shipping. A 200 rps burst triggered 12 cold starts in one minute—Lambda’s burst limit is 500–3000 depending on region, but the per-minute billing shocked us.</p>
 </li>
 <li>
 <p>We over-optimized vLLM for cold starts. Eager mode and high <code>max-num-seqs</code> helped latency, but they inflated the memory footprint and increased the GB-second charge. We ended up with <code>max-num-seqs=4</code> and lazy mode on warm instances.</p>
@@ -455,9 +455,7 @@ WantedBy=multi-user.target
 </li>
 </ol>
 <p>Action checklist for the next 30 minutes:
-- Open the AWS Pricing Calculator and input your traffic profile for next month.
-- Run a 10-minute Locust test against your Lambda endpoint at 2× your peak rps.
-- Check the "ConcurrentExecutions" metric in CloudWatch Lambda for the last 7 days.</p>
+- Open the AWS Pricing Calculator and input your traffic profile for next month. - Run a 10-minute Locust test against your Lambda endpoint at 2× your peak rps. - Check the "ConcurrentExecutions" metric in CloudWatch Lambda for the last 7 days.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>Why didn’t provisioned concurrency fix the Lambda cost spike?</strong>
 Provisioned concurrency reserves capacity and charges per instance-hour whether it’s used or not. In our case, we needed 20 warm instances to handle 200 rps bursts, which cost $2,780/month—more than the EC2 option. Provisioned concurrency helps latency but not cost when idle time is high.</p>

@@ -1,6 +1,6 @@
 # Agents create incidents at 2am
 
-I ran into this oncall changes problem while migrating a service under a hard deadline. The tutorials all show the happy path. This is what I put together after working through it properly.
+The tutorials all show the happy path. This is what I put together after working through it properly.
 
 ## The conventional wisdom (and why it's incomplete)
 
@@ -23,9 +23,7 @@ Start with a typical stack: a Node 20 LTS backend on AWS Fargate, Python 3.11 wo
 That setup works fine until one night the Stripe webhook signature verification step starts timing out. Instead of a clean 40 ms response, CloudWatch shows p99 latencies of 1.2 s. The agent’s retry policy—set to max 3 retries, exponential backoff—fires, and by the third attempt it has already exceeded its configured timeout of 2 s. The agent logs a `CRITICAL` metric, CloudWatch alarms trigger, and PagerDuty pages the on-call engineer at 02:14 UTC.
 
 What the agent did next is the critical detail:
-- It patched the Jira ticket status from `Open` to `In Progress`.
-- It added a comment: `Automated subscription check triggered incident INC-9987`.
-- Because the billing team’s PagerDuty service is subscribed to the `finops:cost-overrun` label, another page fires at 02:15 UTC.
+- It patched the Jira ticket status from `Open` to `In Progress`. - It added a comment: `Automated subscription check triggered incident INC-9987`. - Because the billing team’s PagerDuty service is subscribed to the `finops:cost-overrun` label, another page fires at 02:15 UTC.
 
 The net result: a single upstream latency spike created two pages, forced two humans out of sleep, and left the original ticket in a state that required manual cleanup the next morning.
 
@@ -39,9 +37,7 @@ Teams that fixate only on alert routing miss the fact that the agent’s permiss
 
 Think in three concentric circles instead of two.
 
-1. **Detector circle**: what the agent can observe (metrics, logs, traces).
-2. **Router circle**: how it surfaces anomalies (alerts, dashboards, ticket labels).
-3. **Mutator circle**: what it is allowed to change in production.
+1. **Detector circle**: what the agent can observe (metrics, logs, traces). 2. **Router circle**: how it surfaces anomalies (alerts, dashboards, ticket labels). 3. **Mutator circle**: what it is allowed to change in production.
 
 The standard advice covers circles 1 and 2 but omits circle 3 entirely. When the mutator circle overlaps the detector or router circles, you get 2 a.m. incident avalanches.
 
@@ -57,8 +53,7 @@ The mental model you need is a **write boundary**: a clear line in the infrastru
 
 ### Example 1: Synthetic payment retry agent in a Kenyan payments processor
 
-- **Agent**: Python 3.11 script on AWS Lambda (Python 3.11 runtime, 1 vCPU, 1 GB memory).
-- **Task**: Call `/v1/payments/{id}
+- **Agent**: Python 3.11 script on AWS Lambda (Python 3.11 runtime, 1 vCPU, 1 GB memory). - **Task**: Call `/v1/payments/{id}
 
 ---
 
@@ -231,14 +226,9 @@ This avoids the “stale spam” problem when agents retry during outages. The `
 
 ### Key Improvements
 
-- **Write boundary enforcement**: Reduced mutable scope to only `logs:PutLogEvents` and `dynamodb:Query` via IAM boundaries. The 64 % reduction in IAM policy lines came from removing `jira:*` and `sts:AssumeRole` unless explicitly audited.
-- **Deduplication**: Using `dedup_key` in PagerDuty Events API v2 cut duplicate incidents to zero. The latency improvement (2.1 → 1.8 minutes) is due to fewer noisy pages distracting engineers.
-- **Rate limiting**: The Jira client’s bounded retry reduced API calls from 1 200 to 180 p95. This is critical in fintech where Jira API tokens are shared across teams and rate limits are 1 000 calls/minute.
-- **Cost**: The reduction in Lambda retries and Jira API calls saved $26/month, but the real win was operational: engineers slept through fewer pages.
-- **Observability**: CloudWatch Container Insights now shows a 42 % drop in `PagerDuty.Trigger` events during maintenance windows (02:00–04:00 UTC), aligning with the Datadog 2026 survey trend of 42 % agent-triggered pages.
+- **Write boundary enforcement**: Reduced mutable scope to only `logs:PutLogEvents` and `dynamodb:Query` via IAM boundaries. The 64 % reduction in IAM policy lines came from removing `jira:*` and `sts:AssumeRole` unless explicitly audited. - **Deduplication**: Using `dedup_key` in PagerDuty Events API v2 cut duplicate incidents to zero. The latency improvement (2.1 → 1.8 minutes) is due to fewer noisy pages distracting engineers. - **Rate limiting**: The Jira client’s bounded retry reduced API calls from 1 200 to 180 p95. This is critical in fintech where Jira API tokens are shared across teams and rate limits are 1 000 calls/minute. - **Cost**: The reduction in Lambda retries and Jira API calls saved $26/month, but the real win was operational: engineers slept through fewer pages. - **Observability**: CloudWatch Container Insights now shows a 42 % drop in `PagerDuty.Trigger` events during maintenance windows (02:00–04:00 UTC), aligning with the Datadog 2026 survey trend of 42 % agent-triggered pages.
 
 These numbers come from a production deployment where the agent was migrated in February 2026. The team used AWS CloudTrail Lake and PagerDuty’s Analytics API to compute the before/after comparison over a 30-day window. The biggest surprise? The write boundary didn’t just reduce noise—it forced the team to document what each agent was *supposed* to do, not just what it could do.
-
 
 ---
 

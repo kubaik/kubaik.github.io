@@ -1,12 +1,12 @@
 # African devs: Arc vs Andela vs Toptal in 2026
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
 Last year I accepted a 4-month contract on Toptal expecting a seamless experience. What I got instead was a 5-day delay while the client’s finance team argued with Toptal’s compliance bot over an invoice line that said “Developer time – 40 h” instead of “Professional services – 40 h.” By the time the money arrived, I had already lost two other gigs because the platform’s automated status page falsely reported my profile as “on hold.”
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. I’m writing it because every quarter another African engineer asks me the same four questions: “Which platform still pays on time in 2026? Which one actually lets me keep 70 % of the rate? Which one doesn’t ghost my application after three weeks?” The honest answer is that the market has fragmented into two camps. One camp still works if you’re in Lagos, Nairobi, or Accra and you’re willing to fight for every dollar. The other camp is quietly collapsing under its own compliance paperwork. I’ll show you which is which.
+I’m writing it because every quarter another African engineer asks me the same four questions: “Which platform still pays on time in 2026? Which one actually lets me keep 70 % of the rate? Which one doesn’t ghost my application after three weeks?” The honest answer is that the market has fragmented into two camps. One camp still works if you’re in Lagos, Nairobi, or Accra and you’re willing to fight for every dollar. The other camp is quietly collapsing under its own compliance paperwork. I’ll show you which is which.
 
 Here are the concrete numbers I measured while running side-by-side tests from January to March 2026 on four contracts each:
 
@@ -24,10 +24,7 @@ If you want the bottom line first: Contra is the only platform that still lets A
 
 You don’t need to install anything exotic. Pick one of the four outcomes below and run the checklist for that path only. Each path is self-contained and ends with a working contract or a clear rejection.
 
-Outcome A: Land a 3-month frontend contract on Contra with Stripe Connect in 2026.
-Outcome B: Get accepted on Toptal’s Talent Network and pass the technical screen with Python 3.11 + FastAPI.
-Outcome C: Secure a staff-augmentation role on Andela’s remote roster and keep the benefits.
-Outcome D: Build a direct client pipeline on Arc’s Talent Network and avoid their 10 % fee.
+Outcome A: Land a 3-month frontend contract on Contra with Stripe Connect in 2026. Outcome B: Get accepted on Toptal’s Talent Network and pass the technical screen with Python 3.11 + FastAPI. Outcome C: Secure a staff-augmentation role on Andela’s remote roster and keep the benefits. Outcome D: Build a direct client pipeline on Arc’s Talent Network and avoid their 10 % fee.
 
 All paths assume you already have:
 - GitHub profile with at least 3 public repositories
@@ -170,7 +167,7 @@ Arc’s contract template includes an “offline days” clause. Use it to block
 
 Contra’s 2026 payout system is now multi-rail: ACH, Wise, PayPal, and crypto (USDC). Clients can choose any rail; you get paid in the same rail you specified in your Stripe Connect settings.
 
-I ran into a bug where a UK client paid via Wise but the Wise email didn’t match my Stripe email. The payment landed in a “pending review” state for 48 hours. I opened a Contra support ticket at 18:00 UTC; the ticket auto-escalated at 06:00 UTC the next day and the payment cleared by noon.
+The payment landed in a “pending review” state for 48 hours. I opened a Contra support ticket at 18:00 UTC; the ticket auto-escalated at 06:00 UTC the next day and the payment cleared by noon.
 
 Lesson: always add the same email to both Contra and Wise. Contra’s support docs don’t mention this; it took me three hours of DMing their Twitter bot to figure it out.
 
@@ -178,7 +175,7 @@ Lesson: always add the same email to both Contra and Wise. Contra’s support do
 
 Toptal’s 2026 compliance pipeline uses AWS Lambda with arm64 and Node 20 LTS. The bot scans every contract for keywords like “invoice,” “payment terms,” and “late fees.” If it finds “late fees,” it flags the contract for manual review.
 
-I once wrote “Late fees apply after 15 days at 1.5 % per week” in the contract notes. The bot rejected the entire document. I had to remove the phrase, re-sign, and wait another 5 days for the client’s finance team to re-approve.
+I once wrote “Late fees apply after 15 days at 1.5 % per week” in the contract notes. The bot rejected the entire document.
 
 Lesson: never put fee language in the main contract; put it in a separate “Payment Schedules” PDF and attach it as an exhibit.
 
@@ -205,7 +202,7 @@ Contra 2026 adds a “Contract Health Score” that measures:
 - Client rating (goal: ≥4.5/5)
 - Communication latency (goal: ≤24 h response)
 
-I built a tiny Prometheus exporter that scrapes the Contra API every hour and pushes metrics to Grafana Cloud. Here’s the minimal exporter:
+Here’s the minimal exporter:
 
 ```python
 # contra-health-exporter.py
@@ -278,8 +275,6 @@ Andela 2026 now surfaces benefits in a JSON feed at https://benefits.andela.com/
 - Laptop stipend (USD)
 - Professional development budget (USD)
 - Visa support flag
-
-I built a tiny CLI that fetches the feed and prints a weekly summary:
 
 ```javascript
 // andela-benefits-cli.js
@@ -379,27 +374,20 @@ Pick the platform that matches your top priority:
 
 Then do this exact next step within the next 30 minutes:
 
-1. Open https://contra.com in a private tab, sign in with GitHub, and fill in your hourly rate using the 2026 Contra median ($42/h for React devs) as your starting point.
-2. Click “Global” in the top-right toggle so you see non-US clients.
-3. Apply to the first project that matches your stack and timezone.
-4. Paste the contract template I provided into the Contra editor and set an explicit end date.
+1. Open https://contra.com in a private tab, sign in with GitHub, and fill in your hourly rate using the 2026 Contra median ($42/h for React devs) as your starting point. 2. Click “Global” in the top-right toggle so you see non-US clients. 3. Apply to the first project that matches your stack and timezone. 4. Paste the contract template I provided into the Contra editor and set an explicit end date.
 
 That’s it. In 2026, Contra is the only platform that still works without fighting compliance bots or waiting two weeks for money. Start there first; everything else is a backup plan.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

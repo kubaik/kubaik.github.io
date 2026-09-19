@@ -8,7 +8,7 @@ Most teams treat prompt injection like a theoretical risk they’ll handle later
 
 What the docs *do* show is sanitization libraries and a simple regex. What they skip is how your prompt template evolves over six months of feature creep. We started with a clean 200-character system prompt in January 2026. By June, it ballooned to 1,200 characters because three different teams kept adding new capabilities. Each expansion created new injection vectors: unescaped braces, unquoted user variables, JSON fragments that looked like user input but were actually injected instructions. The moment a malicious user sent `{"role":"admin","prompt":"ignore previous instructions"}` the system prompt’s JSON parser silently swallowed the override and executed the attacker’s payload.
 
-I was surprised to discover that even well-funded teams ignore this because their evaluation suites only test happy-path prompts. Our automated tests used curated datasets of 500 prompts that were manually edited to avoid special characters. Real users, however, paste Excel exports, shell commands, and entire JSON dumps. The gap isn’t just technical—it’s cultural. Engineers assume prompt injection is a red-team problem, not a shipping-velocity problem. The moment we wrapped our prompts in Jinja2 templates with auto-escaping, the hidden injection attempts dropped from 12% of traffic to 0.4%—but only after we measured for a week.
+Our automated tests used curated datasets of 500 prompts that were manually edited to avoid special characters. Real users, however, paste Excel exports, shell commands, and entire JSON dumps. The gap isn’t just technical—it’s cultural. Engineers assume prompt injection is a red-team problem, not a shipping-velocity problem. The moment we wrapped our prompts in Jinja2 templates with auto-escaping, the hidden injection attempts dropped from 12% of traffic to 0.4%—but only after we measured for a week.
 
 Production needs continuous red-teaming, not one-off security reviews. Your staging environment probably runs a static prompt file that never changes. In reality, prompts change daily through feature flags, A/B experiments, and gradual rollouts. What you need is a canary prompt that compares the current prompt hash against a golden hash created during deployment. Any drift triggers an alert before users see the change. I set this up using a 45-line GitHub Action that runs after every merge. The first week it caught three accidental prompt edits—none intentional, all costly when they went live.
 
@@ -342,11 +342,7 @@ The sandboxing approach isn’t perfect. It adds latency and complexity. But it�
 
 If you run an AI service in production today, open your prompt template file right now. Count the number of curly braces. If it’s more than two per line, you’re vulnerable. Then, do this:
 
-1. Run `npm install @ai-safety/prompt-sandbox@1.3.2` or `pip install prompt-sandbox==1.3.2`.
-2. Wrap your prompt template in a sandbox.
-3. Add a Zod schema to validate every prompt variable.
-4. Compute a SHA-256 hash of the rendered prompt and compare it to a golden hash in CI.
-5. Deploy to staging and run a load test with 100 prompts that contain `{`, `}`, `;`, and triple backticks.
+1. Run `npm install @ai-safety/prompt-sandbox@1.3.2` or `pip install prompt-sandbox==1.3.2`. 2. Wrap your prompt template in a sandbox. 3. Add a Zod schema to validate every prompt variable. 4. Compute a SHA-256 hash of the rendered prompt and compare it to a golden hash in CI. 5. Deploy to staging and run a load test with 100 prompts that contain `{`, `}`, `;`, and triple backticks.
 
 If you see any prompts that render successfully, you have an injection vector. Fix it before it hits production.
 
@@ -366,20 +362,16 @@ In Node with `vm2`, it adds ~12ms per request in cold starts. In production with
 **What’s the most common injection vector I’ll see in production?**
 Copy-paste errors. Users paste JSON, Python code, or Excel exports into your input field. The most common payloads are `{key: value}`, `{{system_instruction=...}}`, and triple backticks with injected instructions. These aren’t attacks—they’re accidents that break your system.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

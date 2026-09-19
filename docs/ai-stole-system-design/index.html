@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-21T15:10:03.056592">
-        <meta property="article:modified_time" content="2026-09-17T04:09:37.269681+00:00">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.760546+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI stole system design">
@@ -63,7 +63,7 @@
       "headline": "AI stole system design",
       "description": "Detect AI-generated system designs in 2026 interviews — 3 concrete red flags, a live debugging fix, and the exact Terraform command to audit Terraform pasted…",
       "datePublished": "2026-06-21T15:10:03+00:00",
-      "dateModified": "2026-09-17T04:09:37+00:00",
+      "dateModified": "2026-09-19T08:27:13+00:00",
       "wordCount": 2037,
       "timeRequired": "PT10M",
       "articleSection": "Technology",
@@ -268,7 +268,7 @@
                         10 min read
                         &nbsp;·&nbsp; 2037 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-17
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -302,25 +302,18 @@
 <h2 id="how-to-prevent-this-from-happening-again">How to prevent this from happening again</h2>
 <p>Prevent this by changing the interview format entirely. Replace the static design doc with a live coding exercise on a real cluster. For example:</p>
 <ul>
-<li>Spin up a 3-node Redis Cluster on your laptop using Docker Compose.</li>
-<li>Give the candidate a failing test: a GET request returns stale data after a write.</li>
-<li>Ask them to debug and fix it in 20 minutes while explaining their reasoning.</li>
+<li>Spin up a 3-node Redis Cluster on your laptop using Docker Compose. - Give the candidate a failing test: a GET request returns stale data after a write. - Ask them to debug and fix it in 20 minutes while explaining their reasoning.</li>
 </ul>
 <p>This works because AI assistants can’t fix a real system in real time. The candidate must understand replication lag, quorum, and eviction policies to proceed.</p>
 <p>I implemented this at a fintech in Mexico City. We saw a 40% drop in false positives (candidates who looked good on paper but couldn’t code) and a 25% increase in engineer referral hires within six months. The key was moving from “design a system” to “fix this broken one.”</p>
 <h2 id="related-errors-you-might-hit-next">Related errors you might hit next</h2>
 <ul>
-<li><strong>Over-reliance on AI-generated Terraform</strong>: Candidates paste Terraform modules from Copilot without understanding IAM policies. The symptom is a module that fails to deploy due to missing permissions.</li>
-<li><strong>Misquoted latency numbers</strong>: Candidates quote Redis 7.2’s 1M ops/sec as 10M ops/sec after reading a 2026 blog post. The symptom is an architecture that over-provisions by 3x.</li>
-<li><strong>Vendor-locked diagrams</strong>: Candidates draw diagrams using only AWS icons and services, then can’t explain how the same system would work on GCP. The symptom is a blank stare when asked about equivalent Azure services.</li>
-<li><strong>Over-engineered microservices</strong>: Candidates propose a service per endpoint after prompting Copilot with “microservices best practices.” The symptom is a design with 12 services for a CRUD app.</li>
+<li><strong>Over-reliance on AI-generated Terraform</strong>: Candidates paste Terraform modules from Copilot without understanding IAM policies. The symptom is a module that fails to deploy due to missing permissions. - <strong>Misquoted latency numbers</strong>: Candidates quote Redis 7.2’s 1M ops/sec as 10M ops/sec after reading a 2026 blog post. The symptom is an architecture that over-provisions by 3x. - <strong>Vendor-locked diagrams</strong>: Candidates draw diagrams using only AWS icons and services, then can’t explain how the same system would work on GCP. The symptom is a blank stare when asked about equivalent Azure services. - <strong>Over-engineered microservices</strong>: Candidates propose a service per endpoint after prompting Copilot with “microservices best practices.” The symptom is a design with 12 services for a CRUD app.</li>
 </ul>
 <h2 id="when-none-of-these-work-escalation-path">When none of these work: escalation path</h2>
 <p>If the candidate still passes the design round but fails the live coding round, escalate to a system design deep dive. Ask them to:</p>
 <ol>
-<li>Pick a past production outage they debugged.</li>
-<li>Walk you through their thought process in real time.</li>
-<li>Draw the system topology as they explain it.</li>
+<li>Pick a past production outage they debugged. 2. Walk you through their thought process in real time. 3. Draw the system topology as they explain it.</li>
 </ol>
 <p>If they can’t reconstruct their own work from memory, they didn’t build it. I escalated a candidate in Lima this way. They’d presented a flawless design for a “real-time fraud detection system,” but couldn’t explain how their Kafka topic partitions were sized. Turns out they’d copied the design from a 2026 conference talk. Escalation saved us a bad hire.</p>
 <hr />

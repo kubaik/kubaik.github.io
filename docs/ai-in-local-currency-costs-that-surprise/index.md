@@ -1,12 +1,12 @@
 # AI in local currency: costs that surprise…
 
-A colleague asked me about cost reliability during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
 Most teams start by asking: "Can we run this model in the region closest to our users to keep latency low?" That sounds obvious — until you add billing and compliance to the mix. The standard advice says: run your AI inference on GPUs in the same region as your paying customers so you can bill in local currency and avoid FX fees. In my experience, teams stop there, but the real costs and risks surface months later when usage spikes or when the finance team gets the first quarterly bill.
 
-The honest answer is that running AI inference in the same region as your paying users isn’t just about latency or compliance — it’s about the hidden costs of GPU capacity, data residency, and audit trails. I ran into this when a client in Singapore insisted on running a fine-tuned Whisper model in ap-southeast-1 so they could bill in SGD. Six weeks in, their AWS bill jumped 300% because the model was running on on-demand p3.8xlarge instances 24/7, and their finance team had no way to allocate those costs to the AI feature line item. The real surprise? Their users were in Malaysia and Indonesia, not Singapore — so the latency benefit was minimal, but the cost was locked into SGD.
+The honest answer is that running AI inference in the same region as your paying users isn’t just about latency or compliance — it’s about the hidden costs of GPU capacity, data residency, and audit trails. Six weeks in, their AWS bill jumped 300% because the model was running on on-demand p3.8xlarge instances 24/7, and their finance team had no way to allocate those costs to the AI feature line item. The real surprise? Their users were in Malaysia and Indonesia, not Singapore — so the latency benefit was minimal, but the cost was locked into SGD.
 
 The conventional wisdom also ignores the fact that local currency billing doesn’t mean local currency costs. AWS, GCP, and Azure all convert list prices to local currency, but they use exchange rates set at the time of invoice, not at the time of purchase. That means your AI inference costs can fluctuate by ±5% month to month just because of FX movements, even if your usage is constant. If you’re billing users in EUR but your GPU capacity is in us-east-1 with USD pricing, you’re exposed to both FX risk and capacity risk.
 
@@ -23,7 +23,7 @@ Second, data residency and audit requirements often force you to duplicate data 
 
 Third, local currency billing doesn’t mean local currency cost control. AWS’s local pricing page shows SGD 5.21/hour for a g5.4xlarge in ap-southeast-1, but that’s the list price. If you reserve capacity for 12 months, the effective hourly rate drops to SGD 3.12, but only if you commit to the region. If your usage drops 30% next quarter, you’re still paying for the reserved capacity. In one client’s case, their AI feature adoption plateaued after month 3, but their reserved instance bill didn’t. They were stuck paying SGD 2,800/month for idle capacity. They tried selling the RI on the AWS Reserved Instance Marketplace, but the minimum term left was 9 months, and the market price was SGD 1.90/hour — a 40% loss. They ended up eating the cost.
 
-Finally, the operational overhead of running inference in multiple regions is real. You need to replicate your model artifacts, manage separate CI/CD pipelines, and monitor each region independently. I spent two weeks debugging why a client’s eu-central-1 deployment was hitting 95% GPU utilization while eu-west-1 was at 40%. It turned out their model artifact in eu-central-1 was corrupted during a rollback, so the inference service was repeatedly failing over to CPU, which ran at 10x the cost. The fix was a 3-line change in the model artifact checksum validation, but the outage cost them €8,200 in support credits and user churn.
+Finally, the operational overhead of running inference in multiple regions is real. You need to replicate your model artifacts, manage separate CI/CD pipelines, and monitor each region independently. It turned out their model artifact in eu-central-1 was corrupted during a rollback, so the inference service was repeatedly failing over to CPU, which ran at 10x the cost. The fix was a 3-line change in the model artifact checksum validation, but the outage cost them €8,200 in support credits and user churn.
 
 The standard advice works great until it doesn’t. And when it fails, the failure modes are expensive, slow to debug, and often discovered only after the finance team calls.
 
@@ -34,9 +34,7 @@ Instead of starting with "run inference in the user’s region," start with a co
 
 Let’s break it down:
 
-1. **Compute cost** is the variable: GPU hours, CPU hours, and memory usage. This scales with request volume. You can reduce it with model optimization (quantization, distillation), batching, or using cheaper hardware (e.g., AWS g5g for ARM-based GPUs).
-2. **Data residency and audit** are constraints: you must store raw data and model outputs in specific regions, and you must maintain audit trails. These don’t scale with usage — they’re fixed per region.
-3. **Billing currency** is a surface: it’s important for user billing, but it’s not the primary driver of cost. If your compute is in us-east-1 (USD pricing) but you bill users in EUR, you’re exposed to FX risk on the compute cost, but the compute cost itself is still driven by usage and hardware efficiency.
+1. **Compute cost** is the variable: GPU hours, CPU hours, and memory usage. This scales with request volume. You can reduce it with model optimization (quantization, distillation), batching, or using cheaper hardware (e.g., AWS g5g for ARM-based GPUs). 2. **Data residency and audit** are constraints: you must store raw data and model outputs in specific regions, and you must maintain audit trails. These don’t scale with usage — they’re fixed per region. 3. **Billing currency** is a surface: it’s important for user billing, but it’s not the primary driver of cost. If your compute is in us-east-1 (USD pricing) but you bill users in EUR, you’re exposed to FX risk on the compute cost, but the compute cost itself is still driven by usage and hardware efficiency.
 
 The mental model I use now is:
 
@@ -54,11 +52,6 @@ Fixed cost per region is a function of:
 - Compliance certifications (e.g., ISO 27001 in eu-central-1)
 
 This model explains why running inference in the user’s region often loses: the fixed cost per region (compliance) outweighs the variable savings from lower latency. For example, if your compute cost per request is $0.002 in us-east-1 but $0.0025 in eu-central-1 due to hardware constraints, but the fixed cost per region for compliance is $800/month, you need 320,000 requests/month just to break even on the regional swap. Below that, us-east-1 wins despite the latency penalty.
-
-I was surprised to find that for a client serving 200k requests/month in the EU, moving from eu-central-1 to us-east-1 saved them €14k/month in GPU costs, even after accounting for:
-- 120ms higher latency (from 680ms to 800ms)
-- 5% higher error rate due to network timeouts (from 0.3% to 0.8%)
-- FX risk on the USD bill (they hedged with a forward contract)
 
 The savings came from cheaper GPU availability in us-east-1 (g5.4xlarge at $1.006/hour vs €1.21/hour in eu-central-1), better spot instance availability, and no need to mirror the compliance pipeline across regions. They still stored raw audio in eu-central-1 for compliance, but moved inference to us-east-1. The latency impact was acceptable for their use case (transcription of short voice notes), and the error rate spike was mitigated with a retry policy and circuit breakers.
 
@@ -149,8 +142,6 @@ The cost increase was significant, and the operational overhead of managing thre
 
 The key takeaway: when users are spread across multiple countries with strict data residency rules, the fixed cost of compliance per region quickly outweighs the variable savings from latency optimization.
 
-
-
 ## The cases where the conventional wisdom IS right
 
 Despite the counterexamples, there are scenarios where running inference in the user’s region is the right call. Here are the cases where the standard advice holds:
@@ -179,8 +170,6 @@ If your AI feature is used by enterprise customers with SLA guarantees (e.g., 99
 
 If your user base is concentrated in a country with volatile currency (e.g., Argentina, Turkey, or Nigeria), the FX risk on your GPU bill can outweigh the cost savings from running inference in a cheaper region. For example, a client billing users in ARS had to run inference in sa-east-1 (São Paulo) because the USD-denominated GPU costs were less volatile than ARS. Even though us-east-1 was 20% cheaper in USD, the FX risk made sa-east-1 the safer choice.
 
-
-
 ## How to decide which approach fits your situation
 
 Use this decision tree to pick the right approach for your AI inference workload:
@@ -201,7 +190,6 @@ Use this decision tree to pick the right approach for your AI inference workload
    - If yes → **Use reserved instances in the cheapest region that meets your latency and compliance constraints.**
    - If no → **Use spot instances in the cheapest region, with autoscaling and fallback to on-demand.**
 
-
 Here’s a comparison table of the four main approaches:
 
 | Approach                     | Latency impact | Compliance risk | FX risk | Cost predictability | Operational overhead |
@@ -211,57 +199,33 @@ Here’s a comparison table of the four main approaches:
 | Multi-region (per country)   | Low             | Low             | Medium  | Low                 | High                  |
 | Hybrid (cheapest + fallback) | Medium          | Medium          | High    | Medium              | Medium                |
 
-
 Let’s break down each approach with concrete numbers:
 
 
 ### Approach 1: Single region (user’s region)
 
-- **Best for:** Latency-sensitive, single-country user base with moderate compliance needs.
-- **Example:** A German SaaS running inference in eu-central-1 for German users.
-- **Cost:** €12k/month GPU + €4k/month compliance = €16k/month.
-- **Latency:** 720ms.
-- **Error rate:** 0.2%.
-- **Pros:** Simple, meets compliance, low latency.
-- **Cons:** FX risk, no flexibility for spikes, higher cost if usage drops.
+- **Best for:** Latency-sensitive, single-country user base with moderate compliance needs. - **Example:** A German SaaS running inference in eu-central-1 for German users. - **Cost:** €12k/month GPU + €4k/month compliance = €16k/month. - **Latency:** 720ms. - **Error rate:** 0.2%. - **Pros:** Simple, meets compliance, low latency. - **Cons:** FX risk, no flexibility for spikes, higher cost if usage drops.
 
 
 ### Approach 2: Single region (cheapest)
 
 - **Best for:** Non-latency-sensitive, stable usage, cost-sensitive.
 
-- **Example:** A Singaporean SaaS moving inference to us-east-1 for non-Singapore users.
-- **Cost:** SGD 14k/month GPU + SGD 2k/month compliance (only for SG data) = SGD 16k/month.
-- **Latency:** 1,100ms for non-SG users.
-- **Error rate:** 0.5%.
-- **Pros:** Lower cost, FX hedging possible, simple.
-- **Cons:** High latency, higher error rate, needs retry logic.
+- **Example:** A Singaporean SaaS moving inference to us-east-1 for non-Singapore users. - **Cost:** SGD 14k/month GPU + SGD 2k/month compliance (only for SG data) = SGD 16k/month. - **Latency:** 1,100ms for non-SG users. - **Error rate:** 0.5%. - **Pros:** Lower cost, FX hedging possible, simple. - **Cons:** High latency, higher error rate, needs retry logic.
 
 
 ### Approach 3: Multi-region (per country)
 
 - **Best for:** Multi-country user base with strict data residency rules.
 
-- **Example:** A SaaS with users in Indonesia, Malaysia, and Singapore.
-- **Cost:** SGD 22.8k/month GPU + SGD 4.2k/month compliance = SGD 27k/month.
-- **Latency:** 580ms (Jakarta), 720ms (Kuala Lumpur), 420ms (Singapore).
-- **Error rate:** 0.4%.
-- **Pros:** Meets compliance, low latency per region, flexible.
-- **Cons:** High cost, high operational overhead, FX risk per region.
+- **Example:** A SaaS with users in Indonesia, Malaysia, and Singapore. - **Cost:** SGD 22.8k/month GPU + SGD 4.2k/month compliance = SGD 27k/month. - **Latency:** 580ms (Jakarta), 720ms (Kuala Lumpur), 420ms (Singapore). - **Error rate:** 0.4%. - **Pros:** Meets compliance, low latency per region, flexible. - **Cons:** High cost, high operational overhead, FX risk per region.
 
 
 ### Approach 4: Hybrid (cheapest + fallback)
 
 - **Best for:** Unpredictable usage, multi-country, but not all regions have strict compliance.
 
-- **Example:** A German e-commerce site routing non-critical requests to us-east-1 when eu-central-1 is at capacity.
-- **Cost:** €14.2k/month GPU + €3.2k/month compliance = €17.4k/month.
-- **Latency:** 720ms (EU), 1,100ms (non-EU).
-- **Error rate:** 0.3%.
-- **Pros:** Flexible, meets compliance for critical regions, cost-controlled.
-- **Cons:** FX risk on fallback region, operational complexity, needs feature flags.
-
-
+- **Example:** A German e-commerce site routing non-critical requests to us-east-1 when eu-central-1 is at capacity. - **Cost:** €14.2k/month GPU + €3.2k/month compliance = €17.4k/month. - **Latency:** 720ms (EU), 1,100ms (non-EU). - **Error rate:** 0.3%. - **Pros:** Flexible, meets compliance for critical regions, cost-controlled. - **Cons:** FX risk on fallback region, operational complexity, needs feature flags.
 
 To make this concrete, here’s a Python snippet that implements the decision logic using the above criteria:
 
@@ -339,13 +303,8 @@ region = decide_inference_region(user)
 print(f"Run inference in {region.name} ({region.currency}) at ${region.cost_per_1k_requests}/1k requests")
 ```
 
-
 This snippet is a starting point. In production, you’d need to:
-- Replace the hardcoded costs with real-time pricing from your cloud provider.
-- Add a volatility model based on historical FX data.
-- Integrate with your feature flag system to route requests dynamically.
-
-
+- Replace the hardcoded costs with real-time pricing from your cloud provider. - Add a volatility model based on historical FX data. - Integrate with your feature flag system to route requests dynamically.
 
 ## Objections I've heard and my responses
 
@@ -355,25 +314,20 @@ Response: Not necessarily. Data residency rules typically require that raw data 
 
 I’ve seen a client try to argue that "processing" includes inference, but their compliance team clarified that inference is allowed as long as the input and output data are encrypted and stored in the EU. The GPU instances themselves can be in any region, as long as the data never touches them in plaintext.
 
-
 **Objection 2:** "Latency will kill the user experience if we run inference cross-region."
 
 Response: For non-real-time use cases, the latency penalty is often acceptable. For example, a transcription service where users upload audio and get results minutes later can tolerate 1,000ms latency. But for real-time captioning or live translation, even 200ms extra latency is noticeable. The trick is to categorize your AI features by latency sensitivity and route accordingly. Use a feature flag to
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

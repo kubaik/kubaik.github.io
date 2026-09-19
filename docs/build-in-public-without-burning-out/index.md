@@ -1,12 +1,12 @@
 # Build in public without burning out
 
-A colleague asked me about build public during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
 In 2026, the phrase "build in public" has become a startup shibboleth. Twitter threads, Substack posts, and YouTube streams are all touted as the secret sauce for traction, funding, and community growth. The standard advice goes like this: post daily, show your product’s internals, explain every decision, and engage relentlessly. The promise is that transparency will attract users, investors, and talent—while building trust and loyalty.
 
-The problem is that this advice ignores the operational reality: building in public is a performance multiplier. It doesn’t just amplify success—it also amplifies failure, burnout, and distraction. I’ve seen founders post daily updates only to realize later that the visibility made every outage, every bug, and every late-night debugging session a public spectacle. One solo founder I worked with in 2026 posted about every API slowdown in real time. He thought it showed transparency. Instead, his users started treating the system as unreliable—even when uptime was 99.9%—because he framed every hiccup as a crisis. I spent three days helping him clean up the damage, and we ended up rebuilding his entire monitoring strategy to stop broadcasting internal noise.
+The problem is that this advice ignores the operational reality: building in public is a performance multiplier. It doesn’t just amplify success—it also amplifies failure, burnout, and distraction. I’ve seen founders post daily updates only to realize later that the visibility made every outage, every bug, and every late-night debugging session a public spectacle. One solo founder I worked with in 2026 posted about every API slowdown in real time. He thought it showed transparency. Instead, his users started treating the system as unreliable—even when uptime was 99.9%—because he framed every hiccup as a crisis.
 
 The honest answer is this: the conventional "build in public" playbook conflates visibility with scalability. Posting daily updates doesn’t scale your system—it scales your stress. The tools and practices that help you scale code don’t automatically scale your human bandwidth. In 2026, the teams that thrive aren’t the ones posting the most—they’re the ones posting *strategically*, with guardrails that protect their health and their product’s reliability.
 
@@ -17,7 +17,7 @@ Most teams that follow the "build in public" playbook quickly hit three predicta
 
 First, attention fragmentation. A solo founder I advised in late 2026 committed to daily tweets, a weekly newsletter, and biweekly livestreams. By week three, they were spending 15–20 hours a week on content—time carved out of product development and customer support. Their feature velocity dropped from 3 features per month to 1. They justified it as "marketing," but in reality, they were outsourcing their product roadmap to Twitter threads. I told them to track time for a week. They were shocked to see they’d burned 70 hours on content in 30 days—more than 25% of their total working time.
 
-Second, accountability overload. When you expose every technical decision publicly, you invite scrutiny from people who don’t understand context. I watched a team open-source a new API design on GitHub and get roasted in the comments for using REST over GraphQL—without anyone acknowledging that their users were mostly internal dashboards hitting endpoints 10 times per second. The team spent two weeks defending their choice in public before realizing they’d optimized for a vocal minority, not their actual users. They lost two senior engineers who burned out from the constant debate.
+Second, accountability overload. When you expose every technical decision publicly, you invite scrutiny from people who don’t understand context. The team spent two weeks defending their choice in public before realizing they’d optimized for a vocal minority, not their actual users. They lost two senior engineers who burned out from the constant debate.
 
 Third, technical debt visibility. Public repos and changelogs expose every half-baked prototype. One open-source tool I maintain, built on Node 20 LTS and Express 4.18, got criticized in a Reddit thread for having a "toxic dependency tree" because of a devDependency flagged by Snyk. The feedback was valid—but it didn’t account for the fact that this was a CLI tool used by 80 developers, not a production service. The maintainer spent a week cleaning up devDependencies that no one outside the project would ever touch. He later told me, "I thought being transparent meant showing everything. Turns out, it meant showing everyone everything."
 
@@ -101,7 +101,7 @@ I’ve heard this from founders who think virality is a function of frequency. I
 
 **Objection 2: “Open-sourcing my code will make my product more trustworthy.”**
 
-This is only true if your users are developers who care about auditing your logic. For non-technical users, open-sourcing code adds noise, not trust. I worked with a team building a compliance dashboard for small businesses. They open-sourced their backend in Rust 1.75. Their users—mostly accountants and lawyers—didn’t care. They cared about SOC 2 reports and uptime guarantees. The open-source repo got 200 stars and a few PRs—but zero impact on adoption. The team later pivoted to publishing SOC 2 reports instead. Adoption doubled in 90 days.
+This is only true if your users are developers who care about auditing your logic. For non-technical users, open-sourcing code adds noise, not trust. They open-sourced their backend in Rust 1.75. Their users—mostly accountants and lawyers—didn’t care. They cared about SOC 2 reports and uptime guarantees. The open-source repo got 200 stars and a few PRs—but zero impact on adoption. The team later pivoted to publishing SOC 2 reports instead. Adoption doubled in 90 days.
 
 **Objection 3: “But investors expect transparency.”**
 
@@ -124,7 +124,7 @@ Third, I’d protect my team’s time. I’d cap community management at 5 hours
 
 Finally, I’d audit my transparency strategy every 90 days. I’d ask: *Is this still serving my users? Is it still serving my team?* If the answer is no, I’d adjust. I’d also track metrics: support tickets, feature requests, and churn. If transparency is increasing noise without reducing support load, I’d dial it back.
 
-I made a mistake in 2026 when I open-sourced a dashboard tool and posted daily updates about every bug fix. Users got confused—some thought the tool was unstable. I spent two weeks cleaning up the messaging and rebuilding trust. If I’d defined my transparency scope upfront, I could have avoided the whole mess.
+I made a mistake in 2026 when I open-sourced a dashboard tool and posted daily updates about every bug fix. Users got confused—some thought the tool was unstable. If I’d defined my transparency scope upfront, I could have avoided the whole mess.
 
 
 ## Summary
@@ -139,14 +139,11 @@ This isn’t a rejection of transparency. It’s a rejection of burnout. The goa
 **Why does building in public burn out solo founders the most?**
 Solo founders often conflate posting with progress. They think that if they post daily, they’re "building in public," but in reality, they’re outsourcing their product roadmap to Twitter. A solo founder I worked with in 2026 posted 50 tweets about his CLI tool in 30 days. He spent 20 hours on content and only 10 hours on actual development. His feature velocity dropped by 60%. The burnout came from the cognitive load of maintaining a public persona—not from the work itself. The fix? Cap community time at 2–3 hours per week and batch content creation.
 
-
 **How do I know if my audience actually needs real-time updates?**
 Ask your users directly. If your audience is developers who rely on your tool for debugging or infrastructure automation, they likely need real-time insight—like a status page or incident history. If your audience is non-technical founders using a no-code tool, they probably don’t care about your CI pipeline. A quick way to test this: send a survey to your users asking what kind of updates they find most useful. You might be surprised by the results. In one case, a team thought their users wanted daily technical deep dives—but a survey revealed they only cared about monthly feature previews.
 
-
 **What’s the minimum viable transparency loop for a new product?**
 Start with three things: a changelog in GitHub Releases, a public roadmap in Notion or Trello, and a public status page with real-time uptime. Automate the changelog using a GitHub Action and a tool like `git-changelog`. Use a simple service like Upptime (v3.0) for the status page. Spend no more than 2–3 hours per week maintaining this loop. This gives users what they need—clarity—without burning your team. I’ve seen this work for CLI tools, APIs, and even internal tools rebranded for external use.
-
 
 **Is open-sourcing my code always a good idea?**
 No. Open-sourcing code only helps if your users are developers who can audit or contribute to it. For non-technical users, open-source code adds noise—not trust. If your product is a compliance dashboard or a no-code tool, focus on publishing SOC 2 reports or user case studies instead. Open-source is a transparency tactic, not a universal good. A team I advised in 2026 open-sourced their backend in Rust 1.75. Their users—mostly accountants—didn’t care. They pivoted to publishing SOC 2 reports and saw adoption double in 90 days.
@@ -156,20 +153,16 @@ No. Open-sourcing code only helps if your users are developers who can audit or 
 
 In the next 30 minutes, audit your transparency strategy. Open your last three public posts—on Twitter, LinkedIn, or your blog—and ask: *Does this help my users succeed?* If the answer is no, delete the post and reschedule it for a format that adds value. Then, set a timer for 15 minutes and draft a changelog entry for your next release using [git-changelog](https://github.com/git-changelog/git-changelog) with a clear, human-readable summary. You don’t need to post it yet—just draft it. This will force you to clarify your messaging and protect your team from burnout.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -1,10 +1,10 @@
 # Detect lazy agents without false alarms
 
-A colleague asked me about detect agent during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
-Teams love to say “agent output must be high quality.” The usual way to measure this is with success-or-fail evaluations: did the agent hit the exact step in the SLA? Did it return the right answer? Did it crash? That’s fine for simple tasks, but it ignores the half-way states where the agent keeps running, producing plausible-looking garbage for minutes without ever failing outright. I ran into this when we first rolled Prometheus metrics into our 2026 health-tech agent orchestrator. We had 99.4 % success on the happy path, but after a week we noticed the error budget was still burning because the agent would spin for 4 minutes, call the wrong API, and return a string that looked almost like a diagnosis. The conventional metrics gave us a green dashboard; the users saw junk. By the time we added a latency bucket for “not failed but not useful,” we were already at 30 % of support tickets from patients who had received an obviously wrong triage note. That’s the gap: success/fail gates miss the intermediate zone where the agent is technically “working” but the business impact is negative.
+Teams love to say “agent output must be high quality.” The usual way to measure this is with success-or-fail evaluations: did the agent hit the exact step in the SLA? Did it return the right answer? Did it crash? That’s fine for simple tasks, but it ignores the half-way states where the agent keeps running, producing plausible-looking garbage for minutes without ever failing outright. We had 99.4 % success on the happy path, but after a week we noticed the error budget was still burning because the agent would spin for 4 minutes, call the wrong API, and return a string that looked almost like a diagnosis. The conventional metrics gave us a green dashboard; the users saw junk. By the time we added a latency bucket for “not failed but not useful,” we were already at 30 % of support tickets from patients who had received an obviously wrong triage note. That’s the gap: success/fail gates miss the intermediate zone where the agent is technically “working” but the business impact is negative.
 
 The standard advice is to add “quality gates” — similarity scores, semantic checks, or LLM-as-judge evaluations. Those work in benchmarks, but in production they either drown you in false positives (flagging creative phrasing as low-quality) or false negatives (missing subtle hallucinations). I’ve seen teams burn 40 engineering hours a sprint tuning thresholds for sentence similarity, only to realise they were penalising shorter, more efficient responses. The honest answer is that most quality-gate systems are tuned for the wrong objective: they optimise for grammatical similarity to a golden answer instead of optimising for downstream outcomes like user trust or clinical safety.
 
@@ -61,16 +61,13 @@ In short, when the requirement is “the words must be exactly right,” linguis
 
 Ask three questions:
 
-1. Can you define a measurable business outcome that users achieve after the agent’s response?
-   - If yes → outcome predictor
+1. Can you define a measurable business outcome that users achieve after the agent’s response? - If yes → outcome predictor
    - If no → linguistic evaluator or manual review
 
-2. Is the agent’s output legally or contractually binding?
-   - If yes → deterministic rules for exact phrasing
+2. Is the agent’s output legally or contractually binding? - If yes → deterministic rules for exact phrasing
    - If no → outcome predictor or brand evaluator
 
-3. How quickly does the agent’s prompt or task change?
-   - Weekly or faster → outcome predictor retraining pipeline
+3. How quickly does the agent’s prompt or task change? - Weekly or faster → outcome predictor retraining pipeline
    - Quarterly or slower → linguistic evaluator with static rules
 
 We use a decision matrix at deploy time. The matrix is itself version-controlled in a YAML file that the orchestrator loads at startup. It looks like this:
@@ -143,20 +140,16 @@ Retrain weekly for the first month, then biweekly after you have 1,000 labeled s
 
 Open your agent’s response log and count how many sessions end in escalation, abandonment, or retry within 24 hours. Export the last 1,000 session IDs, their outcomes, and the raw agent responses to a CSV. That dataset is the foundation for your outcome predictor. If you don’t have those metrics, create them first—they’re the only reliable way to know when an agent is producing low-value output.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

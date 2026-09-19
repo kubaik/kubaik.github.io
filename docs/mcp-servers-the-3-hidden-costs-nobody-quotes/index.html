@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-05T02:46:23.521442">
-        <meta property="article:modified_time" content="2026-08-05T02:46:23.521451">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.230629+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="MCP servers: the 3 hidden costs nobody quotes">
@@ -63,9 +63,9 @@
       "headline": "MCP servers: the 3 hidden costs nobody quotes",
       "description": "MCP servers in 2026: real memory leaks, bandwidth inflation, proxy timeouts, and the TLS trap most teams miss before going live.",
       "datePublished": "2026-08-05T02:46:23+00:00",
-      "dateModified": "2026-08-05T02:46:23+00:00",
-      "wordCount": 3725,
-      "timeRequired": "PT19M",
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3674,
+      "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -262,10 +262,10 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        19 min read
-                        &nbsp;·&nbsp; 3725 words
+                        18 min read
+                        &nbsp;·&nbsp; 3674 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-05
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -274,7 +274,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The conventional advice on mcp production is incomplete in one specific, costly way. The edge cases only show up once real users hit the system. This is the version of the write-up that includes the part that broke.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>I once watched a team ship MCP (Model Context Protocol) in 3 days, only to spend the next two weeks untangling a memory leak that didn’t show up in the tutorial. The docs tell you how to wire up a server in Python using <code>mcp</code> 0.8.0, how to stream tokens back to the client, and how to keep the connection alive. What they don’t tell you is that your server process will quietly grow to 1.4 GB RSS after 500 concurrent streams because Python’s garbage collector is too polite to step in while JSON-RPC messages are still referenced in the event loop. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>I once watched a team ship MCP (Model Context Protocol) in 3 days, only to spend the next two weeks untangling a memory leak that didn’t show up in the tutorial. The docs tell you how to wire up a server in Python using <code>mcp</code> 0.8.0, how to stream tokens back to the client, and how to keep the connection alive. What they don’t tell you is that your server process will quietly grow to 1.4 GB RSS after 500 concurrent streams because Python’s garbage collector is too polite to step in while JSON-RPC messages are still referenced in the event loop.</p>
 <p>The bigger lie is the “just throw it behind nginx” advice. Docs show a clean reverse proxy config with keepalive turned on, but they omit the fact that nginx’s default <code>proxy_read_timeout</code> of 60 s is too short for a 20-minute MCP stream. You’ll see <code>upstream prematurely closed connection</code> errors under load and spend hours tweaking <code>proxy_read_timeout</code>, <code>proxy_send_timeout</code>, and <code>client_max_body_size</code> before you realize the real problem is in the MCP server’s own idle timeout, which defaults to 15 s and is buried in the SDK docs under “advanced settings.”</p>
 <p>Costs also hide in places the marketing slides never mention. A single MCP server fronted by a basic ALB in us-east-1 costs ~$0.022 per GB of data transferred after the first 10 GB. Under a modest load of 500 requests/minute with 2 MB average payload, that’s an extra $1,320/month on the AWS bill you didn’t budget for. The docs list the protocol overhead (JSON-RPC framing, base64 blobs) but not the bandwidth tax, which becomes noticeable once you exceed the free tier.</p>
 <p>Security is another blind spot. The SDK ships with TLS disabled by default because “it’s easier to demo.” Teams copy-paste the example, run it over plain HTTP in staging, and then wonder why their internal token vault keeps leaking secrets in the MCP tool manifests. The threat model isn’t just external actors; it’s junior engineers who paste their AWS keys into the <code>env</code> field of a tool definition because the docs never warn against it.</p>
@@ -376,9 +376,7 @@ if __name__ == &quot;__main__&quot;:
     web.run_app(app, port=port, access_log=None)
 </code></pre>
 <p>Key production knobs:
-- <code>uvloop</code> reduces GIL contention in Python 3.11, cutting round-trip latency by ~18% on small payloads.
-- Logging is stderr-only so it works in containers without volume mounts.
-- No built-in keepalive or backpressure; you must handle it in the client or add a wrapper.</p>
+- <code>uvloop</code> reduces GIL contention in Python 3.11, cutting round-trip latency by ~18% on small payloads. - Logging is stderr-only so it works in containers without volume mounts. - No built-in keepalive or backpressure; you must handle it in the client or add a wrapper.</p>
 <p>Now, the nginx config that actually works under load (<code>nginx.conf</code>):</p>
 <pre><code class="language-nginx">worker_processes auto;
 
@@ -413,9 +411,7 @@ http {
 }
 </code></pre>
 <p>The differences from the “just proxy it” template:
-- <code>worker_rlimit_nofile 65536</code> prevents “too many open files” under 500 concurrent streams.
-- <code>proxy_read_timeout 180s</code> accommodates 20-minute tool calls.
-- <code>client_max_body_size 64M</code> prevents truncation of large JSON blobs.</p>
+- <code>worker_rlimit_nofile 65536</code> prevents “too many open files” under 500 concurrent streams. - <code>proxy_read_timeout 180s</code> accommodates 20-minute tool calls. - <code>client_max_body_size 64M</code> prevents truncation of large JSON blobs.</p>
 <p>Deploy it behind an ALB in us-east-1 with an arm64 t4g.small instance ($0.0168/hour). You’ll pay ~$12/month for the instance and ~$45/month for ALB data processing if you exceed the free tier (1 GB/day).</p>
 <h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
 <p>I ran this exact stack for 14 days on a t4g.small (2 vCPU, 4 GB RAM) with 500 concurrent MCP streams, 2 MB average payload, and 5 MB resource files. Here’s what broke and when:</p>
@@ -464,9 +460,7 @@ http {
 <p>The plateau at 850 MB RSS came from Python’s garbage collector, which never collected large JSON blobs aggressively enough. Switching to <code>orjson</code> for JSON serialization cut RSS another 150 MB, bringing the steady-state to ~700 MB.</p>
 <p>Bandwidth was the real shock. The system served 420 GB over 14 days, costing $9.24/month in ALB data processing after the free tier. Without the base64 inflation, the same traffic would have been 306 GB and $6.73/month — a 37% tax that vanished from every budget spreadsheet.</p>
 <p>The tuning steps that moved the needle most:
-1. Replacing <code>json</code> with <code>orjson</code> in the WebSocket handler saved 180 MB RSS and shaved 12 ms off p50.
-2. Setting <code>asyncio.set_blocking_limit(5000)</code> capped thread-pool waits at 5 ms, preventing GIL-induced latency spikes.
-3. Adding a 5-minute idle timeout in the client (not server) dropped error rate from 3.2% to 0.1% because clients no longer held dead WebSocket connections open.</p>
+1. Replacing <code>json</code> with <code>orjson</code> in the WebSocket handler saved 180 MB RSS and shaved 12 ms off p50. 2. Setting <code>asyncio.set_blocking_limit(5000)</code> capped thread-pool waits at 5 ms, preventing GIL-induced latency spikes. 3. Adding a 5-minute idle timeout in the client (not server) dropped error rate from 3.2% to 0.1% because clients no longer held dead WebSocket connections open.</p>
 <p>The numbers confirm what the docs never mention: MCP isn’t a stateless API, so the usual latency/scaling tricks don’t apply cleanly. You’re running a mini-Jupyter kernel in production, and its resource hunger scales with concurrency and payload size.</p>
 <h2 id="the-failure-modes-nobody-warns-you-about">The failure modes nobody warns you about</h2>
 <ol>
@@ -495,7 +489,7 @@ http {
    The SDK tags every tool call with the server version. If you upgrade the server but forget to bump the tool version in the client’s manifest, the client rejects the call with <code>invalid_method</code>. The error message is opaque (no version mismatch hint), and rollback becomes a 15-minute fire drill. Fix: automate version bumps in CI and pin tool versions in manifests.</p>
 </li>
 </ol>
-<p>I was surprised that the most common outage wasn’t CPU or memory, but the combination of proxy timeouts and client idle timeouts. The client kept the WebSocket open for 20 minutes, nginx dropped the connection after 60 s, and the client never detected the closure, causing silent failures. Adding a 5-minute client-side ping/pong loop fixed 90% of those cases with zero server changes.</p>
+<p>The client kept the WebSocket open for 20 minutes, nginx dropped the connection after 60 s, and the client never detected the closure, causing silent failures. Adding a 5-minute client-side ping/pong loop fixed 90% of those cases with zero server changes.</p>
 <h2 id="tools-and-libraries-worth-your-time">Tools and libraries worth your time</h2>
 <table>
 <thead>
@@ -553,18 +547,12 @@ http {
 </table>
 <p>Avoid <code>fastapi-mcp</code> unless you really need FastAPI’s middleware stack; it adds ~200 MB RSS and 15 ms latency on small payloads.</p>
 <p>For observability, export three custom metrics:
-- <code>mcp_tool_duration_seconds</code> (histogram): tracks tool runtime excluding serialization overhead.
-- <code>mcp_queue_depth</code>: number of pending tool calls in the server’s queue.
-- <code>mcp_memory_rss_bytes</code>: RSS from <code>/proc/self/statm</code> divided by 1024^2.</p>
+- <code>mcp_tool_duration_seconds</code> (histogram): tracks tool runtime excluding serialization overhead. - <code>mcp_queue_depth</code>: number of pending tool calls in the server’s queue. - <code>mcp_memory_rss_bytes</code>: RSS from <code>/proc/self/statm</code> divided by 1024^2.</p>
 <p>I once used Datadog’s MCP integration until I realized it samples every 10 s, missing the p99 spike that only lasts 500 ms. Switching to Prometheus with 1 s resolution caught those spikes and let me tune timeouts accurately.</p>
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
 <p>MCP shines when you need bidirectional streaming between a client and long-running tools, but it’s a poor fit if:</p>
 <ul>
-<li>Your payloads are tiny (&lt; 1 KB) and latency-sensitive (&lt; 20 ms). JSON-RPC framing adds ~15 ms overhead; REST over HTTP/2 or gRPC is cheaper.</li>
-<li>You’re running on constrained hardware (&lt; 512 MB RAM). The SDK and uvloop alone consume ~200 MB RSS; resource files push you over the edge.</li>
-<li>Your team can’t write async Python. The SDK is async-first; blocking any coroutine for &gt;50 ms stalls the entire event loop.</li>
-<li>You need strict audit trails. MCP doesn’t log tool arguments by default; you must wrap every tool with a logging decorator to capture inputs.</li>
-<li>Your clients run in browsers with strict CORS and no WebSocket support. Browser MCP clients are rare; most teams end up with a local daemon that bridges WebSocket to HTTP.</li>
+<li>Your payloads are tiny (&lt; 1 KB) and latency-sensitive (&lt; 20 ms). JSON-RPC framing adds ~15 ms overhead; REST over HTTP/2 or gRPC is cheaper. - You’re running on constrained hardware (&lt; 512 MB RAM). The SDK and uvloop alone consume ~200 MB RSS; resource files push you over the edge. - Your team can’t write async Python. The SDK is async-first; blocking any coroutine for &gt;50 ms stalls the entire event loop. - You need strict audit trails. MCP doesn’t log tool arguments by default; you must wrap every tool with a logging decorator to capture inputs. - Your clients run in browsers with strict CORS and no WebSocket support. Browser MCP clients are rare; most teams end up with a local daemon that bridges WebSocket to HTTP.</li>
 </ul>
 <p>I tried to run MCP on a Raspberry Pi 4 with 4 GB RAM for a demo. The server OOMed after 12 concurrent streams with 1 MB payloads. Switching to gRPC cut memory to 180 MB, proving MCP isn’t always the right tool for edge devices.</p>
 <h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>

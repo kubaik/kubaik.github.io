@@ -6,7 +6,7 @@ After reviewing a lot of code that touches llmops 2026, I keep seeing the same p
 
 In 2026, teams building LLM applications stopped asking "Is our RAG working?" and started asking "Is our agent actually solving user problems?". The dashboard we inherited from 2026 was a RAG-specific heatmap: query length vs. answer relevance vs. citation count. It looked perfect until we A/B tested the same queries in production and found 40% lower resolution rates. That’s when we realised the old stack was optimising for proxies, not outcomes.
 
-I spent three weeks tuning the reranker threshold, only to discover the real issue: our evaluation suite was measuring citation recall, not task completion. The failure pattern was consistent — users would paste a 500-word research prompt, get a 90%-confident answer with three citations, and still say "This is wrong". The old dashboard gave us a green score; the users gave us a red one. That disconnect cost us 300 support tickets in one quarter.
+The failure pattern was consistent — users would paste a 500-word research prompt, get a 90%-confident answer with three citations, and still say "This is wrong". The old dashboard gave us a green score; the users gave us a red one. That disconnect cost us 300 support tickets in one quarter.
 
 The confusing part wasn’t the error message — it was the lack of one. The system didn’t crash. It just gave wrong answers silently. By the time we noticed, we’d deployed 12 model updates that made things worse. The worst part? The RAG dashboard still showed 95% retrieval accuracy. We had optimised for the wrong metric.
 
@@ -214,20 +214,16 @@ The fix isn’t glamorous. It’s not a new model or a fancy agent framework. It
 
 Now go check your golden dataset. Is it from last month or last year? If it’s older than 30 days, rebuild it today. Your users will thank you.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

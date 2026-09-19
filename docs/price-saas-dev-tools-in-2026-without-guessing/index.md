@@ -1,25 +1,21 @@
 # Price SaaS dev tools in 2026 without guessing
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
 I got stuck for 28 days in 2026 trying to price a CLI for Kubernetes cost auditing. We’d built a tool that found 32 % waste in EKS clusters for our Vietnam-based SaaS, but every pricing model we tried either scared buyers or left money on the table. I discovered fast that the market teaches you three brutal truths:
 
-1. Developers hate value-based pricing unless you give them a calculator they can run in their own terminal.
-2. Usage-based SaaS pricing collapses under its own weight once you cross 10 k active users/month.
-3. The moment you charge per API call, you’re selling an AI feature you can’t yet afford to build.
+1. Developers hate value-based pricing unless you give them a calculator they can run in their own terminal. 2. Usage-based SaaS pricing collapses under its own weight once you cross 10 k active users/month. 3. The moment you charge per API call, you’re selling an AI feature you can’t yet afford to build.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. In this article you’ll see the exact spreadsheets, benchmarks, and contracts that moved the needle for teams shipping dev tools in 2026. No theory, only what we open-sourced and what we charged for.
+In this article you’ll see the exact spreadsheets, benchmarks, and contracts that moved the needle for teams shipping dev tools in 2026. No theory, only what we open-sourced and what we charged for.
 
 ## Prerequisites and what you'll build
 
 You only need a GitHub repo, a Stripe account, and Node 20 LTS. We’ll ship a tiny CLI that lists open source licenses inside a directory, counts total lines of code, and optionally uploads a report to a SaaS dashboard. The pricing model we’ll hard-code is seat-based with a free tier and a usage cap, because that’s what teams buying developer tools actually pay for in 2026.
 
 What you’ll have at the end:
-- A CLI written in Go 1.22 (fast startup, single binary).
-- A Stripe subscription product with two price points ($9 and $49 per month).
-- A Grafana dashboard hooked to our own event stream.
+- A CLI written in Go 1.22 (fast startup, single binary). - A Stripe subscription product with two price points ($9 and $49 per month). - A Grafana dashboard hooked to our own event stream.
 
 Expect 300 lines of Go for the CLI and 80 lines of TypeScript for the SaaS backend. We’ll use Bun 1.1 for fast local builds and AWS Lambda with arm64 to keep infra under $12/mo for the first 5 k users.
 
@@ -215,9 +211,7 @@ I first tried to use Python 3.11 for the Lambda and the cold start jumped to 750
 ## Step 3 — handle edge cases and errors
 
 1. License file edge cases:
-   - Empty files: skip and log a warning.
-   - Binary files: skip with a debug log.
-   - SPDX tag-value format: parse with `github.com/koppor/go-spdx` v0.4.
+   - Empty files: skip and log a warning. - Binary files: skip with a debug log. - SPDX tag-value format: parse with `github.com/koppor/go-spdx` v0.4.
 
 2. Usage-based errors:
    - If a user exceeds the $9 plan’s 5 k license limit, the CLI returns exit code 2 and prints “Upgrade to Pro to scan more files.”
@@ -299,24 +293,15 @@ We spent two weeks arguing about whether to test the Lambda in CI. In the end we
 We open-sourced the CLI in February 2026 and charged the first 200 teams within 30 days. The pricing model we landed on was seat-based with a usage cap, because every CTO we interviewed said they’d pay $9/mo per seat but balked at per-API pricing.
 
 Traffic and cost snapshot after 30 days:
-- 2,347 active users (defined as at least one scan).
-- 18,921 scans total (8.06 scans/user).
-- 76 % of users stayed on the free plan, scanning a median of 24 files.
-- 24 % upgraded to Pro ($9 or $49) after hitting the free cap of 500 files.
-- AWS Lambda cost: $8.21 for 1.8 M invocations.
-- DynamoDB cost: $1.43 for 9 k WCU and RCU.
-- Stripe fees: $2.10 (1 % + $0.30 per transaction).
+- 2,347 active users (defined as at least one scan). - 18,921 scans total (8.06 scans/user). - 76 % of users stayed on the free plan, scanning a median of 24 files. - 24 % upgraded to Pro ($9 or $49) after hitting the free cap of 500 files. - AWS Lambda cost: $8.21 for 1.8 M invocations. - DynamoDB cost: $1.43 for 9 k WCU and RCU. - Stripe fees: $2.10 (1 % + $0.30 per transaction).
 
 Latency:
-- CLI cold start: 45 ms (Go static binary).
-- Lambda cold start: 220 ms (Node 20 LTS).
-- Full scan of a 10 k file repo: 3.2 s (median).
+- CLI cold start: 45 ms (Go static binary). - Lambda cold start: 220 ms (Node 20 LTS). - Full scan of a 10 k file repo: 3.2 s (median).
 
 Revenue:
-- MRR: $1,147 (38 Pro users × $9 + 12 Pro users × $49).
-- CAC payback period: 4.3 months (from paid ads and GitHub stars).
+- MRR: $1,147 (38 Pro users × $9 + 12 Pro users × $49). - CAC payback period: 4.3 months (from paid ads and GitHub stars).
 
-I was surprised that the $49 plan was adopted twice as fast as the $9 plan despite having the same UI and onboarding flow. Interviews revealed that teams that had already hit the free cap once instantly upgraded to avoid friction.
+Interviews revealed that teams that had already hit the free cap once instantly upgraded to avoid friction.
 
 ## Common questions and variations
 
@@ -345,20 +330,16 @@ Comparison of runtimes for a 10 k file repo (median of 5 runs):
 
 Open the Stripe dashboard, delete the $9 and $49 prices you created earlier, and recreate them with a free tier of 500 files/month and a seat limit of 5 seats per account. Then run the CLI on your own codebase and look at the exit code: if it’s 2, you’ve hit the free cap and the tool just taught you exactly what to charge next. Do this now—it takes 15 minutes and it’s the fastest way to validate pricing before you write another line of code.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

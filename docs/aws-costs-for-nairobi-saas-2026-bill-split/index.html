@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-28T21:38:03.431131">
-        <meta property="article:modified_time" content="2026-06-28T21:38:03.431142">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.872967+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AWS costs for Nairobi SaaS: 2026 bill split">
@@ -63,9 +63,9 @@
       "headline": "AWS costs for Nairobi SaaS: 2026 bill split",
       "description": "Break down a Nairobi SaaS AWS bill in 2026: compute, storage, and egress costs for 500 users, with concrete numbers and CDK scripts you can run today.",
       "datePublished": "2026-06-28T21:38:03+00:00",
-      "dateModified": "2026-06-28T21:38:03+00:00",
-      "wordCount": 2538,
-      "timeRequired": "PT13M",
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2473,
+      "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -264,20 +264,20 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        13 min read
-                        &nbsp;·&nbsp; 2538 words
+                        12 min read
+                        &nbsp;·&nbsp; 2473 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-28
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>I spent two weeks in mid-2026 tracking down why a simple CSV export endpoint in our Nairobi SaaS was eating 40 % of our AWS bill. The surprise wasn’t the compute charge — it was the $480/month RDS snapshot storage for a table that hadn’t been queried in 90 days.</p>
-<p>I had built the stack the way every tutorial told me: PostgreSQL on RDS, EC2 behind an ALB, S3 for files. Costs looked fine until the bill tripled when we added 200 users in Kampala and Kigali. The finance team asked for a breakdown by region, product area, and line item. I didn’t have one. I had to rebuild the cost-explorer queries from scratch because the default Cost and Usage Report skipped the EFS mount I’d forgotten about.</p>
+<p>The surprise wasn’t the compute charge — it was the $480/month RDS snapshot storage for a table that hadn’t been queried in 90 days.</p>
+<p>I had built the stack the way every tutorial told me: PostgreSQL on RDS, EC2 behind an ALB, S3 for files. Costs looked fine until the bill tripled when we added 200 users in Kampala and Kigali. The finance team asked for a breakdown by region, product area, and line item. I didn’t have one.</p>
 <p>That week I learned that Nairobi bandwidth egress is still 5× more expensive than us-east-1 for inter-region traffic, and that CloudFront doesn’t cache POST requests by default, so every download link we generated in Kenya triggered a Lambda@Edge call. This post is the bill split I wish I’d had before launch day.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You’ll end up with a repeatable stack for a Nairobi-based SaaS in 2026:
@@ -664,14 +664,11 @@ providers:
 <p>Do one of these now; the bill won’t fix itself.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

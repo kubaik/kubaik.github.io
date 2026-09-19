@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-08T23:47:39.972246">
-        <meta property="article:modified_time" content="2026-06-08T23:47:39.972256">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.441238+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="RAG pipelines: 4 silent prod killers">
@@ -63,7 +63,7 @@
       "headline": "RAG pipelines: 4 silent prod killers",
       "description": "Cut RAG pipeline latency from 280ms to 35ms and monthly costs from $980 to $620 by moving vector search out of PostgreSQL 16 into Milvus 2.4.3 with Caffeine…",
       "datePublished": "2026-06-08T23:47:39+00:00",
-      "dateModified": "2026-06-08T23:47:39+00:00",
+      "dateModified": "2026-09-19T08:27:14+00:00",
       "wordCount": 2431,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
@@ -266,7 +266,7 @@
                         12 min read
                         &nbsp;·&nbsp; 2431 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-08
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -366,9 +366,7 @@ async def retrieve(query: str):
 - Memory: 800MB RSS
 - Cost: $0.28/hour on a t4g.xlarge (4 vCPU, 16GB)</p>
 <p><strong>When to use Qdrant:</strong>
-- You need a single-node vector search with &lt;100ms latency.
-- You want to avoid Java dependencies (Milvus requires JRE).
-- You’re running on ARM (Graviton) — Qdrant’s Rust binary is natively supported.</p>
+- You need a single-node vector search with &lt;100ms latency. - You want to avoid Java dependencies (Milvus requires JRE). - You’re running on ARM (Graviton) — Qdrant’s Rust binary is natively supported.</p>
 <hr />
 <h3 id="2-weaviate-1250-redis-72-langchain-0118">2. Weaviate 1.25.0 + Redis 7.2 + LangChain 0.1.18</h3>
 <p>Weaviate is a hybrid search engine (vector + BM25) that’s useful for e-commerce queries where product names or SKUs need exact matches. We tested it alongside Milvus for a product search use case.</p>
@@ -444,9 +442,7 @@ embeddings = HuggingFaceInferenceAPIEmbeddings(
 - Memory: 1.5GB RSS
 - Cost: $0.35/hour on a t4g.xlarge</p>
 <p><strong>When to use Weaviate:</strong>
-- You need hybrid search (vector + keyword) for product catalogs.
-- You want to avoid managing a separate reranker (Weaviate has cross-encoder reranking built-in).
-- You’re already using LangChain — Weaviate has first-class LangChain integration.</p>
+- You need hybrid search (vector + keyword) for product catalogs. - You want to avoid managing a separate reranker (Weaviate has cross-encoder reranking built-in). - You’re already using LangChain — Weaviate has first-class LangChain integration.</p>
 <hr />
 <h3 id="3-llamaindex-0103-milvus-243-ollama-028-local-llm">3. LlamaIndex 0.10.3 + Milvus 2.4.3 + Ollama 0.2.8 (local LLM)</h3>
 <p>For teams that want to avoid AWS Bedrock or Anthropic, Ollama is a lightweight way to run LLMs locally. We tested it with LlamaIndex 0.10.3 and Milvus 2.4.3 for a Vietnamese-language chatbot.</p>
@@ -505,9 +501,7 @@ query_engine = index.as_query_engine(
 - Memory: 8GB GPU, 1.2GB CPU (Milvus)
 - Cost: $0.68/hour (g5g.xlarge) + $0.00 (Milvus Lite)</p>
 <p><strong>When to use Ollama:</strong>
-- You need to avoid cloud LLM costs (e.g., for low-traffic internal tools).
-- You’re running in an air-gapped environment.
-- You want to fine-tune the LLM for Vietnamese (Ollama supports GGUF models).</p>
+- You need to avoid cloud LLM costs (e.g., for low-traffic internal tools). - You’re running in an air-gapped environment. - You want to fine-tune the LLM for Vietnamese (Ollama supports GGUF models).</p>
 <hr />
 <h2 id="beforeafter-comparison-actual-numbers">Before/after comparison (actual numbers)</h2>
 <table>
@@ -850,14 +844,11 @@ query_engine = index.as_query_engine(
 <p>If you’re building a RAG pipeline for &gt;5k QPS, <strong>Milvus 2.4.3 on Graviton3 with a two-tier Caffeine/Redis cache is the only architecture that balances cost, latency, and reliability</strong>. The numbers don’t lie: PostgreSQL melts, FAISS OOMs, Redis costs too much, and Milvus scales. Treat retrieval as a stateless service, not a database query — your future self will thank you when the chaos tests pass.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -912,7 +903,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/audit-logs-ship-them-fast-keep-them-forever/">
                         <h3>Audit logs: ship them fast, keep them forever</h3>
                         <p>Cut AWS S3 audit log costs 78% while keeping regulators happy — hot/warm/cold tiering, SHA-256 tamper detection, and Node 20 LTS examples.</p>
-                        <span class="related-meta">15 min read · 6 July 2026</span>
+                        <span class="related-meta">14 min read · 6 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/log-audit-costs-without-breaking-compliance/">

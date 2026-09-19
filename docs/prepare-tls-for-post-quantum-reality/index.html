@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-26T11:02:17.069841">
-        <meta property="article:modified_time" content="2026-06-26T11:02:17.069853">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.393040+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Prepare TLS for post-quantum reality">
@@ -63,8 +63,8 @@
       "headline": "Prepare TLS for post-quantum reality",
       "description": "Cut TLS handshake latency 86% with hybrid certificates in 2026 — the real cost of post-quantum crypto on RSA, ECDSA, and Envoy deployments.",
       "datePublished": "2026-06-26T11:02:17+00:00",
-      "dateModified": "2026-06-26T11:02:17+00:00",
-      "wordCount": 2778,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2749,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2778 words
+                        &nbsp;·&nbsp; 2749 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-26
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -279,10 +279,7 @@
 <p>In late 2026, our team noticed a quiet but urgent alert in the <strong>AWS Certificate Manager (ACM)</strong> console. The banner read: <em>"Your RSA and ECDSA certificates will no longer be accepted for TLS 1.3 handshakes starting March 2026."</em> I had seen deprecation notices before, but this one felt different. I ran a quick scan across our 47 microservices using <strong>Let's Encrypt certificates</strong> with <strong>OpenSSL 3.0</strong> and <strong>Node.js 20 LTS</strong>. The report came back grim: 112 endpoints would stop working in 90 days if we didn’t upgrade.</p>
 <p>The problem wasn’t just certificates. It was the entire TLS stack. Our services relied on <strong>TLS 1.3</strong>, which currently only supports RSA, ECDSA, and EdDSA signatures. Post-quantum cryptography (PQC) introduces new signature algorithms like <strong>CRYSTALS-Dilithium</strong> and <strong>SPHINCS+</strong>, but none were standardized in TLS 1.3 as of <strong>RFC 8446 (2018) with no PQC extension</strong>. Yet, NIST had finalized <strong>FIPS 203 (ML-KEM), FIPS 204 (ML-DSA), and FIPS 205 (SLH-DSA)</strong> in 2026, and the IETF was pushing for <strong>draft-ietf-tls-hybrid-design</strong> to integrate hybrid schemes. The gap between certification and implementation was widening.</p>
 <p>We needed to answer three questions:
-- Which TLS libraries and runtimes would support PQC by March 2026?
-- What would the performance impact be on our 95th-percentile latency (currently 42ms for API calls)?
-- How much would certificate rotation and key management cost at scale?</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+- Which TLS libraries and runtimes would support PQC by March 2026? - What would the performance impact be on our 95th-percentile latency (currently 42ms for API calls)? - How much would certificate rotation and key management cost at scale?</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first instinct was to migrate every service to <strong>TLS 1.2</strong> as a stopgap. We assumed PQC support wasn’t urgent because TLS 1.2 was still widely supported. We were wrong.</p>
 <p>We deployed a <strong>Node.js 20 LTS</strong> service with a <strong>Node-OPCUA</strong> client using <strong>OpenSSL 3.1</strong> and configured it to use <strong>TLS 1.2</strong> exclusively. The change took 15 minutes per service, and we rolled it out across staging. Within hours, we hit two hard walls:</p>
@@ -291,7 +288,7 @@
 <p><strong>Android 14 and iOS 17 clients rejected TLS 1.2</strong> by default. Our mobile traffic dropped 8% in the first hour as users on newer devices saw certificate errors. The error message was clear: <em>"ERR_SSL_PROTOCOL_ERROR"</em>.</p>
 </li>
 <li>
-<p><strong>CloudFront and AWS ALB</strong> started throttling TLS 1.2 handshakes. CloudFront’s logs showed a 300% increase in handshake timeouts. AWS Support told us they were deprecating TLS 1.2 support on their edge caches by Q2 2026, not Q3 as we’d assumed. </p>
+<p><strong>CloudFront and AWS ALB</strong> started throttling TLS 1.2 handshakes. CloudFront’s logs showed a 300% increase in handshake timeouts. AWS Support told us they were deprecating TLS 1.2 support on their edge caches by Q2 2026, not Q3 as we’d assumed.</p>
 </li>
 </ol>
 <p>We rolled back immediately, but the damage was done: 8% churn and a 3-hour outage during peak time.</p>
@@ -608,13 +605,7 @@
 <p>Start with step 1 today. Run the <code>nmap</code> script against your top 10 endpoints. If you find RSA/ECDSA only, you have 90 days to act.</p>
 <h2 id="resources-that-helped">Resources that helped</h2>
 <ul>
-<li><strong>NIST FIPS 203/204/205</strong> (2026) — The official specs for ML-KEM, ML-DSA, and SLH-DSA.</li>
-<li><strong>liboqs 0.9.0</strong> (Dec 2026) — The reference implementation for PQC algorithms.</li>
-<li><strong>BoringSSL’s PQC branch</strong> (Feb 2026) — The fastest path to production TLS 1.3 PQC.</li>
-<li><strong>Envoy 1.28 docs</strong> — How to configure hybrid TLS termination.</li>
-<li><strong>Cloudflare’s PQC blog</strong> (Jan 2026) — Real-world benchmarks and gotchas.</li>
-<li><strong>AWS ACM Private CA</strong> — How to issue hybrid certificates.</li>
-<li><strong>Graviton4 benchmarks</strong> (AWS re:Invent 2026) — Why ARM64 is the future for PQC.</li>
+<li><strong>NIST FIPS 203/204/205</strong> (2026) — The official specs for ML-KEM, ML-DSA, and SLH-DSA. - <strong>liboqs 0.9.0</strong> (Dec 2026) — The reference implementation for PQC algorithms. - <strong>BoringSSL’s PQC branch</strong> (Feb 2026) — The fastest path to production TLS 1.3 PQC. - <strong>Envoy 1.28 docs</strong> — How to configure hybrid TLS termination. - <strong>Cloudflare’s PQC blog</strong> (Jan 2026) — Real-world benchmarks and gotchas. - <strong>AWS ACM Private CA</strong> — How to issue hybrid certificates. - <strong>Graviton4 benchmarks</strong> (AWS re:Invent 2026) — Why ARM64 is the future for PQC.</li>
 </ul>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>How do I generate a hybrid certificate for testing?</strong>
@@ -635,14 +626,11 @@ Use a sidecar proxy like Envoy. Rotate the certificate in the proxy first, then 
 </code></pre>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

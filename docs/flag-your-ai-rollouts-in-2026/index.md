@@ -1,8 +1,8 @@
 # Flag your AI rollouts in 2026
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
-I spent two weeks debugging why our AI feature flags kept flipping to 0% rollout during peak load, only to realize the Redis cluster we’d added for high availability was the bottleneck. This post is the checklist I wish I had then.
+This post is the checklist I wish I had then.
 
 ## Why I wrote this (the problem I kept hitting)
 
@@ -16,9 +16,7 @@ This tutorial walks through the exact setup we use today with LaunchDarkly’s G
 
 You’ll need three things:
 
-1. A feature flag service that supports gradual rollouts and percentage-based targeting. We use LaunchDarkly because it gives us 1 ms p99 latency on flag evaluations and supports JSON flag values — critical when you’re toggling entire model configurations.
-2. A backend service with a public API endpoint. The example uses Go 1.22 and the LaunchDarkly Go SDK 5.17.
-3. A metrics stack: Prometheus 2.47 for scraping and Grafana 10.4 for dashboards.
+1. A feature flag service that supports gradual rollouts and percentage-based targeting. We use LaunchDarkly because it gives us 1 ms p99 latency on flag evaluations and supports JSON flag values — critical when you’re toggling entire model configurations. 2. A backend service with a public API endpoint. The example uses Go 1.22 and the LaunchDarkly Go SDK 5.17. 3. A metrics stack: Prometheus 2.47 for scraping and Grafana 10.4 for dashboards.
 
 You’ll build a minimal AI recommendation endpoint that:
 
@@ -568,20 +566,16 @@ Most importantly, the code reduction wasn’t just cleanup — it was a **struct
 
 We didn’t just ship flags — we shipped **compliance, cost control, and velocity**, all in one go.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -1,12 +1,12 @@
 # USSD fintech in 2026: the 300M user channel nobody
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
 In 2026 I helped a Lagos-based fintech launch a new wallet product that targeted 1.2 million existing users. Marketing promised a ‘mobile-first’ experience, so we built a React Native app and a polished web portal. Rollout started, but two weeks later only 8% of users had installed the app. Support tickets exploded: “I don’t have space for another app,” “I only have a Kesh 20 phone,” “I pay with USSD every day.”
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. What we discovered is that USSD traffic still drives 33% of all transactions in West Africa, according to the 2026 GSMA State of the Industry Report on Mobile Money. That’s 300 million active users who never see our shiny React Native screen. Most product teams in 2026 still treat USSD as a legacy fallback. It isn’t; it’s a high-trust, ultra-low-friction channel that converts at 2.8× the rate of in-app sign-ups when you get the flow right.
+What we discovered is that USSD traffic still drives 33% of all transactions in West Africa, according to the 2026 GSMA State of the Industry Report on Mobile Money. That’s 300 million active users who never see our shiny React Native screen. Most product teams in 2026 still treat USSD as a legacy fallback. It isn’t; it’s a high-trust, ultra-low-friction channel that converts at 2.8× the rate of in-app sign-ups when you get the flow right.
 
 The biggest mistake I see is assuming USSD is just a dial-up menu. It’s a state machine with strict 160-character limits per screen, a 20-second SLA enforced by carriers, and zero room for error recovery. Build it wrong and you leak money: the average failed session costs $0.003 in carrier fees, but multiply that by 10 million failed sessions and you’re burning $30k per month on silent churn.
 
@@ -465,20 +465,16 @@ If it works, you have a production-ready sandbox. If it doesn’t, the logs will
 
 That’s it. USSD is not dead; it’s the fastest path to 300 million users who still pay with buttons.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

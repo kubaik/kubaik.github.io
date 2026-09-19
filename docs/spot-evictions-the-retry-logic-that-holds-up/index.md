@@ -1,6 +1,6 @@
 # Spot evictions: the retry logic that holds up
 
-I spent longer than I should have on use spot before understanding what was actually happening. The edge cases only show up once real users hit the system. Here's the fuller picture, with the tradeoffs left in.
+The edge cases only show up once real users hit the system. Here's the fuller picture, with the tradeoffs left in.
 
 ## The gap between what the docs say and what production needs
 
@@ -271,10 +271,7 @@ Avoid polling SQS for eviction events. SQS has a 1s latency floor and doesn't gi
 This pattern is designed for non-critical, latency-tolerant workloads. If your workload is critical (e.g., payment processing, user-facing API calls, real-time analytics), the coordinated retry storm risk outweighs the Spot cost savings. In those cases, use On-Demand or Savings Plans.
 
 Avoid this pattern if:
-- Your downstream APIs have strict rate limits (<100 RPM per customer).
-- Your jobs must complete within 30 seconds. The retry delay will violate SLA.
-- You cannot tolerate data loss. Redis Streams are durable, but S3 keys can be lost during AZ outages if you don't use versioning.
-- Your team lacks DevOps capacity to run Redis Cluster and CloudWatch alarms.
+- Your downstream APIs have strict rate limits (<100 RPM per customer). - Your jobs must complete within 30 seconds. The retry delay will violate SLA. - You cannot tolerate data loss. Redis Streams are durable, but S3 keys can be lost during AZ outages if you don't use versioning. - Your team lacks DevOps capacity to run Redis Cluster and CloudWatch alarms.
 
 In practice, teams running into this usually see downstream 429s within minutes, which then cascade into 503s. The fix is to either switch to On-Demand or implement a token bucket at the API gateway level.
 
@@ -321,7 +318,6 @@ Start with 8 seconds and increase by 200% on downstream errors. A 2-second delay
 
 **How do I test this in staging without burning real jobs?**
 Use a mock downstream API that returns 429 or 503 based on a query parameter. In your controller, set `downstream_errors` to a fixed value (e.g., 5) for jobs with `job_id` starting with `test-`. Then, simulate evictions by publishing fake events to the Redis Stream and verify the backoff delays. You can also use AWS Step Functions to orchestrate a chaos scenario.
-
 
 ---
 

@@ -1,24 +1,19 @@
 # Audit logs: ship them fast, keep them forever
 
-A colleague asked me about audit logging during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
 Most teams treat audit logging as a checkbox for compliance: write every event to a tamper-proof ledger, ship it to an immutable store, and never touch it again. The standard playbook goes like this:
 
-1. Mirror every database change into a write-once table or object storage bucket.
-2. Stream the same events to a security information and event management (SIEM) system like Splunk or Elasticsearch.
-3. Retain everything for 7–10 years.
-4. Call it a day.
+1. Mirror every database change into a write-once table or object storage bucket. 2. Stream the same events to a security information and event management (SIEM) system like Splunk or Elasticsearch. 3. Retain everything for 7–10 years. 4. Call it a day.
 
 In principle, this is bulletproof. In practice, it’s a performance tax most teams underestimate and a cost volcano most CFOs discover after the first audit.
 
-I ran into this when our bill for AWS S3 Standard-Infrequent Access (S3-IA) tripled overnight because we had naïvely forwarded every request to an S3 bucket with 90-day lifecycle rules. By the time we noticed, we’d already stored 2.4 TB of logs that should have been cold-tiered after 30 days. The honest answer is that the conventional wisdom conflates compliance with durability. Compliance rarely demands 7 years of hot, searchable data—it demands *availability* on demand. Durability and compliance are not synonyms.
+By the time we noticed, we’d already stored 2.4 TB of logs that should have been cold-tiered after 30 days. The honest answer is that the conventional wisdom conflates compliance with durability. Compliance rarely demands 7 years of hot, searchable data—it demands *availability* on demand. Durability and compliance are not synonyms.
 
 Compliance teams care about three things:
-- Can we prove an action happened?
-- Can we show the data hasn’t been altered?
-- Can we retrieve it within a reasonable time when asked?
+- Can we prove an action happened? - Can we show the data hasn’t been altered? - Can we retrieve it within a reasonable time when asked?
 
 That last point is the wedge. The standard advice delivers durability and immutability, but it ignores retrieval cost. A SIEM license that costs $2 k/month at 1 TB/month ingestion balloons to $18 k/month when you keep 120 TB for 5 years. That’s not sustainable.
 
@@ -93,17 +88,13 @@ I’ve seen this fail when teams assumed tiering was always better. One team tri
 Use these five questions to pick your model:
 
 1. **What is your peak ingestion rate?**
-   Below 5 GB/day → keep it hot for simplicity.
-   Above 50 GB/day → tier aggressively.
+   Below 5 GB/day → keep it hot for simplicity. Above 50 GB/day → tier aggressively.
 
 2. **How often do auditors request data older than 90 days?**
-   Annual or less → cold vault is fine.
-   Quarterly or more → warm archive required.
+   Annual or less → cold vault is fine. Quarterly or more → warm archive required.
 
 3. **What is your acceptable retrieval SLA?**
-   < 1 minute → hot cache.
-   1–10 minutes → warm archive.
-   > 10 minutes → cold vault.
+   < 1 minute → hot cache. 1–10 minutes → warm archive. > 10 minutes → cold vault.
 
 4. **What is your cost ceiling per month?**
    If hot retention exceeds 20 % of your infrastructure budget, tier.
@@ -258,38 +249,30 @@ The conventional wisdom is incomplete because it equates durability with complia
 
 Start by calculating your current spend: go to AWS Cost Explorer, filter by service=S3, tag=audit, and look at the last 90 days. If you’re above $500/month, move events older than 7 days to S3 Glacier Instant Retrieval, and events older than 90 days to Glacier Deep Archive. Use S3 Object Lock in governance mode for the hot window to prevent accidental deletion. Finally, implement a lifecycle policy that transitions objects automatically—don’t rely on manual scripts.
 
-
 **what is the minimum retention period required for audit logs in fintech**
 
 Most fintech regulators require 5 years for transactional audit trails, but only the last 12–24 months need to be searchable within a business day. Older logs can be cold-tiered as long as you can retrieve them on demand within the regulatory timeframe. Check your specific license (e.g., FDIC, FCA, MAS) and document the retrieval SLA in your policy. In practice, 90 days hot + 5 years cold is sufficient for most jurisdictions.
-
 
 **how to handle log tampering detection in a tiered audit pipeline**
 
 Compute a SHA-256 hash of the canonical JSON representation of each event at write time. Store the hash in DynamoDB with the event ID as the key. When retrieving, recompute the hash for each object and compare it to the stored value. If they don’t match, flag the object as tampered. For the cold vault, store the hash alongside the object in Glacier so you can verify integrity without network calls. This approach works even when objects are moved between tiers.
 
-
 **what tools can replace elasticsearch for hot audit logs**
 
 AWS OpenSearch Serverless is the easiest drop-in replacement. It scales automatically, costs ~$0.10/GB ingested, and integrates with IAM. If you’re already on PostgreSQL 15+, consider pg_partman to shard your audit table by date and keep recent partitions in an unlogged table for speed. For teams on Node 20 LTS, Meilisearch or Typesense offer sub-second search with a smaller footprint than Elasticsearch. In all cases, cap the retention to 90 days and archive aggressively—no one needs 7 years of hot data.
 
-
 Check your S3 bucket inventory report now and move anything older than 30 days to Glacier Instant Retrieval. Do it in the AWS Console under S3 → Management → Buckets → [your-audit-bucket] → Create lifecycle rule. Set prefix to `audit/` and transition to Glacier Instant Retrieval after 30 days. Expect a 60 % cost drop within the first billing cycle.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

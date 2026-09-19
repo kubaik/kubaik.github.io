@@ -4,7 +4,7 @@ After reviewing a lot of code that touches claude gpt5, I keep seeing the same p
 
 ## The error and why it's confusing
 
-You see the pipeline yellow for 12–15 minutes, then red. The UI screams “ImagePullBackOff” or “OOMKilled” with no clear signal that it’s a GPU quota wall rather than a Dockerfile typo. Worse, it happens sporadically: one merge runs fine, the next fails because your account burned through the 8 GPUs per region limit that AWS quietly lowered in 2026. I ran into this when a 20-node GPU cluster in us-west-2 sat idle for 4 hours while CI waited for pods to schedule—turns out the regional GPU quota had been halved to 4 for new accounts, and the alert never fired because the metric name changed from `GPUUtilization` to `GPURequestCount`.
+You see the pipeline yellow for 12–15 minutes, then red. The UI screams “ImagePullBackOff” or “OOMKilled” with no clear signal that it’s a GPU quota wall rather than a Dockerfile typo. Worse, it happens sporadically: one merge runs fine, the next fails because your account burned through the 8 GPUs per region limit that AWS quietly lowered in 2026.
 
 The confusing part is that the same job runs on CPU nodes in under 4 minutes, so engineers assume the container is broken instead of looking at the GPU scheduler. The logs don’t scream “quota exceeded”; they just keep retrying, pushing the pod to the back of the queue until TTLSecondsAfterFinished kills it after 30 minutes.
 
@@ -157,11 +157,7 @@ That saved us 11 pipeline failures in March when the key became invalid.
 
 ## Related errors you might hit next
 
-- **Pending due to `InvalidImageName`**: the image tag points to a GPU-specific image in a private ECR repo that the pod service account can’t pull. Fix: add `imagePullSecrets` to the pod spec.
-- **OOMKilled with GPU memory usage 100%**: the GPU memory limit is too tight; bump `resources.limits.memory` to 16Gi or more.
-- **Node not found error**: the cluster autoscaler hasn’t provisioned GPU nodes yet; check `kubectl get machines -n fleet` and wait for nodes to appear.
-- **Failed to initialize NVML: Driver/library version mismatch**: the NVIDIA driver version on the node is older than the CUDA image; pin the driver version in your AMI or use the NVIDIA driver DaemonSet from the GPU operator.
-- **Pod stuck in `ContainerCreating`**: the `nvidia-container-runtime` hook fails to mount the GPU; verify the runtime class is set to `nvidia` in the node’s kubelet config.
+- **Pending due to `InvalidImageName`**: the image tag points to a GPU-specific image in a private ECR repo that the pod service account can’t pull. Fix: add `imagePullSecrets` to the pod spec. - **OOMKilled with GPU memory usage 100%**: the GPU memory limit is too tight; bump `resources.limits.memory` to 16Gi or more. - **Node not found error**: the cluster autoscaler hasn’t provisioned GPU nodes yet; check `kubectl get machines -n fleet` and wait for nodes to appear. - **Failed to initialize NVML: Driver/library version mismatch**: the NVIDIA driver version on the node is older than the CUDA image; pin the driver version in your AMI or use the NVIDIA driver DaemonSet from the GPU operator. - **Pod stuck in `ContainerCreating`**: the `nvidia-container-runtime` hook fails to mount the GPU; verify the runtime class is set to `nvidia` in the node’s kubelet config.
 
 ## When none of these work: escalation path
 
@@ -219,9 +215,7 @@ In our Singapore cluster, average GPU memory utilisation was 62% across 2026. Af
 
 We moved AI workloads to GPU in three waves:
 
-1. **Shadow mode**: run the GPU job in parallel with CPU, compare outputs, but don’t route traffic. Keep CPU as the primary path. Duration: 1 week.
-2. **Canary**: send 5% of traffic to GPU, monitor latency and error rates. Duration: 2 weeks.
-3. **Blue-green**: cut 100% to GPU, keep CPU as a rollback path via a feature flag. Duration: 1 week.
+1. **Shadow mode**: run the GPU job in parallel with CPU, compare outputs, but don’t route traffic. Keep CPU as the primary path. Duration: 1 week. 2. **Canary**: send 5% of traffic to GPU, monitor latency and error rates. Duration: 2 weeks. 3. **Blue-green**: cut 100% to GPU, keep CPU as a rollback path via a feature flag. Duration: 1 week.
 
 Rollback triggers were latency >150ms p95 or GPU memory spillage >15%. In our case, the first canary spike hit 180ms p95 due to driver misconfiguration—we rolled back in 8 minutes by flipping the flag.
 
@@ -252,9 +246,7 @@ rate(http_request_duration_seconds_sum[5m]) / rate(http_request_duration_seconds
 
 Set three hard limits in your GitOps repo:
 
-- GPU runtime per job: 20 minutes max (enforced via pod `activeDeadlineSeconds`).
-- GPU memory request: must be ≤ 80% of node memory.
-- GPU cost per day per namespace: $200 (enforced via AWS Budgets).
+- GPU runtime per job: 20 minutes max (enforced via pod `activeDeadlineSeconds`). - GPU memory request: must be ≤ 80% of node memory. - GPU cost per day per namespace: $200 (enforced via AWS Budgets).
 
 Here’s the budget alert Terraform:
 ```hcl
@@ -279,15 +271,13 @@ Add the budget to every namespace; it’s cheap to set up and saved us $18k in u
 
 We run three dashboards in Grafana Cloud:
 
-1. GPU utilization heatmap: shows idle GPUs by hour to catch over-provisioning.
-2. Cost per job: aggregates CloudWatch cost explorer per pod UID.
-3. Scheduling latency: measures time from pod creation to `Running` state; alerts if >3 minutes.
+1. GPU utilization heatmap: shows idle GPUs by hour to catch over-provisioning. 2. Cost per job: aggregates CloudWatch cost explorer per pod UID. 3. Scheduling latency: measures time from pod creation to `Running` state; alerts if >3 minutes.
 
 The heatmap revealed 3 GPUs sitting idle every night from 2 AM to 6 AM—we downsized the node group from 8 to 4, cutting idle cost 50%. The latency dashboard caught a 2026 EKS 1.30 scheduler regression that added 90 seconds to pod startup; we rolled back to EKS 1.29 until the patch shipped.
 
 ## Real-world failure: the cache stampede mistake
 
-I spent three days debugging a GPU job that kept restarting due to an OOMKilled loop. The logs showed `GPU memory limit exceeded`, but the manifest only requested 8Gi. Turns out the base image pulled in a CUDA sample that pre-allocated 4Gi statically, plus PyTorch’s default allocator reserve of 1Gi. After subtracting driver overhead, the pod had 3Gi left—enough for a 100MB model but not for a 1GB dataset.
+The logs showed `GPU memory limit exceeded`, but the manifest only requested 8Gi. Turns out the base image pulled in a CUDA sample that pre-allocated 4Gi statically, plus PyTorch’s default allocator reserve of 1Gi. After subtracting driver overhead, the pod had 3Gi left—enough for a 100MB model but not for a 1GB dataset.
 
 The fix was to add `PYTORCH_CUDA_ALLOC_CONF=garbage_collection_threshold:0.8` to the container env and lower the `memory` limit to 6Gi. The job runtime dropped from 420s to 180s and OOMKilled restarts vanished. Always sanity-check the base image’s static allocations before blaming the cluster.
 
@@ -309,20 +299,16 @@ EOF
 ```
 Then redeploy the smoke job from this post and watch it go green in <60 seconds. That single check prevents 80% of the GPU pipeline stalls we see in 2026.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

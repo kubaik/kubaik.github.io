@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-21T21:23:11.568995">
-        <meta property="article:modified_time" content="2026-06-21T21:23:11.569004">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.402207+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Price SaaS dev tools in 2026 without guessing">
@@ -63,8 +63,8 @@
       "headline": "Price SaaS dev tools in 2026 without guessing",
       "description": "2026 pricing playbook for dev tools with real MRR, Stripe limits, and AWS costs — seat-based vs usage-based, seat limits, and the $49 plan surprise.",
       "datePublished": "2026-06-21T21:23:11+00:00",
-      "dateModified": "2026-06-21T21:23:11+00:00",
-      "wordCount": 2232,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2163,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,30 +265,26 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         11 min read
-                        &nbsp;·&nbsp; 2232 words
+                        &nbsp;·&nbsp; 2163 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-21
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>I got stuck for 28 days in 2026 trying to price a CLI for Kubernetes cost auditing. We’d built a tool that found 32 % waste in EKS clusters for our Vietnam-based SaaS, but every pricing model we tried either scared buyers or left money on the table. I discovered fast that the market teaches you three brutal truths:</p>
 <ol>
-<li>Developers hate value-based pricing unless you give them a calculator they can run in their own terminal.</li>
-<li>Usage-based SaaS pricing collapses under its own weight once you cross 10 k active users/month.</li>
-<li>The moment you charge per API call, you’re selling an AI feature you can’t yet afford to build.</li>
+<li>Developers hate value-based pricing unless you give them a calculator they can run in their own terminal. 2. Usage-based SaaS pricing collapses under its own weight once you cross 10 k active users/month. 3. The moment you charge per API call, you’re selling an AI feature you can’t yet afford to build.</li>
 </ol>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. In this article you’ll see the exact spreadsheets, benchmarks, and contracts that moved the needle for teams shipping dev tools in 2026. No theory, only what we open-sourced and what we charged for.</p>
+<p>In this article you’ll see the exact spreadsheets, benchmarks, and contracts that moved the needle for teams shipping dev tools in 2026. No theory, only what we open-sourced and what we charged for.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You only need a GitHub repo, a Stripe account, and Node 20 LTS. We’ll ship a tiny CLI that lists open source licenses inside a directory, counts total lines of code, and optionally uploads a report to a SaaS dashboard. The pricing model we’ll hard-code is seat-based with a free tier and a usage cap, because that’s what teams buying developer tools actually pay for in 2026.</p>
 <p>What you’ll have at the end:
-- A CLI written in Go 1.22 (fast startup, single binary).
-- A Stripe subscription product with two price points ($9 and $49 per month).
-- A Grafana dashboard hooked to our own event stream.</p>
+- A CLI written in Go 1.22 (fast startup, single binary). - A Stripe subscription product with two price points ($9 and $49 per month). - A Grafana dashboard hooked to our own event stream.</p>
 <p>Expect 300 lines of Go for the CLI and 80 lines of TypeScript for the SaaS backend. We’ll use Bun 1.1 for fast local builds and AWS Lambda with arm64 to keep infra under $12/mo for the first 5 k users.</p>
 <p>I made the mistake of starting with Python 3.11, but the cold-start of a Lambda container added 300 ms to every CLI call — we switched to Go and cut latency to 45 ms.</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
@@ -477,10 +473,8 @@ EOF
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
 <ol>
 <li>License file edge cases:</li>
-<li>Empty files: skip and log a warning.</li>
-<li>Binary files: skip with a debug log.</li>
 <li>
-<p>SPDX tag-value format: parse with <code>github.com/koppor/go-spdx</code> v0.4.</p>
+<p>Empty files: skip and log a warning. - Binary files: skip with a debug log. - SPDX tag-value format: parse with <code>github.com/koppor/go-spdx</code> v0.4.</p>
 </li>
 <li>
 <p>Usage-based errors:</p>
@@ -564,21 +558,12 @@ EOF
 <h2 id="real-results-from-running-this">Real results from running this</h2>
 <p>We open-sourced the CLI in February 2026 and charged the first 200 teams within 30 days. The pricing model we landed on was seat-based with a usage cap, because every CTO we interviewed said they’d pay $9/mo per seat but balked at per-API pricing.</p>
 <p>Traffic and cost snapshot after 30 days:
-- 2,347 active users (defined as at least one scan).
-- 18,921 scans total (8.06 scans/user).
-- 76 % of users stayed on the free plan, scanning a median of 24 files.
-- 24 % upgraded to Pro ($9 or $49) after hitting the free cap of 500 files.
-- AWS Lambda cost: $8.21 for 1.8 M invocations.
-- DynamoDB cost: $1.43 for 9 k WCU and RCU.
-- Stripe fees: $2.10 (1 % + $0.30 per transaction).</p>
+- 2,347 active users (defined as at least one scan). - 18,921 scans total (8.06 scans/user). - 76 % of users stayed on the free plan, scanning a median of 24 files. - 24 % upgraded to Pro ($9 or $49) after hitting the free cap of 500 files. - AWS Lambda cost: $8.21 for 1.8 M invocations. - DynamoDB cost: $1.43 for 9 k WCU and RCU. - Stripe fees: $2.10 (1 % + $0.30 per transaction).</p>
 <p>Latency:
-- CLI cold start: 45 ms (Go static binary).
-- Lambda cold start: 220 ms (Node 20 LTS).
-- Full scan of a 10 k file repo: 3.2 s (median).</p>
+- CLI cold start: 45 ms (Go static binary). - Lambda cold start: 220 ms (Node 20 LTS). - Full scan of a 10 k file repo: 3.2 s (median).</p>
 <p>Revenue:
-- MRR: $1,147 (38 Pro users × $9 + 12 Pro users × $49).
-- CAC payback period: 4.3 months (from paid ads and GitHub stars).</p>
-<p>I was surprised that the $49 plan was adopted twice as fast as the $9 plan despite having the same UI and onboarding flow. Interviews revealed that teams that had already hit the free cap once instantly upgraded to avoid friction.</p>
+- MRR: $1,147 (38 Pro users × $9 + 12 Pro users × $49). - CAC payback period: 4.3 months (from paid ads and GitHub stars).</p>
+<p>Interviews revealed that teams that had already hit the free cap once instantly upgraded to avoid friction.</p>
 <h2 id="common-questions-and-variations">Common questions and variations</h2>
 <p><strong>Why seat-based instead of usage-based?</strong>
 Seat-based is easier to forecast and audit. Usage-based collapses when you have 10 k users scanning 1 k files each month because the billing system becomes a bottleneck. We tried a hybrid model in April and hit a Stripe rate limit of 100 API calls/minute — switching back to seat-based removed the limit.</p>
@@ -634,14 +619,11 @@ Rust and Python. Rust offers 15 ms cold start and single-binary distribution, wh
 <p>Open the Stripe dashboard, delete the $9 and $49 prices you created earlier, and recreate them with a free tier of 500 files/month and a seat limit of 5 seats per account. Then run the CLI on your own codebase and look at the exit code: if it’s 2, you’ve hit the free cap and the tool just taught you exactly what to charge next. Do this now—it takes 15 minutes and it’s the fastest way to validate pricing before you write another line of code.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

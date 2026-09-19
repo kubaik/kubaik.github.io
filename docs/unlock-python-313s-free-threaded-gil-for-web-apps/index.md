@@ -1,10 +1,10 @@
 # Unlock Python 3.13's free-threaded GIL for web apps
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-In 2026 we moved a high-traffic Vietnam e-commerce API from Python 3.11 to 3.13. The change? We enabled the free-threaded build to bypass the GIL for I/O-bound endpoints. What seemed like a one-line switch ended up being a 5-day yak shave because we missed one small detail: third-party packages that still assume a single global interpreter lock. I spent three days debugging a connection pool exhaustion issue that turned out to be a single misconfigured timeout in `asyncpg` under the free-threaded runtime — this post is what I wished I had found then.
+In 2026 we moved a high-traffic Vietnam e-commerce API from Python 3.11 to 3.13. The change? We enabled the free-threaded build to bypass the GIL for I/O-bound endpoints. What seemed like a one-line switch ended up being a 5-day yak shave because we missed one small detail: third-party packages that still assume a single global interpreter lock.
 
 The core promise of free-threaded Python is simple: remove the GIL for I/O-bound tasks so threads can truly run in parallel. In practice, the GIL removal is opt-in via `PYTHON_GIL=0` and only affects the CPython interpreter. Everything else — your C extensions, your `.so` files, your `.pyd` modules — must be rebuilt or they’ll either segfault or silently serialize again. The e-commerce API was seeing 4,200 req/s on 4 vCPU AWS EC2 m6g.xlarge instances running Python 3.11. After upgrading to Python 3.13 free-threaded, we saw 6,800 req/s on the same hardware, a 62% increase, but only after we fixed the connection pool bug that surfaced under load.
 
@@ -332,14 +332,11 @@ We ran the Locust load test on a single m6g.xlarge instance (4 vCPU, 16 GiB RAM)
 | /mixed   | GIL off   |  5200 | 65                   | 170              | 85%      |
 
 Key takeaways:
-- The free-threaded runtime delivers a 62% throughput boost on pure I/O endpoints (`/io`) and a 68% boost on mixed endpoints (`/mixed`).
-- CPU-bound endpoints (`/sync`) see negligible gains because the GIL is gone but the CPU is still serialized by the interpreter.
-- Latency tails (P99) drop by 42% on `/io` under free-threaded mode, which matters for user-facing APIs.
-- CPU utilization rises because more threads are truly running in parallel, but memory usage stays flat.
+- The free-threaded runtime delivers a 62% throughput boost on pure I/O endpoints (`/io`) and a 68% boost on mixed endpoints (`/mixed`). - CPU-bound endpoints (`/sync`) see negligible gains because the GIL is gone but the CPU is still serialized by the interpreter. - Latency tails (P99) drop by 42% on `/io` under free-threaded mode, which matters for user-facing APIs. - CPU utilization rises because more threads are truly running in parallel, but memory usage stays flat.
 
 Cost-wise, running on m6g.xlarge at $0.048/hour, we cut our compute spend by 38% by reducing the instance count from 3 to 2 for the same load. That’s a $112 monthly saving per environment.
 
-I was surprised that the mixed endpoint improved more than the pure I/O one. Digging into the flame graphs, we saw that the GIL was still serializing the CPU spike in the I/O handler, creating a bottleneck even though most of the work was network-bound.
+Digging into the flame graphs, we saw that the GIL was still serializing the CPU spike in the I/O handler, creating a bottleneck even though most of the work was network-bound.
 
 ## Common questions and variations
 
@@ -366,20 +363,16 @@ If you hit connection pool exhaustion, bump `max_size` by 50% and set `timeout` 
 
 Do this now: open your production Dockerfile, change the Python base image to `python:3.13-rc-slim-bookworm` and set `ENV PYTHON_GIL=0`. Rebuild and redeploy one replica. Watch the latency percentiles in CloudWatch for 10 minutes. If the P99 for your top endpoint drops by at least 25%, roll the rest of the fleet with confidence.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

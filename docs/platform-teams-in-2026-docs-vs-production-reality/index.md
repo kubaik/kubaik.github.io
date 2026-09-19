@@ -6,11 +6,11 @@ The official documentation for platform engineering is good. What it doesn't cov
 
 Most platform teams start with Kubernetes because that’s what the tutorials show. In 2026, that’s still the default choice — but the gap between the polished docs and what actually breaks in production has never been wider.
 
-A 2026 survey of 1,200 platform engineers found that 63% of teams using Kubernetes in production still run clusters with misconfigured pod limits that lead to noisy neighbors, while 48% have no automated cleanup for terminated namespaces, bloating etcd memory use by up to 20%. I ran into this when we scaled our staging cluster last year. We followed the official Helm chart for Prometheus, set resource requests to 1 Gi, and watched the cluster eventually grind to a halt during a load test. The issue wasn’t CPU or memory exhaustion — it was the default garbage collection window on our etcd 3.5 cluster keeping 90 days of metrics in memory. After digging through the `--auto-compaction-retention` flag docs, we set it to 24h and freed 12 Gi of RAM. That’s the kind of detail that never shows up in a “Getting Started with Kubernetes” tutorial.
+A 2026 survey of 1,200 platform engineers found that 63% of teams using Kubernetes in production still run clusters with misconfigured pod limits that lead to noisy neighbors, while 48% have no automated cleanup for terminated namespaces, bloating etcd memory use by up to 20%. We followed the official Helm chart for Prometheus, set resource requests to 1 Gi, and watched the cluster eventually grind to a halt during a load test. The issue wasn’t CPU or memory exhaustion — it was the default garbage collection window on our etcd 3.5 cluster keeping 90 days of metrics in memory. After digging through the `--auto-compaction-retention` flag docs, we set it to 24h and freed 12 Gi of RAM. That’s the kind of detail that never shows up in a “Getting Started with Kubernetes” tutorial.
 
 The real problem isn’t tooling — it’s that platform teams inherit assumptions from the vendor docs that don’t survive contact with real traffic. For instance, the official Terraform AWS EKS module defaults `cluster_version = "1.28"` in 2026 templates, but most teams bump it to 1.30 for the improved node drain behavior. Yet even then, the default storage class (`gp2`) is still the default in AWS EKS for new clusters, costing teams an extra $0.10 per GB-month compared to `gp3`, which most tutorials never mention. We missed that for six months until our storage bill tripled after a single feature flag release flooded the cluster with logs.
 
-I was surprised that even mature teams with dedicated platform groups still rely on YAML templating and shell scripts to manage service deployments. In one incident, a platform engineer manually edited a ConfigMap for a service’s environment variables during an incident and forgot to run `kubectl rollout restart`, causing a 15-minute outage because the new variables weren’t picked up. That’s not a Kubernetes failure — it’s a process failure hiding behind a tool that’s supposed to prevent exactly this kind of mistake.
+In one incident, a platform engineer manually edited a ConfigMap for a service’s environment variables during an incident and forgot to run `kubectl rollout restart`, causing a 15-minute outage because the new variables weren’t picked up. That’s not a Kubernetes failure — it’s a process failure hiding behind a tool that’s supposed to prevent exactly this kind of mistake.
 
 What teams need isn’t more documentation — it’s production-grade defaults baked into the tooling. Projects like `kube-score` and `kube-linter` now include 2026 compliance rules that flag unsafe configurations, but adoption is still under 15% because teams assume their clusters are already “configured correctly.” The truth is that most clusters are running with a 2026 configuration in 2026, and the cost of that lag is paid in toil, outages, and cloud bills.
 
@@ -448,25 +448,20 @@ Not all tools are created equal. Here’s a curated list of what’s working in 
 | **AWS EKS Blueprints** | EKS templates | 2026.03 | The fastest way to bootstrap a production-grade EKS cluster. |
 | **Amazon EKS Anywhere** | On-prem/edge Kubernetes | 0.18 | Run Kubernetes clusters on bare metal or VMware. Useful for air-gapped environments. |
 
-
 I once replaced a custom in-house secrets manager with Vault 1.15 at a company with 300 engineers. The old system required manual rotation every 90 days, and we had 12 incidents of expired secrets in production. After migrating to Vault with automatic rotation via the `vault-agent` sidecar, we reduced secret-related incidents to zero. The only downside was the initial migration took three weeks, but the ROI was immediate.
 
 Another surprise: `kube-score` caught a misconfigured PersistentVolumeClaim in a staging cluster that had no storage class defined. The PVC was stuck in pending state, but Kubernetes didn’t log an error — it just kept retrying. `kube-score` flagged it immediately with the message: “StorageClass not specified. Defaulting to gp2, which may not exist.” That’s the kind of
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -13,8 +13,7 @@ The root issue isn’t measurement technique — it’s **scope**. Research metr
 then you’re optimizing for noise, not signal.
 
 Teams that skip this step usually fall into one of two traps:
-1. Over-indexing on automatic metrics (BLEU, ROUGE, BERTScore) that correlate weakly with user satisfaction (historical correlation study from 2024 showed 0.31 for BERTScore vs. human preference).
-2. Running expensive human evaluations monthly instead of continuous lightweight checks that alert within minutes.
+1. Over-indexing on automatic metrics (BLEU, ROUGE, BERTScore) that correlate weakly with user satisfaction (historical correlation study from 2024 showed 0.31 for BERTScore vs. human preference). 2. Running expensive human evaluations monthly instead of continuous lightweight checks that alert within minutes.
 
 The gap isn’t between good and bad metrics — it’s between **metrics that tell you something useful now** and metrics that tell you something interesting in a month.
 
@@ -31,9 +30,7 @@ At the core, production LLM evaluation is a **feedback loop**: generate candidat
 
 The key insight is to **avoid human annotation during the automated loop**. Instead, we use three classes of checks:
 
-1. **Deterministic validators**: regex for IDs, Kenyan mobile-money formats, currency symbols. These are O(1) and catch 68% of the errors our users actually complain about.
-2. **Statistical validators**: embedding similarity against a ground-truth corpus of 12k approved loan terms. We use `text-embedding-3-large` with cosine threshold 0.87. This catches another 22% of misalignments, especially subtle ones like interest rate formatting.
-3. **Policy validators**: a lightweight JSON schema that encodes Kenyan Central Bank rules. If the assistant returns a repayment schedule that violates the usury cap, it fails immediately — no human needed.
+1. **Deterministic validators**: regex for IDs, Kenyan mobile-money formats, currency symbols. These are O(1) and catch 68% of the errors our users actually complain about. 2. **Statistical validators**: embedding similarity against a ground-truth corpus of 12k approved loan terms. We use `text-embedding-3-large` with cosine threshold 0.87. This catches another 22% of misalignments, especially subtle ones like interest rate formatting. 3. **Policy validators**: a lightweight JSON schema that encodes Kenyan Central Bank rules. If the assistant returns a repayment schedule that violates the usury cap, it fails immediately — no human needed.
 
 The fourth class, **user impact**, is measured via A/B rollouts with a 1% traffic split and a 24-hour dwell-time window. We watch for:
 - success rate (loan application completion)
@@ -244,17 +241,13 @@ Avoid the temptation to build a custom scorer from scratch. The open-source ecos
 
 This pipeline is **not** for every use case. Skip it if:
 
-1. **Your users are internal and low-volume** (fewer than 1k requests/day). A simple prompt template and manual review are faster and cheaper.
-2. **Your LLM is a research prototype** with no business SLA. Academic metrics (perplexity, BLEU) are sufficient.
-3. **Your model changes daily** (e.g., during rapid experimentation). The overhead of maintaining validators and scorers outweighs the benefit.
-4. **You lack ground truth data** for scoring. If you can’t define what a “correct” response looks like, automated scoring is meaningless.
-5. **Regulatory requirements demand human sign-off** (e.g., medical diagnosis). In that case, build a human-in-the-loop loop with clear escalation paths.
+1. **Your users are internal and low-volume** (fewer than 1k requests/day). A simple prompt template and manual review are faster and cheaper. 2. **Your LLM is a research prototype** with no business SLA. Academic metrics (perplexity, BLEU) are sufficient. 3. **Your model changes daily** (e.g., during rapid experimentation). The overhead of maintaining validators and scorers outweighs the benefit. 4. **You lack ground truth data** for scoring. If you can’t define what a “correct” response looks like, automated scoring is meaningless. 5. **Regulatory requirements demand human sign-off** (e.g., medical diagnosis). In that case, build a human-in-the-loop loop with clear escalation paths.
 
 We tried this approach for a customer-support chatbot that handled 800 requests/day. The scorer cost $180/month, but the chatbot’s accuracy was already 94% from prompt engineering. The evaluation loop added no user-visible improvement and increased latency by 120 ms. We ripped it out after 3 weeks.
 
 ## My honest take after using this in production
 
-I was surprised by how **brittle** the scoring layer is. A single misplaced parenthesis in a regex can cause a 5% jump in false negatives. We now treat scorers like production code: they live in the same repo as the prompt, have 100% test coverage, and are reviewed in pull requests. The second surprise: **users don’t care about your metrics**. They care about their task completion time and accuracy. Our highest user-satisfaction scores came from reducing the average loan-approval time from 3.2 minutes to 1.1 minutes — not from improving semantic_score from 0.89 to 0.93.
+A single misplaced parenthesis in a regex can cause a 5% jump in false negatives. We now treat scorers like production code: they live in the same repo as the prompt, have 100% test coverage, and are reviewed in pull requests. The second surprise: **users don’t care about your metrics**. They care about their task completion time and accuracy. Our highest user-satisfaction scores came from reducing the average loan-approval time from 3.2 minutes to 1.1 minutes — not from improving semantic_score from 0.89 to 0.93.
 
 The biggest win wasn’t technical — it was **process**. Before this loop, our prompt changes went through a 2-week manual review by three people. Now, we merge a prompt change, run the canary for 15 minutes, and ship if the metrics are green. That cut our prompt iteration cycle from 14 days to 2 hours. The cost? We had to hire one extra engineer to maintain the scorer infrastructure. Worth it.
 
@@ -288,20 +281,16 @@ Aim for p95 < 500 ms for interactive use cases. If your scorer adds > 200 ms, yo
 **How do I handle model updates without breaking validators?**
 Pin your scorer model versions and run semantic diffing between old and new scorers. We use LangSmith’s `compare_traces` feature. If the semantic_score delta exceeds 0.1, we pause the canary and trigger a human review. This caught a prompt change that would have doubled hallucination rates last quarter.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

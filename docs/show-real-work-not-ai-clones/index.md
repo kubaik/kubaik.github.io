@@ -6,8 +6,6 @@ Most build portfolio guides assume a clean environment and a patient timeline. P
 
 In early 2026, our Lagos team hired 12 engineers for our fintech product used by 3 million users across Nigeria and Ghana. Resumes showed glossy AI-generated projects: a "M-Pesa clone with sentiment analysis", a "Flutterwave dashboard using LangChain", a "Stripe-for-Africa API with AI fraud detection". Every candidate claimed to ship AI features, but none could explain how their "AI-powered payment routing" actually worked under real network conditions.
 
-I ran into this when a senior engineer we’d flown in from Nairobi couldn’t answer a simple question: “How does your AI routing handle a 500ms latency jump on MTN’s 3G?” He froze, then said, “Our LLM picks the fastest route.” That’s when I decided we needed a portfolio filter that separated signal from noise.
-
 Our real problem wasn’t finding AI skills — it was finding engineers who could build reliable systems on unreliable networks. We needed proof they could ship under constraints like:
 
 - 2G/3G connections with 500ms–2s latency spikes
@@ -17,9 +15,7 @@ Our real problem wasn’t finding AI skills — it was finding engineers who cou
 
 A portfolio couldn’t just show features — it had to show resilience. We looked for evidence of:
 
-1. **Connection-aware retries**: Did they handle partial failures gracefully?
-2. **Payment flow testing**: Did they test with real SIMs, not just sandbox APIs?
-3. **Latency instrumentation**: Did they measure and optimize for 3G, not just Chrome on fibre?
+1. **Connection-aware retries**: Did they handle partial failures gracefully? 2. **Payment flow testing**: Did they test with real SIMs, not just sandbox APIs? 3. **Latency instrumentation**: Did they measure and optimize for 3G, not just Chrome on fibre?
 
 Most candidates failed on point 1: their "AI clones" had hardcoded timeouts of 200ms. On MTN 3G, that’s optimistic.
 
@@ -31,7 +27,7 @@ Then we tried asking for GitHub links to production code. Most candidates sent l
 
 We tried asking for metrics. Silence. No error rates, no latency percentiles, no uptime numbers. Just screenshots of AI-generated graphs.
 
-I was surprised that even engineers with 5+ years of experience couldn’t point to a single real-world constraint they’d faced. One candidate claimed to have built “a WhatsApp bot handling 10,000 messages/day” — but when asked how he tested WhatsApp webhook retries, he said, “I ran it on localhost and it worked.”
+One candidate claimed to have built “a WhatsApp bot handling 10,000 messages/day” — but when asked how he tested WhatsApp webhook retries, he said, “I ran it on localhost and it worked.”
 
 Our final attempt was to ask for a short case study: a problem they solved, the constraints they faced, and the trade-offs they made. Most responses were 200 words of buzzwords. None mentioned network conditions, payment integrations, or mobile money APIs — the actual problems we solve daily.
 
@@ -72,8 +68,7 @@ To build your own Constraint Resume, focus on three deliverables:
 ### 1. The constraint problem statement (50–100 words)
 
 Write a short paragraph that answers:
-- What problem did you solve?
-- What constraints did you face? (network, device, payment method, cost)
+- What problem did you solve? - What constraints did you face? (network, device, payment method, cost)
 - What was the real impact? (users served, revenue protected, uptime maintained)
 
 Example:
@@ -223,23 +218,17 @@ def disburse(amount: int, recipient: str):
 
 This is the most critical part of the Constraint Resume. It must answer:
 
-- What failed?
-- How did you detect it?
-- What did you do?
-- What did you learn?
+- What failed? - How did you detect it? - What did you do? - What did you learn?
 
 Example from a real portfolio (with metrics redacted for privacy):
 
 > **Post-mortem: M-Pesa STK Push Avalanche on Safaricom, Feb 14 2026**
 >
-> Problem: During Valentine’s Day promotions, our USSD-to-M-Pesa flow received 4x normal traffic. Safaricom’s API started returning 503s at 90 requests/minute. Our system had no circuit breaker and used a fixed 2s timeout.
->
+> Problem: During Valentine’s Day promotions, our USSD-to-M-Pesa flow received 4x normal traffic. Safaricom’s API started returning 503s at 90 requests/minute. Our system had no circuit breaker and used a fixed 2s timeout. >
 > Detection: Prometheus alert fired at 14:37: `mpesa_stk_push_latency_seconds{quantile="0.95"} > 3`. Within 60s, user reports flooded Slack: “M-Pesa not sending.”
 >
-> Root cause: We assumed Safaricom’s SLA of 2s response time was reliable. It wasn’t. Their 503s cascaded: our retry logic (3 attempts, 200ms delay) hammered them into oblivion.
->
-> Fix: Deployed gobreaker v0.6 with 5 failures/30s window, 15s timeout. Added exponential backoff with jitter (base 500ms, max 8s). Queued failed STK pushes for SMS fallback.
->
+> Root cause: We assumed Safaricom’s SLA of 2s response time was reliable. It wasn’t. Their 503s cascaded: our retry logic (3 attempts, 200ms delay) hammered them into oblivion. >
+> Fix: Deployed gobreaker v0.6 with 5 failures/30s window, 15s timeout. Added exponential backoff with jitter (base 500ms, max 8s). Queued failed STK pushes for SMS fallback. >
 > Result:
 > - Error rate dropped from 18% to 2.3% within 10 minutes
 > - 95th percentile latency fell from 4.2s to 1.8s
@@ -610,20 +599,16 @@ def route_payment(amount, recipient):
 
 **Portfolio claim:** “Built a system that disburses 12,000 M-Pesa payments/day to dairy farmers in rural Kenya,
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

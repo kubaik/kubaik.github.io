@@ -19,7 +19,7 @@ Our first attempt was to pivot into **AI-assisted compliance for Kenyan SMEs.** 
 
 But within two weeks, we hit a wall. The **data quality problem** was intractable. Kenyan VAT returns (KRA iTax) have fields that require human judgment: “Is this expense truly for business purposes?” AI models like Llama 3.2 11B kept hallucinating categories. We tried fine-tuning on 50,000 labeled returns, but the error rate stayed at 18% — too high for compliance. Worse, CFOs wouldn’t sign off on AI-generated tax filings. One customer told us, “I’d rather pay my accountant KSh 15,000 than risk an audit because of a bot’s mistake.”
 
-I spent two weeks debugging why our model kept confusing “travel” with “entertainment” expenses. The root cause? KRA’s PDFs use ambiguous terms like “transport” that even humans argue over. We tried using regex to extract line items, but the PDFs were scanned images. Tesseract OCR introduced 12% noise. We burned 140 engineering hours before we shelved the idea.
+The root cause? KRA’s PDFs use ambiguous terms like “transport” that even humans argue over. We tried using regex to extract line items, but the PDFs were scanned images. Tesseract OCR introduced 12% noise. We burned 140 engineering hours before we shelved the idea.
 
 Then we tried **AI-powered loan underwriting for Kenyan SACCOs.** We used a gradient-boosted model (XGBoost 2.1.0) trained on 5 years of SACCO loan data. We deployed on AWS SageMaker with real-time inference via Lambda. Our AUC was 0.87 on historical data — decent. But SACCOs didn’t trust black-box models. One chairman said, “If the model says no, I still have to explain it to the member. I’d rather use Excel.”
 
@@ -31,10 +31,7 @@ Both attempts failed because we assumed **AI could replace human judgment** in d
 We pivoted to a niche where **AI couldn’t replace the human expert** — **specialized regulatory reporting for Kenyan healthcare providers.**
 
 Here’s why this niche has **Moat Potential in 2026:**
-- **Regulatory complexity:** Kenyan healthcare providers must file reports to the Pharmacy and Poisons Board (PPB), Kenya Medical Practitioners and Dentists Board (KMPDB), and Council of Governors (COG). Each has its own schema, deadlines, and validation rules. AI can’t keep up with regulatory changes at this cadence.
-- **High liability:** Errors in these reports can trigger audits, fines, or license suspension. Providers won’t risk AI-generated filings.
-- **Local expertise required:** Reports require domain knowledge (e.g., ICD-11 codes, drug schedules, facility types). Only local health informatics professionals understand these nuances.
-- **Integration depth:** Reports must pull from EHRs, pharmacy systems, and lab instruments. AI can’t reliably parse HL7 v2 messages or FHIR 4.0.1 bundles without heavy human curation.
+- **Regulatory complexity:** Kenyan healthcare providers must file reports to the Pharmacy and Poisons Board (PPB), Kenya Medical Practitioners and Dentists Board (KMPDB), and Council of Governors (COG). Each has its own schema, deadlines, and validation rules. AI can’t keep up with regulatory changes at this cadence. - **High liability:** Errors in these reports can trigger audits, fines, or license suspension. Providers won’t risk AI-generated filings. - **Local expertise required:** Reports require domain knowledge (e.g., ICD-11 codes, drug schedules, facility types). Only local health informatics professionals understand these nuances. - **Integration depth:** Reports must pull from EHRs, pharmacy systems, and lab instruments. AI can’t reliably parse HL7 v2 messages or FHIR 4.0.1 bundles without heavy human curation.
 
 We named the product **MedRegSync.** It’s a **SaaS platform that automates regulatory reporting for Kenyan healthcare providers** — but only after a human expert validates the mapping and logic. AI assists in data extraction and transformation, but the final report is human-approved.
 
@@ -68,11 +65,7 @@ We used **Pydantic V2** for data validation, **SQLModel** for ORM, and **Celery*
 
 ### Core workflow
 
-1. **Data ingestion:** Providers upload HL7 v2 messages or FHIR 4.0.1 bundles via SFTP or API.
-2. **AI-assisted transformation:** We use **Unstructured.io** to extract unstructured text (e.g., discharge summaries) and **Amazon Comprehend Medical** for entity recognition. We normalize ICD-11 codes and drug schedules.
-3. **Human validation:** A certified health informatics professional reviews the transformed data and approves the report.
-4. **Automated filing:** The approved report is filed to PPB, KMPDB, and COG via their APIs or PDF uploads.
-5. **Audit trail:** Every change is logged in an immutable ledger using **AWS QLDB**.
+1. **Data ingestion:** Providers upload HL7 v2 messages or FHIR 4.0.1 bundles via SFTP or API. 2. **AI-assisted transformation:** We use **Unstructured.io** to extract unstructured text (e.g., discharge summaries) and **Amazon Comprehend Medical** for entity recognition. We normalize ICD-11 codes and drug schedules. 3. **Human validation:** A certified health informatics professional reviews the transformed data and approves the report. 4. **Automated filing:** The approved report is filed to PPB, KMPDB, and COG via their APIs or PDF uploads. 5. **Audit trail:** Every change is logged in an immutable ledger using **AWS QLDB**.
 
 We wrote a custom **rule engine** in Python to validate reports against regulatory schemas. The engine uses **JSON Schema** for validation and **Pydantic** for runtime checks. Here’s a snippet:
 
@@ -160,9 +153,7 @@ AI is a **great assistant, but a terrible owner.**
 
 In 2026, the SaaS niches that survive are the ones where **AI can’t take full ownership** of the outcome. These niches have three traits:
 
-1. **High regulatory ambiguity:** Rules change faster than models can adapt.
-2. **Deep human expertise required:** The work can’t be fully automated without unacceptable error rates.
-3. **Local context matters:** Global models fail on nuanced, region-specific workflows.
+1. **High regulatory ambiguity:** Rules change faster than models can adapt. 2. **Deep human expertise required:** The work can’t be fully automated without unacceptable error rates. 3. **Local context matters:** Global models fail on nuanced, region-specific workflows.
 
 This isn’t just true for healthcare. It’s true for **compliance in logistics, legal document review for African jurisdictions, and specialized financial reporting for SACCOs.**
 
@@ -222,9 +213,7 @@ class ReportApproval(models.Model):
 ### Step 4: Measure **trust**, not just usage
 
 Track metrics like:
-- **Approval rate:** % of reports that get human approval without edits.
-- **Time to approval:** How long does it take for a human to review a report?
-- **Error rate post-approval:** Are there mistakes even after human review?
+- **Approval rate:** % of reports that get human approval without edits. - **Time to approval:** How long does it take for a human to review a report? - **Error rate post-approval:** Are there mistakes even after human review?
 
 We thought our NPS of 68 was great — until we realized **only 60% of reports were getting approved on first pass.** We had to improve our AI preprocessing to reduce human edits.
 
@@ -276,20 +265,16 @@ Open your notes app and list **three regulated industries in your target market.
 
 If you can’t answer all three, pick a different niche. Then, **email one potential customer in that niche** and ask for a 15-minute call to discuss their current reporting process. That’s your first step today.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -1,6 +1,6 @@
 # 3 mistakes that break deployments for everyone
 
-I spent longer than I should have on building deployment before understanding what was actually happening. It's the kind of problem that's easy to reproduce and hard to explain. This is the version of the write-up that includes the part that broke.
+It's the kind of problem that's easy to reproduce and hard to explain. This is the version of the write-up that includes the part that broke.
 
 ## Why this list exists (what I was actually trying to solve)
 
@@ -14,10 +14,7 @@ This post is about the three mistakes that break deployments for both camps and 
 
 I tested every approach against two fixed constraints: the solo founder has less than 24 hours a week to spend on platform work, and the deployment system must survive a three-day vacation where no one touches it. Every option was measured on four metrics that matter to a solo founder:
 
-- Time to first deploy from a fresh laptop: benchmarked on a 2026 MacBook Air running Node 20 LTS and Python 3.11, Wi-Fi in a coworking space in Cape Town with 12 Mbps down / 3 Mbps up.
-- Median deployment latency to a single-region AWS EC2 t3.medium (2 vCPU, 4 GB RAM) running Ubuntu 24.04 LTS.
-- Cost per 1,000 deployments at 2026 AWS on-demand pricing (us-east-1).
-- Onboarding failure rate: percentage of new hires who trigger a preventable error in their first two deployments. I used a controlled dataset of 12 new hires who had never seen the stack before.
+- Time to first deploy from a fresh laptop: benchmarked on a 2026 MacBook Air running Node 20 LTS and Python 3.11, Wi-Fi in a coworking space in Cape Town with 12 Mbps down / 3 Mbps up. - Median deployment latency to a single-region AWS EC2 t3.medium (2 vCPU, 4 GB RAM) running Ubuntu 24.04 LTS. - Cost per 1,000 deployments at 2026 AWS on-demand pricing (us-east-1). - Onboarding failure rate: percentage of new hires who trigger a preventable error in their first two deployments. I used a controlled dataset of 12 new hires who had never seen the stack before.
 
 The table below shows the raw numbers I collected over two weeks of parallel runs.
 
@@ -181,12 +178,12 @@ Use this table to pick the right option in five minutes.
 
 | Situation                                                      | Best choice                              | Runner-up               | Why                                                                                     |
 |----------------------------------------------------------------|-------------------------------------------|-------------------------|-----------------------------------------------------------------------------------------|
-| You need the fastest possible first deploy                     | Heroku (2026 dyno)                        | Fly.io                  | 5-minute first deploy beats everything else.                                            |
-| You are already on AWS and want fine-grained control           | AWS CodePipeline + CloudFormation         | AWS Copilot             | IAM policies and rollback behavior are explicit in CloudFormation.                      |
-| You want zero vendor lock-in                                   | GitHub Actions + self-hosted runner       | Buildpacks + Render     | Your Dockerfile and workflow YAML stay the same if you ever move.                      |
-| Your team is non-technical and needs a GUI                     | Render.com                                | Fly.io                  | The dashboard hides infrastructure details, which is safer for new hires.              |
-| You have Kubernetes experience and want GitOps                 | Self-hosted Argo CD                       | Nomad + Waypoint        | Argo CD’s UI shows the exact diff, which reduces onboarding errors.                    |
-| You are bootstrapping and cannot spend more than $50/month     | GitHub Actions + self-hosted runner       | Fly.io                  | $0.45 per 1,000 deploys vs $1.80 for Heroku.                                           |
+| You need the fastest possible first deploy                     | Heroku (2026 dyno)                        | Fly.io                  | 5-minute first deploy beats everything else. |
+| You are already on AWS and want fine-grained control           | AWS CodePipeline + CloudFormation         | AWS Copilot             | IAM policies and rollback behavior are explicit in CloudFormation. |
+| You want zero vendor lock-in                                   | GitHub Actions + self-hosted runner       | Buildpacks + Render     | Your Dockerfile and workflow YAML stay the same if you ever move. |
+| Your team is non-technical and needs a GUI                     | Render.com                                | Fly.io                  | The dashboard hides infrastructure details, which is safer for new hires. |
+| You have Kubernetes experience and want GitOps                 | Self-hosted Argo CD                       | Nomad + Waypoint        | Argo CD’s UI shows the exact diff, which reduces onboarding errors. |
+| You are bootstrapping and cannot spend more than $50/month     | GitHub Actions + self-hosted runner       | Fly.io                  | $0.45 per 1,000 deploys vs $1.80 for Heroku. |
 
 If you fall between two rows, pick the one with the lower onboarding failure rate. A solo founder can recover from a $50 cost mistake much faster than from a new hire who pushes a broken build to production on their first day.
 
@@ -267,7 +264,6 @@ docker info | grep -i "operating system" && echo "Docker is installed and runnin
 ```
 
 If the command prints `Docker is installed and running`, you are ready to proceed. If not, open your project’s README and paste the two-line installation snippet from the top pick section. You’ll be able to deploy from a fresh laptop in under 25 minutes.
-
 
 ---
 

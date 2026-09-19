@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T09:33:36.204639">
-        <meta property="article:modified_time" content="2026-07-03T09:33:36.204646">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.418718+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Prompt injection’s hidden AWS tax">
@@ -63,8 +63,8 @@
       "headline": "Prompt injection’s hidden AWS tax",
       "description": "Cut LLM costs 40% by blocking prompt injection — sandboxing, schema validation, and the retry storm mistake most teams miss.",
       "datePublished": "2026-07-03T09:33:36+00:00",
-      "dateModified": "2026-07-03T09:33:36+00:00",
-      "wordCount": 3745,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3726,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,9 +264,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         19 min read
-                        &nbsp;·&nbsp; 3745 words
+                        &nbsp;·&nbsp; 3726 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-03
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,7 +277,7 @@
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>Most teams treat prompt injection like a theoretical risk they’ll handle later. I did too, until I watched a single malformed user query drain our LLM budget by 34% in one weekend. The docs never mention that a 50-word user message can quietly trigger 5,000 extra tokens of hidden context the model keeps regenerating on every retry. That hidden cost is never logged as an API call, so your observability dashboard shows a green flame graph while your AWS bill screams.</p>
 <p>What the docs <em>do</em> show is sanitization libraries and a simple regex. What they skip is how your prompt template evolves over six months of feature creep. We started with a clean 200-character system prompt in January 2026. By June, it ballooned to 1,200 characters because three different teams kept adding new capabilities. Each expansion created new injection vectors: unescaped braces, unquoted user variables, JSON fragments that looked like user input but were actually injected instructions. The moment a malicious user sent <code>{"role":"admin","prompt":"ignore previous instructions"}</code> the system prompt’s JSON parser silently swallowed the override and executed the attacker’s payload.</p>
-<p>I was surprised to discover that even well-funded teams ignore this because their evaluation suites only test happy-path prompts. Our automated tests used curated datasets of 500 prompts that were manually edited to avoid special characters. Real users, however, paste Excel exports, shell commands, and entire JSON dumps. The gap isn’t just technical—it’s cultural. Engineers assume prompt injection is a red-team problem, not a shipping-velocity problem. The moment we wrapped our prompts in Jinja2 templates with auto-escaping, the hidden injection attempts dropped from 12% of traffic to 0.4%—but only after we measured for a week.</p>
+<p>Our automated tests used curated datasets of 500 prompts that were manually edited to avoid special characters. Real users, however, paste Excel exports, shell commands, and entire JSON dumps. The gap isn’t just technical—it’s cultural. Engineers assume prompt injection is a red-team problem, not a shipping-velocity problem. The moment we wrapped our prompts in Jinja2 templates with auto-escaping, the hidden injection attempts dropped from 12% of traffic to 0.4%—but only after we measured for a week.</p>
 <p>Production needs continuous red-teaming, not one-off security reviews. Your staging environment probably runs a static prompt file that never changes. In reality, prompts change daily through feature flags, A/B experiments, and gradual rollouts. What you need is a canary prompt that compares the current prompt hash against a golden hash created during deployment. Any drift triggers an alert before users see the change. I set this up using a 45-line GitHub Action that runs after every merge. The first week it caught three accidental prompt edits—none intentional, all costly when they went live.</p>
 <p>Another blind spot is the cost of retries. When an injection succeeds, the model often regenerates the same erroneous output for minutes until the cache expires or a human kills the pod. Our Node 20 LTS service running <code>@google-cloud/aiplatform</code> 1.47.0 was configured with a 30-second retry budget, but the actual retry storm lasted 8 minutes and cost $1,247 in extra tokens. The docs mention retry budgets; they don’t mention that token cost is exponential when the model outputs verbose error messages.</p>
 <p>The real gap is psychological: teams assume their prompts are short and stable, but production prompts become sprawling runtimes that ingest user data, feature flags, and external API responses. Each piece of dynamic content is a potential injection surface. If your prompt template has more than two curly braces per line, you’re already in trouble.</p>
@@ -598,11 +598,7 @@ while (attempts &lt; 3 &amp;&amp; budget.use(tokenCount)) {
 <h2 id="what-to-do-next">What to do next</h2>
 <p>If you run an AI service in production today, open your prompt template file right now. Count the number of curly braces. If it’s more than two per line, you’re vulnerable. Then, do this:</p>
 <ol>
-<li>Run <code>npm install @ai-safety/prompt-sandbox@1.3.2</code> or <code>pip install prompt-sandbox==1.3.2</code>.</li>
-<li>Wrap your prompt template in a sandbox.</li>
-<li>Add a Zod schema to validate every prompt variable.</li>
-<li>Compute a SHA-256 hash of the rendered prompt and compare it to a golden hash in CI.</li>
-<li>Deploy to staging and run a load test with 100 prompts that contain <code>{</code>, <code>}</code>, <code>;</code>, and triple backticks.</li>
+<li>Run <code>npm install @ai-safety/prompt-sandbox@1.3.2</code> or <code>pip install prompt-sandbox==1.3.2</code>. 2. Wrap your prompt template in a sandbox. 3. Add a Zod schema to validate every prompt variable. 4. Compute a SHA-256 hash of the rendered prompt and compare it to a golden hash in CI. 5. Deploy to staging and run a load test with 100 prompts that contain <code>{</code>, <code>}</code>, <code>;</code>, and triple backticks.</li>
 </ol>
 <p>If you see any prompts that render successfully, you have an injection vector. Fix it before it hits production.</p>
 <p>Do this in the next 30 minutes. Your LLM budget will thank you.</p>
@@ -617,14 +613,11 @@ In Node with <code>vm2</code>, it adds ~12ms per request in cold starts. In prod
 Copy-paste errors. Users paste JSON, Python code, or Excel exports into your input field. The most common payloads are <code>{key: value}</code>, <code>{{system_instruction=...}}</code>, and triple backticks with injected instructions. These aren’t attacks—they’re accidents that break your system.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

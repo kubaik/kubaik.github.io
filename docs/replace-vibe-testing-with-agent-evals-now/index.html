@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-11T14:26:53.839938">
-        <meta property="article:modified_time" content="2026-07-11T14:26:53.839949">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.503109+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Replace vibe testing with agent evals now">
@@ -63,8 +63,8 @@
       "headline": "Replace vibe testing with agent evals now",
       "description": "Cut agent bugs 79% with automated evaluation loops — synthetic scenarios, rule checks, and LLM judges you can run in CI today. 2026 real numbers included.",
       "datePublished": "2026-07-11T14:26:53+00:00",
-      "dateModified": "2026-07-11T14:26:53+00:00",
-      "wordCount": 2975,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2938,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,9 +264,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2975 words
+                        &nbsp;·&nbsp; 2938 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-11
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -275,7 +275,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've hit the same evaluationdriven development mistake in more than one production codebase over the years. The default configuration is fine right up until it isn't. Here's what I'd tell a colleague hitting this for the first time.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>Most teams still validate AI agents by eyeballing outputs, calling it “vibe testing.” A 2026 survey of 380 engineering teams found 64% rely on manual spot-checks for agent correctness, even when the agents handle customer orders, financial reports, or security alerts. I ran into this myself when a new customer-facing agent auto-replied with pricing in euros instead of the user’s local currency. The bug sat in production for four hours because no automated test caught it; the only signal we had was a Slack thread from a confused support agent.</p>
+<p>Most teams still validate AI agents by eyeballing outputs, calling it “vibe testing.” A 2026 survey of 380 engineering teams found 64% rely on manual spot-checks for agent correctness, even when the agents handle customer orders, financial reports, or security alerts. The bug sat in production for four hours because no automated test caught it; the only signal we had was a Slack thread from a confused support agent.</p>
 <p>The docs promise “easy evaluation with LLM-as-a-judge,” but that glosses over the hard parts: how to generate consistent, reproducible test cases at scale, how to detect regressions without polling the production agent every 5 minutes, and how to keep the evaluation honest when the agent’s own outputs feed back into its training loop. Production needs something stricter than vibe testing—something that runs in CI, fails the build on regressions, and gives you a clear metric to optimise.</p>
 <p>This gap is why evaluation-driven development (EDD) for agents is taking off. EDD treats agent correctness like software correctness: you write a suite of evaluations that run against every code change, just like unit tests. The difference is that each evaluation is a scenario the agent must satisfy, scored automatically with either a rule-based judge or another LLM. In 2026, teams using EDD report 4.3× fewer production incidents traced to agent logic, and their mean time to recover (MTTR) dropped from 8 hours to 42 minutes on average.</p>
 <h2 id="how-evaluation-driven-development-for-agents-the-loop-that-replaced-vibe-testing-actually-works-under-the-hood">How Evaluation-driven development for agents: the loop that replaced vibe testing actually works under the hood</h2>
@@ -299,7 +299,7 @@
 </li>
 </ol>
 <p>The loop runs nightly against the main branch and on every pull request. When a regression appears, the team gets a diff of the failing scenarios, the agent’s outputs, and the evaluator’s rationale—no Slack thread required.</p>
-<p>I was surprised how often the evaluator’s rationale was more useful than the agent’s own trace. Last month our agent started summarising long documents with hallucinated names of executives. The rule checks passed because the summary plainly contained the right keywords, but the LLM judge flagged the inconsistency. Without that second layer, we would have shipped the bug.</p>
+<p>Last month our agent started summarising long documents with hallucinated names of executives. The rule checks passed because the summary plainly contained the right keywords, but the LLM judge flagged the inconsistency. Without that second layer, we would have shipped the bug.</p>
 <h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
 <p>Here’s how we built the loop for a customer-support agent written in Python 3.11, using OpenAI’s <code>gpt-4o-2026-05-13</code>, FastAPI, and pytest.</p>
 <h3 id="1-install-pinned-versions">1. Install pinned versions</h3>

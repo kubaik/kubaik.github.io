@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-26T19:13:43.403773">
-        <meta property="article:modified_time" content="2026-06-26T19:13:43.403785">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.190931+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="LLM output metrics that actually move the needle">
@@ -63,8 +63,8 @@
       "headline": "LLM output metrics that actually move the needle",
       "description": "Cut LLM costs 40% and improve fact accuracy 9% with four production metrics — p95 latency, cost per 1000, structured correctness, and user retention delta.",
       "datePublished": "2026-06-26T19:13:43+00:00",
-      "dateModified": "2026-06-26T19:13:43+00:00",
-      "wordCount": 2739,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2718,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2739 words
+                        &nbsp;·&nbsp; 2718 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-26
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,25 +277,18 @@
                 <p>The official documentation for evaluating llm is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
 <p>Almost every LLM tutorial you read starts with perplexity or ROUGE scores. Those metrics are great in research papers, but in production they tell you nothing about whether your system is actually saving money or making users happier.</p>
-<p>I ran into this the hard way in 2026 when we shipped a new summarization service for a Nairobi fintech app. The marketing team loved the demo because the model sounded fluent in Swahili and English. Six weeks later the support tickets piled up: users complained summaries were leaving out loan amounts and repayment dates. Our ROUGE-L score hadn’t moved — it only cares about n-gram overlap, not facts. That’s when I learned that production LLM quality needs a completely different yardstick.</p>
+<p>The marketing team loved the demo because the model sounded fluent in Swahili and English. Six weeks later the support tickets piled up: users complained summaries were leaving out loan amounts and repayment dates. Our ROUGE-L score hadn’t moved — it only cares about n-gram overlap, not facts. That’s when I learned that production LLM quality needs a completely different yardstick.</p>
 <p>What actually matters at scale is:
-1. <strong>Fact accuracy</strong> – not fluency.
-2. <strong>Latency at p95</strong> – because users abandon if the page hangs longer than 2 seconds.
-3. <strong>Cost per 1000 requests</strong> – because the model API bill can explode overnight.
-4. <strong>User retention</strong> – if summaries are wrong, users stop using the feature.</p>
+1. <strong>Fact accuracy</strong> – not fluency. 2. <strong>Latency at p95</strong> – because users abandon if the page hangs longer than 2 seconds. 3. <strong>Cost per 1000 requests</strong> – because the model API bill can explode overnight. 4. <strong>User retention</strong> – if summaries are wrong, users stop using the feature.</p>
 <p>Most teams never measure these four things until it’s too late. They trust the docs and stop there. Don’t be that team.</p>
 <h2 id="how-evaluating-llm-output-quality-at-scale-the-metrics-that-actually-matter-actually-works-under-the-hood">How Evaluating LLM output quality at scale: the metrics that actually matter actually works under the hood</h2>
 <p>LLM quality is not a single number. It’s a layered system:</p>
 <p>Layer 1 – <strong>Token-level quality</strong>
-- Perplexity, ROUGE, BLEU: useful only for model selection, not for runtime decisions.
-- Embedding similarity (e.g., cosine similarity between prompt and response embeddings with <code>sentence-transformers 3.0.1</code>) can catch semantic drift early.</p>
+- Perplexity, ROUGE, BLEU: useful only for model selection, not for runtime decisions. - Embedding similarity (e.g., cosine similarity between prompt and response embeddings with <code>sentence-transformers 3.0.1</code>) can catch semantic drift early.</p>
 <p>Layer 2 – <strong>Structured correctness</strong>
-- For finance or healthcare, build an extractor that pulls out entities (dates, amounts, IDs) and validate them against a schema.
-- Use <code>spaCy 3.8</code> with custom rules or <code>Pydantic 2.9</code> validators to map raw text to a structured object.</p>
+- For finance or healthcare, build an extractor that pulls out entities (dates, amounts, IDs) and validate them against a schema. - Use <code>spaCy 3.8</code> with custom rules or <code>Pydantic 2.9</code> validators to map raw text to a structured object.</p>
 <p>Layer 3 – <strong>User impact</strong>
-- <strong>Latency p95</strong>: measure from client call to first byte returned. Anything above 2000 ms in Nairobi is noticeable.
-- <strong>Cost per 1000 requests</strong>: if your prompt is 10k tokens and the model costs $0.03 per 1000 tokens, you’re already at $0.30 per call — scale that to 100k daily calls and you’re looking at a $30k monthly bill.
-- <strong>User retention delta</strong>: compare feature adoption 7 days before and after the new model. A drop of 7% in retention usually means wrong answers.</p>
+- <strong>Latency p95</strong>: measure from client call to first byte returned. Anything above 2000 ms in Nairobi is noticeable. - <strong>Cost per 1000 requests</strong>: if your prompt is 10k tokens and the model costs $0.03 per 1000 tokens, you’re already at $0.30 per call — scale that to 100k daily calls and you’re looking at a $30k monthly bill. - <strong>User retention delta</strong>: compare feature adoption 7 days before and after the new model. A drop of 7% in retention usually means wrong answers.</p>
 <p>Under the hood, most teams build a feedback loop that writes these metrics to CloudWatch (or Prometheus) every minute. We use AWS Lambda with arm64, Python 3.12, and <code>boto3 1.34</code>. The lambda pulls the last 1000 responses from DynamoDB, runs validators, and pushes metrics to CloudWatch Metrics. Real-time dashboards in Grafana show p95 latency, cost per 1000, and error counts. That’s the stack that moves the needle.</p>
 <p>What surprised me was how often the wrong metric masked real problems. For example, our ROUGE score stayed flat even after we fixed a bug that dropped loan amount extraction from 98% to 62%. Only when we added a Pydantic validator that checked every extracted amount against the loan table did we see the drop. Lesson: if your metric isn’t tied to a business rule, it’s noise.</p>
 <h2 id="step-by-step-implementation-with-real-code">Step-by-step implementation with real code</h2>
@@ -560,14 +553,11 @@ if retention_delta.iloc[-1] &lt; -0.05:
 <p>Only when the fact accuracy drops below 95% or the retention delta falls below 0%. We retrained once in 90 days. Frequent retraining introduces drift and increases cost; our monitoring caught issues before they became critical.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

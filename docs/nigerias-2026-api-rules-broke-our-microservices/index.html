@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T08:55:38.998495">
-        <meta property="article:modified_time" content="2026-09-19T03:52:01.872966+00:00">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.297280+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Nigeria’s 2026 API rules broke our microservices">
@@ -63,7 +63,7 @@
       "headline": "Nigeria’s 2026 API rules broke our microservices",
       "description": "Cut API compliance risk 8% with transaction boundaries — why Nigeria’s 2026 PSMR rules broke microservices and what to do instead",
       "datePublished": "2026-07-03T08:55:38+00:00",
-      "dateModified": "2026-09-19T03:52:01+00:00",
+      "dateModified": "2026-09-19T08:27:14+00:00",
       "wordCount": 2838,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
@@ -333,17 +333,13 @@
 <p><strong>## The cases where the conventional wisdom IS right</strong></p>
 <p>Not every Nigerian fintech needs to merge services. The conventional wisdom still works in three scenarios:</p>
 <ol>
-<li><strong>Non-critical paths.</strong> If a service is not part of a financial transaction boundary — say, a marketing email service or a blog — you can split it freely. No regulatory clock applies.</li>
-<li><strong>Third-party integrations with strong SLAs.</strong> If you’re calling Flutterwave, M-Pesa, or a bank API with a 200ms SLA and 99.9% uptime, you can split that service. But you must wrap the call in a circuit breaker and a 30-second timeout. If the call times out, fail the transaction and log the error. Don’t let it block the ledger.</li>
-<li><strong>Read-heavy analytics.</strong> If you’re building a reporting dashboard or a customer analytics service, read replicas and eventual consistency are fine. The PSMR clock only applies to financial operations, not analytics.</li>
+<li><strong>Non-critical paths.</strong> If a service is not part of a financial transaction boundary — say, a marketing email service or a blog — you can split it freely. No regulatory clock applies. 2. <strong>Third-party integrations with strong SLAs.</strong> If you’re calling Flutterwave, M-Pesa, or a bank API with a 200ms SLA and 99.9% uptime, you can split that service. But you must wrap the call in a circuit breaker and a 30-second timeout. If the call times out, fail the transaction and log the error. Don’t let it block the ledger. 3. <strong>Read-heavy analytics.</strong> If you’re building a reporting dashboard or a customer analytics service, read replicas and eventual consistency are fine. The PSMR clock only applies to financial operations, not analytics.</li>
 </ol>
 <p>We built a reporting service this way. It reads from a read replica of the ledger database. It serves 10k RPS with P99 latency of 45ms. No compliance clock applies. We deployed it as a separate service with GraphQL API and Redis 7.2 caching. It works fine.</p>
 <p><strong>## How to decide which approach fits your situation</strong></p>
 <p>Here’s a decision tree we use internally:</p>
 <ol>
-<li><strong>Is this a financial transaction boundary?</strong> If yes, keep it in one service or at least one deploy unit. If no, you can split freely.</li>
-<li><strong>Does the service call a third-party API with an SLA &lt; 30 seconds?</strong> If yes, wrap it in a circuit breaker and a 30-second timeout. If no, you can split.</li>
-<li><strong>Is the service read-heavy with no writes?</strong> If yes, split it. If no, keep it in the transaction boundary.</li>
+<li><strong>Is this a financial transaction boundary?</strong> If yes, keep it in one service or at least one deploy unit. If no, you can split freely. 2. <strong>Does the service call a third-party API with an SLA &lt; 30 seconds?</strong> If yes, wrap it in a circuit breaker and a 30-second timeout. If no, you can split. 3. <strong>Is the service read-heavy with no writes?</strong> If yes, split it. If no, keep it in the transaction boundary.</li>
 </ol>
 <p>We also use a cost heuristic: if splitting a service saves us 20% in cloud costs and doesn’t introduce audit gaps, we split. Otherwise, we keep it in the boundary. In 2026, audit compliance is the higher cost.</p>
 <p><strong>## Objections I've heard and my responses</strong></p>
@@ -358,13 +354,7 @@ My response: We use PostgreSQL synchronous replication with <code>synchronous_co
 <p><strong>## What I'd do differently if starting over</strong></p>
 <p>If I were building a Nigerian-regulated fintech in 2026, here’s what I’d do:</p>
 <ol>
-<li><strong>Start with a modular monolith.</strong> Don’t split into microservices until you hit 10k RPS or a clear non-transactional need. We wasted 6 months splitting AuthService from LedgerService. It didn’t help scale and broke compliance.</li>
-<li><strong>Use PostgreSQL 16 with synchronous replication and <code>remote_apply</code>.</strong> Forget Kafka for the audit trail. Read the WAL directly. We spent 3 months debugging Kafka lag spikes. The WAL is simpler and faster.</li>
-<li><strong>Put Redis 7.2 in front of anything read-heavy, but use Redis Streams for invalidation.</strong> Cache misses are 80ms faster, but stale data is a compliance risk. The Streams pattern is reliable.</li>
-<li><strong>Wrap third-party calls in a circuit breaker with a 30-second timeout.</strong> Don’t let a bank API block your ledger. Fail fast and log the error.</li>
-<li><strong>Ship a simple audit dashboard on day one.</strong> The dashboard should show trace IDs, timestamps, and gaps in red. We built ours in Grafana. It caught 8% of audit gaps in our first week.</li>
-<li><strong>Use Node 20 LTS with <code>pg</code> driver and <code>pino</code> for structured logging.</strong> We tried Python and Go for different services. The Node stack was faster to debug and had better library support for structured logs.</li>
-<li><strong>Avoid event sourcing unless you have a clear read/write separation need.</strong> It adds latency and complexity. The outbox pattern is simpler.</li>
+<li><strong>Start with a modular monolith.</strong> Don’t split into microservices until you hit 10k RPS or a clear non-transactional need. We wasted 6 months splitting AuthService from LedgerService. It didn’t help scale and broke compliance. 2. <strong>Use PostgreSQL 16 with synchronous replication and <code>remote_apply</code>.</strong> Forget Kafka for the audit trail. Read the WAL directly. We spent 3 months debugging Kafka lag spikes. The WAL is simpler and faster. 3. <strong>Put Redis 7.2 in front of anything read-heavy, but use Redis Streams for invalidation.</strong> Cache misses are 80ms faster, but stale data is a compliance risk. The Streams pattern is reliable. 4. <strong>Wrap third-party calls in a circuit breaker with a 30-second timeout.</strong> Don’t let a bank API block your ledger. Fail fast and log the error. 5. <strong>Ship a simple audit dashboard on day one.</strong> The dashboard should show trace IDs, timestamps, and gaps in red. We built ours in Grafana. It caught 8% of audit gaps in our first week. 6. <strong>Use Node 20 LTS with <code>pg</code> driver and <code>pino</code> for structured logging.</strong> We tried Python and Go for different services. The Node stack was faster to debug and had better library support for structured logs. 7. <strong>Avoid event sourcing unless you have a clear read/write separation need.</strong> It adds latency and complexity. The outbox pattern is simpler.</li>
 </ol>
 <p>I made one mistake I’d avoid: I assumed Kafka was the source of truth for audit trails. It’s not. The WAL is. Kafka is a transport. The audit system should read the WAL directly, not Kafka. That one change cut our audit gap from 8% to 0%.</p>
 <p><strong>## Summary</strong></p>

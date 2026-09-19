@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-25T13:16:29.832770">
-        <meta property="article:modified_time" content="2026-09-18T12:45:42.220149+00:00">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.538505+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Self-healing pipelines: Argo vs Crossplane in 2026">
@@ -63,7 +63,7 @@
       "headline": "Self-healing pipelines: Argo vs Crossplane in 2026",
       "description": "Cut mean time to recovery 70% with self-healing CI/CD — Argo CD vs Crossplane performance and cost compared using 2026 data from production clusters.",
       "datePublished": "2026-06-25T13:16:29+00:00",
-      "dateModified": "2026-09-18T12:45:42+00:00",
+      "dateModified": "2026-09-19T08:27:14+00:00",
       "wordCount": 3936,
       "timeRequired": "PT20M",
       "articleSection": "Technology",
@@ -259,7 +259,7 @@
                         20 min read
                         &nbsp;·&nbsp; 3936 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-18
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -545,23 +545,15 @@ spec:
 <h2 id="the-decision-framework-i-use">The decision framework I use</h2>
 <p>I’ve used both tools in production, and the choice depends on three factors: failure tolerance, infrastructure complexity, and team expertise. Here’s the framework I rely on when teams ask for my recommendation:</p>
 <ol>
-<li><strong>Failure tolerance</strong>: How long can your application tolerate downtime?</li>
-<li>If your SLA is &lt;5 minutes, use Crossplane. Its 60-second reconciliation loop is faster than Argo CD’s reactive model.</li>
 <li>
-<p>If your SLA is 5-30 minutes, Argo CD is sufficient and easier to adopt.</p>
+<p><strong>Failure tolerance</strong>: How long can your application tolerate downtime? - If your SLA is &lt;5 minutes, use Crossplane. Its 60-second reconciliation loop is faster than Argo CD’s reactive model. - If your SLA is 5-30 minutes, Argo CD is sufficient and easier to adopt.</p>
 </li>
 <li>
-<p><strong>Infrastructure complexity</strong>: How many cloud resources do you manage?</p>
-</li>
-<li>If you have &lt;20 resources (EKS clusters, RDS, S3), Argo CD’s GitOps model is simpler.</li>
-<li>
-<p>If you have &gt;50 resources, Crossplane’s unified control plane reduces operational overhead.</p>
+<p><strong>Infrastructure complexity</strong>: How many cloud resources do you manage? - If you have &lt;20 resources (EKS clusters, RDS, S3), Argo CD’s GitOps model is simpler. - If you have &gt;50 resources, Crossplane’s unified control plane reduces operational overhead.</p>
 </li>
 <li>
-<p><strong>Team expertise</strong>: What languages and tools is your team comfortable with?</p>
+<p><strong>Team expertise</strong>: What languages and tools is your team comfortable with? - If your team knows YAML, Terraform, and Kubernetes, Argo CD is a natural fit. - If your team has Go experience and is willing to model infrastructure as Kubernetes resources, Crossplane is worth the investment.</p>
 </li>
-<li>If your team knows YAML, Terraform, and Kubernetes, Argo CD is a natural fit.</li>
-<li>If your team has Go experience and is willing to model infrastructure as Kubernetes resources, Crossplane is worth the investment.</li>
 </ol>
 <p>I also consider the cost of change. Moving from Terraform to Crossplane requires rewriting all your modules into Compositions, which is a multi-week project. Moving from a traditional CI/CD pipeline to Argo CD is a few days of work. The sunk cost of existing Terraform modules is real — if you’re not ready to abandon them, Argo CD is the safer choice.</p>
 <p>Here’s the decision matrix I use:</p>
@@ -693,7 +685,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ai-features-break-your-stack-every-6-months/">
                         <h3>AI features break your stack every 6 months</h3>
                         <p>AI features break your stack every 6 months unless you design a pluggable layer — learn how we replaced microservices with sidecars, stable interfaces, and…</p>
-                        <span class="related-meta">11 min read · 20 July 2026</span>
+                        <span class="related-meta">10 min read · 20 July 2026</span>
                     </a>
                     
                 </div>

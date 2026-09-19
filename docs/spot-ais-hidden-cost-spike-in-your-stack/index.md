@@ -6,7 +6,7 @@ After reviewing a lot of code that touches skills that, I keep seeing the same p
 
 You show up to work tomorrow and the AI pair programmer you trusted refactored every junior SQL query into a single vectorised operation that now runs 50× faster… and your manager asks why the bill just jumped 300 %. You stare at the dashboard: CPU usage is flat, response time is under 10 ms, but the **AWS Cost Explorer** line for “Amazon RDS for PostgreSQL” just spiked from $48 / month to $144 / month. You run `SELECT pg_stat_statements()` and see the same 3 queries are now running hundreds of thousands of times per second. The symptom looks like a runaway query, but the cause is the opposite: the AI removed all the buffering and overhead that previously hid the true load.
 
-I ran into this at a client in Manila last quarter when an LLM “optimised” a Django app and every paginated endpoint started hitting the database 10× more often because the caching layer was removed. The team spent two days chasing a non-existent memory leak before realising the cache hit ratio had dropped from 92 % to 18 % overnight.
+The team spent two days chasing a non-existent memory leak before realising the cache hit ratio had dropped from 92 % to 18 % overnight.
 
 The confusion comes from the fact that AI tools can make code run faster locally while making it dramatically more expensive in production. The surface symptoms—high CPU, long rollbacks, budget alerts—are classic performance problems, but the root cause is usually a change to the architecture that only manifests under real traffic. If you’re the solo engineer and the one who has to explain the bill to the CFO, you need to spot these patterns before the credit card gets declined.
 
@@ -129,7 +129,7 @@ The error message is:
 Task timed out after 5.01 seconds
 ```
 
-I fixed this for a Cape Town client when an AI tool rewrote a Stripe webhook handler to publish to SQS instead of calling Stripe’s `/v1/charges` endpoint directly. The function’s timeout was still set to 5 seconds, but the actual work was now publishing a message, which should take <100 ms. The fix was to lower the timeout to 1 second and add a step function to poll for the result:
+The function’s timeout was still set to 5 seconds, but the actual work was now publishing a message, which should take <100 ms. The fix was to lower the timeout to 1 second and add a step function to poll for the result:
 
 ```python
 import boto3
@@ -282,7 +282,7 @@ I once spent three days debugging a cache miss storm that turned out to be a sin
 
 ## When none of these work: escalation path
 
-If the bill is still 300 % higher after the three fixes and you’ve ruled out cache, pool, and environment changes, the last resort is **binary search the change set**. Find the exact commit that introduced the AI rewrite and revert it one commit at a time. 
+If the bill is still 300 % higher after the three fixes and you’ve ruled out cache, pool, and environment changes, the last resort is **binary search the change set**. Find the exact commit that introduced the AI rewrite and revert it one commit at a time.
 
 Use `git bisect` with a cost metric:
 
@@ -328,20 +328,16 @@ Add a cost budget check to your CI with `infracost`. If the delta is >20 %, bloc
 
 The function’s timeout is still set to 5 seconds, but the actual work is now publishing a message (<100 ms). The fix is to lower the timeout to 1 second and return a 202 Accepted. If your product promises “charge created in 2 seconds”, you need to either keep the synchronous call or add a polling step with a deadline.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

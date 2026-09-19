@@ -8,7 +8,7 @@ You built an agentic feature: a background job scheduler, an async approval flow
 
 The part that trips people up is that agentic systems fail in ways that look fine to a latency histogram. A stuck retry loop returns 200 every time, but nothing actually progresses. A background worker crams 10k tasks into its queue because the backoff policy never kicks in, and the dashboard still shows 0% errors.
 
-I kept seeing teams ship SLO dashboards that measured the wrong thing and declared victory. The real gap isn’t tooling; it’s defining what “good” means when the system is a loop instead of a request handler. This post shows how to build SLOs that track *outcomes*, not just signals.
+The real gap isn’t tooling; it’s defining what “good” means when the system is a loop instead of a request handler. This post shows how to build SLOs that track *outcomes*, not just signals.
 
 ## Prerequisites and what you'll build
 
@@ -389,10 +389,7 @@ This cuts your trace ingestion bill by 40% in high-volume weeks (e.g., month-end
 | Queue Depth at Peak   | 5,200 (silent failure)           | 42 (explicit failures)            |
 
 **Key takeaways from the numbers:**
-1. The outcome SLO *correlates* with business impact (reports delivered), not just technical signals. In the before state, the team would have ignored the WeasyPrint memory leak for hours because the latency histogram looked fine.
-2. The cost delta ($1.54/day) comes from dropping Datadog’s APM tier (replaced with OpenTelemetry + Grafana Cloud) and consolidating metrics into a single Prometheus instance. The savings paid for the extra 60 lines of outcome-tracking code in <3 weeks.
-3. The queue depth drop from 5,200 to 42 isn’t just a metric—it’s a *behavioral change*. When jobs explicitly fail (with `status='failed'`), the team *sees* the problem and fixes the root cause (e.g., circuit breaker) instead of assuming “it’ll retry.”
-
+1. The outcome SLO *correlates* with business impact (reports delivered), not just technical signals. In the before state, the team would have ignored the WeasyPrint memory leak for hours because the latency histogram looked fine. 2. The cost delta ($1.54/day) comes from dropping Datadog’s APM tier (replaced with OpenTelemetry + Grafana Cloud) and consolidating metrics into a single Prometheus instance. The savings paid for the extra 60 lines of outcome-tracking code in <3 weeks. 3. The queue depth drop from 5,200 to 42 isn’t just a metric—it’s a *behavioral change*. When jobs explicitly fail (with `status='failed'`), the team *sees* the problem and fixes the root cause (e.g., circuit breaker) instead of assuming “it’ll retry.”
 
 ---
 

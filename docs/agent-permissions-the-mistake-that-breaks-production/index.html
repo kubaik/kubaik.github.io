@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-30T14:11:31.108539">
-        <meta property="article:modified_time" content="2026-07-30T14:11:31.108549">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.452372+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Agent permissions: the mistake that breaks production">
@@ -63,8 +63,8 @@
       "headline": "Agent permissions: the mistake that breaks production",
       "description": "Agent permissions: the mistake that breaks production — how we built a desktop agent without admin rights on Windows 7, using COM automation and per-user…",
       "datePublished": "2026-07-30T14:11:31+00:00",
-      "dateModified": "2026-07-30T14:11:31+00:00",
-      "wordCount": 4176,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 4129,
       "timeRequired": "PT21M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -247,9 +247,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         21 min read
-                        &nbsp;·&nbsp; 4176 words
+                        &nbsp;·&nbsp; 4129 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-30
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -259,17 +259,15 @@
                 <p>After reviewing enough code that touches productionizing computer, the same failure pattern keeps showing up. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the root cause, not just the symptom.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>We needed to productionize an AI agent that could use a computer — not a terminal, not a sandbox, but a real desktop environment with GUI automation. The use case was digitizing paper records for a government health program in rural Kenya: staff would scan paper forms, and the agent would extract the data and push it into a PostgreSQL 16 database running on a t3.medium in AWS. The catch was that this agent had to run on legacy Windows 7 machines with 2 GB RAM, spotty internet, and a user logged in 24/7 listening to the radio. The agent also had to avoid giving itself admin rights, because the IT team refused to whitelist a service account with full control — they’d seen too many incidents where a rogue script wiped a shared drive.</p>
-<p>I ran into trouble when the first prototype asked for admin rights to install Python 3.11 and PyAutoGUI. The IT team blocked it immediately. Their policy was simple: no service account gets local admin. We had to make the agent work without it.</p>
+<p>The IT team blocked it immediately. Their policy was simple: no service account gets local admin. We had to make the agent work without it.</p>
 <p>The core requirement was ‘computer use’ — the agent had to interact with desktop apps like Excel 2010 and Adobe Reader 9.5, which meant we had to use GUI automation. The team initially considered two paths:</p>
 <ul>
-<li>Path A: Use Selenium with a headless browser. But the forms were scanned images, not web pages, so OCR would be needed. Tesseract 5.3 worked on Windows 7, but the UI automation to open the scanned images in Adobe Reader wasn’t trivial.</li>
-<li>Path B: Use PyAutoGUI to simulate mouse clicks and keyboard input. This worked on the desktop, but the agent had to run under the logged-in user’s session, not as a service, because services can’t interact with the desktop in Windows 7.</li>
+<li>Path A: Use Selenium with a headless browser. But the forms were scanned images, not web pages, so OCR would be needed. Tesseract 5.3 worked on Windows 7, but the UI automation to open the scanned images in Adobe Reader wasn’t trivial. - Path B: Use PyAutoGUI to simulate mouse clicks and keyboard input. This worked on the desktop, but the agent had to run under the logged-in user’s session, not as a service, because services can’t interact with the desktop in Windows 7.</li>
 </ul>
 <p>We chose Path B because it matched the real workflow: staff open the scanned PDF, the agent types the data into Excel, saves the file, and closes the apps. The challenge was to make this reliable without admin rights.</p>
 <p>The environment forced us to use legacy tools: Python 3.11 on Windows 7, PyAutoGUI 0.9.57, Tesseract 5.3 bundled with the installer, and PostgreSQL 16 for the backend. We avoided cloud-based OCR because the machines were offline most of the time. The agent had to work during the 2-hour daily connectivity window when staff synced data via a VSAT link.</p>
 <p>We estimated the agent would need to process 50 forms per day per machine. Each form had 10 fields. At 10 seconds per form, that’s 500 seconds of runtime, or about 8 minutes per day per machine. With 20 machines, total daily runtime was 160 minutes. We designed the agent to run once per hour in the background, triggered by a batch file that checked for new files in C:\Scans\Incoming. The agent would move files to C:\Scans\Processing, extract data, insert into PostgreSQL, then move to C:\Scans\Done. If it failed, it would move to C:\Scans\Errors and log the failure.</p>
 <p>The first blocker was user permissions. The logged-in staff member used a restricted account with no admin rights. PyAutoGUI could only run if the Python process had access to the desktop session. Running as a service under SYSTEM wouldn’t work because the desktop session was locked. Running as a scheduled task under the logged-in user’s account worked, but the task scheduler in Windows 7 didn’t allow running tasks when the user was logged out — even though the user was always logged in. So we had to run the agent as a console script started by a batch file in the user’s Startup folder.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first attempt was a Python 3.11 script using PyAutoGUI 0.9.57 to open Adobe Reader, navigate to the scanned PDF, and simulate Ctrl+A, Ctrl+C to copy text. We used Tesseract 5.3 for OCR. The script ran fine on a dev machine with admin rights, but failed on the target machines due to three main issues:</p>
 <ol>
@@ -291,18 +289,11 @@
 <p>We pivoted to a design that minimized GUI interaction and relied on accessible APIs where possible. The key insight was to avoid simulating keystrokes and mouse clicks for data extraction, and instead use the accessibility APIs that Adobe Reader and Excel expose via COM automation — but without requiring admin rights.</p>
 <p>We chose <strong>Windows Script Host (WSH)</strong> with VBScript as the runtime, because it’s built into Windows 7 and doesn’t require admin rights. VBScript can use COM automation to control Adobe Reader and Excel without simulating UI actions. The agent would use the Adobe Reader COM interface to extract text from the PDF, and Excel COM to write the extracted data.</p>
 <p>The workflow became:
-1. A batch file in the user’s Startup folder starts a VBScript agent every hour.
-2. The agent checks C:\Scans\Incoming for new PDFs.
-3. For each PDF, the agent uses Adobe Reader’s COM interface to extract text via <code>GetText</code> methods.
-4. The agent uses Excel COM to open a template, paste the extracted data, and save the file.
-5. The agent moves the PDF to Done and logs the result.</p>
+1. A batch file in the user’s Startup folder starts a VBScript agent every hour. 2. The agent checks C:\Scans\Incoming for new PDFs. 3. For each PDF, the agent uses Adobe Reader’s COM interface to extract text via <code>GetText</code> methods. 4. The agent uses Excel COM to open a template, paste the extracted data, and save the file. 5. The agent moves the PDF to Done and logs the result.</p>
 <p>This worked because COM automation doesn’t require admin rights, and it’s stable even if the user locks the screen or clicks around. The agent runs under the logged-in user’s session and has access to the desktop session via COM.</p>
 <p>To handle OCR for scanned images, we used a local Tesseract 5.3 installation bundled with the agent installer. The installer was a single MSI that installed Python 3.11, Tesseract, and the agent scripts. The MSI didn’t require admin rights for installation — it used per-user installation, which was critical because the IT team banned admin installs.</p>
 <p>The agent’s permission model relied on:
-- Running under the logged-in user’s session (no admin needed).
-- Using COM automation for Adobe Reader and Excel (no admin needed).
-- Bundling all dependencies (Python, Tesseract, scripts) in the user’s AppData folder.
-- Logging errors to a file in C:\Logs, which the user could review if needed.</p>
+- Running under the logged-in user’s session (no admin needed). - Using COM automation for Adobe Reader and Excel (no admin needed). - Bundling all dependencies (Python, Tesseract, scripts) in the user’s AppData folder. - Logging errors to a file in C:\Logs, which the user could review if needed.</p>
 <p>We added a heartbeat: every 5 minutes, the agent writes a timestamp to a SQLite 3.45 database in the user’s AppData folder. A separate monitor script (also VBScript) checks the heartbeat. If it’s missing for 15 minutes, the monitor pops up a message: “Agent may be stuck. Please check C:\Logs\agent.log.”</p>
 <p>This design survived the real environment because it respected the constraints: no admin rights, no cloud dependency, no heavy runtime, and no GUI simulation. It also kept the data on-premises, which the health program’s data policy required.</p>
 <h2 id="implementation-details">Implementation details</h2>
@@ -403,10 +394,7 @@ End Sub
 <p>The monitor script reads this table. If the last heartbeat is older than 15 minutes, it shows a message to the user.</p>
 <p>We avoided using Python for the core agent logic because the Windows 7 machines had limited RAM and CPU. VBScript is lightweight and built-in. Python is only used for OCR preprocessing when needed, and only if the machine has enough RAM.</p>
 <p>The agent also handles edge cases:
-- If Adobe Reader is already open, it uses the existing instance.
-- If the PDF is password-protected, it skips and logs an error.
-- If Excel is already open, it uses the existing instance.
-- If the output folder doesn’t exist, it creates it.</p>
+- If Adobe Reader is already open, it uses the existing instance. - If the PDF is password-protected, it skips and logs an error. - If Excel is already open, it uses the existing instance. - If the output folder doesn’t exist, it creates it.</p>
 <h2 id="results-the-numbers-before-and-after">Results — the numbers before and after</h2>
 <p>Before the redesign, the agent failed 40% of the time on the first try. After switching to COM automation and per-user installation, the failure rate dropped to 5%.</p>
 <p>Here’s a breakdown of the improvements:</p>
@@ -536,10 +524,7 @@ End Sub
 </table>
 <p>If your target environment is Windows with legacy apps, COM automation is often the only viable option that respects admin rights and locked screens.</p>
 <p>Next, design for failure:
-- Use atomic file moves (rename is atomic on NTFS).
-- Log everything to a local file. Users can review logs if needed.
-- Add a heartbeat or ping mechanism. If the agent dies, users notice quickly.
-- Bundle all dependencies. Don’t rely on system-wide installs.</p>
+- Use atomic file moves (rename is atomic on NTFS). - Log everything to a local file. Users can review logs if needed. - Add a heartbeat or ping mechanism. If the agent dies, users notice quickly. - Bundle all dependencies. Don’t rely on system-wide installs.</p>
 <p>Finally, test in the real environment. Not in a VM, not on a dev machine — on the actual hardware with the actual user logged in. We did this on the last day of the pilot, and it caught three issues we’d never seen in dev: Adobe Reader’s COM interface was disabled by a group policy, the user’s AppData folder was redirected to a network drive with slow writes, and the scheduled task didn’t run when the user locked the screen. We fixed all three in one afternoon.</p>
 <h2 id="resources-that-helped">Resources that helped</h2>
 <ul>

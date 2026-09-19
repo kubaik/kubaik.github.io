@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-03T10:05:35.557297">
-        <meta property="article:modified_time" content="2026-08-03T10:05:35.557308">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.688546+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Supervisor vs swarm vs debate vs pipeline">
@@ -63,8 +63,8 @@
       "headline": "Supervisor vs swarm vs debate vs pipeline",
       "description": "Then the same code hits production and suddenly you’re debugging: - Why did AgentB hang after AgentA sent 4,231 messages?",
       "datePublished": "2026-08-03T10:05:35+00:00",
-      "dateModified": "2026-08-03T10:05:35+00:00",
-      "wordCount": 3485,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3445,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -243,9 +243,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3485 words
+                        &nbsp;·&nbsp; 3445 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-03
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -254,16 +254,10 @@
             <div class="post-content" itemprop="articleBody">
                 <p>Most multiagent orchestration guides assume a clean environment and a patient timeline. Nobody mentions the failure mode until it's already cost someone a bad night. Here's the fuller picture, with the tradeoffs left in.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>I spent three weeks tuning a multi-agent system that worked fine in the tutorial and exploded in staging — the difference wasn’t the model quality; it was the orchestration layer.</p>
 <p>Most docs show a toy example with two agents passing a JSON blob between each other. Then the same code hits production and suddenly you’re debugging:
-- Why did AgentB hang after AgentA sent 4,231 messages?
-- Why does the supervisor’s health check return 200 when half the swarm is down?
-- How did 132 CPU cores disappear into the void after a single retry loop?</p>
-<p>The gap isn’t about scaling — it’s about <strong>recovery</strong>.
-A multi-agent system that survives production needs three things the tutorials skip:
-1. A deterministic way to restart failed agents without cascading retries.
-2. A circuit breaker that actually stops the supervisor from spamming the message broker.
-3. A way to replay the conversation when the downstream service times out, not just retry the last call.</p>
+- Why did AgentB hang after AgentA sent 4,231 messages? - Why does the supervisor’s health check return 200 when half the swarm is down? - How did 132 CPU cores disappear into the void after a single retry loop?</p>
+<p>The gap isn’t about scaling — it’s about <strong>recovery</strong>. A multi-agent system that survives production needs three things the tutorials skip:
+1. A deterministic way to restart failed agents without cascading retries. 2. A circuit breaker that actually stops the supervisor from spamming the message broker. 3. A way to replay the conversation when the downstream service times out, not just retry the last call.</p>
 <p>I learned this the hard way when a single <code>TimeoutError</code> from an external API triggered 8,000 retries in 90 seconds, melting the supervisor’s CPU. The retry queue grew faster than the supervisor could process it; the supervisor itself became the denial-of-service vector.</p>
 <p>That episode cost three days of debugging and a 40% spike in AWS Lambda bills. The fix wasn’t more RAM — it was a simple circuit breaker and a max retry count baked into the supervisor’s state machine. This post is what I wish I’d had then.</p>
 <p>Multi-agent orchestration isn’t about making agents smarter; it’s about making the <strong>orchestrator dumber</strong> — intentionally limiting its power so it can’t destroy itself when things go wrong.</p>
@@ -308,7 +302,7 @@ class AgentHeartbeat:
 - a timeout (30 seconds per stage)
 - a retry policy (3 retries, exponential backoff)
 - a dead-letter queue for items that fail all retries</p>
-<p>I built a 5-stage pipeline processing 10,000 requests per second. The first stage (agent A) handled validation, the second (agent B) enriched the data, the third (agent C) ran business logic, the fourth (agent D) wrote to a database, and the fifth (agent E) sent a webhook.</p>
+<p>The first stage (agent A) handled validation, the second (agent B) enriched the data, the third (agent C) ran business logic, the fourth (agent D) wrote to a database, and the fifth (agent E) sent a webhook.</p>
 <p>The failure mode I didn’t anticipate was <strong>stage D blocking stage C</strong>. Agent C would send 10,000 enriched items to agent D, but agent D’s database writes slowed to 50 items/second. Agent C’s queue grew to 8,000 items, and its memory usage ballooned. The supervisor (yes, even pipelines need supervisors) didn’t notice because agent C’s health check was still returning 200.</p>
 <p>The fix was to add <strong>queue depth metrics</strong> to the health check. If a stage’s queue depth exceeds 80% of its max size, the stage is marked unhealthy and the supervisor restarts it. This added 3 lines of code and cut the memory spike from 2.4 GB to 300 MB.</p>
 <table>
@@ -441,9 +435,7 @@ func (s *Supervisor) restartAgent(ctx context.Context, agentID string) {
 }
 </code></pre>
 <p>Key lessons:
-- Use Redis for <strong>shared state</strong> — don’t trust in-memory maps in a multi-agent system.
-- Restart counts are <strong>persistent</strong> — they survive agent crashes.
-- Blacklist durations are <strong>short</strong> — 1 hour is long enough to cool down, short enough to recover quickly.</p>
+- Use Redis for <strong>shared state</strong> — don’t trust in-memory maps in a multi-agent system. - Restart counts are <strong>persistent</strong> — they survive agent crashes. - Blacklist durations are <strong>short</strong> — 1 hour is long enough to cool down, short enough to recover quickly.</p>
 <h3 id="swarm-in-node-20-lts-with-nats-210">Swarm in Node 20 LTS with NATS 2.10</h3>
 <p>Here’s a minimal swarm implementation using NATS for message routing and gossip.</p>
 <pre><code class="language-javascript">// agent.js
@@ -741,9 +733,7 @@ key = f&quot;heartbeat:{shard}:{agent_id}&quot;
 </tbody>
 </table>
 <p>Avoid:
-- <strong>Apache Kafka</strong> for multi-agent orchestration — it’s overkill for most patterns and adds 50–200 ms of latency.
-- <strong>gRPC</strong> for inter-agent communication — JSON over NATS is simpler and faster for most use cases.
-- <strong>Custom message brokers</strong> — Redis and NATS cover 90% of needs.</p>
+- <strong>Apache Kafka</strong> for multi-agent orchestration — it’s overkill for most patterns and adds 50–200 ms of latency. - <strong>gRPC</strong> for inter-agent communication — JSON over NATS is simpler and faster for most use cases. - <strong>Custom message brokers</strong> — Redis and NATS cover 90% of needs.</p>
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
 <h3 id="1-you-need-sub-10-ms-latency">1. You need sub-10 ms latency</h3>
 <p>Multi-agent orchestration adds at least 30 ms of overhead (message routing, serialization, Redis lookups). If your use case needs sub-10 ms P99, build a monolith or use a single process with in-memory queues.</p>

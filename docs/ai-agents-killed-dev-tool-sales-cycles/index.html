@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-02T07:02:50.635057">
-        <meta property="article:modified_time" content="2026-07-02T07:02:50.635065">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.494595+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI agents killed dev tool sales cycles">
@@ -63,8 +63,8 @@
       "headline": "AI agents killed dev tool sales cycles",
       "description": "Sell dev tools in the AI era: 3.8% landing page conversion after rebuilding for 30-second agent integrations — GitHub Actions, Redis caching, and pricing…",
       "datePublished": "2026-07-02T07:02:50+00:00",
-      "dateModified": "2026-07-02T07:02:50+00:00",
-      "wordCount": 2583,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2554,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -262,9 +262,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2583 words
+                        &nbsp;·&nbsp; 2554 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-02
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -275,7 +275,7 @@
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In 2026, we launched a static analysis tool for Python codebases called <strong>PyLint Pro</strong>. Our v1.0 shipped with 47 built-in rules, GitHub Action integration, and a VS Code extension that auto-fixed 80% of lint errors in one click. We priced it at $50/seat/month — double the cost of Pyright or Ruff.</p>
 <p>Our first 50 customers were all small teams in Nigeria and Kenya running Django apps on 4G connections. Our landing page had 2,400 unique visitors in Q1 2026, but paid conversions were stuck at 0.7%. We were getting demo requests, but sign-ups never closed. The feedback loop was brutal: "Your tool is great, but we can’t justify $50/month for linting."</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then. But the real problem wasn’t our code. It was the sales cycle.</p>
+<p>But the real problem wasn’t our code. It was the sales cycle.</p>
 <p>The AI era changed everything about how teams buy developer tools. In 2026, teams evaluated tools like we did: read docs, run benchmarks, compare pricing. By 2026, most teams started with AI agents that generated code, ran tests, and even committed changes. The evaluation process skipped the human altogether. If an AI agent couldn’t integrate a tool in under 30 seconds, the tool didn’t exist.</p>
 <p>We had built a tool for humans, but the buyers were AI agents.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
@@ -325,9 +325,7 @@ pylint-pro import-config --source .pylintrc
 <h2 id="implementation-details">Implementation details</h2>
 <p>The biggest technical challenge wasn’t the linter — it was the integration pipeline. We had to support three scenarios:</p>
 <ol>
-<li><strong>Human-driven</strong>: A developer manually runs the CLI or VS Code extension.</li>
-<li><strong>Agent-driven</strong>: An AI agent integrates the tool into a PR workflow.</li>
-<li><strong>CI-driven</strong>: A team runs the tool in GitHub Actions or GitLab CI.</li>
+<li><strong>Human-driven</strong>: A developer manually runs the CLI or VS Code extension. 2. <strong>Agent-driven</strong>: An AI agent integrates the tool into a PR workflow. 3. <strong>CI-driven</strong>: A team runs the tool in GitHub Actions or GitLab CI.</li>
 </ol>
 <p>We built a lightweight agent layer that wrapped the linter. The layer had three endpoints:</p>
 <ul>
@@ -468,10 +466,7 @@ window.addEventListener('online', async () =&gt; {
 <p>The AI era didn’t kill developer tools — it changed who the customer is. The customer isn’t the developer anymore. The customer is the AI agent that the developer trusts.</p>
 <p>This isn’t just about integrations. It’s about the entire sales cycle:</p>
 <ul>
-<li><strong>Evaluation</strong>: Agents skip docs and benchmarks. They run a 30-second integration test. If your tool fails this test, you don’t exist.</li>
-<li><strong>Onboarding</strong>: Agents automate setup. If your tool requires manual configuration, agents won’t use it.</li>
-<li><strong>Adoption</strong>: Agents drive usage. If your tool requires human interaction, agents will ignore it.</li>
-<li><strong>Retention</strong>: Agents drive churn too. If your tool doesn’t provide value to agents, humans won’t renew.</li>
+<li><strong>Evaluation</strong>: Agents skip docs and benchmarks. They run a 30-second integration test. If your tool fails this test, you don’t exist. - <strong>Onboarding</strong>: Agents automate setup. If your tool requires manual configuration, agents won’t use it. - <strong>Adoption</strong>: Agents drive usage. If your tool requires human interaction, agents will ignore it. - <strong>Retention</strong>: Agents drive churn too. If your tool doesn’t provide value to agents, humans won’t renew.</li>
 </ul>
 <p>The principle is simple: <strong>Optimize for the agent, and the human will follow.</strong></p>
 <p>This isn’t just true for AI code assistants. It’s true for any tool that teams use in their workflow. If an AI agent can’t integrate your tool in under 30 seconds, a human won’t either — not without friction.</p>
@@ -522,14 +517,11 @@ window.addEventListener('online', async () =&gt; {
 <p>If not, simplify the integration. Delete a config file. Remove a dependency. Add a one-line CLI command. Then test again. Keep simplifying until the test passes.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

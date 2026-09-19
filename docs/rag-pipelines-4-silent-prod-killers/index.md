@@ -93,9 +93,7 @@ async def retrieve(query: str):
 - Cost: $0.28/hour on a t4g.xlarge (4 vCPU, 16GB)
 
 **When to use Qdrant:**
-- You need a single-node vector search with <100ms latency.
-- You want to avoid Java dependencies (Milvus requires JRE).
-- You’re running on ARM (Graviton) — Qdrant’s Rust binary is natively supported.
+- You need a single-node vector search with <100ms latency. - You want to avoid Java dependencies (Milvus requires JRE). - You’re running on ARM (Graviton) — Qdrant’s Rust binary is natively supported.
 
 ---
 
@@ -183,9 +181,7 @@ embeddings = HuggingFaceInferenceAPIEmbeddings(
 - Cost: $0.35/hour on a t4g.xlarge
 
 **When to use Weaviate:**
-- You need hybrid search (vector + keyword) for product catalogs.
-- You want to avoid managing a separate reranker (Weaviate has cross-encoder reranking built-in).
-- You’re already using LangChain — Weaviate has first-class LangChain integration.
+- You need hybrid search (vector + keyword) for product catalogs. - You want to avoid managing a separate reranker (Weaviate has cross-encoder reranking built-in). - You’re already using LangChain — Weaviate has first-class LangChain integration.
 
 ---
 
@@ -252,9 +248,7 @@ query_engine = index.as_query_engine(
 - Cost: $0.68/hour (g5g.xlarge) + $0.00 (Milvus Lite)
 
 **When to use Ollama:**
-- You need to avoid cloud LLM costs (e.g., for low-traffic internal tools).
-- You’re running in an air-gapped environment.
-- You want to fine-tune the LLM for Vietnamese (Ollama supports GGUF models).
+- You need to avoid cloud LLM costs (e.g., for low-traffic internal tools). - You’re running in an air-gapped environment. - You want to fine-tune the LLM for Vietnamese (Ollama supports GGUF models).
 
 ---
 
@@ -348,20 +342,16 @@ query_engine = index.as_query_engine(
 ### Final recommendation (2026)
 If you’re building a RAG pipeline for >5k QPS, **Milvus 2.4.3 on Graviton3 with a two-tier Caffeine/Redis cache is the only architecture that balances cost, latency, and reliability**. The numbers don’t lie: PostgreSQL melts, FAISS OOMs, Redis costs too much, and Milvus scales. Treat retrieval as a stateless service, not a database query — your future self will thank you when the chaos tests pass.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

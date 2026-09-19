@@ -6,7 +6,7 @@ After reviewing enough code that touches serverless stops, the same failure patt
 
 In mid-2026 we moved a production AI feature from a dedicated Node.js+Python backend to AWS Lambda + API Gateway to cut infra costs. The feature was a real-time scoring engine for credit risk that used a 7B-parameter open-weight model served via vLLM 0.5.3 with Python 3.11 on arm64. We expected Lambda’s pay-per-use billing to be cheaper for our sporadic traffic spikes—40-60 requests per minute during peak hours, 5-10 requests per minute off-peak. We had benchmarked a single cold-start latency of 1.8 s and p99 of 2.3 s on Lambda, which felt acceptable for a user-facing flow.
 
-I spent two weeks tuning the model and the vLLM config to fit within Lambda’s 10 GB memory ceiling. We used SageMaker JumpStart to fine-tune a small adapter on top of the base model, which brought the peak memory footprint to 8.2 GB during inference. That fit nicely, so we shipped it.
+We used SageMaker JumpStart to fine-tune a small adapter on top of the base model, which brought the peak memory footprint to 8.2 GB during inference. That fit nicely, so we shipped it.
 
 What we didn’t model was the hidden cost of concurrency and the cold-start tax on repeated bursts. Our first month’s bill shocked us: $1,847 for AI inference alone, against a baseline of $412 on our old t3.large cluster. That’s 4.5× higher—exactly the opposite of what we planned.
 
@@ -123,7 +123,7 @@ We also reduced our AWS bill by another $140/month by switching the Redis cluste
 
 ## What we’d do differently
 
-1. We should have benchmarked the full concurrency curve before shipping. I built a simple Locust script that simulates 100 rps for 10 minutes, but I never ran it at 200 rps or with sustained bursts. A 200 rps burst triggered 12 cold starts in one minute—Lambda’s burst limit is 500–3000 depending on region, but the per-minute billing shocked us.
+1. We should have benchmarked the full concurrency curve before shipping. A 200 rps burst triggered 12 cold starts in one minute—Lambda’s burst limit is 500–3000 depending on region, but the per-minute billing shocked us.
 
 2. We over-optimized vLLM for cold starts. Eager mode and high `max-num-seqs` helped latency, but they inflated the memory footprint and increased the GB-second charge. We ended up with `max-num-seqs=4` and lazy mode on warm instances.
 
@@ -158,9 +158,7 @@ In 2026, the cheapest path for production AI is usually a small fleet of GPU-bac
 7. Set CloudWatch alarms for vLLM memory usage and 5XX errors, and hook them to an SNS topic that triggers the ASG. The alarm threshold should be 90 % memory or 2 % 5XX for 5 minutes.
 
 Action checklist for the next 30 minutes:
-- Open the AWS Pricing Calculator and input your traffic profile for next month.
-- Run a 10-minute Locust test against your Lambda endpoint at 2× your peak rps.
-- Check the "ConcurrentExecutions" metric in CloudWatch Lambda for the last 7 days.
+- Open the AWS Pricing Calculator and input your traffic profile for next month. - Run a 10-minute Locust test against your Lambda endpoint at 2× your peak rps. - Check the "ConcurrentExecutions" metric in CloudWatch Lambda for the last 7 days.
 
 ## Frequently Asked Questions
 
@@ -182,7 +180,6 @@ Stay on Lambda only if your model fits in 10 GB memory, your peak rps is below 5
 - AWS Pricing Calculator for Lambda and EC2: [https://calculator.aws.amazon.com](https://calculator.aws.amazon.com)
 - Locust load testing guide: [https://docs.locust.io/en/stable/](https://docs.locust.io/en/stable/)
 - Elastic Inference pricing table 2026: [https://aws.amazon.com/machine-learning/elastic-inference/pricing/](https://aws.amazon.com/machine-learning/elastic-inference/pricing/)
-
 
 ---
 

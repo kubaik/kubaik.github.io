@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T15:45:09.304392">
-        <meta property="article:modified_time" content="2026-06-09T15:45:09.304401">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.017162+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Deploy a solo stack for $20/month in 2026">
@@ -63,9 +63,9 @@
       "headline": "Deploy a solo stack for $20/month in 2026",
       "description": "A simple endpoint took 45ms on x86 and 38ms on ARM64.",
       "datePublished": "2026-06-09T15:45:09+00:00",
-      "dateModified": "2026-06-09T15:45:09+00:00",
-      "wordCount": 3314,
-      "timeRequired": "PT17M",
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3225,
+      "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -233,27 +233,25 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        17 min read
-                        &nbsp;·&nbsp; 3314 words
+                        16 min read
+                        &nbsp;·&nbsp; 3225 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-09
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>Building something alone is hard enough, but when you add the expectation that it must scale to thousands of users on day one, every decision feels like a mortgage. I learned this the hard way when I launched a small API in 2026 using the "just AWS Lambda and DynamoDB" stack. The bill for the first month was $89 — and that was with only 200 users. I spent three days debugging cold starts and connection pool timeouts before realizing the problem wasn’t my code — it was the invisible cost of "serverless" when you’re not Netflix.</p>
+<p>Building something alone is hard enough, but when you add the expectation that it must scale to thousands of users on day one, every decision feels like a mortgage. I learned this the hard way when I launched a small API in 2026 using the "just AWS Lambda and DynamoDB" stack. The bill for the first month was $89 — and that was with only 200 users.</p>
 <p>By 2026, the hype had moved on to AI agents and vector databases, but the real cost of shipping software hadn’t changed. Developers still pay for over-provisioned databases, unused CI minutes, and monitoring tools that charge by the alert. This pipeline is for people who want to deploy something real, not something that looks real in a demo.</p>
-<p>I built this to prove that a solo project could run in production without burning $100/month. The result: a full deployment pipeline, observability, and backups — all for under $20/month, including domain and email. This is how I did it.</p>
+<p>The result: a full deployment pipeline, observability, and backups — all for under $20/month, including domain and email. This is how I did it.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You need three things to follow along:</p>
 <ol>
-<li>A GitHub account and a repo with a working application (Node, Python, or Go — doesn’t matter). I used a small FastAPI service, but the pipeline is tool-agnostic.</li>
-<li>A personal AWS account with billing alerts enabled. You’re going to deploy real infrastructure, so set a $100 limit in AWS Budgets. I once forgot and woke up to a $400 bill from an open RDS instance. That’s a mistake you only make once.</li>
-<li>A domain you can point to AWS Route 53. I bought kubai.dev for $12/year. If you don’t have one, buy it now — DNS is the first thing users notice when your site is down.</li>
+<li>A GitHub account and a repo with a working application (Node, Python, or Go — doesn’t matter). I used a small FastAPI service, but the pipeline is tool-agnostic. 2. A personal AWS account with billing alerts enabled. You’re going to deploy real infrastructure, so set a $100 limit in AWS Budgets. I once forgot and woke up to a $400 bill from an open RDS instance. That’s a mistake you only make once. 3. A domain you can point to AWS Route 53. I bought kubai.dev for $12/year. If you don’t have one, buy it now — DNS is the first thing users notice when your site is down.</li>
 </ol>
 <p>What you’ll build:</p>
 <ul>
@@ -330,9 +328,8 @@ def read_root():
         return {&quot;status&quot;: &quot;ok&quot;, &quot;db_ok&quot;: result.fetchone()[0] == 1}
 </code></pre>
 <p>Key details:
-- <code>pool_pre_ping=True</code>: Checks if the connection is alive before use — critical for serverless.
-- <code>pool_recycle=300</code>: Drops connections older than 5 minutes to avoid PostgreSQL’s idle timeout.</p>
-<p>I spent two weeks debugging a "too many connections" error because I forgot to set <code>pool_recycle</code>. The error message was <code>psycopg2.OperationalError: connection already closed</code>.</p>
+- <code>pool_pre_ping=True</code>: Checks if the connection is alive before use — critical for serverless. - <code>pool_recycle=300</code>: Drops connections older than 5 minutes to avoid PostgreSQL’s idle timeout.</p>
+<p>The error message was <code>psycopg2.OperationalError: connection already closed</code>.</p>
 <p>Finally, set up your GitHub repository secrets. Go to Settings → Secrets → Actions → New repository secret. Add:</p>
 <ul>
 <li><code>DB_HOST</code>: your RDS endpoint</li>
@@ -775,7 +772,7 @@ class ApiUser(HttpUser):
 <p><strong>Can I use this with a frontend?</strong>
 Yes. Host your frontend on Vercel, Netlify, or Cloudflare Pages. Point API calls to your Lambda API Gateway endpoint. I did this for a React frontend. The cost was $0 because Vercel’s free tier covers frontend hosting. The only cost was the API calls — $0.40 for 80k requests.</p>
 <p><strong>What if I need WebSockets?</strong>
-Don’t. For a solo project, WebSockets are overkill. Use Server-Sent Events (SSE) or long polling over HTTP. I built a chat feature using SSE and it worked fine. The cost was the same as REST API calls.</p>
+Don’t. For a solo project, WebSockets are overkill. Use Server-Sent Events (SSE) or long polling over HTTP. The cost was the same as REST API calls.</p>
 <p><strong>How do I handle secrets rotation?</strong>
 Rotate the DB password using AWS Secrets Manager. Set up a rotation schedule every 90 days. Use the <code>aws rds generate-db-auth-token</code> for temporary credentials if you want to avoid storing passwords at all. I didn’t do this because the project is small, but it’s a good practice.</p>
 <p><strong>What if I need more than 20 RPS?</strong>
@@ -803,14 +800,11 @@ GitHub Actions is free for public repos and generous for private repos (2,000 mi
 </table>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

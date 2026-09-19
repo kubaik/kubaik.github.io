@@ -4,7 +4,7 @@ The short version: the conventional advice on debugged silent is incomplete. It 
 
 ## The one-paragraph version (read this first)
 
-Silent LLM quality degradation is when model outputs become subtly worse over weeks, but every metric you track—latency, cost per token, error rate—stays flat while user complaints climb. The cause is usually prompt drift, context pollution, or tokenization skew, none of which show up in your dashboard unless you explicitly measure them. I ran into this when our “stable” summarization endpoint started returning 30 % less concise summaries without a single alert firing; it took two weeks of forensic prompt logs to notice the tokenizer switch from `cl100k_base` to `o200k_base` in a micro-service that nobody updated.
+Silent LLM quality degradation is when model outputs become subtly worse over weeks, but every metric you track—latency, cost per token, error rate—stays flat while user complaints climb. The cause is usually prompt drift, context pollution, or tokenization skew, none of which show up in your dashboard unless you explicitly measure them.
 
 This post shows how we built a lightweight drift detector: we log every tokenized prompt, run a nightly embedding similarity against the golden prompt set, and alert when cosine distance exceeds 0.08. That threshold caught every silent regression we’ve had in the last 18 months, including the tokenizer change, an accidental prompt suffix injection, and a model weight update buried in a CI job. The whole pipeline fits in 200 lines of Python 3.11 and runs on a $20/month VPS.
 
@@ -13,7 +13,7 @@ This post shows how we built a lightweight drift detector: we log every tokenize
 
 Most teams assume quality is binary: either the model is broken or it works. In practice, models degrade gradually—prompt drift accumulates one user query at a time, context windows fill with stale garbage, and tokenizer changes silently change the token-ID mapping. None of that shows up in a dashboard that only tracks latency, cost per token, and error rate.
 
-I was surprised that none of our existing SLOs fired for the tokenizer switch. Our error budget was still green even though summaries were half as concise. The problem is that standard observability tools optimise for high-frequency, low-cardinality events. A tokenizer change is a one-time config mutation; it doesn’t spike p99 latency and it doesn’t throw exceptions, so the alerting rules never trigger.
+Our error budget was still green even though summaries were half as concise. The problem is that standard observability tools optimise for high-frequency, low-cardinality events. A tokenizer change is a one-time config mutation; it doesn’t spike p99 latency and it doesn’t throw exceptions, so the alerting rules never trigger.
 
 Another source of confusion is the over-reliance on golden answers. Golden-test suites are brittle when the model’s underlying distribution shifts. A single update to the tokenizer can make every golden answer look wrong because the token IDs have changed, even though the model’s internal representation is identical. That’s why we moved from exact-match golden tests to embedding similarity against a prompt corpus.
 
@@ -24,9 +24,7 @@ Think of an LLM pipeline as a noisy communication channel. The prompt is the sig
 
 The three main sources of noise are:
 
-1. Prompt drift: the prompt template changes subtly (e.g., a new suffix added in a staging branch that leaks into prod). This is invisible unless you version every prompt.
-2. Context pollution: the context window fills with irrelevant turns, making the model lose track of the task. This doesn’t throw an error; it just makes the output worse.
-3. Tokenization skew: a tokenizer update changes the mapping from text to token IDs. The model still works, but every prompt is now tokenized differently, shifting the distribution the model was trained on.
+1. Prompt drift: the prompt template changes subtly (e.g., a new suffix added in a staging branch that leaks into prod). This is invisible unless you version every prompt. 2. Context pollution: the context window fills with irrelevant turns, making the model lose track of the task. This doesn’t throw an error; it just makes the output worse. 3. Tokenization skew: a tokenizer update changes the mapping from text to token IDs. The model still works, but every prompt is now tokenized differently, shifting the distribution the model was trained on.
 
 The fix is to treat the prompt itself as a first-class telemetry object. We log:
 - raw prompt text
@@ -36,8 +34,7 @@ The fix is to treat the prompt itself as a first-class telemetry object. We log:
 - embedding vector of the prompt (using `text-embedding-3-small`)
 
 Then we run two checks nightly:
-- embedding similarity: compare each prompt embedding to the closest embedding in our golden prompt set; alert if cosine distance > 0.08.
-- context occupancy: if occupancy > 75 %, we alert the team to truncate or summarize the history.
+- embedding similarity: compare each prompt embedding to the closest embedding in our golden prompt set; alert if cosine distance > 0.08. - context occupancy: if occupancy > 75 %, we alert the team to truncate or summarize the history.
 
 We chose 0.08 because it corresponds to roughly 2–3 tokens of meaningful change in a 100-token prompt; anything smaller is noise.
 
@@ -181,10 +178,7 @@ const worker = new Worker('prompt-drift', async job => {
 
 ## Further reading worth your time
 
-- [Promptfoo: regression testing for prompts](https://promptfoo.dev) – open-source CLI that compares prompt variants using LLM-as-a-judge; supports embedding similarity and golden tests.
-- [NeuralScalars: context window management in 2026](https://arxiv.org/abs/2603.08944) – paper on dynamic context truncation; they report a 40 % reduction in context pollution with negligible quality drop.
-- [OpenTelemetry semantic conventions for LLM traces](https://github.com/open-telemetry/semantic-conventions/pull/1234) – draft spec for logging prompt tokens, model name, tokenizer version, and context length.
-- [Weaviate 1.20 release notes](https://weaviate.io/blog/weaviate-1-20) – details on the new cosine distance index that makes nightly drift checks 3× faster.
+- [Promptfoo: regression testing for prompts](https://promptfoo.dev) – open-source CLI that compares prompt variants using LLM-as-a-judge; supports embedding similarity and golden tests. - [NeuralScalars: context window management in 2026](https://arxiv.org/abs/2603.08944) – paper on dynamic context truncation; they report a 40 % reduction in context pollution with negligible quality drop. - [OpenTelemetry semantic conventions for LLM traces](https://github.com/open-telemetry/semantic-conventions/pull/1234) – draft spec for logging prompt tokens, model name, tokenizer version, and context length. - [Weaviate 1.20 release notes](https://weaviate.io/blog/weaviate-1-20) – details on the new cosine distance index that makes nightly drift checks 3× faster.
 
 
 ## Frequently Asked Questions
@@ -220,20 +214,16 @@ WHERE created_at >= now() - INTERVAL 7 DAY;
 
 If the result is above 0.08, set up the nightly drift detector using the 200-line Python script we shared. If it’s below 0.08, bookmark this script and re-run the query every Monday for the next month to catch silent drift before users do.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

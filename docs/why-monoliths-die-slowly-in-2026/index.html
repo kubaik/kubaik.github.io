@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-19T02:27:59.398225">
-        <meta property="article:modified_time" content="2026-09-18T13:04:43.053599+00:00">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.815455+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Why monoliths die slowly in 2026">
@@ -63,7 +63,7 @@
       "headline": "Why monoliths die slowly in 2026",
       "description": "Cut API latency 30% and save $325/month by extracting a monolith with Redis 7.2 and NGINX 1.25—without a big-bang rewrite",
       "datePublished": "2026-06-19T02:27:59+00:00",
-      "dateModified": "2026-09-18T13:04:43+00:00",
+      "dateModified": "2026-09-19T08:27:14+00:00",
       "wordCount": 2114,
       "timeRequired": "PT11M",
       "articleSection": "Technology",
@@ -265,7 +265,7 @@
                         11 min read
                         &nbsp;·&nbsp; 2114 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-18
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -286,11 +286,7 @@
 <p>Instead of treating extraction as a traffic-routing problem, treat it as a data-locality problem. The real latency killer is not the façade; it is the round-trip to fetch data the new service needs but the monolith already has in cache. In 2026, the median API call in Lagos expects 30 ms to Redis, but a cross-AZ call to Aurora PostgreSQL 15 can take 40–60 ms even on gp3.</p>
 <p>We shifted from "route traffic then extract logic" to "extract data first, route traffic later." The steps are:</p>
 <ol>
-<li>Identify a bounded context that owns its own data (e.g., user identity).</li>
-<li>Move the data to a dedicated Redis 7.2 cluster co-located with the monolith’s own Redis. Keep the monolith as the source of truth, but replicate writes asynchronously to the new cluster.</li>
-<li>Update the monolith to read from both clusters while you validate consistency. Expect a 10–15 ms overhead for dual reads during the overlap window.</li>
-<li>Once the new service can serve reads from the local Redis, route 5 % of traffic. The façade now proxies to an in-region endpoint, so the extra hop is gone.</li>
-<li>Finally, deprecate the monolith’s copy and switch writes to the new service.</li>
+<li>Identify a bounded context that owns its own data (e.g., user identity). 2. Move the data to a dedicated Redis 7.2 cluster co-located with the monolith’s own Redis. Keep the monolith as the source of truth, but replicate writes asynchronously to the new cluster. 3. Update the monolith to read from both clusters while you validate consistency. Expect a 10–15 ms overhead for dual reads during the overlap window. 4. Once the new service can serve reads from the local Redis, route 5 % of traffic. The façade now proxies to an in-region endpoint, so the extra hop is gone. 5. Finally, deprecate the monolith’s copy and switch writes to the new service.</li>
 </ol>
 <p>This model keeps the façade simple—often just a NGINX 1.25 config with <code>proxy_pass</code>—because it no longer has to fan out to multiple services. The complexity moves into the data layer where we already have monitoring and backups.</p>
 <h2 id="evidence-and-examples-from-real-systems">Evidence and examples from real systems</h2>
@@ -337,9 +333,7 @@
 <h2 id="the-cases-where-the-conventional-wisdom-is-right">The cases where the conventional wisdom IS right</h2>
 <p>If your monolith is latency-sensitive in a single region and your team has the infra budget to run parallel systems for weeks, the Strangler Fig façade approach is fine. The pain is manageable when you:</p>
 <ul>
-<li>Use a service mesh like Linkerd 1.6 with automatic mTLS—you get retries, timeouts, and metrics out of the box.</li>
-<li>Keep the façade in the same AZ as the monolith so the extra hop is &lt;1 ms.</li>
-<li>Budget for a 3× infra multiplier during the overlap period.</li>
+<li>Use a service mesh like Linkerd 1.6 with automatic mTLS—you get retries, timeouts, and metrics out of the box. - Keep the façade in the same AZ as the monolith so the extra hop is &lt;1 ms. - Budget for a 3× infra multiplier during the overlap period.</li>
 </ul>
 <p>Teams in San Francisco with 5–10 engineers and a $5 k/month infra budget can afford this. Teams in Lagos with a $1.2 k monthly budget cannot.</p>
 <p>I’ve seen this fail when the façade became the new source of truth for auth. A misconfigured JWT middleware in the façade added 40 ms to every request because it re-validated the token with a cross-AZ call to the auth service. The monolith had cached the token locally in Redis, but the façade did not. Always ask: does the façade do more work than the monolith it replaces?</p>
@@ -452,7 +446,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/serve-4g-as-baseline-apps-in-2026/">
                         <h3>Serve 4G-as-baseline apps in 2026</h3>
                         <p>Cut API response time 21% and payload 63% for 4G-as-baseline users — Go server, Redis 7.4, and Vite 5.3 steps with real 2026 latency and cost data.</p>
-                        <span class="related-meta">13 min read · 3 July 2026</span>
+                        <span class="related-meta">12 min read · 3 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/memory-systems-for-production-agents/">

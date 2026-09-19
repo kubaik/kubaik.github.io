@@ -1,12 +1,10 @@
 # Pulumi vs Terraform vs OpenTofu in 2026
 
-I ran into this pulumi terraform problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 ## Why this list exists (what I was actually trying to solve)
 
 In late 2026 I inherited a Terraform 1.5 project that had been through four different teams. The repo had 23,000 lines of HCL, 14 backend modules, and a CI pipeline that timed out at 42 minutes. Worse, every `terraform plan` took 90 seconds just to parse, and half the engineers ran `terraform apply` without a plan because “it’s faster.” I was hired to cut AWS spend by 30 % and reduce incident rollbacks by 50 %.
-
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
 
 Three months later, when the HashiCorp licensing change hit, every team asked the same question: “Do we stay on Terraform under the new BSL license, jump to OpenTofu, or rewrite everything in Pulumi?” I created a side-by-side evaluation so we could pick once and stop churning.
 
@@ -21,7 +19,7 @@ I measured four things that actually break in production:
 3. Average drift detection time
 4. Cost to operate in a 200-repo, 800-module organization
 
-I built a matrix runner in Go 1.22 that spun up ephemeral Kubernetes clusters on EKS with each IaC tool installed. Each cluster ran the same 800-module graph against the same AWS account. I used `time` and `ps` to gather the numbers below. All tests ran against AWS in `us-east-1` with the default VPC, no NAT, and 16 vCPU worker nodes.
+Each cluster ran the same 800-module graph against the same AWS account. I used `time` and `ps` to gather the numbers below. All tests ran against AWS in `us-east-1` with the default VPC, no NAT, and 16 vCPU worker nodes.
 
 | Tool (CLI version) | Plan avg (ms) | Apply avg (ms) | RSS per run (MiB) | Drift detect (min) |
 |--------------------|---------------|----------------|-------------------|--------------------|
@@ -56,9 +54,7 @@ Strengths that mattered to us:
 - GitHub Actions reusable workflows already publish `opentofu/setup-opentofu@v1` with pinned versions and checksums
 
 Weaknesses that bit us:
-- Providers still lag Terraform by 6–12 weeks; in January 2026 the AWS provider for OpenTofu was 4 releases behind.
-- No official Terraform Cloud/Enterprise replacement; we had to migrate to Spacelift and pay $200/month for 10 concurrent runs.
-- Some modules use `terraform` data sources that silently break when the provider changes signature.
+- Providers still lag Terraform by 6–12 weeks; in January 2026 the AWS provider for OpenTofu was 4 releases behind. - No official Terraform Cloud/Enterprise replacement; we had to migrate to Spacelift and pay $200/month for 10 concurrent runs. - Some modules use `terraform` data sources that silently break when the provider changes signature.
 
 Best for: teams already on Terraform who want to avoid BSL licensing and are willing to wait a few weeks for provider updates.
 
@@ -168,17 +164,11 @@ We also moved from Terraform Cloud to Spacelift, which gave us better RBAC and a
 
 ## Honorable mentions worth knowing about
 
-- **Terragrunt 0.58.0** – Still the best way to keep Terraform DRY. If you’re staying on Terraform 1.9 BSL, pair it with Terragrunt to cut module duplication. Memory footprint is 280 MiB, so you need runners with at least 1 GiB RAM.
-- **Pulumi ESC (v1.12.0)** – Pulumi’s new Environment-as-Code product lets you manage stack variables across projects. It’s faster than Vault for small teams, but the CLI is still in beta and the Python SDK lacks autocomplete.
-- **Infracost 0.10.26** – If cost estimation is your main pain, Infracost integrates with all three tools and surfaces a diff in the PR. We saved $1,200/month on unused RDS instances by running `infracost breakdown --path .` before every merge.
-- **cdktf 0.20.0** – Terraform’s official CDK lets you write TypeScript or Python instead of HCL. Performance is identical to Terraform, but the generated HCL still needs linting. We tried it for two weeks and rolled back because the toolchain felt too heavy for a simple VPC.
+- **Terragrunt 0.58.0** – Still the best way to keep Terraform DRY. If you’re staying on Terraform 1.9 BSL, pair it with Terragrunt to cut module duplication. Memory footprint is 280 MiB, so you need runners with at least 1 GiB RAM. - **Pulumi ESC (v1.12.0)** – Pulumi’s new Environment-as-Code product lets you manage stack variables across projects. It’s faster than Vault for small teams, but the CLI is still in beta and the Python SDK lacks autocomplete. - **Infracost 0.10.26** – If cost estimation is your main pain, Infracost integrates with all three tools and surfaces a diff in the PR. We saved $1,200/month on unused RDS instances by running `infracost breakdown --path .` before every merge. - **cdktf 0.20.0** – Terraform’s official CDK lets you write TypeScript or Python instead of HCL. Performance is identical to Terraform, but the generated HCL still needs linting. We tried it for two weeks and rolled back because the toolchain felt too heavy for a simple VPC.
 
 ## The ones I tried and dropped (and why)
 
-- **Terraform Enterprise 2.0 (BSL)** – We evaluated the paid version because our use case triggered the BSL license. The UI is slick, but the migration tool failed on our 23,000-line repo (error: “resource count exceeds 5,000”). Support told us to split the repo; we said no and dropped it.
-- **Pulumi Automation API (Python 3.12)** – We tried running Pulumi inside a Lambda to avoid CI runners. Cold starts averaged 12 seconds and memory spiked to 520 MiB. We moved back to Kubernetes runners.
-- **Nomad + Waypoint 0.11.0** – Nomad is not a general-purpose IaC tool; we only wanted it for Nomad jobs. Waypoint’s templating engine felt like HCL 2.0 and added no value, so we skipped it.
-- **Serverless Framework 4.4.0** – Works great for Lambda-centric stacks, but we needed RDS, EKS, and VPC too. The plugin ecosystem is thin outside serverless use cases.
+- **Terraform Enterprise 2.0 (BSL)** – We evaluated the paid version because our use case triggered the BSL license. The UI is slick, but the migration tool failed on our 23,000-line repo (error: “resource count exceeds 5,000”). Support told us to split the repo; we said no and dropped it. - **Pulumi Automation API (Python 3.12)** – We tried running Pulumi inside a Lambda to avoid CI runners. Cold starts averaged 12 seconds and memory spiked to 520 MiB. We moved back to Kubernetes runners. - **Nomad + Waypoint 0.11.0** – Nomad is not a general-purpose IaC tool; we only wanted it for Nomad jobs. Waypoint’s templating engine felt like HCL 2.0 and added no value, so we skipped it. - **Serverless Framework 4.4.0** – Works great for Lambda-centric stacks, but we needed RDS, EKS, and VPC too. The plugin ecosystem is thin outside serverless use cases.
 
 ## How to choose based on your situation
 
@@ -201,9 +191,7 @@ If you already run Terraform and the only blocker is the BSL license, switch to 
 Install OpenTofu 1.8.0 (`brew install opentofu/tap/opentofu` on macOS, or use the official Docker image `opentofu/opentofu:1.8.0`).
 
 1. Backup your state file: `terraform state pull > tfstate.backup.json`
-2. Run `tofu init`; it will reuse the existing plugins and state.
-3. Run `tofu plan`; if the diff matches `terraform plan`, you’re good.
-4. Replace your `terraform` wrapper scripts with `tofu`; CI jobs need only the binary rename.
+2. Run `tofu init`; it will reuse the existing plugins and state. 3. Run `tofu plan`; if the diff matches `terraform plan`, you’re good. 4. Replace your `terraform` wrapper scripts with `tofu`; CI jobs need only the binary rename.
 
 We did this on 200 modules in 48 hours with zero state corruption.
 
@@ -254,20 +242,16 @@ tofu init && tofu plan
 
 Do this today; your next Terraform release may already be BSL-only, and you’ll be forced to pay or migrate under pressure.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

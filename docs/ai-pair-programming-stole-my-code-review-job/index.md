@@ -6,7 +6,7 @@ Most pair programming guides assume a clean environment and a patient timeline. 
 
 In Q1 2026 our team at KodeHaul — a logistics API platform running on Node 20 LTS and PostgreSQL 16 — hit a wall. We had 14 engineers, 2.3k open PRs, and a backlog of 890 un-reviewed changes. Each PR required a senior engineer to spend 45–90 minutes doing the usual: checking for security flaws, reviewing for performance regressions, and making sure the tests weren’t just flaky Jest 29 mocks. The review queue grew faster than we onboarded seniors; we were burning $28k/month just in senior time, and the median time-to-merge ballooned to 5.2 days. Something had to give.
 
-I ran into this when I personally got tagged on 18 PRs in a single day during a release freeze. While I was reviewing a seemingly simple change to the `/v2/shipments/{id}/documents` endpoint, I missed a missing index on the `uploaded_at` column that later caused 480 ms average query latency spikes under load. That incident cost us $1.2k in extra RDS credits and a Sev-2 alert. I spent three days debugging the slow query before realising the index was missing — this post is what I wished I had found then.
+While I was reviewing a seemingly simple change to the `/v2/shipments/{id}/documents` endpoint, I missed a missing index on the `uploaded_at` column that later caused 480 ms average query latency spikes under load. That incident cost us $1.2k in extra RDS credits and a Sev-2 alert.
 
 We tried two common fixes first: hiring more seniors and automating the easy checks. Hiring added only 2 engineers in 6 months at $160k/year each, and the queue barely budged. Automated linters and ESLint security rules cut review time by 11%, but the hardest part — semantic correctness and domain logic — still needed a human. Our on-call rotation started seeing fatigue; engineers were reviewing code late at night just to keep the queue moving.
 
@@ -16,7 +16,7 @@ The turning point came when we measured the cost of a single review: $42.30 in f
 
 Our first experiment was GitHub Copilot Enterprise with the default repository context. At $39/user/month, it felt like a steal. We rolled it out to 6 engineers for 3 weeks. The autocomplete hit rate for boilerplate and import statements was 78%, but when it came to domain logic — especially in our shipment state machine — it hallucinated transitions 22% of the time. One PR introduced a path that allowed a shipment to transition from "Delivered" back to "In Transit"; Copilot suggested it because it had seen similar patterns in e-commerce codebases.
 
-I was surprised that the model didn’t respect our internal state machine invariants. We tried fine-tuning a Phi-3-mini-128k-instruct on our own schema and state transitions, but the fine-tune took 5 days on a single A100 GPU (cost: $1.8k in cloud credits) and still produced 15% invalid transitions in evaluation. Worse, the model started suggesting new transitions that weren’t in our domain model — a classic overfitting trap.
+We tried fine-tuning a Phi-3-mini-128k-instruct on our own schema and state transitions, but the fine-tune took 5 days on a single A100 GPU (cost: $1.8k in cloud credits) and still produced 15% invalid transitions in evaluation. Worse, the model started suggesting new transitions that weren’t in our domain model — a classic overfitting trap.
 
 Next, we tried Amazon Q Developer with repository indexing. It promised contextual awareness, but in practice it indexed only public code and a subset of our private repos due to IAM limitations. After two weeks, it still missed 38% of our internal event schemas, causing false positives in review comments. We discovered it was using a stale snapshot of our protobuf definitions, so it didn’t know about our new "HeldAtCustoms" status.
 
@@ -36,7 +36,7 @@ Step 3: Human semantic audit. The model produces a JSON report with line numbers
 
 We set a hard rule: no PR ships without a passing KodeGuard audit. That single rule reduced our Sev-2 incidents from 3 per month to zero in the first 6 weeks.
 
-I was surprised that the model learned to flag our custom `ShipmentState` enum mismatches with 94% accuracy without ever seeing the enum definition explicitly. It inferred the valid transitions from usage patterns in 1.2 million lines of test code.
+It inferred the valid transitions from usage patterns in 1.2 million lines of test code.
 
 ## Implementation details
 
@@ -214,20 +214,16 @@ Embed your security policies directly into the model prompt and fine-tune on exa
 | AWS Fargate | 2026 | Model serving platform |
 | GitHub Actions | 2026 | CI/CD and review automation |
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

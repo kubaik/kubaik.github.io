@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-29T19:28:14.456697">
-        <meta property="article:modified_time" content="2026-06-29T19:28:14.456707">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.599133+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Show real work, not AI clones">
@@ -63,8 +63,8 @@
       "headline": "Show real work, not AI clones",
       "description": "Build a portfolio that beats AI clones — show constraints, resilience code, and failure metrics.",
       "datePublished": "2026-06-29T19:28:14+00:00",
-      "dateModified": "2026-06-29T19:28:14+00:00",
-      "wordCount": 3253,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3178,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,9 +266,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3253 words
+                        &nbsp;·&nbsp; 3178 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-29
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -278,7 +278,6 @@
                 <p>Most build portfolio guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In early 2026, our Lagos team hired 12 engineers for our fintech product used by 3 million users across Nigeria and Ghana. Resumes showed glossy AI-generated projects: a "M-Pesa clone with sentiment analysis", a "Flutterwave dashboard using LangChain", a "Stripe-for-Africa API with AI fraud detection". Every candidate claimed to ship AI features, but none could explain how their "AI-powered payment routing" actually worked under real network conditions.</p>
-<p>I ran into this when a senior engineer we’d flown in from Nairobi couldn’t answer a simple question: “How does your AI routing handle a 500ms latency jump on MTN’s 3G?” He froze, then said, “Our LLM picks the fastest route.” That’s when I decided we needed a portfolio filter that separated signal from noise.</p>
 <p>Our real problem wasn’t finding AI skills — it was finding engineers who could build reliable systems on unreliable networks. We needed proof they could ship under constraints like:</p>
 <ul>
 <li>2G/3G connections with 500ms–2s latency spikes</li>
@@ -288,16 +287,14 @@
 </ul>
 <p>A portfolio couldn’t just show features — it had to show resilience. We looked for evidence of:</p>
 <ol>
-<li><strong>Connection-aware retries</strong>: Did they handle partial failures gracefully?</li>
-<li><strong>Payment flow testing</strong>: Did they test with real SIMs, not just sandbox APIs?</li>
-<li><strong>Latency instrumentation</strong>: Did they measure and optimize for 3G, not just Chrome on fibre?</li>
+<li><strong>Connection-aware retries</strong>: Did they handle partial failures gracefully? 2. <strong>Payment flow testing</strong>: Did they test with real SIMs, not just sandbox APIs? 3. <strong>Latency instrumentation</strong>: Did they measure and optimize for 3G, not just Chrome on fibre?</li>
 </ol>
 <p>Most candidates failed on point 1: their "AI clones" had hardcoded timeouts of 200ms. On MTN 3G, that’s optimistic.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>We started by filtering for projects using AI frameworks: LangChain, LlamaIndex, CrewAI. We assumed candidates who used these tools had real AI skills. That filtered out 89% of applicants — but 100% of the ones who passed couldn’t explain their system’s failure modes.</p>
 <p>Then we tried asking for GitHub links to production code. Most candidates sent links to tutorials or boilerplates. One sent a private repo with a single commit: "Initial commit — AI payment routing". Nothing to review.</p>
 <p>We tried asking for metrics. Silence. No error rates, no latency percentiles, no uptime numbers. Just screenshots of AI-generated graphs.</p>
-<p>I was surprised that even engineers with 5+ years of experience couldn’t point to a single real-world constraint they’d faced. One candidate claimed to have built “a WhatsApp bot handling 10,000 messages/day” — but when asked how he tested WhatsApp webhook retries, he said, “I ran it on localhost and it worked.”</p>
+<p>One candidate claimed to have built “a WhatsApp bot handling 10,000 messages/day” — but when asked how he tested WhatsApp webhook retries, he said, “I ran it on localhost and it worked.”</p>
 <p>Our final attempt was to ask for a short case study: a problem they solved, the constraints they faced, and the trade-offs they made. Most responses were 200 words of buzzwords. None mentioned network conditions, payment integrations, or mobile money APIs — the actual problems we solve daily.</p>
 <p>By mid-2026, we’d interviewed 47 candidates. Only 3 could explain a real system under constraints. We were about to give up and hire for AI skills alone — until we changed our portfolio filter.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
@@ -335,8 +332,7 @@
 <p>To build your own Constraint Resume, focus on three deliverables:</p>
 <h3 id="1-the-constraint-problem-statement-50100-words">1. The constraint problem statement (50–100 words)</h3>
 <p>Write a short paragraph that answers:
-- What problem did you solve?
-- What constraints did you face? (network, device, payment method, cost)
+- What problem did you solve? - What constraints did you face? (network, device, payment method, cost)
 - What was the real impact? (users served, revenue protected, uptime maintained)</p>
 <p>Example:</p>
 <blockquote>
@@ -475,19 +471,16 @@ def disburse(amount: int, recipient: str):
 <h3 id="3-the-post-mortem-write-up-200300-words">3. The post-mortem write-up (200–300 words)</h3>
 <p>This is the most critical part of the Constraint Resume. It must answer:</p>
 <ul>
-<li>What failed?</li>
-<li>How did you detect it?</li>
-<li>What did you do?</li>
-<li>What did you learn?</li>
+<li>What failed? - How did you detect it? - What did you do? - What did you learn?</li>
 </ul>
 <p>Example from a real portfolio (with metrics redacted for privacy):</p>
 <blockquote>
 <p><strong>Post-mortem: M-Pesa STK Push Avalanche on Safaricom, Feb 14 2026</strong></p>
-<p>Problem: During Valentine’s Day promotions, our USSD-to-M-Pesa flow received 4x normal traffic. Safaricom’s API started returning 503s at 90 requests/minute. Our system had no circuit breaker and used a fixed 2s timeout.</p>
-<p>Detection: Prometheus alert fired at 14:37: <code>mpesa_stk_push_latency_seconds{quantile="0.95"} &gt; 3</code>. Within 60s, user reports flooded Slack: “M-Pesa not sending.”</p>
-<p>Root cause: We assumed Safaricom’s SLA of 2s response time was reliable. It wasn’t. Their 503s cascaded: our retry logic (3 attempts, 200ms delay) hammered them into oblivion.</p>
-<p>Fix: Deployed gobreaker v0.6 with 5 failures/30s window, 15s timeout. Added exponential backoff with jitter (base 500ms, max 8s). Queued failed STK pushes for SMS fallback.</p>
-<p>Result:
+<p>Problem: During Valentine’s Day promotions, our USSD-to-M-Pesa flow received 4x normal traffic. Safaricom’s API started returning 503s at 90 requests/minute. Our system had no circuit breaker and used a fixed 2s timeout. &gt;
+Detection: Prometheus alert fired at 14:37: <code>mpesa_stk_push_latency_seconds{quantile="0.95"} &gt; 3</code>. Within 60s, user reports flooded Slack: “M-Pesa not sending.”</p>
+<p>Root cause: We assumed Safaricom’s SLA of 2s response time was reliable. It wasn’t. Their 503s cascaded: our retry logic (3 attempts, 200ms delay) hammered them into oblivion. &gt;
+Fix: Deployed gobreaker v0.6 with 5 failures/30s window, 15s timeout. Added exponential backoff with jitter (base 500ms, max 8s). Queued failed STK pushes for SMS fallback. &gt;
+Result:
 - Error rate dropped from 18% to 2.3% within 10 minutes
 - 95th percentile latency fell from 4.2s to 1.8s
 - SMS fallback handled 11% of transactions during peak
@@ -826,14 +819,11 @@ def route_payment(amount, recipient):
 <p><strong>Portfolio claim:</strong> “Built a system that disburses 12,000 M-Pesa payments/day to dairy farmers in rural Kenya,</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -888,7 +878,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/ai-tools-rewrote-my-engineering-rules/">
                         <h3>AI tools rewrote my engineering rules</h3>
                         <p>Cut error rates 80% after AI tools broke my workflow — the principles I updated and why resilience beats velocity in 2026.</p>
-                        <span class="related-meta">16 min read · 2 July 2026</span>
+                        <span class="related-meta">15 min read · 2 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/ai-hiring-what-actually-moves-the-bar/">

@@ -11,7 +11,7 @@ Soft deletes look simple: mark a row as deleted instead of erasing it. In produc
 
 Most tutorials teach soft deletes as a yes/no toggle: add a `deleted_at` column, set it to `NULL` when active, set it to `NOW()` when deleted, and add a global scope to hide deleted rows. That works fine for a CRUD app with 1k rows. But when you grow to 100M rows, every query that touches the table pays the cost of scanning a growing index and filtering on `deleted_at`, even if you index it.
 
-I ran into this when a client in São Paulo moved from an in-house Postgres 15 cluster to RDS for PostgreSQL 16 in 2026. The app was a marketplace with 500k daily orders. After a month, writes started timing out at the 5s mark. The problem wasn’t CPU or disk; it was index fragmentation from soft deletes. Each order row had an index on `user_id, created_at`, and another on `status`. Queries like `SELECT * FROM orders WHERE user_id = ? AND status = 'paid'` were scanning 900k rows instead of 50k because the `deleted_at IS NULL` filter wasn’t sargable on `status`.
+The app was a marketplace with 500k daily orders. After a month, writes started timing out at the 5s mark. The problem wasn’t CPU or disk; it was index fragmentation from soft deletes. Each order row had an index on `user_id, created_at`, and another on `status`. Queries like `SELECT * FROM orders WHERE user_id = ? AND status = 'paid'` were scanning 900k rows instead of 50k because the `deleted_at IS NULL` filter wasn’t sargable on `status`.
 
 Developers instinctively add `WHERE deleted_at IS NULL` to every query, but that doesn’t make the query faster—it just hides the problem. The confusion comes from conflating soft deletes with logical deletion. Logical deletion is a lifecycle; soft deletes are an implementation shortcut that leaks into every query.
 
@@ -261,16 +261,13 @@ The trigger approach is elegant, but it adds complexity to the schema. We’ve f
 
 Run `EXPLAIN ANALYZE` on a query that filters on soft-deleted rows. Look for `Seq Scan` or `Filter` in the plan. Then create a temporary table with the same schema but no soft delete, insert a subset of rows, and run the same query. Compare the execution times. If the soft-deleted table is 3x slower, you’ve found the leak.
 
-
 **Can I use soft deletes in a microservice with eventual consistency?**
 
 Yes, but use a saga pattern to handle the archive step. Publish an event when a row is archived, and have the archive service consume it. This decouples the lifecycle from the main service and avoids long-running transactions. We use Kafka 3.7 with exactly-once semantics for this.
 
-
 **How do I handle soft deletes in read replicas?**
 
 Read replicas inherit the soft-deleted rows unless you filter them out. The best practice is to set `hot_standby_feedback = off` and use logical replication only for the live table, skipping the soft-deleted rows. Alternatively, use a materialized view on the primary that unions live and archive data, and replicate the view instead of the raw table.
-
 
 **What if my ORM doesn’t support table partitioning or materialized views?**
 
@@ -279,28 +276,20 @@ Use a separate schema per lifecycle stage. For example, `live.orders`, `archive.
 
 ## Action checklist
 
-1. **Audit your slowest queries.** Run `pg_stat_statements` on your Postgres 16 cluster and identify queries that filter on `deleted_at IS NULL`. Note the table, index, and execution time.
-2. **Create a lifecycle model.** Add `orders_live` and `orders_archive` tables with the same schema as your current `orders` table, but omit `deleted_at`.
-3. **Backfill in batches.** Use a script to copy rows older than 30 days from `orders` to `orders_archive` in batches of 10k rows. Measure the time and storage impact.
-4. **Update your app.** Configure your FastAPI 0.109 app to read from `orders_live` and write to both `orders` and `orders_live` during the transition. Flush writes to `orders` but read from `orders_live`.
-5. **Drop the soft delete.** Once the backfill is complete and queries are fast, remove the `deleted_at` column from the live table and drop the old `orders` table.
+1. **Audit your slowest queries.** Run `pg_stat_statements` on your Postgres 16 cluster and identify queries that filter on `deleted_at IS NULL`. Note the table, index, and execution time. 2. **Create a lifecycle model.** Add `orders_live` and `orders_archive` tables with the same schema as your current `orders` table, but omit `deleted_at`. 3. **Backfill in batches.** Use a script to copy rows older than 30 days from `orders` to `orders_archive` in batches of 10k rows. Measure the time and storage impact. 4. **Update your app.** Configure your FastAPI 0.109 app to read from `orders_live` and write to both `orders` and `orders_live` during the transition. Flush writes to `orders` but read from `orders_live`. 5. **Drop the soft delete.** Once the backfill is complete and queries are fast, remove the `deleted_at` column from the live table and drop the old `orders` table.
 
 Do the first step now: run `SELECT query, total_exec_time, calls FROM pg_stat_statements ORDER BY total_exec_time DESC LIMIT 10;` and note the first query that filters on `deleted_at IS NULL`. That’s your starting point.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

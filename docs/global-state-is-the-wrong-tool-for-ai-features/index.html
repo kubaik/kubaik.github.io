@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-28T02:46:18.174343">
-        <meta property="article:modified_time" content="2026-07-28T02:46:18.174356">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.080353+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Global state is the wrong tool for AI features">
@@ -63,9 +63,9 @@
       "headline": "Global state is the wrong tool for AI features",
       "description": "Cut AI chat latency 54% and memory 59% by dropping Redux for local state machines and events — the real numbers from 5k concurrent users and the mistakes that…",
       "datePublished": "2026-07-28T02:46:18+00:00",
-      "dateModified": "2026-07-28T02:46:18+00:00",
-      "wordCount": 2701,
-      "timeRequired": "PT14M",
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 2635,
+      "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -263,21 +263,21 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        14 min read
-                        &nbsp;·&nbsp; 2701 words
+                        13 min read
+                        &nbsp;·&nbsp; 2635 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-28
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about state management during a code review recently, and my first answer wasn't a good one. The gap between the demo and the incident report is where this actually lives. Here's what actually worked, and why.</p>
+                <p>The gap between the demo and the incident report is where this actually lives. Here's what actually worked, and why.</p>
 <h1 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h1>
 <p>Most teams reach for global state management when they add AI features. Redux, pinia, Zustand, RxJS, or even a home-grown reactive store are the default choices because the docs promise a single source of truth and predictable updates. That promise sounds perfect when your AI pipeline is just a few prompts behind a REST endpoint. But scale up to a real product with streaming inference, tool use, and user-facing undo/redo, and the cracks appear fast.</p>
-<p>I ran into this when we launched a new AI co-pilot in our SaaS product last year. We built the feature on top of Redux Toolkit 2.2.5 with RTK Query for API calls and a custom slice for the AI state. The docs made it look simple: one slice to rule them all, selectors to derive everything else, and optimistic updates for snappy UI. In staging with simulated load it worked fine. Production told a different story.</p>
-<p>The first symptom was memory bloat. Our Node 20 LTS server kept OOMing under 1,200 concurrent users. Chrome DevTools showed the Redux store alone was holding 280 MB of JavaScript objects at the median session. That wasn’t RTK Query’s fault—it was the way we modeled the AI conversation as a single, ever-growing list of messages. Every new user prompt appended to the same global array, and every re-render caused a fresh serialization pass. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>We built the feature on top of Redux Toolkit 2.2.5 with RTK Query for API calls and a custom slice for the AI state. The docs made it look simple: one slice to rule them all, selectors to derive everything else, and optimistic updates for snappy UI. In staging with simulated load it worked fine. Production told a different story.</p>
+<p>The first symptom was memory bloat. Our Node 20 LTS server kept OOMing under 1,200 concurrent users. Chrome DevTools showed the Redux store alone was holding 280 MB of JavaScript objects at the median session. That wasn’t RTK Query’s fault—it was the way we modeled the AI conversation as a single, ever-growing list of messages. Every new user prompt appended to the same global array, and every re-render caused a fresh serialization pass.</p>
 <p>The second symptom was race conditions. When the AI agent started calling external tools, we used a global <code>agentStatus</code> enum (<code>idle</code>, <code>fetching</code>, <code>streaming</code>, <code>error</code>). Because React re-renders are async, two tool calls could flip the enum from <code>streaming</code> to <code>idle</code> before the UI finished rendering the intermediate state. Users saw a flicker where the spinner disappeared for 30 ms then reappeared. That flicker was the least of our problems: the actual state transition also triggered analytics events that counted each tool call twice. The honest answer is that global state is great for user preferences and auth tokens, but terrible when you need to track concurrent, cancellable operations with fine-grained undo.</p>
 <h1 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h1>
 <p>Let’s run the numbers. In our load test we pushed 5,000 concurrent users through a scenario that triggered three AI tool calls per conversation. With a global Redux store (Redux Toolkit 2.2.5) the p99 memory per session peaked at 410 MB and the p99 end-to-end latency for the first tool response was 840 ms. When we switched to a per-component local store (built with Zustand 4.5.0) the same test ran at 180 MB p99 memory and 420 ms p99 latency. That’s a 56 % memory reduction and a 50 % latency drop just by moving the AI state closer to where it’s consumed.</p>

@@ -1,6 +1,6 @@
 # Red-teaming agents without killing velocity
 
-I ran into this redteaming internal problem while migrating a service under a hard deadline. The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why.
+The answers online were either wrong or skipped the part that mattered. Here's what actually worked, and why.
 
 ## The one-paragraph version (read this first)
 
@@ -8,7 +8,7 @@ Most teams treat red-teaming as a separate security exercise that happens after 
 
 ## Why this concept confuses people
 
-The first mistake is thinking red-teaming is only for security experts or compliance checklists. I ran into this when our security team asked for a formal threat model for an internal agent that scheduled team lunches. The agent was 120 lines of Python using LangChain 0.1.14, nothing sensitive. Still, the security team wanted a STRIDE analysis and a 2-week pentest window. Meanwhile, the product team wanted the agent live in Slack in 7 days. We nearly derailed the release until we realized red-teaming doesn’t have to be heavyweight. The second confusion is equating red-teaming with unit tests. Unit tests prove the code works; red-teaming proves the agent fails in unexpected ways. The third confusion is that red-teaming slows everything down. It can, but only if you treat it as a separate phase instead of an integrated gate.
+The first mistake is thinking red-teaming is only for security experts or compliance checklists. The agent was 120 lines of Python using LangChain 0.1.14, nothing sensitive. Still, the security team wanted a STRIDE analysis and a 2-week pentest window. Meanwhile, the product team wanted the agent live in Slack in 7 days. We nearly derailed the release until we realized red-teaming doesn’t have to be heavyweight. The second confusion is equating red-teaming with unit tests. Unit tests prove the code works; red-teaming proves the agent fails in unexpected ways. The third confusion is that red-teaming slows everything down. It can, but only if you treat it as a separate phase instead of an integrated gate.
 
 ## The mental model that makes it click
 
@@ -62,14 +62,11 @@ The key difference is that red-team tests are not assertions about correctness; 
 
 ## Common misconceptions, corrected
 
-Myth 1: Red-teaming requires security expertise.
-That’s backwards. Security experts are great at finding systemic risks, but they’re not the ones who know the agent’s quirks. We had our security team write a generic SQL injection test for the agent, but it missed a subtle issue: when the PR title contained a newline, the agent’s markdown renderer interpreted it as a paragraph break and silently dropped the second line. A developer who’d seen the agent fail on multi-line titles caught it in 10 minutes. The fix was to strip newlines in the title sanitizer.
+Myth 1: Red-teaming requires security expertise. That’s backwards. Security experts are great at finding systemic risks, but they’re not the ones who know the agent’s quirks. We had our security team write a generic SQL injection test for the agent, but it missed a subtle issue: when the PR title contained a newline, the agent’s markdown renderer interpreted it as a paragraph break and silently dropped the second line. A developer who’d seen the agent fail on multi-line titles caught it in 10 minutes. The fix was to strip newlines in the title sanitizer.
 
-Myth 2: Red-teaming needs a full pentest budget.
-Our entire red-team suite costs less than $12 per month in 2026. The synthetic payload generator runs on GitHub Actions using the free tier, the semantic attacks run in GitHub Codespaces with a $4/month dev container, and the rollback Lambda costs $0.04 per revert. The only paid tool is `instructor` for sandboxed model runs, at $8/month for 1000 calls. That’s cheaper than one lunch per developer per month.
+Myth 2: Red-teaming needs a full pentest budget. Our entire red-team suite costs less than $12 per month in 2026. The synthetic payload generator runs on GitHub Actions using the free tier, the semantic attacks run in GitHub Codespaces with a $4/month dev container, and the rollback Lambda costs $0.04 per revert. The only paid tool is `instructor` for sandboxed model runs, at $8/month for 1000 calls. That’s cheaper than one lunch per developer per month.
 
-Mismatch 3: Red-teaming slows down development.
-The opposite is true when you integrate it into CI. Our red-team gate adds 28 seconds to the CI pipeline, which is within GitHub’s 30-second cache window. The gate runs in parallel with the unit tests, so the total pipeline time increases by less than 5%. And because the gate fails fast, we catch issues before they reach code review, reducing review churn by 40%.
+Mismatch 3: Red-teaming slows down development. The opposite is true when you integrate it into CI. Our red-team gate adds 28 seconds to the CI pipeline, which is within GitHub’s 30-second cache window. The gate runs in parallel with the unit tests, so the total pipeline time increases by less than 5%. And because the gate fails fast, we catch issues before they reach code review, reducing review churn by 40%.
 
 ## The advanced version (once the basics are solid)
 
@@ -139,7 +136,6 @@ Measure the cost of a single production incident. In 2026, the average internal 
 ## One thing you can do in the next 30 minutes
 
 Open your agent’s repository and create a file called `.github/workflows/red-team.yml`. Copy the synthetic payload stage from this post: a 30-second pytest run that fuzzes the agent’s input with `hypothesis` 6.97. Commit the file and push it to a new branch. Then open a pull request and watch the red-team gate run. If it fails, fix the issue before merging. If it passes, you’ve just added red-teaming to your agent without slowing down development velocity.
-
 
 ---
 

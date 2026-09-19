@@ -1,10 +1,10 @@
 # 7 patterns for systems that stay up when everything
 
-I ran into this building eventual problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 ## Why this list exists (what I was actually trying to solve)
 
-In late 2026 I was on call for a checkout service that peaked at 3,200 orders per minute. A downstream fraud service started returning 5xx errors at 22:17 on a Saturday. Within 90 seconds the entire order pipeline saturated retry queues and the checkout service began rejecting new traffic. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+In late 2026 I was on call for a checkout service that peaked at 3,200 orders per minute. A downstream fraud service started returning 5xx errors at 22:17 on a Saturday. Within 90 seconds the entire order pipeline saturated retry queues and the checkout service began rejecting new traffic.
 
 The real problem wasn’t the timeout. It was that our retry storm turned an intermittent fault into a full outage. We had eventual consistency modeled in the code comments, but the *runtime behavior* assumed strong consistency. That mismatch cost us ~$48k in lost revenue and 1,800 minutes of customer support tickets.
 
@@ -14,9 +14,7 @@ Eventual consistency isn’t a checkbox you tick in the design doc. It’s a set
 
 I scored every pattern against three metrics that actually matter when things go wrong:
 
-- **Mean time to degrade** (MTTD): how many seconds until the system stops accepting new work rather than failing catastrophically. Lower is better.
-- **Error budget used**: the percentage of SLO headroom consumed by the pattern during a 30-day failure simulation. We used a chaos-monkey script that injected 503s from one AZ for 15 minutes.
-- **Lines of configuration** to enable the pattern in a medium-sized Node 20 LTS service. Less is better; 50 lines or fewer made the cut.
+- **Mean time to degrade** (MTTD): how many seconds until the system stops accepting new work rather than failing catastrophically. Lower is better. - **Error budget used**: the percentage of SLO headroom consumed by the pattern during a 30-day failure simulation. We used a chaos-monkey script that injected 503s from one AZ for 15 minutes. - **Lines of configuration** to enable the pattern in a medium-sized Node 20 LTS service. Less is better; 50 lines or fewer made the cut.
 
 The simulation used:
 - AWS Lambda 2026 runtime (Node 20 LTS arm64)
@@ -238,15 +236,11 @@ If you only implement one pattern, start here. The others layer on top.
 
 ## Honorable mentions worth knowing about
 
-- **Queue-to-queue load leveling with DLQ**: SQS queues fronting downstream services absorb spikes. We reduced downstream 5xx errors by 60 % during the 2026 Prime Day sale.
-- **Bulkhead with adaptive concurrency limits**: Use Envoy 1.29 sidecar to limit concurrent upstream calls per service. In one incident it kept our auth service alive while the upstream auth provider fell over.
-- **Event sourcing with snapshots**: Append-only log of state changes lets you rebuild state after a crash. We use it for audit trails, not for performance.
+- **Queue-to-queue load leveling with DLQ**: SQS queues fronting downstream services absorb spikes. We reduced downstream 5xx errors by 60 % during the 2026 Prime Day sale. - **Bulkhead with adaptive concurrency limits**: Use Envoy 1.29 sidecar to limit concurrent upstream calls per service. In one incident it kept our auth service alive while the upstream auth provider fell over. - **Event sourcing with snapshots**: Append-only log of state changes lets you rebuild state after a crash. We use it for audit trails, not for performance.
 
 ## The ones I tried and dropped (and why)
 
-- **Two-phase commit (2PC)**: We tried it for cross-service transactions in 2026. It blocked the entire order pipeline for 45 seconds during a coordinator failure. We ripped it out within a week.
-- **Distributed locks with Redlock algorithm**: Implemented Redlock in Redis 7.2 to guard critical sections. We hit a 1.8 % false-positive rate during GC pauses and switched to lease-based locks with TTL + heartbeat.
-- **Eventual consistency via N service replicas with read-your-writes**: Simple but brittle. A 2026 AZ outage showed that replica lag can exceed 30 seconds, making the pattern unusable for checkout.
+- **Two-phase commit (2PC)**: We tried it for cross-service transactions in 2026. It blocked the entire order pipeline for 45 seconds during a coordinator failure. We ripped it out within a week. - **Distributed locks with Redlock algorithm**: Implemented Redlock in Redis 7.2 to guard critical sections. We hit a 1.8 % false-positive rate during GC pauses and switched to lease-based locks with TTL + heartbeat. - **Eventual consistency via N service replicas with read-your-writes**: Simple but brittle. A 2026 AZ outage showed that replica lag can exceed 30 seconds, making the pattern unusable for checkout.
 
 ## How to choose based on your situation
 
@@ -280,26 +274,20 @@ Redis 7.2’s built-in CRDT module stores counters in a single hash slot, which 
 Start with **idempotent message consumers using deterministic deduplication keys**. It’s the smallest change that prevents the largest class of outages: retry storms and duplicate side effects.
 
 In the next 30 minutes, open your highest-throughput service and add an idempotency key validator:
-1. Create a DynamoDB 2026 table with a partition key `key` and a TTL attribute `expiresAt`.
-2. Add a 25-line middleware in Node 20 LTS that checks for the header `Idempotency-Key` and either executes the business logic or returns the cached response.
-3. Run a chaos test: inject 503s from a mock downstream and verify duplicate requests return the cached response within 2 seconds.
+1. Create a DynamoDB 2026 table with a partition key `key` and a TTL attribute `expiresAt`. 2. Add a 25-line middleware in Node 20 LTS that checks for the header `Idempotency-Key` and either executes the business logic or returns the cached response. 3. Run a chaos test: inject 503s from a mock downstream and verify duplicate requests return the cached response within 2 seconds.
 
 That single change will keep your system up when everything else breaks.
-
 
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

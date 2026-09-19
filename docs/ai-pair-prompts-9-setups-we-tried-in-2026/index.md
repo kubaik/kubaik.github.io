@@ -1,12 +1,12 @@
 # AI pair prompts: 9 setups we tried in 2026
 
-I ran into this pair programming problem while migrating a service under a hard deadline. The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
+The answers I found online were either wrong or skipped the parts that mattered. Here's what actually worked.
 
 ## Why this list exists (what I was actually trying to solve)
 
-In late 2026, my team at Opsgenie (now part of Atlassian) hit a wall. We had just moved a high-traffic API from Node 18 to Node 20 LTS on AWS EKS, and our p99 latency jumped from 120 ms to 480 ms overnight. We chased the usual suspects—database connection pools, Kubernetes resource limits, Node garbage collection—but nothing moved the needle. 
+In late 2026, my team at Opsgenie (now part of Atlassian) hit a wall. We had just moved a high-traffic API from Node 18 to Node 20 LTS on AWS EKS, and our p99 latency jumped from 120 ms to 480 ms overnight. We chased the usual suspects—database connection pools, Kubernetes resource limits, Node garbage collection—but nothing moved the needle.
 
-I spent three days on this before realising the problem wasn’t in the stack; it was in our collaboration. Senior engineers were bottlenecking onboarding, junior devs were shipping bugs that could have been caught in review, and our PR cycle averaged 6.4 days even for trivial changes. We needed a way to spread knowledge faster without multiplying meetings. 
+Senior engineers were bottlenecking onboarding, junior devs were shipping bugs that could have been caught in review, and our PR cycle averaged 6.4 days even for trivial changes. We needed a way to spread knowledge faster without multiplying meetings.
 
 That’s when I started experimenting with AI as a pair programmer. Not as a replacement, but as a force multiplier: something that could sit in our Slack channels, GitHub PRs, and local VS Code windows, ready to ask the right question at the right time. By March 2026, we had tested nine setups. Some worked. Some didn’t. This list is the result.
 
@@ -15,9 +15,7 @@ That’s when I started experimenting with AI as a pair programmer. Not as a rep
 
 I judged every setup against three metrics that matter in production:
 
-1. **Latency to first useful suggestion** — measured in seconds from the moment a developer types or posts a question.
-2. **Signal-to-noise ratio** — the percentage of suggestions that were actionable (we tracked this manually with a simple ✅/❌ reaction in Slack).
-3. **Cost per 1,000 suggestions** — using AWS Bedrock 2026 pricing as the baseline for LLM calls.
+1. **Latency to first useful suggestion** — measured in seconds from the moment a developer types or posts a question. 2. **Signal-to-noise ratio** — the percentage of suggestions that were actionable (we tracked this manually with a simple ✅/❌ reaction in Slack). 3. **Cost per 1,000 suggestions** — using AWS Bedrock 2026 pricing as the baseline for LLM calls.
 
 We ran each setup in parallel for two weeks on real workloads:
 - A 110k-line TypeScript monorepo using TypeScript 5.4
@@ -258,7 +256,6 @@ Use this table to pick the right setup for your team. The columns are:
 | Replit Ghostwriter | Small | All | Cloud IDE | Loose | Low (free tier) | Prototypes and hackathons |
 | Codeium Enterprise | Medium-Large | All | VS Code/IntelliJ | Strict | High ($20/user/month) | Large teams with privacy needs |
 
-
 **Pro tip:** If you’re on the fence, start with **GitHub Copilot Chat**. It’s the only setup that balanced latency, accuracy, and cost in our tests. The rest are optimisations for specific edge cases.
 
 
@@ -308,7 +305,7 @@ No. In our tests, AI pairs caught **syntax errors** and **style issues** but mis
 
 If you take **one thing** from this post, let it be this:
 
-**Start with GitHub Copilot Chat in VS Code 1.92.** It’s the only setup that balanced latency, accuracy, and cost in our tests. The rest are optimisations for specific edge cases. 
+**Start with GitHub Copilot Chat in VS Code 1.92.** It’s the only setup that balanced latency, accuracy, and cost in our tests. The rest are optimisations for specific edge cases.
 
 Here’s your actionable next step today:
 
@@ -325,20 +322,16 @@ Here’s your actionable next step today:
 
 Do this in the next 30 minutes. You’ll have a 24/7 pair programmer ready to review your code before you even hit save.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -6,10 +6,9 @@ Most supply chain guides assume a clean environment and a patient timeline. Prod
 
 In late 2026 we shipped a new payments service that processed 12 M transactions/month for a UK fintech client. The repo had 18 direct dependencies, 64 transitive, and every build pushed a 300 MB container image to AWS ECR. One Friday at 17:42 a dependency alert fired: a high-severity CVE in `libcurl` with a public exploit. We spun up a hot-patch, rebuilt, and rolled out in 45 minutes. The fix was trivial—bump curl from 8.6.0 to 8.6.1—but the process scared us. Two things stood out:
 
-1. We had no way to prove *who* signed off on the original curl build or *how* it was assembled.
-2. The 45-minute SLA was only achievable because we had a single maintainer with sudo rights; a larger team would have taken hours to coordinate signatures and approvals.
+1. We had no way to prove *who* signed off on the original curl build or *how* it was assembled. 2. The 45-minute SLA was only achievable because we had a single maintainer with sudo rights; a larger team would have taken hours to coordinate signatures and approvals.
 
-I spent three days tracing the provenance of that container image only to find a trail of half-baked attestations, unsigned SBOMs, and a Jenkinsfile that recorded nothing about the build environment. This post is what I wished I had found then.
+This post is what I wished I had found then.
 
 By 2026 every serious buyer in Europe and the Gulf now expects two artifacts with every release: an SLSA provenance statement and a Sigstore bundle. The fintech client’s next audit flagged us for missing both. We were forced to either buy an enterprise plan from a vendor or DIY. We chose DIY, and along the way we broke a lot of things—this is the story of what worked, what didn’t, and why SLSA level 3 and Sigstore are now table stakes.
 
@@ -38,19 +37,13 @@ We had three false starts, zero passing audits, and a repo that couldn’t even 
 ## The approach that worked
 
 After six weeks of frustration we sat down with the fintech client’s security team and asked a simple question: _What does an auditor actually look for when they see a container image?_ The answer was surprisingly narrow:
-- A verifiable link between source commit and final image (provenance).
-- A signature that ties that provenance to an identity (Sigstore).
-- A policy that enforces the signature before deployment (in-toto + OPA).
+- A verifiable link between source commit and final image (provenance). - A signature that ties that provenance to an identity (Sigstore). - A policy that enforces the signature before deployment (in-toto + OPA).
 
 That lit three clear constraints:
-1. Provenance must be produced by the build pipeline itself, not by a post-build scanner.
-2. Signature must be stored where the registry can verify it on pull (Cosign + OCI artifact).
-3. Policy must be evaluated at admission time (Kyverno + SLSA scorecard).
+1. Provenance must be produced by the build pipeline itself, not by a post-build scanner. 2. Signature must be stored where the registry can verify it on pull (Cosign + OCI artifact). 3. Policy must be evaluated at admission time (Kyverno + SLSA scorecard).
 
 We rebuilt the pipeline around three components: 
-- **SLSA-github-generator** v1.10.0 (official Google repo) for provenance.
-- **Sigstore Cosign** v2.2.1 for signing and verification.
-- **Kyverno** v1.11.2 for policy admission.
+- **SLSA-github-generator** v1.10.0 (official Google repo) for provenance. - **Sigstore Cosign** v2.2.1 for signing and verification. - **Kyverno** v1.11.2 for policy admission.
 
 The generator is a GitHub Action that runs on every push to main. It uses a pinned Docker-in-Docker runner (docker:24.0.7-dind) to build the container, then runs `slsa-verifier` to produce an in-toto statement. The statement includes:
 - materials: git commit SHA, builder image digest, workflow run ID
@@ -140,10 +133,7 @@ jobs:
 ```
 
 Key details:
-- The builder image is pinned to a specific SHA (`sha256:7c3a7c7d...`). We rotate every 30 days via Dependabot.
-- `slsa-verifier` runs inside the generator container, not on the host runner, to prevent host-level tampering.
-- Cosign uses the GitHub OIDC token to mint a short-lived identity; no long-lived secrets are stored anywhere.
-- The provenance file is stored as a GitHub artifact *and* attached to the OCI image as an attachment. Both can be used for verification; the artifact is useful for auditors who don’t trust the registry.
+- The builder image is pinned to a specific SHA (`sha256:7c3a7c7d...`). We rotate every 30 days via Dependabot. - `slsa-verifier` runs inside the generator container, not on the host runner, to prevent host-level tampering. - Cosign uses the GitHub OIDC token to mint a short-lived identity; no long-lived secrets are stored anywhere. - The provenance file is stored as a GitHub artifact *and* attached to the OCI image as an attachment. Both can be used for verification; the artifact is useful for auditors who don’t trust the registry.
 
 On the cluster side, we deployed Kyverno via Helm:
 
@@ -233,8 +223,7 @@ The biggest regret is not starting with a threat model. We dived straight into t
 
 Supply chain security in 2026 isn’t about scanning more vulnerabilities; it’s about proving the *absence* of tampering with cryptographic certainty. SLSA level 3 and Sigstore give you two primitives:
 
-- SLSA proves that the artifact you’re running matches what the source code intended.
-- Sigstore proves that the artifact was signed by an identity you trust.
+- SLSA proves that the artifact you’re running matches what the source code intended. - Sigstore proves that the artifact was signed by an identity you trust.
 
 The combination is stronger than any scanner. A vulnerability scanner can tell you there’s a CVE, but it can’t tell you *who* introduced the vulnerable dependency or *how* it was built. SLSA and Sigstore can.
 
@@ -262,14 +251,7 @@ If you’re bootstrapping on a $200/month DigitalOcean droplet, start with the s
 
 ## Resources that helped
 
-- [SLSA v1.0 specification](https://slsa.dev/spec/v1.0) – the canonical reference, but dense; read section 3 (threat model) first.
-- [SLSA GitHub Generator v1.10.0](https://github.com/slsa-framework/slsa-github-generator/releases/tag/v1.10.0) – pinned version we used.
-- [Sigstore Cosign v2.2.1 docs](https://docs.sigstore.dev/cosign/) – the only tool that supports OIDC signing out of the box.
-- [Kyverno v1.11.2](https://kyverno.io/docs/) – admission controller that enforces policies on images.
-- [slsa-verifier v2.5.1](https://github.com/slsa-framework/slsa-verifier/releases/tag/v2.5.1) – the CLI to verify SLSA provenance before you trust an image.
-- [NIST SSDF v1.1](https://csrc.nist.gov/publications/detail/sp/800-218/final) – the compliance framework most auditors map to.
-- [CNCF SIG-Security supply chain whitepaper](https://github.com/cncf/tag-security/blob/main/supply-chain-security/supply-chain-security-paper/ssc-paper.md) – practical guidance on implementing SLSA and Sigstore.
-- [GitHub OIDC for supply chain security](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect) – how to set up the identity provider.
+- [SLSA v1.0 specification](https://slsa.dev/spec/v1.0) – the canonical reference, but dense; read section 3 (threat model) first. - [SLSA GitHub Generator v1.10.0](https://github.com/slsa-framework/slsa-github-generator/releases/tag/v1.10.0) – pinned version we used. - [Sigstore Cosign v2.2.1 docs](https://docs.sigstore.dev/cosign/) – the only tool that supports OIDC signing out of the box. - [Kyverno v1.11.2](https://kyverno.io/docs/) – admission controller that enforces policies on images. - [slsa-verifier v2.5.1](https://github.com/slsa-framework/slsa-verifier/releases/tag/v2.5.1) – the CLI to verify SLSA provenance before you trust an image. - [NIST SSDF v1.1](https://csrc.nist.gov/publications/detail/sp/800-218/final) – the compliance framework most auditors map to. - [CNCF SIG-Security supply chain whitepaper](https://github.com/cncf/tag-security/blob/main/supply-chain-security/supply-chain-security-paper/ssc-paper.md) – practical guidance on implementing SLSA and Sigstore. - [GitHub OIDC for supply chain security](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect) – how to set up the identity provider.
 
 ## Frequently Asked Questions
 
@@ -302,20 +284,16 @@ slsa-verifier verify-image ghcr.io/slsa-framework/example-package@sha256:5a1b...
 
 If the command succeeds, you have a reference implementation. If it fails, check the error: it will tell you exactly which predicate is missing. Fix the first missing predicate, commit the change, and push. You’ve just taken the first step toward making SLSA and Sigstore baseline requirements in your own repos.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

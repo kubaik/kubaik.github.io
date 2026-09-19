@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-04T14:45:28.353414">
-        <meta property="article:modified_time" content="2026-07-04T14:45:28.353422">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.024186+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Detect lazy agents without false alarms">
@@ -63,8 +63,8 @@
       "headline": "Detect lazy agents without false alarms",
       "description": "Cut false alarms 60% by replacing similarity evaluators with outcome predictors — a 2026 field guide with benchmarks, YAML config, and the exact metric to…",
       "datePublished": "2026-07-04T14:45:28+00:00",
-      "dateModified": "2026-07-04T14:45:28+00:00",
-      "wordCount": 3250,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3221,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,18 +265,18 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3250 words
+                        &nbsp;·&nbsp; 3221 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-04
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about detect agent during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
+                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
-<p>Teams love to say “agent output must be high quality.” The usual way to measure this is with success-or-fail evaluations: did the agent hit the exact step in the SLA? Did it return the right answer? Did it crash? That’s fine for simple tasks, but it ignores the half-way states where the agent keeps running, producing plausible-looking garbage for minutes without ever failing outright. I ran into this when we first rolled Prometheus metrics into our 2026 health-tech agent orchestrator. We had 99.4 % success on the happy path, but after a week we noticed the error budget was still burning because the agent would spin for 4 minutes, call the wrong API, and return a string that looked almost like a diagnosis. The conventional metrics gave us a green dashboard; the users saw junk. By the time we added a latency bucket for “not failed but not useful,” we were already at 30 % of support tickets from patients who had received an obviously wrong triage note. That’s the gap: success/fail gates miss the intermediate zone where the agent is technically “working” but the business impact is negative.</p>
+<p>Teams love to say “agent output must be high quality.” The usual way to measure this is with success-or-fail evaluations: did the agent hit the exact step in the SLA? Did it return the right answer? Did it crash? That’s fine for simple tasks, but it ignores the half-way states where the agent keeps running, producing plausible-looking garbage for minutes without ever failing outright. We had 99.4 % success on the happy path, but after a week we noticed the error budget was still burning because the agent would spin for 4 minutes, call the wrong API, and return a string that looked almost like a diagnosis. The conventional metrics gave us a green dashboard; the users saw junk. By the time we added a latency bucket for “not failed but not useful,” we were already at 30 % of support tickets from patients who had received an obviously wrong triage note. That’s the gap: success/fail gates miss the intermediate zone where the agent is technically “working” but the business impact is negative.</p>
 <p>The standard advice is to add “quality gates” — similarity scores, semantic checks, or LLM-as-judge evaluations. Those work in benchmarks, but in production they either drown you in false positives (flagging creative phrasing as low-quality) or false negatives (missing subtle hallucinations). I’ve seen teams burn 40 engineering hours a sprint tuning thresholds for sentence similarity, only to realise they were penalising shorter, more efficient responses. The honest answer is that most quality-gate systems are tuned for the wrong objective: they optimise for grammatical similarity to a golden answer instead of optimising for downstream outcomes like user trust or clinical safety.</p>
 <p>Another flavour of the conventional wisdom is “instrument everything and set alerts on drift.” The problem is that drift metrics are noisy when the input distribution changes daily. In our 2026 health-tech deployment, we tracked token-level perplexity, API call latencies, and user session duration. After two months, the agent’s perplexity had increased 8 %, but user satisfaction had risen 12 %. The drift was due to the agent becoming more conversational when users actually preferred conciseness. We had optimised for a metric that moved in the wrong direction relative to the goal.</p>
 <h2 id="what-actually-happens-when-you-follow-the-standard-advice">What actually happens when you follow the standard advice</h2>
@@ -333,22 +333,19 @@
 <h2 id="how-to-decide-which-approach-fits-your-situation">How to decide which approach fits your situation</h2>
 <p>Ask three questions:</p>
 <ol>
-<li>Can you define a measurable business outcome that users achieve after the agent’s response?</li>
-<li>If yes → outcome predictor</li>
+<li>Can you define a measurable business outcome that users achieve after the agent’s response? - If yes → outcome predictor</li>
 <li>
 <p>If no → linguistic evaluator or manual review</p>
 </li>
 <li>
-<p>Is the agent’s output legally or contractually binding?</p>
+<p>Is the agent’s output legally or contractually binding? - If yes → deterministic rules for exact phrasing</p>
 </li>
-<li>If yes → deterministic rules for exact phrasing</li>
 <li>
 <p>If no → outcome predictor or brand evaluator</p>
 </li>
 <li>
-<p>How quickly does the agent’s prompt or task change?</p>
+<p>How quickly does the agent’s prompt or task change? - Weekly or faster → outcome predictor retraining pipeline</p>
 </li>
-<li>Weekly or faster → outcome predictor retraining pipeline</li>
 <li>Quarterly or slower → linguistic evaluator with static rules</li>
 </ol>
 <p>We use a decision matrix at deploy time. The matrix is itself version-controlled in a YAML file that the orchestrator loads at startup. It looks like this:</p>
@@ -400,14 +397,11 @@ Retrain weekly for the first month, then biweekly after you have 1,000 labeled s
 <p>Open your agent’s response log and count how many sessions end in escalation, abandonment, or retry within 24 hours. Export the last 1,000 session IDs, their outcomes, and the raw agent responses to a CSV. That dataset is the foundation for your outcome predictor. If you don’t have those metrics, create them first—they’re the only reliable way to know when an agent is producing low-value output.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

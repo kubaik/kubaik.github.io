@@ -4,7 +4,7 @@ The conventional advice on ondevice edge is incomplete in one specific, costly w
 
 ## Why I wrote this (the problem I kept hitting)
 
-I spent three weeks debugging why my Lagos-based chatbot kept timing out when the same prompt worked instantly from a London server. Turns out the issue wasn’t the model—it was the 240ms cross-Atlantic round-trip amplifying every token generation delay. In 2026, cloud APIs still dominate most tutorials, but the cold-start penalty for African users hasn’t improved since 2026. Edge agents finally changed this.
+Turns out the issue wasn’t the model—it was the 240ms cross-Atlantic round-trip amplifying every token generation delay. In 2026, cloud APIs still dominate most tutorials, but the cold-start penalty for African users hasn’t improved since 2026. Edge agents finally changed this.
 
 Edge agents run ML models directly on user devices or nearby gateways, cutting round-trips to the cloud. For African developers, this isn't just about latency—it's about availability. Fiber cuts in Mombasa, power outages in Abuja, and congested ISP gateways in Nairobi all break cloud connections. On-device agents keep working when the network fails.
 
@@ -204,9 +204,7 @@ Expected response latency: 70-90ms on a 2026 M3 MacBook Pro. On a 2022 Samsung G
 
 Three classes of failures break edge agents:
 
-1. **Memory pressure**: The OS kills the process when RAM exceeds limits.
-2. **Cold starts**: The first inference after a device reboot is slow.
-3. **Model drift**: Quantized models lose accuracy on long prompts.
+1. **Memory pressure**: The OS kills the process when RAM exceeds limits. 2. **Cold starts**: The first inference after a device reboot is slow. 3. **Model drift**: Quantized models lose accuracy on long prompts.
 
 Address memory pressure with a process watchdog. On Android, use Termux’s `termux-wake-lock` to prevent the OS from killing the agent when the screen locks:
 
@@ -438,12 +436,9 @@ The edge agent itself doesn’t care about network quality—it runs locally. Bu
 
 You now have a working edge agent that cuts latency by 88% and cloud costs by 94% for African users. The next step is to measure its real-world impact. Open your Grafana dashboard and check three metrics in the next 30 minutes:
 
-1. **Fallback rate**: If it’s above 5%, reduce the context window or switch to 8-bit quantization.
-2. **Memory usage**: On Android, use `adb shell dumpsys meminfo` to check RSS for the Termux process. If it exceeds 2GB, switch to a smaller model.
-3. **User feedback**: Send a simple prompt to 10 users in Nairobi, Lagos, or Johannesburg and ask them to rate the response time as "Fast", "Okay", or "Slow". If more than 20% rate it "Slow", investigate cold-start latency.
+1. **Fallback rate**: If it’s above 5%, reduce the context window or switch to 8-bit quantization. 2. **Memory usage**: On Android, use `adb shell dumpsys meminfo` to check RSS for the Termux process. If it exceeds 2GB, switch to a smaller model. 3. **User feedback**: Send a simple prompt to 10 users in Nairobi, Lagos, or Johannesburg and ask them to rate the response time as "Fast", "Okay", or "Slow". If more than 20% rate it "Slow", investigate cold-start latency.
 
 If the fallback rate is low and memory usage is under 2GB, you’re ready to ship. Otherwise, iterate on model size and caching strategies. The edge agent you just built is the foundation—everything else (multi-modal models, larger context windows) will build on top of this.
-
 
 ---
 

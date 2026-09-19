@@ -15,34 +15,26 @@ This post is about two tools that promise AI-assisted incident response: PagerDu
 PagerDuty AI Incident Response (PD AIR) is embedded inside the PagerDuty platform. It ingests alert payloads, past incident history, and infrastructure telemetry to generate a one-line summary and optional auto-resolution recommendation. Under the hood it uses a fine-tuned 7B-parameter model running on PagerDuty’s private GPU cluster (A100 40GB, CUDA 12.1). The model is retrained weekly on anonymized incident data from 8,000+ PagerDuty customers.
 
 Where it shines
-- **Blast radius detection**: PD AIR queries Prometheus 2.45 every 60 seconds to compute a blast-radius score based on error rate, latency p99, and downstream dependency health. When the score crosses 0.75 it attaches a “High blast radius” tag that forces an immediate page instead of a digest email.
-- **Auto-resolution for runbooks**: If the alert body matches a runbook title with >90% semantic similarity (sentence-transformers all-mpnet-base-v2), PD AIR suggests a resolution step and offers a one-click “Execute” button in Slack that calls a webhook pointing to your internal API gateway.
-- **Shift handoff**: At 2 AM it will synthesize the last 2 hours of logs into a 3-bullet summary and push it to the next on-call via the PagerDuty mobile app.
+- **Blast radius detection**: PD AIR queries Prometheus 2.45 every 60 seconds to compute a blast-radius score based on error rate, latency p99, and downstream dependency health. When the score crosses 0.75 it attaches a “High blast radius” tag that forces an immediate page instead of a digest email. - **Auto-resolution for runbooks**: If the alert body matches a runbook title with >90% semantic similarity (sentence-transformers all-mpnet-base-v2), PD AIR suggests a resolution step and offers a one-click “Execute” button in Slack that calls a webhook pointing to your internal API gateway. - **Shift handoff**: At 2 AM it will synthesize the last 2 hours of logs into a 3-bullet summary and push it to the next on-call via the PagerDuty mobile app.
 
 We use it at $39/user/month on the Enterprise plan, which includes 10k AI inference credits per month. Extra credits cost $0.003 per call after that.
 
 Where it stumbles
-- **Cold-start false positives**: In the first 48 hours after a new service ships, PD AIR’s similarity model returns 28% false positives because the semantic index is still sparse.
-- **Cost at scale**: A team of 20 engineers generating 5,000 alerts/day burns through the included credits in 3.6 days and triggers an $820 overage bill.
-- **Custom model drift**: If you tweak your alert payload schema, you must re-upload your runbook PDFs to retrain the model; otherwise similarity scores drop 18%.
+- **Cold-start false positives**: In the first 48 hours after a new service ships, PD AIR’s similarity model returns 28% false positives because the semantic index is still sparse. - **Cost at scale**: A team of 20 engineers generating 5,000 alerts/day burns through the included credits in 3.6 days and triggers an $820 overage bill. - **Custom model drift**: If you tweak your alert payload schema, you must re-upload your runbook PDFs to retrain the model; otherwise similarity scores drop 18%.
 
-I spent two days last month rewriting our Slack alert format to fit PD AIR’s expected schema. The model still misclassified 12% of our custom metrics alerts until we added a “severity” field.
+The model still misclassified 12% of our custom metrics alerts until we added a “severity” field.
 
 ## Option B — how it works and where it shines
 
 FireHydrant AI Auto-Resolve (FH AAR) is a standalone SaaS that sits between your alert router (PagerDuty, Opsgenie, etc.) and the resolver. It ingests alert payloads, parses them into a normalized schema (OpenTelemetry 1.3), runs a lightweight LLM (Mistral-7B-Instruct-v0.3) on a shared GPU instance, and returns either “auto-resolve” or “escalate.” The service is priced at $89/month/1000 alerts processed with a free tier of 500 alerts/month.
 
 Where it shines
-- **Lightweight normalization**: FH AAR converts Datadog, New Relic, and custom JSON alerts into a unified schema in under 300 ms. That’s critical when half our stack still uses DogStatsD.
-- **Real-time LLM tuning**: The model is fine-tuned every 6 hours on your last 24 hours of incident data. You can upload a 5 MB JSONL file with past incidents and it reweights the model in <10 minutes.
-- **Playbook stitching**: It can chain multiple playbooks (Terraform destroy, Kubernetes rollout restart, etc.) into a single 30-second webhook call sequence.
+- **Lightweight normalization**: FH AAR converts Datadog, New Relic, and custom JSON alerts into a unified schema in under 300 ms. That’s critical when half our stack still uses DogStatsD. - **Real-time LLM tuning**: The model is fine-tuned every 6 hours on your last 24 hours of incident data. You can upload a 5 MB JSONL file with past incidents and it reweights the model in <10 minutes. - **Playbook stitching**: It can chain multiple playbooks (Terraform destroy, Kubernetes rollout restart, etc.) into a single 30-second webhook call sequence.
 
 At our scale of 2,500 alerts/day, FH AAR costs $68/day, or $2,040/month, which is cheaper than PD AIR’s overage equivalent.
 
 Where it stumbles
-- **No blast radius scoring**: Without Prometheus integration, FH AAR treats every alert equally, so a single noisy microservice can still trigger pages.
-- **Slack bot latency**: The first message back to Slack after an auto-resolve can take 2–3 seconds, which feels sluggish at 3 AM.
-- **Vendor lock-in**: If you leave FireHydrant, exporting your playbooks requires a support ticket; there’s no one-click backup.
+- **No blast radius scoring**: Without Prometheus integration, FH AAR treats every alert equally, so a single noisy microservice can still trigger pages. - **Slack bot latency**: The first message back to Slack after an auto-resolve can take 2–3 seconds, which feels sluggish at 3 AM. - **Vendor lock-in**: If you leave FireHydrant, exporting your playbooks requires a support ticket; there’s no one-click backup.
 
 The biggest surprise was that FH AAR’s auto-resolve rate stabilized at 42% after two weeks, matching what we saw in PD AIR. The difference is that FH AAR did it without the GPU bill.
 
@@ -96,8 +88,6 @@ False-positive cost is calculated as (false positives × average engineer-hour r
 
 The tuning hours include Prometheus rule writing for PD AIR and JSONL file curation for FH AAR. FH AAR’s lighter model required fewer iterations.
 
-I was surprised that the hidden cost of Prometheus rule maintenance dwarfed the SaaS bill for PD AIR.
-
 ## The decision framework I use
 
 When you’re choosing between these tools—or any AI ops tool—ask three questions.
@@ -125,16 +115,10 @@ Score out of 100. We gave PD AIR 76 and FH AAR 71. The difference was PD AIR’s
 ## My recommendation (and when to ignore it)
 
 Use **PagerDuty AI Incident Response v2.4** if:
-- You already run Prometheus and have clean runbooks.
-- Your alert volume is under 5,000/day.
-- Blast radius detection is mission-critical (think payment systems, auth gateways).
-- You’re willing to spend $1.5k/month and accept 22 minutes of onboarding per engineer.
+- You already run Prometheus and have clean runbooks. - Your alert volume is under 5,000/day. - Blast radius detection is mission-critical (think payment systems, auth gateways). - You’re willing to spend $1.5k/month and accept 22 minutes of onboarding per engineer.
 
 Use **FireHydrant AI Auto-Resolve v3.8** if:
-- Your alert mix includes DogStatsD, New Relic, and custom JSON.
-- You’re above 5,000 alerts/day or expect rapid growth.
-- You want lowest total cost and faster onboarding.
-- You can tolerate higher false positives and will add your own blast-radius scoring later.
+- Your alert mix includes DogStatsD, New Relic, and custom JSON. - You’re above 5,000 alerts/day or expect rapid growth. - You want lowest total cost and faster onboarding. - You can tolerate higher false positives and will add your own blast-radius scoring later.
 
 I ignored my own framework once and chose FH AAR for a payments service. After two weeks the false-positive surge cost us $2,400 in engineer hours. We swapped to PD AIR and cut false positives to 4% within a sprint.
 
@@ -164,20 +148,16 @@ For PagerDuty AI Incident Response v2.4: $3.90 base + $0.30 overage = $4.20 per 
 
 Write a lightweight Lambda (Python 3.11) that queries Prometheus 2.45 every 60 seconds, computes a blast-radius score for each service, and posts it to FireHydrant’s webhook endpoint as a custom field. We did it in 180 lines of code and cut false positives by 40%. The Lambda costs $1.20/month on AWS Lambda with arm64.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

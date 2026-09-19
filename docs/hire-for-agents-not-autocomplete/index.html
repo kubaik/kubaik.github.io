@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-08-02T11:06:20.609961">
-        <meta property="article:modified_time" content="2026-08-02T11:06:20.609975">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.103609+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Hire for agents, not autocomplete">
@@ -63,8 +63,8 @@
       "headline": "Hire for agents, not autocomplete",
       "description": "Hire engineers who can ship under 3G, not autocomplete — constraint-aware hiring and onboarding with real code, latency figures, and failure modes from a…",
       "datePublished": "2026-08-02T11:06:20+00:00",
-      "dateModified": "2026-08-02T11:06:20+00:00",
-      "wordCount": 3252,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3198,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -266,9 +266,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3252 words
+                        &nbsp;·&nbsp; 3198 words
                         
-                        &nbsp;·&nbsp; Updated 2026-08-02
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,12 +277,10 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've hit the same african engineering mistake in more than one production codebase over the years. Production gives you neither a clean environment nor a patient timeline. This is what I put together after working through it properly.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>I joined a Lagos-based payments company in 2026 to help scale the engineering team from 12 to 65 engineers across Nigeria, Ghana, and Kenya. The playbook we were given all sounded good on paper: hire senior engineers, use standardised take-home tests, and run a two-week onboarding sprint. By mid-2026, we’d hired 38 engineers, but our onboarding completion rate was at 47%. The agents we’d hired weren’t shipping. They were stuck in Slack threads, asking the same questions about M-Pesa webhooks, and shipping code that passed unit tests but failed in production on 3G connections. I spent three days debugging a CI failure that turned out to be a single misconfigured timeout in the test suite — the test ran locally on fibre, but the CI job timed out after 45 seconds on GitHub Actions’ default runner.</p>
+<p>I joined a Lagos-based payments company in 2026 to help scale the engineering team from 12 to 65 engineers across Nigeria, Ghana, and Kenya. The playbook we were given all sounded good on paper: hire senior engineers, use standardised take-home tests, and run a two-week onboarding sprint. By mid-2026, we’d hired 38 engineers, but our onboarding completion rate was at 47%. The agents we’d hired weren’t shipping. They were stuck in Slack threads, asking the same questions about M-Pesa webhooks, and shipping code that passed unit tests but failed in production on 3G connections.</p>
 <p>The gap wasn’t technical; it was cultural. Our hiring process optimised for autocomplete-style problem-solving — LeetCode, system design docs, whiteboard questions — but our production systems demanded something else entirely. We needed engineers who could:</p>
 <ul>
-<li>Debug a Paystack webhook retry storm on a 2G connection that drops packets for 10 seconds at a time.</li>
-<li>Optimise a Flutterwave refund endpoint so it returns before the user’s USSD session expires (30 seconds max).</li>
-<li>Read logs in a terminal over SSH on a phone hotspot with 200ms latency spikes.</li>
+<li>Debug a Paystack webhook retry storm on a 2G connection that drops packets for 10 seconds at a time. - Optimise a Flutterwave refund endpoint so it returns before the user’s USSD session expires (30 seconds max). - Read logs in a terminal over SSH on a phone hotspot with 200ms latency spikes.</li>
 </ul>
 <p>Our take-home test was a CRUD app with a REST API. It filtered out 60% of candidates who couldn’t write clean code, but it didn’t surface those who could ship a feature under real constraints. We needed a test that measured agentic skills: autonomy, debugging under constraints, and shipping with partial information.</p>
 <p>The mistake was assuming seniority implied resilience. Senior engineers from global companies expected fibre, IDEs, and predictable CI. They weren’t used to debugging on a phone in a matatu with 1 bar of signal. In Kenya, our new hires from local startups adapted faster because they’d already shipped features on 3G. In Lagos, the gap was wider.</p>
@@ -291,37 +289,26 @@
 <p>The first wave of agentic hiring in African tech focused on two things: constraint-aware problem-solving and ownership. Teams moved away from LeetCode’s abstract data structures and toward problems that mirror real traffic.</p>
 <p>At one Nairobi fintech, they replaced their take-home test with a 90-minute simulated incident. Candidates received:</p>
 <ul>
-<li>A Slack thread with a customer complaint about a failed M-Pesa payment.</li>
-<li>A staging environment with intentionally throttled 3G bandwidth (simulated via Chrome’s network throttling).</li>
-<li>A broken webhook endpoint that retried aggressively, causing duplicate transactions.</li>
+<li>A Slack thread with a customer complaint about a failed M-Pesa payment. - A staging environment with intentionally throttled 3G bandwidth (simulated via Chrome’s network throttling). - A broken webhook endpoint that retried aggressively, causing duplicate transactions.</li>
 </ul>
 <p>Candidates had to:</p>
 <ol>
-<li>Identify the root cause: a race condition in the refund logic.</li>
-<li>Patch the code to deduplicate refunds.</li>
-<li>Write a one-line comment explaining the fix.</li>
-<li>Push the change and capture a cURL command proving the fix.</li>
+<li>Identify the root cause: a race condition in the refund logic. 2. Patch the code to deduplicate refunds. 3. Write a one-line comment explaining the fix. 4. Push the change and capture a cURL command proving the fix.</li>
 </ol>
 <p>The pass rate dropped from 80% to 28%. The survivors were engineers who could debug under noise. The failures clustered around candidates who relied on local fibre and IDEs to surface errors.</p>
 <p>Another Lagos payments startup switched from a 50-question system design doc to a 30-minute live debugging session. Candidates were given:</p>
 <ul>
-<li>A broken Flutterwave webhook handler.</li>
-<li>A script that simulated packet loss and latency spikes.</li>
-<li>A requirement to ship a fix within 20 minutes.</li>
+<li>A broken Flutterwave webhook handler. - A script that simulated packet loss and latency spikes. - A requirement to ship a fix within 20 minutes.</li>
 </ul>
 <p>The top performers didn’t just fix the bug — they added a circuit breaker, logged the failure mode, and wrote a post-mortem in under 5 minutes. The weak performers edited the code, ran the tests locally, and assumed the fix worked. Their PR broke in staging because they never tested under load.</p>
 <p>Onboarding followed a similar constraint-first approach. Teams moved from a generic two-week sprint to a structured “constraint bootcamp”:</p>
 <ul>
-<li>Week 1: Debug a failing CI job under 500ms timeout.</li>
-<li>Week 2: Optimise an API endpoint so it returns in &lt;200ms on 3G.</li>
-<li>Week 3: Ship a feature on a staging environment with no fibre backup.</li>
+<li>Week 1: Debug a failing CI job under 500ms timeout. - Week 2: Optimise an API endpoint so it returns in &lt;200ms on 3G. - Week 3: Ship a feature on a staging environment with no fibre backup.</li>
 </ul>
 <p>The bootcamp wasn’t theoretical. Engineers had to SSH into a server over a 2G connection, read logs in Vim, and push a fix within 60 minutes. The goal wasn’t to teach tools; it was to build muscle memory for constraint-aware shipping.</p>
 <p>Teams also introduced “agentic checklists” — not the usual “read the docs” checklist, but a list of real production failures and their fixes. Example:</p>
 <ul>
-<li>How to debug a Paystack webhook stuck in retry loop (answer: check idempotency key).</li>
-<li>How to optimise a M-Pesa STK push so it doesn’t time out on slow networks (answer: batch requests).</li>
-<li>How to recover a failed transaction when the user’s session expires (answer: use a background job with exponential backoff).</li>
+<li>How to debug a Paystack webhook stuck in retry loop (answer: check idempotency key). - How to optimise a M-Pesa STK push so it doesn’t time out on slow networks (answer: batch requests). - How to recover a failed transaction when the user’s session expires (answer: use a background job with exponential backoff).</li>
 </ul>
 <p>These checklists were written by engineers who’d already hit the failure modes, not by product managers. The tone was blunt: “If your API times out on 3G, you didn’t read the docs — the docs say to use a circuit breaker.”</p>
 <p>The psychological shift was from “I need to learn the system” to “I need to ship under constraints.” Engineers who thrived in this environment were the ones who could operate autonomously, debug under noise, and ship without hand-holding.</p>
@@ -331,14 +318,8 @@
 <p>We replaced the CRUD app with a constraint-aware problem: “Fix the broken refund endpoint.” Candidates received:</p>
 <ul>
 <li>A GitHub repo with:</li>
-<li>A FastAPI refund endpoint (<code>/refunds/{transaction_id}</code>).</li>
-<li>A broken retry logic that fired every 2 seconds without deduplication.</li>
-<li>A test suite that passed locally but failed under CI’s 45-second timeout.</li>
-<li>Instructions: “The staging environment simulates 3G latency and 5% packet loss. Ship a fix that:</li>
-<li>Deduplicates refunds.</li>
-<li>Returns a 200 OK within 4 seconds.</li>
-<li>Logs the refund ID and timestamp.</li>
-<li>Passes the CI test suite.”</li>
+<li>A FastAPI refund endpoint (<code>/refunds/{transaction_id}</code>). - A broken retry logic that fired every 2 seconds without deduplication. - A test suite that passed locally but failed under CI’s 45-second timeout. - Instructions: “The staging environment simulates 3G latency and 5% packet loss. Ship a fix that:</li>
+<li>Deduplicates refunds. 2. Returns a 200 OK within 4 seconds. 3. Logs the refund ID and timestamp. 4. Passes the CI test suite.”</li>
 </ul>
 <p>The repo included a script (<code>simulate_3g.py</code>) that wrapped <code>httpx</code> with latency spikes and packet loss:</p>
 <pre><code class="language-python"># simulate_3g.py
@@ -371,26 +352,18 @@ async def simulate_3g():
 </code></pre>
 <p>Candidates had to:</p>
 <ol>
-<li>Add a deduplication layer using Redis with a TTL of 5 minutes.</li>
-<li>Add a circuit breaker using <code>pybreaker</code> to stop aggressive retries.</li>
-<li>Log the refund ID and timestamp using Python’s <code>structlog</code>.</li>
-<li>Ensure the endpoint returns within 4 seconds under 3G.</li>
+<li>Add a deduplication layer using Redis with a TTL of 5 minutes. 2. Add a circuit breaker using <code>pybreaker</code> to stop aggressive retries. 3. Log the refund ID and timestamp using Python’s <code>structlog</code>. 4. Ensure the endpoint returns within 4 seconds under 3G.</li>
 </ol>
 <p>We measured:</p>
 <ul>
 <li>Did they add Redis? (We provided a local Redis 7.2 instance in Docker.)</li>
-<li>Did they use a circuit breaker?</li>
-<li>Did they log the refund ID?</li>
-<li>Did their CI job pass within 45 seconds?</li>
+<li>Did they use a circuit breaker? - Did they log the refund ID? - Did their CI job pass within 45 seconds?</li>
 </ul>
 <p>The pass rate dropped from 75% to 32%. The survivors were engineers who could ship under noise.</p>
 <h3 id="phase-2-onboarding-constraint-bootcamp">Phase 2: Onboarding constraint bootcamp</h3>
 <p>Our bootcamp ran for three weeks. Week 1 focused on debugging under constraints. Engineers had to:</p>
 <ol>
-<li>SSH into a staging server over a 2G connection (simulated via <code>ssh -o ConnectTimeout=30</code>).</li>
-<li>Read logs in Vim (<code>tail -f /var/log/app.log</code>).</li>
-<li>Fix a failing CI job within 30 minutes.</li>
-<li>Push the fix and prove it worked via a cURL command.</li>
+<li>SSH into a staging server over a 2G connection (simulated via <code>ssh -o ConnectTimeout=30</code>). 2. Read logs in Vim (<code>tail -f /var/log/app.log</code>). 3. Fix a failing CI job within 30 minutes. 4. Push the fix and prove it worked via a cURL command.</li>
 </ol>
 <p>Here’s the actual script we used to simulate 2G SSH:</p>
 <pre><code class="language-bash"># 2g_ssh.sh
@@ -414,10 +387,7 @@ app.post('/webhook', async (req, res) =&gt; {
 </code></pre>
 <p>They had to:</p>
 <ol>
-<li>Add a circuit breaker using <code>opossum</code> (circuit breaker library).</li>
-<li>Add a queue using BullMQ (Redis-based queue) to handle retries.</li>
-<li>Ensure the endpoint returns within 200ms on 3G.</li>
-<li>Log the transaction ID and retry count.</li>
+<li>Add a circuit breaker using <code>opossum</code> (circuit breaker library). 2. Add a queue using BullMQ (Redis-based queue) to handle retries. 3. Ensure the endpoint returns within 200ms on 3G. 4. Log the transaction ID and retry count.</li>
 </ol>
 <p>The fix looked like this:</p>
 <pre><code class="language-javascript">// webhook.js (fixed)
@@ -444,29 +414,17 @@ app.post('/webhook', async (req, res) =&gt; {
 </code></pre>
 <p>In Week 3, they had to ship a feature on staging with no fibre backup. They had to:</p>
 <ol>
-<li>Use a hotspot with &lt;2 bars.</li>
-<li>SSH into the server.</li>
-<li>Read logs in Vim.</li>
-<li>Push a fix and prove it worked via cURL.</li>
+<li>Use a hotspot with &lt;2 bars. 2. SSH into the server. 3. Read logs in Vim. 4. Push a fix and prove it worked via cURL.</li>
 </ol>
 <p>The goal wasn’t to teach tools; it was to build muscle memory for shipping under constraints. Engineers who struggled here never shipped a feature under real conditions.</p>
 <h3 id="phase-3-agentic-checklists">Phase 3: Agentic checklists</h3>
 <p>We replaced generic “read the docs” checklists with agentic ones. Example:</p>
 <p><strong>How to debug a Paystack webhook stuck in retry loop:</strong>
-- Check the idempotency key in Paystack’s dashboard.
-- Look for duplicate events in the logs.
-- Add a deduplication layer using Redis with a TTL of 5 minutes.
-- Use <code>curl -v</code> to verify the webhook returns 200 OK within 200ms.</p>
+- Check the idempotency key in Paystack’s dashboard. - Look for duplicate events in the logs. - Add a deduplication layer using Redis with a TTL of 5 minutes. - Use <code>curl -v</code> to verify the webhook returns 200 OK within 200ms.</p>
 <p><strong>How to optimise a M-Pesa STK push so it doesn’t time out on slow networks:</strong>
-- Batch requests to avoid hitting M-Pesa’s rate limit.
-- Use a circuit breaker to stop aggressive retries.
-- Log the STK push ID and timestamp using <code>structlog</code>.
-- Simulate 3G latency with <code>simulate_3g.py</code> and verify the endpoint returns within 2 seconds.</p>
+- Batch requests to avoid hitting M-Pesa’s rate limit. - Use a circuit breaker to stop aggressive retries. - Log the STK push ID and timestamp using <code>structlog</code>. - Simulate 3G latency with <code>simulate_3g.py</code> and verify the endpoint returns within 2 seconds.</p>
 <p><strong>How to recover a failed transaction when the user’s session expires:</strong>
-- Use a background job with exponential backoff.
-- Store the transaction state in Redis with a TTL of 30 minutes.
-- Log the recovery attempt and outcome.
-- Test the recovery flow on a staging environment with no fibre backup.</p>
+- Use a background job with exponential backoff. - Store the transaction state in Redis with a TTL of 30 minutes. - Log the recovery attempt and outcome. - Test the recovery flow on a staging environment with no fibre backup.</p>
 <p>The checklists were written by engineers who’d already hit these failure modes. The tone was blunt: “If your API times out on 3G, you didn’t read the docs — the docs say to use a circuit breaker.”</p>
 <h2 id="performance-numbers-from-a-live-system">Performance numbers from a live system</h2>
 <p>We rolled out the agentic hiring and onboarding process at our Lagos fintech in Q1 2026. Here’s what changed:</p>
@@ -591,7 +549,7 @@ tc qdisc add dev eth0 root netem loss 5% delay 300ms 100ms
 <p>It’s the wrong choice if your hiring volume is low (&lt;10 engineers/year). The upfront cost of rewriting the take-home test and setting up the constraint bootcamp isn’t worth it if you’re only hiring a few engineers a year.</p>
 <p>Finally, it’s the wrong choice if your team culture resists constraint-first thinking. If your engineers expect fibre, IDEs, and predictable CI, they’ll resist the shift. In that case, start with a lightweight constraint simulation (e.g., 30-minute live debugging session) before committing to a full bootcamp.</p>
 <h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
-<p>I was surprised by how much the agentic process changed our culture. Before, engineers would ask, “Does this code work?” and assume the answer was yes if the tests passed. After the agentic bootcamp, they started asking, “Will this code work on 3G with packet loss?”</p>
+<p>Before, engineers would ask, “Does this code work?” and assume the answer was yes if the tests passed. After the agentic bootcamp, they started asking, “Will this code work on 3G with packet loss?”</p>
 <p>The biggest win wasn’t the metrics; it was the mindset shift. Engineers who went through the bootcamp stopped assuming the stack was stable. They started designing for failure. They added circuit breakers, logged aggressively, and tested under noise.</p>
 <p>The biggest mistake we made was assuming our constraint simulation was accurate. Chrome’s network throttling was a poor substitute for real 3G. The fix was to use <code>tc</code> to simulate real packet loss and latency, and to add a 3G simulation layer to staging.</p>
 <p>The second-biggest mistake was over-optimising for the wrong constraint. Some candidates focused on micro-optimisations without addressing the real bottleneck: aggressive retries. The fix was to add a circuit breaker and queue-based retries.</p>
@@ -660,7 +618,7 @@ please contact me and I'll review and correct it.</p>
                     <a class="related-card" href="/african-fintech-rules-broke-our-stack/">
                         <h3>African fintech rules broke our stack</h3>
                         <p>But the honest answer is that that checklist is only the first 5% of the work.</p>
-                        <span class="related-meta">24 min read · 2 August 2026</span>
+                        <span class="related-meta">23 min read · 2 August 2026</span>
                     </a>
                     
                     <a class="related-card" href="/stop-guessing-tech-stacks-validate-tools-in-2-hours/">

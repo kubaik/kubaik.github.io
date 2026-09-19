@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-12T09:06:49.300435">
-        <meta property="article:modified_time" content="2026-06-12T09:06:49.300444">
+        <meta property="article:modified_time" content="2026-09-19T08:27:14.580445+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Ship 1MB pages on 4G: Starlink Africa case study">
@@ -63,8 +63,8 @@
       "headline": "Ship 1MB pages on 4G: Starlink Africa case study",
       "description": "Ship 1MB pages under 1.5s on 4G in 2026 after Starlink beams hit East Africa — Brotli, CDN edge rules, and QUIC steps with Node 20 LTS and CloudFront 2026…",
       "datePublished": "2026-06-12T09:06:49+00:00",
-      "dateModified": "2026-06-12T09:06:49+00:00",
-      "wordCount": 3258,
+      "dateModified": "2026-09-19T08:27:14+00:00",
+      "wordCount": 3198,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,35 +265,27 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3258 words
+                        &nbsp;·&nbsp; 3198 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-12
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
 <p>In 2026, we launched a SaaS product in Kenya that assumed 4G would behave like 4G in Nairobi’s CBD towers — steady 20 Mbps with 20 ms latency. By Q1 2026, Starlink beams over Lake Victoria lit up rural homes and suddenly our medians on 4G jumped to 120 ms with 12% packet loss. Worse, our Lighthouse performance scores tanked from 95 to 68 in three weeks.</p>
-<p>I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
 <p>What changed after Starlink reached East Africa in late 2025?</p>
 <ol>
-<li><strong>Latency asymmetry</strong> – uplink became 3× slower than downlink in mixed satellite-terrestrial paths, breaking half-duplex assumptions in WebRTC and long-polling APIs.</li>
-<li><strong>Variable RTT jitter</strong> – RTT swings of ±80 ms within a single TCP flow made congestion windows oscillate wildly.</li>
-<li><strong>Burst losses</strong> – satellite handoffs caused 5–15% burst losses lasting 200–500 ms, enough to stall TLS renegotiation.</li>
-<li><strong>Cost asymmetry</strong> – downlink is free for users on Starlink’s 2026 “Basic” tier, but uplink bandwidth now carries real metered costs for providers.</li>
+<li><strong>Latency asymmetry</strong> – uplink became 3× slower than downlink in mixed satellite-terrestrial paths, breaking half-duplex assumptions in WebRTC and long-polling APIs. 2. <strong>Variable RTT jitter</strong> – RTT swings of ±80 ms within a single TCP flow made congestion windows oscillate wildly. 3. <strong>Burst losses</strong> – satellite handoffs caused 5–15% burst losses lasting 200–500 ms, enough to stall TLS renegotiation. 4. <strong>Cost asymmetry</strong> – downlink is free for users on Starlink’s 2026 “Basic” tier, but uplink bandwidth now carries real metered costs for providers.</li>
 </ol>
-<p>Our stack didn’t anticipate these spikes. By March 2026, support tickets tripled for users on mixed networks. I had to rethink how we compress, cache, and stream assets for the new baseline.</p>
+<p>Our stack didn’t anticipate these spikes. By March 2026, support tickets tripled for users on mixed networks.</p>
 <p>This guide walks through the exact changes I made to serve 1 MB pages under 1.5 s median load on 4G-as-baseline in 2026, using nothing exotic — just battle-tested HTTP compression, CDN edge rules, and aggressive preconnect hints.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>By the end you will have:
-- A Node 20 LTS + Express 4.19 stack that serves a 1 MB page in &lt;1.5 s median on 4G.
-- Brotli compression at level 6, with gzip fallback for legacy clients.
-- A CloudFront CDN with edge caching, stale-while-revalidate 30 s, and a 5-minute TTL edge.
-- Observability via CloudWatch RUM and OpenTelemetry traces.
-- Automated Lighthouse CI checks on every PR.</p>
+- A Node 20 LTS + Express 4.19 stack that serves a 1 MB page in &lt;1.5 s median on 4G. - Brotli compression at level 6, with gzip fallback for legacy clients. - A CloudFront CDN with edge caching, stale-while-revalidate 30 s, and a 5-minute TTL edge. - Observability via CloudWatch RUM and OpenTelemetry traces. - Automated Lighthouse CI checks on every PR.</p>
 <p>You will need:
 - Node 20.13 LTS (arm64 recommended for AWS Graviton3 savings)
 - npm 10.5
@@ -594,8 +586,7 @@ AVIF 1.1.0 in 2026 achieves 30% smaller files than WebP at same SSIM. Use <code>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>If you only do two things today:</p>
 <ol>
-<li>Add Brotli compression at level 6 to your static assets and set <code>Content-Encoding: br</code> with <code>Vary: Accept-Encoding</code>.</li>
-<li>Open your Lighthouse CI config and add a first-contentful-paint assertion of &lt;1.5 s for mobile 4G profiles.</li>
+<li>Add Brotli compression at level 6 to your static assets and set <code>Content-Encoding: br</code> with <code>Vary: Accept-Encoding</code>. 2. Open your Lighthouse CI config and add a first-contentful-paint assertion of &lt;1.5 s for mobile 4G profiles.</li>
 </ol>
 <p>Run:</p>
 <pre><code class="language-bash">npm i -g @lhci/cli@0.13
@@ -924,14 +915,11 @@ curl -I --http3 https://your-server.example.com/
 <p>The <strong>code complexity delta</strong> reflects the learning curve: adding Brotli compression and QUIC support required new middleware and configuration patterns, but the actual changes were minimal (+147 lines across 4 files). The biggest surprise was how much <strong>observability</strong> improved outcomes—CloudWatch</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
@@ -980,7 +968,7 @@ please contact me — corrections are applied within 48 hours.</p>
                     <a class="related-card" href="/serve-4g-as-baseline-apps-in-2026/">
                         <h3>Serve 4G-as-baseline apps in 2026</h3>
                         <p>Cut API response time 21% and payload 63% for 4G-as-baseline users — Go server, Redis 7.4, and Vite 5.3 steps with real 2026 latency and cost data.</p>
-                        <span class="related-meta">13 min read · 3 July 2026</span>
+                        <span class="related-meta">12 min read · 3 July 2026</span>
                     </a>
                     
                     <a class="related-card" href="/cost-tools-fail-when-agents-scale-autonomously/">

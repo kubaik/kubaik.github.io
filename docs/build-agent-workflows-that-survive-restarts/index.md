@@ -1,10 +1,10 @@
 # Build agent workflows that survive restarts
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-I spent three weeks building an agent that worked fine in tests but crashed every time the model API rate-limited us or the container restarted. One Tuesday, we rolled out a new model version and watched our agents brownout for 45 minutes because nobody accounted for schema drift. The worst part? The logs blamed the downstream service when the real culprit was our own workflow not persisting state between runs.
+One Tuesday, we rolled out a new model version and watched our agents brownout for 45 minutes because nobody accounted for schema drift. The worst part? The logs blamed the downstream service when the real culprit was our own workflow not persisting state between runs.
 
 Most agent frameworks sell durability as a checkbox: “just use durable queues.” Reality is messier. Restarts, model version bumps, network hiccups, and payload shape changes all conspire to break workflows that looked robust on paper. I went from “let’s ship this” to “how do we survive Tuesday?” in one afternoon.
 
@@ -176,9 +176,7 @@ Model APIs lie about their schemas. I learned this the hard way when the new Ope
 
 Here’s how to make the workflow survive schema drift:
 
-1. Use Pydantic’s `@model_validator` to strip unknown fields before serialization.
-2. Add a `fingerprint` field that hashes the expected schema so you can detect drift at runtime.
-3. Bump the task’s `attempt` only after we’re confident the output is valid.
+1. Use Pydantic’s `@model_validator` to strip unknown fields before serialization. 2. Add a `fingerprint` field that hashes the expected schema so you can detect drift at runtime. 3. Bump the task’s `attempt` only after we’re confident the output is valid.
 
 ```python
 # app.py
@@ -382,20 +380,16 @@ python -m pytest test_workflow.py -s
 
 Watch the test pass. That’s your 30-minute proof that the workflow can survive a restart. Once it works locally, deploy to a staging Lambda with 128MB memory and provisioned concurrency 1. Measure p95 latency and error rate for 10 minutes. If both are under 1.5s and 0.1%, you’re ready to ship to production.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

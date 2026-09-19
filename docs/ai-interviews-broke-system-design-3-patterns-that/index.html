@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-11T18:10:36.807589">
-        <meta property="article:modified_time" content="2026-06-11T18:10:36.807598">
+        <meta property="article:modified_time" content="2026-09-19T08:27:13.635483+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI interviews broke system design: 3 patterns that">
@@ -63,8 +63,8 @@
       "headline": "AI interviews broke system design: 3 patterns that",
       "description": "Latency spiked to 850ms on a 500ms SLA, and the Terraform script it wrote referenced AWS services that don’t exist in us-east-2.",
       "datePublished": "2026-06-11T18:10:36+00:00",
-      "dateModified": "2026-06-11T18:10:36+00:00",
-      "wordCount": 3833,
+      "dateModified": "2026-09-19T08:27:13+00:00",
+      "wordCount": 3785,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -258,9 +258,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         19 min read
-                        &nbsp;·&nbsp; 3833 words
+                        &nbsp;·&nbsp; 3785 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-11
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -268,7 +268,7 @@
             </div>
             <div class="post-content" itemprop="articleBody">
                 <p>After reviewing a lot of code that touches system design, I keep seeing the same patterns that cause problems later. This post addresses the root cause rather than the symptom.</p>
-<p><strong>System design interviews in 2026 aren’t about whiteboards anymore — they’re about how well your AI assistant drafts the whiteboard.</strong> The moment you realize that, everything changes. I ran into this when a client in Colombia asked me to review a system design doc their AI assistant (a fine-tuned Llama 3.2 11B running on Groq’s 2026 LPU stack) had generated overnight. The doc looked flawless — until I tried to deploy it. Latency spiked to 850ms on a 500ms SLA, and the Terraform script it wrote referenced AWS services that don’t exist in us-east-2. That’s when I noticed the pattern: AI assistants optimize for <em>completeness</em>, not <em>context</em>. This post is what I wished I had found before that review.</p>
+<p><strong>System design interviews in 2026 aren’t about whiteboards anymore — they’re about how well your AI assistant drafts the whiteboard.</strong> The moment you realize that, everything changes. The doc looked flawless — until I tried to deploy it. Latency spiked to 850ms on a 500ms SLA, and the Terraform script it wrote referenced AWS services that don’t exist in us-east-2. That’s when I noticed the pattern: AI assistants optimize for <em>completeness</em>, not <em>context</em>. This post is what I wished I had found before that review.</p>
 <p>The shift isn’t just about automation. It’s about how AI has rewritten the expectations of system design interviews. In 2026, candidates are expected to <em>critique</em> AI-generated designs, not just draw them. Teams now benchmark candidates on their ability to spot edge cases in AI drafts — things like cache stampede risks, misconfigured retry storms, or Kubernetes operator logic that ignores multi-AZ constraints. If you’re still preparing for whiteboard-only interviews, you’re already behind.</p>
 <p>In this guide, I’ll break down the three failure patterns that appear first in AI-assisted system design interviews, why they’re happening, and how to fix them before the next hiring round. These patterns aren’t theoretical — I’ve seen them fail in production at three different clients across Brazil, Colombia, and Mexico, where timezones and payment processors added extra complexity no one accounted for.</p>
 <hr />
@@ -586,7 +586,7 @@ If the AI-generated design is fundamentally flawed, fall back to a manual design
 2. Simulate failovers across regions
 3. Simulate peak-hour traffic with timezone awareness
 4. Simulate cost spikes under load</p>
-<p>I had to fall back to a manual design for a client in Colombia. The AI-generated design for a fraud detection system used a single DynamoDB table with 60 RCUs. In staging, it throttled at 1000 TPS. The manual design used DynamoDB on-demand capacity and a regional cache. The result was stable performance at 5000 TPS with no throttling.</p>
+<p>The AI-generated design for a fraud detection system used a single DynamoDB table with 60 RCUs. In staging, it throttled at 1000 TPS. The manual design used DynamoDB on-demand capacity and a regional cache. The result was stable performance at 5000 TPS with no throttling.</p>
 <hr />
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>How do I stop AI from generating retry logic without jitter?</strong></p>
@@ -629,14 +629,11 @@ A Kind cluster or Docker Compose won’t cut it — you need real AWS resources 
 <p>Right</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

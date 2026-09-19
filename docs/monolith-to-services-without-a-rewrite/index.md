@@ -1,6 +1,6 @@
 # Monolith to services without a rewrite
 
-A colleague asked me about migrated monolith during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
+I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.
 
 ## The conventional wisdom (and why it's incomplete)
 
@@ -14,7 +14,7 @@ The missing piece is **data coupling**. When 60% of your queries join across wha
 
 I followed the standard advice on a Singapore-based project in early 2026. The monolith was a Django 4.2 app with 35k lines of Python, 120 models, and a Celery 5.3 queue for async tasks. We chose the ‘strangler fig’ pattern: incrementally replace parts of the monolith with services. We started with the payment module. We extracted it into a Flask 3.0 service behind an internal API gateway. Everything looked good in staging—latency under 20ms, 99.9% success rate.
 
-Then we pushed to production. Within two hours, the payment service started timing out on 3% of requests. The root cause? The monolith’s database had a 600ms write lock on the `transactions` table. The payment service queries that table directly for fraud checks. The lock was invisible to the service layer; it only showed up as a 400ms P95 latency spike. I spent three days on this before realising the database itself was the coupling point. The service extraction didn’t change the data model—it just moved the lock to a different layer.
+Then we pushed to production. Within two hours, the payment service started timing out on 3% of requests. The root cause? The monolith’s database had a 600ms write lock on the `transactions` table. The payment service queries that table directly for fraud checks. The lock was invisible to the service layer; it only showed up as a 400ms P95 latency spike. The service extraction didn’t change the data model—it just moved the lock to a different layer.
 
 Costs also ballooned. The payment service ran on three t3.medium EC2 instances (2 vCPUs, 4GB RAM) at $0.0416/hour each. The monolith had been running on a single r6g.large RDS instance at $0.172/hour. After extraction, the RDS bill stayed flat, but the EC2 bill added $912/month. We hadn’t reduced load; we’d duplicated it across the service boundary. The team justified the cost as ‘investment in scalability,’ but scalability for what? Traffic was flat at 5k requests/second.
 
@@ -100,7 +100,7 @@ Finally, I’d **avoid big-bang anything**. Even with the outbox pattern, I’d 
 
 The conventional wisdom says to extract services early, but the reality is that most monoliths are coupled at the data layer. Jumping to service extraction often creates a distributed monolith with worse latency and higher costs. The safer path is to first reduce coupling by refactoring the database, introducing an outbox pattern, or denormalizing data into schemas. Only after reducing coupling should you consider service extraction—and even then, measure the latency tax before committing.
 
-I spent three weeks on a ‘user profiles’ extraction that failed because the `users` table was still queried for preferences and address history. That post is what I wished I had found then. Start with a coupling audit: use `pg_stat_statements` to rank the top 50 slowest queries, then measure the latency impact of a mock extraction. If the P95 latency increases by more than 20ms, refactor the data layer first. Only after reducing coupling should you extract services—and only if the business case justifies the cost.
+That post is what I wished I had found then. Start with a coupling audit: use `pg_stat_statements` to rank the top 50 slowest queries, then measure the latency impact of a mock extraction. If the P95 latency increases by more than 20ms, refactor the data layer first. Only after reducing coupling should you extract services—and only if the business case justifies the cost.
 
 
 ## Frequently Asked Questions
@@ -126,20 +126,16 @@ Don’t extract a service if your monolith’s P95 latency is under 100ms and th
 
 Run `pg_stat_statements` on your production PostgreSQL 16 database and rank the top 20 slowest queries by total execution time. If more than 30% of those queries join across what you consider separate features, spend the next two weeks refactoring the database or introducing an outbox pattern before touching a single line of service code.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

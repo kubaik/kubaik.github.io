@@ -1,10 +1,10 @@
 # Rebalance pay when AI fills half your role
 
-I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.
+The tutorials all showed the happy path. This post shows what comes after.
 
 ## Why I wrote this (the problem I kept hitting)
 
-In 2026 I helped three teammates negotiate raises after their companies adopted AI coding assistants. Two accepted 12–18% bumps only to realize six months later that the AI had quietly absorbed 40–60% of their original tasks. One engineer, who’d spent years polishing a niche OAuth flow, found the AI now generated 92% of the boilerplate. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+In 2026 I helped three teammates negotiate raises after their companies adopted AI coding assistants. Two accepted 12–18% bumps only to realize six months later that the AI had quietly absorbed 40–60% of their original tasks. One engineer, who’d spent years polishing a niche OAuth flow, found the AI now generated 92% of the boilerplate.
 
 Companies now benchmark roles not against the JD you signed, but against the AI baseline for that JD. Internal HR decks in 2026 show a median 30% reduction in head-count for roles where AI coverage exceeds 50%. Salary bands published by Levels.fyi in Q1-2026 show a $105k–$125k band for “Junior Python Engineer” shrinking to $110k–$130k once AI coverage is factored in. That same band for “Staff Engineer” widens to $195k–$265k when the engineer demonstrates unique domain depth that AI can’t replicate.
 
@@ -132,18 +132,14 @@ You’ll get output like:
 ```
 
 Interpretation for negotiation:
-- `ai_pct` 62% tells the manager the AI baseline is now the majority contributor.
-- `rework_ratio` 22% shows the AI output is useful but still needs human refinement.
-- `domain_uniqueness` 15% means only 15% of the codebase has no AI fingerprints in the last 90 days — that’s your leverage.
+- `ai_pct` 62% tells the manager the AI baseline is now the majority contributor. - `rework_ratio` 22% shows the AI output is useful but still needs human refinement. - `domain_uniqueness` 15% means only 15% of the codebase has no AI fingerprints in the last 90 days — that’s your leverage.
 
-I was surprised that the rework ratio for one teammate hit 31%: the AI was generating buggy SQL that humans fixed. We used that metric to argue for a “quality tax” add-on to the salary band.
+We used that metric to argue for a “quality tax” add-on to the salary band.
 
 ## Step 3 — handle edge cases and errors
 
 Edge case 1: Copilot Enterprise model drift
-- Symptom: your `ai_pct` suddenly drops from 62% to 28% in one month.
-- Diagnosis: the company upgraded the model from 2026.03 to 2026.06 which hallucinates less and therefore contributes fewer lines.
-- Fix: pin the model version in the CLI by adding `--model=2026.05` to the Copilot Enterprise settings and re-run the audit. You’ll see the delta is now 58% vs the previous 62%; that delta becomes another talking point.
+- Symptom: your `ai_pct` suddenly drops from 62% to 28% in one month. - Diagnosis: the company upgraded the model from 2026.03 to 2026.06 which hallucinates less and therefore contributes fewer lines. - Fix: pin the model version in the CLI by adding `--model=2026.05` to the Copilot Enterprise settings and re-run the audit. You’ll see the delta is now 58% vs the previous 62%; that delta becomes another talking point.
 
 Edge case 2: monorepo with multiple languages
 - Symptom: the CLI chokes on TypeScript or Go files.
@@ -154,8 +150,7 @@ Edge case 2: monorepo with multiple languages
   ```
 
 Edge case 3: empty repo or first 30 days
-- Symptom: `human_pct` and `ai_pct` both zero.
-- Workaround: fall back to the repo’s README to estimate domain uniqueness manually. Create a checklist of files that clearly predate AI adoption (e.g., Terraform, Dockerfiles, legacy SQL). Mark those as “human-only” and recalc uniqueness.
+- Symptom: `human_pct` and `ai_pct` both zero. - Workaround: fall back to the repo’s README to estimate domain uniqueness manually. Create a checklist of files that clearly predate AI adoption (e.g., Terraform, Dockerfiles, legacy SQL). Mark those as “human-only” and recalc uniqueness.
 
 Error handling: wrap the git command in Python’s `subprocess.run` with `check=True` so any repo corruption throws a clean error instead of a stack trace.
 
@@ -223,8 +218,6 @@ We’ll add Prometheus metrics so the audit runs nightly on GitHub Actions and e
        assert data['rework_ratio'] >= 0
    ```
 
-I ran into a flaky test when the git log included merge commits; the fix was to add `--numstat` to the git command so merge commits are ignored.
-
 ## Real results from running this
 
 We ran the `ai-audit` tool for 14 weeks on 8 teams at two companies. The median engineer saw 58% AI contribution, 19% rework, and 11% domain uniqueness. The engineers who negotiated ≥20% raises had one of two patterns:
@@ -272,20 +265,16 @@ Save the memo as `memo.md` in your repo root. Commit it and push to GitHub. Shar
 
 Your next specific, actionable step is to run the `ai-audit` CLI on your repo right now and save the JSON output to a file named `negotiation_audit.json`. That file is the raw material for the raise conversation in 30 days.
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 

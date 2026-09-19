@@ -9,11 +9,7 @@ In late 2026, our team noticed a quiet but urgent alert in the **AWS Certificate
 The problem wasn’t just certificates. It was the entire TLS stack. Our services relied on **TLS 1.3**, which currently only supports RSA, ECDSA, and EdDSA signatures. Post-quantum cryptography (PQC) introduces new signature algorithms like **CRYSTALS-Dilithium** and **SPHINCS+**, but none were standardized in TLS 1.3 as of **RFC 8446 (2018) with no PQC extension**. Yet, NIST had finalized **FIPS 203 (ML-KEM), FIPS 204 (ML-DSA), and FIPS 205 (SLH-DSA)** in 2026, and the IETF was pushing for **draft-ietf-tls-hybrid-design** to integrate hybrid schemes. The gap between certification and implementation was widening.
 
 We needed to answer three questions:
-- Which TLS libraries and runtimes would support PQC by March 2026?
-- What would the performance impact be on our 95th-percentile latency (currently 42ms for API calls)?
-- How much would certificate rotation and key management cost at scale?
-
-I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.
+- Which TLS libraries and runtimes would support PQC by March 2026? - What would the performance impact be on our 95th-percentile latency (currently 42ms for API calls)? - How much would certificate rotation and key management cost at scale?
 
 
 ## What we tried first and why it didn’t work
@@ -24,7 +20,7 @@ We deployed a **Node.js 20 LTS** service with a **Node-OPCUA** client using **Op
 
 1. **Android 14 and iOS 17 clients rejected TLS 1.2** by default. Our mobile traffic dropped 8% in the first hour as users on newer devices saw certificate errors. The error message was clear: *"ERR_SSL_PROTOCOL_ERROR"*.
 
-2. **CloudFront and AWS ALB** started throttling TLS 1.2 handshakes. CloudFront’s logs showed a 300% increase in handshake timeouts. AWS Support told us they were deprecating TLS 1.2 support on their edge caches by Q2 2026, not Q3 as we’d assumed. 
+2. **CloudFront and AWS ALB** started throttling TLS 1.2 handshakes. CloudFront’s logs showed a 300% increase in handshake timeouts. AWS Support told us they were deprecating TLS 1.2 support on their edge caches by Q2 2026, not Q3 as we’d assumed.
 
 We rolled back immediately, but the damage was done: 8% churn and a 3-hour outage during peak time.
 
@@ -242,7 +238,7 @@ Follow this checklist to prepare your TLS stack for PQC:
 2. **Evaluate your load balancers and proxies**
    Check if they support PQC. Here’s a compatibility table for 2026:
 
-   | Load Balancer/Proxy | PQC Support | Hybrid Mode | Notes |
+| Load Balancer/Proxy | PQC Support | Hybrid Mode | Notes |
    |--------------------|-------------|-------------|-------|
    | AWS ALB | No | No | Use Envoy or ALB with NLB backend |
    | CloudFront | Partial | Yes | Enable via Lambda@Edge |
@@ -265,13 +261,7 @@ Start with step 1 today. Run the `nmap` script against your top 10 endpoints. If
 
 ## Resources that helped
 
-- **NIST FIPS 203/204/205** (2026) — The official specs for ML-KEM, ML-DSA, and SLH-DSA.
-- **liboqs 0.9.0** (Dec 2026) — The reference implementation for PQC algorithms.
-- **BoringSSL’s PQC branch** (Feb 2026) — The fastest path to production TLS 1.3 PQC.
-- **Envoy 1.28 docs** — How to configure hybrid TLS termination.
-- **Cloudflare’s PQC blog** (Jan 2026) — Real-world benchmarks and gotchas.
-- **AWS ACM Private CA** — How to issue hybrid certificates.
-- **Graviton4 benchmarks** (AWS re:Invent 2026) — Why ARM64 is the future for PQC.
+- **NIST FIPS 203/204/205** (2026) — The official specs for ML-KEM, ML-DSA, and SLH-DSA. - **liboqs 0.9.0** (Dec 2026) — The reference implementation for PQC algorithms. - **BoringSSL’s PQC branch** (Feb 2026) — The fastest path to production TLS 1.3 PQC. - **Envoy 1.28 docs** — How to configure hybrid TLS termination. - **Cloudflare’s PQC blog** (Jan 2026) — Real-world benchmarks and gotchas. - **AWS ACM Private CA** — How to issue hybrid certificates. - **Graviton4 benchmarks** (AWS re:Invent 2026) — Why ARM64 is the future for PQC.
 
 
 ## Frequently Asked Questions
@@ -291,7 +281,6 @@ openssl s_client -connect api.yourdomain.com:443 -tls1_3 -ciphersuites TLS_AES_2
 ```
 If the handshake succeeds, your mobile traffic won’t break.
 
-
 **What’s the performance impact of ML-KEM (Kyber) vs. Dilithium3?**
 Kyber adds ~12ms to the handshake, while Dilithium3 adds ~36ms. Use Kyber for key exchange and Dilithium3 for signatures. The hybrid handshake (ECDHE + Kyber) is the sweet spot for 2026.
 
@@ -302,20 +291,16 @@ Use a sidecar proxy like Envoy. Rotate the certificate in the proxy first, then 
 kubectl rollout restart deployment/envoy-proxy -n default
 ```
 
-
 ---
 
 ### About this article
 
-**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+**Written by:** Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-[LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
+AI/LLM pipelines in real production systems. [LinkedIn](https://www.linkedin.com/in/kevin-kubai-22b61b37/) ·
 [Twitter @KubaiKevin](https://twitter.com/KubaiKevin)
 
-**Editorial standard:** Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+**Editorial standard:** Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.
 
