@@ -13,7 +13,7 @@
   "meta_description": "Cut API failure rates 85% by ditching REST in 2026 — idempotency keys, HTTP/3, and callback queues that survive 250 ms latency and 15% packet loss.",
   "featured_image": "/static/images/apis-must-die-in-2026.jpg",
   "created_at": "2026-06-12T06:47:12.021665",
-  "updated_at": "2026-09-19T08:27:13.849106+00:00",
+  "updated_at": "2026-09-19T09:17:49.434574+00:00",
   "seo_keywords": [
     "ApiDesign2026",
     "FintechRegulationsAfrica",
@@ -39,6 +39,6 @@
   "has_code": false,
   "has_table": true,
   "prewritten_tweet": "Most teams still ship APIs assuming Chrome on fibre.\n\nIn Africa, that’s a bug not a feature.\n\nhttps://kubaik.github.io/apis-must-die-in-2026\n\n#Blockchain #APIs #ApiDesign2026 #FintechRegulationsAfrica\n\nWhere do you think most teams still get this wrong?",
-  "audit_improved_at": "2026-09-19T08:27:13.849106+00:00",
-  "audit_improve_reason": "Claim: Unverifiable first-person incident language (1 sentence(s)).; Technical post with fewer than two code fences"
+  "audit_improved_at": "2026-09-19T09:17:49.434574+00:00",
+  "audit_improve_reason": "Technical post with fewer than two code fences"
 }

@@ -8,7 +8,7 @@
   "meta_description": "Choose no-code vs custom code in 2026 with this decision framework: latency SLOs, export limits, GDPR, and real cost data. Save weeks of rewrite pain.",
   "featured_image": "/static/images/choose-no-code-only-when.jpg",
   "created_at": "2026-06-09T04:30:23.126966",
-  "updated_at": "2026-09-19T08:27:13.967381+00:00",
+  "updated_at": "2026-09-19T09:17:49.460104+00:00",
   "seo_keywords": [
     "Softwareengineering"
   ],
@@ -26,6 +26,6 @@
   "has_code": false,
   "has_table": true,
   "prewritten_tweet": "Most teams pick no-code for speed then rewrite it months later.\n\nThat pain is avoidable.\n\nHere is the exact moment to switch 👇\n\nhttps://kubaik.github.io/choose-no-code-only-when\n\n#AI #SoftwareEngineering\n\nWhat would you add to this?",
-  "audit_improved_at": "2026-09-19T08:27:13.967381+00:00",
+  "audit_improved_at": "2026-09-19T09:17:49.460104+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences"
 }

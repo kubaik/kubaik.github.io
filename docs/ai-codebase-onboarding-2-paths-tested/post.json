@@ -10,7 +10,7 @@
   "meta_description": "Cut onboarding time 60% with guided generation in AI codebases — tooling cost, CI queue drops, and the exact prompts that worked",
   "featured_image": "/static/images/ai-codebase-onboarding-2-paths-tested.jpg",
   "created_at": "2026-06-24T01:35:30.792495",
-  "updated_at": "2026-09-19T08:27:13.557422+00:00",
+  "updated_at": "2026-09-19T09:17:49.385553+00:00",
   "seo_keywords": [
     "AiCodebaseOnboarding",
     "Ai",
@@ -30,6 +30,6 @@
   "has_code": false,
   "has_table": true,
   "prewritten_tweet": "Most teams burn $8k+ on AI tools before measuring ROI.\n\nMost of it goes to autocomplete nobody audits.\n\nHere is what actually paid off 👇\n\nhttps://kubaik.github.io/ai-codebase-onboarding-2-paths-tested\n\n#AI #GenerativeAI #AiCodebaseOnboarding\n\nHot take: most people skip the measurement step. Agree?",
-  "audit_improved_at": "2026-09-19T08:27:13.557422+00:00",
+  "audit_improved_at": "2026-09-19T09:17:49.385553+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences"
 }

@@ -11,7 +11,7 @@
   "meta_description": "Cut on-call false positives 40% with PagerDuty AI Incident Response vs FireHydrant AI Auto-Resolve in 2026 — real benchmarks, cost breakdowns, and the exact…",
   "featured_image": "/static/images/ai-ops-pagerduty-vs-firehydrant-for-oncall.jpg",
   "created_at": "2026-07-02T12:04:55.904057",
-  "updated_at": "2026-09-19T08:27:13.685783+00:00",
+  "updated_at": "2026-09-19T09:17:49.409738+00:00",
   "seo_keywords": [
     "OncallAutomation2026",
     "MttrWithAi",
@@ -35,6 +35,6 @@
   "has_table": true,
   "full_title": "AI ops: PagerDuty vs FireHydrant for oncall",
   "prewritten_tweet": "Most teams waste $8k+ on AI ops tools before measuring ROI.\n\nMost of it goes to autocomplete nobody audits.\n\nHere is what actually paid off\n\nhttps://kubaik.github.io/ai-ops-pagerduty-vs-firehydrant-for-oncall\n\n#TechNews #AI #OncallAutomation2026 #MttrWithAi\n\nWhich part took you the longest to get right?",
-  "audit_improved_at": "2026-09-19T08:27:13.685783+00:00",
+  "audit_improved_at": "2026-09-19T09:17:49.409738+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences"
 }
