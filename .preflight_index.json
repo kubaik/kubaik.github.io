@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-19T08:31:21.424470",
+  "built_at": "2026-09-19T08:48:10.536611",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5230,6 +5230,11 @@
       "slug": "most-llm-cost-dashboards-lie",
       "title": "Most LLM cost dashboards lie…",
       "summary": "It's easy to spend longer than expected on finops llmheavy before the actual failure mode becomes clear. Production gives you neither a clean environment nor a patient timeline. Here's what I'd tell a colleague hitting this for the first time. The gap between what the docs say and what production ne"
+    },
+    {
+      "slug": "context-windows-agents-that-run-for-days",
+      "title": "Context windows: agents that run for days",
+      "summary": "african engineering problems have a habit of surfacing mid-migration, right when there's no time to solve them properly. Here's what changed once we stopped guessing and started measuring. The gap between the demo and the incident report is where this actually lives. The one-paragraph version (read "
     }
   ]
 }

@@ -19,5 +19,7 @@
   "The hidden failure modes of tool-calling agents at scale (and how we guard against them)",
   "The cost and reliability tradeoffs of running agents for users who pay in local mobile money",
   "The compensation negotiation playbook that works when the market knows AI increased your output",
-  "FinOps for LLM-heavy teams: the levers that actually move the needle in 2026"
+  "FinOps for LLM-heavy teams: the levers that actually move the needle in 2026",
+  "How African engineering teams are adapting hiring and onboarding for the agentic era",
+  "Context window management strategies for agents that run for hours or days"
 ]

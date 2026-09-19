@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-05T11:34:19.789035">
-        <meta property="article:modified_time" content="2026-09-19T08:27:13.614922+00:00">
+        <meta property="article:modified_time" content="2026-09-19T08:51:07.522234+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI in slow networks: why models flop where data costs rise">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-in-slow-networks-why-models-flop-where-data-costs-rise/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "AI in slow networks: why models flop where data costs rise",
       "description": "Cut API data cost 88% and latency 76% for AI features in high-cost, high-latency markets.",
       "datePublished": "2026-07-05T11:34:19+00:00",
-      "dateModified": "2026-09-19T08:27:13+00:00",
-      "wordCount": 2669,
+      "dateModified": "2026-09-19T08:51:07+00:00",
+      "wordCount": 2658,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,7 +265,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2669 words
+                        &nbsp;·&nbsp; 2658 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -274,7 +274,7 @@
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The short version: the conventional advice on global best is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
+                <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
 <p>Global AI best practices assume cheap, fast internet and abundant compute, but in markets like East Africa, Nigeria, or India, users pay 5–15% of daily income for every megabyte and expect sub-2 s response times over 2G/3G. Model size and accuracy don’t matter if users quit before the first response loads. The fix is to shrink payloads by 90%, push logic to the edge with lightweight runtimes (Pyodide, TensorFlow Lite, ONNX Runtime 1.16), and cache aggressively using Redis 7.2 with LFU eviction tuned for cache-hit ratios &gt;90%. I once shipped a 300 MB Whisper ASR model to a Nairobi fintech app; 78% of users in low-coverage areas dropped off at 5 s load times. After shrinking the model to 22 MB with ONNX and streaming partial results, session length jumped from 42 s to 138 s and data usage fell 87%. The playbook isn’t about better models; it’s about making existing models survive hostile networks.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>

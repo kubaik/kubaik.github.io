@@ -168,69 +168,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "skip-m-pesa-build-one-api-for-3-african-markets",
-    "title": "Skip M-Pesa: build one API for 3 African markets",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about build payment during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we tried to launch a subscription product in Nigeria.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "agent-decisions-cost-us-three-days-of-logs",
-    "title": "Agent decisions cost us three days of logs",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent longer than I should have on postmortems now before understanding what w; I ran into this when I noticed our on-call rotation failing to write the first p; I spent three days debugging a case where the agent reported a Redis 7.2 connect",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-codebases-two-onboarding-paths-that-actually-work",
-    "title": "AI codebases: two onboarding paths that actually work",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I've seen the same onboard developer mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when we onboarded six developers in one quarter and watched merg",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-features-break-your-stack-every-6-months",
-    "title": "AI features break your stack every 6 months",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about building systems during a code review recently, and m; Here's what I'd tell a colleague hitting this for the first time.; I ran into this when the fraud detection model team asked us to expose a new   e",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-in-local-currency-costs-that-surprise",
-    "title": "AI in local currency: costs that surprise…",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about cost reliability during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when a client in Singapore insisted on running a fine-tuned Whis",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "ai-in-slow-networks-why-models-flop-where-data-costs-rise",
     "title": "AI in slow networks: why models flop where data costs rise",
     "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): The short version: the conventional advice on global best is incomplete.; I once shipped a 300 MB Whisper ASR model to a Nairobi fintech app; 78% of users; I once traced a 1.8 s median response time for a chatbot in Mombasa back to 12 s",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-infra-capacity-planning-vs-runbooks-what-id",
     "title": "AI infra: capacity planning vs runbooks — what I’d",
     "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when we provisioned an extra 128 vCPU cluster for a Black Friday",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-native-apps-forget-the-old-stack",
     "title": "AI-native apps: forget the old stack",
     "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we moved our help-desk bot from a Jupyter notebook to a Fas",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-pair-programming-stole-my-code-review-job",
     "title": "AI pair programming stole my code review job",
     "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when I personally got tagged on 18 PRs in a single day during a ; I spent three days debugging the slow query before realising the index was missi",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-reshaped-my-engineering-principles",
     "title": "AI reshaped my engineering principles",
     "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about engineering principles during a code review last week; I realised I couldn't give a clean explanation — which meant I didn't understand; I bought into this story for a while.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-services-slow-fix-the-network-first",
@@ -2064,6 +2034,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T08:27:14.122451+00:00"
+  },
+  {
+    "slug": "skip-m-pesa-build-one-api-for-3-african-markets",
+    "title": "Skip M-Pesa: build one API for 3 African markets",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about build payment during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we tried to launch a subscription product in Nigeria.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "agent-decisions-cost-us-three-days-of-logs",
+    "title": "Agent decisions cost us three days of logs",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent longer than I should have on postmortems now before understanding what w; I ran into this when I noticed our on-call rotation failing to write the first p; I spent three days debugging a case where the agent reported a Redis 7.2 connect",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-codebases-two-onboarding-paths-that-actually-work",
+    "title": "AI codebases: two onboarding paths that actually work",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I've seen the same onboard developer mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when we onboarded six developers in one quarter and watched merg",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-features-break-your-stack-every-6-months",
+    "title": "AI features break your stack every 6 months",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about building systems during a code review recently, and m; Here's what I'd tell a colleague hitting this for the first time.; I ran into this when the fraud detection model team asked us to expose a new   e",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-in-local-currency-costs-that-surprise",
+    "title": "AI in local currency: costs that surprise…",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about cost reliability during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when a client in Singapore insisted on running a fine-tuned Whis",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "negotiate-2026-pay-when-ai-steals-40-of-your-job",

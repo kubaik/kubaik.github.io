@@ -13,7 +13,7 @@
   "meta_description": "Cut LLM token costs 60% with state machines and prompt versioning — latency benchmarks, cache keys, and the hidden cost of agent loops in 2026.",
   "featured_image": "/static/images/ai-native-apps-forget-the-old-stack.jpg",
   "created_at": "2026-06-12T23:10:41.835738",
-  "updated_at": "2026-09-19T08:51:08.510126+00:00",
+  "updated_at": "2026-09-19T08:27:13.655890+00:00",
   "seo_keywords": [
     "AiNativeApplications",
     "LlmArchitecturePatterns",

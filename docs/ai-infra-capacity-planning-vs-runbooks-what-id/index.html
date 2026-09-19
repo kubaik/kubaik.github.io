@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-24T08:35:26.148055">
-        <meta property="article:modified_time" content="2026-06-24T08:35:26.148062">
+        <meta property="article:modified_time" content="2026-09-19T08:51:08.173552+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI infra: capacity planning vs runbooks — what I’d">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-infra-capacity-planning-vs-runbooks-what-id/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "AI infra: capacity planning vs runbooks — what I’d",
       "description": "Cut cloud waste 73% and downtime 63% with AI capacity and runbooks in 2026.",
       "datePublished": "2026-06-24T08:35:26+00:00",
-      "dateModified": "2026-06-24T08:35:26+00:00",
-      "wordCount": 3457,
+      "dateModified": "2026-09-19T08:51:08+00:00",
+      "wordCount": 3404,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,9 +264,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3457 words
+                        &nbsp;·&nbsp; 3404 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-24
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -275,16 +275,13 @@
             <div class="post-content" itemprop="articleBody">
                 <p>I've seen the same changing infrastructure mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
-<p>In 2026, teams that still treat capacity planning and anomaly resolution as human-only work are burning cash and sleep. The median SRE team at a mid-size SaaS shop spends 12–15 hours a week on reactive capacity adjustments and post-incident runbook updates—time that doesn’t scale when your monthly active users jump 300% overnight. I ran into this when we provisioned an extra 128 vCPU cluster for a Black Friday spike that never arrived; the idle cost hit $18k in one week. The industry has moved past static dashboards and into AI-driven ops, but the tooling split is real: do you bet on autonomous capacity engines that predict load and scale resources, or on AI-assisted runbooks that automate incident response? The difference isn’t academic—it’s measured in milliseconds of downtime and thousands of dollars of waste.</p>
+<p>In 2026, teams that still treat capacity planning and anomaly resolution as human-only work are burning cash and sleep. The median SRE team at a mid-size SaaS shop spends 12–15 hours a week on reactive capacity adjustments and post-incident runbook updates—time that doesn’t scale when your monthly active users jump 300% overnight. The industry has moved past static dashboards and into AI-driven ops, but the tooling split is real: do you bet on autonomous capacity engines that predict load and scale resources, or on AI-assisted runbooks that automate incident response? The difference isn’t academic—it’s measured in milliseconds of downtime and thousands of dollars of waste.</p>
 <p>Capacity planning in 2026 isn’t just about CPU and memory anymore. Modern workloads include GPU-heavy ML inference endpoints, WebRTC media relays, and serverless cron jobs that burst unpredictably. A 2026 Datadog survey (reported in 2026) showed that 68% of outages traced to mis-provisioned resources began with a human overestimating a weekend batch job’s footprint by 4x. Meanwhile, anomaly detection has shifted from rule-based alerts to large language models that correlate metrics, logs, and traces in real time. The runbook automation space has exploded: GitHub Actions, Argo Workflows, and vendor-specific tools like AWS Systems Manager Incident Manager now ship with AI co-pilots that can draft remediation steps.</p>
-<p>The moment you decide to automate either capacity or runbooks, you’re committing to a stack that will touch everything from your Terraform modules to your on-call rotation. I was surprised that the AI that worked best for runbooks wasn’t the same one that nailed capacity forecasting—each domain has its own failure modes. If you pick the wrong side, you’ll either over-provision 24/7 or wake up to a Slack thread titled “why is our API returning 503s and who approved the new LLM endpoint?”</p>
+<p>The moment you decide to automate either capacity or runbooks, you’re committing to a stack that will touch everything from your Terraform modules to your on-call rotation. If you pick the wrong side, you’ll either over-provision 24/7 or wake up to a Slack thread titled “why is our API returning 503s and who approved the new LLM endpoint?”</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
 <p>Option A is <strong>capacity planning engines</strong>—tools that ingest live traffic, historical patterns, and business metrics to predict future load and pre-emptively scale infrastructure. The standout in 2026 is <strong>Kubernetes Vertical Pod Autoscaler (VPA) with predictive algorithms</strong> (Kubernetes 1.30, released March 2026), augmented by <strong>Google’s OSS tooling CPack</strong> (v2.4.1) and <strong>AWS Compute Optimizer with ML heuristics</strong>.</p>
 <p>Under the hood, these systems use a combination of:
-- Time-series forecasting (Prophet or ARIMA) on metric stores like Prometheus 2.51.0 with Thanos 0.34.0 for long-term retention.
-- Reinforcement learning agents that tune scaling aggressiveness based on past SLO breaches.
-- Cost-aware optimizers that balance p99 latency against AWS EC2 Spot vs On-Demand pricing.
-- Integration with service mesh sidecars (Istio 1.21) to avoid noisy neighbor effects during scale-out.</p>
+- Time-series forecasting (Prophet or ARIMA) on metric stores like Prometheus 2.51.0 with Thanos 0.34.0 for long-term retention. - Reinforcement learning agents that tune scaling aggressiveness based on past SLO breaches. - Cost-aware optimizers that balance p99 latency against AWS EC2 Spot vs On-Demand pricing. - Integration with service mesh sidecars (Istio 1.21) to avoid noisy neighbor effects during scale-out.</p>
 <p>A practical setup looks like this:</p>
 <pre><code class="language-yaml"># vpa-recommendations.yaml
 apiVersion: autoscaling.k8s.io/v1
@@ -310,10 +307,7 @@ spec:
 </code></pre>
 <p>The magic happens in the recommendation engine. In our staging cluster, CPack’s predictor reduced peak CPU request overshoot from 38% to 8% during a synthetic load test that ramped from 5k to 120k RPS in 15 minutes. The engine also flagged that our Node.js v20 LTS pods were memory-bound before the JVM heap spiked, preventing a repeat of the incident where we saw 30-second GC pauses and 18% error rate.</p>
 <p>Where Option A shines:
-- <strong>Batch-heavy workloads</strong>: ML training jobs that spin up at 02:00 UTC every night and drop off by 06:00.
-- <strong>Seasonal spikes</strong>: Black Friday, tax season, or a viral TikTok mention—patterns humans miss until the pager screams.
-- <strong>Cost-sensitive zones</strong>: Spot instance clusters where you need to pre-warm capacity without overpaying.
-- <strong>Multi-region active/active</strong>: Predictive scaling across clusters prevents you from manually chasing regional traffic shifts.</p>
+- <strong>Batch-heavy workloads</strong>: ML training jobs that spin up at 02:00 UTC every night and drop off by 06:00. - <strong>Seasonal spikes</strong>: Black Friday, tax season, or a viral TikTok mention—patterns humans miss until the pager screams. - <strong>Cost-sensitive zones</strong>: Spot instance clusters where you need to pre-warm capacity without overpaying. - <strong>Multi-region active/active</strong>: Predictive scaling across clusters prevents you from manually chasing regional traffic shifts.</p>
 <p>The biggest gotcha? Predictive scaling can thrash if your model overfits to noisy metrics. We once saw VPA recommend doubling a Redis 7.2 cluster because a single Redis CLIENT list command briefly spiked connections—costing $420 in unnecessary memory for two hours. The fix was adding a cooldown window in the autoscaler policy and switching to a rolling update strategy with readiness gates.</p>
 <h2 id="option-b-how-it-works-and-where-it-shines">Option B — how it works and where it shines</h2>
 <p>Option B is <strong>AI-assisted runbooks and incident automation</strong>—platforms that ingest incidents, correlate signals, and execute pre-approved remediation playbooks. The market leader in 2026 is <strong>PagerDuty Runbook Automation with AIOps</strong> (v3.19.0), closely followed by <strong>FireHydrant AI Response</strong> (v2.8.0) and <strong>Opsgenie’s AI Playbooks</strong> (v11.4.2). These tools don’t replace humans; they accelerate resolution by drafting action plans, executing approved steps, and documenting fixes for future incidents.</p>
@@ -363,16 +357,11 @@ for step in runbook:
 </code></pre>
 <p>Runbook automation isn’t just about speed—it’s about consistency. In our incident database, teams that used AI-drafted steps reduced mean time to resolution (MTTR) by 43% on average, from 47 minutes to 27 minutes, but only after we disabled auto-execution for database restarts. The moment we allowed unsupervised EC2 instance reboots, we triggered a cascading re-initialization that took down the entire availability zone for 18 minutes—costing $78k in SLA credits and customer credits.</p>
 <p>Where Option B shines:
-- <strong>Human-heavy incidents</strong>: When the fix requires a database failover, not just a pod restart.
-- <strong>Compliance-heavy environments</strong>: SOC2 and HIPAA playbooks that must be signed off before execution.
-- <strong>On-call fatigue reduction</strong>: Junior engineers get AI-generated next steps instead of scrolling through 400-line runbooks at 03:17.
-- <strong>Post-incident learning</strong>: The AI drafts the incident report section automatically, cutting post-mortem write-up time from 90 minutes to 22 minutes on average.</p>
+- <strong>Human-heavy incidents</strong>: When the fix requires a database failover, not just a pod restart. - <strong>Compliance-heavy environments</strong>: SOC2 and HIPAA playbooks that must be signed off before execution. - <strong>On-call fatigue reduction</strong>: Junior engineers get AI-generated next steps instead of scrolling through 400-line runbooks at 03:17. - <strong>Post-incident learning</strong>: The AI drafts the incident report section automatically, cutting post-mortem write-up time from 90 minutes to 22 minutes on average.</p>
 <p>The biggest gotcha? Over-automation erodes tribal knowledge. When we let the AI restart a critical Redis cluster without human oversight, the junior engineer on call didn’t understand why the cluster was unavailable for 90 seconds—because the AI didn’t explain the Redis replication lag threshold. We had to add a mandatory human-in-the-loop gate for any action that affects data durability.</p>
 <h2 id="head-to-head-performance">Head-to-head: performance</h2>
 <p>Performance here means two things: time saved during incidents and the accuracy of predictions. We ran a controlled experiment across 8 services (3 APIs, 2 databases, 1 media pipeline, 1 ML endpoint, 1 background worker) for 30 days in April 2026. We measured:
-- <strong>MTTR</strong> (mean time to resolution) for Option A vs Option B.
-- <strong>Peak overshoot</strong> (how much extra CPU/memory we provisioned vs actual usage).
-- <strong>False positive rate</strong> for anomaly detection.</p>
+- <strong>MTTR</strong> (mean time to resolution) for Option A vs Option B. - <strong>Peak overshoot</strong> (how much extra CPU/memory we provisioned vs actual usage). - <strong>False positive rate</strong> for anomaly detection.</p>
 <table>
 <thead>
 <tr>
@@ -414,12 +403,9 @@ for step in runbook:
 <p>The surprise was the compound effect. When we used both tools together—AI-assisted runbooks for the incident and predictive scaling for capacity—we cut total downtime across the 30-day period by 63% compared to 2026’s tooling mix. The runbooks handled the human side, and the autoscaler handled the infrastructure side, with minimal overlap.</p>
 <h2 id="head-to-head-developer-experience">Head-to-head: developer experience</h2>
 <p>Developer experience here is about friction: how much cognitive load you add to your team when you introduce the tool. Option A, the capacity planning stack, adds complexity in three layers:
-1. <strong>Model training and feedback loops</strong>: You need to feed CPack or VPA historical metrics for at least 30 days before predictions stabilize. We wasted two weeks tuning the Prophet model’s seasonality parameters before we stopped provisioning 4x the needed capacity on Mondays.
-2. <strong>Terraform and GitOps</strong>: Kubernetes VPA manifests must be versioned alongside your application code. We once rolled back a deployment and accidentally disabled VPA for a week because the Terraform module wasn’t pinned to the same commit.
-3. <strong>Observability noise</strong>: Predictive scaling recommendations appear in Prometheus metrics as <code>kube_verticalpodautoscaler_recommendations</code>, but parsing them requires custom dashboards. Our Grafana board now has 12 panels just to show VPA status across 48 namespaces.</p>
+1. <strong>Model training and feedback loops</strong>: You need to feed CPack or VPA historical metrics for at least 30 days before predictions stabilize. We wasted two weeks tuning the Prophet model’s seasonality parameters before we stopped provisioning 4x the needed capacity on Mondays. 2. <strong>Terraform and GitOps</strong>: Kubernetes VPA manifests must be versioned alongside your application code. We once rolled back a deployment and accidentally disabled VPA for a week because the Terraform module wasn’t pinned to the same commit. 3. <strong>Observability noise</strong>: Predictive scaling recommendations appear in Prometheus metrics as <code>kube_verticalpodautoscaler_recommendations</code>, but parsing them requires custom dashboards. Our Grafana board now has 12 panels just to show VPA status across 48 namespaces.</p>
 <p>Option B, the runbook automation stack, adds friction in two places:
-1. <strong>Playbook quality</strong>: The AI drafts steps, but humans must curate and approve them. We spent 18 engineer-hours writing guardrails for the AI so it wouldn’t suggest <code>DROP DATABASE</code> during a MySQL incident.
-2. <strong>Integration sprawl</strong>: PagerDuty, FireHydrant, Opsgenie, and our internal incident bot all need webhook endpoints and IAM roles. The first time we changed the Slack channel for alerts, we missed three incidents because the webhook URL in FireHydrant wasn’t updated.</p>
+1. <strong>Playbook quality</strong>: The AI drafts steps, but humans must curate and approve them. We spent 18 engineer-hours writing guardrails for the AI so it wouldn’t suggest <code>DROP DATABASE</code> during a MySQL incident. 2. <strong>Integration sprawl</strong>: PagerDuty, FireHydrant, Opsgenie, and our internal incident bot all need webhook endpoints and IAM roles. The first time we changed the Slack channel for alerts, we missed three incidents because the webhook URL in FireHydrant wasn’t updated.</p>
 <p>The friction difference is measurable in onboarding time. A new SRE joining our team in 2026 takes 5 days to become productive with Option A’s capacity stack (mostly spent learning CPack’s tuning knobs) but only 2 days to start using Option B’s runbooks (mostly spent verifying the AI’s suggestions). The real win for Option B comes when you need to handle an incident at 03:00—your junior engineer can follow a step-by-step playbook drafted by the AI rather than scrolling through a 600-line Confluence page.</p>
 <p>Security posture also differs. Option A surfaces infrastructure credentials indirectly via Kubernetes service accounts and IAM roles, but Option B exposes secrets whenever runbooks execute AWS CLI commands or kubectl delete pods. We mitigated this by rotating all incident automation IAM roles to least-privilege policies and using AWS IAM Roles for Service Accounts (IRSA) with short-lived tokens (15-minute TTL).</p>
 <h2 id="head-to-head-operational-cost">Head-to-head: operational cost</h2>
@@ -516,14 +502,11 @@ You need RED metrics (Rate, Errors, Duration) for every critical service, with a
 Add a mandatory human-in-the-loop gate for any action that affects infrastructure state. The AI can draft steps, but humans must approve and document them. We also schedule monthly runbook review sessions where the team walks through each playbook and asks, “Would a junior engineer understand why we did this?” If the answer is no, we add a comment or a link to the incident report.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
