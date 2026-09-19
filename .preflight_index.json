@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-19T09:13:38.992243",
+  "built_at": "2026-09-19T09:21:59.119164",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5240,6 +5240,11 @@
       "slug": "platform-engineering-roi-metrics-that-fund-teams",
       "title": "Platform engineering ROI: metrics that fund teams",
       "summary": "The metric everyone watches for platform engineering usually isn't the one that would have caught the problem early. This is what I put together after working through it properly. The failure is quiet — no errors, just wrong answers. The situation (what we were trying to solve) Platform engineering "
+    },
+    {
+      "slug": "scope-agent-permissions-per-task",
+      "title": "Scope agent permissions per task",
+      "summary": "The engineers who build a leastprivilege agents pipeline rarely stick around long enough to document why it works the way it does. Here's what I'd tell a colleague hitting this for the first time. The answers online were either wrong or skipped the part that mattered. The one-paragraph version (read"
     }
   ]
 }

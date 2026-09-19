@@ -10,7 +10,7 @@
   "meta_description": "Choose event-driven over agent-driven 9/10 times — latency spikes, locking, and retry storms explained with concrete fixes and 2026 tools like EventBridge…",
   "featured_image": "/static/images/event-driven-beats-agent-driven-910-times.jpg",
   "created_at": "2026-07-30T02:38:09.602424",
-  "updated_at": "2026-09-19T09:24:55.863235+00:00",
+  "updated_at": "2026-09-19T08:27:14.043524+00:00",
   "seo_keywords": [
     "Aws",
     "QueueRetryStorm",
