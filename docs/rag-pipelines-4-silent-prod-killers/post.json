@@ -16,7 +16,7 @@
   "meta_description": "Cut RAG pipeline latency from 280ms to 35ms and monthly costs from $980 to $620 by moving vector search out of PostgreSQL 16 into Milvus 2.4.3 with Caffeine…",
   "featured_image": "/static/images/rag-pipelines-4-silent-prod-killers.jpg",
   "created_at": "2026-06-08T23:47:39.972246",
-  "updated_at": "2026-09-19T09:27:15.617358+00:00",
+  "updated_at": "2026-09-19T11:31:27.351146+00:00",
   "seo_keywords": [
     "RagPipelineProduction",
     "VectorDatabaseCost",
@@ -45,6 +45,6 @@
   "has_code": true,
   "has_table": true,
   "prewritten_tweet": "Most teams burn $1k+/month on RAG pipelines that melt at 1k QPS.\n\nThe tutorials skip the plumbing: connection pools, cache policies, and distributed vector search.\n\nhttps://kubaik.github.io/rag-pipelines-4-silent-prod-killers\n\n#TechNews #Database #Performance #RAG\n\nWhere do you think most teams still get this wrong?",
-  "audit_improved_at": "2026-09-19T09:27:15.617358+00:00",
+  "audit_improved_at": "2026-09-19T11:31:27.351146+00:00",
   "audit_improve_reason": "AI-filler phrase: game-changer"
 }

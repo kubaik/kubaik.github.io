@@ -10,7 +10,7 @@
   "meta_description": "Cut notification delivery time 40% and costs 30% with Courier v2.18 — compare push, email, SMS, and WhatsApp systems with real latency, cost, and bounce data.",
   "featured_image": "/static/images/5-notification-systems-ranked-push-email-sms.jpg",
   "created_at": "2026-06-22T08:52:57.410443",
-  "updated_at": "2026-09-19T09:27:15.407745+00:00",
+  "updated_at": "2026-09-19T11:31:27.121225+00:00",
   "seo_keywords": [
     "NotificationSystem",
     "CourierV2.18",
@@ -32,6 +32,6 @@
   "has_code": false,
   "has_table": true,
   "prewritten_tweet": "Most teams burn weeks wiring together push, email, SMS, and WhatsApp separately.\n\nCourier v2.18 replaces 1,200 lines of code with 80 lines.\n\nhttps://kubaik.github.io/5-notification-systems-ranked-push-email-sms\n\n#Innovation #NotificationSystem #CourierV218\n\nHot take: most people skip the measurement step. Agree?",
-  "audit_improved_at": "2026-09-19T09:27:15.407745+00:00",
+  "audit_improved_at": "2026-09-19T11:31:27.121225+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences"
 }

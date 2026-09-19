@@ -12,7 +12,7 @@
   "meta_description": "Cut EC2 costs 70% with one sysctl tweak — TCP BBR, zswap, gp3 IOPS, and the exact commands for Amazon Linux 2023 and Ubuntu 22.04 LTS.",
   "featured_image": "/static/images/drop-ec2-bills-70-without-code.jpg",
   "created_at": "2026-06-09T04:57:04.863722",
-  "updated_at": "2026-09-19T09:27:15.546403+00:00",
+  "updated_at": "2026-09-19T11:31:27.267014+00:00",
   "seo_keywords": [
     "CutEc2Costs",
     "Ec2CostOptimization",
@@ -36,6 +36,6 @@
   "has_code": true,
   "has_table": true,
   "prewritten_tweet": "Most EC2 bills are 40–70% too high because of three kernel flags.\n\nBBR instead of fq_codel. zswap instead of OOM kills. gp3 3,000 IOPS instead of 1,000.\n\nhttps://kubaik.github.io/drop-ec2-bills-70-without-code\n\n#TechNews #Performance #TechCareer #CutEc2Costs\n\nWhich part took you the longest to get right?",
-  "audit_improved_at": "2026-09-19T09:27:15.546403+00:00",
+  "audit_improved_at": "2026-09-19T11:31:27.267014+00:00",
   "audit_improve_reason": "Claim: Unverifiable first-person incident language (1 sentence(s))."
 }

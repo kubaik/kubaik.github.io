@@ -15,7 +15,7 @@
   "meta_description": "HTMX 2.0 cut our frontend bundle from 245 KiB to 8 KiB and dropped AWS fees 48% — here’s the real trade-off we made and what we gained by swapping React for…",
   "featured_image": "/static/images/htmx-stack-swap-5-things-i-gained-3-i-lost.jpg",
   "created_at": "2026-06-26T11:39:00.782771",
-  "updated_at": "2026-09-19T09:27:15.563281+00:00",
+  "updated_at": "2026-09-19T11:31:27.284398+00:00",
   "seo_keywords": [
     "Htmx2026",
     "FrontendWithoutReact",
@@ -41,6 +41,6 @@
   "has_code": false,
   "has_table": true,
   "prewritten_tweet": "Most teams burn $8k+ a year on frontend tooling that never gets audited.\n\nHTMX 2.0 cut our AWS bill 48% and dropped bundle size from 245 KiB to 8 KiB.\n\nhttps://kubaik.github.io/htmx-stack-swap-5-things-i-gained-3-i-lost\n\n#Web3 #ReactJS #WebDev #NextJS\n\nDone this differently? Tell me what worked.",
-  "audit_improved_at": "2026-09-19T09:27:15.563281+00:00",
+  "audit_improved_at": "2026-09-19T11:31:27.284398+00:00",
   "audit_improve_reason": "AI-filler phrase: paradigm shift; Technical post with fewer than two code fences"
 }

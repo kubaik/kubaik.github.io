@@ -15,7 +15,7 @@
   "meta_description": "Internal platform adoption fails when feedback latency exceeds 10 seconds — measure rollout time in Backstage with Redis 7.2 and cut developer time 47%",
   "featured_image": "/static/images/internal-platform-adoption-one-metric-kills-velocity.jpg",
   "created_at": "2026-07-21T07:54:25.219668",
-  "updated_at": "2026-09-19T09:27:15.567850+00:00",
+  "updated_at": "2026-09-19T11:31:27.289139+00:00",
   "seo_keywords": [
     "Platform",
     "Backstage",
@@ -41,6 +41,6 @@
   "has_table": true,
   "full_title": "Internal platform adoption: one metric kills velocity",
   "prewritten_tweet": "One platform shipped a perfect golden path.\nTeams ignored it.\n\nTurns out they cared most about one metric the platform never showed.\n\nHere's the fix 👇\n\nhttps://kubaik.github.io/internal-platform-adoption-one-metric-kills-velocity\n\n#TechNews #SoftwareEngineering #Coding #Kubernetes\n\nWhat's the tool you wished you'd found earlier?",
-  "audit_improved_at": "2026-09-19T09:27:15.567850+00:00",
+  "audit_improved_at": "2026-09-19T11:31:27.289139+00:00",
   "audit_improve_reason": "Claim: Unverifiable first-person incident language (1 sentence(s))."
 }

@@ -12,7 +12,7 @@
   "meta_description": "Cut API design debates with data — REST vs GraphQL vs tRPC in 2026 with concrete benchmarks, cost figures, and the exact mistake I made shipping GraphQL for…",
   "featured_image": "/static/images/graphql-vs-rest-vs-trpc-2026s-api-fight.jpg",
   "created_at": "2026-06-09T19:36:20.025671",
-  "updated_at": "2026-09-19T09:27:15.552888+00:00",
+  "updated_at": "2026-09-19T11:31:27.273803+00:00",
   "seo_keywords": [
     "ApiDesign2026",
     "TrpcVsRest",
@@ -37,6 +37,6 @@
   "has_code": false,
   "has_table": true,
   "prewritten_tweet": "Most teams pick APIs by preference, not by pain.\n\nGraphQL for flexibility, REST for reliability, tRPC for TypeScript monorepos.\n\nhttps://kubaik.github.io/graphql-vs-rest-vs-trpc-2026s-api-fight\n\n#CyberTalk #TypeScript #APIs #GraphQL\n\nWhere do you think most teams still get this wrong?",
-  "audit_improved_at": "2026-09-19T09:27:15.552888+00:00",
+  "audit_improved_at": "2026-09-19T11:31:27.273803+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences"
 }

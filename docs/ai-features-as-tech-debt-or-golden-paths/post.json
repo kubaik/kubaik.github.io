@@ -13,7 +13,7 @@
   "meta_description": "AI features built with standard wrappers often become maintenance nightmares in Africa.",
   "featured_image": "/static/images/ai-features-as-tech-debt-or-golden-paths.jpg",
   "created_at": "2026-07-17T02:53:25.164323",
-  "updated_at": "2026-09-19T09:27:15.470502+00:00",
+  "updated_at": "2026-09-19T11:31:27.184319+00:00",
   "seo_keywords": [
     "AiFeatureMaintenance",
     "ResilientAiSystems",
@@ -40,6 +40,6 @@
   "has_table": true,
   "full_title": "AI features as tech debt or golden paths",
   "prewritten_tweet": "Most AI features in Africa die within three months.\n\nThe wrapper layer assumes perfect networks and models.\n\nHere is the stack that survives Black Friday 👇\n\nhttps://kubaik.github.io/ai-features-as-tech-debt-or-golden-paths\n\n#Crypto #AI #Tech #AiFeatureMaintenance\n\nWhere do you think most teams still get this wrong?",
-  "audit_improved_at": "2026-09-19T09:27:15.470502+00:00",
+  "audit_improved_at": "2026-09-19T11:31:27.184319+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences"
 }
