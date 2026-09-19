@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-19T09:31:08.114184",
+  "built_at": "2026-09-19T11:35:47.865622",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5250,6 +5250,11 @@
       "slug": "purpose-built-ai-is-a-trap-for-solo-founders",
       "title": "Purpose-built AI is a trap for solo founders",
       "summary": "Most write-ups stop exactly where the interesting part starts. The same purposebuilt platforms mistake shows up across production codebases often enough to be a pattern, not bad luck. This is what I put together after working through it properly. The conventional wisdom (and why it's incomplete) The"
+    },
+    {
+      "slug": "agentic-ai-cost-control-7-tools-one-backfire",
+      "title": "Agentic AI cost control: 7 tools, one backfire",
+      "summary": "Most write-ups stop exactly where the interesting part starts. evaluationdriven development problems have a habit of surfacing mid-migration, right when there's no time to solve them properly. Here's the version I wish someone had handed me first. Why this list exists (what I was actually trying to "
     }
   ]
 }

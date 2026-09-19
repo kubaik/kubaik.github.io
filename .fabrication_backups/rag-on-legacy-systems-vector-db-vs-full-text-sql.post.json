@@ -15,7 +15,7 @@
   "meta_description": "Cut RAG hosting cost 78% with PostgreSQL 16 + pgvector 0.7 vs Weaviate 1.22. Real latency and cost data from a 12-month enterprise rollout.",
   "featured_image": "/static/images/rag-on-legacy-systems-vector-db-vs-full-text-sql.jpg",
   "created_at": "2026-06-30T19:45:17.392843",
-  "updated_at": "2026-09-19T11:38:04.656346+00:00",
+  "updated_at": "2026-09-19T08:27:14.436720+00:00",
   "seo_keywords": [
     "RagImplementation",
     "Enterprise",

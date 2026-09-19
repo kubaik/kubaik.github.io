@@ -24,5 +24,7 @@
   "Context window management strategies for agents that run for hours or days",
   "Platform engineering ROI: the metrics that convinced our leadership to keep funding it",
   "Least-privilege for AI agents: the permission model that doesn't make developers revolt",
-  "Purpose-built AI platforms vs general platforms: the decision we had to make in 2026"
+  "Purpose-built AI platforms vs general platforms: the decision we had to make in 2026",
+  "Evaluation-driven development for agents: the loop that replaced vibe testing",
+  "Agentic cost management: using AI to optimize our own AI spend (and where it backfired)"
 ]
