@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-18T16:47:54.888157",
+  "built_at": "2026-09-19T03:49:03.207248",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5220,6 +5220,11 @@
       "slug": "mobile-money-agents-when-m-pesa-api-fails",
       "title": "Mobile money agents: when M-Pesa API fails",
       "summary": "hidden failure is easy to demo and hard to keep honest at scale. It's the kind of problem that's easy to reproduce and hard to explain. This is the version of the write-up that includes the part that broke. The error and why it's confusing You've built an agent that accepts payments in local mobile "
+    },
+    {
+      "slug": "negotiating-pay-when-ai-inflates-output",
+      "title": "Negotiating pay when AI inflates output",
+      "summary": "It's fine in staging because staging never sees the traffic pattern that breaks it. The compensation negotiation section of a postmortem is easy to skim past, right up until it's the section that matters. This walks through the fix and the reasoning, not just the patch. The one-paragraph version (re"
     }
   ]
 }

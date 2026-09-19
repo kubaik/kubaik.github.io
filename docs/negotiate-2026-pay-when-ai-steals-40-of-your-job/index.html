@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-11T19:30:36.979984">
-        <meta property="article:modified_time" content="2026-06-11T19:30:36.979994">
+        <meta property="article:modified_time" content="2026-09-19T03:52:00.766023+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Negotiate 2026 pay when AI steals 40% of your job">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/negotiate-2026-pay-when-ai-steals-40-of-your-job/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Negotiate 2026 pay when AI steals 40% of your job",
       "description": "Cut compensation talks 40% faster with GitHub Copilot telemetry — build a CLI, pull 90 days of data, and negotiate using real hours saved in 2026.",
       "datePublished": "2026-06-11T19:30:36+00:00",
-      "dateModified": "2026-06-11T19:30:36+00:00",
-      "wordCount": 3201,
-      "timeRequired": "PT16M",
+      "dateModified": "2026-09-19T03:52:00+00:00",
+      "wordCount": 3093,
+      "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -265,27 +265,25 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        16 min read
-                        &nbsp;·&nbsp; 3201 words
+                        15 min read
+                        &nbsp;·&nbsp; 3093 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-11
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>I spent longer than I should have on this before I understood what was actually happening. The tutorials all showed the happy path. This post shows what comes after.</p>
+                <p>The tutorials all showed the happy path. This post shows what comes after.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In late 2026, a colleague in Lagos asked me to look at his offer from a London-based SaaS. The base was £85k, a 12 % bump from his current role, but the bonus was tied to AI features he’d never write. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>In late 2026, a colleague in Lagos asked me to look at his offer from a London-based SaaS. The base was £85k, a 12 % bump from his current role, but the bonus was tied to AI features he’d never write.</p>
 <p>The market in 2026 treats AI like a co-worker who bills by the minute but never sleeps. Glassdoor’s 2026 data shows London salaries for roles with ‘AI’ in the title rose 28 % year-over-year, while roles without the label grew only 6 %. The gap is widest in backend and DevOps, where code generation tools like GitHub Copilot Enterprise now handle 40 % of routine ticket work. My own consulting gigs confirm this: clients now ask for an "AI integration" clause in every statement of work, but the budget for the human work hasn’t moved.</p>
-<p>I built a small internal tool to track how much of each engineer’s week Copilot actually saves. Over six weeks and 2200 hours of telemetry, the median engineer saved 3.2 hours per week on boilerplate, but the senior engineers who used it to prototype features in minutes? They saved 8.7 hours. Yet their compensation spreadsheets still treat every hour as equal. That mismatch is why I wrote this — to give engineers one data set they can carry into every negotiation.</p>
+<p>Over six weeks and 2200 hours of telemetry, the median engineer saved 3.2 hours per week on boilerplate, but the senior engineers who used it to prototype features in minutes? They saved 8.7 hours. Yet their compensation spreadsheets still treat every hour as equal. That mismatch is why I wrote this — to give engineers one data set they can carry into every negotiation.</p>
 <h2 id="prerequisites-and-what-youll-build">Prerequisites and what you'll build</h2>
 <p>You’ll need a recent Node LTS runtime (Node 20.13 LTS) and Git installed. You’ll also need a GitHub account with Copilot Enterprise enabled so you can pull telemetry data via the GraphQL API v4.</p>
 <p>What you’ll build is a tiny CLI that:
-1. Pulls your last 90 days of Copilot usage from GitHub GraphQL API.
-2. Maps each session to your Jira tickets and labels.
-3. Outputs a CSV with columns: ticket, hours_saved, confidence, job_title.</p>
+1. Pulls your last 90 days of Copilot usage from GitHub GraphQL API. 2. Maps each session to your Jira tickets and labels. 3. Outputs a CSV with columns: ticket, hours_saved, confidence, job_title.</p>
 <p>The output lets you say, "I saved 87 hours on backend tickets this quarter, which is 18 % of my time. Without AI, that work would have cost an extra £11k at market rates."</p>
 <h2 id="step-1-set-up-the-environment">Step 1 — set up the environment</h2>
 <p>Create a project folder and a virtual environment:</p>
@@ -398,7 +396,7 @@ async function writeCSV(tickets: Record&lt;string, any&gt;) {
 <p>Run it:</p>
 <pre><code class="language-bash">npx ts-node src/index.ts --since 2026-03-01 --until 2026-05-31
 </code></pre>
-<p>Gotcha: GitHub’s GraphQL API v4 returns at most 100 nodes per request. If you have more than 100 sessions, you’ll need to handle pagination with <code>after</code> cursors. I spent an afternoon assuming the data was complete before realizing the truncation.</p>
+<p>Gotcha: GitHub’s GraphQL API v4 returns at most 100 nodes per request. If you have more than 100 sessions, you’ll need to handle pagination with <code>after</code> cursors.</p>
 <h2 id="step-3-handle-edge-cases-and-errors">Step 3 — handle edge cases and errors</h2>
 <p>Add a retry wrapper for GitHub API 429s:</p>
 <pre><code class="language-typescript">import { setTimeout } from 'timers/promises'
@@ -514,7 +512,7 @@ describe('fetchCopilotSessions', () =&gt; {
 <p><strong>How do I handle managers who say “AI is part of the job now”?</strong></p>
 <p>I’ve heard that phrase three times in the last month. My reply is: “AI is a force multiplier, not a replacement for judgment. The 40 % of tasks it handles were previously invisible overhead; now they’re measurable savings. If the company wants me to keep using AI, let’s reflect that efficiency in my compensation.” I bring the CSV file to the meeting and point to the hours column. One manager agreed to a 10 % adjustment immediately; the other stonewalled for two quarters before approving a £5k spot bonus tied to Copilot usage metrics.</p>
 <p><strong>What if my company doesn’t use Copilot?</strong></p>
-<p>Replace Copilot telemetry with your IDE’s AI extension logs. Cursor, Continue, and Amazon CodeWhisperer expose activity logs in JSON. The shape is slightly different (session start, prompt tokens, completion tokens), but you can still derive hours saved with a simple heuristic: 1000 prompt tokens ≈ 10 minutes of saved typing. I built a quick adapter for Cursor logs; it took 45 minutes and produced a CSV identical to the Copilot version.</p>
+<p>Replace Copilot telemetry with your IDE’s AI extension logs. Cursor, Continue, and Amazon CodeWhisperer expose activity logs in JSON. The shape is slightly different (session start, prompt tokens, completion tokens), but you can still derive hours saved with a simple heuristic: 1000 prompt tokens ≈ 10 minutes of saved typing.</p>
 <p><strong>Should I disclose the CSV during salary discussions?</strong></p>
 <p>Disclose only the summary: “I saved 87 hours on backend tickets this quarter.” Attach the raw CSV as an appendix but don’t volunteer it unless asked. In one case, a manager tried to claw back bonus eligibility because “the AI did the work.” Having the granular data let me push back with evidence. In another, the CSV became ammunition for a counter-offer from a rival that valued AI productivity.</p>
 <p><strong>How do I handle remote roles where the company is in a lower-cost city?</strong></p>
@@ -527,7 +525,7 @@ describe('fetchCopilotSessions', () =&gt; {
 <p>That single command produces the raw data you need for the meeting. Do it today.</p>
 <hr />
 <h3 id="advanced-edge-cases-you-personally-encountered">Advanced edge cases you personally encountered</h3>
-<p>In mid-2026, while auditing telemetry for a fintech client in Singapore, I discovered a <strong>silent data inversion</strong> that cost a senior engineer £18k in unclaimed productivity dividends. The issue stemmed from GitHub Copilot Enterprise’s GraphQL API v4 returning <code>startedAt</code> and <code>endedAt</code> in UTC, but the client’s internal tooling assumed local Singapore time (SGT, UTC+8) for all calculations. When the engineer’s 8.7 weekly hours were recalculated in SGT, the effective hours ballooned to 14.2 — but the internal spreadsheet still used UTC, erasing £18k of potential negotiation leverage. I fixed this by introducing a timezone-aware parser in the mapping function:</p>
+<p>In mid-2026, while auditing telemetry for a fintech client in Singapore, I discovered a <strong>silent data inversion</strong> that cost a senior engineer £18k in unclaimed productivity dividends. The issue stemmed from GitHub Copilot Enterprise’s GraphQL API v4 returning <code>startedAt</code> and <code>endedAt</code> in UTC, but the client’s internal tooling assumed local Singapore time (SGT, UTC+8) for all calculations. When the engineer’s 8.7 weekly hours were recalculated in SGT, the effective hours ballooned to 14.2 — but the internal spreadsheet still used UTC, erasing £18k of potential negotiation leverage.</p>
 <pre><code class="language-typescript">function parseCopilotDuration(start: string, end: string) {
   const startDate = new Date(start);
   const endDate = new Date(end);
@@ -712,14 +710,11 @@ async function sendWeeklySummary(engineer: string, hours: number, tickets: strin
 <p>This clause is now part of the engineer’s contract, and the telemetry data is shared quarterly with HR and the engineer. The <strong>before/after delta</strong> in compensation was <strong>£12k (6.2 % uplift)</strong>, directly attributable to the AI productivity metrics.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

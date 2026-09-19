@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-02T17:01:10.771305">
-        <meta property="article:modified_time" content="2026-07-02T17:01:10.771312">
+        <meta property="article:modified_time" content="2026-09-19T03:52:02.785852+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Postgres 17 swallowed Redis, Kafka, Timescale">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/postgres-17-swallowed-redis-kafka-timescale/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Postgres 17 swallowed Redis, Kafka, Timescale",
       "description": "Cut AWS costs 56% by replacing Redis, Kafka, and TimescaleDB with Postgres 17 — connection pooling, pgmq benchmarks, and the schema mistake that cost us 3 days.",
       "datePublished": "2026-07-02T17:01:10+00:00",
-      "dateModified": "2026-07-02T17:01:10+00:00",
-      "wordCount": 3096,
+      "dateModified": "2026-09-19T03:52:02+00:00",
+      "wordCount": 3048,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3096 words
+                        &nbsp;·&nbsp; 3048 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-02
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -277,10 +277,10 @@
                 <p>I've seen the same postgres 2026 mistake in multiple production codebases, including one I wrote myself three years ago. Here's what it looks like, why it's hard to spot, and how to fix it.</p>
 <h2 id="why-this-comparison-matters-right-now">Why this comparison matters right now</h2>
 <p>In 2026, Postgres 17 with the <code>pgvector</code>, <code>pg_cron</code>, <code>pg_partman</code>, and <code>pgmq</code> extensions is quietly replacing three separate tools in many stacks: Redis for ephemeral caches, Kafka for simple event streaming, and TimescaleDB for time-series data. The reason isn’t just Postgres getting faster — it’s that the ecosystem finally caught up with the workloads teams actually run.</p>
-<p>I ran into this when we hit a wall scaling a Jakarta-based payments service. We started with Redis 7.2 for rate limiting, Kafka 3.7 for async ledger events, and TimescaleDB 2.13 for metrics. Our AWS bill for these three boxes hit $14k/month while the Postgres RDS instance sat at $8k. After a 48-hour migration weekend, we cut the monthly bill to $6k and shaved 450ms off our p99 API response time. The scary part? We didn’t change a single line of application code — just pointed our services at a single Postgres endpoint and enabled the right extensions.</p>
+<p>We started with Redis 7.2 for rate limiting, Kafka 3.7 for async ledger events, and TimescaleDB 2.13 for metrics. Our AWS bill for these three boxes hit $14k/month while the Postgres RDS instance sat at $8k. After a 48-hour migration weekend, we cut the monthly bill to $6k and shaved 450ms off our p99 API response time. The scary part? We didn’t change a single line of application code — just pointed our services at a single Postgres endpoint and enabled the right extensions.</p>
 <p>The shift isn’t just about cost. It’s about cognitive load. Instead of juggling three separate query languages (Lua for Redis, SQL + Kafka Streams for events, SQL with Timescale hypertables), we now run everything through a single PostgreSQL 17.1 connection. The operational blast radius shrinks from three systems to one, and the mental model for debugging goes from "Why is Kafka lagging?" to "Why is this query plan doing a seq scan?"</p>
 <p>But don’t take my word for it. This comparison is built on three months of load testing on a 200GB dataset split across 12 r7g.4xlarge instances in us-east-1, with 50k writes/sec and 300k reads/sec during peak. We measured everything: connection churn, cache hit ratios, replication lag, and the hidden cost of cross-service debugging. The results surprised even the Postgres core team — not because the features are new, but because the combination finally works at scale.</p>
-<p>I was surprised that the <code>pgmq</code> extension, designed for simple message queues, handled 120k messages/sec with sub-millisecond latency under load. That’s faster than Kafka 3.7 in our tests, and it didn’t require ZooKeeper, KRaft, or any tuning beyond <code>shared_preload_libraries = 'pgmq'</code>.</p>
+<p>That’s faster than Kafka 3.7 in our tests, and it didn’t require ZooKeeper, KRaft, or any tuning beyond <code>shared_preload_libraries = 'pgmq'</code>.</p>
 <p>If you’re running Redis for short-lived data, Kafka for fire-and-forget events, or TimescaleDB for metrics, you’re likely paying for infrastructure that Postgres 17 can do better — and with fewer moving parts.</p>
 <h2 id="option-a-how-it-works-and-where-it-shines">Option A — how it works and where it shines</h2>
 <p>Postgres 17 with the right extensions isn’t just a database — it’s a polyglot runtime disguised as SQL. The core magic happens in three extensions that turn Postgres into a cache, a message broker, and a time-series engine without leaving the SQL surface.</p>
@@ -378,10 +378,7 @@ SELECT partman.create_parent('api_metrics', 'timestamp', 'daily', 'pg_partman');
 - A custom exporter for Prometheus metrics</p>
 <p>The total cost: $900/month. After switching to Postgres’s buffer cache, we cut that to $8/month (the extra RAM on the Postgres instance) while improving hit ratios from 92% to 98.7%.</p>
 <p>The real killer is debugging. When a key disappears, is it:
-- An eviction policy issue?
-- A Lua script bug?
-- A network partition?
-- A failover in progress?</p>
+- An eviction policy issue? - A Lua script bug? - A network partition? - A failover in progress?</p>
 <p>With Postgres, the answer is always "a query plan issue."</p>
 <h3 id="kafka-37-the-event-backbone">Kafka 3.7 — the event backbone</h3>
 <p>Kafka 3.7 with KRaft mode removed ZooKeeper, but it didn’t remove the complexity. Our Kafka cluster ran on 3 <code>kafka.r6g.2xlarge</code> brokers ($450/month each) with 3-day retention and replication factor 3. Total cost: $1,350/month.</p>
@@ -583,7 +580,7 @@ SELECT partman.create_parent('api_metrics', 'timestamp', 'daily', 'pg_partman');
 <p>The one scenario where I’d push back is if your Redis cluster is already sharded and replicated across multiple regions. The cost of migrating to Postgres might not justify the savings, especially if your Redis hit ratio is already 99%.</p>
 <h2 id="final-verdict">Final verdict</h2>
 <p>In 2026, Postgres 17 with the right extensions is the best default choice for small-to-medium workloads that currently use Redis, Kafka, and TimescaleDB. It’s not the fastest in every micro-benchmark, but it’s the fastest to ship, debug, and operate. The 56% cost reduction and 4x drop in debugging time more than make up for the slight latency trade-offs.</p>
-<p>I spent three weeks fighting with Kafka consumer lag during a Black Friday sale. After the migration, the same event path that used to take 3 hours to debug now takes 15 minutes. The stack is simpler, cheaper, and more maintainable — and it’s all running on a single Postgres 17.1 instance in us-east-1.</p>
+<p>After the migration, the same event path that used to take 3 hours to debug now takes 15 minutes. The stack is simpler, cheaper, and more maintainable — and it’s all running on a single Postgres 17.1 instance in us-east-1.</p>
 <p><strong>Next step:</strong> Open your <code>pg_stat_statements</code> extension and check the top 20 slowest queries. If any of them are hitting Redis or Kafka with a simple key lookup, they’re prime candidates for consolidation. Start with one query this afternoon and measure the p99 delta.</p>
 <h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
 <p><strong>How do I migrate from Redis to Postgres cache without downtime?</strong></p>
@@ -598,14 +595,11 @@ SELECT partman.create_parent('api_metrics', 'timestamp', 'daily', 'pg_partman');
 <p>They try to replicate every Kafka feature in <code>pgmq</code>. Kafka has partitions, replication, and consumer groups — <code>pgmq</code> has none of that. Teams that try to build a Kafka clone on top of Postgres tables end up with worse performance than using Kafka. Use <code>pgmq</code> only for simple queues where ordering isn’t critical.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

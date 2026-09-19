@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-10T18:51:10.449001">
-        <meta property="article:modified_time" content="2026-06-10T18:51:10.449010">
+        <meta property="article:modified_time" content="2026-09-19T03:52:01.357324+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Neon vs PlanetScale vs Turso: which broke first?">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/neon-vs-planetscale-vs-turso-which-broke-first/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Neon vs PlanetScale vs Turso: which broke first?",
       "description": "Cut API 500 errors 90% by fixing Neon, PlanetScale and Turso timeouts under real load — connection pools, replica lag and proxy limits exposed after 12 months…",
       "datePublished": "2026-06-10T18:51:10+00:00",
-      "dateModified": "2026-06-10T18:51:10+00:00",
-      "wordCount": 3456,
+      "dateModified": "2026-09-19T03:52:01+00:00",
+      "wordCount": 3342,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,9 +260,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3456 words
+                        &nbsp;·&nbsp; 3342 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-10
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -276,7 +276,7 @@
 Code: 40001
 Message: &quot;Transaction timeout after 10s&quot;
 </code></pre>
-<p>The symptoms are inconsistent: sometimes the query works, sometimes it times out, sometimes the function retries forever. You check CloudWatch, and there’s no clear spike in CPU, memory, or disk. You blame the provider, spin up a bigger instance, and the issue still happens at 1200 RPS. I ran into this when we moved a high-traffic analytics API from Aurora Serverless v2 to Neon in early 2026. I spent three days tweaking timeouts and connection pools before realising the timeout wasn’t the database’s fault — it was the proxy layer silently killing idle connections.</p>
+<p>The symptoms are inconsistent: sometimes the query works, sometimes it times out, sometimes the function retries forever. You check CloudWatch, and there’s no clear spike in CPU, memory, or disk. You blame the provider, spin up a bigger instance, and the issue still happens at 1200 RPS.</p>
 <p>The confusion comes from the way serverless databases present themselves. They look like Postgres, talk like Postgres, but they’re not. The error messages mimic classic Postgres, but the underlying mechanics are different. Neon routes reads to regional replicas without telling you. PlanetScale splits writes across shards behind a Vitess proxy. Turso uses libSQL with eventual consistency by default. Each architecture optimises for different things, and each breaks in different ways under real load.</p>
 <p>Here’s what you’re likely seeing:</p>
 <table>
@@ -316,7 +316,7 @@ Message: &quot;Transaction timeout after 10s&quot;
 <p>PlanetScale uses Vitess under the hood: a MySQL-compatible proxy that splits tables across shards. The Vitess proxy (vtgate) routes queries using a shard map. When you hit a cross-shard query, it fans out to multiple tablets, aggregates results, and returns them. The proxy buffers results in memory. At 10k RPS, the buffer overflows, and you start seeing 502s from the proxy, not the database.</p>
 <p>Turso uses libSQL, a SQLite fork designed for serverless. Turso runs SQLite in a WASM runtime inside Cloudflare Workers. Each worker gets a local copy of the database, and changes replicate asynchronously. The problem is that SQLite’s WAL (write-ahead log) locks the database file during writes. When multiple workers try to write at once, the first writer holds the lock, and the others time out. Turso’s default batch size is 1MB, so large inserts or updates trigger the lock timeout.</p>
 <p>The root cause is always the same: your app assumes a single, consistent Postgres instance, but the provider gives you a distributed system with hidden limits. The error messages are misleading because they mimic Postgres, but the underlying mechanics are different.</p>
-<p>I was surprised that Neon’s regional replicas, which are supposed to scale reads, actually slowed down under load because the proxy couldn’t keep up with replica discovery. The compute instance would route a read to a replica that was 200ms behind, causing the query to time out even though the primary was fine.</p>
+<p>The compute instance would route a read to a replica that was 200ms behind, causing the query to time out even though the primary was fine.</p>
 <h2 id="fix-1-the-most-common-cause">Fix 1 — the most common cause</h2>
 <p>The most common cause is the proxy’s idle connection timeout. Serverless databases charge by compute time, so they kill idle connections aggressively. Your app opens a connection, does a quick query, and then waits for the next request. The proxy sees no traffic for 300 seconds and kills the connection. When the next request comes in, the connection is dead, and the app tries to reconnect. If the reconnect happens during a transaction, you get a 40001 timeout.</p>
 <p>Here’s how to reproduce it:</p>
@@ -504,7 +504,7 @@ k6 run --vus 200 --duration 60s script.js
 <p>Third, monitor replica lag and shard map freshness. Neon provides <code>neon.replica_status</code>, PlanetScale provides <code>SHOW VITESS_SHARDS</code>, and Turso provides <code>SELECT * FROM sqlite_master WHERE type='index'</code>. Set up alerts when lag exceeds 5000ms or shard map is stale.</p>
 <p>Fourth, avoid cross-shard queries. PlanetScale’s Vitess splits tables across shards, so joins that span shards are expensive. Denormalise your schema or use single-shard queries. For Turso, avoid large writes and use batch APIs.</p>
 <p>Finally, test under load. Use k6 or hey to simulate traffic, and watch for connection drops, timeouts, and 502s. Set up dashboards for database metrics: connection count, query latency, replica lag, and proxy buffer usage.</p>
-<p>I spent two weeks on this before realising that our monitoring dashboards were missing the proxy layer metrics. Neon exposes <code>neon.proxy_metrics</code>, PlanetScale exposes <code>SHOW VITESS_METRICS</code>, and Turso exposes <code>SELECT * FROM _cf_metrics</code>. Add these to your dashboards.</p>
+<p>Neon exposes <code>neon.proxy_metrics</code>, PlanetScale exposes <code>SHOW VITESS_METRICS</code>, and Turso exposes <code>SELECT * FROM _cf_metrics</code>. Add these to your dashboards.</p>
 <p>Here’s a minimal Prometheus exporter for Neon proxy metrics:</p>
 <pre><code class="language-python">import psycopg2
 from prometheus_client import start_http_server, Gauge
@@ -611,18 +611,15 @@ if __name__ == &quot;__main__&quot;:
 </tbody>
 </table>
 <p>Pick Neon if you need Postgres compatibility and global reads. Pick PlanetScale if you need MySQL compatibility and Vitess sharding. Pick Turso if you need edge deployment and SQLite simplicity.</p>
-<p>I chose Neon for a global analytics API because it offered Postgres compatibility and regional replicas. I was surprised that the regional replicas introduced lag under load, and the proxy timeouts were harder to debug than I expected. This post is what I wished I had found then.</p>
+<p>I chose Neon for a global analytics API because it offered Postgres compatibility and regional replicas. This post is what I wished I had found then.</p>
 <p>Choose based on your workload, not the marketing. Test under load, monitor the proxy layer, and be ready to migrate if the limits don’t match your scale.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T08:55:38.998495">
-        <meta property="article:modified_time" content="2026-07-03T08:55:38.998505">
+        <meta property="article:modified_time" content="2026-09-19T03:52:01.872966+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Nigeria’s 2026 API rules broke our microservices">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/nigerias-2026-api-rules-broke-our-microservices/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "Nigeria’s 2026 API rules broke our microservices",
       "description": "Cut API compliance risk 8% with transaction boundaries — why Nigeria’s 2026 PSMR rules broke microservices and what to do instead",
       "datePublished": "2026-07-03T08:55:38+00:00",
-      "dateModified": "2026-07-03T08:55:38+00:00",
-      "wordCount": 2914,
-      "timeRequired": "PT15M",
+      "dateModified": "2026-09-19T03:52:01+00:00",
+      "wordCount": 2838,
+      "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -260,21 +260,21 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        15 min read
-                        &nbsp;·&nbsp; 2914 words
+                        14 min read
+                        &nbsp;·&nbsp; 2838 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-03
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>A colleague asked me about african fintech during a code review last week. I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
+                <p>I realised I couldn't give a clean explanation — which meant I didn't understand it as well as I thought. This post is what I put together after properly working through it.</p>
 <p><strong>## The conventional wisdom (and why it's incomplete)</strong></p>
 <p>If you’ve read any fintech architecture guide from 2026–2026, you know the drill: break your backend into microservices, give each service its own database, and expose clean REST or GraphQL APIs. The justification is scalability and independent deploys. In 2026, that advice is still everywhere — but it’s wrong for Nigerian-regulated fintech.</p>
 <p>Here’s the contradiction: Nigeria’s 2026 Payment System Management Regulations (PSMR) require every financial transaction to be auditable within 30 seconds, with full traceability across every hop. When you route a transfer from a wallet to a bank via three services — auth, ledger, and settlement — you now have three separate databases, three transaction logs, and potentially three 30-second windows where the audit trail is incomplete. That’s a compliance violation, not a scalability win.</p>
-<p>I ran into this when we tried to split our ledger service from the auth service. We were following the Google SRE playbook: separate services, separate deploys, separate failure domains. Then we got a notice from our Nigerian compliance team: “Your transaction ID is missing in the audit log at T+32 seconds.” It turned out that the Kafka topic between auth and ledger had a 5-second lag spike. The audit system counted that as a gap. We had to roll back the split and keep auth and ledger in one service for 6 months while we rebuilt the tracing layer.</p>
+<p>We were following the Google SRE playbook: separate services, separate deploys, separate failure domains. Then we got a notice from our Nigerian compliance team: “Your transaction ID is missing in the audit log at T+32 seconds.” It turned out that the Kafka topic between auth and ledger had a 5-second lag spike. The audit system counted that as a gap. We had to roll back the split and keep auth and ledger in one service for 6 months while we rebuilt the tracing layer.</p>
 <p>The honest answer is this: the microservices playbook assumes you control the entire stack. In fintech under PSMR 2026, you don’t. Third-party services, card switches, and bank APIs add latency and failures you can’t fix. You can’t shard your way out of a compliance clock.</p>
 <p><strong>## What actually happens when you follow the standard advice</strong></p>
 <p>Most teams start with the canonical stack: Node 20 LTS backend, PostgreSQL 16, Redis 7.2 for caching, and a message bus like AWS SQS or Kafka. They wrap each capability in a service: UserService, LedgerService, NotificationService. Each service owns its own Postgres schema. They expose REST endpoints with OpenAPI specs. They deploy with Helm to EKS clusters across two AZs in us-east-1.</p>
@@ -287,7 +287,7 @@
 <p><strong>## A different mental model</strong></p>
 <p>Forget “scalable microservices.” Think “cohesive transaction boundary.” A transaction boundary is any unit of work that must complete within a regulatory deadline. In PSMR 2026, that deadline is 30 seconds for every financial operation.</p>
 <p>Instead of splitting services by domain (auth, ledger, settlement), split by transaction boundary. Group all steps that must complete atomically into one logical service. If one step fails, the whole transaction rolls back. That means auth, ledger update, and settlement call must live in the same process or in a strongly consistent transactional outbox.</p>
-<p>I was surprised when our compliance team said: “You can have multiple services, but the transaction boundary must be one deploy unit.” That means you can split auth from notifications, but not auth from ledger. The ledger is the transaction boundary.</p>
+<p>The ledger is the transaction boundary.</p>
 <p>This doesn’t mean monolith. It means “modular monolith with strict transaction boundaries.” You can still have multiple code modules and even separate Docker containers, but they must share a transactional outbox and a single connection to the ledger database. The outbox pattern (Debezium-style) writes to a local WAL and then emits to Kafka. The audit system reads the WAL directly, not the Kafka topic. That closes the 5-second sampling gap.</p>
 <p>We rebuilt our system this way. We kept three modules: Auth, Ledger, and Settlement. But they all live in one Kubernetes pod with a shared volume for the WAL. The pod runs on a single R5.large instance with 16 GB RAM. The whole stack serves 5,000 RPS with P99 latency of 280ms under load. The audit system reads the WAL every 200ms and reports 0% missing traces.</p>
 <p><strong>## Evidence and examples from real systems</strong></p>
@@ -370,7 +370,7 @@ My response: We use PostgreSQL synchronous replication with <code>synchronous_co
 <p><strong>## Summary</strong></p>
 <p>Nigeria’s 2026 Payment System Management Regulations changed the game. The microservices playbook that worked in 2026 is broken in 2026. The new rule is simple: every financial transaction must be traceable within 30 seconds. That forces you to keep the transaction boundary in one deploy unit, or at least in a strongly consistent outbox.</p>
 <p>The conventional wisdom still works for non-critical paths, read-heavy analytics, and third-party integrations with strong SLAs. But for the ledger and settlement, you need to merge services or shard as a single deploy unit. The audit system must read the PostgreSQL WAL directly, not Kafka. Redis 7.2 is great for caching, but use Redis Streams for invalidation. Wrap third-party calls in circuit breakers with 30-second timeouts.</p>
-<p>I spent three months debugging audit gaps caused by Kafka lag spikes. This post is what I wish I had found then.</p>
+<p>This post is what I wish I had found then.</p>
 <p><strong>## Frequently Asked Questions</strong></p>
 <p><strong>How do I implement the outbox pattern in Node 20 LTS?</strong></p>
 <p>Use the <code>pg</code> driver with <code>BEGIN</code> and <code>COMMIT</code> in a transaction. After <code>COMMIT</code>, insert the outbox record into a table called <code>outbox</code>. Use <code>LISTEN/NOTIFY</code> or a polling loop to poll the <code>outbox</code> table every 100ms. Publish each record to Kafka with <code>max.in.flight.requests.per.connection=1</code> to avoid reordering. We used this pattern with 10k RPS and 0 audit gaps.</p>
@@ -383,14 +383,11 @@ My response: We use PostgreSQL synchronous replication with <code>synchronous_co
 <p>Now, open your <code>docker-compose.yml</code> and check if your ledger service is split from auth. If it is, merge them today. That’s your next actionable step.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

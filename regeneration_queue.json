@@ -189,69 +189,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "double-the-price-double-the-revenue",
-    "title": "Double the price, double the revenue",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I assumed developers wanted a free tier first, then a cheap paid tier, then a bi; I copied the pattern from Stripe, Notion, and Vercel without realising those com",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "event-sourcing-pay-the-complexity-tax-only-here",
-    "title": "Event sourcing: pay the complexity tax only here",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): The short version: the conventional advice on event sourcing is incomplete.; I ran into this when we had to retroactively answer “who changed the user’s risk; I once reviewed a codebase that proudly called itself “event-sourced” because it",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "istio-and-cilium-what-really-breaks-in-production",
-    "title": "Istio and Cilium: what really breaks in production",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about service mesh during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when a 30-node EKS cluster in eu-central-1 suddenly started drop",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "meter-dev-tool-pricing-in-2026",
-    "title": "Meter dev-tool pricing in 2026",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I watched peers launch the same tool at $5 / month and die in three weeks; other; I expected usage data to give me the answer.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "micro-saas-niches-eaten-by-ai-in-2026",
-    "title": "Micro-SaaS niches eaten by AI in 2026",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about microsaas 2026 during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I bought this story in 2026 when I launched a tool for indie game developers to ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "negotiate-2026-pay-when-ai-steals-40-of-your-job",
     "title": "Negotiate 2026 pay when AI steals 40% of your job",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I built a small internal tool to track how much of each engineer’s week Copilot ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "neon-vs-planetscale-vs-turso-which-broke-first",
     "title": "Neon vs PlanetScale vs Turso: which broke first?",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I ran into this when we moved a high-traffic analytics API from Aurora Serverles; I spent three days tweaking timeouts and connection pools before realising the t; I was surprised that Neon’s regional replicas, which are supposed to scale reads",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "nigerias-2026-api-rules-broke-our-microservices",
     "title": "Nigeria’s 2026 API rules broke our microservices",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we tried to split our ledger service from the auth service.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ollama-local-vs-ollama-cloud-fintech-data-stays-in-kenya",
     "title": "Ollama Local vs Ollama Cloud: fintech data stays in Kenya",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I drank that Kool-Aid.; I spent three days debugging a connection pool issue that turned out to be a sin; I got bitten once when we forgot to set   on the local registry proxy and pulled",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "postgres-17-swallowed-redis-kafka-timescale",
     "title": "Postgres 17 swallowed Redis, Kafka, Timescale",
     "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I've seen the same postgres 2026 mistake in multiple production codebases, inclu; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when we hit a wall scaling a Jakarta-based payments service.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "skip-m-pesa-build-one-api-for-3-african-markets",
@@ -2108,6 +2078,41 @@
     "slug": "purpose-built-ai-vs-general-platforms",
     "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
     "priority": "normal"
+  },
+  {
+    "slug": "double-the-price-double-the-revenue",
+    "title": "Double the price, double the revenue",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I assumed developers wanted a free tier first, then a cheap paid tier, then a bi; I copied the pattern from Stripe, Notion, and Vercel without realising those com",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "event-sourcing-pay-the-complexity-tax-only-here",
+    "title": "Event sourcing: pay the complexity tax only here",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): The short version: the conventional advice on event sourcing is incomplete.; I ran into this when we had to retroactively answer “who changed the user’s risk; I once reviewed a codebase that proudly called itself “event-sourced” because it",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "istio-and-cilium-what-really-breaks-in-production",
+    "title": "Istio and Cilium: what really breaks in production",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about service mesh during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when a 30-node EKS cluster in eu-central-1 suddenly started drop",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "meter-dev-tool-pricing-in-2026",
+    "title": "Meter dev-tool pricing in 2026",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I watched peers launch the same tool at $5 / month and die in three weeks; other; I expected usage data to give me the answer.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "micro-saas-niches-eaten-by-ai-in-2026",
+    "title": "Micro-SaaS niches eaten by AI in 2026",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about microsaas 2026 during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I bought this story in 2026 when I launched a tool for indie game developers to ",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "built-a-multi-agent-system-without-langgraph",
