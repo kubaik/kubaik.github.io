@@ -150,5 +150,41 @@
   "hit-5k-mrr-without-a-marketing-team": {
     "deleted_at": "2026-09-19T11:43:23.195083",
     "reason": "missing post.json (no source of truth)"
+  },
+  "2026-salary-hacks-prove-ai-didnt-steal-your-value": {
+    "deleted_at": "2026-09-19T12:10:45.940887",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "3-side-gigs-that-paid-me-2k-usdmonth-in-2026": {
+    "deleted_at": "2026-09-19T12:10:45.941080",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "7-passive-income-streams-for-devs-in-2026": {
+    "deleted_at": "2026-09-19T12:10:45.941245",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-ops-datadog-vs-granfa-for-infra-automation": {
+    "deleted_at": "2026-09-19T12:10:45.941452",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-tools-cut-rates-30-whats-real-in-2026": {
+    "deleted_at": "2026-09-19T12:10:45.941599",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "block-api-abuse-in-2026-before-it-blocks": {
+    "deleted_at": "2026-09-19T12:10:45.941736",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "bootcamp-to-120k-2026-steps-that-pay": {
+    "deleted_at": "2026-09-19T12:10:45.941872",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "price-tests-that-raised-revenue-vs-tests-that-killed": {
+    "deleted_at": "2026-09-19T12:10:45.942014",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "wireguard-vs-tailscale-for-5month-zero-trust": {
+    "deleted_at": "2026-09-19T12:10:45.942161",
+    "reason": "missing post.json (no source of truth)"
   }
 }

@@ -168,5 +168,50 @@
     "removed_at": "2026-09-19T08:27:14.108620+00:00",
     "reason": "demoted from improve: Improve strip left 1772 words (< 1800)",
     "source": "content_audit_verdicts"
+  },
+  "2026-salary-hacks-prove-ai-didnt-steal-your-value": {
+    "removed_at": "2026-09-19T09:10:08.253580+00:00",
+    "reason": "Policy-risk title: Income/salary/side-gig bait \u2014 low-value monetization content and unverifiable earnings claims.",
+    "source": "content_audit_verdicts"
+  },
+  "3-side-gigs-that-paid-me-2k-usdmonth-in-2026": {
+    "removed_at": "2026-09-19T09:10:08.255208+00:00",
+    "reason": "Policy-risk title: Income/salary/side-gig bait \u2014 low-value monetization content and unverifiable earnings claims.; Claim: Unverifiable first-person incident language (1 sentence(s)).",
+    "source": "content_audit_verdicts"
+  },
+  "7-passive-income-streams-for-devs-in-2026": {
+    "removed_at": "2026-09-19T09:10:08.256423+00:00",
+    "reason": "Policy-risk title: Income/salary/side-gig bait \u2014 low-value monetization content and unverifiable earnings claims.",
+    "source": "content_audit_verdicts"
+  },
+  "ai-ops-datadog-vs-granfa-for-infra-automation": {
+    "removed_at": "2026-09-19T09:10:08.257604+00:00",
+    "reason": "Claim: Named organization 'Datadog' paired with a precise statistic and no verifiable source URL.",
+    "source": "content_audit_verdicts"
+  },
+  "ai-tools-cut-rates-30-whats-real-in-2026": {
+    "removed_at": "2026-09-19T09:10:08.258791+00:00",
+    "reason": "Claim: Unsourced 'study/survey/report by' phrasing \u2014 treat as a fabricated citation.",
+    "source": "content_audit_verdicts"
+  },
+  "block-api-abuse-in-2026-before-it-blocks": {
+    "removed_at": "2026-09-19T09:10:08.259539+00:00",
+    "reason": "Claim: Named organization 'Cloudflare' paired with a precise statistic and no verifiable source URL.; Claim: Unverifiable first-person incident language (1 sentence(s)).",
+    "source": "content_audit_verdicts"
+  },
+  "bootcamp-to-120k-2026-steps-that-pay": {
+    "removed_at": "2026-09-19T09:10:08.260363+00:00",
+    "reason": "Claim: Named organization 'Cloudflare' paired with a precise statistic and no verifiable source URL.; Claim: Unverifiable first-person incident language (2 sentence(s)).; Technical post with fewer than two code fences",
+    "source": "content_audit_verdicts"
+  },
+  "price-tests-that-raised-revenue-vs-tests-that-killed": {
+    "removed_at": "2026-09-19T09:10:08.261366+00:00",
+    "reason": "Claim: Named organization 'Cloudflare' paired with a precise statistic and no verifiable source URL.; Claim: Unverifiable first-person incident language (1 sentence(s)).",
+    "source": "content_audit_verdicts"
+  },
+  "wireguard-vs-tailscale-for-5month-zero-trust": {
+    "removed_at": "2026-09-19T09:10:08.262060+00:00",
+    "reason": "Claim: Unsourced 'study/survey/report by' phrasing \u2014 treat as a fabricated citation.; Claim: Unverifiable first-person incident language (2 sentence(s)).",
+    "source": "content_audit_verdicts"
   }
 }
