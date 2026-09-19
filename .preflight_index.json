@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-19T09:21:59.119164",
+  "built_at": "2026-09-19T09:31:08.114184",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5245,6 +5245,11 @@
       "slug": "scope-agent-permissions-per-task",
       "title": "Scope agent permissions per task",
       "summary": "The engineers who build a leastprivilege agents pipeline rarely stick around long enough to document why it works the way it does. Here's what I'd tell a colleague hitting this for the first time. The answers online were either wrong or skipped the part that mattered. The one-paragraph version (read"
+    },
+    {
+      "slug": "purpose-built-ai-is-a-trap-for-solo-founders",
+      "title": "Purpose-built AI is a trap for solo founders",
+      "summary": "Most write-ups stop exactly where the interesting part starts. The same purposebuilt platforms mistake shows up across production codebases often enough to be a pattern, not bad luck. This is what I put together after working through it properly. The conventional wisdom (and why it's incomplete) The"
     }
   ]
 }

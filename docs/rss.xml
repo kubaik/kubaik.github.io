@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 19 Sep 2026 12:27:35 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 19 Sep 2026 09:34:11 +0000</lastBuildDate>
+    <item>
+      <title>Purpose-built AI is a trap for solo founders</title>
+      <link>https://kubaik.github.io/purpose-built-ai-is-a-trap-for-solo-founders/</link>
+      <description>Purpose-built AI platforms promise speed but bury control flow. For solo founders, a thin provider-SDK pipeline is fewer dependencies and faster to debug.</description>
+      <pubDate>Sat, 19 Sep 2026 09:31:04 +0000</pubDate>
+      <guid>https://kubaik.github.io/purpose-built-ai-is-a-trap-for-solo-founders/</guid>
+    </item>
     <item>
       <title>Scope agent permissions per task</title>
       <link>https://kubaik.github.io/scope-agent-permissions-per-task/</link>
@@ -138,13 +145,6 @@
       <description>Agent‑orchestrated systems often hide coupling; discover a contract‑first approach that cuts latency 60% and avoids hidden failures.</description>
       <pubDate>Mon, 14 Sep 2026 17:56:40 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-trusting-agents-for-core-logic/</guid>
-    </item>
-    <item>
-      <title>Why does my agent version break clients?</title>
-      <link>https://kubaik.github.io/why-does-my-agent-version-break-clients/</link>
-      <description>Agent versioning pitfalls cause silent breakages; avoid contract drift and mutable tags to keep integrations stable, or risk 15% more incidents.</description>
-      <pubDate>Mon, 14 Sep 2026 04:09:00 +0000</pubDate>
-      <guid>https://kubaik.github.io/why-does-my-agent-version-break-clients/</guid>
     </item>
   </channel>
 </rss>

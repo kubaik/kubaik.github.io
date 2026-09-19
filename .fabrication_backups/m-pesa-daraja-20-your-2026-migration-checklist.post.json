@@ -9,7 +9,7 @@
   "meta_description": "Migrate M-Pesa Daraja to 2.0 in 2026 and cut failed payments 82% — new headers, idempotency keys, and callback changes you must ship before March 31",
   "featured_image": "/static/images/m-pesa-daraja-20-your-2026-migration-checklist.jpg",
   "created_at": "2026-07-02T16:41:45.048601",
-  "updated_at": "2026-09-19T09:34:02.688082+00:00",
+  "updated_at": "2026-09-19T08:27:14.223370+00:00",
   "seo_keywords": [
     "SafaricomApi2026",
     "Apis"

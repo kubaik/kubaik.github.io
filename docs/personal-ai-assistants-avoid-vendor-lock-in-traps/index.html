@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-11T09:44:01.921304">
-        <meta property="article:modified_time" content="2026-06-11T09:44:01.921312">
+        <meta property="article:modified_time" content="2026-09-19T09:34:03.443124+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Personal AI assistants: avoid vendor lock-in traps">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/personal-ai-assistants-avoid-vendor-lock-in-traps/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Personal AI assistants: avoid vendor lock-in traps",
       "description": "Cut 98% of AI assistant costs without vendor lock-in — Redis 7.2 caching, OpenSearch 2.11 search, and vLLM 0.4.0 self-hosted models deliver P95 latency under…",
       "datePublished": "2026-06-11T09:44:01+00:00",
-      "dateModified": "2026-06-11T09:44:01+00:00",
-      "wordCount": 3350,
+      "dateModified": "2026-09-19T09:34:03+00:00",
+      "wordCount": 3321,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3350 words
+                        &nbsp;·&nbsp; 3321 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-11
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -276,7 +276,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>The official documentation for building personal is good. What it doesn't cover is what happens when you're six months into production and the edge cases start appearing. This is the post that fills that gap.</p>
 <h2 id="the-gap-between-what-the-docs-say-and-what-production-needs">The gap between what the docs say and what production needs</h2>
-<p>When I first started building personal AI assistants for dev workflows in 2026, I assumed a simple setup: one LLM call, a few function hooks, and done. The docs promised 200ms response times with a single API key. Reality hit on day three — our staging environment started timing out at 3.2s per assistant call, with CPU throttling on the 4 vCPU instance we’d picked based on the quickstart guide. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>When I first started building personal AI assistants for dev workflows in 2026, I assumed a simple setup: one LLM call, a few function hooks, and done. The docs promised 200ms response times with a single API key. Reality hit on day three — our staging environment started timing out at 3.2s per assistant call, with CPU throttling on the 4 vCPU instance we’d picked based on the quickstart guide.</p>
 <p>The disconnect between marketing copy and production reality isn’t unique to AI. It shows up in three predictable places:</p>
 <ol>
 <li>
@@ -724,14 +724,11 @@ deploy:
 <p>Use Redis-backed rate limiting with a sliding window. For retries, wrap each tool call in a circuit breaker using backoff 2.2.1. Set a 3-retry limit and a 10-second timeout. If a tool fails three times, mark it unhealthy and return an error to the user. This prevents thundering herds and gives users a clear error message.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
