@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-19T03:49:03.207248",
+  "built_at": "2026-09-19T08:31:21.424470",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5225,6 +5225,11 @@
       "slug": "negotiating-pay-when-ai-inflates-output",
       "title": "Negotiating pay when AI inflates output",
       "summary": "It's fine in staging because staging never sees the traffic pattern that breaks it. The compensation negotiation section of a postmortem is easy to skim past, right up until it's the section that matters. This walks through the fix and the reasoning, not just the patch. The one-paragraph version (re"
+    },
+    {
+      "slug": "most-llm-cost-dashboards-lie",
+      "title": "Most LLM cost dashboards lie…",
+      "summary": "It's easy to spend longer than expected on finops llmheavy before the actual failure mode becomes clear. Production gives you neither a clean environment nor a patient timeline. Here's what I'd tell a colleague hitting this for the first time. The gap between what the docs say and what production ne"
     }
   ]
 }

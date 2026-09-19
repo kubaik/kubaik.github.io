@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 19 Sep 2026 11:27:44 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 19 Sep 2026 08:33:34 +0000</lastBuildDate>
+    <item>
+      <title>Most LLM cost dashboards lie…</title>
+      <link>https://kubaik.github.io/most-llm-cost-dashboards-lie/</link>
+      <description>LLM bills hide 30-60% of real spend in retries, cache misses, and agent loops.</description>
+      <pubDate>Sat, 19 Sep 2026 08:31:18 +0000</pubDate>
+      <guid>https://kubaik.github.io/most-llm-cost-dashboards-lie/</guid>
+    </item>
     <item>
       <title>Negotiating pay when AI inflates output</title>
       <link>https://kubaik.github.io/negotiating-pay-when-ai-inflates-output/</link>
@@ -138,13 +145,6 @@
       <description>Prerequisites and what you&amp;#x27;ll build To grasp the architectural shifts we need, you should have at least three years of experience in software development…</description>
       <pubDate>Sat, 12 Sep 2026 15:17:48 +0000</pubDate>
       <guid>https://kubaik.github.io/platform-teams-agentic-world-struggle/</guid>
-    </item>
-    <item>
-      <title>MCP hidden cost traps</title>
-      <link>https://kubaik.github.io/mcp-hidden-cost-traps/</link>
-      <description>MCP operational costs expose hidden $12k monthly waste and security gaps that most teams overlook, with concrete steps to fix scaling and secret leaks.</description>
-      <pubDate>Sat, 12 Sep 2026 13:48:03 +0000</pubDate>
-      <guid>https://kubaik.github.io/mcp-hidden-cost-traps/</guid>
     </item>
   </channel>
 </rss>
