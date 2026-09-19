@@ -10,7 +10,7 @@
   "meta_description": "Cut API latency 42% and raise throughput 62% by switching Python 3.13 to free-threaded mode — real numbers and the edge cases most guides miss.",
   "featured_image": "/static/images/unlock-python-313s-free-threaded-gil-for-web-apps.jpg",
   "created_at": "2026-06-22T19:38:03.246787",
-  "updated_at": "2026-09-19T12:03:04.800039+00:00",
+  "updated_at": "2026-09-19T08:27:14.749664+00:00",
   "seo_keywords": [
     "Fastapi",
     "Python",

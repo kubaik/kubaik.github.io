@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 19 Sep 2026 14:55:30 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 19 Sep 2026 12:03:13 +0000</lastBuildDate>
+    <item>
+      <title>Computer-use agents: the permission trap</title>
+      <link>https://kubaik.github.io/computer-use-agents-the-permission-trap/</link>
+      <description>Computer-use agents inherit full user permissions and leave no audit trail.</description>
+      <pubDate>Sat, 19 Sep 2026 12:00:05 +0000</pubDate>
+      <guid>https://kubaik.github.io/computer-use-agents-the-permission-trap/</guid>
+    </item>
     <item>
       <title>Agentic AI cost control: 7 tools, one backfire</title>
       <link>https://kubaik.github.io/agentic-ai-cost-control-7-tools-one-backfire/</link>
@@ -138,13 +145,6 @@
       <description>Zero-trust for AI services without the latency tax: local OPA, session resumption, and warm pools cut p99 from 640ms to 225ms.</description>
       <pubDate>Tue, 15 Sep 2026 16:35:21 +0000</pubDate>
       <guid>https://kubaik.github.io/zero-trust-ai-skip-the-latency-tax/</guid>
-    </item>
-    <item>
-      <title>Memory Systems for Production Agents</title>
-      <link>https://kubaik.github.io/memory-systems-for-production-agents/</link>
-      <description>Understand the context leaks in memory systems for production agents — in-memory databases, caching layers, and stateful microservices.</description>
-      <pubDate>Tue, 15 Sep 2026 04:09:36 +0000</pubDate>
-      <guid>https://kubaik.github.io/memory-systems-for-production-agents/</guid>
     </item>
   </channel>
 </rss>

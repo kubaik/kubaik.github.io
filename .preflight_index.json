@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-19T11:35:47.865622",
+  "built_at": "2026-09-19T12:00:09.008154",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5255,6 +5255,11 @@
       "slug": "agentic-ai-cost-control-7-tools-one-backfire",
       "title": "Agentic AI cost control: 7 tools, one backfire",
       "summary": "Most write-ups stop exactly where the interesting part starts. evaluationdriven development problems have a habit of surfacing mid-migration, right when there's no time to solve them properly. Here's the version I wish someone had handed me first. Why this list exists (what I was actually trying to "
+    },
+    {
+      "slug": "computer-use-agents-the-permission-trap",
+      "title": "Computer-use agents: the permission trap",
+      "summary": "The metric everyone watches for clickhouse postgres usually isn't the one that would have caught the problem early. This is the version of the write-up that includes the part that broke. The dashboards look healthy right up until the incident starts. The situation (what we were trying to solve) A fi"
     }
   ]
 }

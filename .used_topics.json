@@ -26,5 +26,9 @@
   "Least-privilege for AI agents: the permission model that doesn't make developers revolt",
   "Purpose-built AI platforms vs general platforms: the decision we had to make in 2026",
   "Evaluation-driven development for agents: the loop that replaced vibe testing",
-  "Agentic cost management: using AI to optimize our own AI spend (and where it backfired)"
+  "Agentic cost management: using AI to optimize our own AI spend (and where it backfired)",
+  "ClickHouse vs Postgres for analytics: the tradeoffs that actually matter at scale",
+  "The failure modes we only saw after running multi-agent systems at scale for 6 months",
+  "How we built payment reconciliation that survives M-Pesa, Paystack, and Flutterwave failures",
+  "Productionizing 'computer use' style agents without granting dangerous permissions"
 ]
