@@ -10,7 +10,7 @@
   "meta_description": "Tech salaries in 2026 settled into two tracks: niche roles up 15–25%, mass-market roles flat or down 5–15%.",
   "featured_image": "/static/images/2026-tech-salaries-where-cuts-stopped-where-raises.jpg",
   "created_at": "2026-06-10T23:58:28.966727",
-  "updated_at": "2026-09-19T09:17:49.320698+00:00",
+  "updated_at": "2026-09-19T09:27:15.401772+00:00",
   "seo_keywords": [
     "Tech",
     "Technology",
@@ -30,6 +30,6 @@
   "has_code": false,
   "has_table": true,
   "prewritten_tweet": "Most Nairobi engineers think salaries are flat.\n\nThe reality: fintech roles up 15–25%, generic SaaS flat or down 5–15%.\n\nHere is the full breakdown with offer math and tax gotchas\n\nhttps://kubaik.github.io/2026-tech-salaries-where-cuts-stopped-where-raises\n\n#TechNews #Tech #Technology #CareerAdvice\n\nWhat would you add to this?",
-  "audit_improved_at": "2026-09-19T09:17:49.320698+00:00",
+  "audit_improved_at": "2026-09-19T09:27:15.401772+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences"
 }

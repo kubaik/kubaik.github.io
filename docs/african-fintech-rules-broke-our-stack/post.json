@@ -9,7 +9,7 @@
   "meta_description": "But the honest answer is that that checklist is only the first 5% of the work.",
   "featured_image": "/static/images/african-fintech-rules-broke-our-stack.jpg",
   "created_at": "2026-08-02T13:12:23.214191",
-  "updated_at": "2026-09-19T09:17:49.358709+00:00",
+  "updated_at": "2026-09-19T09:27:15.438756+00:00",
   "seo_keywords": [
     "Tech",
     "Technology"
@@ -28,6 +28,6 @@
   "has_code": false,
   "has_table": true,
   "full_title": "African fintech rules broke our stack",
-  "audit_improved_at": "2026-09-19T09:17:49.358709+00:00",
+  "audit_improved_at": "2026-09-19T09:27:15.438756+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences"
 }

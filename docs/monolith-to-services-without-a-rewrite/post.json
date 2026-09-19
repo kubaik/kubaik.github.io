@@ -14,7 +14,7 @@
   "meta_description": "Cut API response time 20% by decoupling first—database-first refactor beats service extraction for most teams in 2026.",
   "featured_image": "/static/images/monolith-to-services-without-a-rewrite.jpg",
   "created_at": "2026-06-27T20:07:07.246730",
-  "updated_at": "2026-09-19T09:17:49.520506+00:00",
+  "updated_at": "2026-09-19T09:27:15.599316+00:00",
   "seo_keywords": [
     "Monolith",
     "Microservices",
@@ -40,6 +40,6 @@
   "has_code": false,
   "has_table": true,
   "prewritten_tweet": "Most teams burn months extracting services from a monolith only to make it slower and costlier.\n\nThe real work is decoupling the data layer first.\n\nhttps://kubaik.github.io/monolith-to-services-without-a-rewrite\n\n#Crypto #PostgreSQL #Redis #MonolithRefactor2026\n\nDone this differently? Tell me what worked.",
-  "audit_improved_at": "2026-09-19T09:17:49.520506+00:00",
+  "audit_improved_at": "2026-09-19T09:27:15.599316+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences"
 }

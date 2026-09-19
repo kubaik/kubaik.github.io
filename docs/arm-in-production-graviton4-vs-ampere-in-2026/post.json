@@ -11,7 +11,7 @@
   "meta_description": "Cut AWS costs 36% with Graviton4 — the real migration mistakes teams make, benchmarks, and the exact timeouts to change first",
   "featured_image": "/static/images/arm-in-production-graviton4-vs-ampere-in-2026.jpg",
   "created_at": "2026-06-10T08:38:47.576445",
-  "updated_at": "2026-09-19T09:17:49.440054+00:00",
+  "updated_at": "2026-09-19T09:27:15.520525+00:00",
   "seo_keywords": [
     "Graviton4CostSavings",
     "KubernetesArmMigration",
@@ -32,6 +32,6 @@
   "has_code": true,
   "has_table": true,
   "prewritten_tweet": "Most teams burn $7k+ on ARM migration before measuring image pull timeouts.\n\nGraviton4 needs 12s, not 5s.\n\nHere is what actually paid off 👇\n\nhttps://kubaik.github.io/arm-in-production-graviton4-vs-ampere-in-2026\n\n#Innovation #Kubernetes #K8s #Graviton4CostSavings\n\nWhat would you add to this?",
-  "audit_improved_at": "2026-09-19T09:17:49.440054+00:00",
+  "audit_improved_at": "2026-09-19T09:27:15.520525+00:00",
   "audit_improve_reason": "Claim: Unverifiable first-person incident language (1 sentence(s))."
 }

@@ -12,7 +12,7 @@
   "meta_description": "Cut AI code crashes 40% by picking the right sidekick. Compare GitHub Copilot Enterprise 2026 vs Cursor v0.32 on latency, edge cases, and offline survival.",
   "featured_image": "/static/images/ai-code-traps-copilot-vs-cursor-smackdown.jpg",
   "created_at": "2026-06-09T12:29:18.961756",
-  "updated_at": "2026-09-19T09:17:49.379328+00:00",
+  "updated_at": "2026-09-19T09:27:15.458807+00:00",
   "seo_keywords": [
     "EdgeCaseDebugging",
     "PythonEdgeCases",
@@ -37,6 +37,6 @@
   "has_code": false,
   "has_table": true,
   "prewritten_tweet": "Most teams burn $1,200/year on Copilot before measuring ROI.\n\nThe real savings come from picking the AI that survives your edge cases.\n\nHere is what actually paid off 👇\n\nhttps://kubaik.github.io/ai-code-traps-copilot-vs-cursor-smackdown\n\n#AI #ArtificialIntelligence #GitHub #CursorAI\n\nWhat would you add to this?",
-  "audit_improved_at": "2026-09-19T09:17:49.379328+00:00",
+  "audit_improved_at": "2026-09-19T09:27:15.458807+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences"
 }

@@ -13,7 +13,7 @@
   "meta_description": "Cut AI observability ingest cost 70% while slashing dashboard latency from 8.2s to 220ms using NATS JetStream, OTel Collector Lua transforms, and Loki…",
   "featured_image": "/static/images/ai-observability-real-time-dashboards-without-the.jpg",
   "created_at": "2026-06-28T12:18:09.690589",
-  "updated_at": "2026-09-19T09:17:49.404292+00:00",
+  "updated_at": "2026-09-19T09:27:15.482679+00:00",
   "seo_keywords": [
     "AiObservability",
     "RealTimeDashboards",
@@ -39,6 +39,6 @@
   "has_code": true,
   "has_table": true,
   "prewritten_tweet": "Most teams burn $8k+ a month on AI observability logs and never fix the root cause.\n\nhttps://kubaik.github.io/ai-observability-real-time-dashboards-without-the\n\n#Web3 #AI #AiObservability #RealTimeDashboards\n\nWhich part took you the longest to get right?",
-  "audit_improved_at": "2026-09-19T09:17:49.404292+00:00",
+  "audit_improved_at": "2026-09-19T09:27:15.482679+00:00",
   "audit_improve_reason": "AI-filler phrase: game-changer"
 }

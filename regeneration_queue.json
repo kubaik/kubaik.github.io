@@ -9,7 +9,7 @@
   {
     "slug": "launch-saas-in-6-weeks-the-ai-shortcut-i-actually-used",
     "title": "Launch SaaS in 6 weeks: the AI shortcut I actually used",
-    "reason": "retroactive_fabrication_audit: 43 unverifiable first-person anecdote(s): A colleague asked me about built launched during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I tried the slow path first.",
+    "reason": "retroactive_fabrication_audit: 43 unverifiable first-person anecdote(s): A colleague asked me about built launched during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I tried the slow path first.",
     "action": "regenerate",
     "status": "needs_review"
   },
@@ -23,7 +23,7 @@
   {
     "slug": "3-side-gigs-that-paid-me-2k-usdmonth-in-2026",
     "title": "3 side gigs that paid me 2k USD/month in 2026",
-    "reason": "retroactive_fabrication_audit: 34 unverifiable first-person anecdote(s): I ran into this building second problem while migrating a service under a hard d; Here's what actually worked.; I tried the classic “build a SaaS” route with a multi-tenant identity provider i",
+    "reason": "retroactive_fabrication_audit: 34 unverifiable first-person anecdote(s): I ran into this building second problem while migrating a service under a hard d; Here's what actually worked.; I tried the classic \u201cbuild a SaaS\u201d route with a multi-tenant identity provider i",
     "action": "regenerate",
     "status": "needs_review"
   },
@@ -44,7 +44,7 @@
   {
     "slug": "stop-shipping-daily-the-burn-rate-math",
     "title": "Stop shipping daily: the burn rate math",
-    "reason": "retroactive_fabrication_audit: 16 unverifiable first-person anecdote(s): A colleague asked me about build public during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when I tried to build a tiny SaaS tool for freelance translators",
+    "reason": "retroactive_fabrication_audit: 16 unverifiable first-person anecdote(s): A colleague asked me about build public during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when I tried to build a tiny SaaS tool for freelance translators",
     "action": "regenerate",
     "status": "needs_review"
   },
@@ -107,7 +107,7 @@
   {
     "slug": "why-i-picked-playwright-and-vitest-in-2026",
     "title": "Why I picked Playwright and Vitest in 2026",
-    "reason": "retroactive_fabrication_audit: 13 unverifiable first-person anecdote(s): I ran into this test frontend problem while migrating a service under a hard dea; Here's what actually worked.; I ran into the first surprise when our existing Cypress suite—written for a Reac",
+    "reason": "retroactive_fabrication_audit: 13 unverifiable first-person anecdote(s): I ran into this test frontend problem while migrating a service under a hard dea; Here's what actually worked.; I ran into the first surprise when our existing Cypress suite\u2014written for a Reac",
     "action": "regenerate",
     "status": "needs_review"
   },
@@ -121,7 +121,7 @@
   {
     "slug": "5-notification-systems-ranked-push-email-sms",
     "title": "5 notification systems ranked: push, email, SMS",
-    "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I ran into this designing notification problem while migrating a service under a; Here's what actually worked.; I spent three weeks untangling the mess before I realised the real problem wasn’",
+    "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I ran into this designing notification problem while migrating a service under a; Here's what actually worked.; I spent three weeks untangling the mess before I realised the real problem wasn\u2019",
     "action": "regenerate",
     "status": "needs_review"
   },
@@ -135,7 +135,7 @@
   {
     "slug": "pass-interviews-without-a-cs-degree",
     "title": "Pass interviews without a CS degree",
-    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): A colleague asked me about pass technical during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I spent three weeks in 2026 coaching a self-taught engineer who had quit their d",
+    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): A colleague asked me about pass technical during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I spent three weeks in 2026 coaching a self-taught engineer who had quit their d",
     "action": "regenerate",
     "status": "needs_review"
   },
@@ -148,8 +148,8 @@
   },
   {
     "slug": "10-ai-wrappers-that-shipped-in-2026-8-died-fast",
-    "title": "10 AI wrappers that shipped in 2026 — 8 died fast",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I ran into this wrapper businesses problem while migrating a service under a har; Here's what actually worked.; I spent three weeks benchmarking every wrapper we’d adopted — some 12 of them — ",
+    "title": "10 AI wrappers that shipped in 2026 \u2014 8 died fast",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I ran into this wrapper businesses problem while migrating a service under a har; Here's what actually worked.; I spent three weeks benchmarking every wrapper we\u2019d adopted \u2014 some 12 of them \u2014 ",
     "action": "regenerate",
     "status": "needs_review"
   },
@@ -170,7 +170,7 @@
   {
     "slug": "aws-costs-for-nairobi-saas-2026-bill-split",
     "title": "AWS costs for Nairobi SaaS: 2026 bill split",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I had built the stack the way every tutorial told me: PostgreSQL on RDS, EC2 beh; I didn’t have one.",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I had built the stack the way every tutorial told me: PostgreSQL on RDS, EC2 beh; I didn\u2019t have one.",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -184,7 +184,7 @@
   {
     "slug": "breakdown-nairobi-saas-infra-costs-2026",
     "title": "Breakdown: Nairobi SaaS infra costs 2026",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I wanted a single sheet I could hand to finance every month and say “this line i; I initially summed them and over-reported by 30%.",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I wanted a single sheet I could hand to finance every month and say \u201cthis line i; I initially summed them and over-reported by 30%.",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -204,8 +204,8 @@
   },
   {
     "slug": "fintech-apis-broke-in-nigeria-heres-why",
-    "title": "Fintech APIs broke in Nigeria — here’s why",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we launched a new micro-lending feature in Nigeria in Q2 20",
+    "title": "Fintech APIs broke in Nigeria \u2014 here\u2019s why",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when we launched a new micro-lending feature in Nigeria in Q2 20",
     "action": "regenerate"
   },
   {
@@ -217,7 +217,7 @@
   {
     "slug": "micro-saas-niches-surviving-ai-commoditisation",
     "title": "Micro-SaaS niches surviving AI commoditisation",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about microsaas 2026 during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I spent three weeks last month rebuilding a tiny image-resizing micro-app after ",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about microsaas 2026 during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I spent three weeks last month rebuilding a tiny image-resizing micro-app after ",
     "action": "regenerate"
   },
   {
@@ -229,31 +229,31 @@
   {
     "slug": "personal-ai-assistants-avoid-vendor-lock-in-traps",
     "title": "Personal AI assistants: avoid vendor lock-in traps",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I learned this when our legal team flagged that the vendor’s embedding model was; I expected it to be the fastest tool because diffing is a simple algorithm.",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I learned this when our legal team flagged that the vendor\u2019s embedding model was; I expected it to be the fastest tool because diffing is a simple algorithm.",
     "action": "regenerate"
   },
   {
     "slug": "rag-on-legacy-systems-vector-db-vs-full-text-sql",
     "title": "RAG on legacy systems: vector DB vs. full-text SQL",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent three weeks tuning a pgvector index only to realize the joins to the 12-; I was surprised that the biggest blocker wasn’t the AI code but the legacy backu; I ran into a nasty surprise with pgvector’s   operator.",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent three weeks tuning a pgvector index only to realize the joins to the 12-; I was surprised that the biggest blocker wasn\u2019t the AI code but the legacy backu; I ran into a nasty surprise with pgvector\u2019s   operator.",
     "action": "regenerate"
   },
   {
     "slug": "regulators-broke-our-api-design",
     "title": "Regulators broke our API design",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we tried to launch a new savings product in northern Kenya.",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when we tried to launch a new savings product in northern Kenya.",
     "action": "regenerate"
   },
   {
     "slug": "roll-your-own-migrations-why-blue-green-fails-you",
     "title": "Roll your own migrations: why blue-green fails you",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about handle database during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when migrating a healthtech customer’s 3 TB PostgreSQL cluster f",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about handle database during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when migrating a healthtech customer\u2019s 3 TB PostgreSQL cluster f",
     "action": "regenerate"
   },
   {
     "slug": "spot-ais-hidden-cost-spike-in-your-stack",
-    "title": "Spot AI’s hidden cost spike in your stack",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I ran into this at a client in Manila last quarter when an LLM “optimised” a Dja; I recommend the latter only if you can tolerate 2–5 seconds of latency.; I once missed a hidden SQS long-polling loop that added 2 million requests per d",
+    "title": "Spot AI\u2019s hidden cost spike in your stack",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I ran into this at a client in Manila last quarter when an LLM \u201coptimised\u201d a Dja; I recommend the latter only if you can tolerate 2\u20135 seconds of latency.; I once missed a hidden SQS long-polling loop that added 2 million requests per d",
     "action": "regenerate"
   },
   {
@@ -264,8 +264,8 @@
   },
   {
     "slug": "stop-the-writes-zero-downtime-db-migrations",
-    "title": "Stop the writes — zero-downtime DB migrations",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about handle database during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I once watched a team migrate a user profile table from MySQL 5.7 to Aurora Serv",
+    "title": "Stop the writes \u2014 zero-downtime DB migrations",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about handle database during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I once watched a team migrate a user profile table from MySQL 5.7 to Aurora Serv",
     "action": "regenerate"
   },
   {
@@ -289,7 +289,7 @@
   {
     "slug": "who-owns-ai-generated-code",
     "title": "Who owns AI-generated code?",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was surprised that even after doubling our recruiter budget, we still had open; I ran the pilot myself on one flow—the P2P instant transfer between two wallets—",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was surprised that even after doubling our recruiter budget, we still had open; I ran the pilot myself on one flow\u2014the P2P instant transfer between two wallets\u2014",
     "action": "regenerate"
   },
   {
@@ -306,7 +306,7 @@
   },
   {
     "slug": "agentic-workflows-how-we-kept-the-lights",
-    "title": "Agentic workflows: how we kept the lights…",
+    "title": "Agentic workflows: how we kept the lights\u2026",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I settled on three non-negotiables for any observability stack in agentic worklo; I only caught that after Grafana started returning 502 errors.",
     "action": "regenerate"
   },
@@ -318,8 +318,8 @@
   },
   {
     "slug": "ai-ate-our-niche-heres-how-we-picked-a-new-one",
-    "title": "AI ate our niche — here’s how we picked a new one",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a long-time customer told me they’d canceled because their ; I thought it was a one-off until I saw the same story repeat across 12 other mer",
+    "title": "AI ate our niche \u2014 here\u2019s how we picked a new one",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a long-time customer told me they\u2019d canceled because their ; I thought it was a one-off until I saw the same story repeat across 12 other mer",
     "action": "regenerate"
   },
   {
@@ -355,7 +355,7 @@
   {
     "slug": "ai-interviews-break-systems-5-real-mistakes-in-2026",
     "title": "AI interviews break systems: 5 real mistakes in 2026",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this when a candidate’s repo worked perfectly on their M3 Mac with Do; I spent two days debugging a non-existent networking issue before realizing the ; I was surprised that even top-tier candidates submitted systems that hardcoded  ",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this when a candidate\u2019s repo worked perfectly on their M3 Mac with Do; I spent two days debugging a non-existent networking issue before realizing the ; I was surprised that even top-tier candidates submitted systems that hardcoded  ",
     "action": "regenerate"
   },
   {
@@ -367,13 +367,13 @@
   {
     "slug": "ai-native-apps-break-when-you-copy-old-rules",
     "title": "AI-native apps break when you copy old rules",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when I tried to ship an AI-native feature that generated persona",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when I tried to ship an AI-native feature that generated persona",
     "action": "regenerate"
   },
   {
     "slug": "ai-observability-isnt-monitoring-heres-why",
-    "title": "AI observability isn’t monitoring — here’s why",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I first ran into this when a customer reported that our recommendation engine wa; I learned this the hard way when our chatbot’s “answer correctness” metric, meas; I once saw a model’s accuracy drop from 91% to 78% overnight.",
+    "title": "AI observability isn\u2019t monitoring \u2014 here\u2019s why",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I first ran into this when a customer reported that our recommendation engine wa; I learned this the hard way when our chatbot\u2019s \u201canswer correctness\u201d metric, meas; I once saw a model\u2019s accuracy drop from 91% to 78% overnight.",
     "action": "regenerate"
   },
   {
@@ -385,13 +385,13 @@
   {
     "slug": "ai-on-lambda-when-the-bill-explodes",
     "title": "AI on Lambda: when the bill explodes",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent two weeks tuning the model and the vLLM config to fit within Lambda’s 10; I then spent three days tweaking vLLM arguments— ,  ,  .",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent two weeks tuning the model and the vLLM config to fit within Lambda\u2019s 10; I then spent three days tweaking vLLM arguments\u2014 ,  ,  .",
     "action": "regenerate"
   },
   {
     "slug": "ai-ops-pagerduty-vs-opsgenie-which-burns-your-team",
-    "title": "AI ops: PagerDuty vs Opsgenie — which burns your team",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same aiassisted incident mistake in multiple production codebases,; Here's what it looks like, why it's hard to spot, and how to fix it.; I was surprised that Opsgenie’s template model didn’t improve over time as much ",
+    "title": "AI ops: PagerDuty vs Opsgenie \u2014 which burns your team",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same aiassisted incident mistake in multiple production codebases,; Here's what it looks like, why it's hard to spot, and how to fix it.; I was surprised that Opsgenie\u2019s template model didn\u2019t improve over time as much ",
     "action": "regenerate"
   },
   {
@@ -415,19 +415,19 @@
   {
     "slug": "api-attacks-rising-40-the-3-patterns-to-block-now",
     "title": "API attacks rising 40%: the 3 patterns to block now",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when I pulled the CloudWatch graphs for our main   endpoint and ; I spent a week tuning the WAF rules, but every time I tightened a rule, we’d get",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when I pulled the CloudWatch graphs for our main   endpoint and ; I spent a week tuning the WAF rules, but every time I tightened a rule, we\u2019d get",
     "action": "regenerate"
   },
   {
     "slug": "apis-must-die-in-2026",
     "title": "APIs must die in 2026",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when a new microfinance client in Kano asked us to integrate wit",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when a new microfinance client in Kano asked us to integrate wit",
     "action": "regenerate"
   },
   {
     "slug": "audit-logs-ship-them-fast-keep-them-forever",
     "title": "Audit logs: ship them fast, keep them forever",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about audit logging during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when our bill for AWS S3 Standard-Infrequent Access (S3-IA) trip",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about audit logging during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when our bill for AWS S3 Standard-Infrequent Access (S3-IA) trip",
     "action": "regenerate"
   },
   {
@@ -439,7 +439,7 @@
   {
     "slug": "bank-apis-broke-under-african-2g",
     "title": "Bank APIs broke under African 2G",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we rolled out a new payments endpoint in Nigeria in 2026.",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when we rolled out a new payments endpoint in Nigeria in 2026.",
     "action": "regenerate"
   },
   {
@@ -457,7 +457,7 @@
   {
     "slug": "build-agent-workflows-that-survive-restarts",
     "title": "Build agent workflows that survive restarts",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I went from “let’s ship this” to “how do we survive Tuesday?” in one afternoon.; I learned this the hard way when the new OpenAI API 2024-06-01 started returning",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I went from \u201clet\u2019s ship this\u201d to \u201chow do we survive Tuesday?\u201d in one afternoon.; I learned this the hard way when the new OpenAI API 2024-06-01 started returning",
     "action": "regenerate"
   },
   {
@@ -468,14 +468,14 @@
   },
   {
     "slug": "dagster-replaced-airflow-in-2026-heres-the-stack-we",
-    "title": "Dagster replaced Airflow in 2026 — here’s the stack we",
+    "title": "Dagster replaced Airflow in 2026 \u2014 here\u2019s the stack we",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when we tried to add a nightly feature-flag rollout that depende; I spent three days wrestling with the   setup before realizing the BigQuery   sh",
     "action": "regenerate"
   },
   {
     "slug": "found-niche-in-2026-saas-that-ai-cant-copy",
-    "title": "Found niche in 2026: SaaS that AI can’t copy",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was surprised that none of the incumbents had moved into this space.; I needed a niche so narrow that a fine-tuned open-source LLM couldn’t replace it",
+    "title": "Found niche in 2026: SaaS that AI can\u2019t copy",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was surprised that none of the incumbents had moved into this space.; I needed a niche so narrow that a fine-tuned open-source LLM couldn\u2019t replace it",
     "action": "regenerate"
   },
   {
@@ -486,7 +486,7 @@
   },
   {
     "slug": "json-modes-silent-failures-exposed",
-    "title": "JSON mode’s silent failures exposed",
+    "title": "JSON mode\u2019s silent failures exposed",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a job that returned a stringified JSON object wrapp; I spent two hours debugging this before realizing the client was serializing the",
     "action": "regenerate"
   },
@@ -499,19 +499,19 @@
   {
     "slug": "latency-trade-offs-nairobi-teams-beat-global-ai-providers",
     "title": "Latency trade-offs: Nairobi teams beat global AI providers",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this nairobibased teams problem while migrating a service under a har; I ran into this when a client’s AI chatbot in Kampala kept timing out on AWS Bed; I saw this firsthand when a client’s legal chatbot hallucinated case law until w",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this nairobibased teams problem while migrating a service under a har; I ran into this when a client\u2019s AI chatbot in Kampala kept timing out on AWS Bed; I saw this firsthand when a client\u2019s legal chatbot hallucinated case law until w",
     "action": "regenerate"
   },
   {
     "slug": "mcp-servers-the-3-hidden-costs-nobody-quotes",
     "title": "MCP servers: the 3 hidden costs nobody quotes",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the most common outage wasn’t CPU or memory, but the combin; I once used Datadog’s MCP integration until I realized it samples every 10 s, mi",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the most common outage wasn\u2019t CPU or memory, but the combin; I once used Datadog\u2019s MCP integration until I realized it samples every 10 s, mi",
     "action": "regenerate"
   },
   {
     "slug": "multi-agent-systems-break-first",
     "title": "Multi-agent systems break first",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a system where one agent kept replying with empty J; I once inherited a system where the agent orchestrator was running on EC2 instan; I learned this the hard way when our staging Redis cluster OOM’d and took down t",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a system where one agent kept replying with empty J; I once inherited a system where the agent orchestrator was running on EC2 instan; I learned this the hard way when our staging Redis cluster OOM\u2019d and took down t",
     "action": "regenerate"
   },
   {
@@ -528,8 +528,8 @@
   },
   {
     "slug": "payments-fail-how-we-fixed-flutterwave-paystack-m-pesa",
-    "title": "Payments fail? How we fixed Flutterwave, Paystack, M-Pesa…",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days assuming the webhook payload was correct before realizing the; I hit this when a **Paystack** webhook with idempotency key   was retried after ; I was surprised when Flutterwave’s   endpoint returned events in reverse order f",
+    "title": "Payments fail? How we fixed Flutterwave, Paystack, M-Pesa\u2026",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days assuming the webhook payload was correct before realizing the; I hit this when a **Paystack** webhook with idempotency key   was retried after ; I was surprised when Flutterwave\u2019s   endpoint returned events in reverse order f",
     "action": "regenerate"
   },
   {
@@ -559,7 +559,7 @@
   {
     "slug": "replaced-celery-in-2026-what-actually-worked",
     "title": "Replaced Celery in 2026: what actually worked",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into a critical surprise when I enabled Redis slowlog: the queue wasn’t th; I spent three days tuning the limits before realizing the real issue was the tas",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into a critical surprise when I enabled Redis slowlog: the queue wasn\u2019t th; I spent three days tuning the limits before realizing the real issue was the tas",
     "action": "regenerate"
   },
   {
@@ -571,7 +571,7 @@
   {
     "slug": "ship-faster-with-a-paved-road-4-weeks-to-80-less-toil",
     "title": "Ship faster with a paved road: 4 weeks to 80% less toil",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I still remember the day a junior engineer opened a ticket titled “My app works ; I thought the team would rebel.",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I still remember the day a junior engineer opened a ticket titled \u201cMy app works ; I thought the team would rebel.",
     "action": "regenerate"
   },
   {
@@ -589,12 +589,12 @@
   {
     "slug": "treat-every-user-input-as-hostile-in-2026",
     "title": "Treat every user input as hostile in 2026",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about detect prompt during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I spent two weeks debugging a support bot that kept leaking internal docs becaus",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about detect prompt during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I spent two weeks debugging a support bot that kept leaking internal docs becaus",
     "action": "regenerate"
   },
   {
     "slug": "zero-trust-mcp-servers-auth-trap-youll-hit-first",
-    "title": "Zero-trust MCP servers: auth trap you’ll hit first",
+    "title": "Zero-trust MCP servers: auth trap you\u2019ll hit first",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I once inherited a system where the MCP server ran as the same user as the agent; I had to write custom OPA rules that map SPIFFE IDs to a set of allowed operatio",
     "action": "regenerate"
   },
@@ -613,14 +613,14 @@
   },
   {
     "slug": "7-patterns-for-systems-that-wont-die-when-networks",
-    "title": "7 patterns for systems that won’t die when networks",
+    "title": "7 patterns for systems that won\u2019t die when networks",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this building eventual problem while migrating a service under a hard; Here's what actually worked.; I also looked at real-world incidents from 2026 and 2026:\n\n- The 2026 Twilio bre",
     "action": "regenerate"
   },
   {
     "slug": "african-devs-ai-tools-that-work-now-2026",
     "title": "African devs: AI tools that work now (2026)",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when I tried to deploy a Python 3.11 microservice with Django RE; I was surprised that even tools claiming \"offline-first\" support failed when the; I once spent a day debugging why a Next.js app failed in production — the AI sug",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when I tried to deploy a Python 3.11 microservice with Django RE; I was surprised that even tools claiming \"offline-first\" support failed when the; I once spent a day debugging why a Next.js app failed in production \u2014 the AI sug",
     "action": "regenerate"
   },
   {
@@ -632,7 +632,7 @@
   {
     "slug": "agent-design-after-llm-4-we-broke-5-assumptions",
     "title": "Agent design after LLM-4: we broke 5 assumptions",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when paging alerts fired every 20 minutes during peak hours; the; I spent two weeks tweaking HPA thresholds until I realized the bottleneck wasn’t",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when paging alerts fired every 20 minutes during peak hours; the; I spent two weeks tweaking HPA thresholds until I realized the bottleneck wasn\u2019t",
     "action": "regenerate"
   },
   {
@@ -649,14 +649,14 @@
   },
   {
     "slug": "ai-apps-break-your-stack-heres-the-fix",
-    "title": "AI apps break your stack — here’s the fix",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran this exact playbook for a chatbot in 2026.",
+    "title": "AI apps break your stack \u2014 here\u2019s the fix",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran this exact playbook for a chatbot in 2026.",
     "action": "regenerate"
   },
   {
     "slug": "ai-cost-attribution-without-the-spreadsheet-hell",
     "title": "AI cost attribution without the spreadsheet hell",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this cost attribution problem while migrating a service under a hard ; I ran each system for two weeks in production on Node 20 LTS with AWS Lambda (ar; I measured:\n\n- **P99 latency increase** — how much slower the API got after addi",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this cost attribution problem while migrating a service under a hard ; I ran each system for two weeks in production on Node 20 LTS with AWS Lambda (ar; I measured:\n\n- **P99 latency increase** \u2014 how much slower the API got after addi",
     "action": "regenerate"
   },
   {
@@ -674,25 +674,25 @@
   {
     "slug": "ai-interviews-4-questions-that-caught-80-of-weak",
     "title": "AI interviews: 4 questions that caught 80% of weak",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when we moved a Nairobi-based fintech from a 45-minute take-home; I assumed senior candidates would instinctively wrap Redis calls in retries and ; I only realized this after watching a candidate fail because their API couldn’t ",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when we moved a Nairobi-based fintech from a 45-minute take-home; I assumed senior candidates would instinctively wrap Redis calls in retries and ; I only realized this after watching a candidate fail because their API couldn\u2019t ",
     "action": "regenerate"
   },
   {
     "slug": "ai-pair-coding-killed-pull-request-reviews",
     "title": "AI pair coding killed pull request reviews",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when I approved a PR that changed how we rounded AWS Reserved In; I was surprised that the biggest win wasn’t technical—it was social.",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when I approved a PR that changed how we rounded AWS Reserved In; I was surprised that the biggest win wasn\u2019t technical\u2014it was social.",
     "action": "regenerate"
   },
   {
     "slug": "ai-pair-prompts-9-setups-we-tried-in-2026",
     "title": "AI pair prompts: 9 setups we tried in 2026",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this pair programming problem while migrating a service under a hard ; Here's what actually worked.; I spent three days on this before realising the problem wasn’t in the stack; it ",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this pair programming problem while migrating a service under a hard ; Here's what actually worked.; I spent three days on this before realising the problem wasn\u2019t in the stack; it ",
     "action": "regenerate"
   },
   {
     "slug": "ai-sales-cycle-what-changed-for-devtool-founders",
     "title": "AI sales cycle: what changed for devtool founders",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three weeks watching our trial-to-paid conversion drop from 22% to 8% wi; I remember a Zoom call where a prospect said, “Your chatbot just returned a 404 ",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three weeks watching our trial-to-paid conversion drop from 22% to 8% wi; I remember a Zoom call where a prospect said, \u201cYour chatbot just returned a 404 ",
     "action": "regenerate"
   },
   {
@@ -709,7 +709,7 @@
   },
   {
     "slug": "airflows-replacement-what-80-of-teams-moved-to-in",
-    "title": "Airflow’s replacement: what 80% of teams moved to in",
+    "title": "Airflow\u2019s replacement: what 80% of teams moved to in",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when I joined a team that prided itself on \"infrastructure as co; I spent two weeks rewriting our largest pipeline in Prefect, only to discover th",
     "action": "regenerate"
   },
@@ -734,7 +734,7 @@
   {
     "slug": "bundle-size-70-lighter-with-server-components",
     "title": "Bundle size: 70% lighter with server components",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when we replaced a Django admin dashboard with a Next.js fronten; I spent two weeks on this before realising the payload isn’t just JSON—it’s a bi; I also underestimated how much weight comes from non-React dependencies.",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when we replaced a Django admin dashboard with a Next.js fronten; I spent two weeks on this before realising the payload isn\u2019t just JSON\u2014it\u2019s a bi; I also underestimated how much weight comes from non-React dependencies.",
     "action": "regenerate"
   },
   {
@@ -746,25 +746,25 @@
   {
     "slug": "core-web-vitals-2026-inp-is-now-stable",
     "title": "Core Web Vitals 2026: INP is now stable",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days profiling the portal on a feature phone and realized the bigg; I was surprised to find Hotjar’s inline script was adding a 200ms idle callback ",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days profiling the portal on a feature phone and realized the bigg; I was surprised to find Hotjar\u2019s inline script was adding a 200ms idle callback ",
     "action": "regenerate"
   },
   {
     "slug": "css-2026-container-queries-retired-our-utility-class",
     "title": "CSS 2026: container queries retired our utility class",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when we tried to add a new “purchase confirmation” flow for low-; I spent three days debugging a failing cache hashing issue where styles weren’t ",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when we tried to add a new \u201cpurchase confirmation\u201d flow for low-; I spent three days debugging a failing cache hashing issue where styles weren\u2019t ",
     "action": "regenerate"
   },
   {
     "slug": "cut-false-positives-85-with-this-ci-security-trick",
     "title": "Cut false positives 85% with this CI security trick",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a junior engineer disabled the   rule in SonarQube because ; I was surprised that the biggest source of false positives wasn’t the scanners t",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a junior engineer disabled the   rule in SonarQube because ; I was surprised that the biggest source of false positives wasn\u2019t the scanners t",
     "action": "regenerate"
   },
   {
     "slug": "drop-checklists-ai-code-reviews-that-scale",
     "title": "Drop checklists: AI code reviews that scale",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on code review is incomplete.; I built one last quarter that now flags 82% of our real regressions before CI — ; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on code review is incomplete.; I built one last quarter that now flags 82% of our real regressions before CI \u2014 ; I spent three days debugging a connection pool issue that turned out to be a sin",
     "action": "regenerate"
   },
   {
@@ -782,7 +782,7 @@
   {
     "slug": "keep-multi-model-systems-stable-6-rules-that-worked",
     "title": "Keep multi-model systems stable: 6 rules that worked",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent three weeks debugging one of those outages.; I was surprised that the oldest rule—idempotency keys—cut our retry costs 75% on; I learned this the hard way when my collector OOM’d during a load test.",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent three weeks debugging one of those outages.; I was surprised that the oldest rule\u2014idempotency keys\u2014cut our retry costs 75% on; I learned this the hard way when my collector OOM\u2019d during a load test.",
     "action": "regenerate"
   },
   {
@@ -794,25 +794,25 @@
   {
     "slug": "land-5k-remote-roles-what-nairobi-devs-got-right",
     "title": "Land $5k remote roles: what Nairobi devs got right",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into an early surprise when I rewrote our resume bullet points to match th; I spent three days rewriting a single project description from “built a REST API",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into an early surprise when I rewrote our resume bullet points to match th; I spent three days rewriting a single project description from \u201cbuilt a REST API",
     "action": "regenerate"
   },
   {
     "slug": "llm-drift-the-silent-quality-drop-metrics-miss",
     "title": "LLM drift: the silent quality drop metrics miss",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on debugged silent is incomplete.; I ran into this when our “stable” summarization endpoint started returning 30 % ; I was surprised that none of our existing SLOs fired for the tokenizer switch.",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): The short version: the conventional advice on debugged silent is incomplete.; I ran into this when our \u201cstable\u201d summarization endpoint started returning 30 % ; I was surprised that none of our existing SLOs fired for the tokenizer switch.",
     "action": "regenerate"
   },
   {
     "slug": "ndpr-2026-broke-fintech-apis",
     "title": "NDPR 2026 broke fintech APIs",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when our mobile wallet team in Lagos started getting **429 Too M",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when our mobile wallet team in Lagos started getting **429 Too M",
     "action": "regenerate"
   },
   {
     "slug": "negotiate-pay-in-2026-with-ai-proof-points",
     "title": "Negotiate pay in 2026 with AI proof points",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I was surprised that the biggest pushback wasn’t from engineers—it was from fina; I ran this against my own repo and discovered that 32% of my 2026 commits were A",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I was surprised that the biggest pushback wasn\u2019t from engineers\u2014it was from fina; I ran this against my own repo and discovered that 32% of my 2026 commits were A",
     "action": "regenerate"
   },
   {
@@ -823,14 +823,14 @@
   },
   {
     "slug": "observe-llm-features-90-faster",
-    "title": "Observe LLM features 90% faster…",
+    "title": "Observe LLM features 90% faster\u2026",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I once forgot to strip the newline from the key file and spent an hour wondering",
     "action": "regenerate"
   },
   {
     "slug": "one-payment-stack-for-kenya-nigeria-ghana",
     "title": "One payment stack for Kenya, Nigeria, Ghana",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about build payment during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when a single Nigerian user tried to pay with both a card and a ",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about build payment during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when a single Nigerian user tried to pay with both a card and a ",
     "action": "regenerate"
   },
   {
@@ -860,7 +860,7 @@
   {
     "slug": "portfolio-that-stands-out-when-everyone-uses-ai",
     "title": "Portfolio that stands out when everyone uses AI",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I realised that the portfolio problem wasn’t about showcasing code—it was about ; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I realised that the portfolio problem wasn\u2019t about showcasing code\u2014it was about ; I spent three days debugging a connection pool issue that turned out to be a sin",
     "action": "regenerate"
   },
   {
@@ -871,19 +871,19 @@
   },
   {
     "slug": "prompt-injection-got-the-hype-poison-data-ruined-us",
-    "title": "Prompt injection got the hype — poison data ruined us",
+    "title": "Prompt injection got the hype \u2014 poison data ruined us",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I've hit the same owasp llm mistake in more than one production codebase over th; I spent three days debugging a connection pool issue that turned out to be a sin; I wasted six weeks building guardrails for prompt injection before realizing the",
     "action": "regenerate"
   },
   {
     "slug": "prompt-injections-hidden-aws-tax",
-    "title": "Prompt injection’s hidden AWS tax",
+    "title": "Prompt injection\u2019s hidden AWS tax",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I did too, until I watched a single malformed user query drain our LLM budget by; I was surprised to discover that even well-funded teams ignore this because thei; I set this up using a 45-line GitHub Action that runs after every merge.",
     "action": "regenerate"
   },
   {
     "slug": "rag-in-prod-what-tutorials-wont-tell-you",
-    "title": "RAG in prod: what tutorials won’t tell you",
+    "title": "RAG in prod: what tutorials won\u2019t tell you",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I thought we were ready.; I spent three days debugging a connection pool issue before realising the index ",
     "action": "regenerate"
   },
@@ -908,13 +908,13 @@
   {
     "slug": "regulations-forced-better-apis-the-2026-fintech",
     "title": "Regulations forced better APIs: the 2026 fintech",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we launched a new collections product in Kenya in early 202",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when we launched a new collections product in Kenya in early 202",
     "action": "regenerate"
   },
   {
     "slug": "regulations-killed-our-elegant-apis",
     "title": "Regulations killed our elegant APIs",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran a project in 2026 where we shipped a clean REST API built on Node 20 LTS a",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran a project in 2026 where we shipped a clean REST API built on Node 20 LTS a",
     "action": "regenerate"
   },
   {
@@ -932,7 +932,7 @@
   {
     "slug": "scan-10k-repos-daily-without-false-positives",
     "title": "Scan 10k repos daily without false positives",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a critical security patch for Log4j didn’t reach production; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a critical security patch for Log4j didn\u2019t reach production; I spent three days debugging a connection pool issue that turned out to be a sin",
     "action": "regenerate"
   },
   {
@@ -944,7 +944,7 @@
   {
     "slug": "show-real-work-not-ai-clones",
     "title": "Show real work, not AI clones",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a senior engineer we’d flown in from Nairobi couldn’t answe; I was surprised that even engineers with 5+ years of experience couldn’t point t",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a senior engineer we\u2019d flown in from Nairobi couldn\u2019t answe; I was surprised that even engineers with 5+ years of experience couldn\u2019t point t",
     "action": "regenerate"
   },
   {
@@ -973,7 +973,7 @@
   },
   {
     "slug": "why-progressive-web-apps-fail-on-2g-and-how-to-fix",
-    "title": "Why progressive web apps fail on 2G and how to fix…",
+    "title": "Why progressive web apps fail on 2G and how to fix\u2026",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent three days debugging a connection pool issue that turned out to be a sin; I also tracked what we knew about 2026 device capabilities:\n\n- Median Android de",
     "action": "regenerate"
   },
@@ -1023,13 +1023,13 @@
   {
     "slug": "ai-benchmarking-3-mistakes-we-made-first",
     "title": "AI benchmarking: 3 mistakes we made first",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that a smaller model could have worse throughput—until we dug in",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that a smaller model could have worse throughput\u2014until we dug in",
     "action": "regenerate"
   },
   {
     "slug": "ai-feature-drift-why-your-model-died-at-midnight",
     "title": "AI feature drift: why your model died at midnight",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when we moved our loan-default predictor from a simple logistic-; I was surprised that the model’s memory footprint in production (measured with  ",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when we moved our loan-default predictor from a simple logistic-; I was surprised that the model\u2019s memory footprint in production (measured with  ",
     "action": "regenerate"
   },
   {
@@ -1064,7 +1064,7 @@
   },
   {
     "slug": "ai-wrote-the-docs-humans-wrote-the-gaps",
-    "title": "AI wrote the docs — humans wrote the gaps",
+    "title": "AI wrote the docs \u2014 humans wrote the gaps",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a failed M-Pesa payment that turned out to be a mis",
     "action": "regenerate"
   },
@@ -1077,7 +1077,7 @@
   {
     "slug": "api-security-the-attacks-rising-in-2026",
     "title": "API security: the attacks rising in 2026",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days tracking down why our WAF wasn’t blocking it — only to realiz",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days tracking down why our WAF wasn\u2019t blocking it \u2014 only to realiz",
     "action": "regenerate"
   },
   {
@@ -1088,7 +1088,7 @@
   },
   {
     "slug": "block-api-abuse-in-2026-before-it-blocks",
-    "title": "Block API abuse in 2026 before it blocks…",
+    "title": "Block API abuse in 2026 before it blocks\u2026",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin",
     "action": "regenerate"
   },
@@ -1161,7 +1161,7 @@
   {
     "slug": "llm-evals-the-3-metrics-that-pay-off",
     "title": "LLM evals: the 3 metrics that pay off",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I initially used a simple exact-match of the user’s final question against the p",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I initially used a simple exact-match of the user\u2019s final question against the p",
     "action": "regenerate"
   },
   {
@@ -1196,7 +1196,7 @@
   },
   {
     "slug": "mobile-first-ai-fails-you-didnt-plan",
-    "title": "Mobile-first AI fails you didn’t plan…",
+    "title": "Mobile-first AI fails you didn\u2019t plan\u2026",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on prompt tool before understanding what was a; Here's what actually worked, and why.",
     "action": "regenerate"
   },
@@ -1209,7 +1209,7 @@
   {
     "slug": "move-images-50-faster-in-2026-with-starlink-cdn",
     "title": "Move images 50% faster in 2026 with Starlink CDN",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three weeks chasing CloudFront logs before realizing the CDN’s Lambda@Ed",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three weeks chasing CloudFront logs before realizing the CDN\u2019s Lambda@Ed",
     "action": "regenerate"
   },
   {
@@ -1233,7 +1233,7 @@
   {
     "slug": "one-misconfigured-pool-drained-4kmonth",
     "title": "One misconfigured pool drained $4k/month",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when I SSH’d into a pod and saw 720 Postgres connections open to; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I ran into this when I SSH\u2019d into a pod and saw 720 Postgres connections open to; I spent three days debugging a connection pool issue that turned out to be a sin",
     "action": "regenerate"
   },
   {
@@ -1244,7 +1244,7 @@
   },
   {
     "slug": "pick-niches-ai-wont-eat-in-2026",
-    "title": "Pick niches AI won’t eat in 2026",
+    "title": "Pick niches AI won\u2019t eat in 2026",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was shocked to see 60% of our beta users stop paying within 30 days.",
     "action": "regenerate"
   },
@@ -1256,7 +1256,7 @@
   },
   {
     "slug": "poolers-wont-save-your-serverless-db",
-    "title": "Poolers won’t save your serverless DB",
+    "title": "Poolers won\u2019t save your serverless DB",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I also learned the hard way that pooler vendors rarely publish the cost model.; I spent two weeks rewriting shard keys after the first production outage.",
     "action": "regenerate"
   },
@@ -1274,7 +1274,7 @@
   },
   {
     "slug": "reconcile-mobile-money-in-3-days-edge-cases-paystack",
-    "title": "Reconcile mobile money in 3 days — edge cases Paystack",
+    "title": "Reconcile mobile money in 3 days \u2014 edge cases Paystack",
     "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a customer in Yaba, Lagos, called to say their float showed",
     "action": "regenerate"
   },
@@ -1311,19 +1311,19 @@
   {
     "slug": "soft-deletes-fail-what-breaks-first",
     "title": "Soft deletes fail: what breaks first",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): The short version: the conventional advice on soft deletes is incomplete.; I ran into this when a client in São Paulo moved from an in-house Postgres 15 cl",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): The short version: the conventional advice on soft deletes is incomplete.; I ran into this when a client in S\u00e3o Paulo moved from an in-house Postgres 15 cl",
     "action": "regenerate"
   },
   {
     "slug": "survive-ai-swipes-with-niche-picks",
     "title": "Survive AI swipes with niche picks",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was surprised that M-Pesa’s till API (launched 2026) still returned raw JSON t",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was surprised that M-Pesa\u2019s till API (launched 2026) still returned raw JSON t",
     "action": "regenerate"
   },
   {
     "slug": "survived-12000-agents-with-redis",
     "title": "Survived 12,000 agents with Redis",
-    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I once wasted 20 minutes debugging a connection error because I didn’t wait for ; I set   second to avoid overwhelming PostgreSQL, but your mileage may vary.",
+    "reason": "retroactive_fabrication_audit: 2 unverifiable first-person anecdote(s): I once wasted 20 minutes debugging a connection error because I didn\u2019t wait for ; I set   second to avoid overwhelming PostgreSQL, but your mileage may vary.",
     "action": "regenerate"
   },
   {
@@ -1442,8 +1442,8 @@
   },
   {
     "slug": "ai-tools-wont-help-if-everyone-writes-the-same-code",
-    "title": "AI tools won’t help if everyone writes the same code",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I was surprised when a Berlin teammate bluntly said, \"I don’t trust a single AI-",
+    "title": "AI tools won\u2019t help if everyone writes the same code",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I was surprised when a Berlin teammate bluntly said, \"I don\u2019t trust a single AI-",
     "action": "regenerate"
   },
   {
@@ -1478,7 +1478,7 @@
   },
   {
     "slug": "cdc-pipeline-death-spiral-one-bad-llm-call-can-crash",
-    "title": "CDC pipeline death spiral: one bad LLM call can crash…",
+    "title": "CDC pipeline death spiral: one bad LLM call can crash\u2026",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent longer than I should have on building change before understanding what w",
     "action": "regenerate"
   },
@@ -1490,7 +1490,7 @@
   },
   {
     "slug": "currency-switch-fails-in-ghana-one-config-file-to-rule",
-    "title": "Currency switch fails in Ghana: one config file to rule…",
+    "title": "Currency switch fails in Ghana: one config file to rule\u2026",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I've hit the same building fintech mistake in more than one production codebase ",
     "action": "regenerate"
   },
@@ -1539,7 +1539,7 @@
   {
     "slug": "llm-evals-the-two-metrics-that-bite-you",
     "title": "LLM evals: the two metrics that bite you",
-    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this when we first rolled out a new “triage” LLM in our customer-supp",
+    "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this when we first rolled out a new \u201ctriage\u201d LLM in our customer-supp",
     "action": "regenerate"
   },
   {
@@ -1592,7 +1592,7 @@
   },
   {
     "slug": "price-tests-that-raised-revenue-vs-tests-that-killed",
-    "title": "Price tests that raised revenue vs tests that killed…",
+    "title": "Price tests that raised revenue vs tests that killed\u2026",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I ran into this pricing experiments problem while migrating a service under a ha",
     "action": "regenerate"
   },
@@ -1682,7 +1682,7 @@
   },
   {
     "slug": "webhooks-done-right-retries-that-dont-explode-in-2026",
-    "title": "Webhooks done right: retries that don’t explode in 2026",
+    "title": "Webhooks done right: retries that don\u2019t explode in 2026",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.",
     "action": "regenerate"
   },
@@ -1694,13 +1694,13 @@
   },
   {
     "slug": "year-one-claude-codes-slow-burn-wins",
-    "title": "Year one: Claude Code’s slow-burn wins",
+    "title": "Year one: Claude Code\u2019s slow-burn wins",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ",
     "action": "regenerate"
   },
   {
     "slug": "why-token-economics-break-alwayson-fleets",
-    "title": "Why token economics break always‑on fleets",
+    "title": "Why token economics break always\u2011on fleets",
     "reason": "retroactive_fabrication_audit: 1 unverifiable first-person anecdote(s): Here's what actually worked, and why.",
     "action": "regenerate"
   },
@@ -1779,13 +1779,13 @@
   },
   {
     "slug": "ai-wrote-40-of-our-code-heres-what-broke-our-on-call",
-    "title": "AI wrote 40% of our code — here’s what broke our on-call",
+    "title": "AI wrote 40% of our code \u2014 here\u2019s what broke our on-call",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'survey from the start'",
     "action": "regenerate"
   },
   {
     "slug": "code-ai-wont-rewrite",
-    "title": "Code AI won’t rewrite",
+    "title": "Code AI won\u2019t rewrite",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'due to DST. The report showed'",
     "action": "regenerate"
   },
@@ -1803,7 +1803,7 @@
   },
   {
     "slug": "land-a-45k-remote-job-africas-2026-map",
-    "title": "Land a $45k remote job? Africa’s 2026 map",
+    "title": "Land a $45k remote job? Africa\u2019s 2026 map",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'survey from SalaryExpert'",
     "action": "regenerate"
   },
@@ -1923,57 +1923,8 @@
   },
   {
     "slug": "purpose-built-ai-vs-general-platforms",
-    "reason": "quality_gate: score 42.5 < threshold — worst axis: thin content (22 words)",
+    "reason": "quality_gate: score 42.5 < threshold \u2014 worst axis: thin content (22 words)",
     "priority": "normal"
-  },
-  {
-    "slug": "9-ai-wrapper-plays-that-worked-in-2026",
-    "action": "regenerate",
-    "status": null,
-    "reason": "content_audit_verdicts: Unverifiable first-person incident language (2 sentence(s)).",
-    "queued_at": "2026-09-19T09:17:49.343252+00:00"
-  },
-  {
-    "slug": "ai-tools-rewrote-my-engineering-rules",
-    "action": "regenerate",
-    "status": null,
-    "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
-    "queued_at": "2026-09-19T09:17:49.422214+00:00"
-  },
-  {
-    "slug": "ai-ui-tools-6-months-in-what-i-gained-and-lost",
-    "action": "regenerate",
-    "status": null,
-    "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
-    "queued_at": "2026-09-19T09:17:49.430013+00:00"
-  },
-  {
-    "slug": "arm-in-production-graviton4-vs-ampere-in-2026",
-    "action": "regenerate",
-    "status": null,
-    "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
-    "queued_at": "2026-09-19T09:17:49.441114+00:00"
-  },
-  {
-    "slug": "bootstrapped-5k-mrr-without-ads",
-    "action": "regenerate",
-    "status": null,
-    "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
-    "queued_at": "2026-09-19T09:17:49.447368+00:00"
-  },
-  {
-    "slug": "drop-ec2-bills-70-without-code",
-    "action": "regenerate",
-    "status": null,
-    "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
-    "queued_at": "2026-09-19T09:17:49.467207+00:00"
-  },
-  {
-    "slug": "internal-platform-adoption-one-metric-kills-velocity",
-    "action": "regenerate",
-    "status": null,
-    "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
-    "queued_at": "2026-09-19T09:17:49.489274+00:00"
   },
   {
     "slug": "ai-services-slow-fix-the-network-first",
@@ -1985,28 +1936,28 @@
   {
     "slug": "ai-static-analysis-vs-legacy-sast-5x-faster-scans",
     "title": "AI static analysis vs legacy SAST: 5x faster scans",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin; I also measured the time from scan start to merge-block decision (the “gate time",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin; I also measured the time from scan start to merge-block decision (the \u201cgate time",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "ai-wont-fix-your-legacy-code-but-my-script-did",
-    "title": "AI won’t fix your legacy code — but my script did",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I ran into this in 2026 when a client in Medellín handed me a 8-year-old Django ; I tried using Copilot on this Django app and it kept suggesting   — which doesn’; I was surprised that the slowest part wasn’t the LLM — it was the AST parsing.",
+    "title": "AI won\u2019t fix your legacy code \u2014 but my script did",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I ran into this in 2026 when a client in Medell\u00edn handed me a 8-year-old Django ; I tried using Copilot on this Django app and it kept suggesting   \u2014 which doesn\u2019; I was surprised that the slowest part wasn\u2019t the LLM \u2014 it was the AST parsing.",
     "action": "regenerate",
     "status": "resolved_elsewhere"
   },
   {
     "slug": "alerts-2026-ai-turns-false-alarms-to-silence",
     "title": "Alerts 2026: AI turns false alarms to silence",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days on this before realising the alert threshold wasn’t the probl; I learned that the hard way when 56.7.0 dropped a new default for alertmanager.r",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days on this before realising the alert threshold wasn\u2019t the probl; I learned that the hard way when 56.7.0 dropped a new default for alertmanager.r",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "aws-cost-levers-2026-the-3-that-cut-bills-30",
     "title": "AWS cost levers 2026: the 3 that cut bills 30%",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I've seen the same finops 2026 mistake in multiple production codebases, includi; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent two weeks in Q1 2026 debugging why a mid-size API service’s Reserved Ins",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I've seen the same finops 2026 mistake in multiple production codebases, includi; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent two weeks in Q1 2026 debugging why a mid-size API service\u2019s Reserved Ins",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2019,7 +1970,7 @@
   },
   {
     "slug": "ai-infra-capacity-planning-vs-runbooks-what-id",
-    "title": "AI infra: capacity planning vs runbooks — what I’d",
+    "title": "AI infra: capacity planning vs runbooks \u2014 what I\u2019d",
     "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when we provisioned an extra 128 vCPU cluster for a Black Friday",
     "action": "regenerate",
     "status": "stripped"
@@ -2027,7 +1978,7 @@
   {
     "slug": "ai-native-apps-forget-the-old-stack",
     "title": "AI-native apps: forget the old stack",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we moved our help-desk bot from a Jupyter notebook to a Fas",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when we moved our help-desk bot from a Jupyter notebook to a Fas",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2041,14 +1992,14 @@
   {
     "slug": "ai-reshaped-my-engineering-principles",
     "title": "AI reshaped my engineering principles",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about engineering principles during a code review last week; I realised I couldn't give a clean explanation — which meant I didn't understand; I bought into this story for a while.",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about engineering principles during a code review last week; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I bought into this story for a while.",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "skip-m-pesa-build-one-api-for-3-african-markets",
     "title": "Skip M-Pesa: build one API for 3 African markets",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about build payment during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we tried to launch a subscription product in Nigeria.",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about build payment during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when we tried to launch a subscription product in Nigeria.",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2075,29 +2026,29 @@
   },
   {
     "slug": "ai-in-local-currency-costs-that-surprise",
-    "title": "AI in local currency: costs that surprise…",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about cost reliability during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when a client in Singapore insisted on running a fine-tuned Whis",
+    "title": "AI in local currency: costs that surprise\u2026",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about cost reliability during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when a client in Singapore insisted on running a fine-tuned Whis",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "negotiate-2026-pay-when-ai-steals-40-of-your-job",
     "title": "Negotiate 2026 pay when AI steals 40% of your job",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I built a small internal tool to track how much of each engineer’s week Copilot ",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I built a small internal tool to track how much of each engineer\u2019s week Copilot ",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "neon-vs-planetscale-vs-turso-which-broke-first",
     "title": "Neon vs PlanetScale vs Turso: which broke first?",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I ran into this when we moved a high-traffic analytics API from Aurora Serverles; I spent three days tweaking timeouts and connection pools before realising the t; I was surprised that Neon’s regional replicas, which are supposed to scale reads",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I ran into this when we moved a high-traffic analytics API from Aurora Serverles; I spent three days tweaking timeouts and connection pools before realising the t; I was surprised that Neon\u2019s regional replicas, which are supposed to scale reads",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "nigerias-2026-api-rules-broke-our-microservices",
-    "title": "Nigeria’s 2026 API rules broke our microservices",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we tried to split our ledger service from the auth service.",
+    "title": "Nigeria\u2019s 2026 API rules broke our microservices",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when we tried to split our ledger service from the auth service.",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2125,14 +2076,14 @@
   {
     "slug": "event-sourcing-pay-the-complexity-tax-only-here",
     "title": "Event sourcing: pay the complexity tax only here",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): The short version: the conventional advice on event sourcing is incomplete.; I ran into this when we had to retroactively answer “who changed the user’s risk; I once reviewed a codebase that proudly called itself “event-sourced” because it",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): The short version: the conventional advice on event sourcing is incomplete.; I ran into this when we had to retroactively answer \u201cwho changed the user\u2019s risk; I once reviewed a codebase that proudly called itself \u201cevent-sourced\u201d because it",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "istio-and-cilium-what-really-breaks-in-production",
     "title": "Istio and Cilium: what really breaks in production",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about service mesh during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when a 30-node EKS cluster in eu-central-1 suddenly started drop",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about service mesh during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when a 30-node EKS cluster in eu-central-1 suddenly started drop",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2146,7 +2097,7 @@
   {
     "slug": "micro-saas-niches-eaten-by-ai-in-2026",
     "title": "Micro-SaaS niches eaten by AI in 2026",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about microsaas 2026 during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I bought this story in 2026 when I launched a tool for indie game developers to ",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about microsaas 2026 during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I bought this story in 2026 when I launched a tool for indie game developers to ",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2167,7 +2118,7 @@
   {
     "slug": "cut-ai-inference-bill-68-without-model-changes",
     "title": "Cut AI inference bill 68% without model changes",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about cut our during a code review recently, and my first a; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the biggest win wasn’t the cache hit rate — it was the conn",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): A colleague asked me about cut our during a code review recently, and my first a; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the biggest win wasn\u2019t the cache hit rate \u2014 it was the conn",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2188,7 +2139,7 @@
   {
     "slug": "ai-latency-cut-28s-to-380ms-without-retraining",
     "title": "AI latency cut: 2.8s to 380ms without retraining",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I ran into this when we launched a real-time chat assistant in 2026 — the first ; I was surprised that our monitoring stack missed the queueing entirely.",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I ran into this when we launched a real-time chat assistant in 2026 \u2014 the first ; I was surprised that our monitoring stack missed the queueing entirely.",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2223,7 +2174,7 @@
   {
     "slug": "why-monoliths-die-slowly-in-2026",
     "title": "Why monoliths die slowly in 2026",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about migrated monolith during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when a 30 kLOC Django monolith handling Lagos traffic at 200 ms ",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about migrated monolith during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when a 30 kLOC Django monolith handling Lagos traffic at 200 ms ",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2237,27 +2188,27 @@
   {
     "slug": "ai-alert-triage-cut-pages-80-in-production",
     "title": "AI alert triage: cut pages 80% in production",
-    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I did too—until I realized we were still paging humans for 30 % of alerts that t; I spent two weeks debugging why the AI kept saying \"high memory\" when the pod wa",
+    "reason": "retroactive_fabrication_audit: 6 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I did too\u2014until I realized we were still paging humans for 30 % of alerts that t; I spent two weeks debugging why the AI kept saying \"high memory\" when the pod wa",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "migrations-stop-running-them-live",
     "title": "Migrations? Stop running them live",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about handle database during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I followed that playbook for three years at a healthtech startup serving 1.2 mil",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about handle database during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I followed that playbook for three years at a healthtech startup serving 1.2 mil",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "price-saas-tools-in-2026-what-we-learned-pricing-a",
     "title": "Price SaaS tools in 2026: what we learned pricing a",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I learned the hard way that pricing is not a spreadsheet exercise; it’s a system",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I learned the hard way that pricing is not a spreadsheet exercise; it\u2019s a system",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "rag-rots-if-you-dont-refresh-indexes",
-    "title": "RAG rots if you don’t refresh indexes",
+    "title": "RAG rots if you don\u2019t refresh indexes",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): Here's what actually worked, and why.; Most tutorials stop there.; I ran into this when I shipped a customer support chatbot in 2026 using Pinecone",
     "action": "regenerate",
     "status": "stripped"
@@ -2285,7 +2236,7 @@
   },
   {
     "slug": "graphql-vs-rest-vs-trpc-2026s-api-fight",
-    "title": "GraphQL vs REST vs tRPC: 2026’s API fight",
+    "title": "GraphQL vs REST vs tRPC: 2026\u2019s API fight",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same api design mistake in multiple production codebases, includin; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned that the hard way when I shipped a GraphQL API for a payments dashboar",
     "action": "regenerate",
     "status": "stripped"
@@ -2307,14 +2258,14 @@
   {
     "slug": "merge-three-payment-apis-into-one-system",
     "title": "Merge three payment APIs into one system",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about build payment during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I followed it too — until I saw the first bill.",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about build payment during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I followed it too \u2014 until I saw the first bill.",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "ai-sales-cycles-3x-faster-40-less-talk",
     "title": "AI sales cycles: 3x faster, 40% less talk",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this changed sales problem while migrating a service under a hard dea; I ran into this when we launched an AI assistant that auto-generated cold emails; I was surprised to find that the handoff timing matters more than the AI’s accur",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this changed sales problem while migrating a service under a hard dea; I ran into this when we launched an AI assistant that auto-generated cold emails; I was surprised to find that the handoff timing matters more than the AI\u2019s accur",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2327,7 +2278,7 @@
   },
   {
     "slug": "cache-stampedes-the-patterns-that-scale-and-the-ones",
-    "title": "Cache stampedes: the patterns that scale and the ones…",
+    "title": "Cache stampedes: the patterns that scale and the ones\u2026",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this tooluse patterns problem while migrating a service under a hard ; I ran into this the hard way when we moved our Brazilian payments API from a sin; I spent three days debugging a connection pool issue that turned out to be a sin",
     "action": "regenerate",
     "status": "stripped"
@@ -2335,13 +2286,13 @@
   {
     "slug": "circleci-still-beats-github-actions-at-50k-builds",
     "title": "CircleCI still beats GitHub Actions at 50k builds",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about github actions during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this bias firsthand when I joined a Nairobi fintech in 2026 that was ",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): A colleague asked me about github actions during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this bias firsthand when I joined a Nairobi fintech in 2026 that was ",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "debug-async-python-before-it-deadlocks",
-    "title": "Debug async Python before it deadlocks…",
+    "title": "Debug async Python before it deadlocks\u2026",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I've seen the same async python mistake in multiple production codebases, includ; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a background worker that processed 12,000 events per minute",
     "action": "regenerate",
     "status": "stripped"
@@ -2355,7 +2306,7 @@
   },
   {
     "slug": "ai-codes-hidden-cves-exposed",
-    "title": "AI code’s hidden CVEs exposed",
+    "title": "AI code\u2019s hidden CVEs exposed",
     "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I ran into this aigenerated code problem while migrating a service under a hard ; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
     "action": "regenerate",
     "status": "stripped"
@@ -2412,14 +2363,14 @@
   {
     "slug": "ai-agents-circuit-breakers-are-not-optional",
     "title": "AI agents: circuit breakers are not optional",
-    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I learned this the hard way during the August 2026 outage at Kopo Kopo.; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the simplest metric — response length — was more reliable t",
+    "reason": "retroactive_fabrication_audit: 7 unverifiable first-person anecdote(s): I learned this the hard way during the August 2026 outage at Kopo Kopo.; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the simplest metric \u2014 response length \u2014 was more reliable t",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "ai-stole-system-design",
     "title": "AI stole system design",
-    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this when a senior backend candidate in Medellín walked me through a ; I asked how they’d shard the embedding cache.; I was surprised that even experienced engineers fell for it.",
+    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this when a senior backend candidate in Medell\u00edn walked me through a ; I asked how they\u2019d shard the embedding cache.; I was surprised that even experienced engineers fell for it.",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2440,14 +2391,14 @@
   {
     "slug": "killed-3k-kubernetes-kept-200-infra",
     "title": "Killed $3k Kubernetes, kept $200 infra",
-    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin; I knew there had to be a simpler way, but I wasn’t sure where to start.",
+    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I spent three days debugging a connection pool issue that turned out to be a sin; I knew there had to be a simpler way, but I wasn\u2019t sure where to start.",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "8-ways-we-measure-agent-reliability-in-2026",
     "title": "8 ways we measure agent reliability in 2026",
-    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this measure agent problem while migrating a service under a hard dea; Here's what actually worked.; I needed metrics that told me, in real time, whether an end user would say “this",
+    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this measure agent problem while migrating a service under a hard dea; Here's what actually worked.; I needed metrics that told me, in real time, whether an end user would say \u201cthis",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2461,13 +2412,13 @@
   {
     "slug": "ai-chats-hidden-wcag-fails",
     "title": "AI chat's hidden WCAG fails",
-    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this when we shipped an AI assistant that passed automated WCAG scann; I saw this in production when users with screen readers reported messages disapp; I saw production error logs where users flagged \"unreadable code blocks\" — the A",
+    "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I ran into this when we shipped an AI assistant that passed automated WCAG scann; I saw this in production when users with screen readers reported messages disapp; I saw production error logs where users flagged \"unreadable code blocks\" \u2014 the A",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "ai-code-40-how-to-keep-it-from-rotting-your-repo",
-    "title": "AI code 40% — how to keep it from rotting your repo",
+    "title": "AI code 40% \u2014 how to keep it from rotting your repo",
     "reason": "retroactive_fabrication_audit: 8 unverifiable first-person anecdote(s): I've seen the same maintain codebase mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three weeks trying to onboard a new hire onto a Django app that had 38 %",
     "action": "regenerate",
     "status": "stripped"
@@ -2496,7 +2447,7 @@
   {
     "slug": "ship-logs-at-50k-eps-opentelemetry-fluent-bit-clickhouse",
     "title": "Ship logs at 50k EPS: OpenTelemetry, Fluent Bit, ClickHouse",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client’s Node 20 LTS API suddenly jumped from 5,000 EPS t",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client\u2019s Node 20 LTS API suddenly jumped from 5,000 EPS t",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2510,21 +2461,21 @@
   {
     "slug": "stop-guessing-tech-stacks-validate-tools-in-2-hours",
     "title": "Stop guessing tech stacks: validate tools in 2 hours",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent three days debugging a connection pool timeout that turned out to be a m; I once had a team add a CDN layer on top of Cloudflare while also using Fastly—b",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent three days debugging a connection pool timeout that turned out to be a m; I once had a team add a CDN layer on top of Cloudflare while also using Fastly\u2014b",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "lessons-from-3-saas-price-pivots-in-2026",
     "title": "Lessons from 3 SaaS price pivots in 2026",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I set an annual plan at $99/user/year thinking indie hackers would love it.; I dug into the logs and found most churn came from teams of 5–10 people who’d ha",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I set an annual plan at $99/user/year thinking indie hackers would love it.; I dug into the logs and found most churn came from teams of 5\u201310 people who\u2019d ha",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "monolith-to-services-without-a-rewrite",
     "title": "Monolith to services without a rewrite",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about migrated monolith during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran a project in Lagos in 2026 where the monolith handled 8,000 requests per s",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about migrated monolith during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran a project in Lagos in 2026 where the monolith handled 8,000 requests per s",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2538,14 +2489,14 @@
   {
     "slug": "negotiate-salary-2026-with-ai-resume-tool",
     "title": "Negotiate salary 2026 with AI resume tool",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I realized most engineers don’t negotiate around AI clauses—they treat them as b; I spent three days debugging a package that looked fair until I ran the numbers:",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I realized most engineers don\u2019t negotiate around AI clauses\u2014they treat them as b; I spent three days debugging a package that looked fair until I ran the numbers:",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "pick-one-stripe-lemon-squeezy-paddle-in-2026",
     "title": "Pick one: Stripe, Lemon Squeezy, Paddle in 2026",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about stripe lemon during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when I tried to move a $9/month indie project from Stripe to Pad",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about stripe lemon during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I ran into this when I tried to move a $9/month indie project from Stripe to Pad",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2566,7 +2517,7 @@
   {
     "slug": "fix-ai-agent-failures-postmortem-guide",
     "title": "Fix AI agent failures: postmortem guide",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client’s customer-facing agent suddenly started offering ",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client\u2019s customer-facing agent suddenly started offering ",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2587,20 +2538,20 @@
   {
     "slug": "ai-fixes-legacy-code-nobody-owns",
     "title": "AI fixes legacy code nobody owns",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I learned this the hard way when I inherited a 2018 Java monolith running on a 2; I don’t trust the AI to write perfect docs, but it’s great at generating first d; I was surprised to find that the AI often surfaces issues that static analysis m",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I learned this the hard way when I inherited a 2018 Java monolith running on a 2; I don\u2019t trust the AI to write perfect docs, but it\u2019s great at generating first d; I was surprised to find that the AI often surfaces issues that static analysis m",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "ai-tools-cut-rates-30-whats-real-in-2026",
-    "title": "AI tools cut rates 30%: what’s real in 2026",
+    "title": "AI tools cut rates 30%: what\u2019s real in 2026",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): The short version: the conventional advice on freelance developer is incomplete.; I ran into this when a client accepted my $85 / hour quote for a Next.js dashboa; I ran this exact contract with a Berlin startup in Q1 2026.",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "ai-ui-tools-broke-my-react-flow-heres-why",
-    "title": "AI UI tools broke my React flow — here’s why",
+    "title": "AI UI tools broke my React flow \u2014 here\u2019s why",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): The short version: the conventional advice on generation tools is incomplete.; I made that mistake when I tried to generate a responsive table component with s; I once generated a card component that used flexbox for layout, but our design s",
     "action": "regenerate",
     "status": "stripped"
@@ -2615,13 +2566,13 @@
   {
     "slug": "build-in-public-without-burning-out",
     "title": "Build in public without burning out",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about build public during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I spent three days helping him clean up the damage, and we ended up rebuilding h",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about build public during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I spent three days helping him clean up the damage, and we ended up rebuilding h",
     "action": "regenerate",
     "status": "stripped"
   },
   {
     "slug": "7-graceful-degradation-traps-ive-hit-in-production",
-    "title": "7 graceful degradation traps I’ve hit in production",
+    "title": "7 graceful degradation traps I\u2019ve hit in production",
     "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I ran into this designing systems problem while migrating a service under a hard; Here's what actually worked.; I traced the issue to a hardcoded timeout of 100 ms and a fallback path that ass",
     "action": "regenerate",
     "status": "stripped"
@@ -2629,7 +2580,7 @@
   {
     "slug": "africa-devs-ship-production-code-not-crud",
     "title": "Africa devs: Ship production code, not CRUD",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about building portfolio during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I learned this the hard way in 2026.",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): A colleague asked me about building portfolio during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I learned this the hard way in 2026.",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2650,7 +2601,7 @@
   {
     "slug": "ai-agent-postmortems-trace-vs-logs-vs-code",
     "title": "AI agent postmortems: trace vs logs vs code",
-    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client’s agent started recommending out-of-stock items 43",
+    "reason": "retroactive_fabrication_audit: 9 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when a client\u2019s agent started recommending out-of-stock items 43",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2684,7 +2635,7 @@
   },
   {
     "slug": "tame-python-asyncs-hidden-traps",
-    "title": "Tame Python async’s hidden traps",
+    "title": "Tame Python async\u2019s hidden traps",
     "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I've seen the same async python mistake in multiple production codebases, includ; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when I moved a 500k daily active user API from Flask 2.3 to Fast",
     "action": "regenerate",
     "status": "stripped"
@@ -2698,8 +2649,8 @@
   },
   {
     "slug": "boring-aws-lambda-layers-that-dont-lock",
-    "title": "Boring AWS Lambda layers that don’t lock…",
-    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I ran into this golden paths problem while migrating a service under a hard dead; I spent two days debugging why the new deployment kept failing in staging, only ; I deleted the layer, rebuilt it, and redeployed—only to find out I’d also hard-c",
+    "title": "Boring AWS Lambda layers that don\u2019t lock\u2026",
+    "reason": "retroactive_fabrication_audit: 10 unverifiable first-person anecdote(s): I ran into this golden paths problem while migrating a service under a hard dead; I spent two days debugging why the new deployment kept failing in staging, only ; I deleted the layer, rebuilt it, and redeployed\u2014only to find out I\u2019d also hard-c",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2720,7 +2671,7 @@
   {
     "slug": "ai-proof-your-mid-level-salary",
     "title": "AI-proof your mid-level salary",
-    "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I ran into this when a client in Manila asked me to rebuild a Rails API they’d p; I was surprised when I audited my own time tracking for a SaaS project.; I thought I was spending 20% of my time on architecture decisions, but the data ",
+    "reason": "retroactive_fabrication_audit: 11 unverifiable first-person anecdote(s): I ran into this when a client in Manila asked me to rebuild a Rails API they\u2019d p; I was surprised when I audited my own time tracking for a SaaS project.; I thought I was spending 20% of my time on architecture decisions, but the data ",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2748,7 +2699,7 @@
   {
     "slug": "ai-scanners-overlook-real-vulns",
     "title": "AI scanners overlook real vulns",
-    "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): The short version: the conventional advice on being used is incomplete.; I ran into this when I used GitHub Advanced Security’s AI-powered code scanning ; I ran this in GitHub Advanced Security with CodeQL 2.14.",
+    "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): The short version: the conventional advice on being used is incomplete.; I ran into this when I used GitHub Advanced Security\u2019s AI-powered code scanning ; I ran this in GitHub Advanced Security with CodeQL 2.14.",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2776,7 +2727,7 @@
   {
     "slug": "ai-ops-datadog-vs-granfa-for-infra-automation",
     "title": "AI ops: Datadog vs Granfa for infra automation",
-    "reason": "retroactive_fabrication_audit: 16 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when a “simple” capacity spike on a Node 20 LTS serv",
+    "reason": "retroactive_fabrication_audit: 16 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when a \u201csimple\u201d capacity spike on a Node 20 LTS serv",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2811,7 +2762,7 @@
   {
     "slug": "price-your-remote-job-like-a-new-york-dev",
     "title": "Price your remote job like a New York dev",
-    "reason": "retroactive_fabrication_audit: 17 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I learned the hard way that currency math isn’t the same as market math.; I spent two weeks reverse-engineering offer letters from US-based contractors on",
+    "reason": "retroactive_fabrication_audit: 17 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I learned the hard way that currency math isn\u2019t the same as market math.; I spent two weeks reverse-engineering offer letters from US-based contractors on",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2846,7 +2797,7 @@
   {
     "slug": "ai-ate-the-niches-first",
     "title": "AI ate the niches first",
-    "reason": "retroactive_fabrication_audit: 18 unverifiable first-person anecdote(s): A colleague asked me about microsaas 2026 during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I believed that too—until I watched three seemingly safe niches collapse into $0",
+    "reason": "retroactive_fabrication_audit: 18 unverifiable first-person anecdote(s): A colleague asked me about microsaas 2026 during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I believed that too\u2014until I watched three seemingly safe niches collapse into $0",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2874,7 +2825,7 @@
   {
     "slug": "postgres-vector-search-what-breaks-first",
     "title": "Postgres vector search: what breaks first",
-    "reason": "retroactive_fabrication_audit: 22 unverifiable first-person anecdote(s): I spent a week tweaking the pgvector index type (IVFFlat → HNSW → Sparse → dense; I finally broke down and profiled the query itself with   and saw 98% of the tim; I measured three things for every option:\n\n1.",
+    "reason": "retroactive_fabrication_audit: 22 unverifiable first-person anecdote(s): I spent a week tweaking the pgvector index type (IVFFlat \u2192 HNSW \u2192 Sparse \u2192 dense; I finally broke down and profiled the query itself with   and saw 98% of the tim; I measured three things for every option:\n\n1.",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2888,7 +2839,7 @@
   {
     "slug": "ai-apps-break-when-you-treat-them-like-regular-software",
     "title": "AI apps break when you treat them like regular software",
-    "reason": "retroactive_fabrication_audit: 32 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I had treated the AI system like any other web service — stateless, deterministi",
+    "reason": "retroactive_fabrication_audit: 32 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation \u2014 which meant I didn't understand; I had treated the AI system like any other web service \u2014 stateless, deterministi",
     "action": "regenerate",
     "status": "stripped"
   },
@@ -2908,7 +2859,7 @@
   },
   {
     "slug": "2026-salary-hacks-prove-ai-didnt-steal-your-value",
-    "title": "2026 salary hacks: Prove AI didn’t steal your value",
+    "title": "2026 salary hacks: Prove AI didn\u2019t steal your value",
     "reason": "retroactive_fabrication_audit: unverifiable named-source citation: 'the 2026 Stack Overflow Developer Survey that shows'",
     "action": "regenerate",
     "status": "stripped"
@@ -2929,7 +2880,7 @@
   },
   {
     "slug": "3-vibe-coding-tricks-that-kill-mvps-and-5-tools-that",
-    "title": "3 vibe-coding tricks that kill MVPs — and 5 tools that",
+    "title": "3 vibe-coding tricks that kill MVPs \u2014 and 5 tools that",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this vibe coding problem while migrating a service under a hard deadl; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
     "action": "regenerate",
     "status": "stripped"
@@ -2975,5 +2926,54 @@
     "reason": "retroactive_fabrication_audit: 12 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I first noticed the trend after I posted my own remote switch.; I dug into their hiring funnels and found every hire had one thing in common: a ",
     "action": "regenerate",
     "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "9-ai-wrapper-plays-that-worked-in-2026",
+    "action": "regenerate",
+    "status": null,
+    "reason": "content_audit_verdicts: Unverifiable first-person incident language (2 sentence(s)).",
+    "queued_at": "2026-09-19T09:27:15.423421+00:00"
+  },
+  {
+    "slug": "ai-tools-rewrote-my-engineering-rules",
+    "action": "regenerate",
+    "status": null,
+    "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
+    "queued_at": "2026-09-19T09:27:15.502354+00:00"
+  },
+  {
+    "slug": "ai-ui-tools-6-months-in-what-i-gained-and-lost",
+    "action": "regenerate",
+    "status": null,
+    "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
+    "queued_at": "2026-09-19T09:27:15.510244+00:00"
+  },
+  {
+    "slug": "arm-in-production-graviton4-vs-ampere-in-2026",
+    "action": "regenerate",
+    "status": null,
+    "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
+    "queued_at": "2026-09-19T09:27:15.521957+00:00"
+  },
+  {
+    "slug": "bootstrapped-5k-mrr-without-ads",
+    "action": "regenerate",
+    "status": null,
+    "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
+    "queued_at": "2026-09-19T09:27:15.527817+00:00"
+  },
+  {
+    "slug": "drop-ec2-bills-70-without-code",
+    "action": "regenerate",
+    "status": null,
+    "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
+    "queued_at": "2026-09-19T09:27:15.547402+00:00"
+  },
+  {
+    "slug": "internal-platform-adoption-one-metric-kills-velocity",
+    "action": "regenerate",
+    "status": null,
+    "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
+    "queued_at": "2026-09-19T09:27:15.568811+00:00"
   }
 ]
