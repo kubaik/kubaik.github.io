@@ -29,7 +29,7 @@ _ROOT = Path(__file__).resolve().parent.parent
 if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
-from adsense_fixes.claim_gate import check_claims
+from adsense_fixes.claim_gate import check_claims, strip_flagged_language
 from adsense_fixes.policy_risk import is_static_page, topic_policy_violation, SKIP_SITE_DIRS
 
 try:
@@ -205,35 +205,8 @@ def tombstone_slug(slug: str, reason: str, apply: bool) -> str:
 
 
 def _strip_risky_sentences(content: str) -> Tuple[str, int]:
-    """Drop sentences the claim gate would flag. Preserve fenced code."""
-    fences: List[str] = []
-
-    def _mask(match: re.Match) -> str:
-        fences.append(match.group(0))
-        return f"\x00CODE{len(fences) - 1}\x00"
-
-    masked = _CODE_FENCE.sub(_mask, content or "")
-    kept_parts: List[str] = []
-    removed = 0
-    for block in masked.split("\n\n"):
-        if "\x00CODE" in block or block.strip().startswith("#"):
-            kept_parts.append(block)
-            continue
-        sentences = _SENTENCE_SPLIT.split(block)
-        kept_sents = []
-        for sent in sentences:
-            probe = check_claims(sent, "")
-            if probe.blocked:
-                removed += 1
-                continue
-            kept_sents.append(sent)
-        rebuilt = " ".join(s.strip() for s in kept_sents if s.strip())
-        if rebuilt:
-            kept_parts.append(rebuilt)
-    new_content = "\n\n".join(kept_parts)
-    for i, fence in enumerate(fences):
-        new_content = new_content.replace(f"\x00CODE{i}\x00", fence)
-    return new_content, removed
+    """Drop first-person / fake-study / filler sentences. Preserve fences."""
+    return strip_flagged_language(content)
 
 
 def _enqueue_improve(slug: str, reason: str) -> None:

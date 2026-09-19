@@ -239,7 +239,7 @@ Here’s what we use and why:
 
 We tried pytest 7.4 for unit tests, but it wasn’t flexible enough for our AI-driven scenarios. Instead, we use Node.js for orchestration because it’s easier to manage async Docker and AWS calls.
 
-For observability, Grafana 10.2 is a game-changer. We built a dashboard that shows the candidate’s latency, error rate, and cache hit rate in real time. If the candidate’s fix causes a spike, we see it immediately.
+We built a dashboard that shows the candidate’s latency, error rate, and cache hit rate in real time. If the candidate’s fix causes a spike, we see it immediately.
 
 One surprise was how much we relied on Redis 7.2’s RESP3 support. We use Redis Streams for event sourcing, and RESP3 made the protocol more reliable under load.
 

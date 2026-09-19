@@ -256,7 +256,7 @@ Why it’s honorable: I’ve used this for a data pipeline that processed 10k ro
 
 What it does: You write a comment, and the AI writes the code for you.
 
-Strength: You can write code faster. For simple CRUD APIs, this is a game-changer.
+Strength: You can write code faster.
 
 Weakness: The code is often wrong. It generates plausible-looking code that compiles but fails at runtime. Also, the AI doesn’t understand your domain — it just regurgitates patterns it’s seen before.
 

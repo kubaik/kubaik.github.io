@@ -8,7 +8,7 @@ In 2026, self-healing deployment pipelines aren’t just a nice-to-have — they
 
 Both tools claim to heal themselves, but they solve different problems. Argo CD is battle-tested for GitOps deployments with automatic drift correction, while Crossplane turns Kubernetes into a control plane for cloud resources with built-in health checks. The catch? Argo’s self-healing is reactive — it waits for Kubernetes to misbehave before triggering a rollback — whereas Crossplane proactively reconciles cloud resources to match your desired state every 60 seconds by default. That latency meant 45-second windows where a misconfigured RDS instance could stay broken before Crossplane noticed — plenty of time to break prod.
 
-But the real differentiator? Tooling friction. In practice, Argo CD’s self-healing is easy to bolt onto existing GitOps workflows, while Crossplane requires you to model your infrastructure as Kubernetes manifests — a paradigm shift that breaks most teams’ existing Terraform modules. They only made progress when they started from scratch with Crossplane Composition functions. The lesson? Self-healing isn’t just about the tool — it’s about how much cognitive overhead you’re willing to pay in setup and maintenance.
+But the real differentiator? Tooling friction. They only made progress when they started from scratch with Crossplane Composition functions. The lesson? Self-healing isn’t just about the tool — it’s about how much cognitive overhead you’re willing to pay in setup and maintenance.
 
 ## Option A — how it works and where it shines
 
@@ -255,7 +255,7 @@ My recommendation is simple: **use Argo CD if you’re already running GitOps an
 
 Argo CD is the pragmatic choice for most teams in 2026. It’s battle-tested, integrates seamlessly with existing GitOps workflows, and has a lower operational cost. The self-healing is reactive but fast enough for most applications. We’ve run Argo CD in production for three years, and the only self-healing issues we’ve had were due to misconfigured health checks — not the tool itself. That’s the mark of a mature system: it fails gracefully when misconfigured, but works well when set up correctly.
 
-Crossplane is the better choice when you have a large infrastructure footprint and can afford the upfront cost. Its proactive reconciliation is a game-changer for stateful applications where infrastructure drift can cause cascading failures. But it requires a paradigm shift — modeling your infrastructure as Kubernetes resources — and that’s not something every team is ready to commit to. If you’re not ready to rewrite your Terraform modules into Crossplane Compositions, don’t force it. The cognitive overhead isn’t worth the marginal gain in self-healing speed.
+Crossplane is the better choice when you have a large infrastructure footprint and can afford the upfront cost. If you’re not ready to rewrite your Terraform modules into Crossplane Compositions, don’t force it. The cognitive overhead isn’t worth the marginal gain in self-healing speed.
 
 I still have reservations about Crossplane. The 60-second reconciliation loop feels slow for critical applications, and the debugging experience is painful. We mitigated the loop delay by reducing the cooldown to 10 seconds, but that required patching Crossplane’s controller — something most teams won’t do. And the Go dependency is a non-starter for many teams. If Crossplane ever ships a Python or TypeScript SDK for Composition functions, I’ll reconsider my stance.
 

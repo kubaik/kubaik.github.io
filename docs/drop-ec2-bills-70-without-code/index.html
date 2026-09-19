@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T04:57:04.863722">
-        <meta property="article:modified_time" content="2026-09-19T11:31:27.267014+00:00">
+        <meta property="article:modified_time" content="2026-09-19T11:54:35.551996+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Drop EC2 bills 70% without code">
@@ -63,8 +63,8 @@
       "headline": "Drop EC2 bills 70% without code",
       "description": "Cut EC2 costs 70% with one sysctl tweak — TCP BBR, zswap, gp3 IOPS, and the exact commands for Amazon Linux 2023 and Ubuntu 22.04 LTS.",
       "datePublished": "2026-06-09T04:57:04+00:00",
-      "dateModified": "2026-09-19T11:31:27+00:00",
-      "wordCount": 3165,
+      "dateModified": "2026-09-19T11:54:35+00:00",
+      "wordCount": 3141,
       "timeRequired": "PT16M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -260,7 +260,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         16 min read
-                        &nbsp;·&nbsp; 3165 words
+                        &nbsp;·&nbsp; 3141 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -315,7 +315,7 @@
    <code>bash
    jq '.end.sum_retransmits' baseline.json
    # 1872</code>
-   Note that number; you’ll compare it after the tweak.</p>
+Note that number; you’ll compare it after the tweak.</p>
 </li>
 <li>
 <p>Check EBS baseline. If your instance is EBS-only (no instance store) the default gp2/gp3 volume is 1,000 IOPS. Confirm with the AWS CLI.
@@ -598,7 +598,7 @@ ExecStop=/usr/local/bin/graceful-shutdown.sh
 <hr />
 <h3 id="integration-with-real-tools-2026-versions">Integration with Real Tools (2026 Versions)</h3>
 <h4 id="tool-1-ec2-cost-exporter-v241-track-ec2-costs-in-prometheus">Tool 1: <code>ec2-cost-exporter</code> (v2.4.1) – Track EC2 Costs in Prometheus</h4>
-<p>I built this tool to expose EC2 instance costs directly in Prometheus, so I can correlate cost spikes with latency or CPU steal changes. It uses the AWS Cost Explorer API with a daily refresh.</p>
+<p>It uses the AWS Cost Explorer API with a daily refresh.</p>
 <p><strong>Installation</strong>:</p>
 <pre><code class="language-bash">pip install ec2-cost-exporter==2.4.1
 </code></pre>

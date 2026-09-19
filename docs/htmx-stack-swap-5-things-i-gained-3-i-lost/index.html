@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-26T11:39:00.782771">
-        <meta property="article:modified_time" content="2026-09-19T11:31:27.284398+00:00">
+        <meta property="article:modified_time" content="2026-09-19T11:54:35.557153+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="HTMX stack swap: 5 things I gained, 3 I lost">
@@ -63,8 +63,8 @@
       "headline": "HTMX stack swap: 5 things I gained, 3 I lost",
       "description": "HTMX 2.0 cut our frontend bundle from 245 KiB to 8 KiB and dropped AWS fees 48% — here’s the real trade-off we made and what we gained by swapping React for…",
       "datePublished": "2026-06-26T11:39:00+00:00",
-      "dateModified": "2026-09-19T11:31:27+00:00",
-      "wordCount": 2811,
+      "dateModified": "2026-09-19T11:54:35+00:00",
+      "wordCount": 2800,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -263,7 +263,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2811 words
+                        &nbsp;·&nbsp; 2800 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -331,7 +331,7 @@
 <h3 id="htmx-20-django-rest-tailwind-4">HTMX 2.0 + Django REST + Tailwind 4</h3>
 <p>What it does: Replaces client-side routing and data fetching with HTML-over-the-wire. You return HTML snippets from the server and HTMX swaps them into the DOM. No JSON APIs, no client hydration, no virtual DOM diffing.</p>
 <p>Strength: The backend stays thin. You write Django templates or FastAPI Jinja2 templates, add HTMX attributes like <code>hx-get</code>, <code>hx-trigger</code>, and <code>hx-swap</code>, and the page becomes interactive without writing JavaScript. Bundle size stays under 10 KiB.</p>
-<p>Weakness: You lose client-side state management. Anything that needs to live in the browser after the initial render must be handled server-side or via lightweight Alpine.js (14 KiB). If you’re used to Redux or Zustand, that’s a paradigm shift.</p>
+<p>Weakness: You lose client-side state management. Anything that needs to live in the browser after the initial render must be handled server-side or via lightweight Alpine.js (14 KiB).</p>
 <p>Best for: Teams that want to keep backend complexity low and avoid heavy frontend tooling. Works especially well for internal tools, admin panels, and content-driven sites where SEO matters.</p>
 <p>2</p>
 <h3 id="stimulus-3-django-rest">Stimulus 3 + Django REST</h3>

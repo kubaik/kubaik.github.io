@@ -127,7 +127,7 @@ That 30 minutes of patching uncovered a gap in our design tokens: we didn’t ha
 
 If you’ve ever used a CSS preprocessor like Sass with variables, you already understand the core idea: centralize decisions so changes propagate automatically. AI UI tools extend this pattern to visual decisions. The difference is that in Sass, you centralize color hex codes; in AI UI tools, you centralize spacing scales, typography scales, and component behaviors.
 
-I worked on a project in 2026 where we used CSS custom properties for theming. The setup looked like this:
+The setup looked like this:
 ```css
 :root {
   --color-primary: 37 99 235;

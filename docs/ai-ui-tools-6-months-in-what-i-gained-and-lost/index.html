@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-27T05:01:58.869327">
-        <meta property="article:modified_time" content="2026-09-19T11:31:27.221141+00:00">
+        <meta property="article:modified_time" content="2026-09-19T11:54:35.536279+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI UI tools: 6 months in, what I gained and lost">
@@ -63,8 +63,8 @@
       "headline": "AI UI tools: 6 months in, what I gained and lost",
       "description": "Cut UI generation time 40% with AI tools — but only after fixing design tokens and adding visual regression tests.",
       "datePublished": "2026-06-27T05:01:58+00:00",
-      "dateModified": "2026-09-19T11:31:27+00:00",
-      "wordCount": 3005,
+      "dateModified": "2026-09-19T11:54:35+00:00",
+      "wordCount": 2990,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -261,7 +261,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3005 words
+                        &nbsp;·&nbsp; 2990 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -364,7 +364,7 @@ Original: I spent 45 minutes sketching, coding, and iterating the hero manually.
 That 30 minutes of patching uncovered a gap in our design tokens: we didn’t have a <code>shadow-md</code> token, so I had to hardcode it. Two weeks later, when the design team updated the shadow to <code>0 4px 8px rgba(0,0,0,0.15)</code>, I had to update 18 components by hand. The AI didn’t cause the gap; it exposed it. The real cost wasn’t the AI—it was the 30 minutes of patching plus the future 2 hours of refactoring.</p>
 <h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
 <p>If you’ve ever used a CSS preprocessor like Sass with variables, you already understand the core idea: centralize decisions so changes propagate automatically. AI UI tools extend this pattern to visual decisions. The difference is that in Sass, you centralize color hex codes; in AI UI tools, you centralize spacing scales, typography scales, and component behaviors.</p>
-<p>I worked on a project in 2026 where we used CSS custom properties for theming. The setup looked like this:</p>
+<p>The setup looked like this:</p>
 <pre><code class="language-css">:root {
   --color-primary: 37 99 235;
   --spacing-unit: 0.5rem;

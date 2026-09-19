@@ -13,16 +13,6 @@ Usage:
     python adsense_fixes/classify_posts.py --json report.json
     python adsense_fixes/classify_posts.py --only DELETE
     python adsense_fixes/classify_posts.py --slug stop-putting-llm-keys-in-env
-
-
-    # inspect only
-python adsense_fixes/classify_posts.py --only DELETE
-python adsense_fixes/classify_posts.py --only IMPROVE
-
-# strip IMPROVE sentences + tombstone the real DELETE list
-python adsense_fixes/content_audit_verdicts.py --apply --improve-only
-
-python adsense_fixes/content_audit_verdicts.py --apply --delete-only
 """
 from __future__ import annotations
 
@@ -203,7 +193,7 @@ def classify_post(slug: str, data: Dict, path: Path) -> Verdict:
         f"{title} {content}",
         re.IGNORECASE,
     ))
-    if technical and content.count("```") < 2:
+    if technical and content.count("```") < 2 and wc < MIN_WORDS_IMPROVE:
         v.reasons.append("Technical post with fewer than two code fences")
 
     # Decide bucket
@@ -233,10 +223,8 @@ def classify_post(slug: str, data: Dict, path: Path) -> Verdict:
             v.reasons.append("On manual DELETE list")
         return v
 
-    if v.reasons or slug in KNOWN_IMPROVE:
+    if v.reasons:
         v.category = "IMPROVE"
-        if slug in KNOWN_IMPROVE and "On manual IMPROVE list" not in v.reasons:
-            v.reasons.append("On manual IMPROVE list")
         return v
 
     if slug in KNOWN_DELETE:

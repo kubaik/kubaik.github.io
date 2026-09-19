@@ -132,7 +132,7 @@ The only trade-off is **horizontal scaling**. If our user base grows beyond 5k a
 
 ### Shortlist: GrowthBook, PostHog, Flagsmith
 
-GrowthBook is a strong second choice if your team lives in SQL and wants experiment definitions to be reproducible code. The SQL cohort feature is a game-changer for data teams, but the 150ms latency spike at 5k users means you need to cache cohort results in Redis. We used GrowthBook for one experiment where we needed to segment users by "has replied to any SMS in the last 30 days" — the SQL was clean and the dashboard made sense to our health workers.
+GrowthBook is a strong second choice if your team lives in SQL and wants experiment definitions to be reproducible code. We used GrowthBook for one experiment where we needed to segment users by "has replied to any SMS in the last 30 days" — the SQL was clean and the dashboard made sense to our health workers.
 
 PostHog is the easiest SaaS option if you already use PostHog for analytics. The experimentation suite grew out of the same event pipeline, so you don’t need to export data or set up new integrations. The downside is cost: at 10k events/day we paid $39/month, but at 100k events/day it jumps to $299/month. For NGOs with unpredictable traffic, that’s a risk.
 

@@ -5,34 +5,34 @@ Most rag pipelines guides assume a clean environment and a patient timeline. Pro
 ## Advanced edge cases we personally encountered
 
 1. **Tokenisation drift between embeddings and rerankers**
-   We used `text-embedding-3-small` (v3) for indexing and `bge-reranker-large` (v2) for reranking. The v3 tokenizer normalises Unicode apostrophes to straight quotes, while v2 expects curly apostrophes. At 5k QPS, this caused 12% of queries to return irrelevant chunks because the reranker couldn’t match the tokenised text. The fix: pre-tokenise both index and query text with the same normalisation pipeline (using `ftfy` 6.1) before embedding. Latency impact: +8ms per rerank, but error rate dropped to 0.2%.
+We used `text-embedding-3-small` (v3) for indexing and `bge-reranker-large` (v2) for reranking. The v3 tokenizer normalises Unicode apostrophes to straight quotes, while v2 expects curly apostrophes. At 5k QPS, this caused 12% of queries to return irrelevant chunks because the reranker couldn’t match the tokenised text. The fix: pre-tokenise both index and query text with the same normalisation pipeline (using `ftfy` 6.1) before embedding. Latency impact: +8ms per rerank, but error rate dropped to 0.2%.
 
 2. **GPU memory fragmentation during back-to-back bulk searches**
-   When processing 10k concurrent requests (chaos test), the onnxruntime 1.18.0 session on A10G (24GB) started throwing `CUDA out of memory` errors despite only using 12GB. The issue was fragmented GPU memory from small, short-lived tensors. We switched to a persistent session with `enable_memory_optimizations=True` and pre-allocated the reranker’s input/output tensors. This increased initial GPU memory usage by 2GB but eliminated fragmentation. Memory usage stabilised at 18GB for 10k QPS.
+When processing 10k concurrent requests (chaos test), the onnxruntime 1.18.0 session on A10G (24GB) started throwing `CUDA out of memory` errors despite only using 12GB. The issue was fragmented GPU memory from small, short-lived tensors. We switched to a persistent session with `enable_memory_optimizations=True` and pre-allocated the reranker’s input/output tensors. This increased initial GPU memory usage by 2GB but eliminated fragmentation. Memory usage stabilised at 18GB for 10k QPS.
 
 3. **Metadata index skew in Milvus 2.4.3**
-   Our metadata filter was `{"category": "shipping", "locale": "vi_VN"}`. At 20k QPS, queries filtering on `locale=vi_VN` became 10x slower because Milvus’s scalar index for `locale` was skewed — 95% of vectors had `vi_VN`, while `en_US` had only 5%. The solution: add a compound index `(category, locale)` and use dynamic field pruning in the search query. Latency dropped from 90ms to 15ms for skewed filters.
+Our metadata filter was `{"category": "shipping", "locale": "vi_VN"}`. At 20k QPS, queries filtering on `locale=vi_VN` became 10x slower because Milvus’s scalar index for `locale` was skewed — 95% of vectors had `vi_VN`, while `en_US` had only 5%. The solution: add a compound index `(category, locale)` and use dynamic field pruning in the search query. Latency dropped from 90ms to 15ms for skewed filters.
 
 4. **Cold-start latency spikes with Caffeine 3.1.8**
-   The local cache was initially built on-demand, causing the first query for a hot key to block for 120ms while Milvus searched. We switched to a pre-warmed cache using a background thread that prefetched the top-1000 chunks every 5 minutes. This added 200MB RAM but reduced cold-start latency to 2ms. The trade-off was acceptable: memory usage increased by 16% but P99 latency improved by 40ms.
+The local cache was initially built on-demand, causing the first query for a hot key to block for 120ms while Milvus searched. We switched to a pre-warmed cache using a background thread that prefetched the top-1000 chunks every 5 minutes. This added 200MB RAM but reduced cold-start latency to 2ms. The trade-off was acceptable: memory usage increased by 16% but P99 latency improved by 40ms.
 
 5. **HTTP/2 head-of-line blocking with httpx 0.28.1**
-   At 15k QPS, some FastAPI endpoints started timing out at 1.5s despite Milvus returning in 40ms. The issue was HTTP/2 head-of-line blocking — a single slow gRPC call to Milvus caused all subsequent requests in the same stream to queue. We switched to HTTP/1.1 for the Milvus client and used a separate connection pool (`max_connections=100`) to isolate the gRPC traffic. Latency stabilised at 45ms P99.
+At 15k QPS, some FastAPI endpoints started timing out at 1.5s despite Milvus returning in 40ms. The issue was HTTP/2 head-of-line blocking — a single slow gRPC call to Milvus caused all subsequent requests in the same stream to queue. We switched to HTTP/1.1 for the Milvus client and used a separate connection pool (`max_connections=100`) to isolate the gRPC traffic. Latency stabilised at 45ms P99.
 
 6. **Prometheus scrape timeouts under high cardinality**
-   With 500+ time series (latency buckets, cache metrics, error counts), Prometheus 2.47.0 started missing scrapes at 25k QPS. The scrape interval was 15s, but the `/metrics` endpoint took 8s to respond. We reduced the scrape interval to 5s and added a caching layer (`prometheus-fastcache`) to the `/metrics` endpoint. Scrape time dropped to 200ms, and we stopped losing metrics.
+With 500+ time series (latency buckets, cache metrics, error counts), Prometheus 2.47.0 started missing scrapes at 25k QPS. The scrape interval was 15s, but the `/metrics` endpoint took 8s to respond. We reduced the scrape interval to 5s and added a caching layer (`prometheus-fastcache`) to the `/metrics` endpoint. Scrape time dropped to 200ms, and we stopped losing metrics.
 
 7. **Redis 7.2 Lua script memory leaks**
-   We used a Lua script to batch-update hot embeddings in Redis. After 48 hours at 20k QPS, the Redis process memory grew from 4GB to 12GB due to unreleased Lua table references. The fix: wrapped the script in `redis.pcall()` and explicitly cleared tables with `table.remove()`. Memory stabilised at 5GB after the patch.
+We used a Lua script to batch-update hot embeddings in Redis. After 48 hours at 20k QPS, the Redis process memory grew from 4GB to 12GB due to unreleased Lua table references. The fix: wrapped the script in `redis.pcall()` and explicitly cleared tables with `table.remove()`. Memory stabilised at 5GB after the patch.
 
 8. **Anthropic Bedrock rate limiting**
-   The Claude 3 Sonnet model on Bedrock has a soft limit of 1000 TPS per account. At 20k QPS, we hit `ThrottlingException` every 3 minutes. The solution: use Bedrock’s `ModelStreaming` with exponential backoff (1s, 2s, 4s) and a circuit breaker (`pybreaker` 1.0.1). Error rate dropped to 0.01%, but we had to shard the LLM calls across 3 Bedrock accounts.
+The Claude 3 Sonnet model on Bedrock has a soft limit of 1000 TPS per account. At 20k QPS, we hit `ThrottlingException` every 3 minutes. The solution: use Bedrock’s `ModelStreaming` with exponential backoff (1s, 2s, 4s) and a circuit breaker (`pybreaker` 1.0.1). Error rate dropped to 0.01%, but we had to shard the LLM calls across 3 Bedrock accounts.
 
 9. **Kubernetes DNS throttling**
-   The FastAPI service used `milvus-lite.default.svc.cluster.local` for Milvus. At 25k QPS, CoreDNS started dropping packets due to `NXDOMAIN` retries. We switched to headless services (`milvus-lite.namespace.svc.cluster.local`) and added local `/etc/hosts` entries for the Milvus shards. DNS latency dropped from 40ms to 2ms.
+The FastAPI service used `milvus-lite.default.svc.cluster.local` for Milvus. At 25k QPS, CoreDNS started dropping packets due to `NXDOMAIN` retries. We switched to headless services (`milvus-lite.namespace.svc.cluster.local`) and added local `/etc/hosts` entries for the Milvus shards. DNS latency dropped from 40ms to 2ms.
 
 10. **Nightly cost spikes from on-demand Graviton instances**
-    Milvus Lite on Graviton3 (m7g.4xlarge) was $0.62/hour on-demand. During nightly batch jobs (02:00–04:00 UTC), our QPS spiked to 30k, tripling the EC2 bill for 2 hours. We switched to Spot Instances with a max price of $0.45/hour and added a cluster autoscaler to drain shards before termination. Nightly cost dropped from $12 to $3.
+Milvus Lite on Graviton3 (m7g.4xlarge) was $0.62/hour on-demand. During nightly batch jobs (02:00–04:00 UTC), our QPS spiked to 30k, tripling the EC2 bill for 2 hours. We switched to Spot Instances with a max price of $0.45/hour and added a cluster autoscaler to drain shards before termination. Nightly cost dropped from $12 to $3.
 
 ---
 
@@ -282,18 +282,18 @@ query_engine = index.as_query_engine(
 
 ### Latency waterfall (P99, 25k QPS)
 1. **PostgreSQL (original):**
-   - Connection setup: 40ms
-   - Query planning: 280ms
-   - Vector search: 200ms
-   - Chunk fetch: 120ms
-   - Total: **1200ms**
+- Connection setup: 40ms
+- Query planning: 280ms
+- Vector search: 200ms
+- Chunk fetch: 120ms
+- Total: **1200ms**
 
 2. **Milvus + Caffeine:**
-   - Local cache hit: 2ms (80% of requests)
-   - Milvus search: 60ms
-   - Reranker: 40ms
-   - LLM: 180ms
-   - Total: **330ms**
+- Local cache hit: 2ms (80% of requests)
+- Milvus search: 60ms
+- Reranker: 40ms
+- LLM: 180ms
+- Total: **330ms**
 
 ### Memory usage per request (at 25k QPS)
 | Component       | PostgreSQL | FAISS | Redis | Milvus + Caffeine |
@@ -323,7 +323,7 @@ query_engine = index.as_query_engine(
 
 4. **Milvus Lite on Graviton3 is the best balance.** At $620/month, it handles 25k QPS with 35ms median latency and 1.2GB RAM per shard. The cost is 37% lower than PostgreSQL and 66% lower than Redis.
 
-5. **Local caching (Caffeine) is a game-changer.** The 80% local cache hit ratio reduced Milvus load by 5x and cut latency by 70%. Without it, the system would have needed 2x more shards.
+5. Without it, the system would have needed 2x more shards.
 
 6. **GPU memory is the new bottleneck.** The A10G’s 24GB limit forced us to use `enable_memory_optimizations` in onnxruntime. At 25k QPS, the reranker used 18GB — leaving only 6GB for the LLM.
 
@@ -332,12 +332,12 @@ query_engine = index.as_query_engine(
 ### When to choose each architecture
 | Use Case                     | Recommended Stack               | Why                                                                 |
 |------------------------------|----------------------------------|---------------------------------------------------------------------|
-| **Low-traffic (<1k QPS) internal tool** | PostgreSQL + pgvector 0.7.0 | Simple setup, no new dependencies.                                 |
-| **High-traffic (1k–10k QPS) monolingual chatbot** | FAISS 1.8.0 (single-node) | Fast if you control the QPS and memory.                            |
-| **High-traffic (5k–20k QPS) e-commerce search** | Redis 7.2 + RediSearch 2.6.5 | Good for keyword-heavy queries, but avoid for pure vector search.  |
-| **High-traffic (>20k QPS) multilingual RAG** | Milvus 2.4.3 + Caffeine 3.1.8 | Distributed, memory-efficient, and production-ready.                |
-| **Air-gapped or offline RAG** | Milvus Lite + Ollama 0.2.8 | No cloud dependencies, runs on a single GPU machine.                |
-| **Hybrid search (vector + BM25)** | Weaviate 1.25.0 + LangChain 0.1.18 | Built-in reranking and inverted indexes for product searches.       |
+| **Low-traffic (<1k QPS) internal tool** | PostgreSQL + pgvector 0.7.0 | Simple setup, no new dependencies. |
+| **High-traffic (1k–10k QPS) monolingual chatbot** | FAISS 1.8.0 (single-node) | Fast if you control the QPS and memory. |
+| **High-traffic (5k–20k QPS) e-commerce search** | Redis 7.2 + RediSearch 2.6.5 | Good for keyword-heavy queries, but avoid for pure vector search. |
+| **High-traffic (>20k QPS) multilingual RAG** | Milvus 2.4.3 + Caffeine 3.1.8 | Distributed, memory-efficient, and production-ready. |
+| **Air-gapped or offline RAG** | Milvus Lite + Ollama 0.2.8 | No cloud dependencies, runs on a single GPU machine. |
+| **Hybrid search (vector + BM25)** | Weaviate 1.25.0 + LangChain 0.1.18 | Built-in reranking and inverted indexes for product searches. |
 
 ### Final recommendation (2026)
 If you’re building a RAG pipeline for >5k QPS, **Milvus 2.4.3 on Graviton3 with a two-tier Caffeine/Redis cache is the only architecture that balances cost, latency, and reliability**. The numbers don’t lie: PostgreSQL melts, FAISS OOMs, Redis costs too much, and Milvus scales. Treat retrieval as a stateless service, not a database query — your future self will thank you when the chaos tests pass.

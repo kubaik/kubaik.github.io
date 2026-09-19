@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-28T12:18:09.690589">
-        <meta property="article:modified_time" content="2026-09-19T11:31:27.196558+00:00">
+        <meta property="article:modified_time" content="2026-09-19T11:54:35.524484+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI observability: real-time dashboards without the">
@@ -63,8 +63,8 @@
       "headline": "AI observability: real-time dashboards without the",
       "description": "Cut AI observability ingest cost 70% while slashing dashboard latency from 8.2s to 220ms using NATS JetStream, OTel Collector Lua transforms, and Loki…",
       "datePublished": "2026-06-28T12:18:09+00:00",
-      "dateModified": "2026-09-19T11:31:27+00:00",
-      "wordCount": 3017,
+      "dateModified": "2026-09-19T11:54:35+00:00",
+      "wordCount": 2999,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,7 +265,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 3017 words
+                        &nbsp;·&nbsp; 2999 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -286,7 +286,7 @@
 <p>Finally, we tried a pure OpenTelemetry Collector pipeline with the <code>batch</code> processor set to 1 second. The p99 ingestion latency was 280 ms, which looked promising until we turned on tail sampling. The tail sampling processor ran in a single replica with no horizontal scaling, and when we pushed 180 k traces/sec the processor CPU hit 98 % and dropped 11 % of traces. The dropped traces were exactly the ones with the highest latency — the ones we most wanted to see.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>We ditched the monolithic pipelines and adopted a three-layer architecture: collection, curation, and consumption. Collection runs in-process with minimal overhead. Curation happens in a fleet of stateless, horizontally scalable Rust workers that filter, sample, and batch before the data ever hits the durable store. Consumption is Grafana dashboards backed by Loki for logs and Prometheus for metrics, with Tempo for traces served from S3-compatible object storage.</p>
-<p>The game-changer was the OpenTelemetry Collector in a headless deployment with three separate pipelines: logs, traces, and metrics. Each pipeline has its own <code>k8sattributes</code> processor to attach pod metadata, then a <code>transform</code> processor with a small Lua script that drops verbose fields and enriches trace IDs with a tenant tag. The Lua script cut our Loki index size by 68 % and reduced our Tempo storage from 18 TB to 5.4 TB.</p>
+<p>Each pipeline has its own <code>k8sattributes</code> processor to attach pod metadata, then a <code>transform</code> processor with a small Lua script that drops verbose fields and enriches trace IDs with a tenant tag. The Lua script cut our Loki index size by 68 % and reduced our Tempo storage from 18 TB to 5.4 TB.</p>
 <p>For backpressure we switched from Kafka to NATS JetStream 2.12 running on three dedicated m6g.large nodes in us-east-1. NATS gave us per-subject quotas and rate limiting baked in. We set a 5 MB/s quota per tenant namespace; any pod that exceeded the quota gets throttled via the OTel Collector’s <code>memory_limiter</code> processor. The 5 MB/s cap dropped our peak ingestion from 180 k events/sec to 95 k events/sec while still meeting the 300 ms p99 latency target.</p>
 <p>Sampling became adaptive. We used the OTel <code>tail_sampling</code> processor with a dynamic rate based on cluster load: when CPU &gt;70 % we sample 25 % of traces; when CPU &lt;40 % we sample 95 %. The dynamic sampler dropped our trace volume to 21 k events/sec at peak, which our Tempo cluster could handle with 6 Tempo ingesters on r6g.4xlarge nodes. The p99 tail latency for traces stayed under 220 ms even during a 30-minute rolling redeploy of the sampling workers.</p>
 <p>Storage we split: Loki 2.9 for hot logs (7-day retention), S3 + Grafana Mimir 2.10 for metrics (30-day retention), and S3 + Tempo 2.4 for traces (90-day retention). The cost dropped from $4.8 k/month on Loki alone to $2.3 k/month across all three systems. We also enabled Loki’s <code>boltdb-shipper</code> to ship index shards to S3 nightly, cutting our EBS IOPS bill by 72 %.</p>

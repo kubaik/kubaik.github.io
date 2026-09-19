@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-21T07:54:25.219668">
-        <meta property="article:modified_time" content="2026-09-19T11:31:27.289139+00:00">
+        <meta property="article:modified_time" content="2026-09-19T11:54:35.561760+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Internal platform adoption: one metric kills velocity">
@@ -63,8 +63,8 @@
       "headline": "Internal platform adoption: one metric kills velocity",
       "description": "Internal platform adoption fails when feedback latency exceeds 10 seconds — measure rollout time in Backstage with Redis 7.2 and cut developer time 47%",
       "datePublished": "2026-07-21T07:54:25+00:00",
-      "dateModified": "2026-09-19T11:31:27+00:00",
-      "wordCount": 2582,
+      "dateModified": "2026-09-19T11:54:35+00:00",
+      "wordCount": 2564,
       "timeRequired": "PT13M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,7 +265,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         13 min read
-                        &nbsp;·&nbsp; 2582 words
+                        &nbsp;·&nbsp; 2564 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -522,7 +522,7 @@ test('latency appears in Backstage card', async () =&gt; {
   expect(text).toContain('1.2s');
 });
 </code></pre>
-<p>I was surprised that Jest tests for Backstage plugins often fail due to mocking the Kubernetes client incorrectly. The fix was to mock <code>KubernetesClient</code> at the HTTP layer instead of the SDK layer:</p>
+<p>The fix was to mock <code>KubernetesClient</code> at the HTTP layer instead of the SDK layer:</p>
 <pre><code class="language-typescript">jest.mock('@kubernetes/client-node', () =&gt; ({
   KubernetesClient: jest.fn().mockImplementation(() =&gt; ({
     Watch: jest.fn().mockImplementation(() =&gt; ({

@@ -54,7 +54,7 @@ Nothing here requires compiling a kernel or rebooting into a custom AMI. All com
    jq '.end.sum_retransmits' baseline.json
    # 1872
    ```
-   Note that number; you’ll compare it after the tweak.
+Note that number; you’ll compare it after the tweak.
 
 6. Check EBS baseline. If your instance is EBS-only (no instance store) the default gp2/gp3 volume is 1,000 IOPS. Confirm with the AWS CLI.
    ```bash
@@ -197,9 +197,9 @@ aws ec2 attach-volume --volume-id vol-0abcdef1234567890 --instance-id i-0abcdef1
 ### CloudWatch dashboard in 5 minutes
 1. Open CloudWatch → Dashboards → Create dashboard.
 2. Add three widgets:
-   - CPU utilization (1-minute)
-   - EBS read/write IOPS (1-minute)
-   - Memory used (1-minute)
+- CPU utilization (1-minute)
+- EBS read/write IOPS (1-minute)
+- Memory used (1-minute)
 3. Save as `EC2-BBR-Zswap-GP3`.
 
 ### Prometheus exporter for TCP metrics
@@ -343,7 +343,7 @@ The script uses `SIGTERM` with a 10-second timeout, giving the Go runtime time t
 ### Integration with Real Tools (2026 Versions)
 
 #### Tool 1: `ec2-cost-exporter` (v2.4.1) – Track EC2 Costs in Prometheus
-I built this tool to expose EC2 instance costs directly in Prometheus, so I can correlate cost spikes with latency or CPU steal changes. It uses the AWS Cost Explorer API with a daily refresh.
+It uses the AWS Cost Explorer API with a daily refresh.
 
 **Installation**:
 ```bash

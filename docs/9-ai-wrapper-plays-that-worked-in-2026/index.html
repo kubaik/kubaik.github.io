@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-17T14:10:50.529115">
-        <meta property="article:modified_time" content="2026-09-19T11:31:27.135724+00:00">
+        <meta property="article:modified_time" content="2026-09-19T11:54:35.512855+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="9 AI wrapper plays that worked in 2026">
@@ -63,8 +63,8 @@
       "headline": "9 AI wrapper plays that worked in 2026",
       "description": "9 AI wrapper businesses survived 2026 — the ones that got pricing right made $12M ARR, the rest died.",
       "datePublished": "2026-06-17T14:10:50+00:00",
-      "dateModified": "2026-09-19T11:31:27+00:00",
-      "wordCount": 2824,
+      "dateModified": "2026-09-19T11:54:35+00:00",
+      "wordCount": 2798,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,7 +265,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2824 words
+                        &nbsp;·&nbsp; 2798 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -473,9 +473,9 @@
 <h3 id="1-the-silent-drift-problem-in-multi-model-gateways">1. The “silent drift” problem in multi-model gateways</h3>
 <p>In March 2026 I ran a wrapper that routed prompts to Mistral 8x22B, Llama 3.1 405B, and Cohere Command R+ based on real-time price feeds. The first 30 days looked perfect: gross margin 78%, zero support tickets. Then, without warning, Mistral pushed a silent patch that changed its JSON output format. Users who had built parsers around the old schema woke up to broken pipelines. The wrapper’s P99 latency jumped from 800 ms to 2.1 seconds because the new model refused to serialize large outputs. I killed the project in two weeks after 47% churn. Lesson: never route to models you can’t control.</p>
 <h3 id="2-the-invisible-downstream-dependency-in-doc-rag-wrappers">2. The “invisible downstream dependency” in doc RAG wrappers</h3>
-<p>I built a wrapper for a company’s internal API docs using LlamaIndex 0.10. The wrapper worked flawlessly until the backend team renamed an endpoint from <code>/users/{id}</code> to <code>/v2/users/{userId}</code>. The wrapper’s embeddings stayed frozen because the nightly GitHub Action that rebuilt the index only checked the markdown files, not the OpenAPI spec. Users started getting 404s and hallucinations. The fix required parsing the OpenAPI spec, which added 6 days of work and $1,200 in engineering time. Lesson: if your wrapper touches docs, parse the living spec, not the static markdown.</p>
+<p>The wrapper worked flawlessly until the backend team renamed an endpoint from <code>/users/{id}</code> to <code>/v2/users/{userId}</code>. The wrapper’s embeddings stayed frozen because the nightly GitHub Action that rebuilt the index only checked the markdown files, not the OpenAPI spec. Users started getting 404s and hallucinations. The fix required parsing the OpenAPI spec, which added 6 days of work and $1,200 in engineering time. Lesson: if your wrapper touches docs, parse the living spec, not the static markdown.</p>
 <h3 id="3-the-agent-loop-explosion-in-internal-orchestrators">3. The “agent loop explosion” in internal orchestrators</h3>
-<p>I deployed a CrewAI 0.28 agent graph to replace a bank’s cron jobs. The graph started with a lightweight Python agent for log parsing, then escalated to an LLM for anomaly detection. Within 48 hours the LLM agent spawned a sub-agent that tried to “explain” every anomaly, which spawned another agent to summarize the explanation. The Kubernetes cluster hit OOM kills after 12 hours. The fix required hard-coding a max depth of two agents and a hard token limit of 512. Lesson: agent graphs need circuit breakers, not just prompts.</p>
+<p>The graph started with a lightweight Python agent for log parsing, then escalated to an LLM for anomaly detection. Within 48 hours the LLM agent spawned a sub-agent that tried to “explain” every anomaly, which spawned another agent to summarize the explanation. The Kubernetes cluster hit OOM kills after 12 hours. The fix required hard-coding a max depth of two agents and a hard token limit of 512. Lesson: agent graphs need circuit breakers, not just prompts.</p>
 <h3 id="4-the-premium-flag-tax-in-cli-co-pilots">4. The “premium flag tax” in CLI co-pilots</h3>
 <p>A popular open-source CLI added a <code>--ai-summary</code> flag. The wrapper charged $9/month for the flag, but the upstream maintainers refused to upstream the flag code because it depended on a closed-source LLM provider. After 60 days, 38% of users forked the CLI and removed the flag, effectively killing the wrapper. Lesson: if your wrapper adds flags, upstream them or risk forks.</p>
 <h3 id="5-the-token-budget-leak-in-code-review-robots">5. The “token budget leak” in code review robots</h3>

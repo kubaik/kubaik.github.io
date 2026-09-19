@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-14T08:40:11.654317">
-        <meta property="article:modified_time" content="2026-09-19T11:31:27.190270+00:00">
+        <meta property="article:modified_time" content="2026-09-19T11:54:35.518911+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI interviews: 4 questions that caught 80% of weak">
@@ -63,8 +63,8 @@
       "headline": "AI interviews: 4 questions that caught 80% of weak",
       "description": "Cut early-stage incidents 75% with AI interviews that test real production resilience — Redis 7.2 cache stampedes, latency under 150 ms P99, and 428 candidate…",
       "datePublished": "2026-06-14T08:40:11+00:00",
-      "dateModified": "2026-09-19T11:31:27+00:00",
-      "wordCount": 2840,
+      "dateModified": "2026-09-19T11:54:35+00:00",
+      "wordCount": 2833,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,7 +264,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2840 words
+                        &nbsp;·&nbsp; 2833 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -549,7 +549,7 @@ runCandidateTest('candidate-123').catch(console.error);
 </tbody>
 </table>
 <p>We tried pytest 7.4 for unit tests, but it wasn’t flexible enough for our AI-driven scenarios. Instead, we use Node.js for orchestration because it’s easier to manage async Docker and AWS calls.</p>
-<p>For observability, Grafana 10.2 is a game-changer. We built a dashboard that shows the candidate’s latency, error rate, and cache hit rate in real time. If the candidate’s fix causes a spike, we see it immediately.</p>
+<p>We built a dashboard that shows the candidate’s latency, error rate, and cache hit rate in real time. If the candidate’s fix causes a spike, we see it immediately.</p>
 <p>One surprise was how much we relied on Redis 7.2’s RESP3 support. We use Redis Streams for event sourcing, and RESP3 made the protocol more reliable under load.</p>
 <h2 id="when-this-approach-is-the-wrong-choice">When this approach is the wrong choice</h2>
 <p>This screening pipeline is overkill for small teams or early-stage startups. If you’re a team of three, a whiteboard session is enough. The overhead of maintaining the AI proctor, Prometheus, and Docker is significant.</p>

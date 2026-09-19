@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-24T13:52:51.134298">
-        <meta property="article:modified_time" content="2026-09-19T11:31:27.325635+00:00">
+        <meta property="article:modified_time" content="2026-09-19T11:54:35.567901+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Model router: keep it simple, keep it local">
@@ -63,8 +63,8 @@
       "headline": "Model router: keep it simple, keep it local",
       "description": "Within two days, our p95 latency jumped from 80ms to 420ms because the initial implementation didn’t account for cold starts on SageMaker or connection…",
       "datePublished": "2026-07-24T13:52:51+00:00",
-      "dateModified": "2026-09-19T11:31:27+00:00",
-      "wordCount": 3765,
+      "dateModified": "2026-09-19T11:54:35+00:00",
+      "wordCount": 3749,
       "timeRequired": "PT19M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -243,7 +243,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         19 min read
-                        &nbsp;·&nbsp; 3765 words
+                        &nbsp;·&nbsp; 3749 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -616,7 +616,7 @@ def lambda_handler(event, context):
 <p>We tried this pattern in a serverless environment and hit a wall: the Go router couldn’t handle the cold starts of Lambda functions, and the overhead of invoking a Lambda for every request added 50ms. We switched to a Lambda function that embeds the routing logic and handles inference directly, which simplified the stack but lost the separation of concerns.</p>
 <h2 id="my-honest-take-after-using-this-in-production">My honest take after using this in production</h2>
 <p>This approach is a pragmatic middle ground between “all local” and “all cloud.” It’s not the most elegant solution, but it’s the one that’s actually maintainable. The biggest win was reducing the router’s complexity. Initially, we tried to make the router handle retries, circuit breaking, and load balancing, which turned it into a distributed systems problem. By pushing those concerns to the endpoints and infrastructure, we kept the router small and fast.</p>
-<p>The local GPU inference is a game-changer for cost and latency, but it adds operational overhead. You need to manage GPU drivers, model updates, and resource limits, which is a different skill set than cloud DevOps. If your team doesn’t have GPU expertise, stick to cloud endpoints and pre-warm them aggressively.</p>
+<p>You need to manage GPU drivers, model updates, and resource limits, which is a different skill set than cloud DevOps. If your team doesn’t have GPU expertise, stick to cloud endpoints and pre-warm them aggressively.</p>
 <p>One thing I underestimated was how much regional latency matters. Even within AWS, the latency difference between regions can be 2–3x. The router’s regional failover logic is now the most important part of the system, not the routing rules themselves.</p>
 <p>The config file approach works well for small teams but becomes unwieldy as the number of models grows. We’re exploring a database-backed config system with a UI for editing rules, which will add complexity but make the system more maintainable long-term.</p>
 <p>Finally, observability is non-negotiable. Without Prometheus metrics and Grafana dashboards, debugging routing issues is like flying blind. The <code>/metrics</code> endpoint in the router exports counters for model hits, errors, and latency percentiles, which are invaluable during incidents.</p>

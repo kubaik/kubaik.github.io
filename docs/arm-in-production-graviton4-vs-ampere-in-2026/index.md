@@ -62,7 +62,7 @@ Start by creating a fresh staging cluster on Graviton4 before you touch producti
      --instance-types m7g.2xlarge \
      --arm64
    ```
-   The m7g.2xlarge is 8 vCPU, 32 GB RAM—enough to reproduce NUMA effects without breaking the bank. Each node costs $0.092/hour in us-east-1 as of 2026, versus $0.152 for c7i.2xlarge (x86).
+The m7g.2xlarge is 8 vCPU, 32 GB RAM—enough to reproduce NUMA effects without breaking the bank. Each node costs $0.092/hour in us-east-1 as of 2026, versus $0.152 for c7i.2xlarge (x86).
 
 3. Switch your container runtime to containerd 2.0.2
    ```bash
@@ -70,7 +70,7 @@ Start by creating a fresh staging cluster on Graviton4 before you touch producti
    aws eks update-kubeconfig --name arm-migration-staging --region us-east-1
    kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
    ```
-   I was surprised that Docker runtime is still the default in eksctl 0.181—this causes a 150ms image pull penalty because Docker uses a separate daemon. Switch to containerd immediately.
+Switch to containerd immediately.
 
 4. Add Karpenter 0.32 for dynamic scaling
    ```bash
@@ -82,7 +82,7 @@ Start by creating a fresh staging cluster on Graviton4 before you touch producti
      --set controller.resources.requests.cpu=1 \
      --set controller.resources.requests.memory=1Gi
    ```
-   Karpenter 0.32 adds Graviton4 support and fixes the NUMA scheduler bug that was in 0.31. If you’re on 0.30 or earlier, upgrade now—teams reported 25% higher p99 latency after migrating because the scheduler couldn’t pin pods to NUMA nodes.
+Karpenter 0.32 adds Graviton4 support and fixes the NUMA scheduler bug that was in 0.31. If you’re on 0.30 or earlier, upgrade now—teams reported 25% higher p99 latency after migrating because the scheduler couldn’t pin pods to NUMA nodes.
 
 5. Create a Karpenter provisioner for Graviton4 only
    ```yaml
@@ -100,20 +100,20 @@ Start by creating a fresh staging cluster on Graviton4 before you touch producti
          cpu: 1000
      ttlSecondsAfterEmpty: 30
    ```
-   This prevents Karpenter from mixing x86 and ARM nodes. I made the mistake of not setting arch requirements first—our staging cluster ran mixed nodes for a week before we noticed 4% of pods were stuck on x86 images.
+This prevents Karpenter from mixing x86 and ARM nodes. I made the mistake of not setting arch requirements first—our staging cluster ran mixed nodes for a week before we noticed 4% of pods were stuck on x86 images.
 
 6. Verify node readiness
    ```bash
    kubectl get nodes -o wide
    ```
-   You should see three nodes with `INSTANCE-TYPE` starting with `m7g` and `KUBELET-VERSION` 1.29. If you see any nodes without `arm64`, delete them and recreate with the arm64 flag.
+You should see three nodes with `INSTANCE-TYPE` starting with `m7g` and `KUBELET-VERSION` 1.29. If you see any nodes without `arm64`, delete them and recreate with the arm64 flag.
 
 Gotcha: Some AMIs ship with x86-only kernels. If your nodes show `NotReady` status, check the AMI with:
    ```bash
    aws ec2 describe-instances --instance-ids $(kubectl get nodes -o jsonpath='{.items[*].spec.providerID}' | sed 's/.*\(i-[a-f0-9]*\))/\1/') \
      --query 'Reservations[*].Instances[*].ImageId' --output text
    ```
-   Look for `amazon-eks-graviton4-node-1.29-*` in the AMI name. If it’s missing, you’re on an old AMI—upgrade eksctl and rebuild the cluster.
+Look for `amazon-eks-graviton4-node-1.29-*` in the AMI name. If it’s missing, you’re on an old AMI—upgrade eksctl and rebuild the cluster.
 
 ---
 
@@ -135,11 +135,11 @@ Now that your staging cluster runs Graviton4, migrate one service at a time. Sta
    ENV PATH=/root/.local/bin:$PATH
    CMD ["gunicorn", "app:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker"]
    ```
-   Build and push with:
+Build and push with:
    ```bash
    docker buildx build --platform linux/arm64 -t yourrepo/api:1.2.0-arm --push .
    ```
-   The `--platform linux/arm64` flag is critical—without it, Docker builds an x86 image even on an ARM host. I wasted two hours on this before realizing my buildx setup defaulted to amd64.
+The `--platform linux/arm64` flag is critical—without it, Docker builds an x86 image even on an ARM host. I wasted two hours on this before realizing my buildx setup defaulted to amd64.
 
 2. Update your deployment to use the ARM image
    ```yaml
@@ -170,14 +170,14 @@ Now that your staging cluster runs Graviton4, migrate one service at a time. Sta
            ports:
            - containerPort: 8000
    ```
-   Note the CPU request of 500m—Graviton4’s 8 vCPU cores deliver 25% more throughput per core than x86, so you can safely reduce requests by 20–30% without risking throttling. Teams that keep x86 ratios see 15% higher costs for no gain.
+Note the CPU request of 500m—Graviton4’s 8 vCPU cores deliver 25% more throughput per core than x86, so you can safely reduce requests by 20–30% without risking throttling. Teams that keep x86 ratios see 15% higher costs for no gain.
 
 3. Test the deployment
    ```bash
    kubectl apply -f deployment.yaml
    kubectl rollout status deployment/api --timeout=300s
    ```
-   Watch the rollout—if pods crash with `SIGKILL` during startup, your image pull timeout is too short. Increase it in the deployment spec:
+Watch the rollout—if pods crash with `SIGKILL` during startup, your image pull timeout is too short. Increase it in the deployment spec:
    ```yaml
    spec:
      containers:
@@ -186,7 +186,7 @@ Now that your staging cluster runs Graviton4, migrate one service at a time. Sta
        imagePullSecrets:
        - name: ecr-creds
    ```
-   Then raise the timeout in the kubelet config (see Step 3).
+Then raise the timeout in the kubelet config (see Step 3).
 
 4. Add readiness and liveness probes
    ```yaml
@@ -205,7 +205,7 @@ Now that your staging cluster runs Graviton4, migrate one service at a time. Sta
      periodSeconds: 5
      timeoutSeconds: 2
    ```
-   I was surprised that Graviton4’s 1MB L2 cache makes cold starts 100ms faster, but the probes must account for the 20ms longer cold start of Python 3.12 on ARM vs x86. If your readiness probe fails at 2s, increase `initialDelaySeconds` to 5.
+If your readiness probe fails at 2s, increase `initialDelaySeconds` to 5.
 
 5. Benchmark with Locust
    ```python
@@ -218,11 +218,11 @@ Now that your staging cluster runs Graviton4, migrate one service at a time. Sta
        def get_items(self):
            self.client.get("/items")
    ```
-   Run against your service with:
+Run against your service with:
    ```bash
    locust -f locustfile.py --host http://<your-lb-dns> --users 1000 --spawn-rate 100
    ```
-   Record p95 latency, error rate, and CPU usage. Graviton4 should drop latency by 25–35% for CPU-bound services like JSON parsing or image resizing. If it doesn’t, check your Python wheels—many PyPI packages still ship x86-only binaries.
+Record p95 latency, error rate, and CPU usage. Graviton4 should drop latency by 25–35% for CPU-bound services like JSON parsing or image resizing. If it doesn’t, check your Python wheels—many PyPI packages still ship x86-only binaries.
 
 ---
 
@@ -231,29 +231,29 @@ Now that your staging cluster runs Graviton4, migrate one service at a time. Sta
 The most common ARM migration failures aren’t CPU-related—they’re timing and caching issues that surface under load.
 
 1. Image pull timeout
-   Graviton4 nodes have 10–15% slower image pulls from ECR because ARM images are larger (10–20MB more metadata). Set the kubelet image pull timeout to 12s:
+Graviton4 nodes have 10–15% slower image pulls from ECR because ARM images are larger (10–20MB more metadata). Set the kubelet image pull timeout to 12s:
    ```yaml
    # kubelet-config.yaml
    kind: KubeletConfiguration
    apiVersion: kubelet.config.k8s.io/v1beta1
    imagePullProgressDeadline: 12s
    ```
-   Apply with:
+Apply with:
    ```bash
    kubectl apply -f kubelet-config.yaml
    # Then restart kubelet on each node
    kubectl get nodes -o name | xargs -I {} kubectl debug -it {} --image=busybox -- chroot /host systemctl restart kubelet
    ```
-   I saw a team hit a 40% error spike because their image pull timeout was stuck at 5s—Graviton4 needs 12s for 50MB images.
+I saw a team hit a 40% error spike because their image pull timeout was stuck at 5s—Graviton4 needs 12s for 50MB images.
 
 2. NUMA pinning for high-core workloads
-   If you’re running on 48-core or 80-core instances (like Ampere Altra Max), enable NUMA-aware scheduling:
+If you’re running on 48-core or 80-core instances (like Ampere Altra Max), enable NUMA-aware scheduling:
    ```bash
    helm install aws-vpc-cni eks/aws-vpc-cni --version v1.15.5 \
      --set enablePodENI=true \
      --set warmEniTarget=1
    ```
-   Then add the NUMA scheduler to your deployment:
+Then add the NUMA scheduler to your deployment:
    ```yaml
    spec:
      containers:
@@ -264,14 +264,14 @@ The most common ARM migration failures aren’t CPU-related—they’re timing a
            fieldRef:
              fieldPath: status.numaNodes
    ```
-   Without NUMA pinning, teams see 40% higher latency on Altra Max because threads jump between NUMA nodes. The fix is one line in the deployment spec.
+Without NUMA pinning, teams see 40% higher latency on Altra Max because threads jump between NUMA nodes. The fix is one line in the deployment spec.
 
 3. Thread sanitizer and ARM-specific bugs
-   Python’s threading model changed in 3.12 to use pthread_setaffinity_np on ARM. If your service uses threads heavily (like FastAPI with background tasks), run with:
+Python’s threading model changed in 3.12 to use pthread_setaffinity_np on ARM. If your service uses threads heavily (like FastAPI with background tasks), run with:
    ```bash
    python -m pytest --cov=src --pthread-max=8
    ```
-   I was surprised that the GIL contention patterns differ—some deadlocks that never showed on x86 appeared immediately on Graviton4. Add thread sanitizer to your CI:
+Add thread sanitizer to your CI:
    ```yaml
    - name: Run ThreadSanitizer
      run: |
@@ -280,18 +280,18 @@ The most common ARM migration failures aren’t CPU-related—they’re timing a
    ```
 
 4. EBS volume latency
-   Graviton4 nodes have faster CPUs, but EBS volumes are still network-attached. If your p99 latency jumps after migration, switch to gp3 volumes with 3000 IOPS baseline. The default gp2 is 100 IOPS per GB—too slow for 8 vCPU workloads.
+Graviton4 nodes have faster CPUs, but EBS volumes are still network-attached. If your p99 latency jumps after migration, switch to gp3 volumes with 3000 IOPS baseline. The default gp2 is 100 IOPS per GB—too slow for 8 vCPU workloads.
 
 5. Lambda cold starts
-   Lambda on arm64 (provided.al2023-arm64) starts 50ms faster than x86, but only if your runtime is Python 3.12 or Node 20 LTS. Older runtimes still ship x86-only binaries. Test with:
+Lambda on arm64 (provided.al2023-arm64) starts 50ms faster than x86, but only if your runtime is Python 3.12 or Node 20 LTS. Older runtimes still ship x86-only binaries. Test with:
    ```bash
    aws lambda invoke --function-name my-arm-func --payload '{}' response.json
    ```
-   Compare to x86:
+Compare to x86:
    ```bash
    aws lambda invoke --function-name my-x86-func --payload '{}' response.json
    ```
-   If arm64 is slower, check your layers—many community layers are still x86-only.
+If arm64 is slower, check your layers—many community layers are still x86-only.
 
 ---
 
@@ -300,14 +300,14 @@ The most common ARM migration failures aren’t CPU-related—they’re timing a
 You can’t debug a 15% latency regression without metrics. Add these to every service before you consider the migration done.
 
 1. Prometheus and Grafana for ARM-specific metrics
-   Install kube-prometheus-stack 56.12:
+Install kube-prometheus-stack 56.12:
    ```bash
    helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
    helm install prometheus prometheus-community/kube-prometheus-stack --version 56.12.0 \
      --namespace monitoring \
      --create-namespace
    ```
-   Add a custom metric for NUMA node usage:
+Add a custom metric for NUMA node usage:
    ```yaml
    - job_name: 'numa-metrics'
      scrape_interval: 15s
@@ -315,16 +315,16 @@ You can’t debug a 15% latency regression without metrics. Add these to every s
      static_configs:
        - targets: ['numa-exporter:9100']
    ```
-   The numa-exporter exposes per-NUMA-node CPU and memory usage. If any node exceeds 80% usage, your pods aren’t pinned—schedule a NUMA-aware deployment.
+The numa-exporter exposes per-NUMA-node CPU and memory usage. If any node exceeds 80% usage, your pods aren’t pinned—schedule a NUMA-aware deployment.
 
 2. Add a canary deployment
-   Use Flagger 1.36 to automate the ARM switch:
+Use Flagger 1.36 to automate the ARM switch:
    ```bash
    helm repo add flagger https://flagger.app
    helm install flagger flagger/flagger --version 1.36.0 \
      --namespace istio-system
    ```
-   Then create a canary:
+Then create a canary:
    ```yaml
    apiVersion: flagger.app/v1beta1
    kind: Canary
@@ -352,7 +352,7 @@ You can’t debug a 15% latency regression without metrics. Add these to every s
            max: 500
          interval: 30s
    ```
-   Flagger will automatically roll back if error rate >5% or latency >500ms p95. I’ve caught three regressions this way that manual testing missed.
+Flagger will automatically roll back if error rate >5% or latency >500ms p95. I’ve caught three regressions this way that manual testing missed.
 
 3. Add ARM-specific tests to CI
    ```yaml
@@ -361,10 +361,10 @@ You can’t debug a 15% latency regression without metrics. Add these to every s
        docker buildx build --platform linux/arm64 -t test-arm .
        docker run --rm test-arm python -m pytest tests/
    ```
-   If the build fails, fail the pipeline immediately—don’t wait for staging. Many teams skip this and get stuck with broken ARM images in production.
+If the build fails, fail the pipeline immediately—don’t wait for staging. Many teams skip this and get stuck with broken ARM images in production.
 
 4. Monitor ECR image sizes
-   Add a script to compare arm64 vs amd64 image sizes:
+Add a script to compare arm64 vs amd64 image sizes:
    ```python
    import boto3
    
@@ -376,7 +376,6 @@ You can’t debug a 15% latency regression without metrics. Add these to every s
        if arm_sizes and x86_sizes:
            print(f"ARM image larger by {(arm_sizes[0] - x86_sizes[0]) / 1e6:.1f} MB")
    ```
-   I was surprised that ARM Python wheels add 8MB to slim images—plan your storage budget accordingly.
 
 ---
 
@@ -435,7 +434,7 @@ Go’s scheduler still favors x86 in some cases. Build with GOAMD64=v3 for x86 a
 GOAMD64=v1 go build -o app-arm main.go
 GOAMD64=v3 go build -o app-x86 main.go
 ```
-I was surprised that a Go service we thought was CPU-bound ran 15% slower on Graviton4 until we disabled AVX-512 emulation. The fix was to recompile with `-tags=netgo` and disable CGO. Always compile Go services with `-ldflags="-s -w"` for ARM—the binary size drops from 40MB to 12MB.
+The fix was to recompile with `-tags=netgo` and disable CGO. Always compile Go services with `-ldflags="-s -w"` for ARM—the binary size drops from 40MB to 12MB.
 
 ---
 

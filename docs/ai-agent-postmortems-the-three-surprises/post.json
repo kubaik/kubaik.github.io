@@ -13,7 +13,7 @@
   "meta_description": "Catch AI agent failures 60 % faster with shadowing vs logging — real QPS, cost, and alert-latency numbers from Brazilian, Colombian, and Mexican production…",
   "featured_image": "/static/images/ai-agent-postmortems-the-three-surprises.jpg",
   "created_at": "2026-06-24T11:53:53.748750",
-  "updated_at": "2026-09-19T11:31:27.158835+00:00",
+  "updated_at": "2026-09-19T11:42:21.645003+00:00",
   "seo_keywords": [
     "AiAgentPostmortem",
     "Semantic",
@@ -36,6 +36,6 @@
   "has_code": false,
   "has_table": true,
   "prewritten_tweet": "Most teams burn $8k+ on AI agents before auditing semantic drift.\n\nMost of it goes into autocomplete nobody measures.\n\nhttps://kubaik.github.io/ai-agent-postmortems-the-three-surprises\n\n#TechNews #AI #LLM #AiAgentPostmortem\n\nWhere do you think most teams still get this wrong?",
-  "audit_improved_at": "2026-09-19T11:31:27.158835+00:00",
+  "audit_improved_at": "2026-09-19T11:42:21.645003+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences"
 }

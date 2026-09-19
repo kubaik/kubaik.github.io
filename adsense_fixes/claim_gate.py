@@ -107,6 +107,71 @@ def _plain_text(content: str) -> str:
     return text
 
 
+_SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+")
+_MD_PREFIX = re.compile(r"^[\s>*_\-#]+")
+_FILLER_LINE_RE = re.compile(
+    r"\b(?:game-changer|paradigm shift|harness the power of|"
+    r"unlock the potential of|in today's rapidly evolving|"
+    r"in the ever-changing landscape|in today's fast-paced|"
+    r"as an ai language model)\b",
+    re.IGNORECASE,
+)
+
+
+def _line_is_flagged(text: str) -> bool:
+    probe = _MD_PREFIX.sub("", (text or "")).strip()
+    if not probe:
+        return False
+    if _EXPERIENCE_RE.match(probe):
+        return True
+    if _FAKE_AUTHORITY_RE.search(probe):
+        return True
+    if _FILLER_LINE_RE.search(probe):
+        return True
+    return False
+
+
+def strip_flagged_language(content: str) -> tuple[str, int]:
+    """Remove fabricated-authority / first-person / filler sentences.
+
+    Uses the same regexes as check_claims(), including markdown prefixes
+    (*I spent…*, > I ran into…) so improve actually shrinks the IMPROVE list.
+    """
+    fences: List[str] = []
+
+    def _mask(match: re.Match) -> str:
+        fences.append(match.group(0))
+        return f"\x00CODE{len(fences) - 1}\x00"
+
+    masked = _CODE_FENCE_RE.sub(_mask, content or "")
+    removed = 0
+    kept_lines: List[str] = []
+
+    for line in masked.splitlines(keepends=True):
+        raw = line.rstrip("\n")
+        ending = "\n" if line.endswith("\n") else ""
+        if "\x00CODE" in raw:
+            kept_lines.append(line)
+            continue
+        pieces = _SENTENCE_SPLIT.split(raw) if raw.strip() else [raw]
+        kept_pieces: List[str] = []
+        for piece in pieces:
+            if _line_is_flagged(piece):
+                removed += 1
+                continue
+            kept_pieces.append(piece)
+        rebuilt = " ".join(p.strip() for p in kept_pieces if p.strip())
+        if rebuilt:
+            kept_lines.append(rebuilt + ending)
+        elif not raw.strip():
+            kept_lines.append(ending)
+
+    new_content = "".join(kept_lines)
+    for i, fence in enumerate(fences):
+        new_content = new_content.replace(f"\x00CODE{i}\x00", fence)
+    return new_content, removed
+
+
 def check_claims(content: str, title: str = "") -> ClaimGateResult:
     """Return a structured result. Caller decides raise vs retry."""
     result = ClaimGateResult()

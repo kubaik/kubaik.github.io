@@ -373,7 +373,7 @@ We tried this pattern in a serverless environment and hit a wall: the Go router 
 
 This approach is a pragmatic middle ground between “all local” and “all cloud.” It’s not the most elegant solution, but it’s the one that’s actually maintainable. The biggest win was reducing the router’s complexity. Initially, we tried to make the router handle retries, circuit breaking, and load balancing, which turned it into a distributed systems problem. By pushing those concerns to the endpoints and infrastructure, we kept the router small and fast.
 
-The local GPU inference is a game-changer for cost and latency, but it adds operational overhead. You need to manage GPU drivers, model updates, and resource limits, which is a different skill set than cloud DevOps. If your team doesn’t have GPU expertise, stick to cloud endpoints and pre-warm them aggressively.
+You need to manage GPU drivers, model updates, and resource limits, which is a different skill set than cloud DevOps. If your team doesn’t have GPU expertise, stick to cloud endpoints and pre-warm them aggressively.
 
 One thing I underestimated was how much regional latency matters. Even within AWS, the latency difference between regions can be 2–3x. The router’s regional failover logic is now the most important part of the system, not the routing rules themselves.
 

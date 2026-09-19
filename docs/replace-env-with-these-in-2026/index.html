@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-18T22:18:17.148223">
-        <meta property="article:modified_time" content="2026-09-19T11:31:27.365974+00:00">
+        <meta property="article:modified_time" content="2026-09-19T11:54:35.579464+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Replace .env with these in 2026">
@@ -63,8 +63,8 @@
       "headline": "Replace .env with these in 2026",
       "description": "Cut secrets-related outages 90% with AWS Secrets Manager and Teller — rotation without downtime, cache stampede fixes, and the $18k mistake most teams repeat.",
       "datePublished": "2026-06-18T22:18:17+00:00",
-      "dateModified": "2026-09-19T11:31:27+00:00",
-      "wordCount": 3686,
+      "dateModified": "2026-09-19T11:54:35+00:00",
+      "wordCount": 3673,
       "timeRequired": "PT18M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -234,7 +234,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         18 min read
-                        &nbsp;·&nbsp; 3686 words
+                        &nbsp;·&nbsp; 3673 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -534,7 +534,7 @@ async function isHealthy() {
 </tr>
 </tbody>
 </table>
-<p><strong>Recommendation:</strong> Start with <strong>AWS Secrets Manager</strong> if you’re on AWS. It’s the most battle-tested and integrates with <strong>everything</strong>—Lambda, ECS, EKS, RDS, API Gateway. If you’re multi-cloud or on-prem, <strong>HashiCorp Vault</strong> is still the gold standard. For teams that want Vault without the ops overhead, <strong>Doppler</strong> is a game-changer.</p>
+<p><strong>Recommendation:</strong> Start with <strong>AWS Secrets Manager</strong> if you’re on AWS. It’s the most battle-tested and integrates with <strong>everything</strong>—Lambda, ECS, EKS, RDS, API Gateway. If you’re multi-cloud or on-prem, <strong>HashiCorp Vault</strong> is still the gold standard.</p>
 <p>One tool I was skeptical of but now love: <strong>SOPS 3.8</strong>. It lets you encrypt secrets in YAML/JSON files using <strong>Age</strong> or KMS. You can commit the encrypted file to Git, and SOPS decrypts it at runtime. This is <strong><code>.env</code> done right</strong>—secrets in Git, but encrypted.</p>
 <pre><code class="language-yaml"># secrets.enc.yaml (encrypted with SOPS)
 apiVersion: v1

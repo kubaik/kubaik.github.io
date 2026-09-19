@@ -14,7 +14,7 @@
   "meta_description": "Cut frontend test time 37% and CI cost 38% with Playwright 1.46 and Vitest 1.6 — the real migration guide teams need in 2026",
   "featured_image": "/static/images/why-i-picked-playwright-and-vitest-in-2026.jpg",
   "created_at": "2026-07-03T10:25:00.905319",
-  "updated_at": "2026-09-19T11:31:27.399405+00:00",
+  "updated_at": "2026-09-19T11:42:21.904483+00:00",
   "seo_keywords": [
     "FrontendTesting2026",
     "PlaywrightVsCypress",
@@ -41,6 +41,6 @@
   "has_table": true,
   "full_title": "Why I picked Playwright and Vitest in 2026",
   "prewritten_tweet": "Most teams still run Cypress in 2026 even though it misses React 18 race conditions and costs 38 % more than Playwright.\n\nhttps://kubaik.github.io/why-i-picked-playwright-and-vitest-in-2026\n\n#CyberTalk #ReactJS #WebDev #FrontendTesting2026\n\nWhere do you think most teams still get this wrong?",
-  "audit_improved_at": "2026-09-19T11:31:27.399405+00:00",
+  "audit_improved_at": "2026-09-19T11:42:21.904483+00:00",
   "audit_improve_reason": "Technical post with fewer than two code fences"
 }

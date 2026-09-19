@@ -170,7 +170,7 @@ I once added a referral program that gave users 1 month free for every teammate 
 Once you’ve nailed activation and retention, the next lever is **churn reduction** and **price optimization**.
 
 ### Churn reduction: the 30-day re-engagement flow
-I built a lightweight re-engagement flow that targets users who haven’t synced in 7 days. It’s not an email blast — it’s a Slack DM:
+It’s not an email blast — it’s a Slack DM:
 
 ```python
 # Re-engagement flow (Python 3.11, Redis 7.2)

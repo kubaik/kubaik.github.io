@@ -302,7 +302,7 @@ test('latency appears in Backstage card', async () => {
 });
 ```
 
-I was surprised that Jest tests for Backstage plugins often fail due to mocking the Kubernetes client incorrectly. The fix was to mock `KubernetesClient` at the HTTP layer instead of the SDK layer:
+The fix was to mock `KubernetesClient` at the HTTP layer instead of the SDK layer:
 ```typescript
 jest.mock('@kubernetes/client-node', () => ({
   KubernetesClient: jest.fn().mockImplementation(() => ({

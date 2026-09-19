@@ -24,7 +24,7 @@ Finally, we tried a pure OpenTelemetry Collector pipeline with the `batch` proce
 
 We ditched the monolithic pipelines and adopted a three-layer architecture: collection, curation, and consumption. Collection runs in-process with minimal overhead. Curation happens in a fleet of stateless, horizontally scalable Rust workers that filter, sample, and batch before the data ever hits the durable store. Consumption is Grafana dashboards backed by Loki for logs and Prometheus for metrics, with Tempo for traces served from S3-compatible object storage.
 
-The game-changer was the OpenTelemetry Collector in a headless deployment with three separate pipelines: logs, traces, and metrics. Each pipeline has its own `k8sattributes` processor to attach pod metadata, then a `transform` processor with a small Lua script that drops verbose fields and enriches trace IDs with a tenant tag. The Lua script cut our Loki index size by 68 % and reduced our Tempo storage from 18 TB to 5.4 TB.
+Each pipeline has its own `k8sattributes` processor to attach pod metadata, then a `transform` processor with a small Lua script that drops verbose fields and enriches trace IDs with a tenant tag. The Lua script cut our Loki index size by 68 % and reduced our Tempo storage from 18 TB to 5.4 TB.
 
 For backpressure we switched from Kafka to NATS JetStream 2.12 running on three dedicated m6g.large nodes in us-east-1. NATS gave us per-subject quotas and rate limiting baked in. We set a 5 MB/s quota per tenant namespace; any pod that exceeded the quota gets throttled via the OTel Collector’s `memory_limiter` processor. The 5 MB/s cap dropped our peak ingestion from 180 k events/sec to 95 k events/sec while still meeting the 300 ms p99 latency target.
 

@@ -41,7 +41,7 @@ What it does: Replaces client-side routing and data fetching with HTML-over-the-
 
 Strength: The backend stays thin. You write Django templates or FastAPI Jinja2 templates, add HTMX attributes like `hx-get`, `hx-trigger`, and `hx-swap`, and the page becomes interactive without writing JavaScript. Bundle size stays under 10 KiB.
 
-Weakness: You lose client-side state management. Anything that needs to live in the browser after the initial render must be handled server-side or via lightweight Alpine.js (14 KiB). If you’re used to Redux or Zustand, that’s a paradigm shift.
+Weakness: You lose client-side state management. Anything that needs to live in the browser after the initial render must be handled server-side or via lightweight Alpine.js (14 KiB).
 
 Best for: Teams that want to keep backend complexity low and avoid heavy frontend tooling. Works especially well for internal tools, admin panels, and content-driven sites where SEO matters.
 

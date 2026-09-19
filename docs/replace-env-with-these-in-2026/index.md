@@ -295,7 +295,7 @@ Mobile apps cache secrets aggressively. If a secret rotates, the app might use a
 | aws-secrets-manager-caching-python v2.5 | SDK | Cache, async refresh | $0 | Python apps with high churn |
 | Doppler Kubernetes Operator 1.3 | Kubernetes operator | Inject secrets via CRD | $0 | Kubernetes-first teams |
 
-**Recommendation:** Start with **AWS Secrets Manager** if you’re on AWS. It’s the most battle-tested and integrates with **everything**—Lambda, ECS, EKS, RDS, API Gateway. If you’re multi-cloud or on-prem, **HashiCorp Vault** is still the gold standard. For teams that want Vault without the ops overhead, **Doppler** is a game-changer.
+**Recommendation:** Start with **AWS Secrets Manager** if you’re on AWS. It’s the most battle-tested and integrates with **everything**—Lambda, ECS, EKS, RDS, API Gateway. If you’re multi-cloud or on-prem, **HashiCorp Vault** is still the gold standard.
 
 One tool I was skeptical of but now love: **SOPS 3.8**. It lets you encrypt secrets in YAML/JSON files using **Age** or KMS. You can commit the encrypted file to Git, and SOPS decrypts it at runtime. This is **`.env` done right**—secrets in Git, but encrypted.
 

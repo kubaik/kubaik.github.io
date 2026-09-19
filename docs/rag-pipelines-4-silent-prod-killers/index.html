@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-08T23:47:39.972246">
-        <meta property="article:modified_time" content="2026-09-19T11:31:27.351146+00:00">
+        <meta property="article:modified_time" content="2026-09-19T11:54:35.572657+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="RAG pipelines: 4 silent prod killers">
@@ -63,8 +63,8 @@
       "headline": "RAG pipelines: 4 silent prod killers",
       "description": "Cut RAG pipeline latency from 280ms to 35ms and monthly costs from $980 to $620 by moving vector search out of PostgreSQL 16 into Milvus 2.4.3 with Caffeine…",
       "datePublished": "2026-06-08T23:47:39+00:00",
-      "dateModified": "2026-09-19T11:31:27+00:00",
-      "wordCount": 2431,
+      "dateModified": "2026-09-19T11:54:35+00:00",
+      "wordCount": 2409,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -264,7 +264,7 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2431 words
+                        &nbsp;·&nbsp; 2409 words
                         
                         &nbsp;·&nbsp; Updated 2026-09-19
                         
@@ -278,43 +278,43 @@
 <ol>
 <li>
 <p><strong>Tokenisation drift between embeddings and rerankers</strong>
-   We used <code>text-embedding-3-small</code> (v3) for indexing and <code>bge-reranker-large</code> (v2) for reranking. The v3 tokenizer normalises Unicode apostrophes to straight quotes, while v2 expects curly apostrophes. At 5k QPS, this caused 12% of queries to return irrelevant chunks because the reranker couldn’t match the tokenised text. The fix: pre-tokenise both index and query text with the same normalisation pipeline (using <code>ftfy</code> 6.1) before embedding. Latency impact: +8ms per rerank, but error rate dropped to 0.2%.</p>
+We used <code>text-embedding-3-small</code> (v3) for indexing and <code>bge-reranker-large</code> (v2) for reranking. The v3 tokenizer normalises Unicode apostrophes to straight quotes, while v2 expects curly apostrophes. At 5k QPS, this caused 12% of queries to return irrelevant chunks because the reranker couldn’t match the tokenised text. The fix: pre-tokenise both index and query text with the same normalisation pipeline (using <code>ftfy</code> 6.1) before embedding. Latency impact: +8ms per rerank, but error rate dropped to 0.2%.</p>
 </li>
 <li>
 <p><strong>GPU memory fragmentation during back-to-back bulk searches</strong>
-   When processing 10k concurrent requests (chaos test), the onnxruntime 1.18.0 session on A10G (24GB) started throwing <code>CUDA out of memory</code> errors despite only using 12GB. The issue was fragmented GPU memory from small, short-lived tensors. We switched to a persistent session with <code>enable_memory_optimizations=True</code> and pre-allocated the reranker’s input/output tensors. This increased initial GPU memory usage by 2GB but eliminated fragmentation. Memory usage stabilised at 18GB for 10k QPS.</p>
+When processing 10k concurrent requests (chaos test), the onnxruntime 1.18.0 session on A10G (24GB) started throwing <code>CUDA out of memory</code> errors despite only using 12GB. The issue was fragmented GPU memory from small, short-lived tensors. We switched to a persistent session with <code>enable_memory_optimizations=True</code> and pre-allocated the reranker’s input/output tensors. This increased initial GPU memory usage by 2GB but eliminated fragmentation. Memory usage stabilised at 18GB for 10k QPS.</p>
 </li>
 <li>
 <p><strong>Metadata index skew in Milvus 2.4.3</strong>
-   Our metadata filter was <code>{"category": "shipping", "locale": "vi_VN"}</code>. At 20k QPS, queries filtering on <code>locale=vi_VN</code> became 10x slower because Milvus’s scalar index for <code>locale</code> was skewed — 95% of vectors had <code>vi_VN</code>, while <code>en_US</code> had only 5%. The solution: add a compound index <code>(category, locale)</code> and use dynamic field pruning in the search query. Latency dropped from 90ms to 15ms for skewed filters.</p>
+Our metadata filter was <code>{"category": "shipping", "locale": "vi_VN"}</code>. At 20k QPS, queries filtering on <code>locale=vi_VN</code> became 10x slower because Milvus’s scalar index for <code>locale</code> was skewed — 95% of vectors had <code>vi_VN</code>, while <code>en_US</code> had only 5%. The solution: add a compound index <code>(category, locale)</code> and use dynamic field pruning in the search query. Latency dropped from 90ms to 15ms for skewed filters.</p>
 </li>
 <li>
 <p><strong>Cold-start latency spikes with Caffeine 3.1.8</strong>
-   The local cache was initially built on-demand, causing the first query for a hot key to block for 120ms while Milvus searched. We switched to a pre-warmed cache using a background thread that prefetched the top-1000 chunks every 5 minutes. This added 200MB RAM but reduced cold-start latency to 2ms. The trade-off was acceptable: memory usage increased by 16% but P99 latency improved by 40ms.</p>
+The local cache was initially built on-demand, causing the first query for a hot key to block for 120ms while Milvus searched. We switched to a pre-warmed cache using a background thread that prefetched the top-1000 chunks every 5 minutes. This added 200MB RAM but reduced cold-start latency to 2ms. The trade-off was acceptable: memory usage increased by 16% but P99 latency improved by 40ms.</p>
 </li>
 <li>
 <p><strong>HTTP/2 head-of-line blocking with httpx 0.28.1</strong>
-   At 15k QPS, some FastAPI endpoints started timing out at 1.5s despite Milvus returning in 40ms. The issue was HTTP/2 head-of-line blocking — a single slow gRPC call to Milvus caused all subsequent requests in the same stream to queue. We switched to HTTP/1.1 for the Milvus client and used a separate connection pool (<code>max_connections=100</code>) to isolate the gRPC traffic. Latency stabilised at 45ms P99.</p>
+At 15k QPS, some FastAPI endpoints started timing out at 1.5s despite Milvus returning in 40ms. The issue was HTTP/2 head-of-line blocking — a single slow gRPC call to Milvus caused all subsequent requests in the same stream to queue. We switched to HTTP/1.1 for the Milvus client and used a separate connection pool (<code>max_connections=100</code>) to isolate the gRPC traffic. Latency stabilised at 45ms P99.</p>
 </li>
 <li>
 <p><strong>Prometheus scrape timeouts under high cardinality</strong>
-   With 500+ time series (latency buckets, cache metrics, error counts), Prometheus 2.47.0 started missing scrapes at 25k QPS. The scrape interval was 15s, but the <code>/metrics</code> endpoint took 8s to respond. We reduced the scrape interval to 5s and added a caching layer (<code>prometheus-fastcache</code>) to the <code>/metrics</code> endpoint. Scrape time dropped to 200ms, and we stopped losing metrics.</p>
+With 500+ time series (latency buckets, cache metrics, error counts), Prometheus 2.47.0 started missing scrapes at 25k QPS. The scrape interval was 15s, but the <code>/metrics</code> endpoint took 8s to respond. We reduced the scrape interval to 5s and added a caching layer (<code>prometheus-fastcache</code>) to the <code>/metrics</code> endpoint. Scrape time dropped to 200ms, and we stopped losing metrics.</p>
 </li>
 <li>
 <p><strong>Redis 7.2 Lua script memory leaks</strong>
-   We used a Lua script to batch-update hot embeddings in Redis. After 48 hours at 20k QPS, the Redis process memory grew from 4GB to 12GB due to unreleased Lua table references. The fix: wrapped the script in <code>redis.pcall()</code> and explicitly cleared tables with <code>table.remove()</code>. Memory stabilised at 5GB after the patch.</p>
+We used a Lua script to batch-update hot embeddings in Redis. After 48 hours at 20k QPS, the Redis process memory grew from 4GB to 12GB due to unreleased Lua table references. The fix: wrapped the script in <code>redis.pcall()</code> and explicitly cleared tables with <code>table.remove()</code>. Memory stabilised at 5GB after the patch.</p>
 </li>
 <li>
 <p><strong>Anthropic Bedrock rate limiting</strong>
-   The Claude 3 Sonnet model on Bedrock has a soft limit of 1000 TPS per account. At 20k QPS, we hit <code>ThrottlingException</code> every 3 minutes. The solution: use Bedrock’s <code>ModelStreaming</code> with exponential backoff (1s, 2s, 4s) and a circuit breaker (<code>pybreaker</code> 1.0.1). Error rate dropped to 0.01%, but we had to shard the LLM calls across 3 Bedrock accounts.</p>
+The Claude 3 Sonnet model on Bedrock has a soft limit of 1000 TPS per account. At 20k QPS, we hit <code>ThrottlingException</code> every 3 minutes. The solution: use Bedrock’s <code>ModelStreaming</code> with exponential backoff (1s, 2s, 4s) and a circuit breaker (<code>pybreaker</code> 1.0.1). Error rate dropped to 0.01%, but we had to shard the LLM calls across 3 Bedrock accounts.</p>
 </li>
 <li>
 <p><strong>Kubernetes DNS throttling</strong>
-   The FastAPI service used <code>milvus-lite.default.svc.cluster.local</code> for Milvus. At 25k QPS, CoreDNS started dropping packets due to <code>NXDOMAIN</code> retries. We switched to headless services (<code>milvus-lite.namespace.svc.cluster.local</code>) and added local <code>/etc/hosts</code> entries for the Milvus shards. DNS latency dropped from 40ms to 2ms.</p>
+The FastAPI service used <code>milvus-lite.default.svc.cluster.local</code> for Milvus. At 25k QPS, CoreDNS started dropping packets due to <code>NXDOMAIN</code> retries. We switched to headless services (<code>milvus-lite.namespace.svc.cluster.local</code>) and added local <code>/etc/hosts</code> entries for the Milvus shards. DNS latency dropped from 40ms to 2ms.</p>
 </li>
 <li>
 <p><strong>Nightly cost spikes from on-demand Graviton instances</strong>
-    Milvus Lite on Graviton3 (m7g.4xlarge) was $0.62/hour on-demand. During nightly batch jobs (02:00–04:00 UTC), our QPS spiked to 30k, tripling the EC2 bill for 2 hours. We switched to Spot Instances with a max price of $0.45/hour and added a cluster autoscaler to drain shards before termination. Nightly cost dropped from $12 to $3.</p>
+Milvus Lite on Graviton3 (m7g.4xlarge) was $0.62/hour on-demand. During nightly batch jobs (02:00–04:00 UTC), our QPS spiked to 30k, tripling the EC2 bill for 2 hours. We switched to Spot Instances with a max price of $0.45/hour and added a cluster autoscaler to drain shards before termination. Nightly cost dropped from $12 to $3.</p>
 </li>
 </ol>
 <hr />
@@ -789,7 +789,7 @@ query_engine = index.as_query_engine(
 <p><strong>Milvus Lite on Graviton3 is the best balance.</strong> At $620/month, it handles 25k QPS with 35ms median latency and 1.2GB RAM per shard. The cost is 37% lower than PostgreSQL and 66% lower than Redis.</p>
 </li>
 <li>
-<p><strong>Local caching (Caffeine) is a game-changer.</strong> The 80% local cache hit ratio reduced Milvus load by 5x and cut latency by 70%. Without it, the system would have needed 2x more shards.</p>
+<p>Without it, the system would have needed 2x more shards.</p>
 </li>
 <li>
 <p><strong>GPU memory is the new bottleneck.</strong> The A10G’s 24GB limit forced us to use <code>enable_memory_optimizations</code> in onnxruntime. At 25k QPS, the reranker used 18GB — leaving only 6GB for the LLM.</p>
