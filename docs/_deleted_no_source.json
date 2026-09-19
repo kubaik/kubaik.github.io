@@ -146,5 +146,9 @@
   "zero-trust-mcp-servers-auth-trap-youll-hit-first": {
     "deleted_at": "2026-09-18T15:37:32.486665",
     "reason": "missing post.json (no source of truth)"
+  },
+  "hit-5k-mrr-without-a-marketing-team": {
+    "deleted_at": "2026-09-19T11:43:23.195083",
+    "reason": "missing post.json (no source of truth)"
   }
 }
