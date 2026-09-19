@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-17T13:40:10.095223">
-        <meta property="article:modified_time" content="2026-07-17T13:40:10.095234">
+        <meta property="article:modified_time" content="2026-09-19T15:39:46.920173+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="Agentic workflows: how we kept the lights…">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/agentic-workflows-how-we-kept-the-lights/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "Agentic workflows: how we kept the lights…",
       "description": "Agentic workflow observability with millisecond timestamps, queue depth alerts, and OpenSearch Serverless — the stack that cut our MTTR 93% and p99 latency 74%",
       "datePublished": "2026-07-17T13:40:10+00:00",
-      "dateModified": "2026-07-17T13:40:10+00:00",
-      "wordCount": 2967,
+      "dateModified": "2026-09-19T15:39:46+00:00",
+      "wordCount": 2938,
       "timeRequired": "PT15M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,9 +265,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         15 min read
-                        &nbsp;·&nbsp; 2967 words
+                        &nbsp;·&nbsp; 2938 words
                         
-                        &nbsp;·&nbsp; Updated 2026-07-17
+                        &nbsp;·&nbsp; Updated 2026-09-19
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -276,7 +276,7 @@
             <div class="post-content" itemprop="articleBody">
                 <p>observability stack looks simple until it has to survive real traffic. The answers online were either wrong or skipped the part that mattered. This is the version of the write-up that includes the part that broke.</p>
 <h2 id="why-i-wrote-this-the-problem-i-kept-hitting">Why I wrote this (the problem I kept hitting)</h2>
-<p>In late 2026 our agentic workflow service grew from 400 to 4,800 parallel LLM agents in a single region. One Tuesday at 03:17 the p99 latency climbed from 420 ms to 12.4 s and stayed there for 11 minutes. When the alert fired I ran <code>kubectl logs</code> on every pod and hit the same wall: logs were buffered for 30 s before they flushed, so all timestamps were off by exactly that window. That made every correlation query return nonsense. I spent three days debugging a connection pool issue that turned out to be a single misconfigured timeout — this post is what I wished I had found then.</p>
+<p>In late 2026 our agentic workflow service grew from 400 to 4,800 parallel LLM agents in a single region. One Tuesday at 03:17 the p99 latency climbed from 420 ms to 12.4 s and stayed there for 11 minutes. When the alert fired I ran <code>kubectl logs</code> on every pod and hit the same wall: logs were buffered for 30 s before they flushed, so all timestamps were off by exactly that window. That made every correlation query return nonsense.</p>
 <p>We were already shipping Prometheus + Grafana dashboards built for traditional request/response traffic. Those dashboards gave us CPU, memory, and 5xx rates; they told us nothing about agent state, tool calls, or retries. The agentic layer started dropping messages because the underlying Redis queue had grown to 320 k messages and the blocking pop timeout was still the default 0 ms. With no visibility into queue depth, the system simply queued forever and agents timed out.</p>
 <p>The turning point came when we noticed the same symptom in Manila and Cape Town: every agent that ran longer than 90 s disappeared from the dashboard because its heartbeat fell into a 5-minute scrape interval. That 5-minute scrape cadence was the default in our Helm chart; it had been fine for cron jobs but was death for stateful agents. By the time we lowered it to 30 s the queue depth had already grown to 480 k. We burned 1.3 request-seconds per agent per 30-second scrape window just on scraping overhead. That’s 21 % of our CPU budget on a cluster that was already at 89 % utilization.</p>
 <p>I settled on three non-negotiables for any observability stack in agentic workloads:</p>

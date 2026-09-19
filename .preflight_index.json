@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-19T12:00:09.008154",
+  "built_at": "2026-09-19T15:37:59.132814",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5260,6 +5260,11 @@
       "slug": "computer-use-agents-the-permission-trap",
       "title": "Computer-use agents: the permission trap",
       "summary": "The metric everyone watches for clickhouse postgres usually isn't the one that would have caught the problem early. This is the version of the write-up that includes the part that broke. The dashboards look healthy right up until the incident starts. The situation (what we were trying to solve) A fi"
+    },
+    {
+      "slug": "ai-supply-chain-attacks-what-actually-broke",
+      "title": "AI supply chain attacks: what actually broke",
+      "summary": "Everyone assumes someone else already checked this. Inherited leastprivilege access setups tend to come with no explanation, just a working system and a long reverse-engineering session. This post covers what comes after the happy path. The gap between what the docs say and what production needs Eve"
     }
   ]
 }

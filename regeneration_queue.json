@@ -168,69 +168,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "stop-the-writes-zero-downtime-db-migrations",
-    "title": "Stop the writes — zero-downtime DB migrations",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about handle database during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I once watched a team migrate a user profile table from MySQL 5.7 to Aurora Serv",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "unlock-python-313s-free-threaded-gil-for-web-apps",
-    "title": "Unlock Python 3.13's free-threaded GIL for web apps",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool exhaustion issue that turned out ; I tested on Ubuntu 24.04 LTS with kernel 6.5.0-15-generic.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "vibe-code-works-great-fails-forever",
-    "title": "Vibe code: works great, fails forever",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I ran into this vibe coding problem while migrating a service under a hard deadl; Here's what actually worked.; I wrote 300 lines of Python with FastAPI in one night using cursor rules, got it",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "when-flags-become-experiments",
-    "title": "When flags become experiments",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I ran into this feature flag problem while migrating a service under a hard dead; Here's what actually worked.; I started this list to answer: which experimentation platforms actually scale do",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "who-owns-ai-generated-code",
-    "title": "Who owns AI-generated code?",
-    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was surprised that even after doubling our recruiter budget, we still had open; I ran the pilot myself on one flow—the P2P instant transfer between two wallets—",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "7-code-review-traps-when-ai-writes-half-your-code",
     "title": "7 code review traps when AI writes half your code",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this code review problem while migrating a service under a hard deadl; Here's what actually worked.; I spent three weeks chasing down a single line that looked harmless:  .",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ab-pricing-tests-that-lifted-arr-18",
     "title": "A/B pricing tests that lifted ARR 18%",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same pricing experiments mistake in multiple production codebases,; Here's what it looks like, why it's hard to spot, and how to fix it.; I made a mistake early on by running a friction experiment on a page with low tr",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "agentic-workflows-how-we-kept-the-lights",
     "title": "Agentic workflows: how we kept the lights…",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I settled on three non-negotiables for any observability stack in agentic worklo; I only caught that after Grafana started returning 502 errors.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "agents-247-vs-on-demand-42k-bill-shock",
     "title": "Agents 24/7 vs on-demand: $42k bill shock",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I learned this the hard way when our monthly AWS bill jumped from $12k to $54k o; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised to find that the boot time of a Lambda function is not the only ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-ate-our-niche-heres-how-we-picked-a-new-one",
     "title": "AI ate our niche — here’s how we picked a new one",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a long-time customer told me they’d canceled because their ; I thought it was a one-off until I saw the same story repeat across 12 other mer",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "ai-burnout-why-output-pressure-rose-even-as-tools-got",
@@ -1884,6 +1854,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "stop-the-writes-zero-downtime-db-migrations",
+    "title": "Stop the writes — zero-downtime DB migrations",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): A colleague asked me about handle database during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I once watched a team migrate a user profile table from MySQL 5.7 to Aurora Serv",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "unlock-python-313s-free-threaded-gil-for-web-apps",
+    "title": "Unlock Python 3.13's free-threaded GIL for web apps",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool exhaustion issue that turned out ; I tested on Ubuntu 24.04 LTS with kernel 6.5.0-15-generic.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "vibe-code-works-great-fails-forever",
+    "title": "Vibe code: works great, fails forever",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I ran into this vibe coding problem while migrating a service under a hard deadl; Here's what actually worked.; I wrote 300 lines of Python with FastAPI in one night using cursor rules, got it",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "when-flags-become-experiments",
+    "title": "When flags become experiments",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): I ran into this feature flag problem while migrating a service under a hard dead; Here's what actually worked.; I started this list to answer: which experimentation platforms actually scale do",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "who-owns-ai-generated-code",
+    "title": "Who owns AI-generated code?",
+    "reason": "retroactive_fabrication_audit: 5 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I was surprised that even after doubling our recruiter budget, we still had open; I ran the pilot myself on one flow—the P2P instant transfer between two wallets—",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "rag-on-legacy-systems-vector-db-vs-full-text-sql",

@@ -110,6 +110,15 @@
     </image:image>
   </url>
   <url>
+    <loc>https://kubaik.github.io/7-code-review-traps-when-ai-writes-half-your-code/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/7-code-review-traps-when-ai-writes-half-your-code.png</image:loc>
+    </image:image>
+  </url>
+  <url>
     <loc>https://kubaik.github.io/7-graceful-degradation-traps-ive-hit-in-production/</loc>
     <lastmod>2026-09-16</lastmod>
     <changefreq>weekly</changefreq>
@@ -284,6 +293,24 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/agentic-ai-cost-control-7-tools-one-backfire.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/agentic-workflows-how-we-kept-the-lights/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/agentic-workflows-how-we-kept-the-lights.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/agents-247-vs-on-demand-42k-bill-shock/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/agents-247-vs-on-demand-42k-bill-shock.png</image:loc>
     </image:image>
   </url>
   <url>
@@ -623,6 +650,15 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://kubaik.github.io/static/og/ai-stole-system-design.png</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://kubaik.github.io/ai-supply-chain-attacks-what-actually-broke/</loc>
+    <lastmod>2026-09-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://kubaik.github.io/static/og/ai-supply-chain-attacks-what-actually-broke.png</image:loc>
     </image:image>
   </url>
   <url>

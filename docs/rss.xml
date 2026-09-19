@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sat, 19 Sep 2026 12:03:13 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 19 Sep 2026 15:39:52 +0000</lastBuildDate>
+    <item>
+      <title>AI supply chain attacks: what actually broke</title>
+      <link>https://kubaik.github.io/ai-supply-chain-attacks-what-actually-broke/</link>
+      <description>AI supply chain attacks hide in pickle files and trust_remote_code. Hash pinning, safetensors, and a 30-minute audit that finds the real exposure.</description>
+      <pubDate>Sat, 19 Sep 2026 15:37:56 +0000</pubDate>
+      <guid>https://kubaik.github.io/ai-supply-chain-attacks-what-actually-broke/</guid>
+    </item>
     <item>
       <title>Computer-use agents: the permission trap</title>
       <link>https://kubaik.github.io/computer-use-agents-the-permission-trap/</link>
@@ -138,13 +145,6 @@
       <description>Agent platform abstractions that cut incidents 92% — typed tool contracts, Temporal 1.24 durable execution, and the confident-empty-result bug most teams…</description>
       <pubDate>Wed, 16 Sep 2026 09:38:05 +0000</pubDate>
       <guid>https://kubaik.github.io/agent-platform-abstractions-a-case-study/</guid>
-    </item>
-    <item>
-      <title>Zero-trust AI: skip the latency tax</title>
-      <link>https://kubaik.github.io/zero-trust-ai-skip-the-latency-tax/</link>
-      <description>Zero-trust for AI services without the latency tax: local OPA, session resumption, and warm pools cut p99 from 640ms to 225ms.</description>
-      <pubDate>Tue, 15 Sep 2026 16:35:21 +0000</pubDate>
-      <guid>https://kubaik.github.io/zero-trust-ai-skip-the-latency-tax/</guid>
     </item>
   </channel>
 </rss>

@@ -30,5 +30,7 @@
   "ClickHouse vs Postgres for analytics: the tradeoffs that actually matter at scale",
   "The failure modes we only saw after running multi-agent systems at scale for 6 months",
   "How we built payment reconciliation that survives M-Pesa, Paystack, and Flutterwave failures",
-  "Productionizing 'computer use' style agents without granting dangerous permissions"
+  "Productionizing 'computer use' style agents without granting dangerous permissions",
+  "Least-privilege access models for agents that call 30+ internal tools",
+  "The supply chain attacks on AI models and datasets that actually happened to teams we know"
 ]
