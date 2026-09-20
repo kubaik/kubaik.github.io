@@ -5707,6 +5707,7 @@ if __name__ == "__main__":
             with open("config.yaml", "r") as f:
                 config = yaml.safe_load(f)
 
+            # ── Velocity gate ──────────────────────────────────────────
             # FIX (found in review, 2026): VelocityController exists, is
             # fully documented ("HOW TO INTEGRATE... BEFORE calling
             # generate_blog_post()"), and is wired into a *manual*
@@ -5719,6 +5720,13 @@ if __name__ == "__main__":
             # or a misconfigured cron), which is precisely the "10 posts
             # in 10 minutes looks like a content farm" signal this module
             # was built to prevent.
+            #
+            # VelocityController derives today's count and domain age LIVE
+            # from docs/*/post.json created_at fields — it does not persist
+            # a counter file. This means the check here is self-healing on
+            # every fresh GitHub Actions checkout, and can never drift from
+            # what's actually published. See velocity_controller.py's module
+            # docstring for the full rationale.
             vc = VelocityController()
             if not vc.can_publish():
                 print("\n" + "═" * 68)
@@ -5862,6 +5870,13 @@ if __name__ == "__main__":
                 else:
                     print("✅  Content quality check passed (0 warnings).")
 
+                # ── Duplicate gate 1: SimilarityGuard (fail-closed) ─────
+                # similarity_guard.py's own docstring is explicit that a
+                # raised exception here MUST be treated as a hard failure,
+                # not swallowed as non-fatal. Silently publishing when this
+                # gate errors defeats its purpose — the entire point is
+                # duplicate-content protection, and a gate that fails open
+                # under error isn't a gate.
                 try:
                     guard = SimilarityGuard(docs_dir=blog_system.output_dir)
                     sim_result = guard.check(blog_post)
@@ -5872,11 +5887,6 @@ if __name__ == "__main__":
                         for warning in sim_result.warnings:
                             print(f"  ⚠️  Similarity: {warning}")
                 except Exception as sim_err:
-                    # FAIL CLOSED — similarity_guard.py's own docstring is
-                    # explicit that a raised exception here MUST be treated
-                    # as a hard failure, not swallowed as non-fatal. This is
-                    # the one real duplicate-content gate in the pipeline;
-                    # silently publishing when it errors defeats its purpose.
                     print(f"\n🛑  SimilarityGuard raised an error — aborting "
                           f"per its fail-closed contract: {sim_err}")
                     import traceback
@@ -5886,6 +5896,7 @@ if __name__ == "__main__":
                           "error above before re-running.")
                     sys.exit(1)
 
+                # ── Duplicate gate 2: topic_dedup title-key (fail-closed) ─
                 # SECOND, INDEPENDENT duplicate gate (found in review, 2026):
                 # SimilarityGuard's topic-key score is measured on body text
                 # and, run against this site's live 501-post corpus, tops
@@ -5897,10 +5908,8 @@ if __name__ == "__main__":
                 # flags") slip through as a result. topic_dedup.py scores
                 # TITLE keywords instead, which the paraphrasing doesn't
                 # touch, and catches exactly the pairs SimilarityGuard
-                # misses. Same fail-open-non-fatal posture as the other
-                # injection steps below is deliberately NOT used here —
-                # like SimilarityGuard, a duplicate topic is disqualifying,
-                # not a warning.
+                # misses. Same fail-closed contract as SimilarityGuard —
+                # a duplicate topic is disqualifying, not a warning.
                 if not dup_detected:
                     try:
                         topic_dup = check_topic_duplicate(
