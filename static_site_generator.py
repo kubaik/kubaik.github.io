@@ -241,59 +241,16 @@ def _normalize_iso_date(dt_str: str) -> str:
         return dt_str
 
 
-AUTHOR_PAGE_TEMPLATE = """\
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kubai Kevin — Software Developer and Writer</title>
-    <meta name="description" content="Kubai Kevin is a software developer based in Nairobi, Kenya. He writes about AI, backend engineering, and developer careers at {site_name}.">
-    <meta name="author" content="Kubai Kevin">
-    <link rel="canonical" href="{base_url}/author/kubai-kevin/">
-    <link rel="stylesheet" href="{base_path}/static/style.css">
-    <script type="application/ld+json">
-    {{
-      "@context": "https://schema.org",
-      "@type": "ProfilePage",
-      "mainEntity": {{
-        "@type": "Person",
-        "@id": "{base_url}/about/#author",
-        "name": "Kubai Kevin",
-        "url": "{base_url}/about/",
-        "sameAs": [
-          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
-          "https://twitter.com/KubaiKevin",
-          "https://github.com/kubaik"
-        ]
-      }}
-    }}
-    </script>
-</head>
-<body>
-    <header><div class="container">
-        <h1><a href="{base_path}/">{site_name}</a></h1>
-        <nav><a href="{base_path}/">Home</a><a href="{base_path}/about/">About</a></nav>
-    </div></header>
-    <main class="container">
-        <h1>Kubai Kevin</h1>
-        <p>Software developer based in Nairobi, Kenya. Writing about AI, backend engineering,
-        and developer careers at <a href="{base_url}/">{site_name}</a>.</p>
-        <p>
-            <a href="{base_path}/about/">Full bio and editorial process →</a>
-        </p>
-        <p>
-            <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/" target="_blank" rel="noopener">LinkedIn</a> ·
-            <a href="https://twitter.com/KubaiKevin" target="_blank" rel="noopener">Twitter</a> ·
-            <a href="https://github.com/kubaik" target="_blank" rel="noopener">GitHub</a>
-        </p>
-        {posts_html}
-    </main>
-    <footer><div class="container">
-        <p>&copy; {year} {site_name}</p>
-    </div></footer>
-</body>
-</html>"""
+# NOTE (2026-09-16): the inline AUTHOR_PAGE_TEMPLATE constant that used to
+# live at this location has been removed. Author-page rendering is now
+# delegated to adsense_fixes.author_page.generate_author_page(), which
+# holds the author identity (name, sameAs, knowsAbout, address) in a
+# single source of truth and emits a full ProfilePage + Person JSON-LD
+# graph. The prior inline template emitted only a bare Person schema, was
+# not recognized by Google's Rich Results Test as a profile page, and
+# duplicated the sameAs list already on /about/ — any change to the
+# author's social presence required updating two places. See
+# _generate_author_page() below.
 
 
 class StaticSiteGenerator:
@@ -1471,33 +1428,30 @@ Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' h
         print("Generated static pages: about, contact, privacy, terms")
 
     def _generate_author_page(self, posts: List[BlogPost]):
-        config = self.blog_system.config
-        base_url = config.get('base_url', '')
-        base_path = config.get('base_path', '')
-        site_name = config.get('site_name', 'Tech Blog')
+        """
+        Generate /author/kubai-kevin/index.html with a full ProfilePage
+        + Person JSON-LD graph.
 
-        author_dir = Path("./docs/author/kubai-kevin")
-        author_dir.mkdir(parents=True, exist_ok=True)
+        CHANGE (2026-09-16): this method used to render an inline
+        AUTHOR_PAGE_TEMPLATE that emitted a bare Person schema (not a
+        ProfilePage), listed only the newest 20 posts, and duplicated the
+        author's sameAs array already present on /about/. That duplication
+        meant any change to the author's social presence (a new platform,
+        a changed handle) required updating two places and could drift.
 
-        posts_html = ""
-        if posts:
-            items = "\n".join(
-                f'<li><a href="{base_path}/{p.slug}/">{p.title}</a> '
-                f'<span style="color:#999;font-size:0.85rem">— {p.created_at[:10]}</span></li>'
-                for p in posts[:20]
-            )
-            posts_html = f"<h2>Recent Articles</h2>\n<ul style='list-style:none;padding:0;'>\n{items}\n</ul>"
-
-        html = AUTHOR_PAGE_TEMPLATE.format(
-            site_name=site_name,
-            base_url=base_url,
-            base_path=base_path,
-            year=datetime.now().year,
-            posts_html=posts_html
+        All of that now lives in adsense_fixes.author_page, which is the
+        single source of truth for the author identity (name, jobTitle,
+        sameAs, knowsAbout, address) and emits a ProfilePage wrapper that
+        Google's Rich Results Test recognizes as a profile page. This
+        method is a thin delegator so the call site in generate_site()
+        stays unchanged.
+        """
+        from adsense_fixes.author_page import generate_author_page
+        generate_author_page(
+            posts=posts,
+            docs_dir=Path("./docs"),
+            config=self.blog_system.config,
         )
-        with open(author_dir / "index.html", 'w', encoding='utf-8') as f:
-            f.write(html)
-        print("Generated author page (/author/kubai-kevin/)")
 
     def _generate_tag_pages(self, posts: List[BlogPost]):
         config = self.blog_system.config
