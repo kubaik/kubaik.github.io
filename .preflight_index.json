@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-20T04:05:03.565557",
+  "built_at": "2026-09-20T09:44:56.886029",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5270,6 +5270,11 @@
       "slug": "audit-logs-compliance-vs-performance",
       "title": "Audit logs: compliance vs performance",
       "summary": "The workaround gets copy-pasted forward long after the original reason is forgotten. There's a gap between how audit logging is taught and how it actually behaves under load. This is the version of the write-up that includes the part that broke. The conventional wisdom (and why it's incomplete) Comp"
+    },
+    {
+      "slug": "agent-compliance-in-african-fintech-the-cbn-gap",
+      "title": "Agent compliance in African fintech: the CBN gap",
+      "summary": "Most regulatory compliance writeups assume the reader has already made the mistake they're warning about. This is the version of the write-up that includes the part that broke. It works in the simple case and breaks in a specific way under load. The situation (what we were trying to solve) A Lagos-b"
     }
   ]
 }

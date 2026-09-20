@@ -168,69 +168,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-burnout-why-output-pressure-rose-even-as-tools-got",
-    "title": "AI burnout: why output pressure rose even as tools got",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): The short version: the conventional advice on developer burnout is incomplete.; I once joined a team that cut PR review time from 2 days to 2 hours after we rol; I spent two weeks chasing down why developers felt \"more stressed\" despite shipp",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-code-in-prod-postmortems-still-work",
-    "title": "AI code in prod? Postmortems still work",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I learned that the hard way when a simple cron job that used to run in 200 ms st; I spent three days debugging a connection pool issue that turned out to be a sin; I once saw a generated function assume Node 20 LTS, but our runtime was Node 18 ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-codebase-guardrails-over-guardrails",
-    "title": "AI codebase? Guardrails over guardrails",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same maintain codebase mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three days debugging a connection-pool crash that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-codebase-onboarding-2-paths-tested",
-    "title": "AI codebase onboarding: 2 paths tested",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same onboard developer mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned that the hard way when I joined a team in Q2 2026 whose main service w",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-freelance-rates-2026-which-stacks-still-pay",
-    "title": "AI freelance rates 2026: which stacks still pay",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): The short version: the conventional advice on freelance developer is incomplete.; I used Copilot Enterprise 1.5 to scaffold the checkout page.; I caught it in code review, swapped in the new   from  , but forgot to add the i",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "ai-interviews-break-systems-5-real-mistakes-in-2026",
     "title": "AI interviews break systems: 5 real mistakes in 2026",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this when a candidate’s repo worked perfectly on their M3 Mac with Do; I spent two days debugging a non-existent networking issue before realizing the ; I was surprised that even top-tier candidates submitted systems that hardcoded  ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-memory-systems-context-that-survives-sessions",
     "title": "AI memory systems: context that survives sessions",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this when we moved from a simple in-memory cache to a proper vector s; I once debugged a production agent for three days before realizing the Redis con; I was surprised when a staging agent worked fine for days, then after a rolling ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-native-apps-break-when-you-copy-old-rules",
     "title": "AI-native apps break when you copy old rules",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when I tried to ship an AI-native feature that generated persona",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-observability-isnt-monitoring-heres-why",
     "title": "AI observability isn’t monitoring — here’s why",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I first ran into this when a customer reported that our recommendation engine wa; I learned this the hard way when our chatbot’s “answer correctness” metric, meas; I once saw a model’s accuracy drop from 91% to 78% overnight.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-observability-real-time-dashboards-without-the",
     "title": "AI observability: real-time dashboards without the",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-on-lambda-when-the-bill-explodes",
@@ -1824,6 +1794,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "ai-burnout-why-output-pressure-rose-even-as-tools-got",
+    "title": "AI burnout: why output pressure rose even as tools got",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): The short version: the conventional advice on developer burnout is incomplete.; I once joined a team that cut PR review time from 2 days to 2 hours after we rol; I spent two weeks chasing down why developers felt \"more stressed\" despite shipp",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-code-in-prod-postmortems-still-work",
+    "title": "AI code in prod? Postmortems still work",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I learned that the hard way when a simple cron job that used to run in 200 ms st; I spent three days debugging a connection pool issue that turned out to be a sin; I once saw a generated function assume Node 20 LTS, but our runtime was Node 18 ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-codebase-guardrails-over-guardrails",
+    "title": "AI codebase? Guardrails over guardrails",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same maintain codebase mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three days debugging a connection-pool crash that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-codebase-onboarding-2-paths-tested",
+    "title": "AI codebase onboarding: 2 paths tested",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same onboard developer mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned that the hard way when I joined a team in Q2 2026 whose main service w",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-freelance-rates-2026-which-stacks-still-pay",
+    "title": "AI freelance rates 2026: which stacks still pay",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): The short version: the conventional advice on freelance developer is incomplete.; I used Copilot Enterprise 1.5 to scaffold the checkout page.; I caught it in code review, swapped in the new   from  , but forgot to add the i",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "7-code-review-traps-when-ai-writes-half-your-code",

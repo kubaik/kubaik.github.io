@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 20 Sep 2026 12:41:41 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 20 Sep 2026 09:47:26 +0000</lastBuildDate>
+    <item>
+      <title>Agent compliance in African fintech: the CBN gap</title>
+      <link>https://kubaik.github.io/agent-compliance-in-african-fintech-the-cbn-gap/</link>
+      <description>Mapping autonomous agents onto CBN, NDPA 2023, and SEC obligations — the deterministic gate and append-only audit store that survive a compliance review.</description>
+      <pubDate>Sun, 20 Sep 2026 09:44:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/agent-compliance-in-african-fintech-the-cbn-gap/</guid>
+    </item>
     <item>
       <title>Audit logs: compliance vs performance</title>
       <link>https://kubaik.github.io/audit-logs-compliance-vs-performance/</link>
@@ -138,13 +145,6 @@
       <description>Edge agents vs centralised caching for 3G/4G users in East Africa — latency numbers, reconnection storm fixes, and the egress cost mistake that spikes…</description>
       <pubDate>Wed, 16 Sep 2026 11:26:58 +0000</pubDate>
       <guid>https://kubaik.github.io/which-agent-stack-survives-3g/</guid>
-    </item>
-    <item>
-      <title>Self-service AI tooling: where it breaks first</title>
-      <link>https://kubaik.github.io/self-service-ai-tooling-where-it-breaks-first/</link>
-      <description>Self-service AI tooling 429 and 403 errors: per-key rate limits, budget guards, and model pins that stop one team&amp;#x27;s experiment from breaking everyone…</description>
-      <pubDate>Wed, 16 Sep 2026 09:53:25 +0000</pubDate>
-      <guid>https://kubaik.github.io/self-service-ai-tooling-where-it-breaks-first/</guid>
     </item>
   </channel>
 </rss>
