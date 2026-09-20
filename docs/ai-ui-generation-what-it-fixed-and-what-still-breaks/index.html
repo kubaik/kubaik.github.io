@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-07-03T06:48:30.376782">
-        <meta property="article:modified_time" content="2026-09-19T08:27:13.784721+00:00">
+        <meta property="article:modified_time" content="2026-09-20T15:46:42.013497+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI UI generation: what it fixed and what still breaks">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-ui-generation-what-it-fixed-and-what-still-breaks/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "AI UI generation: what it fixed and what still breaks",
       "description": "Cut frontend work 40–60% with AI UI generation tools — real wins, hidden Safari CORS bugs, and the exact prompts that paid off in 2026.",
       "datePublished": "2026-07-03T06:48:30+00:00",
-      "dateModified": "2026-09-19T08:27:13+00:00",
-      "wordCount": 3470,
+      "dateModified": "2026-09-20T15:46:42+00:00",
+      "wordCount": 3459,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -252,16 +252,16 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         17 min read
-                        &nbsp;·&nbsp; 3470 words
+                        &nbsp;·&nbsp; 3459 words
                         
-                        &nbsp;·&nbsp; Updated 2026-09-19
+                        &nbsp;·&nbsp; Updated 2026-09-20
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The short version: the conventional advice on generation tools is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
+                <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
 <p>AI UI generation tools like v0 by Vercel, Figma AI, and Locofy can cut frontend work by 40–60% when used right, but they’re not magic. They excel at producing a first pass of React components, Tailwind markup, and basic state logic, but they can’t architect a responsive layout for a dashboard with 12 different roles, nor can they debug a race condition at 3 AM. My team moved from 500 lines of hand-written React to 200 lines using v0 in one sprint—until we hit a bug where our AI-generated form silently dropped every submission from Safari users. The tool didn’t know Safari’s stricter CORS policy. That’s the gap: AI can speed up the mechanical parts, but it can’t anticipate the invisible constraints of production.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>

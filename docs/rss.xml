@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 20 Sep 2026 09:47:26 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 20 Sep 2026 15:46:50 +0000</lastBuildDate>
+    <item>
+      <title>Token economics: the unsolved agent cost</title>
+      <link>https://kubaik.github.io/token-economics-the-unsolved-agent-cost/</link>
+      <description>Always-on agent teams burn tokens on context, not work. See the sink breakdown, a ledger you can add today, and why 61% of spend is standing context.</description>
+      <pubDate>Sun, 20 Sep 2026 15:44:16 +0000</pubDate>
+      <guid>https://kubaik.github.io/token-economics-the-unsolved-agent-cost/</guid>
+    </item>
     <item>
       <title>Agent compliance in African fintech: the CBN gap</title>
       <link>https://kubaik.github.io/agent-compliance-in-african-fintech-the-cbn-gap/</link>
@@ -138,13 +145,6 @@
       <description>Why .env files fail at 40+ LLM integrations — the env-dump leak, build-arg exposure, and the gateway pattern that fixes rotation and audit.</description>
       <pubDate>Thu, 17 Sep 2026 04:06:21 +0000</pubDate>
       <guid>https://kubaik.github.io/stop-putting-llm-keys-in-env/</guid>
-    </item>
-    <item>
-      <title>Which agent stack survives 3G?</title>
-      <link>https://kubaik.github.io/which-agent-stack-survives-3g/</link>
-      <description>Edge agents vs centralised caching for 3G/4G users in East Africa — latency numbers, reconnection storm fixes, and the egress cost mistake that spikes…</description>
-      <pubDate>Wed, 16 Sep 2026 11:26:58 +0000</pubDate>
-      <guid>https://kubaik.github.io/which-agent-stack-survives-3g/</guid>
     </item>
   </channel>
 </rss>

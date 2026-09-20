@@ -168,69 +168,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "ai-interviews-break-systems-5-real-mistakes-in-2026",
-    "title": "AI interviews break systems: 5 real mistakes in 2026",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this when a candidate’s repo worked perfectly on their M3 Mac with Do; I spent two days debugging a non-existent networking issue before realizing the ; I was surprised that even top-tier candidates submitted systems that hardcoded  ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-memory-systems-context-that-survives-sessions",
-    "title": "AI memory systems: context that survives sessions",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this when we moved from a simple in-memory cache to a proper vector s; I once debugged a production agent for three days before realizing the Redis con; I was surprised when a staging agent worked fine for days, then after a rolling ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-native-apps-break-when-you-copy-old-rules",
-    "title": "AI-native apps break when you copy old rules",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when I tried to ship an AI-native feature that generated persona",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-observability-isnt-monitoring-heres-why",
-    "title": "AI observability isn’t monitoring — here’s why",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I first ran into this when a customer reported that our recommendation engine wa; I learned this the hard way when our chatbot’s “answer correctness” metric, meas; I once saw a model’s accuracy drop from 91% to 78% overnight.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-observability-real-time-dashboards-without-the",
-    "title": "AI observability: real-time dashboards without the",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "ai-on-lambda-when-the-bill-explodes",
     "title": "AI on Lambda: when the bill explodes",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what actually worked, and why.; I spent two weeks tuning the model and the vLLM config to fit within Lambda’s 10; I then spent three days tweaking vLLM arguments— ,  ,  .",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-ops-pagerduty-vs-opsgenie-which-burns-your-team",
     "title": "AI ops: PagerDuty vs Opsgenie — which burns your team",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same aiassisted incident mistake in multiple production codebases,; Here's what it looks like, why it's hard to spot, and how to fix it.; I was surprised that Opsgenie’s template model didn’t improve over time as much ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-ops-vs-human-ops-the-incidents-that-broke-them",
     "title": "AI ops vs human ops: the incidents that broke them",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same aiassisted incident mistake in multiple production codebases,; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned this the hard way when a single missing index in PostgreSQL 16.2 cause",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-ui-generation-what-it-fixed-and-what-still-breaks",
     "title": "AI UI generation: what it fixed and what still breaks",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): The short version: the conventional advice on generation tools is incomplete.; I ran into this when our AI-generated checkout page worked perfectly in Chrome, ; I tried to ask v0 to generate a Next.js app with Prisma, Clerk auth, and a Postg",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-ui-tools-promise-vs-production",
     "title": "AI UI tools: promise vs. production",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): The short version: the conventional advice on generation tools is incomplete.; I went from 180 ms to 90 ms median component render time and halved our design-s; I ran into this when our design-system maintainer pointed out that the AI had us",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "api-attacks-rising-40-the-3-patterns-to-block-now",
@@ -1794,6 +1764,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "ai-interviews-break-systems-5-real-mistakes-in-2026",
+    "title": "AI interviews break systems: 5 real mistakes in 2026",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this when a candidate’s repo worked perfectly on their M3 Mac with Do; I spent two days debugging a non-existent networking issue before realizing the ; I was surprised that even top-tier candidates submitted systems that hardcoded  ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-memory-systems-context-that-survives-sessions",
+    "title": "AI memory systems: context that survives sessions",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this when we moved from a simple in-memory cache to a proper vector s; I once debugged a production agent for three days before realizing the Redis con; I was surprised when a staging agent worked fine for days, then after a rolling ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-native-apps-break-when-you-copy-old-rules",
+    "title": "AI-native apps break when you copy old rules",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when I tried to ship an AI-native feature that generated persona",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-observability-isnt-monitoring-heres-why",
+    "title": "AI observability isn’t monitoring — here’s why",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I first ran into this when a customer reported that our recommendation engine wa; I learned this the hard way when our chatbot’s “answer correctness” metric, meas; I once saw a model’s accuracy drop from 91% to 78% overnight.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-observability-real-time-dashboards-without-the",
+    "title": "AI observability: real-time dashboards without the",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same changing infrastructure mistake in multiple production codeba; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-burnout-why-output-pressure-rose-even-as-tools-got",

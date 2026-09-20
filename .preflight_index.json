@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-20T09:44:56.886029",
+  "built_at": "2026-09-20T15:44:20.268846",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5275,6 +5275,11 @@
       "slug": "agent-compliance-in-african-fintech-the-cbn-gap",
       "title": "Agent compliance in African fintech: the CBN gap",
       "summary": "Most regulatory compliance writeups assume the reader has already made the mistake they're warning about. This is the version of the write-up that includes the part that broke. It works in the simple case and breaks in a specific way under load. The situation (what we were trying to solve) A Lagos-b"
+    },
+    {
+      "slug": "token-economics-the-unsolved-agent-cost",
+      "title": "Token economics: the unsolved agent cost",
+      "summary": "The official documentation for ebpf 2026 is good. What it doesn't cover is what happens six months into production. The edge cases only show up once real users hit the system. This covers the fix, the cost of not knowing sooner, and what we monitor now. The gap between what the docs say and what pro"
     }
   ]
 }

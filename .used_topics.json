@@ -34,5 +34,7 @@
   "Least-privilege access models for agents that call 30+ internal tools",
   "The supply chain attacks on AI models and datasets that actually happened to teams we know",
   "The audit logging architecture that satisfies both compliance and performance teams",
-  "The regulatory and compliance realities of deploying autonomous agents in African fintech in 2026"
+  "The regulatory and compliance realities of deploying autonomous agents in African fintech in 2026",
+  "eBPF in 2026: the observability and security use cases that finally justified the complexity",
+  "The token economics problem nobody solved yet for always-on agent teams"
 ]
