@@ -13,7 +13,7 @@
   "meta_description": "AI code in prod is a dependency that changes under you — capture its prompt, snapshot, and runtime assumptions to cut incident time 78% and false positives 83%.",
   "featured_image": "/static/images/ai-code-in-prod-postmortems-still-work.jpg",
   "created_at": "2026-07-21T14:01:05.993241",
-  "updated_at": "2026-09-20T04:07:55.697580+00:00",
+  "updated_at": "2026-09-19T08:27:13.536090+00:00",
   "seo_keywords": [
     "AiCodePostmortem",
     "PostmortemArtifacts",

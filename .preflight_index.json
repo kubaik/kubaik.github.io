@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-19T15:37:59.132814",
+  "built_at": "2026-09-20T04:05:03.565557",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5265,6 +5265,11 @@
       "slug": "ai-supply-chain-attacks-what-actually-broke",
       "title": "AI supply chain attacks: what actually broke",
       "summary": "Everyone assumes someone else already checked this. Inherited leastprivilege access setups tend to come with no explanation, just a working system and a long reverse-engineering session. This post covers what comes after the happy path. The gap between what the docs say and what production needs Eve"
+    },
+    {
+      "slug": "audit-logs-compliance-vs-performance",
+      "title": "Audit logs: compliance vs performance",
+      "summary": "The workaround gets copy-pasted forward long after the original reason is forgotten. There's a gap between how audit logging is taught and how it actually behaves under load. This is the version of the write-up that includes the part that broke. The conventional wisdom (and why it's incomplete) Comp"
     }
   ]
 }

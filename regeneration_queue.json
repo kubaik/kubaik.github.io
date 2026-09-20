@@ -168,69 +168,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "7-code-review-traps-when-ai-writes-half-your-code",
-    "title": "7 code review traps when AI writes half your code",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this code review problem while migrating a service under a hard deadl; Here's what actually worked.; I spent three weeks chasing down a single line that looked harmless:  .",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ab-pricing-tests-that-lifted-arr-18",
-    "title": "A/B pricing tests that lifted ARR 18%",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same pricing experiments mistake in multiple production codebases,; Here's what it looks like, why it's hard to spot, and how to fix it.; I made a mistake early on by running a friction experiment on a page with low tr",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
-    "slug": "agentic-workflows-how-we-kept-the-lights",
-    "title": "Agentic workflows: how we kept the lights…",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I settled on three non-negotiables for any observability stack in agentic worklo; I only caught that after Grafana started returning 502 errors.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "agents-247-vs-on-demand-42k-bill-shock",
-    "title": "Agents 24/7 vs on-demand: $42k bill shock",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I learned this the hard way when our monthly AWS bill jumped from $12k to $54k o; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised to find that the boot time of a Lambda function is not the only ",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "ai-ate-our-niche-heres-how-we-picked-a-new-one",
-    "title": "AI ate our niche — here’s how we picked a new one",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a long-time customer told me they’d canceled because their ; I thought it was a one-off until I saw the same story repeat across 12 other mer",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
     "slug": "ai-burnout-why-output-pressure-rose-even-as-tools-got",
     "title": "AI burnout: why output pressure rose even as tools got",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): The short version: the conventional advice on developer burnout is incomplete.; I once joined a team that cut PR review time from 2 days to 2 hours after we rol; I spent two weeks chasing down why developers felt \"more stressed\" despite shipp",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-code-in-prod-postmortems-still-work",
     "title": "AI code in prod? Postmortems still work",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I learned that the hard way when a simple cron job that used to run in 200 ms st; I spent three days debugging a connection pool issue that turned out to be a sin; I once saw a generated function assume Node 20 LTS, but our runtime was Node 18 ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-codebase-guardrails-over-guardrails",
     "title": "AI codebase? Guardrails over guardrails",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same maintain codebase mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three days debugging a connection-pool crash that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-codebase-onboarding-2-paths-tested",
     "title": "AI codebase onboarding: 2 paths tested",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same onboard developer mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I learned that the hard way when I joined a team in Q2 2026 whose main service w",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-freelance-rates-2026-which-stacks-still-pay",
     "title": "AI freelance rates 2026: which stacks still pay",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): The short version: the conventional advice on freelance developer is incomplete.; I used Copilot Enterprise 1.5 to scaffold the checkout page.; I caught it in code review, swapped in the new   from  , but forgot to add the i",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-interviews-break-systems-5-real-mistakes-in-2026",
@@ -1854,6 +1824,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "7-code-review-traps-when-ai-writes-half-your-code",
+    "title": "7 code review traps when AI writes half your code",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this code review problem while migrating a service under a hard deadl; Here's what actually worked.; I spent three weeks chasing down a single line that looked harmless:  .",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ab-pricing-tests-that-lifted-arr-18",
+    "title": "A/B pricing tests that lifted ARR 18%",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same pricing experiments mistake in multiple production codebases,; Here's what it looks like, why it's hard to spot, and how to fix it.; I made a mistake early on by running a friction experiment on a page with low tr",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "agentic-workflows-how-we-kept-the-lights",
+    "title": "Agentic workflows: how we kept the lights…",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I settled on three non-negotiables for any observability stack in agentic worklo; I only caught that after Grafana started returning 502 errors.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "agents-247-vs-on-demand-42k-bill-shock",
+    "title": "Agents 24/7 vs on-demand: $42k bill shock",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I learned this the hard way when our monthly AWS bill jumped from $12k to $54k o; I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised to find that the boot time of a Lambda function is not the only ",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "ai-ate-our-niche-heres-how-we-picked-a-new-one",
+    "title": "AI ate our niche — here’s how we picked a new one",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when a long-time customer told me they’d canceled because their ; I thought it was a one-off until I saw the same story repeat across 12 other mer",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "stop-the-writes-zero-downtime-db-migrations",

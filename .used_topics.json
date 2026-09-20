@@ -32,5 +32,6 @@
   "How we built payment reconciliation that survives M-Pesa, Paystack, and Flutterwave failures",
   "Productionizing 'computer use' style agents without granting dangerous permissions",
   "Least-privilege access models for agents that call 30+ internal tools",
-  "The supply chain attacks on AI models and datasets that actually happened to teams we know"
+  "The supply chain attacks on AI models and datasets that actually happened to teams we know",
+  "The audit logging architecture that satisfies both compliance and performance teams"
 ]

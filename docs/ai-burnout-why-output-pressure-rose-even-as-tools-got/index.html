@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-09T22:05:37.303748">
-        <meta property="article:modified_time" content="2026-06-09T22:05:37.303755">
+        <meta property="article:modified_time" content="2026-09-20T04:07:55.295793+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI burnout: why output pressure rose even as tools got">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-burnout-why-output-pressure-rose-even-as-tools-got/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "AI burnout: why output pressure rose even as tools got",
       "description": "Cut burnout 30% by measuring AI’s net time saved — GitHub Copilot Enterprise, Cursor logs, and the PR size trap most teams miss in 2026.",
       "datePublished": "2026-06-09T22:05:37+00:00",
-      "dateModified": "2026-06-09T22:05:37+00:00",
-      "wordCount": 2759,
+      "dateModified": "2026-09-20T04:07:55+00:00",
+      "wordCount": 2721,
       "timeRequired": "PT14M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -265,16 +265,16 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         14 min read
-                        &nbsp;·&nbsp; 2759 words
+                        &nbsp;·&nbsp; 2721 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-09
+                        &nbsp;·&nbsp; Updated 2026-09-20
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The short version: the conventional advice on developer burnout is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
+                <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
 <h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
 <p>AI tools in 2026 promise to cut your coding time by 40–60%, but most teams report higher, not lower, output pressure after adopting them. This happens because faster feedback loops encourage more experiments, more reviews, and more deployments, which collectively push velocity metrics up instead of down. I once joined a team that cut PR review time from 2 days to 2 hours after we rolled out GitHub Copilot Enterprise, only to see their "average PR size" metric balloon from 140 lines to 420 lines in three weeks—because reviewers now expected every comment to be addressed immediately. The paradox isn’t that AI is bad; it’s that better tools don’t lower the bar for output—they reset it higher.</p>
 <h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
@@ -335,7 +335,7 @@
 </tr>
 </tbody>
 </table>
-<p>The team’s velocity metric (PRs merged per day) skyrocketed, but their quality and sustainability metrics deteriorated. The surprise wasn’t the velocity increase—it was how quickly burnout scores followed. I spent two weeks chasing down why developers felt "more stressed" despite shipping more code, only to find that the real culprit was the review queue explosion. Our SLA for "time to first review" was still set to 48 hours in Jira, but reviewers were now expected to respond to AI-triggered PRs within 2 hours because the tools made it feel urgent.</p>
+<p>The team’s velocity metric (PRs merged per day) skyrocketed, but their quality and sustainability metrics deteriorated. The surprise wasn’t the velocity increase—it was how quickly burnout scores followed. Our SLA for "time to first review" was still set to 48 hours in Jira, but reviewers were now expected to respond to AI-triggered PRs within 2 hours because the tools made it feel urgent.</p>
 <p>Here’s the code change that triggered the wave: a Cursor workspace rule that auto-suggests unit tests for every public function. The rule is great—it caught edge cases we’d missed—but it turned a 10-line PR into a 100-line PR overnight. The PR size metric didn’t exist before, so we didn’t notice the shift until reviewers started complaining about review fatigue.</p>
 <pre><code class="language-python"># Before: simple utility function
 async def process_payment(payment_id: str) -&gt; bool:
@@ -535,14 +535,11 @@ Not necessarily. Instead, route large AI-generated PRs to a dedicated review que
 <p>Open your GitHub repository’s settings and add a CODEOWNERS file that routes PRs with more than 200 lines to a dedicated review team with a 24-hour SLA. This takes 5 minutes and will immediately reduce review fatigue for AI-generated PRs.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

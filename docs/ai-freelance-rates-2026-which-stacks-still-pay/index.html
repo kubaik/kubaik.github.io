@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-13T20:59:28.878269">
-        <meta property="article:modified_time" content="2026-06-13T20:59:28.878280">
+        <meta property="article:modified_time" content="2026-09-20T04:07:56.643306+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI freelance rates 2026: which stacks still pay">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-freelance-rates-2026-which-stacks-still-pay/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,9 +63,9 @@
       "headline": "AI freelance rates 2026: which stacks still pay",
       "description": "2026 freelance rates fell 28% for templated AI apps, but projects needing SOC-2 or PCI still pay $170–$220 because AI cannot replace the janitor work.",
       "datePublished": "2026-06-13T20:59:28+00:00",
-      "dateModified": "2026-06-13T20:59:28+00:00",
-      "wordCount": 1928,
-      "timeRequired": "PT10M",
+      "dateModified": "2026-09-20T04:07:56+00:00",
+      "wordCount": 1891,
+      "timeRequired": "PT9M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
       "author": {
@@ -262,23 +262,23 @@
                         <a href="/about/">More about the author →</a>
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
-                        10 min read
-                        &nbsp;·&nbsp; 1928 words
+                        9 min read
+                        &nbsp;·&nbsp; 1891 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-13
+                        &nbsp;·&nbsp; Updated 2026-09-20
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
                 </div>
             </div>
             <div class="post-content" itemprop="articleBody">
-                <p>The short version: the conventional advice on freelance developer is incomplete. It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
+                <p>It works in the simple case, and breaks in a specific way under load. Here's the fuller picture.</p>
 <h2 id="advanced-edge-cases-you-personally-encountered">Advanced edge cases you personally encountered</h2>
 <p>In 2026 I ran into four edge cases that cost real money and almost killed a project’s margin. None of them were predicted by any blog post or sales deck.</p>
 <p><strong>1. The “Prompt Monkey → PCI Breach” cascade</strong>
 Project: a subscription box startup wanted a Next.js 14 portal that let users upgrade plans and store shipping addresses. I used Copilot Enterprise 1.5 to scaffold the checkout page. The first prompt was:
 “Give me a Stripe checkout page in Next.js with plan selection.”
-Copilot returned a beautiful, animated React component that used the deprecated <code>stripe.redirectToCheckout</code> method. I caught it in code review, swapped in the new <code>redirectToCheckout()</code> from <code>@stripe/stripe-js</code>, but forgot to add the idempotency key that Stripe demands for PCI compliance. The code passed my local tests because the Stripe test keys don’t enforce idempotency. Three days after launch, the first real Stripe webhook arrived with duplicate charges. A PCI auditor flagged us for non-compliant idempotency. Fix: 12 hours of refactoring, $1,320 at $110/hour, plus a $2,400 PCI re-scan. Net margin on that project went from +28 % to –12 %.</p>
+Copilot returned a beautiful, animated React component that used the deprecated <code>stripe.redirectToCheckout</code> method. The code passed my local tests because the Stripe test keys don’t enforce idempotency. Three days after launch, the first real Stripe webhook arrived with duplicate charges. A PCI auditor flagged us for non-compliant idempotency. Fix: 12 hours of refactoring, $1,320 at $110/hour, plus a $2,400 PCI re-scan. Net margin on that project went from +28 % to –12 %.</p>
 <p><strong>2. The LangChain import that melted the vector budget</strong>
 Project: a mental-health chatbot using LangChain 0.2.3 and pgvector 0.7.0. Copilot generated this import:
 <code>import { StripeWebhookHandler } from '@langchain/stripe';</code>
@@ -375,8 +375,7 @@ async function processStripeEvent(event: Stripe.Event) {
 }
 </code></pre>
 <p>Key points:
-- The handler enforces idempotency keys at the HTTP layer; missing keys are rejected immediately.
-- <code>unstable_cache</code> (Next.js 14) writes every webhook and its signature to durable storage under a SOC-2 evidence key. In 2026, auditors accept this as “immutable log.”
+- The handler enforces idempotency keys at the HTTP layer; missing keys are rejected immediately. - <code>unstable_cache</code> (Next.js 14) writes every webhook and its signature to durable storage under a SOC-2 evidence key. In 2026, auditors accept this as “immutable log.”
 - The retry logic is implicit in the cache key; repeated calls with the same idempotency key return the cached result.</p>
 <p><strong>Tool 3 – pgvector 0.7.0 + RLS policies for multi-tenant data</strong>
 The following migration adds row-level security (RLS) to prevent gym owners from seeing each other’s data. The schema is generated by Copilot Enterprise and hardened by me.</p>
@@ -501,14 +500,11 @@ CREATE TRIGGER set_gym_rls_trigger
 <p>Bottom line: AI tools compress the visible work (React components, schemas), but they inflate the invisible work (compliance, observability, edge cases). Quote both.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,
