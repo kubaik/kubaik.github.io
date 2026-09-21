@@ -128,6 +128,7 @@ cicd-for-django-in-20ms-africa-networks,95,2141,CI/CD for Django in 20ms Africa 
 claude-code-after-365-days-what-actually-works,95,2218,Claude Code after 365 days: what actually works,2026-06-12T07:04:26.911283,1,no FAQ section
 claude-code-after-a-year-daily-wins,95,2665,Claude Code after a year: daily wins,2026-06-25T03:55:14.348158,1,no FAQ section
 css-2026-container-queries-retired-our-utility-class,95,2710,CSS 2026: container queries retired our utility class,2026-06-13T22:39:56.076513,1,no FAQ section
+dead-letter-queues-stop-poison-messages,95,2701,Dead-letter queues: stop poison messages,2026-09-21T04:01:53.975376,1,no FAQ section
 debug-ai-agent-failures-differently,95,2935,Debug AI agent failures differently,2026-06-27T15:03:09.620372,1,no FAQ section
 debug-async-python-before-it-deadlocks,95,2164,Debug async Python before it deadlocks…,2026-07-03T05:52:28.629794,1,no FAQ section
 deploy-a-solo-stack-for-20month-in-2026,95,3225,Deploy a solo stack for $20/month in 2026,2026-06-09T15:45:09.304392,1,no FAQ section
@@ -297,10 +298,10 @@ ai-solo-saas-2026-build-vs-buy,100,3706,AI solo SaaS 2026: build vs buy,2026-07-
 ai-steals-junior-tasks-3-skills-that-protect-pay,100,2738,AI steals junior tasks: 3 skills that protect pay,2026-06-24T05:02:01.012343,0,
 ai-supply-chain-attacks-what-actually-broke,100,3149,AI supply chain attacks: what actually broke,2026-09-19T15:37:56.916667,0,
 ai-tools-rewrote-my-engineering-rules,100,3071,AI tools rewrote my engineering rules,2026-07-02T08:41:32.908522,0,
-ai-ui-generation-what-it-fixed-and-what-still-breaks,100,3470,AI UI generation: what it fixed and what still breaks,2026-07-03T06:48:30.376782,0,
+ai-ui-generation-what-it-fixed-and-what-still-breaks,100,3459,AI UI generation: what it fixed and what still breaks,2026-07-03T06:48:30.376782,0,
 ai-ui-tools-6-months-in-what-i-gained-and-lost,100,2990,"AI UI tools: 6 months in, what I gained and lost",2026-06-27T05:01:58.869327,0,
 ai-ui-tools-broke-my-react-flow-heres-why,100,3557,AI UI tools broke my React flow — here’s why,2026-06-23T15:45:26.142776,0,
-ai-ui-tools-promise-vs-production,100,1842,AI UI tools: promise vs. production,2026-06-30T01:37:01.441639,0,
+ai-ui-tools-promise-vs-production,100,1805,AI UI tools: promise vs. production,2026-06-30T01:37:01.441639,0,
 ai-wrote-40-of-our-code-heres-what-broke-our-on-call,100,3564,AI wrote 40% of our code — here’s what broke our on-call,2026-07-06T03:54:00.254749,0,
 airflows-replacement-what-80-of-teams-moved-to-in,100,3111,Airflow’s replacement: what 80% of teams moved to in,2026-06-14T21:03:21.502046,0,
 api-abuse-patterns-rising-in-2026,100,2183,API abuse patterns rising in 2026,2026-06-24T08:43:50.518338,0,
@@ -444,7 +445,6 @@ survive-90s-db-failover-without-melting,100,3630,Survive 90s DB failover without
 survive-network-drops-agentic-workflows-that-keep-running,100,2596,Survive network drops: agentic workflows that keep running,2026-07-04T12:14:28.758125,0,
 test-ai-code-without-testing-the-ai,100,3737,Test AI code without testing the AI,2026-07-01T18:05:47.823221,0,
 tls-13-post-quantum-what-breaks-at-scale,100,2419,TLS 1.3 + post-quantum: what breaks at scale,2026-06-21T16:00:52.359876,0,
-token-economics-the-unsolved-agent-cost,100,2727,Token economics: the unsolved agent cost,2026-09-20T15:44:16.963613,0,
 tool-calling-patterns-patterns-that-survive-load-vs,100,3005,Tool calling patterns: patterns that survive load vs,2026-06-27T14:22:36.645569,0,
 tool-calls-under-load-async-batch-vs-fire-and-forget,100,3802,Tool calls under load: async batch vs fire-and-forget,2026-06-13T10:23:27.741037,0,
 track-ai-agent-costs-in-fractal-workflows,100,3211,Track AI agent costs in fractal workflows,2026-07-27T03:28:57.383047,0,

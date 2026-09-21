@@ -36,5 +36,7 @@
   "The audit logging architecture that satisfies both compliance and performance teams",
   "The regulatory and compliance realities of deploying autonomous agents in African fintech in 2026",
   "eBPF in 2026: the observability and security use cases that finally justified the complexity",
-  "The token economics problem nobody solved yet for always-on agent teams"
+  "The token economics problem nobody solved yet for always-on agent teams",
+  "The durable execution patterns that replaced most of our custom workflow code",
+  "Designing background job queues that handle poison messages gracefully"
 ]

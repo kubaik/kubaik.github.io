@@ -5,13 +5,13 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Sun, 20 Sep 2026 15:46:50 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 21 Sep 2026 04:03:14 +0000</lastBuildDate>
     <item>
-      <title>Token economics: the unsolved agent cost</title>
-      <link>https://kubaik.github.io/token-economics-the-unsolved-agent-cost/</link>
-      <description>Always-on agent teams burn tokens on context, not work. See the sink breakdown, a ledger you can add today, and why 61% of spend is standing context.</description>
-      <pubDate>Sun, 20 Sep 2026 15:44:16 +0000</pubDate>
-      <guid>https://kubaik.github.io/token-economics-the-unsolved-agent-cost/</guid>
+      <title>Dead-letter queues: stop poison messages</title>
+      <link>https://kubaik.github.io/dead-letter-queues-stop-poison-messages/</link>
+      <description>Poison messages can stall your queue for 45 minutes. Build a Redis 7.2 + RQ 1.15 dead-letter queue with retry caps and alerts in under 150 lines.</description>
+      <pubDate>Mon, 21 Sep 2026 04:01:53 +0000</pubDate>
+      <guid>https://kubaik.github.io/dead-letter-queues-stop-poison-messages/</guid>
     </item>
     <item>
       <title>Agent compliance in African fintech: the CBN gap</title>

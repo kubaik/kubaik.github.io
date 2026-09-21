@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-20T15:44:20.268846",
+  "built_at": "2026-09-21T04:01:55.957302",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5280,6 +5280,11 @@
       "slug": "token-economics-the-unsolved-agent-cost",
       "title": "Token economics: the unsolved agent cost",
       "summary": "The official documentation for ebpf 2026 is good. What it doesn't cover is what happens six months into production. The edge cases only show up once real users hit the system. This covers the fix, the cost of not knowing sooner, and what we monitor now. The gap between what the docs say and what pro"
+    },
+    {
+      "slug": "dead-letter-queues-stop-poison-messages",
+      "title": "Dead-letter queues: stop poison messages",
+      "summary": "durable execution is the kind of decision that looks reversible until it isn't. It's a one-line fix once you know where to look, and expensive until then. Here's what changed once we stopped guessing and started measuring. Why I wrote this (the problem I kept hitting) A background worker that retrie"
     }
   ]
 }
