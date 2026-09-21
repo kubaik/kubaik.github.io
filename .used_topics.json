@@ -38,5 +38,6 @@
   "eBPF in 2026: the observability and security use cases that finally justified the complexity",
   "The token economics problem nobody solved yet for always-on agent teams",
   "The durable execution patterns that replaced most of our custom workflow code",
-  "Designing background job queues that handle poison messages gracefully"
+  "Designing background job queues that handle poison messages gracefully",
+  "Offline-capable agent workflows for field agents and last-mile operations in Africa"
 ]

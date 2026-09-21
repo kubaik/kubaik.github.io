@@ -168,13 +168,6 @@
     "status": "needs_review"
   },
   {
-    "slug": "api-attacks-rising-40-the-3-patterns-to-block-now",
-    "title": "API attacks rising 40%: the 3 patterns to block now",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when I pulled the CloudWatch graphs for our main   endpoint and ; I spent a week tuning the WAF rules, but every time I tightened a rule, we’d get",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "apis-must-die-in-2026",
     "title": "APIs must die in 2026",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when a new microfinance client in Kano asked us to integrate wit",
@@ -182,55 +175,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "audit-logs-ship-them-fast-keep-them-forever",
-    "title": "Audit logs: ship them fast, keep them forever",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about audit logging during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when our bill for AWS S3 Standard-Infrequent Access (S3-IA) trip",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "aws-finops-levers-what-mid-size-teams-ignore-in-2026",
-    "title": "AWS FinOps levers: what mid-size teams ignore in 2026",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same finops 2026 mistake in multiple production codebases, includi; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when our monthly bill jumped from $18k to $24k overnight after a",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "bank-apis-broke-under-african-2g",
-    "title": "Bank APIs broke under African 2G",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we rolled out a new payments endpoint in Nigeria in 2026.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "build-a-search-system-in-2026-semantic-keyword",
     "title": "Build a search system in 2026: semantic, keyword",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I also tried a pure vector index without the keyword filter to see if we could d",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "build-a-static-analyzer-in-14-days-with-tree-sitter",
     "title": "Build a static analyzer in 14 days with Tree-sitter",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I did the same in 2026 on a greenfield service and hit a wall: our codebase used; I spent three days reading AST spec docs trying to shoehorn a square peg into a ",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "build-agent-workflows-that-survive-restarts",
     "title": "Build agent workflows that survive restarts",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I went from “let’s ship this” to “how do we survive Tuesday?” in one afternoon.; I learned this the hard way when the new OpenAI API 2024-06-01 started returning",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "claude-code-in-2026-one-year-of-lessons-learned",
     "title": "Claude Code in 2026: one year of lessons learned",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I assumed Claude Code would give us that out of the box.; I spent three days debugging a connection-pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "dagster-replaced-airflow-in-2026-heres-the-stack-we",
     "title": "Dagster replaced Airflow in 2026 — here’s the stack we",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when we tried to add a nightly feature-flag rollout that depende; I spent three days wrestling with the   setup before realizing the BigQuery   sh",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "found-niche-in-2026-saas-that-ai-cant-copy",
@@ -1734,6 +1711,34 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "api-attacks-rising-40-the-3-patterns-to-block-now",
+    "title": "API attacks rising 40%: the 3 patterns to block now",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when I pulled the CloudWatch graphs for our main   endpoint and ; I spent a week tuning the WAF rules, but every time I tightened a rule, we’d get",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "audit-logs-ship-them-fast-keep-them-forever",
+    "title": "Audit logs: ship them fast, keep them forever",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about audit logging during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when our bill for AWS S3 Standard-Infrequent Access (S3-IA) trip",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "aws-finops-levers-what-mid-size-teams-ignore-in-2026",
+    "title": "AWS FinOps levers: what mid-size teams ignore in 2026",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same finops 2026 mistake in multiple production codebases, includi; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into this when our monthly bill jumped from $18k to $24k overnight after a",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "bank-apis-broke-under-african-2g",
+    "title": "Bank APIs broke under African 2G",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about african fintech during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran into this when we rolled out a new payments endpoint in Nigeria in 2026.",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-on-lambda-when-the-bill-explodes",

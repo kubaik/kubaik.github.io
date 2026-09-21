@@ -14,7 +14,7 @@
   "meta_description": "Cut search latency 50 % in 5 minutes — PostgreSQL 16, pgvector 0.7, and Redis 7.2 walkthrough with real 2026 benchmarks and cost breakdowns",
   "featured_image": "/static/images/build-a-search-system-in-2026-semantic-keyword.jpg",
   "created_at": "2026-06-10T21:36:55.121317",
-  "updated_at": "2026-09-21T07:36:10.422008+00:00",
+  "updated_at": "2026-09-19T08:27:13.929609+00:00",
   "seo_keywords": [
     "SearchSystemDesign",
     "HybridSearch2026",

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T04:01:55.957302",
+  "built_at": "2026-09-21T07:32:19.679603",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5285,6 +5285,11 @@
       "slug": "dead-letter-queues-stop-poison-messages",
       "title": "Dead-letter queues: stop poison messages",
       "summary": "durable execution is the kind of decision that looks reversible until it isn't. It's a one-line fix once you know where to look, and expensive until then. Here's what changed once we stopped guessing and started measuring. Why I wrote this (the problem I kept hitting) A background worker that retrie"
+    },
+    {
+      "slug": "offline-agent-workflows-for-last-mile-ops",
+      "title": "Offline agent workflows for last-mile ops",
+      "summary": "offlinecapable agent is easy to demo and hard to keep honest at scale. Most write-ups stop exactly where the interesting part starts. This is what I put together after working through it properly. The problem this solves Last-mile delivery in Lagos, Nairobi, or Accra rarely happens on a stable 4G co"
     }
   ]
 }
