@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Sep 2026 12:58:40 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 21 Sep 2026 10:02:17 +0000</lastBuildDate>
+    <item>
+      <title>Rust rewrites: where they pay off, where they don&apos;t</title>
+      <link>https://kubaik.github.io/rust-rewrites-where-they-pay-off-where-they-dont/</link>
+      <description>Rust backend rewrites pay off for CPU-bound work, not I/O.</description>
+      <pubDate>Mon, 21 Sep 2026 10:01:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/rust-rewrites-where-they-pay-off-where-they-dont/</guid>
+    </item>
     <item>
       <title>Idempotency keys: what they fix, what they don&apos;t</title>
       <link>https://kubaik.github.io/idempotency-keys-what-they-fix-what-they-dont/</link>
@@ -138,13 +145,6 @@
       <description>vLLM vs Ollama for local fintech LLM agents: concurrency limits, guided JSON, and the p95 latency number that decides which serving stack you actually…</description>
       <pubDate>Fri, 18 Sep 2026 12:42:41 +0000</pubDate>
       <guid>https://kubaik.github.io/local-llm-agents-vllm-vs-ollama-for-fintech/</guid>
-    </item>
-    <item>
-      <title>Multi-agent systems: why failures hide</title>
-      <link>https://kubaik.github.io/multi-agent-systems-why-failures-hide/</link>
-      <description>Multi-agent systems fail silently at scale — token budget overruns, retry storms, and deadlocks.</description>
-      <pubDate>Fri, 18 Sep 2026 11:29:41 +0000</pubDate>
-      <guid>https://kubaik.github.io/multi-agent-systems-why-failures-hide/</guid>
     </item>
   </channel>
 </rss>

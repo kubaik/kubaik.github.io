@@ -175,69 +175,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "pulumi-vs-terraform-vs-opentofu-in-2026",
-    "title": "Pulumi vs Terraform vs OpenTofu in 2026",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this pulumi terraform problem while migrating a service under a hard ; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "rebalance-pay-when-ai-fills-half-your-role",
-    "title": "Rebalance pay when AI fills half your role",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I started collecting negotiation transcripts and compensation data from 112 engi",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "replace-env-with-these-in-2026",
-    "title": "Replace .env with these in 2026",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised to learn that AWS Secrets Manager can cache secrets locally for ; I ran into this when we upgraded a PostgreSQL cluster from 14 to 16.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "replace-vibe-testing-with-agent-evals-now",
-    "title": "Replace vibe testing with agent evals now",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've hit the same evaluationdriven development mistake in more than one producti; Here's what I'd tell a colleague hitting this for the first time.; I ran into this myself when a new customer-facing agent auto-replied with pricin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "replaced-celery-in-2026-what-actually-worked",
-    "title": "Replaced Celery in 2026: what actually worked",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into a critical surprise when I enabled Redis slowlog: the queue wasn’t th; I spent three days tuning the limits before realizing the real issue was the tas",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "self-healing-ai-agents-vs-rule-based-ops-40-fewer",
     "title": "Self-healing AI agents vs rule-based ops: 40% fewer",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same built selfhealing mistake in multiple production codebases, i; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three weeks debugging that agent before I realized it was using a derive",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ship-faster-with-a-paved-road-4-weeks-to-80-less-toil",
     "title": "Ship faster with a paved road: 4 weeks to 80% less toil",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I still remember the day a junior engineer opened a ticket titled “My app works ; I thought the team would rebel.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "supervisor-vs-swarm-vs-debate-vs-pipeline",
     "title": "Supervisor vs swarm vs debate vs pipeline",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I learned this the hard way when a single   from an external API triggered 8,000; I once watched a supervisor burn through 1,200 restarts in 20 minutes because th; I tested a swarm of 12 agents processing 5,000 requests per second.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "tool-calls-under-load-async-batch-vs-fire-and-forget",
     "title": "Tool calls under load: async batch vs fire-and-forget",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same toolcalling patterns mistake in multiple production codebases; Here's what it looks like, why it's hard to spot, and how to fix it.; I ran into a nasty edge case when we set the batch size to 200 in Scenario 1.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "treat-every-user-input-as-hostile-in-2026",
     "title": "Treat every user input as hostile in 2026",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): A colleague asked me about detect prompt during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I spent two weeks debugging a support bot that kept leaking internal docs becaus",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "zero-trust-mcp-servers-auth-trap-youll-hit-first",
@@ -1621,6 +1591,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "pulumi-vs-terraform-vs-opentofu-in-2026",
+    "title": "Pulumi vs Terraform vs OpenTofu in 2026",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this pulumi terraform problem while migrating a service under a hard ; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "rebalance-pay-when-ai-fills-half-your-role",
+    "title": "Rebalance pay when AI fills half your role",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I started collecting negotiation transcripts and compensation data from 112 engi",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "replace-env-with-these-in-2026",
+    "title": "Replace .env with these in 2026",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised to learn that AWS Secrets Manager can cache secrets locally for ; I ran into this when we upgraded a PostgreSQL cluster from 14 to 16.",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "replace-vibe-testing-with-agent-evals-now",
+    "title": "Replace vibe testing with agent evals now",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've hit the same evaluationdriven development mistake in more than one producti; Here's what I'd tell a colleague hitting this for the first time.; I ran into this myself when a new customer-facing agent auto-replied with pricin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "replaced-celery-in-2026-what-actually-worked",
+    "title": "Replaced Celery in 2026: what actually worked",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into a critical surprise when I enabled Redis slowlog: the queue wasn’t th; I spent three days tuning the limits before realizing the real issue was the tas",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "mcp-servers-the-3-hidden-costs-nobody-quotes",

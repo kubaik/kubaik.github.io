@@ -44,5 +44,6 @@
   "Why traditional cloud cost tools struggle once agents make autonomous scaling decisions",
   "Building golden paths for AI features that don't become maintenance nightmares",
   "Golden paths that don't become golden handcuffs \u2014 keeping the paved road evolvable",
-  "Idempotency keys done right: the payment API bugs they prevent and the ones they don't"
+  "Idempotency keys done right: the payment API bugs they prevent and the ones they don't",
+  "Rust for backend services: where the rewrite paid off and where it didn't"
 ]

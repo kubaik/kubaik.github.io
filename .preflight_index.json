@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T09:17:52.252666",
+  "built_at": "2026-09-21T10:01:52.979103",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5305,6 +5305,11 @@
       "slug": "idempotency-keys-what-they-fix-what-they-dont",
       "title": "Idempotency keys: what they fix, what they don't",
       "summary": "The conventional advice on idempotency keys is incomplete in one specific, costly way. Here's the fuller picture, with the tradeoffs left in. Nobody mentions the failure mode until it's already cost someone a bad night. The problem this solves A payment API without idempotency is a bet that the netw"
+    },
+    {
+      "slug": "rust-rewrites-where-they-pay-off-where-they-dont",
+      "title": "Rust rewrites: where they pay off, where they don't",
+      "summary": "The workaround gets copy-pasted forward long after the original reason is forgotten. The rust backend advice that circulates internally rarely matches what's in the public docs. This is the version of the write-up that includes the part that broke. The gap between what the docs say and what producti"
     }
   ]
 }

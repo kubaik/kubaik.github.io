@@ -10,7 +10,7 @@
   "meta_description": "Cut cloud costs 60% with async batch tool calls — real P99 latency, Redis 7.2 cost, and the fire-and-forget trap most teams hit at scale.",
   "featured_image": "/static/images/tool-calls-under-load-async-batch-vs-fire-and-forget.jpg",
   "created_at": "2026-06-13T10:23:27.741037",
-  "updated_at": "2026-09-21T10:02:09.072314+00:00",
+  "updated_at": "2026-09-19T08:27:14.725659+00:00",
   "seo_keywords": [
     "ToolCallOptimization",
     "Apis",

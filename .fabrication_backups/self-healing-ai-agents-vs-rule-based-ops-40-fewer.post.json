@@ -14,7 +14,7 @@
   "meta_description": "Cut MTTR 83% with self-healing AI agents — real costs, false positives, and the exact Kubernetes manifests to migrate in 30 minutes.",
   "featured_image": "/static/images/self-healing-ai-agents-vs-rule-based-ops-40-fewer.jpg",
   "created_at": "2026-06-11T21:16:42.291244",
-  "updated_at": "2026-09-21T10:02:09.014434+00:00",
+  "updated_at": "2026-09-19T08:27:14.527522+00:00",
   "seo_keywords": [
     "AiAgentsDeployment",
     "CanaryAnalysisRollback",
