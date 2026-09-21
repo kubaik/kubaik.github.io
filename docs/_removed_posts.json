@@ -323,5 +323,15 @@
     "removed_at": "2026-09-21T11:23:19.955409",
     "reason": "unverifiable named-source citation: 'a survey of 23 developers'",
     "source": "adsense_triage"
+  },
+  "breakdown-nairobi-saas-infra-costs-2026": {
+    "removed_at": "2026-09-21T14:29:06.998420",
+    "reason": "2 first-person incident(s)",
+    "source": "adsense_triage"
+  },
+  "progressive-web-apps-what-browser-apis-finally-fixed": {
+    "removed_at": "2026-09-21T14:29:07.000145",
+    "reason": "4 first-person incident(s)",
+    "source": "adsense_triage"
   }
 }
