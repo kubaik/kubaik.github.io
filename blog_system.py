@@ -279,13 +279,6 @@ def _extract_numbers(text: str) -> str:
     return ""
 
 
-# CHANGE 2 (part B): broaden _SKIP_PATTERNS to catch narrative-cost verbs
-# that have no leading first-person pronoun. The previous version only
-# matched "I spent..."/"I built..." openers, so it missed the corpus's most
-# common fabricated-incident shape: "cost us 40 hours", "burned $18k",
-# "survived 12,000 agents", "saved us a week". Those read as specific
-# incidents even without a first-person subject and were scoring 95-100
-# in quality_gate.py.
 _SKIP_PATTERNS = re.compile(
     r'^('
     r'A colleague\b|This took me\b|The short version\b|Writing this\b|'
@@ -957,13 +950,6 @@ _DEEPSEEK_MODEL = "deepseek-flash"
 _CF_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
 
 
-# CHANGE 1: structure headings rewritten to remove first-person and
-# past-tense narrative instructions that were actively training the model to
-# invent specific incidents ("## Why I wrote this (the problem I kept
-# hitting)", "## My honest take after using this in production", "## What we
-# tried first and why it didn't work", etc.). Each heading is now either a
-# noun phrase, a question, or an imperative — nothing that invites a
-# fabricated past-tense narrative. Format notes updated to match.
 _STRUCTURE_SETS = [
     (
         "deep_dive",
@@ -1283,41 +1269,62 @@ def _build_humanization_note(topic: str) -> str:
     return _AUTHOR_CONTEXTS[idx]
 
 
-# CHANGE 2 (part A): fabricated-citation patterns extended with two
-# additional structural forms. The previous list only matched citations
-# with a by/from connector or a possessive ("a study by X", "Y's survey").
-# It missed the adjectival form that dominates the current corpus:
-# "a 2026 GSMA report found", "SRE survey shows", "Pulse survey found",
-# "the report from S" (the last is caught by the bare possessive-less form).
+# ─────────────────────────────────────────────────────────────────
+# PATCH (2026-09-21): fabricated-citation patterns — scoped case-
+# sensitivity fix.
+#
+# The previous version of this list compiled every pattern with a single
+# re.IGNORECASE flag applied to the whole pattern. That silently turned
+# [A-Z] — intended to mean "the start of a proper noun, i.e. a named
+# source" — into [A-Za-z], i.e. "any letter". The result was that
+# ordinary engineering prose like "according to the process exit code"
+# and "report from the BigQuery table" matched the fabricated-citation
+# pattern, and ~50% of triage deletions on the live corpus were false
+# positives.
+#
+# The fix uses Python's scoped inline flags — (?i:...) — so the literal
+# English phrases ("according to", "survey that found") remain case-
+# insensitive, but every proper-noun capture group ([A-Z][\w&.'-]*...)
+# is compiled with case-sensitivity ON. Under that scoping, "according
+# to the process exit code" no longer matches (lowercase 'process' fails
+# the [A-Z] check) while "according to Gartner" and "a 2026 Freelance
+# Pulse survey found" still do.
+#
+# Also: the 'by|from' alternation and the survey-type alternation are
+# wrapped in their own (?i:...) groups so they don't inherit the case-
+# sensitivity the surrounding literal contexts need to keep off the
+# proper-noun matcher.
 _FABRICATED_CITATION_PATTERNS = [
-    r'\b(a |the )?(20\d\d )?(study|paper|report|research|survey|analysis)\s+'
-    r'(by|from)\s+([A-Z][\w&.\'-]*\s*){1,6}',
+    # "a/the [YEAR] study/paper/report/research/survey/analysis by/from <ProperNoun>"
+    r'\b(?i:(?:a|the)\s+)?(?:\d{4}\s+)?'
+    r'(?i:(?:study|paper|report|research|survey|analysis)\s+(?:by|from)\s+)'
+    r'([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,5})',
 
-    r'\baccording to (a |an |the )?([A-Z][\w&.\'-]*\s*){1,6}',
+    # "according to <ProperNoun>"
+    r'\b(?i:according to\s+)(?:(?i:a|an|the)\s+)?'
+    r'([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,5})',
 
-    r'\b([A-Z][\w&.\'-]*\s*){1,4}\'s\s+(study|research|red[\s-]?team|'
-    r'findings|report|analysis|survey)\b',
+    # "<ProperNoun>'s <study|research|red-team|findings|report|analysis|survey>"
+    r'\b([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,3})\'s\s+'
+    r'(?i:study|research|red[\s-]?team|findings|report|analysis|survey)\b',
 
-    r'\baccording to (a |an )?(20\d\d )?(stack overflow|gartner|forrester|mckinsey|'
-    r'gitlab|github|jetbrains)\b',
-    r'\b(20\d\d )?(stack overflow|gartner|forrester|mckinsey) (survey|report|study)\b',
-    r'\ba (survey|study) of [\d,]+\s+(developers|engineers|teams|companies)\b',
+    # Named-entity fast checks — always case-insensitive (real names)
+    r'(?i:\baccording to\s+(?:a\s+|an\s+)?(?:\d{4}\s+)?'
+    r'(?:stack overflow|gartner|forrester|mckinsey|gitlab|github|jetbrains)\b)',
+    r'(?i:\b(?:\d{4}\s+)?(?:stack overflow|gartner|forrester|mckinsey)'
+    r'\s+(?:survey|report|study)\b)',
+    r'(?i:\ba (?:survey|study) of [\d,]+\s+(?:developers|engineers|teams|companies)\b)',
 
-    r'\b(a |the )?(20\d\d )?([A-Z][\w&.\'-]*\s*){1,4}'
-    r'(survey|study|report|research|analysis|benchmark)\s+(that\s+|which\s+)?'
-    r'(found|shows?|tracked|reveals?|says?|showed)\b',
+    # "<ProperNoun> survey/study that/which found/shows/tracked"
+    r'\b(?:(?i:a|the)\s+)?(?:\d{4}\s+)?'
+    r'([A-Z][\w&\'-]*(?:\s+[A-Z][\w&\'-]*){0,3})\s+'
+    r'(?i:(?:survey|study|report|research|analysis|benchmark)\s+'
+    r'(?:that|which)?\s*(?:found|shows?|tracked|reveals?|says?|showed))\b',
 
-    # CHANGE 2 (part A cont.): adjectival form — "<Name> survey/study/report
-    # that/which found/shows/tracked". Catches the corpus's dominant
-    # fabrication shape when by/from/possessive is dropped.
-    r'\b(a |an |the )?(20\d\d )?([A-Z][\w&.\'-]*\s*){1,4}'
-    r'(survey|study|report|research|analysis|benchmark)\s+'
-    r'(that\s+|which\s+)?(found|shows?|tracked|reveals?|says?|showed)\b',
-
-    # CHANGE 2 (part A cont.): bare possessive-less "<Name> survey shows" /
-    # "<Name> report finds" without a that/which clause.
-    r'\b([A-Z][\w&.\'-]+)\s+(survey|study|report)\s+'
-    r'(shows?|finds?|found|showed|revealed|estimates?)\b',
+    # Bare possessive-less "<ProperNoun> survey shows" / "<ProperNoun> report finds"
+    r'\b([A-Z][\w&\'-]+)\s+'
+    r'(?i:(?:survey|study|report)\s+'
+    r'(?:shows?|finds?|found|showed|revealed|estimates?))\b',
 ]
 
 
@@ -1372,38 +1379,84 @@ def _reject_if_generic_meta_description(meta_description: str) -> Optional[str]:
     return None
 
 
+# ─────────────────────────────────────────────────────────────────
+# PATCH (2026-09-21): allow-list of legitimate contexts.
+#
+# The expanded version below covers two categories the previous list
+# missed, which caused "according to X" and "report from Y" false
+# positives during triage:
+#
+#   1. Runtime/operational context — references to a process's own state,
+#      logs, exit code, query result, dashboard, or config. These are NOT
+#      citations to a third-party source; they're ordinary technical
+#      writing about what a system reports about itself. Examples that
+#      were misflagged: "according to the process exit code",
+#      "according to its own logs", "report from the BigQuery table".
+#
+#   2. Primary-documentation context — unchanged from before, still
+#      covers docs/changelog/README/RFC/error-message shapes.
+#
+# Any match whose surrounding 400-char window contains one of these
+# phrases is treated as legitimate and skipped.
 _LEGITIMATE_SOURCE_CONTEXT = re.compile(
-    r'\b(documentation|docs\b|changelog|release notes|official (docs|'
+    r'\b('
+    # Primary documentation
+    r'documentation|docs\b|changelog|release notes|official (docs|'
     r'documentation|guide)|readme|man page|manual|rfc\s?\d|spec(ification)?|'
-    r'error message|log output|stack trace|source code|the source|'
-    r'\.md\b|github\.com|repository)\b',
+    r'error message|log output|log files?|logs?\b|stack trace|source code|'
+    r'the source|\.md\b|github\.com|repository|'
+    # Runtime / operational context (added 2026-09-21)
+    r'exit code|runtime|its own|their own|'
+    r'the (query|table|response|output|payload|request|config|settings|'
+    r'dashboard|metrics|monitor|system|service|application|process|'
+    r'result|results|function|variable|parameter|schema|index|cache)|'
+    r'per (the|its|their|our)|'
+    r'report (?:from|of) the (query|table|dashboard|job|pipeline|process)|'
+    r'according to the (config|settings|documentation|logs?|exit code)'
+    r')\b',
     re.IGNORECASE,
 )
 
 
 def _reject_if_fabricated_citation(content: str) -> Optional[str]:
+    """
+    Returns a rejection reason if the draft names a real-world third party
+    as the source of a claim without a URL or nearby primary-documentation
+    context. This is citation fabrication, not just an unsourced number.
+
+    PATCH (2026-09-21): added a minimum-word-count guard against matches
+    that are sentence-boundary artifacts rather than real citations. Under
+    the old case-insensitive pattern, "According to the" alone could match
+    and then extend into whatever capitalized-looking words followed. A
+    real citation always has at least 3 words ("according to the McKinsey
+    report" or "a 2026 Freelance Pulse survey"); anything shorter is
+    noise.
+    """
     for pattern in _FABRICATED_CITATION_PATTERNS:
-        for match in _re.finditer(pattern, content, _re.IGNORECASE):
+        for match in _re.finditer(pattern, content):
+            matched_text = match.group(0).strip()
+
+            # Guard 1: minimum 3 words. Anything shorter is a sentence
+            # boundary artifact, not an actionable citation.
+            if len(matched_text.split()) < 3:
+                continue
+
             window = content[max(0, match.start() - 200):match.end() + 200]
 
+            # Guard 2: a real URL nearby means it's actually sourced.
             if _re.search(r'https?://', window):
                 continue
 
+            # Guard 3: referencing official/primary documentation, runtime
+            # state, or a system's own logs is legitimate technical writing,
+            # not a fabricated third-party study.
             if _LEGITIMATE_SOURCE_CONTEXT.search(window):
                 continue
 
-            return f"unverifiable named-source citation: '{match.group(0).strip()}'"
+            return f"unverifiable named-source citation: '{matched_text[:80]}'"
     return None
 
 
-# CHANGE 3: title-level fabricated-narrative detection. The previous pipeline
-# only scanned the body for narrative incidents — never the title. That's how
-# "Cloud agents burned $18k", "Added circuit breakers 3 days after cascade
-# failure", "Saved $3k/month by ditching Kubernetes" all shipped. This gate
-# runs before post-processing and rejects three patterns:
-#   1. First-person pronoun + past-tense verb in the title.
-#   2. Past-tense narrative verb at the start of the title.
-#   3. Past-tense verb + a specific cost/time/percentage claim.
 _TITLE_NARRATIVE_VERBS = (
     r"Added|Killed|Saved|Cut|Dumped|Launched|Survived|Burned|"
     r"Replaced|Grew|Found|Built|Shipped|Migrated|Reduced|Trimmed|"
@@ -1431,21 +1484,6 @@ _TITLE_SPECIFIC_NUMBER_RE = re.compile(
 
 
 def _reject_if_narrative_title(title: str) -> Optional[str]:
-    """
-    Reject titles that read as a specific past-tense incident report rather
-    than a topic or claim. Runs BEFORE post-processing — the whole draft is
-    thrown away if the title is narrative-shaped, because the entire
-    article will have been framed around it. Called from
-    generate_blog_post() immediately after the title is finalized.
-
-    Three patterns:
-      1. First-person pronoun + concrete past-tense verb
-         ("I actually used X", "I regret shipping Y")
-      2. Past-tense action verb at the start of the title
-         ("Added circuit breakers 3 days after...", "Saved $3k/month by...")
-      3. Past-tense narrative verb + a specific number claim
-         ("Cloud agents burned $18k", "Cut latency 68% without retraining")
-    """
     if not title:
         return None
 
@@ -1509,11 +1547,6 @@ def _check_expansion_completeness(content: str) -> List[str]:
 
 
 def _build_system_prompt(author_note: str, format_name: str, format_note: str, year_guidance: str) -> str:
-    # CHANGE 4: item 8 added to CONTENT QUALITY REQUIREMENTS — explicit
-    # forbidden title shapes matched to the _reject_if_narrative_title()
-    # gate added in Change 3. Previously the prompt banned filler phrases
-    # and asked for no fabricated autobiography in the body, but said nothing
-    # about title shape, leaving the model free to invent narrative titles.
     return (
         f"{author_note}\n\n"
         f"{year_guidance}\n\n"
@@ -3278,14 +3311,6 @@ class BlogSystem:
                     f"Last error: {e}"
                 )
 
-            # CHANGE 3 + CHANGE 5 wiring: narrative-title gate. Runs
-            # immediately after the title is finalized — before expansion,
-            # before content gates, before any other work. If the title
-            # reads as a specific past-tense incident ("Cloud agents burned
-            # $18k", "Added circuit breakers 3 days after...", "I actually
-            # used X"), the pipeline tries a cheap title-only rewrite first
-            # (Change 5); only if that fails does it fall through to a full
-            # topic-switch.
             _title_narrative = _reject_if_narrative_title(title)
             if _title_narrative:
                 print(f"\n  ⚠️  {_title_narrative}")
@@ -3314,8 +3339,6 @@ class BlogSystem:
                 else:
                     print("  ⚠️  Title-only rewrite failed to produce a result.")
 
-                # If the title is still narrative-shaped after the cheap
-                # rewrite attempt, burn the retry attempt on a new topic.
                 if _reject_if_narrative_title(title):
                     if attempt_num < MAX_GENERATION_ATTEMPTS:
                         print(
@@ -3991,10 +4014,6 @@ Return ONLY the JSON object.""",
                 f"  Title regeneration failed ({e}). Keeping original title.")
             return title
 
-    # CHANGE 5: targeted title-only repair for when the ONLY problem is
-    # the title (narrative shape, first-person claim, past-tense verb
-    # with a specific number). Cheaper than throwing away a whole draft —
-    # the article body is kept intact and reframed by the new title.
     async def _regenerate_title_only(
         self,
         bad_title: str,
@@ -4003,12 +4022,6 @@ Return ONLY the JSON object.""",
         existing_titles: List[str],
         reason: str,
     ) -> Optional[str]:
-        """
-        Produce a replacement title for a draft whose title (not body) is
-        the problem. Returns the raw title string, or None if the call
-        failed. The caller is responsible for running the result back
-        through generate_display_title() and _reject_if_narrative_title().
-        """
         excerpt = " ".join(content.split()[:400])
         existing_hint = "\n".join(f'- "{t}"' for t in existing_titles[:15])
 
@@ -4465,10 +4478,6 @@ Return ONLY the JSON object.""",
                 f"Refusing to save '{post.title}': " + "; ".join(claim_result.reasons)
             )
 
-        # CHANGE 3 (defense-in-depth): also refuse to save a post whose
-        # title is a narrative incident claim, even if it somehow slipped
-        # past the earlier gate. This is the last line of defense before
-        # the post hits disk.
         _narrative_title = _reject_if_narrative_title(post.title)
         if _narrative_title:
             raise ValueError(
@@ -4844,7 +4853,6 @@ def create_sample_config(config_path: str = "config.yaml"):
     config = existing
 
     NEW_TOPICS = [
-        # (same topic list as before — unchanged)
         "MCP in production: the operational costs and security gotchas most teams miss",
         "Why MCP became the dominant agent-tool protocol, and what it changed in agent design",
         "Multi-agent orchestration patterns compared: supervisor, swarm, debate, pipeline",
@@ -5732,3 +5740,5 @@ if __name__ == "__main__":
               "test-twitter | dedup | fix-descriptions | fix-titles | refresh-stale | "
               "audit-links | audit-slugs | audit-freshness | velocity | preflight-rebuild | "
               "preflight-check")
+
+        

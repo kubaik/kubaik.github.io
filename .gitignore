@@ -59,3 +59,7 @@ cleanup_plan.json
 .used_topics.json
 .publish_velocity.json
 .trending_hashtag_cache.json
+.adsense_triage/delete.json
+.adsense_triage/improve.json
+.adsense_triage/keep.json
+
