@@ -175,13 +175,6 @@
     "status": "needs_review"
   },
   {
-    "slug": "zero-trust-mcp-servers-auth-trap-youll-hit-first",
-    "title": "Zero-trust MCP servers: auth trap you’ll hit first",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I once inherited a system where the MCP server ran as the same user as the agent; I had to write custom OPA rules that map SPIFFE IDs to a set of allowed operatio",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
     "slug": "3-mistakes-that-break-deployments-for-everyone",
     "title": "3 mistakes that break deployments for everyone",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on building deployment before understanding wh; I used a controlled dataset of 12 new hires who had never seen the stack before.; I also looked at the long-term cost of lock-in.",
@@ -189,62 +182,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "7-patterns-for-systems-that-stay-up-when-everything",
-    "title": "7 patterns for systems that stay up when everything",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this building eventual problem while migrating a service under a hard; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "7-patterns-for-systems-that-wont-die-when-networks",
-    "title": "7 patterns for systems that won’t die when networks",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this building eventual problem while migrating a service under a hard; Here's what actually worked.; I also looked at real-world incidents from 2026 and 2026:\n\n- The 2026 Twilio bre",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "african-devs-ai-tools-that-work-now-2026",
-    "title": "African devs: AI tools that work now (2026)",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when I tried to deploy a Python 3.11 microservice with Django RE; I was surprised that even tools claiming \"offline-first\" support failed when the; I once spent a day debugging why a Next.js app failed in production — the AI sug",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "agent-auth-the-silent-deployment-killer",
-    "title": "Agent auth: the silent deployment killer",
-    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I built this system twice: once with the patterns we used in 2026, and once with; I expected some improvement, but not that much.",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
     "slug": "agent-design-after-llm-4-we-broke-5-assumptions",
     "title": "Agent design after LLM-4: we broke 5 assumptions",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into this when paging alerts fired every 20 minutes during peak hours; the; I spent two weeks tweaking HPA thresholds until I realized the bottleneck wasn’t",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "ai-agent-postmortem-human-loop-vs-blind-replay",
     "title": "AI agent postmortem: human loop vs blind replay",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I've seen the same postmortem agent mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-api-docs-what-humans-still-write-in-2026",
     "title": "AI API docs: what humans still write in 2026",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three weeks debugging a payment callback that failed 12% of the time bec; I saw a single microservice where the AI kept switching between  ,  , and   in t",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "ai-apps-break-your-stack-heres-the-fix",
     "title": "AI apps break your stack — here’s the fix",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): A colleague asked me about design ainative during a code review last week.; I realised I couldn't give a clean explanation — which meant I didn't understand; I ran this exact playbook for a chatbot in 2026.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-cost-attribution-without-the-spreadsheet-hell",
     "title": "AI cost attribution without the spreadsheet hell",
     "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this cost attribution problem while migrating a service under a hard ; I ran each system for two weeks in production on Node 20 LTS with AWS Lambda (ar; I measured:\n\n- **P99 latency increase** — how much slower the API got after addi",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "ai-engineer-role-vanished-in-6-months",
@@ -1561,6 +1531,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "zero-trust-mcp-servers-auth-trap-youll-hit-first",
+    "title": "Zero-trust MCP servers: auth trap you’ll hit first",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I once inherited a system where the MCP server ran as the same user as the agent; I had to write custom OPA rules that map SPIFFE IDs to a set of allowed operatio",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
+  },
+  {
+    "slug": "7-patterns-for-systems-that-stay-up-when-everything",
+    "title": "7 patterns for systems that stay up when everything",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this building eventual problem while migrating a service under a hard; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "7-patterns-for-systems-that-wont-die-when-networks",
+    "title": "7 patterns for systems that won’t die when networks",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this building eventual problem while migrating a service under a hard; Here's what actually worked.; I also looked at real-world incidents from 2026 and 2026:\n\n- The 2026 Twilio bre",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "african-devs-ai-tools-that-work-now-2026",
+    "title": "African devs: AI tools that work now (2026)",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I ran into this when I tried to deploy a Python 3.11 microservice with Django RE; I was surprised that even tools claiming \"offline-first\" support failed when the; I once spent a day debugging why a Next.js app failed in production — the AI sug",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "agent-auth-the-silent-deployment-killer",
+    "title": "Agent auth: the silent deployment killer",
+    "reason": "retroactive_fabrication_audit: 3 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I built this system twice: once with the patterns we used in 2026, and once with; I expected some improvement, but not that much.",
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "self-healing-ai-agents-vs-rule-based-ops-40-fewer",

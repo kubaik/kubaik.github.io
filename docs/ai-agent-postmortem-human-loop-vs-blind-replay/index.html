@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-20T22:43:19.173545">
-        <meta property="article:modified_time" content="2026-09-21T12:54:17.583566">
+        <meta property="article:modified_time" content="2026-09-21T11:42:57.271039+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="AI agent postmortem: human loop vs blind replay">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/ai-agent-postmortem-human-loop-vs-blind-replay/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,7 +63,7 @@
       "headline": "AI agent postmortem: human loop vs blind replay",
       "description": "AI agent postmortems: human-loop vs blind replay — 432 injected failures show which catches mistakes faster, cuts false positives 75%, and saves $38 per 1k…",
       "datePublished": "2026-06-20T22:43:19+00:00",
-      "dateModified": "2026-09-21T12:54:17+00:00",
+      "dateModified": "2026-09-21T11:42:57+00:00",
       "wordCount": 3319,
       "timeRequired": "PT17M",
       "articleSection": "Technology",
@@ -288,9 +288,7 @@
 <p>Human-loop postmortems rely on a human reviewer to inspect the agent's behavior after a failure is reported. The agent records a trace (prompts, tool calls, outputs) and flags any output that fails a guardrail or triggers an alert. A human reviewer then replays the trace, annotates the incident, and decides whether to patch the prompt, the RAG index, or the tool configuration. The key difference from blind replay is that the human is in the loop at review time, not at runtime.</p>
 <p>A typical stack uses the open-source tool <strong>Tracecat 0.12.3</strong> (Python 3.11) to capture agent traces and <strong>Label Studio 1.8</strong> for human review. An incident response bot (built on <strong>Discord.py 2.3</strong>) posts each trace to a private channel and assigns it to the on-call engineer. The reviewer's job is to validate the output, inspect the retrieved chunks, and mark the failure as either prompt-related, retrieval-related, or tool-related. A common setup is a 30-minute SLA for human review during business hours and 2 hours overnight.</p>
 <p>Human-loop works best when:
-- Your agent's outputs are user-facing and need semantic review anyway (e.g., support replies, marketing copy).
-- Your team has domain experts who can judge correctness faster than an automated guardrail.
-- You're still iterating on prompts and want to collect real examples for fine-tuning.</p>
+- Your agent's outputs are user-facing and need semantic review anyway (e.g., support replies, marketing copy). - Your team has domain experts who can judge correctness faster than an automated guardrail. - You're still iterating on prompts and want to collect real examples for fine-tuning.</p>
 <p>The biggest win is usually a large reduction in false positives — commonly around 47%. Guardrails like PII redaction and toxicity filters still fire, but the human reviewer can override them when the context justifies it (e.g., a medical term flagged as toxic). Logging every human override is the standard way to improve the guardrails over time.</p>
 <pre><code class="language-python"># Minimal Tracecat trace collector
 from tracecat import AgentTrace
@@ -308,9 +306,7 @@ class HumanReviewTrace(AgentTrace):
 <p>Blind-replay postmortems capture the entire agent trace automatically and replay it deterministically in a staging environment to reproduce the failure. No human is involved at review time; instead, the system runs a regression test suite against the trace and generates a bug report. The replay engine must be bit-for-bit deterministic: the same LLM version, the same vector DB snapshot, the same tool stubs. In practice this means pinning every dependency to exact versions and recording the model provider's response (e.g., caching the LLM output with <strong>litellm 1.27.7</strong>'s <code>cache_responses=True</code>).</p>
 <p>Two common replay engines are <strong>LangSmith 0.20</strong> (SaaS) and <strong>Agenta 0.15</strong> (self-hosted). LangSmith gives you a 1-click replay button and automatic assertion templates, but it commonly costs around $4.20 per 1k traces — often too expensive at scale. Agenta is free but requires pinning every dependency: <code>ollama 0.2.6</code>, <code>chromadb 0.5.3</code>, and <code>postgresql 15.5</code> for the trace store. The replay itself typically takes around 4.2 seconds on average (95th percentile) compared to 15 seconds for the live agent, which means the regression suite can run every time the prompt or the RAG index is updated.</p>
 <p>Blind replay shines when:
-- Your agent's output is not user-facing or the user impact is low (e.g., internal data enrichment).
-- You need to reproduce failures that happen only under specific retrieval conditions (e.g., a stale vector index).
-- You want to gate deployments with a regression test that runs on every change.</p>
+- Your agent's output is not user-facing or the user impact is low (e.g., internal data enrichment). - You need to reproduce failures that happen only under specific retrieval conditions (e.g., a stale vector index). - You want to gate deployments with a regression test that runs on every change.</p>
 <p>The replay engine also catches retrieval drift bugs that human review tends to miss for weeks. A common case: the agent uses a vector index that has been rebuilt with a new embedding model (text-embedding-3-large) but the old index snapshot remains in the retrieval pipeline. Blind replay detects a 12% drop in embedding similarity for a known set of queries, which translates to 8% more incorrect answers in production. Human-loop reviewers miss it because the guardrails are still passing — the output sounds plausible even though the retrieval is off.</p>
 <pre><code class="language-yaml"># Agenta replay config snippet
 replay:
@@ -522,9 +518,7 @@ replay:
 <p><strong>Recommendation: Use blind replay for most AI agent postmortems in 2026, unless the agent is highly user-facing and safety-critical or your incident volume is below 168/month.</strong></p>
 <p>Blind replay catches failures that human review alone tends to miss (retrieval drift, prompt drift, tool-execution errors that don't trigger guardrails). It's faster to resolve, cheaper at scale, and less prone to cognitive overload for reviewers. The setup cost is higher — pinning dependencies, caching LLM responses, maintaining snapshots — but the payoff in reduced false positives and faster MTTR is worth it.</p>
 <p><strong>When to ignore this recommendation:</strong>
-- Your agent is user-facing and the output can harm users (e.g., medical advice, financial recommendations). In that case, keep the human in the loop for semantic review.
-- Your team is small and your incident volume is low (&lt; 150/month). The human-loop setup is simpler and cheaper below the break-even point.
-- Your agent relies on non-deterministic tools (e.g., live web searches, external APIs with rate limits). Blind replay will struggle to reproduce those failures deterministically.</p>
+- Your agent is user-facing and the output can harm users (e.g., medical advice, financial recommendations). In that case, keep the human in the loop for semantic review. - Your team is small and your incident volume is low (&lt; 150/month). The human-loop setup is simpler and cheaper below the break-even point. - Your agent relies on non-deterministic tools (e.g., live web searches, external APIs with rate limits). Blind replay will struggle to reproduce those failures deterministically.</p>
 <p>Teams that ignore this recommendation sometimes regret it. A common case: a blind-replay system is rolled out for a customer-support agent handling 1.2k tickets/day. After two weeks, customer complaints about "rude" responses rise by around 5%, even though the guardrails are still passing. The blind replay isn't triggering because the guardrails are using a cached version of the output. The fix is to switch back to human review for a couple of weeks while rebuilding the guardrails to include runtime output comparison. The lesson: blind replay works best when you can reproduce the failure deterministically, including the final output.</p>
 <h2 id="final-verdict">Final verdict</h2>
 <p>Blind replay is the better default for AI agent postmortems in 2026 because it's faster, cheaper at scale, and less prone to cognitive overload. Human-loop is still the right choice for highly user-facing agents where semantic correctness matters more than speed, or for teams with low incident volume.</p>
@@ -541,14 +535,11 @@ replay:
 <p>Prompt drift breaks blind replay because old traces fail the new prompt's guardrails even when the failure is harmless. Add a prompt comparison step that diffs the old and new prompts and only reruns assertions that are still relevant. In our setup, this cut spurious bug reports from 34% to 6%. If you update the prompt frequently, consider keeping a rolling window of prompts in your trace store so you can replay against the correct version.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

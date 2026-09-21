@@ -1,0 +1,618 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>When your agent goes silent: degrade gracefully - Kubai Kevin</title>
+        <meta name="description" content="Model calls that are slow or confidently wrong break most systems. Deadlines, fallbacks, and output validation that keep your p99 under 2s.">
+        <meta name="keywords" content="GracefulDegradation, CircuitBreaker, LlmTimeout, Model, Llm, Generativeai">
+        <meta name="author" content="Kubai Kevin">
+        <meta name="base-path" content="">
+        <meta property="article:author" content="Kubai Kevin">
+        <meta property="article:published_time" content="2026-09-21T11:42:38.476648">
+        <meta property="article:modified_time" content="2026-09-21T11:42:38.476659">
+        <meta property="article:section" content="Technology">
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="When your agent goes silent: degrade gracefully">
+        <meta property="og:description" content="Model calls that are slow or confidently wrong break most systems. Deadlines, fallbacks, and output validation that keep your p99 under 2s.">
+        <meta property="og:url" content="https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/">
+        <meta property="og:site_name" content="Kubai Kevin">
+        <meta property="og:locale" content="en_US">
+        <meta property="og:image" content="https://kubaik.github.io/static/og/when-your-agent-goes-silent-degrade-gracefully.png">
+        <meta property="og:image:alt" content="When your agent goes silent: degrade gracefully">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="When your agent goes silent: degrade gracefully">
+        <meta name="twitter:description" content="Model calls that are slow or confidently wrong break most systems. Deadlines, fallbacks, and output validation that keep your p99 under 2s.">
+        <meta name="twitter:image" content="https://kubaik.github.io/static/og/when-your-agent-goes-silent-degrade-gracefully.png">
+        <meta name="twitter:site" content="@KubaiKevin">
+
+        <link rel="canonical" href="https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/">
+        <meta name="robots" content="index, follow">
+
+        <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+        <link rel="preconnect" href="https://googleads.g.doubleclick.net">
+        <link rel="preconnect" href="https://www.google-analytics.com">
+
+        <script>window.dataLayer=window.dataLayer||[];function gtag(){window.dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var EU_EEA_UK=['AT','BE','BG','CY','CZ','DE','DK','EE','ES','FI','FR','GB','GR','HR','HU','IE','IS','IT','LI','LT','LU','LV','MT','NL','NO','PL','PT','RO','SE','SI','SK'];var mm=document.cookie.match(/(?:^|;) *cookie_consent_v1=([^;]*)/);var g=mm&&decodeURIComponent(mm[1])==='accepted';var s=g?'granted':'denied';gtag('consent','default',{region:EU_EEA_UK,ad_storage:s,ad_user_data:s,ad_personalization:s,analytics_storage:s,functionality_storage:s,personalization_storage:s,wait_for_update:g?0:500});})();</script>
+        <script src="/static/consent.js" defer></script>
+
+            <meta name="google-adsense-account" content="ca-pub-4477679588953789">
+    <meta name="google-site-verification" content="GAh_7S5n0fb7zkvYaKlkw_YS1PUDwCpOYs4E7-cZ4VI">
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DST4PJYK6V"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DST4PJYK6V', {anonymize_ip: true});
+    </script>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4477679588953789" crossorigin="anonymous"></script>
+
+            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+
+        <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Article",
+      "@id": "https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/#article",
+      "headline": "When your agent goes silent: degrade gracefully",
+      "description": "Model calls that are slow or confidently wrong break most systems. Deadlines, fallbacks, and output validation that keep your p99 under 2s.",
+      "datePublished": "2026-09-21T11:42:38+00:00",
+      "dateModified": "2026-09-21T11:42:38+00:00",
+      "wordCount": 2348,
+      "timeRequired": "PT12M",
+      "articleSection": "Technology",
+      "inLanguage": "en-US",
+      "author": {
+        "@type": "Person",
+        "@id": "https://kubaik.github.io/about/#author",
+        "name": "Kubai Kevin",
+        "jobTitle": "Software Developer",
+        "url": "https://kubaik.github.io/about/",
+        "sameAs": [
+          "https://www.linkedin.com/in/kevin-kubai-22b61b37/",
+          "https://twitter.com/KubaiKevin",
+          "https://github.com/kubaik"
+        ],
+        "knowsAbout": [
+          "Python",
+          "Node.js",
+          "TypeScript",
+          "AWS",
+          "Backend Systems",
+          "AI",
+          "Machine Learning"
+        ]
+      },
+      "publisher": {
+        "@type": "Organization",
+        "@id": "https://kubaik.github.io/#organization",
+        "name": "Kubai Kevin",
+        "url": "https://kubaik.github.io"
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/"
+      },
+      "keywords": "GracefulDegradation, CircuitBreaker, LlmTimeout, Model, Llm, Generativeai"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://kubaik.github.io/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "When your agent goes silent: degrade gracefully",
+          "item": "https://kubaik.github.io/when-your-agent-goes-silent-degrade-gracefully/"
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+        <link rel="stylesheet" href="/static/style.css">
+        <link rel="stylesheet" href="/static/enhanced-blog-post-styles.css">
+        <script defer src="/static/code_runner.js"></script>
+        <link rel="manifest" href="/manifest.json">
+        <meta name="theme-color" content="#6366f1">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="default">
+        <meta name="apple-mobile-web-app-title" content="Kubai Kevin">
+        <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
+        <style>
+            #reading-progress {
+                position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+                background: linear-gradient(90deg, #667eea, #764ba2);
+                z-index: 9999; transition: width 0.1s linear;
+            }
+            .post-content img { max-width: 100%; height: auto; border-radius: 6px; }
+            .post-content table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            /* CLS prevention: always reserve space for ad slots.
+               The <ins> itself also carries min-height (see seo_optimizer).
+               Do NOT set min-height:0 here — that defeats the reservation
+               and causes layout shift when AdSense fills the unit. */
+            .ad-inline,
+            .ad-header,
+            .ad-footer,
+            .ad-middle {
+                overflow: hidden;
+                text-align: center;
+            }
+            .ad-header {
+                min-height: 90px;   /* leaderboard reservation */
+            }
+            .ad-inline,
+            .ad-middle,
+            .ad-footer {
+                min-height: 250px;  /* medium-rectangle / responsive floor */
+            }
+            .ad-inline:not(:empty),
+            .ad-header:not(:empty),
+            .ad-footer:not(:empty),
+            .ad-middle:not(:empty) {
+                margin: 1.5rem 0;
+            }
+            /* Collapse unfilled units so empty reserved space is reclaimed */
+            .ad-inline ins[data-ad-status="unfilled"],
+            .ad-middle ins[data-ad-status="unfilled"],
+            .ad-footer ins[data-ad-status="unfilled"],
+            .ad-header ins[data-ad-status="unfilled"] {
+                display: none !important;
+            }
+            .ad-inline:has(ins[data-ad-status="unfilled"]),
+            .ad-middle:has(ins[data-ad-status="unfilled"]),
+            .ad-footer:has(ins[data-ad-status="unfilled"]),
+            .ad-header:has(ins[data-ad-status="unfilled"]) {
+                min-height: 0;
+                margin: 0;
+            }
+        </style>
+    </head>
+<body>
+    <div id="reading-progress" role="progressbar" aria-label="Reading progress"></div>
+    <header>
+        <div class="container">
+            <h1><a href="/">Kubai Kevin</a></h1>
+            <nav>
+                <a href="/">Home</a>
+                <a href="/about/">About</a>
+                <a href="/contact/">Contact</a>
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </nav>
+        </div>
+    </header>
+    <div class="ad-header"><ins class="adsbygoogle"
+     style="display:block;width:100%;min-height:90px;max-height:90px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <main class="container">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <span>When your agent goes silent: degrade gracefully</span>
+        </nav>
+        <article class="blog-post" itemscope itemtype="https://schema.org/Article">
+            <header class="post-header">
+                <h1 itemprop="headline">When your agent goes silent: degrade gracefully</h1>
+                
+                <p class="post-lead">Model calls that are slow or confidently wrong break most systems. Deadlines, fallbacks, and output validation that keep your p99 under 2s.</p>
+                
+                
+                <div class="tags">
+                    
+                    
+                    <a class="tag" href="/tag/gracefuldegradation/"
+                       style="text-decoration:none;">GracefulDegradation</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/circuitbreaker/"
+                       style="text-decoration:none;">CircuitBreaker</a>
+                    
+                    
+                    
+                    <span class="tag tag--unlinked" title="Not enough posts yet for a topic page">LlmTimeout</span>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/model/"
+                       style="text-decoration:none;">Model</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/llm/"
+                       style="text-decoration:none;">Llm</a>
+                    
+                    
+                    
+                    <a class="tag" href="/tag/generativeai/"
+                       style="text-decoration:none;">Generativeai</a>
+                    
+                    
+                </div>
+                
+            </header>
+            <div class="author-block" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                <div class="author-avatar" aria-hidden="true">KK</div>
+                <div class="author-info">
+                    <p class="author-name" itemprop="name">
+                        <a href="/about/">Kubai Kevin</a>
+                    </p>
+                    <p class="author-bio">
+                        Software developer based in Nairobi, Kenya. Writing about AI,
+                        backend systems, and developer tooling based on real production experience.
+                        <a href="/about/">More about the author →</a>
+                    </p>
+                    <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
+                        12 min read
+                        &nbsp;·&nbsp; 2348 words
+                        
+                        &nbsp;·&nbsp; Updated 2026-09-21
+                        
+                        &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
+                    </p>
+                </div>
+            </div>
+            <div class="post-content" itemprop="articleBody">
+                <p>The edge cases only show up once real users hit the system. The evaluationdriven development advice that circulates internally rarely matches what's in the public docs. Here's what actually worked, and why.</p>
+<h2 id="the-one-paragraph-version-read-this-first">The one-paragraph version (read this first)</h2>
+<p>When an upstream agent or model is slow or wrong, the default behavior of most systems is to hang, crash, or return garbage. Graceful degradation means the system keeps returning a useful (if reduced) answer instead of a failure. The core tools are timeouts, fallbacks, circuit breakers, and validation. The hard part is not implementing these — it is deciding <em>what</em> degraded behavior is acceptable for each call site, because "degrade" is a product decision disguised as an infrastructure problem. A request that takes 30 seconds and returns a wrong answer is worse than a request that takes 200ms and returns a cached, slightly stale answer. This post is about making that trade explicit and testable.</p>
+<h2 id="why-this-concept-confuses-people">Why this concept confuses people</h2>
+<p>Most engineers learn resilience patterns from infrastructure: retries, timeouts, circuit breakers. Those patterns assume the upstream is <em>down</em>. An agent or model is rarely down. It is <em>up and slow</em>, or <em>up and confidently wrong</em>. That difference breaks the mental model.</p>
+<p>A classic HTTP timeout story: your service calls a model endpoint, sets a 30-second timeout, and moves on. In production, the p99 latency of that endpoint is 12 seconds, the p95 is 4 seconds, and the median is 800ms. Your timeout never fires. Instead, your own service's thread pool fills up with requests waiting 12 seconds, your own p99 climbs to 11 seconds, and the failure shows up <em>somewhere else</em> — usually as a downstream timeout in a service that has nothing to do with the model. Teams spend days looking at the wrong service.</p>
+<p>The wrongness case is worse because there is no error to catch. A model returns a JSON object that parses fine, has all the required fields, and contains a hallucinated account number. Your schema validator passes it. Your integration test passes because the test fixture was written by the same person who wrote the prompt. The failure only appears when a human reads the output, which is 40 minutes later, in a support ticket.</p>
+<p>The confusion is that "slow" and "wrong" feel like two problems. They are one problem: <strong>the upstream is not a reliable function, and your code is written as if it is.</strong></p>
+<h2 id="the-mental-model-that-makes-it-click">The mental model that makes it click</h2>
+<p>Think of it like a restaurant kitchen during a rush. The grill station is the model. When it is fast, everything is fine. When it is slow, you do not stand at the pass waiting — you send out the salad that is already plated, tell the server to apologize for the delay on the steak, and keep the dining room moving. The kitchen has a <em>degraded menu</em>, not a <em>failed menu</em>.</p>
+<p>That is the whole idea. Graceful degradation is having a degraded menu ready before the rush starts.</p>
+<p>Concretely, every call to an agent or model should answer three questions at design time:</p>
+<ol>
+<li><strong>What is the deadline?</strong> Not the timeout — the deadline for the <em>user-visible</em> operation. If the user is waiting on a page load, the deadline is 2 seconds, not 30.</li>
+<li><strong>What is the fallback?</strong> A cached answer, a cheaper model, a deterministic rule, or an honest "we couldn't do this right now."</li>
+<li><strong>What is the validation?</strong> What does "wrong" look like for this call, and can you detect it in under 10ms?</li>
+</ol>
+<p>If you cannot answer all three, you do not have a resilient system. You have a system that works in the demo.</p>
+<h2 id="a-concrete-worked-example">A concrete worked example</h2>
+<p>A common failure mode: an internal "summarize this ticket" feature calls a model to produce a one-line summary for a support dashboard. The dashboard renders 50 tickets per page.</p>
+<p>Naive implementation:</p>
+<pre><code class="language-python"># naive.py — do not ship this
+import httpx
+
+async def summarize(ticket_text: str) -&gt; str:
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        r = await client.post(
+            &quot;https://model.internal/v1/summarize&quot;,
+            json={&quot;text&quot;: ticket_text},
+        )
+        r.raise_for_status()
+        return r.json()[&quot;summary&quot;]
+
+async def render_dashboard(tickets):
+    # 50 concurrent calls, each allowed 30s
+    return await asyncio.gather(*(summarize(t.body) for t in tickets))
+</code></pre>
+<p>What happens in production: the model endpoint has a p99 of 12 seconds under load. Fifty concurrent calls saturate the model's own queue. Latency climbs. <code>asyncio.gather</code> waits for the slowest call. The dashboard takes 28 seconds to render. Users refresh. Load doubles. The endpoint falls over entirely.</p>
+<p>A degraded version:</p>
+<pre><code class="language-python"># degraded.py
+import asyncio
+import httpx
+from circuitbreaker import circuit  # circuitbreaker 2.0.0
+
+DEADLINE_S = 1.5
+CACHE_TTL_S = 300
+
+@circuit(failure_threshold=5, recovery_timeout=30)
+async def call_model(text: str) -&gt; str:
+    async with httpx.AsyncClient(timeout=DEADLINE_S) as client:
+        r = await client.post(
+            &quot;https://model.internal/v1/summarize&quot;,
+            json={&quot;text&quot;: text},
+        )
+        r.raise_for_status()
+        summary = r.json()[&quot;summary&quot;]
+        if not is_plausible(summary, text):
+            raise ValueError(&quot;implausible summary&quot;)
+        return summary
+
+async def summarize(ticket) -&gt; tuple[str, str]:
+    &quot;&quot;&quot;Return (summary, source). Source is 'model', 'cache', or 'fallback'.&quot;&quot;&quot;
+    cached = cache.get(ticket.id)
+    if cached and cache.age(ticket.id) &lt; CACHE_TTL_S:
+        return cached, &quot;cache&quot;
+    try:
+        summary = await asyncio.wait_for(call_model(ticket.body), timeout=DEADLINE_S)
+        cache.set(ticket.id, summary)
+        return summary, &quot;model&quot;
+    except (asyncio.TimeoutError, httpx.HTTPError, ValueError):
+        # Deterministic fallback: first 80 chars of the subject line
+        return ticket.subject[:80], &quot;fallback&quot;
+</code></pre>
+<p>Three things changed, and each one matters:</p>
+<ul>
+<li><strong>The deadline is 1.5s, not 30s.</strong> The user is looking at a dashboard. 1.5s is the budget for the whole page, and the model gets a fraction of it.</li>
+<li><strong>There is a fallback that is always available.</strong> The subject line is already in the database. It is a worse summary, but it is a summary.</li>
+<li><strong>There is a circuit breaker.</strong> After 5 consecutive failures, calls short-circuit for 30 seconds. The dashboard stays fast even when the model is fully down.</li>
+</ul>
+<p>The result: the dashboard's p99 goes from ~28s to ~1.8s. The model's load drops because the circuit breaker sheds traffic during incidents. The summaries are slightly worse during incidents, which is the entire point.</p>
+<h2 id="how-this-connects-to-things-you-already-know">How this connects to things you already know</h2>
+<p>If you have ever written a database query with a <code>LIMIT</code>, you have already done graceful degradation. You decided that the first 100 rows are more useful than waiting for all 10 million.</p>
+<p>If you have ever used a CDN, you have done it too. A stale asset served from cache is a degraded response. It is also almost always better than a 504.</p>
+<p>If you have used <code>Promise.race</code> in JavaScript to implement a timeout, you have the primitive. The missing piece is deciding what the losing branch returns.</p>
+<pre><code class="language-javascript">// Node 20 LTS — deadline with a real fallback
+async function withDeadline(promise, ms, fallback) {
+  let timer;
+  const timeout = new Promise((resolve) =&gt; {
+    timer = setTimeout(() =&gt; resolve(fallback), ms);
+  });
+  try {
+    return await Promise.race([promise, timeout]);
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+const summary = await withDeadline(
+  callModel(ticket.body),
+  1500,
+  { summary: ticket.subject.slice(0, 80), source: 'fallback' }
+);
+</code></pre>
+<p>The difference between this and a plain <code>AbortController</code> timeout is that <code>AbortController</code> gives you a rejection. This gives you a <em>value</em>. That value is what the UI renders.</p>
+<h2 id="common-misconceptions-corrected">Common misconceptions, corrected</h2>
+<p><strong>"Retries handle this."</strong> Retries handle transient failures. They make latency worse during overload, because you are adding load to a system that is already slow. A retry with exponential backoff and jitter is correct for a network blip; it is actively harmful when the model itself is the bottleneck. Cap retries at 2, and only for idempotent calls.</p>
+<p><strong>"A bigger timeout is safer."</strong> A bigger timeout moves the failure from "error" to "slow," which is usually worse. A 500 error is visible and alertable. A 25-second success is invisible until your own p99 page fires at 3am.</p>
+<p><strong>"We validate the output with a JSON schema."</strong> A schema catches malformed output. It does not catch a well-formed hallucination. Validation for model output needs a second layer: does the summary contain tokens from the input? Is the extracted amount within 2x of the source? Is the classification one of the labels you actually trained on? These checks are cheap and catch the majority of confident-wrong outputs.</p>
+<p><strong>"Degradation is an infrastructure concern."</strong> It is a product concern. The product owner has to decide whether a stale summary is acceptable. Engineering can implement it, but the decision is not engineering's to make silently.</p>
+<p><strong>"Circuit breakers are for microservices."</strong> They are for any dependency with a failure mode. A model endpoint is a dependency. So is a feature flag service, a vector database, and an OAuth provider.</p>
+<h2 id="the-advanced-version-once-the-basics-are-solid">The advanced version (once the basics are solid)</h2>
+<p>Once timeouts and fallbacks are in place, the interesting work is <em>adaptive</em> degradation.</p>
+<p>The idea: your system should degrade <em>more</em> as load increases, not less. A static 1.5s deadline is fine at low traffic and too generous at high traffic. A common pattern is a token bucket that shrinks the deadline as the model's queue depth grows:</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Low load</th>
+<th>High load</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model p95 latency</td>
+<td>&lt; 1s</td>
+<td>&gt; 5s</td>
+<td>Shrink deadline 1.5s → 800ms</td>
+</tr>
+<tr>
+<td>Circuit state</td>
+<td>closed</td>
+<td>open</td>
+<td>Serve cache only</td>
+</tr>
+<tr>
+<td>Cache hit rate</td>
+<td>70%</td>
+<td>&lt; 30%</td>
+<td>Extend TTL 300s → 900s</td>
+</tr>
+<tr>
+<td>Error rate</td>
+<td>&lt; 0.5%</td>
+<td>&gt; 5%</td>
+<td>Disable model path entirely</td>
+</tr>
+<tr>
+<td>Queue depth</td>
+<td>&lt; 10</td>
+<td>&gt; 100</td>
+<td>Reject new model calls, fallback only</td>
+</tr>
+</tbody>
+</table>
+<p>The second advanced idea is <em>tiered models</em>. If you have a small fast model and a large slow model, route by deadline: try the small one first, and only escalate to the large one if the deadline allows and the small one's output fails validation. This is sometimes called a cascade, and it is one of the few places where you genuinely get better quality <em>and</em> lower latency, because most requests never need the big model.</p>
+<p>The third is <em>shadow evaluation</em>. Run the fallback path on a sample of traffic even when the model is healthy, and log both outputs. This gives you a real measurement of how much quality you lose during degradation, which is the number you need to make the product decision. Without it, "degraded" is a guess.</p>
+<h2 id="quick-reference">Quick reference</h2>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>When to use</th>
+<th>Cost</th>
+<th>Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hard timeout</td>
+<td>Every model call</td>
+<td>Low</td>
+<td>Aborts slow-but-correct calls</td>
+</tr>
+<tr>
+<td>Cached fallback</td>
+<td>Read-heavy, stable inputs</td>
+<td>Low</td>
+<td>Stale answers</td>
+</tr>
+<tr>
+<td>Deterministic fallback</td>
+<td>Always</td>
+<td>Low</td>
+<td>Lower quality</td>
+</tr>
+<tr>
+<td>Circuit breaker</td>
+<td>Shared dependency</td>
+<td>Medium</td>
+<td>Sheds load during recovery</td>
+</tr>
+<tr>
+<td>Tiered models</td>
+<td>Quality-sensitive</td>
+<td>High</td>
+<td>Two paths to maintain</td>
+</tr>
+<tr>
+<td>Shadow eval</td>
+<td>Before shipping degradation</td>
+<td>Medium</td>
+<td>Extra compute</td>
+</tr>
+<tr>
+<td>Output validation</td>
+<td>Any structured output</td>
+<td>Low</td>
+<td>False positives</td>
+</tr>
+</tbody>
+</table>
+<p>Checklist before shipping any model call:</p>
+<ul>
+<li>[ ] Deadline is derived from the user-visible budget, not the model's p99</li>
+<li>[ ] Fallback returns a value, not an exception</li>
+<li>[ ] Circuit breaker wraps the call</li>
+<li>[ ] Output validation catches confident-wrong, not just malformed</li>
+<li>[ ] Degraded path is exercised in CI, not just written</li>
+<li>[ ] Metrics distinguish <code>source=model</code> from <code>source=fallback</code></li>
+</ul>
+<h2 id="frequently-asked-questions">Frequently Asked Questions</h2>
+<p><strong>How do I choose a timeout for an LLM call?</strong>
+Start from the user-visible budget and work backwards. If a page must render in 2 seconds and the model is one of five calls, it gets at most 400ms. If that is unrealistic, the model call belongs behind a loading state or a background job, not in the request path. A timeout chosen from the model's own latency distribution is almost always too generous.</p>
+<p><strong>Why does my p99 spike after I add a model call?</strong>
+Because the model's latency distribution has a long tail, and your request path now inherits it. If the model's p99 is 12s and you call it once per request, your p99 becomes at least 12s. The fix is a deadline shorter than your SLO, plus a fallback, so the tail is truncated before it reaches your users.</p>
+<p><strong>What is the difference between a retry and a fallback?</strong>
+A retry asks the same dependency again, hoping for a different result. A fallback asks a different source, or returns a degraded value. Retries are for transient network errors. Fallbacks are for slow or wrong responses. Using a retry where a fallback belongs is a common cause of cascading overload.</p>
+<p><strong>How do I test graceful degradation?</strong>
+Inject latency and errors at the client boundary, not the network. In Python, wrap the HTTP client with a fixture that sleeps or raises. In CI, run the degraded path as a first-class test case and assert on the fallback value. If your test suite never exercises the fallback, it is untested code, and it will be the code that runs during the incident.</p>
+<h2 id="further-reading-worth-your-time">Further reading worth your time</h2>
+<ul>
+<li>The original circuit breaker write-up by Martin Fowler (2014): https://martinfowler.com/bliki/CircuitBreaker.html</li>
+<li>Google SRE Book, chapter on handling overload: https://sre.google/sre-book/handling-overload/</li>
+<li><code>circuitbreaker</code> Python library docs: https://pypi.org/project/circuitbreaker/</li>
+<li>AWS Well-Architected reliability pillar, "Design interactions to handle failures": https://docs.aws.amazon.com/wellarchitected/latest/reliability-pillar/welcome.html</li>
+</ul>
+<p>Your next 30 minutes: open your service's main model-call module, find every call that has no deadline shorter than 2 seconds, and add a <code>source</code> field to its return value. That single field is what makes degradation measurable, and measurement is what turns a vague resilience goal into a decision you can defend.</p>
+<hr />
+<h3 id="about-this-article">About this article</h3>
+<p><strong>Written by:</strong> <a href="/about/">Kubai Kevin</a> — software developer based in Nairobi, Kenya, with 10+ years building production systems in fintech and AI.</p>
+<p><strong>How this article was produced:</strong> This site uses an automated LLM pipeline designed and maintained by the author. Topics are selected from real production experience. Drafts pass automated quality gates (minimum length, uniqueness, concrete metrics, versioned tools, code samples, absence of filler). Individual line-by-line human editing is not performed on every post before publication. Specific numbers, benchmarks and cost figures are illustrative; verify them against current official documentation before production use.</p>
+<p><strong>Corrections:</strong> Report errors via the <a href="/contact/">contact page</a>. Corrections are applied promptly.</p>
+<p><strong>Last generated:</strong> September 2026</p>
+                
+                <div class="ad-inline"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+                
+                <div class="ad-middle"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+                
+            </div>
+            
+            <div class="content-policy-footer" style="
+                margin-top: 3rem; padding-top: 1.5rem;
+                border-top: 1px solid #e0e0e0; font-size: 0.8rem;
+                color: #888; line-height: 1.6;
+            ">
+                <p>
+                    <strong>How this article was made:</strong> This article was drafted with
+                    AI assistance and published through an automated pipeline. Before
+                    publishing, it passes automated checks for duplicate/near-duplicate
+                    content, minimum sourcing (external references to primary docs),
+                    keyword-stuffing thresholds, and — where the topic involves code —
+                    presence of runnable code samples. It has not been reviewed by a
+                    human editor. If you spot an error, <a href="/contact/">please let us know</a> —
+                    corrections are applied within 48 hours.
+                </p>
+                
+            </div>
+            
+            <section class="related-posts">
+                <h2>Related Articles</h2>
+                <div class="related-grid">
+                    
+                    <a class="related-card" href="/context-windows-agents-that-run-for-days/">
+                        <h3>Context windows: agents that run for days</h3>
+                        <p>Long-running agents forget constraints when context windows fill.</p>
+                        <span class="related-meta">15 min read · 19 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/most-llm-cost-dashboards-lie/">
+                        <h3>Most LLM cost dashboards lie…</h3>
+                        <p>LLM bills hide 30-60% of real spend in retries, cache misses, and agent loops.</p>
+                        <span class="related-meta">15 min read · 19 September 2026</span>
+                    </a>
+                    
+                    <a class="related-card" href="/multi-agent-systems-why-failures-hide/">
+                        <h3>Multi-agent systems: why failures hide</h3>
+                        <p>Multi-agent systems fail silently at scale — token budget overruns, retry storms, and deadlocks.</p>
+                        <span class="related-meta">12 min read · 18 September 2026</span>
+                    </a>
+                    
+                </div>
+            </section>
+            
+        </article>
+    </main>
+    <div class="ad-footer"><ins class="adsbygoogle"
+     style="display:block;min-height:250px"
+     data-ad-client="ca-pub-4477679588953789"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kubai Kevin. Written by
+               <a href="/about/">Kubai Kevin</a> with AI assistance.
+               See our <a href="/ai-content-policy/">AI content policy</a>.</p>
+        </div>
+    </footer>
+    <script src="/static/navigation.js"></script>
+    <script defer src="/static/pwa.js"></script>
+    <script>
+    (function(){
+        var bar = document.getElementById('reading-progress');
+        if (!bar) return;
+        function update() {
+            var el = document.documentElement;
+            var scrolled = el.scrollTop || document.body.scrollTop;
+            var total = (el.scrollHeight || document.body.scrollHeight) - el.clientHeight;
+            bar.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+        }
+        window.addEventListener('scroll', update, { passive: true });
+        update();
+    })();
+    </script>
+    <script>
+    (function(){
+        if (!('loading' in HTMLImageElement.prototype)) return;
+        document.querySelectorAll('.post-content img').forEach(function(img){
+            if (!img.getAttribute('loading')) img.setAttribute('loading', 'lazy');
+        });
+    })();
+    </script>
+</body>
+</html>

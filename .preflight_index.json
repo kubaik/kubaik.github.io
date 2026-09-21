@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T11:34:07.826444",
+  "built_at": "2026-09-21T11:42:41.624576",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5315,6 +5315,11 @@
       "slug": "cqrs-when-it-pays-off-and-when-it-breaks",
       "title": "CQRS: when it pays off and when it breaks",
       "summary": "Most reconciliation engine writeups assume the reader has already made the mistake they're warning about. Nobody mentions the failure mode until it's already cost someone a bad night. This is the version of the write-up that includes the part that broke. The error and why it's confusing You've proba"
+    },
+    {
+      "slug": "when-your-agent-goes-silent-degrade-gracefully",
+      "title": "When your agent goes silent: degrade gracefully",
+      "summary": "The edge cases only show up once real users hit the system. The evaluationdriven development advice that circulates internally rarely matches what's in the public docs. Here's what actually worked, and why. The one-paragraph version (read this first) When an upstream agent or model is slow or wrong,"
     }
   ]
 }
