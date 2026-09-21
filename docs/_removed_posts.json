@@ -171,17 +171,17 @@
   },
   "2026-salary-hacks-prove-ai-didnt-steal-your-value": {
     "removed_at": "2026-09-19T09:10:08.253580+00:00",
-    "reason": "Policy-risk title: Income/salary/side-gig bait \u2014 low-value monetization content and unverifiable earnings claims.",
+    "reason": "Policy-risk title: Income/salary/side-gig bait — low-value monetization content and unverifiable earnings claims.",
     "source": "content_audit_verdicts"
   },
   "3-side-gigs-that-paid-me-2k-usdmonth-in-2026": {
     "removed_at": "2026-09-19T09:10:08.255208+00:00",
-    "reason": "Policy-risk title: Income/salary/side-gig bait \u2014 low-value monetization content and unverifiable earnings claims.; Claim: Unverifiable first-person incident language (1 sentence(s)).",
+    "reason": "Policy-risk title: Income/salary/side-gig bait — low-value monetization content and unverifiable earnings claims.; Claim: Unverifiable first-person incident language (1 sentence(s)).",
     "source": "content_audit_verdicts"
   },
   "7-passive-income-streams-for-devs-in-2026": {
     "removed_at": "2026-09-19T09:10:08.256423+00:00",
-    "reason": "Policy-risk title: Income/salary/side-gig bait \u2014 low-value monetization content and unverifiable earnings claims.",
+    "reason": "Policy-risk title: Income/salary/side-gig bait — low-value monetization content and unverifiable earnings claims.",
     "source": "content_audit_verdicts"
   },
   "ai-ops-datadog-vs-granfa-for-infra-automation": {
@@ -191,7 +191,7 @@
   },
   "ai-tools-cut-rates-30-whats-real-in-2026": {
     "removed_at": "2026-09-19T09:10:08.258791+00:00",
-    "reason": "Claim: Unsourced 'study/survey/report by' phrasing \u2014 treat as a fabricated citation.",
+    "reason": "Claim: Unsourced 'study/survey/report by' phrasing — treat as a fabricated citation.",
     "source": "content_audit_verdicts"
   },
   "block-api-abuse-in-2026-before-it-blocks": {
@@ -211,7 +211,117 @@
   },
   "wireguard-vs-tailscale-for-5month-zero-trust": {
     "removed_at": "2026-09-19T09:10:08.262060+00:00",
-    "reason": "Claim: Unsourced 'study/survey/report by' phrasing \u2014 treat as a fabricated citation.; Claim: Unverifiable first-person incident language (2 sentence(s)).",
+    "reason": "Claim: Unsourced 'study/survey/report by' phrasing — treat as a fabricated citation.; Claim: Unverifiable first-person incident language (2 sentence(s)).",
     "source": "content_audit_verdicts"
+  },
+  "3-vibe-coding-tools-i-regret-shipping-in-production": {
+    "removed_at": "2026-09-21T11:23:19.920104",
+    "reason": "narrative title: first-person claim in title ('3 vibe coding tools I regret shipping in productio')",
+    "source": "adsense_triage"
+  },
+  "added-circuit-breakers-3-days-after-cascade-failure": {
+    "removed_at": "2026-09-21T11:23:19.922037",
+    "reason": "narrative title: past-tense action verb + specific number ('Added circuit breakers 3 days after cascade failur')",
+    "source": "adsense_triage"
+  },
+  "african-devs-arc-vs-andela-vs-toptal-in-2026": {
+    "removed_at": "2026-09-21T11:23:19.923717",
+    "reason": "unverifiable named-source citation: 'The 2026 Freelance Pulse survey found'",
+    "source": "adsense_triage"
+  },
+  "agent-design-after-llm-4-we-broke-5-assumptions": {
+    "removed_at": "2026-09-21T11:23:19.925582",
+    "reason": "narrative title: first-person claim in title ('Agent design after LLM-4: we broke 5 assumptions')",
+    "source": "adsense_triage"
+  },
+  "ai-ops-vs-dumb-alerts-the-incident-that-broke-us": {
+    "removed_at": "2026-09-21T11:23:19.927085",
+    "reason": "unverifiable named-source citation: 'The 2026 PagerDuty SRE survey shows'",
+    "source": "adsense_triage"
+  },
+  "ai-portfolios-ruin-yours-fix-your-signal": {
+    "removed_at": "2026-09-21T11:23:19.929296",
+    "reason": "unverifiable named-source citation: 'A 2026 LinkedIn Engineering survey found'",
+    "source": "adsense_triage"
+  },
+  "ai-skills-that-pay-data-vs-prompt-skills-in-2026": {
+    "removed_at": "2026-09-21T11:23:19.931043",
+    "reason": "unverifiable named-source citation: '2026 Stack Overflow Developer Survey shows'",
+    "source": "adsense_triage"
+  },
+  "dumped-kubernetes-for-200-and-no-one-noticed": {
+    "removed_at": "2026-09-21T11:23:19.932915",
+    "reason": "narrative title: past-tense action verb + specific number ('Dumped Kubernetes for $200 and no one noticed')",
+    "source": "adsense_triage"
+  },
+  "grew-5k-mrr-on-a-29-vps": {
+    "removed_at": "2026-09-21T11:23:19.934588",
+    "reason": "narrative title: past-tense action verb + specific number ('Grew $5k MRR on a $29 VPS')",
+    "source": "adsense_triage"
+  },
+  "htmx-stack-swap-5-things-i-gained-3-i-lost": {
+    "removed_at": "2026-09-21T11:23:19.935817",
+    "reason": "narrative title: first-person claim in title ('HTMX stack swap: 5 things I gained, 3 I lost')",
+    "source": "adsense_triage"
+  },
+  "killed-3k-kubernetes-kept-200-infra": {
+    "removed_at": "2026-09-21T11:23:19.937903",
+    "reason": "narrative title: past-tense action verb + specific number ('Killed $3k Kubernetes, kept $200 infra')",
+    "source": "adsense_triage"
+  },
+  "launch-saas-in-6-weeks-the-ai-shortcut-i-actually-used": {
+    "removed_at": "2026-09-21T11:23:19.939711",
+    "reason": "narrative title: first-person claim in title ('Launch SaaS in 6 weeks: the AI shortcut I actually')",
+    "source": "adsense_triage"
+  },
+  "launched-ai-saas-under-150month": {
+    "removed_at": "2026-09-21T11:23:19.940806",
+    "reason": "narrative title: past-tense action verb + specific number ('Launched AI SaaS under $150/month')",
+    "source": "adsense_triage"
+  },
+  "multi-agent-frameworks-in-2026-langgraph-wins": {
+    "removed_at": "2026-09-21T11:23:19.942163",
+    "reason": "unverifiable named-source citation: 'A 2026 GSMA report found'",
+    "source": "adsense_triage"
+  },
+  "negotiate-after-ai-boosts-your-output": {
+    "removed_at": "2026-09-21T11:23:19.943771",
+    "reason": "unverifiable named-source citation: 'a 2026 Radford survey show'",
+    "source": "adsense_triage"
+  },
+  "payments-fail-how-we-fixed-flutterwave-paystack-m-pesa": {
+    "removed_at": "2026-09-21T11:23:19.945469",
+    "reason": "narrative title: first-person claim in title ('Payments fail? How we fixed Flutterwave, Paystack,')",
+    "source": "adsense_triage"
+  },
+  "portfolio-that-hires-6-projects-i-actually-used-to": {
+    "removed_at": "2026-09-21T11:23:19.947098",
+    "reason": "narrative title: first-person claim in title ('Portfolio that hires: 6 projects I actually used t')",
+    "source": "adsense_triage"
+  },
+  "price-saas-dev-tools-in-2026-without-guessing": {
+    "removed_at": "2026-09-21T11:23:19.948522",
+    "reason": "unverifiable named-source citation: 'the report from S3'",
+    "source": "adsense_triage"
+  },
+  "saved-3kmonth-by-ditching-kubernetes": {
+    "removed_at": "2026-09-21T11:23:19.950137",
+    "reason": "narrative title: past-tense action verb + specific number ('Saved $3k/month by ditching Kubernetes')",
+    "source": "adsense_triage"
+  },
+  "survived-12000-agents-with-redis": {
+    "removed_at": "2026-09-21T11:23:19.951578",
+    "reason": "narrative title: past-tense action verb + specific number ('Survived 12,000 agents with Redis')",
+    "source": "adsense_triage"
+  },
+  "tool-calls-at-scale-sync-vs-async-patterns-that-live": {
+    "removed_at": "2026-09-21T11:23:19.953413",
+    "reason": "unverifiable named-source citation: 'A 2026 Datadog report shows'",
+    "source": "adsense_triage"
+  },
+  "trim-aws-iam-policies-in-one-afternoon": {
+    "removed_at": "2026-09-21T11:23:19.955409",
+    "reason": "unverifiable named-source citation: 'a survey of 23 developers'",
+    "source": "adsense_triage"
   }
 }

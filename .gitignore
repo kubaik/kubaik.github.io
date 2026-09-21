@@ -62,4 +62,6 @@ cleanup_plan.json
 .adsense_triage/delete.json
 .adsense_triage/improve.json
 .adsense_triage/keep.json
+.adsense_triage/
+adsense_audit_report.json
 

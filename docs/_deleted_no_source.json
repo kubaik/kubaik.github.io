@@ -186,5 +186,93 @@
   "wireguard-vs-tailscale-for-5month-zero-trust": {
     "deleted_at": "2026-09-19T12:10:45.942161",
     "reason": "missing post.json (no source of truth)"
+  },
+  "3-vibe-coding-tools-i-regret-shipping-in-production": {
+    "deleted_at": "2026-09-21T11:24:18.864000",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "added-circuit-breakers-3-days-after-cascade-failure": {
+    "deleted_at": "2026-09-21T11:24:18.864191",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "african-devs-arc-vs-andela-vs-toptal-in-2026": {
+    "deleted_at": "2026-09-21T11:24:18.864360",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "agent-design-after-llm-4-we-broke-5-assumptions": {
+    "deleted_at": "2026-09-21T11:24:18.864510",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-ops-vs-dumb-alerts-the-incident-that-broke-us": {
+    "deleted_at": "2026-09-21T11:24:18.864665",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-portfolios-ruin-yours-fix-your-signal": {
+    "deleted_at": "2026-09-21T11:24:18.864814",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "ai-skills-that-pay-data-vs-prompt-skills-in-2026": {
+    "deleted_at": "2026-09-21T11:24:18.864961",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "dumped-kubernetes-for-200-and-no-one-noticed": {
+    "deleted_at": "2026-09-21T11:24:18.865102",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "grew-5k-mrr-on-a-29-vps": {
+    "deleted_at": "2026-09-21T11:24:18.865255",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "htmx-stack-swap-5-things-i-gained-3-i-lost": {
+    "deleted_at": "2026-09-21T11:24:18.865399",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "killed-3k-kubernetes-kept-200-infra": {
+    "deleted_at": "2026-09-21T11:24:18.865562",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "launch-saas-in-6-weeks-the-ai-shortcut-i-actually-used": {
+    "deleted_at": "2026-09-21T11:24:18.865706",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "launched-ai-saas-under-150month": {
+    "deleted_at": "2026-09-21T11:24:18.865854",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "multi-agent-frameworks-in-2026-langgraph-wins": {
+    "deleted_at": "2026-09-21T11:24:18.866025",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "negotiate-after-ai-boosts-your-output": {
+    "deleted_at": "2026-09-21T11:24:18.866177",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "payments-fail-how-we-fixed-flutterwave-paystack-m-pesa": {
+    "deleted_at": "2026-09-21T11:24:18.866355",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "portfolio-that-hires-6-projects-i-actually-used-to": {
+    "deleted_at": "2026-09-21T11:24:18.866504",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "price-saas-dev-tools-in-2026-without-guessing": {
+    "deleted_at": "2026-09-21T11:24:18.866735",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "saved-3kmonth-by-ditching-kubernetes": {
+    "deleted_at": "2026-09-21T11:24:18.866890",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "survived-12000-agents-with-redis": {
+    "deleted_at": "2026-09-21T11:24:18.867032",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "tool-calls-at-scale-sync-vs-async-patterns-that-live": {
+    "deleted_at": "2026-09-21T11:24:18.867524",
+    "reason": "missing post.json (no source of truth)"
+  },
+  "trim-aws-iam-policies-in-one-afternoon": {
+    "deleted_at": "2026-09-21T11:24:18.867801",
+    "reason": "missing post.json (no source of truth)"
   }
 }
