@@ -93,7 +93,7 @@ boring-aws-lambda-layers-that-dont-lock,75,2093,Boring AWS Lambda layers that do
 build-a-nairobi-saas-stack-for-32kmonth,75,2329,Build a Nairobi SaaS stack for $3.2k/month,2026-06-10T12:02:34.221562,2,"first-person incident: 'This is the stack I ended up with after burning $1,200 in unexpected costs and t' | no FAQ section"
 build-a-search-system-in-2026-semantic-keyword,75,2517,"Build a search system in 2026: semantic, keyword",2026-06-10T21:36:55.121317,2,first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nIn 2026 I built a keyword sear' | no FAQ section
 build-a-serverless-backend-in-africa-with-pocketbase,75,2078,Build a serverless backend in Africa with PocketBase,2026-06-30T21:24:56.868861,2,first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nIn 2026 I joined a Lagos finte' | no FAQ section
-build-a-static-analyzer-in-14-days-with-tree-sitter,75,2298,Build a static analyzer in 14 days with Tree-sitter,2026-06-17T14:55:34.091462,2,first-person incident: 'I spent three days reading AST spec docs trying to shoehorn a square peg into a ' | no FAQ section
+build-a-static-analyzer-in-14-days-with-tree-sitter,75,2273,Build a static analyzer in 14 days with Tree-sitter,2026-06-17T14:55:34.091462,2,first-person incident: 'We spent two days on a **custom suppression syntax** inside   comments before re' | no FAQ section
 build-agent-workflows-that-survive-restarts,75,2058,Build agent workflows that survive restarts,2026-07-06T07:57:25.796672,2,"first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nOne Tuesday, we rolled out a n' | no FAQ section"
 build-apps-that-still-work-on-500-ms-latency,75,3351,Build apps that still work on 500 ms latency,2026-06-14T07:17:21.188689,2,"first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nIn 2025, I helped an open-sour' | no FAQ section"
 cache-stampedes-the-patterns-that-scale-and-the-ones,75,4127,Cache stampedes: the patterns that scale and the ones…,2026-07-21T02:56:30.208859,2,"first-person incident: 'After, we downgraded to db.r6g.medium (2 vCPU, 8 GB RAM) and saved $800/month in' | no FAQ section"
@@ -428,6 +428,7 @@ currency-switch-fails-in-ghana-one-config-file-to-rule,100,3207,Currency switch 
 event-driven-beats-agent-driven-910-times,100,3706,Event-driven beats agent-driven 9/10 times,2026-07-30T02:38:09.602424,0,
 feature-flags-became-ai-rollout-platforms,100,3229,Feature flags became AI rollout platforms,2026-09-18T03:52:01.902652,0,
 global-state-is-the-wrong-tool-for-ai-features,100,2635,Global state is the wrong tool for AI features,2026-07-28T02:46:18.174343,0,
+golden-paths-become-load-bearing-walls,100,2712,Golden paths become load-bearing walls,2026-09-21T08:13:29.567361,0,
 kill-noisy-alerts-the-triage-system-that-restored-sleep,100,3362,Kill noisy alerts: the triage system that restored sleep,2026-07-11T13:28:35.352118,0,
 latency-trade-offs-nairobi-teams-beat-global-ai-providers,100,2470,Latency trade-offs: Nairobi teams beat global AI providers,2026-07-26T03:19:07.385553,0,
 llm-drift-the-silent-quality-drop-metrics-miss,100,2288,LLM drift: the silent quality drop metrics miss,2026-07-04T20:16:21.808811,0,

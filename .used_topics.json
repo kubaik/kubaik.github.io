@@ -39,5 +39,8 @@
   "The token economics problem nobody solved yet for always-on agent teams",
   "The durable execution patterns that replaced most of our custom workflow code",
   "Designing background job queues that handle poison messages gracefully",
-  "Offline-capable agent workflows for field agents and last-mile operations in Africa"
+  "Offline-capable agent workflows for field agents and last-mile operations in Africa",
+  "How Cursor, Claude Code, and Windsurf are changing daily engineering workflows",
+  "Why traditional cloud cost tools struggle once agents make autonomous scaling decisions",
+  "Building golden paths for AI features that don't become maintenance nightmares"
 ]

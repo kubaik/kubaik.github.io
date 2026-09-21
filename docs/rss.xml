@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Sep 2026 11:09:15 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 21 Sep 2026 08:13:58 +0000</lastBuildDate>
+    <item>
+      <title>Golden paths become load-bearing walls</title>
+      <link>https://kubaik.github.io/golden-paths-become-load-bearing-walls/</link>
+      <description>Golden paths for AI features often hide the model ID and prompt version — the two things you need during a migration. Here is the failure mode and the fix.</description>
+      <pubDate>Mon, 21 Sep 2026 08:13:29 +0000</pubDate>
+      <guid>https://kubaik.github.io/golden-paths-become-load-bearing-walls/</guid>
+    </item>
     <item>
       <title>Offline agent workflows for last-mile ops</title>
       <link>https://kubaik.github.io/offline-agent-workflows-for-last-mile-ops/</link>
@@ -138,13 +145,6 @@
       <description>Feature flags now gate AI rollouts. Ranked review of 7 platforms, the eval-metric rollback gap, and the SDK fallback mistake that takes down requests.</description>
       <pubDate>Fri, 18 Sep 2026 03:52:01 +0000</pubDate>
       <guid>https://kubaik.github.io/feature-flags-became-ai-rollout-platforms/</guid>
-    </item>
-    <item>
-      <title>Agent access for non-AI engineers</title>
-      <link>https://kubaik.github.io/agent-access-for-non-ai-engineers/</link>
-      <description>Agent access for non-AI engineers: typed tool schemas, dry-run defaults, and idempotency keys that stop hallucinated arguments from reaching prod.</description>
-      <pubDate>Thu, 17 Sep 2026 16:33:46 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-access-for-non-ai-engineers/</guid>
     </item>
   </channel>
 </rss>

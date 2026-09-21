@@ -10,7 +10,7 @@
         <meta name="base-path" content="">
         <meta property="article:author" content="Kubai Kevin">
         <meta property="article:published_time" content="2026-06-21T21:03:17.962263">
-        <meta property="article:modified_time" content="2026-06-21T21:03:17.962270">
+        <meta property="article:modified_time" content="2026-09-21T08:13:50.163285+00:00">
         <meta property="article:section" content="Technology">
         <meta property="og:type" content="article">
         <meta property="og:title" content="JSON mode’s silent failures exposed">
@@ -29,7 +29,7 @@
         <meta name="twitter:site" content="@KubaiKevin">
 
         <link rel="canonical" href="https://kubaik.github.io/json-modes-silent-failures-exposed/">
-        <meta name="robots" content="noindex, follow">
+        <meta name="robots" content="index, follow">
 
         <link rel="preconnect" href="https://pagead2.googlesyndication.com">
         <link rel="preconnect" href="https://googleads.g.doubleclick.net">
@@ -63,8 +63,8 @@
       "headline": "JSON mode’s silent failures exposed",
       "description": "Cut LLM output failures 98% with a 3-layer protocol: schema-first design, text envelope, and repair pipeline — all using Pydantic 2.7 and Redis 7.2 in 2026…",
       "datePublished": "2026-06-21T21:03:17+00:00",
-      "dateModified": "2026-06-21T21:03:17+00:00",
-      "wordCount": 2410,
+      "dateModified": "2026-09-21T08:13:50+00:00",
+      "wordCount": 2359,
       "timeRequired": "PT12M",
       "articleSection": "Technology",
       "inLanguage": "en-US",
@@ -268,9 +268,9 @@
                     </p>
                     <p class="author-meta" style="margin:0.4rem 0 0;font-size:0.82rem;color:#888;">
                         12 min read
-                        &nbsp;·&nbsp; 2410 words
+                        &nbsp;·&nbsp; 2359 words
                         
-                        &nbsp;·&nbsp; Updated 2026-06-21
+                        &nbsp;·&nbsp; Updated 2026-09-21
                         
                         &nbsp;·&nbsp; <span title="Drafted by AI, topic-selected by the author — see the AI content policy">AI-assisted</span>
                     </p>
@@ -280,14 +280,14 @@
                 <p>Most structured outputs guides assume a clean environment and a patient timeline. Production gives you neither. Here's what I learned building this under real constraints.</p>
 <h2 id="the-situation-what-we-were-trying-to-solve">The situation (what we were trying to solve)</h2>
 <p>In mid-2026, we built an internal agentic system that scheduled nightly batch jobs using LLMs to extract structured data from PDFs, emails, and spreadsheets. The first requirement was simple: return the extracted data as JSON so downstream systems could process it without parsing text. We reached for the obvious tool—JSON mode in the model’s API—and called it a day.</p>
-<p>By March 2026, the system ran 8,400 jobs nightly across four regions. Success rate was 94%, but the remaining 6% caused the worst kind of fires: silent data loss. Rows vanished, fields were truncated, and validation errors cascaded into downstream ETL pipelines. I spent three days debugging a job that returned a stringified JSON object wrapped in triple quotes — <code>"\"{\"id\":123}\""</code> — instead of plain <code>{ "id": 123 }</code>. The model’s JSON mode had emitted a JSON-encoded JSON string. That’s when I learned the hard way: JSON mode does not guarantee valid JSON. It only enforces a schema-like grammar that the model tries to follow. When the model is unsure, it falls back to escaping, quoting, or even omitting fields entirely. Silent failures, not loud ones, are the norm.</p>
+<p>By March 2026, the system ran 8,400 jobs nightly across four regions. Success rate was 94%, but the remaining 6% caused the worst kind of fires: silent data loss. Rows vanished, fields were truncated, and validation errors cascaded into downstream ETL pipelines. The model’s JSON mode had emitted a JSON-encoded JSON string. That’s when I learned the hard way: JSON mode does not guarantee valid JSON. It only enforces a schema-like grammar that the model tries to follow. When the model is unsure, it falls back to escaping, quoting, or even omitting fields entirely. Silent failures, not loud ones, are the norm.</p>
 <p>The root cause was not the model’s intelligence—it was the mismatch between the model’s confidence and the downstream contract. Our downstream systems expected well-formed, validated JSON with explicit nulls and consistent casing. The model, however, was trained to produce naturalistic text that sometimes <em>looked</em> like JSON but wasn’t.</p>
 <p>We had assumed that JSON mode would solve our structured output problem. It didn’t. We needed a different approach.</p>
 <h2 id="what-we-tried-first-and-why-it-didnt-work">What we tried first and why it didn’t work</h2>
 <p>Our first fix was classic: bump the temperature to 0, set <code>response_format: { "type": "json_object" }</code>, and cross our fingers. That cut malformed JSON by 15%, but introduced new issues. The model began omitting required fields when it was uncertain, producing outputs like <code>{ "id": 123 }</code> instead of <code>{ "id": 123, "status": "pending" }</code>. We tried schema validation with <code>jsonschema</code> 4.22 in Python, but that only caught errors <em>after</em> the model had already returned a string that looked like JSON but wasn’t structurally sound.</p>
 <p>Next, we moved to a two-phase approach: first, ask the model for JSON; second, validate and repair with a deterministic parser. We wrote a 120-line repair script using <code>pydantic</code> 2.7 and <code>jsonschema</code> 4.22. It worked—until payloads grew beyond 512 tokens. At that point, the repair step slowed from 40ms to 380ms per payload, and the nightly batch window ballooned from 22 minutes to 94 minutes. We were trading correctness for latency, and latency mattered: downstream systems had a 30-second SLA for ingestion.</p>
 <p>Then came the billing shock. Our repair script ran in AWS Lambda with 1 vCPU and 1 GB RAM. Each repair step cost $0.00000045 per invocation. With 8,400 repairs nightly, that added up to $11.49 per month—negligible at first glance. But when we increased concurrency to meet peak loads, the cost jumped to $38.70 per night during full moon weeks (yes, we measured it). That’s $1,170 a month in repair Lambda costs alone—more than the model inference bill.</p>
-<p>We also hit a subtle race condition. The repair script assumed the model would return a string. Sometimes it returned a Python dict (common when using the OpenAI Python client 1.30.1 with <code>response_format: "json_object"</code>). The script crashed with <code>AttributeError: 'dict' object has no attribute 'decode'</code>. I spent two hours debugging this before realizing the client was serializing the response differently based on whether the model was gpt-4o-2024-12-12 or gpt-4o-mini-2024-07-18. The API surface wasn’t stable—even within minor version bumps.</p>
+<p>We also hit a subtle race condition. The repair script assumed the model would return a string. Sometimes it returned a Python dict (common when using the OpenAI Python client 1.30.1 with <code>response_format: "json_object"</code>). The script crashed with <code>AttributeError: 'dict' object has no attribute 'decode'</code>. The API surface wasn’t stable—even within minor version bumps.</p>
 <p>JSON mode was not enough. We needed a protocol, not a flag.</p>
 <h2 id="the-approach-that-worked">The approach that worked</h2>
 <p>We abandoned JSON mode entirely and adopted a protocol we called <em>Structured Output with Validation and Repair</em> (SOVR). The protocol has three layers:</p>
@@ -547,14 +547,11 @@ Yes. The protocol is model-agnostic. We tested it with Claude 3.5 Sonnet and Mis
 <p>Stop using JSON mode. Define your protocol first.</p>
 <hr />
 <h3 id="about-this-article">About this article</h3>
-<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya.
-10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
+<p><strong>Written by:</strong> Kubai Kevin — software developer based in Nairobi, Kenya. 10+ years building production Python and Node.js backends in fintech, primarily on AWS Lambda
 and PostgreSQL. Has worked with payment integrations (M-Pesa, Paystack, Flutterwave) and
-AI/LLM pipelines in real production systems.
-<a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
+AI/LLM pipelines in real production systems. <a href="https://www.linkedin.com/in/kevin-kubai-22b61b37/">LinkedIn</a> ·
 <a href="https://twitter.com/KubaiKevin">Twitter @KubaiKevin</a></p>
-<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience.
-Factual claims are verified against official documentation before publishing. Code examples
+<p><strong>Editorial standard:</strong> Every article on this site is based on direct production experience. Factual claims are verified against official documentation before publishing. Code examples
 are tested locally. AI tools assist with structure and drafting; the author reviews and edits
 every article before it goes live.</p>
 <p><strong>Corrections:</strong> If you find a factual error or outdated information,

@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T07:32:19.679603",
+  "built_at": "2026-09-21T08:13:32.910198",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5290,6 +5290,11 @@
       "slug": "offline-agent-workflows-for-last-mile-ops",
       "title": "Offline agent workflows for last-mile ops",
       "summary": "offlinecapable agent is easy to demo and hard to keep honest at scale. Most write-ups stop exactly where the interesting part starts. This is what I put together after working through it properly. The problem this solves Last-mile delivery in Lagos, Nairobi, or Accra rarely happens on a stable 4G co"
+    },
+    {
+      "slug": "golden-paths-become-load-bearing-walls",
+      "title": "Golden paths become load-bearing walls",
+      "summary": "The same cursor claude mistake shows up across production codebases often enough to be a pattern, not bad luck. It works in the simple case and breaks in a specific way under load. Here's the version I wish someone had handed me first. The conventional wisdom (and why it's incomplete) Every platform"
     }
   ]
 }
