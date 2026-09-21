@@ -22,7 +22,6 @@ ai-apps-break-when-you-treat-them-like-regular-software,72,3710,AI apps break wh
 ai-codebase-onboarding-2-paths-tested,72,2744,AI codebase onboarding: 2 paths tested,2026-06-24T01:35:30.792495,2,first-person incident: 'We spent two weeks reconciling them.' | no fenced code block
 ai-features-as-tech-debt-or-golden-paths,72,2638,AI features as tech debt or golden paths,2026-07-17T02:53:25.164323,2,"first-person incident: ""Here's what I'd tell a colleague hitting this for the first time."" | no fenced code block"
 ai-ops-pagerduty-vs-firehydrant-for-oncall,72,2269,AI ops: PagerDuty vs FireHydrant for oncall,2026-07-02T12:04:55.904057,2,first-person incident: 'Extra credits cost $0.003 per call after that.' | no fenced code block
-apis-must-die-in-2026,72,2846,APIs must die in 2026,2026-06-12T06:47:12.021665,2,first-person incident: 'I ran into this when a new microfinance client in Kano asked us to integrate wit' | no fenced code block
 choose-no-code-only-when,72,1981,Choose no-code only when,2026-06-09T04:30:23.126966,2,"first-person incident: 'In our waitlist example, the no-code stack cost $360 plus 12 dev hours to work a' | no fenced code block"
 istio-and-cilium-what-really-breaks-in-production,72,3227,Istio and Cilium: what really breaks in production,2026-06-24T09:26:52.873534,2,"first-person incident: 'During a rolling deployment of a new version of a payment service, I watched the' | no fenced code block"
 llmops-2026-evaluation-stack-that-replaced-rag-dashboards,72,2544,LLMOps 2026: evaluation stack that replaced RAG dashboards,2026-07-05T12:37:15.024662,2,vague attribution: 'The data showed' | first-person incident: 'We spent 12 hours rebuilding our golden set with 500 real user queries from the '
@@ -106,13 +105,12 @@ map-legacy-code-with-ai-before-it-breaks,75,3711,Map legacy code with AI before 
 merge-three-payment-apis-into-one-system,75,3548,Merge three payment APIs into one system,2026-06-10T02:38:19.531287,2,first-person incident: 'A normalized key scheme would have saved us three weeks of debugging.' | no FAQ section
 meter-dev-tool-pricing-in-2026,75,2157,Meter dev-tool pricing in 2026,2026-07-02T17:53:21.753006,2,first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nThe difference wasn’t the code' | no FAQ section
 move-images-50-faster-in-2026-with-starlink-cdn,75,2148,Move images 50% faster in 2026 with Starlink CDN,2026-06-18T16:57:23.521775,2,"first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nIn mid-2026, I joined a team s' | no FAQ section"
-multi-agent-systems-break-first,75,3576,Multi-agent systems break first,2026-06-08T04:25:12.053864,2,first-person incident: 'I spent three days debugging a system where one agent kept replying with empty J' | no FAQ section
 multi-agent-systems-why-failures-hide,75,2436,Multi-agent systems: why failures hide,2026-09-18T11:29:41.379120,2,first-person incident: '## Why I wrote this (the problem I kept hitting)\n\n[Multi-agent systems are](/mul' | no FAQ section
 negotiate-2026-pay-when-ai-steals-40-of-your-job,75,3093,Negotiate 2026 pay when AI steals 40% of your job,2026-06-11T19:30:36.979984,2,"first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nIn late 2026, a colleague in L' | no FAQ section"
 negotiate-pay-in-2026-with-ai-proof-points,75,1979,Negotiate pay in 2026 with AI proof points,2026-06-25T16:15:21.594638,2,first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nIn late 2026 I was reviewing o' | no FAQ section
 offline-first-agents-for-field-teams,75,2103,Offline-first agents for field teams,2026-07-16T02:51:18.981017,2,first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nLast-mile logistics in Africa ' | no FAQ section
 offline-first-money-apps-with-dynamodb-streams,75,2605,Offline-first money apps with DynamoDB Streams,2026-08-08T09:54:51.263546,2,first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nMost e-money apps in East Afri' | no FAQ section
-one-misconfigured-vector-db-killed-our-rag-pipeline,75,2508,One misconfigured vector DB killed our RAG pipeline,2026-07-29T14:18:17.130040,2,first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nI was on call over a public ho' | no FAQ section
+one-misconfigured-vector-db-killed-our-rag-pipeline,75,2478,One misconfigured vector DB killed our RAG pipeline,2026-07-29T14:18:17.130040,2,first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nI was on call over a public ho' | no FAQ section
 platform-teams-agentic-world-struggle,75,3322,Platform Teams: Agentic World Struggle,2026-09-12T15:17:48.160046,2,"first-person incident: ""## Why I wrote this (the problem I kept hitting)\n\nSoutheast Asia's startup scene"" | no FAQ section"
 platform-teams-in-2026-docs-vs-production-reality,75,3793,Platform teams in 2026: Docs vs. production reality,2026-06-27T12:07:28.402718,2,first-person incident: 'I once joined a seed-stage startup that skipped this and spent two weeks debuggi' | no FAQ section
 portfolio-projects-that-hire-remote-senior-devs,75,2806,Portfolio projects that hire remote senior devs,2026-09-03T03:37:01.086541,2,"first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nIn 2026, the remote job market' | no FAQ section"
@@ -211,7 +209,7 @@ ai-scanners-overlook-real-vulns,80,2337,AI scanners overlook real vulns,2026-07-
 ai-solo-saas-2026-build-vs-buy,80,3706,AI solo SaaS 2026: build vs buy,2026-07-03T12:11:43.962216,1,"first-person incident: 'By week three, I had 6,800 lines of code, a Pydantic 2.7 schema to maintain, and'"
 ai-steals-junior-tasks-3-skills-that-protect-pay,80,2738,AI steals junior tasks: 3 skills that protect pay,2026-06-24T05:02:01.012343,1,first-person incident: 'That single habit saved me 8 hours of wasted engineering time.'
 ai-tools-rewrote-my-engineering-rules,80,3071,AI tools rewrote my engineering rules,2026-07-02T08:41:32.908522,1,"first-person incident: 'If they’d built resilience in from day one, they’d have saved 4 weeks and avoide'"
-ai-tools-wont-help-if-everyone-writes-the-same-code,80,2855,AI tools won’t help if everyone writes the same code,2026-07-29T02:53:12.108815,1,"first-person incident: 'I was surprised when a Berlin teammate bluntly said, ""I don’t trust a single AI-'"
+ai-tools-wont-help-if-everyone-writes-the-same-code,80,2851,AI tools won’t help if everyone writes the same code,2026-07-29T02:53:12.108815,1,"first-person incident: 'library in Python 3.11\n- **Incident tracking**: PagerDuty REST API v2, with a cu'"
 ai-ui-generation-what-it-fixed-and-what-still-breaks,80,3459,AI UI generation: what it fixed and what still breaks,2026-07-03T06:48:30.376782,1,first-person incident: 'Here’s the diff that fixed it:\n\n \n\n### Step 4: Measure the real cost\n\nThe AI sav'
 ai-ui-tools-6-months-in-what-i-gained-and-lost,80,2990,"AI UI tools: 6 months in, what I gained and lost",2026-06-27T05:01:58.869327,1,first-person incident: '## The one-paragraph version (read this first)\n\nAI UI generation tools like v0 b'
 ai-ui-tools-broke-my-react-flow-heres-why,80,3557,AI UI tools broke my React flow — here’s why,2026-06-23T15:45:26.142776,1,"first-person incident: 'The refactor took 45 minutes, but the AI saved us 3 hours of writing boilerplate'"
@@ -269,7 +267,7 @@ observability-2026-ditch-the-three-pillars,80,3378,Observability 2026: ditch the
 observe-llm-features-90-faster,80,3314,Observe LLM features 90% faster…,2026-07-08T14:23:50.999349,1,first-person incident: '## Why I wrote this (the problem I kept hitting)\n\nIn 2026 we shipped a governmen'
 offline-first-apps-what-3g-markets-taught-us,80,3209,Offline-first apps: what 3G markets taught us,2026-06-21T10:38:08.004189,1,first-person incident: 'I spent two weeks debugging a connection pool issue that turned out to be a sing'
 one-payment-stack-for-kenya-nigeria-ghana,80,2693,"One payment stack for Kenya, Nigeria, Ghana",2026-06-20T12:04:01.031479,1,"first-person incident: 'After, we consolidated to one cluster with 24 pods and saved $18,000/month on co'"
-optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache,80,2456,Optimise agent sync on 3G: gzip + CDN vs local cache,2026-07-05T03:44:52.157490,1,first-person incident: 'I spent three days debugging a connection pool issue that turned out to be a sin'
+optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache,80,2408,Optimise agent sync on 3G: gzip + CDN vs local cache,2026-07-05T03:44:52.157490,1,first-person incident: 'Option A would have cost $360 if we had served every request from origin (no cac'
 orchestration-tax-kills-multi-agent-systems,80,2610,Orchestration tax kills multi-agent systems,2026-08-11T10:02:06.598760,1,first-person incident: 'Why dropped: p99 latency jumped from 20 ms to 180 ms due to pod startup and sche'
 orm-2026-prisma-vs-drizzle-vs-sqlalchemy,80,3234,ORM 2026: Prisma vs Drizzle vs SQLAlchemy,2026-06-10T16:18:49.318783,1,"first-person incident: 'By the end, we cut our cold-start latency 38% and saved $1,200/month by avoiding'"
 personal-ai-assistants-avoid-vendor-lock-in-traps,80,3321,Personal AI assistants: avoid vendor lock-in traps,2026-06-11T09:44:01.921304,1,"first-person incident: 'Reality: we hit 8000 calls/day on heavy days, but our self-hosted stack cost $0.'"
@@ -340,6 +338,7 @@ why-monoliths-die-slowly-in-2026,87,2114,Why monoliths die slowly in 2026,2026-0
 ai-in-slow-networks-why-models-flop-where-data-costs-rise,90,2658,AI in slow networks: why models flop where data costs rise,2026-07-05T11:34:19.789035,1,AI filler (1): 'state-of-the-art'
 thundering-herd-the-hidden-scaling-trap,90,2399,Thundering Herd: The Hidden Scaling Trap,2026-09-10T08:29:58.184595,2,no markdown table | no FAQ section
 ai-stole-system-design,92,2037,AI stole system design,2026-06-21T15:10:03.056592,1,no fenced code block
+apis-must-die-in-2026,92,3012,APIs must die in 2026,2026-06-12T06:47:12.021665,1,no fenced code block
 regulators-broke-our-api-design,92,3155,Regulators broke our API design,2026-06-17T10:17:15.717047,1,no fenced code block
 agents-create-incidents-at-2am,95,2344,Agents create incidents at 2am,2026-08-06T08:07:50.591032,1,no FAQ section
 ai-chats-hidden-wcag-fails,95,3668,AI chat's hidden WCAG fails,2026-07-02T12:40:53.455722,1,no FAQ section
@@ -357,8 +356,10 @@ fintech-features-break-in-ghana-the-real-fix,95,2613,Fintech features break in G
 golden-paths-that-dont-handcuff,95,2169,Golden paths that don't handcuff,2026-09-21T08:28:08.494579,1,no FAQ section
 hire-for-agents-not-autocomplete,95,3198,"Hire for agents, not autocomplete",2026-08-02T11:06:20.609961,1,no FAQ section
 hybrid-cloud-routing-cost-speed-balance-for-sea,95,2633,Hybrid Cloud Routing: Cost-Speed Balance for SEA,2026-09-04T16:04:06.736348,1,no FAQ section
+idempotency-keys-what-they-fix-what-they-dont,95,2565,"Idempotency keys: what they fix, what they don't",2026-09-21T09:17:49.117913,1,no FAQ section
 llm-apps-owasp-risks-you-missed,95,2245,LLM apps: OWASP risks you missed,2026-06-16T12:09:10.277983,1,no FAQ section
 llm-drift-before-users-complain-catch-it-early,95,2836,LLM drift before users complain: catch it early,2026-08-10T12:22:46.862454,1,no markdown table
+multi-agent-systems-break-first,95,3476,Multi-agent systems break first,2026-06-08T04:25:12.053864,1,no FAQ section
 offline-agent-workflows-for-last-mile-ops,95,2499,Offline agent workflows for last-mile ops,2026-09-21T07:32:16.420961,1,no FAQ section
 ollama-local-vs-ollama-cloud-fintech-data-stays-in-kenya,95,3486,Ollama Local vs Ollama Cloud: fintech data stays in Kenya,2026-08-01T13:30:10.426126,1,no FAQ section
 portfolio-projects-that-beat-ai-clones-4-signals,95,2999,Portfolio projects that beat AI clones: 4 signals,2026-06-19T12:15:12.554224,1,no FAQ section

@@ -175,69 +175,39 @@
     "status": "needs_review"
   },
   {
-    "slug": "mcp-servers-the-3-hidden-costs-nobody-quotes",
-    "title": "MCP servers: the 3 hidden costs nobody quotes",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the most common outage wasn’t CPU or memory, but the combin; I once used Datadog’s MCP integration until I realized it samples every 10 s, mi",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "multi-agent-systems-break-first",
-    "title": "Multi-agent systems break first",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a system where one agent kept replying with empty J; I once inherited a system where the agent orchestrator was running on EC2 instan; I learned this the hard way when our staging Redis cluster OOM’d and took down t",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "one-misconfigured-vector-db-killed-our-rag-pipeline",
-    "title": "One misconfigured vector DB killed our RAG pipeline",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've hit the same our beautiful mistake in more than one production codebase ove; I spent three days debugging a connection pool issue that turned out to be a sin; Most tutorials show how to build a RAG pipeline, but none cover what happens whe",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache",
-    "title": "Optimise agent sync on 3G: gzip + CDN vs local cache",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same built lowlatency mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate",
-    "status": "stripped"
-  },
-  {
-    "slug": "payments-fail-how-we-fixed-flutterwave-paystack-m-pesa",
-    "title": "Payments fail? How we fixed Flutterwave, Paystack, M-Pesa…",
-    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days assuming the webhook payload was correct before realizing the; I hit this when a **Paystack** webhook with idempotency key   was retried after ; I was surprised when Flutterwave’s   endpoint returned events in reverse order f",
-    "action": "regenerate",
-    "status": "resolved_elsewhere"
-  },
-  {
     "slug": "pulumi-vs-terraform-vs-opentofu-in-2026",
     "title": "Pulumi vs Terraform vs OpenTofu in 2026",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I ran into this pulumi terraform problem while migrating a service under a hard ; Here's what actually worked.; I spent three days debugging a connection pool issue that turned out to be a sin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "rebalance-pay-when-ai-fills-half-your-role",
     "title": "Rebalance pay when AI fills half your role",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent longer than I should have on this before I understood what was actually ; I spent three days debugging a connection pool issue that turned out to be a sin; I started collecting negotiation transcripts and compensation data from 112 engi",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "replace-env-with-these-in-2026",
     "title": "Replace .env with these in 2026",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised to learn that AWS Secrets Manager can cache secrets locally for ; I ran into this when we upgraded a PostgreSQL cluster from 14 to 16.",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "replace-vibe-testing-with-agent-evals-now",
     "title": "Replace vibe testing with agent evals now",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've hit the same evaluationdriven development mistake in more than one producti; Here's what I'd tell a colleague hitting this for the first time.; I ran into this myself when a new customer-facing agent auto-replied with pricin",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "replaced-celery-in-2026-what-actually-worked",
     "title": "Replaced Celery in 2026: what actually worked",
     "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): Here's what I learned building this under real constraints.; I ran into a critical surprise when I enabled Redis slowlog: the queue wasn’t th; I spent three days tuning the limits before realizing the real issue was the tas",
-    "action": "regenerate"
+    "action": "regenerate",
+    "status": "stripped"
   },
   {
     "slug": "self-healing-ai-agents-vs-rule-based-ops-40-fewer",
@@ -1651,6 +1621,41 @@
     "status": null,
     "reason": "content_audit_verdicts: Unverifiable first-person incident language (1 sentence(s)).",
     "queued_at": "2026-09-19T11:42:21.805680+00:00"
+  },
+  {
+    "slug": "mcp-servers-the-3-hidden-costs-nobody-quotes",
+    "title": "MCP servers: the 3 hidden costs nobody quotes",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a connection pool issue that turned out to be a sin; I was surprised that the most common outage wasn’t CPU or memory, but the combin; I once used Datadog’s MCP integration until I realized it samples every 10 s, mi",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "multi-agent-systems-break-first",
+    "title": "Multi-agent systems break first",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days debugging a system where one agent kept replying with empty J; I once inherited a system where the agent orchestrator was running on EC2 instan; I learned this the hard way when our staging Redis cluster OOM’d and took down t",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "one-misconfigured-vector-db-killed-our-rag-pipeline",
+    "title": "One misconfigured vector DB killed our RAG pipeline",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've hit the same our beautiful mistake in more than one production codebase ove; I spent three days debugging a connection pool issue that turned out to be a sin; Most tutorials show how to build a RAG pipeline, but none cover what happens whe",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "optimise-agent-sync-on-3g-gzip-cdn-vs-local-cache",
+    "title": "Optimise agent sync on 3G: gzip + CDN vs local cache",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I've seen the same built lowlatency mistake in multiple production codebases, in; Here's what it looks like, why it's hard to spot, and how to fix it.; I spent three days debugging a connection pool issue that turned out to be a sin",
+    "action": "regenerate",
+    "status": "stripped"
+  },
+  {
+    "slug": "payments-fail-how-we-fixed-flutterwave-paystack-m-pesa",
+    "title": "Payments fail? How we fixed Flutterwave, Paystack, M-Pesa…",
+    "reason": "retroactive_fabrication_audit: 4 unverifiable first-person anecdote(s): I spent three days assuming the webhook payload was correct before realizing the; I hit this when a **Paystack** webhook with idempotency key   was retried after ; I was surprised when Flutterwave’s   endpoint returned events in reverse order f",
+    "action": "regenerate",
+    "status": "resolved_elsewhere"
   },
   {
     "slug": "found-niche-in-2026-saas-that-ai-cant-copy",

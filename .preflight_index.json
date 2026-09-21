@@ -1,5 +1,5 @@
 {
-  "built_at": "2026-09-21T08:28:11.607433",
+  "built_at": "2026-09-21T09:17:52.252666",
   "entries": [
     {
       "slug": "merge-three-payment-apis-into-one-system",
@@ -5300,6 +5300,11 @@
       "slug": "golden-paths-that-dont-handcuff",
       "title": "Golden paths that don't handcuff",
       "summary": "The golden paths section of a postmortem is easy to skim past, right up until it's the section that matters. The gap between the demo and the incident report is where this actually lives. This covers the fix, the cost of not knowing sooner, and what we monitor now. The problem this solves A golden p"
+    },
+    {
+      "slug": "idempotency-keys-what-they-fix-what-they-dont",
+      "title": "Idempotency keys: what they fix, what they don't",
+      "summary": "The conventional advice on idempotency keys is incomplete in one specific, costly way. Here's the fuller picture, with the tradeoffs left in. Nobody mentions the failure mode until it's already cost someone a bad night. The problem this solves A payment API without idempotency is a bet that the netw"
     }
   ]
 }

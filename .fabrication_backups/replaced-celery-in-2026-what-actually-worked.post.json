@@ -15,7 +15,7 @@
   "meta_description": "Replaced Celery in 2026 and cut API latency 85% with NATS JetStream + Go workers — $2,400/month Redis savings, 3× Black Friday traffic handled without errors",
   "featured_image": "/static/images/replaced-celery-in-2026-what-actually-worked.jpg",
   "created_at": "2026-06-11T05:08:10.105324",
-  "updated_at": "2026-09-21T09:18:08.486370+00:00",
+  "updated_at": "2026-09-19T08:27:14.508079+00:00",
   "seo_keywords": [
     "CeleryAlternatives2026",
     "EphemeralWorkers2026",

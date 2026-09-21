@@ -5,7 +5,14 @@
     <link>https://kubaik.github.io</link>
     <description>Practical backend engineering, AI tooling, and developer career advice by Kubai Kevin — a software developer with 10+ years building production systems in fintech and AI.</description>
     <language>en-us</language>
-    <lastBuildDate>Mon, 21 Sep 2026 12:14:21 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 21 Sep 2026 09:18:16 +0000</lastBuildDate>
+    <item>
+      <title>Idempotency keys: what they fix, what they don&apos;t</title>
+      <link>https://kubaik.github.io/idempotency-keys-what-they-fix-what-they-dont/</link>
+      <description>Idempotency keys prevent double charges on retry, but not concurrency, key reuse, or partial failures.</description>
+      <pubDate>Mon, 21 Sep 2026 09:17:49 +0000</pubDate>
+      <guid>https://kubaik.github.io/idempotency-keys-what-they-fix-what-they-dont/</guid>
+    </item>
     <item>
       <title>Golden paths that don&apos;t handcuff</title>
       <link>https://kubaik.github.io/golden-paths-that-dont-handcuff/</link>
@@ -138,13 +145,6 @@
       <description>Multi-agent systems fail silently at scale — token budget overruns, retry storms, and deadlocks.</description>
       <pubDate>Fri, 18 Sep 2026 11:29:41 +0000</pubDate>
       <guid>https://kubaik.github.io/multi-agent-systems-why-failures-hide/</guid>
-    </item>
-    <item>
-      <title>Agent drift: the failure mode you didn&apos;t log</title>
-      <link>https://kubaik.github.io/agent-drift-the-failure-mode-you-didnt-log/</link>
-      <description>Agent drift hides in flat latency and clean eval suites.</description>
-      <pubDate>Fri, 18 Sep 2026 08:41:59 +0000</pubDate>
-      <guid>https://kubaik.github.io/agent-drift-the-failure-mode-you-didnt-log/</guid>
     </item>
   </channel>
 </rss>
